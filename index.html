@@ -30,6 +30,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
   <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handjs/1.3.11/hand.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
   <link rel="stylesheet" href="main.css">
 </head>
 
@@ -41,8 +44,10 @@
     </div>
   </div>
 
+  <canvas id="renderCanvas"></canvas>
   <div id="main-page" style="display:none;">
-    <button id="sign-out-button" style="float:right;margin-top:5px;" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
+
+    <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
 
     <section class="mdl-grid content" id="add-post" style="display:none;z-index:1000;float:left;">
       <!-- Show the add post form -->
@@ -73,7 +78,7 @@
       </div>
     </section>
     <section class="mdl-grid content" id="templates-list">
-      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
+      <div id="posts-container">
       </div>
     </section>
   </div>

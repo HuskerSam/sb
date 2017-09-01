@@ -9,6 +9,7 @@ var signOutButton = document.getElementById('sign-out-button');
 var loginPage = document.getElementById('login-page');
 var mainPage = document.getElementById('main-page');
 var templatesList = document.getElementById('templates-list');
+var postsContainer = document.getElementById('posts-container');
 var listeningFirebaseRefs = [];
 
 function writeNewPost(uid, username, picture, title, body) {
@@ -34,27 +35,21 @@ function createPostElement(postId, title, text, author, authorId, authorPic) {
   var uid = firebase.auth().currentUser.uid;
 
   var html =
-      '<div class="post-' + postId + ' mdl-cell mdl-grid mdl-grid--no-spacing">' +
-        '<h4 class="mdl-card__title-text"></h4>' +
-        '<div class="avatar"></div>' +
-        '<div class="username mdl-color-text--black"></div>' +
-        '<div class="text"></div>' +
-      '</div>';
+    '<div id="model-' + postId + '" class="model-item">' +
+    '<div class="model-title"></div>' +
+    '<div class="model-avatar"></div>' +
+    '<div class="model-username"></div>'
+  '</div>';
 
   // Create the DOM element from the HTML.
   var div = document.createElement('div');
   div.innerHTML = html;
   var postElement = div.firstChild;
-//  if (componentHandler) {
-  //  componentHandler.upgradeElements(postElement.getElementsByClassName('mdl-textfield')[0]);
-//  }
 
-  // Set values.
-  postElement.getElementsByClassName('text')[0].innerText = text;
-  postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = title;
-  postElement.getElementsByClassName('username')[0].innerText = author || 'Anonymous';
-  postElement.getElementsByClassName('avatar')[0].style.backgroundImage = 'url("' +
-      (authorPic || './silhouette.jpg') + '")';
+  postElement.getElementsByClassName('model-title')[0].innerText = title;
+  postElement.getElementsByClassName('model-username')[0].innerText = author || 'Anonymous';
+  postElement.getElementsByClassName('model-avatar')[0].style.backgroundImage = 'url("' +
+    (authorPic || './silhouette.jpg') + '")';
 
   return postElement;
 }
@@ -70,42 +65,31 @@ function startDatabaseQueries() {
   var fetchPosts = function(postsRef, sectionElement) {
     postsRef.on('child_added', function(data) {
       var author = data.val().author || 'Anonymous';
-      var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-      containerElement.insertBefore(
-          createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
-          containerElement.firstChild);
+      postsContainer.insertBefore(
+        createPostElement(data.key, data.val().title, data.val().body, author, data.val().uid, data.val().authorPic),
+        postsContainer.firstChild);
     });
     postsRef.on('child_changed', function(data) {
-		var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-		var postElement = containerElement.getElementsByClassName('post-' + data.key)[0];
-		postElement.getElementsByClassName('mdl-card__title-text')[0].innerText = data.val().title;
-		postElement.getElementsByClassName('username')[0].innerText = data.val().author;
-		postElement.getElementsByClassName('text')[0].innerText = data.val().body;
-		postElement.getElementsByClassName('star-count')[0].innerText = data.val().starCount;
+      var postElement = postsContainer.getElementsByClassName('post-' + data.key)[0];
+      postElement.getElementsByClassName('model-title')[0].innerText = data.val().title;
+      postElement.getElementsByClassName('model-username')[0].innerText = data.val().author;
     });
     postsRef.on('child_removed', function(data) {
-		var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
-		var post = containerElement.getElementsByClassName('post-' + data.key)[0];
-	    post.parentElement.removeChild(post);
+      var post = postsContainer.getElementsByClassName('post-' + data.key)[0];
+      post.parentElement.removeChild(post);
     });
   };
 
-  // Fetching and displaying all posts of each sections.
   fetchPosts(recentPostsRef, templatesList);
 
-  // Keep track of all Firebase refs we are listening to.
   listeningFirebaseRefs.push(recentPostsRef);
 }
 
-/**
- * Writes the user's data to the database.
- */
-// [START basic_write]
 function writeUserData(userId, name, email, imageUrl) {
   firebase.database().ref('users/' + userId).set({
     username: name,
     email: email,
-    profile_picture : imageUrl
+    profile_picture: imageUrl
   });
 }
 // [END basic_write]
@@ -115,7 +99,7 @@ function writeUserData(userId, name, email, imageUrl) {
  */
 function cleanupUi() {
   // Remove all previously displayed posts.
-  templatesList.getElementsByClassName('posts-container')[0].innerHTML = '';
+  postsContainer.innerHTML = '';
 
   // Stop all currently listening Firebase listeners.
   listeningFirebaseRefs.forEach(function(ref) {
@@ -165,8 +149,8 @@ function newPostForCurrentUser(title, text) {
     var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
     // [START_EXCLUDE]
     return writeNewPost(firebase.auth().currentUser.uid, username,
-        firebase.auth().currentUser.photoURL,
-        title, text);
+      firebase.auth().currentUser.photoURL,
+      title, text);
     // [END_EXCLUDE]
   });
   // [END single_value_read]
@@ -202,3 +186,28 @@ window.addEventListener('load', function() {
     }
   };
 }, false);
+
+
+var canvas = document.getElementById("renderCanvas");
+var engine = new BABYLON.Engine(canvas, true);
+var createScene = function() {
+  var scene = new BABYLON.Scene(engine);
+  scene.clearColor = new BABYLON.Color3(0, 1, 0);
+  var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+  camera.setTarget(BABYLON.Vector3.Zero());
+  camera.attachControl(canvas, false);
+  var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+  light.intensity = .5;
+  var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, scene);
+  sphere.position.y = 1;
+  var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
+  return scene;
+
+};
+var scene = createScene();
+engine.runRenderLoop(function() {
+  scene.render();
+});
+window.addEventListener("resize", function() {
+  engine.resize();
+});
