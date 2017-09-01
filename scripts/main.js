@@ -8,12 +8,7 @@ var signInButton = document.getElementById('sign-in-button');
 var signOutButton = document.getElementById('sign-out-button');
 var loginPage = document.getElementById('login-page');
 var mainPage = document.getElementById('main-page');
-var addPost = document.getElementById('add-post');
-var addButton = document.getElementById('add');
 var templatesList = document.getElementById('templates-list');
-var recentMenuButton = document.getElementById('menu-recent');
-var myPostsMenuButton = document.getElementById('menu-my-posts');
-var myTopPostsMenuButton = document.getElementById('menu-my-top-posts');
 var listeningFirebaseRefs = [];
 
 function writeNewPost(uid, username, picture, title, body) {
@@ -177,23 +172,6 @@ function newPostForCurrentUser(title, text) {
   // [END single_value_read]
 }
 
-/**
- * Displays the given section element and changes styling of the given button.
- */
-function showSection(sectionElement, buttonElement) {
-  templatesList.style.display = 'none';
-  addPost.style.display = 'none';
-  recentMenuButton.classList.remove('is-active');
-  addButton.classList.remove('is-active');
-
-  if (sectionElement) {
-    sectionElement.style.display = 'block';
-  }
-  if (buttonElement) {
-    buttonElement.classList.add('is-active');
-  }
-}
-
 // Bindings on load.
 window.addEventListener('load', function() {
   // Bind Sign in button.
@@ -223,15 +201,4 @@ window.addEventListener('load', function() {
       titleInput.value = '';
     }
   };
-
-  // Bind menu buttons.
-  recentMenuButton.onclick = function() {
-    showSection(templatesList, recentMenuButton);
-  };
-  addButton.onclick = function() {
-    showSection(addPost, addButton);
-    messageInput.value = '';
-    titleInput.value = '';
-  };
-  recentMenuButton.onclick();
 }, false);
