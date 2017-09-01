@@ -49,6 +49,16 @@
 
     <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
 
+    <div id="model-upload-panel">
+      Upload Model
+      <br>
+      Title
+      <input type="text" id="file-title" />
+      <input type="file" id="model-upload" name="model-upload" />
+      <h6>File URL:</h6>
+      <span id="linkbox"></span>
+    </div>
+
     <section class="mdl-grid content" id="add-post" style="display:none;z-index:1000;float:left;">
       <!-- Show the add post form -->
       <div class="mdl-cell mdl-cell--12-col mdl-grid">
@@ -86,6 +96,7 @@
   <script src="/__/firebase/3.9.0/firebase-app.js"></script>
   <script src="/__/firebase/3.9.0/firebase-auth.js"></script>
   <script src="/__/firebase/3.9.0/firebase-database.js"></script>
+  <script src="/__/firebase/3.9.0/firebase-storage.js"></script>
   <script src="/__/firebase/init.js"></script>
 
   <script src="scripts/main.js"></script>
