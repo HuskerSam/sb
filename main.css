@@ -56,12 +56,16 @@ html, body {
 .model-item {
   float: left;
   clear: both;
+  width: 100%;
+  border: solid 1px silver;
+  padding: 5px;
+  text-align: center;
 }
 
 #posts-container {
   height: 100%;
   left: 0px;
-  width: 40px;
+  width: 120px;
   overflow-x: hidden;
   overflow-y: auto;
   position:absolute;
