@@ -161,24 +161,35 @@ function handleFileSelect(evt) {
 function initCanvas() {
   var canvas = document.getElementById("renderCanvas");
   var engine = new BABYLON.Engine(canvas, true);
+  var camera;
   var createScene = function() {
     var scene = new BABYLON.Scene(engine);
     scene.clearColor = new BABYLON.Color3(0, 1, 0);
-    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+    camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     camera.attachControl(canvas, false);
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = .5;
-    var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, scene);
-    sphere.position.y = 1;
     var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
     return scene;
 
   };
   var scene = createScene();
-  engine.runRenderLoop(function() {
-    scene.render();
-  });
+  BABYLON.SceneLoader.ImportMesh("King", "", "models.babylon", scene, function (newMeshes) {
+       // Set the target of the camera to the first imported mesh
+       camera.target = newMeshes[0];
+
+       scene.executeWhenReady(function () {
+           // Once the scene is loaded, just register a render loop to render it
+           engine.runRenderLoop(function() {
+               scene.render();
+           });
+       });
+   });
+
+//  engine.runRenderLoop(function() {
+//    scene.render();
+//  });
 }
 
 initCanvas();
