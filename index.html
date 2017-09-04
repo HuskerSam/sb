@@ -51,16 +51,15 @@
 
     <div id="model-upload-panel">
       Upload Model
-      <br>
-      Title
+      <br> Title
       <input type="text" id="file-title" />
       <input type="file" id="model-upload" name="model-upload" />
       <h6>File URL:</h6>
       <span id="linkbox"></span>
     </div>
 
-    <section class="mdl-grid content" id="templates-list">
-      <div id="posts-container">
+    <section class="mdl-grid content" id="models-list">
+      <div id="models-content">
       </div>
     </section>
   </div>
@@ -71,6 +70,8 @@
   <script src="/__/firebase/3.9.0/firebase-storage.js"></script>
   <script src="/__/firebase/init.js"></script>
 
+  <script src="scripts/firebaseutil.js"></script>
+  <script src="scripts/babylonutil.js"></script>
   <script src="scripts/main.js"></script>
 </body>
 
