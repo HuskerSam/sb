@@ -10,6 +10,7 @@ window.addEventListener('load', function() {
     console.log(r);
   });
   */
+  initUploadDialog();
   document.getElementById('sign-in-button').addEventListener('click', function() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
@@ -18,16 +19,6 @@ window.addEventListener('load', function() {
     firebase.auth().signOut();
   });
   firebase.auth().onAuthStateChanged(onAuthStateChanged);
-  document.getElementById('model-upload').addEventListener('change', function(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    var file = evt.target.files[0];
-    var title = document.getElementById('file-title').value.trim();
-    fireUtil.uploadModel(file, title).then(function(result) {
-      document.getElementById('file-title').value = '';
-      evt.target.value = '';
-    });
-  }, false);
 }, false);
 
 function onAuthStateChanged(user) {
@@ -48,4 +39,26 @@ function onAuthStateChanged(user) {
     loginPage.style.display = '';
     mainPage.style.display = 'none';
   }
+}
+
+function initUploadDialog() {
+  var dialog = document.querySelector('dialog');
+  if (! dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+  document.getElementById('upload-button').addEventListener('click', function() {
+    dialog.showModal();
+  });
+  dialog.querySelector('.close').addEventListener('click', function() {
+    dialog.close();
+  });
+  dialog.querySelector('.import').addEventListener('click', function() {
+    var file = document.getElementById('model-upload-file').files[0];
+    var title = document.getElementById('object-id').value.trim();
+    fireUtil.uploadModel(file, title).then(function(result) {
+      document.getElementById('object-id').value = '';
+      document.getElementById('model-upload-file').value = '';
+      dialog.close();
+    });
+  });
 }

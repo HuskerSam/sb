@@ -25,9 +25,7 @@ html, body {
 }
 
 #sign-out-button {
-  position: absolute;
-  top: 5px;
-  right: 10px;
+  float:right;
 }
 
 .model-avatar {
@@ -81,4 +79,15 @@ html, body {
   width: 200px;
   right: 10px;
   top:50px;
+}
+#upload-button {
+  float:right;
+}
+#main-title-bar {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 40px;
 }

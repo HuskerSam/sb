@@ -46,17 +46,29 @@
 
   <canvas id="renderCanvas"></canvas>
   <div id="main-page" style="display:none;">
-
-    <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
-
-    <div id="model-upload-panel">
-      Upload Model
-      <br> Title
-      <input type="text" id="file-title" />
-      <input type="file" id="model-upload" name="model-upload" />
-      <h6>File URL:</h6>
-      <span id="linkbox"></span>
+    <div id="main-title-bar">
+      <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
+      <button id="upload-button">Upload</button>
     </div>
+
+    <dialog class="mdl-dialog">
+      <h4 class="mdl-dialog__title">Upload Mesh From .babylon</h4>
+      <div class="mdl-dialog__content">
+        <div class="mdl-textfield mdl-js-textfield">
+          <label class="mdl-textfield__label" for="object-id">Id</label>
+          <input type="text" id="object-id" class="mdl-textfield__input" />
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+          <label class="mdl-textfield__label" for="object-id">Type</label>
+          <input type="text" id="object-id" class="mdl-textfield__input" value="Mesh" />
+        </div>
+        <input type="file" id="model-upload-file" />
+      </div>
+      <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button import">Import</button>
+        <button type="button" class="mdl-button close">Cancel</button>
+      </div>
+    </dialog>
 
     <section class="mdl-grid content" id="models-list">
       <div id="models-content">
