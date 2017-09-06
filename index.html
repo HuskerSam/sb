@@ -29,10 +29,15 @@
   <!-- Material Design Lite -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.9/dialog-polyfill.min.css">
+
   <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.9/dialog-polyfill.min.js"></script>
   <script src="https://cdn.babylonjs.com/babylon.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handjs/1.3.11/hand.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
+
   <link rel="stylesheet" href="main.css">
 </head>
 
@@ -51,18 +56,20 @@
       <button id="upload-button">Upload</button>
     </div>
 
-    <dialog class="mdl-dialog">
+    <section class="mdl-grid content" id="models-list">
+      <div id="models-content">
+      </div>
+    </section>
+
+    <dialog class="mdl-dialog" id="model-upload-dialog">
       <h4 class="mdl-dialog__title">Upload Mesh From .babylon</h4>
       <div class="mdl-dialog__content">
         <div class="mdl-textfield mdl-js-textfield">
           <label class="mdl-textfield__label" for="object-id">Id</label>
           <input type="text" id="object-id" class="mdl-textfield__input" />
         </div>
-        <div class="mdl-textfield mdl-js-textfield">
-          <label class="mdl-textfield__label" for="object-id">Type</label>
-          <input type="text" id="object-id" class="mdl-textfield__input" value="Mesh" />
-        </div>
-        <input type="file" id="model-upload-file" />
+        <input type="file" id="model-upload-file" name="model-upload-file" />
+        <div id="model-upload-progress" style="display:none;margin-top:10px;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
       </div>
       <div class="mdl-dialog__actions">
         <button type="button" class="mdl-button import">Import</button>
@@ -70,10 +77,16 @@
       </div>
     </dialog>
 
-    <section class="mdl-grid content" id="models-list">
-      <div id="models-content">
+    <dialog class="mdl-dialog" id="mesh-details-dialog">
+      <h4 class="mdl-dialog__title">Mesh Details</h4>
+      <div class="mdl-dialog__content">
+        <div id="mesh-details-json"></div>
       </div>
-    </section>
+      <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button import">Import</button>
+        <button type="button" class="mdl-button close">Cancel</button>
+      </div>
+    </dialog>
   </div>
 
   <script src="/__/firebase/3.9.0/firebase-app.js"></script>
@@ -84,6 +97,7 @@
 
   <script src="scripts/firebaseutil.js"></script>
   <script src="scripts/babylonutil.js"></script>
+  <script src="scripts/meshesutil.js"></script>
   <script src="scripts/main.js"></script>
 </body>
 

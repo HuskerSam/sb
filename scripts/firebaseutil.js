@@ -37,7 +37,8 @@ fireUtil.createModelDOM = function(data) {
     '<div class="model-title"></div>' +
     '<div class="model-avatar"></div>' +
     '<div class="model-username"></div>' +
-    '<button class="model-remove">Remove</button>'
+    '<button class="model-remove">Remove</button>' +
+    '<button class="model-details">Details</button>' +
   '</div>';
 
   var outer = document.createElement('div');
@@ -53,6 +54,10 @@ fireUtil.createModelDOM = function(data) {
     updates['/modelslib/' + data.key] = null;
     firebase.database().ref().update(updates).then(function(e) {});
   });
+  div.getElementsByClassName('model-details')[0].addEventListener('click', function(e) {
+    meshes.showDetailsPopup(data);
+  });
+
   return div;
 };
 fireUtil.onAuthStateChanged = function(user, domModelContainer) {
@@ -72,24 +77,20 @@ fireUtil.onAuthStateChanged = function(user, domModelContainer) {
     fireUtil.currentUser = {};
   }
 };
-fireUtil.uploadModel = function(file, title) {
+fireUtil.uploadModel = function(modelString, title) {
   return new Promise(function(resolve, reject) {
+    var modelId = firebase.database().ref().child('modelslib').push().key;
     var storageRef = firebase.storage().ref();
     var auth = firebase.auth();
-    var metadata = {
-      'contentType': file.type
-    };
-    storageRef.child('images/' + file.name).put(file, metadata).then(function(snapshot) {
-      var newPostKey = firebase.database().ref().child('modelslib').push().key;
+    storageRef.child('images/' + modelId + '/file.babylon').putString(modelString).then(function(snapshot) {
       if (!title)
         title = new Date().toISOString();
 
-      fireUtil.updateModel(newPostKey, {
+      fireUtil.updateModel(modelId, {
         title: title,
         url: snapshot.downloadURL,
         type: 'url',
         size: snapshot.totalBytes
-    //    ,metaData: snapshot.metadata
       }).then(function(e) {
         resolve(e);
       })
