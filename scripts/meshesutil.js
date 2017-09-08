@@ -10,6 +10,8 @@ meshes.init = function() {
   this.dialogUploadButton = this.dialog.querySelector('.import');
   this.dialogProgress = document.getElementById('model-upload-progress');
   this.meshDetailEditor = ace.edit("mesh-details-json");
+  this.meshDetailsSave = document.querySelector('.save-details');
+  this.meshDetailsClose = document.querySelector('.close-details');
 
   var me = this;
   if (!this.dialog.showModal) {
@@ -26,6 +28,17 @@ meshes.init = function() {
   });
   this.dialogCloseUpload.addEventListener('click', function() {
     me.dialog.close();
+  });
+  this.meshDetailsClose.addEventListener('click', function() {
+    me.meshDetailsDialog.close();
+  });
+  this.meshDetailsClose.addEventListener('click', function() {
+    me.meshDetailsDialog.close();
+  });
+  this.meshDetailsSave.addEventListener('click', function() {
+
+
+    me.meshDetailsDialog.close();
   });
   this.dialogUploadButton.addEventListener('click', function() {
     var file = me.fileUpload.files[0];

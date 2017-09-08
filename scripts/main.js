@@ -7,6 +7,7 @@ window.addEventListener('load', function() {
   babyUtil.initCanvas("renderCanvas");
 
   meshes.init();
+  meshespopup.init();
   document.getElementById('sign-in-button').addEventListener('click', function() {
     var provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
