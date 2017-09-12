@@ -1,9 +1,6 @@
 'use strict';
 var babyUtil = {};
 
-window.addEventListener("resize", function() {
-  engine.resize();
-});
 window.addEventListener('load', function() {
   babyUtil = new BabylonHelper("renderCanvas");
 

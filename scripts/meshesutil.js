@@ -32,9 +32,6 @@ meshes.init = function() {
   this.meshDetailsClose.addEventListener('click', function() {
     me.meshDetailsDialog.close();
   });
-  this.meshDetailsClose.addEventListener('click', function() {
-    me.meshDetailsDialog.close();
-  });
   this.meshDetailsSave.addEventListener('click', function() {
 
 
