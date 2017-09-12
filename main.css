@@ -110,11 +110,23 @@ table {
   border-color: collapse;
 }
 
-#drag-tab-height {
-  position:absolute;
-  left:48.5%;
-  width: 5%;
-  top: -5px;
-  z-index: 10000;
+#drag-tab-height, #drag-tab-rotate {
   background: transparent;
+}
+#drag-button-bar {
+  position:absolute;
+  display:inline-block;
+  left: 1%;
+  width: 5%;
+  top: -10px;
+  z-index: 10000;
+}
+#meshDetailCanvas {
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  z-index: -1;
+}
+#portrait-upper-cell {
+  position: relative;
 }

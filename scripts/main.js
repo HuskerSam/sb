@@ -1,10 +1,11 @@
 'use strict';
+var babyUtil = {};
 
 window.addEventListener("resize", function() {
   engine.resize();
 });
 window.addEventListener('load', function() {
-  babyUtil.initCanvas("renderCanvas");
+  babyUtil = new BabylonHelper("renderCanvas");
 
   meshes.init();
   meshespopup.init();
