@@ -130,3 +130,7 @@ table {
 #portrait-upper-cell {
   position: relative;
 }
+#details-content-div {
+  position: relative;
+  height: 100%;
+}

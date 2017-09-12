@@ -85,10 +85,10 @@
           </td>
         </tr>
         <tr id="landscape-row" style="height:100%;display:none;">
-          <td id="landscape-left-cell" style="width:50%;">
+          <td id="landscape-left-cell" style="width:100%;">
 
           </td>
-          <td id="landscape-right-cell" style="width:50%;">
+          <td id="landscape-right-cell" style="width:200px;">
 
           </td>
         </tr>
@@ -99,16 +99,16 @@
         </tr>
         <tr id="portrait-lower-row">
           <td id="portrait-lower-cell" colspan="2">
-            <div id="details-content-div" style="position:relative;">
+            <div id="details-content-div">
               <div id="drag-button-bar">
                 <button id="drag-tab-height">=</button>
                 <button id="drag-tab-rotate">+</button>
               </div>
               <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" id="meshes-details-tabs" style="height:200px">
                 <div class="mdl-tabs__tab-bar">
-                  <a href="#mesh-details-panel" class="mdl-tabs__tab is-active">Details</a>
-                  <a href="#mesh-json-panel" class="mdl-tabs__tab">JSON</a>
-                  <a href="#mesh-babylon-panel" class="mdl-tabs__tab">Babylon</a>
+                  <a href="#mesh-details-panel" id="mesh-detail-tab-button" class="mdl-tabs__tab is-active">D</a>
+                  <a href="#mesh-json-panel" id="mesh-json-tab-button" class="mdl-tabs__tab">J</a>
+                  <a href="#mesh-babylon-panel" id="mesh-babylon-tab-button" class="mdl-tabs__tab">B</a>
                 </div>
 
                 <div class="mdl-tabs__panel is-active" id="mesh-details-panel">
