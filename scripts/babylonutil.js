@@ -2,20 +2,22 @@ class BabylonHelper {
   constructor(canvasName) {
     this.canvas = document.getElementById(canvasName);
     this.engine = new BABYLON.Engine(this.canvas, true);
-    //this.camera;
+    this.engine.enableOfflineSupport = false;
 
-    this.scene = this.createDefaultScene();
     var me = this;
+    window.addEventListener("resize", function() {
+      me.engine.resize();
+    });
+  }
+  setScene(scene) {
+    this.scene = scene;
+    var me = this;
+    this.engine.stopRenderLoop();
     this.scene.executeWhenReady(function() {
       me.engine.runRenderLoop(function() {
         me.scene.render();
       });
     });
-
-    window.addEventListener("resize", function() {
-      me.engine.resize();
-    });
-    me.engine.resize();
   }
   createDefaultScene() {
     var scene = new BABYLON.Scene(this.engine);
@@ -38,9 +40,9 @@ class BabylonHelper {
   serializeMesh(meshName, path, fileName) {
     var me = this;
     return new Promise(function(resolve, reject) {
-      var scene = new BABYLON.Scene(this.engine);
+      var scene = new BABYLON.Scene(me.engine);
       me.loadMesh(meshName, path, fileName, scene).then(function(newMesh) {
-        return resolve(JSON.stringify(BABYLON.SceneSerializer.Serialize(scene)));
+        return resolve(BABYLON.SceneSerializer.Serialize(scene));
       });
     });
   }

@@ -55,7 +55,7 @@ fireUtil.createModelDOM = function(data) {
     firebase.database().ref().update(updates).then(function(e) {});
   });
   div.getElementsByClassName('model-details')[0].addEventListener('click', function(e) {
-    meshes.showDetailsPopup(data);
+    meshespopup.show(data);
   });
 
   return div;

@@ -3,6 +3,7 @@ var babyUtil = {};
 
 window.addEventListener('load', function() {
   babyUtil = new BabylonHelper("renderCanvas");
+  babyUtil.setScene(babyUtil.createDefaultScene());
 
   meshes.init();
   meshespopup.init();

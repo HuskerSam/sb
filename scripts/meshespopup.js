@@ -1,6 +1,6 @@
 var meshespopup = {};
-
 meshespopup.init = function() {
+  var me = this;
   this.dragButton = document.getElementById('drag-tab-height');
   this.meshesTab = document.getElementById('meshes-details-tabs');
   this.rotateButton = document.getElementById('drag-tab-rotate');
@@ -14,18 +14,43 @@ meshespopup.init = function() {
   this.meshCanvas = document.getElementById('meshDetailCanvas');
   this.detailsContainer = document.getElementById('details-content-div');
   this.babyHelper = new BabylonHelper('meshDetailCanvas');
+  this.scene = this.babyHelper.createDefaultScene();
+  this.babyHelper.setScene(this.scene);
+
   this.detailTabButton = document.getElementById('mesh-detail-tab-button');
   this.jsonTabButton = document.getElementById('mesh-json-tab-button');
   this.babyTabButton = document.getElementById('mesh-babylon-tab-button');
+  this.meshDetailsDialog = document.getElementById('mesh-details-dialog');
+  this.meshDetailEditor = ace.edit("mesh-details-json");
+  this.meshDetailsSave = document.querySelector('.save-details');
+  this.meshDetailsClose = document.querySelector('.close-details');
+  this.meshData = {};
+  this.basePath = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
+  this.setEditorOptions(this.meshDetailEditor);
 
   this.tabHeight = 200;
   this.tabWidth = 200;
   this.tabRotate = false;
 
+  if (!this.meshDetailsDialog.showModal) {
+    dialogPolyfill.registerDialog(this.meshDetailsDialog);
+  }
+
   this.setTabDragLimits();
   this.dragButton.addEventListener('mousedown', this.resizeMouseDown, false);
   this.rotateButton.addEventListener('click', this.rotateTab);
   window.addEventListener('resize', this.setTabDragLimits, false);
+
+
+  this.meshDetailsClose.addEventListener('click', function() {
+    me.meshDetailsDialog.close();
+  });
+
+  this.meshDetailsSave.addEventListener('click', function() {
+
+
+    me.meshDetailsDialog.close();
+  });
 };
 meshespopup.rotateTab = function(e) {
   if (meshespopup.tabRotate) {
@@ -88,4 +113,22 @@ meshespopup.resizeMouseMove = function(e) {
 meshespopup.resizeMouseUp = function(e) {
   window.removeEventListener('mousemove', meshespopup.resizeMouseMove, false);
   window.removeEventListener('mouseup', meshespopup.resizeMouseUp, false);
+};
+meshespopup.show = function(meshData) {
+  this.meshData = meshData.val();
+  this.babyHelper.loadMesh(this.meshData.title, this.basePath,
+    this.meshData.url.replace(this.basePath, ''),
+    this.scene).then(function (m) {
+
+    });
+  this.meshDetailsDialog.showModal();
+  this.babyHelper.engine.resize();
+};
+meshespopup.setEditorOptions = function(e) {
+  e.setTheme("ace/theme/textmate");
+  e.getSession().setMode("ace/mode/json");
+  e.setOptions({
+    fontFamily: '"Lucida Console",Monaco,monospace',
+    fontSize: '9pt'
+  });
 };
