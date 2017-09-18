@@ -27,7 +27,7 @@ class BabylonHelper {
     this.camera.attachControl(this.canvas, false);
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = .5;
-    var ground = BABYLON.Mesh.CreateGround("ground1", 5, 5, 2, scene);
+  //  var ground = BABYLON.Mesh.CreateGround("ground1", 5, 5, 2, scene);
     return scene;
   }
   loadMesh(meshName, path, fileName, scene) {

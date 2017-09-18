@@ -1,6 +1,13 @@
 var meshespopup = {};
 meshespopup.init = function() {
-  var me = this;
+  let me = this;
+
+  this.uiHelper = new UIHelper();
+  this.babyHelper = new BabylonHelper('meshDetailCanvas');
+  this.meshCanvas = document.getElementById('meshDetailCanvas');
+  this.scene = this.babyHelper.createDefaultScene();
+  this.babyHelper.setScene(this.scene);
+
   this.dragButton = document.getElementById('drag-tab-height');
   this.meshesTab = document.getElementById('meshes-details-tabs');
   this.rotateButton = document.getElementById('drag-tab-rotate');
@@ -11,22 +18,29 @@ meshespopup.init = function() {
   this.landscapeRow = document.getElementById('landscape-row');
   this.landscapeLeftCell = document.getElementById('landscape-left-cell');
   this.landscapeRightCell = document.getElementById('landscape-right-cell');
-  this.meshCanvas = document.getElementById('meshDetailCanvas');
   this.detailsContainer = document.getElementById('details-content-div');
-  this.babyHelper = new BabylonHelper('meshDetailCanvas');
-  this.scene = this.babyHelper.createDefaultScene();
-  this.babyHelper.setScene(this.scene);
+  this.meshDetailsScaleX = document.getElementById('mesh-details-scale-x');
+  this.meshDetailsScaleY = document.getElementById('mesh-details-scale-y');
+  this.meshDetailsScaleZ = document.getElementById('mesh-details-scale-z');
+  this.meshDetailsPosX = document.getElementById('mesh-details-pos-x');
+  this.meshDetailsPosY = document.getElementById('mesh-details-pos-y');
+  this.meshDetailsPosZ = document.getElementById('mesh-details-pos-z');
+  this.meshDetailsRotateX = document.getElementById('mesh-details-rotate-x');
+  this.meshDetailsRotateY = document.getElementById('mesh-details-rotate-y');
+  this.meshDetailsRotateZ = document.getElementById('mesh-details-rotate-z');
+  this.meshObject = {};
 
   this.detailTabButton = document.getElementById('mesh-detail-tab-button');
   this.jsonTabButton = document.getElementById('mesh-json-tab-button');
   this.babyTabButton = document.getElementById('mesh-babylon-tab-button');
   this.meshDetailsDialog = document.getElementById('mesh-details-dialog');
-  this.meshDetailEditor = ace.edit("mesh-details-json");
+  this.meshDetailEditor = this.uiHelper.editor("mesh-details-json");
+  this.babyDetailEditor = this.uiHelper.editor("mesh-babylon-json");
   this.meshDetailsSave = document.querySelector('.save-details');
   this.meshDetailsClose = document.querySelector('.close-details');
+  this.meshDetailsApply = document.querySelector('.apply-details');
   this.meshData = {};
   this.basePath = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
-  this.setEditorOptions(this.meshDetailEditor);
 
   this.tabHeight = 200;
   this.tabWidth = 200;
@@ -42,15 +56,58 @@ meshespopup.init = function() {
   window.addEventListener('resize', this.setTabDragLimits, false);
 
 
-  this.meshDetailsClose.addEventListener('click', function() {
-    me.meshDetailsDialog.close();
-  });
+  this.meshDetailsClose.addEventListener('click', () => me.meshDetailsDialog.close());
+  this.meshDetailsSave.addEventListener('click', () => me.meshDetailsDialog.close());
+  this.meshDetailsApply.addEventListener('click', () => me.commit());
 
-  this.meshDetailsSave.addEventListener('click', function() {
+  this.meshDetailsScaleX.addEventListener('change', this.meshDetailsChange, false);
+  this.meshDetailsScaleY.addEventListener('change', this.meshDetailsChange, false);
+  this.meshDetailsScaleZ.addEventListener('change', this.meshDetailsChange, false);
 
+  this.meshDetailsPosX.addEventListener('change', this.meshDetailsChange, false);
+  this.meshDetailsPosY.addEventListener('change', this.meshDetailsChange, false);
+  this.meshDetailsPosZ.addEventListener('change', this.meshDetailsChange, false);
 
-    me.meshDetailsDialog.close();
-  });
+  this.meshDetailsRotateX.addEventListener('change', this.meshDetailsChange, false);
+  this.meshDetailsRotateY.addEventListener('change', this.meshDetailsChange, false);
+  this.meshDetailsRotateZ.addEventListener('change', this.meshDetailsChange, false);
+};
+meshespopup.commit = function() {
+
+};
+meshespopup.meshDetailsChange = function(e) {
+  meshespopup.meshObject.scaling.y = meshespopup.meshDetailsScaleY.value;
+  meshespopup.meshObject.scaling.z = meshespopup.meshDetailsScaleZ.value;
+
+  meshespopup.meshObject.position.x = meshespopup.meshDetailsPosX.value;
+  meshespopup.meshObject.position.y = meshespopup.meshDetailsPosY.value;
+  meshespopup.meshObject.position.z = meshespopup.meshDetailsPosZ.value;
+
+  if (meshespopup.meshDetailsScaleX.value != this.meshData.simpleUIDetails.scaleX) {
+    this.meshData.simpleUIDetails.scaleX = meshespopup.meshDetailsScaleX.value;
+    meshespopup.meshObject.scaling.x = meshespopup.meshDetailsScaleX.value;
+  }
+  if (meshespopup.meshDetailsScaleY.value != this.meshData.simpleUIDetails.scaleY) {
+    this.meshData.simpleUIDetails.scaleY = meshespopup.meshDetailsScaleY.value;
+    meshespopup.meshObject.scaling.y = meshespopup.meshDetailsScaleY.value;
+  }
+  if (meshespopup.meshDetailsScaleZ.value != this.meshData.simpleUIDetails.scaleZ) {
+    this.meshData.simpleUIDetails.scaleZ = meshespopup.meshDetailsScaleZ.value;
+    meshespopup.meshObject.scaling.z = meshespopup.meshDetailsScaleZ.value;
+  }
+
+  //meshespopup.meshDetailsPosX.value = this.meshData.simpleUIDetails.positionX;
+  //meshespopup.meshDetailsPosY.value = this.meshData.simpleUIDetails.positionY;
+  //meshespopup.meshDetailsPosZ.value = this.meshData.simpleUIDetails.positionZ;
+
+  //  meshespopup.meshDetailsRotateX.value = this.meshData.simpleUIDetails.rotateX;
+  //  meshespopup.meshDetailsRotateY.value = this.meshData.simpleUIDetails.rotateY;
+  //  meshespopup.meshDetailsRotateZ.value = this.meshData.simpleUIDetails.rotateZ;
+
+  //  meshespopup.meshObject.rotate(BABYLON.Axis.X, meshespopup.meshDetailsRotateX.value, BABYLON.Space.LOCAL);
+  //  meshespopup.meshObject.rotate.x = meshespopup.meshDetailsRotateX.value;
+  //  meshespopup.meshObject.rotate.y = meshespopup.meshDetailsRotateY.value;
+  //  meshespopup.meshObject.rotate.z = meshespopup.meshDetailsRotateZ.value;
 };
 meshespopup.rotateTab = function(e) {
   if (meshespopup.tabRotate) {
@@ -115,20 +172,34 @@ meshespopup.resizeMouseUp = function(e) {
   window.removeEventListener('mouseup', meshespopup.resizeMouseUp, false);
 };
 meshespopup.show = function(meshData) {
+  let me = this;
   this.meshData = meshData.val();
   this.babyHelper.loadMesh(this.meshData.title, this.basePath,
     this.meshData.url.replace(this.basePath, ''),
-    this.scene).then(function (m) {
-
-    });
-  this.meshDetailsDialog.showModal();
-  this.babyHelper.engine.resize();
-};
-meshespopup.setEditorOptions = function(e) {
-  e.setTheme("ace/theme/textmate");
-  e.getSession().setMode("ace/mode/json");
-  e.setOptions({
-    fontFamily: '"Lucida Console",Monaco,monospace',
-    fontSize: '9pt'
+    this.scene).then(function(m) {
+    me.meshObject = m;
+    let s = me.uiHelper.stringify(m);
+    me.babyDetailEditor.setValue(s);
+    me.uiHelper.beautify(me.babyDetailEditor);
+    me.loadUIData();
   });
+  this.meshDetailsDialog.showModal();
+  this.meshDetailEditor.setValue(JSON.stringify(this.meshData));
+  this.uiHelper.beautify(me.meshDetailEditor);
+
+  this.babyHelper.engine.resize();
+  this.detailTabButton.click();
+};
+meshespopup.loadUIData = function() {
+  meshespopup.meshDetailsScaleX.value = this.meshData.simpleUIDetails.scaleX;
+  meshespopup.meshDetailsScaleY.value = this.meshData.simpleUIDetails.scaleY;
+  meshespopup.meshDetailsScaleZ.value = this.meshData.simpleUIDetails.scaleZ;
+
+  meshespopup.meshDetailsPosX.value = this.meshData.simpleUIDetails.positionX;
+  meshespopup.meshDetailsPosY.value = this.meshData.simpleUIDetails.positionY;
+  meshespopup.meshDetailsPosZ.value = this.meshData.simpleUIDetails.positionZ;
+
+  meshespopup.meshDetailsRotateX.value = this.meshData.simpleUIDetails.rotateX;
+  meshespopup.meshDetailsRotateY.value = this.meshData.simpleUIDetails.rotateY;
+  meshespopup.meshDetailsRotateZ.value = this.meshData.simpleUIDetails.rotateZ;
 };

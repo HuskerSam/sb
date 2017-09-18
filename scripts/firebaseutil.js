@@ -6,7 +6,7 @@ fireUtil.listeningFirebaseRefs = [];
 fireUtil.userWriteData = function() {
   firebase.database().ref('users/' + this.currentUser.uid).set(this.currentUser.toJSON());
 };
-fireUtil.updateModel = function(id, data) {
+fireUtil.setModel = function(id, data) {
   var updates = {};
   updates['/modelslib/' + id] = data;
   return firebase.database().ref().update(updates);
@@ -50,6 +50,8 @@ fireUtil.createModelDOM = function(data) {
   div.getElementsByClassName('model-avatar')[0].style.backgroundImage = 'url("' +
     (data.val().authorPic || './silhouette.jpg') + '")';
   div.getElementsByClassName('model-remove')[0].addEventListener('click', function(e) {
+    if (! confirm('Are you sure you want to delete this model?'))
+      return ;
     var updates = {};
     updates['/modelslib/' + data.key] = null;
     firebase.database().ref().update(updates).then(function(e) {});
@@ -86,12 +88,13 @@ fireUtil.uploadModel = function(modelString, title) {
       if (!title)
         title = new Date().toISOString();
 
-      fireUtil.updateModel(modelId, {
-        title: title,
-        url: snapshot.downloadURL,
-        type: 'url',
-        size: snapshot.totalBytes
-      }).then(function(e) {
+      var meshData = JSON.parse(JSON.stringify(defaultMeshData));
+      meshData.title = title;
+      meshData.url = snapshot.downloadURL;
+      meshData.type = 'url';
+      meshData.size = snapshot.totalBytes;
+
+      fireUtil.setModel(modelId, meshData).then(function(e) {
         resolve(e);
       })
     }).catch(function(error) {

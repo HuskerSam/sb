@@ -37,6 +37,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handjs/1.3.11/hand.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js" type="text/javascript" charset="utf-8"></script>
 
   <link rel="stylesheet" href="main.css">
 </head>
@@ -112,13 +113,30 @@
                 </div>
 
                 <div class="mdl-tabs__panel is-active" id="mesh-details-panel">
-                  X: Y: Z: ScaleX: ScaleY: ScaleZ: RotateX: RotateY: RotateZ:
+                  <div style="float:left;">
+                    PosX: <input type="text" id="mesh-details-pos-x" value="0" />
+                    <br> PosY: <input type="text" id="mesh-details-pos-y" value="0" />
+                    <br> PosZ: <input type="text" id="mesh-details-pos-z" value="0" />
+                    <br /> ScaleX: <input type="text" id="mesh-details-scale-x" value="1" />
+                    <br> ScaleY: <input type="text" id="mesh-details-scale-y" value="1" />
+                    <br> ScaleZ: <input type="text" id="mesh-details-scale-z" value="1" />
+                    <br />
+                  </div>
+                  <div>
+                    RotateX:
+                    <input type="text" id="mesh-details-rotate-x" value="0" />
+                    <br>
+                    RotateY:
+                    <input type="text" id="mesh-details-rotate-y" value="0" />
+                    <br>
+                    RotateZ:
+                    <input type="text" id="mesh-details-rotate-z" value="0" />
+                  </div>
                 </div>
-                <div class="mdl-tabs__panel is-active" id="mesh-json-panel">
+                <div class="mdl-tabs__panel is-active" id="mesh-json-panel" style="height:100%;">
                   <div id="mesh-details-json" style="width:100%;height:100%;"></div>
                 </div>
-                <div class="mdl-tabs__panel is-active" id="mesh-babylon-panel">
-
+                <div class="mdl-tabs__panel is-active" id="mesh-babylon-panel" style="height:100%;">
                   <div id="mesh-babylon-json" style="width:100%;height:100%;"></div>
                 </div>
               </div>
@@ -127,6 +145,7 @@
         </tr>
         <tr>
           <td style="padding-bottom:20px;text-align:right;" colspan="2">
+            <button type="button" class="mdl-button apply-details">Apply</button>
             <button type="button" class="mdl-button save-details">Save</button>
             <button type="button" class="mdl-button close-details">Cancel</button>
           </td>
@@ -143,6 +162,7 @@
 
   <script src="scripts/firebaseutil.js"></script>
   <script src="scripts/babylonutil.js"></script>
+  <script src="scripts/uiutil.js"></script>
   <script src="scripts/meshesutil.js"></script>
   <script src="scripts/meshespopup.js"></script>
   <script src="scripts/main.js"></script>
