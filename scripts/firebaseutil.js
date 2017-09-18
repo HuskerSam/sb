@@ -20,7 +20,7 @@ fireUtil.initModelList = function() {
     me.domModelContainer.insertBefore(me.createModelDOM(data), me.domModelContainer.firstChild);
   });
   modelsRef.on('child_changed', function(data) {
-    var div = me.domModelContainer.getElementsByClassName('post-' + data.key)[0];
+    var div = document.getElementById('model-' + data.key);
     div.getElementsByClassName('model-title')[0].innerText = data.val().title;
     div.getElementsByClassName('model-username')[0].innerText = data.val().author;
   });
@@ -39,7 +39,7 @@ fireUtil.createModelDOM = function(data) {
     '<div class="model-username"></div>' +
     '<button class="model-remove">Remove</button>' +
     '<button class="model-details">Details</button>' +
-  '</div>';
+    '</div>';
 
   var outer = document.createElement('div');
   outer.innerHTML = html;
@@ -50,8 +50,8 @@ fireUtil.createModelDOM = function(data) {
   div.getElementsByClassName('model-avatar')[0].style.backgroundImage = 'url("' +
     (data.val().authorPic || './silhouette.jpg') + '")';
   div.getElementsByClassName('model-remove')[0].addEventListener('click', function(e) {
-    if (! confirm('Are you sure you want to delete this model?'))
-      return ;
+    if (!confirm('Are you sure you want to delete this model?'))
+      return;
     var updates = {};
     updates['/modelslib/' + data.key] = null;
     firebase.database().ref().update(updates).then(function(e) {});
@@ -79,12 +79,12 @@ fireUtil.onAuthStateChanged = function(user, domModelContainer) {
     fireUtil.currentUser = {};
   }
 };
-fireUtil.uploadModel = function(modelString, title) {
+fireUtil.newModel = function(modelString, title) {
+  var me = this;
   return new Promise(function(resolve, reject) {
     var modelId = firebase.database().ref().child('modelslib').push().key;
-    var storageRef = firebase.storage().ref();
-    var auth = firebase.auth();
-    storageRef.child('images/' + modelId + '/file.babylon').putString(modelString).then(function(snapshot) {
+
+    me.uploadData(modelId, modelString, 'file.babylon').then(function(snapshot) {
       if (!title)
         title = new Date().toISOString();
 
@@ -97,6 +97,17 @@ fireUtil.uploadModel = function(modelString, title) {
       fireUtil.setModel(modelId, meshData).then(function(e) {
         resolve(e);
       })
+    }).catch(function(error) {
+      reject(error);
+    });
+  });
+};
+fireUtil.uploadData = function(id, dataString, filename) {
+  return new Promise(function(resolve, reject) {
+    var storageRef = firebase.storage().ref();
+    var auth = firebase.auth();
+    storageRef.child('images/' + id + '/' + filename).putString(dataString).then(function(snapshot) {
+      resolve(snapshot);
     }).catch(function(error) {
       reject(error);
     });

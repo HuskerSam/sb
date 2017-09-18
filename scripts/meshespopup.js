@@ -11,6 +11,8 @@ meshespopup.init = function() {
   this.dragButton = document.getElementById('drag-tab-height');
   this.meshesTab = document.getElementById('meshes-details-tabs');
   this.rotateButton = document.getElementById('drag-tab-rotate');
+  this.dialogButtonBar = document.getElementById('mesh-dialog-button-bar');
+  this.dialogProgressBar = document.getElementById('mesh-apply-progress');
   this.portraitUpperRow = document.getElementById('portrait-upper-row');
   this.portraitLowerRow = document.getElementById('portrait-lower-row');
   this.portraitUpperCell = document.getElementById('portrait-upper-cell');
@@ -73,9 +75,22 @@ meshespopup.init = function() {
   this.meshDetailsRotateZ.addEventListener('change', this.meshDetailsChange, false);
 };
 meshespopup.commit = function() {
-
+  this.dialogButtonBar.style.display = 'none';
+  this.dialogProgressBar.style.display = '';
+  var me = this;
+  var meshJSON = BABYLON.SceneSerializer.Serialize(me.scene);
+  fireUtil.uploadData(me.meshId, JSON.stringify(meshJSON), 'file.babylon').then(function(uploadResult) {
+    me.meshData.url = uploadResult.downloadURL;
+    fireUtil.setModel(me.meshId, me.meshData).then(function(dataResult) {
+      me.dialogButtonBar.style.display = '';
+      me.dialogProgressBar.style.display = 'none';
+    });
+  }).catch(function(error) {
+    console.log(error);
+  });
 };
 meshespopup.meshDetailsChange = function(e) {
+  meshespopup.meshObject.scaling.x = meshespopup.meshDetailsScaleX.value;
   meshespopup.meshObject.scaling.y = meshespopup.meshDetailsScaleY.value;
   meshespopup.meshObject.scaling.z = meshespopup.meshDetailsScaleZ.value;
 
@@ -83,32 +98,22 @@ meshespopup.meshDetailsChange = function(e) {
   meshespopup.meshObject.position.y = meshespopup.meshDetailsPosY.value;
   meshespopup.meshObject.position.z = meshespopup.meshDetailsPosZ.value;
 
-  if (meshespopup.meshDetailsScaleX.value != this.meshData.simpleUIDetails.scaleX) {
-    this.meshData.simpleUIDetails.scaleX = meshespopup.meshDetailsScaleX.value;
-    meshespopup.meshObject.scaling.x = meshespopup.meshDetailsScaleX.value;
-  }
-  if (meshespopup.meshDetailsScaleY.value != this.meshData.simpleUIDetails.scaleY) {
-    this.meshData.simpleUIDetails.scaleY = meshespopup.meshDetailsScaleY.value;
-    meshespopup.meshObject.scaling.y = meshespopup.meshDetailsScaleY.value;
-  }
-  if (meshespopup.meshDetailsScaleZ.value != this.meshData.simpleUIDetails.scaleZ) {
-    this.meshData.simpleUIDetails.scaleZ = meshespopup.meshDetailsScaleZ.value;
-    meshespopup.meshObject.scaling.z = meshespopup.meshDetailsScaleZ.value;
-  }
+  meshespopup.meshData.simpleUIDetails.scaleX = meshespopup.meshDetailsScaleX.value;
+  meshespopup.meshData.simpleUIDetails.scaleY = meshespopup.meshDetailsScaleY.value;
+  meshespopup.meshData.simpleUIDetails.scaleZ = meshespopup.meshDetailsScaleZ.value;
 
-  //meshespopup.meshDetailsPosX.value = this.meshData.simpleUIDetails.positionX;
-  //meshespopup.meshDetailsPosY.value = this.meshData.simpleUIDetails.positionY;
-  //meshespopup.meshDetailsPosZ.value = this.meshData.simpleUIDetails.positionZ;
+  //  meshespopup.meshObject.rotate(BABYLON.Axis.X,30, BABYLON.Space.LOCAL);
 
-  //  meshespopup.meshDetailsRotateX.value = this.meshData.simpleUIDetails.rotateX;
-  //  meshespopup.meshDetailsRotateY.value = this.meshData.simpleUIDetails.rotateY;
-  //  meshespopup.meshDetailsRotateZ.value = this.meshData.simpleUIDetails.rotateZ;
-
-  //  meshespopup.meshObject.rotate(BABYLON.Axis.X, meshespopup.meshDetailsRotateX.value, BABYLON.Space.LOCAL);
-  //  meshespopup.meshObject.rotate.x = meshespopup.meshDetailsRotateX.value;
-  //  meshespopup.meshObject.rotate.y = meshespopup.meshDetailsRotateY.value;
-  //  meshespopup.meshObject.rotate.z = meshespopup.meshDetailsRotateZ.value;
 };
+
+//  meshespopup.meshDetailsRotateX.value = this.meshData.simpleUIDetails.rotateX;
+//  meshespopup.meshDetailsRotateY.value = this.meshData.simpleUIDetails.rotateY;
+//  meshespopup.meshDetailsRotateZ.value = this.meshData.simpleUIDetails.rotateZ;
+
+//  meshespopup.meshObject.rotate.x = meshespopup.meshDetailsRotateX.value;
+//  meshespopup.meshObject.rotate.y = meshespopup.meshDetailsRotateY.value;
+//  meshespopup.meshObject.rotate.z = meshespopup.meshDetailsRotateZ.value;
+
 meshespopup.rotateTab = function(e) {
   if (meshespopup.tabRotate) {
     meshespopup.portraitLowerRow.style.display = '';
@@ -171,9 +176,10 @@ meshespopup.resizeMouseUp = function(e) {
   window.removeEventListener('mousemove', meshespopup.resizeMouseMove, false);
   window.removeEventListener('mouseup', meshespopup.resizeMouseUp, false);
 };
-meshespopup.show = function(meshData) {
+meshespopup.show = function(firebaseMeshData) {
   let me = this;
-  this.meshData = meshData.val();
+  this.meshId = firebaseMeshData.key;
+  this.meshData = firebaseMeshData.val();
   this.babyHelper.loadMesh(this.meshData.title, this.basePath,
     this.meshData.url.replace(this.basePath, ''),
     this.scene).then(function(m) {

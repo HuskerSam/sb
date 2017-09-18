@@ -52,7 +52,7 @@ meshes.init = function() {
     me.dialogProgress.style.display = '';
     babyUtil.fileToURL(file).then(function(fileData) {
       babyUtil.serializeMesh(objId, "", "data:" + fileData).then(function(meshJSON) {
-        fireUtil.uploadModel(JSON.stringify(meshJSON), objId).then(function(result) {
+        fireUtil.newModel(JSON.stringify(meshJSON), objId).then(function(result) {
           me.objIdUpload.value = '';
           me.fileUpload.value = '';
           me.dialogCloseUpload.style.display = '';
