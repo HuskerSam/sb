@@ -176,6 +176,9 @@ meshespopup.resizeMouseUp = function(e) {
 };
 meshespopup.show = function(firebaseMeshData) {
   let me = this;
+  this.scene = this.babyHelper.createDefaultScene();
+  this.babyHelper.setScene(this.scene);
+
   this.meshId = firebaseMeshData.key;
   this.meshData = firebaseMeshData.val();
   this.babyHelper.loadMesh(this.meshData.title, this.basePath,
