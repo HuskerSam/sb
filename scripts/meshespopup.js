@@ -102,17 +102,11 @@ meshespopup.meshDetailsChange = function(e) {
   meshespopup.meshData.simpleUIDetails.scaleY = meshespopup.meshDetailsScaleY.value;
   meshespopup.meshData.simpleUIDetails.scaleZ = meshespopup.meshDetailsScaleZ.value;
 
-  //  meshespopup.meshObject.rotate(BABYLON.Axis.X,30, BABYLON.Space.LOCAL);
-
+  meshespopup.meshData.simpleUIDetails.positionX = meshespopup.meshDetailsPosX.value;
+  meshespopup.meshData.simpleUIDetails.positionY = meshespopup.meshDetailsPosY.value;
+  meshespopup.meshData.simpleUIDetails.positionZ = meshespopup.meshDetailsPosZ.value;
+  //  meshespopup.meshObject.rotate(BABYLON.Axis.X,30, BABYLON.Space.LOCAL)
 };
-
-//  meshespopup.meshDetailsRotateX.value = this.meshData.simpleUIDetails.rotateX;
-//  meshespopup.meshDetailsRotateY.value = this.meshData.simpleUIDetails.rotateY;
-//  meshespopup.meshDetailsRotateZ.value = this.meshData.simpleUIDetails.rotateZ;
-
-//  meshespopup.meshObject.rotate.x = meshespopup.meshDetailsRotateX.value;
-//  meshespopup.meshObject.rotate.y = meshespopup.meshDetailsRotateY.value;
-//  meshespopup.meshObject.rotate.z = meshespopup.meshDetailsRotateZ.value;
 
 meshespopup.rotateTab = function(e) {
   if (meshespopup.tabRotate) {
@@ -163,12 +157,16 @@ meshespopup.resizeMouseMove = function(e) {
       meshespopup.tabWidth = meshespopup.tabWidthMin;
     meshespopup.meshesTab.style.width = meshespopup.tabWidth + 'px';
   } else {
+    var orig = meshespopup.tabHeight;
     meshespopup.tabHeight = meshespopup.tabHeight + (meshespopup.dragButtonStartY - e.clientY);
     meshespopup.dragButtonStartY = e.clientY;
     if (meshespopup.tabHeight > meshespopup.tabHeightMax)
       meshespopup.tabHeight = meshespopup.tabHeightMax;
     if (meshespopup.tabHeight < meshespopup.tabHeightMin)
       meshespopup.tabHeight = meshespopup.tabHeightMin;
+    var delta = meshespopup.tabHeight - orig;
+    var orig2 = 1.0 * (meshespopup.meshCanvas.getAttribute("height"));
+    meshespopup.meshCanvas.setAttribute("height", orig2 - delta);
     meshespopup.meshesTab.style.height = meshespopup.tabHeight + 'px';
   }
 };

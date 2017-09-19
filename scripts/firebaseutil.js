@@ -84,7 +84,7 @@ fireUtil.newModel = function(modelString, title) {
   return new Promise(function(resolve, reject) {
     var modelId = firebase.database().ref().child('modelslib').push().key;
 
-    me.uploadData(modelId, modelString, 'file.babylon').then(function(snapshot) {
+    me.uploadData(modelId, modelString, 'file.babylon', 'mesh').then(function(snapshot) {
       if (!title)
         title = new Date().toISOString();
 
@@ -102,11 +102,11 @@ fireUtil.newModel = function(modelString, title) {
     });
   });
 };
-fireUtil.uploadData = function(id, dataString, filename) {
+fireUtil.uploadData = function(id, dataString, filename, prefix) {
   return new Promise(function(resolve, reject) {
     var storageRef = firebase.storage().ref();
     var auth = firebase.auth();
-    storageRef.child('images/' + id + '/' + filename).putString(dataString).then(function(snapshot) {
+    storageRef.child(prefix + '/' + id + '/' + filename).putString(dataString).then(function(snapshot) {
       resolve(snapshot);
     }).catch(function(error) {
       reject(error);
