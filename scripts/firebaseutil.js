@@ -79,17 +79,19 @@ fireUtil.onAuthStateChanged = function(user, domModelContainer) {
     fireUtil.currentUser = {};
   }
 };
-fireUtil.newModel = function(modelString, title) {
+fireUtil.newModel = function(modelString, meshName) {
   var me = this;
   return new Promise(function(resolve, reject) {
     var modelId = firebase.database().ref().child('modelslib').push().key;
 
     me.uploadData(modelId, modelString, 'file.babylon', 'mesh').then(function(snapshot) {
+      let title = meshName;
       if (!title)
         title = new Date().toISOString();
 
       var meshData = JSON.parse(JSON.stringify(defaultMeshData));
       meshData.title = title;
+      meshData.meshName = meshName;
       meshData.url = snapshot.downloadURL;
       meshData.type = 'url';
       meshData.size = snapshot.totalBytes;

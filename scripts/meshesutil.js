@@ -2,6 +2,7 @@ var meshes = {};
 
 var defaultMeshData = {
   title: 'Mesh',
+  meshName: '',
   url: '',
   type: 'url',
   size: 0,
