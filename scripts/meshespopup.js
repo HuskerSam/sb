@@ -203,7 +203,7 @@ meshespopup.show = function(firebaseMeshData) {
     me.meshesSimpleFields.style.display = '';
     me.dialogButtonBar.style.display = '';
     me.dialogProgressBar.style.display = 'none';
-    });
+  });
   this.meshDetailsDialog.showModal();
   this.meshDetailEditor.setValue(JSON.stringify(this.meshData));
   this.uiHelper.beautify(me.meshDetailEditor);
@@ -224,4 +224,9 @@ meshespopup.loadUIData = function() {
   meshespopup.meshDetailsRotateX.value = this.meshData.simpleUIDetails.rotateX;
   meshespopup.meshDetailsRotateY.value = this.meshData.simpleUIDetails.rotateY;
   meshespopup.meshDetailsRotateZ.value = this.meshData.simpleUIDetails.rotateZ;
+
+  var mdlInputs = document.querySelectorAll('.mdl-js-textfield');
+  for (var i = 0, l = mdlInputs.length; i < l; i++) {
+    mdlInputs[i].MaterialTextfield.checkDirty();
+  }
 };

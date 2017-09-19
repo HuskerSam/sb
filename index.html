@@ -105,32 +105,58 @@
                 <button id="drag-tab-height">=</button>
                 <button id="drag-tab-rotate">+</button>
               </div>
-              <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" id="meshes-details-tabs" style="height:200px">
+              <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" id="meshes-details-tabs">
                 <div class="mdl-tabs__tab-bar">
                   <a href="#mesh-details-panel" id="mesh-detail-tab-button" class="mdl-tabs__tab is-active">Details</a>
                   <a href="#mesh-json-panel" id="mesh-json-tab-button" class="mdl-tabs__tab">JSON</a>
                   <a href="#mesh-babylon-panel" id="mesh-babylon-tab-button" class="mdl-tabs__tab">Babylon</a>
                 </div>
 
-                <div class="mdl-tabs__panel is-active" id="mesh-details-panel">
+                <div class="mdl-tabs__panel is-active" id="mesh-details-panel" style="height:100%;padding:5px;overflow:auto;">
                   <div id="mesh-details-panel-fields">
-                    Title: <input type="text" id="mesh-details-title" />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-title">
+                      <label class="mdl-textfield__label" for="mesh-details-title">Title</label>
+                    </div>
                     <br>
-                    PosX: <input type="text" id="mesh-details-pos-x" />
-                    <br> PosY: <input type="text" id="mesh-details-pos-y" />
-                    <br> PosZ: <input type="text" id="mesh-details-pos-z" />
-                    <br /> ScaleX: <input type="text" id="mesh-details-scale-x" />
-                    <br> ScaleY: <input type="text" id="mesh-details-scale-y" />
-                    <br> ScaleZ: <input type="text" id="mesh-details-scale-z" />
-                    <br />
-                    RotateX:
-                    <input type="text" id="mesh-details-rotate-x" value="0" />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-pos-x">
+                      <label class="mdl-textfield__label" for="mesh-details-pos-x">Position X</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-pos-y">
+                      <label class="mdl-textfield__label" for="mesh-details-pos-y">Position Y</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-pos-z">
+                      <label class="mdl-textfield__label" for="mesh-details-pos-z">Position Z</label>
+                    </div>
                     <br>
-                    RotateY:
-                    <input type="text" id="mesh-details-rotate-y" value="0" />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-scale-x">
+                      <label class="mdl-textfield__label" for="mesh-details-scale-x">Scale X</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-scale-y">
+                      <label class="mdl-textfield__label" for="mesh-details-scale-y">Scale Y</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-scale-z">
+                      <label class="mdl-textfield__label" for="mesh-details-scale-z">Scale Z</label>
+                    </div>
                     <br>
-                    RotateZ:
-                    <input type="text" id="mesh-details-rotate-z" value="0" />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-rotate-x">
+                      <label class="mdl-textfield__label" for="mesh-details-rotate-x">Rotate X</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-rotate-y">
+                      <label class="mdl-textfield__label" for="mesh-details-rotate-y">Rotate Y</label>
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                      <input class="mdl-textfield__input" type="text" id="mesh-details-rotate-z">
+                      <label class="mdl-textfield__label" for="mesh-details-rotate-z">Rotate Z</label>
+                    </div>
                   </div>
                 </div>
                 <div class="mdl-tabs__panel is-active" id="mesh-json-panel" style="height:100%;">
