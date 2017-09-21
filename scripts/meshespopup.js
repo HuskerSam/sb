@@ -51,7 +51,6 @@ meshespopup.init = function() {
   }
 
   this.meshDetailsClose.addEventListener('click', () => me.meshDetailsDialog.close());
-  this.meshDetailsSave.addEventListener('click', () => me.meshDetailsDialog.close());
   this.meshDetailsApply.addEventListener('click', () => me.commit());
 
   this.meshDetailsScaleX.addEventListener('change', this.meshDetailsChange, false);

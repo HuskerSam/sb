@@ -84,13 +84,7 @@
         <div id="mesh-detail-wrapper">
           <canvas id="meshDetailCanvas" style="width:100%;height:100%;"></canvas>
         </div>
-        <div id="meshes-details-tabs" style="position:relative;">
-          <div style="position:absolute; top:0px;right:0px;z-index:20000;">
-            <button id="mesh-detail-tab-button">Details</button>
-            <button id="mesh-json-tab-button">JSON</button>
-            <button id="mesh-babylon-tab-button">Babylon</button>
-          </div>
-
+        <div id="meshes-details-tabs">
           <div class="mdl-tabs__panel is-active" id="mesh-details-panel" style="width:100%;height:100%;overflow:auto;">
             <div id="mesh-details-panel-fields">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -146,12 +140,15 @@
           </div>
         </div>
       </div>
-      <div>
+      <div style="padding:5px; border-top:2px solid silver;">
         <div id="mesh-apply-progress" style="display:none;margin-top:10px;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
         <div id="mesh-dialog-button-bar">
-          <button type="button" class="mdl-button apply-details">Apply</button>
-          <button type="button" class="mdl-button save-details" style="display:none">Save</button>
-          <button type="button" class="mdl-button close-details">Close</button>
+          <button id="mesh-detail-tab-button">Details</button>
+          <button id="mesh-json-tab-button">JSON</button>
+          <button id="mesh-babylon-tab-button">Babylon</button>
+
+          <button type="button" class="close-details" style="float:right;">Close</button>
+          <button type="button" class="apply-details" style="float:right;">Apply</button>
         </div>
       </div>
     </div>
