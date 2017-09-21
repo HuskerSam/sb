@@ -8,23 +8,20 @@ meshespopup.init = function() {
   this.scene = this.babyHelper.createDefaultScene();
   this.babyHelper.setScene(this.scene);
 
-  this.dragButton = document.getElementById('drag-tab-height');
   this.meshesTab = document.getElementById('meshes-details-tabs');
   this.meshesSimpleFields = document.getElementById('mesh-details-panel-fields');
-  this.rotateButton = document.getElementById('drag-tab-rotate');
   this.dialogButtonBar = document.getElementById('mesh-dialog-button-bar');
   this.dialogProgressBar = document.getElementById('mesh-apply-progress');
-  this.portraitUpperRow = document.getElementById('portrait-upper-row');
-  this.portraitLowerRow = document.getElementById('portrait-lower-row');
-  this.portraitUpperCell = document.getElementById('portrait-upper-cell');
-  this.portraitLowerCell = document.getElementById('portrait-lower-cell');
-  this.landscapeRow = document.getElementById('landscape-row');
-  this.landscapeLeftCell = document.getElementById('landscape-left-cell');
-  this.landscapeRightCell = document.getElementById('landscape-right-cell');
+  this.actionButtonBar = document.getElementById('popup-details-button-bar');
   this.detailsContainer = document.getElementById('details-content-div');
   this.meshDetailsScaleX = document.getElementById('mesh-details-scale-x');
   this.meshDetailsScaleY = document.getElementById('mesh-details-scale-y');
   this.meshDetailsScaleZ = document.getElementById('mesh-details-scale-z');
+
+  window.Split(['#mesh-detail-wrapper', '#meshes-details-tabs'], {
+    minSize: [100, 100],
+    direction: 'vertical'
+  });
 
   this.meshDetailsTitle = document.getElementById('mesh-details-title');
   this.meshDetailsPosX = document.getElementById('mesh-details-pos-x');
@@ -47,19 +44,11 @@ meshespopup.init = function() {
   this.meshData = {};
   this.basePath = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
 
-  this.tabHeight = 200;
-  this.tabWidth = 200;
   this.tabRotate = false;
 
   if (!this.meshDetailsDialog.showModal) {
     dialogPolyfill.registerDialog(this.meshDetailsDialog);
   }
-
-  this.setTabDragLimits();
-  this.dragButton.addEventListener('mousedown', this.resizeMouseDown, false);
-  this.rotateButton.addEventListener('click', this.rotateTab);
-  window.addEventListener('resize', this.setTabDragLimits, false);
-
 
   this.meshDetailsClose.addEventListener('click', () => me.meshDetailsDialog.close());
   this.meshDetailsSave.addEventListener('click', () => me.meshDetailsDialog.close());
@@ -76,6 +65,18 @@ meshespopup.init = function() {
   this.meshDetailsRotateX.addEventListener('change', this.meshDetailsChange, false);
   this.meshDetailsRotateY.addEventListener('change', this.meshDetailsChange, false);
   this.meshDetailsRotateZ.addEventListener('change', this.meshDetailsChange, false);
+
+  this.detailTabButton.addEventListener('click', (e) => me.showTab('mesh-details-panel'), false);
+  this.jsonTabButton.addEventListener('click', (e) => me.showTab('mesh-json-panel'), false);
+  this.babyTabButton.addEventListener('click', (e) => me.showTab('mesh-babylon-panel'), false);
+};
+meshespopup.showTab = function(divId) {
+
+  document.getElementById('mesh-details-panel').style.display = 'none';
+  document.getElementById('mesh-json-panel').style.display = 'none';
+  document.getElementById('mesh-babylon-panel').style.display = 'none';
+
+  document.getElementById(divId).style.display = '';
 };
 meshespopup.commit = function() {
   this.dialogButtonBar.style.display = 'none';
@@ -192,6 +193,7 @@ meshespopup.show = function(firebaseMeshData) {
 
   this.meshId = firebaseMeshData.key;
   this.meshData = firebaseMeshData.val();
+
   this.babyHelper.loadMesh(this.meshData.meshName, this.basePath,
     this.meshData.url.replace(this.basePath, ''),
     this.scene).then(function(m) {
