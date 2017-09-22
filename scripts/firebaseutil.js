@@ -15,9 +15,11 @@ fireUtil.onAuthStateChanged = function(user) {
     this.currentUser = user;
     this.userWriteData();
 
-    this.meshesFireSet = new FireSet('lib_meshes', 'meshes', ['author', 'title'], this.defaultItemTemplate);
+    this.meshesFireSet = new FireSet('lib_meshes', 'meshes', ['title'], this.defaultItemTemplate);
     this.fireSets.push(this.meshesFireSet);
     this.texturesFireSet = new FireSet('lib_textures', 'textures', ['title'], this.defaultItemTemplate);
+    this.fireSets.push(this.texturesFireSet);
+    this.texturesFireSet = new FireSet('lib_materials', 'materials', ['title'], this.defaultItemTemplate);
     this.fireSets.push(this.texturesFireSet);
   } else {
     fireUtil.currentUser = {};
@@ -97,8 +99,6 @@ fireUtil.defaultItemTemplate = function(domPrefix, fireData) {
   return `
 <div id="${domPrefix}-${fireData.key}" class="firebase-item">
   <div class="${domPrefix}-title"></div>
-  <div class="${domPrefix}-avatar"></div>
-  <div class="${domPrefix}-author"></div>
   <button class="${domPrefix}-remove mdl-button mdl-js-button mdl-button--icon">
     <i class="material-icons">delete</i>
   </button>

@@ -3,6 +3,7 @@ var scenebuilder = {};
 scenebuilder.init = function() {
   this.initMeshUpload();
   this.initTextureUpload();
+  this.initMaterialUpload();
   this.initToolbars();
 };
 scenebuilder.initToolbars = function() {
@@ -11,12 +12,15 @@ scenebuilder.initToolbars = function() {
   this.meshesCollapsePanel = document.getElementById('meshes-content');
   this.skinsCollapseButton = document.getElementById('collapse-textures');
   this.skinsCollapsePanel = document.getElementById('textures-content');
+  this.materialsCollapseButton = document.getElementById('collapse-materials');
+  this.materialsCollapsePanel = document.getElementById('materials-content');
 
   this.meshesCollapseButton.addEventListener('click',
     (e) => me.toggleBar(me.meshesCollapseButton, me.meshesCollapsePanel), false);
-
   this.skinsCollapseButton.addEventListener('click',
     (e) => me.toggleBar(me.skinsCollapseButton, me.skinsCollapsePanel), false);
+  this.materialsCollapseButton.addEventListener('click',
+    (e) => me.toggleBar(me.materialsCollapseButton, me.materialsCollapsePanel), false);
 };
 scenebuilder.initMeshUpload = function() {
   let me = this;
@@ -122,4 +126,11 @@ scenebuilder.toggleBar = function(button, bar) {
     button.querySelector('i').innerHTML = 'expand_less';
     bar.parentNode.parentNode.insertBefore(bar.parentNode, null);
   }
+};
+scenebuilder.uploadMaterial = function() {
+
+};
+scenebuilder.initMaterialUpload = function() {
+  let me = this;
+  
 };
