@@ -50,12 +50,24 @@ class FireSet {
     updates['/' + this.dataPrefix + '/' + id] = jsonData;
     return firebase.database().ref().update(updates);
   }
-  setBlob(id, dataString, filename) {
+  setString(id, dataString, filename) {
     let me = this;
     return new Promise(function(resolve, reject) {
       var storageRef = firebase.storage().ref();
       var auth = firebase.auth();
       storageRef.child(me.dataPrefix + '/' + id + '/' + filename).putString(dataString).then(function(snapshot) {
+        resolve(snapshot);
+      }).catch(function(error) {
+        reject(error);
+      });
+    });
+  }
+  setBlob(id, blob, filename) {
+    let me = this;
+    return new Promise(function(resolve, reject) {
+      var storageRef = firebase.storage().ref();
+      var auth = firebase.auth();
+      storageRef.child(me.dataPrefix + '/' + id + '/' + filename).put(blob).then(function(snapshot) {
         resolve(snapshot);
       }).catch(function(error) {
         reject(error);
@@ -92,6 +104,8 @@ class FireSet {
   showPopup(e, fireData) {
     if (this.domPrefix === 'meshes')
       meshespopup.show(fireData);
+    if (this.domPrefix ==='textures')
+      alert(fireData.val().url);
   }
   removeElement(e, fireKey) {
     if (!confirm('Are you sure you want to delete this ' + this.domPrefix + '?'))
@@ -99,5 +113,14 @@ class FireSet {
     let updates = {};
     updates['/' + this.dataPrefix + '/' + fireKey] = null;
     firebase.database().ref().update(updates).then(function(e) {});
+  }
+  fileToURL(file) {
+    return new Promise(function(resolve, reject) {
+      var reader = new FileReader();
+      reader.addEventListener("loadend", function() {
+        resolve(reader.result);
+      });
+      reader.readAsText(file);
+    }, false);
   }
 }

@@ -1,13 +1,17 @@
 var scenebuilder = {};
 
 scenebuilder.init = function() {
+  this.initMeshUpload();
+  this.initTextureUpload();
+  this.initToolbars();
+};
+scenebuilder.initToolbars = function() {
   let me = this;
   this.meshesCollapseButton = document.getElementById('collapse-meshes');
   this.meshesCollapsePanel = document.getElementById('meshes-content');
-  this.skinsCollapseButton = document.getElementById('collapse-skins');
-  this.skinsCollapsePanel = document.getElementById('skins-content');
+  this.skinsCollapseButton = document.getElementById('collapse-textures');
+  this.skinsCollapsePanel = document.getElementById('textures-content');
 
-  this.initMeshUpload();
   this.meshesCollapseButton.addEventListener('click',
     (e) => me.toggleBar(me.meshesCollapseButton, me.meshesCollapsePanel), false);
 
@@ -16,8 +20,8 @@ scenebuilder.init = function() {
 };
 scenebuilder.initMeshUpload = function() {
   let me = this;
-  this.showMeshUploadDialog = document.getElementById('mesh-upload-button');
   this.meshUploadDialog = document.getElementById('mesh-upload-dialog');
+  this.showMeshUploadDialog = document.getElementById('mesh-upload-button');
   this.meshUploadFileDom = document.getElementById('mesh-upload-file');
   this.meshObjIdUpload = document.getElementById('mesh-object-id');
   this.importMeshDialogProgress = document.getElementById('mesh-upload-progress');
@@ -36,7 +40,6 @@ scenebuilder.initMeshUpload = function() {
   this.meshUploadDialogClose.addEventListener('click', function() {
     me.meshUploadDialog.close();
   });
-
   this.importMeshUploadButton.addEventListener('click', (e) => me.uploadMesh(), false);
 };
 scenebuilder.uploadMesh = function() {
@@ -50,7 +53,7 @@ scenebuilder.uploadMesh = function() {
   me.meshUploadDialogClose.style.display = 'none';
   me.importMeshUploadButton.style.display = 'none';
   me.importMeshDialogProgress.style.display = '';
-  babyUtil.fileToURL(file).then(function(fileData) {
+  fireUtil.meshesFireSet.fileToURL(file).then(function(fileData) {
     babyUtil.serializeMesh(objId, "", "data:" + fileData).then(function(meshJSON) {
       fireUtil.newMesh(JSON.stringify(meshJSON), objId).then(function(result) {
         me.meshObjIdUpload.value = '';
@@ -63,7 +66,50 @@ scenebuilder.uploadMesh = function() {
     });
   });
 };
+scenebuilder.uploadTexture = function() {
+  let me = this;
+  let file = me.textureUploadFile.files[0];
+  let title = me.textureUploadTitle.value.trim();
+  if (!title) {
+    alert('Need a title to upload');
+    return;
+  }
+  me.textureUploadClose.style.display = 'none';
+  me.textureUploadImport.style.display = 'none';
+  me.textureUploadProgress.style.display = '';
+  fireUtil.newTexture(file, title).then(function(result) {
+    me.textureUploadTitle.value = '';
+    me.textureUploadFile.value = '';
+    me.textureUploadClose.style.display = '';
+    me.textureUploadImport.style.display = '';
+    me.textureUploadProgress.style.display = 'none';
+    me.textureUploadDialog.close();
+  });
+};
+scenebuilder.initTextureUpload = function() {
+  let me = this;
+  this.textureUploadDialog = document.getElementById('texture-upload-dialog');
+  this.showTextureUploadDialog = document.getElementById('texture-upload-button');
+  this.textureUploadFile = document.getElementById('texture-upload-file');
+  this.textureUploadTitle = document.getElementById('texture-upload-title');
+  this.textureUploadProgress = document.getElementById('texture-upload-progress');
+  this.textureUploadImport = this.textureUploadDialog.querySelector('.import');
+  this.textureUploadClose = this.textureUploadDialog.querySelector('.close');
 
+  if (!this.textureUploadDialog.showModal) {
+    dialogPolyfill.registerDialog(this.textureUploadDialog);
+  }
+  this.showTextureUploadDialog.addEventListener('click', function() {
+    me.textureUploadClose.style.display = '';
+    me.textureUploadImport.style.display = '';
+    me.textureUploadProgress.style.display = 'none';
+    me.textureUploadDialog.showModal();
+  });
+  this.textureUploadClose.addEventListener('click', function() {
+    me.textureUploadDialog.close();
+  });
+  this.textureUploadImport.addEventListener('click', (e) => me.uploadTexture(), false);
+};
 scenebuilder.toggleBar = function(button, bar) {
   if (bar.style.display === 'none') {
     bar.style.display = '';
