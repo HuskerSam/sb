@@ -1,102 +1,40 @@
 var fireUtil = {};
 fireUtil.currentUser = {};
-fireUtil.domModelContainer = null;
-fireUtil.listeningFirebaseRefs = [];
+fireUtil.meshesFireSet = null;
 
 fireUtil.userWriteData = function() {
   firebase.database().ref('users/' + this.currentUser.uid).set(this.currentUser.toJSON());
 };
-fireUtil.setModel = function(id, data) {
-  var updates = {};
-  updates['/modelslib/' + id] = data;
-  return firebase.database().ref().update(updates);
-};
-fireUtil.initModelList = function() {
-  var myUserId = firebase.auth().currentUser.uid;
-  var modelsRef = firebase.database().ref('modelslib');
-
-  var me = this;
-  modelsRef.on('child_added', function(data) {
-    me.domModelContainer.insertBefore(me.createModelDOM(data), me.domModelContainer.firstChild);
-  });
-  modelsRef.on('child_changed', function(data) {
-    var div = document.getElementById('model-' + data.key);
-    div.getElementsByClassName('model-title')[0].innerText = data.val().title;
-    div.getElementsByClassName('model-username')[0].innerText = data.val().author;
-  });
-  modelsRef.on('child_removed', function(data) {
-    var post = document.getElementById('model-' + data.key);
-    if (post)
-      me.domModelContainer.removeChild(post);
-  });
-  this.listeningFirebaseRefs.push(modelsRef);
-};
-fireUtil.createModelDOM = function(data) {
-  var html =
-    '<div id="model-' + data.key + '" class="model-item">' +
-    '<div class="model-title"></div>' +
-    '<div class="model-avatar"></div>' +
-    '<div class="model-username"></div>' +
-    '<button class="model-remove mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">delete</i></button>' +
-    '<button class="model-details mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">settings</i></button>' +
-    '</div>';
-
-  var outer = document.createElement('div');
-  outer.innerHTML = html;
-  var div = outer.firstChild;
-
-  div.getElementsByClassName('model-title')[0].innerText = data.val().title;
-  div.getElementsByClassName('model-username')[0].innerText = data.val().author;
-  div.getElementsByClassName('model-avatar')[0].style.backgroundImage = 'url("' +
-    (data.val().authorPic || './silhouette.jpg') + '")';
-  div.getElementsByClassName('model-remove')[0].addEventListener('click', function(e) {
-    if (!confirm('Are you sure you want to delete this model?'))
-      return;
-    var updates = {};
-    updates['/modelslib/' + data.key] = null;
-    firebase.database().ref().update(updates).then(function(e) {});
-  });
-  div.getElementsByClassName('model-details')[0].addEventListener('click', function(e) {
-    meshespopup.show(data);
-  });
-
-  return div;
-};
-fireUtil.onAuthStateChanged = function(user, domModelContainer) {
-  this.domModelContainer = domModelContainer;
-  this.domModelContainer.innerHTML = '';
-
-  this.listeningFirebaseRefs.forEach(function(ref) {
-    ref.off();
-  });
-  this.listeningFirebaseRefs = [];
+fireUtil.onAuthStateChanged = function(user) {
+  if (this.meshesFireSet)
+    this.meshesFireSet.destroy();
 
   if (user) {
     this.currentUser = user;
     this.userWriteData();
-    fireUtil.initModelList();
+    this.meshesFireSet = new FireSet('lib_meshes', 'meshes');
   } else {
     fireUtil.currentUser = {};
   }
 };
-fireUtil.newModel = function(modelString, meshName) {
+fireUtil.newMesh = function(meshString, meshName) {
   var me = this;
   return new Promise(function(resolve, reject) {
-    var modelId = firebase.database().ref().child('modelslib').push().key;
+    var key = me.meshesFireSet.getKey();
 
-    me.uploadData(modelId, modelString, 'file.babylon', 'mesh').then(function(snapshot) {
+    me.meshesFirstSet.setBlob(key, meshString, 'file.babylon').then(function(snapshot) {
       let title = meshName;
       if (!title)
         title = new Date().toISOString();
 
-      var meshData = JSON.parse(JSON.stringify(defaultMeshData));
+      var meshData = me.getMeshData();
       meshData.title = title;
       meshData.meshName = meshName;
       meshData.url = snapshot.downloadURL;
       meshData.type = 'url';
       meshData.size = snapshot.totalBytes;
 
-      fireUtil.setModel(modelId, meshData).then(function(e) {
+      me.meshesFireSet.set(key, meshData).then(function(e) {
         resolve(e);
       })
     }).catch(function(error) {
@@ -104,14 +42,32 @@ fireUtil.newModel = function(modelString, meshName) {
     });
   });
 };
-fireUtil.uploadData = function(id, dataString, filename, prefix) {
-  return new Promise(function(resolve, reject) {
-    var storageRef = firebase.storage().ref();
-    var auth = firebase.auth();
-    storageRef.child(prefix + '/' + id + '/' + filename).putString(dataString).then(function(snapshot) {
-      resolve(snapshot);
-    }).catch(function(error) {
-      reject(error);
-    });
-  });
+fireUtil.getNewMeshData = function() {
+  return {
+    title: 'Mesh',
+    meshName: '',
+    url: '',
+    type: 'url',
+    size: 0,
+    simpleUIDetails: {
+      scaleX: 1.0,
+      scaleY: 1.0,
+      scaleZ: 1.0,
+      positionX: 0.0,
+      positionY: 0.0,
+      positionZ: 0.0,
+      rotateX: 0.0,
+      rotateY: 0.0,
+      rotateZ: 0.0
+    }
+  };
+};
+fireUtil.meshItemTemplate = function(domPrefix, fireData) {
+  return '<div id="' + domPrefix + '-' + fireData.key + '" class="model-item">' +
+    '<div class="model-title"></div>' +
+    '<div class="model-avatar"></div>' +
+    '<div class="model-username"></div>' +
+    '<button class="model-remove mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">delete</i></button>' +
+    '<button class="model-details mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">settings</i></button>' +
+    '</div>';
 };

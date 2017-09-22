@@ -5,7 +5,6 @@ window.addEventListener('load', function() {
   babyUtil = new BabylonHelper("renderCanvas");
   babyUtil.setScene(babyUtil.createDefaultScene());
 
-  meshes.init();
   meshespopup.init();
   scenebuilder.init();
   document.getElementById('sign-in-button').addEventListener('click', function() {
@@ -24,7 +23,7 @@ function onAuthStateChanged(user) {
     return;
   }
 
-  fireUtil.onAuthStateChanged(user, document.getElementById('models-content'));
+  fireUtil.onAuthStateChanged(user);
 
   var loginPage = document.getElementById('login-page');
   var mainPage = document.getElementById('main-page');
