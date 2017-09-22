@@ -24,7 +24,7 @@ class FireSet {
     return firebase.database().ref().child(this.dataPrefix).push().key
   }
   childAdded(fireData) {
-    this.domModelContainer.insertBefore(this.createDOM(fireData), this.domModelContainer.firstChild);
+    this.domContainer.insertBefore(this.createDOM(fireData), this.domContainer.firstChild);
   }
   childChanged(fireData) {
     var div = document.getElementById(this.domPrefix + '-' + fireData.key);
@@ -32,7 +32,9 @@ class FireSet {
       try {
         let key = this.keyList[i];
         let ele = div.getElementsByClassName(this.domPrefix + '-' + key)[0];
-        ele.innerText = fireData.val()[key];
+        let val = fireData.val()[key];
+        if (val !== undefined)
+          ele.innerText = fireData.val()[key];
       } catch (e) {
         console.log('FireSet.childChanged ' + key + ' failed', e);
       }
@@ -41,7 +43,7 @@ class FireSet {
   childRemoved(fireData) {
     let post = document.getElementById(this.domPrefix + '-' + fireData.key);
     if (post)
-      me.domModelContainer.removeChild(post);
+      this.domContainer.removeChild(post);
   }
   set(id, jsonData) {
     let updates = {};
@@ -66,10 +68,12 @@ class FireSet {
     var outer = document.createElement('div');
     outer.innerHTML = html;
     for (let i in this.keyList) {
+      let key = this.keyList[i];
       try {
-        let key = this.keyList[i];
         let ele = outer.getElementsByClassName(this.domPrefix + '-' + key)[0];
-        ele.innerText = fireData.val()[key];
+        let val = fireData.val()[key];
+        if (val !== undefined)
+          ele.innerText = val;
       } catch (e) {
         console.log('FireSet.createNode ' + key + ' failed', e);
       }
@@ -83,7 +87,7 @@ class FireSet {
     if (details_div)
       details_div.addEventListener('click',(e) => me.showPopup(e, fireData), false);
 
-    return div;
+    return outer.childNodes[0];
   }
   showPopup(e, fireData) {
     if (this.domPrefix === 'meshes')

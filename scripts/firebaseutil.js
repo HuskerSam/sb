@@ -12,7 +12,7 @@ fireUtil.onAuthStateChanged = function(user) {
   if (user) {
     this.currentUser = user;
     this.userWriteData();
-    this.meshesFireSet = new FireSet('lib_meshes', 'meshes');
+    this.meshesFireSet = new FireSet('lib_meshes', 'meshes', ['author', 'title'], this.meshItemTemplate);
   } else {
     fireUtil.currentUser = {};
   }
@@ -22,12 +22,12 @@ fireUtil.newMesh = function(meshString, meshName) {
   return new Promise(function(resolve, reject) {
     var key = me.meshesFireSet.getKey();
 
-    me.meshesFirstSet.setBlob(key, meshString, 'file.babylon').then(function(snapshot) {
+    me.meshesFireSet.setBlob(key, meshString, 'file.babylon').then(function(snapshot) {
       let title = meshName;
       if (!title)
         title = new Date().toISOString();
 
-      var meshData = me.getMeshData();
+      var meshData = me.getNewMeshData();
       meshData.title = title;
       meshData.meshName = meshName;
       meshData.url = snapshot.downloadURL;
@@ -63,11 +63,11 @@ fireUtil.getNewMeshData = function() {
   };
 };
 fireUtil.meshItemTemplate = function(domPrefix, fireData) {
-  return '<div id="' + domPrefix + '-' + fireData.key + '" class="model-item">' +
-    '<div class="model-title"></div>' +
-    '<div class="model-avatar"></div>' +
-    '<div class="model-username"></div>' +
-    '<button class="model-remove mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">delete</i></button>' +
-    '<button class="model-details mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">settings</i></button>' +
+  return '<div id="' + domPrefix + '-' + fireData.key + '" class="firebase-item">' +
+    '<div class="meshes-title"></div>' +
+    '<div class="meshes-avatar"></div>' +
+    '<div class="meshes-author"></div>' +
+    '<button class="meshes-remove mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">delete</i></button>' +
+    '<button class="meshes-details mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">settings</i></button>' +
     '</div>';
 };

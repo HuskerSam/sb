@@ -52,7 +52,7 @@ scenebuilder.uploadMesh = function() {
   me.importMeshDialogProgress.style.display = '';
   babyUtil.fileToURL(file).then(function(fileData) {
     babyUtil.serializeMesh(objId, "", "data:" + fileData).then(function(meshJSON) {
-      fireUtil.newModel(JSON.stringify(meshJSON), objId).then(function(result) {
+      fireUtil.newMesh(JSON.stringify(meshJSON), objId).then(function(result) {
         me.meshObjIdUpload.value = '';
         me.meshUploadFileDom.value = '';
         me.meshUploadDialogClose.style.display = '';

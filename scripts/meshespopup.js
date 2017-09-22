@@ -83,9 +83,10 @@ meshespopup.commit = function() {
   var me = this;
   me.scrape();
   var meshJSON = BABYLON.SceneSerializer.Serialize(me.scene);
-  fireUtil.uploadData(me.meshId, JSON.stringify(meshJSON), 'file.babylon').then(function(uploadResult) {
+  let fireSet = fireUtil.meshesFireSet;
+  fireSet.setBlob(me.meshId, JSON.stringify(meshJSON), 'file.babylon').then(function(uploadResult) {
     me.meshData.url = uploadResult.downloadURL;
-    fireUtil.setModel(me.meshId, me.meshData).then(function(dataResult) {
+    fireSet.set(me.meshId, me.meshData).then(function(dataResult) {
       me.dialogButtonBar.style.display = '';
       me.dialogProgressBar.style.display = 'none';
     });

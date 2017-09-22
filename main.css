@@ -48,7 +48,7 @@ html, body {
   text-align: left;
 }
 
-.model-item {
+.firebase-item {
   display: inline-block;
   border: solid 1px rgb(50,50,50);
   margin: 2px;
