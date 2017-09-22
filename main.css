@@ -25,10 +25,6 @@ html, body {
   z-index: -1;
 }
 
-#sign-out-button {
-  float: right;
-}
-
 .model-avatar {
   display: none;
   height: 32px;
@@ -53,24 +49,26 @@ html, body {
 }
 
 .model-item {
-  float: left;
-  clear: both;
-  width: 100%;
-  border: solid 1px silver;
+  display: inline-block;
+  border: solid 1px rgb(50,50,50);
+  margin: 2px;
+  border-radius: 10px;
   padding: 5px;
   text-align: center;
 }
 
 #models-list {
-  height: 100%;
-  left: 0px;
-  width: 120px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  position: absolute;
+  padding:4px;
+  font-size:10pt;
+  overflow-x:auto;
+  overflow-y:hidden;
   z-index: 1;
 }
-
+#main-title-bar {
+  text-align:right;
+  padding: 2px;
+  background: rgba(255,255,255,.5);
+}
 #main-page {
   position: absolute;
   width: 100%;
@@ -84,51 +82,60 @@ html, body {
   top: 50px;
 }
 
-#upload-button {
-  float: right;
-}
 #meshDetailCanvas {
   touch-action: none;
   z-index: -1;
 }
 
+.split, .split-flex {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
-  .split, .split-flex {
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+.gutter {
+  background-color: #eee;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
 
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
+.gutter.gutter-horizontal {
+  background-image: url('assets/vertical.png');
+  cursor: ew-resize;
+}
 
-  .gutter {
-    background-color: #eee;
+.gutter.gutter-vertical {
+  background-image: url('assets/horizontal.png');
+  cursor: ns-resize;
+}
 
-    background-repeat: no-repeat;
-    background-position: 50%;
-  }
-
-  .gutter.gutter-horizontal {
-    background-image: url('assets/vertical.png');
-    cursor: ew-resize;
-  }
-
-  .gutter.gutter-vertical {
-    background-image: url('assets/horizontal.png');
-    cursor: ns-resize;
-  }
-
-  .split.split-horizontal, .gutter.gutter-horizontal {
-    height: 100%;
-    float: left;
-  }
-
+.split.split-horizontal, .gutter.gutter-horizontal {
+  height: 100%;
+  float: left;
+}
 
 .flex-vertical {
-  display:flex;
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* align items in Main Axis */
-  align-items: stretch; /* align items in Cross Axis */
-  align-content: stretch; /* Extra space in Cross Axis */
+  justify-content: flex-start;
+  /* align items in Main Axis */
+  align-items: stretch;
+  /* align items in Cross Axis */
+  align-content: stretch;
+  /* Extra space in Cross Axis */
+}
+.flex-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  /* align items in Main Axis */
+  align-items: stretch;
+  /* align items in Cross Axis */
+  align-content: stretch;
+  /* Extra space in Cross Axis */
+}
+#sign-out-button {
+  font-size:10px;
 }

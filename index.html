@@ -54,13 +54,20 @@
   <div id="main-page" style="display:none;">
     <div id="main-title-bar">
       <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
-      <button id="upload-button">Upload</button>
     </div>
 
-    <section class="mdl-grid content" id="models-list">
+    <div class="mdl-grid" id="models-list" class="flex-horizontal">
+      <div style="display:inline-block;">
+        Meshes<br>
+        <button id="upload-button" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">cloud_upload</i></button>
+      </div>
       <div id="models-content">
       </div>
-    </section>
+    </div>
+    <div id="skins-list">
+      skins list
+    </div>
   </div>
   <dialog class="mdl-dialog" id="model-upload-dialog">
     <h4 class="mdl-dialog__title">Upload Mesh From .babylon</h4>
@@ -140,15 +147,15 @@
           </div>
         </div>
       </div>
-      <div style="padding:5px; border-top:2px solid silver;">
+      <div style="padding:10px;">
         <div id="mesh-apply-progress" style="display:none;margin-top:10px;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
         <div id="mesh-dialog-button-bar">
-          <button id="mesh-detail-tab-button">Details</button>
-          <button id="mesh-json-tab-button">JSON</button>
-          <button id="mesh-babylon-tab-button">Babylon</button>
+          <button id="mesh-detail-tab-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
+          <button id="mesh-json-tab-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">JSON</button>
+          <button id="mesh-babylon-tab-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Babylon</button>
 
-          <button type="button" class="close-details" style="float:right;">Close</button>
-          <button type="button" class="apply-details" style="float:right;">Apply</button>
+          <button type="button" class="close-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Close</button>
+          <button type="button" class="apply-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Apply</button>
         </div>
       </div>
     </div>
@@ -159,11 +166,6 @@
   <script src="/__/firebase/3.9.0/firebase-database.js"></script>
   <script src="/__/firebase/3.9.0/firebase-storage.js"></script>
   <script src="/__/firebase/init.js"></script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/github.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
 
   <script src="https://unpkg.com/split.js/split.min.js"></script>
   <script src="scripts/firebaseutil.js"></script>

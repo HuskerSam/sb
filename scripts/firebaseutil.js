@@ -37,8 +37,8 @@ fireUtil.createModelDOM = function(data) {
     '<div class="model-title"></div>' +
     '<div class="model-avatar"></div>' +
     '<div class="model-username"></div>' +
-    '<button class="model-remove">Remove</button>' +
-    '<button class="model-details">Details</button>' +
+    '<button class="model-remove mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">delete</i></button>' +
+    '<button class="model-details mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">settings</i></button>' +
     '</div>';
 
   var outer = document.createElement('div');
