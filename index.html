@@ -56,17 +56,31 @@
       <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
     </div>
 
-    <div class="mdl-grid" id="models-list" class="flex-horizontal">
+    <div class="mdl-grid items-panel flex-horizontal">
+      <button id="collapse-meshes" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">expand_more</i>
+      </button>
       <div style="display:inline-block;">
         Meshes<br>
         <button id="upload-button" class="mdl-button mdl-js-button mdl-button--icon">
-        <i class="material-icons">cloud_upload</i></button>
+        <i class="material-icons">cloud_upload</i>
+      </button>
       </div>
       <div id="models-content">
       </div>
     </div>
-    <div id="skins-list">
-      skins list
+    <div class="mdl-grid items-panel flex-horizontal">
+      <button id="collapse-skins" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">expand_less</i>
+      </button>
+      <div style="display:inline-block;">
+        Skins<br>
+        <button id="upload-skin-button" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">cloud_upload</i>
+        </button>
+      </div>
+      <div id="skins-content">
+      </div>
     </div>
   </div>
   <dialog class="mdl-dialog" id="model-upload-dialog">
@@ -173,6 +187,7 @@
   <script src="scripts/uiutil.js"></script>
   <script src="scripts/meshesutil.js"></script>
   <script src="scripts/meshespopup.js"></script>
+  <script src="scripts/scenebuilder.js"></script>
   <script src="scripts/main.js"></script>
 </body>
 
