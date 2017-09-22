@@ -3,7 +3,7 @@ var scenebuilder = {};
 scenebuilder.init = function() {
   let me = this;
   this.meshesCollapseButton = document.getElementById('collapse-meshes');
-  this.meshesCollapsePanel = document.getElementById('models-content');
+  this.meshesCollapsePanel = document.getElementById('meshes-content');
   this.skinsCollapseButton = document.getElementById('collapse-skins');
   this.skinsCollapsePanel = document.getElementById('skins-content');
 

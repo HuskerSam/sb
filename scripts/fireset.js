@@ -66,7 +66,7 @@ class FireSet {
     let me = this;
     let html = this.itemTemplateFunction(this.domPrefix, fireData);
     var outer = document.createElement('div');
-    outer.innerHTML = html;
+    outer.innerHTML = html.trim();
     for (let i in this.keyList) {
       let key = this.keyList[i];
       try {

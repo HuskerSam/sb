@@ -12,7 +12,7 @@ fireUtil.onAuthStateChanged = function(user) {
   if (user) {
     this.currentUser = user;
     this.userWriteData();
-    this.meshesFireSet = new FireSet('lib_meshes', 'meshes', ['author', 'title'], this.meshItemTemplate);
+    this.meshesFireSet = new FireSet('lib_meshes', 'meshes', ['author', 'title'], this.defaultItemTemplate);
   } else {
     fireUtil.currentUser = {};
   }
@@ -62,12 +62,17 @@ fireUtil.getNewMeshData = function() {
     }
   };
 };
-fireUtil.meshItemTemplate = function(domPrefix, fireData) {
-  return '<div id="' + domPrefix + '-' + fireData.key + '" class="firebase-item">' +
-    '<div class="meshes-title"></div>' +
-    '<div class="meshes-avatar"></div>' +
-    '<div class="meshes-author"></div>' +
-    '<button class="meshes-remove mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">delete</i></button>' +
-    '<button class="meshes-details mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">settings</i></button>' +
-    '</div>';
+fireUtil.defaultItemTemplate = function(domPrefix, fireData) {
+  return `
+<div id="${domPrefix}-${fireData.key}" class="firebase-item">
+  <div class="${domPrefix}-title"></div>
+  <div class="${domPrefix}-avatar"></div>
+  <div class="${domPrefix}-author"></div>
+  <button class="${domPrefix}-remove mdl-button mdl-js-button mdl-button--icon">
+    <i class="material-icons">delete</i>
+  </button>
+  <button class="${domPrefix}-details mdl-button mdl-js-button mdl-button--icon">
+    <i class="material-icons">settings</i>
+  </button>
+</div>`;
 };
