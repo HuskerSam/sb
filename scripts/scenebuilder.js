@@ -127,10 +127,26 @@ scenebuilder.toggleBar = function(button, bar) {
     bar.parentNode.parentNode.insertBefore(bar.parentNode, null);
   }
 };
-scenebuilder.uploadMaterial = function() {
-
+scenebuilder.saveMaterial = function() {
+  let me = this;
+  let title = this.materialUploadTitle.value.trim();
+  fireUtil.newMaterial(title).then((result) => {
+    me.materialUploadTitle.value = '';
+    me.materialUploadDialog.close();
+  });
 };
 scenebuilder.initMaterialUpload = function() {
   let me = this;
-  
+  this.materialUploadDialog = document.getElementById('material-upload-dialog');
+  this.showMaterialUploadDialog = document.getElementById('material-upload-button');
+  this.materialUploadTitle = document.getElementById('material-upload-title');
+  this.materialUploadSave = this.materialUploadDialog.querySelector('.save');
+  this.materialUploadClose = this.materialUploadDialog.querySelector('.close');
+
+  if (!this.materialUploadDialog.showModal) {
+    dialogPolyfill.registerDialog(this.materialUploadDialog);
+  }
+  this.showMaterialUploadDialog.addEventListener('click', () => me.materialUploadDialog.showModal());
+  this.materialUploadClose.addEventListener('click', () => me.materialUploadDialog.close());
+  this.materialUploadSave.addEventListener('click', (e) => me.saveMaterial(), false);
 };

@@ -49,7 +49,6 @@
       <button id="sign-in-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign in with Google</button>
     </div>
   </div>
-
   <canvas id="renderCanvas"></canvas>
   <div id="main-page" style="display:none;">
     <div id="main-title-bar">
@@ -76,11 +75,13 @@
         </button>
         <div style="display:inline-block;">
           Materials<br>
-          <button id="materials-upload-button" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">cloud_upload</i>
+          <button id="material-upload-button" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">add</i>
         </button>
         </div>
-        <div id="materials-content">
+        <div style="flex:1;">
+          <div id="materials-content" style="width:100%;">
+          </div>
         </div>
       </div>
       <div class="mdl-grid items-panel flex-horizontal">
@@ -90,7 +91,7 @@
         <div style="display:inline-block;">
           Textures<br>
           <button id="texture-upload-button" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">cloud_upload</i>
+          <i class="material-icons">file_upload</i>
         </button>
         </div>
         <div id="textures-content">
@@ -118,7 +119,7 @@
     <h4 class="mdl-dialog__title">Upload Texture</h4>
     <div class="mdl-dialog__content">
       <div class="mdl-textfield mdl-js-textfield">
-        <label class="mdl-textfield__label" for="texture-object-title">Title</label>
+        <label class="mdl-textfield__label" for="texture-upload-title">Title</label>
         <input type="text" id="texture-upload-title" class="mdl-textfield__input" />
       </div>
       <input type="file" id="texture-upload-file" name="texture-upload-file" />
@@ -126,6 +127,20 @@
     </div>
     <div class="mdl-dialog__actions">
       <button type="button" class="mdl-button import">Upload</button>
+      <button type="button" class="mdl-button close">Cancel</button>
+    </div>
+  </dialog>
+
+  <dialog class="mdl-dialog" id="material-upload-dialog">
+    <h4 class="mdl-dialog__title">Create Material</h4>
+    <div class="mdl-dialog__content">
+      <div class="mdl-textfield mdl-js-textfield">
+        <label class="mdl-textfield__label" for="material-upload-title">Title</label>
+        <input type="text" id="material-upload-title" class="mdl-textfield__input" />
+      </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button save">Create</button>
       <button type="button" class="mdl-button close">Cancel</button>
     </div>
   </dialog>

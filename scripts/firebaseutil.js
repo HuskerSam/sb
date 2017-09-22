@@ -19,8 +19,8 @@ fireUtil.onAuthStateChanged = function(user) {
     this.fireSets.push(this.meshesFireSet);
     this.texturesFireSet = new FireSet('lib_textures', 'textures', ['title'], this.defaultItemTemplate);
     this.fireSets.push(this.texturesFireSet);
-    this.texturesFireSet = new FireSet('lib_materials', 'materials', ['title'], this.defaultItemTemplate);
-    this.fireSets.push(this.texturesFireSet);
+    this.materialsFireSet = new FireSet('lib_materials', 'materials', ['title'], this.defaultItemTemplate);
+    this.fireSets.push(this.materialsFireSet);
   } else {
     fireUtil.currentUser = {};
   }
@@ -68,6 +68,18 @@ fireUtil.newTexture = function(textureBlob, title) {
     });
   });
 };
+fireUtil.newMaterial = function(title) {
+  var me = this;
+  return new Promise(function(resolve, reject) {
+    let key = me.meshesFireSet.getKey();
+    let data = me.getNewMaterialData();
+    data.title = title;
+
+    me.materialsFireSet.set(key, data).then(function(e) {
+      resolve(e);
+    });
+  });
+};
 fireUtil.getNewMeshData = function() {
   return {
     title: 'Mesh',
@@ -93,6 +105,11 @@ fireUtil.getNewTextureData = function() {
     title: 'Texture',
     url: '',
     size: 0
+  };
+};
+fireUtil.getNewMaterialData = function() {
+  return {
+    title: 'Material'
   };
 };
 fireUtil.defaultItemTemplate = function(domPrefix, fireData) {
