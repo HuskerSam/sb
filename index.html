@@ -55,10 +55,10 @@
       <span style="float:left;font-size:20px;padding:8px;"> Scene Builder </span>
       <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
     </div>
-    <div style="display:inline-block;pointer-events:none;">
-      <div class="mdl-grid items-panel flex-horizontal">
+    <div style="pointer-events:none;">
+      <div class="mdl-grid items-panel flex-horizontal" style="display:inline-block;">
         <button id="collapse-meshes" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">expand_more</i>
+          <i class="material-icons">expand_less</i>
         </button>
         <div style="display:inline-block;">
           Meshes<br>
@@ -66,12 +66,12 @@
             <i class="material-icons">cloud_upload</i>
           </button>
         </div>
-        <div id="meshes-content">
+        <div id="meshes-content"  class="items-container" style="display:none;">
         </div>
       </div>
-      <div class="mdl-grid items-panel flex-horizontal">
+      <div class="mdl-grid items-panel flex-horizontal" style="display:inline-block;">
         <button id="collapse-materials" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">expand_more</i>
+          <i class="material-icons">expand_less</i>
         </button>
         <div style="display:inline-block;">
           Materials<br>
@@ -79,14 +79,12 @@
           <i class="material-icons">add</i>
         </button>
         </div>
-        <div style="flex:1;">
-          <div id="materials-content" style="width:100%;">
-          </div>
+        <div id="materials-content" class="items-container" style="display:none;">
         </div>
       </div>
-      <div class="mdl-grid items-panel flex-horizontal">
+      <div class="mdl-grid items-panel flex-horizontal" style="display:inline-block;">
         <button id="collapse-textures" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">expand_more</i>
+          <i class="material-icons">expand_less</i>
         </button>
         <div style="display:inline-block;">
           Textures<br>
@@ -94,7 +92,7 @@
           <i class="material-icons">file_upload</i>
         </button>
         </div>
-        <div id="textures-content">
+        <div id="textures-content" class="items-container" style="display:none;">
         </div>
       </div>
     </div>

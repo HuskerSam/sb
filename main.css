@@ -58,13 +58,19 @@ html, body {
 }
 
 .items-panel {
-  padding:4px;
   font-size:10pt;
   overflow-x:auto;
   overflow-y:hidden;
   z-index: 1;
+  border-radius: 10px;
+  margin:2px;
   background: rgba(255,255,255,.5);
   pointer-events: auto;
+}
+.items-container {
+  flex:1;
+  white-space:nowrap;
+  overflow:auto;
 }
 #main-title-bar {
   text-align:right;
