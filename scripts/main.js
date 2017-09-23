@@ -5,7 +5,7 @@ window.addEventListener('load', function() {
   babyUtil = new BabylonHelper("renderCanvas");
   babyUtil.setScene(babyUtil.createDefaultScene());
 
-  meshespopup.init();
+  editpopup.init();
   scenebuilder.init();
   document.getElementById('sign-in-button').addEventListener('click', function() {
     var provider = new firebase.auth.GoogleAuthProvider();

@@ -38,7 +38,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js" type="text/javascript" charset="utf-8"></script>
-
+  
   <link rel="stylesheet" href="main.css">
 </head>
 
@@ -66,7 +66,7 @@
             <i class="material-icons">cloud_upload</i>
           </button>
         </div>
-        <div id="meshes-content"  class="items-container" style="display:none;">
+        <div id="meshes-content" class="items-container" style="display:none;">
         </div>
       </div>
       <div class="mdl-grid items-panel flex-horizontal" style="display:inline-block;">
@@ -143,8 +143,24 @@
     </div>
   </dialog>
 
-<dialog class="mdl-dialog" id="material-edit-dialog">
-</dialog>
+  <dialog class="mdl-dialog" id="material-edit-dialog">
+    <h4 class="mdl-dialog__title">Edit Material</h4>
+    <div class="mdl-dialog__content">
+      <div id="material-preview-wrapper">
+        <canvas id="materialPreviewCanvas" style="width:100%;height:100%;"></canvas>
+      </div>
+      <div id="edit-material-fields-wrapper">
+        <div class="mdl-textfield mdl-js-textfield">
+          <label class="mdl-textfield__label" for="material-edit-title">Title</label>
+          <input type="text" id="material-edit-title" class="mdl-textfield__input" />
+        </div>
+      </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button save">Save</button>
+      <button type="button" class="mdl-button close">Cancel</button>
+    </div>
+  </dialog>
 
   <dialog class="mdl-dialog" id="mesh-details-dialog" style="width:93%;height:90%;">
     <div class="flex-vertical" style="height:100%;">
@@ -230,11 +246,11 @@
 
   <script src="https://unpkg.com/split.js/split.min.js"></script>
   <script src="scripts/firebaseutil.js"></script>
-  <script src="scripts/fireset.js"></script>
-  <script src="scripts/babylonutil.js"></script>
-  <script src="scripts/uiutil.js"></script>
-  <script src="scripts/meshespopup.js"></script>
+  <script src="scripts/clsfireset.js"></script>
+  <script src="scripts/clsbabylonhelper.js"></script>
+  <script src="scripts/clsuihelper.js"></script>
   <script src="scripts/scenebuilder.js"></script>
+  <script src="scripts/editpopup.js"></script>
   <script src="scripts/main.js"></script>
 </body>
 
