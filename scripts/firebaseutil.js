@@ -107,9 +107,32 @@ fireUtil.getNewTextureData = function() {
     size: 0
   };
 };
+//var materialSphere1 = new BABYLON.StandardMaterial("texture1", scene);
 fireUtil.getNewMaterialData = function() {
   return {
-    title: 'Material'
+    title: 'Material',
+    alpha: 0.5,
+    diffuse: this.getTextureOptionsData(),
+    emissive: this.getTextureOptionsData(),
+    ambient: this.getTextureOptionsData(),
+    specular: this.getTextureOptionsData(),
+    specularPower: 32,
+    useSpecularOverAlpha: false,
+    backFaceCulling: true,
+    wireframe: false
+  };
+};
+fireUtil.getTextureOptionsData = function() {
+  return {
+    color: [.5, .5, .5],
+    texture: {
+      name: '',
+      vOffset: 0.0,
+      uOffset: 0.0,
+      vScale: 1.0,
+      uScale: 1.0,
+      hasAlpha: false
+    }
   };
 };
 fireUtil.defaultItemTemplate = function(domPrefix, fireData) {
