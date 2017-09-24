@@ -38,8 +38,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js" type="text/javascript" charset="utf-8"></script>
-  
-  <link rel="stylesheet" href="main.css">
+  <script src="https://unpkg.com/split.js/split.min.js"></script>
 </head>
 
 <body>
@@ -169,8 +168,8 @@
           <canvas id="meshDetailCanvas" style="width:100%;height:100%;"></canvas>
         </div>
         <div id="meshes-details-tabs">
-          <div class="mdl-tabs__panel is-active" id="mesh-details-panel" style="width:100%;height:100%;overflow:auto;">
-            <div id="mesh-details-panel-fields">
+          <div class="tab-panel-mesh-details mdl-tabs__panel is-active canvaspopuptabpanel">
+            <div class="fields-container">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" id="mesh-details-title">
                 <label class="mdl-textfield__label" for="mesh-details-title">Title</label>
@@ -216,23 +215,23 @@
               </div>
             </div>
           </div>
-          <div class="mdl-tabs__panel is-active" id="mesh-json-panel" style="height:100%;overflow:hidden;display:none;">
+          <div class="tab-panel-fire-json mdl-tabs__panel is-active canvaspopuptabpanel">
             <div id="mesh-details-json" style="width:100%;height:100%;"></div>
           </div>
-          <div class="mdl-tabs__panel is-active" id="mesh-babylon-panel" style="height:100%;overflow:hidden;display:none;">
+          <div class="tab-panel-mesh-json mdl-tabs__panel is-active canvaspopuptabpanel">
             <div id="mesh-babylon-json" style="width:100%;height:100%;"></div>
           </div>
         </div>
       </div>
       <div style="padding:10px;">
-        <div id="mesh-apply-progress" style="display:none;margin-top:10px;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-        <div id="mesh-dialog-button-bar">
-          <button id="mesh-detail-tab-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
-          <button id="mesh-json-tab-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">JSON</button>
-          <button id="mesh-babylon-tab-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Babylon</button>
+        <div class="canvas-popup-progress-bar mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        <div class="canvas-popup-button-bar">
+          <button class="tab-button-mesh-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
+          <button class="tab-button-fire-json mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">JSON</button>
+          <button class="tab-button-mesh-json mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Babylon</button>
 
-          <button type="button" class="close-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Close</button>
-          <button type="button" class="apply-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Apply</button>
+          <button type="button" class="close-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Cancel</button>
+          <button type="button" class="save-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Save</button>
         </div>
       </div>
     </div>
@@ -244,14 +243,17 @@
   <script src="/__/firebase/3.9.0/firebase-storage.js"></script>
   <script src="/__/firebase/init.js"></script>
 
-  <script src="https://unpkg.com/split.js/split.min.js"></script>
-  <script src="scripts/firebaseutil.js"></script>
-  <script src="scripts/clsfireset.js"></script>
-  <script src="scripts/clsbabylonhelper.js"></script>
-  <script src="scripts/clsuihelper.js"></script>
-  <script src="scripts/scenebuilder.js"></script>
-  <script src="scripts/editpopup.js"></script>
-  <script src="scripts/main.js"></script>
+  <link rel="stylesheet" href="main.css">
+
+  <script src="cls/clsfireset.js"></script>
+  <script src="cls/clsfirefields.js"></script>
+  <script src="cls/clsbabylonhelper.js"></script>
+  <script src="cls/clsglobal.js"></script>
+  <script src="cls/clscanvaspopup.js"></script>
+  <script src="cls/clspoupupdialogs.js"></script>
+  <script src="cls/clsfirebasehelper.js"></script>
+  <script src="cls/clsscenebuilder.js"></script>
+  <script src="main.js"></script>
 </body>
 
 </html>

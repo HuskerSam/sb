@@ -102,12 +102,10 @@ class FireSet {
     return outer.childNodes[0];
   }
   showPopup(e, fireData) {
-    if (this.domPrefix === 'meshes')
-      editpopup.showEditMesh(fireData);
     if (this.domPrefix ==='textures')
       alert(fireData.val().url);
-    if (this.domPrefix === 'materials')
-      editpopup.showEditMaterials(fireData);
+    if (gG.popupDialogs.dialogs[this.domPrefix])
+      gG.popupDialogs.dialogs[this.domPrefix].show();      
   }
   removeElement(e, fireKey) {
     if (!confirm('Are you sure you want to delete this ' + this.domPrefix + '?'))
