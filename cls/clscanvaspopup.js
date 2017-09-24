@@ -48,8 +48,13 @@ class clsCanvasPopup {
     this.splitQS = splitQS;
     window.Split(splitQS, {
       minSize: [100, 100],
-      direction: 'vertical'
+      direction: 'vertical',
+      onDragEnd: () => me.splitDragEnd()
     });
+  }
+  splitDragEnd() {
+    for (let i in this.editors)
+      this.editors[i].resize();
   }
   showTab(tab) {
     for (let i in this.tabPanels)
