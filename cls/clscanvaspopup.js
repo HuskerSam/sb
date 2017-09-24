@@ -9,20 +9,17 @@ class clsCanvasPopup {
     this.serializeScene = true;
     this.fileName = 'file.babylon';
 
-    if (!this.dialog.showModal) {
+    if (!this.dialog.showModal)
       dialogPolyfill.registerDialog(this.dialog);
-    }
 
-    this.babyHelper = new BabylonHelper(canvasQS);
-    this.scene = this.meshEditBabyHelper.createDefaultScene();
+    this.babyHelper = new clsBabylonHelper(canvasQS);
+    this.scene = this.babyHelper.createDefaultScene();
     this.babyHelper.setScene(this.scene);
 
-    this.editorIds = editorsIds;
+    this.editorIds = editorIds;
     this.editors = [];
-    for (let i in editorIds) {
-      let id = editorIds[i];
-      this.editors.push(gG.editor(id));
-    }
+    for (let i in this.editorIds)
+      this.editors.push(gAPPP.editor(this.editorIds[i]));
 
     this.buttonBar = this.dialog.querySelector('.canvas-popup-button-bar');
     this.progressBar = this.dialog.querySelector('.canvas-popup-progress-bar');
@@ -37,8 +34,8 @@ class clsCanvasPopup {
     this.tabPanels = [];
 
     function initTab(tab) {
-      let btn = this.dialog.querySelector('tab-button-' + tab);
-      let pnl = this.dialog.querySelector('tab-panel-' + tab);
+      let btn = me.dialog.querySelector('.tab-button-' + tab);
+      let pnl = me.dialog.querySelector('.tab-panel-' + tab);
       me.tabButtons.push(btn);
       me.tabPanels.push(pnl);
       btn.addEventListener('click', (e) => me.showTab(pnl), false);
@@ -67,7 +64,7 @@ class clsCanvasPopup {
       return this.fireSet.setString(me.meshId, strScene, this.fileName);
     }
 
-    return gG.emptyPromise();
+    return gAPPP.emptyPromise();
   }
   commit() {
     let me = this;
@@ -87,30 +84,30 @@ class clsCanvasPopup {
     this.buttonBar.style.display = 'none';
     this.progressBar.style.display = '';
     this.id = fireData.key;
-    this.fireSet.setData(fireData);
+    this.fireFields.setData(fireData);
 
     this.dialog.showModal();
 
-    this.editors[0].setValue(JSON.stringify(this.fireSet.values));
-    gG.beautify(this.editors[0]);
+    this.editors[0].setValue(JSON.stringify(this.fireFields.values));
+    gAPPP.beautify(this.editors[0]);
 
     this.babyHelper.engine.resize();
     this.showTab(this.tabPanels[0]);
 
-    let url = this.fireSet.values.url.replace(gG.storagePrefix, '');
-    let meshName = this.fireSet.values.meshName;
+    let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
+    let meshName = this.fireFields.values.meshName;
     let me = this;
 
-    this.babyHelper.loadMesh(meshName, gG.storagePrefix, url, this.scene)
+    this.babyHelper.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
       .then((m) => me.finishShow(m));
   }
   finishShow(uiObject) {
     this.uiObject = uiObject;
 
-    let s = gG.stringify(m);
+    let s = gAPPP.stringify(uiObject);
     this.editors[1].setValue(s);
-    gG.beautify(this.editors[1]);
-    this.meshFireFields.paint(firebaseMeshData, this.uiObject);
+    gAPPP.beautify(this.editors[1]);
+    this.fireFields.paint(this.uiObject);
     this.fireFields.container.style.display = '';
     this.buttonBar.style.display = '';
     this.progressBar.style.display = 'none';

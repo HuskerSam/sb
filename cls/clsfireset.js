@@ -103,9 +103,9 @@ class FireSet {
   }
   showPopup(e, fireData) {
     if (this.domPrefix ==='textures')
-      alert(fireData.val().url);
-    if (gG.popupDialogs.dialogs[this.domPrefix])
-      gG.popupDialogs.dialogs[this.domPrefix].show();      
+      return alert(fireData.val().url);
+    if (gAPPP.popupDialogs.dialogs[this.domPrefix])
+      return gAPPP.popupDialogs.dialogs[this.domPrefix].show(fireData);
   }
   removeElement(e, fireKey) {
     if (!confirm('Are you sure you want to delete this ' + this.domPrefix + '?'))

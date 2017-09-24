@@ -25,14 +25,14 @@ class FireFields {
 
     for (let i in this.fields) {
       let d = this.fields[i];
-      let v = gG.path(this.values, d.fireSetField);
+      let v = gAPPP.path(this.values, d.fireSetField);
       if (d.domQuerySelector)
-        let v = d.domElement.value;
+        v = d.domElement.value;
       if (d.babylonMeshField)
         if (this.uiObject !== null)
-          gG.path(this.uiObject, d.babylonMeshField, v);
+          gAPPP.path(this.uiObject, d.babylonMeshField, v);
       if (d.fireSetField)
-        gG.path(this.values, d.fireSetField, v);
+        gAPPP.path(this.values, d.fireSetField, v);
     }
   }
   setData(fireData) {
@@ -50,12 +50,12 @@ class FireFields {
     this.active = true;
     for (let i in this.fields) {
       let d = this.fields[i];
-      let v = gG.path(this.values, d.fireSetField);
+      let v = gAPPP.path(this.values, d.fireSetField);
       if (d.domElement)
         d.domElement.value = v;
       if (d.babylonMeshField)
         if (this.uiObject !== null)
-          gG.path(this.uiObject, d.babylonMeshField, v);
+          gAPPP.path(this.uiObject, d.babylonMeshField, v);
     }
 
     let mdlInputs = this.container.querySelectorAll('.mdl-js-textfield');

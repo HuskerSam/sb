@@ -1,10 +1,11 @@
-class BabylonHelper {
-  constructor(canvasName) {
-    this.canvas = document.getElementById(canvasName);
+class clsBabylonHelper {
+  constructor(canvasQS) {
+    this.canvasQS = canvasQS;
+    this.canvas = document.querySelector(this.canvasQS);
     this.engine = new BABYLON.Engine(this.canvas, true);
     this.engine.enableOfflineSupport = false;
 
-    var me = this;
+    let me = this;
     window.addEventListener("resize", function() {
       me.engine.resize();
     });

@@ -1,5 +1,6 @@
-class clsGlobal {
+class clsApp {
   constructor() {
+    window.gAPPP = this;
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
     this.popupDialogs = new clsPopupDialogs();
     this.sceneBuilder = new clsSceneBuilder();
@@ -28,7 +29,7 @@ class clsGlobal {
     let cache = [];
     let result = JSON.stringify(obj, function(key, value) {
       if (typeof value === 'object' && value !== null) {
-        if (cache.pathOf(value) !== -1) {
+        if (cache.indexOf(value) !== -1) {
           return;
         }
         cache.push(value);

@@ -1,8 +1,8 @@
 class clsSceneBuilder {
   constructor() {
-    this.babyUtil = new BabylonHelper("#renderCanvas");
+    this.babyUtil = new clsBabylonHelper("#renderCanvas");
     this.scene = this.babyUtil.createDefaultScene();
-    this.babyUtil.setScene(scene);
+    this.babyUtil.setScene(this.scene);
 
     this.initMeshUpload();
     this.initTextureUpload();
