@@ -5,7 +5,8 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "functions"
+      "functions",
+      "assets/babylon/*.*"
     ],
     "headers": [{
       "source": "index.html",

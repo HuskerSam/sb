@@ -34,7 +34,7 @@ html, body {
   border-radius: 32px;
   border: 2px white solid;
   margin-right: 10px;
-  background-image: url('./silhouette.jpg');
+  background-image: url('./assets/silhouette.jpg');
 }
 
 .model-username {
