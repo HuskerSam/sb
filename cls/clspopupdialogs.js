@@ -45,9 +45,7 @@ class clsPopupDialogs {
       domQuerySelector: '#mesh-details-rotate-z',
       babylonMeshField: 'rotation.z'
     }];
-    let splitQS = ['#mesh-detail-wrapper', '#meshes-details-tabs'];
-    this.dialogs['meshes'] = new clsCanvasPopup('#mesh-details-dialog', '#meshDetailCanvas',
-      meshTabs, meshFields, meshEditorIds, splitQS);
+    this.dialogs['meshes'] = new clsCanvasPopup('#mesh-details-dialog', meshTabs, meshFields, meshEditorIds);
 
     this.dialogs['meshes-create'] = new clsCreatePopup('#mesh-upload-dialog', ['id'], 'uploadMesh');
     this.dialogs['textures-create'] = new clsCreatePopup('#texture-upload-dialog', ['title'], 'uploadTexture');

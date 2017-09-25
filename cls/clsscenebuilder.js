@@ -1,6 +1,6 @@
 class clsSceneBuilder {
   constructor() {
-    this.babyHelper = new clsBabylonHelper("#renderCanvas");
+    this.babyHelper = new clsBabylonHelper(document.querySelector("#renderCanvas"));
     this.scene = this.babyHelper.createDefaultScene();
     this.babyHelper.setScene(this.scene);
     this.toolbarItems = {};

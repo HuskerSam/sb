@@ -1,6 +1,7 @@
 class clsCanvasPopup {
-  constructor(dialogQS, canvasQS, tabs, fields, editorIds, splitQS) {
+  constructor(dialogQS, tabs, fields, editorIds) {
     let me = this;
+    this.dialogQS = dialogQS;
     this.dialog = document.querySelector(dialogQS);
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
@@ -12,9 +13,8 @@ class clsCanvasPopup {
     if (!this.dialog.showModal)
       dialogPolyfill.registerDialog(this.dialog);
 
-    this.babyHelper = new clsBabylonHelper(canvasQS);
-    this.scene = this.babyHelper.createDefaultScene();
-    this.babyHelper.setScene(this.scene);
+    this.canvas = this.dialog.querySelector('.popup-canvas');
+    this.babyHelper = new clsBabylonHelper(this.canvas);
 
     this.editorIds = editorIds;
     this.editors = [];
@@ -33,24 +33,23 @@ class clsCanvasPopup {
     this.tabButtons = [];
     this.tabPanels = [];
 
-    function initTab(tab) {
-      let btn = me.dialog.querySelector('.tab-button-' + tab);
-      let pnl = me.dialog.querySelector('.tab-panel-' + tab);
-      me.tabButtons.push(btn);
-      me.tabPanels.push(pnl);
-      btn.addEventListener('click', (e) => me.showTab(pnl), false);
-    }
-    for (let i in this.tabs) {
-      let tab = this.tabs[i];
-      initTab(tab);
-    }
+    for (let i in this.tabs) this.initTab(this.tabs[i]);
 
-    this.splitQS = splitQS;
-    window.Split(splitQS, {
+    let t = this.dialogQS + ' .popup-canvas';
+    let b = this.dialogQS + ' .popup-detail-view';
+    window.Split([t, b], {
       minSize: [100, 100],
       direction: 'vertical',
       onDragEnd: () => me.splitDragEnd()
     });
+  }
+  initTab(tab) {
+    let me = this;
+    let btn = this.dialog.querySelector('.tab-button-' + tab);
+    let pnl = this.dialog.querySelector('.tab-panel-' + tab);
+    this.tabButtons.push(btn);
+    this.tabPanels.push(pnl);
+    btn.addEventListener('click', (e) => me.showTab(pnl), false);
   }
   splitDragEnd() {
     for (let i in this.editors)
@@ -97,6 +96,8 @@ class clsCanvasPopup {
     this.editors[0].setValue(JSON.stringify(this.fireFields.values));
     gAPPP.beautify(this.editors[0]);
 
+    this.scene = this.babyHelper.createDefaultScene();
+    this.babyHelper.setScene(this.scene);
     this.babyHelper.engine.resize();
     this.showTab(this.tabPanels[0]);
 
@@ -127,6 +128,9 @@ class clsCanvasPopup {
     });
   }
   close() {
+    this.scene = this.babyHelper.createDefaultScene();
+    this.babyHelper.setScene(this.scene);
+    this.babyHelper.engine.resize();
     this.fireFields.active = false;
     this.dialog.close();
   }

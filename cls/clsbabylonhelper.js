@@ -1,7 +1,6 @@
 class clsBabylonHelper {
-  constructor(canvasQS) {
-    this.canvasQS = canvasQS;
-    this.canvas = document.querySelector(this.canvasQS);
+  constructor(canvas) {
+    this.canvas = canvas;
     this.engine = new BABYLON.Engine(this.canvas, true);
     this.engine.enableOfflineSupport = false;
 

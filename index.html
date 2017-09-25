@@ -129,32 +129,11 @@
     </div>
   </dialog>
 
-  <dialog class="mdl-dialog" id="material-edit-dialog">
-    <h4 class="mdl-dialog__title">Edit Material</h4>
-    <div class="mdl-dialog__content">
-      <div id="material-preview-wrapper">
-        <canvas id="materialPreviewCanvas" style="width:100%;height:100%;"></canvas>
-      </div>
-      <div id="edit-material-fields-wrapper">
-        <div class="mdl-textfield mdl-js-textfield">
-          <label class="mdl-textfield__label" for="material-edit-title">Title</label>
-          <input type="text" id="material-edit-title" class="mdl-textfield__input" />
-        </div>
-      </div>
-    </div>
-    <div class="mdl-dialog__actions">
-      <button type="button" class="mdl-button save">Save</button>
-      <button type="button" class="mdl-button close">Cancel</button>
-    </div>
-  </dialog>
-
   <dialog class="mdl-dialog" id="mesh-details-dialog" style="width:93%;height:90%;">
-    <div class="flex-vertical" style="height:100%;">
-      <div style="overflow:hidden;flex:1">
-        <div id="mesh-detail-wrapper">
-          <canvas id="meshDetailCanvas" style="width:100%;height:100%;"></canvas>
-        </div>
-        <div id="meshes-details-tabs">
+    <div style="width:100%;height:100%;" class="flex-vertical">
+      <div style="flex:1;width:100%;" class="popup-canvas-body">
+        <canvas class="popup-canvas" style="width:100%;"></canvas>
+        <div class="popup-detail-view">
           <div class="tab-panel-mesh-details mdl-tabs__panel is-active canvaspopuptabpanel">
             <div class="fields-container">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -210,7 +189,7 @@
           </div>
         </div>
       </div>
-      <div style="padding:10px;">
+      <div class="popup-canvas-buttons">
         <div class="canvas-popup-progress-bar mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
         <div class="canvas-popup-button-bar">
           <button class="tab-button-mesh-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
@@ -221,6 +200,25 @@
           <button type="button" class="save-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Save</button>
         </div>
       </div>
+    </div>
+  </dialog>
+
+  <dialog class="mdl-dialog" id="material-edit-dialog" style="width:100%;height:100%;">
+    <h4 class="mdl-dialog__title">Edit Material</h4>
+    <div class="mdl-dialog__content">
+      <div id="material-preview-wrapper">
+        <canvas id="materialPreviewCanvas" style="width:100%;height:100%;"></canvas>
+      </div>
+      <div id="edit-material-fields-wrapper">
+        <div class="mdl-textfield mdl-js-textfield">
+          <label class="mdl-textfield__label" for="material-edit-title">Title</label>
+          <input type="text" id="material-edit-title" class="mdl-textfield__input" />
+        </div>
+      </div>
+    </div>
+    <div class="mdl-dialog__actions">
+      <button type="button" class="mdl-button save">Save</button>
+      <button type="button" class="mdl-button close">Cancel</button>
     </div>
   </dialog>
 
