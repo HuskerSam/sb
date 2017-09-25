@@ -4,8 +4,7 @@ class clsSceneBuilder {
     this.scene = this.babyHelper.createDefaultScene();
     this.babyHelper.setScene(this.scene);
 
-    this.initTextureUpload();
-    this.initMaterialUpload();
+//    this.initMaterialUpload();
     this.initToolbars();
   }
   initToolbars() {
@@ -23,51 +22,6 @@ class clsSceneBuilder {
       (e) => me.toggleBar(me.skinsCollapseButton, me.skinsCollapsePanel), false);
     this.materialsCollapseButton.addEventListener('click',
       (e) => me.toggleBar(me.materialsCollapseButton, me.materialsCollapsePanel), false);
-  }
-
-  uploadTexture() {
-    let me = this;
-    let file = me.textureUploadFile.files[0];
-    let title = me.textureUploadTitle.value.trim();
-    if (!title) {
-      alert('Need a title to upload');
-      return;
-    }
-    me.textureUploadClose.style.display = 'none';
-    me.textureUploadImport.style.display = 'none';
-    me.textureUploadProgress.style.display = '';
-    gAPPP.firebaseHelper.newTexture(file, title).then(function(result) {
-      me.textureUploadTitle.value = '';
-      me.textureUploadFile.value = '';
-      me.textureUploadClose.style.display = '';
-      me.textureUploadImport.style.display = '';
-      me.textureUploadProgress.style.display = 'none';
-      me.textureUploadDialog.close();
-    });
-  }
-  initTextureUpload() {
-    let me = this;
-    this.textureUploadDialog = document.getElementById('texture-upload-dialog');
-    this.showTextureUploadDialog = document.getElementById('texture-upload-button');
-    this.textureUploadFile = document.getElementById('texture-upload-file');
-    this.textureUploadTitle = document.getElementById('texture-upload-title');
-    this.textureUploadProgress = document.getElementById('texture-upload-progress');
-    this.textureUploadImport = this.textureUploadDialog.querySelector('.import');
-    this.textureUploadClose = this.textureUploadDialog.querySelector('.close');
-
-    if (!this.textureUploadDialog.showModal) {
-      dialogPolyfill.registerDialog(this.textureUploadDialog);
-    }
-    this.showTextureUploadDialog.addEventListener('click', function() {
-      me.textureUploadClose.style.display = '';
-      me.textureUploadImport.style.display = '';
-      me.textureUploadProgress.style.display = 'none';
-      me.textureUploadDialog.showModal();
-    });
-    this.textureUploadClose.addEventListener('click', function() {
-      me.textureUploadDialog.close();
-    });
-    this.textureUploadImport.addEventListener('click', (e) => me.uploadTexture(), false);
   }
   toggleBar(button, bar) {
     if (bar.style.display === 'none') {

@@ -139,3 +139,7 @@ html, body {
   height:100%;
   overflow:auto;
 }
+.popup-progress-bar {
+  display:none;
+  margin-top:10px;
+}

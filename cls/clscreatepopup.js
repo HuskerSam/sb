@@ -1,7 +1,7 @@
-class clsSimplePopup {
-  constructor(dialogQS, fields, openBtnQS, babyHelper) {
+class clsCreatePopup {
+  constructor(dialogQS, fields, openBtnQS, type) {
     let me = this;
-    this.babyHelper = babyHelper;
+    this.type = type;
     this.dialog = document.querySelector(dialogQS);
     this.openBtn = document.querySelector(openBtnQS);
     this.fileDom = this.dialog.querySelector('.popup-file');
@@ -61,6 +61,29 @@ class clsSimplePopup {
       let f = this.fields[i];
       this.fieldsDom[f].value = '';
     }
+    if (this.fileDom)
+      this.fileDom.value = '';
+  }
+  createPromise() {
+    let me = this;
+    if (this.type === 'uploadMesh') {
+      return new Promise((resolve, reject) => {
+        this.importMesh().then((mesh) => {
+          let id = me.fieldsValues['id'];
+          let strMesh = JSON.stringify(mesh);
+          gAPPP.firebaseHelper.newMesh(strMesh, id).then((r) => resolve(r));
+        });
+      });
+    }
+    if (this.type === 'uploadTexture') {
+      return new Promise((resolve, reject) => {
+        let title = me.fieldsValues['title'];
+        let file = me.fileDom.files[0];
+        gAPPP.firebaseHelper.newTexture(file, title).then((r) => resolve(r));
+      });
+    }
+
+    return gAPPP.emptyPromise();
   }
   create() {
     let me = this;
@@ -74,18 +97,12 @@ class clsSimplePopup {
     this.popupContent.style.display = 'none';
     this.progressBar.style.display = 'block';
 
-    this.importMesh().then((mesh) => {
-      let id = this.fieldsValues['id'];
-      let strMesh = JSON.stringify(mesh);
-      gAPPP.firebaseHelper.newMesh(strMesh, id)
-        .then((r) => {
-          me.clear();
-          me.fileDom.value = '';
-          this.popupButtons.style.display = 'block';
-          this.popupContent.style.display = 'block';
-          this.progressBar.style.display = 'none';
-          me.dialog.close();
-        });
+    this.createPromise().then((r) => {
+      me.clear();
+      me.popupButtons.style.display = 'block';
+      me.popupContent.style.display = 'block';
+      me.progressBar.style.display = 'none';
+      me.dialog.close();
     });
   }
 }

@@ -49,6 +49,7 @@ class clsPopupDialogs {
     this.dialogs['meshes'] = new clsCanvasPopup('#mesh-details-dialog', '#meshDetailCanvas',
       meshTabs, meshFields, meshEditorIds, splitQS);
 
-    this.dialogs['mesh-upload'] = new clsSimplePopup('#mesh-upload-dialog', ['id'], '#mesh-upload-button');
+    this.dialogs['mesh-upload'] = new clsCreatePopup('#mesh-upload-dialog', ['id'], '#mesh-upload-button', 'uploadMesh');
+    this.dialogs['texture-upload'] = new clsCreatePopup('#texture-upload-dialog', ['title'], '#texture-upload-button', 'uploadTexture');
   }
 }
