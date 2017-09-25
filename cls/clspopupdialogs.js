@@ -2,8 +2,6 @@ class clsPopupDialogs {
   constructor() {
     this.dialogs = {};
 
-    let meshEditorIds = ['mesh-details-json', 'mesh-babylon-json'];
-    let meshTabs = ['mesh-details', 'fire-json', 'mesh-json'];
     let meshFields = [{
       fireSetField: 'title',
       domQuerySelector: '#mesh-details-title',
@@ -45,8 +43,20 @@ class clsPopupDialogs {
       domQuerySelector: '#mesh-details-rotate-z',
       babylonMeshField: 'rotation.z'
     }];
-    this.dialogs['meshes'] = new clsCanvasPopup('#mesh-details-dialog', meshTabs, meshFields, meshEditorIds);
 
+    let materialFields = [{
+      fireSetField: 'title',
+      domQuerySelector: '#material-details-title',
+      babylonMeshField: null
+    }, {
+      fireSetField: 'color',
+      domQuerySelector: '#material-details-color',
+      babylonMeshField: null
+    }];
+
+    this.dialogs['meshes-edit'] = new clsCanvasPopup('mesh', ['details', 'json', 'babylon'], meshFields);
+    this.dialogs['materials-edit'] = new clsCanvasPopup('material', ['details', 'json'], materialFields);
+    
     this.dialogs['meshes-create'] = new clsCreatePopup('#mesh-upload-dialog', ['id'], 'uploadMesh');
     this.dialogs['textures-create'] = new clsCreatePopup('#texture-upload-dialog', ['title'], 'uploadTexture');
     this.dialogs['materials-create'] = new clsCreatePopup('#material-upload-dialog', ['title', 'color'], 'uploadMaterial');

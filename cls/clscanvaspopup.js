@@ -1,8 +1,9 @@
 class clsCanvasPopup {
-  constructor(dialogQS, tabs, fields, editorIds) {
+  constructor(tag, tabs, fields) {
     let me = this;
-    this.dialogQS = dialogQS;
-    this.dialog = document.querySelector(dialogQS);
+    this.tag = tag;
+    this.dialogQS = '#' + this.tag + '-details-dialog';
+    this.dialog = document.querySelector(this.dialogQS);
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.fireFields = new clsFireFields(fields, this.fieldsContainer);
@@ -16,10 +17,17 @@ class clsCanvasPopup {
     this.canvas = this.dialog.querySelector('.popup-canvas');
     this.babyHelper = new clsBabylonHelper(this.canvas);
 
-    this.editorIds = editorIds;
     this.editors = [];
-    for (let i in this.editorIds)
-      this.editors.push(gAPPP.editor(this.editorIds[i]));
+    let fireEditorId = this.tag + '-details-json';
+    if (this.dialog.querySelector('#' + fireEditorId)) {
+      this.fireEditor = gAPPP.editor(fireEditorId);
+      this.editors.push(this.fireEditor);
+    }
+    let babylonEditorId = this.tag + '-details-babylon';
+    if (this.dialog.querySelector('#' + babylonEditorId)) {
+      this.babylonEditor = gAPPP.editor(babylonEditorId);
+      this.editors.push(this.babylonEditor);
+    }
 
     this.buttonBar = this.dialog.querySelector('.canvas-popup-button-bar');
     this.progressBar = this.dialog.querySelector('.canvas-popup-progress-bar');
@@ -93,27 +101,45 @@ class clsCanvasPopup {
 
     this.dialog.showModal();
 
-    this.editors[0].setValue(JSON.stringify(this.fireFields.values));
-    gAPPP.beautify(this.editors[0]);
-
     this.scene = this.babyHelper.createDefaultScene();
     this.babyHelper.setScene(this.scene);
     this.babyHelper.engine.resize();
     this.showTab(this.tabPanels[0]);
 
-    let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
-    let meshName = this.fireFields.values.meshName;
-    let me = this;
+    if (this.tag === 'mesh') {
+      let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
+      let meshName = this.fireFields.values.meshName;
+      let me = this;
 
-    this.babyHelper.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
-      .then((m) => me.finishShow(m));
+      this.babyHelper.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
+        .then((m) => me.finishMeshShow(m));
+
+      return;
+    }
+    if (this.tag === 'material') {
+      this.finishMaterialShow(null);
+    }
   }
-  finishShow(uiObject) {
+  finishMaterialShow(uiObject) {
     this.uiObject = uiObject;
 
-    let s = gAPPP.stringify(uiObject);
-    this.editors[1].setValue(s);
-    gAPPP.beautify(this.editors[1]);
+    this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
+    gAPPP.beautify(this.fireEditor);
+
+    this.fireFields.paint(this.uiObject);
+    this.fireFields.container.style.display = '';
+    this.buttonBar.style.display = '';
+    this.progressBar.style.display = 'none';
+  }
+  finishMeshShow(uiObject) {
+    this.uiObject = uiObject;
+
+    this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
+    gAPPP.beautify(this.fireEditor);
+
+    this.babylonEditor.setValue(gAPPP.stringify(uiObject));
+    gAPPP.beautify(this.babylonEditor);
+
     this.fireFields.paint(this.uiObject);
     this.fireFields.container.style.display = '';
     this.buttonBar.style.display = '';

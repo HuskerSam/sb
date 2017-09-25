@@ -66,6 +66,8 @@
       </div>
     </div>
   </div>
+
+  <!-- CREATE DIALOGS -->
   <dialog class="mdl-dialog" id="mesh-upload-dialog">
     <h4 class="mdl-dialog__title">Import .babylon Mesh</h4>
     <div class="mdl-dialog__content">
@@ -85,7 +87,6 @@
       </div>
     </div>
   </dialog>
-
   <dialog class="mdl-dialog" id="texture-upload-dialog">
     <h4 class="mdl-dialog__title">Upload Texture</h4>
     <div class="mdl-dialog__content">
@@ -105,7 +106,6 @@
       </div>
     </div>
   </dialog>
-
   <dialog class="mdl-dialog" id="material-upload-dialog">
     <h4 class="mdl-dialog__title">Create Material</h4>
     <div class="mdl-dialog__content">
@@ -128,13 +128,15 @@
       </div>
     </div>
   </dialog>
+  <!-- CREATE DIALOGS END -->
 
-  <dialog class="mdl-dialog" id="mesh-details-dialog" style="width:93%;height:90%;">
+  <!-- EDIT DIALOGS -->
+  <dialog class="mdl-dialog" id="mesh-details-dialog" style="width:96%;height:92%;background:rgba(255,255,255,.5)">
     <div style="width:100%;height:100%;" class="flex-vertical">
       <div style="flex:1;width:100%;" class="popup-canvas-body">
         <canvas class="popup-canvas" style="width:100%;"></canvas>
         <div class="popup-detail-view">
-          <div class="tab-panel-mesh-details mdl-tabs__panel is-active canvaspopuptabpanel">
+          <div class="tab-panel-details canvaspopuptabpanel">
             <div class="fields-container">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" id="mesh-details-title">
@@ -181,20 +183,20 @@
               </div>
             </div>
           </div>
-          <div class="tab-panel-fire-json mdl-tabs__panel is-active canvaspopuptabpanel">
+          <div class="tab-panel-json canvaspopuptabpanel">
             <div id="mesh-details-json" style="width:100%;height:100%;"></div>
           </div>
-          <div class="tab-panel-mesh-json mdl-tabs__panel is-active canvaspopuptabpanel">
-            <div id="mesh-babylon-json" style="width:100%;height:100%;"></div>
+          <div class="tab-panel-babylon canvaspopuptabpanel">
+            <div id="mesh-details-babylon" style="width:100%;height:100%;"></div>
           </div>
         </div>
       </div>
       <div class="popup-canvas-buttons">
         <div class="canvas-popup-progress-bar mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
         <div class="canvas-popup-button-bar">
-          <button class="tab-button-mesh-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
-          <button class="tab-button-fire-json mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">JSON</button>
-          <button class="tab-button-mesh-json mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Babylon</button>
+          <button class="tab-button-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
+          <button class="tab-button-json mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">JSON</button>
+          <button class="tab-button-babylon mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Babylon</button>
 
           <button type="button" class="close-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Cancel</button>
           <button type="button" class="save-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Save</button>
@@ -202,25 +204,43 @@
       </div>
     </div>
   </dialog>
-
-  <dialog class="mdl-dialog" id="material-edit-dialog" style="width:100%;height:100%;">
-    <h4 class="mdl-dialog__title">Edit Material</h4>
-    <div class="mdl-dialog__content">
-      <div id="material-preview-wrapper">
-        <canvas id="materialPreviewCanvas" style="width:100%;height:100%;"></canvas>
+  <dialog class="mdl-dialog" id="material-details-dialog" style="width:96%;height:92%;background:rgba(255,255,255,.5);">
+    <div style="width:100%;height:100%;" class="flex-vertical">
+      <div style="flex:1;width:100%;" class="popup-canvas-body">
+        <canvas class="popup-canvas" style="width:100%;"></canvas>
+        <div class="popup-detail-view">
+          <div class="tab-panel-details canvaspopuptabpanel">
+            <div class="fields-container">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="material-details-title">
+                <label class="mdl-textfield__label" for="material-details-title">Title</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="material-details-default-color">
+                <label class="mdl-textfield__label" for="material-details-color">Color</label>
+              </div>
+              <br>
+            </div>
+          </div>
+          <div class="tab-panel-json canvaspopuptabpanel">
+            <div id="material-details-json" style="width:100%;height:100%;"></div>
+          </div>
+        </div>
       </div>
-      <div id="edit-material-fields-wrapper">
-        <div class="mdl-textfield mdl-js-textfield">
-          <label class="mdl-textfield__label" for="material-edit-title">Title</label>
-          <input type="text" id="material-edit-title" class="mdl-textfield__input" />
+      <div class="popup-canvas-buttons">
+        <div class="canvas-popup-progress-bar mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+        <div class="canvas-popup-button-bar">
+          <button class="tab-button-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
+          <button class="tab-button-json mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">JSON</button>
+
+          <button type="button" class="close-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Cancel</button>
+          <button type="button" class="save-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Save</button>
         </div>
       </div>
     </div>
-    <div class="mdl-dialog__actions">
-      <button type="button" class="mdl-button save">Save</button>
-      <button type="button" class="mdl-button close">Cancel</button>
-    </div>
   </dialog>
+  <!-- EDIT DIALOGS END -->
+
 
   <script src="/__/firebase/3.9.0/firebase-app.js"></script>
   <script src="/__/firebase/3.9.0/firebase-auth.js"></script>

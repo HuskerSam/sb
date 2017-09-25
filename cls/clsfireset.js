@@ -109,10 +109,10 @@ class FireSet {
     return outer.childNodes[0];
   }
   showPopup(e, key) {
-    if (this.domPrefix ==='textures')
+    if (this.domPrefix === 'textures-edit')
       return alert(this.fireDataStash[key].val().url);
-    if (gAPPP.popupDialogs.dialogs[this.domPrefix])
-      return gAPPP.popupDialogs.dialogs[this.domPrefix].show(this.fireDataStash[key], this);
+    if (gAPPP.popupDialogs.dialogs[this.domPrefix + '-edit'])
+      return gAPPP.popupDialogs.dialogs[this.domPrefix + '-edit'].show(this.fireDataStash[key], this);
   }
   removeElement(e, fireKey) {
     if (!confirm('Are you sure you want to delete this ' + this.domPrefix + '?'))
