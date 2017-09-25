@@ -48,5 +48,7 @@ class clsPopupDialogs {
     let splitQS = ['#mesh-detail-wrapper', '#meshes-details-tabs'];
     this.dialogs['meshes'] = new clsCanvasPopup('#mesh-details-dialog', '#meshDetailCanvas',
       meshTabs, meshFields, meshEditorIds, splitQS);
+
+    this.dialogs['mesh-upload'] = new clsSimplePopup('#mesh-upload-dialog', ['id'], '#mesh-upload-button');
   }
 }

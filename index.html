@@ -92,16 +92,20 @@
   <dialog class="mdl-dialog" id="mesh-upload-dialog">
     <h4 class="mdl-dialog__title">Import .babylon Mesh</h4>
     <div class="mdl-dialog__content">
-      <div class="mdl-textfield mdl-js-textfield">
-        <label class="mdl-textfield__label" for="mesh-object-id">Id</label>
-        <input type="text" id="mesh-object-id" class="mdl-textfield__input" />
+      <div class="popup-content">
+        <div class="mdl-textfield mdl-js-textfield">
+          <label class="mdl-textfield__label" for="mesh-object-id">Id</label>
+          <input type="text" id="mesh-object-id" class="mdl-textfield__input simple-popup-field-id" />
+        </div>
+        <input type="file" id="mesh-upload-file" name="mesh-upload-file" class="popup-file" />
       </div>
-      <input type="file" id="mesh-upload-file" name="mesh-upload-file" />
-      <div id="mesh-upload-progress" style="display:none;margin-top:10px;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
     </div>
     <div class="mdl-dialog__actions">
-      <button type="button" class="mdl-button import">Import</button>
-      <button type="button" class="mdl-button close">Cancel</button>
+      <div style="display:none;margin-top:10px;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate popup-progress-bar"></div>
+      <div class="popup-buttons">
+        <button type="button" class="mdl-button create">Import</button>
+        <button type="button" class="mdl-button cancel">Cancel</button>
+      </div>
     </div>
   </dialog>
 
@@ -241,6 +245,7 @@
   <script src="cls/clsfireset.js"></script>
   <script src="cls/clsfirefields.js"></script>
   <script src="cls/clsbabylonhelper.js"></script>
+  <script src="cls/clssimplepopup.js"></script>
   <script src="cls/clscanvaspopup.js"></script>
   <script src="cls/clspopupdialogs.js"></script>
   <script src="cls/clsfirebasehelper.js"></script>

@@ -1,10 +1,9 @@
 class clsSceneBuilder {
   constructor() {
-    this.babyUtil = new clsBabylonHelper("#renderCanvas");
-    this.scene = this.babyUtil.createDefaultScene();
-    this.babyUtil.setScene(this.scene);
+    this.babyHelper = new clsBabylonHelper("#renderCanvas");
+    this.scene = this.babyHelper.createDefaultScene();
+    this.babyHelper.setScene(this.scene);
 
-    this.initMeshUpload();
     this.initTextureUpload();
     this.initMaterialUpload();
     this.initToolbars();
@@ -25,54 +24,7 @@ class clsSceneBuilder {
     this.materialsCollapseButton.addEventListener('click',
       (e) => me.toggleBar(me.materialsCollapseButton, me.materialsCollapsePanel), false);
   }
-  initMeshUpload() {
-    let me = this;
-    this.meshUploadDialog = document.getElementById('mesh-upload-dialog');
-    this.showMeshUploadDialog = document.getElementById('mesh-upload-button');
-    this.meshUploadFileDom = document.getElementById('mesh-upload-file');
-    this.meshObjIdUpload = document.getElementById('mesh-object-id');
-    this.importMeshDialogProgress = document.getElementById('mesh-upload-progress');
-    this.importMeshUploadButton = this.meshUploadDialog.querySelector('.import');
-    this.meshUploadDialogClose = this.meshUploadDialog.querySelector('.close');
 
-    if (!this.meshUploadDialog.showModal) {
-      dialogPolyfill.registerDialog(this.meshUploadDialog);
-    }
-    this.showMeshUploadDialog.addEventListener('click', function() {
-      me.meshUploadDialogClose.style.display = '';
-      me.importMeshUploadButton.style.display = '';
-      me.importMeshDialogProgress.style.display = 'none';
-      me.meshUploadDialog.showModal();
-    });
-    this.meshUploadDialogClose.addEventListener('click', function() {
-      me.meshUploadDialog.close();
-    });
-    this.importMeshUploadButton.addEventListener('click', (e) => me.uploadMesh(), false);
-  }
-  uploadMesh() {
-    let me = this;
-    let file = me.meshUploadFileDom.files[0];
-    let objId = me.meshObjIdUpload.value.trim();
-    if (!objId) {
-      alert('Need an id to import');
-      return;
-    }
-    me.meshUploadDialogClose.style.display = 'none';
-    me.importMeshUploadButton.style.display = 'none';
-    me.importMeshDialogProgress.style.display = '';
-    gAPPP.firebaseHelper.fileToURL(file).then(function(fileData) {
-      me.babyUtil.serializeMesh(objId, "", "data:" + fileData).then(function(meshJSON) {
-        gAPPP.firebaseHelper.newMesh(JSON.stringify(meshJSON), objId).then(function(result) {
-          me.meshObjIdUpload.value = '';
-          me.meshUploadFileDom.value = '';
-          me.meshUploadDialogClose.style.display = '';
-          me.importMeshUploadButton.style.display = '';
-          me.importMeshDialogProgress.style.display = 'none';
-          me.meshUploadDialog.close();
-        });
-      });
-    });
-  }
   uploadTexture() {
     let me = this;
     let file = me.textureUploadFile.files[0];

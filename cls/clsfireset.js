@@ -109,7 +109,7 @@ class FireSet {
   }
   showPopup(e, key) {
     if (this.domPrefix ==='textures')
-      return alert(this.fireBaseStash[key].val().url);
+      return alert(this.fireDataStash[key].val().url);
     if (gAPPP.popupDialogs.dialogs[this.domPrefix])
       return gAPPP.popupDialogs.dialogs[this.domPrefix].show(this.fireDataStash[key], this);
   }
