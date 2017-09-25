@@ -51,5 +51,6 @@ class clsPopupDialogs {
 
     this.dialogs['meshes-create'] = new clsCreatePopup('#mesh-upload-dialog', ['id'], 'uploadMesh');
     this.dialogs['textures-create'] = new clsCreatePopup('#texture-upload-dialog', ['title'], 'uploadTexture');
+    this.dialogs['materials-create'] = new clsCreatePopup('#material-upload-dialog', ['title', 'color'], 'uploadMaterial');
   }
 }

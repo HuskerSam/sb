@@ -102,7 +102,7 @@ class clsFirebaseHelper {
       });
     });
   }
-  newMaterial(title) {
+  newMaterial(title, color) {
     let me = this;
     return new Promise(function(resolve, reject) {
       let key = me.meshesFireSet.getKey();

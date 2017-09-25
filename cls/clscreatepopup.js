@@ -80,7 +80,13 @@ class clsCreatePopup {
         gAPPP.firebaseHelper.newTexture(file, title).then((r) => resolve(r));
       });
     }
-
+    if (this.type === 'uploadMaterial') {
+      return new Promise((resolve, reject) => {
+        let title = me.fieldsValues['title'];
+        let color = me.fieldsValues['color'];
+        gAPPP.firebaseHelper.newMaterial(title, color).then((r) => resolve(r));
+      });
+    }
     return gAPPP.emptyPromise();
   }
   create() {

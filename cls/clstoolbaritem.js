@@ -36,6 +36,6 @@ class clsToolbarItem {
     }
   }
   showPopup() {
-    gAPPP.popupDialogs.dialogs[this.tag + '-upload'].show();
+    gAPPP.popupDialogs.dialogs[this.tag + '-create'].show();
   }
 }
