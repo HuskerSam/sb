@@ -1,4 +1,4 @@
-class FireFields {
+class clsFireFields {
   constructor(fields, container) {
     let me = this;
     this.fields = fields;
@@ -39,10 +39,10 @@ class FireFields {
     this.values = fireData.val();
     this.fireData = fireData;
   }
-  commit() {
+  commit(fireSet) {
     let me = this;
     return new Promise( (resolve, reject)  => {
-      me.fireSet.set(me.id, me.values).then((r) => resolve(r)).error((e) => reject(e));
+      fireSet.set(me.fireData.key, me.values).then((r) => resolve(r));
     });
   }
   paint(uiObject) {

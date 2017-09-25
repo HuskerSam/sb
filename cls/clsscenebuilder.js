@@ -60,9 +60,9 @@ class clsSceneBuilder {
     me.meshUploadDialogClose.style.display = 'none';
     me.importMeshUploadButton.style.display = 'none';
     me.importMeshDialogProgress.style.display = '';
-    fireUtil.meshesFireSet.fileToURL(file).then(function(fileData) {
-      babyUtil.serializeMesh(objId, "", "data:" + fileData).then(function(meshJSON) {
-        fireUtil.newMesh(JSON.stringify(meshJSON), objId).then(function(result) {
+    gAPPP.firebaseHelper.fileToURL(file).then(function(fileData) {
+      me.babyUtil.serializeMesh(objId, "", "data:" + fileData).then(function(meshJSON) {
+        gAPPP.firebaseHelper.newMesh(JSON.stringify(meshJSON), objId).then(function(result) {
           me.meshObjIdUpload.value = '';
           me.meshUploadFileDom.value = '';
           me.meshUploadDialogClose.style.display = '';
@@ -84,7 +84,7 @@ class clsSceneBuilder {
     me.textureUploadClose.style.display = 'none';
     me.textureUploadImport.style.display = 'none';
     me.textureUploadProgress.style.display = '';
-    fireUtil.newTexture(file, title).then(function(result) {
+    gAPPP.firebaseHelper.newTexture(file, title).then(function(result) {
       me.textureUploadTitle.value = '';
       me.textureUploadFile.value = '';
       me.textureUploadClose.style.display = '';
@@ -133,7 +133,7 @@ class clsSceneBuilder {
   saveMaterial() {
     let me = this;
     let title = this.materialUploadTitle.value.trim();
-    fireUtil.newMaterial(title).then((result) => {
+    gAPPP.firebaseHelper.newMaterial(title).then((result) => {
       me.materialUploadTitle.value = '';
       me.materialUploadDialog.close();
     });

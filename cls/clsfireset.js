@@ -12,6 +12,7 @@ class FireSet {
     this.notiRef.on('child_added', (data) => me.childAdded(data));
     this.notiRef.on('child_changed', (data) => me.childChanged(data));
     this.notiRef.on('child_removed', (data) => me.childRemoved(data));
+    this.fireDataStash = {};
   }
   destroy() {
     if (! this.active)
@@ -24,23 +25,27 @@ class FireSet {
     return firebase.database().ref().child(this.dataPrefix).push().key
   }
   childAdded(fireData) {
+    this.fireDataStash[fireData.key] = fireData;
     this.domContainer.insertBefore(this.createDOM(fireData), this.domContainer.firstChild);
   }
   childChanged(fireData) {
+    this.fireDataStash[fireData.key] = fireData;
     var div = document.getElementById(this.domPrefix + '-' + fireData.key);
+    let values = fireData.val();
     for (let i in this.keyList) {
       try {
         let key = this.keyList[i];
         let ele = div.getElementsByClassName(this.domPrefix + '-' + key)[0];
-        let val = fireData.val()[key];
+        let val = values[key];
         if (val !== undefined)
-          ele.innerText = fireData.val()[key];
+          ele.innerText = values[key];
       } catch (e) {
         console.log('FireSet.childChanged ' + key + ' failed', e);
       }
     }
   }
   childRemoved(fireData) {
+    delete this.fireDataStash[fireData.key];
     let post = document.getElementById(this.domPrefix + '-' + fireData.key);
     if (post)
       this.domContainer.removeChild(post);
@@ -96,16 +101,17 @@ class FireSet {
       remove_div.addEventListener('click', (e) => me.removeElement(e, fireData.key), false);
 
     let details_div = outer.getElementsByClassName(this.domPrefix + '-details')[0];
+    let key = fireData.key;
     if (details_div)
-      details_div.addEventListener('click',(e) => me.showPopup(e, fireData), false);
+      details_div.addEventListener('click',(e) => me.showPopup(e, key), false);
 
     return outer.childNodes[0];
   }
-  showPopup(e, fireData) {
+  showPopup(e, key) {
     if (this.domPrefix ==='textures')
-      return alert(fireData.val().url);
+      return alert(this.fireBaseStash[key].val().url);
     if (gAPPP.popupDialogs.dialogs[this.domPrefix])
-      return gAPPP.popupDialogs.dialogs[this.domPrefix].show(fireData);
+      return gAPPP.popupDialogs.dialogs[this.domPrefix].show(this.fireDataStash[key], this);
   }
   removeElement(e, fireKey) {
     if (!confirm('Are you sure you want to delete this ' + this.domPrefix + '?'))
@@ -113,14 +119,5 @@ class FireSet {
     let updates = {};
     updates['/' + this.dataPrefix + '/' + fireKey] = null;
     firebase.database().ref().update(updates).then(function(e) {});
-  }
-  fileToURL(file) {
-    return new Promise(function(resolve, reject) {
-      var reader = new FileReader();
-      reader.addEventListener("loadend", function() {
-        resolve(reader.result);
-      });
-      reader.readAsText(file);
-    }, false);
   }
 }

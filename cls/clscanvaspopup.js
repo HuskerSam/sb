@@ -3,8 +3,8 @@ class clsCanvasPopup {
     let me = this;
     this.dialog = document.querySelector(dialogQS);
     this.fields = fields;
-    this.fieldsContainer = this.dialog.querySelector('.fields-container')
-    this.fireFields = new FireFields(fields, this.fieldsContainer);
+    this.fieldsContainer = this.dialog.querySelector('.fields-container');
+    this.fireFields = new clsFireFields(fields, this.fieldsContainer);
     this.tabs = tabs;
     this.serializeScene = true;
     this.fileName = 'file.babylon';
@@ -66,7 +66,7 @@ class clsCanvasPopup {
     if (this.serializeScene) {
       let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
       let strScene = JSON.stringify(sceneJSON);
-      return this.fireSet.setString(me.meshId, strScene, this.fileName);
+      return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
     }
 
     return gAPPP.emptyPromise();
@@ -75,20 +75,21 @@ class clsCanvasPopup {
     let me = this;
     return new Promise((resolve, reject) => {
       me.buttonBar.style.display = 'none';
-      me.progressBar.style.display = '';
+      me.progressBar.style.display = 'block';
       me.fireFields.scrape();
 
       me.uploadPromise().then((r1) => {
         me.fireFields.values.url = r1.downloadURL;
-        me.fireFields.commit().then((r2) => resolve(r2));
+        me.fireFields.commit(me.fireSet).then((r2) => resolve(r2));
       });
     });
   }
-  show(fireData) {
+  show(fireData, fireSet) {
     this.fireFields.container.style.display = 'none';
     this.buttonBar.style.display = 'none';
-    this.progressBar.style.display = '';
+    this.progressBar.style.display = 'block';
     this.id = fireData.key;
+    this.fireSet = fireSet;
     this.fireFields.setData(fireData);
 
     this.dialog.showModal();
@@ -118,13 +119,15 @@ class clsCanvasPopup {
     this.progressBar.style.display = 'none';
   }
   save() {
+    let me = this;
     this.commit().then((result) => {
       me.buttonBar.style.display = '';
       me.progressBar.style.display = 'none';
-      this.close();
+      me.close();
     });
   }
   close() {
+    this.fireFields.active = false;
     this.dialog.close();
   }
 }
