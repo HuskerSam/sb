@@ -1,9 +1,8 @@
 class clsCreatePopup {
-  constructor(dialogQS, fields, openBtnQS, type) {
+  constructor(dialogQS, fields, type) {
     let me = this;
     this.type = type;
     this.dialog = document.querySelector(dialogQS);
-    this.openBtn = document.querySelector(openBtnQS);
     this.fileDom = this.dialog.querySelector('.popup-file');
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.createBtn = this.dialog.querySelector('.create');
@@ -19,7 +18,6 @@ class clsCreatePopup {
     if (!this.dialog.showModal) {
       dialogPolyfill.registerDialog(this.dialog);
     }
-    this.openBtn.addEventListener('click', () => me.show(), false);
     this.cancelBtn.addEventListener('click', () => me.close(), false);
     this.createBtn.addEventListener('click', (e) => me.create(), false);
   }

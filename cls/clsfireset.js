@@ -5,7 +5,8 @@ class FireSet {
     this.userId = firebase.auth().currentUser.uid;
     this.dataPrefix = dataPrefix;
     this.domPrefix = domPrefix;
-    this.domContainer = document.getElementById(this.domPrefix + '-content');
+    let qs = '#sb-' + this.domPrefix + '-floating-toolbar-item .sb-floating-toolbar-content';
+    this.domContainer = document.querySelector(qs);
     this.keyList = keyList;
     this.itemTemplateFunction = itemTemplateFunction;
     this.notiRef = firebase.database().ref(this.dataPrefix);

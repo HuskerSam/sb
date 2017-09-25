@@ -47,44 +47,21 @@
       <span style="float:left;font-size:20px;padding:8px;"> Scene Builder </span>
       <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
     </div>
-    <div style="pointer-events:none;">
-      <div class="mdl-grid items-panel flex-horizontal" style="display:inline-block;">
-        <button id="collapse-meshes" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">expand_less</i>
-        </button>
-        <div style="display:inline-block;">
-          Meshes<br>
-          <button id="mesh-upload-button" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">cloud_upload</i>
+    <div style="pointer-events:none;" id="sb-floating-toolbar">
+      <div style="display:none;" id="sb-floating-toolbar-item-template">
+        <div class="flex-horizontal sb-floating-toolbar-item">
+          <div class="button-wrapper">
+            <span class="button-title"></span>
+            <br>
+            <button class="mdl-button mdl-js-button mdl-button--icon sb-floating-toolbar-expand-btn">
+            <i class="material-icons">expand_less</i>
           </button>
-        </div>
-        <div id="meshes-content" class="items-container" style="display:none;">
-        </div>
-      </div>
-      <div class="mdl-grid items-panel flex-horizontal" style="display:inline-block;">
-        <button id="collapse-materials" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">expand_less</i>
-        </button>
-        <div style="display:inline-block;">
-          Materials<br>
-          <button id="material-upload-button" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">add</i>
-        </button>
-        </div>
-        <div id="materials-content" class="items-container" style="display:none;">
-        </div>
-      </div>
-      <div class="mdl-grid items-panel flex-horizontal" style="display:inline-block;">
-        <button id="collapse-textures" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">expand_less</i>
-        </button>
-        <div style="display:inline-block;">
-          Textures<br>
-          <button id="texture-upload-button" class="mdl-button mdl-js-button mdl-button--icon">
-          <i class="material-icons">file_upload</i>
-        </button>
-        </div>
-        <div id="textures-content" class="items-container" style="display:none;">
+            <button class="mdl-button mdl-js-button mdl-button--icon sb-floating-toolbar-create-btn">
+            <i class="material-icons">add</i>
+          </button>
+          </div>
+          <div class="sb-floating-toolbar-content">
+          </div>
         </div>
       </div>
     </div>
@@ -118,7 +95,7 @@
           <input type="text" id="texture-upload-title" class="mdl-textfield__input simple-popup-field-title" />
         </div>
         <input type="file" id="texture-upload-file" name="texture-upload-file" class="popup-file" />
-        </div>
+      </div>
     </div>
     <div class="mdl-dialog__actions">
       <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate popup-progress-bar"></div>
@@ -257,6 +234,7 @@
   <script src="cls/clscanvaspopup.js"></script>
   <script src="cls/clspopupdialogs.js"></script>
   <script src="cls/clsfirebasehelper.js"></script>
+  <script src="cls/clstoolbaritem.js"></script>
   <script src="cls/clsscenebuilder.js"></script>
   <script src="cls/clsapp.js"></script>
   <script src="main.js"></script>
