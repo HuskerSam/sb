@@ -25,28 +25,6 @@ html, body {
   z-index: -1;
 }
 
-.model-avatar {
-  display: none;
-  height: 32px;
-  width: 32px;
-  display: none;
-  background-size: 32px 32px;
-  border-radius: 32px;
-  border: 2px white solid;
-  margin-right: 10px;
-  background-image: url('./assets/silhouette.jpg');
-}
-
-.model-username {
-  display: none;
-  line-height: 38px;
-  vertical-align: top;
-  width: calc(100% - 46px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-}
 #main-title-bar {
   text-align:right;
   padding: 2px;
@@ -161,4 +139,7 @@ html, body {
 }
 .tab-panel-details {
   overflow:auto;
+}
+.modal-dialog {
+  background:white;
 }

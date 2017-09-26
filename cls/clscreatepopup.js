@@ -15,21 +15,18 @@ class clsCreatePopup {
     for (let i in this.fields)
       this.fieldsDom[this.fields[i]] = this.dialog.querySelector('.simple-popup-field-' + this.fields[i]);
 
-    if (!this.dialog.showModal) {
-      dialogPolyfill.registerDialog(this.dialog);
-    }
     this.cancelBtn.addEventListener('click', () => me.close(), false);
     this.createBtn.addEventListener('click', (e) => me.create(), false);
   }
   close() {
-    this.dialog.close();
+    $(this.dialog).modal('hide');
   }
   show() {
     this.popupButtons.style.display = 'block';
     this.popupContent.style.display = 'block';
     this.progressBar.style.display = 'none';
     this.clear();
-    this.dialog.showModal();
+    $(this.dialog).modal('show');
   }
   importMesh() {
     let me = this;
@@ -105,7 +102,7 @@ class clsCreatePopup {
       me.popupButtons.style.display = 'block';
       me.popupContent.style.display = 'block';
       me.progressBar.style.display = 'none';
-      me.dialog.close();
+      me.close();
     });
   }
 }

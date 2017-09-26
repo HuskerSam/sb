@@ -12,9 +12,6 @@ class clsCanvasPopup {
     this.serializeScene = true;
     this.fileName = 'file.babylon';
 
-    if (!this.dialog.showModal)
-      dialogPolyfill.registerDialog(this.dialog);
-
     this.canvas = this.dialog.querySelector('.popup-canvas');
     this.babyHelper = new clsBabylonHelper(this.canvas);
 
@@ -43,7 +40,7 @@ class clsCanvasPopup {
     this.tabPanels = [];
 
     for (let i in this.tabs) this.initTab(this.tabs[i]);
-
+/*
     let t = this.dialogQS + ' .popup-canvas';
     let b = this.dialogQS + ' .popup-detail-view';
     window.Split([t, b], {
@@ -51,6 +48,7 @@ class clsCanvasPopup {
       direction: 'vertical',
       onDragEnd: () => me.splitDragEnd()
     });
+    */
   }
   initTab(tab) {
     let me = this;

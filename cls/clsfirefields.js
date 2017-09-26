@@ -18,7 +18,6 @@ class clsFireFields {
         d.domElement.addEventListener('change', (e) => me.scrape(e), false);
       }
     }
-    this.refreshFields();
   }
   scrape(e) {
     if (!this.active)
@@ -57,13 +56,6 @@ class clsFireFields {
       if (d.babylonMeshField)
         if (this.uiObject !== null)
           gAPPP.path(this.uiObject, d.babylonMeshField, v);
-    }
-    this.refreshFields();
-  }
-  refreshFields() {
-    let mdlInputs = this.container.querySelectorAll('.mdl-js-textfield');
-    for (var i = 0, l = mdlInputs.length; i < l; i++) {
-      mdlInputs[i].MaterialTextfield.checkDirty();
     }
   }
 }

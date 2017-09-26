@@ -3,35 +3,18 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Scene Builder for SWH Designs">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scene Builder - MU 2</title>
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Scene Builder">
-  <meta name="theme-color" content="#303F9F">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Scene Builder">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
-
-  <!-- Material Design Lite -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.9/dialog-polyfill.min.css">
-
-  <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.4.9/dialog-polyfill.min.js"></script>
   <script src="https://cdn.babylonjs.com/babylon.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handjs/1.3.11/hand.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="https://unpkg.com/split.js/split.min.js"></script>
 </head>
 
 <body>
@@ -45,7 +28,7 @@
   <div id="main-page" style="display:none;">
     <div id="main-title-bar">
       <span style="float:left;font-size:20px;padding:8px;"> Scene Builder </span>
-      <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
+      <button id="sign-out-button">Sign out</button>
     </div>
     <div style="pointer-events:none;" id="sb-floating-toolbar">
       <div style="display:none;" id="sb-floating-toolbar-item-template">
@@ -53,12 +36,8 @@
           <div class="button-wrapper">
             <span class="button-title"></span>
             <br>
-            <button class="mdl-button mdl-js-button mdl-button--icon sb-floating-toolbar-expand-btn">
-            <i class="material-icons">expand_less</i>
-          </button>
-            <button class="mdl-button mdl-js-button mdl-button--icon sb-floating-toolbar-create-btn">
-            <i class="material-icons">add</i>
-          </button>
+            <button class="sb-floating-toolbar-expand-btn">E</button>
+            <button class="sb-floating-toolbar-create-btn">A</button>
           </div>
           <div class="sb-floating-toolbar-content">
           </div>
@@ -68,62 +47,83 @@
   </div>
 
   <!-- CREATE DIALOGS -->
-  <dialog class="mdl-dialog" id="mesh-upload-dialog">
-    <h4 class="mdl-dialog__title">Import .babylon Mesh</h4>
-    <div class="mdl-dialog__content">
-      <div class="popup-content">
-        <div class="mdl-textfield mdl-js-textfield">
-          <label class="mdl-textfield__label" for="mesh-object-id">Id</label>
-          <input type="text" id="mesh-object-id" class="mdl-textfield__input simple-popup-field-id" />
+  <div class="modal fade" id="mesh-upload-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Import .babylon Mesh</h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup-content">
+          <div class="form-group">
+            <label for="mesh-object-id">Id</label>
+            <input type="text" id="mesh-object-id" class="form-control simple-popup-field-id" />
+          </div>
+          <input type="file" id="mesh-upload-file" name="mesh-upload-file" class="popup-file" />
         </div>
-        <input type="file" id="mesh-upload-file" name="mesh-upload-file" class="popup-file" />
       </div>
-    </div>
-    <div class="mdl-dialog__actions">
-      <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate popup-progress-bar"></div>
-      <div class="popup-buttons">
-        <button type="button" class="mdl-button create">Import</button>
-        <button type="button" class="mdl-button cancel">Cancel</button>
-      </div>
-    </div>
-  </dialog>
-  <dialog class="mdl-dialog" id="texture-upload-dialog">
-    <h4 class="mdl-dialog__title">Upload Texture</h4>
-    <div class="mdl-dialog__content">
-      <div class="popup-content">
-        <div class="mdl-textfield mdl-js-textfield">
-          <label class="mdl-textfield__label" for="texture-upload-title">Title</label>
-          <input type="text" id="texture-upload-title" class="mdl-textfield__input simple-popup-field-title" />
+      <div class="modal-footer">
+        <div class="popup-progress-bar">
+          Importing...
         </div>
-        <input type="file" id="texture-upload-file" name="texture-upload-file" class="popup-file" />
-      </div>
-    </div>
-    <div class="mdl-dialog__actions">
-      <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate popup-progress-bar"></div>
-      <div class="popup-buttons">
-        <button type="button" class="mdl-button create">Create</button>
-        <button type="button" class="mdl-button cancel">Cancel</button>
-      </div>
-    </div>
-  </dialog>
-  <dialog class="mdl-dialog" id="material-upload-dialog">
-    <h4 class="mdl-dialog__title">Create Material</h4>
-    <div class="mdl-dialog__content">
-      <div class="popup-content">
-        <div class="mdl-textfield mdl-js-textfield">
-          <label class="mdl-textfield__label" for="material-upload-title">Title</label>
-          <input type="text" id="material-upload-title" class="mdl-textfield__input simple-popup-field-title" />
+        <div class="popup-buttons">
+          <button type="button" class="btn btn-primary create">Import</button>
+          <button type="button" class="btn cancel">Cancel</button>
         </div>
       </div>
     </div>
-    <div class="mdl-dialog__actions">
-      <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate popup-progress-bar"></div>
-      <div class="popup-buttons">
-        <button type="button" class="mdl-button create">Create</button>
-        <button type="button" class="mdl-button cancel">Cancel</button>
+  </div>
+  <div class="modal fade" id="texture-upload-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Upload Texture</h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup-content">
+          <div class="form-group">
+            <label for="texture-upload-title">Title</label>
+            <input type="text" id="texture-upload-title" class="form-control simple-popup-field-title" />
+          </div>
+          <input type="file" id="texture-upload-file" name="texture-upload-file" class="popup-file" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="popup-progress-bar">
+          Importing...
+        </div>
+        <div class="popup-buttons">
+          <button type="button" class="btn btn-primary create">Import</button>
+          <button type="button" class="btn cancel">Cancel</button>
+        </div>
       </div>
     </div>
-  </dialog>
+  </div>
+  <div class="modal fade" id="material-upload-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create Material</h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup-content">
+          <div class="form-group">
+            <label for="material-upload-title">Title</label>
+            <input type="text" id="material-upload-title" class="form-control simple-popup-field-title" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="popup-progress-bar">
+          Importing...
+        </div>
+        <div class="popup-buttons">
+          <button type="button" class="btn btn-primary create">Import</button>
+          <button type="button" class="btn cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- CREATE DIALOGS END -->
 
   <!-- EDIT DIALOGS -->
