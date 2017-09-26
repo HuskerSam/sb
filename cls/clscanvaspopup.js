@@ -9,7 +9,7 @@ class clsCanvasPopup {
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
     this.cancelBtn = this.dialog.querySelector('.close-details');
-    this.popupContent = this.dialog.querySelector('.popup-details');
+    this.tabContent = this.dialog.querySelector('.tab-content');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
 
     this.fields = fields;
@@ -76,7 +76,8 @@ class clsCanvasPopup {
   commit() {
     let me = this;
     return new Promise((resolve, reject) => {
-      me.buttonBar.style.display = 'none';
+      me.popupButtons.style.display = 'none';
+      me.tabContent.style.display = 'none';
       me.progressBar.style.display = 'block';
       me.fireFields.scrape();
 
@@ -95,8 +96,8 @@ class clsCanvasPopup {
   }
   show(fireData, fireSet) {
     this.popupButtons.style.display = 'none';
-    this.popupContent.style.display = 'none';
-    this.progressBar.style.display = '';
+    this.tabContent.style.display = 'none';
+    this.progressBar.style.display = 'block';
 
     this.initEditors();
     if (this.babyHelper === null)
@@ -135,7 +136,7 @@ class clsCanvasPopup {
 
     this.fireFields.paint(this.uiObject);
     this.popupButtons.style.display = 'block';
-    this.popupContent.style.display = 'block';
+    this.tabContent.style.display = 'block';
     this.progressBar.style.display = 'none';
   }
   finishMeshShow(uiObject) {
@@ -150,14 +151,14 @@ class clsCanvasPopup {
 
     this.fireFields.paint(this.uiObject);
     this.popupButtons.style.display = 'block';
-    this.popupContent.style.display = 'block';
+    this.tabContent.style.display = 'block';
     this.progressBar.style.display = 'none';
   }
   save() {
     let me = this;
     this.commit().then((result) => {
       this.popupButtons.style.display = 'block';
-      this.popupContent.style.display = 'block';
+      this.tabContent.style.display = 'block';
       this.progressBar.style.display = 'none';
       me.close();
     });
