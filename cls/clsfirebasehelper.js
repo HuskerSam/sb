@@ -172,12 +172,8 @@ class clsFirebaseHelper {
     return `
 <div id="${domPrefix}-${fireData.key}" class="firebase-item">
   <div class="${domPrefix}-title"></div>
-  <button class="${domPrefix}-remove mdl-button mdl-js-button mdl-button--icon">
-    <i class="material-icons">delete</i>
-  </button>
-  <button class="${domPrefix}-details mdl-button mdl-js-button mdl-button--icon">
-    <i class="material-icons">settings</i>
-  </button>
+  <button class="${domPrefix}-remove btn-toolbar-icon"><span class="glyphicon glyphicon-remove-circle"></span></button>
+  <button class="${domPrefix}-details btn-toolbar-icon"><span class="glyphicon glyphicon-cog"></span></button>
 </div>`;
   }
   fileToURL(file) {

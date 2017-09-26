@@ -4,6 +4,16 @@ class clsCanvasPopup {
     this.tag = tag;
     this.dialogQS = '#' + this.tag + '-details-dialog';
     this.dialog = document.querySelector(this.dialogQS);
+
+    this.fileDom = this.dialog.querySelector('.popup-file');
+    this.progressBar = this.dialog.querySelector('.popup-progress-bar');
+    this.okBtn = this.dialog.querySelector('.save-details');
+    this.cancelBtn = this.dialog.querySelector('.close-details');
+    this.popupContent = this.dialog.querySelector('.popup-details');
+    this.popupButtons = this.dialog.querySelector('.popup-buttons');
+
+    $(this.dialog).on("show.bs.modal", () => me.resizeDialog());
+
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.fieldsContainer.style.display = 'none';
@@ -27,46 +37,28 @@ class clsCanvasPopup {
       this.editors.push(this.babylonEditor);
     }
 
-    this.buttonBar = this.dialog.querySelector('.canvas-popup-button-bar');
-    this.progressBar = this.dialog.querySelector('.canvas-popup-progress-bar');
-
-    this.closeButton = this.buttonBar.querySelector('.close-details');
-    this.saveButton = this.buttonBar.querySelector('.save-details');
-
-    this.closeButton.addEventListener('click', () => me.close());
-    this.saveButton.addEventListener('click', () => me.save());
+    this.cancelBtn.addEventListener('click', () => me.close());
+    this.okBtn.addEventListener('click', () => me.save());
 
     this.tabButtons = [];
     this.tabPanels = [];
 
-    for (let i in this.tabs) this.initTab(this.tabs[i]);
-/*
-    let t = this.dialogQS + ' .popup-canvas';
-    let b = this.dialogQS + ' .popup-detail-view';
-    window.Split([t, b], {
-      sizes: [50, 50],
-      direction: 'vertical',
-      onDragEnd: () => me.splitDragEnd()
-    });
-    */
+    if (this.tag === 'mesh') {
+
+      let t = this.dialogQS + ' .popup-canvas';
+      let b = this.dialogQS + ' .popup-details';
+      window.Split([t, b], {
+        sizes: [50, 50],
+        direction: 'vertical',
+        onDragEnd: () => me.splitDragEnd()
+      });  
+    }
   }
-  initTab(tab) {
-    let me = this;
-    let btn = this.dialog.querySelector('.tab-button-' + tab);
-    let pnl = this.dialog.querySelector('.tab-panel-' + tab);
-    this.tabButtons.push(btn);
-    this.tabPanels.push(pnl);
-    btn.addEventListener('click', (e) => me.showTab(pnl), false);
+  resizeDialog() {
   }
   splitDragEnd() {
     for (let i in this.editors)
       this.editors[i].resize();
-  }
-  showTab(tab) {
-    for (let i in this.tabPanels)
-      this.tabPanels[i].style.display = 'none';
-
-    tab.style.display = 'block';
   }
   uploadPromise() {
     if (this.serializeScene) {
@@ -90,18 +82,26 @@ class clsCanvasPopup {
       });
     });
   }
+  close() {
+    this.scene = this.babyHelper.createDefaultScene();
+    this.babyHelper.setScene(this.scene);
+    this.babyHelper.engine.resize();
+    this.fireFields.active = false;
+    $(this.dialog).modal('hide');
+  }
   show(fireData, fireSet) {
-    this.buttonBar.style.display = 'none';
-    this.progressBar.style.display = 'block';
+    this.popupButtons.style.display = 'none';
+    this.popupContent.style.display = 'none';
+    this.progressBar.style.display = '';
+
     this.id = fireData.key;
     this.fireSet = fireSet;
     this.fireFields.setData(fireData);
-    this.dialog.showModal();
+    $(this.dialog).modal('show');
 
     this.scene = this.babyHelper.createDefaultScene();
     this.babyHelper.setScene(this.scene);
     this.babyHelper.engine.resize();
-    this.showTab(this.tabPanels[1]);
 
     if (this.tag === 'mesh') {
       let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
@@ -125,8 +125,9 @@ class clsCanvasPopup {
     let s = this.babyHelper.addSphere('sphere1', 50, 5, this.scene, false);
 
     this.fireFields.paint(this.uiObject);
-    this.fieldsContainer.style.display = 'block';
-    this.buttonBar.style.display = '';
+    this.resizeDialog();
+    this.popupButtons.style.display = 'block';
+    this.popupContent.style.display = 'block';
     this.progressBar.style.display = 'none';
   }
   finishMeshShow(uiObject) {
@@ -140,22 +141,17 @@ class clsCanvasPopup {
     gAPPP.beautify(this.babylonEditor);
 
     this.fireFields.paint(this.uiObject);
-    this.buttonBar.style.display = '';
+    this.popupButtons.style.display = 'block';
+    this.popupContent.style.display = 'block';
     this.progressBar.style.display = 'none';
   }
   save() {
     let me = this;
     this.commit().then((result) => {
-      me.buttonBar.style.display = '';
-      me.progressBar.style.display = 'none';
+      this.popupButtons.style.display = 'block';
+      this.popupContent.style.display = 'block';
+      this.progressBar.style.display = 'none';
       me.close();
     });
-  }
-  close() {
-    this.scene = this.babyHelper.createDefaultScene();
-    this.babyHelper.setScene(this.scene);
-    this.babyHelper.engine.resize();
-    this.fireFields.active = false;
-    this.dialog.close();
   }
 }

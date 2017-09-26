@@ -15,13 +15,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.8/ace.js" type="text/javascript" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.14/beautify.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://unpkg.com/split.js/split.min.js"></script>
 </head>
 
 <body>
   <div id="login-page" style="display:none;">
     <h3>Scene Builder</h3>
     <div>
-      <button id="sign-in-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign in with Google</button>
+      <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
     </div>
   </div>
   <canvas id="renderCanvas"></canvas>
@@ -29,6 +30,7 @@
     <div id="main-title-bar">
       <span style="float:left;font-size:20px;padding:8px;"> Scene Builder </span>
       <button id="sign-out-button">Sign out</button>
+      <div style="clear:both;"></div>
     </div>
     <div style="pointer-events:none;" id="sb-floating-toolbar">
       <div style="display:none;" id="sb-floating-toolbar-item-template">
@@ -36,8 +38,8 @@
           <div class="button-wrapper">
             <span class="button-title"></span>
             <br>
-            <button class="sb-floating-toolbar-expand-btn">E</button>
-            <button class="sb-floating-toolbar-create-btn">A</button>
+            <button class="btn-toolbar-icon sb-floating-toolbar-expand-btn"><span class="glyphicon glyphicon-pushpin"></span></button>
+            <button class="btn-toolbar-icon sb-floating-toolbar-create-btn"><span class="glyphicon glyphicon-plus"></span></button>
           </div>
           <div class="sb-floating-toolbar-content">
           </div>
@@ -127,80 +129,93 @@
   <!-- CREATE DIALOGS END -->
 
   <!-- EDIT DIALOGS -->
-  <dialog class="mdl-dialog" id="mesh-details-dialog" style="width:96%;height:92%;background:rgba(255,255,255,.5)">
-    <div style="width:100%;height:100%;" class="flex-vertical">
-      <div class="popup-canvas-body">
+  <div class="modal edit-modal" id="mesh-details-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-body">
         <canvas class="popup-canvas"></canvas>
-        <div class="popup-detail-view">
-          <div class="tab-panel-details canvaspopuptabpanel">
-            <div class="fields-container">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-title">
-                <label class="mdl-textfield__label" for="mesh-details-title">Title</label>
+        <div class="popup-details">
+          <div class="popup-action-bar" style="height:3em;overflow:hidden;">
+            <div class="popup-progress-bar">
+              Importing...
+            </div>
+            <div class="popup-buttons">
+              <ul class="nav nav-pills" style="float:left;">
+                <li class="active"><a data-toggle="pill" href="#mesh-details-details-panel">Details</a></li>
+                <li><a data-toggle="pill" href="#mesh-details-firebase-panel">Firebase</a></li>
+                <li><a data-toggle="pill" href="#mesh-details-babylon-panel">Babylon</a></li>
+              </ul>
+
+              <div style="float:right;">
+                <button type="button" class="btn btn-primary save-details">Save</button>
+                <button type="button" class="btn close-details">Cancel</button>
               </div>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-pos-x">
-                <label class="mdl-textfield__label" for="mesh-details-pos-x">Position X</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-pos-y">
-                <label class="mdl-textfield__label" for="mesh-details-pos-y">Position Y</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-pos-z">
-                <label class="mdl-textfield__label" for="mesh-details-pos-z">Position Z</label>
-              </div>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-scale-x">
-                <label class="mdl-textfield__label" for="mesh-details-scale-x">Scale X</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-scale-y">
-                <label class="mdl-textfield__label" for="mesh-details-scale-y">Scale Y</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-scale-z">
-                <label class="mdl-textfield__label" for="mesh-details-scale-z">Scale Z</label>
-              </div>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-rotate-x">
-                <label class="mdl-textfield__label" for="mesh-details-rotate-x">Rotate X</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-rotate-y">
-                <label class="mdl-textfield__label" for="mesh-details-rotate-y">Rotate Y</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="mesh-details-rotate-z">
-                <label class="mdl-textfield__label" for="mesh-details-rotate-z">Rotate Z</label>
-              </div>
+              <div style="clear:both;"></div>
             </div>
           </div>
-          <div class="tab-panel-json canvaspopuptabpanel">
-            <div id="mesh-details-json" style="width:100%;height:100%;"></div>
+          <div class="tab-content" style="height:calc(100% - 3.2em);overflow-y:auto;">
+            <div id="mesh-details-details-panel" class="tab-pane fade in active">
+              <div class="fields-container">
+                <div class="form-group">
+                  <label for="mesh-details-title">Title</label>
+                  <input class="form-control" type="text" id="mesh-details-title">
+                </div>
+                <br>
+                <div class="tab-panel-details">
+                  <div class="form-group">
+                    <label for="mesh-details-pos-x">Position X</label>
+                    <input class="form-control" type="text" id="mesh-details-pos-x">
+                  </div>
+                  <div class="form-group">
+                    <label for="mesh-details-pos-y">Position Y</label>
+                    <input class="form-control" type="text" id="mesh-details-pos-y">
+                  </div>
+                  <div class="form-group">
+                    <label for="mesh-details-pos-z">Position Z</label>
+                    <input class="form-control" type="text" id="mesh-details-pos-z">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="mesh-details-scale-x">Scale X</label>
+                    <input class="form-control" type="text" id="mesh-details-scale-x">
+                  </div>
+                  <div class="form-group">
+                    <label for="mesh-details-scale-y">Scale Y</label>
+                    <input class="form-control" type="text" id="mesh-details-scale-y">
+                  </div>
+                  <div class="form-group">
+                    <label for="mesh-details-scale-z">Scale Z</label>
+                    <input class="form-control" type="text" id="mesh-details-scale-z">
+                  </div>
+                  <br>
+                  <div class="form-group">
+                    <label for="mesh-details-rotate-x">Rotate X</label>
+                    <input class="form-control" type="text" id="mesh-details-rotate-x">
+                  </div>
+                  <div class="form-group">
+                    <label for="mesh-details-rotate-y">Rotate Y</label>
+                    <input class="form-control" type="text" id="mesh-details-rotate-y">
+                  </div>
+                  <div class="form-group">
+                    <label for="mesh-details-rotate-z">Rotate Z</label>
+                    <input class="form-control" type="text" id="mesh-details-rotate-z">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="mesh-details-firebase-panel" class="tab-pane fade">
+              <div id="mesh-details-json" style="width:100%;height:100%;"></div>
+            </div>
+            <div id="mesh-details-babylon-panel" class="tab-pane fade">
+              <div id="mesh-details-babylon" style="width:100%;height:100%;"></div>
+            </div>
           </div>
-          <div class="tab-panel-babylon canvaspopuptabpanel">
-            <div id="mesh-details-babylon" style="width:100%;height:100%;"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="popup-canvas-buttons">
-        <div class="canvas-popup-progress-bar mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-        <div class="canvas-popup-button-bar">
-          <button class="tab-button-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
-          <button class="tab-button-json mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">JSON</button>
-          <button class="tab-button-babylon mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Babylon</button>
-
-          <button type="button" class="close-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Cancel</button>
-          <button type="button" class="save-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Save</button>
         </div>
       </div>
     </div>
-  </dialog>
+  </div>
+
+
+
   <dialog class="mdl-dialog" id="material-details-dialog" style="width:96%;height:92%;background:rgba(255,255,255,.5);">
     <div class="popup-canvas-body" style="height:75%;">
       <canvas class="popup-canvas"></canvas>
