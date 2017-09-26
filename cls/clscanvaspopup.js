@@ -6,6 +6,7 @@ class clsCanvasPopup {
     this.dialog = document.querySelector(this.dialogQS);
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
+    this.fieldsContainer.style.display = 'none';
     this.fireFields = new clsFireFields(fields, this.fieldsContainer);
     this.tabs = tabs;
     this.serializeScene = true;
@@ -46,7 +47,7 @@ class clsCanvasPopup {
     let t = this.dialogQS + ' .popup-canvas';
     let b = this.dialogQS + ' .popup-detail-view';
     window.Split([t, b], {
-      minSize: [100, 100],
+      sizes: [50, 50],
       direction: 'vertical',
       onDragEnd: () => me.splitDragEnd()
     });
@@ -67,7 +68,7 @@ class clsCanvasPopup {
     for (let i in this.tabPanels)
       this.tabPanels[i].style.display = 'none';
 
-    tab.style.display = '';
+    tab.style.display = 'block';
   }
   uploadPromise() {
     if (this.serializeScene) {
@@ -92,19 +93,17 @@ class clsCanvasPopup {
     });
   }
   show(fireData, fireSet) {
-    this.fireFields.container.style.display = 'none';
     this.buttonBar.style.display = 'none';
     this.progressBar.style.display = 'block';
     this.id = fireData.key;
     this.fireSet = fireSet;
     this.fireFields.setData(fireData);
-
     this.dialog.showModal();
 
     this.scene = this.babyHelper.createDefaultScene();
     this.babyHelper.setScene(this.scene);
     this.babyHelper.engine.resize();
-    this.showTab(this.tabPanels[0]);
+    this.showTab(this.tabPanels[1]);
 
     if (this.tag === 'mesh') {
       let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
@@ -125,15 +124,17 @@ class clsCanvasPopup {
 
     this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
     gAPPP.beautify(this.fireEditor);
+    let s = this.babyHelper.addSphere('sphere1', 50, 5, this.scene, false);
 
     this.fireFields.paint(this.uiObject);
-    this.fireFields.container.style.display = '';
+    this.fieldsContainer.style.display = 'block';
     this.buttonBar.style.display = '';
     this.progressBar.style.display = 'none';
   }
   finishMeshShow(uiObject) {
     this.uiObject = uiObject;
 
+    this.fieldsContainer.style.display = 'block';
     this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
     gAPPP.beautify(this.fireEditor);
 
@@ -141,7 +142,6 @@ class clsCanvasPopup {
     gAPPP.beautify(this.babylonEditor);
 
     this.fireFields.paint(this.uiObject);
-    this.fireFields.container.style.display = '';
     this.buttonBar.style.display = '';
     this.progressBar.style.display = 'none';
   }

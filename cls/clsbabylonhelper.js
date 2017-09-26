@@ -20,15 +20,19 @@ class clsBabylonHelper {
     });
   }
   createDefaultScene() {
-    var scene = new BABYLON.Scene(this.engine);
+    let scene = new BABYLON.Scene(this.engine);
     scene.clearColor = new BABYLON.Color3(0, 1, 0);
     this.camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
     this.camera.setTarget(BABYLON.Vector3.Zero());
     this.camera.attachControl(this.canvas, false);
-    var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    let light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = .5;
-  //  var ground = BABYLON.Mesh.CreateGround("ground1", 5, 5, 2, scene);
     return scene;
+  }
+  addSphere(name, faces, diameter, scene, refresh) {
+    if (! refresh)
+      refresh = false;
+    return BABYLON.Mesh.CreateSphere(name, faces, diameter, scene, refresh);
   }
   loadMesh(meshName, path, fileName, scene) {
     return new Promise(function(resolve, reject) {

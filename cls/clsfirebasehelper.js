@@ -102,7 +102,7 @@ class clsFirebaseHelper {
       });
     });
   }
-  newMaterial(title, color) {
+  newMaterial(title) {
     let me = this;
     return new Promise(function(resolve, reject) {
       let key = me.meshesFireSet.getKey();
@@ -141,11 +141,10 @@ class clsFirebaseHelper {
       size: 0
     };
   }
-  //var materialSphere1 = new BABYLON.StandardMaterial("texture1", scene);
   getNewMaterialData() {
     return {
       title: 'Material',
-      alpha: 0.5,
+      alpha: null,
       diffuse: this.getTextureOptionsData(),
       emissive: this.getTextureOptionsData(),
       ambient: this.getTextureOptionsData(),

@@ -83,8 +83,7 @@ class clsCreatePopup {
     if (this.type === 'uploadMaterial') {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
-        let color = me.fieldsValues['color'];
-        gAPPP.firebaseHelper.newMaterial(title, color).then((r) => resolve(r));
+        gAPPP.firebaseHelper.newMaterial(title).then((r) => resolve(r));
       });
     }
     return gAPPP.emptyPromise();

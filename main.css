@@ -58,14 +58,6 @@ html, body {
   height: 100%
 }
 
-#model-upload-panel {
-  position: absolute;
-  width: 200px;
-  right: 10px;
-  top: 50px;
-}
-
-
 .split, .split-flex {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -112,7 +104,6 @@ html, body {
 .canvaspopuptabpanel {
   width:100%;
   height:100%;
-  overflow:auto;
 }
 .popup-progress-bar {
   display:none;
@@ -154,10 +145,20 @@ html, body {
   text-align: center;
   margin: 0px 2px;
   }
-
-  popup-canvas {
+.popup-canvas-body {
+  flex:1;
+  width:100%;
+}
+.popup-canvas {
     touch-action: none;
     z-index: -1;
     width:100%;
-    height:100%;
   }
+.fields-container {
+  height: 100%;
+  width: 100%;
+  overflow:auto;
+}
+.tab-panel-details {
+  overflow:auto;
+}

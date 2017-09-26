@@ -48,17 +48,13 @@ class clsPopupDialogs {
       fireSetField: 'title',
       domQuerySelector: '#material-details-title',
       babylonMeshField: null
-    }, {
-      fireSetField: 'color',
-      domQuerySelector: '#material-details-color',
-      babylonMeshField: null
     }];
 
     this.dialogs['meshes-edit'] = new clsCanvasPopup('mesh', ['details', 'json', 'babylon'], meshFields);
     this.dialogs['materials-edit'] = new clsCanvasPopup('material', ['details', 'json'], materialFields);
-    
+
     this.dialogs['meshes-create'] = new clsCreatePopup('#mesh-upload-dialog', ['id'], 'uploadMesh');
     this.dialogs['textures-create'] = new clsCreatePopup('#texture-upload-dialog', ['title'], 'uploadTexture');
-    this.dialogs['materials-create'] = new clsCreatePopup('#material-upload-dialog', ['title', 'color'], 'uploadMaterial');
+    this.dialogs['materials-create'] = new clsCreatePopup('#material-upload-dialog', ['title'], 'uploadMaterial');
   }
 }

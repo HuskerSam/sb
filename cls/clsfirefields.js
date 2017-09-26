@@ -18,9 +18,10 @@ class clsFireFields {
         d.domElement.addEventListener('change', (e) => me.scrape(e), false);
       }
     }
+    this.refreshFields();
   }
   scrape(e) {
-    if (! this.active)
+    if (!this.active)
       return;
 
     for (let i in this.fields) {
@@ -41,7 +42,7 @@ class clsFireFields {
   }
   commit(fireSet) {
     let me = this;
-    return new Promise( (resolve, reject)  => {
+    return new Promise((resolve, reject) => {
       fireSet.set(me.fireData.key, me.values).then((r) => resolve(r));
     });
   }
@@ -57,7 +58,9 @@ class clsFireFields {
         if (this.uiObject !== null)
           gAPPP.path(this.uiObject, d.babylonMeshField, v);
     }
-
+    this.refreshFields();
+  }
+  refreshFields() {
     let mdlInputs = this.container.querySelectorAll('.mdl-js-textfield');
     for (var i = 0, l = mdlInputs.length; i < l; i++) {
       mdlInputs[i].MaterialTextfield.checkDirty();
