@@ -139,14 +139,15 @@
               Importing...
             </div>
             <div class="popup-buttons" style="padding: .1em;">
-              <span style="float:left;font-size: 1.5em; margin-right:1em;">
-              Mesh Editor
-            </span>
+
               <ul class="nav nav-pills" style="float:left;">
                 <li class="active"><a data-toggle="pill" href="#mesh-details-details-panel">Details</a></li>
                 <li><a data-toggle="pill" href="#mesh-details-firebase-panel">Firebase</a></li>
                 <li><a data-toggle="pill" href="#mesh-details-babylon-panel">Babylon</a></li>
               </ul>
+              <span class="popup-title">
+              Mesh<br>Editor
+            </span>
               <div style="float:right;">
                 <button type="button" class="btn btn-primary save-details">Save</button>
                 <button type="button" class="btn close-details">Cancel</button>
@@ -214,97 +215,105 @@
     </div>
   </div>
 
+  <div class="modal edit-modal" id="material-details-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-body">
+        <canvas class="popup-canvas"></canvas>
+        <div class="popup-details">
+          <div class="popup-action-bar" style="height:3.1em;overflow:hidden;">
+            <div class="popup-progress-bar">
+              Importing...
+            </div>
+            <div class="popup-buttons" style="padding: .1em;">
+              <span class="popup-title">
+              Material<br>Editor
+            </span>
+              <ul class="nav nav-pills" style="float:left;">
+                <li class="active"><a data-toggle="pill" href="#material-details-details-panel">Details</a></li>
+                <li><a data-toggle="pill" href="#material-details-firebase-panel">Firebase</a></li>
+              </ul>
+              <div style="float:right;">
+                <button type="button" class="btn btn-primary save-details">Save</button>
+                <button type="button" class="btn close-details">Cancel</button>
+              </div>
+              <div style="clear:both;"></div>
+            </div>
+          </div>
+          <div class="tab-content" style="height:calc(100% - 3.5em);overflow-y:auto;">
+            <div id="material-details-details-panel" class="tab-pane fade in active">
+              <div class="fields-container" style="padding:1%;">
+                <div class="form-group">
+                  <label for="material-details-title">Title</label>
+                  <input class="form-control" type="text" id="material-details-title">
+                </div>
+                <div class="form-group">
+                  <label for="material-details-wireframe">Wireframe</label>
+                  <input class="form-control" type="text" id="material-details-wireframe">
+                </div>
+                <div class="form-group">
+                  <label for="material-details-alpha">Alpha</label>
+                  <input class="form-control" type="text" id="material-details-alpha">
+                </div>
+                <br>
 
-
-  <dialog class="mdl-dialog" id="material-details-dialog" style="width:96%;height:92%;background:rgba(255,255,255,.5);">
-    <div class="popup-canvas-body" style="height:75%;">
-      <canvas class="popup-canvas"></canvas>
-      <div class="popup-detail-view">
-        <div class="tab-panel-details canvaspopuptabpanel">
-          <div style="overflow:hidden;">
-            <div class="fields-container">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-title">
-                <label class="mdl-textfield__label" for="material-details-title">Title</label>
+                <div class="form-group">
+                  <label for="material-details-diffuse-color">Diffuse Color (main)</label>
+                  <input class="form-control" type="text" id="material-details-diffuse-color">
+                </div>
+                <div class="form-group">
+                  <label for="material-details-diffuse-texture-name">Diffuse Texture Name</label>
+                  <input class="form-control" type="text" id="material-details-diffuse-texture-name">
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="material-details-ambient-color">Ambient Color (reflective)</label>
+                  <input class="form-control" type="text" id="material-details-ambient-color">
+                </div>
+                <div class="form-group">
+                  <label for="material-details-ambient-texture-name">Ambient Texture Name</label>
+                  <input class="form-control" type="text" id="material-details-ambient-texture-name">
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="material-details-emissive-color">Emissive Color</label>
+                  <input class="form-control" type="text" id="material-details-emissive-color">
+                </div>
+                <div class="form-group">
+                  <label for="material-details-emissive-texture-name">Emissive Texture Name</label>
+                  <input class="form-control" type="text" id="material-details-emissive-texture-name">
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="material-details-specular-color">Specular Color</label>
+                  <input class="form-control" type="text" id="material-details-specular-color">
+                </div>
+                <div class="form-group">
+                  <label for="material-details-specular-texture-name">Specular Texture Name</label>
+                  <input class="form-control" type="text" id="material-details-specular-texture-name">
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="material-details-backface-culling">Backface Culling</label>
+                  <input class="form-control" type="text" id="material-details-backface-culling">
+                </div>
+                <div class="form-group">
+                  <label for="material-details-specular-power">Specular Power</label>
+                  <input class="form-control" type="text" id="material-details-specular-power">
+                </div>
+                <div class="form-group">
+                  <label for="material-details-use-specular-over-alpha">useSpecularOverAlpha</label>
+                  <input class="form-control" type="text" id="material-details-use-specular-over-alpha">
+                </div>
               </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-wireframe">
-                <label class="mdl-textfield__label" for="material-details-wireframe">Wireframe</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-alpha">
-                <label class="mdl-textfield__label" for="material-details-alpha">Alpha</label>
-              </div>
-
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-diffuse-color">
-                <label class="mdl-textfield__label" for="material-details-diffuse-color">Diffuse Color (main)</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-diffuse-texture-name">
-                <label class="mdl-textfield__label" for="material-details-diffuse-texture">Diffuse Texture Name</label>
-              </div>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-ambient-color">
-                <label class="mdl-textfield__label" for="material-details-ambient-color">Ambient Color (reflective)</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-ambient-texture-name">
-                <label class="mdl-textfield__label" for="material-details-ambient-texture">Ambient Texture Name</label>
-              </div>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-emissive-color">
-                <label class="mdl-textfield__label" for="material-details-emissive-color">Emissive Color</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-emissive-texture-name">
-                <label class="mdl-textfield__label" for="material-details-emissive-texture">Emissive Texture Name</label>
-              </div>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-specular-color">
-                <label class="mdl-textfield__label" for="material-details-specular-color">Specular Color (main)</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-specular-texture-name">
-                <label class="mdl-textfield__label" for="material-details-specular-texture">Specular Texture Name</label>
-              </div>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-backface-culling">
-                <label class="mdl-textfield__label" for="material-details-backface-culling">Back Face Culling</label>
-              </div>
-
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-specular-power">
-                <label class="mdl-textfield__label" for="material-details-specular-power">Specular Power</label>
-              </div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" id="material-details-use-specular-over-alpha">
-                <label class="mdl-textfield__label" for="material-details-use-specular-over-alpha">useSpecularOverAlpha</label>
-              </div>
+            </div>
+            <div id="material-details-firebase-panel" style="width:100%;height:100%;" class="tab-pane fade">
+              <div id="material-details-json" style="width:100%;height:100%;"></div>
             </div>
           </div>
         </div>
-        <div class="tab-panel-json canvaspopuptabpanel">
-          <div id="material-details-json" style="width:100%;height:100%;"></div>
-        </div>
       </div>
     </div>
-    <div class="popup-canvas-buttons" style="height:25%">
-      <div class="canvas-popup-progress-bar mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
-      <div class="canvas-popup-button-bar">
-        <button class="tab-button-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Details</button>
-        <button class="tab-button-json mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">JSON</button>
-
-        <button type="button" class="close-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Cancel</button>
-        <button type="button" class="save-details mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="float:right;">Save</button>
-      </div>
-    </div>
-  </dialog>
+  </div>
   <!-- EDIT DIALOGS END -->
 
 

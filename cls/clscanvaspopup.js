@@ -12,8 +12,6 @@ class clsCanvasPopup {
     this.popupContent = this.dialog.querySelector('.popup-details');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
 
-    $(this.dialog).on("show.bs.modal", () => me.resizeDialog());
-
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.fieldsContainer.style.display = 'none';
@@ -31,10 +29,13 @@ class clsCanvasPopup {
       this.fireEditor = gAPPP.editor(fireEditorId);
       this.editors.push(this.fireEditor);
     }
-    let babylonEditorId = this.tag + '-details-babylon';
-    if (this.dialog.querySelector('#' + babylonEditorId)) {
-      this.babylonEditor = gAPPP.editor(babylonEditorId);
-      this.editors.push(this.babylonEditor);
+
+    if (this.tag === 'mesh') {
+      let babylonEditorId = this.tag + '-details-babylon';
+      if (this.dialog.querySelector('#' + babylonEditorId)) {
+        this.babylonEditor = gAPPP.editor(babylonEditorId);
+        this.editors.push(this.babylonEditor);
+      }
     }
 
     this.cancelBtn.addEventListener('click', () => me.close());
@@ -43,18 +44,13 @@ class clsCanvasPopup {
     this.tabButtons = [];
     this.tabPanels = [];
 
-    if (this.tag === 'mesh') {
-
-      let t = this.dialogQS + ' .popup-canvas';
-      let b = this.dialogQS + ' .popup-details';
-      window.Split([t, b], {
-        sizes: [50, 50],
-        direction: 'vertical',
-        onDragEnd: () => me.splitDragEnd()
-      });  
-    }
-  }
-  resizeDialog() {
+    let t = this.dialogQS + ' .popup-canvas';
+    let b = this.dialogQS + ' .popup-details';
+    window.Split([t, b], {
+      sizes: [50, 50],
+      direction: 'vertical',
+      onDragEnd: () => me.splitDragEnd()
+    });
   }
   splitDragEnd() {
     for (let i in this.editors)
@@ -120,12 +116,12 @@ class clsCanvasPopup {
   finishMaterialShow(uiObject) {
     this.uiObject = uiObject;
 
+    this.fieldsContainer.style.display = 'block';
     this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
     gAPPP.beautify(this.fireEditor);
     let s = this.babyHelper.addSphere('sphere1', 50, 5, this.scene, false);
 
     this.fireFields.paint(this.uiObject);
-    this.resizeDialog();
     this.popupButtons.style.display = 'block';
     this.popupContent.style.display = 'block';
     this.progressBar.style.display = 'none';
