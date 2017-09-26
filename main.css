@@ -68,39 +68,25 @@ html, body {
   float: left;
 }
 
-.flex-vertical, .flex-horizontal {
-  display: flex;
-  flex-direction: column;
+#sign-out-button {
+  font-size: 10px;
+}
+.sb-title {
+   float:left;
+   font-size:20px;
+   padding-left: 15px;
+   padding-top: 3px;
+}
+.sb-floating-toolbar-item {
+  font-size: 10pt;
+  z-index: 1;
+  pointer-events: auto;
+  display: inline-block;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: stretch;
   align-content: stretch;
 }
-
-.flex-horizontal {
-  flex-direction: row;
-}
-
-#sign-out-button {
-  font-size: 10px;
-}
-
-.canvas-popup-progress-bar {
-  display: none;
-  margin-top: 10px;
-}
-
-.popup-progress-bar {
-  display: none;
-  margin-top: 10px;
-}
-
-.sb-floating-toolbar-item {
-  display: inline-block;
-  font-size: 10pt;
-  z-index: 1;
-  pointer-events: auto;
-}
-
 .sb-floating-toolbar-content {
   flex: 1;
   white-space: nowrap;
@@ -180,7 +166,6 @@ html, body {
 .popup-details {
   overflow: hidden;
 }
-
 .popup-title {
   text-align:center;
   float: right;
@@ -191,4 +176,27 @@ html, body {
   margin: 4px;
   color: white;
   background: rgb(0, 140, 0);
+}
+.popup-action-bar {
+   height:3.07em;
+   overflow:hidden;
+}
+.popup-buttons {
+  padding: 4px;
+}
+.fields-container {
+  padding: 1%;
+}
+.tab-content {
+  height:calc(100% - 3.5em);
+  overflow-y:auto;
+}
+.editor-tab-pane, .editor-tab-pane > div {
+  height: 100%;
+  width: 100%;
+}
+
+.popup-progress-bar {
+  display: none;
+  margin-top: 10px;
 }

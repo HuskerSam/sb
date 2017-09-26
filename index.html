@@ -28,13 +28,13 @@
   <canvas id="renderCanvas"></canvas>
   <div id="main-page" style="display:none;">
     <div id="main-title-bar">
-      <span style="float:left;font-size:20px;padding:8px;"> Scene Builder </span>
-      <button id="sign-out-button">Sign out</button>
+      <span class="sb-title">Scene Builder</span>
+      <button id="sign-out-button" class="btn btn-default">Sign out</button>
       <div style="clear:both;"></div>
     </div>
     <div style="pointer-events:none;" id="sb-floating-toolbar">
       <div style="display:none;" id="sb-floating-toolbar-item-template">
-        <div class="flex-horizontal sb-floating-toolbar-item">
+        <div class="sb-floating-toolbar-item">
           <div class="button-wrapper">
             <span class="button-title"></span>
             <br>
@@ -134,12 +134,11 @@
       <div class="modal-body">
         <canvas class="popup-canvas"></canvas>
         <div class="popup-details">
-          <div class="popup-action-bar" style="height:3.07em;overflow:hidden;">
+          <div class="popup-action-bar">
             <div class="popup-progress-bar">
               Importing...
             </div>
-            <div class="popup-buttons" style="padding: .1em;">
-
+            <div class="popup-buttons">
               <ul class="nav nav-pills" style="float:left;">
                 <li class="active"><a data-toggle="pill" href="#mesh-details-details-panel">Details</a></li>
                 <li><a data-toggle="pill" href="#mesh-details-firebase-panel">Firebase</a></li>
@@ -147,7 +146,7 @@
               </ul>
               <span class="popup-title">
               Mesh<br>Editor
-            </span>
+              </span>
               <div style="float:right;">
                 <button type="button" class="btn btn-primary save-details">Save</button>
                 <button type="button" class="btn close-details">Cancel</button>
@@ -155,9 +154,9 @@
               <div style="clear:both;"></div>
             </div>
           </div>
-          <div class="tab-content" style="height:calc(100% - 3.5em);overflow-y:auto;">
+          <div class="tab-content">
             <div id="mesh-details-details-panel" class="tab-pane fade in active">
-              <div class="fields-container" style="padding:1%;">
+              <div class="fields-container">
                 <div class="form-group">
                   <label for="mesh-details-title">Title</label>
                   <input class="form-control" type="text" id="mesh-details-title">
@@ -203,11 +202,11 @@
                 </div>
               </div>
             </div>
-            <div id="mesh-details-firebase-panel" style="width:100%;height:100%;" class="tab-pane fade">
-              <div id="mesh-details-json" style="width:100%;height:100%;"></div>
+            <div id="mesh-details-firebase-panel" class="tab-pane fade editor-tab-pane">
+              <div id="mesh-details-json" ></div>
             </div>
-            <div id="mesh-details-babylon-panel" style="width:100%;height:100%;" class="tab-pane fade">
-              <div id="mesh-details-babylon" style="width:100%;height:100%;"></div>
+            <div id="mesh-details-babylon-panel" class="tab-pane fade editor-tab-pane">
+              <div id="mesh-details-babylon"></div>
             </div>
           </div>
         </div>
@@ -220,11 +219,11 @@
       <div class="modal-body">
         <canvas class="popup-canvas"></canvas>
         <div class="popup-details">
-          <div class="popup-action-bar" style="height:3.1em;overflow:hidden;">
+          <div class="popup-action-bar">
             <div class="popup-progress-bar">
               Importing...
             </div>
-            <div class="popup-buttons" style="padding: .1em;">
+            <div class="popup-buttons">
               <span class="popup-title">
               Material<br>Editor
             </span>
@@ -239,9 +238,9 @@
               <div style="clear:both;"></div>
             </div>
           </div>
-          <div class="tab-content" style="height:calc(100% - 3.5em);overflow-y:auto;">
+          <div class="tab-content">
             <div id="material-details-details-panel" class="tab-pane fade in active">
-              <div class="fields-container" style="padding:1%;">
+              <div class="fields-container">
                 <div class="form-group">
                   <label for="material-details-title">Title</label>
                   <input class="form-control" type="text" id="material-details-title">
@@ -306,8 +305,8 @@
                 </div>
               </div>
             </div>
-            <div id="material-details-firebase-panel" style="width:100%;height:100%;" class="tab-pane fade">
-              <div id="material-details-json" style="width:100%;height:100%;"></div>
+            <div id="material-details-firebase-panel" class="tab-pane fade editor-tab-pane">
+              <div id="material-details-json"></div>
             </div>
           </div>
         </div>

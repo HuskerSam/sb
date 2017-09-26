@@ -21,22 +21,9 @@ class clsCanvasPopup {
     this.fileName = 'file.babylon';
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
-    this.babyHelper = new clsBabylonHelper(this.canvas);
 
-    this.editors = [];
-    let fireEditorId = this.tag + '-details-json';
-    if (this.dialog.querySelector('#' + fireEditorId)) {
-      this.fireEditor = gAPPP.editor(fireEditorId);
-      this.editors.push(this.fireEditor);
-    }
-
-    if (this.tag === 'mesh') {
-      let babylonEditorId = this.tag + '-details-babylon';
-      if (this.dialog.querySelector('#' + babylonEditorId)) {
-        this.babylonEditor = gAPPP.editor(babylonEditorId);
-        this.editors.push(this.babylonEditor);
-      }
-    }
+    this.babyHelper = null;
+    this.editors = null;
 
     this.cancelBtn.addEventListener('click', () => me.close());
     this.okBtn.addEventListener('click', () => me.save());
@@ -51,6 +38,27 @@ class clsCanvasPopup {
       direction: 'vertical',
       onDragEnd: () => me.splitDragEnd()
     });
+  }
+  initEditors() {
+    if (this.editors !== null)
+      return;
+
+    this.editors = [];
+    let fireEditorId = this.tag + '-details-json';
+    if (this.dialog.querySelector('#' + fireEditorId)) {
+      this.fireEditor = gAPPP.editor(fireEditorId);
+      this.fireEditor.$blockScrolling = Infinity;
+      this.editors.push(this.fireEditor);
+    }
+
+    if (this.tag === 'mesh') {
+      let babylonEditorId = this.tag + '-details-babylon';
+      if (this.dialog.querySelector('#' + babylonEditorId)) {
+        this.babylonEditor = gAPPP.editor(babylonEditorId);
+        this.babylonEditor.$blockScrolling = Infinity;
+        this.editors.push(this.babylonEditor);
+      }
+    }
   }
   splitDragEnd() {
     for (let i in this.editors)
@@ -89,6 +97,10 @@ class clsCanvasPopup {
     this.popupButtons.style.display = 'none';
     this.popupContent.style.display = 'none';
     this.progressBar.style.display = '';
+
+    this.initEditors();
+    if (this.babyHelper === null)
+      this.babyHelper = new clsBabylonHelper(this.canvas);
 
     this.id = fireData.key;
     this.fireSet = fireSet;
