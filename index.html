@@ -134,17 +134,19 @@
       <div class="modal-body">
         <canvas class="popup-canvas"></canvas>
         <div class="popup-details">
-          <div class="popup-action-bar" style="height:3em;overflow:hidden;">
+          <div class="popup-action-bar" style="height:3.07em;overflow:hidden;">
             <div class="popup-progress-bar">
               Importing...
             </div>
-            <div class="popup-buttons">
+            <div class="popup-buttons" style="padding: .1em;">
+              <span style="float:left;font-size: 1.5em; margin-right:1em;">
+              Mesh Editor
+            </span>
               <ul class="nav nav-pills" style="float:left;">
                 <li class="active"><a data-toggle="pill" href="#mesh-details-details-panel">Details</a></li>
                 <li><a data-toggle="pill" href="#mesh-details-firebase-panel">Firebase</a></li>
                 <li><a data-toggle="pill" href="#mesh-details-babylon-panel">Babylon</a></li>
               </ul>
-
               <div style="float:right;">
                 <button type="button" class="btn btn-primary save-details">Save</button>
                 <button type="button" class="btn close-details">Cancel</button>
@@ -152,60 +154,58 @@
               <div style="clear:both;"></div>
             </div>
           </div>
-          <div class="tab-content" style="height:calc(100% - 3.2em);overflow-y:auto;">
+          <div class="tab-content" style="height:calc(100% - 3.5em);overflow-y:auto;">
             <div id="mesh-details-details-panel" class="tab-pane fade in active">
-              <div class="fields-container">
+              <div class="fields-container" style="padding:1%;">
                 <div class="form-group">
                   <label for="mesh-details-title">Title</label>
                   <input class="form-control" type="text" id="mesh-details-title">
                 </div>
                 <br>
-                <div class="tab-panel-details">
-                  <div class="form-group">
-                    <label for="mesh-details-pos-x">Position X</label>
-                    <input class="form-control" type="text" id="mesh-details-pos-x">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-pos-y">Position Y</label>
-                    <input class="form-control" type="text" id="mesh-details-pos-y">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-pos-z">Position Z</label>
-                    <input class="form-control" type="text" id="mesh-details-pos-z">
-                  </div>
-                  <br>
-                  <div class="form-group">
-                    <label for="mesh-details-scale-x">Scale X</label>
-                    <input class="form-control" type="text" id="mesh-details-scale-x">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-scale-y">Scale Y</label>
-                    <input class="form-control" type="text" id="mesh-details-scale-y">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-scale-z">Scale Z</label>
-                    <input class="form-control" type="text" id="mesh-details-scale-z">
-                  </div>
-                  <br>
-                  <div class="form-group">
-                    <label for="mesh-details-rotate-x">Rotate X</label>
-                    <input class="form-control" type="text" id="mesh-details-rotate-x">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-rotate-y">Rotate Y</label>
-                    <input class="form-control" type="text" id="mesh-details-rotate-y">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-rotate-z">Rotate Z</label>
-                    <input class="form-control" type="text" id="mesh-details-rotate-z">
-                  </div>
+                <div class="form-group">
+                  <label for="mesh-details-pos-x">Position X</label>
+                  <input class="form-control" type="text" id="mesh-details-pos-x">
+                </div>
+                <div class="form-group">
+                  <label for="mesh-details-pos-y">Position Y</label>
+                  <input class="form-control" type="text" id="mesh-details-pos-y">
+                </div>
+                <div class="form-group">
+                  <label for="mesh-details-pos-z">Position Z</label>
+                  <input class="form-control" type="text" id="mesh-details-pos-z">
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="mesh-details-scale-x">Scale X</label>
+                  <input class="form-control" type="text" id="mesh-details-scale-x">
+                </div>
+                <div class="form-group">
+                  <label for="mesh-details-scale-y">Scale Y</label>
+                  <input class="form-control" type="text" id="mesh-details-scale-y">
+                </div>
+                <div class="form-group">
+                  <label for="mesh-details-scale-z">Scale Z</label>
+                  <input class="form-control" type="text" id="mesh-details-scale-z">
+                </div>
+                <br>
+                <div class="form-group">
+                  <label for="mesh-details-rotate-x">Rotate X</label>
+                  <input class="form-control" type="text" id="mesh-details-rotate-x">
+                </div>
+                <div class="form-group">
+                  <label for="mesh-details-rotate-y">Rotate Y</label>
+                  <input class="form-control" type="text" id="mesh-details-rotate-y">
+                </div>
+                <div class="form-group">
+                  <label for="mesh-details-rotate-z">Rotate Z</label>
+                  <input class="form-control" type="text" id="mesh-details-rotate-z">
                 </div>
               </div>
             </div>
-            <div id="mesh-details-firebase-panel" class="tab-pane fade">
+            <div id="mesh-details-firebase-panel" style="width:100%;height:100%;" class="tab-pane fade">
               <div id="mesh-details-json" style="width:100%;height:100%;"></div>
             </div>
-            <div id="mesh-details-babylon-panel" class="tab-pane fade">
+            <div id="mesh-details-babylon-panel" style="width:100%;height:100%;" class="tab-pane fade">
               <div id="mesh-details-babylon" style="width:100%;height:100%;"></div>
             </div>
           </div>
