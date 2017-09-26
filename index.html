@@ -30,7 +30,9 @@
   <div id="main-page" style="display:none;">
     <div id="main-title-bar">
       <span class="sb-title">Scene Builder</span>
-      <button id="sign-out-button" class="btn btn-default">Sign out</button>
+      <button id="sign-out-button" class="btn btn-primary-outline single-toolbar-btn">
+        <i class="material-icons">account_circle</i> Sign out
+      </button>
       <div style="clear:both;"></div>
     </div>
     <div style="pointer-events:none;" id="sb-floating-toolbar">
@@ -137,21 +139,28 @@
         <div class="popup-details">
           <div class="popup-action-bar">
             <div class="progress progress-striped active popup-progress-bar">
-              <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 90%;margin-left:5%;">
+              <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
               </div>
             </div>
             <div class="popup-buttons">
-              <ul class="nav nav-pills" style="float:left;">
-                <li class="active"><a data-toggle="pill" href="#mesh-details-details-panel">Details</a></li>
-                <li><a data-toggle="pill" href="#mesh-details-firebase-panel">Firebase</a></li>
-                <li><a data-toggle="pill" href="#mesh-details-babylon-panel">Babylon</a></li>
+              <ul class="nav nav-tabs" style="float:left;">
+                <li class="active"><a data-toggle="tab" href="#mesh-details-details-panel">Details</a></li>
+                <li><a data-toggle="tab" href="#mesh-details-firebase-panel">Firebase</a></li>
+                <li><a data-toggle="tab" href="#mesh-details-babylon-panel">Babylon</a></li>
               </ul>
               <span class="popup-title">
               Mesh<br>Editor
               </span>
               <div style="float:right;">
-                <button type="button" class="btn btn-primary save-details">Save</button>
-                <button type="button" class="btn close-details">Cancel</button>
+                <button type="button" class="btn btn-primary-outline">
+                  <i class="material-icons">rotate_90_degrees_ccw</i>
+                </button>
+                <button type="button" class="btn btn-primary save-details">
+                  <i class="material-icons">cloud_done</i>
+                </button>
+                <button type="button" class="btn btn-primary-outline close-details">
+                  <i class="material-icons">close</i>
+                </button>
               </div>
               <div style="clear:both;"></div>
             </div>

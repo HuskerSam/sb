@@ -67,10 +67,6 @@ html, body {
   height: 100%;
   float: left;
 }
-
-#sign-out-button {
-  font-size: 10px;
-}
 .sb-title {
    float:left;
    font-size:20px;
@@ -194,4 +190,21 @@ html, body {
 .editor-tab-pane, .editor-tab-pane > div {
   height: 100%;
   width: 100%;
+}
+.btn-primary-outline {
+  background-color: transparent;
+  border-color: #ccc;
+  padding-bottom: 0px;
+}
+.popup-buttons .save-details {
+  padding-bottom: 0px;
+}
+.single-toolbar-btn {
+  font-size: 14px;
+  padding-top: 0px;
+}
+.single-toolbar-btn > i {
+  position:relative;
+  top: 3px;
+  font-size: 17px;
 }

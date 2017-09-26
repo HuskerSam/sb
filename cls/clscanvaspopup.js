@@ -138,6 +138,8 @@ class clsCanvasPopup {
     this.popupButtons.style.display = 'block';
     this.tabContent.style.display = 'block';
     this.progressBar.style.display = 'none';
+
+    this.cancelBtn.focus();
   }
   finishMeshShow(uiObject) {
     this.uiObject = uiObject;
@@ -153,6 +155,8 @@ class clsCanvasPopup {
     this.popupButtons.style.display = 'block';
     this.tabContent.style.display = 'block';
     this.progressBar.style.display = 'none';
+
+    this.cancelBtn.focus();
   }
   save() {
     let me = this;
