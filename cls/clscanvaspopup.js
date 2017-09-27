@@ -12,6 +12,8 @@ class clsCanvasPopup {
     this.rotateBtn = this.dialog.querySelector('.rotate-details');
     this.tabContent = this.dialog.querySelector('.tab-content');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
+    this.sceneJSONBtn = this.dialog.querySelector('.scene-pill-button');
+    this.uiJSON = 'N/A';
 
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
@@ -24,14 +26,19 @@ class clsCanvasPopup {
     this.babyHelper = null;
     this.editors = null;
 
-    this.cancelBtn.addEventListener('click', () => me.close());
-    this.okBtn.addEventListener('click', () => me.save());
-    this.rotateBtn.addEventListener('click', () => me.rotateView());
+    this.cancelBtn.addEventListener('click', () => me.close(), false);
+    this.okBtn.addEventListener('click', () => me.save(), false);
+    this.rotateBtn.addEventListener('click', () => me.rotateView(), false);
+    if (this.sceneJSONBtn)
+      this.sceneJSONBtn.addEventListener('click', () => me.showSceneJSON(), false);
     this.tabButtons = [];
     this.tabPanels = [];
 
     this.rotateState = 'vertical';
     this.splitView();
+  }
+  showSceneJSON() {
+    gAPPP.popupDialogs.dialogs['ace-editor-popup'].showAce(this.uiJSON);
   }
   splitView() {
     if (this.splitInstance)
@@ -76,15 +83,6 @@ class clsCanvasPopup {
       this.fireEditor = gAPPP.editor(fireEditorId);
       this.fireEditor.$blockScrolling = Infinity;
       this.editors.push(this.fireEditor);
-    }
-
-    if (this.tag === 'mesh') {
-      let babylonEditorId = this.tag + '-details-babylon';
-      if (this.dialog.querySelector('#' + babylonEditorId)) {
-        this.babylonEditor = gAPPP.editor(babylonEditorId);
-        this.babylonEditor.$blockScrolling = Infinity;
-        this.editors.push(this.babylonEditor);
-      }
     }
   }
   splitDragEnd() {
@@ -191,8 +189,7 @@ class clsCanvasPopup {
     this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
     gAPPP.beautify(this.fireEditor);
 
-    this.babylonEditor.setValue(gAPPP.stringify(uiObject));
-    gAPPP.beautify(this.babylonEditor);
+    this.uiJSON = js_beautify(gAPPP.stringify(uiObject));
 
     this.fireFields.paint(this.uiObject);
     this.popupButtons.style.display = 'block';

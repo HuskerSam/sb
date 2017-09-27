@@ -51,6 +51,34 @@
     </div>
   </div>
 
+  <!-- UTILITY DIALOGS -->
+  <div class="modal edit-modal" id="utility-dialog-show-ace-editor" role="dialog" style="z-index:10000">
+    <div class="modal-dialog">
+      <div class="modal-body">
+        <div class="popup-action-bar">
+          <div class="popup-buttons">
+            <span class="popup-title">
+            JSON<br>Editor
+            </span>
+            <div style="float:right;">
+              <button type="button" class="btn btn-primary save-details">
+                <i class="material-icons">cloud_done</i>
+              </button>
+              <button type="button" class="btn btn-primary-outline close-details">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+            <div style="clear:both;"></div>
+          </div>
+        </div>
+        <div class="popup-main-body">
+          <div id="utility-ace-editor-json" style="width:100%;height:100%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- UTILITY DIALOGS END -->
+
   <!-- CREATE DIALOGS -->
   <div class="modal fade" id="mesh-upload-dialog" role="dialog">
     <div class="modal-dialog">
@@ -143,8 +171,8 @@
           <div class="popup-buttons">
             <ul class="nav nav-pills" style="float:left;">
               <li class="active"><a data-toggle="pill" href="#mesh-details-details-panel">Details</a></li>
-              <li><a data-toggle="pill" href="#mesh-details-firebase-panel">Firebase</a></li>
-              <li><a data-toggle="pill" href="#mesh-details-babylon-panel">Babylon</a></li>
+              <li><a data-toggle="pill" href="#mesh-details-firebase-panel">Raw</a></li>
+              <li><a class="scene-pill-button">Scene</a></li>
             </ul>
             <span class="popup-title">
             Mesh<br>Editor
@@ -173,9 +201,6 @@
               </div>
               <div id="mesh-details-firebase-panel" class="tab-pane fade editor-tab-pane">
                 <div id="mesh-details-json"></div>
-              </div>
-              <div id="mesh-details-babylon-panel" class="tab-pane fade editor-tab-pane">
-                <div id="mesh-details-babylon"></div>
               </div>
             </div>
           </div>
@@ -291,6 +316,7 @@
   <script src="cls/clsbabylonhelper.js"></script>
   <script src="cls/clscreatepopup.js"></script>
   <script src="cls/clscanvaspopup.js"></script>
+  <script src="cls/clsutilitypopup.js"></script>
   <script src="cls/clspopupdialogs.js"></script>
   <script src="cls/clsfirebasehelper.js"></script>
   <script src="cls/clstoolbaritem.js"></script>
