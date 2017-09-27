@@ -5,6 +5,7 @@ class clsFireFields {
     this.values = null;
     this.fireData = null;
     this.active = false;
+    this.groups = {};
     this.lineBreaks = lineBreaks;
     this.container = container;
 
@@ -17,6 +18,16 @@ class clsFireFields {
     let t = document.createElement('input');
     let l = document.createElement('label');
     let c = document.createElement('div');
+    let g = null;
+    if (f.group) {
+      g = this.groups[f.group];
+      if (!g) {
+        g = document.createElement('div');
+        g.classList.add('form-group-container-group');
+        this.container.appendChild(g);
+        this.groups[f.group] = g;
+      }
+    }
     t.id = n;
     l.setAttribute('for', t.id);
     l.innerText = f.title;
@@ -25,9 +36,14 @@ class clsFireFields {
     c.appendChild(l);
     c.appendChild(t);
     c.addEventListener('change', (e) => me.scrape(e), false);
-    this.container.appendChild(c);
-    if (this.lineBreaks.indexOf(Number(index)) !== -1)
-      this.container.appendChild(document.createElement('br'));
+    if (g)
+      g.appendChild(c);
+    else {
+      let w = document.createElement('div');
+      w.classList.add('form-group-container-group');
+      w.appendChild(c);
+      this.container.appendChild(w);
+    }
     f.dom = c;
   }
   scrape(e) {

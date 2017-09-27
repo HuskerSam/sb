@@ -149,7 +149,7 @@ class clsFirebaseHelper {
       emissive: this.getTextureOptionsData(),
       ambient: this.getTextureOptionsData(),
       specular: this.getTextureOptionsData(),
-      specularPower: 32,
+      specularPower: 0.0,
       useSpecularOverAlpha: false,
       backFaceCulling: true,
       wireframe: false

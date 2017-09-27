@@ -1,8 +1,7 @@
 class clsCanvasPopup {
-  constructor(tag, fields, lineBreaks) {
+  constructor(tag, fields) {
     let me = this;
     this.tag = tag;
-    this.lineBreaks = lineBreaks;
     this.dialogQS = '#' + this.tag + '-details-dialog';
     this.dialog = document.querySelector(this.dialogQS);
 

@@ -233,6 +233,14 @@ html, body {
 .modal-body .nav-pills {
   padding-top: 2px;
 }
-.modal-body .form-group {
+.form-group-container-group {
+  display:inline-block;
+  border: solid 1px silver;
+  border-radius: 12px;
+  padding: 4px;
   margin: 4px;
+  background: rgb(240, 220, 240);
+}
+.form-group-container-group .form-group {
+  margin-bottom:0px;
 }
