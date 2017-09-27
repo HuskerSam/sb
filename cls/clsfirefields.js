@@ -1,23 +1,34 @@
 class clsFireFields {
-  constructor(fields, container) {
-    let me = this;
+  constructor(fields, prefix, container, lineBreaks) {
     this.fields = fields;
+    this.prefix = prefix;
     this.values = null;
     this.fireData = null;
     this.active = false;
+    this.lineBreaks = lineBreaks;
+    this.container = container;
 
-    if (container)
-      this.container = container;
-    else
-      this.container = document;
-
-    for (let i in this.fields) {
-      let d = this.fields[i];
-      if (d.domQuerySelector) {
-        d.domElement = this.container.querySelector(d.domQuerySelector);
-        d.domElement.addEventListener('change', (e) => me.scrape(e), false);
-      }
-    }
+    for (let i in this.fields)
+      this.initField(this.fields[i], i.toString());
+  }
+  initField(f, index) {
+    let me = this;
+    let n = this.prefix + 'field-' + index;
+    let t = document.createElement('input');
+    let l = document.createElement('label');
+    let c = document.createElement('div');
+    t.id = n;
+    l.setAttribute('for', t.id);
+    l.innerText = f.title;
+    c.classList.add('form-group');
+    t.classList.add('form-control');
+    c.appendChild(l);
+    c.appendChild(t);
+    c.addEventListener('change', (e) => me.scrape(e), false);
+    this.container.appendChild(c);
+    if (this.lineBreaks.indexOf(Number(index)) !== -1)
+      this.container.appendChild(document.createElement('br'));
+    f.dom = c;
   }
   scrape(e) {
     if (!this.active)

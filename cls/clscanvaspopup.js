@@ -1,11 +1,12 @@
 class clsCanvasPopup {
-  constructor(tag, tabs, fields) {
+  constructor(tag, fields, lineBreaks) {
     let me = this;
     this.tag = tag;
+    this.lineBreaks = lineBreaks;
     this.dialogQS = '#' + this.tag + '-details-dialog';
     this.dialog = document.querySelector(this.dialogQS);
 
-    this.fileDom = this.dialog.querySelector('.popup-file');
+    //this.fileDom = this.dialog.querySelector('.popup-file');
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
     this.cancelBtn = this.dialog.querySelector('.close-details');
@@ -16,9 +17,7 @@ class clsCanvasPopup {
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.fieldsContainer.style.display = 'none';
-    this.fireFields = new clsFireFields(fields, this.fieldsContainer);
-    this.tabs = tabs;
-    this.serializeScene = true;
+    this.fireFields = new clsFireFields(this.fields, this.tag + '-fields-', this.fieldsContainer, this.lineBreaks);
     this.fileName = 'file.babylon';
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
@@ -94,13 +93,9 @@ class clsCanvasPopup {
       this.editors[i].resize();
   }
   uploadPromise() {
-    if (this.serializeScene) {
-      let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
-      let strScene = JSON.stringify(sceneJSON);
-      return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
-    }
-
-    return gAPPP.emptyPromise();
+    let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
+    let strScene = JSON.stringify(sceneJSON);
+    return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
   }
   commit() {
     let me = this;
@@ -151,11 +146,31 @@ class clsCanvasPopup {
 
       return;
     }
+    if (this.tag === 'texture') {
+      this.finishTextureShow(null);
+      return;
+    }
     if (this.tag === 'material') {
       this.finishMaterialShow(null);
+      return;
     }
   }
   finishMaterialShow(uiObject) {
+    this.uiObject = uiObject;
+
+    this.fieldsContainer.style.display = 'block';
+    this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
+    gAPPP.beautify(this.fireEditor);
+    let s = this.babyHelper.addSphere('sphere1', 50, 5, this.scene, false);
+
+    this.fireFields.paint(this.uiObject);
+    this.popupButtons.style.display = 'block';
+    this.tabContent.style.display = 'block';
+    this.progressBar.style.display = 'none';
+
+    this.cancelBtn.focus();
+  }
+  finishTextureShow(uiObject) {
     this.uiObject = uiObject;
 
     this.fieldsContainer.style.display = 'block';

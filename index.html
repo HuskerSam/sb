@@ -30,7 +30,7 @@
   <div id="main-page" style="display:none;">
     <div id="main-title-bar">
       <span class="sb-title">Scene Builder</span>
-      <button id="sign-out-button" class="btn btn-primary-outline single-toolbar-btn">
+      <button id="sign-out-button" class="btn btn-primary-outline single-toolbar-btn" style="margin-right:4px;margin-top:4px;">
         <i class="material-icons">account_circle</i> Sign out
       </button>
       <div style="clear:both;"></div>
@@ -169,49 +169,6 @@
             <div class="tab-content">
               <div id="mesh-details-details-panel" class="tab-pane fade in active">
                 <div class="fields-container">
-                  <div class="form-group">
-                    <label for="mesh-details-title">Title</label>
-                    <input class="form-control" type="text" id="mesh-details-title">
-                  </div>
-                  <br>
-                  <div class="form-group">
-                    <label for="mesh-details-pos-x">Position X</label>
-                    <input class="form-control" type="text" id="mesh-details-pos-x">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-pos-y">Position Y</label>
-                    <input class="form-control" type="text" id="mesh-details-pos-y">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-pos-z">Position Z</label>
-                    <input class="form-control" type="text" id="mesh-details-pos-z">
-                  </div>
-                  <br>
-                  <div class="form-group">
-                    <label for="mesh-details-scale-x">Scale X</label>
-                    <input class="form-control" type="text" id="mesh-details-scale-x">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-scale-y">Scale Y</label>
-                    <input class="form-control" type="text" id="mesh-details-scale-y">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-scale-z">Scale Z</label>
-                    <input class="form-control" type="text" id="mesh-details-scale-z">
-                  </div>
-                  <br>
-                  <div class="form-group">
-                    <label for="mesh-details-rotate-x">Rotate X</label>
-                    <input class="form-control" type="text" id="mesh-details-rotate-x">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-rotate-y">Rotate Y</label>
-                    <input class="form-control" type="text" id="mesh-details-rotate-y">
-                  </div>
-                  <div class="form-group">
-                    <label for="mesh-details-rotate-z">Rotate Z</label>
-                    <input class="form-control" type="text" id="mesh-details-rotate-z">
-                  </div>
                 </div>
               </div>
               <div id="mesh-details-firebase-panel" class="tab-pane fade editor-tab-pane">
@@ -326,6 +283,57 @@
               </div>
               <div id="material-details-firebase-panel" class="tab-pane fade editor-tab-pane">
                 <div id="material-details-json"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal edit-modal" id="texture-details-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-body">
+        <div class="popup-action-bar">
+          <div class="progress progress-striped active popup-progress-bar">
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
+            </div>
+          </div>
+          <div class="popup-buttons">
+            <ul class="nav nav-pills" style="float:left;">
+              <li class="active"><a data-toggle="pill" href="#texture-details-details-panel">Details</a></li>
+              <li><a data-toggle="pill" href="#texture-details-firebase-panel">Firebase</a></li>
+            </ul>
+            <span class="popup-title">
+            Texture<br>Editor
+            </span>
+            <div style="float:right;">
+              <button type="button" class="btn btn-primary-outline rotate-details">
+                <i class="material-icons">rotate_90_degrees_ccw</i>
+              </button>
+              <button type="button" class="btn btn-primary save-details">
+                <i class="material-icons">cloud_done</i>
+              </button>
+              <button type="button" class="btn btn-primary-outline close-details">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+            <div style="clear:both;"></div>
+          </div>
+        </div>
+        <div class="popup-main-body">
+          <canvas class="popup-canvas"></canvas>
+          <div class="popup-details">
+            <div class="tab-content">
+              <div id="texture-details-details-panel" class="tab-pane fade in active">
+                <div class="fields-container">
+                  <div class="form-group">
+                    <label for="texture-details-title">Title</label>
+                    <input class="form-control" type="text" id="texture-details-title">
+                  </div>
+                </div>
+              </div>
+              <div id="texture-details-firebase-panel" class="tab-pane fade editor-tab-pane">
+                <div id="texture-details-json"></div>
               </div>
             </div>
           </div>

@@ -233,3 +233,6 @@ html, body {
 .modal-body .nav-pills {
   padding-top: 2px;
 }
+.modal-body .form-group {
+  margin: 4px;
+}
