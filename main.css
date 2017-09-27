@@ -128,6 +128,10 @@ html, body {
   touch-action: none;
   z-index: -1;
   width: 100%;
+  height: 100%;
+}
+.popup-canvas-wrapper {
+
 }
 
 .btn-toolbar-icon {
@@ -184,8 +188,12 @@ html, body {
   padding: 1%;
 }
 .tab-content {
+  height: 100%;
+  overflow-y: auto;
+}
+.popup-main-body {
   height:calc(100% - 3.5em);
-  overflow-y:auto;
+  overflow-y:hidden;
 }
 .editor-tab-pane, .editor-tab-pane > div {
   height: 100%;
@@ -207,4 +215,8 @@ html, body {
   position:relative;
   top: 3px;
   font-size: 17px;
+}
+.vertical-split-display {
+  height:calc(100% - 3.5em);
+  float:left;
 }

@@ -9,6 +9,7 @@ class clsCanvasPopup {
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
     this.cancelBtn = this.dialog.querySelector('.close-details');
+    this.rotateBtn = this.dialog.querySelector('.rotate-details');
     this.tabContent = this.dialog.querySelector('.tab-content');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
 
@@ -27,17 +28,45 @@ class clsCanvasPopup {
 
     this.cancelBtn.addEventListener('click', () => me.close());
     this.okBtn.addEventListener('click', () => me.save());
-
+    this.rotateBtn.addEventListener('click', () => me.rotateView());
     this.tabButtons = [];
     this.tabPanels = [];
 
+    this.rotateState = 'vertical';
+    this.splitView();
+  }
+  splitView() {
+    if (this.splitInstance)
+      this.splitInstance.destroy();
+
     let t = this.dialogQS + ' .popup-canvas';
     let b = this.dialogQS + ' .popup-details';
-    window.Split([t, b], {
+    let mb = this.dialogQS + ' .popup-main-body';
+
+    if (this.rotateState === 'horizontal') {
+      document.querySelector(t).classList.add('vertical-split-display');
+      document.querySelector(b).classList.add('vertical-split-display');
+      document.querySelector(mb).style.height = '100%';
+    } else {
+      document.querySelector(t).classList.remove('vertical-split-display');
+      document.querySelector(b).classList.remove('vertical-split-display');
+      document.querySelector(mb).style.height = '';
+    }
+
+    let me = this;
+    this.splitInstance = window.Split([t, b], {
       sizes: [50, 50],
-      direction: 'vertical',
+      direction: this.rotateState,
       onDragEnd: () => me.splitDragEnd()
     });
+  }
+  rotateView() {
+    if (this.rotateState === 'vertical') {
+      this.rotateState = 'horizontal';
+    } else {
+      this.rotateState = 'vertical';
+    }
+    this.splitView();
   }
   initEditors() {
     if (this.editors !== null)
