@@ -220,3 +220,16 @@ html, body {
   height:calc(100% - 3.5em);
   float:left;
 }
+.popup-progress-bar {
+  margin-top: 20px;
+  width:80%;
+  display:inline-block;
+  margin-left: 10%;
+}
+.modal-body .nav-pills > li > a {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.modal-body .nav-pills {
+  padding-top: 2px;
+}
