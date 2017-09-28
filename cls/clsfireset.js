@@ -1,4 +1,4 @@
-class FireSet {
+class clsFireSet {
   constructor(dataPrefix, domPrefix, keyList, itemTemplateFunction) {
     let me = this;
     this.active = true;
@@ -14,9 +14,11 @@ class FireSet {
     this.notiRef.on('child_changed', (data) => me.childChanged(data));
     this.notiRef.on('child_removed', (data) => me.childRemoved(data));
     this.fireDataStash = {};
+    this.fireDataName = {};
+    this.fireDataValues = {};
   }
   destroy() {
-    if (! this.active)
+    if (!this.active)
       return;
     this.domContainer.innerHTML = '';
     this.notiRef.off();
@@ -26,11 +28,27 @@ class FireSet {
     return firebase.database().ref().child(this.dataPrefix).push().key
   }
   childAdded(fireData) {
-    this.fireDataStash[fireData.key] = fireData;
+    this.updateStash(fireData);
     this.domContainer.insertBefore(this.createDOM(fireData), this.domContainer.firstChild);
   }
+  updateStash(fireData, remove) {
+    let key = fireData.key;
+    if (remove) {
+
+      delete this.fireDataStash[key];
+      delete this.fireDataValues[key];
+      if (this.fireDataName[key])
+        delete this.fireDataName[key];
+      return;
+    }
+
+    this.fireDataStash[key] = fireData;
+    this.fireDataValues[key] = fireData.val();
+    if (this.fireDataValues[key].title)
+      this.fireDataName[this.fireDataValues[key].title] = this.fireDataValues[key];
+  }
   childChanged(fireData) {
-    this.fireDataStash[fireData.key] = fireData;
+    this.updateStash(fireData);
     var div = document.getElementById(this.domPrefix + '-' + fireData.key);
     let values = fireData.val();
     for (let i in this.keyList) {
@@ -46,7 +64,7 @@ class FireSet {
     }
   }
   childRemoved(fireData) {
-    delete this.fireDataStash[fireData.key];
+    this.updateStash(fireData, true);
     let post = document.getElementById(this.domPrefix + '-' + fireData.key);
     if (post)
       this.domContainer.removeChild(post);
@@ -104,7 +122,7 @@ class FireSet {
     let details_div = outer.getElementsByClassName(this.domPrefix + '-details')[0];
     let key = fireData.key;
     if (details_div)
-      details_div.addEventListener('click',(e) => me.showPopup(e, key), false);
+      details_div.addEventListener('click', (e) => me.showPopup(e, key), false);
 
     return outer.childNodes[0];
   }

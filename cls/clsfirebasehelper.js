@@ -46,11 +46,11 @@ class clsFirebaseHelper {
       this.loggedIn = true;
       this.userWriteData();
 
-      this.meshesFireSet = new FireSet('lib_meshes', 'meshes', ['title'], this.defaultItemTemplate);
+      this.meshesFireSet = new clsFireSet('lib_meshes', 'meshes', ['title'], this.defaultItemTemplate);
       this.fireSets.push(this.meshesFireSet);
-      this.texturesFireSet = new FireSet('lib_textures', 'textures', ['title'], this.defaultItemTemplate);
+      this.texturesFireSet = new clsFireSet('lib_textures', 'textures', ['title'], this.defaultItemTemplate);
       this.fireSets.push(this.texturesFireSet);
-      this.materialsFireSet = new FireSet('lib_materials', 'materials', ['title'], this.defaultItemTemplate);
+      this.materialsFireSet = new clsFireSet('lib_materials', 'materials', ['title'], this.defaultItemTemplate);
       this.fireSets.push(this.materialsFireSet);
     } else {
       this.currentUser = {};

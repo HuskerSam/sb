@@ -72,19 +72,7 @@ class clsFireFields {
 
     if (this.uiObject.type === 'texture') {
       let material = this.uiObject.m;
-      let texture = new BABYLON.Texture(this.valueCache['url']);
-
-      if (isNumeric(this.valueCache['vScale']))
-        texture.vScale = Number(this.valueCache['vScale']);
-      if (isNumeric(this.valueCache['uScale']))
-        texture.uScale = Number(this.valueCache['uScale']);
-      if (isNumeric(this.valueCache['vOffset']))
-        texture.vOffset = Number(this.valueCache['vOffset']);
-      if (isNumeric(this.valueCache['uOffset']))
-        texture.uOffset = Number(this.valueCache['uOffset']);
-
-      texture.hasAlpha = this.valueCache['hasAlpha'];
-      material.diffuseTexture = texture;
+      material.diffuseTexture = this.texture(this.valueCache);
       return;
     }
 
@@ -118,13 +106,25 @@ class clsFireFields {
       if (v !== undefined) {
         try {
           if (f.type === 'color') {
-            if (v === '') {
+            if (v === '')
               return;
-            }
+
             let parts = v.split(',');
             let cA = [];
-            let color =  new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+            let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
             gAPPP.path(o, f.uiObjectField, color);
+
+            return;
+          }
+
+          if (f.type === 'texture') {
+            let tD = gAPPP.firebaseHelper.texturesFireSet.fireDataName[v];
+            if (tD === undefined)
+              return;
+
+            let t = this.texture(tD);
+            gAPPP.path(o, f.uiObjectField, t);
+
             return;
           }
 
@@ -153,6 +153,8 @@ class clsFireFields {
     for (let i in this.fields) {
       let f = this.fields[i];
       let nV = gAPPP.path(this.values, f.fireSetField);
+      if (nV === undefined)
+        nV = '';
       let v = this.validate(f, nV);
       f.dom.value = v;
       this.scrapeCache[i] = v;
@@ -189,6 +191,25 @@ class clsFireFields {
       return r.toFixed(3) + ',' + g.toFixed(3) + ',' + b.toFixed(3);
     }
 
+    if (f.type === 'texture') {
+    //  return r;
+    }
     return r;
   }
+  texture(values) {
+    let texture = new BABYLON.Texture(values['url']);
+
+    if (isNumeric(values['vScale']))
+      texture.vScale = Number(values['vScale']);
+    if (isNumeric(values['uScale']))
+      texture.uScale = Number(values['uScale']);
+    if (isNumeric(values['vOffset']))
+      texture.vOffset = Number(values['vOffset']);
+    if (isNumeric(values['uOffset']))
+      texture.uOffset = Number(values['uOffset']);
+
+    texture.hasAlpha = values['hasAlpha'];
+    return texture;
+  }
+
 }
