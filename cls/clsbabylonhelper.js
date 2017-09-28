@@ -58,6 +58,7 @@ class clsBabylonHelper {
     return {
       title: 'Mesh',
       name: '',
+      materialName: '',
       url: '',
       type: 'url',
       size: 0,

@@ -51,11 +51,11 @@ class clsCanvasPopup {
     if (this.rotateState === 'horizontal') {
       document.querySelector(t).classList.add('vertical-split-display');
       document.querySelector(b).classList.add('vertical-split-display');
-      document.querySelector(mb).style.height = '100%';
+  //    document.querySelector(mb).style.height = '100%';
     } else {
       document.querySelector(t).classList.remove('vertical-split-display');
       document.querySelector(b).classList.remove('vertical-split-display');
-      document.querySelector(mb).style.height = '';
+  //    document.querySelector(mb).style.height = '';
     }
 
     let me = this;

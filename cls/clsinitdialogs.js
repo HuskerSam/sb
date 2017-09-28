@@ -8,10 +8,11 @@ class clsInitDialogs {
         uiObjectField: null,
         group: 'title'
       }, {
-        title: 'Name (scene id)',
-        fireSetField: 'name',
-        uiObjectField: name,
-        group: 'title'
+        title: 'Material Name',
+        fireSetField: 'materialName',
+        uiObjectField: 'material',
+        group: 'title',
+        type: 'material'
       }, {
         title: 'Scale X',
         fireSetField: 'simpleUIDetails.scaleX',

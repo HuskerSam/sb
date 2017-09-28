@@ -71,24 +71,12 @@ class clsFireFields {
       return;
 
     if (this.uiObject.type === 'texture') {
-      let material = this.uiObject.m;
-      material.diffuseTexture = this.texture(this.valueCache);
+      this.uiObject.m.diffuseTexture = this.texture(this.valueCache);
       return;
     }
 
-    if (this.uiObject.type === 'material') {
-
-      let material = this.uiObject.m;
-
-      for (let i in this.fields) {
-        let f = this.fields[i];
-        let v = this.scrapeCache[i];
-
-        if (f.uiObjectField)
-          this.updateUIObjectField(f, v, material);
-      }
-      return;
-    }
+    if (this.uiObject.type === 'material')
+      return this.material(this.scrapeCache, this.uiObject.m);
 
     for (let i in this.fields) {
       let f = this.fields[i];
@@ -128,6 +116,16 @@ class clsFireFields {
             return;
           }
 
+          if (f.type === 'material') {
+            let tD = gAPPP.firebaseHelper.materialsFireSet.fireDataName[v];
+            if (tD === undefined)
+              return;
+
+            let m = this.material(tD, undefined, scene);
+            gAPPP.path(o, f.uiObjectField, m);
+
+            return;
+          }
           gAPPP.path(o, f.uiObjectField, v);
         } catch (e) {
           e;
@@ -211,5 +209,18 @@ class clsFireFields {
     texture.hasAlpha = values['hasAlpha'];
     return texture;
   }
+  material(values, m, scene) {
+    if (!m)
+      m = new BABYLON.StandardMaterial('material', scene);
 
+    for (let i in this.fields) {
+      let f = this.fields[i];
+      let v = this.scrapeCache[i];
+
+      if (f.uiObjectField)
+        this.updateUIObjectField(f, v, m);
+    }
+
+    return m;
+  }
 }
