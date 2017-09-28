@@ -3,161 +3,180 @@ class clsPopupDialogs {
     this.dialogs = {};
 
     let meshFields = [{
-      title: 'Title',
-      fireSetField: 'title',
-      babylonMeshField: null
-    }, {
-      title: 'Scale X',
-      fireSetField: 'simpleUIDetails.scaleX',
-      babylonMeshField: 'scaling.x',
-      group: 'scale'
-    }, {
-      title: 'Scale Y',
-      fireSetField: 'simpleUIDetails.scaleY',
-      babylonMeshField: 'scaling.y',
-      group: 'scale'
-    }, {
-      title: 'Scale Z',
-      fireSetField: 'simpleUIDetails.scaleZ',
-      babylonMeshField: 'scaling.z',
-      group: 'scale'
-    }, {
-      title: 'Offset X',
-      fireSetField: 'simpleUIDetails.positionX',
-      babylonMeshField: 'position.x',
-      group: 'offset'
-    }, {
-      title: 'Offset Y',
-      fireSetField: 'simpleUIDetails.positionY',
-      babylonMeshField: 'position.y',
-      group: 'offset'
-    }, {
-      title: 'Offset Z',
-      fireSetField: 'simpleUIDetails.positionZ',
-      babylonMeshField: 'position.z',
-      group: 'offset'
-    }, {
-      title: 'Rotate X',
-      fireSetField: 'simpleUIDetails.rotateX',
-      babylonMeshField: 'rotation.x',
-      group: 'rotate'
-    }, {
-      title: 'Rotate Y',
-      fireSetField: 'simpleUIDetails.rotateY',
-      babylonMeshField: 'rotation.y',
-      group: 'rotate'
-    }, {
-      title: 'Rotate Z',
-      fireSetField: 'simpleUIDetails.rotateZ',
-      babylonMeshField: 'rotation.z',
-      group: 'rotate'
-    }];
+        title: 'Title',
+        fireSetField: 'title',
+        uiObjectField: null,
+        group: 'title'
+      }, {
+        title: 'Name (scene id)',
+        fireSetField: 'name',
+        uiObjectField: name,
+        group: 'title'
+      }, {
+        title: 'Scale X',
+        fireSetField: 'simpleUIDetails.scaleX',
+        uiObjectField: 'scaling.x',
+        group: 'scale'
+      }, {
+        title: 'Scale Y',
+        fireSetField: 'simpleUIDetails.scaleY',
+        uiObjectField: 'scaling.y',
+        group: 'scale'
+      }, {
+        title: 'Scale Z',
+        fireSetField: 'simpleUIDetails.scaleZ',
+        uiObjectField: 'scaling.z',
+        group: 'scale'
+      }, {
+        title: 'Offset X',
+        fireSetField: 'simpleUIDetails.positionX',
+        uiObjectField: 'position.x',
+        group: 'offset'
+      }, {
+        title: 'Offset Y',
+        fireSetField: 'simpleUIDetails.positionY',
+        uiObjectField: 'position.y',
+        group: 'offset'
+      }, {
+        title: 'Offset Z',
+        fireSetField: 'simpleUIDetails.positionZ',
+        uiObjectField: 'position.z',
+        group: 'offset'
+      }, {
+        title: 'Rotate X',
+        fireSetField: 'simpleUIDetails.rotateX',
+        uiObjectField: 'rotation.x',
+        group: 'rotate'
+      }, {
+        title: 'Rotate Y',
+        fireSetField: 'simpleUIDetails.rotateY',
+        uiObjectField: 'rotation.y',
+        group: 'rotate'
+      }, {
+        title: 'Rotate Z',
+        fireSetField: 'simpleUIDetails.rotateZ',
+        uiObjectField: 'rotation.z',
+        group: 'rotate'
+      }
+    ];
 
     let materialFields = [{
       title: 'Title',
       fireSetField: 'title',
-      babylonMeshField: null,
+      uiObjectField: null,
+      group: 'title'
+    }, {
+      title: 'Name (scene id)',
+      fireSetField: 'name',
+      uiObjectField: name,
       group: 'title'
     }, {
       title: 'Wireframe',
       fireSetField: 'wireFrame',
-      babylonMeshField: null,
-      group: 'title'
+      uiObjectField: null,
+      group: 'options'
     }, {
       title: 'Alpha',
       fireSetField: 'alpha',
-      babylonMeshField: null,
-      group: 'title'
+      uiObjectField: null,
+      group: 'options'
     }, {
       title: 'Diffuse Color (main)',
       fireSetField: 'diffuseColor',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'diffuseColor'
     }, {
       title: 'Diffuse Texture Name',
       fireSetField: 'diffuseTextureName',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'diffuseColor'
     }, {
       title: 'Ambient Color (reflects)',
       fireSetField: 'ambientColor',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'ambientColor'
     }, {
       title: 'Ambient Texture Name',
       fireSetField: 'ambientTextureName',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'ambientColor'
     }, {
       title: 'Emissive Color (emits)',
       fireSetField: 'emissiveColor',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'emissiveColor'
     }, {
       title: 'Emissive Texture Name',
       fireSetField: 'emissiveTextureName',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'emissiveColor'
     }, {
       title: 'Specular Power',
       fireSetField: 'specularPower',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'specularPower'
     }, {
       title: 'useSpecularOverAlpha',
       fireSetField: 'useSpecularOverAlpha',
-      babylonMeshField: null,
+      uiObjectField: null,
+      group: 'specularPower'
+    }, {
+      title: 'useGlossinessFromSpecularMapAlpha',
+      fireSetField: 'useGlossinessFromSpecularMapAlpha',
+      uiObjectField: null,
       group: 'specularPower'
     }, {
       title: 'Specular Color (shines)',
       fireSetField: 'specularColor',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'specularColor'
     }, {
       title: 'Specular Texture Name',
       fireSetField: 'specularTextureName',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'specularColor'
     }, {
       title: 'Backface Culling',
       fireSetField: 'backfaceCulling',
-      babylonMeshField: null
+      uiObjectField: null
     }];
 
     let textureFields = [{
       title: 'Title',
       fireSetField: 'title',
-      babylonMeshField: null,
+      uiObjectField: null,
       group: 'title'
-    }, {
-      title: 'Name',
-      fireSetField: 'name',
-      babylonMeshField: null,
-      group: 'title'
+    },{
+      title: 'Url',
+      fireSetField: 'url',
+      uiObjectField: null,
+      uiType: 'texture',
+      group: 'options'
     }, {
       title: 'Alpha',
       fireSetField: 'hasAlpha',
-      babylonMeshField: null,
-      group: 'title'
+      uiObjectField: 'hasAlpha',
+      uiType: 'boolean',
+      group: 'options'
     }, {
       title: 'Offset v',
       fireSetField: 'vOffset',
-      babylonMeshField: null,
+      uiObjectField: 'vOffset',
       group: 'offset'
     }, {
       title: 'Offset u',
       fireSetField: 'uOffset',
-      babylonMeshField: null,
+      uiObjectField: 'uOffset',
       group: 'offset'
     }, {
       title: 'Scale v',
       fireSetField: 'vScale',
-      babylonMeshField: null,
+      uiObjectField: 'vScale',
       group: 'scale'
     }, {
       title: 'Scale u',
       fireSetField: 'uScale',
-      babylonMeshField: null,
+      uiObjectField: 'uScale',
       group: 'scale'
     }];
 

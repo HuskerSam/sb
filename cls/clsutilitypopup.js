@@ -29,7 +29,7 @@ class clsUtilityPopup {
   }
   showAce(json) {
     this.initEditors();
-
+    json = js_beautify(json);
     this.aceEditor.setValue(json);
     //gAPPP.beautify(this.fireEditor);
 

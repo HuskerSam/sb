@@ -2,8 +2,13 @@ class clsCanvasPopup {
   constructor(tag, fields) {
     let me = this;
     this.tag = tag;
+    this.uiJSON = 'N/A';
     this.dialogQS = '#' + this.tag + '-details-dialog';
     this.dialog = document.querySelector(this.dialogQS);
+    this.fileName = 'file.babylon';
+    this.babyHelper = null;
+    this.editors = null;
+    this.sceneObjects = [];
 
     //this.fileDom = this.dialog.querySelector('.popup-file');
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
@@ -13,18 +18,13 @@ class clsCanvasPopup {
     this.tabContent = this.dialog.querySelector('.tab-content');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
     this.sceneJSONBtn = this.dialog.querySelector('.scene-pill-button');
-    this.uiJSON = 'N/A';
 
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.fieldsContainer.style.display = 'none';
     this.fireFields = new clsFireFields(this.fields, this.tag + '-fields-', this.fieldsContainer, this.lineBreaks);
-    this.fileName = 'file.babylon';
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
-
-    this.babyHelper = null;
-    this.editors = null;
 
     this.cancelBtn.addEventListener('click', () => me.close(), false);
     this.okBtn.addEventListener('click', () => me.save(), false);
@@ -38,7 +38,8 @@ class clsCanvasPopup {
     this.splitView();
   }
   showSceneJSON() {
-    gAPPP.popupDialogs.dialogs['ace-editor-popup'].showAce(this.uiJSON);
+    let json = gAPPP.stringify(this.uiObject);
+    gAPPP.popupDialogs.dialogs['ace-editor-popup'].showAce(json);
   }
   splitView() {
     if (this.splitInstance)
@@ -90,9 +91,15 @@ class clsCanvasPopup {
       this.editors[i].resize();
   }
   uploadPromise() {
-    let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
-    let strScene = JSON.stringify(sceneJSON);
-    return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
+    if (this.tag === 'mesh') {
+
+      let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
+      let strScene = JSON.stringify(sceneJSON);
+      return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
+
+    }
+
+    return gAPPP.emptyPromise();
   }
   commit() {
     let me = this;
@@ -103,7 +110,9 @@ class clsCanvasPopup {
       me.fireFields.scrape();
 
       me.uploadPromise().then((r1) => {
-        me.fireFields.values.url = r1.downloadURL;
+        if (this.tag === 'mesh') {
+          me.fireFields.values.url = r1.downloadURL;            
+        }
         me.fireFields.commit(me.fireSet).then((r2) => resolve(r2));
       });
     });
@@ -116,6 +125,8 @@ class clsCanvasPopup {
     $(this.dialog).modal('hide');
   }
   show(fireData, fireSet) {
+    this.fireData = fireData;
+    this.fireSet = fireSet;
     this.popupButtons.style.display = 'none';
     this.tabContent.style.display = 'none';
     this.progressBar.style.display = 'block';
@@ -124,8 +135,7 @@ class clsCanvasPopup {
     if (this.babyHelper === null)
       this.babyHelper = new clsBabylonHelper(this.canvas);
 
-    this.id = fireData.key;
-    this.fireSet = fireSet;
+    this.id = this.fireData.key;
     this.fireFields.setData(fireData);
     $(this.dialog).modal('show');
 
@@ -139,57 +149,40 @@ class clsCanvasPopup {
       let me = this;
 
       this.babyHelper.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
-        .then((m) => me.finishMeshShow(m));
+        .then((m) => me.finishShow(m));
 
       return;
     }
-    if (this.tag === 'texture') {
-      this.finishTextureShow(null);
-      return;
-    }
+
     if (this.tag === 'material') {
-      this.finishMaterialShow(null);
-      return;
+      let s = this.babyHelper.addSphere('sphere1', 50, 5, this.scene, false);
+      this.sceneObjects.push(s);
+      return this.finishShow(s);
     }
+
+    if (this.tag === 'texture') {
+      let values = this.fireData.val();
+      let s = this.babyHelper.addGround('ground1', 6, 6, 20, this.scene);
+      this.sceneObjects.push(s);
+
+      let material = new BABYLON.StandardMaterial('material', this.scene);
+      s.material = material;
+
+      return this.finishShow({
+        type: 'texture',
+        scene: this.scene,
+        m: material
+      });
+    }
+
+    this.finishShow(null);
   }
-  finishMaterialShow(uiObject) {
+  finishShow(uiObject) {
     this.uiObject = uiObject;
 
     this.fieldsContainer.style.display = 'block';
     this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
     gAPPP.beautify(this.fireEditor);
-    let s = this.babyHelper.addSphere('sphere1', 50, 5, this.scene, false);
-
-    this.fireFields.paint(this.uiObject);
-    this.popupButtons.style.display = 'block';
-    this.tabContent.style.display = 'block';
-    this.progressBar.style.display = 'none';
-
-    this.cancelBtn.focus();
-  }
-  finishTextureShow(uiObject) {
-    this.uiObject = uiObject;
-
-    this.fieldsContainer.style.display = 'block';
-    this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
-    gAPPP.beautify(this.fireEditor);
-    let s = this.babyHelper.addSphere('sphere1', 50, 5, this.scene, false);
-
-    this.fireFields.paint(this.uiObject);
-    this.popupButtons.style.display = 'block';
-    this.tabContent.style.display = 'block';
-    this.progressBar.style.display = 'none';
-
-    this.cancelBtn.focus();
-  }
-  finishMeshShow(uiObject) {
-    this.uiObject = uiObject;
-
-    this.fieldsContainer.style.display = 'block';
-    this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
-    gAPPP.beautify(this.fireEditor);
-
-    this.uiJSON = js_beautify(gAPPP.stringify(uiObject));
 
     this.fireFields.paint(this.uiObject);
     this.popupButtons.style.display = 'block';

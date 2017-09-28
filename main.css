@@ -73,6 +73,9 @@ html, body {
    padding-left: 15px;
    padding-top: 3px;
 }
+#sb-floating-toolbar {
+  pointer-events: none;
+}
 .sb-floating-toolbar-item {
   font-size: 10pt;
   z-index: 1;

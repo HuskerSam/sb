@@ -35,7 +35,7 @@ class clsFireFields {
     t.classList.add('form-control');
     c.appendChild(l);
     c.appendChild(t);
-    c.addEventListener('change', (e) => me.scrape(e), false);
+    t.addEventListener('change', (e) => me.scrape(e), false);
     if (g)
       g.appendChild(c);
     else {
@@ -44,22 +44,79 @@ class clsFireFields {
       w.appendChild(c);
       this.container.appendChild(w);
     }
-    f.dom = c;
+    f.dom = t;
   }
   scrape(e) {
     if (!this.active)
       return;
+    this.scrapeCache = {};
+    this.valueCache = {};
+    for (let i in this.fields) {
+      let f = this.fields[i];
+      let v = f.dom.value;
+      this.scrapeCache[i] = v;
+      this.valueCache[f.fireSetField] = v;
+      if (f.type === 'boolean') {
+        v = false;
+        if (v.toString().toLowerCase().substr(0, 1) === 't')
+          v = true;
+        if (v.toString().substr(0, 1) === '0')
+          v = true;
+      }
+
+      if (f.fireSetField)
+        gAPPP.path(this.values, f.fireSetField, v);
+    }
+
+    this.updateUIObject();
+  }
+  updateUIObject() {
+    if (!this.uiObject)
+      return;
+
+    if (this.uiObject.type === 'texture') {
+      function isNumeric(v) {
+        let n = Number(v);
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      }
+
+      let material = this.uiObject.m;
+      let texture = new BABYLON.Texture(this.valueCache['url']);
+      
+      if (isNumeric(this.valueCache['vScale']))
+        texture.vScale = Number(this.valueCache['vScale']);
+      if (isNumeric(this.valueCache['uScale']))
+        texture.uScale = Number(this.valueCache['uScale']);
+      if (isNumeric(this.valueCache['vOffset']))
+        texture.vOffset = Number(this.valueCache['vOffset']);
+      if (isNumeric(this.valueCache['uOffset']))
+        texture.uOffset = Number(this.valueCache['uOffset']);
+
+      texture.hasAlpha = this.valueCache['hasAlpha'];
+      material.diffuseTexture = texture;
+      return;
+    }
 
     for (let i in this.fields) {
-      let d = this.fields[i];
-      let v = gAPPP.path(this.values, d.fireSetField);
-      if (d.domQuerySelector)
-        v = d.domElement.value;
-      if (d.babylonMeshField)
-        if (this.uiObject !== null)
-          gAPPP.path(this.uiObject, d.babylonMeshField, v);
-      if (d.fireSetField)
-        gAPPP.path(this.values, d.fireSetField, v);
+      let f = this.fields[i];
+      let v = this.scrapeCache[i];
+
+      if (f.fireSetField === 'name')
+        continue;
+
+      if (f.uiObjectField)
+        this.updateUIObjectField(f, v);
+    }
+  }
+  updateUIObjectField(f, v) {
+    if (this.uiObject !== null) {
+      if (v) {
+        try {
+          gAPPP.path(this.uiObject, f.uiObjectField, v);
+        } catch (e) {
+          e;
+        }
+      }
     }
   }
   setData(fireData) {
@@ -75,14 +132,15 @@ class clsFireFields {
   paint(uiObject) {
     this.uiObject = uiObject;
     this.active = true;
+    this.scrapeCache = {};
+    this.valueCache = {};
     for (let i in this.fields) {
-      let d = this.fields[i];
-      let v = gAPPP.path(this.values, d.fireSetField);
-      if (d.domElement)
-        d.domElement.value = v;
-      if (d.babylonMeshField)
-        if (this.uiObject !== null)
-          gAPPP.path(this.uiObject, d.babylonMeshField, v);
+      let f = this.fields[i];
+      let v = gAPPP.path(this.values, f.fireSetField);
+      f.dom.value = v;
+      this.scrapeCache[i] = v;
+      this.valueCache[f.fireSetField] = v;
     }
+    this.updateUIObject();
   }
 }

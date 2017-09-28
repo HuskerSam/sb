@@ -34,6 +34,10 @@ class clsBabylonHelper {
       refresh = false;
     return BABYLON.Mesh.CreateSphere(name, faces, diameter, scene, refresh);
   }
+  addGround(name, width, depth, subdivs, scene) {
+    let ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
+    return ground;
+  }
   loadMesh(meshName, path, fileName, scene) {
     return new Promise(function(resolve, reject) {
       BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene, function(newMeshes) {
@@ -49,5 +53,56 @@ class clsBabylonHelper {
         return resolve(BABYLON.SceneSerializer.Serialize(scene));
       });
     });
+  }
+  getNewMeshData() {
+    return {
+      title: 'Mesh',
+      name: '',
+      url: '',
+      type: 'url',
+      size: 0,
+      simpleUIDetails: {
+        scaleX: 1.0,
+        scaleY: 1.0,
+        scaleZ: 1.0,
+        positionX: 0.0,
+        positionY: 0.0,
+        positionZ: 0.0,
+        rotateX: 0.0,
+        rotateY: 0.0,
+        rotateZ: 0.0
+      }
+    };
+  }
+  getNewTextureData() {
+    return {
+      title: 'Texture',
+      url: '',
+      vOffset: 0.0,
+      uOffset: 0.0,
+      vScale: 1.0,
+      uScale: 1.0,
+      hasAlpha: false
+    };
+  }
+  getNewMaterialData() {
+    return {
+      title: 'Material',
+      name: '',
+      alpha: 1.0,
+      diffuseTextureColor: '',
+      diffuseTextureName: '',
+      emissiveTextureColor: '',
+      emissiveTextureName: '',
+      ambientTextureColor: '',
+      ambientTextureName: '',
+      specularTextureColor: '',
+      specularTextureName: '',
+      specularPower: 64.0,
+      useSpecularOverAlpha: false,
+      useGlossinessFromSpecularMapAlpha: false,
+      backFaceCulling: true,
+      wireframe: false
+    };
   }
 }

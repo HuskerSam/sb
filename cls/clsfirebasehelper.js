@@ -69,7 +69,7 @@ class clsFirebaseHelper {
         if (!title)
           title = new Date().toISOString();
 
-        let meshData = me.getNewMeshData();
+        let meshData = gAPPP.sceneBuilder.babyHelper.getNewMeshData();
         meshData.title = title;
         meshData.meshName = meshName;
         meshData.url = snapshot.downloadURL;
@@ -89,7 +89,7 @@ class clsFirebaseHelper {
     return new Promise(function(resolve, reject) {
       let key = me.meshesFireSet.getKey();
       me.texturesFireSet.setBlob(key, textureBlob, 'texturefile').then(function(snapshot) {
-        let textureData = me.getNewTextureData();
+        let textureData = gAPPP.sceneBuilder.babyHelper.getNewTextureData();
         textureData.title = title;
         textureData.url = snapshot.downloadURL;
         textureData.size = snapshot.totalBytes;
@@ -106,67 +106,13 @@ class clsFirebaseHelper {
     let me = this;
     return new Promise(function(resolve, reject) {
       let key = me.meshesFireSet.getKey();
-      let data = me.getNewMaterialData();
+      let data = gAPPP.sceneBuilder.babyHelper.getNewMaterialData();
       data.title = title;
 
       me.materialsFireSet.set(key, data).then(function(e) {
         resolve(e);
       });
     });
-  }
-  getNewMeshData() {
-    return {
-      title: 'Mesh',
-      meshName: '',
-      url: '',
-      type: 'url',
-      size: 0,
-      simpleUIDetails: {
-        scaleX: 1.0,
-        scaleY: 1.0,
-        scaleZ: 1.0,
-        positionX: 0.0,
-        positionY: 0.0,
-        positionZ: 0.0,
-        rotateX: 0.0,
-        rotateY: 0.0,
-        rotateZ: 0.0
-      }
-    };
-  }
-  getNewTextureData() {
-    return {
-      title: 'Texture',
-      url: '',
-      size: 0
-    };
-  }
-  getNewMaterialData() {
-    return {
-      title: 'Material',
-      alpha: null,
-      diffuse: this.getTextureOptionsData(),
-      emissive: this.getTextureOptionsData(),
-      ambient: this.getTextureOptionsData(),
-      specular: this.getTextureOptionsData(),
-      specularPower: 0.0,
-      useSpecularOverAlpha: false,
-      backFaceCulling: true,
-      wireframe: false
-    };
-  }
-  getTextureOptionsData() {
-    return {
-      color: [.5, .5, .5],
-      texture: {
-        name: '',
-        vOffset: 0.0,
-        uOffset: 0.0,
-        vScale: 1.0,
-        uScale: 1.0,
-        hasAlpha: false
-      }
-    };
   }
   defaultItemTemplate(domPrefix, fireData) {
     return `
@@ -184,5 +130,23 @@ class clsFirebaseHelper {
       });
       reader.readAsText(file);
     }, false);
+  }
+  urlToDataURL(url) {
+    let me = this;
+    return new Promise(function(resolve, reject) {
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.responseType = 'blob';
+
+      xhr.onload = function(e) {
+        if (this.status == 200) {
+          let blob = new Blob([this.response]);
+          me.fileToURL(blob).then((r) => {
+            resolve(r);
+          });
+        }
+      };
+      xhr.send();
+    });
   }
 }
