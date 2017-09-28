@@ -1,8 +1,13 @@
 class clsApp {
   constructor() {
+    window.isNumeric = function(v) {
+      let n = Number(v);
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    };
+
     window.gAPPP = this;
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
-    this.popupDialogs = new clsPopupDialogs();
+    this.popupDialogs = new clsInitDialogs();
     this.sceneBuilder = new clsSceneBuilder();
     this.firebaseHelper = new clsFirebaseHelper('#sign-in-button', '#sign-out-button');
   }

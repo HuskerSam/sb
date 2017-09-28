@@ -1,4 +1,4 @@
-class clsPopupDialogs {
+class clsInitDialogs {
   constructor() {
     this.dialogs = {};
 
@@ -68,77 +68,90 @@ class clsPopupDialogs {
     }, {
       title: 'Name (scene id)',
       fireSetField: 'name',
-      uiObjectField: name,
+      uiObjectField: 'name',
+      type: 'id',
       group: 'title'
     }, {
       title: 'Wireframe',
-      fireSetField: 'wireFrame',
-      uiObjectField: null,
+      fireSetField: 'wireframe',
+      uiObjectField: 'wireframe',
+      type: 'boolean',
       group: 'options'
     }, {
-      title: 'Alpha',
+      title: 'Alpha (0-1)',
       fireSetField: 'alpha',
-      uiObjectField: null,
+      uiObjectField: 'alpha',
       group: 'options'
     }, {
-      title: 'Diffuse Color (main)',
+      title: 'Diffuse Color r,g,b (0-1)',
       fireSetField: 'diffuseColor',
-      uiObjectField: null,
+      uiObjectField: 'diffuseColor',
+      type: 'color',
       group: 'diffuseColor'
     }, {
       title: 'Diffuse Texture Name',
       fireSetField: 'diffuseTextureName',
-      uiObjectField: null,
+      uiObjectField: 'diffuseTexture',
+      type: 'texture',
       group: 'diffuseColor'
     }, {
       title: 'Ambient Color (reflects)',
       fireSetField: 'ambientColor',
-      uiObjectField: null,
+      uiObjectField: 'ambientColor',
+      type: 'color',
       group: 'ambientColor'
     }, {
       title: 'Ambient Texture Name',
       fireSetField: 'ambientTextureName',
-      uiObjectField: null,
+      uiObjectField: 'ambientTexture',
+      type: 'texture',
       group: 'ambientColor'
     }, {
-      title: 'Emissive Color (emits)',
+      title: 'Emissive Color (glows)',
       fireSetField: 'emissiveColor',
-      uiObjectField: null,
+      uiObjectField: 'emissiveColor',
+      type: 'color',
       group: 'emissiveColor'
     }, {
       title: 'Emissive Texture Name',
       fireSetField: 'emissiveTextureName',
-      uiObjectField: null,
+      uiObjectField: 'emissiveTexture',
+      type: 'texture',
       group: 'emissiveColor'
     }, {
-      title: 'Specular Power',
+      title: 'Specular Power (64 default)',
       fireSetField: 'specularPower',
-      uiObjectField: null,
+      uiObjectField: 'specularPower',
       group: 'specularPower'
     }, {
       title: 'useSpecularOverAlpha',
       fireSetField: 'useSpecularOverAlpha',
-      uiObjectField: null,
-      group: 'specularPower'
+      uiObjectField: 'useSpecularOverAlpha',
+      group: 'specularPower',
+      type: 'boolean'
     }, {
       title: 'useGlossinessFromSpecularMapAlpha',
       fireSetField: 'useGlossinessFromSpecularMapAlpha',
-      uiObjectField: null,
-      group: 'specularPower'
+      uiObjectField: 'specularPower',
+      group: 'specularPower',
+      type: 'boolean',
     }, {
       title: 'Specular Color (shines)',
       fireSetField: 'specularColor',
-      uiObjectField: null,
-      group: 'specularColor'
+      uiObjectField: 'specularColor',
+      group: 'specularColor',
+      type: 'color'
     }, {
       title: 'Specular Texture Name',
       fireSetField: 'specularTextureName',
-      uiObjectField: null,
-      group: 'specularColor'
+      uiObjectField: 'specularTexture',
+      group: 'specularColor',
+      type: 'texture'
     }, {
       title: 'Backface Culling',
       fireSetField: 'backfaceCulling',
-      uiObjectField: null
+      uiObjectField: 'backfaceCulling',
+      type: 'boolean'
     }];
 
     let textureFields = [{
@@ -150,31 +163,31 @@ class clsPopupDialogs {
       title: 'Url',
       fireSetField: 'url',
       uiObjectField: null,
-      uiType: 'texture',
+      type: 'texture',
       group: 'options'
     }, {
       title: 'Alpha',
       fireSetField: 'hasAlpha',
       uiObjectField: 'hasAlpha',
-      uiType: 'boolean',
+      type: 'boolean',
       group: 'options'
     }, {
-      title: 'Offset v',
+      title: 'Offset v (0-1)',
       fireSetField: 'vOffset',
       uiObjectField: 'vOffset',
       group: 'offset'
     }, {
-      title: 'Offset u',
+      title: 'Offset u (0-1)',
       fireSetField: 'uOffset',
       uiObjectField: 'uOffset',
       group: 'offset'
     }, {
-      title: 'Scale v',
+      title: 'Scale v (1/x)',
       fireSetField: 'vScale',
       uiObjectField: 'vScale',
       group: 'scale'
     }, {
-      title: 'Scale u',
+      title: 'Scale u (1/x)',
       fireSetField: 'uScale',
       uiObjectField: 'uScale',
       group: 'scale'

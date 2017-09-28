@@ -10,7 +10,6 @@ class clsCanvasPopup {
     this.editors = null;
     this.sceneObjects = [];
 
-    //this.fileDom = this.dialog.querySelector('.popup-file');
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
     this.cancelBtn = this.dialog.querySelector('.close-details');
@@ -92,13 +91,10 @@ class clsCanvasPopup {
   }
   uploadPromise() {
     if (this.tag === 'mesh') {
-
       let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
       let strScene = JSON.stringify(sceneJSON);
       return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
-
     }
-
     return gAPPP.emptyPromise();
   }
   commit() {
@@ -111,7 +107,7 @@ class clsCanvasPopup {
 
       me.uploadPromise().then((r1) => {
         if (this.tag === 'mesh') {
-          me.fireFields.values.url = r1.downloadURL;            
+          me.fireFields.values.url = r1.downloadURL;
         }
         me.fireFields.commit(me.fireSet).then((r2) => resolve(r2));
       });
@@ -155,9 +151,16 @@ class clsCanvasPopup {
     }
 
     if (this.tag === 'material') {
-      let s = this.babyHelper.addSphere('sphere1', 50, 5, this.scene, false);
+      let s = this.babyHelper.addSphere('sphere1', 10, 5, this.scene, false);
+
+      let material = new BABYLON.StandardMaterial('material', this.scene);
+      s.material = material;
       this.sceneObjects.push(s);
-      return this.finishShow(s);
+      return this.finishShow({
+        type: 'material',
+        scene: this.scene,
+        m: material
+      });
     }
 
     if (this.tag === 'texture') {

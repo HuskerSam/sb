@@ -8,6 +8,8 @@ class clsFireFields {
     this.groups = {};
     this.lineBreaks = lineBreaks;
     this.container = container;
+    this.scrapeCache = [];
+    this.valueCache = {};
 
     for (let i in this.fields)
       this.initField(this.fields[i], i.toString());
@@ -49,20 +51,14 @@ class clsFireFields {
   scrape(e) {
     if (!this.active)
       return;
-    this.scrapeCache = {};
+    this.scrapeCache = [];
     this.valueCache = {};
     for (let i in this.fields) {
       let f = this.fields[i];
-      let v = f.dom.value;
-      this.scrapeCache[i] = v;
+      let nV = f.dom.value;
+      let v = this.validate(f, nV);
+      this.scrapeCache.push(v);
       this.valueCache[f.fireSetField] = v;
-      if (f.type === 'boolean') {
-        v = false;
-        if (v.toString().toLowerCase().substr(0, 1) === 't')
-          v = true;
-        if (v.toString().substr(0, 1) === '0')
-          v = true;
-      }
 
       if (f.fireSetField)
         gAPPP.path(this.values, f.fireSetField, v);
@@ -75,14 +71,9 @@ class clsFireFields {
       return;
 
     if (this.uiObject.type === 'texture') {
-      function isNumeric(v) {
-        let n = Number(v);
-        return !isNaN(parseFloat(n)) && isFinite(n);
-      }
-
       let material = this.uiObject.m;
       let texture = new BABYLON.Texture(this.valueCache['url']);
-      
+
       if (isNumeric(this.valueCache['vScale']))
         texture.vScale = Number(this.valueCache['vScale']);
       if (isNumeric(this.valueCache['uScale']))
@@ -97,6 +88,20 @@ class clsFireFields {
       return;
     }
 
+    if (this.uiObject.type === 'material') {
+
+      let material = this.uiObject.m;
+
+      for (let i in this.fields) {
+        let f = this.fields[i];
+        let v = this.scrapeCache[i];
+
+        if (f.uiObjectField)
+          this.updateUIObjectField(f, v, material);
+      }
+      return;
+    }
+
     for (let i in this.fields) {
       let f = this.fields[i];
       let v = this.scrapeCache[i];
@@ -105,14 +110,25 @@ class clsFireFields {
         continue;
 
       if (f.uiObjectField)
-        this.updateUIObjectField(f, v);
+        this.updateUIObjectField(f, v, this.uiObject);
     }
   }
-  updateUIObjectField(f, v) {
+  updateUIObjectField(f, v, o) {
     if (this.uiObject !== null) {
-      if (v) {
+      if (v !== undefined) {
         try {
-          gAPPP.path(this.uiObject, f.uiObjectField, v);
+          if (f.type === 'color') {
+            if (v === '') {
+              return;
+            }
+            let parts = v.split(',');
+            let cA = [];
+            let color =  new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+            gAPPP.path(o, f.uiObjectField, color);
+            return;
+          }
+
+          gAPPP.path(o, f.uiObjectField, v);
         } catch (e) {
           e;
         }
@@ -136,11 +152,43 @@ class clsFireFields {
     this.valueCache = {};
     for (let i in this.fields) {
       let f = this.fields[i];
-      let v = gAPPP.path(this.values, f.fireSetField);
+      let nV = gAPPP.path(this.values, f.fireSetField);
+      let v = this.validate(f, nV);
       f.dom.value = v;
       this.scrapeCache[i] = v;
       this.valueCache[f.fireSetField] = v;
     }
     this.updateUIObject();
+  }
+  validate(f, v) {
+    let r = v;
+    if (f.type === 'boolean') {
+      r = false;
+      if (v.toString().toLowerCase().substr(0, 1) === 't')
+        r = true;
+      if (v.toString().substr(0, 1) === '1')
+        r = true;
+      return r;
+    }
+
+    if (f.type === 'color') {
+      let parts = v.trim().split(',');
+      if (parts.length < 3)
+        return '';
+      let r = Number(parts[0]);
+      let g = Number(parts[1]);
+      let b = Number(parts[2]);
+
+      if (!isNumeric(r) || !isNumeric(g) || !isNumeric(b))
+        return '';
+
+      r = Math.max(0.0, Math.min(1.0, r));
+      g = Math.max(0.0, Math.min(1.0, g));
+      b = Math.max(0.0, Math.min(1.0, b));
+
+      return r.toFixed(3) + ',' + g.toFixed(3) + ',' + b.toFixed(3);
+    }
+
+    return r;
   }
 }
