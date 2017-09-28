@@ -75,6 +75,16 @@ class clsBabylonHelper {
       }
     };
   }
+  getNewSceneData() {
+    return {
+      title: 'Mesh',
+      url: '',
+      type: 'url',
+      size: 0,
+      simpleUIDetails: {
+      }
+    };
+  }
   getNewTextureData() {
     return {
       title: 'Texture',

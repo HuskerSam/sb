@@ -285,7 +285,7 @@ html, body {
 
 #sign-out-button {
   position: absolute;
-  z-index: 10010;
+  z-index: 1;
   right: 4px;
   top: 4px;
   background: rgba(0,0,0,.2)

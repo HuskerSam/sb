@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <div id="login-page" style="display:none;">
+  <div id="login-page" style="display:none;position:absolute;z-index:100;top:0px;left:0px;width:100%;">
     <h3>Scene Builder</h3>
     <div>
       <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
@@ -142,6 +142,34 @@
             <label for="material-upload-title">Title</label>
             <input type="text" id="material-upload-title" class="form-control simple-popup-field-title" />
           </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="popup-progress-bar">
+          Importing...
+        </div>
+        <div class="popup-buttons">
+          <button type="button" class="btn btn-primary create">Import</button>
+          <button type="button" class="btn cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="scene-upload-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Import .babylon Scene</h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup-content">
+          <div class="form-group">
+            <label for="scene-upload-title">Title</label>
+            <input type="text" id="scene-upload-title" class="form-control simple-popup-field-title" />
+          </div>
+          <br>
+          <label for="scene-upload-file">Starting Scene (optional)</label> <br>
+          <input type="file" id="scene-upload-file" name="scene-upload-file" class="popup-file" />
         </div>
       </div>
       <div class="modal-footer">

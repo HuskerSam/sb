@@ -51,11 +51,9 @@ class clsCanvasPopup {
     if (this.rotateState === 'horizontal') {
       document.querySelector(t).classList.add('vertical-split-display');
       document.querySelector(b).classList.add('vertical-split-display');
-  //    document.querySelector(mb).style.height = '100%';
     } else {
       document.querySelector(t).classList.remove('vertical-split-display');
       document.querySelector(b).classList.remove('vertical-split-display');
-  //    document.querySelector(mb).style.height = '';
     }
 
     let me = this;
@@ -89,14 +87,6 @@ class clsCanvasPopup {
     for (let i in this.editors)
       this.editors[i].resize();
   }
-  uploadPromise() {
-    if (this.tag === 'mesh') {
-      let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
-      let strScene = JSON.stringify(sceneJSON);
-      return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
-    }
-    return gAPPP.emptyPromise();
-  }
   commit() {
     let me = this;
     return new Promise((resolve, reject) => {
@@ -104,14 +94,17 @@ class clsCanvasPopup {
       me.tabContent.style.display = 'none';
       me.progressBar.style.display = 'block';
       me.fireFields.scrape();
-
-      me.uploadPromise().then((r1) => {
-        if (this.tag === 'mesh') {
-          me.fireFields.values.url = r1.downloadURL;
-        }
-        me.fireFields.commit(me.fireSet).then((r2) => resolve(r2));
-      });
+      me.fireFields.commit(me.fireSet).then((r2) => resolve(r2))
     });
+  }
+  uploadSceneFile() {
+//      let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
+//      let strScene = JSON.stringify(sceneJSON);
+//      return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
+//      if (this.tag === 'mesh') {
+//        me.fireFields.values.url = r1.downloadURL;
+//      }
+
   }
   close() {
     this.scene = this.babyHelper.createDefaultScene();

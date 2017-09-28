@@ -201,6 +201,7 @@ class clsInitDialogs {
     this.dialogs['meshes-create'] = new clsCreatePopup('#mesh-upload-dialog', ['id'], 'uploadMesh');
     this.dialogs['textures-create'] = new clsCreatePopup('#texture-upload-dialog', ['title'], 'uploadTexture');
     this.dialogs['materials-create'] = new clsCreatePopup('#material-upload-dialog', ['title'], 'uploadMaterial');
+    this.dialogs['scenes-create'] = new clsCreatePopup('#scene-upload-dialog', ['title'], 'uploadScene');
 
     this.dialogs['ace-editor-popup'] = new clsUtilityPopup('utility-dialog-show-ace-editor');
   }

@@ -52,6 +52,8 @@ class clsFirebaseHelper {
       this.fireSets.push(this.texturesFireSet);
       this.materialsFireSet = new clsFireSet('lib_materials', 'materials', ['title'], this.defaultItemTemplate);
       this.fireSets.push(this.materialsFireSet);
+      this.scenesFireSet = new clsFireSet('lib_scenes', 'scenes', ['title'], this.defaultItemTemplate);
+      this.fireSets.push(this.scenesFireSet);
     } else {
       this.currentUser = {};
       this.loggedIn = false;
@@ -84,6 +86,30 @@ class clsFirebaseHelper {
       });
     });
   }
+  newScene(sceneString, title) {
+    let me = this;
+    return new Promise(function(resolve, reject) {
+      let key = me.scenesFireSet.getKey();
+
+      me.scenesFireSet.setString(key, sceneString, 'file.babylon').then(function(snapshot) {
+        if (!title)
+          title = new Date().toISOString();
+
+        let sceneData = gAPPP.sceneBuilder.babyHelper.getNewSceneData();
+        sceneData.title = title;
+        sceneData.url = snapshot.downloadURL;
+        sceneData.type = 'url';
+        sceneData.size = snapshot.totalBytes;
+
+        me.scenesFireSet.set(key, sceneData).then(function(e) {
+          resolve(e);
+        })
+      }).catch(function(error) {
+        reject(error);
+      });
+    });
+  }
+
   newTexture(textureBlob, title) {
     let me = this;
     return new Promise(function(resolve, reject) {
@@ -114,14 +140,7 @@ class clsFirebaseHelper {
       });
     });
   }
-  defaultItemTemplate(domPrefix, fireData) {
-    return `
-<div id="${domPrefix}-${fireData.key}" class="firebase-item">
-  <div class="${domPrefix}-title"></div>
-  <button class="${domPrefix}-remove btn-toolbar-icon"><i class="material-icons">delete</i></button>
-  <button class="${domPrefix}-details btn-toolbar-icon"><i class="material-icons">settings</i></button>
-</div>`;
-  }
+
   fileToURL(file) {
     return new Promise(function(resolve, reject) {
       var reader = new FileReader();
@@ -148,5 +167,12 @@ class clsFirebaseHelper {
       };
       xhr.send();
     });
+  }
+  defaultItemTemplate(domPrefix, fireData) {
+    return `<div id="${domPrefix}-${fireData.key}" class="firebase-item">
+  <div class="${domPrefix}-title"></div>
+  <button class="${domPrefix}-remove btn-toolbar-icon"><i class="material-icons">delete</i></button>
+  <button class="${domPrefix}-details btn-toolbar-icon"><i class="material-icons">settings</i></button>
+</div>`;
   }
 }

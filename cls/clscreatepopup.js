@@ -38,6 +38,23 @@ class clsCreatePopup {
           .then((mesh) => resolve(mesh)));
     });
   }
+  getNewSceneSerialized() {
+    let me = this;
+    let file = this.fileDom.files[0];
+
+    if (file) {
+      return new Promise((resolve, reject) => {
+        gAPPP.firebaseHelper.fileToURL(file)
+          .then((sceneSerial) => resolve(sceneSerial));
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        let s = gAPPP.sceneBuilder.babyHelper.createDefaultScene();
+        let sS = BABYLON.SceneSerializer.Serialize(s);
+        resolve(JSON.stringify(sS));
+      });
+    }
+  }
   scrape() {
     this.fieldsValues = {};
     let emptyField = false;
@@ -63,10 +80,18 @@ class clsCreatePopup {
     let me = this;
     if (this.type === 'uploadMesh') {
       return new Promise((resolve, reject) => {
-        this.importMesh().then((mesh) => {
+        me.importMesh().then((mesh) => {
           let id = me.fieldsValues['id'];
           let strMesh = JSON.stringify(mesh);
           gAPPP.firebaseHelper.newMesh(strMesh, id).then((r) => resolve(r));
+        });
+      });
+    }
+    if (this.type === 'uploadScene') {
+      return new Promise((resolve, reject) => {
+        me.getNewSceneSerialized().then((sceneSerial) => {
+          let title = me.fieldsValues['title'];
+          gAPPP.firebaseHelper.newScene(sceneSerial, title).then((r) => resolve(r));
         });
       });
     }
