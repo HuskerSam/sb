@@ -34,5 +34,7 @@ class clsUtilityPopup {
     //gAPPP.beautify(this.fireEditor);
 
     $(this.dialog).modal('show');
+
+    this.cancelBtn.focus();
   }
 }
