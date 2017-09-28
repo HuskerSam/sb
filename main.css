@@ -282,3 +282,11 @@ html, body {
   top: 3px;
   left:3px;
 }
+
+#sign-out-button {
+  position: absolute;
+  z-index: 10010;
+  right: 4px;
+  top: 4px;
+  background: rgba(0,0,0,.2)
+}

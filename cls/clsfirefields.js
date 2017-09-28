@@ -22,7 +22,7 @@ class clsFireFields {
     let g = null;
     let t = document.createElement('input');
     let l = document.createElement('label');
-  if (f.group) {
+    if (f.group) {
       g = this.groups[f.group];
       if (!g) {
         g = document.createElement('div');
@@ -88,60 +88,63 @@ class clsFireFields {
     }
 
     if (this.uiObject.type === 'material')
-      return this.material(this.scrapeCache, this.uiObject.m);
+      return this.material(this.valueCache, this.uiObject.m);
 
+    if (this.uiObject.type === 'mesh') {
+      return this.updateMeshUI();
+    }
+  }
+  updateMeshUI() {
     for (let i in this.fields) {
       let f = this.fields[i];
       let v = this.scrapeCache[i];
 
       if (f.fireSetField === 'name')
         continue;
-
       if (f.uiObjectField)
-        this.updateUIObjectField(f, v, this.uiObject);
+        this.updateUIObjectField(f, v, this.uiObject.mesh);
     }
   }
   updateUIObjectField(f, v, o) {
-    if (this.uiObject !== null) {
-      if (v !== undefined) {
-        try {
-          if (f.type === 'color') {
-            if (v === '')
-              return;
-
-            let parts = v.split(',');
-            let cA = [];
-            let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
-            gAPPP.path(o, f.uiObjectField, color);
-
+    if (v !== undefined) {
+      try {
+        if (f.type === 'color') {
+          if (v === '')
             return;
-          }
 
-          if (f.type === 'texture') {
-            let tD = gAPPP.firebaseHelper.texturesFireSet.fireDataName[v];
-            if (tD === undefined)
-              return;
+          let parts = v.split(',');
+          let cA = [];
+          let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+          gAPPP.path(o, f.uiObjectField, color);
 
-            let t = this.texture(tD);
-            gAPPP.path(o, f.uiObjectField, t);
-
-            return;
-          }
-
-          if (f.type === 'material') {
-            let tD = gAPPP.firebaseHelper.materialsFireSet.fireDataName[v];
-            if (tD === undefined)
-              return;
-
-            let m = this.material(tD);
-            gAPPP.path(o, f.uiObjectField, m);
-
-            return;
-          }
-          gAPPP.path(o, f.uiObjectField, v);
-        } catch (e) {
-          console.log('set ui object error', e);
+          return;
         }
+
+        if (f.type === 'texture') {
+          let tD = gAPPP.firebaseHelper.texturesFireSet.fireDataName[v];
+          if (tD === undefined)
+            return;
+
+          let t = this.texture(tD);
+          gAPPP.path(o, f.uiObjectField, t);
+
+          return;
+        }
+
+        if (f.type === 'material') {
+          let tD = gAPPP.firebaseHelper.materialsFireSet.fireDataName[v];
+          if (tD === undefined)
+            return;
+
+          let m = this.material(tD);
+          o.material = m;
+
+          return;
+        }
+
+        gAPPP.path(o, f.uiObjectField, v);
+      } catch (e) {
+        console.log('set ui object error', e);
       }
     }
   }
@@ -229,13 +232,13 @@ class clsFireFields {
     if (!m)
       m = new BABYLON.StandardMaterial('material', this.parent.scene);
 
-    for (let i in this.fields) {
-      let f = this.fields[i];
-      let v = this.scrapeCache[i];
+    let fields = gAPPP.popupDialogs.materialFields;
+    for (let i in fields) {
+      let f = fields[i];
+      let v = values[f.fireSetField];
 
-
-      //    if (f.uiObjectField)
-      //    this.updateUIObjectField(f, v, m);
+      if (f.uiObjectField)
+        this.updateUIObjectField(f, v, m);
     }
 
     return m;

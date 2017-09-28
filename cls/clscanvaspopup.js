@@ -145,7 +145,10 @@ class clsCanvasPopup {
       let me = this;
 
       this.babyHelper.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
-        .then((m) => me.finishShow(m));
+        .then((m) => me.finishShow({
+          type: 'mesh',
+          mesh: m
+        }));
 
       return;
     }
@@ -158,7 +161,6 @@ class clsCanvasPopup {
       this.sceneObjects.push(s);
       return this.finishShow({
         type: 'material',
-        scene: this.scene,
         m: material
       });
     }
@@ -173,7 +175,6 @@ class clsCanvasPopup {
 
       return this.finishShow({
         type: 'texture',
-        scene: this.scene,
         m: material
       });
     }

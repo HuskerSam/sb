@@ -2,7 +2,7 @@ class clsInitDialogs {
   constructor() {
     this.dialogs = {};
 
-    let meshFields = [{
+    this.meshFields = [{
         title: 'Title',
         fireSetField: 'title',
         uiObjectField: null,
@@ -61,7 +61,7 @@ class clsInitDialogs {
       }
     ];
 
-    let materialFields = [{
+    this.materialFields = [{
       title: 'Title',
       fireSetField: 'title',
       uiObjectField: null,
@@ -194,8 +194,8 @@ class clsInitDialogs {
       group: 'scale'
     }];
 
-    this.dialogs['meshes-edit'] = new clsCanvasPopup('mesh', meshFields);
-    this.dialogs['materials-edit'] = new clsCanvasPopup('material', materialFields);
+    this.dialogs['meshes-edit'] = new clsCanvasPopup('mesh', this.meshFields);
+    this.dialogs['materials-edit'] = new clsCanvasPopup('material', this.materialFields);
     this.dialogs['textures-edit'] = new clsCanvasPopup('texture', textureFields);
 
     this.dialogs['meshes-create'] = new clsCreatePopup('#mesh-upload-dialog', ['id'], 'uploadMesh');
