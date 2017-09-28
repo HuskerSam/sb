@@ -21,7 +21,7 @@ class clsCanvasPopup {
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.fieldsContainer.style.display = 'none';
-    this.fireFields = new clsFireFields(this.fields, this.tag + '-fields-', this.fieldsContainer, this.lineBreaks);
+    this.fireFields = new clsFireFields(this.fields, this.tag + '-fields-', this.fieldsContainer, this);
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
 

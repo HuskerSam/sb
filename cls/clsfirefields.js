@@ -1,13 +1,14 @@
 class clsFireFields {
-  constructor(fields, prefix, container, lineBreaks) {
+  constructor(fields, prefix, container, parent) {
     this.fields = fields;
     this.prefix = prefix;
     this.values = null;
     this.fireData = null;
     this.active = false;
-    this.groups = {};
-    this.lineBreaks = lineBreaks;
+    this.parent = parent;
     this.container = container;
+
+    this.groups = {};
     this.scrapeCache = [];
     this.valueCache = {};
 
@@ -17,11 +18,11 @@ class clsFireFields {
   initField(f, index) {
     let me = this;
     let n = this.prefix + 'field-' + index;
-    let t = document.createElement('input');
-    let l = document.createElement('label');
     let c = document.createElement('div');
     let g = null;
-    if (f.group) {
+    let t = document.createElement('input');
+    let l = document.createElement('label');
+  if (f.group) {
       g = this.groups[f.group];
       if (!g) {
         g = document.createElement('div');
@@ -31,12 +32,21 @@ class clsFireFields {
       }
     }
     t.id = n;
-    l.setAttribute('for', t.id);
-    l.innerText = f.title;
+    if (f.type === 'boolean') {
+      t.setAttribute('type', 'checkbox');
+      l.innerText = f.title;
+      l.insertBefore(t, l.childNodes[0]);
+      c.appendChild(l);
+    } else {
+      l.setAttribute('for', t.id);
+      l.innerText = f.title;
+
+      t.classList.add('form-control');
+      c.appendChild(l);
+      c.appendChild(t);
+    }
+
     c.classList.add('form-group');
-    t.classList.add('form-control');
-    c.appendChild(l);
-    c.appendChild(t);
     t.addEventListener('change', (e) => me.scrape(e), false);
     if (g)
       g.appendChild(c);
@@ -56,6 +66,8 @@ class clsFireFields {
     for (let i in this.fields) {
       let f = this.fields[i];
       let nV = f.dom.value;
+      if (f.type === 'boolean')
+        nV = f.dom.checked;
       let v = this.validate(f, nV);
       this.scrapeCache.push(v);
       this.valueCache[f.fireSetField] = v;
@@ -121,14 +133,14 @@ class clsFireFields {
             if (tD === undefined)
               return;
 
-            let m = this.material(tD, undefined, scene);
+            let m = this.material(tD);
             gAPPP.path(o, f.uiObjectField, m);
 
             return;
           }
           gAPPP.path(o, f.uiObjectField, v);
         } catch (e) {
-          e;
+          console.log('set ui object error', e);
         }
       }
     }
@@ -154,7 +166,11 @@ class clsFireFields {
       if (nV === undefined)
         nV = '';
       let v = this.validate(f, nV);
-      f.dom.value = v;
+
+      if (f.type === 'boolean')
+        f.dom.checked = v;
+      else
+        f.dom.value = v;
       this.scrapeCache[i] = v;
       this.valueCache[f.fireSetField] = v;
     }
@@ -182,15 +198,15 @@ class clsFireFields {
       if (!isNumeric(r) || !isNumeric(g) || !isNumeric(b))
         return '';
 
-      r = Math.max(0.0, Math.min(1.0, r));
-      g = Math.max(0.0, Math.min(1.0, g));
-      b = Math.max(0.0, Math.min(1.0, b));
+      r = parseFloat(Math.max(0.0, Math.min(1.0, r)).toFixed(4));
+      g = parseFloat(Math.max(0.0, Math.min(1.0, g)).toFixed(4));
+      b = parseFloat(Math.max(0.0, Math.min(1.0, b)).toFixed(4));
 
-      return r.toFixed(3) + ',' + g.toFixed(3) + ',' + b.toFixed(3);
+      return r + ',' + g + ',' + b;
     }
 
     if (f.type === 'texture') {
-    //  return r;
+      //  return r;
     }
     return r;
   }
@@ -209,16 +225,17 @@ class clsFireFields {
     texture.hasAlpha = values['hasAlpha'];
     return texture;
   }
-  material(values, m, scene) {
+  material(values, m) {
     if (!m)
-      m = new BABYLON.StandardMaterial('material', scene);
+      m = new BABYLON.StandardMaterial('material', this.parent.scene);
 
     for (let i in this.fields) {
       let f = this.fields[i];
       let v = this.scrapeCache[i];
 
-      if (f.uiObjectField)
-        this.updateUIObjectField(f, v, m);
+
+      //    if (f.uiObjectField)
+      //    this.updateUIObjectField(f, v, m);
     }
 
     return m;
