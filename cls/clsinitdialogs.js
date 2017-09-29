@@ -164,7 +164,7 @@ class clsInitDialogs {
       title: 'Url',
       fireSetField: 'url',
       uiObjectField: null,
-      type: 'texture',
+      type: 'url',
       group: 'options'
     }, {
       title: 'Alpha',
@@ -194,9 +194,25 @@ class clsInitDialogs {
       group: 'scale'
     }];
 
+    this.sceneFields = [
+      {
+        title: 'Title',
+        fireSetField: 'title',
+        uiObjectField: null,
+        group: 'title'
+      },{
+        title: 'Url',
+        fireSetField: 'url',
+        uiObjectField: null,
+        type: 'url',
+        group: 'options'
+      }
+    ];
+
     this.dialogs['meshes-edit'] = new clsCanvasPopup('mesh', this.meshFields);
     this.dialogs['materials-edit'] = new clsCanvasPopup('material', this.materialFields);
     this.dialogs['textures-edit'] = new clsCanvasPopup('texture', textureFields);
+    this.dialogs['scenes-edit'] = new clsCanvasPopup('scene', this.sceneFields);
 
     this.dialogs['meshes-create'] = new clsCreatePopup('#mesh-upload-dialog', ['id'], 'uploadMesh');
     this.dialogs['textures-create'] = new clsCreatePopup('#texture-upload-dialog', ['title'], 'uploadTexture');

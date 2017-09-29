@@ -338,6 +338,57 @@
       </div>
     </div>
   </div>
+  <div class="modal edit-modal" id="scene-details-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-body">
+        <div class="popup-main-body">
+          <button class="btn btn-primary-outline scene-pill-button">JSON</button>
+          <canvas class="popup-canvas"></canvas>
+          <div class="popup-details">
+            <div class="tab-content">
+              <div id="scene-details-details-panel" class="tab-pane fade in active">
+                <div class="fields-container">
+                </div>
+              </div>
+              <div id="scene-details-firebase-panel" class="tab-pane fade editor-tab-pane">
+                <div id="scene-details-json"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="popup-action-bar">
+          <div class="progress progress-striped active popup-progress-bar">
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
+            </div>
+          </div>
+          <div class="popup-buttons">
+            <ul class="nav nav-tabs" style="float:left;">
+              <li class="active"><a data-toggle="tab" href="#scene-details-details-panel">Details</a></li>
+              <li><a data-toggle="tab" href="#scene-details-firebase-panel">Raw</a></li>
+            </ul>
+
+            <div class="popup-mid-buttons">
+              <span class="popup-title">
+              Scene<br>Editor
+              </span> &nbsp;
+              <button type="button" class="btn btn-primary-outline rotate-details">
+              <i class="material-icons">rotate_90_degrees_ccw</i>
+              </button>
+            </div>
+            <div style="float:right;">
+              <button type="button" class="btn btn-primary save-details">
+                <i class="material-icons">cloud_done</i>
+              </button>
+              <button type="button" class="btn btn-primary-outline close-details">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+            <div style="clear:both;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- EDIT DIALOGS END -->
 
 

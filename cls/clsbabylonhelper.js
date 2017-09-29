@@ -45,6 +45,13 @@ class clsBabylonHelper {
       });
     });
   }
+  loadScene(path, fileName, engine) {
+    return new Promise(function(resolve, reject) {
+      BABYLON.SceneLoader.Load(path, fileName, engine, function(scene) {
+        return resolve(scene);
+      });
+    });
+  }
   serializeMesh(meshName, path, fileName) {
     var me = this;
     return new Promise(function(resolve, reject) {

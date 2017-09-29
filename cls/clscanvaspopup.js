@@ -98,13 +98,12 @@ class clsCanvasPopup {
     });
   }
   uploadSceneFile() {
-//      let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
-//      let strScene = JSON.stringify(sceneJSON);
-//      return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
-//      if (this.tag === 'mesh') {
-//        me.fireFields.values.url = r1.downloadURL;
-//      }
-
+    let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
+    let strScene = JSON.stringify(sceneJSON);
+    return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
+    if (this.tag === 'mesh') {
+      me.fireFields.values.url = r1.downloadURL;
+    }
   }
   close() {
     this.scene = this.babyHelper.createDefaultScene();
@@ -141,6 +140,18 @@ class clsCanvasPopup {
         .then((m) => me.finishShow({
           type: 'mesh',
           mesh: m
+        }));
+
+      return;
+    }
+    if (this.tag === 'scene') {
+      let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
+      let me = this;
+
+      this.babyHelper.loadScene(gAPPP.storagePrefix, url, this.babyHelper.engine)
+        .then((scene) => me.finishShow({
+          type: 'scene',
+          scene: scene
         }));
 
       return;
