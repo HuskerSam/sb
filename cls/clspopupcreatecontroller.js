@@ -1,8 +1,8 @@
 class clsPopupCreateController {
-  constructor(dialogQS, fields, type) {
+  constructor(tag, fields) {
     let me = this;
-    this.type = type;
-    this.dialog = document.querySelector(dialogQS);
+    this.tag = tag;
+    this.dialog = document.querySelector('#' + this.tag + '-upload-dialog');
     this.fileDom = this.dialog.querySelector('.popup-file');
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.createBtn = this.dialog.querySelector('.create');
@@ -33,7 +33,7 @@ class clsPopupCreateController {
     return new Promise((resolve, reject) => {
       let id = this.fieldsValues['id'];
       let file = this.fileDom.files[0];
-      gAPPP.authorizationController.fileToURL(file)
+      gAPPP.fileToURL(file)
         .then((d) => gAPPP.renderEngine.serializeMesh(id, "", "data:" + d)
           .then((mesh) => resolve(mesh)));
     });
@@ -44,7 +44,7 @@ class clsPopupCreateController {
 
     if (file) {
       return new Promise((resolve, reject) => {
-        gAPPP.authorizationController.fileToURL(file)
+        gAPPP.fileToURL(file)
           .then((sceneSerial) => resolve(sceneSerial));
       });
     } else {
@@ -78,34 +78,34 @@ class clsPopupCreateController {
   }
   createPromise() {
     let me = this;
-    if (this.type === 'uploadMesh') {
+    if (this.tag === 'mesh') {
       return new Promise((resolve, reject) => {
         me.importMesh().then((mesh) => {
           let id = me.fieldsValues['id'];
           let strMesh = JSON.stringify(mesh);
-          gAPPP.authorizationController.newMesh(strMesh, id).then((r) => resolve(r));
+          gAPPP.authorizationController.modelSets.meshes.newMesh(strMesh, id).then((r) => resolve(r));
         });
       });
     }
-    if (this.type === 'uploadScene') {
+    if (this.tag === 'scene') {
       return new Promise((resolve, reject) => {
         me.getNewSceneSerialized().then((sceneSerial) => {
           let title = me.fieldsValues['title'];
-          gAPPP.authorizationController.newScene(sceneSerial, title).then((r) => resolve(r));
+          gAPPP.authorizationController.modelSets.scenes.newScene(sceneSerial, title).then((r) => resolve(r));
         });
       });
     }
-    if (this.type === 'uploadTexture') {
+    if (this.tag === 'texture') {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
         let file = me.fileDom.files[0];
-        gAPPP.authorizationController.newTexture(file, title).then((r) => resolve(r));
+        gAPPP.authorizationController.modelSets.textures.newTexture(file, title).then((r) => resolve(r));
       });
     }
-    if (this.type === 'uploadMaterial') {
+    if (this.tag === 'material') {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
-        gAPPP.authorizationController.newMaterial(title).then((r) => resolve(r));
+        gAPPP.authorizationController.modelSets.materials.newMaterial(title).then((r) => resolve(r));
       });
     }
     return gAPPP.emptyPromise();

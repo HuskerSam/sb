@@ -121,7 +121,7 @@ class clsFieldsController {
         }
 
         if (f.type === 'texture') {
-          let tD = gAPPP.authorizationController.texturesFireSet.fireDataName[v];
+          let tD = gAPPP.authorizationController.modelSets.textures.fireDataName[v];
           if (tD === undefined)
             return;
 
@@ -132,7 +132,7 @@ class clsFieldsController {
         }
 
         if (f.type === 'material') {
-          let tD = gAPPP.authorizationController.materialsFireSet.fireDataName[v];
+          let tD = gAPPP.authorizationController.modelSets.materials.fireDataName[v];
           if (tD === undefined)
             return;
 

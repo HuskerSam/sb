@@ -1,5 +1,5 @@
 class clsFirebaseModel {
-  constructor(dataPrefix, domPrefix, keyList, itemTemplateFunction) {
+  constructor(dataPrefix, domPrefix, keyList) {
     let me = this;
     this.active = true;
     this.userId = firebase.auth().currentUser.uid;
@@ -8,7 +8,6 @@ class clsFirebaseModel {
     let qs = '#sb-' + this.domPrefix + '-floating-toolbar-item .sb-floating-toolbar-content';
     this.domContainer = document.querySelector(qs);
     this.keyList = keyList;
-    this.itemTemplateFunction = itemTemplateFunction;
     this.notiRef = firebase.database().ref(this.dataPrefix);
     this.notiRef.on('child_added', (data) => me.childAdded(data));
     this.notiRef.on('child_changed', (data) => me.childChanged(data));
@@ -49,7 +48,7 @@ class clsFirebaseModel {
   }
   childChanged(fireData) {
     this.updateStash(fireData);
-    var div = document.getElementById(this.domPrefix + '-' + fireData.key);
+    var div = document.querySelector('.' + this.domPrefix + '-' + fireData.key);
     let values = fireData.val();
     for (let i in this.keyList) {
       try {
@@ -65,7 +64,7 @@ class clsFirebaseModel {
   }
   childRemoved(fireData) {
     this.updateStash(fireData, true);
-    let post = document.getElementById(this.domPrefix + '-' + fireData.key);
+    let post = document.querySelector('.' + this.domPrefix + '-' + fireData.key);
     if (post)
       this.domContainer.removeChild(post);
   }
@@ -100,7 +99,13 @@ class clsFirebaseModel {
   }
   createDOM(fireData) {
     let me = this;
-    let html = this.itemTemplateFunction(this.domPrefix, fireData);
+
+    let domPrefix = this.domPrefix;
+    let html = `<div class="firebase-item ${domPrefix}-${fireData.key}"><div class="${domPrefix}-title"></div>`;
+    html += `<button class="${domPrefix}-remove btn-toolbar-icon"><i class="material-icons">delete</i></button>`;
+    html += `<button class="${domPrefix}-details btn-toolbar-icon"><i class="material-icons">settings</i></button>`;
+    html += `</div>`
+
     var outer = document.createElement('div');
     outer.innerHTML = html.trim();
     for (let i in this.keyList) {
@@ -138,5 +143,83 @@ class clsFirebaseModel {
     let updates = {};
     updates['/' + this.dataPrefix + '/' + fireKey] = null;
     firebase.database().ref().update(updates).then(function(e) {});
+  }
+  newMesh(meshString, meshName) {
+    let me = this;
+    return new Promise(function(resolve, reject) {
+      let key = me.getKey();
+
+      me.setString(key, meshString, 'file.babylon').then(function(snapshot) {
+        let title = meshName;
+        if (!title)
+          title = new Date().toISOString();
+
+        let meshData = gAPPP.renderEngine.getNewMeshData();
+        meshData.title = title;
+        meshData.meshName = meshName;
+        meshData.url = snapshot.downloadURL;
+        meshData.type = 'url';
+        meshData.size = snapshot.totalBytes;
+
+        me.set(key, meshData).then(function(e) {
+          resolve(e);
+        })
+      }).catch(function(error) {
+        reject(error);
+      });
+    });
+  }
+  newScene(sceneString, title) {
+    let me = this;
+    return new Promise(function(resolve, reject) {
+      let key = me.getKey();
+
+      me.setString(key, sceneString, 'file.babylon').then(function(snapshot) {
+        if (!title)
+          title = new Date().toISOString();
+
+        let sceneData = gAPPP.renderEngine.getNewSceneData();
+        sceneData.title = title;
+        sceneData.url = snapshot.downloadURL;
+        sceneData.type = 'url';
+        sceneData.size = snapshot.totalBytes;
+
+        me.set(key, sceneData).then(function(e) {
+          resolve(e);
+        })
+      }).catch(function(error) {
+        reject(error);
+      });
+    });
+  }
+  newTexture(textureBlob, title) {
+    let me = this;
+    return new Promise(function(resolve, reject) {
+      let key = me.getKey();
+      me.setBlob(key, textureBlob, 'texturefile').then(function(snapshot) {
+        let textureData = gAPPP.renderEngine.getNewTextureData();
+        textureData.title = title;
+        textureData.url = snapshot.downloadURL;
+        textureData.size = snapshot.totalBytes;
+
+        me.set(key, textureData).then(function(e) {
+          resolve(e);
+        })
+      }).catch(function(error) {
+        reject(error);
+      });
+    });
+  }
+  newMaterial(title) {
+    let me = this;
+    return new Promise(function(resolve, reject) {
+      let key = me.getKey();
+      let data = gAPPP.renderEngine.getNewMaterialData();
+      data.title = title;
+
+      me.set(key, data).then(function(e) {
+        resolve(e);
+      });
+    });
   }
 }

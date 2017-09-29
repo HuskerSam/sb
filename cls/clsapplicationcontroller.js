@@ -2,6 +2,7 @@ class clsApplicationController {
   constructor() {
     window.gAPPP = this;
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
+    this.initGlobalHelperFunctions();
     this.initDialogs();
 
     this.authorizationController = new clsAuthorizationController('#sign-in-button', '#sign-out-button');
@@ -72,63 +73,62 @@ class clsApplicationController {
     this.dialogs = {};
 
     this.meshFields = [{
-        title: 'Title',
-        fireSetField: 'title',
-        uiObjectField: null,
-        group: 'title'
-      }, {
-        title: 'Material Name',
-        fireSetField: 'materialName',
-        uiObjectField: 'material',
-        group: 'title',
-        type: 'material'
-      }, {
-        title: 'Scale X',
-        fireSetField: 'simpleUIDetails.scaleX',
-        uiObjectField: 'scaling.x',
-        group: 'scale'
-      }, {
-        title: 'Scale Y',
-        fireSetField: 'simpleUIDetails.scaleY',
-        uiObjectField: 'scaling.y',
-        group: 'scale'
-      }, {
-        title: 'Scale Z',
-        fireSetField: 'simpleUIDetails.scaleZ',
-        uiObjectField: 'scaling.z',
-        group: 'scale'
-      }, {
-        title: 'Offset X',
-        fireSetField: 'simpleUIDetails.positionX',
-        uiObjectField: 'position.x',
-        group: 'offset'
-      }, {
-        title: 'Offset Y',
-        fireSetField: 'simpleUIDetails.positionY',
-        uiObjectField: 'position.y',
-        group: 'offset'
-      }, {
-        title: 'Offset Z',
-        fireSetField: 'simpleUIDetails.positionZ',
-        uiObjectField: 'position.z',
-        group: 'offset'
-      }, {
-        title: 'Rotate X',
-        fireSetField: 'simpleUIDetails.rotateX',
-        uiObjectField: 'rotation.x',
-        group: 'rotate'
-      }, {
-        title: 'Rotate Y',
-        fireSetField: 'simpleUIDetails.rotateY',
-        uiObjectField: 'rotation.y',
-        group: 'rotate'
-      }, {
-        title: 'Rotate Z',
-        fireSetField: 'simpleUIDetails.rotateZ',
-        uiObjectField: 'rotation.z',
-        group: 'rotate'
-      }
-    ];
+      title: 'Title',
+      fireSetField: 'title',
+      uiObjectField: null,
+      group: 'title'
+    }, {
+      title: 'Material Name',
+      fireSetField: 'materialName',
+      uiObjectField: 'material',
+      group: 'title',
+      type: 'material'
+    }, {
+      title: 'Scale X',
+      fireSetField: 'simpleUIDetails.scaleX',
+      uiObjectField: 'scaling.x',
+      group: 'scale'
+    }, {
+      title: 'Scale Y',
+      fireSetField: 'simpleUIDetails.scaleY',
+      uiObjectField: 'scaling.y',
+      group: 'scale'
+    }, {
+      title: 'Scale Z',
+      fireSetField: 'simpleUIDetails.scaleZ',
+      uiObjectField: 'scaling.z',
+      group: 'scale'
+    }, {
+      title: 'Offset X',
+      fireSetField: 'simpleUIDetails.positionX',
+      uiObjectField: 'position.x',
+      group: 'offset'
+    }, {
+      title: 'Offset Y',
+      fireSetField: 'simpleUIDetails.positionY',
+      uiObjectField: 'position.y',
+      group: 'offset'
+    }, {
+      title: 'Offset Z',
+      fireSetField: 'simpleUIDetails.positionZ',
+      uiObjectField: 'position.z',
+      group: 'offset'
+    }, {
+      title: 'Rotate X',
+      fireSetField: 'simpleUIDetails.rotateX',
+      uiObjectField: 'rotation.x',
+      group: 'rotate'
+    }, {
+      title: 'Rotate Y',
+      fireSetField: 'simpleUIDetails.rotateY',
+      uiObjectField: 'rotation.y',
+      group: 'rotate'
+    }, {
+      title: 'Rotate Z',
+      fireSetField: 'simpleUIDetails.rotateZ',
+      uiObjectField: 'rotation.z',
+      group: 'rotate'
+    }];
 
     this.materialFields = [{
       title: 'Title',
@@ -229,7 +229,7 @@ class clsApplicationController {
       fireSetField: 'title',
       uiObjectField: null,
       group: 'title'
-    },{
+    }, {
       title: 'Url',
       fireSetField: 'url',
       uiObjectField: null,
@@ -263,31 +263,38 @@ class clsApplicationController {
       group: 'scale'
     }];
 
-    this.sceneFields = [
-      {
-        title: 'Title',
-        fireSetField: 'title',
-        uiObjectField: null,
-        group: 'title'
-      },{
-        title: 'Url',
-        fireSetField: 'url',
-        uiObjectField: null,
-        type: 'url',
-        group: 'options'
-      }
-    ];
+    this.sceneFields = [{
+      title: 'Title',
+      fireSetField: 'title',
+      uiObjectField: null,
+      group: 'title'
+    }, {
+      title: 'Url',
+      fireSetField: 'url',
+      uiObjectField: null,
+      type: 'url',
+      group: 'options'
+    }];
 
     this.dialogs['meshes-edit'] = new clsPopupEditController('mesh', this.meshFields);
     this.dialogs['materials-edit'] = new clsPopupEditController('material', this.materialFields);
     this.dialogs['textures-edit'] = new clsPopupEditController('texture', textureFields);
     this.dialogs['scenes-edit'] = new clsPopupEditController('scene', this.sceneFields);
 
-    this.dialogs['meshes-create'] = new clsPopupCreateController('#mesh-upload-dialog', ['id'], 'uploadMesh');
-    this.dialogs['textures-create'] = new clsPopupCreateController('#texture-upload-dialog', ['title'], 'uploadTexture');
-    this.dialogs['materials-create'] = new clsPopupCreateController('#material-upload-dialog', ['title'], 'uploadMaterial');
-    this.dialogs['scenes-create'] = new clsPopupCreateController('#scene-upload-dialog', ['title'], 'uploadScene');
+    this.dialogs['meshes-create'] = new clsPopupCreateController('mesh', ['id']);
+    this.dialogs['textures-create'] = new clsPopupCreateController('texture', ['title']);
+    this.dialogs['materials-create'] = new clsPopupCreateController('material', ['title']);
+    this.dialogs['scenes-create'] = new clsPopupCreateController('scene', ['title']);
 
     this.dialogs['ace-editor-popup'] = new clsPopupUtilityController('utility-dialog-show-ace-editor');
+  }
+  fileToURL(file) {
+    return new Promise(function(resolve, reject) {
+      var reader = new FileReader();
+      reader.addEventListener("loadend", function() {
+        resolve(reader.result);
+      });
+      reader.readAsText(file);
+    }, false);
   }
 }
