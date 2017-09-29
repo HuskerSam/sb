@@ -1,4 +1,4 @@
-class clsBabylonHelper {
+class clsRenderEngineController {
   constructor(canvas) {
     this.canvas = canvas;
     this.engine = new BABYLON.Engine(this.canvas, true);

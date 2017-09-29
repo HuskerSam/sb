@@ -1,4 +1,4 @@
-class clsToolbarItem {
+class clsToolbarBandController {
   constructor(tag, title) {
     let me = this;
     this.tag = tag;
@@ -37,6 +37,6 @@ class clsToolbarItem {
     }
   }
   showPopup() {
-    gAPPP.popupDialogs.dialogs[this.tag + '-create'].show();
+    gAPPP.dialogs[this.tag + '-create'].show();
   }
 }

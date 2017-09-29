@@ -28,9 +28,15 @@
   </div>
   <canvas id="renderCanvas"></canvas>
   <div id="main-page" style="display:none;">
-    <button id="sign-out-button" class="btn btn-primary-outline single-toolbar-btn" style="margin-right:4px;margin-top:4px;">
+    <div class="floating-right-profile-buttons">
+      <button id="sign-out-button" class="btn btn-primary-outline single-toolbar-btn">
         <i class="material-icons">account_circle</i> Sign out
       </button>
+      <br>
+      <button id="user-profile-settings" class="btn btn-primary-outline single-toolbar-btn">
+        Options
+      </button>
+    </div>
     <div id="sb-floating-toolbar-expanded">
     </div>
     <div id="sb-floating-toolbar">
@@ -391,7 +397,6 @@
   </div>
   <!-- EDIT DIALOGS END -->
 
-
   <script src="/__/firebase/3.9.0/firebase-app.js"></script>
   <script src="/__/firebase/3.9.0/firebase-auth.js"></script>
   <script src="/__/firebase/3.9.0/firebase-database.js"></script>
@@ -399,18 +404,23 @@
   <script src="/__/firebase/init.js"></script>
 
   <link rel="stylesheet" href="main.css">
+<!-- architecture -->
+  <script src="cls/clsapplicationcontroller.js"></script>
+  <script src="cls/clsauthorizationcontroller.js"></script>
 
-  <script src="cls/clsfireset.js"></script>
-  <script src="cls/clsfirefields.js"></script>
-  <script src="cls/clsbabylonhelper.js"></script>
-  <script src="cls/clscreatepopup.js"></script>
-  <script src="cls/clscanvaspopup.js"></script>
-  <script src="cls/clsutilitypopup.js"></script>
-  <script src="cls/clsinitdialogs.js"></script>
-  <script src="cls/clsfirebasehelper.js"></script>
-  <script src="cls/clstoolbaritem.js"></script>
-  <script src="cls/clsscenebuilder.js"></script>
-  <script src="cls/clsapp.js"></script>
+<!-- UI and data foundation -->
+  <script src="cls/clsfieldscontroller.js"></script>
+  <script src="cls/clsfirebasemodel.js"></script>
+  <script src="cls/clsrenderenginecontroller.js"></script>
+
+<!-- view controllers -->
+  <script src="cls/clspopupcreatecontroller.js"></script>
+  <script src="cls/clspopupeditcontroller.js"></script>
+  <script src="cls/clspopuputilitycontroller.js"></script>
+
+<!-- misc -->
+  <script src="cls/clstoolbandcontroller.js"></script>
+
   <script src="main.js"></script>
 </body>
 

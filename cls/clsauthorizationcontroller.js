@@ -1,4 +1,4 @@
-class clsFirebaseHelper {
+class clsAuthorizationController {
   constructor(signInQS, signOutQS) {
     let me = this;
     this.currentUser = {};
@@ -46,13 +46,13 @@ class clsFirebaseHelper {
       this.loggedIn = true;
       this.userWriteData();
 
-      this.meshesFireSet = new clsFireSet('lib_meshes', 'meshes', ['title'], this.defaultItemTemplate);
+      this.meshesFireSet = new clsFirebaseModel('lib_meshes', 'meshes', ['title'], this.defaultItemTemplate);
       this.fireSets.push(this.meshesFireSet);
-      this.texturesFireSet = new clsFireSet('lib_textures', 'textures', ['title'], this.defaultItemTemplate);
+      this.texturesFireSet = new clsFirebaseModel('lib_textures', 'textures', ['title'], this.defaultItemTemplate);
       this.fireSets.push(this.texturesFireSet);
-      this.materialsFireSet = new clsFireSet('lib_materials', 'materials', ['title'], this.defaultItemTemplate);
+      this.materialsFireSet = new clsFirebaseModel('lib_materials', 'materials', ['title'], this.defaultItemTemplate);
       this.fireSets.push(this.materialsFireSet);
-      this.scenesFireSet = new clsFireSet('lib_scenes', 'scenes', ['title'], this.defaultItemTemplate);
+      this.scenesFireSet = new clsFirebaseModel('lib_scenes', 'scenes', ['title'], this.defaultItemTemplate);
       this.fireSets.push(this.scenesFireSet);
     } else {
       this.currentUser = {};
@@ -71,7 +71,7 @@ class clsFirebaseHelper {
         if (!title)
           title = new Date().toISOString();
 
-        let meshData = gAPPP.sceneBuilder.babyHelper.getNewMeshData();
+        let meshData = gAPPP.renderEngine.getNewMeshData();
         meshData.title = title;
         meshData.meshName = meshName;
         meshData.url = snapshot.downloadURL;
@@ -95,7 +95,7 @@ class clsFirebaseHelper {
         if (!title)
           title = new Date().toISOString();
 
-        let sceneData = gAPPP.sceneBuilder.babyHelper.getNewSceneData();
+        let sceneData = gAPPP.renderEngine.getNewSceneData();
         sceneData.title = title;
         sceneData.url = snapshot.downloadURL;
         sceneData.type = 'url';
@@ -115,7 +115,7 @@ class clsFirebaseHelper {
     return new Promise(function(resolve, reject) {
       let key = me.meshesFireSet.getKey();
       me.texturesFireSet.setBlob(key, textureBlob, 'texturefile').then(function(snapshot) {
-        let textureData = gAPPP.sceneBuilder.babyHelper.getNewTextureData();
+        let textureData = gAPPP.renderEngine.getNewTextureData();
         textureData.title = title;
         textureData.url = snapshot.downloadURL;
         textureData.size = snapshot.totalBytes;
@@ -132,7 +132,7 @@ class clsFirebaseHelper {
     let me = this;
     return new Promise(function(resolve, reject) {
       let key = me.meshesFireSet.getKey();
-      let data = gAPPP.sceneBuilder.babyHelper.getNewMaterialData();
+      let data = gAPPP.renderEngine.getNewMaterialData();
       data.title = title;
 
       me.materialsFireSet.set(key, data).then(function(e) {

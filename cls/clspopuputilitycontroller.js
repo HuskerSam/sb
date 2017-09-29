@@ -1,4 +1,4 @@
-class clsUtilityPopup {
+class clsPopupUtilityController {
   constructor(id) {
     let me = this;
     this.dialog = document.getElementById(id);

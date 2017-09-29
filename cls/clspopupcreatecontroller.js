@@ -1,4 +1,4 @@
-class clsCreatePopup {
+class clsPopupCreateController {
   constructor(dialogQS, fields, type) {
     let me = this;
     this.type = type;
@@ -33,8 +33,8 @@ class clsCreatePopup {
     return new Promise((resolve, reject) => {
       let id = this.fieldsValues['id'];
       let file = this.fileDom.files[0];
-      gAPPP.firebaseHelper.fileToURL(file)
-        .then((d) => gAPPP.sceneBuilder.babyHelper.serializeMesh(id, "", "data:" + d)
+      gAPPP.authorizationController.fileToURL(file)
+        .then((d) => gAPPP.renderEngine.serializeMesh(id, "", "data:" + d)
           .then((mesh) => resolve(mesh)));
     });
   }
@@ -44,12 +44,12 @@ class clsCreatePopup {
 
     if (file) {
       return new Promise((resolve, reject) => {
-        gAPPP.firebaseHelper.fileToURL(file)
+        gAPPP.authorizationController.fileToURL(file)
           .then((sceneSerial) => resolve(sceneSerial));
       });
     } else {
       return new Promise((resolve, reject) => {
-        let s = gAPPP.sceneBuilder.babyHelper.createDefaultScene();
+        let s = gAPPP.renderEngine.createDefaultScene();
         let sS = BABYLON.SceneSerializer.Serialize(s);
         resolve(JSON.stringify(sS));
       });
@@ -83,7 +83,7 @@ class clsCreatePopup {
         me.importMesh().then((mesh) => {
           let id = me.fieldsValues['id'];
           let strMesh = JSON.stringify(mesh);
-          gAPPP.firebaseHelper.newMesh(strMesh, id).then((r) => resolve(r));
+          gAPPP.authorizationController.newMesh(strMesh, id).then((r) => resolve(r));
         });
       });
     }
@@ -91,7 +91,7 @@ class clsCreatePopup {
       return new Promise((resolve, reject) => {
         me.getNewSceneSerialized().then((sceneSerial) => {
           let title = me.fieldsValues['title'];
-          gAPPP.firebaseHelper.newScene(sceneSerial, title).then((r) => resolve(r));
+          gAPPP.authorizationController.newScene(sceneSerial, title).then((r) => resolve(r));
         });
       });
     }
@@ -99,13 +99,13 @@ class clsCreatePopup {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
         let file = me.fileDom.files[0];
-        gAPPP.firebaseHelper.newTexture(file, title).then((r) => resolve(r));
+        gAPPP.authorizationController.newTexture(file, title).then((r) => resolve(r));
       });
     }
     if (this.type === 'uploadMaterial') {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
-        gAPPP.firebaseHelper.newMaterial(title).then((r) => resolve(r));
+        gAPPP.authorizationController.newMaterial(title).then((r) => resolve(r));
       });
     }
     return gAPPP.emptyPromise();

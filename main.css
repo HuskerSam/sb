@@ -283,10 +283,16 @@ html, body {
   left:3px;
 }
 
-#sign-out-button {
+.floating-right-profile-buttons {
   position: absolute;
   z-index: 1;
   right: 4px;
   top: 4px;
-  background: rgba(0,0,0,.2)
+  background: rgba(0,0,0,.2);
+  text-align:center;
+  border-radius: 5px;
+  border: silver;
+}
+.floating-right-profile-buttons button {
+  margin: 3px;
 }

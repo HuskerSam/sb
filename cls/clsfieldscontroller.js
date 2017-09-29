@@ -1,4 +1,4 @@
-class clsFireFields {
+class clsFieldsController {
   constructor(fields, prefix, container, parent) {
     this.fields = fields;
     this.prefix = prefix;
@@ -121,7 +121,7 @@ class clsFireFields {
         }
 
         if (f.type === 'texture') {
-          let tD = gAPPP.firebaseHelper.texturesFireSet.fireDataName[v];
+          let tD = gAPPP.authorizationController.texturesFireSet.fireDataName[v];
           if (tD === undefined)
             return;
 
@@ -132,7 +132,7 @@ class clsFireFields {
         }
 
         if (f.type === 'material') {
-          let tD = gAPPP.firebaseHelper.materialsFireSet.fireDataName[v];
+          let tD = gAPPP.authorizationController.materialsFireSet.fireDataName[v];
           if (tD === undefined)
             return;
 
@@ -232,7 +232,7 @@ class clsFireFields {
     if (!m)
       m = new BABYLON.StandardMaterial('material', this.parent.scene);
 
-    let fields = gAPPP.popupDialogs.materialFields;
+    let fields = gAPPP.materialFields;
     for (let i in fields) {
       let f = fields[i];
       let v = values[f.fireSetField];

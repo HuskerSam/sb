@@ -1,4 +1,4 @@
-class clsCanvasPopup {
+class clsPopupEditController {
   constructor(tag, fields) {
     let me = this;
     this.tag = tag;
@@ -6,7 +6,7 @@ class clsCanvasPopup {
     this.dialogQS = '#' + this.tag + '-details-dialog';
     this.dialog = document.querySelector(this.dialogQS);
     this.fileName = 'file.babylon';
-    this.babyHelper = null;
+    this.renderEngine = null;
     this.editors = null;
     this.sceneObjects = [];
 
@@ -21,7 +21,7 @@ class clsCanvasPopup {
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.fieldsContainer.style.display = 'none';
-    this.fireFields = new clsFireFields(this.fields, this.tag + '-fields-', this.fieldsContainer, this);
+    this.fireFields = new clsFieldsController(this.fields, this.tag + '-fields-', this.fieldsContainer, this);
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
 
@@ -38,7 +38,7 @@ class clsCanvasPopup {
   }
   showSceneJSON() {
     let json = gAPPP.stringify(this.uiObject);
-    gAPPP.popupDialogs.dialogs['ace-editor-popup'].showAce(json);
+    gAPPP.dialogs['ace-editor-popup'].showAce(json);
   }
   splitView() {
     if (this.splitInstance)
@@ -100,15 +100,15 @@ class clsCanvasPopup {
   uploadSceneFile() {
     let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
     let strScene = JSON.stringify(sceneJSON);
-    return gAPPP.firebaseHelper.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
+    return gAPPP.authorizationController.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
     if (this.tag === 'mesh') {
       me.fireFields.values.url = r1.downloadURL;
     }
   }
   close() {
-    this.scene = this.babyHelper.createDefaultScene();
-    this.babyHelper.setScene(this.scene);
-    this.babyHelper.engine.resize();
+    this.scene = this.renderEngine.createDefaultScene();
+    this.renderEngine.setScene(this.scene);
+    this.renderEngine.engine.resize();
     this.fireFields.active = false;
     $(this.dialog).modal('hide');
   }
@@ -120,23 +120,23 @@ class clsCanvasPopup {
     this.progressBar.style.display = 'block';
 
     this.initEditors();
-    if (this.babyHelper === null)
-      this.babyHelper = new clsBabylonHelper(this.canvas);
+    if (this.renderEngine === null)
+      this.renderEngine = new clsRenderEngineController(this.canvas);
 
     this.id = this.fireData.key;
     this.fireFields.setData(fireData);
     $(this.dialog).modal('show');
 
-    this.scene = this.babyHelper.createDefaultScene();
-    this.babyHelper.setScene(this.scene);
-    this.babyHelper.engine.resize();
+    this.scene = this.renderEngine.createDefaultScene();
+    this.renderEngine.setScene(this.scene);
+    this.renderEngine.engine.resize();
 
     if (this.tag === 'mesh') {
       let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
       let meshName = this.fireFields.values.meshName;
       let me = this;
 
-      this.babyHelper.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
+      this.renderEngine.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
         .then((m) => me.finishShow({
           type: 'mesh',
           mesh: m
@@ -148,7 +148,7 @@ class clsCanvasPopup {
       let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
       let me = this;
 
-      this.babyHelper.loadScene(gAPPP.storagePrefix, url, this.babyHelper.engine)
+      this.renderEngine.loadScene(gAPPP.storagePrefix, url, this.renderEngine.engine)
         .then((scene) => me.finishShow({
           type: 'scene',
           scene: scene
@@ -158,7 +158,7 @@ class clsCanvasPopup {
     }
 
     if (this.tag === 'material') {
-      let s = this.babyHelper.addSphere('sphere1', 10, 5, this.scene, false);
+      let s = this.renderEngine.addSphere('sphere1', 10, 5, this.scene, false);
 
       let material = new BABYLON.StandardMaterial('material', this.scene);
       s.material = material;
@@ -171,7 +171,7 @@ class clsCanvasPopup {
 
     if (this.tag === 'texture') {
       let values = this.fireData.val();
-      let s = this.babyHelper.addGround('ground1', 6, 6, 20, this.scene);
+      let s = this.renderEngine.addGround('ground1', 6, 6, 20, this.scene);
       this.sceneObjects.push(s);
 
       let material = new BABYLON.StandardMaterial('material', this.scene);
