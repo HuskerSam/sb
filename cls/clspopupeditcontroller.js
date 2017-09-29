@@ -93,7 +93,10 @@ class clsPopupEditController {
       me.tabContent.style.display = 'none';
       me.progressBar.style.display = 'block';
       me.fireFields.scrape();
-      me.fireFields.commit(me.fireSet).then((r2) => resolve(r2))
+      let imageDataURL = gAPPP.renderEngine.getJPGDataURL().then((imageDataURL) => {
+        let blob = me.fireSet.dataURItoBlob(imageDataURL);
+        me.fireFields.commit(me.fireSet, blob, 'sceneRenderImage.jpg').then((r2) => resolve(r2));
+      });
     });
   }
   uploadSceneFile() {

@@ -10,12 +10,13 @@ class clsRenderEngineController {
   }
   setCanvas(canvas) {
     this.canvas = canvas;
-    this.engine = new BABYLON.Engine(this.canvas, true);
+    this.engine = new BABYLON.Engine(this.canvas, true, {preserveDrawingBuffer: true});
     this.engine.enableOfflineSupport = false;
   }
   setSceneDetails(sceneDetails) {
     this.scene = sceneDetails.scene;
-    this.camera = sceneDetails.camera.attachControl(this.canvas, false);
+    this.sceneDetails = sceneDetails;
+    sceneDetails.camera.attachControl(this.canvas, false);
     var me = this;
     this.engine.stopRenderLoop();
     this.scene.executeWhenReady(function() {
@@ -26,7 +27,7 @@ class clsRenderEngineController {
     this.engine.resize();
   }
   addSphere(name, faces, diameter, scene, refresh) {
-    if (! refresh)
+    if (!refresh)
       refresh = false;
     return BABYLON.Mesh.CreateSphere(name, faces, diameter, scene, refresh);
   }
@@ -85,8 +86,7 @@ class clsRenderEngineController {
       url: '',
       type: 'url',
       size: 0,
-      simpleUIDetails: {
-      }
+      simpleUIDetails: {}
     };
   }
   getNewTextureData() {
@@ -120,7 +120,12 @@ class clsRenderEngineController {
       wireframe: false
     };
   }
-
+  getJPGDataURL() {
+    let me = this;
+    return new Promise((resolve, reject) => {
+      BABYLON.Tools.CreateScreenshot(me.engine, me.sceneDetails.camera, { width: 500 }, (base64Image) => resolve(base64Image));
+    });
+  }
   setDefaultSceneDetails(sceneDetails) {
     this.defaultSceneDetails = sceneDetails;
   }

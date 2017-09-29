@@ -83,10 +83,15 @@ class clsFieldsController {
     this.values = fireData.val();
     this.fireData = fireData;
   }
-  commit(fireSet) {
+  commit(fireSet, imageBlob, renderImageFileName) {
     let me = this;
     return new Promise((resolve, reject) => {
-      fireSet.set(me.fireData.key, me.values).then((r) => resolve(r));
+      fireSet.setBlob(me.fireData.key, imageBlob, renderImageFileName).then((uploadResult) => {
+        me.values['renderImageURL'] = uploadResult.downloadURL;
+        console.log('save', me.values, uploadResult.downloadURL);
+        fireSet.set(me.fireData.key, me.values).then((r) => resolve(r));
+      });
+
     });
   }
   paint(uiObject) {
