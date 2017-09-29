@@ -51,13 +51,13 @@ class SCScene {
       if (value === undefined)
         return;
       if (field.type === undefined)
-        return gAPPP.path(object, field.uiObjectField, value);
+        return gAPPP.u.path(object, field.uiObjectField, value);
 
       if (field.type === 'color') {
         let parts = value.split(',');
         let cA = [];
         let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
-        return gAPPP.path(object, field.uiObjectField, color);
+        return gAPPP.u.path(object, field.uiObjectField, color);
       }
 
       if (field.type === 'texture') {
@@ -66,7 +66,7 @@ class SCScene {
           return;
 
         let t = this.texture(tD);
-        return gAPPP.path(object, field.uiObjectField, t);
+        return gAPPP.u.path(object, field.uiObjectField, t);
       }
 
       if (field.type === 'material') {
@@ -80,7 +80,7 @@ class SCScene {
       }
 
       //default
-      gAPPP.path(object, field.uiObjectField, value);
+      gAPPP.u.path(object, field.uiObjectField, value);
     } catch (e) {
       console.log('set ui object error', e, field, object, value);
     }
@@ -106,7 +106,7 @@ class SCScene {
 
     if (file) {
       return new Promise((resolve, reject) => {
-        gAPPP.fileToURL(file)
+        gAPPP.u.fileToURI(file)
           .then((sceneSerial) => resolve(sceneSerial));
       });
     } else {

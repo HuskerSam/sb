@@ -22,7 +22,7 @@ class clsPopupUtilityController {
     let aceId = 'utility-ace-editor-json';
     let aceDiv = document.getElementById(aceId);
     if (aceDiv) {
-      this.aceEditor = gAPPP.editor(aceId);
+      this.aceEditor = gAPPP.u.editor(aceId);
       this.aceEditor.$blockScrolling = Infinity;
       this.editors.push(this.aceEditor);
     }
@@ -31,7 +31,6 @@ class clsPopupUtilityController {
     this.initEditors();
     json = js_beautify(json);
     this.aceEditor.setValue(json);
-    //gAPPP.beautify(this.fireEditor);
 
     $(this.dialog).modal('show');
 

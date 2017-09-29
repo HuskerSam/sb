@@ -37,7 +37,7 @@ class CTLDialogEditItem {
     this.splitView();
   }
   showSceneJSON() {
-    let json = gAPPP.stringify(this.uiObject);
+    let json = gAPPP.u.stringify(this.uiObject);
     gAPPP.dialogs['ace-editor-popup'].showAce(json);
   }
   splitView() {
@@ -78,7 +78,7 @@ class CTLDialogEditItem {
     this.editors = [];
     let fireEditorId = this.tag + '-details-json';
     if (this.dialog.querySelector('#' + fireEditorId)) {
-      this.fireEditor = gAPPP.editor(fireEditorId);
+      this.fireEditor = gAPPP.u.editor(fireEditorId);
       this.fireEditor.$blockScrolling = Infinity;
       this.editors.push(this.fireEditor);
     }
@@ -198,7 +198,7 @@ class CTLDialogEditItem {
 
     this.fieldsContainer.style.display = 'block';
     this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
-    gAPPP.beautify(this.fireEditor);
+    gAPPP.u.beautify(this.fireEditor);
 
     this.fireFields.paint(this.uiObject);
     this.popupButtons.style.display = 'block';

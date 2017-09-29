@@ -73,7 +73,7 @@ class CTLBoundFields {
       this.valueCache[f.fireSetField] = v;
 
       if (f.fireSetField)
-        gAPPP.path(this.values, f.fireSetField, v);
+        gAPPP.u.path(this.values, f.fireSetField, v);
     }
 
     gAPPP.sceneController.updateUI(this.uiObject, this.valueCache);
@@ -99,7 +99,7 @@ class CTLBoundFields {
     this.valueCache = {};
     for (let i in this.fields) {
       let f = this.fields[i];
-      let nV = gAPPP.path(this.values, f.fireSetField);
+      let nV = gAPPP.u.path(this.values, f.fireSetField);
       if (nV === undefined)
         nV = '';
       let v = this.validate(f, nV);

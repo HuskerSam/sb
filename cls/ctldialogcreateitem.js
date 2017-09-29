@@ -34,7 +34,7 @@ class CTLDialogCreateItem {
     return new Promise((resolve, reject) => {
       let id = this.fieldsValues['id'];
       let file = this.fileDom.files[0];
-      gAPPP.fileToURL(file)
+      gAPPP.u.fileToURI(file)
         .then((d) => gAPPP.renderEngine.serializeMesh(id, "", "data:" + d)
           .then((mesh) => resolve(mesh)));
     });
@@ -92,7 +92,7 @@ class CTLDialogCreateItem {
         gAPPP.authorizationController.modelSets.materials.newMaterial(title).then((r) => resolve(r));
       });
     }
-    return gAPPP.emptyPromise();
+    return new Promise(resolve => resolve());
   }
   create() {
     let me = this;
