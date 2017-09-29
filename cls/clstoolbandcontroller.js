@@ -47,8 +47,12 @@ class clsToolbarBandController {
     if (type === 'remove')
       return this.childRemoved(fireData);
   }
-  toggle() {
-    if (this.bar.style.display !== 'inline-block') {
+  toggle(forceValue) {
+    if (forceValue === undefined)
+      forceValue = (this.bar.style.display !== 'inline-block');
+
+    let expand = !forceValue;
+    if (forceValue) {
       this.bar.style.display = 'inline-block';
       this.createBtn.style.display = 'inline-block';
       this.bar.parentNode.style.display = 'block';
@@ -92,11 +96,11 @@ class clsToolbarBandController {
           continue;
         if (binding.type === 'innerText')
           element.innerText = val;
-        if (binding.type === 'background-image'){
+        if (binding.type === 'background-image') {
           element.style.backgroundImage = 'url("' + val + '")';
         }
       } catch (e) {
-        console.log('clstoolbandcontroller.js', e, binding  );
+        console.log('clstoolbandcontroller.js', e, binding);
       }
     }
   }

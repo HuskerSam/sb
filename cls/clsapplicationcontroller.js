@@ -17,7 +17,18 @@ class clsApplicationController {
     this.toolbarItems['meshes'] = new clsToolbarBandController('meshes', 'Meshes');
     this.toolbarItems['materials'] = new clsToolbarBandController('materials', "Materials");
     this.toolbarItems['textures'] = new clsToolbarBandController('textures', 'Textures');
-    this.toolbarItems['scenes'].toggle();
+
+    let me = this;
+    document.querySelector('#expand-all-toolbands').addEventListener('click', (e) => me.expandAllBands(), false);
+    document.querySelector('#collapse-all-toolbands').addEventListener('click', (e) => me.collapseAllBands(), false);
+  }
+  expandAllBands(){
+    for (let i in this.toolbarItems)
+      this.toolbarItems[i].toggle(true);
+  }
+  collapseAllBands() {
+    for (let i in this.toolbarItems)
+      this.toolbarItems[i].toggle(false);
   }
   initDialogs() {
     this.dialogs = {};
