@@ -1,4 +1,4 @@
-class clsSceneController {
+class SCScene {
   constructor() {}
   setMesh(values, mesh) {
     let fields = gAPPP.meshFields;

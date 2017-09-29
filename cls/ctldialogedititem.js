@@ -1,4 +1,4 @@
-class clsPopupEditController {
+class CTLDialogEditItem {
   constructor(tag, fields, fireSetTag) {
     let me = this;
     this.tag = tag;
@@ -21,7 +21,7 @@ class clsPopupEditController {
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.fieldsContainer.style.display = 'none';
-    this.fireFields = new clsFieldsController(this.fields, this.tag + '-fields-', this.fieldsContainer, this);
+    this.fireFields = new CTLBoundFields(this.fields, this.tag + '-fields-', this.fieldsContainer, this);
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
 

@@ -1,4 +1,4 @@
-class clsFirebaseModel {
+class MDLFirebaseList {
   constructor(dataPrefix) {
     let me = this;
     this.active = true;

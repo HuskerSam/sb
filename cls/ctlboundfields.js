@@ -1,6 +1,6 @@
-class clsFieldsController {
-  constructor(fields, prefix, container, parent) {
-    this.fields = fields;
+class CTLBoundFields {
+  constructor(boundFields, prefix, container, parent) {
+    this.fields = boundFields;
     this.prefix = prefix;
     this.values = null;
     this.fireData = null;
@@ -75,7 +75,6 @@ class clsFieldsController {
       if (f.fireSetField)
         gAPPP.path(this.values, f.fireSetField, v);
     }
-
 
     gAPPP.sceneController.updateUI(this.uiObject, this.valueCache);
   }

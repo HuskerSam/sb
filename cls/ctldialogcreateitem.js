@@ -1,4 +1,4 @@
-class clsPopupCreateController {
+class CTLDialogCreateItem {
   constructor(tag, fields) {
     let me = this;
     this.tag = tag;

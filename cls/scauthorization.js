@@ -1,4 +1,4 @@
-class clsAuthorizationController {
+class scAuthorization {
   constructor(signInQS, signOutQS) {
     let me = this;
     this.currentUser = {};
@@ -56,13 +56,13 @@ class clsAuthorizationController {
     this.loggedIn = true;
     this.userWriteData();
 
-    this.modelSets['meshes'] = new clsFirebaseModel('lib_meshes');
+    this.modelSets['meshes'] = new MDLFirebaseList('lib_meshes');
     this.fireSets.push(this.modelSets.meshes);
-    this.modelSets['textures'] = new clsFirebaseModel('lib_textures');
+    this.modelSets['textures'] = new MDLFirebaseList('lib_textures');
     this.fireSets.push(this.modelSets.textures);
-    this.modelSets['materials'] = new clsFirebaseModel('lib_materials');
+    this.modelSets['materials'] = new MDLFirebaseList('lib_materials');
     this.fireSets.push(this.modelSets.materials);
-    this.modelSets['scenes'] = new clsFirebaseModel('lib_scenes');
+    this.modelSets['scenes'] = new MDLFirebaseList('lib_scenes');
     this.fireSets.push(this.modelSets.scenes);
 
     gAPPP.initToolbars();

@@ -1,4 +1,4 @@
-class clsRenderEngineController {
+class SCRender {
   constructor(defaultCanvas) {
     let me = this;
     this.defaultCanvas = defaultCanvas;

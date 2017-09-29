@@ -1,22 +1,26 @@
-class clsApplicationController {
+'use strict';
+window.addEventListener('load', function() {
+  new scApplication();
+});
+class scApplication {
   constructor() {
     window.gAPPP = this;
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
     this.initDialogs();
 
     this.screenCanvas = document.querySelector('#renderCanvas');
-    this.renderEngine = new clsRenderEngineController(this.screenCanvas);
-    this.sceneController = new clsSceneController();
+    this.renderEngine = new SCRender(this.screenCanvas);
+    this.sceneController = new SCScene();
     this.screenSceneDetails = this.sceneController.createDefaultScene();
     this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
     this.renderEngine.setSceneDetails(this.screenSceneDetails);
 
-    this.authorizationController = new clsAuthorizationController('#sign-in-button', '#sign-out-button');
+    this.authorizationController = new scAuthorization('#sign-in-button', '#sign-out-button');
     this.toolbarItems = {};
-    this.toolbarItems['scenes'] = new clsToolbarBandController('scenes', 'Scenes');
-    this.toolbarItems['meshes'] = new clsToolbarBandController('meshes', 'Meshes');
-    this.toolbarItems['materials'] = new clsToolbarBandController('materials', "Materials");
-    this.toolbarItems['textures'] = new clsToolbarBandController('textures', 'Textures');
+    this.toolbarItems['scenes'] = new CTLToolband('scenes', 'Scenes');
+    this.toolbarItems['meshes'] = new CTLToolband('meshes', 'Meshes');
+    this.toolbarItems['materials'] = new CTLToolband('materials', "Materials");
+    this.toolbarItems['textures'] = new CTLToolband('textures', 'Textures');
 
     let me = this;
     document.querySelector('#expand-all-toolbands').addEventListener('click', (e) => me.expandAllBands(), false);
@@ -237,15 +241,15 @@ class clsApplicationController {
       group: 'options'
     }];
 
-    this.dialogs['meshes-edit'] = new clsPopupEditController('mesh', this.meshFields, 'meshes');
-    this.dialogs['materials-edit'] = new clsPopupEditController('material', this.materialFields, 'materials');
-    this.dialogs['textures-edit'] = new clsPopupEditController('texture', textureFields, 'textures');
-    this.dialogs['scenes-edit'] = new clsPopupEditController('scene', this.sceneFields, 'scenes');
+    this.dialogs['meshes-edit'] = new CTLDialogEditItem('mesh', this.meshFields, 'meshes');
+    this.dialogs['materials-edit'] = new CTLDialogEditItem('material', this.materialFields, 'materials');
+    this.dialogs['textures-edit'] = new CTLDialogEditItem('texture', textureFields, 'textures');
+    this.dialogs['scenes-edit'] = new CTLDialogEditItem('scene', this.sceneFields, 'scenes');
 
-    this.dialogs['meshes-create'] = new clsPopupCreateController('mesh', ['id'], 'meshes');
-    this.dialogs['textures-create'] = new clsPopupCreateController('texture', ['title'], 'textures');
-    this.dialogs['materials-create'] = new clsPopupCreateController('material', ['title'], 'materials');
-    this.dialogs['scenes-create'] = new clsPopupCreateController('scene', ['title'], 'scenes');
+    this.dialogs['meshes-create'] = new CTLDialogCreateItem('mesh', ['id'], 'meshes');
+    this.dialogs['textures-create'] = new CTLDialogCreateItem('texture', ['title'], 'textures');
+    this.dialogs['materials-create'] = new CTLDialogCreateItem('material', ['title'], 'materials');
+    this.dialogs['scenes-create'] = new CTLDialogCreateItem('scene', ['title'], 'scenes');
 
     this.dialogs['ace-editor-popup'] = new clsPopupUtilityController('utility-dialog-show-ace-editor');
   }

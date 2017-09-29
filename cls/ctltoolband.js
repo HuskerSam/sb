@@ -1,4 +1,4 @@
-class clsToolbarBandController {
+class CTLToolband {
   constructor(tag, title) {
     let me = this;
     this.tag = tag;
