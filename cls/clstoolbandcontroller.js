@@ -3,7 +3,16 @@ class clsToolbarBandController {
     let me = this;
     this.tag = tag;
     this.title = title;
-    this.keyList = ['title'];
+    this.bindingsList = [{
+        dataName: 'title',
+        type: 'innerText'
+      },
+      {
+        dataName: 'renderImageURL',
+        type: 'background-image',
+        classKey: 'OUTER'
+      }
+    ];
     this.containerCollapsed = document.querySelector('#sb-floating-toolbar');
     this.containerExpanded = document.querySelector('#sb-floating-toolbar-expanded');
     let d = this.containerCollapsed.querySelector('#sb-floating-toolbar-item-template').cloneNode(true);
@@ -64,15 +73,30 @@ class clsToolbarBandController {
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);
     let values = fireData.val();
-    for (let i in this.keyList) {
-      let key = this.keyList[i];
+    this.nodeApplyValues(values, div);
+  }
+  nodeApplyValues(values, outer) {
+    for (let i in this.bindingsList) {
+      let binding = this.bindingsList[i];
       try {
-        let ele = div.querySelector('.band-' + key);
-        let val = values[key];
-        if (val !== undefined)
-          ele.innerText = values[key];
+        let classKey = binding.dataName;
+        if (binding.classKey)
+          classKey = binding.classKey;
+        let element = outer.querySelector('.band-' + classKey);
+        if (classKey === 'OUTER')
+          element = outer;
+        if (element === null)
+          continue;
+        let val = values[binding.dataName];
+        if (val === undefined)
+          continue;
+        if (binding.type === 'innerText')
+          element.innerText = val;
+        if (binding.type === 'background-image'){
+          element.style.backgroundImage = 'url("' + val + '")';
+        }
       } catch (e) {
-        console.log('FireSet.childChanged ' + key + ' failed', e);
+        console.log('clstoolbandcontroller.js', e, binding  );
       }
     }
   }
@@ -89,24 +113,15 @@ class clsToolbarBandController {
     let me = this;
     let values = fireData.val();
     let key = fireData.key;
-    let html = `<div class="firebase-item ${this.tag}-${key}"><div class="band-title"></div>`;
+    let html = `<div class="firebase-item ${this.tag}-${key} band-background-preview"><div class="band-title"></div>`;
     html += `<button class="band-remove-button btn-toolbar-icon"><i class="material-icons">delete</i></button>`;
     html += `<button class="band-details-button btn-toolbar-icon"><i class="material-icons">settings</i></button>`;
     html += `</div>`
 
     let outer = document.createElement('div');
     outer.innerHTML = html.trim();
-    for (let i in this.keyList) {
-      let key = this.keyList[i];
-      try {
-        let ele = outer.querySelector('.band-' + key);
-        let val = values[key];
-        if (val !== undefined)
-          ele.innerText = val;
-      } catch (e) {
-        console.log('FireSet.createNode ' + key + ' failed', e);
-      }
-    }
+    let newNode = outer.childNodes[0];
+    this.nodeApplyValues(values, newNode);
 
     let remove_div = outer.querySelector('.band-remove-button');
     if (remove_div)
@@ -116,7 +131,7 @@ class clsToolbarBandController {
     if (details_div)
       details_div.addEventListener('click', (e) => me.showEditPopup(e, key), false);
 
-    return outer.childNodes[0];
+    return newNode;
   }
   removeElement(e, key) {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
