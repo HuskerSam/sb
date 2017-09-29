@@ -250,7 +250,7 @@ class scApplication {
     this.dialogs['materials-create'] = new CTLDialogCreateItem('material', ['title'], 'materials');
     this.dialogs['scenes-create'] = new CTLDialogCreateItem('scene', ['title'], 'scenes');
 
-    this.dialogs['ace-editor-popup'] = new clsPopupUtilityController('utility-dialog-show-ace-editor');
+    this.dialogs['ace-editor-popup'] = new SCDialogUtility('utility-dialog-show-ace-editor');
   }
   initToolbars() {
     for (let i in this.toolbarItems)

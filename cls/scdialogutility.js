@@ -1,4 +1,4 @@
-class clsPopupUtilityController {
+class SCDialogUtility {
   constructor(id) {
     let me = this;
     this.dialog = document.getElementById(id);

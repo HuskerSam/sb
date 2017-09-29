@@ -95,7 +95,7 @@ class CTLDialogEditItem {
       me.progressBar.style.display = 'block';
       me.fireFields.scrape();
       let imageDataURL = gAPPP.renderEngine.getJPGDataURL().then((imageDataURL) => {
-        let blob = gAPPP.dataURItoBlob(imageDataURL);
+        let blob = gAPPP.u.dataURItoBlob(imageDataURL);
         me.fireFields.commit(me.fireSet, blob, 'sceneRenderImage.jpg').then((r2) => resolve(r2));
       });
     });
