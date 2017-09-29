@@ -1,3 +1,4 @@
+/* create dialog controller - binds to mdlFirebaseList */
 class CTLDialogCreateItem {
   constructor(tag, fields) {
     let me = this;

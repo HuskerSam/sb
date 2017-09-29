@@ -1,3 +1,5 @@
+/* firebase bound data list with events - 1 instance per firebase collection/list */
+'use strict';
 class MDLFirebaseList {
   constructor(dataPrefix) {
     let me = this;

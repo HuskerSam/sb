@@ -1,3 +1,5 @@
+/* Global stateless functions ~ utilities */
+'use strict';
 class SCUtility {
   constructor() {}
 

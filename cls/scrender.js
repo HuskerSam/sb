@@ -1,3 +1,5 @@
+/* babylon singleton wrapper - only 1 instance for many canves */
+'use strict';
 class SCRender {
   constructor(defaultCanvas) {
     let me = this;

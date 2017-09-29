@@ -1,3 +1,5 @@
+/* edit dialog controller - binds to mdlFirebaseList and SCRender */
+'use strict';
 class CTLDialogEditItem {
   constructor(tag, fields, fireSetTag) {
     let me = this;

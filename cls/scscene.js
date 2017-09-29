@@ -1,3 +1,4 @@
+'use strict';
 class SCScene {
   constructor() {}
   setMesh(values, mesh) {

@@ -1,3 +1,5 @@
+/* toolband ui controller - binds to mdlFirebaseList */
+'use strict';
 class CTLToolband {
   constructor(tag, title) {
     let me = this;

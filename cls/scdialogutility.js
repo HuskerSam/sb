@@ -1,3 +1,4 @@
+'use strict';
 class SCDialogUtility {
   constructor(id) {
     let me = this;

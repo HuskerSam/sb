@@ -1,3 +1,5 @@
+/*  singleton firebase authorization controller (owns firebase bound models)   */
+'use strict';
 class scAuthorization {
   constructor(signInQS, signOutQS) {
     let me = this;

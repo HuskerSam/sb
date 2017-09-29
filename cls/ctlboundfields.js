@@ -1,3 +1,5 @@
+/* binding controller for dom to mdlFirebaseList */
+'use strict';
 class CTLBoundFields {
   constructor(boundFields, prefix, container, parent) {
     this.fields = boundFields;
