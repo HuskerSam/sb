@@ -29,7 +29,9 @@ class clsSceneController {
   }
   texture(values) {
     let texture = new BABYLON.Texture(values['url']);
-
+    function isNumeric(v) {
+      return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
+    }
     if (isNumeric(values['vScale']))
       texture.vScale = Number(values['vScale']);
     if (isNumeric(values['uScale']))
@@ -59,7 +61,7 @@ class clsSceneController {
       }
 
       if (field.type === 'texture') {
-        let tD = gAPPP.authorizationController.modelSets.textures.fireDataName[value];
+        let tD = gAPPP.authorizationController.modelSets.textures.fireDataValuesByTitle[value];
         if (tD === undefined)
           return;
 
@@ -68,7 +70,7 @@ class clsSceneController {
       }
 
       if (field.type === 'material') {
-        let tD = gAPPP.authorizationController.modelSets.materials.fireDataName[value];
+        let tD = gAPPP.authorizationController.modelSets.materials.fireDataValuesByTitle[value];
         if (tD === undefined)
           return;
 

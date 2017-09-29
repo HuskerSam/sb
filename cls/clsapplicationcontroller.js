@@ -2,7 +2,6 @@ class clsApplicationController {
   constructor() {
     window.gAPPP = this;
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
-    this.initGlobalHelperFunctions();
     this.initDialogs();
 
     this.screenCanvas = document.querySelector('#renderCanvas');
@@ -19,58 +18,6 @@ class clsApplicationController {
     this.toolbarItems['materials'] = new clsToolbarBandController('materials', "Materials");
     this.toolbarItems['textures'] = new clsToolbarBandController('textures', 'Textures');
     this.toolbarItems['scenes'].toggle();
-  }
-  initGlobalHelperFunctions() {
-    window.isNumeric = function(v) {
-      let n = Number(v);
-      return !isNaN(parseFloat(n)) && isFinite(n);
-    };
-  }
-  beautify(editor) {
-    let val = editor.session.getValue();
-    let array = val.split(/\n/);
-    array[0] = array[0].trim();
-    val = array.join("\n");
-    val = js_beautify(val);
-    editor.session.setValue(val);
-  }
-  editor(domId) {
-    let e = ace.edit(domId);
-    e.setTheme("ace/theme/textmate");
-    e.getSession().setMode("ace/mode/json");
-    e.setOptions({
-      fontFamily: '"Lucida Console",Monaco,monospace',
-      fontSize: '9pt'
-    });
-
-    return e;
-  }
-  stringify(obj) {
-    let cache = [];
-    let result = JSON.stringify(obj, function(key, value) {
-      if (typeof value === 'object' && value !== null) {
-        if (cache.indexOf(value) !== -1) {
-          return;
-        }
-        cache.push(value);
-      }
-      return value;
-    });
-    cache = null;
-    return result;
-  }
-  path(obj, is, value) {
-    if (typeof is == 'string')
-      return this.path(obj, is.split('.'), value);
-    else if (is.length == 1 && value !== undefined)
-      return obj[is[0]] = value;
-    else if (is.length == 0)
-      return obj;
-    else
-      return this.path(obj[is[0]], is.slice(1), value);
-  }
-  emptyPromise() {
-    return new Promise((resolve) => resolve());
   }
   initDialogs() {
     this.dialogs = {};
@@ -279,17 +226,68 @@ class clsApplicationController {
       group: 'options'
     }];
 
-    this.dialogs['meshes-edit'] = new clsPopupEditController('mesh', this.meshFields);
-    this.dialogs['materials-edit'] = new clsPopupEditController('material', this.materialFields);
-    this.dialogs['textures-edit'] = new clsPopupEditController('texture', textureFields);
-    this.dialogs['scenes-edit'] = new clsPopupEditController('scene', this.sceneFields);
+    this.dialogs['meshes-edit'] = new clsPopupEditController('mesh', this.meshFields, 'meshes');
+    this.dialogs['materials-edit'] = new clsPopupEditController('material', this.materialFields, 'materials');
+    this.dialogs['textures-edit'] = new clsPopupEditController('texture', textureFields, 'textures');
+    this.dialogs['scenes-edit'] = new clsPopupEditController('scene', this.sceneFields, 'scenes');
 
-    this.dialogs['meshes-create'] = new clsPopupCreateController('mesh', ['id']);
-    this.dialogs['textures-create'] = new clsPopupCreateController('texture', ['title']);
-    this.dialogs['materials-create'] = new clsPopupCreateController('material', ['title']);
-    this.dialogs['scenes-create'] = new clsPopupCreateController('scene', ['title']);
+    this.dialogs['meshes-create'] = new clsPopupCreateController('mesh', ['id'], 'meshes');
+    this.dialogs['textures-create'] = new clsPopupCreateController('texture', ['title'], 'textures');
+    this.dialogs['materials-create'] = new clsPopupCreateController('material', ['title'], 'materials');
+    this.dialogs['scenes-create'] = new clsPopupCreateController('scene', ['title'], 'scenes');
 
     this.dialogs['ace-editor-popup'] = new clsPopupUtilityController('utility-dialog-show-ace-editor');
+  }
+  initToolbars() {
+    for (let i in this.toolbarItems)
+      this.toolbarItems[i].init();
+  }
+
+  beautify(editor) {
+    let val = editor.session.getValue();
+    let array = val.split(/\n/);
+    array[0] = array[0].trim();
+    val = array.join("\n");
+    val = js_beautify(val);
+    editor.session.setValue(val);
+  }
+  editor(domId) {
+    let e = ace.edit(domId);
+    e.setTheme("ace/theme/textmate");
+    e.getSession().setMode("ace/mode/json");
+    e.setOptions({
+      fontFamily: '"Lucida Console",Monaco,monospace',
+      fontSize: '9pt'
+    });
+
+    return e;
+  }
+  stringify(obj) {
+    let cache = [];
+    let result = JSON.stringify(obj, function(key, value) {
+      if (typeof value === 'object' && value !== null) {
+        if (cache.indexOf(value) !== -1) {
+          return;
+        }
+        cache.push(value);
+      }
+      return value;
+    });
+    cache = null;
+    return result;
+  }
+  path(obj, is, value) {
+    if (typeof is == 'string')
+      return this.path(obj, is.split('.'), value);
+    else if (is.length == 1 && value !== undefined)
+      return obj[is[0]] = value;
+    else if (is.length == 0)
+      return obj;
+    else
+      return this.path(obj[is[0]], is.slice(1), value);
+  }
+  emptyPromise() {
+    return new Promise((resolve) => resolve());
   }
   fileToURL(file) {
     return new Promise(function(resolve, reject) {
@@ -299,5 +297,18 @@ class clsApplicationController {
       });
       reader.readAsText(file);
     }, false);
+  }
+  dataURItoBlob(dataURI) {
+    let byteString = atob(dataURI.split(',')[1]);
+    let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+    let ab = new ArrayBuffer(byteString.length);
+    let ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    let blob = new Blob([ab], {
+      type: mimeString
+    });
+    return blob;
   }
 }

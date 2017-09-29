@@ -88,7 +88,6 @@ class clsFieldsController {
     return new Promise((resolve, reject) => {
       fireSet.setBlob(me.fireData.key, imageBlob, renderImageFileName).then((uploadResult) => {
         me.values['renderImageURL'] = uploadResult.downloadURL;
-        console.log('save', me.values, uploadResult.downloadURL);
         fireSet.set(me.fireData.key, me.values).then((r) => resolve(r));
       });
 
@@ -117,6 +116,9 @@ class clsFieldsController {
   }
   validate(f, v) {
     let r = v;
+    function isNumeric(v) {
+      return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
+    }
     if (f.type === 'boolean') {
       r = false;
       if (v.toString().toLowerCase().substr(0, 1) === 't')

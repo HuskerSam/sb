@@ -1,7 +1,8 @@
 class clsPopupEditController {
-  constructor(tag, fields) {
+  constructor(tag, fields, fireSetTag) {
     let me = this;
     this.tag = tag;
+    this.fireSetTag = fireSetTag;
     this.uiJSON = 'N/A';
     this.dialogQS = '#' + this.tag + '-details-dialog';
     this.dialog = document.querySelector(this.dialogQS);
@@ -94,7 +95,7 @@ class clsPopupEditController {
       me.progressBar.style.display = 'block';
       me.fireFields.scrape();
       let imageDataURL = gAPPP.renderEngine.getJPGDataURL().then((imageDataURL) => {
-        let blob = me.fireSet.dataURItoBlob(imageDataURL);
+        let blob = gAPPP.dataURItoBlob(imageDataURL);
         me.fireFields.commit(me.fireSet, blob, 'sceneRenderImage.jpg').then((r2) => resolve(r2));
       });
     });
@@ -112,23 +113,24 @@ class clsPopupEditController {
     $(this.dialog).modal('hide');
     gAPPP.renderEngine.renderDefault();
   }
-  show(fireData, fireSet) {
-    this.fireData = fireData;
-    this.fireSet = fireSet;
+  show(key) {
+    this.key = key;
+    this.fireSet = gAPPP.authorizationController.modelSets[this.fireSetTag];
+    this.fireData = this.fireSet.fireDataByKey[this.key];
+
     this.popupButtons.style.display = 'none';
     this.tabContent.style.display = 'none';
     this.progressBar.style.display = 'block';
 
     this.initEditors();
 
-    this.id = this.fireData.key;
-    this.fireFields.setData(fireData);
+    this.fireFields.setData(this.fireData);
     $(this.dialog).modal('show');
 
     gAPPP.renderEngine.setCanvas(this.canvas);
     let sceneDetails = gAPPP.sceneController.createDefaultScene();
-    gAPPP.renderEngine.setSceneDetails(sceneDetails);
     this.sceneDetails = sceneDetails;
+    gAPPP.renderEngine.setSceneDetails(this.sceneDetails);
     this.scene = sceneDetails.scene;
 
     if (this.tag === 'mesh') {

@@ -56,13 +56,15 @@ class clsAuthorizationController {
     this.loggedIn = true;
     this.userWriteData();
 
-    this.modelSets.meshes = new clsFirebaseModel('lib_meshes', 'meshes', ['title']);
+    this.modelSets['meshes'] = new clsFirebaseModel('lib_meshes');
     this.fireSets.push(this.modelSets.meshes);
-    this.modelSets.textures = new clsFirebaseModel('lib_textures', 'textures', ['title']);
+    this.modelSets['textures'] = new clsFirebaseModel('lib_textures');
     this.fireSets.push(this.modelSets.textures);
-    this.modelSets.materials = new clsFirebaseModel('lib_materials', 'materials', ['title']);
+    this.modelSets['materials'] = new clsFirebaseModel('lib_materials');
     this.fireSets.push(this.modelSets.materials);
-    this.modelSets.scenes = new clsFirebaseModel('lib_scenes', 'scenes', ['title']);
+    this.modelSets['scenes'] = new clsFirebaseModel('lib_scenes');
     this.fireSets.push(this.modelSets.scenes);
+
+    gAPPP.initToolbars();
   }
 }
