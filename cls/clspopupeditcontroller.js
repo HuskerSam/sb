@@ -137,9 +137,9 @@ class clsPopupEditController {
       let me = this;
 
       this.renderEngine.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
-        .then((m) => me.finishShow({
+        .then((mesh) => me.finishShow({
           type: 'mesh',
-          mesh: m
+          mesh
         }));
 
       return;
@@ -149,11 +149,13 @@ class clsPopupEditController {
       let me = this;
 
       this.renderEngine.loadScene(gAPPP.storagePrefix, url, this.renderEngine.engine)
-        .then((scene) => me.finishShow({
-          type: 'scene',
-          scene: scene
-        }));
-
+        .then((scene) => {
+          me.scene = scene;
+          me.finishShow({
+            type: 'scene',
+            scene: me.scene
+          });
+        });
       return;
     }
 
@@ -165,7 +167,9 @@ class clsPopupEditController {
       this.sceneObjects.push(s);
       return this.finishShow({
         type: 'material',
-        m: material
+        mesh: s,
+        material,
+        scene: this.scene
       });
     }
 
@@ -179,7 +183,9 @@ class clsPopupEditController {
 
       return this.finishShow({
         type: 'texture',
-        m: material
+        mesh: s,
+        material,
+        scene: this.scene
       });
     }
 

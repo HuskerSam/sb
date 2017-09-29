@@ -7,6 +7,7 @@ class clsFieldsController {
     this.active = false;
     this.parent = parent;
     this.container = container;
+    this.sceneController = new clsSceneController();
 
     this.groups = {};
     this.scrapeCache = [];
@@ -76,77 +77,8 @@ class clsFieldsController {
         gAPPP.path(this.values, f.fireSetField, v);
     }
 
-    this.updateUIObject();
-  }
-  updateUIObject() {
-    if (!this.uiObject)
-      return;
 
-    if (this.uiObject.type === 'texture') {
-      this.uiObject.m.diffuseTexture = this.texture(this.valueCache);
-      return;
-    }
-
-    if (this.uiObject.type === 'material')
-      return this.material(this.valueCache, this.uiObject.m);
-
-    if (this.uiObject.type === 'mesh') {
-      return this.updateMeshUI();
-    }
-  }
-  updateMeshUI() {
-    for (let i in this.fields) {
-      let f = this.fields[i];
-      let v = this.scrapeCache[i];
-
-      if (f.fireSetField === 'name')
-        continue;
-      if (f.uiObjectField)
-        this.updateUIObjectField(f, v, this.uiObject.mesh);
-    }
-  }
-  updateUIObjectField(f, v, o) {
-    if (v !== undefined) {
-      try {
-        if (f.type === 'color') {
-          if (v === '')
-            return;
-
-          let parts = v.split(',');
-          let cA = [];
-          let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
-          gAPPP.path(o, f.uiObjectField, color);
-
-          return;
-        }
-
-        if (f.type === 'texture') {
-          let tD = gAPPP.authorizationController.modelSets.textures.fireDataName[v];
-          if (tD === undefined)
-            return;
-
-          let t = this.texture(tD);
-          gAPPP.path(o, f.uiObjectField, t);
-
-          return;
-        }
-
-        if (f.type === 'material') {
-          let tD = gAPPP.authorizationController.modelSets.materials.fireDataName[v];
-          if (tD === undefined)
-            return;
-
-          let m = this.material(tD);
-          o.material = m;
-
-          return;
-        }
-
-        gAPPP.path(o, f.uiObjectField, v);
-      } catch (e) {
-        console.log('set ui object error', e);
-      }
-    }
+    this.sceneController.updateUI(this.uiObject, this.valueCache);
   }
   setData(fireData) {
     this.values = fireData.val();
@@ -177,7 +109,7 @@ class clsFieldsController {
       this.scrapeCache[i] = v;
       this.valueCache[f.fireSetField] = v;
     }
-    this.updateUIObject();
+    this.sceneController.updateUI(uiObject, this.valueCache);
   }
   validate(f, v) {
     let r = v;
@@ -212,35 +144,5 @@ class clsFieldsController {
       //  return r;
     }
     return r;
-  }
-  texture(values) {
-    let texture = new BABYLON.Texture(values['url']);
-
-    if (isNumeric(values['vScale']))
-      texture.vScale = Number(values['vScale']);
-    if (isNumeric(values['uScale']))
-      texture.uScale = Number(values['uScale']);
-    if (isNumeric(values['vOffset']))
-      texture.vOffset = Number(values['vOffset']);
-    if (isNumeric(values['uOffset']))
-      texture.uOffset = Number(values['uOffset']);
-
-    texture.hasAlpha = values['hasAlpha'];
-    return texture;
-  }
-  material(values, m) {
-    if (!m)
-      m = new BABYLON.StandardMaterial('material', this.parent.scene);
-
-    let fields = gAPPP.materialFields;
-    for (let i in fields) {
-      let f = fields[i];
-      let v = values[f.fireSetField];
-
-      if (f.uiObjectField)
-        this.updateUIObjectField(f, v, m);
-    }
-
-    return m;
   }
 }
