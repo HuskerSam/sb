@@ -91,11 +91,41 @@ class clsSceneController {
       uiObject.material.diffuseTexture = this.texture(valueCache);
       return;
     }
-    if (uiObject.type === 'material'){
+    if (uiObject.type === 'material') {
       uiObject.mesh.material = this.material(valueCache, uiObject.scene);
       return;
     }
     if (uiObject.type === 'mesh')
       return this.setMesh(valueCache, uiObject.mesh);
+  }
+  getNewSceneSerialized() {
+    let me = this;
+    let file = this.fileDom.files[0];
+
+    if (file) {
+      return new Promise((resolve, reject) => {
+        gAPPP.fileToURL(file)
+          .then((sceneSerial) => resolve(sceneSerial));
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        let s = me.createDefaultScene().scene;
+        let sS = BABYLON.SceneSerializer.Serialize(s);
+        resolve(JSON.stringify(sS));
+      });
+    }
+  }
+  createDefaultScene() {
+    let scene = new BABYLON.Scene(gAPPP.renderEngine.engine);
+    scene.clearColor = new BABYLON.Color3(0, 1, 0);
+    let camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+    camera.setTarget(BABYLON.Vector3.Zero());
+    let light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    light.intensity = .5;
+
+    return { light,
+      camera,
+      scene
+    };
   }
 }

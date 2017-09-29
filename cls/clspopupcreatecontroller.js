@@ -20,6 +20,7 @@ class clsPopupCreateController {
   }
   close() {
     $(this.dialog).modal('hide');
+    gAPPP.renderEngine.renderDefault();
   }
   show() {
     this.popupButtons.style.display = 'block';
@@ -37,23 +38,6 @@ class clsPopupCreateController {
         .then((d) => gAPPP.renderEngine.serializeMesh(id, "", "data:" + d)
           .then((mesh) => resolve(mesh)));
     });
-  }
-  getNewSceneSerialized() {
-    let me = this;
-    let file = this.fileDom.files[0];
-
-    if (file) {
-      return new Promise((resolve, reject) => {
-        gAPPP.fileToURL(file)
-          .then((sceneSerial) => resolve(sceneSerial));
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        let s = gAPPP.renderEngine.createDefaultScene();
-        let sS = BABYLON.SceneSerializer.Serialize(s);
-        resolve(JSON.stringify(sS));
-      });
-    }
   }
   scrape() {
     this.fieldsValues = {};

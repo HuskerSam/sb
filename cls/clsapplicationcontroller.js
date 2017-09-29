@@ -5,11 +5,14 @@ class clsApplicationController {
     this.initGlobalHelperFunctions();
     this.initDialogs();
 
-    this.authorizationController = new clsAuthorizationController('#sign-in-button', '#sign-out-button');
+    this.screenCanvas = document.querySelector('#renderCanvas');
+    this.renderEngine = new clsRenderEngineController(this.screenCanvas);
+    this.sceneController = new clsSceneController();
+    this.screenSceneDetails = this.sceneController.createDefaultScene();
+    this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
+    this.renderEngine.setSceneDetails(this.screenSceneDetails);
 
-    this.renderEngine = new clsRenderEngineController(document.querySelector("#renderCanvas"));
-    this.scene = this.renderEngine.createDefaultScene();
-    this.renderEngine.setScene(this.scene);
+    this.authorizationController = new clsAuthorizationController('#sign-in-button', '#sign-out-button');
     this.toolbarItems = {};
     this.toolbarItems['scenes'] = new clsToolbarBandController('scenes', 'Scenes');
     this.toolbarItems['meshes'] = new clsToolbarBandController('meshes', 'Meshes');

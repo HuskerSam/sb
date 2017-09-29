@@ -1,16 +1,21 @@
 class clsRenderEngineController {
-  constructor(canvas) {
+  constructor(defaultCanvas) {
+    let me = this;
+    this.defaultCanvas = defaultCanvas;
+    this.setCanvas(defaultCanvas);
+    window.addEventListener("resize", function() {
+      if (me.engine)
+        me.engine.resize();
+    });
+  }
+  setCanvas(canvas) {
     this.canvas = canvas;
     this.engine = new BABYLON.Engine(this.canvas, true);
     this.engine.enableOfflineSupport = false;
-
-    let me = this;
-    window.addEventListener("resize", function() {
-      me.engine.resize();
-    });
   }
-  setScene(scene) {
-    this.scene = scene;
+  setSceneDetails(sceneDetails) {
+    this.scene = sceneDetails.scene;
+    this.camera = sceneDetails.camera.attachControl(this.canvas, false);
     var me = this;
     this.engine.stopRenderLoop();
     this.scene.executeWhenReady(function() {
@@ -18,16 +23,7 @@ class clsRenderEngineController {
         me.scene.render();
       });
     });
-  }
-  createDefaultScene() {
-    let scene = new BABYLON.Scene(this.engine);
-    scene.clearColor = new BABYLON.Color3(0, 1, 0);
-    this.camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
-    this.camera.setTarget(BABYLON.Vector3.Zero());
-    this.camera.attachControl(this.canvas, false);
-    let light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-    light.intensity = .5;
-    return scene;
+    this.engine.resize();
   }
   addSphere(name, faces, diameter, scene, refresh) {
     if (! refresh)
@@ -45,9 +41,10 @@ class clsRenderEngineController {
       });
     });
   }
-  loadScene(path, fileName, engine) {
+  loadScene(path, fileName) {
+    let me = this;
     return new Promise(function(resolve, reject) {
-      BABYLON.SceneLoader.Load(path, fileName, engine, function(scene) {
+      BABYLON.SceneLoader.Load(path, fileName, me.engine, function(scene) {
         return resolve(scene);
       });
     });
@@ -122,5 +119,13 @@ class clsRenderEngineController {
       backFaceCulling: true,
       wireframe: false
     };
+  }
+
+  setDefaultSceneDetails(sceneDetails) {
+    this.defaultSceneDetails = sceneDetails;
+  }
+  renderDefault() {
+    this.setCanvas(this.defaultCanvas);
+    this.setSceneDetails(this.defaultSceneDetails);
   }
 }

@@ -6,7 +6,6 @@ class clsPopupEditController {
     this.dialogQS = '#' + this.tag + '-details-dialog';
     this.dialog = document.querySelector(this.dialogQS);
     this.fileName = 'file.babylon';
-    this.renderEngine = null;
     this.editors = null;
     this.sceneObjects = [];
 
@@ -106,11 +105,9 @@ class clsPopupEditController {
     }
   }
   close() {
-    this.scene = this.renderEngine.createDefaultScene();
-    this.renderEngine.setScene(this.scene);
-    this.renderEngine.engine.resize();
     this.fireFields.active = false;
     $(this.dialog).modal('hide');
+    gAPPP.renderEngine.renderDefault();
   }
   show(fireData, fireSet) {
     this.fireData = fireData;
@@ -120,23 +117,23 @@ class clsPopupEditController {
     this.progressBar.style.display = 'block';
 
     this.initEditors();
-    if (this.renderEngine === null)
-      this.renderEngine = new clsRenderEngineController(this.canvas);
 
     this.id = this.fireData.key;
     this.fireFields.setData(fireData);
     $(this.dialog).modal('show');
 
-    this.scene = this.renderEngine.createDefaultScene();
-    this.renderEngine.setScene(this.scene);
-    this.renderEngine.engine.resize();
+    gAPPP.renderEngine.setCanvas(this.canvas);
+    let sceneDetails = gAPPP.sceneController.createDefaultScene();
+    gAPPP.renderEngine.setSceneDetails(sceneDetails);
+    this.sceneDetails = sceneDetails;
+    this.scene = sceneDetails.scene;
 
     if (this.tag === 'mesh') {
       let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
       let meshName = this.fireFields.values.meshName;
       let me = this;
 
-      this.renderEngine.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
+      gAPPP.renderEngine.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
         .then((mesh) => me.finishShow({
           type: 'mesh',
           mesh
@@ -148,7 +145,7 @@ class clsPopupEditController {
       let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
       let me = this;
 
-      this.renderEngine.loadScene(gAPPP.storagePrefix, url, this.renderEngine.engine)
+      gAPPP.renderEngine.loadScene(gAPPP.storagePrefix, url)
         .then((scene) => {
           me.scene = scene;
           me.finishShow({
@@ -160,7 +157,7 @@ class clsPopupEditController {
     }
 
     if (this.tag === 'material') {
-      let s = this.renderEngine.addSphere('sphere1', 10, 5, this.scene, false);
+      let s = gAPPP.renderEngine.addSphere('sphere1', 10, 5, this.scene, false);
 
       let material = new BABYLON.StandardMaterial('material', this.scene);
       s.material = material;
@@ -175,7 +172,7 @@ class clsPopupEditController {
 
     if (this.tag === 'texture') {
       let values = this.fireData.val();
-      let s = this.renderEngine.addGround('ground1', 6, 6, 20, this.scene);
+      let s = gAPPP.renderEngine.addGround('ground1', 6, 6, 20, this.scene);
       this.sceneObjects.push(s);
 
       let material = new BABYLON.StandardMaterial('material', this.scene);

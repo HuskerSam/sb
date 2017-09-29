@@ -7,7 +7,6 @@ class clsFieldsController {
     this.active = false;
     this.parent = parent;
     this.container = container;
-    this.sceneController = new clsSceneController();
 
     this.groups = {};
     this.scrapeCache = [];
@@ -78,7 +77,7 @@ class clsFieldsController {
     }
 
 
-    this.sceneController.updateUI(this.uiObject, this.valueCache);
+    gAPPP.sceneController.updateUI(this.uiObject, this.valueCache);
   }
   setData(fireData) {
     this.values = fireData.val();
@@ -109,7 +108,7 @@ class clsFieldsController {
       this.scrapeCache[i] = v;
       this.valueCache[f.fireSetField] = v;
     }
-    this.sceneController.updateUI(uiObject, this.valueCache);
+    gAPPP.sceneController.updateUI(uiObject, this.valueCache);
   }
   validate(f, v) {
     let r = v;
