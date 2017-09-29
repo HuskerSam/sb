@@ -46,20 +46,15 @@ html, body {
 }
 
 .gutter {
-  background-color: #eee;
-  background-repeat: no-repeat;
-  background-position: 50%;
   line-height: 1px;
   margin-top: -5px;
 }
 
 .gutter.gutter-horizontal {
-  background-image: url('assets/vertical.png');
   cursor: ew-resize;
 }
 
 .gutter.gutter-vertical {
-  background-image: url('assets/horizontal.png');
   cursor: ns-resize;
 }
 
