@@ -12,6 +12,9 @@ class CTLDialogEditItem {
     this.editors = null;
     this.sceneObjects = [];
 
+
+    this.canvasController = new ctlBoundScene();
+
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
     this.cancelBtn = this.dialog.querySelector('.close-details');
@@ -133,7 +136,7 @@ class CTLDialogEditItem {
     $(this.dialog).modal('show');
 
     gAPPP.renderEngine.setCanvas(this.canvas);
-    let sceneDetails = gAPPP.sceneController.createDefaultScene();
+    let sceneDetails = gAPPP.b.createDefaultScene();
     this.sceneDetails = sceneDetails;
     gAPPP.renderEngine.setSceneDetails(this.sceneDetails);
     this.scene = sceneDetails.scene;

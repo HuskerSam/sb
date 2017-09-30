@@ -258,11 +258,6 @@ html, body {
   padding-top: 0px;
 }
 
-.single-toolbar-btn>i {
-  position: relative;
-  top: 3px;
-  font-size: 1.2em;
-}
 
 .vertical-split-display {
   height: 100%;
@@ -336,4 +331,10 @@ html, body {
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
+}
+
+button i.material-icons {
+  position: relative;
+  top: 3px;
+  font-size: 1.2em;
 }

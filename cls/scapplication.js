@@ -7,17 +7,17 @@ class scApplication {
     window.gAPPP = this;
     this.u = new SCUtility();
     this.s = new SCStatic();
+    this.b = new scBabylonUtility();
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
     this.toolbarItems = {};
     this.dialogs = {};
 
-//load user profile
+    //load user profile
     this.a = new scAuthorization('#sign-in-button', '#sign-out-button');
 
     this.screenCanvas = document.querySelector('#renderCanvas');
     this.renderEngine = new SCRender(this.screenCanvas);
-    this.sceneController = new SCScene();
-    this.screenSceneDetails = this.sceneController.createDefaultScene();
+    this.screenSceneDetails = this.b.createDefaultScene();
     this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
     this.renderEngine.setSceneDetails(this.screenSceneDetails);
 

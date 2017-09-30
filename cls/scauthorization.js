@@ -71,7 +71,8 @@ class scAuthorization {
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
 
-    gAPPP.renderEngine.sceneDetails.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
+    if (gAPPP.renderEngine.sceneDetails)
+      gAPPP.renderEngine.sceneDetails.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
   }
   onAuthStateChanged(user) {
     //ignore unwanted events
