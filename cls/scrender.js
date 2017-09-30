@@ -12,7 +12,9 @@ class SCRender {
   }
   setCanvas(canvas) {
     this.canvas = canvas;
-    this.engine = new BABYLON.Engine(this.canvas, true, {preserveDrawingBuffer: true});
+    this.engine = new BABYLON.Engine(this.canvas, true, {
+      preserveDrawingBuffer: true
+    });
     this.engine.enableOfflineSupport = false;
   }
   setSceneDetails(sceneDetails) {
@@ -125,7 +127,9 @@ class SCRender {
   getJPGDataURL() {
     let me = this;
     return new Promise((resolve, reject) => {
-      BABYLON.Tools.CreateScreenshot(me.engine, me.sceneDetails.camera, { width: 500 }, (base64Image) => resolve(base64Image));
+      BABYLON.Tools.CreateScreenshot(me.engine, me.sceneDetails.camera, {
+        width: 500
+      }, (base64Image) => resolve(base64Image));
     });
   }
   setDefaultSceneDetails(sceneDetails) {
@@ -142,5 +146,16 @@ class SCRender {
     let parts = str.split(',');
     let cA = [];
     return new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+  }
+  colorRGB255(str) {
+    let bC = this.color(str);
+    if (isNaN(bC.r))
+      bC.r = 1;
+    if (isNaN(bC.g))
+      bC.g = 1;
+    if (isNaN(bC.b))
+      bC.b = 1;
+
+    return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0)  + ')'
   }
 }

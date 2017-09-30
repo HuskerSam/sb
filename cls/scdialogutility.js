@@ -67,8 +67,12 @@ class SCDialogUserProfile {
     gAPPP.a.profile.fontSize = this.fontSize.value;
     gAPPP.a.profile.fontFamily = this.fontFamily.value;
     gAPPP.a.profile.canvasColor = this.canvasColor.value;
-
+    this.applyCanvasColorToLabel()
     gAPPP.a.applyProfileSettings();
+  }
+  applyCanvasColorToLabel() {
+    let babylonColor = gAPPP.renderEngine.colorRGB255(this.canvasColor.value);
+    this.canvasColor.parentNode.style.background =babylonColor;
   }
   close() {
     gAPPP.a.profile.fontSize = this.original.fontSize;
@@ -83,7 +87,7 @@ class SCDialogUserProfile {
     this.fontSize.value = gAPPP.a.profile.fontSize;
     this.fontFamily.value = gAPPP.a.profile.fontFamily;
     this.canvasColor.value = gAPPP.a.profile.canvasColor;
-
+    this.applyCanvasColorToLabel();
     gAPPP.a.applyProfileSettings();
   }
   show() {
