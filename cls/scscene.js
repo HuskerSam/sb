@@ -120,7 +120,7 @@ class SCScene {
   }
   createDefaultScene() {
     let scene = new BABYLON.Scene(gAPPP.renderEngine.engine);
-    scene.clearColor = new BABYLON.Color3(1, 1, 1);
+    scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
     let camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     let light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);

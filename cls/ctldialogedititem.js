@@ -155,7 +155,8 @@ class CTLDialogEditItem {
       gAPPP.renderEngine.loadScene(gAPPP.storagePrefix, url)
         .then((scene) => {
           me.scene = scene;
-          me.finishShow({
+//          me.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
+      me.finishShow({
             type: 'scene',
             scene: me.scene
           });

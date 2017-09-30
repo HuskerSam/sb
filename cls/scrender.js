@@ -135,4 +135,12 @@ class SCRender {
     this.setCanvas(this.defaultCanvas);
     this.setSceneDetails(this.defaultSceneDetails);
   }
+  color(str) {
+    if (!str) {
+      str = '1,1,1';
+    }
+    let parts = str.split(',');
+    let cA = [];
+    return new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+  }
 }

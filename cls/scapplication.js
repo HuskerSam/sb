@@ -11,6 +11,9 @@ class scApplication {
     this.toolbarItems = {};
     this.dialogs = {};
 
+//load user profile
+    this.a = new scAuthorization('#sign-in-button', '#sign-out-button');
+
     this.screenCanvas = document.querySelector('#renderCanvas');
     this.renderEngine = new SCRender(this.screenCanvas);
     this.sceneController = new SCScene();
@@ -18,7 +21,6 @@ class scApplication {
     this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
     this.renderEngine.setSceneDetails(this.screenSceneDetails);
 
-    this.a = new scAuthorization('#sign-in-button', '#sign-out-button');
 
     this.toolbarItems['scenes'] = new CTLToolband('scenes', 'Scenes');
     this.toolbarItems['meshes'] = new CTLToolband('meshes', 'Meshes');
