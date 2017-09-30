@@ -156,6 +156,17 @@ class SCRender {
     if (isNaN(bC.b))
       bC.b = 1;
 
-    return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0)  + ')'
+    return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0) + ')'
+  }
+  setColorLabel(dom, defaultValue) {
+    let v = dom.value;
+    if (v === '')
+      if (defaultValue)
+        v = defaultValue;
+
+    let rgb = '';
+    if (v !== '')
+      rgb = gAPPP.renderEngine.colorRGB255(v);
+    dom.parentNode.style.background = rgb;
   }
 }

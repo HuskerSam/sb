@@ -48,6 +48,11 @@ class CTLBoundFields {
       c.appendChild(t);
     }
 
+    if (f.type === 'color') {
+
+
+    }
+
     c.classList.add('form-group');
     t.addEventListener('change', (e) => me.scrape(e), false);
     if (g)
@@ -73,6 +78,9 @@ class CTLBoundFields {
       let v = this.validate(f, nV);
       this.scrapeCache.push(v);
       this.valueCache[f.fireSetField] = v;
+
+      if (f.type === 'color')
+        gAPPP.renderEngine.setColorLabel(f.dom);
 
       if (f.fireSetField)
         gAPPP.u.path(this.values, f.fireSetField, v);
@@ -110,6 +118,10 @@ class CTLBoundFields {
         f.dom.checked = v;
       else
         f.dom.value = v;
+
+      if (f.type === 'color')
+        gAPPP.renderEngine.setColorLabel(f.dom);
+
       this.scrapeCache[i] = v;
       this.valueCache[f.fireSetField] = v;
     }
