@@ -62,7 +62,8 @@ class CTLDialogEditItem {
     this.splitInstance = window.Split([t, b], {
       sizes: [50, 50],
       direction: this.rotateState,
-      onDragEnd: () => me.splitDragEnd()
+      onDragEnd: () => me.splitDragEnd(),
+      onDrag: () => me.splitDragEnd()
     });
   }
   rotateView() {
@@ -88,6 +89,8 @@ class CTLDialogEditItem {
   splitDragEnd() {
     for (let i in this.editors)
       this.editors[i].resize();
+
+    gAPPP.renderEngine.engine.resize();
   }
   commit() {
     let me = this;
