@@ -8,12 +8,9 @@ class CTLDialogEditItem {
     this.uiJSON = 'N/A';
     this.dialogQS = '#' + this.tag + '-details-dialog';
     this.dialog = document.querySelector(this.dialogQS);
-    this.fileName = 'file.babylon';
     this.editors = null;
-    this.sceneObjects = [];
 
-
-    this.canvasController = new ctlBoundScene();
+    this.sC = new ctlBoundScene();
 
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
@@ -108,14 +105,6 @@ class CTLDialogEditItem {
       });
     });
   }
-  uploadSceneFile() {
-    let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
-    let strScene = JSON.stringify(sceneJSON);
-    return gAPPP.a.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
-    if (this.tag === 'mesh') {
-      me.fireFields.values.url = r1.downloadURL;
-    }
-  }
   close() {
     this.fireFields.active = false;
     $(this.dialog).modal('hide');
@@ -137,70 +126,9 @@ class CTLDialogEditItem {
 
     gAPPP.renderEngine.setCanvas(this.canvas);
     let sceneDetails = gAPPP.b.createDefaultScene();
-    this.sceneDetails = sceneDetails;
-    gAPPP.renderEngine.setSceneDetails(this.sceneDetails);
-    this.scene = sceneDetails.scene;
-
-    if (this.tag === 'mesh') {
-      let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
-      let meshName = this.fireFields.values.meshName;
-      let me = this;
-
-      gAPPP.renderEngine.loadMesh(meshName, gAPPP.storagePrefix, url, this.scene)
-        .then((mesh) => me.finishShow({
-          type: 'mesh',
-          mesh
-        }));
-
-      return;
-    }
-    if (this.tag === 'scene') {
-      let url = this.fireFields.values.url.replace(gAPPP.storagePrefix, '');
-      let me = this;
-
-      gAPPP.renderEngine.loadScene(gAPPP.storagePrefix, url)
-        .then((scene) => {
-          me.scene = scene;
-          me.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
-          me.finishShow({
-            type: 'scene',
-            scene: me.scene
-          });
-        });
-      return;
-    }
-
-    if (this.tag === 'material') {
-      let s = gAPPP.renderEngine.addSphere('sphere1', 10, 5, this.scene, false);
-
-      let material = new BABYLON.StandardMaterial('material', this.scene);
-      s.material = material;
-      this.sceneObjects.push(s);
-      return this.finishShow({
-        type: 'material',
-        mesh: s,
-        material,
-        scene: this.scene
-      });
-    }
-
-    if (this.tag === 'texture') {
-      let values = this.fireData.val();
-      let s = gAPPP.renderEngine.addGround('ground1', 6, 6, 20, this.scene);
-      this.sceneObjects.push(s);
-
-      let material = new BABYLON.StandardMaterial('material', this.scene);
-      s.material = material;
-
-      return this.finishShow({
-        type: 'texture',
-        mesh: s,
-        material,
-        scene: this.scene
-      });
-    }
-
-    this.finishShow(null);
+    this.sC.set(sceneDetails);
+    this.sC.activate();
+    this.sC.loadScene(this.tag, this.fireData.val()).then(r => this.finishShow(r));
   }
   finishShow(uiObject) {
     this.uiObject = uiObject;
