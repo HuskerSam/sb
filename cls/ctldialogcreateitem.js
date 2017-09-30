@@ -68,7 +68,7 @@ class CTLDialogCreateItem {
         me.importMesh().then((mesh) => {
           let id = me.fieldsValues['id'];
           let strMesh = JSON.stringify(mesh);
-          gAPPP.authorizationController.modelSets.meshes.newMesh(strMesh, id).then((r) => resolve(r));
+          gAPPP.a.modelSets.meshes.newMesh(strMesh, id).then((r) => resolve(r));
         });
       });
     }
@@ -76,7 +76,7 @@ class CTLDialogCreateItem {
       return new Promise((resolve, reject) => {
         me.getNewSceneSerialized().then((sceneSerial) => {
           let title = me.fieldsValues['title'];
-          gAPPP.authorizationController.modelSets.scenes.newScene(sceneSerial, title).then((r) => resolve(r));
+          gAPPP.a.modelSets.scenes.newScene(sceneSerial, title).then((r) => resolve(r));
         });
       });
     }
@@ -84,13 +84,13 @@ class CTLDialogCreateItem {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
         let file = me.fileDom.files[0];
-        gAPPP.authorizationController.modelSets.textures.newTexture(file, title).then((r) => resolve(r));
+        gAPPP.a.modelSets.textures.newTexture(file, title).then((r) => resolve(r));
       });
     }
     if (this.tag === 'material') {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
-        gAPPP.authorizationController.modelSets.materials.newMaterial(title).then((r) => resolve(r));
+        gAPPP.a.modelSets.materials.newMaterial(title).then((r) => resolve(r));
       });
     }
     return new Promise(resolve => resolve());

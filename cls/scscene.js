@@ -2,7 +2,7 @@
 class SCScene {
   constructor() {}
   setMesh(values, mesh) {
-    let fields = gAPPP.meshFields;
+    let fields = gAPPP.s.bindingFields['mesh'];
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
@@ -17,7 +17,7 @@ class SCScene {
   material(values, scene) {
     let material = new BABYLON.StandardMaterial('material', scene);
 
-    let fields = gAPPP.materialFields;
+    let fields = gAPPP.s.bindingFields['material'];
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
@@ -62,7 +62,7 @@ class SCScene {
       }
 
       if (field.type === 'texture') {
-        let tD = gAPPP.authorizationController.modelSets.textures.fireDataValuesByTitle[value];
+        let tD = gAPPP.a.modelSets.textures.fireDataValuesByTitle[value];
         if (tD === undefined)
           return;
 
@@ -71,7 +71,7 @@ class SCScene {
       }
 
       if (field.type === 'material') {
-        let tD = gAPPP.authorizationController.modelSets.materials.fireDataValuesByTitle[value];
+        let tD = gAPPP.a.modelSets.materials.fireDataValuesByTitle[value];
         if (tD === undefined)
           return;
 

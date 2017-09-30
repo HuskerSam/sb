@@ -105,7 +105,7 @@ class CTLDialogEditItem {
   uploadSceneFile() {
     let sceneJSON = BABYLON.SceneSerializer.Serialize(this.scene);
     let strScene = JSON.stringify(sceneJSON);
-    return gAPPP.authorizationController.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
+    return gAPPP.a.meshesFireSet.setString(this.fireFields.fireData.key, strScene, this.fileName);
     if (this.tag === 'mesh') {
       me.fireFields.values.url = r1.downloadURL;
     }
@@ -117,7 +117,7 @@ class CTLDialogEditItem {
   }
   show(key) {
     this.key = key;
-    this.fireSet = gAPPP.authorizationController.modelSets[this.fireSetTag];
+    this.fireSet = gAPPP.a.modelSets[this.fireSetTag];
     this.fireData = this.fireSet.fireDataByKey[this.key];
 
     this.popupButtons.style.display = 'none';

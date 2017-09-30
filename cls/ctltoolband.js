@@ -39,7 +39,7 @@ class CTLToolband {
       return;
     this.inited = true;
     let me = this;
-    gAPPP.authorizationController.modelSets[this.tag].childListeners.push((fireData, type) => me.handleDataChange(fireData, type));
+    gAPPP.a.modelSets[this.tag].childListeners.push((fireData, type) => me.handleDataChange(fireData, type));
   }
   handleDataChange(fireData, type) {
     if (type === 'add')
@@ -142,6 +142,6 @@ class CTLToolband {
   removeElement(e, key) {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
       return;
-    gAPPP.authorizationController.modelSets[this.tag].removeByKey(key);
+    gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
 }

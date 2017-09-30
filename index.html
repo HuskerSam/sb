@@ -22,7 +22,7 @@
 <body>
   <div id="login-page" style="display:none;position:absolute;z-index:100;top:0px;left:0px;width:100%;">
     <h3>Scene Builder</h3>
-    <div>
+    <di135
       <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
     </div>
   </div>
@@ -30,16 +30,16 @@
   <div id="main-page" style="display:none;">
     <div class="floating-right-profile-buttons">
       <button id="expand-all-toolbands" class="btn btn-primary-outline single-toolbar-btn">
-        <i class="material-icons">rotate_left</i>
+        <i class="material-icons" style="transform: rotate(145deg)">rotate_right</i>
       </button>
       <button id="sign-out-button" class="btn btn-primary-outline single-toolbar-btn">
         <i class="material-icons">account_box</i> Sign out
       </button>
       <br>
       <button id="collapse-all-toolbands" class="btn btn-primary-outline single-toolbar-btn">
-        <i class="material-icons">rotate_right</i>
+        <i class="material-icons" style="transform: rotate(35deg)">rotate_left</i>
       </button>
-      <button id="user-profile-settings" class="btn btn-primary-outline single-toolbar-btn">
+      <button id="user-profile-settings-button" class="btn btn-primary-outline single-toolbar-btn">
         <i class="material-icons">settings_applications</i>
       </button>
     </div>
@@ -87,6 +87,40 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="user-profile-settings-dialog" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Profile Settings</h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup-content">
+          <div class="form-group">
+            <label for="user-profile-default-canvas-color">Canvas Color (1,1,1)</label>
+            <input type="text" id="user-profile-default-canvas-color" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="user-profile-default-font-family">Font Family (Helvetica)</label>
+            <input type="text" id="user-profile-default-font-family" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="user-profile-default-font-size">Font Size</label>
+            <input type="text" id="user-profile-default-font-size" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Info</label>
+            <br>
+            <span class="user-info"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary save-details">Save</button>
+          <button type="button" class="btn btn-default cancel cancel-details">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <!-- UTILITY DIALOGS END -->
 
   <!-- CREATE DIALOGS -->

@@ -18,7 +18,7 @@ class scApplication {
     this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
     this.renderEngine.setSceneDetails(this.screenSceneDetails);
 
-    this.authorizationController = new scAuthorization('#sign-in-button', '#sign-out-button');
+    this.a = new scAuthorization('#sign-in-button', '#sign-out-button');
 
     this.toolbarItems['scenes'] = new CTLToolband('scenes', 'Scenes');
     this.toolbarItems['meshes'] = new CTLToolband('meshes', 'Meshes');
@@ -36,9 +36,11 @@ class scApplication {
     this.dialogs['scenes-create'] = new CTLDialogCreateItem('scene', ['title'], 'scenes');
 
     this.dialogs['ace-editor-popup'] = new SCDialogUtility('utility-dialog-show-ace-editor');
+    this.dialogs['user-profile'] = new SCDialogUserProfile('user-profile-settings-dialog');
 
-    document.querySelector('#expand-all-toolbands').addEventListener('click', (e) => me.expandAllBands(), false);
-    document.querySelector('#collapse-all-toolbands').addEventListener('click', (e) => me.collapseAllBands(), false);
+    document.querySelector('#expand-all-toolbands').addEventListener('click', e => me.expandAllBands(), false);
+    document.querySelector('#collapse-all-toolbands').addEventListener('click', e => me.collapseAllBands(), false);
+    document.querySelector('#user-profile-settings-button').addEventListener('click', e => me.dialogs['user-profile'].show(), false);
   }
   expandAllBands(){
     for (let i in this.toolbarItems)
