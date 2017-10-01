@@ -1,5 +1,4 @@
-/* binding controller for dom to mdlFirebaseList */
-'use strict';
+/* binding controller for dom to mFirebaseSuper */
 class cBoundFields {
   constructor(boundFields, prefix, container, parent) {
     this.fields = boundFields;
@@ -8,6 +7,7 @@ class cBoundFields {
     this.active = false;
     this.parent = parent;
     this.container = container;
+    this.focusLock = true;
 
     this.groups = {};
     this.scrapeCache = [];
@@ -50,6 +50,7 @@ class cBoundFields {
     c.classList.add('form-group');
     t.addEventListener('change', (e) => me.scrape(e), false);
     t.addEventListener('keyup', (e) => me.scrape(e), false);
+    t.addEventListener('blur', (e) => me._blurField(t, f, e), false);
     if (g)
       g.appendChild(c);
     else {
@@ -111,7 +112,6 @@ class cBoundFields {
     }
     return updates;
   }
-
   commit(fireSet, imageBlob, renderImageFileName, key) {
     let me = this;
     return new Promise((resolve, reject) => {
@@ -125,27 +125,83 @@ class cBoundFields {
   paint(uiObject) {
     this.uiObject = uiObject;
     this.active = true;
-    this.scrapeCache = {};
-    this.valueCache = {};
+    let scrapes = {};
+    let valueCache = {};
     for (let i in this.fields) {
       let f = this.fields[i];
-      let nV = sUtility.path(this.values, f.fireSetField);
-      if (nV === undefined)
-        nV = '';
-      let v = this.validate(f, nV);
 
-      if (f.type === 'boolean')
-        f.dom.checked = v;
-      else
-        f.dom.value = v;
+      let r = this._updateFieldDom(f);
+      if (r.updateShown) {
+        scrapes[i] = r.value;
+        valueCache[f.fireSetField] = r.value;
+      }
+      else {
+        scrapes[i] = this.scrapeCache[i];
+        valueCache[f.fireSetField] = this.valueCache[f.fireSetField];
+      }
+    }
+    this.valueCache = valueCache;
+    this.scrapeCache = scrapes;
+    sBabylonUtility.updateUI(uiObject, this.valueCache);
+  }
+  _handleDataChange(values, type, fireData) {
+    this.values = values;
+    this.paint(this.uiObject);
+  }
+  _updateFieldDom(f) {
+    let updateShown = false;
+    let nV = sUtility.path(this.values, f.fireSetField);
+    if (nV === undefined)
+      nV = '';
+    let v = this.validate(f, nV);
+    let o = this.valueCache[f.fireSetField];
 
+    if (f.type === 'boolean') {
+      if (f.dom !== document.activeElement) {
+        updateShown = true;
+        f.dom.style.border = '';
+        if (f.dom.checked !== v)
+          f.dom.checked = v;
+      } else {
+        if (! this.focusLock) //if value hasn't changed with focus, update it
+          if (o === f.dom.checked) {
+            f.dom.checked = v;
+            updateShown = true;
+          }
+        if (f.dom.checked !== v)
+          f.dom.style.border = 'solid 2px red';
+        else
+          f.dom.style.border = '';
+      }
+    }
+    else {
+      if (f.dom !== document.activeElement) {
+        updateShown = true;
+        f.dom.style.border = '';
+        if (f.dom.value !== v)
+          f.dom.value = v;
+      } else {
+        if (! this.focusLock)
+          if (o === f.dom.value) { //if value hasn't changed with focus, update it
+            f.dom.value = v;
+            updateShown = true;
+            f.dom.style.border = '';
+          }
+        if (f.dom.value !== v)
+          f.dom.style.border = 'solid 2px red';
+        else
+          f.dom.style.border = '';
+      }
+    }
+
+    if (updateShown) {
       if (f.type === 'color')
         gAPPP.renderEngine.setColorLabel(f.dom);
-
-      this.scrapeCache[i] = v;
-      this.valueCache[f.fireSetField] = v;
     }
-    sBabylonUtility.updateUI(uiObject, this.valueCache);
+    return { updateShown, value: v };
+  }
+  _blurField(domControl, field, e) {
+    this._updateFieldDom(field);
   }
   validate(f, v) {
     let r = v;

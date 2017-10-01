@@ -51,11 +51,9 @@ class mFirebaseSuper {
   }
   notifyChildren(fireData, type) {
     for (let i in this.childListeners)
-      this.childListeners[i](fireData, type);
+      this.childListeners[i](this.getCache(fireData.key), type, fireData);
   }
-  commitData(values, key) {
-
-  }
+  commitData(values, key) {}
   getCache(key) {
     return this.values;
   }

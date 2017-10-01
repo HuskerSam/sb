@@ -5,7 +5,7 @@ class mFirebaseProfile extends mFirebaseSuper {
     this.profile = {};
     this.styleProfileDom = null;
     this.fireData = null;
-    this.childListeners.push((fireData, type) => me._handleProfileDataChange(fireData, type));
+    this.childListeners.push((values, type, fireData) => me._handleProfileDataChange(fireData, type));
   }
   _handleProfileDataChange(fireData, type) {
     let value = fireData.val();

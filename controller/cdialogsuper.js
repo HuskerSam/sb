@@ -16,6 +16,7 @@ class cDialogSuper {
     if (this.fields) {
       let domClassPrefix = this.tag + '-fields-';
       this.fireFields = new cBoundFields(this.fields, domClassPrefix, this.fieldsContainer, this);
+      this.fireSet.childListeners.push((values, type, fireData) => me.fireFields._handleDataChange(values, type, fireData));
     }
 
     this.okBtn = this.dialog.querySelector('.save-details');
@@ -47,9 +48,9 @@ class cDialogSuper {
     if (this.splitInstance)
       this.splitInstance.destroy();
 
-      let t = this.dialog.querySelector('.popup-canvas');
-      let b = this.dialog.querySelector('.popup-details');
-      let mb = this.dialog.querySelector('.popup-main-body');
+    let t = this.dialog.querySelector('.popup-canvas');
+    let b = this.dialog.querySelector('.popup-details');
+    let mb = this.dialog.querySelector('.popup-main-body');
 
     if (this.rotateState === 'horizontal') {
       t.classList.add('vertical-split-display');
@@ -116,12 +117,8 @@ class cDialogSuper {
 
     this.splitView();
   }
-  scrape() {
-
-  }
-  paint() {
-
-  }
+  scrape() {}
+  paint() {}
   commit() {
     return new Promise((resolve, reject) => resolve());
   }

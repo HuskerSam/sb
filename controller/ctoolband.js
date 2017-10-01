@@ -31,7 +31,7 @@ class cToolband {
     this.expandBtn.addEventListener('click', (e) => me.toggle(), false);
     this.createBtn.addEventListener('click', (e) => me.showPopup(), false);
 
-    gAPPP.a.modelSets[this.tag].childListeners.push((fireData, type) => me.handleDataChange(fireData, type));
+    gAPPP.a.modelSets[this.tag].childListeners.push((values, type, fireData) => me.handleDataChange(fireData, type));
   }
   handleDataChange(fireData, type) {
     if (type === 'add')
