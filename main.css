@@ -293,12 +293,6 @@ html, body {
   margin-bottom: 0px;
 }
 
-.scene-pill-button {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-}
-
 .floating-right-profile-buttons {
   position: absolute;
   z-index: 1;
@@ -337,4 +331,15 @@ button i.material-icons {
   position: relative;
   top: 3px;
   font-size: 1.2em;
+}
+
+
+.scene-tools-band-container {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  font-size: .8em;
+}
+.scene-tools-band-container .button-container {
+  display:inline-block;
 }

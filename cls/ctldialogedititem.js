@@ -18,7 +18,6 @@ class CTLDialogEditItem {
     this.rotateBtn = this.dialog.querySelector('.rotate-details');
     this.tabContent = this.dialog.querySelector('.tab-content');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
-    this.sceneJSONBtn = this.dialog.querySelector('.scene-pill-button');
 
     this.fields = fields;
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
@@ -26,21 +25,16 @@ class CTLDialogEditItem {
     this.fireFields = new CTLBoundFields(this.fields, this.tag + '-fields-', this.fieldsContainer, this);
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
+    this.sceneTools = new ctlSceneToolsBand(this.canvas, this.sC);
 
     this.cancelBtn.addEventListener('click', () => me.close(), false);
     this.okBtn.addEventListener('click', () => me.save(), false);
     this.rotateBtn.addEventListener('click', () => me.rotateView(), false);
-    if (this.sceneJSONBtn)
-      this.sceneJSONBtn.addEventListener('click', () => me.showSceneJSON(), false);
     this.tabButtons = [];
     this.tabPanels = [];
 
     this.rotateState = 'vertical';
     this.splitView();
-  }
-  showSceneJSON() {
-    let json = gAPPP.u.stringify(this.uiObject);
-    gAPPP.dialogs['ace-editor-popup'].showAce(json);
   }
   splitView() {
     if (this.splitInstance)

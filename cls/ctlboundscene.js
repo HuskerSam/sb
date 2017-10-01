@@ -42,7 +42,7 @@ class ctlBoundScene {
   _loadSceneMaterial(materialData) {
     let me = this;
     return new Promise((resolve, reject) => {
-      let s = gAPPP.renderEngine.addSphere('sphere1', 10, 5, me.sceneDetails.scene, false);
+      let s = gAPPP.renderEngine.addSphere('sphere1', 15, 12, me.sceneDetails.scene, false);
       let material = new BABYLON.StandardMaterial('material', me.sceneDetails.scene);
       s.material = material;
       me.extraSceneObjects.push(s);
