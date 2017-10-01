@@ -55,6 +55,7 @@ class CTLBoundFields {
 
     c.classList.add('form-group');
     t.addEventListener('change', (e) => me.scrape(e), false);
+    t.addEventListener('keyup', (e) => me.scrape(e), false);
     if (g)
       g.appendChild(c);
     else {

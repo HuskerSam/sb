@@ -30,15 +30,6 @@ class SCRender {
     });
     this.engine.resize();
   }
-  addSphere(name, faces, diameter, scene, refresh) {
-    if (!refresh)
-      refresh = false;
-    return BABYLON.Mesh.CreateSphere(name, faces, diameter, scene, refresh);
-  }
-  addGround(name, width, depth, subdivs, scene) {
-    let ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
-    return ground;
-  }
   loadMesh(meshName, path, fileName, scene) {
     return new Promise(function(resolve, reject) {
       BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene, function(newMeshes) {

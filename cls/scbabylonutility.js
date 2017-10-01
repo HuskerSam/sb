@@ -120,56 +120,22 @@ class scBabylonUtility {
   createDefaultScene() {
     let scene = new BABYLON.Scene(gAPPP.renderEngine.engine);
     scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
-    let camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 9, -14), scene);
+    let camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 10, -10), scene);
     camera.setTarget(BABYLON.Vector3.Zero());
     let light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-    light.intensity = .5;
+    light.intensity = .7;
     return { light,
       camera,
       scene
     };
   }
-  addGridToScene(scene, width, length, x, z) {
-    let precision = {
-        "w" : 1,
-        "h" : 1
-    };
-    let subdivisions = {
-        'h' : length,
-        'w' : width
-    };
-    // Create the Tiled Ground
-    let xmin = x;
-    let zmin = z;
-    let xmax = width - 1;
-    let zmax = length - 1;
-    let tiledGround = new BABYLON.Mesh.CreateTiledGround("Tiled Ground", xmin, zmin, xmax, zmax,
-      subdivisions, precision, scene);
-
-    let tMat = new BABYLON.StandardMaterial("Transparent", scene);
-    tMat.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    tMat.alpha = 0.0;
-
-    let gMat = new BABYLON.StandardMaterial("GreenLucient", scene);
-    gMat.diffuseColor = new BABYLON.Color3(.2, 1, .2);
-    gMat.alpha = 0.3;
-
-    let multimat = new BABYLON.MultiMaterial("multi", scene);
-    multimat.subMaterials.push(tMat);
-    multimat.subMaterials.push(gMat);
-    tiledGround.material = multimat;
-    let verticesCount = tiledGround.getTotalVertices();
-    let tileIndicesLength = tiledGround.getIndices().length / (subdivisions.w * subdivisions.h);
-    tiledGround.subMeshes = [];
-    var base = 0;
-    for (var row = 0; row < subdivisions.h; row++) {
-        for (var col = 0; col < subdivisions.w; col++) {
-            tiledGround.subMeshes.push(new BABYLON.SubMesh(row%2 ^ col%2, 0,
-              verticesCount, base , tileIndicesLength, tiledGround));
-            base += tileIndicesLength;
-        }
-    }
-
-    return tiledGround;
+  addSphere(name, faces, diameter, scene) {
+    let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, scene);
+    s.position.y = diameter / 2.0;
+    return s;
+  }
+  addGround(name, width, depth, subdivs, scene) {
+    let ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
+    return ground;
   }
 }
