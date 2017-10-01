@@ -1,15 +1,14 @@
-/* firebase bound data list with events - 1 instance per firebase collection/list */
-'use strict';
-class MDLFirebaseList extends mdlFirebaseReference {
-  constructor(dataPrefix) {
-    super(dataPrefix);
+/* firebase bound data list */
+class mdlFirebaseList extends mdlFirebaseReference {
+  constructor(referencePath, activate) {
+    super(referencePath, activate);
 
     this.fireDataByKey = {};
     this.fireDataValuesByTitle = {};
     this.fireDataValuesByKey = {};
   }
   getKey() {
-    return firebase.database().ref().child(this.dataPrefix).push().key
+    return firebase.database().ref().child(this.referencePath).push().key
   }
   updateStash(fireData, remove) {
     let key = fireData.key;
@@ -28,7 +27,7 @@ class MDLFirebaseList extends mdlFirebaseReference {
   }
   set(id, jsonData) {
     let updates = {};
-    updates['/' + this.dataPrefix + '/' + id] = jsonData;
+    updates['/' + this.referencePath + '/' + id] = jsonData;
     return firebase.database().ref().update(updates);
   }
   setString(id, dataString, filename) {
@@ -36,7 +35,7 @@ class MDLFirebaseList extends mdlFirebaseReference {
     return new Promise(function(resolve, reject) {
       var storageRef = firebase.storage().ref();
       var auth = firebase.auth();
-      storageRef.child(me.dataPrefix + '/' + id + '/' + filename).putString(dataString).then(function(snapshot) {
+      storageRef.child(me.referencePath + '/' + id + '/' + filename).putString(dataString).then(function(snapshot) {
         resolve(snapshot);
       }).catch(function(error) {
         reject(error);
@@ -48,7 +47,7 @@ class MDLFirebaseList extends mdlFirebaseReference {
     return new Promise(function(resolve, reject) {
       var storageRef = firebase.storage().ref();
       var auth = firebase.auth();
-      storageRef.child(me.dataPrefix + '/' + id + '/' + filename).put(blob).then(function(snapshot) {
+      storageRef.child(me.referencePath + '/' + id + '/' + filename).put(blob).then(function(snapshot) {
         resolve(snapshot);
       }).catch(function(error) {
         reject(error);
@@ -136,7 +135,7 @@ class MDLFirebaseList extends mdlFirebaseReference {
   removeByKey(key) {
     return new Promise((resolve, reject) => {
       let updates = {};
-      updates['/' + this.dataPrefix + '/' + key] = null;
+      updates['/' + this.referencePath + '/' + key] = null;
       firebase.database().ref().update(updates).then(e => resolve(e));
     });
   }

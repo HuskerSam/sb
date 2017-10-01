@@ -32,13 +32,6 @@ class CTLToolband {
     this.expandBtn.addEventListener('click', (e) => me.toggle(), false);
     this.createBtn.addEventListener('click', (e) => me.showPopup(), false);
 
-    this.inited = false;
-  }
-  init() {
-    if (this.inited)
-      return;
-    this.inited = true;
-    let me = this;
     gAPPP.a.modelSets[this.tag].childListeners.push((fireData, type) => me.handleDataChange(fireData, type));
   }
   handleDataChange(fireData, type) {

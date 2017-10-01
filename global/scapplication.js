@@ -21,7 +21,6 @@ class scApplication {
     this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
     this.renderEngine.setSceneDetails(this.screenSceneDetails);
 
-
     this.toolbarItems['scenes'] = new CTLToolband('scenes', 'Scenes');
     this.toolbarItems['meshes'] = new CTLToolband('meshes', 'Meshes');
     this.toolbarItems['materials'] = new CTLToolband('materials', "Materials");
@@ -38,7 +37,7 @@ class scApplication {
     this.dialogs['scenes-create'] = new CTLDialogCreateItem('scene', ['title'], 'scenes');
 
     this.dialogs['ace-editor-popup'] = new SCDialogUtility('utility-dialog-show-ace-editor');
-    this.dialogs['user-profile'] = new SCDialogUserProfile('user-profile-settings-dialog');
+    this.dialogs['user-profile'] = new scDialogUserProfile('user-profile-settings-dialog');
 
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => me.expandAllBands(), false);
     document.querySelector('#collapse-all-toolbands').addEventListener('click', e => me.collapseAllBands(), false);
@@ -51,9 +50,5 @@ class scApplication {
   collapseAllBands() {
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(false);
-  }
-  initToolbars() {
-    for (let i in this.toolbarItems)
-      this.toolbarItems[i].init();
   }
 }

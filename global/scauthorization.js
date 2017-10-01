@@ -1,5 +1,4 @@
 /*  singleton firebase authorization controller (owns firebase bound models)   */
-'use sctrict';
 class scAuthorization {
   constructor(signInQS, signOutQS) {
     let me = this;
@@ -7,19 +6,29 @@ class scAuthorization {
     this.uid = null;
     this.fireSets = [];
     this.modelSets = {};
-    this.profile = {};
-    this.styleProfileDom = null;
+
+    this.modelSets['userProfile'] = new mdlFirebaseProfile();
+    this.fireSets.push(this.modelSets['userProfile']);
+
+    this.modelSets['meshes'] = new mdlFirebaseList('lib_meshes');
+    this.fireSets.push(this.modelSets['meshes']);
+    this.modelSets['textures'] = new mdlFirebaseList('lib_textures');
+    this.fireSets.push(this.modelSets['textures']);
+    this.modelSets['materials'] = new mdlFirebaseList('lib_materials');
+    this.fireSets.push(this.modelSets['materials']);
+    this.modelSets['scenes'] = new mdlFirebaseList('lib_scenes');
+    this.fireSets.push(this.modelSets['scenes']);
 
     document.querySelector(signInQS).addEventListener('click', () => me.signIn(), false);
     document.querySelector(signOutQS).addEventListener('click', () => me.signOut(), false);
 
     firebase.auth().onAuthStateChanged((user) => me.onAuthStateChanged(user));
   }
-  userWriteData() {
-    firebase.database().ref('users/' + this.currentUser.uid).set(this.currentUser.toJSON());
-  }
-  userWriteProfileData() {
-    firebase.database().ref('usersprofile/' + this.currentUser.uid).set(this.profile);
+  get profile() {
+    let model = this.modelSets['userProfile'];
+    if (model.active)
+      return model.profile;
+    return {};
   }
   signIn() {
     this.provider = new firebase.auth.GoogleAuthProvider();
@@ -27,10 +36,6 @@ class scAuthorization {
   }
   signOut() {
     firebase.auth().signOut();
-  }
-  resetProfile() {
-    this.profile = null;
-    this.userWriteProfileData();
   }
   updateAuthUI() {
     let loginPage = document.getElementById('login-page');
@@ -44,82 +49,40 @@ class scAuthorization {
       mainPage.style.display = 'none';
     }
   }
-  userReadProfileData() {
-    let me = this;
-    this.fireDataProfileRef = firebase.database().ref('usersprofile/' + this.currentUser.uid);
-    this.fireDataProfileRef.on('value', (snapshot) => {
-      me.profile = snapshot.val();
-      if (! me.profile)
-        me.profile = {
-          canvasColor: '',
-          fontFamily: '',
-          fontSize: ''
-        };
-      me.applyProfileSettings();
-    });
-  }
-  applyProfileSettings() {
-    if (this.styleProfileDom !== null) {
-      this.styleProfileDom.parentNode.removeChild(this.styleProfileDom);
-    }
 
-    let css = 'html, body { ';
-
-    if (this.profile.fontSize !== '')
-      css += 'font-size:' + this.profile.fontSize + ';';
-    if (this.profile.fontFamily !== '')
-      css += 'font-family:' + this.profile.fontFamily + ';';
-    css += '}';
-
-    this.styleProfileDom = document.createElement('style');
-    this.styleProfileDom.innerHTML = css;
-    document.body.appendChild(this.styleProfileDom);
-
-    if (gAPPP.renderEngine.sceneDetails)
-      gAPPP.renderEngine.sceneDetails.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
-  }
   onAuthStateChanged(user) {
     //ignore unwanted events
     if (user && this.uid === user.uid) {
       return;
     }
 
-    for (let i in this.fireSets)
-      this.fireSets[i].destroy();
-    this.fireSets = [];
-
     if (user) {
       this.currentUser = user;
       this.uid = user.uid;
+      this.loggedIn = true;
 
       //check for profile reset
       let searchParams = new URLSearchParams(window.location.search);
-      if (searchParams.get('reset') === 'true') {
-        this.resetProfile();
-      }
-      this.initAuthorizedData(user);
-  } else {
+      if (searchParams.get('reset') === 'true')
+        this.mdlProfile.setObject(null);
+
+      firebase.database().ref('users/' + this.currentUser.uid).set(this.currentUser.toJSON());
+
+      this._activateModels();
+    } else {
       this.currentUser = null;
       this.loggedIn = false;
+      this._deactivateModels();
     }
 
     this.updateAuthUI();
   }
-  initFireData() {
-    this.modelSets['meshes'] = new MDLFirebaseList('lib_meshes');
-    this.fireSets.push(this.modelSets.meshes);
-    this.modelSets['textures'] = new MDLFirebaseList('lib_textures');
-    this.fireSets.push(this.modelSets.textures);
-    this.modelSets['materials'] = new MDLFirebaseList('lib_materials');
-    this.fireSets.push(this.modelSets.materials);
-    this.modelSets['scenes'] = new MDLFirebaseList('lib_scenes');
-    this.fireSets.push(this.modelSets.scenes);
+  _activateModels() {
+    for (let c in this.fireSets)
+      this.fireSets[c].activate();
   }
-  initAuthorizedData(user) {
-    this.loggedIn = true;
-    this.userWriteData();
-    this.initFireData();
-    this.userReadProfileData();
-    gAPPP.initToolbars();
+  _deactivate() {
+    for (let c in this.fireSets)
+      this.fireSets[c].deactivate();
   }
 }
