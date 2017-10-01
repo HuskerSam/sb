@@ -28,6 +28,10 @@ class scAuthorization {
   signOut() {
     firebase.auth().signOut();
   }
+  resetProfile() {
+    this.profile = null;
+    this.userWriteProfileData();
+  }
   updateAuthUI() {
     let loginPage = document.getElementById('login-page');
     let mainPage = document.getElementById('main-page');
@@ -85,6 +89,14 @@ class scAuthorization {
     this.fireSets = [];
 
     if (user) {
+      this.currentUser = user;
+      this.uid = user.uid;
+
+      //check for profile reset
+      let searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.get('reset') === 'true') {
+        this.resetProfile();
+      }
       this.initAuthorizedData(user);
   } else {
       this.currentUser = null;
@@ -104,8 +116,6 @@ class scAuthorization {
     this.fireSets.push(this.modelSets.scenes);
   }
   initAuthorizedData(user) {
-    this.currentUser = user;
-    this.uid = user.uid;
     this.loggedIn = true;
     this.userWriteData();
     this.initFireData();
