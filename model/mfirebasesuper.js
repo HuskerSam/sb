@@ -53,4 +53,26 @@ class mFirebaseSuper {
     for (let i in this.childListeners)
       this.childListeners[i](fireData, type);
   }
+  commitData(values, key) {
+
+  }
+  getCache(key) {
+    return this.values;
+  }
+  commitUpdateList(fieldUpdates, key) {
+    let basePath = '/' + this.referencePath;
+    if (key)
+      basePath += '/' + key;
+
+    let fireUpdates = {};
+    for (let i in fieldUpdates) {
+      let upd = fieldUpdates[i];
+      let fieldPath = upd.field.replace(/\./g,/\//);
+
+      let refPath = basePath + '/' + fieldPath;
+      fireUpdates[refPath] = upd.newValue;
+    }
+
+    return firebase.database().ref().update(fireUpdates);
+  }
 }

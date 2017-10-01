@@ -18,6 +18,10 @@ class sUtility {
 
     return e;
   }
+  static replaceAll(str, search, replacement) {
+    let t = str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    return str.replace(new RegExp(t, 'g'), replacement);
+  }
   static stringify(obj) {
     let cache = [];
     let result = JSON.stringify(obj, function(key, value) {

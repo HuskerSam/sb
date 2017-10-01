@@ -286,7 +286,7 @@ html, body {
   border-radius: 12px;
   padding: 4px;
   margin: 4px;
-  background: rgb(240, 220, 240);
+  background: rgba(220, 175, 200, .3);
 }
 
 .form-group-container-group .form-group {

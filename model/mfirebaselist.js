@@ -8,7 +8,11 @@ class mFirebaseList extends mFirebaseSuper {
     this.fireDataValuesByKey = {};
   }
   getKey() {
-    return firebase.database().ref().child(this.referencePath).push().key
+    return firebase.database().ref().child(this.referencePath).push().key;
+  }
+  getCache(key) {
+    if (key)
+      return this.fireDataValuesByKey[key];
   }
   updateStash(fireData, remove) {
     let key = fireData.key;
@@ -29,6 +33,9 @@ class mFirebaseList extends mFirebaseSuper {
     let updates = {};
     updates['/' + this.referencePath + '/' + id] = jsonData;
     return firebase.database().ref().update(updates);
+  }
+  commitData(values, key) {
+    this.set(key, values);
   }
   setString(id, dataString, filename) {
     let me = this;

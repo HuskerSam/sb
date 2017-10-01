@@ -4,8 +4,7 @@ class cBoundFields {
   constructor(boundFields, prefix, container, parent) {
     this.fields = boundFields;
     this.prefix = prefix;
-    this.values = null;
-    this.fireData = null;
+    this.values = {};
     this.active = false;
     this.parent = parent;
     this.container = container;
@@ -48,11 +47,6 @@ class cBoundFields {
       c.appendChild(t);
     }
 
-    if (f.type === 'color') {
-
-
-    }
-
     c.classList.add('form-group');
     t.addEventListener('change', (e) => me.scrape(e), false);
     t.addEventListener('keyup', (e) => me.scrape(e), false);
@@ -82,23 +76,48 @@ class cBoundFields {
 
       if (f.type === 'color')
         gAPPP.renderEngine.setColorLabel(f.dom);
-
-      if (f.fireSetField)
-        sUtility.path(this.values, f.fireSetField, v);
     }
 
     sBabylonUtility.updateUI(this.uiObject, this.valueCache);
+    this._commitUpdates(this.valueCache);
   }
-  setData(fireData) {
-    this.values = fireData.val();
-    this.fireData = fireData;
+  _commitUpdates(newValues) {
+    if (!this.parent.fireSet)
+      return;
+
+    let updates = this._generateUpdateList(newValues);
+    this.parent.fireSet.commitUpdateList(updates, this.parent.key);
+
+    for (let i in this.fields) {
+      let f = this.fields[i];
+      if (f.fireSetField)
+        sUtility.path(this.values, f.fireSetField, newValues[f.fireSetField]);
+    }
   }
-  commit(fireSet, imageBlob, renderImageFileName) {
+  _generateUpdateList(newValues) {
+    let updates = [];
+    for (let i in this.fields) {
+      let f = this.fields[i];
+      let v = newValues[f.fireSetField];
+      let o = this.values[f.fireSetField];
+
+      if (v !== o) {
+        updates.push({
+          field: f.fireSetField,
+          newValue: v,
+          oldValue: o
+        });
+      }
+    }
+    return updates;
+  }
+
+  commit(fireSet, imageBlob, renderImageFileName, key) {
     let me = this;
     return new Promise((resolve, reject) => {
-      fireSet.setBlob(me.fireData.key, imageBlob, renderImageFileName).then((uploadResult) => {
+      fireSet.setBlob(key, imageBlob, renderImageFileName).then((uploadResult) => {
         me.values['renderImageURL'] = uploadResult.downloadURL;
-        fireSet.set(me.fireData.key, me.values).then((r) => resolve(r));
+        fireSet.set(key, me.values).then((r) => resolve(r));
       });
 
     });
@@ -130,6 +149,7 @@ class cBoundFields {
   }
   validate(f, v) {
     let r = v;
+
     function isNumeric(v) {
       return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
     }
@@ -140,28 +160,6 @@ class cBoundFields {
       if (v.toString().substr(0, 1) === '1')
         r = true;
       return r;
-    }
-
-    if (f.type === 'color') {
-      let parts = v.trim().split(',');
-      if (parts.length < 3)
-        return '';
-      let r = Number(parts[0]);
-      let g = Number(parts[1]);
-      let b = Number(parts[2]);
-
-      if (!isNumeric(r) || !isNumeric(g) || !isNumeric(b))
-        return '';
-
-      r = parseFloat(Math.max(0.0, Math.min(1.0, r)).toFixed(4));
-      g = parseFloat(Math.max(0.0, Math.min(1.0, g)).toFixed(4));
-      b = parseFloat(Math.max(0.0, Math.min(1.0, b)).toFixed(4));
-
-      return r + ',' + g + ',' + b;
-    }
-
-    if (f.type === 'texture') {
-      //  return r;
     }
     return r;
   }

@@ -3,6 +3,7 @@ class cDialogSuper {
     let me = this;
 
     this.tag = tag;
+    this.key = null;
     this.fields = sStatic.bindingFields[this.tag];
     this.fireSet = gAPPP.a.modelSets[this.tag];
     this.fireFields = null;

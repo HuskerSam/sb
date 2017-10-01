@@ -207,3 +207,21 @@ __localStaticStorageForBindingFields['scene'] = [{
   type: 'url',
   group: 'options'
 }];
+
+__localStaticStorageForBindingFields['userProfile'] = [{
+  title: 'Canvas Color (1,1,1)',
+  fireSetField: 'canvasColor',
+  uiObjectField: null,
+  type: 'color',
+  group: 'main'
+}, {
+  title: 'Font Family',
+  fireSetField: 'fontFamily',
+  uiObjectField: null,
+  group: 'font'
+}, {
+  title: 'Font Size',
+  fireSetField: 'fontSize',
+  uiObjectField: null,
+  group: 'font'
+}];

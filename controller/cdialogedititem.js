@@ -1,4 +1,3 @@
-/* edit dialog controller - binds to mdlFirebaseList and SCRender */
 class cDialogEditItem extends cDialogSuper {
   constructor(tag) {
     super('#' + tag + '-details-dialog', tag);
@@ -6,6 +5,7 @@ class cDialogEditItem extends cDialogSuper {
     this.splitViewAlive = true;
     this.initScene = true;
   }
+  /*
   commit() {
     let me = this;
     return new Promise((resolve, reject) => {
@@ -13,14 +13,14 @@ class cDialogEditItem extends cDialogSuper {
       me.fireFields.scrape();
       let imageDataURL = gAPPP.renderEngine.getJPGDataURL().then((imageDataURL) => {
         let blob = sUtility.dataURItoBlob(imageDataURL);
-        me.fireFields.commit(me.fireSet, blob, 'sceneRenderImage.jpg').then((r2) => resolve(r2));
+        me.fireFields.commit(me.fireSet, blob, 'sceneRenderImage.jpg', me.key).then((r2) => resolve(r2));
       });
     });
   }
+  */
   show(key) {
     this.key = key;
-    this.fireData = this.fireSet.fireDataByKey[this.key];
-    this.fireFields.setData(this.fireData);
+    this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     super.show();
   }
 }

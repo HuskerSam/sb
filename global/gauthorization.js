@@ -64,8 +64,9 @@ class gAuthorization {
       //check for profile reset
       let searchParams = new URLSearchParams(window.location.search);
       if (searchParams.get('reset') === 'true')
-        this.mdlProfile.setObject(null);
+        this.modelSets['userProfile'].setObject(null);
 
+      //save user data to firebase (WWWHHHYYYY?)
       firebase.database().ref('users/' + this.currentUser.uid).set(this.currentUser.toJSON());
 
       this._activateModels();
