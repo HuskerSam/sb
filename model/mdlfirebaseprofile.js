@@ -1,4 +1,4 @@
-class mdlFirebaseProfile extends mdlFirebaseReference {
+class mdlFirebaseProfile extends mdlRoot {
   constructor() {
     super();
     let me = this;
@@ -27,7 +27,6 @@ class mdlFirebaseProfile extends mdlFirebaseReference {
     }
 
     let css = 'html, body { ';
-
     if (this.profile.fontSize !== '')
       css += 'font-size:' + this.profile.fontSize + ';';
     if (this.profile.fontFamily !== '')

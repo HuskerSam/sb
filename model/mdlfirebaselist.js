@@ -1,5 +1,5 @@
 /* firebase bound data list */
-class mdlFirebaseList extends mdlFirebaseReference {
+class mdlFirebaseList extends mdlRoot {
   constructor(referencePath, activate) {
     super(referencePath, activate);
 
