@@ -1,14 +1,13 @@
 class scDialogUserProfile extends ctlDialogRoot {
   constructor(id) {
     super(id);
+    let me = this;
 
     this.userInfoSpan = this.dialog.querySelector('.user-info');
-
 
     this.fontSize = this.dialog.querySelector('#user-profile-default-font-size');
     this.fontFamily = this.dialog.querySelector('#user-profile-default-font-family');
     this.canvasColor = this.dialog.querySelector('#user-profile-default-canvas-color');
-
 
     this.fontSize.addEventListener('change', e => me.scrape(), false);
     this.fontFamily.addEventListener('change', e => me.scrape(), false);

@@ -1,8 +1,6 @@
 class scBabylonUtility {
-  constructor() {}
-
-  setMesh(values, mesh) {
-    let fields = gAPPP.s.bindingFields['mesh'];
+  static setMesh(values, mesh) {
+    let fields = scStatic.bindingFields['mesh'];
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
@@ -13,10 +11,10 @@ class scBabylonUtility {
         this.updateObjectValue(field, value, mesh);
     }
   }
-  material(values, scene) {
+  static material(values, scene) {
     let material = new BABYLON.StandardMaterial('material', scene);
 
-    let fields = gAPPP.s.bindingFields['material'];
+    let fields = scStatic.bindingFields['material'];
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
@@ -26,7 +24,7 @@ class scBabylonUtility {
     }
     return material;
   }
-  texture(values) {
+  static texture(values) {
     let texture = new BABYLON.Texture(values['url']);
     function isNumeric(v) {
       return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
@@ -43,33 +41,33 @@ class scBabylonUtility {
     texture.hasAlpha = values['hasAlpha'];
     return texture;
   }
-  updateObjectValue(field, value, object) {
+  static updateObjectValue(field, value, object) {
     try {
       if (value === '')
         return;
       if (value === undefined)
         return;
       if (field.type === undefined)
-        return gAPPP.u.path(object, field.uiObjectField, value);
+        return scUtility.path(object, field.uiObjectField, value);
 
       if (field.type === 'color') {
         let parts = value.split(',');
         let cA = [];
         let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
-        return gAPPP.u.path(object, field.uiObjectField, color);
+        return scUtility.path(object, field.uiObjectField, color);
       }
 
       if (field.type === 'texture') {
-        let tD = gAPPP.a.modelSets.textures.fireDataValuesByTitle[value];
+        let tD = gAPPP.a.modelSets['texture'].fireDataValuesByTitle[value];
         if (tD === undefined)
           return;
 
         let t = this.texture(tD);
-        return gAPPP.u.path(object, field.uiObjectField, t);
+        return scUtility.path(object, field.uiObjectField, t);
       }
 
       if (field.type === 'material') {
-        let tD = gAPPP.a.modelSets.materials.fireDataValuesByTitle[value];
+        let tD = gAPPP.a.modelSets['material'].fireDataValuesByTitle[value];
         if (tD === undefined)
           return;
 
@@ -79,12 +77,12 @@ class scBabylonUtility {
       }
 
       //default
-      gAPPP.u.path(object, field.uiObjectField, value);
+      scUtility.path(object, field.uiObjectField, value);
     } catch (e) {
       console.log('set ui object error', e, field, object, value);
     }
   }
-  updateUI(uiObject, valueCache) {
+  static updateUI(uiObject, valueCache) {
     if (!uiObject)
       return;
 
@@ -99,14 +97,13 @@ class scBabylonUtility {
     if (uiObject.type === 'mesh')
       return this.setMesh(valueCache, uiObject.mesh);
   }
-
-  getNewSceneSerialized() {
+  static getNewSceneSerialized() {
     let me = this;
     let file = this.fileDom.files[0];
 
     if (file) {
       return new Promise((resolve, reject) => {
-        gAPPP.u.fileToURI(file)
+        scUtility.fileToURI(file)
           .then((sceneSerial) => resolve(sceneSerial));
       });
     } else {
@@ -117,7 +114,7 @@ class scBabylonUtility {
       });
     }
   }
-  createDefaultScene() {
+  static createDefaultScene() {
     let scene = new BABYLON.Scene(gAPPP.renderEngine.engine);
     scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
     let camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 10, -10), scene);
@@ -129,12 +126,12 @@ class scBabylonUtility {
       scene
     };
   }
-  addSphere(name, faces, diameter, scene) {
+  static addSphere(name, faces, diameter, scene) {
     let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, scene);
     s.position.y = diameter / 2.0;
     return s;
   }
-  addGround(name, width, depth, subdivs, scene) {
+  static addGround(name, width, depth, subdivs, scene) {
     let ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
     return ground;
   }

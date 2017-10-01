@@ -44,7 +44,7 @@ class ctlSceneToolsBand {
     this.showSceneRawBtn = document.createElement('button');
     this.showSceneRawBtn.setAttribute('class', 'btn btn-primary-outline');
     this.showSceneRawBtn.addEventListener('click', () => {
-        //let json = gAPPP.u.stringify(this.uiObject);
+        //let json = scUtility.stringify(this.uiObject);
         let json = '{}';
         gAPPP.dialogs['ace-editor-popup'].showAce(json);
     }, false);

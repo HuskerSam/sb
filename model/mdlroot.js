@@ -1,5 +1,5 @@
 // base class for firebase realtime data
-class mdlFirebaseReference {
+class mdlRoot {
   constructor(referencePath, activate) {
     let me = this;
     this.referencePath = referencePath;
@@ -31,7 +31,7 @@ class mdlFirebaseReference {
   }
   childAdded(fireData) {
     this.updateStash(fireData);
-    this.notifyChildren(fireData, 'remove');
+    this.notifyChildren(fireData, 'add');
   }
   childChanged(fireData) {
     this.updateStash(fireData);
@@ -39,7 +39,7 @@ class mdlFirebaseReference {
   }
   childRemoved(fireData) {
     this.updateStash(fireData);
-    this.notifyChildren(fireData, 'add');
+    this.notifyChildren(fireData, 'remove');
   }
   updateStash(fireData) {
     this.values = fireData.val();

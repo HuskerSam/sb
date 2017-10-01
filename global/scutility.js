@@ -1,9 +1,5 @@
-/* Global stateless functions ~ utilities */
-'use strict';
-class SCUtility {
-  constructor() {}
-
-  beautify(editor) {
+class scUtility {
+  static beautify(editor) {
     let val = editor.session.getValue();
     let array = val.split(/\n/);
     array[0] = array[0].trim();
@@ -11,7 +7,7 @@ class SCUtility {
     val = js_beautify(val);
     editor.session.setValue(val);
   }
-  editor(domId) {
+  static editor(domId) {
     let e = ace.edit(domId);
     e.setTheme("ace/theme/textmate");
     e.getSession().setMode("ace/mode/json");
@@ -22,7 +18,7 @@ class SCUtility {
 
     return e;
   }
-  stringify(obj) {
+  static stringify(obj) {
     let cache = [];
     let result = JSON.stringify(obj, function(key, value) {
       if (typeof value === 'object' && value !== null) {
@@ -36,7 +32,7 @@ class SCUtility {
     cache = null;
     return result;
   }
-  path(obj, is, value) {
+  static path(obj, is, value) {
     if (typeof is == 'string')
       return this.path(obj, is.split('.'), value);
     else if (is.length == 1 && value !== undefined)
@@ -46,7 +42,7 @@ class SCUtility {
     else
       return this.path(obj[is[0]], is.slice(1), value);
   }
-  fileToURI(file) {
+  static fileToURI(file) {
     return new Promise(function(resolve, reject) {
       var reader = new FileReader();
       reader.addEventListener("loadend", function() {
@@ -55,7 +51,7 @@ class SCUtility {
       reader.readAsText(file);
     }, false);
   }
-  dataURItoBlob(dataURI) {
+  static dataURItoBlob(dataURI) {
     let byteString = atob(dataURI.split(',')[1]);
     let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
     let ab = new ArrayBuffer(byteString.length);

@@ -23,7 +23,7 @@ class SCDialogUtility {
     let aceId = 'utility-ace-editor-json';
     let aceDiv = document.getElementById(aceId);
     if (aceDiv) {
-      this.aceEditor = gAPPP.u.editor(aceId);
+      this.aceEditor = scUtility.editor(aceId);
       this.aceEditor.$blockScrolling = Infinity;
       this.editors.push(this.aceEditor);
     }

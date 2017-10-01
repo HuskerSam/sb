@@ -10,14 +10,14 @@ class scAuthorization {
     this.modelSets['userProfile'] = new mdlFirebaseProfile();
     this.fireSets.push(this.modelSets['userProfile']);
 
-    this.modelSets['meshes'] = new mdlFirebaseList('lib_meshes');
-    this.fireSets.push(this.modelSets['meshes']);
-    this.modelSets['textures'] = new mdlFirebaseList('lib_textures');
-    this.fireSets.push(this.modelSets['textures']);
-    this.modelSets['materials'] = new mdlFirebaseList('lib_materials');
-    this.fireSets.push(this.modelSets['materials']);
-    this.modelSets['scenes'] = new mdlFirebaseList('lib_scenes');
-    this.fireSets.push(this.modelSets['scenes']);
+    this.modelSets['mesh'] = new mdlFirebaseList('lib_meshes');
+    this.fireSets.push(this.modelSets['mesh']);
+    this.modelSets['texture'] = new mdlFirebaseList('lib_textures');
+    this.fireSets.push(this.modelSets['texture']);
+    this.modelSets['material'] = new mdlFirebaseList('lib_materials');
+    this.fireSets.push(this.modelSets['material']);
+    this.modelSets['scene'] = new mdlFirebaseList('lib_scenes');
+    this.fireSets.push(this.modelSets['scene']);
 
     document.querySelector(signInQS).addEventListener('click', () => me.signIn(), false);
     document.querySelector(signOutQS).addEventListener('click', () => me.signOut(), false);

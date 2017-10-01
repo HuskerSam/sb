@@ -1,5 +1,5 @@
 /* create dialog controller - binds to mdlFirebaseList */
-class CTLDialogCreateItem {
+class ctlDialogCreateItem {
   constructor(tag, fields) {
     let me = this;
     this.tag = tag;
@@ -35,7 +35,7 @@ class CTLDialogCreateItem {
     return new Promise((resolve, reject) => {
       let id = this.fieldsValues['id'];
       let file = this.fileDom.files[0];
-      gAPPP.u.fileToURI(file)
+      scUtility.fileToURI(file)
         .then((d) => gAPPP.renderEngine.serializeMesh(id, "", "data:" + d)
           .then((mesh) => resolve(mesh)));
     });
@@ -68,7 +68,7 @@ class CTLDialogCreateItem {
         me.importMesh().then((mesh) => {
           let id = me.fieldsValues['id'];
           let strMesh = JSON.stringify(mesh);
-          gAPPP.a.modelSets.meshes.newMesh(strMesh, id).then((r) => resolve(r));
+          gAPPP.a.modelSets['mesh'].newMesh(strMesh, id).then((r) => resolve(r));
         });
       });
     }
@@ -76,7 +76,7 @@ class CTLDialogCreateItem {
       return new Promise((resolve, reject) => {
         me.getNewSceneSerialized().then((sceneSerial) => {
           let title = me.fieldsValues['title'];
-          gAPPP.a.modelSets.scenes.newScene(sceneSerial, title).then((r) => resolve(r));
+          gAPPP.a.modelSets['scene'].newScene(sceneSerial, title).then((r) => resolve(r));
         });
       });
     }
@@ -84,13 +84,13 @@ class CTLDialogCreateItem {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
         let file = me.fileDom.files[0];
-        gAPPP.a.modelSets.textures.newTexture(file, title).then((r) => resolve(r));
+        gAPPP.a.modelSets['texture'].newTexture(file, title).then((r) => resolve(r));
       });
     }
     if (this.tag === 'material') {
       return new Promise((resolve, reject) => {
         let title = me.fieldsValues['title'];
-        gAPPP.a.modelSets.materials.newMaterial(title).then((r) => resolve(r));
+        gAPPP.a.modelSets['material'].newMaterial(title).then((r) => resolve(r));
       });
     }
     return new Promise(resolve => resolve());

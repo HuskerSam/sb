@@ -55,7 +55,7 @@ class ctlBoundScene {
   _loadSceneMaterial(materialData) {
     let me = this;
     return new Promise((resolve, reject) => {
-      let s = gAPPP.b.addSphere('sphere1', 15, 5, me.sceneDetails.scene, false);
+      let s = scBabylonUtility.addSphere('sphere1', 15, 5, me.sceneDetails.scene, false);
       let material = new BABYLON.StandardMaterial('material', me.sceneDetails.scene);
       s.material = material;
       me.extraSceneObjects.push(s);
@@ -107,7 +107,7 @@ class ctlBoundScene {
       let length = 10;
       let x = -10;
       let z = -10;
-      let grid = gAPPP.b.addGround('ground1', 6, 6, 3, this.sceneDetails.scene);
+      let grid = scBabylonUtility.addGround('ground1', 6, 6, 3, this.sceneDetails.scene);
       this._addObject('grid', grid);
     } else {
       this.gridShown = false;

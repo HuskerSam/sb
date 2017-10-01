@@ -84,10 +84,10 @@ class CTLBoundFields {
         gAPPP.renderEngine.setColorLabel(f.dom);
 
       if (f.fireSetField)
-        gAPPP.u.path(this.values, f.fireSetField, v);
+        scUtility.path(this.values, f.fireSetField, v);
     }
 
-    gAPPP.b.updateUI(this.uiObject, this.valueCache);
+    scBabylonUtility.updateUI(this.uiObject, this.valueCache);
   }
   setData(fireData) {
     this.values = fireData.val();
@@ -110,7 +110,7 @@ class CTLBoundFields {
     this.valueCache = {};
     for (let i in this.fields) {
       let f = this.fields[i];
-      let nV = gAPPP.u.path(this.values, f.fireSetField);
+      let nV = scUtility.path(this.values, f.fireSetField);
       if (nV === undefined)
         nV = '';
       let v = this.validate(f, nV);
@@ -126,7 +126,7 @@ class CTLBoundFields {
       this.scrapeCache[i] = v;
       this.valueCache[f.fireSetField] = v;
     }
-    gAPPP.b.updateUI(uiObject, this.valueCache);
+    scBabylonUtility.updateUI(uiObject, this.valueCache);
   }
   validate(f, v) {
     let r = v;

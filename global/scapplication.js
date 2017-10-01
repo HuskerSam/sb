@@ -5,9 +5,6 @@ class scApplication {
   constructor() {
     let me = this;
     window.gAPPP = this;
-    this.u = new SCUtility();
-    this.s = new SCStatic();
-    this.b = new scBabylonUtility();
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
     this.toolbarItems = {};
     this.dialogs = {};
@@ -17,27 +14,27 @@ class scApplication {
 
     this.screenCanvas = document.querySelector('#renderCanvas');
     this.renderEngine = new SCRender(this.screenCanvas);
-    this.screenSceneDetails = this.b.createDefaultScene();
+    this.screenSceneDetails = scBabylonUtility.createDefaultScene();
     this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
     this.renderEngine.setSceneDetails(this.screenSceneDetails);
 
-    this.toolbarItems['scenes'] = new CTLToolband('scenes', 'Scenes');
-    this.toolbarItems['meshes'] = new CTLToolband('meshes', 'Meshes');
-    this.toolbarItems['materials'] = new CTLToolband('materials', "Materials");
-    this.toolbarItems['textures'] = new CTLToolband('textures', 'Textures');
+    this.toolbarItems['scene'] = new CTLToolband('scene', 'Scenes');
+    this.toolbarItems['mesh'] = new CTLToolband('mesh', 'Meshes');
+    this.toolbarItems['material'] = new CTLToolband('material', "Materials");
+    this.toolbarItems['texture'] = new CTLToolband('texture', 'Textures');
 
-    this.dialogs['meshes-edit'] = new CTLDialogEditItem('mesh', this.s.bindingFields['mesh'], 'meshes');
-    this.dialogs['materials-edit'] = new CTLDialogEditItem('material', this.s.bindingFields['material'], 'materials');
-    this.dialogs['textures-edit'] = new CTLDialogEditItem('texture', this.s.bindingFields['texture'], 'textures');
-    this.dialogs['scenes-edit'] = new CTLDialogEditItem('scene', this.s.bindingFields['scene'], 'scenes');
+    this.dialogs['mesh-edit'] = new ctlDialogEditItem('mesh');
+    this.dialogs['material-edit'] = new ctlDialogEditItem('material');
+    this.dialogs['textur-edit'] = new ctlDialogEditItem('texture');
+    this.dialogs['scene-edit'] = new ctlDialogEditItem('scene');
 
-    this.dialogs['meshes-create'] = new CTLDialogCreateItem('mesh', ['id'], 'meshes');
-    this.dialogs['textures-create'] = new CTLDialogCreateItem('texture', ['title'], 'textures');
-    this.dialogs['materials-create'] = new CTLDialogCreateItem('material', ['title'], 'materials');
-    this.dialogs['scenes-create'] = new CTLDialogCreateItem('scene', ['title'], 'scenes');
+    this.dialogs['mesh-create'] = new ctlDialogCreateItem('mesh', ['id']);
+    this.dialogs['texture-create'] = new ctlDialogCreateItem('texture', ['title']);
+    this.dialogs['material-create'] = new ctlDialogCreateItem('material', ['title']);
+    this.dialogs['scene-create'] = new ctlDialogCreateItem('scene', ['title']);
 
     this.dialogs['ace-editor-popup'] = new SCDialogUtility('utility-dialog-show-ace-editor');
-    this.dialogs['user-profile'] = new scDialogUserProfile('user-profile-settings-dialog');
+    this.dialogs['user-profile'] = new scDialogUserProfile('#user-profile-settings-dialog');
 
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => me.expandAllBands(), false);
     document.querySelector('#collapse-all-toolbands').addEventListener('click', e => me.collapseAllBands(), false);
