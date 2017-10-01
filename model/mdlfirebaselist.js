@@ -1,37 +1,15 @@
 /* firebase bound data list with events - 1 instance per firebase collection/list */
 'use strict';
-class MDLFirebaseList {
+class MDLFirebaseList extends mdlFirebaseReference {
   constructor(dataPrefix) {
-    let me = this;
-    this.active = true;
-    this.userId = firebase.auth().currentUser.uid;
-    this.dataPrefix = dataPrefix;
-    this.notiRef = firebase.database().ref(this.dataPrefix);
-    this.notiRef.on('child_added', (data) => me.childAdded(data));
-    this.notiRef.on('child_changed', (data) => me.childChanged(data));
-    this.notiRef.on('child_removed', (data) => me.childRemoved(data));
+    super(dataPrefix);
+
     this.fireDataByKey = {};
     this.fireDataValuesByTitle = {};
     this.fireDataValuesByKey = {};
-    this.childListeners = [];
-  }
-  destroy() {
-    if (!this.active)
-      return;
-    this.domContainer.innerHTML = '';
-    this.notiRef.off();
-    this.active = false;
   }
   getKey() {
     return firebase.database().ref().child(this.dataPrefix).push().key
-  }
-  childAdded(fireData) {
-    this.updateStash(fireData);
-    this.notifyChildren(fireData, 'add');
-  }
-  notifyChildren(fireData, type) {
-    for (let i in this.childListeners)
-      this.childListeners[i](fireData, type);
   }
   updateStash(fireData, remove) {
     let key = fireData.key;
@@ -47,14 +25,6 @@ class MDLFirebaseList {
     this.fireDataValuesByKey[key] = fireData.val();
     if (this.fireDataValuesByKey[key].title)
       this.fireDataValuesByTitle[this.fireDataValuesByKey[key].title] = this.fireDataValuesByKey[key];
-  }
-  childChanged(fireData) {
-    this.updateStash(fireData);
-    this.notifyChildren(fireData, 'change');
-  }
-  childRemoved(fireData) {
-    this.updateStash(fireData, true);
-    this.notifyChildren(fireData, 'remove');
   }
   set(id, jsonData) {
     let updates = {};
