@@ -3,7 +3,20 @@
 class ctlBoundScene {
   constructor() {
     this.sceneDetails = {};
-    this.extraSceneObjects = [];
+    this.extraSceneObjects = {};
+    this.gridShown = false;
+    this.gridObject = null;
+  }
+  _addObject(key, obj) {
+    if (this.extraSceneObjects[key])
+      this.remove(this.extraSceneObjects[key]);
+    this.extraSceneObjects[key] = obj;
+  }
+  _removeObject(key) {
+    if (this.extraSceneObjects[key]) {
+      this.extraSceneObjects[key].dispose();
+      delete this.extraSceneObjects[key];
+    }
   }
   activate() {
     gAPPP.renderEngine.setSceneDetails(this.sceneDetails);
@@ -86,5 +99,22 @@ class ctlBoundScene {
       return this._loadSceneTexture(values);
 
     return new Promise((resolve) => resolve(null));
+  }
+  showGrid(hide) {
+    if (!hide) {
+      this.gridShown = true;
+      let width = 10;
+      let length = 10;
+      let x = -5;
+      let z = -5;
+      let grid = gAPPP.b.addGridToScene(this.sceneDetails.scene, width, length, x, z);
+      this._addObject('grid', grid);
+    } else {
+      this.gridShown = false;
+      this._removeObject('grid');
+    }
+  }
+  showGuides(hide) {
+    
   }
 }

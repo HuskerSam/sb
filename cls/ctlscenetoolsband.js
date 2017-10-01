@@ -54,11 +54,11 @@ class ctlSceneToolsBand {
   _showGrid() {
     if (this.gridShown) {
       this.showSceneFloorGridBtn.style.background = 'rgba(0,0,0,.2)';
-
+      this.sC.showGrid();
     }
     else {
       this.showSceneFloorGridBtn.style.background = '';
-
+      this.sC.showGrid(true);
     }
   }
   addShowSceneFloorGrid() {

@@ -129,42 +129,47 @@ class scBabylonUtility {
       scene
     };
   }
-  addGridToScene(scene, width, length) {
+  addGridToScene(scene, width, length, x, z) {
     let precision = {
-        "w" : 2,
-        "h" : 2
+        "w" : 1,
+        "h" : 1
     };
     let subdivisions = {
         'h' : length,
         'w' : width
     };
     // Create the Tiled Ground
-    let xmin = 0;
-    let zmin = 0;
+    let xmin = x;
+    let zmin = z;
     let xmax = width - 1;
     let zmax = length - 1;
-    var tiledGround = new BABYLON.Mesh.CreateTiledGround("Tiled Ground", xmin, zmin, xmax, zmax,
+    let tiledGround = new BABYLON.Mesh.CreateTiledGround("Tiled Ground", xmin, zmin, xmax, zmax,
       subdivisions, precision, scene);
 
-    var whiteMaterial = new BABYLON.StandardMaterial("White", scene);
-    whiteMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1);
+    let tMat = new BABYLON.StandardMaterial("Transparent", scene);
+    tMat.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    tMat.alpha = 0.0;
 
-    var blackMaterial = new BABYLON.StandardMaterial("Black", scene);
-    blackMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    let gMat = new BABYLON.StandardMaterial("GreenLucient", scene);
+    gMat.diffuseColor = new BABYLON.Color3(.2, 1, .2);
+    gMat.alpha = 0.3;
 
-    var multimat = new BABYLON.MultiMaterial("multi", scene);
-    multimat.subMaterials.push(whiteMaterial);
-    multimat.subMaterials.push(blackMaterial);
+    let multimat = new BABYLON.MultiMaterial("multi", scene);
+    multimat.subMaterials.push(tMat);
+    multimat.subMaterials.push(gMat);
     tiledGround.material = multimat;
-    var verticesCount = tiledGround.getTotalVertices();
-    var tileIndicesLength = tiledGround.getIndices().length / (subdivisions.w * subdivisions.h);
+    let verticesCount = tiledGround.getTotalVertices();
+    let tileIndicesLength = tiledGround.getIndices().length / (subdivisions.w * subdivisions.h);
     tiledGround.subMeshes = [];
     var base = 0;
     for (var row = 0; row < subdivisions.h; row++) {
         for (var col = 0; col < subdivisions.w; col++) {
-            tiledGround.subMeshes.push(new BABYLON.SubMesh(row%2 ^ col%2, 0, verticesCount, base , tileIndicesLength, tiledGround));
+            tiledGround.subMeshes.push(new BABYLON.SubMesh(row%2 ^ col%2, 0,
+              verticesCount, base , tileIndicesLength, tiledGround));
             base += tileIndicesLength;
         }
     }
+
+    return tiledGround;
   }
 }
