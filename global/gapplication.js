@@ -1,0 +1,51 @@
+/* singleton controller for application */
+'use strict';
+window.addEventListener('load', () => new gApplication());
+class gApplication {
+  constructor() {
+    let me = this;
+    window.gAPPP = this;
+    this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
+    this.toolbarItems = {};
+    this.dialogs = {};
+
+    //load user profile
+    this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
+
+    this.screenCanvas = document.querySelector('#renderCanvas');
+    this.renderEngine = new gRender(this.screenCanvas);
+    this.screenSceneDetails = sBabylonUtility.createDefaultScene();
+    this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
+    this.renderEngine.setSceneDetails(this.screenSceneDetails);
+
+    this.toolbarItems['scene'] = new cToolband('scene', 'Scenes');
+    this.toolbarItems['mesh'] = new cToolband('mesh', 'Meshes');
+    this.toolbarItems['material'] = new cToolband('material', "Materials");
+    this.toolbarItems['texture'] = new cToolband('texture', 'Textures');
+
+    this.dialogs['mesh-edit'] = new cDialogEditItem('mesh');
+    this.dialogs['material-edit'] = new cDialogEditItem('material');
+    this.dialogs['textur-edit'] = new cDialogEditItem('texture');
+    this.dialogs['scene-edit'] = new cDialogEditItem('scene');
+
+    this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', ['id']);
+    this.dialogs['texture-create'] = new cDialogCreateItem('texture', ['title']);
+    this.dialogs['material-create'] = new cDialogCreateItem('material', ['title']);
+    this.dialogs['scene-create'] = new cDialogCreateItem('scene', ['title']);
+
+    this.dialogs['ace-editor-popup'] = new cDialogUtility('utility-dialog-show-ace-editor');
+    this.dialogs['user-profile'] = new cDialogUserProfile('#user-profile-settings-dialog');
+
+    document.querySelector('#expand-all-toolbands').addEventListener('click', e => me.expandAllBands(), false);
+    document.querySelector('#collapse-all-toolbands').addEventListener('click', e => me.collapseAllBands(), false);
+    document.querySelector('#user-profile-settings-button').addEventListener('click', e => me.dialogs['user-profile'].show(), false);
+  }
+  expandAllBands(){
+    for (let i in this.toolbarItems)
+      this.toolbarItems[i].toggle(true);
+  }
+  collapseAllBands() {
+    for (let i in this.toolbarItems)
+      this.toolbarItems[i].toggle(false);
+  }
+}

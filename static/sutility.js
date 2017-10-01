@@ -1,4 +1,4 @@
-class scUtility {
+class sUtility {
   static beautify(editor) {
     let val = editor.session.getValue();
     let array = val.split(/\n/);

@@ -1,5 +1,5 @@
 /* edit dialog controller - binds to mdlFirebaseList and SCRender */
-class ctlDialogEditItem extends ctlDialogRoot {
+class cDialogEditItem extends cDialogSuper {
   constructor(tag) {
     super('#' + tag + '-details-dialog', tag);
     this.fireEditorId = this.tag + '-details-json';
@@ -12,7 +12,7 @@ class ctlDialogEditItem extends ctlDialogRoot {
       me._startLoad();
       me.fireFields.scrape();
       let imageDataURL = gAPPP.renderEngine.getJPGDataURL().then((imageDataURL) => {
-        let blob = scUtility.dataURItoBlob(imageDataURL);
+        let blob = sUtility.dataURItoBlob(imageDataURL);
         me.fireFields.commit(me.fireSet, blob, 'sceneRenderImage.jpg').then((r2) => resolve(r2));
       });
     });

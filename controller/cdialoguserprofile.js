@@ -1,4 +1,4 @@
-class scDialogUserProfile extends ctlDialogRoot {
+class cDialogUserProfile extends cDialogSuper {
   constructor(id) {
     super(id);
     let me = this;

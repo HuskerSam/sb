@@ -1,5 +1,5 @@
 // base class for firebase realtime data
-class mdlRoot {
+class mFirebaseSuper {
   constructor(referencePath, activate) {
     let me = this;
     this.referencePath = referencePath;

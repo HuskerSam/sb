@@ -1,6 +1,5 @@
 /* babylon singleton wrapper - only 1 instance for many canves */
-'use strict';
-class SCRender {
+class gRender {
   constructor(defaultCanvas) {
     let me = this;
     this.defaultCanvas = defaultCanvas;

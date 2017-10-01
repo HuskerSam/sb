@@ -1,20 +1,20 @@
-class ctlDialogRoot {
+class cDialogSuper {
   constructor(dialogQuerySelector, tag) {
     let me = this;
 
     this.tag = tag;
-    this.fields = scStatic.bindingFields[this.tag];
+    this.fields = sStatic.bindingFields[this.tag];
     this.fireSet = gAPPP.a.modelSets[this.tag];
     this.fireFields = null;
     this.uiJSON = 'N/A';
-    this.sC = new ctlBoundScene();
+    this.sC = new cBoundScene();
 
     this.dialogQuerySelector = dialogQuerySelector;
     this.dialog = document.querySelector(this.dialogQuerySelector);
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     if (this.fields) {
       let domClassPrefix = this.tag + '-fields-';
-      this.fireFields = new CTLBoundFields(this.fields, domClassPrefix, this.fieldsContainer, this);
+      this.fireFields = new cBoundFields(this.fields, domClassPrefix, this.fieldsContainer, this);
     }
 
     this.okBtn = this.dialog.querySelector('.save-details');
@@ -36,7 +36,7 @@ class ctlDialogRoot {
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas)
-      this.sceneTools = new ctlSceneToolsBand(this.canvas, this.sC);
+      this.sceneTools = new cSceneToolsBand(this.canvas, this.sC);
 
     this.rotateState = 'vertical';
   }
@@ -137,7 +137,7 @@ class ctlDialogRoot {
     this._focus();
 
     if (this.initScene) {
-      let sceneDetails = scBabylonUtility.createDefaultScene();
+      let sceneDetails = sBabylonUtility.createDefaultScene();
       this.sC.set(sceneDetails);
       this.sC.activate();
       this.sC.loadScene(this.tag, this.fireData.val()).then(r => me._finishShow(r));
@@ -159,7 +159,7 @@ class ctlDialogRoot {
     this.editors = [];
     if (this.fireEditorId)
       if (this.dialog.querySelector('#' + fireEditorId)) {
-        this.fireEditor = scUtility.editor(fireEditorId);
+        this.fireEditor = sUtility.editor(fireEditorId);
         this.fireEditor.$blockScrolling = Infinity;
         this.editors.push(this.fireEditor);
       }
@@ -168,7 +168,7 @@ class ctlDialogRoot {
     this.uiObject = uiObject;
     if (this.fireEditor) {
       this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
-      scUtility.beautify(this.fireEditor);
+      sUtility.beautify(this.fireEditor);
     }
 
     if (this.fireFields)

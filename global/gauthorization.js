@@ -1,5 +1,5 @@
 /*  singleton firebase authorization controller (owns firebase bound models)   */
-class scAuthorization {
+class gAuthorization {
   constructor(signInQS, signOutQS) {
     let me = this;
     this.currentUser = null;
@@ -7,16 +7,16 @@ class scAuthorization {
     this.fireSets = [];
     this.modelSets = {};
 
-    this.modelSets['userProfile'] = new mdlFirebaseProfile();
+    this.modelSets['userProfile'] = new mFirebaseProfile();
     this.fireSets.push(this.modelSets['userProfile']);
 
-    this.modelSets['mesh'] = new mdlFirebaseList('lib_meshes');
+    this.modelSets['mesh'] = new mFirebaseList('lib_meshes');
     this.fireSets.push(this.modelSets['mesh']);
-    this.modelSets['texture'] = new mdlFirebaseList('lib_textures');
+    this.modelSets['texture'] = new mFirebaseList('lib_textures');
     this.fireSets.push(this.modelSets['texture']);
-    this.modelSets['material'] = new mdlFirebaseList('lib_materials');
+    this.modelSets['material'] = new mFirebaseList('lib_materials');
     this.fireSets.push(this.modelSets['material']);
-    this.modelSets['scene'] = new mdlFirebaseList('lib_scenes');
+    this.modelSets['scene'] = new mFirebaseList('lib_scenes');
     this.fireSets.push(this.modelSets['scene']);
 
     document.querySelector(signInQS).addEventListener('click', () => me.signIn(), false);

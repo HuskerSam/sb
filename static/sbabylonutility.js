@@ -1,6 +1,6 @@
-class scBabylonUtility {
+class sBabylonUtility {
   static setMesh(values, mesh) {
-    let fields = scStatic.bindingFields['mesh'];
+    let fields = sStatic.bindingFields['mesh'];
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
@@ -14,7 +14,7 @@ class scBabylonUtility {
   static material(values, scene) {
     let material = new BABYLON.StandardMaterial('material', scene);
 
-    let fields = scStatic.bindingFields['material'];
+    let fields = sStatic.bindingFields['material'];
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
@@ -48,13 +48,13 @@ class scBabylonUtility {
       if (value === undefined)
         return;
       if (field.type === undefined)
-        return scUtility.path(object, field.uiObjectField, value);
+        return sUtility.path(object, field.uiObjectField, value);
 
       if (field.type === 'color') {
         let parts = value.split(',');
         let cA = [];
         let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
-        return scUtility.path(object, field.uiObjectField, color);
+        return sUtility.path(object, field.uiObjectField, color);
       }
 
       if (field.type === 'texture') {
@@ -63,7 +63,7 @@ class scBabylonUtility {
           return;
 
         let t = this.texture(tD);
-        return scUtility.path(object, field.uiObjectField, t);
+        return sUtility.path(object, field.uiObjectField, t);
       }
 
       if (field.type === 'material') {
@@ -77,7 +77,7 @@ class scBabylonUtility {
       }
 
       //default
-      scUtility.path(object, field.uiObjectField, value);
+      sUtility.path(object, field.uiObjectField, value);
     } catch (e) {
       console.log('set ui object error', e, field, object, value);
     }
@@ -103,7 +103,7 @@ class scBabylonUtility {
 
     if (file) {
       return new Promise((resolve, reject) => {
-        scUtility.fileToURI(file)
+        sUtility.fileToURI(file)
           .then((sceneSerial) => resolve(sceneSerial));
       });
     } else {

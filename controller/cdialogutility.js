@@ -1,5 +1,4 @@
-'use strict';
-class SCDialogUtility {
+class cDialogUtility {
   constructor(id) {
     let me = this;
     this.dialog = document.getElementById(id);
@@ -23,7 +22,7 @@ class SCDialogUtility {
     let aceId = 'utility-ace-editor-json';
     let aceDiv = document.getElementById(aceId);
     if (aceDiv) {
-      this.aceEditor = scUtility.editor(aceId);
+      this.aceEditor = sUtility.editor(aceId);
       this.aceEditor.$blockScrolling = Infinity;
       this.editors.push(this.aceEditor);
     }

@@ -1,4 +1,4 @@
-class scStatic {
+class sStatic {
   static get bindingFields() {
     return __localStaticStorageForBindingFields;
   }

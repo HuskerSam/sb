@@ -1,5 +1,5 @@
 /* create dialog controller - binds to mdlFirebaseList */
-class ctlDialogCreateItem {
+class cDialogCreateItem {
   constructor(tag, fields) {
     let me = this;
     this.tag = tag;
@@ -35,7 +35,7 @@ class ctlDialogCreateItem {
     return new Promise((resolve, reject) => {
       let id = this.fieldsValues['id'];
       let file = this.fileDom.files[0];
-      scUtility.fileToURI(file)
+      sUtility.fileToURI(file)
         .then((d) => gAPPP.renderEngine.serializeMesh(id, "", "data:" + d)
           .then((mesh) => resolve(mesh)));
     });

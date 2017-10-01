@@ -1,5 +1,5 @@
 /* button bar controller for canvas/scene */
-class ctlSceneToolsBand {
+class cSceneToolsBand {
   constructor(canvas, sceneController) {
     let me = this;
     this.sC = sceneController;
@@ -44,7 +44,7 @@ class ctlSceneToolsBand {
     this.showSceneRawBtn = document.createElement('button');
     this.showSceneRawBtn.setAttribute('class', 'btn btn-primary-outline');
     this.showSceneRawBtn.addEventListener('click', () => {
-        //let json = scUtility.stringify(this.uiObject);
+        //let json = sUtility.stringify(this.uiObject);
         let json = '{}';
         gAPPP.dialogs['ace-editor-popup'].showAce(json);
     }, false);

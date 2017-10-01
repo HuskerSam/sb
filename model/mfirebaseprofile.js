@@ -1,4 +1,4 @@
-class mdlFirebaseProfile extends mdlRoot {
+class mFirebaseProfile extends mFirebaseSuper {
   constructor() {
     super();
     let me = this;

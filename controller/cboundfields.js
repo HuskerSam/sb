@@ -1,6 +1,6 @@
 /* binding controller for dom to mdlFirebaseList */
 'use strict';
-class CTLBoundFields {
+class cBoundFields {
   constructor(boundFields, prefix, container, parent) {
     this.fields = boundFields;
     this.prefix = prefix;
@@ -84,10 +84,10 @@ class CTLBoundFields {
         gAPPP.renderEngine.setColorLabel(f.dom);
 
       if (f.fireSetField)
-        scUtility.path(this.values, f.fireSetField, v);
+        sUtility.path(this.values, f.fireSetField, v);
     }
 
-    scBabylonUtility.updateUI(this.uiObject, this.valueCache);
+    sBabylonUtility.updateUI(this.uiObject, this.valueCache);
   }
   setData(fireData) {
     this.values = fireData.val();
@@ -110,7 +110,7 @@ class CTLBoundFields {
     this.valueCache = {};
     for (let i in this.fields) {
       let f = this.fields[i];
-      let nV = scUtility.path(this.values, f.fireSetField);
+      let nV = sUtility.path(this.values, f.fireSetField);
       if (nV === undefined)
         nV = '';
       let v = this.validate(f, nV);
@@ -126,7 +126,7 @@ class CTLBoundFields {
       this.scrapeCache[i] = v;
       this.valueCache[f.fireSetField] = v;
     }
-    scBabylonUtility.updateUI(uiObject, this.valueCache);
+    sBabylonUtility.updateUI(uiObject, this.valueCache);
   }
   validate(f, v) {
     let r = v;
