@@ -49,8 +49,7 @@ class cBoundFields {
     }
 
     c.classList.add('form-group');
-    t.addEventListener('change', (e) => me.scrape(e), false);
-    t.addEventListener('keyup', (e) => me.scrape(e), false);
+    t.addEventListener('input', (e) => me.scrape(e), false);
     t.addEventListener('blur', (e) => me._blurField(t, f, e), false);
     if (g)
       g.appendChild(c);
@@ -61,6 +60,17 @@ class cBoundFields {
       this.container.appendChild(w);
     }
     f.dom = t;
+    this._specialDomFeatures(f);
+  }
+  _specialDomFeatures(field) {
+    let element = field.dom;
+    if (field.type === 'texture') {
+      element.setAttribute('list', 'texturedatatitlelookuplist');
+    }
+    if (field.type === 'material') {
+      element.setAttribute('list', 'materialdatatitlelookuplist');
+    }
+
   }
   scrape(e) {
     if (!this.active)
@@ -69,7 +79,7 @@ class cBoundFields {
     this.valueCache = {};
     for (let i in this.fields) {
       let f = this.fields[i];
-      let nV = f.dom.value;
+      let nV = f.dom.value.trim();
       if (f.type === 'boolean')
         nV = f.dom.checked;
       let v = nV;//this.validate(f, nV);

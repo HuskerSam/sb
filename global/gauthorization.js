@@ -10,13 +10,13 @@ class gAuthorization {
     this.modelSets['userProfile'] = new mFirebaseProfile();
     this.fireSets.push(this.modelSets['userProfile']);
 
-    this.modelSets['mesh'] = new mFirebaseList('lib_meshes');
+    this.modelSets['mesh'] = new mFirebaseList('lib_meshes', 'mesh');
     this.fireSets.push(this.modelSets['mesh']);
-    this.modelSets['texture'] = new mFirebaseList('lib_textures');
+    this.modelSets['texture'] = new mFirebaseList('lib_textures', 'texture');
     this.fireSets.push(this.modelSets['texture']);
-    this.modelSets['material'] = new mFirebaseList('lib_materials');
+    this.modelSets['material'] = new mFirebaseList('lib_materials', 'material');
     this.fireSets.push(this.modelSets['material']);
-    this.modelSets['scene'] = new mFirebaseList('lib_scenes');
+    this.modelSets['scene'] = new mFirebaseList('lib_scenes', 'scene');
     this.fireSets.push(this.modelSets['scene']);
 
     document.querySelector(signInQS).addEventListener('click', () => me.signIn(), false);

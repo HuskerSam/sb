@@ -1,11 +1,15 @@
 /* firebase bound data list */
 class mFirebaseList extends mFirebaseSuper {
-  constructor(referencePath, activate) {
-    super(referencePath, activate);
+  constructor(referencePath, listtag) {
+    super(referencePath, false);
 
     this.fireDataByKey = {};
     this.fireDataValuesByTitle = {};
     this.fireDataValuesByKey = {};
+    
+    this.domTitleList = document.createElement('datalist');
+    this.domTitleList.id = listtag + 'datatitlelookuplist';
+    document.body.appendChild(this.domTitleList);
   }
   getKey() {
     return firebase.database().ref().child(this.referencePath).push().key;
@@ -145,5 +149,11 @@ class mFirebaseList extends mFirebaseSuper {
       updates['/' + this.referencePath + '/' + key] = null;
       firebase.database().ref().update(updates).then(e => resolve(e));
     });
+  }
+  _updateDomLookupList() {
+    let innerHTML = '';
+    for (let i in this.fireDataValuesByTitle)
+      innerHTML += '<option>' + i.toString() + '</option>';
+    this.domTitleList.innerHTML = innerHTML;
   }
 }
