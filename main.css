@@ -15,6 +15,7 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
 #renderCanvas {
   width: 100%;
   height: 100%;
@@ -44,7 +45,7 @@ html, body {
 }
 
 .gutter {
-  background-color: rgba(200,200,200,.5);
+  background-color: rgba(200, 200, 200, .5);
   line-height: 1px;
   margin-top: -5px;
 }
@@ -143,8 +144,9 @@ html, body {
 .form-group {
   width: 15em;
   display: inline-block;
-  font-size:inherit;
+  font-size: inherit;
 }
+
 .form-group input {
   font-size: inherit;
 }
@@ -258,7 +260,6 @@ html, body {
   padding-top: 0px;
 }
 
-
 .vertical-split-display {
   height: 100%;
   float: left;
@@ -316,13 +317,20 @@ html, body {
   font-size: inherit;
 }
 
-#user-profile-settings-dialog {
-  padding-right:100px;
-}
 #user-profile-settings-dialog .popup-content {
-    background-size: 25%;
-    background-position: top right;
-    background-repeat: no-repeat;
+  height: 100%;
+  overflow: auto;
+}
+
+#user-profile-settings-dialog .user-image-display {
+  max-height: 7em;
+  max-width: 7em;
+  margin-top: 5px;
+  margin-right: 15px;
+  border-radius: 20%;
+  margin-left: 10px;
+  border: solid 1px silver;
+  float:left;
 }
 
 button i.material-icons {
@@ -331,13 +339,17 @@ button i.material-icons {
   font-size: 1.2em;
 }
 
-
 .scene-tools-band-container {
   position: absolute;
   top: 3px;
   left: 3px;
   font-size: .8em;
 }
+
 .scene-tools-band-container .button-container {
-  display:inline-block;
+  display: inline-block;
+}
+
+#utility-dialog-show-ace-editor {
+  z-index: 10000;
 }
