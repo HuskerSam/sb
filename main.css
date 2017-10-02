@@ -227,10 +227,6 @@ html, body {
   padding: 4px;
 }
 
-.fields-container {
-  padding: 1%;
-}
-
 .tab-content {
   height: 100%;
   overflow-y: auto;
