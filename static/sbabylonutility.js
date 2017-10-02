@@ -108,7 +108,16 @@ class sBabylonUtility {
     }
   }
   static setSceneToolsDetails(uiObject, valueCache) {
-    
+    let fields = sStatic.bindingFields['sceneToolsBar'];
+    for (let i in fields) {
+      let field = fields[i];
+      let value = valueCache[field.fireSetField];
+
+      if (field.fireSetField === 'lightIntensity')
+      {
+        uiObject.sceneController.sceneDetails.light.intensity = Number(value);
+      }
+    }
   }
   static getNewSceneSerialized(fileDom) {
     let me = this;
