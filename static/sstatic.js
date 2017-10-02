@@ -235,13 +235,14 @@ __localStaticStorageForBindingFields['userProfile'] = [{
     uiObjectField: null,
     group: 'camera'
   }, {
-    title: 'Light Intensity (0 - 1)',
+    title: 'Light Intensity (.7)',
     fireSetField: 'lightIntensity',
     uiObjectField: null,
     group: 'light'
   }, {
-    title: 'Show Grid (false)',
+    title: 'Show Grid',
     fireSetField: 'showFloorGrid',
+    type: 'boolean',
     uiObjectField: null,
     group: 'extras'
   }, {
@@ -250,14 +251,16 @@ __localStaticStorageForBindingFields['userProfile'] = [{
     uiObjectField: null,
     group: 'extras'
   }, {
-    title: 'Show Guides (true)',
+    title: 'Show Guides',
     fireSetField: 'showSceneGuides',
     uiObjectField: null,
+    type: 'boolean',
     group: 'extras'
   }, {
-    title: 'Focus Lock (true)',
+    title: 'No Focus Lock',
     fireSetField: 'inputFocusLock',
     uiObjectField: null,
+    type: 'boolean',
     group: 'inputFocusLock'
   }
 

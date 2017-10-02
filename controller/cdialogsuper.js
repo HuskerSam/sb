@@ -67,6 +67,8 @@ class cDialogSuper {
       onDragEnd: () => me.splitDragEnd(),
       onDrag: () => me.splitDragEnd()
     });
+
+    gAPPP.renderEngine.engine.resize();
   }
   rotateView() {
     if (this.rotateState === 'vertical') {

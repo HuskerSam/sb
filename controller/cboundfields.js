@@ -49,6 +49,7 @@ class cBoundFields {
     }
 
     c.classList.add('form-group');
+    t.addEventListener('click', (e) => me.scrape(e), false);
     t.addEventListener('input', (e) => me.scrape(e), false);
     t.addEventListener('blur', (e) => me._blurField(t, f, e), false);
     if (g)
