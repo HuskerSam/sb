@@ -151,13 +151,13 @@ class cDialogSuper {
       this.okBtn.focus();
   }
   initEditors() {
-    if (this.editors !== null)
+    if (this.editors)
       return;
 
     this.editors = [];
     if (this.fireEditorId)
-      if (this.dialog.querySelector('#' + fireEditorId)) {
-        this.fireEditor = sUtility.editor(fireEditorId);
+      if (this.dialog.querySelector('#' + this.fireEditorId)) {
+        this.fireEditor = sUtility.editor(this.fireEditorId);
         this.fireEditor.$blockScrolling = Infinity;
         this.editors.push(this.fireEditor);
       }
