@@ -1,5 +1,0 @@
-class cSceneOptionsBar {
-  constructor() {
-
-  }
-}

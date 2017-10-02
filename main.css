@@ -320,8 +320,8 @@ html, body {
   padding-right:100px;
 }
 #user-profile-settings-dialog .popup-content {
-    background-size: contain;
-    background-position: right;
+    background-size: 25%;
+    background-position: top right;
     background-repeat: no-repeat;
 }
 

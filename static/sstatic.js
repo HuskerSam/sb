@@ -209,19 +209,56 @@ __localStaticStorageForBindingFields['scene'] = [{
 }];
 
 __localStaticStorageForBindingFields['userProfile'] = [{
-  title: 'Canvas Color (1,1,1)',
-  fireSetField: 'canvasColor',
-  uiObjectField: null,
-  type: 'color',
-  group: 'main'
-}, {
-  title: 'Font Family',
-  fireSetField: 'fontFamily',
-  uiObjectField: null,
-  group: 'font'
-}, {
-  title: 'Font Size',
-  fireSetField: 'fontSize',
-  uiObjectField: null,
-  group: 'font'
-}];
+    title: 'Canvas Color (1,1,1)',
+    fireSetField: 'canvasColor',
+    uiObjectField: null,
+    type: 'color',
+    group: 'main'
+  }, {
+    title: 'Font Family',
+    fireSetField: 'fontFamily',
+    uiObjectField: null,
+    group: 'font'
+  }, {
+    title: 'Font Size',
+    fireSetField: 'fontSize',
+    uiObjectField: null,
+    group: 'font'
+  }, {
+    title: 'Camera Height (-10)',
+    fireSetField: 'cameraHeight',
+    uiObjectField: null,
+    group: 'camera'
+  }, {
+    title: 'Camera Distance (10)',
+    fireSetField: 'cameraDistance',
+    uiObjectField: null,
+    group: 'camera'
+  }, {
+    title: 'Light Intensity (0 - 1)',
+    fireSetField: 'lightIntensity',
+    uiObjectField: null,
+    group: 'light'
+  }, {
+    title: 'Show Grid (false)',
+    fireSetField: 'showFloorGrid',
+    uiObjectField: null,
+    group: 'extras'
+  }, {
+    title: 'Grid Depth (4)',
+    fireSetField: 'floorGridDepth',
+    uiObjectField: null,
+    group: 'extras'
+  }, {
+    title: 'Show Guides (true)',
+    fireSetField: 'showSceneGuides',
+    uiObjectField: null,
+    group: 'extras'
+  }, {
+    title: 'Focus Lock (true)',
+    fireSetField: 'inputFocusLock',
+    uiObjectField: null,
+    group: 'inputFocusLock'
+  }
+
+];
