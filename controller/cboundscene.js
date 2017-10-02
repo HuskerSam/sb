@@ -1,5 +1,3 @@
-/* binding controller for babylon scene to mdlFirebaseList */
-'use strict';
 class cBoundScene {
   constructor() {
     this.sceneDetails = {};
@@ -71,7 +69,8 @@ class cBoundScene {
   _loadSceneTexture(textureData) {
     let me = this;
     return new Promise((resolve, reject) => {
-      let s = sBabylonUtility.addGround('ground1', 6, 6, 20, me.sceneDetails.scene);
+      let s = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, me.sceneDetails.scene);
+
       me.extraSceneObjects.push(s);
 
       let material = new BABYLON.StandardMaterial('material', me.sceneDetails.scene);
@@ -103,19 +102,28 @@ class cBoundScene {
   }
   showGrid(hide) {
     if (!hide) {
+      if (this.gridShown) {
+        this.showGrid(true);
+      }
+      
       this.gridShown = true;
-      let width = 10;
-      let length = 10;
-      let x = -10;
-      let z = -10;
-      let grid = sBabylonUtility.addGround('ground1', 6, 6, 3, this.sceneDetails.scene);
+      let gridDepth = sBabylonUtility.getNumberOrDefault(gAPPP.a.profile.floorGridDepth, 5);
+      let grid = BABYLON.Mesh.CreateGround("ground1", gridDepth, gridDepth, 2, this.sceneDetails.scene);
+      let material = new BABYLON.StandardMaterial('scenematerialforfloorgrid', this.sceneDetails.scene);
+      let texture = new BABYLON.Texture('greengrid.png');
+      texture.hasAlpha = true;
+      material.diffuseTexture = texture;
+      texture.vScale = gridDepth;
+      texture.uScale = gridDepth;
+      //material.wireframe = true;
+      grid.material = material;
       this._addObject('grid', grid);
     } else {
+      if (! this.gridShown)
+        return;
       this.gridShown = false;
       this._removeObject('grid');
     }
   }
-  showGuides(hide) {
-
-  }
+  showGuides(hide) { }
 }

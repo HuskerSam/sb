@@ -117,6 +117,18 @@ class sBabylonUtility {
       {
         uiObject.sceneController.sceneDetails.light.intensity = Number(value);
       }
+      if (field.fireSetField === 'lightVector')
+      {
+        uiObject.sceneController.sceneDetails.light.direction = this.getVector(value, 0, 1, 0);
+      }
+      if (field.fireSetField === 'cameraVector')
+      {
+        uiObject.sceneController.sceneDetails.camera.position = this.getVector(value, 0, 10, -10);
+      }
+      if (field.fireSetField === 'showFloorGrid' ||
+          field.fireSetField === 'showFloorGrid') {
+        uiObject.sceneController.showGrid(! value);
+      }
     }
   }
   static getNewSceneSerialized(fileDom) {
@@ -178,9 +190,5 @@ class sBabylonUtility {
     let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, scene);
     s.position.y = diameter / 2.0;
     return s;
-  }
-  static addGround(name, width, depth, subdivs, scene) {
-    let ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
-    return ground;
   }
 }
