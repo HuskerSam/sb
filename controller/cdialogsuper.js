@@ -34,7 +34,7 @@ class cDialogSuper {
       this.okBtn.addEventListener('click', () => me.save(), false);
     if (this.rotateBtn)
       this.rotateBtn.addEventListener('click', () => me.rotateView(), false);
-    this.dialog.addEventListener('hidden.bs.modal', () => me.close(), false); //force cleanup if closed via escape
+    $(this.dialog).on('hidden.bs.modal', () => me.close()); //force cleanup if closed via escape
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas)
@@ -85,9 +85,14 @@ class cDialogSuper {
   close() {
     if (this.fireFields)
       this.fireFields.active = false;
+    if (this.fireFields.renderImageUpdateNeeded) {
+      this.fireFields.renderImageUpdateNeeded = false;
+      this._renderImageUpdate();
+    }
     $(this.dialog).modal('hide');
     gAPPP.renderEngine.renderDefault();
   }
+  _renderImageUpdate() {}
   _startLoad() {
     this._hideDom(this.popupButtons);
     this._hideDom(this.tabContent);
@@ -103,11 +108,7 @@ class cDialogSuper {
       element.style.display = 'none';
   }
   save() {
-    let me = this;
-    this.commit().then((result) => {
-      me._endLoad();
-      me.close();
-    });
+    this.close();
   }
   _endLoad() {
     this._showDom(this.popupButtons);
@@ -119,9 +120,6 @@ class cDialogSuper {
   }
   scrape() {}
   paint() {}
-  commit() {
-    return new Promise((resolve, reject) => resolve());
-  }
   show() {
     let me = this;
     this._startLoad();
@@ -138,7 +136,7 @@ class cDialogSuper {
       let sceneDetails = sBabylonUtility.createDefaultScene();
       this.sC.set(sceneDetails);
       this.sC.activate();
-      this.sC.loadScene(this.tag, this.fireData.val()).then(r => me._finishShow(r));
+      this.sC.loadScene(this.tag, this.fireSet.values).then(r => me._finishShow(r));
       return;
     }
 

@@ -8,6 +8,7 @@ class cBoundFields {
     this.parent = parent;
     this.container = container;
     this.focusLock = true;
+    this.renderImageUpdateNeeded = false;
 
     this.groups = {};
     this.scrapeCache = [];
@@ -87,12 +88,17 @@ class cBoundFields {
       return;
 
     let updates = this._generateUpdateList(newValues);
-    this.parent.fireSet.commitUpdateList(updates, this.parent.key);
+    if (updates) {
+      this.parent.fireSet.commitUpdateList(updates, this.parent.key);
 
-    for (let i in this.fields) {
-      let f = this.fields[i];
-      if (f.fireSetField)
-        sUtility.path(this.values, f.fireSetField, newValues[f.fireSetField]);
+//is this still needed???
+      for (let i in this.fields) {
+        let f = this.fields[i];
+        if (f.fireSetField)
+          sUtility.path(this.values, f.fireSetField, newValues[f.fireSetField]);
+      }
+
+      this.renderImageUpdateNeeded = true;
     }
   }
   _generateUpdateList(newValues) {
@@ -111,16 +117,6 @@ class cBoundFields {
       }
     }
     return updates;
-  }
-  commit(fireSet, imageBlob, renderImageFileName, key) {
-    let me = this;
-    return new Promise((resolve, reject) => {
-      fireSet.setBlob(key, imageBlob, renderImageFileName).then((uploadResult) => {
-        me.values['renderImageURL'] = uploadResult.downloadURL;
-        fireSet.set(key, me.values).then((r) => resolve(r));
-      });
-
-    });
   }
   paint(uiObject) {
     this.uiObject = uiObject;

@@ -5,19 +5,19 @@ class cDialogEditItem extends cDialogSuper {
     this.splitViewAlive = true;
     this.initScene = true;
   }
-  /*
-  commit() {
+  _renderImageUpdate() {
     let me = this;
-    return new Promise((resolve, reject) => {
-      me._startLoad();
-      me.fireFields.scrape();
-      let imageDataURL = gAPPP.renderEngine.getJPGDataURL().then((imageDataURL) => {
-        let blob = sUtility.dataURItoBlob(imageDataURL);
-        me.fireFields.commit(me.fireSet, blob, 'sceneRenderImage.jpg', me.key).then((r2) => resolve(r2));
+    gAPPP.renderEngine.getJPGDataURL().then((imageDataURL) => {
+      let blob = sUtility.dataURItoBlob(imageDataURL);
+      me.fireSet.setBlob(me.key, blob, 'sceneRenderImage.jpg').then(uploadResult => {
+        let updateInfo = {
+          field: 'renderImageURL',
+          newValue: uploadResult.downloadURL
+        };
+        me.fireSet.commitUpdateList([updateInfo], me.key);
       });
     });
   }
-  */
   show(key) {
     this.key = key;
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
