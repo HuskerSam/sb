@@ -31,8 +31,10 @@ class gAuthorization {
     return {};
   }
   signIn() {
+    let me = this;
     this.provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(this.provider);
+    firebase.auth().onAuthStateChanged((user) => me.onAuthStateChanged(user));
   }
   signOut() {
     firebase.auth().signOut();
@@ -82,7 +84,7 @@ class gAuthorization {
     for (let c in this.fireSets)
       this.fireSets[c].activate();
   }
-  _deactivate() {
+  _deactivateModels() {
     for (let c in this.fireSets)
       this.fireSets[c].deactivate();
   }
