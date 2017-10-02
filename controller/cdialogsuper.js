@@ -174,7 +174,12 @@ class cDialogSuper {
     if (this.fireFields)
       this.fireFields.paint(this.uiObject);
     if (this.sceneTools)
-      this.sceneTools.fireFields.paint(null);
+      this.sceneTools.fireFields.paint({
+        type: 'sceneTools',
+        uiObject: this.uiObject,
+        scene: this.uiObject.scene,
+        sceneController: this.sC
+      });
     this._endLoad();
     this._focus();
   }

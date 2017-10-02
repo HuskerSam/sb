@@ -103,6 +103,12 @@ class sBabylonUtility {
     }
     if (uiObject.type === 'mesh')
       return this.setMesh(valueCache, uiObject.mesh);
+    if (uiObject.type === 'sceneTools') {
+      return this.setSceneToolsDetails(uiObject, valueCache);
+    }
+  }
+  static setSceneToolsDetails(uiObject, valueCache) {
+    
   }
   static getNewSceneSerialized(fileDom) {
     let me = this;
