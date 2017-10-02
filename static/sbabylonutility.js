@@ -100,9 +100,11 @@ class sBabylonUtility {
     if (uiObject.type === 'mesh')
       return this.setMesh(valueCache, uiObject.mesh);
   }
-  static getNewSceneSerialized() {
+  static getNewSceneSerialized(fileDom) {
     let me = this;
-    let file = this.fileDom.files[0];
+    let file = null;
+    if (fileDom)
+      file = fileDom.files[0];
 
     if (file) {
       return new Promise((resolve, reject) => {

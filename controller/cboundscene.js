@@ -34,7 +34,8 @@ class cBoundScene {
           me._url(meshData['url']), me.sceneDetails.scene)
         .then((mesh) => resolve({
           type: 'mesh',
-          mesh
+          mesh,
+          scene: me.sceneDetails.scene
         }));
     });
   }

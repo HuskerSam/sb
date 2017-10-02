@@ -74,7 +74,7 @@ class cDialogCreateItem {
     }
     if (this.tag === 'scene') {
       return new Promise((resolve, reject) => {
-        me.getNewSceneSerialized().then((sceneSerial) => {
+        sBabylonUtility.getNewSceneSerialized(this.fileDom).then((sceneSerial) => {
           let title = me.fieldsValues['title'];
           gAPPP.a.modelSets['scene'].newScene(sceneSerial, title).then((r) => resolve(r));
         });
