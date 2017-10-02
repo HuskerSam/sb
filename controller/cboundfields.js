@@ -72,7 +72,7 @@ class cBoundFields {
       let nV = f.dom.value;
       if (f.type === 'boolean')
         nV = f.dom.checked;
-      let v = this.validate(f, nV);
+      let v = nV;//this.validate(f, nV);
       this.scrapeCache.push(v);
       this.valueCache[f.fireSetField] = v;
 
@@ -80,7 +80,7 @@ class cBoundFields {
         gAPPP.renderEngine.setColorLabel(f.dom);
     }
 
-    sBabylonUtility.updateUI(this.uiObject, this.values);
+    sBabylonUtility.updateUI(this.uiObject, this.valueCache);
     this._commitUpdates(this.valueCache);
   }
   _commitUpdates(newValues) {
@@ -88,10 +88,9 @@ class cBoundFields {
       return;
 
     let updates = this._generateUpdateList(newValues);
-    if (updates) {
+    if (updates.length > 0) {
       this.parent.fireSet.commitUpdateList(updates, this.parent.key);
 
-//is this still needed???
       for (let i in this.fields) {
         let f = this.fields[i];
         if (f.fireSetField)
@@ -106,8 +105,10 @@ class cBoundFields {
     for (let i in this.fields) {
       let f = this.fields[i];
       let v = newValues[f.fireSetField];
-      let o = this.values[f.fireSetField];
-
+      let o = sUtility.path(this.values, f.fireSetField);
+      if (o === undefined)
+        o = '';
+      o = o.toString();
       if (v !== o) {
         updates.push({
           field: f.fireSetField,
@@ -138,7 +139,7 @@ class cBoundFields {
     }
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
-    sBabylonUtility.updateUI(uiObject, this.values);
+    sBabylonUtility.updateUI(uiObject, valueCache);
   }
   _handleDataChange(values, type, fireData) {
     this.values = values;
@@ -149,8 +150,11 @@ class cBoundFields {
     let nV = sUtility.path(this.values, f.fireSetField);
     if (nV === undefined)
       nV = '';
-    let v = this.validate(f, nV);
+    let v = nV; // this.validate(f, nV);
     let o = this.valueCache[f.fireSetField];
+
+    if (o === undefined)
+      o = '';
 
     if (f.type === 'boolean') {
       if (f.dom !== document.activeElement) {
@@ -171,6 +175,7 @@ class cBoundFields {
       }
     }
     else {
+      o = o.toString(); //stringify old value for compare
       if (f.dom !== document.activeElement) {
         updateShown = true;
         f.dom.style.border = '';
@@ -198,21 +203,5 @@ class cBoundFields {
   }
   _blurField(domControl, field, e) {
     this._updateFieldDom(field);
-  }
-  validate(f, v) {
-    let r = v;
-
-    function isNumeric(v) {
-      return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
-    }
-    if (f.type === 'boolean') {
-      r = false;
-      if (v.toString().toLowerCase().substr(0, 1) === 't')
-        r = true;
-      if (v.toString().substr(0, 1) === '1')
-        r = true;
-      return r;
-    }
-    return r;
   }
 }

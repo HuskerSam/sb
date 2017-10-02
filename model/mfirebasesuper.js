@@ -65,7 +65,7 @@ class mFirebaseSuper {
     let fireUpdates = {};
     for (let i in fieldUpdates) {
       let upd = fieldUpdates[i];
-      let fieldPath = upd.field.replace(/\./g,/\//);
+      let fieldPath = upd.field.replace(/\./g, '/');
 
       let refPath = basePath + '/' + fieldPath;
       fireUpdates[refPath] = upd.newValue;

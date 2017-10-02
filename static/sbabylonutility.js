@@ -68,8 +68,11 @@ class sBabylonUtility {
 
       if (field.type === 'material') {
         let tD = gAPPP.a.modelSets['material'].fireDataValuesByTitle[value];
-        if (tD === undefined)
-          return;
+        if (tD === undefined){
+            let m = new BABYLON.StandardMaterial('material', gAPPP.renderEngine.sceneDetails.scene);
+            object.material = m;
+            return;
+        }
 
         let m = this.material(tD);
         object.material = m;
