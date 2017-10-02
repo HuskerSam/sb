@@ -26,6 +26,7 @@ class sBabylonUtility {
   }
   static texture(values) {
     let texture = new BABYLON.Texture(values['url']);
+
     function isNumeric(v) {
       return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
     }
@@ -68,10 +69,10 @@ class sBabylonUtility {
 
       if (field.type === 'material') {
         let tD = gAPPP.a.modelSets['material'].fireDataValuesByTitle[value];
-        if (tD === undefined){
-            let m = new BABYLON.StandardMaterial('material', gAPPP.renderEngine.sceneDetails.scene);
-            object.material = m;
-            return;
+        if (tD === undefined) {
+          let m = new BABYLON.StandardMaterial('material', gAPPP.renderEngine.sceneDetails.scene);
+          object.material = m;
+          return;
         }
 
         let m = this.material(tD);
@@ -122,14 +123,38 @@ class sBabylonUtility {
       });
     }
   }
+  static getNumberOrDefault(str, d) {
+    function isNumeric(v) {
+      return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
+    }
+    if (isNumeric(str))
+      return Number(str);
+    return d;
+  }
+  static getVector(str, x, y, z) {
+    if (str !== undefined)
+      if (str !== '') {
+        let parts = str.trim().split(',');
+        x = sBabylonUtility.getNumberOrDefault(parts[0], x);
+        y = sBabylonUtility.getNumberOrDefault(parts[1], y);
+        z = sBabylonUtility.getNumberOrDefault(parts[2], z);
+      }
+    return new BABYLON.Vector3(x, y, z);
+  }
   static createDefaultScene() {
     let scene = new BABYLON.Scene(gAPPP.renderEngine.engine);
     scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
-    let camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 10, -10), scene);
+
+    let cameraVector = sBabylonUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+    let lightVector = sBabylonUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
+    let camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, scene);
     camera.setTarget(BABYLON.Vector3.Zero());
-    let light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+    let light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, scene);
     light.intensity = .7;
-    return { light,
+    if (gAPPP.a.profile.lightIntensity !== undefined)
+      light.intensity = gAPPP.a.profile.lightIntensity;
+    return {
+      light,
       camera,
       scene
     };

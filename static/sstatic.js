@@ -225,18 +225,18 @@ __localStaticStorageForBindingFields['userProfile'] = [{
     uiObjectField: null,
     group: 'font'
   }, {
-    title: 'Camera Height (-10)',
-    fireSetField: 'cameraHeight',
-    uiObjectField: null,
-    group: 'camera'
-  }, {
-    title: 'Camera Distance (10)',
-    fireSetField: 'cameraDistance',
+    title: 'Camera Vector (0,10,-10)',
+    fireSetField: 'cameraVector',
     uiObjectField: null,
     group: 'camera'
   }, {
     title: 'Light Intensity (.7)',
     fireSetField: 'lightIntensity',
+    uiObjectField: null,
+    group: 'light'
+  },{
+    title: 'Light Vector (0,1,0)',
+    fireSetField: 'lightVector',
     uiObjectField: null,
     group: 'light'
   }, {
@@ -257,7 +257,7 @@ __localStaticStorageForBindingFields['userProfile'] = [{
     type: 'boolean',
     group: 'extras'
   }, {
-    title: 'No Focus Lock',
+    title: 'No Input Focus Lock',
     fireSetField: 'inputFocusLock',
     uiObjectField: null,
     type: 'boolean',
