@@ -86,6 +86,9 @@ class sBabylonUtility {
     if (!uiObject)
       return;
 
+    if (uiObject.scene !== gAPPP.renderEngine.sceneDetails.scene)
+      return;
+
     if (uiObject.type === 'texture') {
       uiObject.material.diffuseTexture = this.texture(valueCache);
       return;

@@ -25,7 +25,7 @@ class gApplication {
 
     this.dialogs['mesh-edit'] = new cDialogEditItem('mesh');
     this.dialogs['material-edit'] = new cDialogEditItem('material');
-    this.dialogs['textur-edit'] = new cDialogEditItem('texture');
+    this.dialogs['texture-edit'] = new cDialogEditItem('texture');
     this.dialogs['scene-edit'] = new cDialogEditItem('scene');
 
     this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', ['id']);

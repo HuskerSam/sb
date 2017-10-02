@@ -70,7 +70,7 @@ class cBoundScene {
   _loadSceneTexture(textureData) {
     let me = this;
     return new Promise((resolve, reject) => {
-      let s = gAPPP.renderEngine.addGround('ground1', 6, 6, 20, me.sceneDetails.scene);
+      let s = sBabylonUtility.addGround('ground1', 6, 6, 20, me.sceneDetails.scene);
       me.extraSceneObjects.push(s);
 
       let material = new BABYLON.StandardMaterial('material', me.sceneDetails.scene);

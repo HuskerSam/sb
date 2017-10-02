@@ -136,7 +136,7 @@ class cDialogSuper {
       let sceneDetails = sBabylonUtility.createDefaultScene();
       this.sC.set(sceneDetails);
       this.sC.activate();
-      this.sC.loadScene(this.tag, this.fireSet.values).then(r => me._finishShow(r));
+      this.sC.loadScene(this.tag, this.fireFields.values).then(r => me._finishShow(r));
       return;
     }
 

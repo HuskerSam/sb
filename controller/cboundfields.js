@@ -80,7 +80,7 @@ class cBoundFields {
         gAPPP.renderEngine.setColorLabel(f.dom);
     }
 
-    sBabylonUtility.updateUI(this.uiObject, this.valueCache);
+    sBabylonUtility.updateUI(this.uiObject, this.values);
     this._commitUpdates(this.valueCache);
   }
   _commitUpdates(newValues) {
@@ -138,7 +138,7 @@ class cBoundFields {
     }
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
-    sBabylonUtility.updateUI(uiObject, this.valueCache);
+    sBabylonUtility.updateUI(uiObject, this.values);
   }
   _handleDataChange(values, type, fireData) {
     this.values = values;
