@@ -4,7 +4,7 @@ class cDialogSuper {
 
     this.tag = tag;
     this.key = null;
-    this.fields = sStatic.bindingFields[this.tag];
+    this.fields = sStatic.bindingFieldsCloned(this.tag);
     this.fireSet = gAPPP.a.modelSets[this.tag];
     this.fireFields = null;
     this.uiJSON = 'N/A';
@@ -38,7 +38,7 @@ class cDialogSuper {
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas)
-      this.sceneTools = new cSceneToolsBand(this.canvas, this.sC);
+      this.sceneTools = new cSceneToolsBand(this.tag, this.canvas, this.sC);
 
     this.rotateState = 'vertical';
   }
@@ -87,6 +87,8 @@ class cDialogSuper {
   close() {
     if (this.fireFields)
       this.fireFields.active = false;
+    if (this.sceneTools)
+      this.sceneTools.fireFields.active = false;
     if (this.fireFields.renderImageUpdateNeeded) {
       this.fireFields.renderImageUpdateNeeded = false;
       this._renderImageUpdate();
@@ -171,6 +173,8 @@ class cDialogSuper {
 
     if (this.fireFields)
       this.fireFields.paint(this.uiObject);
+    if (this.sceneTools)
+      this.sceneTools.fireFields.paint(null);
     this._endLoad();
     this._focus();
   }

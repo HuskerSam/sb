@@ -1,10 +1,11 @@
 /* button bar controller for canvas/scene */
 class cSceneToolsBand {
-  constructor(canvas, sceneController) {
+  constructor(classPrefix, canvas, sceneController) {
     let me = this;
     this.sC = sceneController;
     this.canvas = canvas;
     this.expanded = false;
+    this.classPrefix = classPrefix;
 
     this.container = document.createElement('div');
     this.container.setAttribute('class', 'scene-tools-band-container sb-floating-toolbar-item');
@@ -26,11 +27,12 @@ class cSceneToolsBand {
         this.buttonContainer.style.display = 'none';
         this.container.appendChild(this.buttonContainer);
     */
-    this.fields = sStatic.bindingFields['sceneToolsBar'];
+    this.fields = sStatic.bindingFieldsCloned('sceneToolsBar');
     this.fieldsContainer = document.createElement('div');
     this.fieldsContainer.setAttribute('class', 'fields-container');
     this.innerContainer.appendChild(this.fieldsContainer);
-    let domClassPrefix = 'scene-tools-band-fields-';
+    this.classPrefix = classPrefix;
+    let domClassPrefix = this.classPrefix + '-scene-tools-band-fields-';
     this.fireSet = gAPPP.a.modelSets['userProfile'];
     this.fireFields = new cBoundFields(this.fields, domClassPrefix, this.fieldsContainer, this);
     this.fireSet.childListeners.push((values, type, fireData) =>

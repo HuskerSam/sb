@@ -2,6 +2,9 @@ class sStatic {
   static get bindingFields() {
     return __localStaticStorageForBindingFields;
   }
+  static bindingFieldsCloned(tag) {
+    return JSON.parse(JSON.stringify(__localStaticStorageForBindingFields[tag]));
+  }
 }
 let __localStaticStorageForBindingFields = {};
 __localStaticStorageForBindingFields['mesh'] = [{
