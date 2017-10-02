@@ -105,9 +105,9 @@ class cBoundScene {
       if (this.gridShown) {
         this.showGrid(true);
       }
-      
+
       this.gridShown = true;
-      let gridDepth = sBabylonUtility.getNumberOrDefault(gAPPP.a.profile.floorGridDepth, 5);
+      let gridDepth = sBabylonUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
       let grid = BABYLON.Mesh.CreateGround("ground1", gridDepth, gridDepth, 2, this.sceneDetails.scene);
       let material = new BABYLON.StandardMaterial('scenematerialforfloorgrid', this.sceneDetails.scene);
       let texture = new BABYLON.Texture('greengrid.png');
@@ -115,15 +115,33 @@ class cBoundScene {
       material.diffuseTexture = texture;
       texture.vScale = gridDepth;
       texture.uScale = gridDepth;
-      //material.wireframe = true;
       grid.material = material;
       this._addObject('grid', grid);
     } else {
-      if (! this.gridShown)
+      if (!this.gridShown)
         return;
       this.gridShown = false;
       this._removeObject('grid');
     }
   }
-  showGuides(hide) { }
+  showGuides(hide) {
+    if (!hide) {
+      if (this.guidesShown) {
+        this.showGuides(true);
+      }
+      let gridDepth = sBabylonUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
+      this.guideObjects = sBabylonUtility.showAxis(gridDepth, this.sceneDetails.scene);
+
+      for (let i in this.guideObjects)
+        this.extraSceneObjects['guideObject' + i.toString()] = this.guideObjects[i];
+      this.guidesShown = true;
+    } else {
+      if (!this.guidesShown)
+        return;
+      this.guidesShown = false;
+      for (let i in this.guideObjects)
+        this._removeObject('guideObject' + i.toString());
+      this.guideObjects = [];
+    }
+  }
 }

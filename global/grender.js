@@ -27,6 +27,8 @@ class gRender {
         me.scene.render();
       });
     });
+    gAPPP.renderEngine.sceneDetails.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
+
     this.engine.resize();
   }
   loadMesh(meshName, path, fileName, scene) {

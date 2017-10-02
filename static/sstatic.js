@@ -290,8 +290,8 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   type: 'boolean',
   uiObjectField: null
 }, {
-  title: 'Grid Depth (4)',
-  fireSetField: 'floorGridDepth',
+  title: 'Grid and Guides Depth (4)',
+  fireSetField: 'gridAndGuidesDepth',
   uiObjectField: null
 }, {
   title: 'Show Guides',
