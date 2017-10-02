@@ -11,7 +11,7 @@ class cSceneToolsBand {
     this.canvas.parentNode.appendChild(this.container);
 
     this.collapseButton = document.createElement('button');
-    this.collapseButton.innerHTML = '<i class="material-icons">settings</i>';
+    this.collapseButton.innerHTML = 'Options<br><i class="material-icons">settings</i>';
     this.collapseButton.setAttribute('class', 'btn btn-primary-outline');
     this.collapseButton.addEventListener('click', e => me.toggle(), false);
     this.container.appendChild(this.collapseButton);
@@ -22,8 +22,19 @@ class cSceneToolsBand {
     this.buttonContainer.style.display = 'none';
     this.container.appendChild(this.buttonContainer);
 
-    this.addShowSceneFloorGrid();
-    this.addShowSceneRawButton();
+    this.fields = sStatic.bindingFields['sceneToolsBar'];
+    this.fieldsContainer = document.createElement('div');
+    this.fieldsContainer.setAttribute('class', 'fields-container');
+    this.buttonContainer.appendChild(this.fieldsContainer);
+      let domClassPrefix = 'scene-tools-band-fields-';
+      this.fireSet = gAPPP.a.modelSets['userProfile'];
+      this.fireFields = new cBoundFields(this.fields, domClassPrefix, this.fieldsContainer, this);
+      this.fireSet.childListeners.push((values, type, fireData) =>
+        me.fireFields._handleDataChange(values, type, fireData));
+
+
+
+//    this.addShowSceneRawButton();
   }
   _addButton(btn) {
     this.buttonContainer.appendChild(btn);

@@ -209,59 +209,90 @@ __localStaticStorageForBindingFields['scene'] = [{
 }];
 
 __localStaticStorageForBindingFields['userProfile'] = [{
-    title: 'Canvas Color (1,1,1)',
-    fireSetField: 'canvasColor',
-    uiObjectField: null,
-    type: 'color',
-    group: 'main'
-  }, {
-    title: 'Font Family',
-    fireSetField: 'fontFamily',
-    uiObjectField: null,
-    group: 'font'
-  }, {
-    title: 'Font Size',
-    fireSetField: 'fontSize',
-    uiObjectField: null,
-    group: 'font'
-  }, {
-    title: 'Camera Vector (0,10,-10)',
-    fireSetField: 'cameraVector',
-    uiObjectField: null,
-    group: 'camera'
-  }, {
-    title: 'Light Intensity (.7)',
-    fireSetField: 'lightIntensity',
-    uiObjectField: null,
-    group: 'light'
-  },{
-    title: 'Light Vector (0,1,0)',
-    fireSetField: 'lightVector',
-    uiObjectField: null,
-    group: 'light'
-  }, {
-    title: 'Show Grid',
-    fireSetField: 'showFloorGrid',
-    type: 'boolean',
-    uiObjectField: null,
-    group: 'extras'
-  }, {
-    title: 'Grid Depth (4)',
-    fireSetField: 'floorGridDepth',
-    uiObjectField: null,
-    group: 'extras'
-  }, {
-    title: 'Show Guides',
-    fireSetField: 'showSceneGuides',
-    uiObjectField: null,
-    type: 'boolean',
-    group: 'extras'
-  }, {
-    title: 'No Input Focus Lock',
-    fireSetField: 'inputFocusLock',
-    uiObjectField: null,
-    type: 'boolean',
-    group: 'inputFocusLock'
-  }
+  title: 'Font Family',
+  fireSetField: 'fontFamily',
+  uiObjectField: null,
+  group: 'font'
+}, {
+  title: 'Font Size',
+  fireSetField: 'fontSize',
+  uiObjectField: null,
+  group: 'font'
+}, {
+  title: 'Canvas Color (1,1,1)',
+  fireSetField: 'canvasColor',
+  uiObjectField: null,
+  type: 'color',
+  group: 'main'
+}, {
+  title: 'Camera Vector (0,10,-10)',
+  fireSetField: 'cameraVector',
+  uiObjectField: null,
+  group: 'camera'
+}, {
+  title: 'Light Intensity (.7)',
+  fireSetField: 'lightIntensity',
+  uiObjectField: null,
+  group: 'light'
+}, {
+  title: 'Light Vector (0,1,0)',
+  fireSetField: 'lightVector',
+  uiObjectField: null,
+  group: 'light'
+}, {
+  title: 'Show Grid',
+  fireSetField: 'showFloorGrid',
+  type: 'boolean',
+  uiObjectField: null,
+  group: 'extras'
+}, {
+  title: 'Grid Depth (4)',
+  fireSetField: 'floorGridDepth',
+  uiObjectField: null,
+  group: 'extras'
+}, {
+  title: 'Show Guides',
+  fireSetField: 'showSceneGuides',
+  uiObjectField: null,
+  type: 'boolean',
+  group: 'extras'
+}, {
+  title: 'No Input Focus Lock',
+  fireSetField: 'inputFocusLock',
+  uiObjectField: null,
+  type: 'boolean',
+  group: 'inputFocusLock'
+}];
 
-];
+__localStaticStorageForBindingFields['sceneToolsBar'] = [{
+  title: 'Canvas Color (1,1,1)',
+  fireSetField: 'canvasColor',
+  uiObjectField: null,
+  type: 'color'
+}, {
+  title: 'Camera Vector (0,10,-10)',
+  fireSetField: 'cameraVector',
+  uiObjectField: null
+}, {
+  title: 'Light Intensity (.7)',
+  fireSetField: 'lightIntensity',
+  uiObjectField: null
+}, {
+  title: 'Light Vector (0,1,0)',
+  fireSetField: 'lightVector',
+  uiObjectField: null
+}, {
+  title: 'Show Grid',
+  fireSetField: 'showFloorGrid',
+  type: 'boolean',
+  uiObjectField: null
+}, {
+  title: 'Grid Depth (4)',
+  fireSetField: 'floorGridDepth',
+  uiObjectField: null
+}, {
+  title: 'Show Guides',
+  fireSetField: 'showSceneGuides',
+  uiObjectField: null,
+  type: 'boolean'
+}];

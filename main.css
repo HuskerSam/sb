@@ -296,7 +296,7 @@ html, body {
 
 .floating-right-profile-buttons {
   position: absolute;
-  z-index: 1;
+  z-index: 100;
   right: 4px;
   top: 4px;
   background: rgba(0, 0, 0, .15);
@@ -316,7 +316,9 @@ html, body {
 .btn {
   font-size: inherit;
 }
-
+#user-profile-settings-dialog {
+  z-index: 1200;
+}
 #user-profile-settings-dialog .popup-content {
   height: 100%;
   overflow: auto;
@@ -347,7 +349,9 @@ button i.material-icons {
 }
 
 .scene-tools-band-container .button-container {
-  display: inline-block;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: scroll;
 }
 
 #utility-dialog-show-ace-editor {
