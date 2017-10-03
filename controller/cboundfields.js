@@ -49,6 +49,16 @@ class cBoundFields {
       c.appendChild(t);
     }
 
+    if (f.type === 'url'){
+      c.classList.add('url-type-input-group');
+      let a = document.createElement('a');
+      a.innerText = f.title;
+      a.setAttribute('href', '');
+      a.setAttribute('target', '_blank');
+      l.innerHTML = '';
+      f.urlAnchor = a;
+      l.appendChild(a);
+    }
     c.classList.add('form-group');
     t.addEventListener('click', (e) => me.scrape(e), false);
     t.addEventListener('input', (e) => me.scrape(e), false);
@@ -72,7 +82,6 @@ class cBoundFields {
     if (field.type === 'material') {
       element.setAttribute('list', 'materialdatatitlelookuplist');
     }
-
   }
   scrape(e) {
     if (!this.active)
@@ -160,10 +169,9 @@ class cBoundFields {
   }
   _updateFieldDom(f) {
     let updateShown = false;
-    let nV = sUtility.path(this.values, f.fireSetField);
-    if (nV === undefined)
-      nV = '';
-    let v = nV; // this.validate(f, nV);
+    let v = sUtility.path(this.values, f.fireSetField);
+    if (v === undefined)
+      v = '';
     let o = this.valueCache[f.fireSetField];
 
     if (o === undefined)
@@ -205,6 +213,10 @@ class cBoundFields {
           f.dom.style.border = 'solid 2px red';
         else
           f.dom.style.border = '';
+      }
+
+      if (f.type === 'url') {
+        f.urlAnchor.setAttribute('href', v);
       }
     }
 

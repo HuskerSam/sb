@@ -63,6 +63,12 @@ __localStaticStorageForBindingFields['mesh'] = [{
   fireSetField: 'simpleUIDetails.rotateZ',
   uiObjectField: 'rotation.z',
   group: 'rotate'
+}, {
+  title: 'Url',
+  fireSetField: 'url',
+  uiObjectField: null,
+  type: 'url',
+  group: 'url'
 }];
 
 __localStaticStorageForBindingFields['material'] = [{
@@ -165,12 +171,6 @@ __localStaticStorageForBindingFields['texture'] = [{
   uiObjectField: null,
   group: 'title'
 }, {
-  title: 'Url',
-  fireSetField: 'url',
-  uiObjectField: null,
-  type: 'url',
-  group: 'options'
-}, {
   title: 'has Alpha',
   fireSetField: 'hasAlpha',
   uiObjectField: 'hasAlpha',
@@ -196,6 +196,12 @@ __localStaticStorageForBindingFields['texture'] = [{
   fireSetField: 'uScale',
   uiObjectField: 'uScale',
   group: 'scale'
+}, {
+  title: 'Url',
+  fireSetField: 'url',
+  uiObjectField: null,
+  type: 'url',
+  group: 'url'
 }];
 
 __localStaticStorageForBindingFields['scene'] = [{

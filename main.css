@@ -388,3 +388,6 @@ button i.material-icons {
 .create-dialog .modal-dialog {
   background: rgba(255,255,255,.8);
 }
+.url-type-input-group {
+  width: 25em;
+}
