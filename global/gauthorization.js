@@ -27,7 +27,8 @@ class gAuthorization {
   get profile() {
     let model = this.modelSets['userProfile'];
     if (model.active)
-      return model.profile;
+      if (model.profile)
+        return model.profile;
     return {};
   }
   signIn() {
@@ -46,9 +47,9 @@ class gAuthorization {
 
     if (this.loggedIn) {
       loginPage.style.display = 'none';
-      mainPage.style.display = '';
+      mainPage.style.display = 'block';
     } else {
-      loginPage.style.display = '';
+      loginPage.style.display = 'block';
       mainPage.style.display = 'none';
     }
   }
@@ -67,7 +68,7 @@ class gAuthorization {
       //check for profile reset
       let searchParams = new URLSearchParams(window.location.search);
       if (searchParams.get('reset') === 'true')
-        this.modelSets['userProfile'].setObject(null);
+        this.resetProfile();
 
       //save user data to firebase (WWWHHHYYYY?)
       firebase.database().ref('users/' + this.currentUser.uid).set(this.currentUser.toJSON());
@@ -81,6 +82,12 @@ class gAuthorization {
     }
 
     this.updateAuthUI();
+  }
+  resetProfile() {
+    this.modelSets['userProfile'].setObject({
+      fontSize: '10pt',
+      canvasColor: '.7,.7,1'
+    });
   }
   _activateModels() {
     for (let c in this.fireSets)

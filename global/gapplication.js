@@ -39,6 +39,9 @@ class gApplication {
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => me.expandAllBands(), false);
     document.querySelector('#collapse-all-toolbands').addEventListener('click', e => me.collapseAllBands(), false);
     document.querySelector('#user-profile-settings-button').addEventListener('click', e => me.dialogs['user-profile'].show(), false);
+    document.querySelector('#global-toolbar-decrease-fontsize').addEventListener('click', e => me.increaseFontSize(true), false);
+    document.querySelector('#global-toolbar-increase-fontsize').addEventListener('click', e => me.increaseFontSize(), false);
+    document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => me.a.resetProfile(), false);
   }
   expandAllBands(){
     for (let i in this.toolbarItems)
@@ -47,5 +50,28 @@ class gApplication {
   collapseAllBands() {
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(false);
+  }
+  increaseFontSize(decrease) {
+    let originalFontSize = this.a.profile.fontSize;
+    if (originalFontSize === undefined)
+      originalFontSize = '';
+    let size = parseFloat(originalFontSize);
+    if(isNaN(size))
+      size = 9;
+    let units = 'pt';
+    if (originalFontSize.indexOf('px') !== -1)
+      units = 'px';
+    if (decrease)
+      size -= 1;
+    else
+      size += 1;
+    let newFontSize = size.toString() + units;
+
+    let fontUpdate = {
+      field: 'fontSize',
+      newValue: newFontSize,
+      oldValue: originalFontSize
+    }
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([fontUpdate]);
   }
 }

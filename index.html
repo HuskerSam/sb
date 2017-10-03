@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <div id="login-page" style="display:none;position:absolute;z-index:100;top:0px;left:0px;width:100%;">
+  <div id="login-page" style="display:none;">
     <h3>Scene Builder</h3>
     <div>
       <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
@@ -26,19 +26,25 @@
   </div>
   <canvas id="renderCanvas"></canvas>
   <div id="main-page" style="display:none;">
-    <div class="floating-right-profile-buttons" style="text-align:left;white-space:nowrap;">
-      <button id="sign-out-button" class="btn btn-primary-outline single-toolbar-btn">
-        <i class="material-icons">account_box</i> Sign out
+    <div class="floating-right-profile-buttons">
+      <button id="user-profile-settings-button" class="btn btn-primary-outline single-toolbar-btn">
+        <i class="material-icons">settings_applications</i>
       </button>
       <br>
       <button id="expand-all-toolbands" class="btn btn-primary-outline single-toolbar-btn">
         <i class="material-icons" style="transform: rotate(145deg)">rotate_right</i>
       </button>
+      <br>
       <button id="collapse-all-toolbands" class="btn btn-primary-outline single-toolbar-btn">
         <i class="material-icons" style="transform: rotate(35deg)">rotate_left</i>
       </button>
-      <button id="user-profile-settings-button" class="btn btn-primary-outline single-toolbar-btn">
-        <i class="material-icons">settings_applications</i>
+      <br>
+      <button id="global-toolbar-increase-fontsize" class="btn btn-primary-outline single-toolbar-btn">
+        <i class="material-icons">format_size</i>
+      </button>
+      <br>
+      <button id="global-toolbar-decrease-fontsize" class="btn btn-primary-outline single-toolbar-btn">
+        <i class="material-icons" style="transform: rotateY(180deg)">format_size</i>
       </button>
     </div>
     <div id="sb-floating-toolbar-expanded">
@@ -95,10 +101,17 @@
           <div class="popup-content">
             <img class="user-image-display" />
             <div class="form-group user-profile-info-block">
+              <button id="sign-out-button" style="float:right;font-size:1.3em;" class="btn btn-primary-outline single-toolbar-btn">
+                <i class="material-icons">account_box</i> Sign out
+              </button>
               <label>User Profile Information</label>
               <br>
               <span class="user-info"></span>
+              <button id="user-profile-dialog-reset-button" style="float:right;clear:both;" class="btn btn-primary-outline single-toolbar-btn">
+                <i class="material-icons">account_circle</i> Reset Profile
+              </button>
             </div>
+
             <div style="clear:both"></div>
             <div class="fields-container"></div>
           </div>
@@ -109,7 +122,7 @@
   <!-- UTILITY DIALOGS END -->
 
   <!-- CREATE DIALOGS -->
-  <div class="modal fade" id="mesh-upload-dialog" role="dialog">
+  <div class="modal fade create-dialog" id="mesh-upload-dialog" role="dialog">
     <div class="modal-dialog">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -135,7 +148,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="texture-upload-dialog" role="dialog">
+  <div class="modal fade create-dialog" id="texture-upload-dialog" role="dialog">
     <div class="modal-dialog">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -161,7 +174,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="material-upload-dialog" role="dialog">
+  <div class="modal fade create-dialog" id="material-upload-dialog" role="dialog">
     <div class="modal-dialog">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -186,7 +199,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="scene-upload-dialog" role="dialog">
+  <div class="modal fade create-dialog" id="scene-upload-dialog" role="dialog">
     <div class="modal-dialog">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>

@@ -15,7 +15,7 @@ class mFirebaseSuper {
       return;
     this.notiRef.off();
     this.active = false;
-    this.notifyChildren(fireData, 'clear');
+  //  this.notifyChildren({ key: null }, 'clear');
   }
   activate(referencePath) {
     if (this.active)

@@ -124,18 +124,18 @@ __localStaticStorageForBindingFields['material'] = [{
   type: 'texture',
   group: 'emissiveColor'
 }, {
-  title: 'Specular Power (64 default)',
+  title: 'Specular Power (64)',
   fireSetField: 'specularPower',
   uiObjectField: 'specularPower',
   group: 'specularPower'
 }, {
-  title: 'Specular > Alpha',
+  title: 'Specular over Alpha',
   fireSetField: 'useSpecularOverAlpha',
   uiObjectField: 'useSpecularOverAlpha',
   group: 'specularPower',
   type: 'boolean'
 }, {
-  title: 'Gloss From Specular Map Alpha',
+  title: 'Gloss From Specular',
   fireSetField: 'useGlossinessFromSpecularMapAlpha',
   uiObjectField: 'specularPower',
   group: 'specularPower',
