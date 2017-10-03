@@ -111,25 +111,38 @@ class cToolband {
     let me = this;
     let values = fireData.val();
     let key = fireData.key;
-    let html = `<div class="firebase-item ${this.tag}-${key} band-background-preview"><div class="band-title"></div>`;
-    html += `<button class="band-remove-button btn-toolbar-icon"><i class="material-icons">delete</i></button>`;
-    html += `<button class="band-details-button btn-toolbar-icon"><i class="material-icons">settings</i></button>`;
+    let html = `<div class="firebase-item ${this.tag}-${key} band-background-preview">`;
+
+    html += '<div class="dropdown band-menu-button">';
+    html += '<button class="btn-toolbar-icon" type="button" data-toggle="dropdown">';
+    html += '<i class="material-icons">menu</i></button>';
+    html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
+    html += '<li role="presentation"><a role="menuitem" class="edit-item" tabindex="-1">Edit</a></li>';
+    html += '<li role="presentation"><a role="menuitem" class="clone-item" tabindex="-1">Clone</a></li>';
+    html += '<li role="presentation" class="divider"></li>';
+    html += '<li role="presentation"><a role="menuitem" class="delete-item" tabindex="-1">Delete</a></li>';
+    html += '</ul>';
+    html += '</div>';
+    html += `<br><div class="band-title"></div>`;
     html += `</div>`
 
     let outer = document.createElement('div');
     outer.innerHTML = html.trim();
     let newNode = outer.childNodes[0];
+
+    let i = newNode.querySelector('li a.edit-item');
+    i.addEventListener('click', e => me.showEditPopup(e, key), true);
+    i = newNode.querySelector('li a.delete-item');
+    i.addEventListener('click', e => me.removeElement(e, key), true);
+    i = newNode.querySelector('li a.clone-item');
+    i.addEventListener('click', e => me.cloneElement(e, key), true);
+
     this.nodeApplyValues(values, newNode);
 
-    let remove_div = outer.querySelector('.band-remove-button');
-    if (remove_div)
-      remove_div.addEventListener('click', (e) => me.removeElement(e, key), false);
-
-    let details_div = outer.querySelector('.band-details-button');
-    if (details_div)
-      details_div.addEventListener('click', (e) => me.showEditPopup(e, key), false);
-
     return newNode;
+  }
+  cloneElement(e, key) {
+    alert('clone' + key);
   }
   removeElement(e, key) {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
