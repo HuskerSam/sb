@@ -75,6 +75,7 @@ class gAuthorization {
     } else {
       this.currentUser = null;
       this.loggedIn = false;
+      this.uid = null;
       this._deactivateModels();
     }
 

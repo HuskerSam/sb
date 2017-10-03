@@ -171,7 +171,7 @@ __localStaticStorageForBindingFields['texture'] = [{
   type: 'url',
   group: 'options'
 }, {
-  title: 'Alpha',
+  title: 'has Alpha',
   fireSetField: 'hasAlpha',
   uiObjectField: 'hasAlpha',
   type: 'boolean',
