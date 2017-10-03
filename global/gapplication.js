@@ -53,19 +53,13 @@ class gApplication {
   }
   increaseFontSize(decrease) {
     let originalFontSize = this.a.profile.fontSize;
-    if (originalFontSize === undefined)
-      originalFontSize = '';
-    let size = parseFloat(originalFontSize);
-    if(isNaN(size))
-      size = 9;
-    let units = 'pt';
-    if (originalFontSize.indexOf('px') !== -1)
-      units = 'px';
+    let size = sUtility.parseFontSize(originalFontSize);
+
     if (decrease)
       size -= 1;
     else
       size += 1;
-    let newFontSize = size.toString() + units;
+    let newFontSize = size.toString();
 
     let fontUpdate = {
       field: 'fontSize',

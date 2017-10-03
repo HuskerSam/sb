@@ -35,9 +35,9 @@ class mFirebaseProfile extends mFirebaseSuper {
     }
 
     let css = 'html, body { ';
-    if (this.profile.fontSize !== '')
-      css += 'font-size:' + this.profile.fontSize + ';';
-    if (this.profile.fontFamily !== '')
+    let fontSize = sUtility.parseFontSize(this.profile.fontSize);
+    css += 'font-size:' + fontSize.toString() + 'pt;';
+    if (this.profile.fontFamily)
       css += 'font-family:' + this.profile.fontFamily + ';';
     css += '}';
 

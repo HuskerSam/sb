@@ -29,6 +29,8 @@ class gAuthorization {
     if (model.active)
       if (model.profile)
         return model.profile;
+      else
+        this.resetProfile();
     return {};
   }
   signIn() {
@@ -85,8 +87,9 @@ class gAuthorization {
   }
   resetProfile() {
     this.modelSets['userProfile'].setObject({
-      fontSize: '10pt',
-      canvasColor: '.7,.7,1'
+      fontSize: '12',
+      canvasColor: '.4,.9,1',
+      lightIntensity: '.8'
     });
   }
   _activateModels() {

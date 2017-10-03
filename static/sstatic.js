@@ -83,12 +83,12 @@ __localStaticStorageForBindingFields['material'] = [{
   type: 'boolean',
   group: 'options'
 }, {
-  title: 'Alpha (0-1)',
+  title: 'Alpha Level',
   fireSetField: 'alpha',
   uiObjectField: 'alpha',
   group: 'options'
 }, {
-  title: 'Diffuse Color r,g,b (0-1)',
+  title: 'Diffuse Color (main)',
   fireSetField: 'diffuseColor',
   uiObjectField: 'diffuseColor',
   type: 'color',
@@ -124,7 +124,7 @@ __localStaticStorageForBindingFields['material'] = [{
   type: 'texture',
   group: 'emissiveColor'
 }, {
-  title: 'Specular Power (64)',
+  title: 'Specular Power',
   fireSetField: 'specularPower',
   uiObjectField: 'specularPower',
   group: 'specularPower'
@@ -217,28 +217,28 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   uiObjectField: null,
   group: 'font'
 }, {
-  title: 'Font Size',
+  title: 'Font Size (pt)',
   fireSetField: 'fontSize',
   uiObjectField: null,
   group: 'font'
 }, {
-  title: 'Canvas Color (1,1,1)',
+  title: 'Canvas Color',
   fireSetField: 'canvasColor',
   uiObjectField: null,
   type: 'color',
   group: 'main'
 }, {
-  title: 'Camera Vector (0,10,-10)',
+  title: 'Camera Vector',
   fireSetField: 'cameraVector',
   uiObjectField: null,
   group: 'camera'
 }, {
-  title: 'Light Intensity (.7)',
+  title: 'Light Intensity',
   fireSetField: 'lightIntensity',
   uiObjectField: null,
   group: 'light'
 }, {
-  title: 'Light Vector (0,1,0)',
+  title: 'Light Vector',
   fireSetField: 'lightVector',
   uiObjectField: null,
   group: 'light'
@@ -249,7 +249,7 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   uiObjectField: null,
   group: 'extras'
 }, {
-  title: 'Grid Depth (4)',
+  title: 'Grid Depth',
   fireSetField: 'floorGridDepth',
   uiObjectField: null,
   group: 'extras'
@@ -268,20 +268,20 @@ __localStaticStorageForBindingFields['userProfile'] = [{
 }];
 
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
-  title: 'Canvas Color (1,1,1)',
+  title: 'Canvas Color',
   fireSetField: 'canvasColor',
   uiObjectField: null,
   type: 'color'
 }, {
-  title: 'Camera Vector (0,10,-10)',
+  title: 'Camera Vector',
   fireSetField: 'cameraVector',
   uiObjectField: null
 }, {
-  title: 'Light Intensity (.7)',
+  title: 'Light Intensity',
   fireSetField: 'lightIntensity',
   uiObjectField: 'sceneDetails.light.intensity'
 }, {
-  title: 'Light Vector (0,1,0)',
+  title: 'Light Vector',
   fireSetField: 'lightVector',
   uiObjectField: null
 }, {
@@ -290,7 +290,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   type: 'boolean',
   uiObjectField: null
 }, {
-  title: 'Grid and Guides Depth (4)',
+  title: 'Grid and Guides Depth',
   fireSetField: 'gridAndGuidesDepth',
   uiObjectField: null
 }, {

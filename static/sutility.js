@@ -68,4 +68,16 @@ class sUtility {
     });
     return blob;
   }
+  static parseFontSize(str) {
+      if (str === undefined)
+        str = '';
+      let size = parseFloat(str);
+      if(isNaN(size))
+        size = 9;
+      if (size < 4)
+        size = 4;
+      if (size > 30)
+        size = 30;
+      return size;
+  }
 }
