@@ -142,17 +142,29 @@ html, body {
 }
 
 .form-group {
-  width: 15em;
+  width: 10em;
   display: inline-block;
   font-size: inherit;
+  margin-right:2px;
 }
-
+.form-group label {
+  font-size: .7em;
+  margin-bottom: 1px;
+}
 .form-group input {
   font-size: inherit;
+  height:2em;
+  padding: 12px 4px;
 }
-
+.checkboxgroup input {
+  width: 2em;
+  height: 1em;
+}
+.checkboxgroup label {
+  font-size: 1em;
+}
 .modal-dialog {
-  background: white;
+  background: rgba(255,255,255,.1);
 }
 
 .edit-modal .modal-dialog {
@@ -280,10 +292,10 @@ html, body {
 .form-group-container-group {
   display: inline-block;
   border: solid 1px silver;
-  border-radius: 12px;
-  padding: 4px;
-  margin: 4px;
-  background: rgba(220, 175, 200, .3);
+  border-radius: 5px;
+  padding: 2px;
+  margin: 2px;
+  background: rgba(255,255,255, .2);
 }
 
 .form-group-container-group .form-group {
@@ -351,4 +363,13 @@ button i.material-icons {
 
 #utility-dialog-show-ace-editor {
   z-index: 10000;
+}
+.user-profile-info-block {
+  padding: 12px;
+  background: rgba(0,0,0,.3);
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  border: solid silver 2px;
+  width: auto;
 }

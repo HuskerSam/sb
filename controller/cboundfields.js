@@ -39,6 +39,7 @@ class cBoundFields {
       l.innerText = f.title;
       l.insertBefore(t, l.childNodes[0]);
       c.appendChild(l);
+      c.classList.add('checkboxgroup');
     } else {
       l.setAttribute('for', t.id);
       l.innerText = f.title;
@@ -150,6 +151,7 @@ class cBoundFields {
     }
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
+    this.focusLock = gAPPP.a.profile['inputFocusLock'];
     sBabylonUtility.updateUI(uiObject, valueCache);
   }
   _handleDataChange(values, type, fireData) {

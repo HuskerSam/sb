@@ -38,6 +38,7 @@ class gAuthorization {
   }
   signOut() {
     firebase.auth().signOut();
+    location.reload(); // just dump the dom and restart
   }
   updateAuthUI() {
     let loginPage = document.getElementById('login-page');

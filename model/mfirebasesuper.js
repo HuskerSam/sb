@@ -15,6 +15,7 @@ class mFirebaseSuper {
       return;
     this.notiRef.off();
     this.active = false;
+    this.notifyChildren(fireData, 'clear');
   }
   activate(referencePath) {
     if (this.active)
@@ -44,10 +45,6 @@ class mFirebaseSuper {
   updateStash(fireData) {
     this.values = fireData.val();
     this.fireData = fireData;
-  }
-  childAdded(fireData) {
-    this.updateStash(fireData);
-    this.notifyChildren(fireData, 'add');
   }
   notifyChildren(fireData, type) {
     for (let i in this.childListeners)
