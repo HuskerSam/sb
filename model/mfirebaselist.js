@@ -4,7 +4,6 @@ class mFirebaseList extends mFirebaseSuper {
     super(referencePath, false);
 
     this.fireDataByKey = {};
-    this.fireDataValuesByTitle = {};
     this.fireDataValuesByKey = {};
 
     this.domTitleList = document.createElement('datalist');
@@ -24,15 +23,11 @@ class mFirebaseList extends mFirebaseSuper {
     if (remove) {
       delete this.fireDataByKey[key];
       delete this.fireDataValuesByKey[key];
-      if (this.fireDataValuesByTitle[key])
-        delete this.fireDataValuesByTitle[key];
       return;
     }
 
     this.fireDataByKey[key] = fireData;
     this.fireDataValuesByKey[key] = fireData.val();
-    if (this.fireDataValuesByKey[key].title)
-      this.fireDataValuesByTitle[this.fireDataValuesByKey[key].title] = this.fireDataValuesByKey[key];
   }
   set(id, jsonData) {
     let updates = {};
@@ -161,10 +156,16 @@ class mFirebaseList extends mFirebaseSuper {
       resolve(newKey);
     });
   }
+  getValuesByFieldLookup(field, value) {
+    for (let i in this.fireDataValuesByKey)
+      if (this.fireDataValuesByKey[i][field] === value)
+        return this.fireDataValuesByKey[i];
+    return null;
+  }
   _updateDomLookupList() {
     let innerHTML = '';
-    for (let i in this.fireDataValuesByTitle)
-      innerHTML += '<option>' + i.toString() + '</option>';
+    for (let i in this.fireDataValuesByKey)
+      innerHTML += '<option>' + this.fireDataValuesByKey[i]['title'].toString() + '</option>';
     this.domTitleList.innerHTML = innerHTML;
   }
 }

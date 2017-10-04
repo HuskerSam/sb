@@ -59,7 +59,7 @@ class sBabylonUtility {
       }
 
       if (field.type === 'texture') {
-        let tD = gAPPP.a.modelSets['texture'].fireDataValuesByTitle[value];
+        let tD = gAPPP.a.modelSets['texture'].getValuesByFieldLookup('title', value);
         if (tD === undefined)
           return;
 
@@ -68,7 +68,7 @@ class sBabylonUtility {
       }
 
       if (field.type === 'material') {
-        let tD = gAPPP.a.modelSets['material'].fireDataValuesByTitle[value];
+        let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
         if (tD === undefined) {
           let m = new BABYLON.StandardMaterial('material', gAPPP.renderEngine.sceneDetails.scene);
           object.material = m;
