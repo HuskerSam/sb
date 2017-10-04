@@ -81,6 +81,7 @@ html, body {
 #sb-floating-toolbar {
   clear:both;
   pointer-events:none;
+  padding-top: 1px;
 }
 
 .btn-toolbar-icon {
@@ -97,8 +98,9 @@ html, body {
   display: inline-block;
   clear:both;
 }
-.sb-floating-toolbar-expanded {
+#sb-floating-toolbar-expanded {
   pointer-events: none;
+  padding-top:2px;
 }
 .sb-floating-toolbar-content {
   white-space: nowrap;
@@ -162,6 +164,21 @@ html, body {
 .checkboxgroup input {
   width: 2em;
   height: 1em;
+}
+.url-form-group label {
+  text-decoration: underline;
+  padding: 2px;
+  border-radius: 3px;
+  color: blue;
+  background: rgba(255,255,255,.5);
+}
+.url-form-group button {
+  float:right;
+  margin-right: 5px;
+  margin-top:2px;
+  border: solid 1px silver;
+  border-radius: 3px;
+  background: rgba(255,255,255,.5);
 }
 .checkboxgroup label {
   font-size: .8em;
@@ -278,10 +295,11 @@ html, body {
 }
 
 .popup-progress-bar {
-  margin-top: 20px;
   width: 80%;
   display: inline-block;
   margin-left: 10%;
+  position: absolute;
+  bottom: 5px;
 }
 
 .modal-body .nav-pills>li>a {

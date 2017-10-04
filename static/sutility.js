@@ -37,14 +37,18 @@ class sUtility {
     return result;
   }
   static path(obj, is, value) {
-    if (typeof is == 'string')
-      return this.path(obj, is.split('.'), value);
-    else if (is.length == 1 && value !== undefined)
-      return obj[is[0]] = value;
-    else if (is.length == 0)
-      return obj;
-    else
-      return this.path(obj[is[0]], is.slice(1), value);
+    try {
+      if (typeof is == 'string')
+        return this.path(obj, is.split('.'), value);
+      else if (is.length == 1 && value !== undefined)
+        return obj[is[0]] = value;
+      else if (is.length == 0)
+        return obj;
+      else
+        return this.path(obj[is[0]], is.slice(1), value);
+    } catch (e) {
+      console.log('path() err', e);
+    }
   }
   static fileToURI(file) {
     return new Promise(function(resolve, reject) {
@@ -69,15 +73,15 @@ class sUtility {
     return blob;
   }
   static parseFontSize(str) {
-      if (str === undefined)
-        str = '';
-      let size = parseFloat(str);
-      if(isNaN(size))
-        size = 9;
-      if (size < 5)
-        size = 5;
-      if (size > 30)
-        size = 30;
-      return size;
+    if (str === undefined)
+      str = '';
+    let size = parseFloat(str);
+    if (isNaN(size))
+      size = 9;
+    if (size < 5)
+      size = 5;
+    if (size > 30)
+      size = 30;
+    return size;
   }
 }

@@ -64,10 +64,15 @@ __localStaticStorageForBindingFields['mesh'] = [{
   uiObjectField: 'rotation.z',
   group: 'rotate'
 }, {
-  title: 'Url',
+  title: 'Object Id',
+  fireSetField: 'meshName',
+  uiObjectField: null
+}, {
+  title: 'Mesh Url (.babylon file[Object Id])',
   fireSetField: 'url',
   uiObjectField: null,
   type: 'url',
+  uploadType: 'mesh',
   group: 'url'
 }];
 
@@ -197,10 +202,11 @@ __localStaticStorageForBindingFields['texture'] = [{
   uiObjectField: 'uScale',
   group: 'scale'
 }, {
-  title: 'Url',
+  title: 'Url (Image)',
   fireSetField: 'url',
   uiObjectField: null,
   type: 'url',
+  uploadType: 'texture',
   group: 'url'
 }];
 

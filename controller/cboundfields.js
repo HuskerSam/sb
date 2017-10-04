@@ -9,6 +9,7 @@ class cBoundFields {
     this.container = container;
     this.focusLock = true;
     this.renderImageUpdateNeeded = false;
+    this.loadedURL = '';
 
     this.groups = {};
     this.scrapeCache = [];
@@ -49,20 +50,12 @@ class cBoundFields {
       c.appendChild(t);
     }
 
-    if (f.type === 'url'){
-      c.classList.add('url-type-input-group');
-      let a = document.createElement('a');
-      a.innerText = f.title;
-      a.setAttribute('href', '');
-      a.setAttribute('target', '_blank');
-      l.innerHTML = '';
-      f.urlAnchor = a;
-      l.appendChild(a);
-    }
     c.classList.add('form-group');
     t.addEventListener('click', (e) => me.scrape(e), false);
     t.addEventListener('input', (e) => me.scrape(e), false);
     t.addEventListener('blur', (e) => me._blurField(t, f, e), false);
+    f.domContainer = c;
+    f.domLabel = l;
     if (g)
       g.appendChild(c);
     else {
@@ -75,12 +68,79 @@ class cBoundFields {
     this._specialDomFeatures(f);
   }
   _specialDomFeatures(field) {
+    let me = this;
     let element = field.dom;
     if (field.type === 'texture') {
       element.setAttribute('list', 'texturedatatitlelookuplist');
     }
     if (field.type === 'material') {
       element.setAttribute('list', 'materialdatatitlelookuplist');
+    }
+    if (field.type === 'url') {
+      let l = field.domLabel;
+      let c = field.domContainer;
+      c.classList.add('url-type-input-group');
+      let a = document.createElement('a');
+      a.innerText = field.title;
+      a.setAttribute('href', '');
+      a.setAttribute('target', '_blank');
+      l.innerHTML = '';
+      field.urlAnchor = a;
+      l.appendChild(a);
+
+      let b = document.createElement('button');
+      b.innerHTML = '<i class="material-icons">cloud_upload</i>';
+      c.classList.add('url-form-group');
+      c.insertBefore(b, c.childNodes[0]);
+      b.addEventListener('click', e => field.fileDom.click(), false);
+
+      let file = document.createElement('input');
+      file.setAttribute('type', 'file');
+      file.style.display = 'none';
+      c.insertBefore(file, b);
+      file.addEventListener('change', e => me.uploadURL(field), false);
+      field.fileDom = file;
+
+      let p_bar = document.createElement('div');
+      p_bar.setAttribute('class', "progress progress-striped active");
+      p_bar.innerHTML = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;"></div>';
+      p_bar.style.display = 'none';
+      c.appendChild(p_bar);
+      field.progressBar = p_bar;
+    }
+  }
+  uploadURL(f) {
+    let me = this;
+    if (f.fileDom.files.length === 0)
+      return;
+
+    if (f.uploadType === 'mesh') {
+      let fS = gAPPP.a.modelSets['mesh'];
+      let meshName = this.valueCache['meshName'];
+      f.progressBar.style.display = '';
+      f.dom.style.display = 'none';
+      sBabylonUtility.importMesh(meshName, f.fileDom.files[0]).then(mesh => {
+        let strMesh = JSON.stringify(mesh);
+        let key = me.parent.key;
+        fS.setString(key, strMesh, 'file.babylon').then(snapshot => {
+          let updates = [{
+            field: 'url',
+            newValue: snapshot.downloadURL,
+            oldValue: me.valueCache['url']
+          }, {
+            field: 'size',
+            newValue: snapshot.totalBytes,
+            oldValue: me.valueCache['size']
+          }];
+          f.fileDom.value = '';
+          this.parent.fireSet.commitUpdateList(updates, me.parent.key);
+
+          f.progressBar.style.display = 'none';
+          f.dom.style.display = '';
+        });
+      });
+    } else if (f.uploadType === 'texture') {
+
     }
   }
   scrape(e) {
@@ -93,7 +153,7 @@ class cBoundFields {
       let nV = f.dom.value.trim();
       if (f.type === 'boolean')
         nV = f.dom.checked;
-      let v = nV;//this.validate(f, nV);
+      let v = nV;
       this.scrapeCache.push(v);
       this.valueCache[f.fireSetField] = v;
 
@@ -145,30 +205,39 @@ class cBoundFields {
     this.active = true;
     let scrapes = {};
     let valueCache = {};
+    let sceneReloadRequired = false;
+
     for (let i in this.fields) {
-      let f = this.fields[i];
+      let f = this.fields[i]
 
       let r = this._updateFieldDom(f);
       if (r.updateShown) {
         scrapes[i] = r.value;
         valueCache[f.fireSetField] = r.value;
-      }
-      else {
+      } else {
         scrapes[i] = this.scrapeCache[i];
         valueCache[f.fireSetField] = this.valueCache[f.fireSetField];
       }
+      if (r.sceneReloadRequired)
+        sceneReloadRequired = true;
     }
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
     sBabylonUtility.updateUI(uiObject, valueCache);
+    return sceneReloadRequired;
   }
   _handleDataChange(values, type, fireData) {
+    if (this.parent.key)
+      if (this.parent.key !== fireData.key)
+        return;
     this.values = values;
     this.paint(this.uiObject);
   }
   _updateFieldDom(f) {
     let updateShown = false;
+    let sceneReloadRequired = false;
+    let me = this;
     let v = sUtility.path(this.values, f.fireSetField);
     if (v === undefined)
       v = '';
@@ -184,7 +253,7 @@ class cBoundFields {
         if (f.dom.checked !== v)
           f.dom.checked = v;
       } else {
-        if (! this.focusLock) //if value hasn't changed with focus, update it
+        if (!this.focusLock) //if value hasn't changed with focus, update it
           if (o === f.dom.checked) {
             f.dom.checked = v;
             updateShown = true;
@@ -194,8 +263,7 @@ class cBoundFields {
         else
           f.dom.style.border = '';
       }
-    }
-    else {
+    } else {
       o = o.toString(); //stringify old value for compare
       if (f.dom !== document.activeElement) {
         updateShown = true;
@@ -203,7 +271,7 @@ class cBoundFields {
         if (f.dom.value !== v)
           f.dom.value = v;
       } else {
-        if (! this.focusLock)
+        if (!this.focusLock)
           if (o === f.dom.value) { //if value hasn't changed with focus, update it
             f.dom.value = v;
             updateShown = true;
@@ -223,8 +291,22 @@ class cBoundFields {
     if (updateShown) {
       if (f.type === 'color')
         gAPPP.renderEngine.setColorLabel(f.dom);
+
+      if (f.type === 'url') {
+        if (this.parent.tag === 'mesh') {
+            if (this.loadedURL !== this.valueCache['url']) {
+              sceneReloadRequired = true;
+              this.loadedURL = this.valueCache['url'];
+            }
+        }
+      }
     }
-    return { updateShown, value: v };
+
+    return {
+      updateShown,
+      value: v,
+      sceneReloadRequired
+    };
   }
   _blurField(domControl, field, e) {
     this._updateFieldDom(field);

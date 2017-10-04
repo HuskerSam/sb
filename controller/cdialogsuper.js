@@ -137,14 +137,17 @@ class cDialogSuper {
     this._focus();
 
     if (this.initScene) {
-      let sceneDetails = sBabylonUtility.createDefaultScene();
-      this.sC.set(sceneDetails);
-      this.sC.activate();
-      this.sC.loadScene(this.tag, this.fireFields.values).then(r => me._finishShow(r));
-      return;
+      return this._initScene();
     }
 
     this._finishShow(null);
+  }
+  _initScene() {
+    let me = this;
+    let sceneDetails = sBabylonUtility.createDefaultScene();
+    this.sC.set(sceneDetails);
+    this.sC.activate();
+    this.sC.loadScene(this.tag, this.fireFields.values).then(r => me._finishShow(r));
   }
   _focus() {
     if (this.cancelBtn)
@@ -166,13 +169,18 @@ class cDialogSuper {
   }
   _finishShow(uiObject) {
     this.uiObject = uiObject;
+
     if (this.fireEditor) {
       this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
       sUtility.beautify(this.fireEditor);
     }
 
-    if (this.fireFields)
-      this.fireFields.paint(this.uiObject);
+    if (this.fireFields){
+      this.fireFields.loadedURL = this.fireFields.values['url'];
+      let sceneReloadRequired = this.fireFields.paint(this.uiObject);
+  //    if (sceneReloadRequired)
+    //    return this._initScene();
+    }
     if (this.sceneTools)
       this.sceneTools.fireFields.paint({
         type: 'sceneTools',

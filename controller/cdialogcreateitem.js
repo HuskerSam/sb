@@ -1,4 +1,3 @@
-/* create dialog controller - binds to mdlFirebaseList */
 class cDialogCreateItem {
   constructor(tag, fields) {
     let me = this;
@@ -30,16 +29,6 @@ class cDialogCreateItem {
     this.clear();
     $(this.dialog).modal('show');
   }
-  importMesh() {
-    let me = this;
-    return new Promise((resolve, reject) => {
-      let id = this.fieldsValues['id'];
-      let file = this.fileDom.files[0];
-      sUtility.fileToURI(file)
-        .then((d) => gAPPP.renderEngine.serializeMesh(id, "", "data:" + d)
-          .then((mesh) => resolve(mesh)));
-    });
-  }
   scrape() {
     this.fieldsValues = {};
     let emptyField = false;
@@ -65,7 +54,8 @@ class cDialogCreateItem {
     let me = this;
     if (this.tag === 'mesh') {
       return new Promise((resolve, reject) => {
-        me.importMesh().then((mesh) => {
+        sBabylonUtility.importMesh(me.fieldsValues['id'],
+          me.fileDom.files[0]).then((mesh) => {
           let id = me.fieldsValues['id'];
           let strMesh = JSON.stringify(mesh);
           gAPPP.a.modelSets['mesh'].newMesh(strMesh, id).then((r) => resolve(r));
