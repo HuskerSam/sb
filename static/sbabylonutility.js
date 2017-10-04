@@ -1,5 +1,7 @@
 class sBabylonUtility {
   static setMesh(values, mesh) {
+    if (! mesh)
+      return;
     let fields = sStatic.bindingFields['mesh'];
     for (let i in fields) {
       let field = fields[i];
@@ -176,6 +178,7 @@ class sBabylonUtility {
     let lightVector = sBabylonUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
     let camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, scene);
     camera.setTarget(BABYLON.Vector3.Zero());
+
     let light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, scene);
     light.intensity = .7;
     if (gAPPP.a.profile.lightIntensity !== undefined)

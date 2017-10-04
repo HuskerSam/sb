@@ -22,6 +22,13 @@ class cBoundScene {
   set(sceneDetails) {
     this.sceneDetails = sceneDetails;
   }
+  updateCamera() {
+    if (this.sceneDetails.camera)
+      this.sceneDetails.camera.dispose();
+    let cameraVector = sBabylonUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+    this.sceneDetails.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.sceneDetails.scene);
+    this.sceneDetails.camera.setTarget(BABYLON.Vector3.Zero());
+  }
   _url(fireUrl) {
     return fireUrl.replace(gAPPP.storagePrefix, '');
   }
@@ -34,6 +41,7 @@ class cBoundScene {
             me.meshObj = mesh;
             me.meshLoadedName = meshData['meshName'];
             me.meshLoadedURL = meshData['url'];
+            gAPPP.renderEngine.enableRender();
             resolve({
                 type: 'mesh',
                 mesh,

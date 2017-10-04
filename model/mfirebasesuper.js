@@ -6,6 +6,7 @@ class mFirebaseSuper {
     this.active = false;
     this.childListeners = [];
     this.values = {};
+    this.keyList = false;
 
     if (activate)
       this.activate();

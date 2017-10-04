@@ -178,8 +178,6 @@ class cDialogSuper {
     if (this.fireFields){
       this.fireFields.loadedURL = this.fireFields.values['url'];
       let sceneReloadRequired = this.fireFields.paint(this.uiObject);
-  //    if (sceneReloadRequired)
-    //    return this._initScene();
     }
     if (this.sceneTools)
       this.sceneTools.fireFields.paint({

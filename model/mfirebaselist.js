@@ -3,6 +3,7 @@ class mFirebaseList extends mFirebaseSuper {
   constructor(referencePath, listtag) {
     super(referencePath, false);
 
+    this.keyList = true;
     this.fireDataByKey = {};
     this.fireDataValuesByKey = {};
 

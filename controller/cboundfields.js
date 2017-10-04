@@ -1,4 +1,3 @@
-/* binding controller for dom to mFirebaseSuper */
 class cBoundFields {
   constructor(boundFields, prefix, container, parent) {
     this.fields = boundFields;
@@ -119,9 +118,12 @@ class cBoundFields {
       let meshName = this.valueCache['meshName'];
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
-      sBabylonUtility.importMesh(meshName, f.fileDom.files[0]).then(mesh => {
-        let strMesh = JSON.stringify(mesh);
+
+      //gAPPP.renderEngine.engine.stopRenderLoop();
+      sBabylonUtility.importMesh(meshName, f.fileDom.files[0]).then(meshScene => {
+        let strMesh = JSON.stringify(meshScene);
         let key = me.parent.key;
+        me.loadedURL = '';
         fS.setString(key, strMesh, 'file.babylon').then(snapshot => {
           let updates = [{
             field: 'url',
@@ -225,14 +227,38 @@ class cBoundFields {
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
     sBabylonUtility.updateUI(uiObject, valueCache);
+    this.loadedURL = this.valueCache['url'];
+    this.loadedMeshName = this.valueCache['meshName'];
     return sceneReloadRequired;
   }
   _handleDataChange(values, type, fireData) {
-    if (this.parent.key)
+    let me = this;
+    if (this.parent.fireSet.keyList) {
       if (this.parent.key !== fireData.key)
         return;
+    }
+
     this.values = values;
-    this.paint(this.uiObject);
+    let sceneReloadRequired = this.paint(this.uiObject);
+    if (sceneReloadRequired) {
+      if (this.parent.tag === 'mesh') {
+        let sC = me.parent.sC;
+        let oldMesh = this.uiObject.mesh;
+        oldMesh.material = undefined;
+
+        gAPPP.renderEngine.disableRender();
+        gAPPP.renderEngine.loadMesh(this.values['meshName'], gAPPP.storagePrefix,
+          sC._url(this.values['url']), sC.sceneDetails.scene).then(r => {
+            me.uiObject.mesh = r;
+            //sC.updateCamera();
+            if (oldMesh)
+              oldMesh.dispose();
+
+            setTimeout(() => gAPPP.renderEngine.enableRender());
+        });
+
+      }
+    }
   }
   _updateFieldDom(f) {
     let updateShown = false;
@@ -294,10 +320,9 @@ class cBoundFields {
 
       if (f.type === 'url') {
         if (this.parent.tag === 'mesh') {
-            if (this.loadedURL !== this.valueCache['url']) {
-              sceneReloadRequired = true;
-              this.loadedURL = this.valueCache['url'];
-            }
+          if (this.loadedURL !== this.valueCache[f.fireSetField]) {
+            sceneReloadRequired = true;
+          }
         }
       }
     }

@@ -8,6 +8,7 @@ class gRender {
       if (me.engine)
         me.engine.resize();
     });
+    this._disableRender = false;
   }
   setCanvas(canvas) {
     this.canvas = canvas;
@@ -17,31 +18,49 @@ class gRender {
     this.engine.enableOfflineSupport = false;
   }
   setSceneDetails(sceneDetails) {
-    this.scene = sceneDetails.scene;
     this.sceneDetails = sceneDetails;
-    sceneDetails.camera.attachControl(this.canvas, false);
-    var me = this;
-    this.engine.stopRenderLoop();
-    this.scene.executeWhenReady(function() {
-      me.engine.runRenderLoop(function() {
-        me.scene.render();
-      });
-    });
+    this.enableRender();
     gAPPP.renderEngine.sceneDetails.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
+  }
+  renderFrame() {
+    if (! this._disableRender)
+      if (this.sceneDetails.scene){
+        this.sceneDetails.scene.render();
 
+      }
+  }
+  disableRender() {
+    this._disableRender = true;
+    this.engine.stopRenderLoop();
+  }
+  enableRender() {
+    var me = this;
+    this._disableRender = false;
+    this.engine.stopRenderLoop();
+    this.sceneDetails.camera.attachControl(this.canvas, false);
+    this.sceneDetails.scene.executeWhenReady(() =>{
+      me.engine.runRenderLoop(() => me.renderFrame());
+    });
     this.engine.resize();
   }
   loadMesh(meshName, path, fileName, scene) {
+    let me = this;
+    me.disableRender();
     return new Promise(function(resolve, reject) {
-      BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene, function(newMeshes) {
-        return resolve(newMeshes[0]);
-      });
+      BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene,
+        (newMeshes, particleSystems, skeletons) => {
+          if (! meshName)
+            meshName = 'mesh';
+          let mesh = newMeshes[0].clone(meshName);
+      //    newMeshes[0].dispose();
+          return resolve(mesh);
+        });
     });
   }
   loadScene(path, fileName) {
     let me = this;
     return new Promise(function(resolve, reject) {
-      BABYLON.SceneLoader.Load(path, fileName, me.engine, function(scene) {
+      BABYLON.SceneLoader.Load(path, fileName, me.engine, scene => {
         return resolve(scene);
       });
     });
