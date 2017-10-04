@@ -6,7 +6,7 @@ class mFirebaseList extends mFirebaseSuper {
     this.fireDataByKey = {};
     this.fireDataValuesByTitle = {};
     this.fireDataValuesByKey = {};
-    
+
     this.domTitleList = document.createElement('datalist');
     this.domTitleList.id = listtag + 'datatitlelookuplist';
     document.body.appendChild(this.domTitleList);
@@ -17,6 +17,7 @@ class mFirebaseList extends mFirebaseSuper {
   getCache(key) {
     if (key)
       return this.fireDataValuesByKey[key];
+    return null;
   }
   updateStash(fireData, remove) {
     let key = fireData.key;
@@ -148,6 +149,16 @@ class mFirebaseList extends mFirebaseSuper {
       let updates = {};
       updates['/' + this.referencePath + '/' + key] = null;
       firebase.database().ref().update(updates).then(e => resolve(e));
+    });
+  }
+  cloneByKey(key) {
+    let me = this;
+    return new Promise((resolve, reject) => {
+      let newKey = this.getKey();
+      let data = this.getCache(key);
+      let newData = JSON.parse(JSON.stringify(data));
+      me.set(newKey, newData);
+      resolve(newKey);
     });
   }
   _updateDomLookupList() {

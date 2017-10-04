@@ -1,4 +1,3 @@
-/* toolband ui controller - binds to mdlFirebaseList */
 class cToolband {
   constructor(tag, title) {
     let me = this;
@@ -49,17 +48,17 @@ class cToolband {
     if (forceValue) {
       this.bar.style.display = 'inline-block';
       this.createBtn.style.display = 'inline-block';
-      this.bar.parentNode.style.display = 'block';
+      this.bar.parentNode.style.display = 'flex';
       this.expandBtn.querySelector('i').innerHTML = 'expand_more';
       this.containerExpanded.insertBefore(this.bar.parentNode, null);
-      this.wrapper.style.display = 'flex';
+      this.wrapper.style.display = 'left';
     } else {
       this.bar.style.display = 'none';
       this.createBtn.style.display = 'none';
       this.bar.parentNode.style.display = 'inline-block';
       this.expandBtn.querySelector('i').innerHTML = 'expand_less';
       this.containerCollapsed.insertBefore(this.bar.parentNode, null);
-      this.wrapper.style.display = 'inline-block';
+      this.wrapper.style.float = '';
     }
   }
   showPopup() {
@@ -142,7 +141,7 @@ class cToolband {
     return newNode;
   }
   cloneElement(e, key) {
-    alert('clone' + key);
+    gAPPP.a.modelSets[this.tag].cloneByKey(key).then(key => {});
   }
   removeElement(e, key) {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
