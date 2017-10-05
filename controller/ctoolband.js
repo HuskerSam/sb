@@ -116,10 +116,6 @@ class cToolband {
     html += '<button class="btn-toolbar-icon" type="button" data-toggle="dropdown">';
     html += '<i class="material-icons">menu</i></button>';
     html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
-    html += '<li role="presentation"><a role="menuitem" class="edit-item" tabindex="-1">Edit</a></li>';
-    html += '<li role="presentation"><a role="menuitem" class="clone-item" tabindex="-1">Clone</a></li>';
-    html += '<li role="presentation" class="divider"></li>';
-    html += '<li role="presentation"><a role="menuitem" class="delete-item" tabindex="-1">Delete</a></li>';
     html += '</ul>';
     html += '</div>';
     html += `<br><div class="band-title"></div>`;
@@ -129,16 +125,52 @@ class cToolband {
     outer.innerHTML = html.trim();
     let newNode = outer.childNodes[0];
 
-    let i = newNode.querySelector('li a.edit-item');
-    i.addEventListener('click', e => me.showEditPopup(e, key), true);
-    i = newNode.querySelector('li a.delete-item');
-    i.addEventListener('click', e => me.removeElement(e, key), true);
-    i = newNode.querySelector('li a.clone-item');
-    i.addEventListener('click', e => me.cloneElement(e, key), true);
+    let ul = newNode.querySelector('ul');
+
+    if (this.tag === 'scene') {
+      this.__addMenuItem(ul, 'Select', e => me.materialToShape(e, key));
+    }
+
+    this.__addMenuItem(ul, 'Edit', e => me.showEditPopup(e, key));
+    this.__addMenuItem(ul, 'Clone', e => me.cloneElement(e, key));
+
+    if (this.tag === 'texture') {
+      this.__addMenuItem(ul, 'To Material', e => me.textureToMaterial(e, key), true);
+      this.__addMenuItem(ul, 'To Shape', e => me.textureToShape(e, key), true);
+    }
+    if (this.tag === 'material') {
+      this.__addMenuItem(ul, 'To Shape', e => me.materialToShape(e, key), true);
+      this.__addMenuItem(ul, 'To Mesh', e => me.materialToShape(e, key));
+    }
+    if (this.tag === 'mesh') {
+      this.__addMenuItem(ul, 'To Scene', e => me.materialToShape(e, key), true);
+    }
+
+    this.__addMenuItem(ul, 'Remove', e => me.removeElement(e, key), true);
 
     this.nodeApplyValues(values, newNode);
 
     return newNode;
+  }
+  textureToMaterial(e, key) {
+    alert('soon');
+  }
+  materialToShape(e, key) {
+    alert('soon');
+  }
+  __addMenuItem(ul, title, clickHandler, prependDivider) {
+    let html = '<a role="menuitem" tabindex="-1">' + title + '</a>';
+    let li = document.createElement('li');
+    li.innerHTML = html;
+    li.setAttribute('role', 'presentation');
+    if (prependDivider) {
+      let di = document.createElement('li');
+      di.setAttribute('role', 'presentation');
+      di.classList.add('divider');
+      ul.appendChild(di);
+    }
+    ul.appendChild(li);
+    li.querySelector('a').addEventListener('click', e => clickHandler(e), false);
   }
   cloneElement(e, key) {
     gAPPP.a.modelSets[this.tag].cloneByKey(key).then(key => {});
