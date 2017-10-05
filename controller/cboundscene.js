@@ -46,6 +46,14 @@ class cBoundScene {
                 mesh,
                 scene: me.sceneDetails.scene
               });
+            }, (scene) => {
+              console.log('failed to load mesh');
+              resolve({
+                  type: 'mesh',
+                  mesh: null,
+                  scene: me.sceneDetails.scene,
+                  error: 'failed to load mesh'
+                });
             });
     });
   }

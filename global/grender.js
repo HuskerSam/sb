@@ -52,7 +52,8 @@ class gRender {
       BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene,
         (newMeshes, particleSystems, skeletons) => {
           return resolve(newMeshes[0]);
-        });
+        }, () => {},
+      (err) => reject(err));
     });
   }
   loadScene(path, fileName) {

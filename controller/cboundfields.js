@@ -240,7 +240,7 @@ class cBoundFields {
     this.values = values;
     let sceneReloadRequired = this.paint(this.uiObject);
     if (sceneReloadRequired) {
-      if (this.parent.tag === 'mesh') {
+      if (this.parent.tag === 'mesh' && this.uiObject) {
         let sC = me.parent.sC;
         let oldMesh = this.uiObject.mesh;
         if (oldMesh)
@@ -250,9 +250,6 @@ class cBoundFields {
         gAPPP.renderEngine.loadMesh(this.values['meshName'], gAPPP.storagePrefix,
           sC._url(this.values['url']), sC.sceneDetails.scene).then(r => {
             me.uiObject.mesh = r;
-//            r.position = BABYLON.Vector3.Zero();
-
-            //gAPPP.renderEngine.restart();
         });
       }
     }
