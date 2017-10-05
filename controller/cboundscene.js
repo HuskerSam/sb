@@ -164,4 +164,43 @@ class cBoundScene {
       this.guideObjects = [];
     }
   }
+
+  uploadObject(type, title, fileDom) {
+    let me = this;
+    if (type === 'mesh') {
+      return new Promise((resolve, reject) => {
+        let meshData = sStatic.getDefaultDataCloned('mesh');
+        meshData.title = title;
+
+        if (fileDom.files.length > 0)
+          gAPPP.renderEngine.importMesh(fileDom.files[0]).then(mesh => {
+            let strMesh = null;
+            if (mesh)
+              strMesh = JSON.stringify(mesh);
+            gAPPP.a.modelSets['mesh'].createWithBlobString(meshData, strMesh, 'mesh.babylon').then((r) => resolve(r));
+          });
+        else
+          gAPPP.a.modelSets['mesh'].createWithBlobString(meshData).then((r) => resolve(r));
+      });
+    }
+    if (type === 'scene') {
+      return new Promise((resolve, reject) => {
+        sBabylonUtility.getNewSceneSerialized(fileDom).then((sceneSerial) => {
+          gAPPP.a.modelSets['scene'].newScene(sceneSerial, title).then((r) => resolve(r));
+        });
+      });
+    }
+    if (type === 'texture') {
+      return new Promise((resolve, reject) => {
+        gAPPP.a.modelSets['texture'].newTexture(file, title).then((r) => resolve(r));
+      });
+    }
+    if (type === 'material') {
+      return new Promise((resolve, reject) => {
+        gAPPP.a.modelSets['material'].newMaterial(title).then((r) => resolve(r));
+      });
+    }
+
+    return new Promise(resolve => resolve());
+  }
 }

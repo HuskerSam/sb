@@ -27,8 +27,8 @@ class gRender {
     gAPPP.renderEngine.sceneDetails.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
   }
   renderFrame() {
-    if (! this._disableRender)
-      if (this.sceneDetails.scene){
+    if (!this._disableRender)
+      if (this.sceneDetails.scene) {
         this.sceneDetails.scene.render();
       }
   }
@@ -41,20 +41,10 @@ class gRender {
     this._disableRender = false;
     this.engine.stopRenderLoop();
     this.sceneDetails.camera.attachControl(this.canvas, false);
-    this.sceneDetails.scene.executeWhenReady(() =>{
+    this.sceneDetails.scene.executeWhenReady(() => {
       me.engine.runRenderLoop(() => me.renderFrame());
     });
     this.engine.resize();
-  }
-  loadMesh(meshName, path, fileName, scene) {
-    let me = this;
-    return new Promise(function(resolve, reject) {
-      BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene,
-        (newMeshes, particleSystems, skeletons) => {
-          return resolve(newMeshes[0]);
-        }, () => {},
-      (err) => reject(err));
-    });
   }
   loadScene(path, fileName) {
     let me = this;
@@ -63,76 +53,6 @@ class gRender {
         return resolve(scene);
       });
     });
-  }
-  serializeMesh(meshName, path, fileName) {
-    var me = this;
-    return new Promise(function(resolve, reject) {
-      var scene = new BABYLON.Scene(me.engine);
-      me.loadMesh(meshName, path, fileName, scene).then(function(newMesh) {
-        return resolve(BABYLON.SceneSerializer.Serialize(scene));
-      });
-    });
-  }
-  getNewMeshData() {
-    return {
-      title: 'Mesh',
-      name: '',
-      materialName: '',
-      url: '',
-      type: 'url',
-      size: 0,
-      simpleUIDetails: {
-        scaleX: 1.0,
-        scaleY: 1.0,
-        scaleZ: 1.0,
-        positionX: 0.0,
-        positionY: 0.0,
-        positionZ: 0.0,
-        rotateX: 0.0,
-        rotateY: 0.0,
-        rotateZ: 0.0
-      }
-    };
-  }
-  getNewSceneData() {
-    return {
-      title: 'Scene',
-      url: '',
-      type: 'url',
-      size: 0,
-      simpleUIDetails: {}
-    };
-  }
-  getNewTextureData() {
-    return {
-      title: 'Texture',
-      url: '',
-      vOffset: 0.0,
-      uOffset: 0.0,
-      vScale: 1.0,
-      uScale: 1.0,
-      hasAlpha: false
-    };
-  }
-  getNewMaterialData() {
-    return {
-      title: 'Material',
-      name: '',
-      alpha: 1.0,
-      diffuseColor: '',
-      diffuseTextureName: '',
-      emissiveColor: '',
-      emissiveTextureName: '',
-      ambientColor: '',
-      ambientTextureName: '',
-      specularColor: '',
-      specularTextureName: '',
-      specularPower: 64.0,
-      useSpecularOverAlpha: false,
-      useGlossinessFromSpecularMapAlpha: false,
-      backFaceCulling: true,
-      wireframe: false
-    };
   }
   getJPGDataURL() {
     let me = this;
@@ -178,5 +98,36 @@ class gRender {
     if (v !== '')
       rgb = gAPPP.renderEngine.colorRGB255(v);
     dom.parentNode.style.background = rgb;
+  }
+  importMesh(file, meshName) {
+    let me = this;
+    return new Promise((resolve, reject) => {
+      sUtility.fileToURI(file)
+        .then(d => me.serializeMesh(meshName, "", "data:" + d)
+          .then(strMesh => resolve(strMesh)));
+    });
+  }
+
+  loadMesh(meshName, path, fileName, scene) {
+    let me = this;
+    if (meshName === undefined)
+      meshName = '';
+    return new Promise((resolve, reject) => {
+      BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene,
+        (newMeshes, particleSystems, skeletons) => {
+          return resolve(newMeshes[0]);
+        }, progress => {},
+        err => reject(err));
+    });
+  }
+  serializeMesh(meshName, path, fileName) {
+    var me = this;
+    return new Promise((resolve, reject) => {
+      let scene = new BABYLON.Scene(me.engine);
+      me.loadMesh(meshName, path, fileName, scene).then(newMesh => {
+        resolve(BABYLON.SceneSerializer.Serialize(scene));
+        scene.dispose();
+      });
+    });
   }
 }

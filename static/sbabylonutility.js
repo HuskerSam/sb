@@ -239,12 +239,4 @@ class sBabylonUtility {
     sObjects.push(zChar);
     return sObjects;
   }
-  static importMesh(meshId, file) {
-    let me = this;
-    return new Promise((resolve, reject) => {
-      sUtility.fileToURI(file)
-        .then((d) => gAPPP.renderEngine.serializeMesh(meshId, "", "data:" + d)
-          .then((mesh) => resolve(mesh)));
-    });
-  }
 }

@@ -1,19 +1,24 @@
 class cDialogCreateItem {
-  constructor(tag, fields) {
+  constructor(tag, title) {
     let me = this;
     this.tag = tag;
-    this.dialog = document.querySelector('#' + this.tag + '-upload-dialog');
-    this.fileDom = this.dialog.querySelector('.popup-file');
-    this.progressBar = this.dialog.querySelector('.popup-progress-bar');
+    this.sC = new cBoundScene();
+
+    let d = document.createElement('div');
+    d.innerHTML = document.getElementById('scene-builder-create-dialog-template').innerHTML;
+    d.setAttribute('role', 'dialog');
+    d.setAttribute('class', 'modal fade create-dialog');
+    this.dialog = d;
+
+    this.fileDom = this.dialog.querySelector('input[type="file"]');
     this.createBtn = this.dialog.querySelector('.create');
     this.cancelBtn = this.dialog.querySelector('.cancel');
     this.popupContent = this.dialog.querySelector('.popup-content');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
-
-    this.fields = fields;
-    this.fieldsDom = {};
-    for (let i in this.fields)
-      this.fieldsDom[this.fields[i]] = this.dialog.querySelector('.simple-popup-field-' + this.fields[i]);
+    this.progressBar = this.dialog.querySelector('.popup-progress-bar');
+    this.dialog.querySelector('.modal-title').innerHTML = title;
+    this.titleDom = this.dialog.querySelector('.input-title');
+    $(this.dialog).on('hidden.bs.modal', () => me.close()); //force cleanup if closed via escape
 
     this.cancelBtn.addEventListener('click', () => me.close(), false);
     this.createBtn.addEventListener('click', (e) => me.create(), false);
@@ -29,79 +34,26 @@ class cDialogCreateItem {
     this.clear();
     $(this.dialog).modal('show');
   }
-  scrape() {
-    this.fieldsValues = {};
-    let emptyField = false;
-    for (let i in this.fields) {
-      let f = this.fields[i];
-      let v = this.fieldsDom[f].value.trim();
-      if (v === '')
-        emptyField = true;
-      this.fieldsValues[f] = v;
-    }
-    this.emptyField = emptyField;
-  }
   clear() {
-    this.fieldsValues = {};
-    for (let i in this.fields) {
-      let f = this.fields[i];
-      this.fieldsDom[f].value = '';
-    }
-    if (this.fileDom)
-      this.fileDom.value = '';
-  }
-  createPromise() {
-    let me = this;
-    if (this.tag === 'mesh') {
-      return new Promise((resolve, reject) => {
-        sBabylonUtility.importMesh(me.fieldsValues['id'],
-          me.fileDom.files[0]).then((mesh) => {
-          let id = me.fieldsValues['id'];
-          let strMesh = JSON.stringify(mesh);
-          gAPPP.a.modelSets['mesh'].newMesh(strMesh, id).then((r) => resolve(r));
-        });
-      });
-    }
-    if (this.tag === 'scene') {
-      return new Promise((resolve, reject) => {
-        sBabylonUtility.getNewSceneSerialized(this.fileDom).then((sceneSerial) => {
-          let title = me.fieldsValues['title'];
-          gAPPP.a.modelSets['scene'].newScene(sceneSerial, title).then((r) => resolve(r));
-        });
-      });
-    }
-    if (this.tag === 'texture') {
-      return new Promise((resolve, reject) => {
-        let title = me.fieldsValues['title'];
-        let file = me.fileDom.files[0];
-        gAPPP.a.modelSets['texture'].newTexture(file, title).then((r) => resolve(r));
-      });
-    }
-    if (this.tag === 'material') {
-      return new Promise((resolve, reject) => {
-        let title = me.fieldsValues['title'];
-        gAPPP.a.modelSets['material'].newMaterial(title).then((r) => resolve(r));
-      });
-    }
-    return new Promise(resolve => resolve());
+    this.titleDom.value = '';
+    this.fileDom.value = '';
   }
   create() {
     let me = this;
-    this.scrape();
-    if (this.emptyField) {
-      alert('required fields missing');
+    if (this.titleDom.value.trim() === '') {
+      alert('please supply a title');
       return;
     }
-
     this.popupButtons.style.display = 'none';
     this.popupContent.style.display = 'none';
     this.progressBar.style.display = 'block';
+    let title = me.titleDom.value.trim();
 
-    this.createPromise().then((r) => {
+    this.sC.uploadObject(this.tag, title, this.fileDom).then((r) => {
       me.clear();
       me.popupButtons.style.display = 'block';
       me.popupContent.style.display = 'block';
-      me.progressBar.style.display = 'none';
+      this.progressBar.style.display = 'none';
       me.close();
     });
   }

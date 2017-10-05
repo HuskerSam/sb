@@ -119,7 +119,7 @@ class cBoundFields {
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
-      sBabylonUtility.importMesh(meshName, f.fileDom.files[0]).then(meshScene => {
+      gAPPP.renderEngine.importMesh(meshName, f.fileDom.files[0]).then(meshScene => {
         let strMesh = JSON.stringify(meshScene);
         let key = me.parent.key;
         me.loadedURL = '';

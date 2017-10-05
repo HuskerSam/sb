@@ -5,8 +5,16 @@ class sStatic {
   static bindingFieldsCloned(tag) {
     return JSON.parse(JSON.stringify(__localStaticStorageForBindingFields[tag]));
   }
+  static get defaultData() {
+    return __defaultData;
+  }
+  static getDefaultDataCloned(tag) {
+    return JSON.parse(JSON.stringify(__defaultData[tag]));
+  }
 }
 let __localStaticStorageForBindingFields = {};
+let __defaultData = {};
+
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -311,3 +319,58 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   uiObjectField: null,
   type: 'boolean'
 }];
+
+__defaultData['mesh'] = {
+    title: 'Mesh',
+    name: '',
+    meshName: '',
+    materialName: '',
+    url: '',
+    type: 'url',
+    size: 0,
+    simpleUIDetails: {
+      scaleX: 1.0,
+      scaleY: 1.0,
+      scaleZ: 1.0,
+      positionX: 0.0,
+      positionY: 0.0,
+      positionZ: 0.0,
+      rotateX: 0.0,
+      rotateY: 0.0,
+      rotateZ: 0.0
+    }
+};
+__defaultData['scene'] = {
+    title: 'Scene',
+    url: '',
+    type: 'url',
+    size: 0,
+    simpleUIDetails: {}
+  };
+__defaultData['texture'] = {
+    title: 'Texture',
+    url: '',
+    vOffset: 0.0,
+    uOffset: 0.0,
+    vScale: 1.0,
+    uScale: 1.0,
+    hasAlpha: false
+  };
+__defaultData['material'] = {
+    title: 'Material',
+    name: '',
+    alpha: 1.0,
+    diffuseColor: '',
+    diffuseTextureName: '',
+    emissiveColor: '',
+    emissiveTextureName: '',
+    ambientColor: '',
+    ambientTextureName: '',
+    specularColor: '',
+    specularTextureName: '',
+    specularPower: 64.0,
+    useSpecularOverAlpha: false,
+    useGlossinessFromSpecularMapAlpha: false,
+    backFaceCulling: true,
+    wireframe: false
+  };

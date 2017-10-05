@@ -62,29 +62,23 @@ class mFirebaseList extends mFirebaseSuper {
       });
     });
   }
-  newMesh(meshString, meshName) {
+  createWithBlobString(data, blobString, filename) {
     let me = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       let key = me.getKey();
 
-      me.setString(key, meshString, 'file.babylon').then(function(snapshot) {
-        let title = meshName;
-        if (!title)
-          title = new Date().toISOString();
+      if (blobString) {
+        me.setString(key, blobString, filename).then(sr => {
+          data.url = sr.downloadURL;
+          data.type = 'url';
+          data.size = sr.totalBytes;
 
-        let meshData = gAPPP.renderEngine.getNewMeshData();
-        meshData.title = title;
-        meshData.meshName = meshName;
-        meshData.url = snapshot.downloadURL;
-        meshData.type = 'url';
-        meshData.size = snapshot.totalBytes;
-
-        me.set(key, meshData).then(function(e) {
-          resolve(e);
-        })
-      }).catch(function(error) {
-        reject(error);
-      });
+          me.set(key, data).then(r => resolve(r));
+        }).catch(e => reject(e));
+      }
+      else {
+        me.set(key, data).then(r => resolve(r));
+      }
     });
   }
   newScene(sceneString, title) {
@@ -96,7 +90,7 @@ class mFirebaseList extends mFirebaseSuper {
         if (!title)
           title = new Date().toISOString();
 
-        let sceneData = gAPPP.renderEngine.getNewSceneData();
+        let sceneData = sStatic.getDefaultDataCloned('scene');
         sceneData.title = title;
         sceneData.url = snapshot.downloadURL;
         sceneData.type = 'url';
@@ -115,12 +109,12 @@ class mFirebaseList extends mFirebaseSuper {
     return new Promise((resolve, reject) => {
       let key = me.getKey();
       me.setBlob(key, textureBlob, 'texturefile').then(function(snapshot) {
-        let textureData = gAPPP.renderEngine.getNewTextureData();
+        let textureData = sStatic.getDefaultDataCloned('texture');
         textureData.title = title;
         textureData.url = snapshot.downloadURL;
         textureData.size = snapshot.totalBytes;
 
-        me.set(key, textureData).then(function(e) {
+        me.set(key, textureData).then(e => {
           resolve(e);
         })
       }).catch(function(error) {
@@ -132,7 +126,7 @@ class mFirebaseList extends mFirebaseSuper {
     let me = this;
     return new Promise((resolve, reject) => {
       let key = me.getKey();
-      let data = gAPPP.renderEngine.getNewMaterialData();
+      let data = sStatic.getDefaultDataCloned('material');
       data.title = title;
 
       me.set(key, data).then(function(e) {

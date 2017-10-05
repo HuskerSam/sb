@@ -28,10 +28,10 @@ class gApplication {
     this.dialogs['texture-edit'] = new cDialogEditItem('texture');
     this.dialogs['scene-edit'] = new cDialogEditItem('scene');
 
-    this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', ['id']);
-    this.dialogs['texture-create'] = new cDialogCreateItem('texture', ['title']);
-    this.dialogs['material-create'] = new cDialogCreateItem('material', ['title']);
-    this.dialogs['scene-create'] = new cDialogCreateItem('scene', ['title']);
+    this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', 'Add Mesh');
+    this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
+    this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material');
+    this.dialogs['scene-create'] = new cDialogCreateItem('scene', 'Add Scene');
 
     this.dialogs['ace-editor-popup'] = new cDialogUtility('utility-dialog-show-ace-editor');
     this.dialogs['user-profile'] = new cDialogUserProfile('#user-profile-settings-dialog', 'userProfile');
