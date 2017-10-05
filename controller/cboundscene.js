@@ -35,11 +35,10 @@ class cBoundScene {
   _loadSceneMesh(meshData) {
     let me = this;
     return new Promise((resolve, reject) => {
-      gAPPP.renderEngine.loadMesh(meshData['meshName'], gAPPP.storagePrefix,
+      gAPPP.renderEngine.loadMesh(gAPPP.storagePrefix,
           me._url(meshData['url']), me.sceneDetails.scene)
         .then((mesh) => {
           me.meshObj = mesh;
-          me.meshLoadedName = meshData['meshName'];
           me.meshLoadedURL = meshData['url'];
           resolve({
             type: 'mesh',

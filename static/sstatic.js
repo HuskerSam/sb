@@ -319,7 +319,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 __defaultData['mesh'] = {
     title: 'Mesh',
     name: '',
-    meshName: '',
     materialName: '',
     url: '',
     type: 'url',

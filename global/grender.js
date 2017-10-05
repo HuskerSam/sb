@@ -99,32 +99,28 @@ class gRender {
       rgb = gAPPP.renderEngine.colorRGB255(v);
     dom.parentNode.style.background = rgb;
   }
-  importMesh(file, meshName) {
+  importMesh(file) {
     let me = this;
     return new Promise((resolve, reject) => {
       sUtility.fileToURI(file)
-        .then(d => me.serializeMesh(meshName, "", "data:" + d)
+        .then(d => me.serializeMesh("", "data:" + d)
           .then(strMesh => resolve(strMesh)));
     });
   }
-
-  loadMesh(meshName, path, fileName, scene) {
-    let me = this;
-    if (meshName === undefined)
-      meshName = '';
+  loadMesh(path, fileName, scene) {
     return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene,
+      BABYLON.SceneLoader.ImportMesh('', path, fileName, scene,
         (newMeshes, particleSystems, skeletons) => {
           return resolve(newMeshes[0]);
         }, progress => {},
         err => reject(err));
     });
   }
-  serializeMesh(meshName, path, fileName) {
+  serializeMesh(path, fileName) {
     var me = this;
     return new Promise((resolve, reject) => {
       let scene = new BABYLON.Scene(me.engine);
-      me.loadMesh(meshName, path, fileName, scene).then(newMesh => {
+      me.loadMesh(path, fileName, scene).then(newMesh => {
         resolve(BABYLON.SceneSerializer.Serialize(scene));
         scene.dispose();
       });

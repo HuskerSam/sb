@@ -115,11 +115,10 @@ class cBoundFields {
 
     if (f.uploadType === 'mesh') {
       let fS = gAPPP.a.modelSets['mesh'];
-      let meshName = this.valueCache['meshName'];
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
-      gAPPP.renderEngine.importMesh(meshName, f.fileDom.files[0]).then(meshScene => {
+      gAPPP.renderEngine.importMesh(f.fileDom.files[0]).then(meshScene => {
         let strMesh = JSON.stringify(meshScene);
         let key = me.parent.key;
         me.loadedURL = '';
@@ -227,7 +226,6 @@ class cBoundFields {
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
     sBabylonUtility.updateUI(uiObject, valueCache);
     this.loadedURL = this.valueCache['url'];
-    this.loadedMeshName = this.valueCache['meshName'];
     return sceneReloadRequired;
   }
   _handleDataChange(values, type, fireData) {
@@ -247,7 +245,7 @@ class cBoundFields {
           oldMesh.dispose();
         this.uiObject.mesh = null;
 
-        gAPPP.renderEngine.loadMesh(this.values['meshName'], gAPPP.storagePrefix,
+        gAPPP.renderEngine.loadMesh(gAPPP.storagePrefix,
           sC._url(this.values['url']), sC.sceneDetails.scene).then(r => {
             me.uiObject.mesh = r;
         });
