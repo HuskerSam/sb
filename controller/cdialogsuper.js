@@ -1,5 +1,5 @@
 class cDialogSuper {
-  constructor(dialogQuerySelector, tag) {
+  constructor(dialogQuerySelector, tag, dialog) {
     let me = this;
 
     this.tag = tag;
@@ -11,7 +11,11 @@ class cDialogSuper {
     this.sC = new cBoundScene();
 
     this.dialogQuerySelector = dialogQuerySelector;
-    this.dialog = document.querySelector(this.dialogQuerySelector);
+    if (!dialog)
+      this.dialog = document.querySelector(this.dialogQuerySelector);
+    else
+      this.dialog = dialog;
+      
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     if (this.fields) {
       let domClassPrefix = this.tag + '-fields-';
@@ -79,9 +83,6 @@ class cDialogSuper {
     this.splitView();
   }
   splitDragEnd() {
-    for (let i in this.editors)
-      this.editors[i].resize();
-
     gAPPP.renderEngine.engine.resize();
   }
   close() {
@@ -129,7 +130,6 @@ class cDialogSuper {
     this._startLoad();
     if (this.canvas)
       gAPPP.renderEngine.setCanvas(this.canvas);
-    this.initEditors();
     this.paint();
 
     $(this.dialog).modal('show');
@@ -155,25 +155,8 @@ class cDialogSuper {
     else if (this.okBtn)
       this.okBtn.focus();
   }
-  initEditors() {
-    if (this.editors)
-      return;
-
-    this.editors = [];
-    if (this.fireEditorId)
-      if (this.dialog.querySelector('#' + this.fireEditorId)) {
-        this.fireEditor = sUtility.editor(this.fireEditorId);
-        this.fireEditor.$blockScrolling = Infinity;
-        this.editors.push(this.fireEditor);
-      }
-  }
   _finishShow(uiObject) {
     this.uiObject = uiObject;
-
-    if (this.fireEditor) {
-      this.fireEditor.setValue(JSON.stringify(this.fireFields.values));
-      sUtility.beautify(this.fireEditor);
-    }
 
     if (this.fireFields){
       this.fireFields.loadedURL = this.fireFields.values['url'];

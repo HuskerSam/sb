@@ -1,7 +1,11 @@
 class cDialogEditItem extends cDialogSuper {
   constructor(tag) {
-    super('#' + tag + '-details-dialog', tag);
-    this.fireEditorId = this.tag + '-details-json';
+    let d = document.createElement('div');
+    d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;
+    d.setAttribute('role', 'dialog');
+    d.setAttribute('class', 'modal fade edit-modal');
+
+    super('#' + tag + '-details-dialog', tag, d);
     this.splitViewAlive = true;
     this.initScene = true;
   }

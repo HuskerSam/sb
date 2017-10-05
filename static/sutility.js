@@ -1,23 +1,4 @@
 class sUtility {
-  static beautify(editor) {
-    let val = editor.session.getValue();
-    let array = val.split(/\n/);
-    array[0] = array[0].trim();
-    val = array.join("\n");
-    val = js_beautify(val);
-    editor.session.setValue(val);
-  }
-  static editor(domId) {
-    let e = ace.edit(domId);
-    e.setTheme("ace/theme/textmate");
-    e.getSession().setMode("ace/mode/json");
-    e.setOptions({
-      fontFamily: '"Lucida Console",Monaco,monospace',
-      fontSize: '9pt'
-    });
-
-    return e;
-  }
   static replaceAll(str, search, replacement) {
     let t = str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     return str.replace(new RegExp(t, 'g'), replacement);

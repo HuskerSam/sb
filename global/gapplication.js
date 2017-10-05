@@ -33,7 +33,6 @@ class gApplication {
     this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material');
     this.dialogs['scene-create'] = new cDialogCreateItem('scene', 'Add Scene');
 
-    this.dialogs['ace-editor-popup'] = new cDialogUtility('utility-dialog-show-ace-editor');
     this.dialogs['user-profile'] = new cDialogUserProfile('#user-profile-settings-dialog', 'userProfile');
 
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => me.expandAllBands(), false);

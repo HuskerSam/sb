@@ -37,10 +37,6 @@ class cSceneToolsBand {
     this.fireFields = new cBoundFields(this.fields, domClassPrefix, this.fieldsContainer, this);
     this.fireSet.childListeners.push((values, type, fireData) =>
       me.fireFields._handleDataChange(values, type, fireData));
-
-
-
-    //    this.addShowSceneRawButton();
   }
   _addButton(btn) {
     this.buttonContainer.appendChild(btn);
@@ -60,17 +56,6 @@ class cSceneToolsBand {
       this.container.style.display = 'flex';
       this.container.style.width = '100%';
     }
-  }
-  addShowSceneRawButton() {
-    this.showSceneRawBtn = document.createElement('button');
-    this.showSceneRawBtn.setAttribute('class', 'btn btn-primary-outline');
-    this.showSceneRawBtn.addEventListener('click', () => {
-      //let json = sUtility.stringify(this.uiObject);
-      let json = '{}';
-      gAPPP.dialogs['ace-editor-popup'].showAce(json);
-    }, false);
-    this.showSceneRawBtn.innerHTML = 'Raw';
-    this._addButton(this.showSceneRawBtn);
   }
   _showGrid() {
     if (this.gridShown) {
