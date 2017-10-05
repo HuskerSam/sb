@@ -81,6 +81,25 @@ class mFirebaseList extends mFirebaseSuper {
       }
     });
   }
+  createWithBlob(data, blob, filename) {
+    let me = this;
+    return new Promise((resolve, reject) => {
+      let key = me.getKey();
+
+      if (blob) {
+        me.setBlob(key, blob, filename).then(sr => {
+          data.url = sr.downloadURL;
+          data.type = 'url';
+          data.size = sr.totalBytes;
+
+          me.set(key, data).then(r => resolve(r));
+        }).catch(e => reject(e));
+      }
+      else {
+        me.set(key, data).then(r => resolve(r));
+      }
+    });
+  }
   newScene(sceneString, title) {
     let me = this;
     return new Promise(function(resolve, reject) {
@@ -97,24 +116,6 @@ class mFirebaseList extends mFirebaseSuper {
         sceneData.size = snapshot.totalBytes;
 
         me.set(key, sceneData).then(function(e) {
-          resolve(e);
-        })
-      }).catch(function(error) {
-        reject(error);
-      });
-    });
-  }
-  newTexture(textureBlob, title) {
-    let me = this;
-    return new Promise((resolve, reject) => {
-      let key = me.getKey();
-      me.setBlob(key, textureBlob, 'texturefile').then(function(snapshot) {
-        let textureData = sStatic.getDefaultDataCloned('texture');
-        textureData.title = title;
-        textureData.url = snapshot.downloadURL;
-        textureData.size = snapshot.totalBytes;
-
-        me.set(key, textureData).then(e => {
           resolve(e);
         })
       }).catch(function(error) {

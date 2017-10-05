@@ -15,7 +15,7 @@ class cDialogSuper {
       this.dialog = document.querySelector(this.dialogQuerySelector);
     else
       this.dialog = dialog;
-      
+
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     if (this.fields) {
       let domClassPrefix = this.tag + '-fields-';
@@ -25,7 +25,6 @@ class cDialogSuper {
 
     this.okBtn = this.dialog.querySelector('.save-details');
     this.cancelBtn = this.dialog.querySelector('.close-details');
-    this.popupContent = this.dialog.querySelector('.popup-content');
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
     this.rotateBtn = this.dialog.querySelector('.rotate-details');
@@ -53,7 +52,7 @@ class cDialogSuper {
       this.splitInstance.destroy();
 
     let t = this.dialog.querySelector('.popup-canvas');
-    let b = this.dialog.querySelector('.popup-details');
+    let b = this.dialog.querySelector('.fields-container');
     let mb = this.dialog.querySelector('.popup-main-body');
 
     if (this.rotateState === 'horizontal') {
@@ -121,16 +120,15 @@ class cDialogSuper {
     this._showDom(this.fieldsContainer);
     this._hideDom(this.progressBar);
 
+    gAPPP.renderEngine.engine.resize();
+
     this.splitView();
   }
-  scrape() {}
-  paint() {}
   show() {
     let me = this;
     this._startLoad();
     if (this.canvas)
       gAPPP.renderEngine.setCanvas(this.canvas);
-    this.paint();
 
     $(this.dialog).modal('show');
 

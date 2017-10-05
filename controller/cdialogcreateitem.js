@@ -13,7 +13,6 @@ class cDialogCreateItem {
     this.fileDom = this.dialog.querySelector('input[type="file"]');
     this.createBtn = this.dialog.querySelector('.create');
     this.cancelBtn = this.dialog.querySelector('.cancel');
-    this.popupContent = this.dialog.querySelector('.popup-content');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.dialog.querySelector('.modal-title').innerHTML = title;
@@ -29,7 +28,6 @@ class cDialogCreateItem {
   }
   show() {
     this.popupButtons.style.display = 'block';
-    this.popupContent.style.display = 'block';
     this.progressBar.style.display = 'none';
     this.clear();
     $(this.dialog).modal('show');
@@ -45,14 +43,12 @@ class cDialogCreateItem {
       return;
     }
     this.popupButtons.style.display = 'none';
-    this.popupContent.style.display = 'none';
     this.progressBar.style.display = 'block';
     let title = me.titleDom.value.trim();
 
     this.sC.uploadObject(this.tag, title, this.fileDom).then((r) => {
       me.clear();
       me.popupButtons.style.display = 'block';
-      me.popupContent.style.display = 'block';
       this.progressBar.style.display = 'none';
       me.close();
     });

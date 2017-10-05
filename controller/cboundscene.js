@@ -38,23 +38,23 @@ class cBoundScene {
       gAPPP.renderEngine.loadMesh(meshData['meshName'], gAPPP.storagePrefix,
           me._url(meshData['url']), me.sceneDetails.scene)
         .then((mesh) => {
-            me.meshObj = mesh;
-            me.meshLoadedName = meshData['meshName'];
-            me.meshLoadedURL = meshData['url'];
-            resolve({
-                type: 'mesh',
-                mesh,
-                scene: me.sceneDetails.scene
-              });
-            }, (scene) => {
-              console.log('failed to load mesh');
-              resolve({
-                  type: 'mesh',
-                  mesh: null,
-                  scene: me.sceneDetails.scene,
-                  error: 'failed to load mesh'
-                });
-            });
+          me.meshObj = mesh;
+          me.meshLoadedName = meshData['meshName'];
+          me.meshLoadedURL = meshData['url'];
+          resolve({
+            type: 'mesh',
+            mesh,
+            scene: me.sceneDetails.scene
+          });
+        }, (scene) => {
+          console.log('failed to load mesh');
+          resolve({
+            type: 'mesh',
+            mesh: null,
+            scene: me.sceneDetails.scene,
+            error: 'failed to load mesh'
+          });
+        });
     });
   }
   _loadSceneFromData(sceneData) {
@@ -192,7 +192,15 @@ class cBoundScene {
     }
     if (type === 'texture') {
       return new Promise((resolve, reject) => {
-        gAPPP.a.modelSets['texture'].newTexture(file, title).then((r) => resolve(r));
+        let textureData = sStatic.getDefaultDataCloned('texture');
+        textureData.title = title;
+
+        if (fileDom.files.length > 0)
+          gAPPP.a.modelSets['texture'].createWithBlob(textureData, fileDom.files[0],
+            'texturefileimage' + fileDom.files[0].name)
+          .then((r) => resolve(r));
+        else
+          gAPPP.a.modelSets['texture'].createWithBlob(textureData).then((r) => resolve(r));
       });
     }
     if (type === 'material') {

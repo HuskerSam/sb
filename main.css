@@ -199,11 +199,6 @@ html, body {
   margin: 0;
   overflow: hidden;
 }
-
-.popup-details {
-  overflow: hidden;
-}
-
 .popup-title {
   text-align: center;
   font-size: .8em;
@@ -215,7 +210,9 @@ html, body {
   background: rgb(200, 240, 200);
   float: left;
 }
-
+.fields-container {
+  overflow: auto;
+}
 .popup-mid-buttons {
   display: inline-block;
   padding-top: 3px;
