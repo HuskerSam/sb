@@ -30,7 +30,7 @@ class gApplication {
 
     this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', 'Add Mesh');
     this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
-    this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material');
+    this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material', true);
     this.dialogs['scene-create'] = new cDialogCreateItem('scene', 'Add Scene');
 
     this.dialogs['user-profile'] = new cDialogUserProfile('#user-profile-settings-dialog', 'userProfile');

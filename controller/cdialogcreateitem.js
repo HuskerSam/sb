@@ -1,5 +1,5 @@
 class cDialogCreateItem {
-  constructor(tag, title) {
+  constructor(tag, title, hideFileDom) {
     let me = this;
     this.tag = tag;
     this.sC = new cBoundScene();
@@ -11,6 +11,8 @@ class cDialogCreateItem {
     this.dialog = d;
 
     this.fileDom = this.dialog.querySelector('input[type="file"]');
+    if (hideFileDom)
+      this.fileDom.style.display = 'none';
     this.createBtn = this.dialog.querySelector('.create');
     this.cancelBtn = this.dialog.querySelector('.cancel');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');

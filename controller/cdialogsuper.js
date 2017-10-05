@@ -38,6 +38,7 @@ class cDialogSuper {
     if (this.rotateBtn)
       this.rotateBtn.addEventListener('click', () => me.rotateView(), false);
     $(this.dialog).on('hidden.bs.modal', () => me.close()); //force cleanup if closed via escape
+    $(this.dialog).on('shown.bs.modal', () => me.showFocus());
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas)
@@ -120,8 +121,6 @@ class cDialogSuper {
     this._showDom(this.fieldsContainer);
     this._hideDom(this.progressBar);
 
-    gAPPP.renderEngine.engine.resize();
-
     this.splitView();
   }
   show() {
@@ -132,7 +131,7 @@ class cDialogSuper {
 
     $(this.dialog).modal('show');
 
-    this._focus();
+    this.showFocus();
 
     if (this.initScene) {
       return this._initScene();
@@ -147,16 +146,18 @@ class cDialogSuper {
     this.sC.activate();
     this.sC.loadScene(this.tag, this.fireFields.values).then(r => me._finishShow(r));
   }
-  _focus() {
+  showFocus() {
     if (this.cancelBtn)
       this.cancelBtn.focus();
     else if (this.okBtn)
       this.okBtn.focus();
+
+    gAPPP.renderEngine.engine.resize();
   }
   _finishShow(uiObject) {
     this.uiObject = uiObject;
 
-    if (this.fireFields){
+    if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];
       let sceneReloadRequired = this.fireFields.paint(this.uiObject);
     }
@@ -168,6 +169,6 @@ class cDialogSuper {
         sceneController: this.sC
       });
     this._endLoad();
-    this._focus();
+    this.showFocus();
   }
 }

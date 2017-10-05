@@ -72,10 +72,6 @@ __localStaticStorageForBindingFields['mesh'] = [{
   uiObjectField: 'rotation.z',
   group: 'rotate'
 }, {
-  title: 'Object Id',
-  fireSetField: 'meshName',
-  uiObjectField: null
-}, {
   title: 'Mesh Url (.babylon file[Object Id])',
   fireSetField: 'url',
   uiObjectField: null,
@@ -280,7 +276,7 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   type: 'boolean',
   group: 'extras'
 }, {
-  title: 'No Input Focus Lock',
+  title: 'Disable focus lock',
   fireSetField: 'inputFocusLock',
   uiObjectField: null,
   type: 'boolean',
