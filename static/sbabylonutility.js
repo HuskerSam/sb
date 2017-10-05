@@ -26,8 +26,8 @@ class sBabylonUtility {
     }
     return material;
   }
-  static texture(values) {
-    let texture = new BABYLON.Texture(values['url']);
+  static texture(values, scene) {
+    let texture = new BABYLON.Texture(values['url'], scene);
 
     function isNumeric(v) {
       return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
@@ -65,7 +65,7 @@ class sBabylonUtility {
         if (tD === undefined)
           return;
 
-        let t = this.texture(tD);
+        let t = this.texture(tD, gAPPP.renderEngine.sceneDetails.scene);
         return sUtility.path(object, field.uiObjectField, t);
       }
 
@@ -77,7 +77,7 @@ class sBabylonUtility {
           return;
         }
 
-        let m = this.material(tD);
+        let m = this.material(tD, gAPPP.renderEngine.sceneDetails.scene);
         object.material = m;
         return;
       }

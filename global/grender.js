@@ -12,10 +12,14 @@ class gRender {
   }
   setCanvas(canvas) {
     this.canvas = canvas;
-    this.engine = new BABYLON.Engine(this.canvas, true, {
+    this.engine = new BABYLON.Engine(this.canvas, false, {
       preserveDrawingBuffer: true
     });
     this.engine.enableOfflineSupport = false;
+  }
+  restart() {
+    this.setCanvas(this.canvas);
+    this.setSceneDetails(this.sceneDetails)
   }
   setSceneDetails(sceneDetails) {
     this.sceneDetails = sceneDetails;
@@ -26,7 +30,6 @@ class gRender {
     if (! this._disableRender)
       if (this.sceneDetails.scene){
         this.sceneDetails.scene.render();
-
       }
   }
   disableRender() {
@@ -34,7 +37,7 @@ class gRender {
     this.engine.stopRenderLoop();
   }
   enableRender() {
-    var me = this;
+    let me = this;
     this._disableRender = false;
     this.engine.stopRenderLoop();
     this.sceneDetails.camera.attachControl(this.canvas, false);
@@ -45,15 +48,10 @@ class gRender {
   }
   loadMesh(meshName, path, fileName, scene) {
     let me = this;
-    me.disableRender();
     return new Promise(function(resolve, reject) {
       BABYLON.SceneLoader.ImportMesh(meshName, path, fileName, scene,
         (newMeshes, particleSystems, skeletons) => {
-          if (! meshName)
-            meshName = 'mesh';
-          let mesh = newMeshes[0].clone(meshName);
-      //    newMeshes[0].dispose();
-          return resolve(mesh);
+          return resolve(newMeshes[0]);
         });
     });
   }
@@ -97,7 +95,7 @@ class gRender {
   }
   getNewSceneData() {
     return {
-      title: 'Mesh',
+      title: 'Scene',
       url: '',
       type: 'url',
       size: 0,

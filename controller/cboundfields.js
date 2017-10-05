@@ -119,7 +119,6 @@ class cBoundFields {
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
-      //gAPPP.renderEngine.engine.stopRenderLoop();
       sBabylonUtility.importMesh(meshName, f.fileDom.files[0]).then(meshScene => {
         let strMesh = JSON.stringify(meshScene);
         let key = me.parent.key;
@@ -244,19 +243,17 @@ class cBoundFields {
       if (this.parent.tag === 'mesh') {
         let sC = me.parent.sC;
         let oldMesh = this.uiObject.mesh;
-        oldMesh.material = undefined;
+        if (oldMesh)
+          oldMesh.dispose();
+        this.uiObject.mesh = null;
 
-        gAPPP.renderEngine.disableRender();
         gAPPP.renderEngine.loadMesh(this.values['meshName'], gAPPP.storagePrefix,
           sC._url(this.values['url']), sC.sceneDetails.scene).then(r => {
             me.uiObject.mesh = r;
-            //sC.updateCamera();
-            if (oldMesh)
-              oldMesh.dispose();
+//            r.position = BABYLON.Vector3.Zero();
 
-            setTimeout(() => gAPPP.renderEngine.enableRender());
+            //gAPPP.renderEngine.restart();
         });
-
       }
     }
   }

@@ -41,7 +41,6 @@ class cBoundScene {
             me.meshObj = mesh;
             me.meshLoadedName = meshData['meshName'];
             me.meshLoadedURL = meshData['url'];
-            gAPPP.renderEngine.enableRender();
             resolve({
                 type: 'mesh',
                 mesh,
