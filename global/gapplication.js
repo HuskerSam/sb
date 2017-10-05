@@ -23,10 +23,10 @@ class gApplication {
     this.toolbarItems['material'] = new cToolband('material', "Materials");
     this.toolbarItems['texture'] = new cToolband('texture', 'Textures');
 
-    this.dialogs['mesh-edit'] = new cDialogEditItem('mesh');
-    this.dialogs['material-edit'] = new cDialogEditItem('material');
-    this.dialogs['texture-edit'] = new cDialogEditItem('texture');
-    this.dialogs['scene-edit'] = new cDialogEditItem('scene');
+    this.dialogs['mesh-edit'] = new cDialogEditItem('mesh', 'Mesh Options');
+    this.dialogs['material-edit'] = new cDialogEditItem('material', 'Material Options');
+    this.dialogs['texture-edit'] = new cDialogEditItem('texture', 'Texture Options');
+    this.dialogs['scene-edit'] = new cDialogEditItem('scene', 'Scene Options');
 
     this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', 'Add Mesh');
     this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');

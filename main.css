@@ -199,17 +199,6 @@ html, body {
   margin: 0;
   overflow: hidden;
 }
-.popup-title {
-  text-align: center;
-  font-size: .8em;
-  padding: 2px;
-  padding-left: 8px;
-  padding-right: 8px;
-  border-radius: 8px;
-  color: black;
-  background: rgb(200, 240, 200);
-  float: left;
-}
 .fields-container {
   overflow: auto;
 }
@@ -400,7 +389,6 @@ button i.material-icons {
   overflow-y: hidden;
   overflow-x: scroll;
 }
-
 .user-profile-info-block {
   padding: 12px;
   background: rgba(0,0,0,.3);
@@ -418,4 +406,13 @@ button i.material-icons {
 }
 .url-type-input-group {
   width: 25em;
+}
+.popup-title {
+  text-align: center;
+  padding: 4px 12px;
+  font-weight: bold;
+  border-radius: 8px;
+  color: silver;
+  background: rgba(0, 0, 0, .5);
+  float: left;
 }
