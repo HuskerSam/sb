@@ -105,15 +105,14 @@ class cContext {
     });
   }
   _loadSceneFromData(sceneData) {
-    let me = this;
     return new Promise((resolve, reject) => {
-      this.loadSceneFromURL(gAPPP.storagePrefix, me._url(sceneData['url']))
+      this.loadSceneFromURL(gAPPP.storagePrefix, this._url(sceneData['url']))
         .then((scene) => {
-          me.scene = scene;
-          me.sceneAddDefaultObjects();
+          this.scene = scene;
+          this.sceneAddDefaultObjects();
           resolve({
             type: 'scene',
-            context: me
+            context: this
           });
         });
     });

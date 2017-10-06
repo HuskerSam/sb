@@ -11,13 +11,16 @@ class gMainView {
     this.context.activate();
   }
   updateSelectedScene() {
-    if (this.key !== gAPPP.a.profile.selectedSceneKey) {
-      let sceneData = sceneFireSet.getCache(selectedKey);
+    let profileKey = gAPPP.a.profile.selectedSceneKey;
+    if (this.key !== profileKey) {
+      let sceneData = this.fireSet.getCache(profileKey);
       if (sceneData) {
+        this.key = profileKey;
         let url = sceneData.url;
         if (this.loadedSceneURL !== sceneData.url) {
           this.loadedSceneURL = sceneData.url;
-          this.context.loadScene(this.loadedSceneURL);
+          this.context._loadSceneFromData(sceneData);
+          this.context.activate();
         }
       }
     }

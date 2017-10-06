@@ -125,14 +125,14 @@ class cDialogSuper {
   show() {
     let me = this;
     this._startLoad();
-    this.context.activate();
     $(this.dialog).modal('show');
 
     this.showFocus();
 
-    if (this.initScene)
+    if (this.initScene) {
+      this.context.activate();
       this.context.loadScene(this.tag, this.fireFields.values).then(r => this._finishShow(r));
-    else
+    } else
       this._finishShow(null);
   }
   showFocus() {

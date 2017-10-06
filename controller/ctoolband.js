@@ -128,7 +128,7 @@ class cToolband {
     let ul = newNode.querySelector('ul');
 
     if (this.tag === 'scene') {
-      this.__addMenuItem(ul, 'Select', e => me.materialToShape(e, key));
+      this.__addMenuItem(ul, 'Select', e => me.selectScene(e, key));
     }
 
     this.__addMenuItem(ul, 'Edit', e => me.showEditPopup(e, key));
@@ -151,6 +151,14 @@ class cToolband {
     this.nodeApplyValues(values, newNode);
 
     return newNode;
+  }
+  selectScene(e, key) {
+    let updates = [{
+      field: 'selectedSceneKey',
+      newValue: key,
+      oldValue: gAPPP.a.profile.selectedSceneKey
+    }];
+    gAPPP.a.modelSets['userProfile'].commitUpdateList(updates);
   }
   textureToMaterial(e, key) {
     alert('soon');
