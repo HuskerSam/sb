@@ -41,8 +41,8 @@ class cDialogSuper {
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas) {
-      this.sC = new cBoundScene(this.canvas);
-      this.sceneTools = new cSceneToolsBand(this.tag, this.sC);
+      this.context = new cContext(this.canvas);
+      this.sceneTools = new cSceneToolsBand(this.tag, this.context);
     }
     this.rotateState = 'vertical';
   }
@@ -71,6 +71,7 @@ class cDialogSuper {
       onDragEnd: () => me.splitDragEnd(),
       onDrag: () => me.splitDragEnd()
     });
+    gAPPP.resize();
   }
   rotateView() {
     if (this.rotateState === 'vertical') {
@@ -93,7 +94,7 @@ class cDialogSuper {
       this._renderImageUpdate();
     }
     $(this.dialog).modal('hide');
-    gAPPP.mV.sC.activate();
+    gAPPP.mV.context.activate();
   }
   _renderImageUpdate() {}
   _startLoad() {
@@ -124,14 +125,14 @@ class cDialogSuper {
   show() {
     let me = this;
     this._startLoad();
-    this.sC.activate();
+    this.context.activate();
     $(this.dialog).modal('show');
 
     this.showFocus();
 
-    if (this.initScene) {
-      this.sC.loadScene(this.tag, this.fireFields.values).then(r => this._finishShow(r));
-    } else
+    if (this.initScene)
+      this.context.loadScene(this.tag, this.fireFields.values).then(r => this._finishShow(r));
+    else
       this._finishShow(null);
   }
   showFocus() {
@@ -146,7 +147,7 @@ class cDialogSuper {
     this.uiObject = uiObject;
 
     if (this.initScene)
-      this.sC.activate();
+      this.context.activate();
 
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];
@@ -156,8 +157,7 @@ class cDialogSuper {
       this.sceneTools.fireFields.paint({
         type: 'sceneTools',
         uiObject: this.uiObject,
-        scene: this.uiObject.scene,
-        sceneController: this.sC
+        context: this.context
       });
     this._endLoad();
     this.showFocus();

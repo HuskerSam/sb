@@ -1,14 +1,14 @@
 /* button bar controller for canvas/scene */
 class cSceneToolsBand {
-  constructor(classPrefix, sceneController) {
+  constructor(classPrefix, context) {
     let me = this;
-    this.sC = sceneController;
+    this.context = context;
     this.expanded = false;
     this.classPrefix = classPrefix;
 
     this.container = document.createElement('div');
     this.container.setAttribute('class', 'scene-tools-band-container sb-floating-toolbar-item');
-    this.sC.canvas.parentNode.appendChild(this.container);
+    this.context.canvas.parentNode.appendChild(this.container);
 
     this.collapseButton = document.createElement('button');
     this.collapseButton.innerHTML = '<i class="material-icons">menu</i>';
@@ -53,10 +53,10 @@ class cSceneToolsBand {
   _showGrid() {
     if (this.gridShown) {
       this.showSceneFloorGridBtn.style.background = 'rgba(0,0,0,.2)';
-      this.sC.showGrid();
+      this.context.showGrid();
     } else {
       this.showSceneFloorGridBtn.style.background = '';
-      this.sC.showGrid(true);
+      this.context.showGrid(true);
     }
   }
   addShowSceneFloorGrid() {

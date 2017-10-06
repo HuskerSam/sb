@@ -92,19 +92,19 @@ class sBabylonUtility {
     if (!uiObject)
       return;
 
-    if (uiObject.sceneController !== gAPPP.activeSceneController)
+    if (uiObject.context !== gAPPP.activeContext)
       return;
 
     if (uiObject.type === 'texture') {
-      uiObject.material.diffuseTexture = this.texture(valueCache);
+      uiObject.material.diffuseTexture = this.texture(valueCache, uiObject.context.scene);
       return;
     }
     if (uiObject.type === 'material') {
-      uiObject.mesh.material = this.material(valueCache, uiObject.scene);
+      uiObject.mesh.material = this.material(valueCache, uiObject.context.scene);
       return;
     }
     if (uiObject.type === 'mesh')
-      return this.setMesh(valueCache, uiObject.mesh, uiObject.scene);
+      return this.setMesh(valueCache, uiObject.mesh, uiObject.context.scene);
     if (uiObject.type === 'sceneTools') {
       return this.setSceneToolsDetails(uiObject, valueCache);
     }
@@ -116,19 +116,19 @@ class sBabylonUtility {
       let value = valueCache[field.fireSetField];
 
       if (field.fireSetField === 'lightIntensity') {
-        uiObject.sceneController.light.intensity = Number(value);
+        uiObject.context.light.intensity = Number(value);
       }
       if (field.fireSetField === 'lightVector') {
-        uiObject.sceneController.light.direction = this.getVector(value, 0, 1, 0);
+        uiObject.context.light.direction = this.getVector(value, 0, 1, 0);
       }
       if (field.fireSetField === 'cameraVector') {
-        uiObject.sceneController.camera.position = this.getVector(value, 0, 10, -10);
+        uiObject.context.camera.position = this.getVector(value, 0, 10, -10);
       }
       if (field.fireSetField === 'showFloorGrid') {
-        uiObject.sceneController.showGrid(!value);
+        uiObject.context.showGrid(!value);
       }
       if (field.fireSetField === 'showSceneGuides') {
-        uiObject.sceneController.showGuides(!value);
+        uiObject.context.showGuides(!value);
       }
       // field.fireSetField === 'gridAndGuidesDepth'
     }

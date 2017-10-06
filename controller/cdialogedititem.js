@@ -11,7 +11,7 @@ class cDialogEditItem extends cDialogSuper {
   }
   _renderImageUpdate() {
     let me = this;
-    this.sC.getJPGDataURL().then((imageDataURL) => {
+    this.context.getJPGDataURL().then((imageDataURL) => {
       let blob = sUtility.dataURItoBlob(imageDataURL);
       me.fireSet.setBlob(me.key, blob, 'sceneRenderImage.jpg').then(uploadResult => {
         let updateInfo = {

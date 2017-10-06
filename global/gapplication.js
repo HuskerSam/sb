@@ -10,7 +10,7 @@ class gApplication {
 
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
 
-    this.activeSceneController = null;
+    this.activeContext = null;
     this.mV = new gMainView();
     this.mV.show();
     window.addEventListener("resize", () => this.resize());
@@ -40,8 +40,8 @@ class gApplication {
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => me.a.resetProfile(), false);
   }
   resize() {
-    if (this.activeSceneController)
-      this.activeSceneController.engine.resize();
+    if (this.activeContext)
+      this.activeContext.engine.resize();
   }
   expandAllBands(){
     for (let i in this.toolbarItems)

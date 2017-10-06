@@ -55,7 +55,6 @@ class gAuthorization {
       mainPage.style.display = 'none';
     }
   }
-
   onAuthStateChanged(user) {
     //ignore unwanted events
     if (user && this.uid === user.uid) {

@@ -1,4 +1,3 @@
-/* firebase bound data list */
 class mFirebaseList extends mFirebaseSuper {
   constructor(referencePath, listtag) {
     super(referencePath, false);

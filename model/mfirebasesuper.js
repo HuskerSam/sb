@@ -1,4 +1,3 @@
-// base class for firebase realtime data
 class mFirebaseSuper {
   constructor(referencePath, activate) {
     let me = this;
@@ -16,7 +15,6 @@ class mFirebaseSuper {
       return;
     this.notiRef.off();
     this.active = false;
-  //  this.notifyChildren({ key: null }, 'clear');
   }
   activate(referencePath) {
     if (this.active)

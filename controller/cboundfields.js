@@ -118,7 +118,7 @@ class cBoundFields {
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
-      this.parent.sC.importMesh(f.fileDom.files[0]).then(meshScene => {
+      this.parent.context.importMesh(f.fileDom.files[0]).then(meshScene => {
         let strMesh = JSON.stringify(meshScene);
         let key = me.parent.key;
         me.loadedURL = '';
@@ -239,14 +239,14 @@ class cBoundFields {
     let sceneReloadRequired = this.paint(this.uiObject);
     if (sceneReloadRequired) {
       if (this.parent.tag === 'mesh' && this.uiObject) {
-        let sC = me.parent.sC;
+        let context = me.parent.context;
         let oldMesh = this.uiObject.mesh;
         if (oldMesh)
           oldMesh.dispose();
         this.uiObject.mesh = null;
 
-        sC.loadMesh(gAPPP.storagePrefix,
-          sC._url(this.values['url']), sC.scene).then(r => {
+        context.loadMesh(gAPPP.storagePrefix,
+          context._url(this.values['url']), context.scene).then(r => {
             me.uiObject.mesh = r;
         });
       }

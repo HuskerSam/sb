@@ -47,7 +47,7 @@ class cDialogCreateItem {
     this.progressBar.style.display = 'block';
     let title = me.titleDom.value.trim();
 
-    gAPPP.mV.sC.uploadObject(this.tag, title, this.fileDom).then((r) => {
+    gAPPP.mV.context.uploadObject(this.tag, title, this.fileDom).then((r) => {
       me.clear();
       me.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';
