@@ -1,4 +1,3 @@
-/* singleton controller for application */
 'use strict';
 window.addEventListener('load', () => new gApplication());
 class gApplication {
@@ -9,14 +8,12 @@ class gApplication {
     this.toolbarItems = {};
     this.dialogs = {};
 
-    //load user profile
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
 
-    this.screenCanvas = document.querySelector('#renderCanvas');
-    this.renderEngine = new gRender(this.screenCanvas);
-    this.screenSceneDetails = sBabylonUtility.createDefaultScene();
-    this.renderEngine.setDefaultSceneDetails(this.screenSceneDetails);
-    this.renderEngine.setSceneDetails(this.screenSceneDetails);
+    this.activeSceneController = null;
+    this.mV = new gMainView();
+    this.mV.show();
+    window.addEventListener("resize", () => this.resize());
 
     this.toolbarItems['scene'] = new cToolband('scene', 'Scenes');
     this.toolbarItems['mesh'] = new cToolband('mesh', 'Meshes');
@@ -41,6 +38,10 @@ class gApplication {
     document.querySelector('#global-toolbar-decrease-fontsize').addEventListener('click', e => me.increaseFontSize(true), false);
     document.querySelector('#global-toolbar-increase-fontsize').addEventListener('click', e => me.increaseFontSize(), false);
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => me.a.resetProfile(), false);
+  }
+  resize() {
+    if (this.activeSceneController)
+      this.activeSceneController.engine.resize();
   }
   expandAllBands(){
     for (let i in this.toolbarItems)

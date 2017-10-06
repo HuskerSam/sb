@@ -1,5 +1,5 @@
 class sBabylonUtility {
-  static setMesh(values, mesh) {
+  static setMesh(values, mesh, scene) {
     if (! mesh)
       return;
     let fields = sStatic.bindingFields['mesh'];
@@ -10,7 +10,7 @@ class sBabylonUtility {
       if (field.fireSetField === 'name')
         continue;
       if (field.uiObjectField)
-        this.updateObjectValue(field, value, mesh);
+        this.updateObjectValue(field, value, mesh, scene);
     }
   }
   static material(values, scene) {
@@ -22,7 +22,7 @@ class sBabylonUtility {
       let value = values[field.fireSetField];
 
       if (field.uiObjectField)
-        this.updateObjectValue(field, value, material);
+        this.updateObjectValue(field, value, material, scene);
     }
     return material;
   }
@@ -44,7 +44,7 @@ class sBabylonUtility {
     texture.hasAlpha = values['hasAlpha'];
     return texture;
   }
-  static updateObjectValue(field, value, object) {
+  static updateObjectValue(field, value, object, scene) {
     try {
       if (value === '')
         return;
@@ -65,19 +65,19 @@ class sBabylonUtility {
         if (tD === undefined)
           return;
 
-        let t = this.texture(tD, gAPPP.renderEngine.sceneDetails.scene);
+        let t = this.texture(tD, scene);
         return sUtility.path(object, field.uiObjectField, t);
       }
 
       if (field.type === 'material') {
         let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
         if (tD === undefined) {
-          let m = new BABYLON.StandardMaterial('material', gAPPP.renderEngine.sceneDetails.scene);
+          let m = new BABYLON.StandardMaterial('material', scene);
           object.material = m;
           return;
         }
 
-        let m = this.material(tD, gAPPP.renderEngine.sceneDetails.scene);
+        let m = this.material(tD, scene);
         object.material = m;
         return;
       }
@@ -92,7 +92,7 @@ class sBabylonUtility {
     if (!uiObject)
       return;
 
-    if (uiObject.scene !== gAPPP.renderEngine.sceneDetails.scene)
+    if (uiObject.sceneController !== gAPPP.activeSceneController)
       return;
 
     if (uiObject.type === 'texture') {
@@ -104,7 +104,7 @@ class sBabylonUtility {
       return;
     }
     if (uiObject.type === 'mesh')
-      return this.setMesh(valueCache, uiObject.mesh);
+      return this.setMesh(valueCache, uiObject.mesh, uiObject.scene);
     if (uiObject.type === 'sceneTools') {
       return this.setSceneToolsDetails(uiObject, valueCache);
     }
@@ -116,13 +116,13 @@ class sBabylonUtility {
       let value = valueCache[field.fireSetField];
 
       if (field.fireSetField === 'lightIntensity') {
-        uiObject.sceneController.sceneDetails.light.intensity = Number(value);
+        uiObject.sceneController.light.intensity = Number(value);
       }
       if (field.fireSetField === 'lightVector') {
-        uiObject.sceneController.sceneDetails.light.direction = this.getVector(value, 0, 1, 0);
+        uiObject.sceneController.light.direction = this.getVector(value, 0, 1, 0);
       }
       if (field.fireSetField === 'cameraVector') {
-        uiObject.sceneController.sceneDetails.camera.position = this.getVector(value, 0, 10, -10);
+        uiObject.sceneController.camera.position = this.getVector(value, 0, 10, -10);
       }
       if (field.fireSetField === 'showFloorGrid') {
         uiObject.sceneController.showGrid(!value);
@@ -131,25 +131,6 @@ class sBabylonUtility {
         uiObject.sceneController.showGuides(!value);
       }
       // field.fireSetField === 'gridAndGuidesDepth'
-    }
-  }
-  static getNewSceneSerialized(fileDom) {
-    let me = this;
-    let file = null;
-    if (fileDom)
-      file = fileDom.files[0];
-
-    if (file) {
-      return new Promise((resolve, reject) => {
-        sUtility.fileToURI(file)
-          .then((sceneSerial) => resolve(sceneSerial));
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        let s = me.createDefaultScene().scene;
-        let sS = BABYLON.SceneSerializer.Serialize(s);
-        resolve(JSON.stringify(sS));
-      });
     }
   }
   static getNumberOrDefault(str, d) {
@@ -169,25 +150,6 @@ class sBabylonUtility {
         z = sBabylonUtility.getNumberOrDefault(parts[2], z);
       }
     return new BABYLON.Vector3(x, y, z);
-  }
-  static createDefaultScene() {
-    let scene = new BABYLON.Scene(gAPPP.renderEngine.engine);
-    scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
-
-    let cameraVector = sBabylonUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
-    let lightVector = sBabylonUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
-    let camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, scene);
-    camera.setTarget(BABYLON.Vector3.Zero());
-
-    let light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, scene);
-    light.intensity = .7;
-    if (gAPPP.a.profile.lightIntensity !== undefined)
-      light.intensity = gAPPP.a.profile.lightIntensity;
-    return {
-      light,
-      camera,
-      scene
-    };
   }
   static addSphere(name, faces, diameter, scene) {
     let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, scene);
@@ -238,5 +200,35 @@ class sBabylonUtility {
     zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
     sObjects.push(zChar);
     return sObjects;
+  }
+  static color(str) {
+    if (!str) {
+      str = '1,1,1';
+    }
+    let parts = str.split(',');
+    let cA = [];
+    return new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+  }
+  static colorRGB255(str) {
+    let bC = this.color(str);
+    if (isNaN(bC.r))
+      bC.r = 1;
+    if (isNaN(bC.g))
+      bC.g = 1;
+    if (isNaN(bC.b))
+      bC.b = 1;
+
+    return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0) + ')'
+  }
+  static setColorLabel(dom, defaultValue) {
+    let v = dom.value;
+    if (v === '')
+      if (defaultValue)
+        v = defaultValue;
+
+    let rgb = '';
+    if (v !== '')
+      rgb = this.colorRGB255(v);
+    dom.parentNode.style.background = rgb;
   }
 }

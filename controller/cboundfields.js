@@ -118,7 +118,7 @@ class cBoundFields {
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
-      gAPPP.renderEngine.importMesh(f.fileDom.files[0]).then(meshScene => {
+      this.parent.sC.importMesh(f.fileDom.files[0]).then(meshScene => {
         let strMesh = JSON.stringify(meshScene);
         let key = me.parent.key;
         me.loadedURL = '';
@@ -158,7 +158,7 @@ class cBoundFields {
       this.valueCache[f.fireSetField] = v;
 
       if (f.type === 'color')
-        gAPPP.renderEngine.setColorLabel(f.dom);
+        sBabylonUtility.setColorLabel(f.dom);
     }
 
     sBabylonUtility.updateUI(this.uiObject, this.valueCache);
@@ -245,8 +245,8 @@ class cBoundFields {
           oldMesh.dispose();
         this.uiObject.mesh = null;
 
-        gAPPP.renderEngine.loadMesh(gAPPP.storagePrefix,
-          sC._url(this.values['url']), sC.sceneDetails.scene).then(r => {
+        sC.loadMesh(gAPPP.storagePrefix,
+          sC._url(this.values['url']), sC.scene).then(r => {
             me.uiObject.mesh = r;
         });
       }
@@ -308,7 +308,7 @@ class cBoundFields {
 
     if (updateShown) {
       if (f.type === 'color')
-        gAPPP.renderEngine.setColorLabel(f.dom);
+        sBabylonUtility.setColorLabel(f.dom);
 
       if (f.type === 'url') {
         if (this.parent.tag === 'mesh') {

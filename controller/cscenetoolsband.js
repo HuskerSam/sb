@@ -1,15 +1,14 @@
 /* button bar controller for canvas/scene */
 class cSceneToolsBand {
-  constructor(classPrefix, canvas, sceneController) {
+  constructor(classPrefix, sceneController) {
     let me = this;
     this.sC = sceneController;
-    this.canvas = canvas;
     this.expanded = false;
     this.classPrefix = classPrefix;
 
     this.container = document.createElement('div');
     this.container.setAttribute('class', 'scene-tools-band-container sb-floating-toolbar-item');
-    this.canvas.parentNode.appendChild(this.container);
+    this.sC.canvas.parentNode.appendChild(this.container);
 
     this.collapseButton = document.createElement('button');
     this.collapseButton.innerHTML = '<i class="material-icons">menu</i>';
@@ -21,12 +20,6 @@ class cSceneToolsBand {
     this.innerContainer.setAttribute('class', 'sb-floating-toolbar-content');
     this.container.appendChild(this.innerContainer);
 
-    /*
-        this.buttonContainer = document.createElement('div');
-        this.buttonContainer.setAttribute('class', 'button-container');
-        this.buttonContainer.style.display = 'none';
-        this.container.appendChild(this.buttonContainer);
-    */
     this.fields = sStatic.bindingFieldsCloned('sceneToolsBar');
     this.fieldsContainer = document.createElement('div');
     this.fieldsContainer.setAttribute('class', 'fields-container');

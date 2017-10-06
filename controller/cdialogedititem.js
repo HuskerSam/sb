@@ -11,7 +11,7 @@ class cDialogEditItem extends cDialogSuper {
   }
   _renderImageUpdate() {
     let me = this;
-    gAPPP.renderEngine.getJPGDataURL().then((imageDataURL) => {
+    this.sC.getJPGDataURL().then((imageDataURL) => {
       let blob = sUtility.dataURItoBlob(imageDataURL);
       me.fireSet.setBlob(me.key, blob, 'sceneRenderImage.jpg').then(uploadResult => {
         let updateInfo = {

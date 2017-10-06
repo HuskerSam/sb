@@ -295,7 +295,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'Light Intensity',
   fireSetField: 'lightIntensity',
-  uiObjectField: 'sceneDetails.light.intensity'
+  uiObjectField: null
 }, {
   title: 'Light Vector',
   fireSetField: 'lightVector',

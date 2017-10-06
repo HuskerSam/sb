@@ -8,7 +8,6 @@ class cDialogSuper {
     this.fireSet = gAPPP.a.modelSets[this.tag];
     this.fireFields = null;
     this.uiJSON = 'N/A';
-    this.sC = new cBoundScene();
 
     this.dialogQuerySelector = dialogQuerySelector;
     if (!dialog)
@@ -41,9 +40,10 @@ class cDialogSuper {
     $(this.dialog).on('shown.bs.modal', () => me.showFocus());
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
-    if (this.canvas)
-      this.sceneTools = new cSceneToolsBand(this.tag, this.canvas, this.sC);
-
+    if (this.canvas) {
+      this.sC = new cBoundScene(this.canvas);
+      this.sceneTools = new cSceneToolsBand(this.tag, this.sC);
+    }
     this.rotateState = 'vertical';
   }
   splitView() {
@@ -71,8 +71,6 @@ class cDialogSuper {
       onDragEnd: () => me.splitDragEnd(),
       onDrag: () => me.splitDragEnd()
     });
-
-    gAPPP.renderEngine.engine.resize();
   }
   rotateView() {
     if (this.rotateState === 'vertical') {
@@ -83,7 +81,7 @@ class cDialogSuper {
     this.splitView();
   }
   splitDragEnd() {
-    gAPPP.renderEngine.engine.resize();
+    gAPPP.resize();
   }
   close() {
     if (this.fireFields)
@@ -95,7 +93,7 @@ class cDialogSuper {
       this._renderImageUpdate();
     }
     $(this.dialog).modal('hide');
-    gAPPP.renderEngine.renderDefault();
+    gAPPP.mV.sC.activate();
   }
   _renderImageUpdate() {}
   _startLoad() {
@@ -126,25 +124,15 @@ class cDialogSuper {
   show() {
     let me = this;
     this._startLoad();
-    if (this.canvas)
-      gAPPP.renderEngine.setCanvas(this.canvas);
-
+    this.sC.activate();
     $(this.dialog).modal('show');
 
     this.showFocus();
 
     if (this.initScene) {
-      return this._initScene();
-    }
-
-    this._finishShow(null);
-  }
-  _initScene() {
-    let me = this;
-    let sceneDetails = sBabylonUtility.createDefaultScene();
-    this.sC.set(sceneDetails);
-    this.sC.activate();
-    this.sC.loadScene(this.tag, this.fireFields.values).then(r => me._finishShow(r));
+      this.sC.loadScene(this.tag, this.fireFields.values).then(r => this._finishShow(r));
+    } else
+      this._finishShow(null);
   }
   showFocus() {
     if (this.cancelBtn)
@@ -152,10 +140,13 @@ class cDialogSuper {
     else if (this.okBtn)
       this.okBtn.focus();
 
-    gAPPP.renderEngine.engine.resize();
+    gAPPP.resize();
   }
   _finishShow(uiObject) {
     this.uiObject = uiObject;
+
+    if (this.initScene)
+      this.sC.activate();
 
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];

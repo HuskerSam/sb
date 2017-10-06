@@ -45,7 +45,7 @@ class mFirebaseProfile extends mFirebaseSuper {
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
 
-    if (gAPPP.renderEngine.sceneDetails)
-      gAPPP.renderEngine.sceneDetails.scene.clearColor = gAPPP.renderEngine.color(gAPPP.a.profile.canvasColor);
+    if (gAPPP.activeSceneController)
+      gAPPP.activeSceneController.scene.clearColor = sBabylonUtility.color(gAPPP.a.profile.canvasColor);
   }
 }

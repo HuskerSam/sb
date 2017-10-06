@@ -2,7 +2,6 @@ class cDialogCreateItem {
   constructor(tag, title, hideFileDom) {
     let me = this;
     this.tag = tag;
-    this.sC = new cBoundScene();
 
     let d = document.createElement('div');
     d.innerHTML = document.getElementById('scene-builder-create-dialog-template').innerHTML;
@@ -26,7 +25,7 @@ class cDialogCreateItem {
   }
   close() {
     $(this.dialog).modal('hide');
-    gAPPP.renderEngine.renderDefault();
+    gAPPP.mV.activate();
   }
   show() {
     this.popupButtons.style.display = 'block';
@@ -48,7 +47,7 @@ class cDialogCreateItem {
     this.progressBar.style.display = 'block';
     let title = me.titleDom.value.trim();
 
-    this.sC.uploadObject(this.tag, title, this.fileDom).then((r) => {
+    gAPPP.mV.sC.uploadObject(this.tag, title, this.fileDom).then((r) => {
       me.clear();
       me.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';
