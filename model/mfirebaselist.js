@@ -74,10 +74,26 @@ class mFirebaseList extends mFirebaseSuper {
 
           me.set(key, data).then(r => resolve(r));
         }).catch(e => reject(e));
-      }
-      else {
+      } else {
         me.set(key, data).then(r => resolve(r));
       }
+    });
+  }
+  updateBlobString(key, blobString, filename) {
+    return new Promise((resolve, reject) => {
+      this.setString(key, blobString, filename).then(snapshot => {
+        let updates = [{
+          field: 'url',
+          newValue: snapshot.downloadURL,
+          oldValue: this.getCache(key)['url']
+        }, {
+          field: 'size',
+          newValue: snapshot.totalBytes,
+          oldValue: this.getCache(key)['size']
+        }];
+        this.commitUpdateList(updates, key);
+        resolve(snapshot);
+      });
     });
   }
   createWithBlob(data, blob, filename) {
@@ -93,8 +109,7 @@ class mFirebaseList extends mFirebaseSuper {
 
           me.set(key, data).then(r => resolve(r));
         }).catch(e => reject(e));
-      }
-      else {
+      } else {
         me.set(key, data).then(r => resolve(r));
       }
     });
@@ -104,7 +119,7 @@ class mFirebaseList extends mFirebaseSuper {
     return new Promise(function(resolve, reject) {
       let key = me.getKey();
 
-      me.setString(key, sceneString, 'file.babylon').then(function(snapshot) {
+      me.setString(key, sceneString, 'scene.babylon').then(function(snapshot) {
         if (!title)
           title = new Date().toISOString();
 

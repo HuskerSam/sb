@@ -9,6 +9,7 @@ class cContext {
     this.activeContextObject = null;
     this.canvas = canvas;
     this.engine = null;
+    this.meshFilename = 'mesh.bablyon';
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
         preserveDrawingBuffer: true
@@ -75,7 +76,7 @@ class cContext {
   }
   _loadSceneMesh(meshData) {
     return new Promise((resolve, reject) => {
-      this.loadMesh(gAPPP.storagePrefix, this._url(meshData['url']), this.scene)
+      this.loadMesh(gAPPP.storagePrefix, this._url(meshData['url']))
         .then(mesh => {
           this.meshObj = mesh;
           this.meshLoadedURL = meshData['url'];
@@ -97,15 +98,15 @@ class cContext {
   }
   _loadSceneFromData(sceneData) {
     return new Promise((resolve, reject) => {
-      this.loadSceneFromURL(gAPPP.storagePrefix, this._url(sceneData['url']))
-        .then((scene) => {
-          this.scene = scene;
-          this.sceneAddDefaultObjects();
-          resolve({
-            type: 'scene',
-            context: this
-          });
+      BABYLON.SceneLoader.ShowLoadingScreen = false;
+      BABYLON.SceneLoader.Load(gAPPP.storagePrefix, this._url(sceneData['url']), this.engine, newScene => {
+        this.scene = newScene;
+        this.sceneAddDefaultObjects();
+        resolve({
+          type: 'scene',
+          context: this
         });
+      });
     });
   }
   _loadSceneMaterial(materialData) {
@@ -205,6 +206,48 @@ class cContext {
       this.guideObjects = [];
     }
   }
+  sceneAddDefaultObjects() {
+    this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
+
+    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+    this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
+    this.camera.setTarget(BABYLON.Vector3.Zero());
+
+    let lightVector = sUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
+    this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
+    this.light.intensity = .7;
+
+    this.updateSceneObjects();
+  }
+  updateSceneObjects() {
+    if (gAPPP.a.profile.lightIntensity !== undefined)
+      this.light.intensity = gAPPP.a.profile.lightIntensity;
+    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+    this.camera.position = cameraVector;
+  }
+  getJPGDataURL() {
+    return new Promise((resolve, reject) => {
+      BABYLON.Tools.CreateScreenshot(this.engine, this.camera, {
+        width: 500
+      }, (base64Image) => resolve(base64Image));
+    });
+  }
+  importMesh(file) {
+    let me = this;
+    return new Promise((resolve, reject) => {
+      sUtility.fileToURI(file)
+        .then(d => me.serializeMesh("", "data:" + d)
+          .then(strMesh => resolve(strMesh)));
+    });
+  }
+  updateMesh(key, file) {
+    return new Promise((resolve, reject) => {
+      this.importMesh(file).then(meshScene => {
+        let strMesh = JSON.stringify(meshScene);
+        gAPPP.a.modelSets['mesh'].updateBlobString(key, strMesh, this.meshFilename).then((r) => resolve(r));
+      });
+    });
+  }
   uploadObject(type, title, fileDom) {
     let me = this;
     if (type === 'mesh') {
@@ -217,7 +260,7 @@ class cContext {
             let strMesh = null;
             if (mesh)
               strMesh = JSON.stringify(mesh);
-            gAPPP.a.modelSets['mesh'].createWithBlobString(meshData, strMesh, 'mesh.babylon').then((r) => resolve(r));
+            gAPPP.a.modelSets['mesh'].createWithBlobString(meshData, strMesh, this.meshFilename).then((r) => resolve(r));
           });
         else
           gAPPP.a.modelSets['mesh'].createWithBlobString(meshData).then((r) => resolve(r));
@@ -251,49 +294,6 @@ class cContext {
 
     return new Promise(resolve => resolve());
   }
-  sceneAddDefaultObjects() {
-    this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
-
-    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
-    this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
-    this.camera.setTarget(BABYLON.Vector3.Zero());
-
-    let lightVector = sUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
-    this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
-    this.light.intensity = .7;
-
-    this.updateSceneObjects();
-  }
-  updateSceneObjects() {
-    if (gAPPP.a.profile.lightIntensity !== undefined)
-      this.light.intensity = gAPPP.a.profile.lightIntensity;
-    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
-    this.camera.position = cameraVector;
-  }
-  loadSceneFromURL(path, fileName) {
-    let me = this;
-    return new Promise(function(resolve, reject) {
-      BABYLON.SceneLoader.ShowLoadingScreen = false;
-      BABYLON.SceneLoader.Load(path, fileName, me.engine, scene => {
-        return resolve(scene);
-      });
-    });
-  }
-  getJPGDataURL() {
-    return new Promise((resolve, reject) => {
-      BABYLON.Tools.CreateScreenshot(this.engine, this.camera, {
-        width: 500
-      }, (base64Image) => resolve(base64Image));
-    });
-  }
-  importMesh(file) {
-    let me = this;
-    return new Promise((resolve, reject) => {
-      sUtility.fileToURI(file)
-        .then(d => me.serializeMesh("", "data:" + d)
-          .then(strMesh => resolve(strMesh)));
-    });
-  }
   loadMesh(path, fileName) {
     return new Promise((resolve, reject) => {
       BABYLON.SceneLoader.ImportMesh('', path, fileName, this.scene,
@@ -304,12 +304,9 @@ class cContext {
     });
   }
   serializeMesh(path, fileName) {
-    var me = this;
     return new Promise((resolve, reject) => {
-      let temp_scene = new BABYLON.Scene(me.engine);
-      me.loadMesh(path, fileName, temp_scene).then(newMesh => {
-        resolve(BABYLON.SceneSerializer.Serialize(scene));
-        temp_scene.dispose();
+      this.loadMesh(path, fileName).then(newMesh => {
+        resolve(BABYLON.SceneSerializer.Serialize(this.scene));
       });
     });
   }

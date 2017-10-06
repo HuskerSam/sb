@@ -72,7 +72,7 @@ __localStaticStorageForBindingFields['mesh'] = [{
   contextObjectField: 'rotation.z',
   group: 'rotate'
 }, {
-  title: 'Mesh Url (.babylon file[Object Id])',
+  title: 'Mesh Url',
   fireSetField: 'url',
   contextObjectField: null,
   type: 'url',
@@ -220,7 +220,7 @@ __localStaticStorageForBindingFields['scene'] = [{
   contextObjectField: null,
   group: 'title'
 }, {
-  title: 'Url',
+  title: 'Scene Url',
   fireSetField: 'url',
   contextObjectField: null,
   type: 'url',

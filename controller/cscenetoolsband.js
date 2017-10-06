@@ -27,7 +27,7 @@ class cSceneToolsBand {
     this.classPrefix = classPrefix;
     let domClassPrefix = this.classPrefix + '-scene-tools-band-fields-';
     this.fireSet = gAPPP.a.modelSets['userProfile'];
-    this.fireFields = new cBoundFields(this.fields, domClassPrefix, this.fieldsContainer, this);
+    this.fireFields = new cDataView(this.fields, domClassPrefix, this.fieldsContainer, this);
     this.fireSet.childListeners.push((values, type, fireData) =>
       me.fireFields._handleDataChange(values, type, fireData));
   }

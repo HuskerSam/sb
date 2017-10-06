@@ -1,4 +1,4 @@
-class cBoundFields {
+class cDataView {
   constructor(boundFields, prefix, container, parent) {
     this.fields = boundFields;
     this.prefix = prefix;
@@ -118,27 +118,12 @@ class cBoundFields {
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
-      this.parent.context.importMesh(f.fileDom.files[0]).then(meshScene => {
-        let strMesh = JSON.stringify(meshScene);
-        let key = me.parent.key;
-        me.loadedURL = '';
-        fS.setString(key, strMesh, 'file.babylon').then(snapshot => {
-          let updates = [{
-            field: 'url',
-            newValue: snapshot.downloadURL,
-            oldValue: me.valueCache['url']
-          }, {
-            field: 'size',
-            newValue: snapshot.totalBytes,
-            oldValue: me.valueCache['size']
-          }];
+      if (f.fileDom.files.length > 0)
+        this.parent.context.updateMesh(this.parent.key, f.fileDom.files[0]).then(snapshot => {
           f.fileDom.value = '';
-          this.parent.fireSet.commitUpdateList(updates, me.parent.key);
-
           f.progressBar.style.display = 'none';
           f.dom.style.display = '';
         });
-      });
     } else if (f.uploadType === 'texture') {
 
     }
@@ -206,7 +191,7 @@ class cBoundFields {
     this.active = true;
     let scrapes = {};
     let valueCache = {};
-    let sceneReloadRequired = false;
+    let contextReloadRequired = false;
 
     for (let i in this.fields) {
       let f = this.fields[i]
@@ -219,8 +204,8 @@ class cBoundFields {
         scrapes[i] = this.scrapeCache[i];
         valueCache[f.fireSetField] = this.valueCache[f.fireSetField];
       }
-      if (r.sceneReloadRequired)
-        sceneReloadRequired = true;
+      if (r.contextReloadRequired)
+        contextReloadRequired = true;
     }
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
@@ -228,7 +213,7 @@ class cBoundFields {
     if (contextObject)
       contextObject.context.updateSelectedObject(contextObject, valueCache);
     this.loadedURL = this.valueCache['url'];
-    return sceneReloadRequired;
+    return contextReloadRequired;
   }
   _handleDataChange(values, type, fireData) {
     let me = this;
@@ -238,8 +223,8 @@ class cBoundFields {
     }
 
     this.values = values;
-    let sceneReloadRequired = this.paint(this.contextObject);
-    if (sceneReloadRequired) {
+    let contextReloadRequired = this.paint(this.contextObject);
+    if (contextReloadRequired) {
       if (this.parent.tag === 'mesh' && this.contextObject) {
         let context = me.parent.context;
         let oldMesh = this.contextObject.mesh;
@@ -249,14 +234,14 @@ class cBoundFields {
 
         context.loadMesh(gAPPP.storagePrefix,
           context._url(this.values['url']), context.scene).then(r => {
-            me.contextObject.mesh = r;
+          me.contextObject.mesh = r;
         });
       }
     }
   }
   _updateFieldDom(f) {
     let updateShown = false;
-    let sceneReloadRequired = false;
+    let contextReloadRequired = false;
     let me = this;
     let v = sUtility.path(this.values, f.fireSetField);
     if (v === undefined)
@@ -315,7 +300,7 @@ class cBoundFields {
       if (f.type === 'url') {
         if (this.parent.tag === 'mesh') {
           if (this.loadedURL !== this.valueCache[f.fireSetField]) {
-            sceneReloadRequired = true;
+            contextReloadRequired = true;
           }
         }
       }
@@ -324,7 +309,7 @@ class cBoundFields {
     return {
       updateShown,
       value: v,
-      sceneReloadRequired
+      contextReloadRequired
     };
   }
   _blurField(domControl, field, e) {

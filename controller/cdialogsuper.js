@@ -18,7 +18,7 @@ class cDialogSuper {
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     if (this.fields) {
       let domClassPrefix = this.tag + '-fields-';
-      this.fireFields = new cBoundFields(this.fields, domClassPrefix, this.fieldsContainer, this);
+      this.fireFields = new cDataView(this.fields, domClassPrefix, this.fieldsContainer, this);
       this.fireSet.childListeners.push((values, type, fireData) => me.fireFields._handleDataChange(values, type, fireData));
     }
 
