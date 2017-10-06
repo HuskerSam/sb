@@ -211,7 +211,7 @@ class cDataView {
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
     if (contextObject)
-      contextObject.context.updateSelectedObject(contextObject, valueCache);
+      contextObject.context.updateSelectedObject(this.contextObject, valueCache);
     this.loadedURL = this.valueCache['url'];
     return contextReloadRequired;
   }

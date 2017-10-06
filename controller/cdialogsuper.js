@@ -27,7 +27,6 @@ class cDialogSuper {
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
     this.rotateBtn = this.dialog.querySelector('.rotate-details');
-    this.tabContent = this.dialog.querySelector('.tab-content');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
 
     if (this.cancelBtn)
@@ -99,7 +98,6 @@ class cDialogSuper {
   _renderImageUpdate() {}
   _startLoad() {
     this._hideDom(this.popupButtons);
-    this._hideDom(this.tabContent);
     this._hideDom(this.fieldsContainer);
     this._showDom(this.progressBar);
   }
@@ -116,7 +114,6 @@ class cDialogSuper {
   }
   _endLoad() {
     this._showDom(this.popupButtons);
-    this._showDom(this.tabContent);
     this._showDom(this.fieldsContainer);
     this._hideDom(this.progressBar);
 
@@ -131,7 +128,9 @@ class cDialogSuper {
 
     if (this.initScene) {
       this.context.activate();
-      this.context.loadScene(this.tag, this.fireFields.values).then(r => this._finishShow(r));
+      this.context.loadScene(this.tag, this.fireFields.values).then(
+        r => this._finishShow(r),
+        e => this._finishShow(e));
     } else
       this._finishShow(null);
   }

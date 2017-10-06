@@ -78,8 +78,6 @@ class cContext {
     return new Promise((resolve, reject) => {
       this.loadMesh(gAPPP.storagePrefix, this._url(meshData['url']))
         .then(mesh => {
-          this.meshObj = mesh;
-          this.meshLoadedURL = meshData['url'];
           resolve({
             type: 'mesh',
             mesh,
@@ -141,9 +139,9 @@ class cContext {
     });
   }
   loadScene(sceneType, values) {
-    if (sceneType !== 'scene') {
+  //  if (sceneType !== 'scene') {
       this.createEmptyScene();
-    }
+  //  }
 
     this.extraSceneObjects = [];
     if (sceneType === 'mesh')
