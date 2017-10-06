@@ -18,63 +18,63 @@ let __defaultData = {};
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
   fireSetField: 'title',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'title'
 }, {
   title: 'Material Name',
   fireSetField: 'materialName',
-  uiObjectField: 'material',
+  contextObjectField: 'material',
   group: 'title',
   type: 'material'
 }, {
   title: 'Scale X',
   fireSetField: 'simpleUIDetails.scaleX',
-  uiObjectField: 'scaling.x',
+  contextObjectField: 'scaling.x',
   group: 'scale'
 }, {
   title: 'Scale Y',
   fireSetField: 'simpleUIDetails.scaleY',
-  uiObjectField: 'scaling.y',
+  contextObjectField: 'scaling.y',
   group: 'scale'
 }, {
   title: 'Scale Z',
   fireSetField: 'simpleUIDetails.scaleZ',
-  uiObjectField: 'scaling.z',
+  contextObjectField: 'scaling.z',
   group: 'scale'
 }, {
   title: 'Offset X',
   fireSetField: 'simpleUIDetails.positionX',
-  uiObjectField: 'position.x',
+  contextObjectField: 'position.x',
   group: 'offset'
 }, {
   title: 'Offset Y',
   fireSetField: 'simpleUIDetails.positionY',
-  uiObjectField: 'position.y',
+  contextObjectField: 'position.y',
   group: 'offset'
 }, {
   title: 'Offset Z',
   fireSetField: 'simpleUIDetails.positionZ',
-  uiObjectField: 'position.z',
+  contextObjectField: 'position.z',
   group: 'offset'
 }, {
   title: 'Rotate X',
   fireSetField: 'simpleUIDetails.rotateX',
-  uiObjectField: 'rotation.x',
+  contextObjectField: 'rotation.x',
   group: 'rotate'
 }, {
   title: 'Rotate Y',
   fireSetField: 'simpleUIDetails.rotateY',
-  uiObjectField: 'rotation.y',
+  contextObjectField: 'rotation.y',
   group: 'rotate'
 }, {
   title: 'Rotate Z',
   fireSetField: 'simpleUIDetails.rotateZ',
-  uiObjectField: 'rotation.z',
+  contextObjectField: 'rotation.z',
   group: 'rotate'
 }, {
   title: 'Mesh Url (.babylon file[Object Id])',
   fireSetField: 'url',
-  uiObjectField: null,
+  contextObjectField: null,
   type: 'url',
   uploadType: 'mesh',
   group: 'url'
@@ -83,132 +83,132 @@ __localStaticStorageForBindingFields['mesh'] = [{
 __localStaticStorageForBindingFields['material'] = [{
   title: 'Title',
   fireSetField: 'title',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'title'
 }, {
   title: 'Name (scene id)',
   fireSetField: 'name',
-  uiObjectField: 'name',
+  contextObjectField: 'name',
   type: 'id',
   group: 'title'
 }, {
   title: 'Wireframe',
   fireSetField: 'wireframe',
-  uiObjectField: 'wireframe',
+  contextObjectField: 'wireframe',
   type: 'boolean',
   group: 'options'
 }, {
   title: 'Alpha Level',
   fireSetField: 'alpha',
-  uiObjectField: 'alpha',
+  contextObjectField: 'alpha',
   group: 'options'
 }, {
   title: 'Diffuse Color (main)',
   fireSetField: 'diffuseColor',
-  uiObjectField: 'diffuseColor',
+  contextObjectField: 'diffuseColor',
   type: 'color',
   group: 'diffuseColor'
 }, {
   title: 'Diffuse Texture Name',
   fireSetField: 'diffuseTextureName',
-  uiObjectField: 'diffuseTexture',
+  contextObjectField: 'diffuseTexture',
   type: 'texture',
   group: 'diffuseColor'
 }, {
   title: 'Ambient Color (reflects)',
   fireSetField: 'ambientColor',
-  uiObjectField: 'ambientColor',
+  contextObjectField: 'ambientColor',
   type: 'color',
   group: 'ambientColor'
 }, {
   title: 'Ambient Texture Name',
   fireSetField: 'ambientTextureName',
-  uiObjectField: 'ambientTexture',
+  contextObjectField: 'ambientTexture',
   type: 'texture',
   group: 'ambientColor'
 }, {
   title: 'Emissive Color (glows)',
   fireSetField: 'emissiveColor',
-  uiObjectField: 'emissiveColor',
+  contextObjectField: 'emissiveColor',
   type: 'color',
   group: 'emissiveColor'
 }, {
   title: 'Emissive Texture Name',
   fireSetField: 'emissiveTextureName',
-  uiObjectField: 'emissiveTexture',
+  contextObjectField: 'emissiveTexture',
   type: 'texture',
   group: 'emissiveColor'
 }, {
   title: 'Specular Power',
   fireSetField: 'specularPower',
-  uiObjectField: 'specularPower',
+  contextObjectField: 'specularPower',
   group: 'specularPower'
 }, {
   title: 'Specular over Alpha',
   fireSetField: 'useSpecularOverAlpha',
-  uiObjectField: 'useSpecularOverAlpha',
+  contextObjectField: 'useSpecularOverAlpha',
   group: 'specularPower',
   type: 'boolean'
 }, {
   title: 'Gloss From Specular',
   fireSetField: 'useGlossinessFromSpecularMapAlpha',
-  uiObjectField: 'specularPower',
+  contextObjectField: 'specularPower',
   group: 'specularPower',
   type: 'boolean',
 }, {
   title: 'Specular Color (shines)',
   fireSetField: 'specularColor',
-  uiObjectField: 'specularColor',
+  contextObjectField: 'specularColor',
   group: 'specularColor',
   type: 'color'
 }, {
   title: 'Specular Texture Name',
   fireSetField: 'specularTextureName',
-  uiObjectField: 'specularTexture',
+  contextObjectField: 'specularTexture',
   group: 'specularColor',
   type: 'texture'
 }, {
   title: 'Backface Culling',
   fireSetField: 'backfaceCulling',
-  uiObjectField: 'backfaceCulling',
+  contextObjectField: 'backfaceCulling',
   type: 'boolean'
 }];
 
 __localStaticStorageForBindingFields['texture'] = [{
   title: 'Title',
   fireSetField: 'title',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'title'
 }, {
   title: 'has Alpha',
   fireSetField: 'hasAlpha',
-  uiObjectField: 'hasAlpha',
+  contextObjectField: 'hasAlpha',
   type: 'boolean',
   group: 'options'
 }, {
   title: 'Offset v (0-1)',
   fireSetField: 'vOffset',
-  uiObjectField: 'vOffset',
+  contextObjectField: 'vOffset',
   group: 'offset'
 }, {
   title: 'Offset u (0-1)',
   fireSetField: 'uOffset',
-  uiObjectField: 'uOffset',
+  contextObjectField: 'uOffset',
   group: 'offset'
 }, {
   title: 'Scale v (1/x)',
   fireSetField: 'vScale',
-  uiObjectField: 'vScale',
+  contextObjectField: 'vScale',
   group: 'scale'
 }, {
   title: 'Scale u (1/x)',
   fireSetField: 'uScale',
-  uiObjectField: 'uScale',
+  contextObjectField: 'uScale',
   group: 'scale'
 }, {
   title: 'Url (Image)',
   fireSetField: 'url',
-  uiObjectField: null,
+  contextObjectField: null,
   type: 'url',
   uploadType: 'texture',
   group: 'url'
@@ -217,12 +217,12 @@ __localStaticStorageForBindingFields['texture'] = [{
 __localStaticStorageForBindingFields['scene'] = [{
   title: 'Title',
   fireSetField: 'title',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'title'
 }, {
   title: 'Url',
   fireSetField: 'url',
-  uiObjectField: null,
+  contextObjectField: null,
   type: 'url',
   group: 'options'
 }];
@@ -230,55 +230,55 @@ __localStaticStorageForBindingFields['scene'] = [{
 __localStaticStorageForBindingFields['userProfile'] = [{
   title: 'Font Family',
   fireSetField: 'fontFamily',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'font'
 }, {
   title: 'Font Size (pt)',
   fireSetField: 'fontSize',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'font'
 }, {
   title: 'Canvas Color',
   fireSetField: 'canvasColor',
-  uiObjectField: null,
+  contextObjectField: null,
   type: 'color',
   group: 'main'
 }, {
   title: 'Camera Vector',
   fireSetField: 'cameraVector',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'camera'
 }, {
   title: 'Light Intensity',
   fireSetField: 'lightIntensity',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'light'
 }, {
   title: 'Light Vector',
   fireSetField: 'lightVector',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'light'
 }, {
   title: 'Show Grid',
   fireSetField: 'showFloorGrid',
   type: 'boolean',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'extras'
 }, {
   title: 'Grid Depth',
   fireSetField: 'floorGridDepth',
-  uiObjectField: null,
+  contextObjectField: null,
   group: 'extras'
 }, {
   title: 'Show Guides',
   fireSetField: 'showSceneGuides',
-  uiObjectField: null,
+  contextObjectField: null,
   type: 'boolean',
   group: 'extras'
 }, {
   title: 'Disable focus lock',
   fireSetField: 'inputFocusLock',
-  uiObjectField: null,
+  contextObjectField: null,
   type: 'boolean',
   group: 'inputFocusLock'
 }];
@@ -286,33 +286,33 @@ __localStaticStorageForBindingFields['userProfile'] = [{
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   title: 'Canvas Color',
   fireSetField: 'canvasColor',
-  uiObjectField: null,
+  contextObjectField: null,
   type: 'color'
 }, {
   title: 'Camera Vector',
   fireSetField: 'cameraVector',
-  uiObjectField: null
+  contextObjectField: null
 }, {
   title: 'Light Intensity',
   fireSetField: 'lightIntensity',
-  uiObjectField: null
+  contextObjectField: null
 }, {
   title: 'Light Vector',
   fireSetField: 'lightVector',
-  uiObjectField: null
+  contextObjectField: null
 }, {
   title: 'Show Grid',
   fireSetField: 'showFloorGrid',
   type: 'boolean',
-  uiObjectField: null
+  contextObjectField: null
 }, {
   title: 'Grid and Guides Depth',
   fireSetField: 'gridAndGuidesDepth',
-  uiObjectField: null
+  contextObjectField: null
 }, {
   title: 'Show Guides',
   fireSetField: 'showSceneGuides',
-  uiObjectField: null,
+  contextObjectField: null,
   type: 'boolean'
 }];
 

@@ -143,20 +143,20 @@ class cDialogSuper {
 
     gAPPP.resize();
   }
-  _finishShow(uiObject) {
-    this.uiObject = uiObject;
+  _finishShow(contextObject) {
+    this.contextObject = contextObject;
 
     if (this.initScene)
       this.context.activate();
 
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];
-      let sceneReloadRequired = this.fireFields.paint(this.uiObject);
+      let sceneReloadRequired = this.fireFields.paint(this.contextObject);
     }
     if (this.sceneTools)
       this.sceneTools.fireFields.paint({
         type: 'sceneTools',
-        uiObject: this.uiObject,
+        contextObject: this.contextObject,
         context: this.context
       });
     this._endLoad();

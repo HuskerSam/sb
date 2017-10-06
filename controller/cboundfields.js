@@ -158,10 +158,11 @@ class cBoundFields {
       this.valueCache[f.fireSetField] = v;
 
       if (f.type === 'color')
-        sBabylonUtility.setColorLabel(f.dom);
+        sUtility.setColorLabel(f.dom);
     }
 
-    sBabylonUtility.updateUI(this.uiObject, this.valueCache);
+    if (this.contextObject)
+      this.contextObject.context.updateSelectedObject(this.contextObject, this.valueCache);
     this._commitUpdates(this.valueCache);
   }
   _commitUpdates(newValues) {
@@ -200,8 +201,8 @@ class cBoundFields {
     }
     return updates;
   }
-  paint(uiObject) {
-    this.uiObject = uiObject;
+  paint(contextObject) {
+    this.contextObject = contextObject;
     this.active = true;
     let scrapes = {};
     let valueCache = {};
@@ -224,7 +225,8 @@ class cBoundFields {
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
-    sBabylonUtility.updateUI(uiObject, valueCache);
+    if (contextObject)
+      contextObject.context.updateSelectedObject(contextObject, valueCache);
     this.loadedURL = this.valueCache['url'];
     return sceneReloadRequired;
   }
@@ -236,18 +238,18 @@ class cBoundFields {
     }
 
     this.values = values;
-    let sceneReloadRequired = this.paint(this.uiObject);
+    let sceneReloadRequired = this.paint(this.contextObject);
     if (sceneReloadRequired) {
-      if (this.parent.tag === 'mesh' && this.uiObject) {
+      if (this.parent.tag === 'mesh' && this.contextObject) {
         let context = me.parent.context;
-        let oldMesh = this.uiObject.mesh;
+        let oldMesh = this.contextObject.mesh;
         if (oldMesh)
           oldMesh.dispose();
-        this.uiObject.mesh = null;
+        this.contextObject.mesh = null;
 
         context.loadMesh(gAPPP.storagePrefix,
           context._url(this.values['url']), context.scene).then(r => {
-            me.uiObject.mesh = r;
+            me.contextObject.mesh = r;
         });
       }
     }
@@ -308,7 +310,7 @@ class cBoundFields {
 
     if (updateShown) {
       if (f.type === 'color')
-        sBabylonUtility.setColorLabel(f.dom);
+        sUtility.setColorLabel(f.dom);
 
       if (f.type === 'url') {
         if (this.parent.tag === 'mesh') {

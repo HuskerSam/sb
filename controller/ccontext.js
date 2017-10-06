@@ -6,10 +6,8 @@ class cContext {
     this.light = null;
     this.camera = null;
     this.scene = null;
-    this.activeObject = null;
+    this.activeContextObject = null;
     this.canvas = canvas;
-    //this.loadedSceneURL = '';
-    //this.loadedSceneKey = null;
     this.engine = null;
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
@@ -71,34 +69,26 @@ class cContext {
       delete this.extraSceneObjects[key];
     }
   }
-  updateCamera() {
-    if (this.camera)
-      this.camera.dispose();
-    let cameraVector = sBabylonUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
-    this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
-    this.camera.setTarget(BABYLON.Vector3.Zero());
-  }
   _url(fireUrl) {
     return fireUrl.replace(gAPPP.storagePrefix, '');
   }
   _loadSceneMesh(meshData) {
-    let me = this;
     return new Promise((resolve, reject) => {
       this.loadMesh(gAPPP.storagePrefix, this._url(meshData['url']), this.scene)
-        .then((mesh) => {
-          me.meshObj = mesh;
-          me.meshLoadedURL = meshData['url'];
+        .then(mesh => {
+          this.meshObj = mesh;
+          this.meshLoadedURL = meshData['url'];
           resolve({
             type: 'mesh',
             mesh,
-            context: me
+            context: this
           });
-        }, (scene) => {
+        }, scene => {
           console.log('failed to load mesh');
           resolve({
             type: 'mesh',
             mesh: null,
-            context: me,
+            context: this,
             error: 'failed to load mesh'
           });
         });
@@ -119,7 +109,7 @@ class cContext {
   }
   _loadSceneMaterial(materialData) {
     return new Promise((resolve, reject) => {
-      let s = sBabylonUtility.addSphere('sphere1', 15, 5, this.scene, false);
+      let s = this.addSphere('sphere1', 15, 5, this.scene, false);
       let material = new BABYLON.StandardMaterial('material', this.scene);
       s.material = material;
       this.extraSceneObjects.push(s);
@@ -176,7 +166,7 @@ class cContext {
       }
 
       this.gridShown = true;
-      let gridDepth = sBabylonUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
+      let gridDepth = sUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
       let grid = BABYLON.Mesh.CreateGround("ground1", gridDepth, gridDepth, 2, this.scene);
       let material = new BABYLON.StandardMaterial('scenematerialforfloorgrid', this.scene);
       let texture = new BABYLON.Texture('greengrid.png', this.scene);
@@ -199,8 +189,8 @@ class cContext {
       if (this.guidesShown) {
         this.showGuides(true);
       }
-      let gridDepth = sBabylonUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-      this.guideObjects = sBabylonUtility.showAxis(gridDepth, this.scene);
+      let gridDepth = sUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
+      this.guideObjects = sUtility.showAxis(gridDepth, this.scene);
 
       for (let i in this.guideObjects)
         this.extraSceneObjects['guideObject' + i.toString()] = this.guideObjects[i];
@@ -261,13 +251,13 @@ class cContext {
     return new Promise(resolve => resolve());
   }
   sceneAddDefaultObjects() {
-    this.scene.clearColor = sBabylonUtility.color(gAPPP.a.profile.canvasColor);
+    this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
 
-    let cameraVector = sBabylonUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
     this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
     this.camera.setTarget(BABYLON.Vector3.Zero());
 
-    let lightVector = sBabylonUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
+    let lightVector = sUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
     this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
     this.light.intensity = .7;
 
@@ -276,7 +266,7 @@ class cContext {
   updateSceneObjects() {
     if (gAPPP.a.profile.lightIntensity !== undefined)
       this.light.intensity = gAPPP.a.profile.lightIntensity;
-    let cameraVector = sBabylonUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
     this.camera.position = cameraVector;
   }
   loadSceneFromURL(path, fileName) {
@@ -302,9 +292,9 @@ class cContext {
           .then(strMesh => resolve(strMesh)));
     });
   }
-  loadMesh(path, fileName, scene) {
+  loadMesh(path, fileName) {
     return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ImportMesh('', path, fileName, scene,
+      BABYLON.SceneLoader.ImportMesh('', path, fileName, this.scene,
         (newMeshes, particleSystems, skeletons) => {
           return resolve(newMeshes[0]);
         }, progress => {},
@@ -314,11 +304,192 @@ class cContext {
   serializeMesh(path, fileName) {
     var me = this;
     return new Promise((resolve, reject) => {
-      let scene = new BABYLON.Scene(me.engine);
-      me.loadMesh(path, fileName, scene).then(newMesh => {
+      let temp_scene = new BABYLON.Scene(me.engine);
+      me.loadMesh(path, fileName, temp_scene).then(newMesh => {
         resolve(BABYLON.SceneSerializer.Serialize(scene));
-        scene.dispose();
+        temp_scene.dispose();
       });
     });
+  }
+  _updateObjectValue(field, value, object) {
+    try {
+      if (value === '')
+        return;
+      if (value === undefined)
+        return;
+      if (field.type === undefined)
+        return sUtility.path(object, field.contextObjectField, value);
+
+      if (field.type === 'color') {
+        let parts = value.split(',');
+        let cA = [];
+        let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+        return sUtility.path(object, field.contextObjectField, color);
+      }
+
+      if (field.type === 'texture') {
+        let tD = gAPPP.a.modelSets['texture'].getValuesByFieldLookup('title', value);
+        if (tD === undefined)
+          return;
+
+        let t = this.texture(tD);
+        return sUtility.path(object, field.contextObjectField, t);
+      }
+
+      if (field.type === 'material') {
+        let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
+        if (tD === undefined) {
+          let m = new BABYLON.StandardMaterial('material');
+          object.material = m;
+          return;
+        }
+
+        let m = this.material(tD);
+        object.material = m;
+        return;
+      }
+
+      //default
+      sUtility.path(object, field.contextObjectField, value);
+    } catch (e) {
+      console.log('set ui object error', e, field, object, value);
+    }
+  }
+  updateSelectedObject(contextObject, valueCache) {
+    if (this !== gAPPP.activeContext)
+      return;
+
+    if (contextObject.type === 'texture') {
+      contextObject.material.diffuseTexture = this.texture(valueCache);
+      return;
+    }
+    if (contextObject.type === 'material') {
+      contextObject.mesh.material = this.material(valueCache);
+      return;
+    }
+    if (contextObject.type === 'mesh')
+      return this.setMesh(valueCache, contextObject.mesh);
+    if (contextObject.type === 'sceneTools') {
+      return this.setSceneToolsDetails(contextObject, valueCache);
+    }
+  }
+  setMesh(values, mesh) {
+    if (!mesh)
+      return;
+    let fields = sStatic.bindingFields['mesh'];
+    for (let i in fields) {
+      let field = fields[i];
+      let value = values[field.fireSetField];
+
+      if (field.fireSetField === 'name')
+        continue;
+      if (field.contextObjectField)
+        this._updateObjectValue(field, value, mesh);
+    }
+  }
+  material(values) {
+    let material = new BABYLON.StandardMaterial('material', this.scene);
+
+    let fields = sStatic.bindingFields['material'];
+    for (let i in fields) {
+      let field = fields[i];
+      let value = values[field.fireSetField];
+
+      if (field.contextObjectField)
+        this._updateObjectValue(field, value, material);
+    }
+    return material;
+  }
+  texture(values) {
+    let texture = new BABYLON.Texture(values['url'], this.scene);
+
+    function isNumeric(v) {
+      return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
+    }
+    if (isNumeric(values['vScale']))
+      texture.vScale = Number(values['vScale']);
+    if (isNumeric(values['uScale']))
+      texture.uScale = Number(values['uScale']);
+    if (isNumeric(values['vOffset']))
+      texture.vOffset = Number(values['vOffset']);
+    if (isNumeric(values['uOffset']))
+      texture.uOffset = Number(values['uOffset']);
+
+    texture.hasAlpha = values['hasAlpha'];
+    return texture;
+  }
+  setSceneToolsDetails(contextObject, valueCache) {
+    let fields = sStatic.bindingFields['sceneToolsBar'];
+    for (let i in fields) {
+      let field = fields[i];
+      let value = valueCache[field.fireSetField];
+
+      if (field.fireSetField === 'lightIntensity') {
+        contextObject.context.light.intensity = Number(value);
+      }
+      if (field.fireSetField === 'lightVector') {
+        contextObject.context.light.direction = sUtility.getVector(value, 0, 1, 0);
+      }
+      if (field.fireSetField === 'cameraVector') {
+        contextObject.context.camera.position = sUtility.getVector(value, 0, 10, -10);
+      }
+      if (field.fireSetField === 'showFloorGrid') {
+        contextObject.context.showGrid(!value);
+      }
+      if (field.fireSetField === 'showSceneGuides') {
+        contextObject.context.showGuides(!value);
+      }
+      // field.fireSetField === 'gridAndGuidesDepth'
+    }
+  }
+  addSphere(name, faces, diameter) {
+    let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, this.scene);
+    s.position.y = diameter / 2.0;
+    return s;
+  }
+  makeTextPlane(text, color, size) {
+    let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, this.scene, true);
+    dynamicTexture.hasAlpha = true;
+    dynamicTexture.drawText(text, 5, 40, "bold 36px Arial", color, "transparent", true);
+    let plane = new BABYLON.Mesh.CreatePlane("TextPlane", size, this.scene, true);
+    plane.material = new BABYLON.StandardMaterial("TextPlaneMaterial", this.scene);
+    plane.material.backFaceCulling = false;
+    plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
+    plane.material.diffuseTexture = dynamicTexture;
+    return plane;
+  }
+  showAxis(size) {
+    let sObjects = [];
+    let axisX = BABYLON.Mesh.CreateLines("axisX", [
+      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, 0.05 * size, 0),
+      new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, -0.05 * size, 0)
+    ], this.scene);
+    axisX.color = new BABYLON.Color3(1, 0, 0);
+    sObjects.push(axisX);
+    let xChar = this.makeTextPlane("X", "red", size / 10);
+    xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
+    sObjects.push(xChar);
+
+    let axisY = BABYLON.Mesh.CreateLines("axisY", [
+      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3(-0.05 * size, size * 0.95, 0),
+      new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3(0.05 * size, size * 0.95, 0)
+    ], this.scene);
+    axisY.color = new BABYLON.Color3(0, 1, 0);
+    sObjects.push(axisY);
+    let yChar = this.makeTextPlane("Y", "green", size / 10);
+    yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
+    sObjects.push(yChar);
+
+    let axisZ = BABYLON.Mesh.CreateLines("axisZ", [
+      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3(0, -0.05 * size, size * 0.95),
+      new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3(0, 0.05 * size, size * 0.95)
+    ], this.scene);
+    axisZ.color = new BABYLON.Color3(0, 0, 1);
+    sObjects.push(axisZ);
+
+    let zChar = this.makeTextPlane("Z", "blue", size / 10);
+    zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
+    sObjects.push(zChar);
+    return sObjects;
   }
 }

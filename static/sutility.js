@@ -65,4 +65,52 @@ class sUtility {
       size = 30;
     return size;
   }
+  static getNumberOrDefault(str, d) {
+    function isNumeric(v) {
+      return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
+    }
+    if (isNumeric(str))
+      return Number(str);
+    return d;
+  }
+  static getVector(str, x, y, z) {
+    if (str !== undefined)
+      if (str !== '') {
+        let parts = str.trim().split(',');
+        x = sUtility.getNumberOrDefault(parts[0], x);
+        y = sUtility.getNumberOrDefault(parts[1], y);
+        z = sUtility.getNumberOrDefault(parts[2], z);
+      }
+    return new BABYLON.Vector3(x, y, z);
+  }
+  static color(str) {
+    if (!str) {
+      str = '1,1,1';
+    }
+    let parts = str.split(',');
+    let cA = [];
+    return new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+  }
+  static colorRGB255(str) {
+    let bC = this.color(str);
+    if (isNaN(bC.r))
+      bC.r = 1;
+    if (isNaN(bC.g))
+      bC.g = 1;
+    if (isNaN(bC.b))
+      bC.b = 1;
+
+    return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0) + ')'
+  }
+  static setColorLabel(dom, defaultValue) {
+    let v = dom.value;
+    if (v === '')
+      if (defaultValue)
+        v = defaultValue;
+
+    let rgb = '';
+    if (v !== '')
+      rgb = this.colorRGB255(v);
+    dom.parentNode.style.background = rgb;
+  }
 }
