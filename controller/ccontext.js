@@ -9,7 +9,7 @@ class cContext {
     this.activeContextObject = null;
     this.canvas = canvas;
     this.engine = null;
-    this.meshFilename = 'mesh.bablyon';
+
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
         preserveDrawingBuffer: true
@@ -37,59 +37,169 @@ class cContext {
       });
     this.engine.resize();
   }
-  createEmptyScene() {
-    this.scene = new BABYLON.Scene(this.engine);
-    this.sceneAddDefaultObjects();
+  clear() {
+    this.loadedSceneURL = '';
+    this._createEmptyScene();
+    this.activate();
   }
-  getNewSceneSerialized(fileDom) {
-    let me = this;
-    let file = null;
-    if (fileDom)
-      file = fileDom.files[0];
+  createObject(objectType, title, file) {
+    let objectData = sStatic.getDefaultDataCloned(objectType);
+    let fireSet = gAPPP.a.modelSets[objectType];
+    objectData.title = title;
 
-    if (file) {
-      return new Promise((resolve, reject) => {
-        sUtility.fileToURI(file)
-          .then((sceneSerial) => resolve(sceneSerial));
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        let s = new BABYLON.Scene(this.engine);
-        let sS = BABYLON.SceneSerializer.Serialize(s);
-        resolve(JSON.stringify(sS));
-      });
+    if (!file)
+      return fireSet.createWithBlobString(objectData);
+
+    let filename = file.name;
+
+    if (objectType !== 'mesh')
+      return fireSet.createWithBlob(objectData, file, filename);
+
+    return new Promise((resolve, reject) => {
+      sUtility.fileToURI(file).then(
+        fileBlobString => this.sceneLoadMesh("", "data:" + fileBlobString).then(
+          mesh => {
+            let sceneJSON = this._serializeScene();
+            fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
+              r => resolve(r));
+          }));
+    });
+  }
+  loadScene(sceneType, values) {
+    this.createEmptyScene();
+    this.extraSceneObjects = [];
+
+    if (sceneType === 'mesh')
+      return this._loadSceneMesh(values);
+
+    if (sceneType === 'scene')
+      return this._loadSceneFromData(values);
+
+    if (sceneType === 'material')
+      return this._loadSceneMaterial(values);
+
+    if (sceneType === 'texture')
+      return this._loadSceneTexture(values);
+
+    return new Promise((resolve) => resolve(null));
+  }
+  renderPreview(objectType, key) {
+    let fireSet = gAPPP.a.modelSets[objectType];
+    BABYLON.Tools.CreateScreenshot(this.engine, this.camera, {
+      width: 500
+    }, base64ImageURI => {
+      let blob = sUtility.dataURItoBlob(base64ImageURI);
+      fireSet.setBlob(key, blob, 'sceneRenderImage.jpg').then(uploadResult =>
+        fireSet.commitUpdateList([{
+          field: 'renderImageURL',
+          newValue: uploadResult.downloadURL
+        }], key));
+    });
+  }
+  sceneLoadMesh(path, fileName) {
+    let scene = this.scene;
+    return new Promise((resolve, reject) => {
+      BABYLON.SceneLoader.ImportMesh('', path, fileName, scene,
+        (newMeshes, particleSystems, skeletons) => {
+          return resolve(newMeshes[0]);
+        }, progress => {},
+        err => resolve(null));
+    });
+  }
+  setSceneToolsDetails(contextObject, valueCache) {
+    let fields = sStatic.bindingFields['sceneToolsBar'];
+    for (let i in fields) {
+      let field = fields[i];
+      let value = valueCache[field.fireSetField];
+
+      if (field.fireSetField === 'lightIntensity') {
+        contextObject.context.light.intensity = Number(value);
+      }
+      if (field.fireSetField === 'lightVector') {
+        contextObject.context.light.direction = sUtility.getVector(value, 0, 1, 0);
+      }
+      if (field.fireSetField === 'cameraVector') {
+        contextObject.context.camera.position = sUtility.getVector(value, 0, 10, -10);
+      }
+      if (field.fireSetField === 'showFloorGrid') {
+        contextObject.context.showGrid(!value);
+      }
+      if (field.fireSetField === 'showSceneGuides') {
+        contextObject.context.showGuides(!value);
+      }
+      // field.fireSetField === 'gridAndGuidesDepth'
     }
   }
+  updateObjectURL(objectType, key, file) {
+    sUtility.fileToURI(file).then(
+      fileBlobString => this.sceneLoadMesh("", "data:" + fileBlobString).then(
+        mesh => {
+          let filename = file.name;
+          let fireSet = gAPPP.a.modelSets[objectType];
+          let sceneJSON = this._serializeScene();
+          fireSet.updateBlobString(key, sceneJSON, filename);
+        }));
+  }
+  updateSelectedObject(contextObject, valueCache) {
+    if (this !== gAPPP.activeContext)
+      return;
+
+    if (contextObject.type === 'texture') {
+      contextObject.material.diffuseTexture = this._texture(valueCache);
+      return;
+    }
+    if (contextObject.type === 'material') {
+      contextObject.mesh.material = this._material(valueCache);
+      return;
+    }
+    if (contextObject.type === 'mesh')
+      return this.setMesh(valueCache, contextObject.mesh);
+    if (contextObject.type === 'sceneTools') {
+      return this.setSceneToolsDetails(contextObject, valueCache);
+    }
+  }
+  updateSceneObjects() {
+    if (gAPPP.a.profile.lightIntensity !== undefined)
+      this.light.intensity = gAPPP.a.profile.lightIntensity;
+    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+    this.camera.position = cameraVector;
+  }
+
   _addObject(key, obj) {
     if (this.extraSceneObjects[key])
       this.remove(this.extraSceneObjects[key]);
     this.extraSceneObjects[key] = obj;
   }
-  _removeObject(key) {
-    if (this.extraSceneObjects[key]) {
-      this.extraSceneObjects[key].dispose();
-      delete this.extraSceneObjects[key];
-    }
+  _addSphere(name, faces, diameter) {
+    let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, this.scene);
+    s.position.y = diameter / 2.0;
+    return s;
   }
-  _url(fireUrl) {
-    return fireUrl.replace(gAPPP.storagePrefix, '');
+  _createEmptyScene() {
+    this.scene = new BABYLON.Scene(this.engine);
+    this._sceneAddDefaultObjects();
   }
-  _loadSceneMesh(meshData) {
+  _loadSceneMesh(objectData) {
     return new Promise((resolve, reject) => {
-      this.loadMesh(gAPPP.storagePrefix, this._url(meshData['url']))
-        .then(mesh => {
+      let path = gAPPP.storagePrefix;
+      let filename = this._url(objectData['url']);
+      BABYLON.SceneLoader.ImportMesh('', path, filename, this.scene,
+        (newMeshes, particleSystems, skeletons) => resolve({
+          type: 'mesh',
+          mesh: newMeshes[0],
+          context: this
+        }),
+        progress => {},
+        err => {
           resolve({
-            type: 'mesh',
-            mesh,
-            context: this
-          });
-        }, scene => {
-          console.log('failed to load mesh');
-          resolve({
-            type: 'mesh',
-            mesh: null,
-            context: this,
-            error: 'failed to load mesh'
+            console.log('failed to load mesh');
+            resolve({
+              type: 'mesh',
+              mesh: null,
+              context: this,
+              error: true,
+              message: 'failed to load mesh'
+            });
           });
         });
     });
@@ -99,7 +209,7 @@ class cContext {
       BABYLON.SceneLoader.ShowLoadingScreen = false;
       BABYLON.SceneLoader.Load(gAPPP.storagePrefix, this._url(sceneData['url']), this.engine, newScene => {
         this.scene = newScene;
-        this.sceneAddDefaultObjects();
+        this._sceneAddDefaultObjects();
         resolve({
           type: 'scene',
           context: this
@@ -109,7 +219,7 @@ class cContext {
   }
   _loadSceneMaterial(materialData) {
     return new Promise((resolve, reject) => {
-      let s = this.addSphere('sphere1', 15, 5, this.scene, false);
+      let s = this._addSphere('sphere1', 15, 5, this.scene, false);
       let material = new BABYLON.StandardMaterial('material', this.scene);
       s.material = material;
       this.extraSceneObjects.push(s);
@@ -138,31 +248,123 @@ class cContext {
       });
     });
   }
-  loadScene(sceneType, values) {
-  //  if (sceneType !== 'scene') {
-      this.createEmptyScene();
-  //  }
-
-    this.extraSceneObjects = [];
-    if (sceneType === 'mesh')
-      return this._loadSceneMesh(values);
-
-    if (sceneType === 'scene')
-      return this._loadSceneFromData(values);
-
-    if (sceneType === 'material')
-      return this._loadSceneMaterial(values);
-
-    if (sceneType === 'texture')
-      return this._loadSceneTexture(values);
-
-    return new Promise((resolve) => resolve(null));
+  _makeTextPlane(text, color, size) {
+    let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, this.scene, true);
+    dynamicTexture.hasAlpha = true;
+    dynamicTexture.drawText(text, 5, 40, "bold 36px Arial", color, "transparent", true);
+    let plane = new BABYLON.Mesh.CreatePlane("TextPlane", size, this.scene, true);
+    plane.material = new BABYLON.StandardMaterial("TextPlaneMaterial", this.scene);
+    plane.material.backFaceCulling = false;
+    plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
+    plane.material.diffuseTexture = dynamicTexture;
+    return plane;
   }
-  showGrid(hide) {
+  _material(values) {
+    let material = new BABYLON.StandardMaterial('material', this.scene);
+
+    let fields = sStatic.bindingFields['material'];
+    for (let i in fields) {
+      let field = fields[i];
+      let value = values[field.fireSetField];
+
+      if (field.contextObjectField)
+        this._updateObjectValue(field, value, material);
+    }
+    return material;
+  }
+  _texture(values) {
+    let texture = new BABYLON.Texture(values['url'], this.scene);
+
+    function isNumeric(v) {
+      return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
+    }
+    if (isNumeric(values['vScale']))
+      texture.vScale = Number(values['vScale']);
+    if (isNumeric(values['uScale']))
+      texture.uScale = Number(values['uScale']);
+    if (isNumeric(values['vOffset']))
+      texture.vOffset = Number(values['vOffset']);
+    if (isNumeric(values['uOffset']))
+      texture.uOffset = Number(values['uOffset']);
+
+    texture.hasAlpha = values['hasAlpha'];
+    return texture;
+  }
+  _removeObject(key) {
+    if (this.extraSceneObjects[key]) {
+      this.extraSceneObjects[key].dispose();
+      delete this.extraSceneObjects[key];
+    }
+  }
+  _sceneAddDefaultObjects() {
+    this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
+
+    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+    this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
+    this.camera.setTarget(BABYLON.Vector3.Zero());
+
+    let lightVector = sUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
+    this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
+    this.light.intensity = .7;
+
+    this.updateSceneObjects();
+  }
+  _serializeScene() {
+    return JSON.stringify(BABYLON.SceneSerializer.Serialize(this.scene));
+  }
+  _setMesh(values, mesh) {
+    if (!mesh)
+      return;
+    let fields = sStatic.bindingFields['mesh'];
+    for (let i in fields) {
+      let field = fields[i];
+      let value = values[field.fireSetField];
+
+      if (field.fireSetField === 'name')
+        continue;
+      if (field.contextObjectField)
+        this._updateObjectValue(field, value, mesh);
+    }
+  }
+  _showAxis(size) {
+    let sObjects = [];
+    let axisX = BABYLON.Mesh.CreateLines("axisX", [
+      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, 0.05 * size, 0),
+      new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, -0.05 * size, 0)
+    ], this.scene);
+    axisX.color = new BABYLON.Color3(1, 0, 0);
+    sObjects.push(axisX);
+    let xChar = this._makeTextPlane("X", "red", size / 10);
+    xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
+    sObjects.push(xChar);
+
+    let axisY = BABYLON.Mesh.CreateLines("axisY", [
+      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3(-0.05 * size, size * 0.95, 0),
+      new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3(0.05 * size, size * 0.95, 0)
+    ], this.scene);
+    axisY.color = new BABYLON.Color3(0, 1, 0);
+    sObjects.push(axisY);
+    let yChar = this._makeTextPlane("Y", "green", size / 10);
+    yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
+    sObjects.push(yChar);
+
+    let axisZ = BABYLON.Mesh.CreateLines("axisZ", [
+      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3(0, -0.05 * size, size * 0.95),
+      new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3(0, 0.05 * size, size * 0.95)
+    ], this.scene);
+    axisZ.color = new BABYLON.Color3(0, 0, 1);
+    sObjects.push(axisZ);
+
+    let zChar = this._makeTextPlane("Z", "blue", size / 10);
+    zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
+    sObjects.push(zChar);
+    return sObjects;
+  }
+  _showGrid(hide) {
     return;
     if (!hide) {
       if (this.gridShown) {
-        this.showGrid(true);
+        this._showGrid(true);
       }
 
       this.gridShown = true;
@@ -183,14 +385,14 @@ class cContext {
       this._removeObject('grid');
     }
   }
-  showGuides(hide) {
+  _showGuides(hide) {
     return;
     if (!hide) {
       if (this.guidesShown) {
         this.showGuides(true);
       }
       let gridDepth = sUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-      this.guideObjects = sUtility.showAxis(gridDepth, this.scene);
+      this.guideObjects = this._showAxis(gridDepth, this.scene);
 
       for (let i in this.guideObjects)
         this.extraSceneObjects['guideObject' + i.toString()] = this.guideObjects[i];
@@ -203,110 +405,6 @@ class cContext {
         this._removeObject('guideObject' + i.toString());
       this.guideObjects = [];
     }
-  }
-  sceneAddDefaultObjects() {
-    this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
-
-    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
-    this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
-    this.camera.setTarget(BABYLON.Vector3.Zero());
-
-    let lightVector = sUtility.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
-    this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
-    this.light.intensity = .7;
-
-    this.updateSceneObjects();
-  }
-  updateSceneObjects() {
-    if (gAPPP.a.profile.lightIntensity !== undefined)
-      this.light.intensity = gAPPP.a.profile.lightIntensity;
-    let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
-    this.camera.position = cameraVector;
-  }
-  getJPGDataURL() {
-    return new Promise((resolve, reject) => {
-      BABYLON.Tools.CreateScreenshot(this.engine, this.camera, {
-        width: 500
-      }, (base64Image) => resolve(base64Image));
-    });
-  }
-  importMesh(file) {
-    let me = this;
-    return new Promise((resolve, reject) => {
-      sUtility.fileToURI(file)
-        .then(d => me.serializeMesh("", "data:" + d)
-          .then(strMesh => resolve(strMesh)));
-    });
-  }
-  updateMesh(key, file) {
-    return new Promise((resolve, reject) => {
-      this.importMesh(file).then(meshScene => {
-        let strMesh = JSON.stringify(meshScene);
-        gAPPP.a.modelSets['mesh'].updateBlobString(key, strMesh, this.meshFilename).then((r) => resolve(r));
-      });
-    });
-  }
-  uploadObject(type, title, fileDom) {
-    let me = this;
-    if (type === 'mesh') {
-      return new Promise((resolve, reject) => {
-        let meshData = sStatic.getDefaultDataCloned('mesh');
-        meshData.title = title;
-
-        if (fileDom.files.length > 0)
-          this.importMesh(fileDom.files[0]).then(mesh => {
-            let strMesh = null;
-            if (mesh)
-              strMesh = JSON.stringify(mesh);
-            gAPPP.a.modelSets['mesh'].createWithBlobString(meshData, strMesh, this.meshFilename).then((r) => resolve(r));
-          });
-        else
-          gAPPP.a.modelSets['mesh'].createWithBlobString(meshData).then((r) => resolve(r));
-      });
-    }
-    if (type === 'scene') {
-      return new Promise((resolve, reject) => {
-        this.getNewSceneSerialized(fileDom).then((sceneSerial) => {
-          gAPPP.a.modelSets['scene'].newScene(sceneSerial, title).then((r) => resolve(r));
-        });
-      });
-    }
-    if (type === 'texture') {
-      return new Promise((resolve, reject) => {
-        let textureData = sStatic.getDefaultDataCloned('texture');
-        textureData.title = title;
-
-        if (fileDom.files.length > 0)
-          gAPPP.a.modelSets['texture'].createWithBlob(textureData, fileDom.files[0],
-            'texturefileimage' + fileDom.files[0].name)
-          .then((r) => resolve(r));
-        else
-          gAPPP.a.modelSets['texture'].createWithBlob(textureData).then((r) => resolve(r));
-      });
-    }
-    if (type === 'material') {
-      return new Promise((resolve, reject) => {
-        gAPPP.a.modelSets['material'].newMaterial(title).then((r) => resolve(r));
-      });
-    }
-
-    return new Promise(resolve => resolve());
-  }
-  loadMesh(path, fileName) {
-    return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ImportMesh('', path, fileName, this.scene,
-        (newMeshes, particleSystems, skeletons) => {
-          return resolve(newMeshes[0]);
-        }, progress => {},
-        err => reject(err));
-    });
-  }
-  serializeMesh(path, fileName) {
-    return new Promise((resolve, reject) => {
-      this.loadMesh(path, fileName).then(newMesh => {
-        resolve(BABYLON.SceneSerializer.Serialize(this.scene));
-      });
-    });
   }
   _updateObjectValue(field, value, object) {
     try {
@@ -329,7 +427,7 @@ class cContext {
         if (tD === undefined)
           return;
 
-        let t = this.texture(tD);
+        let t = this._texture(tD);
         return sUtility.path(object, field.contextObjectField, t);
       }
 
@@ -352,141 +450,7 @@ class cContext {
       console.log('set ui object error', e, field, object, value);
     }
   }
-  updateSelectedObject(contextObject, valueCache) {
-    if (this !== gAPPP.activeContext)
-      return;
-
-    if (contextObject.type === 'texture') {
-      contextObject.material.diffuseTexture = this.texture(valueCache);
-      return;
-    }
-    if (contextObject.type === 'material') {
-      contextObject.mesh.material = this.material(valueCache);
-      return;
-    }
-    if (contextObject.type === 'mesh')
-      return this.setMesh(valueCache, contextObject.mesh);
-    if (contextObject.type === 'sceneTools') {
-      return this.setSceneToolsDetails(contextObject, valueCache);
-    }
-  }
-  setMesh(values, mesh) {
-    if (!mesh)
-      return;
-    let fields = sStatic.bindingFields['mesh'];
-    for (let i in fields) {
-      let field = fields[i];
-      let value = values[field.fireSetField];
-
-      if (field.fireSetField === 'name')
-        continue;
-      if (field.contextObjectField)
-        this._updateObjectValue(field, value, mesh);
-    }
-  }
-  material(values) {
-    let material = new BABYLON.StandardMaterial('material', this.scene);
-
-    let fields = sStatic.bindingFields['material'];
-    for (let i in fields) {
-      let field = fields[i];
-      let value = values[field.fireSetField];
-
-      if (field.contextObjectField)
-        this._updateObjectValue(field, value, material);
-    }
-    return material;
-  }
-  texture(values) {
-    let texture = new BABYLON.Texture(values['url'], this.scene);
-
-    function isNumeric(v) {
-      return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
-    }
-    if (isNumeric(values['vScale']))
-      texture.vScale = Number(values['vScale']);
-    if (isNumeric(values['uScale']))
-      texture.uScale = Number(values['uScale']);
-    if (isNumeric(values['vOffset']))
-      texture.vOffset = Number(values['vOffset']);
-    if (isNumeric(values['uOffset']))
-      texture.uOffset = Number(values['uOffset']);
-
-    texture.hasAlpha = values['hasAlpha'];
-    return texture;
-  }
-  setSceneToolsDetails(contextObject, valueCache) {
-    let fields = sStatic.bindingFields['sceneToolsBar'];
-    for (let i in fields) {
-      let field = fields[i];
-      let value = valueCache[field.fireSetField];
-
-      if (field.fireSetField === 'lightIntensity') {
-        contextObject.context.light.intensity = Number(value);
-      }
-      if (field.fireSetField === 'lightVector') {
-        contextObject.context.light.direction = sUtility.getVector(value, 0, 1, 0);
-      }
-      if (field.fireSetField === 'cameraVector') {
-        contextObject.context.camera.position = sUtility.getVector(value, 0, 10, -10);
-      }
-      if (field.fireSetField === 'showFloorGrid') {
-        contextObject.context.showGrid(!value);
-      }
-      if (field.fireSetField === 'showSceneGuides') {
-        contextObject.context.showGuides(!value);
-      }
-      // field.fireSetField === 'gridAndGuidesDepth'
-    }
-  }
-  addSphere(name, faces, diameter) {
-    let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, this.scene);
-    s.position.y = diameter / 2.0;
-    return s;
-  }
-  makeTextPlane(text, color, size) {
-    let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, this.scene, true);
-    dynamicTexture.hasAlpha = true;
-    dynamicTexture.drawText(text, 5, 40, "bold 36px Arial", color, "transparent", true);
-    let plane = new BABYLON.Mesh.CreatePlane("TextPlane", size, this.scene, true);
-    plane.material = new BABYLON.StandardMaterial("TextPlaneMaterial", this.scene);
-    plane.material.backFaceCulling = false;
-    plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
-    plane.material.diffuseTexture = dynamicTexture;
-    return plane;
-  }
-  showAxis(size) {
-    let sObjects = [];
-    let axisX = BABYLON.Mesh.CreateLines("axisX", [
-      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, 0.05 * size, 0),
-      new BABYLON.Vector3(size, 0, 0), new BABYLON.Vector3(size * 0.95, -0.05 * size, 0)
-    ], this.scene);
-    axisX.color = new BABYLON.Color3(1, 0, 0);
-    sObjects.push(axisX);
-    let xChar = this.makeTextPlane("X", "red", size / 10);
-    xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
-    sObjects.push(xChar);
-
-    let axisY = BABYLON.Mesh.CreateLines("axisY", [
-      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3(-0.05 * size, size * 0.95, 0),
-      new BABYLON.Vector3(0, size, 0), new BABYLON.Vector3(0.05 * size, size * 0.95, 0)
-    ], this.scene);
-    axisY.color = new BABYLON.Color3(0, 1, 0);
-    sObjects.push(axisY);
-    let yChar = this.makeTextPlane("Y", "green", size / 10);
-    yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
-    sObjects.push(yChar);
-
-    let axisZ = BABYLON.Mesh.CreateLines("axisZ", [
-      new BABYLON.Vector3.Zero(), new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3(0, -0.05 * size, size * 0.95),
-      new BABYLON.Vector3(0, 0, size), new BABYLON.Vector3(0, 0.05 * size, size * 0.95)
-    ], this.scene);
-    axisZ.color = new BABYLON.Color3(0, 0, 1);
-    sObjects.push(axisZ);
-
-    let zChar = this.makeTextPlane("Z", "blue", size / 10);
-    zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
-    sObjects.push(zChar);
-    return sObjects;
+  _url(fireUrl) {
+    return fireUrl.replace(gAPPP.storagePrefix, '');
   }
 }

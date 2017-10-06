@@ -1,4 +1,3 @@
-/* button bar controller for canvas/scene */
 class cSceneToolsBand {
   constructor(classPrefix, context) {
     let me = this;
@@ -53,10 +52,8 @@ class cSceneToolsBand {
   _showGrid() {
     if (this.gridShown) {
       this.showSceneFloorGridBtn.style.background = 'rgba(0,0,0,.2)';
-      this.context.showGrid();
     } else {
       this.showSceneFloorGridBtn.style.background = '';
-      this.context.showGrid(true);
     }
   }
   addShowSceneFloorGrid() {

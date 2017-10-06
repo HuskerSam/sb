@@ -34,9 +34,9 @@ class cDialogSuper {
     if (this.okBtn)
       this.okBtn.addEventListener('click', () => me.save(), false);
     if (this.rotateBtn)
-      this.rotateBtn.addEventListener('click', () => me.rotateView(), false);
+      this.rotateBtn.addEventListener('click', () => me._rotateView(), false);
     $(this.dialog).on('hidden.bs.modal', () => me.close()); //force cleanup if closed via escape
-    $(this.dialog).on('shown.bs.modal', () => me.showFocus());
+    $(this.dialog).on('shown.bs.modal', () => me._showFocus());
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas) {
@@ -45,8 +45,91 @@ class cDialogSuper {
     }
     this.rotateState = 'vertical';
   }
-  splitView() {
-    if (!this.splitViewAlive)
+  close() {
+    if (this.fireFields)
+      this.fireFields.active = false;
+    if (this.sceneTools)
+      this.sceneTools.fireFields.active = false;
+    if (this.fireFields.renderImageUpdateNeeded) {
+      this.fireFields.renderImageUpdateNeeded = false;
+      this.context.renderPreview(this.tag, this.key);
+    }
+    $(this.dialog).modal('hide');
+    gAPPP.mV.context.activate();
+  }
+  save() {
+    this.close();
+  }
+  show() {
+    let me = this;
+    this._startLoad();
+    $(this.dialog).modal('show');
+
+    this._showFocus();
+
+    if (this.initScene) {
+      this.context.activate();
+      this.context.loadScene(this.tag, this.fireFields.values).then(
+        r => this._finishShow(r),
+        e => this._finishShow(e));
+    } else
+      this._finishShow(null);
+  }
+  _endLoad() {
+    this._showDom(this.popupButtons);
+    this._showDom(this.fieldsContainer);
+    this._hideDom(this.progressBar);
+
+    this._splitView();
+  }
+  _finishShow(contextObject) {
+    this.contextObject = contextObject;
+
+    if (this.initScene)
+      this.context.activate();
+
+    if (this.fireFields) {
+      this.fireFields.loadedURL = this.fireFields.values['url'];
+      let sceneReloadRequired = this.fireFields.paint(this.contextObject);
+    }
+    if (this.sceneTools)
+      this.sceneTools.fireFields.paint({
+        type: 'sceneTools',
+        contextObject: this.contextObject,
+        context: this.context
+      });
+    this._endLoad();
+    this._showFocus();
+  }
+  _hideDom(element) {
+    if (element)
+      element.style.display = 'none';
+  }
+  _showDom(element) {
+    if (element)
+      element.style.display = 'block';
+  }
+  _showFocus() {
+    if (this.cancelBtn)
+      this.cancelBtn.focus();
+    else if (this.okBtn)
+      this.okBtn.focus();
+
+    gAPPP.resize();
+  }
+  _rotateView() {
+    if (this.rotateState === 'vertical') {
+      this.rotateState = 'horizontal';
+    } else {
+      this.rotateState = 'vertical';
+    }
+    this._splitView();
+  }
+  _splitDragEnd() {
+    gAPPP.resize();
+  }
+  _splitView() {
+    if (!this._splitViewAlive)
       return;
     if (this.splitInstance)
       this.splitInstance.destroy();
@@ -67,98 +150,14 @@ class cDialogSuper {
     this.splitInstance = window.Split([t, b], {
       sizes: [50, 50],
       direction: this.rotateState,
-      onDragEnd: () => me.splitDragEnd(),
-      onDrag: () => me.splitDragEnd()
+      onDragEnd: () => me._splitDragEnd(),
+      onDrag: () => me._splitDragEnd()
     });
     gAPPP.resize();
   }
-  rotateView() {
-    if (this.rotateState === 'vertical') {
-      this.rotateState = 'horizontal';
-    } else {
-      this.rotateState = 'vertical';
-    }
-    this.splitView();
-  }
-  splitDragEnd() {
-    gAPPP.resize();
-  }
-  close() {
-    if (this.fireFields)
-      this.fireFields.active = false;
-    if (this.sceneTools)
-      this.sceneTools.fireFields.active = false;
-    if (this.fireFields.renderImageUpdateNeeded) {
-      this.fireFields.renderImageUpdateNeeded = false;
-      this._renderImageUpdate();
-    }
-    $(this.dialog).modal('hide');
-    gAPPP.mV.context.activate();
-  }
-  _renderImageUpdate() {}
   _startLoad() {
     this._hideDom(this.popupButtons);
     this._hideDom(this.fieldsContainer);
     this._showDom(this.progressBar);
-  }
-  _showDom(element) {
-    if (element)
-      element.style.display = 'block';
-  }
-  _hideDom(element) {
-    if (element)
-      element.style.display = 'none';
-  }
-  save() {
-    this.close();
-  }
-  _endLoad() {
-    this._showDom(this.popupButtons);
-    this._showDom(this.fieldsContainer);
-    this._hideDom(this.progressBar);
-
-    this.splitView();
-  }
-  show() {
-    let me = this;
-    this._startLoad();
-    $(this.dialog).modal('show');
-
-    this.showFocus();
-
-    if (this.initScene) {
-      this.context.activate();
-      this.context.loadScene(this.tag, this.fireFields.values).then(
-        r => this._finishShow(r),
-        e => this._finishShow(e));
-    } else
-      this._finishShow(null);
-  }
-  showFocus() {
-    if (this.cancelBtn)
-      this.cancelBtn.focus();
-    else if (this.okBtn)
-      this.okBtn.focus();
-
-    gAPPP.resize();
-  }
-  _finishShow(contextObject) {
-    this.contextObject = contextObject;
-
-    if (this.initScene)
-      this.context.activate();
-
-    if (this.fireFields) {
-      this.fireFields.loadedURL = this.fireFields.values['url'];
-      let sceneReloadRequired = this.fireFields.paint(this.contextObject);
-    }
-    if (this.sceneTools)
-      this.sceneTools.fireFields.paint({
-        type: 'sceneTools',
-        contextObject: this.contextObject,
-        context: this.context
-      });
-    this._endLoad();
-    this.showFocus();
   }
 }

@@ -6,27 +6,14 @@ class cDialogEditItem extends cDialogSuper {
     d.setAttribute('class', 'modal fade edit-modal');
     d.querySelector('.popup-title').innerHTML = title;
     super('#' + tag + '-details-dialog', tag, d);
-    this.splitViewAlive = true;
+    this._splitViewAlive = true;
     this.initScene = true;
-  }
-  _renderImageUpdate() {
-    let me = this;
-    this.context.getJPGDataURL().then((imageDataURL) => {
-      let blob = sUtility.dataURItoBlob(imageDataURL);
-      me.fireSet.setBlob(me.key, blob, 'sceneRenderImage.jpg').then(uploadResult => {
-        let updateInfo = {
-          field: 'renderImageURL',
-          newValue: uploadResult.downloadURL
-        };
-        me.fireSet.commitUpdateList([updateInfo], me.key);
-      });
-    });
   }
   show(key) {
     this.key = key;
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
 
-    if ( ! this.fireFields.values['renderImageURL'] )
+    if (! this.fireFields.values['renderImageURL'])
       this.fireFields.renderImageUpdateNeeded = true;
     super.show();
   }
