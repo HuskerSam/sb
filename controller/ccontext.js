@@ -20,12 +20,13 @@ class cContext {
     if (gAPPP.activeContext)
       gAPPP.activeContext.engine.stopRenderLoop();
 
-    gAPPP.activeContext = this;
-    this.engine = new BABYLON.Engine(this.canvas, false, {
-      preserveDrawingBuffer: true
-    });
-    this.engine.enableOfflineSupport = false;
-
+    if (gAPPP.activeContext !== this) {
+      gAPPP.activeContext = this;
+      this.engine = new BABYLON.Engine(this.canvas, false, {
+        preserveDrawingBuffer: true
+      });
+      this.engine.enableOfflineSupport = false;
+    }
     if (this.camera)
       this.camera.attachControl(this.canvas, false);
 
@@ -272,6 +273,7 @@ class cContext {
   loadSceneFromURL(path, fileName) {
     let me = this;
     return new Promise(function(resolve, reject) {
+      BABYLON.SceneLoader.ShowLoadingScreen = false;
       BABYLON.SceneLoader.Load(path, fileName, me.engine, scene => {
         return resolve(scene);
       });

@@ -25,7 +25,7 @@ class cDialogCreateItem {
   }
   close() {
     $(this.dialog).modal('hide');
-    gAPPP.mV.activate();
+    gAPPP.mV.context.activate();
   }
   show() {
     this.popupButtons.style.display = 'block';

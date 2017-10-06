@@ -118,7 +118,7 @@ class cToolband {
     html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
     html += '</ul>';
     html += '</div>';
-    html += `<br><div class="band-title"></div>`;
+    html += `<br><button class="band-title"></button>`;
     html += `</div>`
 
     let outer = document.createElement('div');
@@ -128,7 +128,7 @@ class cToolband {
     let ul = newNode.querySelector('ul');
 
     if (this.tag === 'scene') {
-      this.__addMenuItem(ul, 'Select', e => me.selectScene(e, key));
+      this.__addMenuItem(ul, '<b>Select</b>', e => me.selectScene(e, key));
     }
 
     this.__addMenuItem(ul, 'Edit', e => me.showEditPopup(e, key));
@@ -150,7 +150,12 @@ class cToolband {
 
     this.nodeApplyValues(values, newNode);
 
+    newNode.querySelector('.band-title').addEventListener('click', e => me.defaultAction(e, key), false);
     return newNode;
+  }
+  defaultAction(e, key) {
+    if (this.tag === 'scene')
+      this.selectScene(e, key);
   }
   selectScene(e, key) {
     let updates = [{

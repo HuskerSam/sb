@@ -361,7 +361,6 @@ button i.material-icons {
   background-repeat: no-repeat;
   overflow:hidden;
   pointer-events: auto;
-  cursor: pointer;
 }
 .band-background-preview .band-menu-button {
   position:absolute;
@@ -374,6 +373,8 @@ button i.material-icons {
   border-radius: 6px;
   background: rgba(255,255,255,.1);
   margin-top: .7em;
+  width:100%;
+  border:none;
 }
 .scene-tools-band-container .button-container {
   white-space: nowrap;
