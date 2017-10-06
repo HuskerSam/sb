@@ -23,6 +23,11 @@ class cDialogCreateItem {
     $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
     $(this.dialog).on('shown.bs.modal', () => this._showFocus());
 
+    this.canvas = this.dialog.querySelector('.create-preview-canvas');
+    if (this.canvas) {
+      this.context = new cContext(this.canvas);
+      this.context.loadScene().then(r => {});
+    }
     this.cancelBtn.addEventListener('click', () => this.close(), false);
     this.createBtn.addEventListener('click', (e) => this.create(), false);
   }
@@ -42,6 +47,7 @@ class cDialogCreateItem {
     this.popupButtons.style.display = 'block';
     this.progressBar.style.display = 'none';
     this.clear();
+    this.context.activate();
     $(this.dialog).modal('show');
   }
   clear() {
@@ -64,12 +70,10 @@ class cDialogCreateItem {
     this.popupButtons.style.display = 'none';
     this.progressBar.style.display = 'block';
     let title = this.titleDom.value.trim();
-
-
     let file = null;
     if (this.fileDom.files.length > 0)
       file = this.fileDom.files[0];
-    gAPPP.mV.context.createObject(this.tag, title, file).then(r => {
+    this.context.createObject(this.tag, title, file).then(r => {
       this.clear();
       this.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';

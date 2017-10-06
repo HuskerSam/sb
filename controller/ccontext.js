@@ -57,7 +57,7 @@ class cContext {
 
     return new Promise((resolve, reject) => {
       sUtility.fileToURI(file).then(
-        fileBlobString => this.sceneLoadMesh("", "data:" + fileBlobString).then(
+        fileBlobString => this._sceneLoadMesh("", "data:" + fileBlobString).then(
           mesh => {
             let sceneJSON = this._serializeScene();
             fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
@@ -66,7 +66,7 @@ class cContext {
     });
   }
   loadScene(sceneType, values) {
-    this.createEmptyScene();
+    this._createEmptyScene();
     this.extraSceneObjects = [];
 
     if (sceneType === 'mesh')
@@ -96,10 +96,10 @@ class cContext {
         }], key));
     });
   }
-  sceneLoadMesh(path, fileName) {
+  _sceneLoadMesh(path, URI) {
     let scene = this.scene;
     return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ImportMesh('', path, fileName, scene,
+      BABYLON.SceneLoader.ImportMesh('', path, URI, scene,
         (newMeshes, particleSystems, skeletons) => {
           return resolve(newMeshes[0]);
         }, progress => {},
@@ -122,23 +122,26 @@ class cContext {
         contextObject.context.camera.position = sUtility.getVector(value, 0, 10, -10);
       }
       if (field.fireSetField === 'showFloorGrid') {
-        contextObject.context.showGrid(!value);
+        contextObject.context._showGrid(!value);
       }
       if (field.fireSetField === 'showSceneGuides') {
-        contextObject.context.showGuides(!value);
+        contextObject.context._showGuides(!value);
       }
       // field.fireSetField === 'gridAndGuidesDepth'
     }
   }
   updateObjectURL(objectType, key, file) {
-    sUtility.fileToURI(file).then(
-      fileBlobString => this.sceneLoadMesh("", "data:" + fileBlobString).then(
-        mesh => {
-          let filename = file.name;
-          let fireSet = gAPPP.a.modelSets[objectType];
-          let sceneJSON = this._serializeScene();
-          fireSet.updateBlobString(key, sceneJSON, filename);
-        }));
+    return new Promise((resolve, reject) => {
+      sUtility.fileToURI(file).then(
+        fileBlobString => this._sceneLoadMesh("", "data:" + fileBlobString).then(
+          mesh => {
+            let filename = file.name;
+            let fireSet = gAPPP.a.modelSets[objectType];
+            let sceneJSON = this._serializeScene();
+            fireSet.updateBlobString(key, sceneJSON, filename).then(
+              r => resolve(r));
+          }));
+    });
   }
   updateSelectedObject(contextObject, valueCache) {
     if (this !== gAPPP.activeContext)
@@ -153,7 +156,7 @@ class cContext {
       return;
     }
     if (contextObject.type === 'mesh')
-      return this.setMesh(valueCache, contextObject.mesh);
+      return this._setMesh(valueCache, contextObject.mesh);
     if (contextObject.type === 'sceneTools') {
       return this.setSceneToolsDetails(contextObject, valueCache);
     }
@@ -191,15 +194,13 @@ class cContext {
         }),
         progress => {},
         err => {
+          console.log('failed to load mesh');
           resolve({
-            console.log('failed to load mesh');
-            resolve({
-              type: 'mesh',
-              mesh: null,
-              context: this,
-              error: true,
-              message: 'failed to load mesh'
-            });
+            type: 'mesh',
+            mesh: null,
+            context: this,
+            error: true,
+            message: 'failed to load mesh'
           });
         });
     });
@@ -439,7 +440,7 @@ class cContext {
           return;
         }
 
-        let m = this.material(tD);
+        let m = this._material(tD);
         object.material = m;
         return;
       }
