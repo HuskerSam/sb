@@ -1,7 +1,5 @@
-/*  singleton firebase authorization controller (owns firebase bound models)   */
 class gAuthorization {
   constructor(signInQS, signOutQS) {
-    let me = this;
     this.currentUser = null;
     this.uid = null;
     this.fireSets = [];
@@ -18,13 +16,12 @@ class gAuthorization {
     this.fireSets.push(this.modelSets['material']);
     this.modelSets['scene'] = new mFirebaseList('lib_scenes', 'scene');
     this.fireSets.push(this.modelSets['scene']);
-    this.modelSets['scene'].childListeners
-      .push((values, type, fireData) => gAPPP.mV.updateSelectedScene());
-  
-    document.querySelector(signInQS).addEventListener('click', () => me.signIn(), false);
-    document.querySelector(signOutQS).addEventListener('click', () => me.signOut(), false);
+    this.modelSets['scene'].childListeners.push(v => gAPPP.handleDataUpdate());
 
-    firebase.auth().onAuthStateChanged((user) => me.onAuthStateChanged(user));
+    document.querySelector(signInQS).addEventListener('click', e => this.signIn(), false);
+    document.querySelector(signOutQS).addEventListener('click', e => this.signOut(), false);
+
+    firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
   }
   get profile() {
     let model = this.modelSets['userProfile'];

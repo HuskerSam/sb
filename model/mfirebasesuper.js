@@ -48,10 +48,7 @@ class mFirebaseSuper {
   notifyChildren(fireData, type) {
     for (let i in this.childListeners)
       this.childListeners[i](this.getCache(fireData.key), type, fireData);
-
-    this._updateDomLookupList();
   }
-  _updateDomLookupList() {}
   commitData(values, key) {}
   getCache(key) {
     return this.values;

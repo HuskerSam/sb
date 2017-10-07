@@ -19,7 +19,7 @@ class cContext {
   }
   set scene(newScene) {
     if (gAPPP.activeContext)
-        gAPPP.activeContext.engine.stopRenderLoop();
+      gAPPP.activeContext.engine.stopRenderLoop();
 
     if (this._scene)
       this._scene.dispose();
@@ -210,14 +210,17 @@ class cContext {
   _loadSceneFromData(sceneData) {
     return new Promise((resolve, reject) => {
       BABYLON.SceneLoader.ShowLoadingScreen = false;
-      BABYLON.SceneLoader.Load(gAPPP.storagePrefix, this._url(sceneData['url']), this.engine, newScene => {
-        this.scene = newScene;
-        this._sceneAddDefaultObjects();
-        resolve({
-          type: 'scene',
-          context: this
-        });
-      });
+      BABYLON.SceneLoader.Load(gAPPP.storagePrefix, this._url(sceneData['url']), this.engine,
+        newScene => {
+          this.scene = newScene;
+          this._sceneAddDefaultObjects();
+          resolve({
+            type: 'scene',
+            context: this
+          });
+        },
+        p => {},
+        e => reject(e));
     });
   }
   _loadSceneMaterial(materialData) {

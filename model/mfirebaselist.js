@@ -6,9 +6,16 @@ class mFirebaseList extends mFirebaseSuper {
     this.fireDataByKey = {};
     this.fireDataValuesByKey = {};
 
-    this.domTitleList = document.createElement('datalist');
-    this.domTitleList.id = listtag + 'datatitlelookuplist';
-    document.body.appendChild(this.domTitleList);
+    this.domTitleList = null;
+    if (listtag) {
+      this.domTitleList = document.createElement('datalist');
+      this.domTitleList.id = listtag + 'datatitlelookuplist';
+      document.body.appendChild(this.domTitleList);
+    }
+  }
+  notifyChildren(fireData, type) {
+    super.notifyChildren(fireData, type);
+    this._updateDomLookupList();
   }
   getKey() {
     return firebase.database().ref().child(this.referencePath).push().key;
@@ -38,44 +45,40 @@ class mFirebaseList extends mFirebaseSuper {
     this.set(key, values);
   }
   setString(id, dataString, filename) {
-    let me = this;
-    return new Promise(function(resolve, reject) {
-      var storageRef = firebase.storage().ref();
-      var auth = firebase.auth();
-      storageRef.child(me.referencePath + '/' + id + '/' + filename).putString(dataString).then(function(snapshot) {
-        resolve(snapshot);
-      }).catch(function(error) {
-        reject(error);
-      });
+    return new Promise((resolve, reject) => {
+      let storageRef = firebase.storage().ref();
+      let auth = firebase.auth();
+      let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename);
+
+      ref.putString(dataString).then(
+        snapshot => resolve(snapshot)).catch(
+        error => reject(error));
     });
   }
   setBlob(id, blob, filename) {
-    let me = this;
-    return new Promise(function(resolve, reject) {
-      var storageRef = firebase.storage().ref();
-      var auth = firebase.auth();
-      storageRef.child(me.referencePath + '/' + id + '/' + filename).put(blob).then(function(snapshot) {
-        resolve(snapshot);
-      }).catch(function(error) {
-        reject(error);
-      });
+    return new Promise((resolve, reject) => {
+      let storageRef = firebase.storage().ref();
+      let auth = firebase.auth();
+      let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename)
+      ref.put(blob).then(
+        snapshot => resolve(snapshot)).catch(
+        error => reject(error));
     });
   }
   createWithBlobString(data, blobString, filename) {
-    let me = this;
     return new Promise((resolve, reject) => {
-      let key = me.getKey();
+      let key = this.getKey();
 
       if (blobString) {
-        me.setString(key, blobString, filename).then(sr => {
+        this.setString(key, blobString, filename).then(sr => {
           data.url = sr.downloadURL;
           data.type = 'url';
           data.size = sr.totalBytes;
 
-          me.set(key, data).then(r => resolve(r));
+          this.set(key, data).then(r => resolve(r));
         }).catch(e => reject(e));
       } else {
-        me.set(key, data).then(r => resolve(r));
+        this.set(key, data).then(r => resolve(r));
       }
     });
   }
@@ -97,56 +100,53 @@ class mFirebaseList extends mFirebaseSuper {
     });
   }
   createWithBlob(data, blob, filename) {
-    let me = this;
     return new Promise((resolve, reject) => {
-      let key = me.getKey();
+      let key = this.getKey();
 
       if (blob) {
-        me.setBlob(key, blob, filename).then(sr => {
-          data.url = sr.downloadURL;
-          data.type = 'url';
-          data.size = sr.totalBytes;
+        this.setBlob(key, blob, filename).then(
+          sr => {
+            data.url = sr.downloadURL;
+            data.type = 'url';
+            data.size = sr.totalBytes;
 
-          me.set(key, data).then(r => resolve(r));
-        }).catch(e => reject(e));
+            this.set(key, data).then(
+              r => resolve(r));
+          }).catch(
+          error => reject(error));
       } else {
-        me.set(key, data).then(r => resolve(r));
+        this.set(key, data).then(r => resolve(r));
       }
     });
   }
   newScene(sceneString, title) {
-    let me = this;
-    return new Promise(function(resolve, reject) {
-      let key = me.getKey();
+    return new Promise((resolve, reject) => {
+      let key = this.getKey();
 
-      me.setString(key, sceneString, 'scene.babylon').then(function(snapshot) {
-        if (!title)
-          title = new Date().toISOString();
+      this.setString(key, sceneString, 'scene.babylon').then(
+        snapshot => {
+          if (!title)
+            title = new Date().toISOString();
 
-        let sceneData = sStatic.getDefaultDataCloned('scene');
-        sceneData.title = title;
-        sceneData.url = snapshot.downloadURL;
-        sceneData.type = 'url';
-        sceneData.size = snapshot.totalBytes;
+          let sceneData = sStatic.getDefaultDataCloned('scene');
+          sceneData.title = title;
+          sceneData.url = snapshot.downloadURL;
+          sceneData.type = 'url';
+          sceneData.size = snapshot.totalBytes;
 
-        me.set(key, sceneData).then(function(e) {
-          resolve(e);
-        })
-      }).catch(function(error) {
-        reject(error);
-      });
+          this.set(key, sceneData).then(
+            e => resolve(e)).catch(
+            error => reject(error))
+        });
     });
   }
   newMaterial(title) {
-    let me = this;
     return new Promise((resolve, reject) => {
-      let key = me.getKey();
+      let key = this.getKey();
       let data = sStatic.getDefaultDataCloned('material');
       data.title = title;
 
-      me.set(key, data).then(function(e) {
-        resolve(e);
-      });
+      this.set(key, data).then(e => resolve(e));
     });
   }
   removeByKey(key) {
@@ -157,12 +157,11 @@ class mFirebaseList extends mFirebaseSuper {
     });
   }
   cloneByKey(key) {
-    let me = this;
     return new Promise((resolve, reject) => {
       let newKey = this.getKey();
       let data = this.getCache(key);
       let newData = JSON.parse(JSON.stringify(data));
-      me.set(newKey, newData);
+      this.set(newKey, newData);
       resolve(newKey);
     });
   }
@@ -173,6 +172,8 @@ class mFirebaseList extends mFirebaseSuper {
     return null;
   }
   _updateDomLookupList() {
+    if (!this.domTitleList)
+      return;
     let innerHTML = '';
     for (let i in this.fireDataValuesByKey)
       innerHTML += '<option>' + this.fireDataValuesByKey[i]['title'].toString() + '</option>';

@@ -7,10 +7,17 @@ class gMainView {
     this.fireSet = gAPPP.a.modelSets['scene'];
   }
   show() {
-    this.context.activate();
+    this.context.reset();
+    this.updateSelectedScene();
   }
   updateSelectedScene() {
+    if (gAPPP.activeContext !== this.context)
+      return;
+
     let profileKey = gAPPP.a.profile.selectedSceneKey;
+    if (! profileKey)
+      return;
+
     if (this.key !== profileKey) {
       let sceneData = this.fireSet.getCache(profileKey);
       if (sceneData) {
@@ -18,8 +25,7 @@ class gMainView {
         let url = sceneData.url;
         if (this.loadedSceneURL !== sceneData.url) {
           this.loadedSceneURL = sceneData.url;
-          this.context._loadSceneFromData(sceneData);
-          this.context.activate();
+          this.context._loadSceneFromData(sceneData).then(r => this.context.activate());
         }
       }
     }

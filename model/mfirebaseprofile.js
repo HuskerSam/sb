@@ -3,7 +3,6 @@ class mFirebaseProfile extends mFirebaseSuper {
     super();
     let me = this;
     this.profile = {};
-    this.styleProfileDom = null;
     this.fireData = null;
     this.childListeners.push((values, type, fireData) => me._handleProfileDataChange(fireData, type));
   }
@@ -12,7 +11,7 @@ class mFirebaseProfile extends mFirebaseSuper {
     let key = fireData.key;
     this.fireData = fireData;
     this.profile[key] = value;
-    this._applyProfileToApplication();
+    gAPPP.handleDataUpdate();
   }
   activate() {
     this.user = gAPPP.a.currentUser;
@@ -28,26 +27,5 @@ class mFirebaseProfile extends mFirebaseSuper {
   }
   getCache(key) {
     return this.profile;
-  }
-  _applyProfileToApplication() {
-    if (this.styleProfileDom !== null) {
-      this.styleProfileDom.parentNode.removeChild(this.styleProfileDom);
-    }
-
-    let css = 'html, body { ';
-    let fontSize = sUtility.parseFontSize(this.profile.fontSize);
-    css += 'font-size:' + fontSize.toString() + 'pt;';
-    if (this.profile.fontFamily)
-      css += 'font-family:' + this.profile.fontFamily + ';';
-    css += '}';
-
-    this.styleProfileDom = document.createElement('style');
-    this.styleProfileDom.innerHTML = css;
-    document.body.appendChild(this.styleProfileDom);
-
-    if (gAPPP.activeContext){
-      gAPPP.activeContext.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
-    }
-    gAPPP.mV.updateSelectedScene();
   }
 }
