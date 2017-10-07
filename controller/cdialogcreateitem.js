@@ -8,6 +8,11 @@ class cDialogCreateItem {
     d.setAttribute('class', 'modal fade create-dialog');
     this.dialog = d;
 
+    this.canvas = this.dialog.querySelector('.create-preview-canvas');
+    if (this.canvas) {
+      this.context = new cContext(this.canvas);
+    }
+
     this.fileDom = this.dialog.querySelector('input[type="file"]');
     if (hideFileDom)
       this.fileDom.style.display = 'none';
@@ -23,15 +28,11 @@ class cDialogCreateItem {
     $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
     $(this.dialog).on('shown.bs.modal', () => this._shown());
 
-    this.canvas = this.dialog.querySelector('.create-preview-canvas');
-    if (this.canvas) {
-      this.context = new cContext(this.canvas);
-    }
     this.cancelBtn.addEventListener('click', () => this.close(), false);
     this.createBtn.addEventListener('click', (e) => this.create(), false);
   }
   _shown() {
-    this.context.reset();
+    this.context.activate(null);
     this._showFocus();
   }
   _showFocus() {
@@ -77,6 +78,7 @@ class cDialogCreateItem {
     if (this.fileDom.files.length > 0)
       file = this.fileDom.files[0];
     this.context.createObject(this.tag, title, file).then(r => {
+      console.log(r);
       this.clear();
       this.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';

@@ -31,15 +31,6 @@ class sUtility {
       console.log('path() err', e);
     }
   }
-  static fileToURI(file) {
-    return new Promise(function(resolve, reject) {
-      let reader = new FileReader();
-      reader.addEventListener("loadend", function() {
-        resolve(reader.result);
-      });
-      reader.readAsText(file);
-    }, false);
-  }
   static dataURItoBlob(dataURI) {
     let byteString = atob(dataURI.split(',')[1]);
     let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]

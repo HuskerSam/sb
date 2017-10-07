@@ -29,17 +29,26 @@ class cContext {
   get scene() {
     return this._scene;
   }
-  activate() {
+  activate(scene) {
     if (gAPPP.activeContext)
       gAPPP.activeContext.engine.stopRenderLoop();
 
-    if (gAPPP.activeContext !== this) {
-      gAPPP.activeContext = this;
-      this.engine = new BABYLON.Engine(this.canvas, false, {
-        preserveDrawingBuffer: true
-      });
-      this.engine.enableOfflineSupport = false;
-    }
+    //  if (gAPPP.activeContext !== this) {
+    gAPPP.activeContext = this;
+    this.engine = new BABYLON.Engine(this.canvas, false, {
+      preserveDrawingBuffer: true
+    });
+    this.engine.enableOfflineSupport = false;
+    //}
+
+
+    if (scene === null)
+      this.scene = new BABYLON.Scene(this.engine);
+    else if (scene !== undefined)
+      this.scene = scene;
+
+    this._sceneAddDefaultObjects();
+
     if (this.camera)
       this.camera.attachControl(this.canvas, false);
 
@@ -48,11 +57,6 @@ class cContext {
         this.engine.runRenderLoop(() => this.scene.render());
       });
     this.engine.resize();
-  }
-  reset() {
-    this.loadedSceneURL = '';
-    this._createEmptyScene();
-    this.activate();
   }
   createObject(objectType, title, file) {
     let objectData = sStatic.getDefaultDataCloned(objectType);
@@ -68,24 +72,26 @@ class cContext {
       return fireSet.createWithBlob(objectData, file, filename);
 
     return new Promise((resolve, reject) => {
-      sUtility.fileToURI(file).then(
-        fileBlobString => this._sceneLoadMesh("", "data:" + fileBlobString).then(
+      if (objectType === 'mesh') {
+        this.activate(null);
+        this._sceneLoadMesh("", URL.createObjectURL(file)).then(
           mesh => {
             let sceneJSON = this._serializeScene();
             fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
               r => resolve(r));
-          }));
+          });
+      }
     });
   }
   loadScene(sceneType, values) {
-    this._createEmptyScene();
+    this.activate(null);
     this.extraSceneObjects = [];
 
     if (sceneType === 'mesh')
       return this._loadSceneMesh(values);
 
     if (sceneType === 'scene')
-      return this._loadSceneFromData(values);
+      return this.loadSceneURL(values['url']);
 
     if (sceneType === 'material')
       return this._loadSceneMaterial(values);
@@ -134,15 +140,19 @@ class cContext {
   }
   updateObjectURL(objectType, key, file) {
     return new Promise((resolve, reject) => {
-      sUtility.fileToURI(file).then(
-        fileBlobString => this._sceneLoadMesh("", "data:" + fileBlobString).then(
-          mesh => {
-            let filename = file.name;
-            let fireSet = gAPPP.a.modelSets[objectType];
-            let sceneJSON = this._serializeScene();
-            fireSet.updateBlobString(key, sceneJSON, filename).then(
-              r => resolve(r));
-          }));
+      this.activate(null);
+      if (objectType === 'mesh') {
+        let fileURI = URL.createObjectURL(file);
+         this._sceneLoadMesh("", fileURI).then(
+            mesh => {
+              let filename = file.name;
+              let fireSet = gAPPP.a.modelSets[objectType];
+              let sceneJSON = this._serializeScene();
+              fireSet.updateBlobString(key, sceneJSON, filename).then(
+                r => resolve(r));
+            });
+      }
+      resolve({});
     });
   }
   updateSelectedObject(contextObject, valueCache) {
@@ -180,10 +190,6 @@ class cContext {
     s.position.y = diameter / 2.0;
     return s;
   }
-  _createEmptyScene() {
-    this.scene = new BABYLON.Scene(this.engine);
-    this._sceneAddDefaultObjects();
-  }
   _loadSceneMesh(objectData) {
     return new Promise((resolve, reject) => {
       let path = gAPPP.storagePrefix;
@@ -207,13 +213,12 @@ class cContext {
         });
     });
   }
-  _loadSceneFromData(sceneData) {
+  loadSceneURL(url) {
     return new Promise((resolve, reject) => {
       BABYLON.SceneLoader.ShowLoadingScreen = false;
-      BABYLON.SceneLoader.Load(gAPPP.storagePrefix, this._url(sceneData['url']), this.engine,
+      BABYLON.SceneLoader.Load(gAPPP.storagePrefix, this._url(url), this.engine,
         newScene => {
-          this.scene = newScene;
-          this._sceneAddDefaultObjects();
+          this.activate(newScene);
           resolve({
             type: 'scene',
             context: this

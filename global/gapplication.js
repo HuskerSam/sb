@@ -12,6 +12,7 @@ class gApplication {
 
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
     this.mV = new gMainView();
+    this.mV.show();
 
     window.addEventListener("resize", () => this.resize());
 
@@ -40,12 +41,11 @@ class gApplication {
     document.querySelector('#global-toolbar-increase-fontsize').addEventListener('click', e => this._increaseFontSize(), false);
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile(), false);
 
-    this.mV.show();
   }
   handleDataUpdate() {
     this.activeContext.scene.clearColor = sUtility.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
-    this.mV.updateSelectedScene();
+    this.mV._updateSelectedScene();
   }
   resize() {
     if (this.activeContext)
