@@ -5,7 +5,7 @@ class cContext {
     this.gridObject = null;
     this.light = null;
     this.camera = null;
-    this.scene = null;
+    this._scene = null;
     this.activeContextObject = null;
     this.canvas = canvas;
     this.engine = null;
@@ -16,6 +16,14 @@ class cContext {
       });
       this.engine.enableOfflineSupport = false;
     }
+  }
+  set scene(newScene) {
+    if (this._scene !== null)
+      this._scene.dispose();
+    this._scene = newScene;
+  }
+  get scene() {
+    return this._scene;
   }
   activate() {
     if (gAPPP.activeContext)
@@ -94,16 +102,6 @@ class cContext {
           field: 'renderImageURL',
           newValue: uploadResult.downloadURL
         }], key));
-    });
-  }
-  _sceneLoadMesh(path, URI) {
-    let scene = this.scene;
-    return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ImportMesh('', path, URI, scene,
-        (newMeshes, particleSystems, skeletons) => {
-          return resolve(newMeshes[0]);
-        }, progress => {},
-        err => resolve(null));
     });
   }
   setSceneToolsDetails(contextObject, valueCache) {
@@ -309,6 +307,16 @@ class cContext {
     this.light.intensity = .7;
 
     this.updateSceneObjects();
+  }
+  _sceneLoadMesh(path, URI) {
+    let scene = this.scene;
+    return new Promise((resolve, reject) => {
+      BABYLON.SceneLoader.ImportMesh('', path, URI, scene,
+        (newMeshes, particleSystems, skeletons) => {
+          return resolve(newMeshes[0]);
+        }, progress => {},
+        err => resolve(null));
+    });
   }
   _serializeScene() {
     return JSON.stringify(BABYLON.SceneSerializer.Serialize(this.scene));
