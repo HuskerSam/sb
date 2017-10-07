@@ -118,12 +118,14 @@ class cDataView {
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
-      if (f.fileDom.files.length > 0)
+      if (f.fileDom.files.length > 0){
+        this.parent.context.reset();
         this.parent.context.updateObjectURL('mesh', this.parent.key, f.fileDom.files[0]).then(snapshot => {
           f.fileDom.value = '';
           f.progressBar.style.display = 'none';
           f.dom.style.display = '';
         });
+      }
     } else if (f.uploadType === 'texture') {
 
     }

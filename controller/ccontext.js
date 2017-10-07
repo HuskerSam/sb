@@ -18,8 +18,12 @@ class cContext {
     }
   }
   set scene(newScene) {
-    if (this._scene !== null)
+    if (gAPPP.activeContext)
+        gAPPP.activeContext.engine.stopRenderLoop();
+
+    if (this._scene)
       this._scene.dispose();
+
     this._scene = newScene;
   }
   get scene() {
@@ -45,7 +49,7 @@ class cContext {
       });
     this.engine.resize();
   }
-  clear() {
+  reset() {
     this.loadedSceneURL = '';
     this._createEmptyScene();
     this.activate();

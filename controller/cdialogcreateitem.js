@@ -21,15 +21,18 @@ class cDialogCreateItem {
     this.dialog.querySelector('.modal-title').innerHTML = title;
     this.titleDom = this.dialog.querySelector('.input-title');
     $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
-    $(this.dialog).on('shown.bs.modal', () => this._showFocus());
+    $(this.dialog).on('shown.bs.modal', () => this._shown());
 
     this.canvas = this.dialog.querySelector('.create-preview-canvas');
     if (this.canvas) {
       this.context = new cContext(this.canvas);
-      this.context.loadScene().then(r => {});
     }
     this.cancelBtn.addEventListener('click', () => this.close(), false);
     this.createBtn.addEventListener('click', (e) => this.create(), false);
+  }
+  _shown() {
+    this.context.reset();
+    this._showFocus();
   }
   _showFocus() {
     if (this.hideFileDom)
@@ -47,7 +50,7 @@ class cDialogCreateItem {
     this.popupButtons.style.display = 'block';
     this.progressBar.style.display = 'none';
     this.clear();
-    this.context.activate();
+
     $(this.dialog).modal('show');
   }
   clear() {

@@ -417,4 +417,5 @@ button i.material-icons {
   width:100px;
   height: 100px;
   display: inline-block;
+  touch-action: none;
 }

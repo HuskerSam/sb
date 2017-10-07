@@ -2,7 +2,7 @@ class gMainView {
   constructor() {
     this.canvasDOM = document.querySelector('#renderCanvas');
     this.context = new cContext(this.canvasDOM, true);
-    this.context.clear();
+    this.context.reset();
     this.key = null;
     this.fireSet = gAPPP.a.modelSets['scene'];
   }
