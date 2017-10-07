@@ -78,7 +78,7 @@ class cContext {
           mesh => {
             let sceneJSON = this._serializeScene();
             fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
-              r => resolve(r));
+              newKey => resolve(newKey));
           });
       }
     });

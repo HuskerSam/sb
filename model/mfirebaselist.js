@@ -75,10 +75,10 @@ class mFirebaseList extends mFirebaseSuper {
           data.type = 'url';
           data.size = sr.totalBytes;
 
-          this.set(key, data).then(r => resolve(r));
+          this.set(key, data).then(r => resolve(key));
         }).catch(e => reject(e));
       } else {
-        this.set(key, data).then(r => resolve(r));
+        this.set(key, data).then(r => resolve(key));
       }
     });
   }
@@ -111,11 +111,11 @@ class mFirebaseList extends mFirebaseSuper {
             data.size = sr.totalBytes;
 
             this.set(key, data).then(
-              r => resolve(r));
+              r => resolve(key));
           }).catch(
           error => reject(error));
       } else {
-        this.set(key, data).then(r => resolve(r));
+        this.set(key, data).then(r => resolve(key));
       }
     });
   }
@@ -176,7 +176,8 @@ class mFirebaseList extends mFirebaseSuper {
       return;
     let innerHTML = '';
     for (let i in this.fireDataValuesByKey)
-      innerHTML += '<option>' + this.fireDataValuesByKey[i]['title'].toString() + '</option>';
+      if (this.fireDataValuesByKey[i])
+        innerHTML += '<option>' + this.fireDataValuesByKey[i]['title'] + '</option>';
     this.domTitleList.innerHTML = innerHTML;
   }
 }

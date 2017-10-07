@@ -77,8 +77,8 @@ class cDialogCreateItem {
     let file = null;
     if (this.fileDom.files.length > 0)
       file = this.fileDom.files[0];
-    this.context.createObject(this.tag, title, file).then(r => {
-      console.log(r);
+    this.context.createObject(this.tag, title, file).then(newKey => {
+      this.context.renderPreview(this.tag, newKey);
       this.clear();
       this.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';

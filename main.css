@@ -91,6 +91,7 @@ html, body {
   z-index: 1;
   display: inline-block;
   clear:both;
+  pointer-events: auto;
 }
 #sb-floating-toolbar-expanded {
   pointer-events: none;
