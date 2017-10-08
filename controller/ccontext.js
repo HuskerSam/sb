@@ -1,8 +1,8 @@
 class cContext {
   constructor(canvas, initEngine) {
-    this.extraSceneObjects = {};
     this.gridShown = false;
     this.gridObject = null;
+    this.guidesSceneObjects = [];
     this.light = null;
     this.camera = null;
     this._scene = null;
@@ -44,20 +44,22 @@ class cContext {
       this.engine.enableOfflineSupport = false;
     }
 
-    if (scene === null)
-      this.scene = new BABYLON.Scene(this.engine);
-    else if (scene !== undefined)
-      this.scene = scene;
+    if (scene !== undefined) {
+      if (scene === null)
+        this.scene = new BABYLON.Scene(this.engine);
+      else if (scene !== undefined)
+        this.scene = scene;
 
-    this._sceneAddDefaultObjects();
+      this._sceneAddDefaultObjects();
+      this.guidesSceneObjects = {};
+      this.gridObject = null;
+    }
 
-    if (this.camera)
-      this.camera.attachControl(this.canvas, false);
+    this.camera.attachControl(this.canvas, false);
 
-    if (this.scene)
-      this.scene.executeWhenReady(() => {
-        this.engine.runRenderLoop(() => this.scene.render());
-      });
+    this.scene.executeWhenReady(() => {
+      this.engine.runRenderLoop(() => this.scene.render());
+    });
     this.engine.resize();
   }
   createObject(objectType, title, file) {
@@ -79,12 +81,24 @@ class cContext {
           meshes => {
             let newMesh = meshes[0];
             this.engine.stopRenderLoop();
-            this._removeAllMeshesExcept([newMesh]);
             this._sceneDisposeDefaultObjects();
 
             let sceneJSON = this._serializeScene();
             this._sceneAddDefaultObjects();
             this.activate();
+
+            objectData.simpleUIDetails.scaleX = newMesh.scaling.x;
+            objectData.simpleUIDetails.scaleY = newMesh.scaling.y;
+            objectData.simpleUIDetails.scaleZ = newMesh.scaling.z;
+
+            objectData.simpleUIDetails.positionX = newMesh.position.x;
+            objectData.simpleUIDetails.positionY = newMesh.position.y;
+            objectData.simpleUIDetails.positionZ = newMesh.position.z;
+
+            objectData.simpleUIDetails.rotateX = newMesh.rotation.x;
+            objectData.simpleUIDetails.rotateY = newMesh.rotation.y;
+            objectData.simpleUIDetails.rotateZ = newMesh.rotation.z;
+
             fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
               result => {
                 resolve({
@@ -97,8 +111,6 @@ class cContext {
     });
   }
   loadScene(sceneType, values) {
-    this.extraSceneObjects = [];
-
     if (sceneType === 'mesh')
       return this._loadSceneMesh(values);
 
@@ -112,6 +124,21 @@ class cContext {
       return this._loadSceneTexture(values);
 
     return new Promise((resolve) => resolve(null));
+  }
+  loadSceneURL(url) {
+    return new Promise((resolve, reject) => {
+      BABYLON.SceneLoader.ShowLoadingScreen = false;
+      BABYLON.SceneLoader.Load(gAPPP.storagePrefix, this._url(url), this.engine,
+        newScene => {
+          this.activate(newScene);
+          resolve({
+            type: 'scene',
+            context: this
+          });
+        },
+        p => {},
+        e => reject(e));
+    });
   }
   renderPreview(objectType, key) {
     let fireSet = gAPPP.a.modelSets[objectType];
@@ -197,11 +224,6 @@ class cContext {
     this.camera.position = cameraVector;
   }
 
-  _addObject(key, obj) {
-    if (this.extraSceneObjects[key])
-      this.remove(this.extraSceneObjects[key]);
-    this.extraSceneObjects[key] = obj;
-  }
   _addOriginalAndClone(originalMesh) {
     this.importedMeshes.push(originalMesh);
     let newMesh = originalMesh.clone(originalMesh);
@@ -216,43 +238,24 @@ class cContext {
     return new Promise((resolve, reject) => {
       let path = gAPPP.storagePrefix;
       let filename = this._url(objectData['url']);
+      let meshCount = this.scene.meshes.length;
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.scene,
         (newMeshes, particleSystems, skeletons) => {
-          let newMesh = newMeshes[0].clone('wildnewname');
-          newMeshes[0].isVisible = false;
-          this.activeContextObject = newMesh;
           resolve({
             type: 'mesh',
-            mesh: newMesh,
+            mesh: newMeshes[0],
             context: this
           });
         },
         progress => {},
-        err => {
-          console.log('failed to load mesh');
-          resolve({
-            type: 'mesh',
-            mesh: null,
-            context: this,
+        (scene, msg, err) => {
+          console.log('_loadSceneMesh', msg, err);
+          reject({
             error: true,
-            message: 'failed to load mesh'
+            message: msg,
+            errorObject: err
           });
         });
-    });
-  }
-  loadSceneURL(url) {
-    return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ShowLoadingScreen = false;
-      BABYLON.SceneLoader.Load(gAPPP.storagePrefix, this._url(url), this.engine,
-        newScene => {
-          this.activate(newScene);
-          resolve({
-            type: 'scene',
-            context: this
-          });
-        },
-        p => {},
-        e => reject(e));
     });
   }
   _loadSceneMaterial(materialData) {
@@ -260,7 +263,6 @@ class cContext {
       let s = this._addSphere('sphere1', 15, 5, this.scene, false);
       let material = new BABYLON.StandardMaterial('material', this.scene);
       s.material = material;
-      this.extraSceneObjects.push(s);
       resolve({
         type: 'material',
         mesh: s,
@@ -272,12 +274,8 @@ class cContext {
   _loadSceneTexture(textureData) {
     return new Promise((resolve, reject) => {
       let s = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, this.scene);
-
-      this.extraSceneObjects.push(s);
-
       let material = new BABYLON.StandardMaterial('material', this.scene);
       s.material = material;
-
       resolve({
         type: 'texture',
         mesh: s,
@@ -328,20 +326,18 @@ class cContext {
     texture.hasAlpha = values['hasAlpha'];
     return texture;
   }
-  _removeObject(key) {
-    if (this.extraSceneObjects[key]) {
-      this.extraSceneObjects[key].dispose();
-      delete this.extraSceneObjects[key];
-    }
-  }
-  _sceneDisposeDefaultObjects() {
-    if (this.camera)
-      this.camera.dispose();
-    this.camera = null;
+  _sceneDisposeDefaultObjects(leaveCameraAndLight) {
+    if (!leaveCameraAndLight) {
+      if (this.camera)
+        this.camera.dispose();
+      this.camera = null;
 
-    if (this.light)
-      this.light.dispose();
-    this.light = null;
+      if (this.light)
+        this.light.dispose();
+      this.light = null;
+    }
+    this._showGuides(true);
+    this._showGrid(true);
   }
   _sceneAddDefaultObjects() {
     this.scene.clearColor = sUtility.color('.7,.7,.7');
@@ -439,12 +435,14 @@ class cContext {
       texture.vScale = gridDepth;
       texture.uScale = gridDepth;
       grid.material = material;
-      this._addObject('grid', grid);
+      this.gridObject = grid;
     } else {
       if (!this.gridShown)
         return;
       this.gridShown = false;
-      this._removeObject('grid');
+      if (this.gridObject)
+        this.gridObject.dispose();
+      this.gridObject = null;
     }
   }
   _showGuides(hide) {
@@ -454,18 +452,16 @@ class cContext {
         this.showGuides(true);
       }
       let gridDepth = sUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-      this.guideObjects = this._showAxis(gridDepth, this.scene);
+      this.guidesSceneObjects = this._showAxis(gridDepth, this.scene);
 
-      for (let i in this.guideObjects)
-        this.extraSceneObjects['guideObject' + i.toString()] = this.guideObjects[i];
       this.guidesShown = true;
     } else {
       if (!this.guidesShown)
         return;
       this.guidesShown = false;
-      for (let i in this.guideObjects)
-        this._removeObject('guideObject' + i.toString());
-      this.guideObjects = [];
+      for (let i in this.guidesSceneObjects)
+        this.guidesSceneObjects[i].dispose();
+      this.guidesSceneObjects = [];
     }
   }
   _updateObjectValue(field, value, object) {
