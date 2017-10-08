@@ -9,9 +9,17 @@ class cDialogCreateItem {
     this.dialog = d;
 
     this.canvas = this.dialog.querySelector('.create-preview-canvas');
-    if (this.canvas) {
-      this.context = new cContext(this.canvas);
-    }
+    this.context = new cContext(this.canvas);
+    if (this.tag === 'scene' || this.tag === 'mesh')
+      this.canvas.style.display = 'block';
+    else
+      this.canvas.style.display = 'none';
+
+    this.image = this.dialog.querySelector('.create-preview-image');
+    if (this.tag === 'texture')
+      this.image.style.display = 'inline-block';
+    else
+      this.image.style.display = 'none';
 
     this.fileDom = this.dialog.querySelector('input[type="file"]');
     if (hideFileDom)
@@ -75,10 +83,22 @@ class cDialogCreateItem {
           });
         }
         if (this.tag === 'scene') {
-          this.context.loadSceneFromDomFile(this.fileDom.files[0]).then(r =>{});
+          this.context.loadSceneFromDomFile(this.fileDom.files[0]).then(r => {});
         }
       } else {
         this.context.activate(null);
+      }
+    }
+    if (this.tag === 'texture') {
+      if (this.fileDom.files.length > 0) {
+        if (this.titleDom.value === '') {
+          this.titleDom.value = this.fileDom.files[0].name;
+          this.createBtn.focus();
+        }
+
+        this.image.setAttribute('src', URL.createObjectURL(this.fileDom.files[0]));
+      } else {
+        this.image.setAttribute('src', '');
       }
     }
   }
@@ -97,7 +117,14 @@ class cDialogCreateItem {
     if (this.tag !== 'scene')
       this.context.activate(null);
     this.context.createObject(this.tag, title, file).then(results => {
-      this.context.renderPreview(this.tag, results.key);
+      if (this.tag !== 'texture')
+        this.context.renderPreview(this.tag, results.key);
+      else {
+        gAPPP.a.modelSets['texture'].commitUpdateList([{
+          field: 'renderImageURL',
+          newValue: results.url
+        }], results.key);
+      }
       this.clear();
       this.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';

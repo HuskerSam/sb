@@ -134,36 +134,6 @@ class mFirebaseList extends mFirebaseSuper {
       }
     });
   }
-  newScene(sceneString, title) {
-    return new Promise((resolve, reject) => {
-      let key = this.getKey();
-
-      this.setString(key, sceneString, 'scene.babylon').then(
-        snapshot => {
-          if (!title)
-            title = new Date().toISOString();
-
-          let sceneData = sStatic.getDefaultDataCloned('scene');
-          sceneData.title = title;
-          sceneData.url = snapshot.downloadURL;
-          sceneData.type = 'url';
-          sceneData.size = snapshot.totalBytes;
-
-          this.set(key, sceneData).then(
-            e => resolve(e)).catch(
-            error => reject(error))
-        });
-    });
-  }
-  newMaterial(title) {
-    return new Promise((resolve, reject) => {
-      let key = this.getKey();
-      let data = sStatic.getDefaultDataCloned('material');
-      data.title = title;
-
-      this.set(key, data).then(e => resolve(e));
-    });
-  }
   removeByKey(key) {
     let values = this.getCache(key);
     if (values === null)

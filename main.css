@@ -414,7 +414,7 @@ button i.material-icons {
   padding: 2px;
   border-radius: 4px;
 }
-.create-preview-canvas {
+.create-preview-canvas, .create-preview-image {
   width:100px;
   height: 100px;
   display: inline-block;
