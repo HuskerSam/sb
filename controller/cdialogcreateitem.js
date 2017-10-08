@@ -62,15 +62,21 @@ class cDialogCreateItem {
     this.updateFilePreview();
   }
   updateFilePreview() {
-    if (this.tag === 'mesh') {
+    if (this.tag === 'mesh' || this.tag === 'scene') {
       if (this.fileDom.files.length > 0) {
         if (this.titleDom.value === '') {
           this.titleDom.value = this.fileDom.files[0].name.replace('.babylon', '');
           this.createBtn.focus();
         }
-        this.context._loadMeshFromDomFile(this.fileDom.files[0]).then(meshes => {
-          meshes[0].showBoundingBox = true;
-        });
+
+        if (this.tag === 'mesh') {
+          this.context._loadMeshFromDomFile(this.fileDom.files[0]).then(meshes => {
+            meshes[0].showBoundingBox = true;
+          });
+        }
+        if (this.tag === 'scene') {
+          this.context.loadSceneFromDomFile(this.fileDom.files[0]).then(r =>{});
+        }
       } else {
         this.context.activate(null);
       }
@@ -87,9 +93,11 @@ class cDialogCreateItem {
     let file = null;
     if (this.fileDom.files.length > 0)
       file = this.fileDom.files[0];
-    this.context.activate(null);
+
+    if (this.tag !== 'scene')
+      this.context.activate(null);
     this.context.createObject(this.tag, title, file).then(results => {
-      this.context.renderPreview(this.tag, results.objectInfo.key);
+      this.context.renderPreview(this.tag, results.key);
       this.clear();
       this.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';

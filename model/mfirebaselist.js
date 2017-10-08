@@ -120,11 +120,17 @@ class mFirebaseList extends mFirebaseSuper {
             data.size = sr.totalBytes;
 
             this.set(key, data).then(
-              r => resolve(key));
+              r => resolve({
+                url: data.url,
+                key
+              }));
           }).catch(
           error => reject(error));
       } else {
-        this.set(key, data).then(r => resolve(key));
+        this.set(key, data).then(r => resolve({
+          key,
+          url: ''
+        }));
       }
     });
   }

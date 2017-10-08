@@ -100,12 +100,7 @@ class cContext {
             objectData.simpleUIDetails.rotateZ = newMesh.rotation.z;
 
             fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
-              result => {
-                resolve({
-                  objectInfo: result,
-                  mesh: newMesh
-                });
-              });
+              r => resolve(r));
           });
       }
     });
@@ -249,7 +244,7 @@ class cContext {
         (newMeshes, particleSystems, skeletons) => {
           resolve({
             type: 'mesh',
-            mesh: newMeshes[0],
+            sceneObject: newMeshes[0],
             context: this
           });
         },
@@ -271,7 +266,7 @@ class cContext {
       s.material = material;
       resolve({
         type: 'material',
-        mesh: s,
+        sceneObject: s,
         material,
         context: this
       });
@@ -284,7 +279,7 @@ class cContext {
       s.material = material;
       resolve({
         type: 'texture',
-        mesh: s,
+        sceneObject: s,
         material,
         context: this
       });
@@ -366,6 +361,22 @@ class cContext {
         (newMeshes, particleSystems, skeletons) => resolve(newMeshes),
         progress => {},
         err => resolve(null));
+    });
+  }
+  loadSceneFromDomFile(file) {
+    return new Promise((resolve, reject) => {
+      BABYLON.SceneLoader.ShowLoadingScreen = false;
+      let URI = URL.createObjectURL(file);
+      BABYLON.SceneLoader.Load('', URI, this.engine,
+        newScene => {
+          this.activate(newScene);
+          resolve({
+            type: 'scene',
+            context: this
+          });
+        },
+        p => {},
+        e => reject(e));
     });
   }
   _removeAllMeshesExcept(exceptionArray) {
