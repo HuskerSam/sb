@@ -75,10 +75,16 @@ class mFirebaseList extends mFirebaseSuper {
           data.type = 'url';
           data.size = sr.totalBytes;
 
-          this.set(key, data).then(r => resolve({ key, url: data.url }));
+          this.set(key, data).then(r => resolve({
+            key,
+            url: data.url
+          }));
         }).catch(e => reject(e));
       } else {
-        this.set(key, data).then(r => resolve({ key, url: '' }));
+        this.set(key, data).then(r => resolve({
+          key,
+          url: ''
+        }));
       }
     });
   }
@@ -95,7 +101,10 @@ class mFirebaseList extends mFirebaseSuper {
           oldValue: this.getCache(key)['size']
         }];
         this.commitUpdateList(updates, key);
-        resolve({ result: snapshot, url: snapshot.downloadURL });
+        resolve({
+          result: snapshot,
+          url: snapshot.downloadURL
+        });
       });
     });
   }
@@ -150,10 +159,28 @@ class mFirebaseList extends mFirebaseSuper {
     });
   }
   removeByKey(key) {
+    let values = this.getCache(key);
+    if (values === null)
+      return new Promise(r => r(null));
     return new Promise((resolve, reject) => {
       let updates = {};
       updates['/' + this.referencePath + '/' + key] = null;
-      firebase.database().ref().update(updates).then(e => resolve(e));
+
+      firebase.database().ref().update(updates).then(e => {
+        let url = values['url'];
+        if (url.indexOf(key) !== -1) {
+          let shortPath = url.replace(gAPPP.storagePrefix, '');
+          shortPath = decodeURIComponent(shortPath);
+          shortPath = shortPath.substr(0, shortPath.indexOf('?'));
+          let storageRef = firebase.storage().ref();
+          let ref = storageRef.child(shortPath);
+          ref.delete().then(d => resolve(e));
+
+          return;
+        }
+
+        resolve(e);
+      });
     });
   }
   cloneByKey(key) {
