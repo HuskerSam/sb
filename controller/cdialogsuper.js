@@ -68,6 +68,7 @@ class cDialogSuper {
     this._showFocus();
 
     if (this.initScene) {
+      this.context.activate(null);
       this.context.loadScene(this.tag, this.fireFields.values).then(
         r => this._finishShow(r),
         e => this._finishShow(e));

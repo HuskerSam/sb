@@ -75,10 +75,10 @@ class mFirebaseList extends mFirebaseSuper {
           data.type = 'url';
           data.size = sr.totalBytes;
 
-          this.set(key, data).then(r => resolve(key));
+          this.set(key, data).then(r => resolve({ key, url: data.url }));
         }).catch(e => reject(e));
       } else {
-        this.set(key, data).then(r => resolve(key));
+        this.set(key, data).then(r => resolve({ key, url: '' }));
       }
     });
   }
@@ -95,7 +95,7 @@ class mFirebaseList extends mFirebaseSuper {
           oldValue: this.getCache(key)['size']
         }];
         this.commitUpdateList(updates, key);
-        resolve(snapshot);
+        resolve({ result: snapshot, url: snapshot.downloadURL });
       });
     });
   }

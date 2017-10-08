@@ -12,8 +12,7 @@ class gApplication {
 
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
     this.mV = new gMainView();
-    this.mV.show();
-
+    
     window.addEventListener("resize", () => this.resize());
 
     this.toolbarItems['scene'] = new cToolband('scene', 'Scenes');

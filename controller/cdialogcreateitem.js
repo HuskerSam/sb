@@ -32,7 +32,6 @@ class cDialogCreateItem {
     this.createBtn.addEventListener('click', (e) => this.create(), false);
   }
   _shown() {
-    this.context.activate(null);
     this._showFocus();
   }
   _showFocus() {
@@ -51,6 +50,7 @@ class cDialogCreateItem {
     this.popupButtons.style.display = 'block';
     this.progressBar.style.display = 'none';
     this.clear();
+    this.context.activate(null);
 
     $(this.dialog).modal('show');
   }
@@ -77,8 +77,8 @@ class cDialogCreateItem {
     let file = null;
     if (this.fileDom.files.length > 0)
       file = this.fileDom.files[0];
-    this.context.createObject(this.tag, title, file).then(newKey => {
-      this.context.renderPreview(this.tag, newKey);
+    this.context.createObject(this.tag, title, file).then(results => {
+      this.context.renderPreview(this.tag, results.objectInfo.key);
       this.clear();
       this.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';

@@ -36,13 +36,13 @@ class cContext {
     if (gAPPP.activeContext)
       gAPPP.activeContext.engine.stopRenderLoop();
 
-  //  if (gAPPP.activeContext !== this) {
+    if (gAPPP.activeContext !== this) {
       gAPPP.activeContext = this;
       this.engine = new BABYLON.Engine(this.canvas, false, {
         preserveDrawingBuffer: true
       });
       this.engine.enableOfflineSupport = false;
-//    }
+    }
 
     if (scene === null)
       this.scene = new BABYLON.Scene(this.engine);
@@ -75,18 +75,28 @@ class cContext {
 
     return new Promise((resolve, reject) => {
       if (objectType === 'mesh') {
-        this.activate(null);
-        this._loadMeshFromFile("", URL.createObjectURL(file)).then(
-          mesh => {
+        this._loadMeshFromDomFile(file).then(
+          meshes => {
+            let newMesh = meshes[0];
+            this.engine.stopRenderLoop();
+            this._removeAllMeshesExcept([newMesh]);
+            this._sceneDisposeDefaultObjects();
+
             let sceneJSON = this._serializeScene();
+            this._sceneAddDefaultObjects();
+            this.activate();
             fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
-              newKey => resolve(newKey));
+              result => {
+                resolve({
+                  objectInfo: result,
+                  mesh: newMesh
+                });
+              });
           });
       }
     });
   }
   loadScene(sceneType, values) {
-    this.activate(null);
     this.extraSceneObjects = [];
 
     if (sceneType === 'mesh')
@@ -142,19 +152,17 @@ class cContext {
   }
   updateObjectURL(objectType, key, file) {
     return new Promise((resolve, reject) => {
-      this.activate(null);
       if (objectType === 'mesh') {
-        let fileURI = URL.createObjectURL(file);
-        this._loadMeshFromFile("", fileURI).then(
-          mesh => {
+        this._loadMeshFromDomFile(file).then(
+          meshes => {
             let filename = file.name;
             let fireSet = gAPPP.a.modelSets[objectType];
             let sceneJSON = this._serializeScene();
             fireSet.updateBlobString(key, sceneJSON, filename).then(
               r => resolve(r));
           });
-      }
-      resolve({});
+      } else
+        resolve({});
     });
   }
   updateSelectedObject(contextObject, valueCache) {
@@ -176,8 +184,15 @@ class cContext {
     }
   }
   updateSceneObjects() {
-    if (gAPPP.a.profile.lightIntensity !== undefined)
-      this.light.intensity = gAPPP.a.profile.lightIntensity;
+    this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
+
+    if (!this.camera)
+      return;
+
+    let li = gAPPP.a.profile.lightIntensity;
+    if (li !== undefined)
+      if (li !== '')
+        this.light.intensity = li;
     let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
     this.camera.position = cameraVector;
   }
@@ -186,6 +201,11 @@ class cContext {
     if (this.extraSceneObjects[key])
       this.remove(this.extraSceneObjects[key]);
     this.extraSceneObjects[key] = obj;
+  }
+  _addOriginalAndClone(originalMesh) {
+    this.importedMeshes.push(originalMesh);
+    let newMesh = originalMesh.clone(originalMesh);
+
   }
   _addSphere(name, faces, diameter) {
     let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, this.scene);
@@ -314,10 +334,20 @@ class cContext {
       delete this.extraSceneObjects[key];
     }
   }
-  _sceneAddDefaultObjects() {
-    this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
+  _sceneDisposeDefaultObjects() {
+    if (this.camera)
+      this.camera.dispose();
+    this.camera = null;
 
+    if (this.light)
+      this.light.dispose();
+    this.light = null;
+  }
+  _sceneAddDefaultObjects() {
+    this.scene.clearColor = sUtility.color('.7,.7,.7');
+    this._sceneDisposeDefaultObjects();
     let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
+
     this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
     this.camera.setTarget(BABYLON.Vector3.Zero());
 
@@ -327,16 +357,19 @@ class cContext {
 
     this.updateSceneObjects();
   }
-  _loadMeshFromFile(path, URI) {
+  _loadMeshFromDomFile(file) {
     return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ImportMesh('', path, URI, this.scene,
-        (newMeshes, particleSystems, skeletons) => {
-          let newMesh = newMeshes[0].clone('wildnewname');
-          newMeshes[0].isVisible = false;
-          return resolve(newMesh);
-        }, progress => {},
+      let URI = URL.createObjectURL(file);
+      BABYLON.SceneLoader.ImportMesh('', '', URI, this.scene,
+        (newMeshes, particleSystems, skeletons) => resolve(newMeshes),
+        progress => {},
         err => resolve(null));
     });
+  }
+  _removeAllMeshesExcept(exceptionArray) {
+    for (let c = this.scene.meshes.length - 1; c >= 0; c--)
+      if (exceptionArray.indexOf(this.scene.meshes[c]) === -1)
+        this.scene.meshes[c].dispose();
   }
   _serializeScene() {
     return JSON.stringify(BABYLON.SceneSerializer.Serialize(this.scene));

@@ -7,9 +7,6 @@ class gMainView {
     this.loadedSceneURL = '';
     this.fireSet = gAPPP.a.modelSets['scene'];
   }
-  show() {
-    this.context.activate(null);
-  }
   _updateSelectedScene() {
     if (gAPPP.activeContext !== this.context)
       return;
@@ -25,7 +22,7 @@ class gMainView {
         let url = sceneData.url;
         if (this.loadedSceneURL !== sceneData.url) {
           this.loadedSceneURL = sceneData.url;
-          this.context.loadSceneURL(this.loadedSceneURL).then(r => this.context.activate());
+          this.context.loadSceneURL(this.loadedSceneURL).then(r => {});
         }
       }
     }
