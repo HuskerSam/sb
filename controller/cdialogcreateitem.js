@@ -59,10 +59,20 @@ class cDialogCreateItem {
     this.fileDom.value = '';
   }
   fileDomChange(e) {
-    if (this.fileDom.files.length > 0) {
-      if (this.titleDom.value === '') {
-        this.titleDom.value = this.fileDom.files[0].name.replace('.babylon', '');
-        this.createBtn.focus();
+    this.updateFilePreview();
+  }
+  updateFilePreview() {
+    if (this.tag === 'mesh') {
+      if (this.fileDom.files.length > 0) {
+        if (this.titleDom.value === '') {
+          this.titleDom.value = this.fileDom.files[0].name.replace('.babylon', '');
+          this.createBtn.focus();
+        }
+        this.context._loadMeshFromDomFile(this.fileDom.files[0]).then(meshes => {
+          meshes[0].showBoundingBox = true;
+        });
+      } else {
+        this.context.activate(null);
       }
     }
   }
@@ -77,6 +87,7 @@ class cDialogCreateItem {
     let file = null;
     if (this.fileDom.files.length > 0)
       file = this.fileDom.files[0];
+    this.context.activate(null);
     this.context.createObject(this.tag, title, file).then(results => {
       this.context.renderPreview(this.tag, results.objectInfo.key);
       this.clear();

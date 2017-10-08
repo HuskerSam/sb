@@ -168,6 +168,8 @@ class mFirebaseList extends mFirebaseSuper {
 
       firebase.database().ref().update(updates).then(e => {
         let url = values['url'];
+        if (url === undefined)
+          url = '';
         if (url.indexOf(key) !== -1) {
           let shortPath = url.replace(gAPPP.storagePrefix, '');
           shortPath = decodeURIComponent(shortPath);
