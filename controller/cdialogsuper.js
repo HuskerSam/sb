@@ -95,7 +95,7 @@ class cDialogSuper {
       let sceneReloadRequired = this.fireFields.paint(this.contextObject);
     }
     if (this.sceneTools)
-      this.sceneTools.fireFields.paint(this.contextObject);
+      this.sceneTools.fireFields.paint(null);
     this._endLoad();
     this._showFocus();
   }

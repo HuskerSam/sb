@@ -72,7 +72,10 @@ class cContext {
 
     let filename = file.name;
 
-    if (objectType !== 'mesh')
+    if (objectType === 'scene')
+      return fireSet.createWithBlob(objectData, file, filename);
+
+    if (objectType === 'texture')
       return fireSet.createWithBlob(objectData, file, filename);
 
     return new Promise((resolve, reject) => {
@@ -231,7 +234,7 @@ class cContext {
 
   }
   _addSphere(name, faces, diameter) {
-    let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, this.scene);
+    let s = BABYLON.Mesh.CreateSphere(name, faces, diameter, this.scene, false);
     s.position.y = diameter / 2.0;
     return s;
   }
@@ -261,7 +264,7 @@ class cContext {
   }
   _loadSceneMaterial(materialData) {
     return new Promise((resolve, reject) => {
-      let s = this._addSphere('sphere1', 15, 5, this.scene, false);
+      let s = this._addSphere('sphere1', 15, 5);
       let material = new BABYLON.StandardMaterial('material', this.scene);
       s.material = material;
       resolve({
