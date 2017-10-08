@@ -84,9 +84,6 @@ class cDialogSuper {
   _finishShow(contextObject) {
     this.contextObject = contextObject;
 
-    if (this.initScene)
-      this.context.activate();
-
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];
       let sceneReloadRequired = this.fireFields.paint(this.contextObject);

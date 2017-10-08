@@ -10,6 +10,9 @@ class cContext {
     this.canvas = canvas;
     this.engine = null;
 
+    this.importedMeshes = [];
+    this.importedMeshClones = [];
+
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
         preserveDrawingBuffer: true
@@ -33,14 +36,13 @@ class cContext {
     if (gAPPP.activeContext)
       gAPPP.activeContext.engine.stopRenderLoop();
 
-    //  if (gAPPP.activeContext !== this) {
-    gAPPP.activeContext = this;
-    this.engine = new BABYLON.Engine(this.canvas, false, {
-      preserveDrawingBuffer: true
-    });
-    this.engine.enableOfflineSupport = false;
-    //}
-
+  //  if (gAPPP.activeContext !== this) {
+      gAPPP.activeContext = this;
+      this.engine = new BABYLON.Engine(this.canvas, false, {
+        preserveDrawingBuffer: true
+      });
+      this.engine.enableOfflineSupport = false;
+//    }
 
     if (scene === null)
       this.scene = new BABYLON.Scene(this.engine);
@@ -74,7 +76,7 @@ class cContext {
     return new Promise((resolve, reject) => {
       if (objectType === 'mesh') {
         this.activate(null);
-        this._sceneLoadMesh("", URL.createObjectURL(file)).then(
+        this._loadMeshFromFile("", URL.createObjectURL(file)).then(
           mesh => {
             let sceneJSON = this._serializeScene();
             fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
@@ -143,14 +145,14 @@ class cContext {
       this.activate(null);
       if (objectType === 'mesh') {
         let fileURI = URL.createObjectURL(file);
-         this._sceneLoadMesh("", fileURI).then(
-            mesh => {
-              let filename = file.name;
-              let fireSet = gAPPP.a.modelSets[objectType];
-              let sceneJSON = this._serializeScene();
-              fireSet.updateBlobString(key, sceneJSON, filename).then(
-                r => resolve(r));
-            });
+        this._loadMeshFromFile("", fileURI).then(
+          mesh => {
+            let filename = file.name;
+            let fireSet = gAPPP.a.modelSets[objectType];
+            let sceneJSON = this._serializeScene();
+            fireSet.updateBlobString(key, sceneJSON, filename).then(
+              r => resolve(r));
+          });
       }
       resolve({});
     });
@@ -195,11 +197,16 @@ class cContext {
       let path = gAPPP.storagePrefix;
       let filename = this._url(objectData['url']);
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.scene,
-        (newMeshes, particleSystems, skeletons) => resolve({
-          type: 'mesh',
-          mesh: newMeshes[0],
-          context: this
-        }),
+        (newMeshes, particleSystems, skeletons) => {
+          let newMesh = newMeshes[0].clone('wildnewname');
+          newMeshes[0].isVisible = false;
+          this.activeContextObject = newMesh;
+          resolve({
+            type: 'mesh',
+            mesh: newMesh,
+            context: this
+          });
+        },
         progress => {},
         err => {
           console.log('failed to load mesh');
@@ -320,12 +327,13 @@ class cContext {
 
     this.updateSceneObjects();
   }
-  _sceneLoadMesh(path, URI) {
-    let scene = this.scene;
+  _loadMeshFromFile(path, URI) {
     return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ImportMesh('', path, URI, scene,
+      BABYLON.SceneLoader.ImportMesh('', path, URI, this.scene,
         (newMeshes, particleSystems, skeletons) => {
-          return resolve(newMeshes[0]);
+          let newMesh = newMeshes[0].clone('wildnewname');
+          newMeshes[0].isVisible = false;
+          return resolve(newMesh);
         }, progress => {},
         err => resolve(null));
     });
