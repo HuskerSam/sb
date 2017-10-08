@@ -52,7 +52,8 @@ class cDialogSuper {
       this.sceneTools.fireFields.active = false;
     if (this.fireFields.renderImageUpdateNeeded) {
       this.fireFields.renderImageUpdateNeeded = false;
-      this.context.renderPreview(this.tag, this.key);
+      if (this.context)
+        this.context.renderPreview(this.tag, this.key);
     }
     $(this.dialog).modal('hide');
     gAPPP.mV.context.activate();
@@ -85,6 +86,10 @@ class cDialogSuper {
   _finishShow(contextObject) {
     this.contextObject = contextObject;
 
+    if (this.context) {
+      if (this.contextObject)
+        this.context.activeContextObject = contextObject.sceneObject;
+    }
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];
       let sceneReloadRequired = this.fireFields.paint(this.contextObject);

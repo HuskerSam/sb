@@ -119,7 +119,9 @@ class cDataView {
       f.dom.style.display = 'none';
 
       if (f.fileDom.files.length > 0){
-        this.parent.context.updateObjectURL('mesh', this.parent.key, f.fileDom.files[0]).then(snapshot => {
+        this.parent.context.updateObjectURL('mesh', this.parent.key, f.fileDom.files[0]).then(results => {
+
+
           f.fileDom.value = '';
           f.progressBar.style.display = 'none';
           f.dom.style.display = '';
@@ -148,7 +150,7 @@ class cDataView {
     }
 
     if (this.contextObject)
-      this.contextObject.context.updateSelectedObject(this.contextObject, this.valueCache);
+      this.contextObject.context.setSceneObject(this.contextObject.type, this.contextObject.sceneObject, this.valueCache);
     this._commitUpdates(this.valueCache);
   }
   _commitUpdates(newValues) {
@@ -212,7 +214,7 @@ class cDataView {
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
     if (contextObject)
-      contextObject.context.updateSelectedObject(this.contextObject, valueCache);
+      contextObject.context.setSceneObject(this.contextObject.type, this.contextObject.sceneObject, valueCache);
     this.loadedURL = this.valueCache['url'];
     return contextReloadRequired;
   }
@@ -228,14 +230,16 @@ class cDataView {
     if (contextReloadRequired) {
       if (this.parent.tag === 'mesh' && this.contextObject) {
         let context = me.parent.context;
-        let oldMesh = this.contextObject.mesh;
+        let oldMesh = context.activeContextObject;
         if (oldMesh)
           oldMesh.dispose();
-        this.contextObject.mesh = null;
+        context.activeContextObject = null;
 
         context.loadMesh(gAPPP.storagePrefix,
           context._url(this.values['url']), context.scene).then(r => {
-          me.contextObject.mesh = r;
+          context.activeContextObject = r;
+          this.contextObject.sceneObject = r;
+          this.paint(this.contextObject);
         });
       }
     }

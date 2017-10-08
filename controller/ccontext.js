@@ -166,7 +166,7 @@ class cContext {
         contextObject.context.light.direction = sUtility.getVector(value, 0, 1, 0);
       }
       if (field.fireSetField === 'cameraVector') {
-        contextObject.context.camera.position = sUtility.getVector(value, 0, 10, -10);
+        contextObject.context.camera.position = sUtility.getVector(value, 3, 15, -25);
       }
       if (field.fireSetField === 'showFloorGrid') {
         contextObject.context._showGrid(!value);
@@ -180,11 +180,19 @@ class cContext {
   updateObjectURL(objectType, key, file) {
     return new Promise((resolve, reject) => {
       if (objectType === 'mesh') {
+        this.activate(null);
         this._loadMeshFromDomFile(file).then(
           meshes => {
+            let newMesh = meshes[0];
+            this.engine.stopRenderLoop();
+            this._sceneDisposeDefaultObjects();
+
             let filename = file.name;
             let fireSet = gAPPP.a.modelSets[objectType];
             let sceneJSON = this._serializeScene();
+            this._sceneAddDefaultObjects();
+            this.activate();
+            this.activeContextObject = newMesh;
             fireSet.updateBlobString(key, sceneJSON, filename).then(
               r => resolve(r));
           });
@@ -192,23 +200,21 @@ class cContext {
         resolve({});
     });
   }
-  updateSelectedObject(contextObject, valueCache) {
+  setSceneObject(objectType, sceneObject, valueCache) {
     if (this !== gAPPP.activeContext)
       return;
 
-    if (contextObject.type === 'texture') {
-      contextObject.material.diffuseTexture = this._texture(valueCache);
-      return;
-    }
-    if (contextObject.type === 'material') {
-      contextObject.mesh.material = this._material(valueCache);
-      return;
-    }
-    if (contextObject.type === 'mesh')
-      return this._setMesh(valueCache, contextObject.mesh);
-    if (contextObject.type === 'sceneTools') {
-      return this.setSceneToolsDetails(contextObject, valueCache);
-    }
+    if (objectType === 'texture')
+      sceneObject.material.diffuseTexture = this._texture(valueCache);
+
+    if (objectType === 'material')
+      sceneObject.material = this._material(valueCache);
+
+    if (objectType === 'mesh')
+      this._setMesh(valueCache, sceneObject);
+
+    if (objectType === 'sceneTools')
+      this.setSceneToolsDetails(valueCache);
   }
   updateSceneObjects() {
     this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
@@ -491,7 +497,7 @@ class cContext {
 
       if (field.type === 'material') {
         let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
-        if (tD === undefined) {
+        if (!tD) {
           let m = new BABYLON.StandardMaterial('material');
           object.material = m;
           return;
