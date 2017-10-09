@@ -12,7 +12,7 @@ class gApplication {
 
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
     this.mV = new gMainView();
-    
+
     window.addEventListener("resize", () => this.resize());
 
     this.toolbarItems['scene'] = new cToolband('scene', 'Scenes');
@@ -50,6 +50,18 @@ class gApplication {
     if (this.activeContext)
       this.activeContext.engine.resize();
   }
+  _parseFontSize(str) {
+    if (str === undefined)
+      str = '';
+    let size = parseFloat(str);
+    if (isNaN(size))
+      size = 9;
+    if (size < 7)
+      size = 7;
+    if (size > 36)
+      size = 36;
+    return size;
+  }
   _collaspseAllBands() {
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(false);
@@ -60,7 +72,7 @@ class gApplication {
   }
   _increaseFontSize(decrease) {
     let originalFontSize = this.a.profile.fontSize;
-    let size = sUtility.parseFontSize(originalFontSize);
+    let size = this._parseFontSize(originalFontSize);
 
     if (decrease)
       size -= 1;
@@ -77,7 +89,7 @@ class gApplication {
   }
   _updateApplicationStyle() {
     let css = 'html, body { ';
-    let fontSize = sUtility.parseFontSize(this.a.profile.fontSize);
+    let fontSize = this._parseFontSize(this.a.profile.fontSize);
     css += 'font-size:' + fontSize.toString() + 'pt;';
     if (this.a.profile.fontFamily)
       css += 'font-family:' + this.a.profile.fontFamily + ';';

@@ -27,7 +27,6 @@ html, body {
   height: 100%;
   touch-action: none;
   position: absolute;
-  z-index: -1;
 }
 
 #main-page {
@@ -88,16 +87,18 @@ html, body {
 }
 
 .sb-floating-toolbar-item {
-  z-index: 1;
   display: inline-block;
   clear:both;
-  pointer-events: auto;
+  position: relative;
+  pointer-events: none;
 }
 #sb-floating-toolbar-expanded {
   pointer-events: none;
   padding-top:2px;
+  position: relative;
 }
 .sb-floating-toolbar-content {
+  pointer-events: auto;
   white-space: nowrap;
   overflow: auto;
   display: none;
@@ -316,7 +317,7 @@ html, body {
   position: absolute;
   z-index: 100;
   right: 1px;
-  top: 1px;
+  bottom: 2px;
   margin-right: -5px;
 }
 .floating-right-profile-buttons button {
@@ -351,16 +352,22 @@ button i.material-icons {
   top: 3px;
   font-size: 1.1em;
 }
-
+.band-menu-button .dropdown-menu {
+  font-size: inherit;
+}
 .scene-tools-band-container {
   position: absolute;
   top: 3px;
   left: 3px;
 }
+.create-dialog .scene-tools-band-container {
+  display: none;
+}
 #main-page .scene-tools-band-container {
   bottom: 2px;
   left: 1px;
   top: initial;
+  pointer-events: auto;
 }
 .band-background-preview {
   width: 5em;

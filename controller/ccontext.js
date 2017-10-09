@@ -60,6 +60,7 @@ class cContext {
       this.gridObject = null;
     }
 
+    this.scene.clearColor = sUtility.color(gAPPP.a.profile.canvasColor);
     this.camera.attachControl(this.canvas, false);
     this.sceneTools.activate();
     this.scene.executeWhenReady(() => {

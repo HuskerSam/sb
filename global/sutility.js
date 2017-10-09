@@ -44,18 +44,6 @@ class sUtility {
     });
     return blob;
   }
-  static parseFontSize(str) {
-    if (str === undefined)
-      str = '';
-    let size = parseFloat(str);
-    if (isNaN(size))
-      size = 9;
-    if (size < 5)
-      size = 5;
-    if (size > 30)
-      size = 30;
-    return size;
-  }
   static getNumberOrDefault(str, d) {
     function isNumeric(v) {
       return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
