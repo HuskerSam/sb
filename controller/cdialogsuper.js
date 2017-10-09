@@ -81,7 +81,7 @@ class cDialogSuper {
 
     if (this.context)
       if (this.contextObject)
-        this.context.setActiveObject(contextObject.sceneObject);
+        this.context.setContextActiveObject(contextObject);
 
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];

@@ -6,7 +6,7 @@ class cContext {
     this.light = null;
     this.camera = null;
     this._scene = null;
-    this.activeSceneObject = null;
+    this.activeContextObject = null;
     this.canvas = canvas;
     this.engine = null;
     this.sceneTools = new cSceneToolsBand(this);
@@ -217,7 +217,7 @@ class cContext {
             let sceneJSON = this._serializeScene();
             this._sceneAddDefaultObjects();
             this.activate();
-            this.activeSceneObject = newMesh;
+            this.activeContextObject = newMesh;
             fireSet.updateBlobString(key, sceneJSON, filename).then(
               r => resolve(r));
           });
@@ -225,18 +225,18 @@ class cContext {
         resolve({});
     });
   }
-  setSceneObject(selectedSceneObject, objectType, valueCache) {
+  setSceneObject(contextObject, valueCache) {
     if (this !== gAPPP.activeContext)
       return;
-
+    let objectType = contextObject.type;
     if (objectType === 'texture')
-      selectedSceneObject.material.diffuseTexture = this._texture(valueCache);
+      contextObject.sceneObject.material.diffuseTexture = this._texture(valueCache);
 
     if (objectType === 'material')
-      selectedSceneObject.material = this._material(valueCache);
+      contextObject.sceneObject.material = this._material(valueCache);
 
     if (objectType === 'mesh')
-      this._setMesh(selectedSceneObject, valueCache);
+      this._setMesh(contextObject.sceneObject, valueCache);
 
     if (objectType === 'sceneTools')
       this.setSceneToolsDetails(valueCache);
@@ -254,8 +254,8 @@ class cContext {
     let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
     this.camera.position = cameraVector;
   }
-  setActiveObject(sceneObject) {
-    this._clearActiveObject();
+  setContextActiveObject(sceneObject) {
+    this._clearActiveContextObject();
 
     this.sceneTools.activate();
   }
@@ -269,9 +269,9 @@ class cContext {
     s.position.y = diameter / 2.0;
     return s;
   }
-  _clearActiveObject() {
-    if (this.activeSceneObject) {
-      this.activeSceneObject = null;
+  _clearActiveContextObject() {
+    if (this.activeContextObject) {
+      this.activeContextObject = null;
       //remove boxes, outlines, etc
       this.sceneTools.deactivate();
     }

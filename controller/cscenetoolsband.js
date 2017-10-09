@@ -28,11 +28,14 @@ class cSceneToolsBand {
       this.fireFields._handleDataChange(values, type, fireData));
   }
   activate() {
-    this.fireFields.paint({
+    let contextObject = {
       type: 'sceneTools',
-      sceneObject: this.context.activeSceneObject,
+      sceneObject: null,
       context: this.context
-    });
+    };
+    if (this.context.activeContextObject)
+      contextObject.sceneObject = this.context.activeContextObject.sceneObject;
+    this.fireFields.paint(contextObject);
   }
   deactivate() {
     this.fireFields.active = false;

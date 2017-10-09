@@ -85,7 +85,7 @@ class cDataView {
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
     if (contextObject)
-      contextObject.context.setSceneObject(this.contextObject.sceneObject, this.contextObject.type, valueCache);
+      contextObject.context.setSceneObject(this.contextObject, valueCache);
     this.loadedURL = this.valueCache['url'];
     return contextReloadRequired;
   }
@@ -107,7 +107,7 @@ class cDataView {
     }
 
     if (this.contextObject)
-      this.contextObject.context.setSceneObject(this.contextObject.sceneObject, this.contextObject.type, this.valueCache);
+      this.contextObject.context.setSceneObject(this.contextObject, this.valueCache);
     this._commitUpdates(this.valueCache);
   }
   uploadURL(f) {
@@ -182,17 +182,17 @@ class cDataView {
     if (contextReloadRequired) {
       if (this.parent.tag === 'mesh' && this.contextObject) {
         let context = this.parent.context;
-        let oldMesh = context.activeSceneObject;
+        let oldMesh = context.activeContextObject;
         if (oldMesh)
           oldMesh.dispose();
-        context.activeSceneObject = null;
+        context.activeContextObject = null;
 
-        context.loadMesh(gAPPP.storagePrefix,
-          context._url(this.values['url']), context.scene).then(r => {
-          context.activeSceneObject = r;
-          this.contextObject.sceneObject = r;
-          this.paint(this.contextObject);
-        });
+        context.loadMesh(gAPPP.storagePrefix, context._url(this.values['url']), context.scene).then(
+          meshSceneObject => {
+            this.contextObject.sceneObject = meshSceneObject;
+            context.activeContextObject = this.contextObject;
+            this.paint(this.contextObject);
+          });
       }
     }
   }
