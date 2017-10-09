@@ -17,8 +17,7 @@ class cDialogSuper {
 
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     if (this.fields) {
-      let domClassPrefix = this.tag + '-fields-';
-      this.fireFields = new cDataView(this.fields, domClassPrefix, this.fieldsContainer, this);
+      this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
       this.fireSet.childListeners.push((values, type, fireData) => me.fireFields._handleDataChange(values, type, fireData));
     }
 
@@ -39,17 +38,14 @@ class cDialogSuper {
     $(this.dialog).on('shown.bs.modal', () => me._showFocus());
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
-    if (this.canvas) {
+    if (this.canvas)
       this.context = new cContext(this.canvas);
-      this.sceneTools = new cSceneToolsBand(this.tag, this.context);
-    }
+
     this.rotateState = 'vertical';
   }
   close() {
     if (this.fireFields)
       this.fireFields.active = false;
-    if (this.sceneTools)
-      this.sceneTools.fireFields.active = false;
     if (this.fireFields.renderImageUpdateNeeded) {
       this.fireFields.renderImageUpdateNeeded = false;
       if (this.context)
@@ -86,16 +82,15 @@ class cDialogSuper {
   _finishShow(contextObject) {
     this.contextObject = contextObject;
 
-    if (this.context) {
+    if (this.context)
       if (this.contextObject)
-        this.context.activeContextObject = contextObject.sceneObject;
-    }
+        this.context.setActiveObject(contextObject.sceneObject);
+
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];
       let sceneReloadRequired = this.fireFields.paint(this.contextObject);
     }
-    if (this.sceneTools)
-      this.sceneTools.fireFields.paint(null);
+
     this._endLoad();
     this._showFocus();
   }

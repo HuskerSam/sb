@@ -150,11 +150,13 @@ html, body {
 .form-group label {
   font-size: .7em;
   margin-bottom: 1px;
+  margin-top:2px;
 }
 .form-group input {
-  font-size: inherit;
+  font-size: 1em;
   height:2em;
   padding: 12px 4px;
+  font-weight: normal;
 }
 .checkboxgroup input {
   width: 2em;
@@ -167,13 +169,21 @@ html, body {
   color: blue;
   background: rgba(255,255,255,.5);
 }
+.url-form-group a {
+  padding-left: 5px;
+  padding-right: 5px;
+}
 .url-form-group button {
   float:right;
-  margin-right: 5px;
-  margin-top:2px;
+  font-size: .7em;
+  margin-top: 5px;
   border: solid 1px silver;
   border-radius: 3px;
   background: rgba(255,255,255,.5);
+}
+.url-form-group input {
+  margin-top: 2px;
+  font-size: .5em;
 }
 .checkboxgroup label {
   font-size: .8em;
@@ -346,6 +356,11 @@ button i.material-icons {
   position: absolute;
   top: 3px;
   left: 3px;
+}
+#main-page .scene-tools-band-container {
+  bottom: 2px;
+  left: 1px;
+  top: initial;
 }
 .band-background-preview {
   width: 5em;

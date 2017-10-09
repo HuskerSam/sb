@@ -1,7 +1,6 @@
 class cDataView {
-  constructor(boundFields, prefix, container, parent) {
+  constructor(boundFields, container, parent) {
     this.fields = boundFields;
-    this.prefix = prefix;
     this.values = {};
     this.active = false;
     this.parent = parent;
@@ -19,7 +18,6 @@ class cDataView {
   }
   initField(f, index) {
     let me = this;
-    let n = this.prefix + 'field-' + index;
     let c = document.createElement('div');
     let g = null;
     let t = document.createElement('input');
@@ -33,7 +31,6 @@ class cDataView {
         this.groups[f.group] = g;
       }
     }
-    t.id = n;
     if (f.type === 'boolean') {
       t.setAttribute('type', 'checkbox');
       l.innerText = f.title;
@@ -41,12 +38,10 @@ class cDataView {
       c.appendChild(l);
       c.classList.add('checkboxgroup');
     } else {
-      l.setAttribute('for', t.id);
       l.innerText = f.title;
-
+      l.appendChild(t);
       t.classList.add('form-control');
       c.appendChild(l);
-      c.appendChild(t);
     }
 
     c.classList.add('form-group');
@@ -88,9 +83,10 @@ class cDataView {
       l.appendChild(a);
 
       let b = document.createElement('button');
-      b.innerHTML = '<i class="material-icons">cloud_upload</i>';
+      b.innerHTML = '<i class="material-icons">cloud_upload</i> Upload';
       c.classList.add('url-form-group');
       c.insertBefore(b, c.childNodes[0]);
+      c.appendChild(field.dom);
       b.addEventListener('click', e => field.fileDom.click(), false);
 
       let file = document.createElement('input');
@@ -135,7 +131,6 @@ class cDataView {
     if (!this.active)
       return;
     this.scrapeCache = [];
-    this.valueCache = {};
     for (let i in this.fields) {
       let f = this.fields[i];
       let nV = f.dom.value.trim();
@@ -150,7 +145,7 @@ class cDataView {
     }
 
     if (this.contextObject)
-      this.contextObject.context.setSceneObject(this.contextObject.type, this.contextObject.sceneObject, this.valueCache);
+      this.contextObject.context.setSceneObject(this.contextObject.sceneObject, this.contextObject.type, this.valueCache);
     this._commitUpdates(this.valueCache);
   }
   _commitUpdates(newValues) {
@@ -214,7 +209,7 @@ class cDataView {
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
     if (contextObject)
-      contextObject.context.setSceneObject(this.contextObject.type, this.contextObject.sceneObject, valueCache);
+      contextObject.context.setSceneObject(this.contextObject.sceneObject, this.contextObject.type, valueCache);
     this.loadedURL = this.valueCache['url'];
     return contextReloadRequired;
   }
@@ -230,14 +225,14 @@ class cDataView {
     if (contextReloadRequired) {
       if (this.parent.tag === 'mesh' && this.contextObject) {
         let context = me.parent.context;
-        let oldMesh = context.activeContextObject;
+        let oldMesh = context.activeSceneObject;
         if (oldMesh)
           oldMesh.dispose();
-        context.activeContextObject = null;
+        context.activeSceneObject = null;
 
         context.loadMesh(gAPPP.storagePrefix,
           context._url(this.values['url']), context.scene).then(r => {
-          context.activeContextObject = r;
+          context.activeSceneObject = r;
           this.contextObject.sceneObject = r;
           this.paint(this.contextObject);
         });

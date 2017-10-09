@@ -1,9 +1,7 @@
 class cSceneToolsBand {
-  constructor(classPrefix, context) {
-    let me = this;
+  constructor(context) {
     this.context = context;
     this.expanded = false;
-    this.classPrefix = classPrefix;
 
     this.container = document.createElement('div');
     this.container.setAttribute('class', 'scene-tools-band-container sb-floating-toolbar-item');
@@ -12,7 +10,7 @@ class cSceneToolsBand {
     this.collapseButton = document.createElement('button');
     this.collapseButton.innerHTML = '<i class="material-icons">menu</i>';
     this.collapseButton.setAttribute('class', 'btn btn-primary-outline');
-    this.collapseButton.addEventListener('click', e => me.toggle(), false);
+    this.collapseButton.addEventListener('click', e => this.toggle(), false);
     this.container.appendChild(this.collapseButton);
 
     this.innerContainer = document.createElement('div');
@@ -23,12 +21,11 @@ class cSceneToolsBand {
     this.fieldsContainer = document.createElement('div');
     this.fieldsContainer.setAttribute('class', 'fields-container');
     this.innerContainer.appendChild(this.fieldsContainer);
-    this.classPrefix = classPrefix;
-    let domClassPrefix = this.classPrefix + '-scene-tools-band-fields-';
+
     this.fireSet = gAPPP.a.modelSets['userProfile'];
-    this.fireFields = new cDataView(this.fields, domClassPrefix, this.fieldsContainer, this);
+    this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
     this.fireSet.childListeners.push((values, type, fireData) =>
-      me.fireFields._handleDataChange(values, type, fireData));
+      this.fireFields._handleDataChange(values, type, fireData));
   }
   _addButton(btn) {
     this.buttonContainer.appendChild(btn);
@@ -57,15 +54,24 @@ class cSceneToolsBand {
     }
   }
   addShowSceneFloorGrid() {
-    let me = this;
     this.gridShown = false;
     this.showSceneFloorGridBtn = document.createElement('button');
     this.showSceneFloorGridBtn.setAttribute('class', 'btn btn-primary-outline');
     this.showSceneFloorGridBtn.addEventListener('click', () => {
-      me.gridShown = !me.gridShown;
-      me._showGrid();
+      this.gridShown = !this.gridShown;
+      this._showGrid();
     }, false);
     this.showSceneFloorGridBtn.innerHTML = 'Grid';
     this._addButton(this.showSceneFloorGridBtn);
+  }
+  activate() {
+    this.fireFields.paint({
+      type: 'sceneTools',
+      sceneObject: this.context.activeSceneObject,
+      context: this.context
+    });
+  }
+  deactivate() {
+    this.fireFields.active = false;
   }
 }

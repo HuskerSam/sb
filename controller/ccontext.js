@@ -6,9 +6,10 @@ class cContext {
     this.light = null;
     this.camera = null;
     this._scene = null;
-    this.activeContextObject = null;
+    this.activeSceneObject = null;
     this.canvas = canvas;
     this.engine = null;
+    this.sceneTools = new cSceneToolsBand(this);
 
     this.importedMeshes = [];
     this.importedMeshClones = [];
@@ -34,7 +35,7 @@ class cContext {
   }
   activate(scene) {
     if (gAPPP.activeContext)
-      gAPPP.activeContext.engine.stopRenderLoop();
+      gAPPP.activeContext._deactivate();
 
     if (gAPPP.activeContext !== this) {
       gAPPP.activeContext = this;
@@ -56,11 +57,16 @@ class cContext {
     }
 
     this.camera.attachControl(this.canvas, false);
-
+    this.sceneTools.activate();
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => this.scene.render());
     });
     this.engine.resize();
+  }
+  _deactivate() {
+    this.sceneTools.deactivate();
+    if (gAPPP.activeContext)
+      gAPPP.activeContext.engine.stopRenderLoop();
   }
   createObject(objectType, title, file) {
     let objectData = sStatic.getDefaultDataCloned(objectType);
@@ -151,26 +157,26 @@ class cContext {
         }], key));
     });
   }
-  setSceneToolsDetails(contextObject, valueCache) {
+  setSceneToolsDetails(valueCache) {
     let fields = sStatic.bindingFields['sceneToolsBar'];
     for (let i in fields) {
       let field = fields[i];
       let value = valueCache[field.fireSetField];
 
       if (field.fireSetField === 'lightIntensity') {
-        contextObject.context.light.intensity = Number(value);
+        this.light.intensity = Number(value);
       }
       if (field.fireSetField === 'lightVector') {
-        contextObject.context.light.direction = sUtility.getVector(value, 0, 1, 0);
+        this.light.direction = sUtility.getVector(value, 0, 1, 0);
       }
       if (field.fireSetField === 'cameraVector') {
-        contextObject.context.camera.position = sUtility.getVector(value, 3, 15, -25);
+        this.camera.position = sUtility.getVector(value, 3, 15, -25);
       }
       if (field.fireSetField === 'showFloorGrid') {
-        contextObject.context._showGrid(!value);
+        this._showGrid(!value);
       }
       if (field.fireSetField === 'showSceneGuides') {
-        contextObject.context._showGuides(!value);
+        this._showGuides(!value);
       }
       // field.fireSetField === 'gridAndGuidesDepth'
     }
@@ -190,7 +196,7 @@ class cContext {
             let sceneJSON = this._serializeScene();
             this._sceneAddDefaultObjects();
             this.activate();
-            this.activeContextObject = newMesh;
+            this.activeSceneObject = newMesh;
             fireSet.updateBlobString(key, sceneJSON, filename).then(
               r => resolve(r));
           });
@@ -198,18 +204,18 @@ class cContext {
         resolve({});
     });
   }
-  setSceneObject(objectType, sceneObject, valueCache) {
+  setSceneObject(selectedSceneObject, objectType, valueCache) {
     if (this !== gAPPP.activeContext)
       return;
 
     if (objectType === 'texture')
-      sceneObject.material.diffuseTexture = this._texture(valueCache);
+      selectedSceneObject.material.diffuseTexture = this._texture(valueCache);
 
     if (objectType === 'material')
-      sceneObject.material = this._material(valueCache);
+      selectedSceneObject.material = this._material(valueCache);
 
     if (objectType === 'mesh')
-      this._setMesh(valueCache, sceneObject);
+      this._setMesh(selectedSceneObject, valueCache);
 
     if (objectType === 'sceneTools')
       this.setSceneToolsDetails(valueCache);
@@ -226,6 +232,18 @@ class cContext {
         this.light.intensity = li;
     let cameraVector = sUtility.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
     this.camera.position = cameraVector;
+  }
+  setActiveObject(sceneObject) {
+    this._clearActiveObject();
+
+    this.sceneTools.activate();
+  }
+  _clearActiveObject() {
+    if (this.activeSceneObject) {
+      this.activeSceneObject = null;
+      //remove boxes, outlines, etc
+      this.sceneTools.deactivate();
+    }
   }
 
   _addOriginalAndClone(originalMesh) {
@@ -390,8 +408,8 @@ class cContext {
   _serializeScene() {
     return JSON.stringify(BABYLON.SceneSerializer.Serialize(this.scene));
   }
-  _setMesh(values, mesh) {
-    if (!mesh)
+  _setMesh(meshSceneObject, values) {
+    if (!meshSceneObject)
       return;
     let fields = sStatic.bindingFields['mesh'];
     for (let i in fields) {
@@ -401,7 +419,7 @@ class cContext {
       if (field.fireSetField === 'name')
         continue;
       if (field.contextObjectField)
-        this._updateObjectValue(field, value, mesh);
+        this._updateObjectValue(field, value, meshSceneObject);
     }
   }
   _showAxis(size) {
