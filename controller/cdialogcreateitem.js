@@ -22,7 +22,8 @@ class cDialogCreateItem {
       this.image.style.display = 'none';
 
     this.fileDom = this.dialog.querySelector('input[type="file"]');
-    if (hideFileDom)
+    this.hideFileDom = hideFileDom;
+    if (this.hideFileDom)
       this.fileDom.style.display = 'none';
     else
       this.fileDom.addEventListener('change', e => this.fileDomChange(e), false);
@@ -36,8 +37,9 @@ class cDialogCreateItem {
     $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
     $(this.dialog).on('shown.bs.modal', () => this._shown());
 
-    this.cancelBtn.addEventListener('click', () => this.close(), false);
-    this.createBtn.addEventListener('click', (e) => this.create(), false);
+    this.cancelBtn.addEventListener('click', e => this.close(), false);
+    this.createBtn.addEventListener('click', e => this.create(), false);
+    this.titleDom.addEventListener('keypress', e => this._titleKeyPress(e), false);
   }
   _shown() {
     this._showFocus();
@@ -49,6 +51,11 @@ class cDialogCreateItem {
       this.fileDom.focus();
 
     gAPPP.resize();
+  }
+  _titleKeyPress(e) {
+    if (this.hideFileDom)
+      if (e.code === 'Enter')
+        this.create();
   }
   close() {
     $(this.dialog).modal('hide');

@@ -214,6 +214,19 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'url'
 }];
 
+__localStaticStorageForBindingFields['shape'] = [{
+  title: 'Title',
+  fireSetField: 'title',
+  contextObjectField: null,
+  group: 'main'
+}, {
+  title: 'Shape Type',
+  fireSetField: 'shapeType',
+  contextObjectField: null,
+  type: 'shapeType',
+  group: 'main'
+}];
+
 __localStaticStorageForBindingFields['scene'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -317,55 +330,60 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }];
 
 __defaultData['mesh'] = {
-    title: 'Mesh',
-    name: '',
-    materialName: '',
-    url: '',
-    type: 'url',
-    size: 0,
-    simpleUIDetails: {
-      scaleX: 1.0,
-      scaleY: 1.0,
-      scaleZ: 1.0,
-      positionX: 0.0,
-      positionY: 0.0,
-      positionZ: 0.0,
-      rotateX: 0.0,
-      rotateY: 0.0,
-      rotateZ: 0.0
-    }
+  title: 'Mesh',
+  name: '',
+  materialName: '',
+  url: '',
+  type: 'url',
+  size: 0,
+  simpleUIDetails: {
+    scaleX: 1.0,
+    scaleY: 1.0,
+    scaleZ: 1.0,
+    positionX: 0.0,
+    positionY: 0.0,
+    positionZ: 0.0,
+    rotateX: 0.0,
+    rotateY: 0.0,
+    rotateZ: 0.0
+  }
 };
 __defaultData['scene'] = {
-    title: 'Scene',
-    url: '',
-    type: 'url',
-    size: 0,
-    simpleUIDetails: {}
-  };
+  title: 'Scene',
+  url: '',
+  type: 'url',
+  size: 0,
+  simpleUIDetails: {}
+};
+__defaultData['shape'] = {
+  title: 'Shape',
+  shapeType: 'sphere',
+  simpleUIDetails: {}
+};
 __defaultData['texture'] = {
-    title: 'Texture',
-    url: '',
-    vOffset: 0.0,
-    uOffset: 0.0,
-    vScale: 1.0,
-    uScale: 1.0,
-    hasAlpha: false
-  };
+  title: 'Texture',
+  url: '',
+  vOffset: 0.0,
+  uOffset: 0.0,
+  vScale: 1.0,
+  uScale: 1.0,
+  hasAlpha: false
+};
 __defaultData['material'] = {
-    title: 'Material',
-    name: '',
-    alpha: 1.0,
-    diffuseColor: '',
-    diffuseTextureName: '',
-    emissiveColor: '',
-    emissiveTextureName: '',
-    ambientColor: '',
-    ambientTextureName: '',
-    specularColor: '',
-    specularTextureName: '',
-    specularPower: 64.0,
-    useSpecularOverAlpha: false,
-    useGlossinessFromSpecularMapAlpha: false,
-    backFaceCulling: true,
-    wireframe: false
-  };
+  title: 'Material',
+  name: '',
+  alpha: 1.0,
+  diffuseColor: '',
+  diffuseTextureName: '',
+  emissiveColor: '',
+  emissiveTextureName: '',
+  ambientColor: '',
+  ambientTextureName: '',
+  specularColor: '',
+  specularTextureName: '',
+  specularPower: 64.0,
+  useSpecularOverAlpha: false,
+  useGlossinessFromSpecularMapAlpha: false,
+  backFaceCulling: true,
+  wireframe: false
+};
