@@ -120,15 +120,14 @@ class cContext {
       gAPPP.activeContext.engine.stopRenderLoop();
   }
   loadScene(sceneType, values) {
+    if (sceneType === 'shape')
+      return this._loadSceneShape(values);
     if (sceneType === 'mesh')
       return this._loadSceneMesh(values);
-
     if (sceneType === 'scene')
       return this.loadSceneURL(values['url']);
-
     if (sceneType === 'material')
       return this._loadSceneMaterial(values);
-
     if (sceneType === 'texture')
       return this._loadSceneTexture(values);
 
@@ -236,7 +235,10 @@ class cContext {
       contextObject.sceneObject.material = this._material(valueCache);
 
     if (objectType === 'mesh')
-      this._setMesh(contextObject.sceneObject, valueCache);
+      this._setMesh(contextObject, valueCache);
+
+    if (objectType === 'shape')
+      this._setShape(contextObject, valueCache);
 
     if (objectType === 'sceneTools')
       this.setSceneToolsDetails(valueCache);
@@ -254,9 +256,9 @@ class cContext {
     let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
     this.camera.position = cameraVector;
   }
-  setContextActiveObject(sceneObject) {
+  setContextActiveObject(contextObject) {
     this._clearActiveContextObject();
-
+    this._activeContextObject = contextObject;
     this.sceneTools.activate();
   }
   _addOriginalAndClone(originalMesh) {
@@ -321,6 +323,44 @@ class cContext {
         context: this
       });
     });
+  }
+  _loadSceneShape(objectData) {
+    return new Promise((resolve, reject) => {
+      let contextObject = {
+        type: 'shape',
+        context: this
+      };
+
+      let contextSceneObject = this._createSceneObject(objectData);
+      contextObject.sceneObject = contextSceneObject;
+      resolve(contextObject);
+    });
+  }
+  _createSceneObject(objectData) {
+    let sType = objectData['shapeType'];
+    let name = 'singleSceneObject';
+    let sceneObject = null;
+
+    if (sType === 'sphere') {
+      sceneObject = BABYLON.MeshBuilder.CreateSphere(name, {
+        diameter: objectData['sphereDiameter'],
+        segments: objectData['sphereSegments']
+      });
+    }
+    if (sType === 'box') {
+      sceneObject = BABYLON.MeshBuilder.CreateBox(name, {
+        width: objectData['boxWidth'],
+        height: objectData['boxHeight'],
+        depth: objectData['boxDepth']
+      });
+    }
+
+    if (!sceneObject) { // 'cube'
+      sceneObject = BABYLON.MeshBuilder.CreateBox(name, {
+        size: objectData['cubeSize']
+      });
+    }
+    return sceneObject;
   }
   _loadSceneTexture(textureData) {
     return new Promise((resolve, reject) => {
@@ -389,19 +429,42 @@ class cContext {
   _serializeScene() {
     return JSON.stringify(BABYLON.SceneSerializer.Serialize(this.scene));
   }
-  _setMesh(meshSceneObject, values) {
-    if (!meshSceneObject)
+  _setMesh(contextObject, values) {
+    if (!contextObject.sceneObject)
       return;
     let fields = sDataDefinition.bindingFields('mesh');
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
 
-      if (field.fireSetField === 'name')
-        continue;
       if (field.contextObjectField)
-        this._updateObjectValue(field, value, meshSceneObject);
+        this._updateObjectValue(field, value, contextObject.sceneObject);
     }
+  }
+  _setShape(contextObject, values) {
+    if (contextObject.sceneObject){
+      contextObject.sceneObject.dispose();
+      contextObject.sceneObject = null;
+    }
+
+    let newShape = this._createSceneObject(values);
+    if (!newShape) {
+      contextObject.sceneObject = null;
+      return;
+    }
+    contextObject.sceneObject = newShape;
+
+    let fields = sDataDefinition.bindingFields('shape');
+    for (let i in fields) {
+      let field = fields[i];
+      let value = values[field.fireSetField];
+
+      if (field.contextObjectField)
+        this._updateObjectValue(field, value, contextObject.sceneObject);
+    }
+
+
+    //return contextObject;
   }
   _showAxis(size) {
     let sObjects = [];

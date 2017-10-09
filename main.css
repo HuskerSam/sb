@@ -126,7 +126,9 @@ html, body {
   pointer-events: auto;
   white-space: nowrap;
 }
-
+.scene-tools-band-container button {
+  pointer-events: auto;
+}
 .popup-canvas-body {
   flex: 1;
   width: 100%;

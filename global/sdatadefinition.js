@@ -397,6 +397,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   fireSetField: 'shapeType',
   contextObjectField: null,
   type: 'shapeType',
+  displayType: 'displayFilter',
   group: 'main'
 }, {
   title: 'Material Name',
@@ -409,6 +410,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   contextObjectField: null,
   displayGroup: 'box',
   displayKey: 'shapeType',
+  displayType: 'number',
   group: 'dimensions'
 }, {
   title: 'Height',
@@ -416,6 +418,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   contextObjectField: null,
   displayGroup: 'box',
   displayKey: 'shapeType',
+  displayType: 'number',
   group: 'dimensions'
 }, {
   title: 'Depth',
@@ -423,6 +426,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   contextObjectField: null,
   displayGroup: 'box',
   displayKey: 'shapeType',
+  displayType: 'number',
   group: 'dimensions'
 }, {
   title: 'Diameter',
@@ -430,6 +434,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   contextObjectField: null,
   displayGroup: 'sphere',
   displayKey: 'shapeType',
+  displayType: 'number',
   group: 'dimensions'
 }, {
   title: 'Segments',
@@ -437,6 +442,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   contextObjectField: null,
   displayGroup: 'sphere',
   displayKey: 'shapeType',
+  displayType: 'number',
   group: 'dimensions'
 }, {
   title: 'Size',
@@ -444,6 +450,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   contextObjectField: null,
   displayGroup: 'cube',
   displayKey: 'shapeType',
+  displayType: 'number',
   group: 'dimensions'
 }];
 __defaultData['shape'] = {

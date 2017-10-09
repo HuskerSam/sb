@@ -87,6 +87,8 @@ class cDataView {
     if (contextObject)
       contextObject.context.setSceneObject(this.contextObject, valueCache);
     this.loadedURL = this.valueCache['url'];
+
+    this._updateDisplayFilters();
     return contextReloadRequired;
   }
   scrape(e) {
@@ -294,19 +296,12 @@ class cDataView {
       }
     }
 
-    if (f.displayGroup) {
-      let group = null;
-      if (f.displayKey)
-        group = this.valueCache[f.displayKey];
-
-      if (f.displayGroup === group)
-        f.domContainer.style.display = '';
-      else
-        f.domContainer.style.display = 'none';
-    }
-
     if (f.displayType === 'number') {
       f.domContainer.classList.add('cdataview-number-display');
+    }
+
+    if (f.displayType === 'displayFilter') {
+      this._updateDisplayFilters();
     }
 
     if (updateShown) {
@@ -327,5 +322,22 @@ class cDataView {
       value: v,
       contextReloadRequired
     };
+  }
+  _updateDisplayFilters() {
+    for (let inner in this.fields) {
+      let innerField = this.fields[inner];
+      if (innerField.displayGroup) {
+        let group = null;
+        if (innerField.displayKey)
+          group = this.valueCache[innerField.displayKey];
+        else
+          continue;
+
+        if (innerField.displayGroup === group)
+          innerField.domContainer.style.display = 'inline-block';
+        else
+          innerField.domContainer.style.display = 'none';
+      }
+    }
   }
 }
