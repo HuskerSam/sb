@@ -41,25 +41,45 @@ class cDialogCreateItem {
     this.createBtn.addEventListener('click', e => this.create(), false);
     this.titleDom.addEventListener('keypress', e => this._titleKeyPress(e), false);
   }
-  _shown() {
-    this._showFocus();
-  }
-  _showFocus() {
-    if (this.hideFileDom)
-      this.titleDom.focus();
-    else
-      this.fileDom.focus();
-
-    gAPPP.resize();
-  }
-  _titleKeyPress(e) {
-    if (this.hideFileDom)
-      if (e.code === 'Enter')
-        this.create();
+  clear() {
+    this.titleDom.value = '';
+    this.fileDom.value = '';
   }
   close() {
     $(this.dialog).modal('hide');
     gAPPP.mV.context.activate();
+  }
+  create() {
+    if (this.titleDom.value.trim() === '') {
+      alert('please supply a title');
+      return;
+    }
+    this.popupButtons.style.display = 'none';
+    this.progressBar.style.display = 'block';
+    let title = this.titleDom.value.trim();
+    let file = null;
+    if (this.fileDom.files.length > 0)
+      file = this.fileDom.files[0];
+
+    if (this.tag !== 'scene')
+      this.context.activate(null);
+    this.context.createObject(this.tag, title, file).then(results => {
+      if (this.tag !== 'texture')
+        this.context.renderPreview(this.tag, results.key);
+      else {
+        gAPPP.a.modelSets['texture'].commitUpdateList([{
+          field: 'renderImageURL',
+          newValue: results.url
+        }], results.key);
+      }
+      this.clear();
+      this.popupButtons.style.display = 'block';
+      this.progressBar.style.display = 'none';
+      this.close();
+    });
+  }
+  fileDomChange(e) {
+    this.updateFilePreview();
   }
   show() {
     this.popupButtons.style.display = 'block';
@@ -68,13 +88,6 @@ class cDialogCreateItem {
     this.context.activate(null);
 
     $(this.dialog).modal('show');
-  }
-  clear() {
-    this.titleDom.value = '';
-    this.fileDom.value = '';
-  }
-  fileDomChange(e) {
-    this.updateFilePreview();
   }
   updateFilePreview() {
     if (this.tag === 'mesh' || this.tag === 'scene') {
@@ -109,33 +122,20 @@ class cDialogCreateItem {
       }
     }
   }
-  create() {
-    if (this.titleDom.value.trim() === '') {
-      alert('please supply a title');
-      return;
-    }
-    this.popupButtons.style.display = 'none';
-    this.progressBar.style.display = 'block';
-    let title = this.titleDom.value.trim();
-    let file = null;
-    if (this.fileDom.files.length > 0)
-      file = this.fileDom.files[0];
+  _showFocus() {
+    if (this.hideFileDom)
+      this.titleDom.focus();
+    else
+      this.fileDom.focus();
 
-    if (this.tag !== 'scene')
-      this.context.activate(null);
-    this.context.createObject(this.tag, title, file).then(results => {
-      if (this.tag !== 'texture')
-        this.context.renderPreview(this.tag, results.key);
-      else {
-        gAPPP.a.modelSets['texture'].commitUpdateList([{
-          field: 'renderImageURL',
-          newValue: results.url
-        }], results.key);
-      }
-      this.clear();
-      this.popupButtons.style.display = 'block';
-      this.progressBar.style.display = 'none';
-      this.close();
-    });
+    gAPPP.resize();
+  }
+  _shown() {
+    this._showFocus();
+  }
+  _titleKeyPress(e) {
+    if (this.hideFileDom)
+      if (e.code === 'Enter')
+        this.create();
   }
 }

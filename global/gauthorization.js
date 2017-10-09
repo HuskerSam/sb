@@ -25,37 +25,6 @@ class gAuthorization {
 
     firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
   }
-  get profile() {
-    let model = this.modelSets['userProfile'];
-    if (model.active)
-      if (model.profile)
-        return model.profile;
-      else
-        this.resetProfile();
-    return {};
-  }
-  signIn() {
-    let me = this;
-    this.provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(this.provider);
-    firebase.auth().onAuthStateChanged((user) => me.onAuthStateChanged(user));
-  }
-  signOut() {
-    firebase.auth().signOut();
-    location.reload(); // just dump the dom and restart
-  }
-  updateAuthUI() {
-    let loginPage = document.getElementById('login-page');
-    let mainPage = document.getElementById('main-page');
-
-    if (this.loggedIn) {
-      loginPage.style.display = 'none';
-      mainPage.style.display = 'block';
-    } else {
-      loginPage.style.display = 'block';
-      mainPage.style.display = 'none';
-    }
-  }
   onAuthStateChanged(user) {
     //ignore unwanted events
     if (user && this.uid === user.uid) {
@@ -84,6 +53,36 @@ class gAuthorization {
     }
 
     this.updateAuthUI();
+  }
+  get profile() {
+    let model = this.modelSets['userProfile'];
+    if (model.active)
+      if (model.profile)
+        return model.profile;
+      else
+        this.resetProfile();
+    return {};
+  }
+  signIn() {
+    this.provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(this.provider);
+    firebase.auth().onAuthStateChanged((user) => this.onAuthStateChanged(user));
+  }
+  signOut() {
+    firebase.auth().signOut();
+    location.reload(); // just dump the dom and restart
+  }
+  updateAuthUI() {
+    let loginPage = document.getElementById('login-page');
+    let mainPage = document.getElementById('main-page');
+
+    if (this.loggedIn) {
+      loginPage.style.display = 'none';
+      mainPage.style.display = 'block';
+    } else {
+      loginPage.style.display = 'block';
+      mainPage.style.display = 'none';
+    }
   }
   resetProfile() {
     this.modelSets['userProfile'].setObject({

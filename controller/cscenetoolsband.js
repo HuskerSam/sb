@@ -17,7 +17,7 @@ class cSceneToolsBand {
     this.innerContainer.setAttribute('class', 'sb-floating-toolbar-content');
     this.container.appendChild(this.innerContainer);
 
-    this.fields = sStatic.bindingFieldsCloned('sceneToolsBar');
+    this.fields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
     this.fieldsContainer = document.createElement('div');
     this.fieldsContainer.setAttribute('class', 'fields-container');
     this.innerContainer.appendChild(this.fieldsContainer);
@@ -27,9 +27,15 @@ class cSceneToolsBand {
     this.fireSet.childListeners.push((values, type, fireData) =>
       this.fireFields._handleDataChange(values, type, fireData));
   }
-  _addButton(btn) {
-    this.buttonContainer.appendChild(btn);
-    this.buttonContainer.appendChild(document.createElement('br'));
+  activate() {
+    this.fireFields.paint({
+      type: 'sceneTools',
+      sceneObject: this.context.activeSceneObject,
+      context: this.context
+    });
+  }
+  deactivate() {
+    this.fireFields.active = false;
   }
   toggle() {
     if (this.expanded) {
@@ -46,32 +52,15 @@ class cSceneToolsBand {
       this.container.style.width = '100%';
     }
   }
+  _addButton(btn) {
+    this.buttonContainer.appendChild(btn);
+    this.buttonContainer.appendChild(document.createElement('br'));
+  }
   _showGrid() {
     if (this.gridShown) {
       this.showSceneFloorGridBtn.style.background = 'rgba(0,0,0,.2)';
     } else {
       this.showSceneFloorGridBtn.style.background = '';
     }
-  }
-  addShowSceneFloorGrid() {
-    this.gridShown = false;
-    this.showSceneFloorGridBtn = document.createElement('button');
-    this.showSceneFloorGridBtn.setAttribute('class', 'btn btn-primary-outline');
-    this.showSceneFloorGridBtn.addEventListener('click', () => {
-      this.gridShown = !this.gridShown;
-      this._showGrid();
-    }, false);
-    this.showSceneFloorGridBtn.innerHTML = 'Grid';
-    this._addButton(this.showSceneFloorGridBtn);
-  }
-  activate() {
-    this.fireFields.paint({
-      type: 'sceneTools',
-      sceneObject: this.context.activeSceneObject,
-      context: this.context
-    });
-  }
-  deactivate() {
-    this.fireFields.active = false;
   }
 }

@@ -9,7 +9,10 @@ class gApplication {
     this.styleProfileDom = null;
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
-
+    this.shapeTypes = [
+      'box', 'cylinder', 'disc', 'icosphere', 'line', 'sphere', 'text'
+    ];
+    this._initShapesList();
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
     this.mV = new gMainView();
 
@@ -42,28 +45,15 @@ class gApplication {
     document.querySelector('#global-toolbar-decrease-fontsize').addEventListener('click', e => this._increaseFontSize(true), false);
     document.querySelector('#global-toolbar-increase-fontsize').addEventListener('click', e => this._increaseFontSize(), false);
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile(), false);
-
   }
   handleDataUpdate() {
-    this.activeContext.scene.clearColor = sUtility.color(this.a.profile.canvasColor);
+    this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
     this.mV._updateSelectedScene();
   }
   resize() {
     if (this.activeContext)
       this.activeContext.engine.resize();
-  }
-  _parseFontSize(str) {
-    if (str === undefined)
-      str = '';
-    let size = parseFloat(str);
-    if (isNaN(size))
-      size = 9;
-    if (size < 7)
-      size = 7;
-    if (size > 36)
-      size = 36;
-    return size;
   }
   _collaspseAllBands() {
     for (let i in this.toolbarItems)
@@ -89,6 +79,29 @@ class gApplication {
       oldValue: originalFontSize
     }
     gAPPP.a.modelSets['userProfile'].commitUpdateList([fontUpdate]);
+  }
+  _initShapesList() {
+    this._domShapeList = document.createElement('datalist');
+    this._domShapeList.id = 'applicationdynamicshapelistlookuplist';
+
+    let innerHTML = '';
+    for (let i in this.shapeTypes)
+        innerHTML += '<option>' + this.shapeTypes[i] + '</option>';
+    this._domShapeList.innerHTML = innerHTML;
+
+    document.body.appendChild(this._domShapeList);
+  }
+  _parseFontSize(str) {
+    if (str === undefined)
+      str = '';
+    let size = parseFloat(str);
+    if (isNaN(size))
+      size = 9;
+    if (size < 7)
+      size = 7;
+    if (size > 36)
+      size = 36;
+    return size;
   }
   _updateApplicationStyle() {
     let css = 'html, body { ';

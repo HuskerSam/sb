@@ -1,4 +1,4 @@
-class sStatic {
+class sDataDefinition {
   static get bindingFields() {
     return __localStaticStorageForBindingFields;
   }
@@ -79,7 +79,6 @@ __localStaticStorageForBindingFields['mesh'] = [{
   uploadType: 'mesh',
   group: 'url'
 }];
-
 __localStaticStorageForBindingFields['material'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -173,7 +172,6 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: 'backfaceCulling',
   type: 'boolean'
 }];
-
 __localStaticStorageForBindingFields['texture'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -213,7 +211,6 @@ __localStaticStorageForBindingFields['texture'] = [{
   uploadType: 'texture',
   group: 'url'
 }];
-
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -226,7 +223,6 @@ __localStaticStorageForBindingFields['shape'] = [{
   type: 'shapeType',
   group: 'main'
 }];
-
 __localStaticStorageForBindingFields['scene'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -239,7 +235,6 @@ __localStaticStorageForBindingFields['scene'] = [{
   type: 'url',
   group: 'options'
 }];
-
 __localStaticStorageForBindingFields['userProfile'] = [{
   title: 'Font Family',
   fireSetField: 'fontFamily',
@@ -295,7 +290,6 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   type: 'boolean',
   group: 'inputFocusLock'
 }];
-
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   title: 'Canvas Color',
   fireSetField: 'canvasColor',

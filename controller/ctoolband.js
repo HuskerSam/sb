@@ -1,6 +1,5 @@
 class cToolband {
   constructor(tag, title) {
-    let me = this;
     this.tag = tag;
     this.title = title;
     this.bindingsList = [{
@@ -27,10 +26,76 @@ class cToolband {
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
     this.expandBtn = this.wrapper.querySelector('.sb-floating-toolbar-expand-btn')
 
-    this.expandBtn.addEventListener('click', (e) => me.toggle(), false);
-    this.createBtn.addEventListener('click', (e) => me.showPopup(), false);
+    this.expandBtn.addEventListener('click', e => this.toggle(), false);
+    this.createBtn.addEventListener('click', e => this.showPopup(), false);
 
-    gAPPP.a.modelSets[this.tag].childListeners.push((values, type, fireData) => me.handleDataChange(fireData, type));
+    gAPPP.a.modelSets[this.tag].childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
+  }
+  childAdded(fireData) {
+    this.childrenContainer.insertBefore(this.createDOM(fireData), this.childrenContainer.firstChild);
+  }
+  childChanged(fireData) {
+    let div = document.querySelector('.' + this.tag + '-' + fireData.key);
+    let values = fireData.val();
+    this.nodeApplyValues(values, div);
+  }
+  childRemoved(fireData) {
+    let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);
+    if (post)
+      this.childrenContainer.removeChild(post);
+  }
+  cloneElement(e, key) {
+    gAPPP.a.modelSets[this.tag].cloneByKey(key).then(key => {});
+  }
+  createDOM(fireData) {
+    let values = fireData.val();
+    let key = fireData.key;
+    let html = `<div class="firebase-item ${this.tag}-${key} band-background-preview">`;
+
+    html += '<div class="dropdown band-menu-button">';
+    html += '<button class="btn-toolbar-icon" type="button" data-toggle="dropdown">';
+    html += '<i class="material-icons">menu</i></button>';
+    html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
+    html += '</ul>';
+    html += '</div>';
+    html += `<br><button class="band-title"></button>`;
+    html += `</div>`
+
+    let outer = document.createElement('div');
+    outer.innerHTML = html.trim();
+    let newNode = outer.childNodes[0];
+
+    let ul = newNode.querySelector('ul');
+
+    if (this.tag === 'scene') {
+      this.__addMenuItem(ul, '<b>Select</b>', e => this.selectScene(e, key));
+    }
+
+    this.__addMenuItem(ul, 'Edit', e => this.showEditPopup(e, key));
+    this.__addMenuItem(ul, 'Clone', e => this.cloneElement(e, key));
+
+    if (this.tag === 'texture') {
+      this.__addMenuItem(ul, 'To Material', e => this.textureToMaterial(e, key), true);
+      this.__addMenuItem(ul, 'To Shape', e => this.textureToShape(e, key), true);
+    }
+    if (this.tag === 'material') {
+      this.__addMenuItem(ul, 'To Shape', e => this.materialToShape(e, key), true);
+      this.__addMenuItem(ul, 'To Mesh', e => this.materialToShape(e, key));
+    }
+    if (this.tag === 'mesh') {
+      this.__addMenuItem(ul, 'To Scene', e => this.materialToShape(e, key), true);
+    }
+
+    this.__addMenuItem(ul, 'Remove', e => this.removeElement(e, key), true);
+
+    this.nodeApplyValues(values, newNode);
+
+    newNode.querySelector('.band-title').addEventListener('click', e => this.defaultAction(e, key), false);
+    return newNode;
+  }
+  defaultAction(e, key) {
+    if (this.tag === 'scene')
+      this.selectScene(e, key);
   }
   handleDataChange(fireData, type) {
     if (type === 'add')
@@ -40,37 +105,8 @@ class cToolband {
     if (type === 'remove')
       return this.childRemoved(fireData);
   }
-  toggle(forceValue) {
-    if (forceValue === undefined)
-      forceValue = (this.bar.style.display !== 'inline-block');
-
-    let expand = !forceValue;
-    if (forceValue) {
-      this.bar.style.display = 'inline-block';
-      this.createBtn.style.display = 'inline-block';
-      this.bar.parentNode.style.display = 'flex';
-      this.expandBtn.querySelector('i').innerHTML = 'expand_more';
-      this.containerExpanded.insertBefore(this.bar.parentNode, null);
-      this.wrapper.style.display = 'left';
-    } else {
-      this.bar.style.display = 'none';
-      this.createBtn.style.display = 'none';
-      this.bar.parentNode.style.display = 'inline-block';
-      this.expandBtn.querySelector('i').innerHTML = 'expand_less';
-      this.containerCollapsed.insertBefore(this.bar.parentNode, null);
-      this.wrapper.style.float = '';
-    }
-  }
-  showPopup() {
-    gAPPP.dialogs[this.tag + '-create'].show();
-  }
-  childAdded(fireData) {
-    this.childrenContainer.insertBefore(this.createDOM(fireData), this.childrenContainer.firstChild);
-  }
-  childChanged(fireData) {
-    let div = document.querySelector('.' + this.tag + '-' + fireData.key);
-    let values = fireData.val();
-    this.nodeApplyValues(values, div);
+  materialToShape(e, key) {
+    alert('soon');
   }
   nodeApplyValues(values, outer) {
     for (let i in this.bindingsList) {
@@ -97,65 +133,10 @@ class cToolband {
       }
     }
   }
-  showEditPopup(e, key) {
-    if (gAPPP.dialogs[this.tag + '-edit'])
-      return gAPPP.dialogs[this.tag + '-edit'].show(key);
-  }
-  childRemoved(fireData) {
-    let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);
-    if (post)
-      this.childrenContainer.removeChild(post);
-  }
-  createDOM(fireData) {
-    let me = this;
-    let values = fireData.val();
-    let key = fireData.key;
-    let html = `<div class="firebase-item ${this.tag}-${key} band-background-preview">`;
-
-    html += '<div class="dropdown band-menu-button">';
-    html += '<button class="btn-toolbar-icon" type="button" data-toggle="dropdown">';
-    html += '<i class="material-icons">menu</i></button>';
-    html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
-    html += '</ul>';
-    html += '</div>';
-    html += `<br><button class="band-title"></button>`;
-    html += `</div>`
-
-    let outer = document.createElement('div');
-    outer.innerHTML = html.trim();
-    let newNode = outer.childNodes[0];
-
-    let ul = newNode.querySelector('ul');
-
-    if (this.tag === 'scene') {
-      this.__addMenuItem(ul, '<b>Select</b>', e => me.selectScene(e, key));
-    }
-
-    this.__addMenuItem(ul, 'Edit', e => me.showEditPopup(e, key));
-    this.__addMenuItem(ul, 'Clone', e => me.cloneElement(e, key));
-
-    if (this.tag === 'texture') {
-      this.__addMenuItem(ul, 'To Material', e => me.textureToMaterial(e, key), true);
-      this.__addMenuItem(ul, 'To Shape', e => me.textureToShape(e, key), true);
-    }
-    if (this.tag === 'material') {
-      this.__addMenuItem(ul, 'To Shape', e => me.materialToShape(e, key), true);
-      this.__addMenuItem(ul, 'To Mesh', e => me.materialToShape(e, key));
-    }
-    if (this.tag === 'mesh') {
-      this.__addMenuItem(ul, 'To Scene', e => me.materialToShape(e, key), true);
-    }
-
-    this.__addMenuItem(ul, 'Remove', e => me.removeElement(e, key), true);
-
-    this.nodeApplyValues(values, newNode);
-
-    newNode.querySelector('.band-title').addEventListener('click', e => me.defaultAction(e, key), false);
-    return newNode;
-  }
-  defaultAction(e, key) {
-    if (this.tag === 'scene')
-      this.selectScene(e, key);
+  removeElement(e, key) {
+    if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
+      return;
+    gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
   selectScene(e, key) {
     let updates = [{
@@ -165,11 +146,36 @@ class cToolband {
     }];
     gAPPP.a.modelSets['userProfile'].commitUpdateList(updates);
   }
+  showEditPopup(e, key) {
+    if (gAPPP.dialogs[this.tag + '-edit'])
+      return gAPPP.dialogs[this.tag + '-edit'].show(key);
+  }
+  showPopup() {
+    gAPPP.dialogs[this.tag + '-create'].show();
+  }
   textureToMaterial(e, key) {
     alert('soon');
   }
-  materialToShape(e, key) {
-    alert('soon');
+  toggle(forceValue) {
+    if (forceValue === undefined)
+      forceValue = (this.bar.style.display !== 'inline-block');
+
+    let expand = !forceValue;
+    if (forceValue) {
+      this.bar.style.display = 'inline-block';
+      this.createBtn.style.display = 'inline-block';
+      this.bar.parentNode.style.display = 'flex';
+      this.expandBtn.querySelector('i').innerHTML = 'expand_more';
+      this.containerExpanded.insertBefore(this.bar.parentNode, null);
+      this.wrapper.style.display = 'left';
+    } else {
+      this.bar.style.display = 'none';
+      this.createBtn.style.display = 'none';
+      this.bar.parentNode.style.display = 'inline-block';
+      this.expandBtn.querySelector('i').innerHTML = 'expand_less';
+      this.containerCollapsed.insertBefore(this.bar.parentNode, null);
+      this.wrapper.style.float = '';
+    }
   }
   __addMenuItem(ul, title, clickHandler, prependDivider) {
     let html = '<a role="menuitem" tabindex="-1">' + title + '</a>';
@@ -184,13 +190,5 @@ class cToolband {
     }
     ul.appendChild(li);
     li.querySelector('a').addEventListener('click', e => clickHandler(e), false);
-  }
-  cloneElement(e, key) {
-    gAPPP.a.modelSets[this.tag].cloneByKey(key).then(key => {});
-  }
-  removeElement(e, key) {
-    if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
-      return;
-    gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
 }

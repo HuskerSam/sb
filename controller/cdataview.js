@@ -17,7 +17,6 @@ class cDataView {
       this.initField(this.fields[i], i.toString());
   }
   initField(f, index) {
-    let me = this;
     let c = document.createElement('div');
     let g = null;
     let t = document.createElement('input');
@@ -45,9 +44,9 @@ class cDataView {
     }
 
     c.classList.add('form-group');
-    t.addEventListener('click', (e) => me.scrape(e), false);
-    t.addEventListener('input', (e) => me.scrape(e), false);
-    t.addEventListener('blur', (e) => me._blurField(t, f, e), false);
+    t.addEventListener('click', e => this.scrape(e), false);
+    t.addEventListener('input', e => this.scrape(e), false);
+    t.addEventListener('blur', e => this._blurField(t, f, e), false);
     f.domContainer = c;
     f.domLabel = l;
     if (g)
@@ -60,129 +59,6 @@ class cDataView {
     }
     f.dom = t;
     this._specialDomFeatures(f);
-  }
-  _specialDomFeatures(field) {
-    let me = this;
-    let element = field.dom;
-    if (field.type === 'texture') {
-      element.setAttribute('list', 'texturedatatitlelookuplist');
-    }
-    if (field.type === 'material') {
-      element.setAttribute('list', 'materialdatatitlelookuplist');
-    }
-    if (field.type === 'url') {
-      let l = field.domLabel;
-      let c = field.domContainer;
-      c.classList.add('url-type-input-group');
-      let a = document.createElement('a');
-      a.innerText = field.title;
-      a.setAttribute('href', '');
-      a.setAttribute('target', '_blank');
-      l.innerHTML = '';
-      field.urlAnchor = a;
-      l.appendChild(a);
-
-      let b = document.createElement('button');
-      b.innerHTML = '<i class="material-icons">cloud_upload</i> Upload';
-      c.classList.add('url-form-group');
-      c.insertBefore(b, c.childNodes[0]);
-      c.appendChild(field.dom);
-      b.addEventListener('click', e => field.fileDom.click(), false);
-
-      let file = document.createElement('input');
-      file.setAttribute('type', 'file');
-      file.style.display = 'none';
-      c.insertBefore(file, b);
-      file.addEventListener('change', e => me.uploadURL(field), false);
-      field.fileDom = file;
-
-      let p_bar = document.createElement('div');
-      p_bar.setAttribute('class', "progress progress-striped active");
-      p_bar.innerHTML = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;"></div>';
-      p_bar.style.display = 'none';
-      c.appendChild(p_bar);
-      field.progressBar = p_bar;
-    }
-  }
-  uploadURL(f) {
-    let me = this;
-    if (f.fileDom.files.length === 0)
-      return;
-
-    if (f.uploadType === 'mesh') {
-      let fS = gAPPP.a.modelSets['mesh'];
-      f.progressBar.style.display = '';
-      f.dom.style.display = 'none';
-
-      if (f.fileDom.files.length > 0){
-        this.parent.context.updateObjectURL('mesh', this.parent.key, f.fileDom.files[0]).then(results => {
-
-
-          f.fileDom.value = '';
-          f.progressBar.style.display = 'none';
-          f.dom.style.display = '';
-        });
-      }
-    } else if (f.uploadType === 'texture') {
-
-    }
-  }
-  scrape(e) {
-    if (!this.active)
-      return;
-    this.scrapeCache = [];
-    for (let i in this.fields) {
-      let f = this.fields[i];
-      let nV = f.dom.value.trim();
-      if (f.type === 'boolean')
-        nV = f.dom.checked;
-      let v = nV;
-      this.scrapeCache.push(v);
-      this.valueCache[f.fireSetField] = v;
-
-      if (f.type === 'color')
-        sUtility.setColorLabel(f.dom);
-    }
-
-    if (this.contextObject)
-      this.contextObject.context.setSceneObject(this.contextObject.sceneObject, this.contextObject.type, this.valueCache);
-    this._commitUpdates(this.valueCache);
-  }
-  _commitUpdates(newValues) {
-    if (!this.parent.fireSet)
-      return;
-
-    let updates = this._generateUpdateList(newValues);
-    if (updates.length > 0) {
-      this.parent.fireSet.commitUpdateList(updates, this.parent.key);
-
-      for (let i in this.fields) {
-        let f = this.fields[i];
-        if (f.fireSetField)
-          sUtility.path(this.values, f.fireSetField, newValues[f.fireSetField]);
-      }
-
-      this.renderImageUpdateNeeded = true;
-    }
-  }
-  _generateUpdateList(newValues) {
-    let updates = [];
-    for (let i in this.fields) {
-      let f = this.fields[i];
-      let v = newValues[f.fireSetField];
-      let o = sUtility.path(this.values, f.fireSetField);
-      if (o === undefined)
-        o = '';
-      o = o.toString();
-      if (v !== o) {
-        updates.push({
-          field: f.fireSetField,
-          newValue: v,
-          oldValue: o
-        });
-      }
-    }
-    return updates;
   }
   paint(contextObject) {
     this.contextObject = contextObject;
@@ -213,8 +89,89 @@ class cDataView {
     this.loadedURL = this.valueCache['url'];
     return contextReloadRequired;
   }
+  scrape(e) {
+    if (!this.active)
+      return;
+    this.scrapeCache = [];
+    for (let i in this.fields) {
+      let f = this.fields[i];
+      let nV = f.dom.value.trim();
+      if (f.type === 'boolean')
+        nV = f.dom.checked;
+      let v = nV;
+      this.scrapeCache.push(v);
+      this.valueCache[f.fireSetField] = v;
+
+      if (f.type === 'color')
+        GLOBALUTIL.setColorLabel(f.dom);
+    }
+
+    if (this.contextObject)
+      this.contextObject.context.setSceneObject(this.contextObject.sceneObject, this.contextObject.type, this.valueCache);
+    this._commitUpdates(this.valueCache);
+  }
+  uploadURL(f) {
+    if (f.fileDom.files.length === 0)
+      return;
+
+    if (f.uploadType === 'mesh') {
+      let fS = gAPPP.a.modelSets['mesh'];
+      f.progressBar.style.display = '';
+      f.dom.style.display = 'none';
+
+      if (f.fileDom.files.length > 0){
+        this.parent.context.updateObjectURL('mesh', this.parent.key, f.fileDom.files[0]).then(results => {
+
+
+          f.fileDom.value = '';
+          f.progressBar.style.display = 'none';
+          f.dom.style.display = '';
+        });
+      }
+    } else if (f.uploadType === 'texture') {
+
+    }
+  }
+  _blurField(domControl, field, e) {
+    this._updateFieldDom(field);
+  }
+  _commitUpdates(newValues) {
+    if (!this.parent.fireSet)
+      return;
+
+    let updates = this._generateUpdateList(newValues);
+    if (updates.length > 0) {
+      this.parent.fireSet.commitUpdateList(updates, this.parent.key);
+
+      for (let i in this.fields) {
+        let f = this.fields[i];
+        if (f.fireSetField)
+          GLOBALUTIL.path(this.values, f.fireSetField, newValues[f.fireSetField]);
+      }
+
+      this.renderImageUpdateNeeded = true;
+    }
+  }
+  _generateUpdateList(newValues) {
+    let updates = [];
+    for (let i in this.fields) {
+      let f = this.fields[i];
+      let v = newValues[f.fireSetField];
+      let o = GLOBALUTIL.path(this.values, f.fireSetField);
+      if (o === undefined)
+        o = '';
+      o = o.toString();
+      if (v !== o) {
+        updates.push({
+          field: f.fireSetField,
+          newValue: v,
+          oldValue: o
+        });
+      }
+    }
+    return updates;
+  }
   _handleDataChange(values, type, fireData) {
-    let me = this;
     if (this.parent.fireSet.keyList) {
       if (this.parent.key !== fireData.key)
         return;
@@ -224,7 +181,7 @@ class cDataView {
     let contextReloadRequired = this.paint(this.contextObject);
     if (contextReloadRequired) {
       if (this.parent.tag === 'mesh' && this.contextObject) {
-        let context = me.parent.context;
+        let context = this.parent.context;
         let oldMesh = context.activeSceneObject;
         if (oldMesh)
           oldMesh.dispose();
@@ -239,11 +196,55 @@ class cDataView {
       }
     }
   }
+  _specialDomFeatures(field) {
+    let element = field.dom;
+    if (field.type === 'texture') {
+      element.setAttribute('list', 'texturedatatitlelookuplist');
+    }
+    if (field.type === 'material') {
+      element.setAttribute('list', 'materialdatatitlelookuplist');
+    }
+    if (field.type === 'shapeType') {
+      element.setAttribute('list', 'applicationdynamicshapelistlookuplist');
+    }
+    if (field.type === 'url') {
+      let l = field.domLabel;
+      let c = field.domContainer;
+      c.classList.add('url-type-input-group');
+      let a = document.createElement('a');
+      a.innerText = field.title;
+      a.setAttribute('href', '');
+      a.setAttribute('target', '_blank');
+      l.innerHTML = '';
+      field.urlAnchor = a;
+      l.appendChild(a);
+
+      let b = document.createElement('button');
+      b.innerHTML = '<i class="material-icons">cloud_upload</i> Upload';
+      c.classList.add('url-form-group');
+      c.insertBefore(b, c.childNodes[0]);
+      c.appendChild(field.dom);
+      b.addEventListener('click', e => field.fileDom.click(), false);
+
+      let file = document.createElement('input');
+      file.setAttribute('type', 'file');
+      file.style.display = 'none';
+      c.insertBefore(file, b);
+      file.addEventListener('change', e => this.uploadURL(field), false);
+      field.fileDom = file;
+
+      let p_bar = document.createElement('div');
+      p_bar.setAttribute('class', "progress progress-striped active");
+      p_bar.innerHTML = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;"></div>';
+      p_bar.style.display = 'none';
+      c.appendChild(p_bar);
+      field.progressBar = p_bar;
+    }
+  }
   _updateFieldDom(f) {
     let updateShown = false;
     let contextReloadRequired = false;
-    let me = this;
-    let v = sUtility.path(this.values, f.fireSetField);
+    let v = GLOBALUTIL.path(this.values, f.fireSetField);
     if (v === undefined)
       v = '';
     let o = this.valueCache[f.fireSetField];
@@ -295,7 +296,7 @@ class cDataView {
 
     if (updateShown) {
       if (f.type === 'color')
-        sUtility.setColorLabel(f.dom);
+        GLOBALUTIL.setColorLabel(f.dom);
 
       if (f.type === 'url') {
         if (this.parent.tag === 'mesh') {
@@ -311,8 +312,5 @@ class cDataView {
       value: v,
       contextReloadRequired
     };
-  }
-  _blurField(domControl, field, e) {
-    this._updateFieldDom(field);
   }
 }

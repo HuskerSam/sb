@@ -1,6 +1,5 @@
 class mFirebaseSuper {
   constructor(referencePath, activate) {
-    let me = this;
     this.referencePath = referencePath;
     this.active = false;
     this.childListeners = [];
@@ -19,15 +18,14 @@ class mFirebaseSuper {
   activate(referencePath) {
     if (this.active)
       return;
-    let me = this;
     if (referencePath)
       this.referencePath = referencePath;
 
     this.active = true;
     this.notiRef = firebase.database().ref(this.referencePath);
-    this.notiRef.on('child_added', e => me.childAdded(e));
-    this.notiRef.on('child_changed', e => me.childChanged(e));
-    this.notiRef.on('child_removed', e => me.childRemoved(e));
+    this.notiRef.on('child_added', e => this.childAdded(e));
+    this.notiRef.on('child_changed', e => this.childChanged(e));
+    this.notiRef.on('child_removed', e => this.childRemoved(e));
   }
   childAdded(fireData) {
     this.updateStash(fireData);

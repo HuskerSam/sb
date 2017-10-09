@@ -1,10 +1,8 @@
 class cDialogSuper {
   constructor(dialogQuerySelector, tag, dialog) {
-    let me = this;
-
     this.tag = tag;
     this.key = null;
-    this.fields = sStatic.bindingFieldsCloned(this.tag);
+    this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.fireSet = gAPPP.a.modelSets[this.tag];
     this.fireFields = null;
     this.uiJSON = 'N/A';
@@ -18,7 +16,7 @@ class cDialogSuper {
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     if (this.fields) {
       this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
-      this.fireSet.childListeners.push((values, type, fireData) => me.fireFields._handleDataChange(values, type, fireData));
+      this.fireSet.childListeners.push((values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData));
     }
 
     this.okBtn = this.dialog.querySelector('.save-details');
@@ -29,13 +27,13 @@ class cDialogSuper {
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
 
     if (this.cancelBtn)
-      this.cancelBtn.addEventListener('click', () => me.close(), false);
+      this.cancelBtn.addEventListener('click', () => this.close(), false);
     if (this.okBtn)
-      this.okBtn.addEventListener('click', () => me.save(), false);
+      this.okBtn.addEventListener('click', () => this.save(), false);
     if (this.rotateBtn)
-      this.rotateBtn.addEventListener('click', () => me._rotateView(), false);
-    $(this.dialog).on('hidden.bs.modal', () => me.close()); //force cleanup if closed via escape
-    $(this.dialog).on('shown.bs.modal', () => me._showFocus());
+      this.rotateBtn.addEventListener('click', () => this._rotateView(), false);
+    $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
+    $(this.dialog).on('shown.bs.modal', () => this._showFocus());
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas)
@@ -58,7 +56,6 @@ class cDialogSuper {
     this.close();
   }
   show() {
-    let me = this;
     this._startLoad();
     $(this.dialog).modal('show');
 
@@ -98,6 +95,14 @@ class cDialogSuper {
     if (element)
       element.style.display = 'none';
   }
+  _rotateView() {
+    if (this.rotateState === 'vertical') {
+      this.rotateState = 'horizontal';
+    } else {
+      this.rotateState = 'vertical';
+    }
+    this._splitView();
+  }
   _showDom(element) {
     if (element)
       element.style.display = 'block';
@@ -109,14 +114,6 @@ class cDialogSuper {
       this.okBtn.focus();
 
     gAPPP.resize();
-  }
-  _rotateView() {
-    if (this.rotateState === 'vertical') {
-      this.rotateState = 'horizontal';
-    } else {
-      this.rotateState = 'vertical';
-    }
-    this._splitView();
   }
   _splitDragEnd() {
     gAPPP.resize();
@@ -139,12 +136,11 @@ class cDialogSuper {
       b.classList.remove('vertical-split-display');
     }
 
-    let me = this;
     this.splitInstance = window.Split([t, b], {
       sizes: [50, 50],
       direction: this.rotateState,
-      onDragEnd: () => me._splitDragEnd(),
-      onDrag: () => me._splitDragEnd()
+      onDragEnd: () => this._splitDragEnd(),
+      onDrag: () => this._splitDragEnd()
     });
     gAPPP.resize();
   }
