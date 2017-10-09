@@ -28,6 +28,10 @@ class cContext {
     if (this._scene)
       this._scene.dispose();
 
+    this.gridObject = null;
+    this.gridShown = false;
+    this.guidesSceneObjects = [];
+    this.guidesShown = false;
     this._scene = newScene;
   }
   get scene() {
@@ -457,7 +461,6 @@ class cContext {
     return sObjects;
   }
   _showGrid(hide) {
-    return;
     if (!hide) {
       if (this.gridShown) {
         this._showGrid(true);
@@ -484,10 +487,9 @@ class cContext {
     }
   }
   _showGuides(hide) {
-    return;
     if (!hide) {
       if (this.guidesShown) {
-        this.showGuides(true);
+        this._showGuides(true);
       }
       let gridDepth = sUtility.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
       this.guidesSceneObjects = this._showAxis(gridDepth, this.scene);
