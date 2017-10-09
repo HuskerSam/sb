@@ -386,7 +386,6 @@ __defaultData['material'] = {
   wireframe: false
 };
 
-
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -405,9 +404,19 @@ __localStaticStorageForBindingFields['shape'] = [{
   contextObjectField: 'material',
   type: 'material'
 }, {
+  title: 'Size',
+  fireSetField: 'boxSize',
+  contextObjectField: null,
+  shapeOption: 'size',
+  displayGroup: 'box',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'main'
+}, {
   title: 'Width',
   fireSetField: 'boxWidth',
   contextObjectField: null,
+  shapeOption: 'width',
   displayGroup: 'box',
   displayKey: 'shapeType',
   displayType: 'number',
@@ -416,6 +425,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   title: 'Height',
   fireSetField: 'boxHeight',
   contextObjectField: null,
+  shapeOption: 'height',
   displayGroup: 'box',
   displayKey: 'shapeType',
   displayType: 'number',
@@ -424,6 +434,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   title: 'Depth',
   fireSetField: 'boxDepth',
   contextObjectField: null,
+  shapeOption: 'depth',
   displayGroup: 'box',
   displayKey: 'shapeType',
   displayType: 'number',
@@ -432,6 +443,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   title: 'Diameter',
   fireSetField: 'sphereDiameter',
   contextObjectField: null,
+  shapeOption: 'diameter',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
   displayType: 'number',
@@ -440,18 +452,83 @@ __localStaticStorageForBindingFields['shape'] = [{
   title: 'Segments',
   fireSetField: 'sphereSegments',
   contextObjectField: null,
+  shapeOption: 'segments',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
   displayType: 'number',
   group: 'dimensions'
 }, {
-  title: 'Size',
-  fireSetField: 'cubeSize',
+  title: 'Diameter X',
+  fireSetField: 'sphereDiameterX',
   contextObjectField: null,
-  displayGroup: 'cube',
+  shapeOption: 'diameterX',
+  displayGroup: 'sphere',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'tweaks'
+}, {
+  title: 'Diameter Y',
+  fireSetField: 'sphereDiameterY',
+  contextObjectField: null,
+  shapeOption: 'diameterX',
+  displayGroup: 'sphere',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'tweaks'
+}, {
+  title: 'Diameter Z',
+  fireSetField: 'sphereDiameterZ',
+  contextObjectField: null,
+  shapeOption: 'diameterZ',
+  displayGroup: 'sphere',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'tweaks'
+}, {
+  title: 'Height',
+  fireSetField: 'cylinderHeight',
+  contextObjectField: null,
+  shapeOption: 'height',
+  displayGroup: 'cylinder',
   displayKey: 'shapeType',
   displayType: 'number',
   group: 'dimensions'
+},{
+  title: 'Diameter',
+  fireSetField: 'cylinderDiameter',
+  contextObjectField: null,
+  shapeOption: 'diameter',
+  displayGroup: 'cylinder',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions'
+}, {
+  title: 'Tessellsation',
+  fireSetField: 'cylinderTessellation',
+  contextObjectField: null,
+  shapeOption: 'tessellation',
+  displayGroup: 'cylinder',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'tweaks'
+}, {
+  title: 'Top',
+  fireSetField: 'cylinderDiameterTop',
+  contextObjectField: null,
+  shapeOption: 'diameterTop',
+  displayGroup: 'cylinder',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'tweaks'
+}, {
+  title: 'Bottom',
+  fireSetField: 'cylinderDiameterBottom',
+  contextObjectField: null,
+  shapeOption: 'diameterBottom',
+  displayGroup: 'cylinder',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'tweaks'
 }];
 __defaultData['shape'] = {
   title: 'Shape',

@@ -47,6 +47,10 @@ class GLOBALUTIL {
     return new BABYLON.Vector3(x, y, z);
   }
   static isNumeric(v) {
+    if (v === undefined)
+      return false;
+    if (v === '')
+      return false;
     return !isNaN(parseFloat(Number(v))) && isFinite(Number(v));
   }
   static path(obj, is, value) {

@@ -278,6 +278,34 @@ class cContext {
       this.sceneTools.deactivate();
     }
   }
+  _createSceneObject(objectData) {
+    let name = 'singleSceneObject';
+    let sceneObject = null;
+
+    let options = {};
+    let fields = sDataDefinition.bindingFields('shape');
+    for (let i in fields) {
+      let field = fields[i];
+      if (field.shapeOption)
+        if (field.displayGroup === objectData['shapeType'])
+        if (GLOBALUTIL.isNumeric(objectData[field.fireSetField]))
+          options[field.shapeOption] = Number(objectData[field.fireSetField]);
+    }
+
+    if (objectData['shapeType'] === 'sphere')
+      sceneObject = BABYLON.MeshBuilder.CreateSphere(name, options, this.scene);
+
+    if (objectData['shapeType'] === 'box')
+      sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.scene);
+
+    if (objectData['shapeType'] === 'cylinder')
+      sceneObject = BABYLON.MeshBuilder.CreateCylinder(name, options, this.scene);
+
+    if (!sceneObject)
+      sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.scene);
+
+    return sceneObject;
+  }
   _loadMeshFromDomFile(file) {
     return new Promise((resolve, reject) => {
       let URI = URL.createObjectURL(file);
@@ -335,32 +363,6 @@ class cContext {
       contextObject.sceneObject = contextSceneObject;
       resolve(contextObject);
     });
-  }
-  _createSceneObject(objectData) {
-    let sType = objectData['shapeType'];
-    let name = 'singleSceneObject';
-    let sceneObject = null;
-
-    if (sType === 'sphere') {
-      sceneObject = BABYLON.MeshBuilder.CreateSphere(name, {
-        diameter: objectData['sphereDiameter'],
-        segments: objectData['sphereSegments']
-      });
-    }
-    if (sType === 'box') {
-      sceneObject = BABYLON.MeshBuilder.CreateBox(name, {
-        width: objectData['boxWidth'],
-        height: objectData['boxHeight'],
-        depth: objectData['boxDepth']
-      });
-    }
-
-    if (!sceneObject) { // 'cube'
-      sceneObject = BABYLON.MeshBuilder.CreateBox(name, {
-        size: objectData['cubeSize']
-      });
-    }
-    return sceneObject;
   }
   _loadSceneTexture(textureData) {
     return new Promise((resolve, reject) => {
@@ -442,7 +444,7 @@ class cContext {
     }
   }
   _setShape(contextObject, values) {
-    if (contextObject.sceneObject){
+    if (contextObject.sceneObject) {
       contextObject.sceneObject.dispose();
       contextObject.sceneObject = null;
     }
@@ -462,9 +464,6 @@ class cContext {
       if (field.contextObjectField)
         this._updateObjectValue(field, value, contextObject.sceneObject);
     }
-
-
-    //return contextObject;
   }
   _showAxis(size) {
     let sObjects = [];
