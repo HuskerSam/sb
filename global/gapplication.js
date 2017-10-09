@@ -10,7 +10,7 @@ class gApplication {
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
     this.shapeTypes = [
-      'box', 'cylinder', 'disc', 'icosphere', 'line', 'sphere', 'text'
+      'box', 'cube', 'cylinder', 'disc', 'ellipsoid', 'line', 'sphere', 'text'
     ];
     this._initShapesList();
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');

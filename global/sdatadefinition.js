@@ -1,9 +1,13 @@
 class sDataDefinition {
-  static get bindingFields() {
-    return __localStaticStorageForBindingFields;
+  static bindingFields(tag) {
+    let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
+    if (tag === 'mesh' || tag === 'shape') {
+      localCopy = localCopy.concat(this.bindingFields('simpleUIDetails'));
+    }
+    return localCopy;
   }
   static bindingFieldsCloned(tag) {
-    return JSON.parse(JSON.stringify(__localStaticStorageForBindingFields[tag]));
+    return JSON.parse(JSON.stringify(this.bindingFields(tag)));
   }
   static get defaultData() {
     return __defaultData;
@@ -26,51 +30,6 @@ __localStaticStorageForBindingFields['mesh'] = [{
   contextObjectField: 'material',
   group: 'title',
   type: 'material'
-}, {
-  title: 'Scale X',
-  fireSetField: 'simpleUIDetails.scaleX',
-  contextObjectField: 'scaling.x',
-  group: 'scale'
-}, {
-  title: 'Scale Y',
-  fireSetField: 'simpleUIDetails.scaleY',
-  contextObjectField: 'scaling.y',
-  group: 'scale'
-}, {
-  title: 'Scale Z',
-  fireSetField: 'simpleUIDetails.scaleZ',
-  contextObjectField: 'scaling.z',
-  group: 'scale'
-}, {
-  title: 'Offset X',
-  fireSetField: 'simpleUIDetails.positionX',
-  contextObjectField: 'position.x',
-  group: 'offset'
-}, {
-  title: 'Offset Y',
-  fireSetField: 'simpleUIDetails.positionY',
-  contextObjectField: 'position.y',
-  group: 'offset'
-}, {
-  title: 'Offset Z',
-  fireSetField: 'simpleUIDetails.positionZ',
-  contextObjectField: 'position.z',
-  group: 'offset'
-}, {
-  title: 'Rotate X',
-  fireSetField: 'simpleUIDetails.rotateX',
-  contextObjectField: 'rotation.x',
-  group: 'rotate'
-}, {
-  title: 'Rotate Y',
-  fireSetField: 'simpleUIDetails.rotateY',
-  contextObjectField: 'rotation.y',
-  group: 'rotate'
-}, {
-  title: 'Rotate Z',
-  fireSetField: 'simpleUIDetails.rotateZ',
-  contextObjectField: 'rotation.z',
-  group: 'rotate'
 }, {
   title: 'Mesh Url',
   fireSetField: 'url',
@@ -187,22 +146,26 @@ __localStaticStorageForBindingFields['texture'] = [{
   title: 'Offset v (0-1)',
   fireSetField: 'vOffset',
   contextObjectField: 'vOffset',
-  group: 'offset'
+  group: 'offset',
+  displayType: 'number'
 }, {
   title: 'Offset u (0-1)',
   fireSetField: 'uOffset',
   contextObjectField: 'uOffset',
-  group: 'offset'
+  group: 'offset',
+  displayType: 'number'
 }, {
   title: 'Scale v (1/x)',
   fireSetField: 'vScale',
   contextObjectField: 'vScale',
-  group: 'scale'
+  group: 'scale',
+  displayType: 'number'
 }, {
   title: 'Scale u (1/x)',
   fireSetField: 'uScale',
   contextObjectField: 'uScale',
-  group: 'scale'
+  group: 'scale',
+  displayType: 'number'
 }, {
   title: 'Url (Image)',
   fireSetField: 'url',
@@ -210,18 +173,6 @@ __localStaticStorageForBindingFields['texture'] = [{
   type: 'url',
   uploadType: 'texture',
   group: 'url'
-}];
-__localStaticStorageForBindingFields['shape'] = [{
-  title: 'Title',
-  fireSetField: 'title',
-  contextObjectField: null,
-  group: 'main'
-}, {
-  title: 'Shape Type',
-  fireSetField: 'shapeType',
-  contextObjectField: null,
-  type: 'shapeType',
-  group: 'main'
 }];
 __localStaticStorageForBindingFields['scene'] = [{
   title: 'Title',
@@ -244,7 +195,8 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   title: 'Font Size (pt)',
   fireSetField: 'fontSize',
   contextObjectField: null,
-  group: 'font'
+  group: 'font',
+  displayType: 'number'
 }, {
   title: 'Canvas Color',
   fireSetField: 'canvasColor',
@@ -260,7 +212,8 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   title: 'Light Intensity',
   fireSetField: 'lightIntensity',
   contextObjectField: null,
-  group: 'light'
+  group: 'light',
+  displayType: 'number'
 }, {
   title: 'Light Vector',
   fireSetField: 'lightVector',
@@ -276,7 +229,8 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   title: 'Grid Depth',
   fireSetField: 'floorGridDepth',
   contextObjectField: null,
-  group: 'extras'
+  group: 'extras',
+  displayType: 'number'
 }, {
   title: 'Show Guides',
   fireSetField: 'showSceneGuides',
@@ -302,7 +256,8 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'Light Intensity',
   fireSetField: 'lightIntensity',
-  contextObjectField: null
+  contextObjectField: null,
+  displayType: 'number'
 }, {
   title: 'Light Vector',
   fireSetField: 'lightVector',
@@ -315,14 +270,69 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'Grid and Guides Depth',
   fireSetField: 'gridAndGuidesDepth',
-  contextObjectField: null
+  contextObjectField: null,
+  displayType: 'number'
 }, {
   title: 'Show Guides',
   fireSetField: 'showSceneGuides',
   contextObjectField: null,
   type: 'boolean'
 }];
-
+__localStaticStorageForBindingFields['simpleUIDetails'] = [{
+  title: 'Scale X',
+  fireSetField: 'simpleUIDetails.scaleX',
+  contextObjectField: 'scaling.x',
+  group: 'scale',
+  displayType: 'number'
+}, {
+  title: 'Scale Y',
+  fireSetField: 'simpleUIDetails.scaleY',
+  contextObjectField: 'scaling.y',
+  group: 'scale',
+  displayType: 'number'
+}, {
+  title: 'Scale Z',
+  fireSetField: 'simpleUIDetails.scaleZ',
+  contextObjectField: 'scaling.z',
+  group: 'scale',
+  displayType: 'number'
+}, {
+  title: 'Offset X',
+  fireSetField: 'simpleUIDetails.positionX',
+  contextObjectField: 'position.x',
+  group: 'offset',
+  displayType: 'number'
+}, {
+  title: 'Offset Y',
+  fireSetField: 'simpleUIDetails.positionY',
+  contextObjectField: 'position.y',
+  group: 'offset',
+  displayType: 'number'
+}, {
+  title: 'Offset Z',
+  fireSetField: 'simpleUIDetails.positionZ',
+  contextObjectField: 'position.z',
+  group: 'offset',
+  displayType: 'number'
+}, {
+  title: 'Rotate X',
+  fireSetField: 'simpleUIDetails.rotateX',
+  contextObjectField: 'rotation.x',
+  group: 'rotate',
+  displayType: 'number'
+}, {
+  title: 'Rotate Y',
+  fireSetField: 'simpleUIDetails.rotateY',
+  contextObjectField: 'rotation.y',
+  group: 'rotate',
+  displayType: 'number'
+}, {
+  title: 'Rotate Z',
+  fireSetField: 'simpleUIDetails.rotateZ',
+  contextObjectField: 'rotation.z',
+  group: 'rotate',
+  displayType: 'number'
+}];
 __defaultData['mesh'] = {
   title: 'Mesh',
   name: '',
@@ -346,13 +356,7 @@ __defaultData['scene'] = {
   title: 'Scene',
   url: '',
   type: 'url',
-  size: 0,
-  simpleUIDetails: {}
-};
-__defaultData['shape'] = {
-  title: 'Shape',
-  shapeType: 'sphere',
-  simpleUIDetails: {}
+  size: 0
 };
 __defaultData['texture'] = {
   title: 'Texture',
@@ -380,4 +384,96 @@ __defaultData['material'] = {
   useGlossinessFromSpecularMapAlpha: false,
   backFaceCulling: true,
   wireframe: false
+};
+
+
+__localStaticStorageForBindingFields['shape'] = [{
+  title: 'Title',
+  fireSetField: 'title',
+  contextObjectField: null,
+  group: 'main'
+}, {
+  title: 'Shape Type',
+  fireSetField: 'shapeType',
+  contextObjectField: null,
+  type: 'shapeType',
+  group: 'main'
+}, {
+  title: 'Material Name',
+  fireSetField: 'materialName',
+  contextObjectField: 'material',
+  type: 'material'
+}, {
+  title: 'Width',
+  fireSetField: 'boxWidth',
+  contextObjectField: null,
+  displayGroup: 'box',
+  displayKey: 'shapeType',
+  group: 'dimensions'
+}, {
+  title: 'Height',
+  fireSetField: 'boxHeight',
+  contextObjectField: null,
+  displayGroup: 'box',
+  displayKey: 'shapeType',
+  group: 'dimensions'
+}, {
+  title: 'Depth',
+  fireSetField: 'boxDepth',
+  contextObjectField: null,
+  displayGroup: 'box',
+  displayKey: 'shapeType',
+  group: 'dimensions'
+}, {
+  title: 'Diameter',
+  fireSetField: 'sphereDiameter',
+  contextObjectField: null,
+  displayGroup: 'sphere',
+  displayKey: 'shapeType',
+  group: 'dimensions'
+}, {
+  title: 'Segments',
+  fireSetField: 'sphereSegments',
+  contextObjectField: null,
+  displayGroup: 'sphere',
+  displayKey: 'shapeType',
+  group: 'dimensions'
+}, {
+  title: 'Size',
+  fireSetField: 'cubeSize',
+  contextObjectField: null,
+  displayGroup: 'cube',
+  displayKey: 'shapeType',
+  group: 'dimensions'
+}];
+__defaultData['shape'] = {
+  title: 'Shape',
+  shapeType: 'box',
+  boxWidth: 10,
+  boxHeight: 10,
+  boxDepth: 10,
+  materialName: '',
+  face0Color: '',
+  face1Color: '',
+  face2Color: '',
+  face3Color: '',
+  face4Color: '',
+  face5Color: '',
+  face0UV: '',
+  face1UV: '',
+  face2UV: '',
+  face3UV: '',
+  face4UV: '',
+  face5UV: '',
+  simpleUIDetails: {
+    scaleX: 1.0,
+    scaleY: 1.0,
+    scaleZ: 1.0,
+    positionX: 0.0,
+    positionY: 0.0,
+    positionZ: 0.0,
+    rotateX: 0.0,
+    rotateY: 0.0,
+    rotateZ: 0.0
+  }
 };

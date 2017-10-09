@@ -179,7 +179,7 @@ class cContext {
     });
   }
   setSceneToolsDetails(valueCache) {
-    let fields = sDataDefinition.bindingFields['sceneToolsBar'];
+    let fields = sDataDefinition.bindingFields('sceneToolsBar');
     for (let i in fields) {
       let field = fields[i];
       let value = valueCache[field.fireSetField];
@@ -349,7 +349,7 @@ class cContext {
   _material(values) {
     let material = new BABYLON.StandardMaterial('material', this.scene);
 
-    let fields = sDataDefinition.bindingFields['material'];
+    let fields = sDataDefinition.bindingFields('material');
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
@@ -392,7 +392,7 @@ class cContext {
   _setMesh(meshSceneObject, values) {
     if (!meshSceneObject)
       return;
-    let fields = sDataDefinition.bindingFields['mesh'];
+    let fields = sDataDefinition.bindingFields('mesh');
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];

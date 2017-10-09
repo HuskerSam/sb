@@ -119,7 +119,7 @@ class cDataView {
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
-      if (f.fileDom.files.length > 0){
+      if (f.fileDom.files.length > 0) {
         this.parent.context.updateObjectURL('mesh', this.parent.key, f.fileDom.files[0]).then(results => {
 
 
@@ -292,6 +292,21 @@ class cDataView {
       if (f.type === 'url') {
         f.urlAnchor.setAttribute('href', v);
       }
+    }
+
+    if (f.displayGroup) {
+      let group = null;
+      if (f.displayKey)
+        group = this.valueCache[f.displayKey];
+
+      if (f.displayGroup === group)
+        f.domContainer.style.display = '';
+      else
+        f.domContainer.style.display = 'none';
+    }
+
+    if (f.displayType === 'number') {
+      f.domContainer.classList.add('cdataview-number-display');
     }
 
     if (updateShown) {

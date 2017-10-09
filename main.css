@@ -148,6 +148,9 @@ html, body {
   font-size: inherit;
   margin-right:2px;
 }
+.cdataview-number-display {
+  width: 5em;
+}
 .form-group label {
   font-size: .7em;
   margin-bottom: 1px;
