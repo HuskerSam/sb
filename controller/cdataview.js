@@ -14,9 +14,9 @@ class cDataView {
     this.valueCache = {};
 
     for (let i in this.fields)
-      this.initField(this.fields[i], i.toString());
+      this._initField(this.fields[i], i.toString());
   }
-  initField(f, index) {
+  _initField(f, index) {
     let c = document.createElement('div');
     let g = null;
     let t = document.createElement('input');

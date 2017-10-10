@@ -13,6 +13,7 @@ class cContext {
 
     this.importedMeshes = [];
     this.importedMeshClones = [];
+    this.helperPanels = null;
 
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
@@ -243,6 +244,8 @@ class cContext {
 
     if (objectType === 'sceneTools')
       this.setSceneToolsDetails(valueCache);
+
+    this._refreshActiveObjectInfo();
   }
   updateSceneObjects() {
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
@@ -265,23 +268,6 @@ class cContext {
 
     this._refreshActiveObjectInfo();
   }
-  _refreshActiveObjectInfo() {
-    if (!this.activeContextObject)
-      return;
-    if (gAPPP.a.profile.hideBoundsBox)
-      this.activeContextObject.sceneObject.showBoundingBox = false;
-    else
-      this.activeContextObject.sceneObject.showBoundingBox = true;
-    if (gAPPP.a.profile.showMeshDetails)
-      this.sceneTools.meshDetailsLabel.style.display = 'inline-block';
-    else
-      this.sceneTools.meshDetailsLabel.style.display = 'none';
-
-      let boundingInfo = this.activeContextObject.sceneObject.getBoundingInfo();
-      let mn = boundingInfo.minimum;
-      let mx = boundingInfo.maximum;
-      this.sceneTools.meshDetailsLabel.innerHTML = `Minimum x:${mn.x} y:${mn.y} z:${mn.z}<br>Maximum x:${mx.x} y:${mx.y} z:${mx.z}`;
-    }
   _addOriginalAndClone(originalMesh) {
     this.importedMeshes.push(originalMesh);
     let newMesh = originalMesh.clone(originalMesh);
@@ -332,6 +318,19 @@ class cContext {
       sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.scene);
 
     return sceneObject;
+  }
+  _formatNumber(num) {
+    let leftSide = 3;
+    let rightSide = 3;
+    if (!GLOBALUTIL.isNumeric(num))
+      num = 0;
+    let str = num.toFixed(rightSide);
+    let parts = str.split('.');
+    let left = parts[0];
+    let right = parts[1];
+    let leftFinal = left.padStart(leftSide, ' ');
+    let rightFinal = right.padEnd(rightSide, ' ');
+    return leftFinal + '.' + rightFinal;
   }
   _loadMeshFromDomFile(file) {
     return new Promise((resolve, reject) => {
@@ -427,6 +426,60 @@ class cContext {
         this._updateObjectValue(field, value, material);
     }
     return material;
+  }
+  _refreshActiveObjectInfo(timeoutCall) {
+    if (!this.activeContextObject)
+      return;
+
+    if (!timeoutCall) //do this twice - once after it renders a frame
+      setTimeout(() => this._refreshActiveObjectInfo(true), 100);
+
+    if (gAPPP.a.profile.hideBoundsBox)
+      this.activeContextObject.sceneObject.showBoundingBox = false;
+    else
+      this.activeContextObject.sceneObject.showBoundingBox = true;
+    if (gAPPP.a.profile.showMeshDetails)
+      this.sceneTools.meshDetailsLabel.style.display = 'inline-block';
+    else
+      this.sceneTools.meshDetailsLabel.style.display = 'none';
+
+    let boundingBox = this.activeContextObject.sceneObject.getBoundingInfo().boundingBox;
+    let originalDimensions = {
+      center: boundingBox.center,
+      size: boundingBox.extendSize,
+      minimum: boundingBox.minimum,
+      maximum: boundingBox.maximum
+    };
+    let worldDimensions = {
+      center: boundingBox.centerWorld,
+      size: boundingBox.extendSizeWorld,
+      minimum: boundingBox.minimumWorld,
+      maximum: boundingBox.maximumWorld
+    };
+    this.sceneTools.meshDetailsLabel.innerHTML = JSON.stringify(boundingBox, null, 2);
+
+    if (this.helperPanels['scale']) {
+      let hp = this.helperPanels['scale'];
+
+      let html = `Original w${this._formatNumber(originalDimensions.size.x)} h${this._formatNumber(originalDimensions.size.y)} d${this._formatNumber(originalDimensions.size.z)}`;
+      html += `\nScale    w${this._formatNumber(worldDimensions.size.x)} h${this._formatNumber(worldDimensions.size.y)} d${this._formatNumber(worldDimensions.size.z)}`;
+
+      hp.helperDom.innerHTML = html;
+    }
+
+    if (this.helperPanels['offset']) {
+      let hp = this.helperPanels['offset'];
+
+      let html = `Original x-min ${this._formatNumber(originalDimensions.minimum.x)} x-max ${this._formatNumber(originalDimensions.maximum.x)}`;
+      html += `\n         floor ${this._formatNumber(originalDimensions.minimum.y)} ceil  ${this._formatNumber(originalDimensions.maximum.y)}`;
+      html += `\n         z-min ${this._formatNumber(originalDimensions.minimum.z)} z-max ${this._formatNumber(originalDimensions.maximum.z)}`;
+
+      html += `\nOffset   x-max ${this._formatNumber(worldDimensions.minimum.x)} x-max ${this._formatNumber(worldDimensions.maximum.x)}`;
+      html += `\n         floor ${this._formatNumber(worldDimensions.minimum.z)} ceil  ${this._formatNumber(worldDimensions.maximum.y)}`;
+      html += `\n         z-min ${this._formatNumber(worldDimensions.minimum.z)} z-max ${this._formatNumber(worldDimensions.maximum.z)}`;
+
+      hp.helperDom.innerHTML = html;
+    }
   }
   _sceneDisposeDefaultObjects(leaveCameraAndLight) {
     if (!leaveCameraAndLight) {

@@ -157,6 +157,7 @@ html, body {
   font-size: .7em;
   margin-bottom: 1px;
   margin-top:2px;
+  text-align:center;
 }
 .form-group input {
   font-size: 1em;
@@ -458,4 +459,18 @@ button i.material-icons {
   background: rgba(255,255,255,.2);
   padding: 3px;
   border-radius: 5px;
+  font-size: .6em;
+  max-height: 30%;
+  max-width: 20em;
+  overflow: auto;
+  white-space: pre;
+}
+.selected-mesh-bounds-helper-box {
+  background:rgba(0,120,0,.5);
+  color:blue;
+  font-size:.6em;
+  font-family: monospace;
+  padding-left: 2px;
+  margin-left: 2px;
+  white-space: pre;
 }

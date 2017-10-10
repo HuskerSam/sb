@@ -319,6 +319,12 @@ __localStaticStorageForBindingFields['simpleUIDetails'] = [{
   contextObjectField: 'scaling.z',
   group: 'scale',
   displayType: 'number'
+},{
+  title: 'Container Height',
+  fireSetField: 'simpleUIDetails.containerHeight',
+  contextObjectField: null,
+  group: 'containerHeight',
+  displayType: 'number'
 }, {
   title: 'Offset X',
   fireSetField: 'simpleUIDetails.positionX',
