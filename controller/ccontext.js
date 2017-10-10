@@ -2,6 +2,7 @@ class cContext {
   constructor(canvas, initEngine) {
     this.gridShown = false;
     this.gridObject = null;
+    this.scaleClone = null;
     this.guidesSceneObjects = [];
     this.light = null;
     this.camera = null;
@@ -33,6 +34,8 @@ class cContext {
     this.gridShown = false;
     this.guidesSceneObjects = [];
     this.guidesShown = false;
+    this.scalePreviewMesh = null;
+    this.alphaFadeMesh = false;
     this._scene = newScene;
   }
   get scene() {
@@ -319,6 +322,85 @@ class cContext {
 
     return sceneObject;
   }
+  _createTextMesh(name, options) {
+    let canvas = document.getElementById("highresolutionhiddencanvas");
+    let context2D = canvas.getContext("2d");
+    let size = 100;
+
+    let vectorOptions = {
+      polygons: true,
+      textBaseline: "top",
+      fontStyle: 'normal',
+      fontVariant: 'normal',
+      fontWeight: 'normal',
+      fontFamily: 'Arial',
+      size: size,
+      stroke: false
+    };
+
+    for (let i in vectorOptions)
+      if (options[i])
+        vectorOptions[i] = options[i];
+    if (options['size'])
+      size = Number(options['size']);
+
+    let vectorData = vectorizeText(options['text'], renderCanvas, context2D, vectorOptions);
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    let thick = 10;
+    if (options['depth'])
+      thick = Number(options['depth']);
+    let scale = size / 10;
+    let lenX = 0;
+    let lenY = 0;
+    let textWrapperMesh = null;
+    for (var i = 0; i < vectorData.length; i++) {
+      var letter = vectorData[i];
+      var conners = [];
+      for (var k = 0; k < letter[0].length; k++) {
+        conners[k] = new BABYLON.Vector2(scale * letter[0][k][1], scale * letter[0][k][0]);
+        if (lenX < conners[k].x) lenX = conners[k].x;
+        if (lenY < conners[k].y) lenY = conners[k].y;
+      }
+      var polyBuilder = new BABYLON.PolygonMeshBuilder("pBuilder" + i, conners, this.scene);
+
+      for (var j = 1; j < letter.length; j++) {
+        var hole = [];
+        for (var k = 0; k < letter[j].length; k++) {
+          hole[k] = new BABYLON.Vector2(scale * letter[j][k][1], scale * letter[j][k][0]);
+        }
+        hole.reverse();
+        polyBuilder.addHole(hole);
+      }
+      var polygon = polyBuilder.build(false, thick);
+      polygon.receiveShadows = true;
+
+      if (textWrapperMesh)
+        polygon.setParent(textWrapperMesh);
+      else
+        textWrapperMesh = polygon;
+    }
+
+    if (lenY === 0)
+      lenY = 0.001;
+    if (lenX === 0)
+      lenX = 0.001;
+
+    if (textWrapperMesh === null)
+      return null;
+
+    textWrapperMesh.position.x = -lenY / 2 + x;
+    textWrapperMesh.position.y = lenX / 2 + y;
+    textWrapperMesh.position.z = z;
+
+    textWrapperMesh.rotation.y = Math.PI / 2;
+    textWrapperMesh.rotation.z = -Math.PI / 2;
+    textWrapperMesh.lenX = lenX;
+    textWrapperMesh.lenY = lenY;
+
+    return textWrapperMesh;
+  }
   _formatNumber(num) {
     let leftSide = 3;
     let rightSide = 3;
@@ -443,14 +525,15 @@ class cContext {
     else
       this.sceneTools.meshDetailsLabel.style.display = 'none';
 
-    let boundingBox = this.activeContextObject.sceneObject.getBoundingInfo().boundingBox;
-    let originalDimensions = {
+    let sObj = this.activeContextObject.sceneObject;
+    let boundingBox = sObj.getBoundingInfo().boundingBox;
+    let oDim = {
       center: boundingBox.center,
       size: boundingBox.extendSize,
       minimum: boundingBox.minimum,
       maximum: boundingBox.maximum
     };
-    let worldDimensions = {
+    let wDim = {
       center: boundingBox.centerWorld,
       size: boundingBox.extendSizeWorld,
       minimum: boundingBox.minimumWorld,
@@ -458,27 +541,71 @@ class cContext {
     };
     this.sceneTools.meshDetailsLabel.innerHTML = JSON.stringify(boundingBox, null, 2);
 
+    this.alphaFadeMesh = false;
+
     if (this.helperPanels['scale']) {
       let hp = this.helperPanels['scale'];
 
-      let html = `Original w${this._formatNumber(originalDimensions.size.x)} h${this._formatNumber(originalDimensions.size.y)} d${this._formatNumber(originalDimensions.size.z)}`;
-      html += `\nScale    w${this._formatNumber(worldDimensions.size.x)} h${this._formatNumber(worldDimensions.size.y)} d${this._formatNumber(worldDimensions.size.z)}`;
+      let html = `Original w${this._formatNumber(oDim.size.x)} h${this._formatNumber(oDim.size.y)} d${this._formatNumber(oDim.size.z)}`;
+      html += `\n  Actual w${this._formatNumber(wDim.size.x)} h${this._formatNumber(wDim.size.y)} d${this._formatNumber(wDim.size.z)}`;
 
-      hp.helperDom.innerHTML = html;
+      hp.infoDom.innerHTML = html;
+
+      let scaleValue = hp.scaleInput.value;
+      let scalePreview = hp.scalePreview;
+
+      if (scaleValue === "100" || !GLOBALUTIL.isNumeric(scaleValue)) {
+        scalePreview.innerHTML = ' ';
+      } else {
+        this.alphaFadeMesh = true;
+        let val = Number(scaleValue) / 100.0;
+        let width = wDim.size.x * val;
+        let height = wDim.size.y * val;
+        let depth = wDim.size.z * val;
+        let html = '';
+        html += `Scaled w${this._formatNumber(width)} h${this._formatNumber(height)} d${this._formatNumber(depth)}`;
+
+        if (this.scalePreviewMesh !== null)
+          this.scalePreviewMesh.dispose();
+
+        this.scalePreviewMesh = sObj.clone('scaleClonePreview');
+        this.scalePreviewMesh.scaling.x = width / oDim.size.x * sObj.scaling.x;
+        this.scalePreviewMesh.scaling.y = height / oDim.size.y * sObj.scaling.y;
+        this.scalePreviewMesh.scaling.z = depth / oDim.size.z * sObj.scaling.z;
+        this.scalePreviewMesh.visibility = 1;
+        scalePreview.innerHTML = html;
+      }
     }
 
     if (this.helperPanels['offset']) {
       let hp = this.helperPanels['offset'];
 
-      let html = `Original x-min ${this._formatNumber(originalDimensions.minimum.x)} x-max ${this._formatNumber(originalDimensions.maximum.x)}`;
-      html += `\n         floor ${this._formatNumber(originalDimensions.minimum.y)} ceil  ${this._formatNumber(originalDimensions.maximum.y)}`;
-      html += `\n         z-min ${this._formatNumber(originalDimensions.minimum.z)} z-max ${this._formatNumber(originalDimensions.maximum.z)}`;
+      let html = `  Mesh x-min${this._formatNumber(oDim.minimum.x)}  x-max${this._formatNumber(oDim.maximum.x)}`;
+      html += `\n       floor${this._formatNumber(oDim.minimum.y)}  ceil ${this._formatNumber(oDim.maximum.y)}`;
+      html += `\n       z-min${this._formatNumber(oDim.minimum.z)}  z-max${this._formatNumber(oDim.maximum.z)}`;
 
-      html += `\nOffset   x-max ${this._formatNumber(worldDimensions.minimum.x)} x-max ${this._formatNumber(worldDimensions.maximum.x)}`;
-      html += `\n         floor ${this._formatNumber(worldDimensions.minimum.z)} ceil  ${this._formatNumber(worldDimensions.maximum.y)}`;
-      html += `\n         z-min ${this._formatNumber(worldDimensions.minimum.z)} z-max ${this._formatNumber(worldDimensions.maximum.z)}`;
+      html += `\nActual x-max${this._formatNumber(wDim.minimum.x)}  x-max${this._formatNumber(wDim.maximum.x)}`;
+      html += `\n       floor${this._formatNumber(wDim.minimum.z)}  ceil ${this._formatNumber(wDim.maximum.y)}`;
+      html += `\n       z-min${this._formatNumber(wDim.minimum.z)}  z-max${this._formatNumber(wDim.maximum.z)}`;
 
-      hp.helperDom.innerHTML = html;
+      hp.infoDom.innerHTML = html;
+    }
+
+    if (this.helperPanels['rotate']) {
+      let hp = this.helperPanels['rotate'];
+
+      let r = sObj.rotation;
+      let html = `Degrees x${this._formatNumber(r.x * 57.2958)}`;
+      html += ` y${this._formatNumber(r.y * 57.2958)}`;
+      html += ` z${this._formatNumber(r.z * 57.2958)}`;
+
+      hp.infoDom.innerHTML = html;
+    }
+
+    if (this.alphaFadeMesh) {
+      sObj.visibility = .5;
+    } else {
+      sObj.visibility = 1.0;
     }
   }
   _sceneDisposeDefaultObjects(leaveCameraAndLight) {
@@ -493,6 +620,11 @@ class cContext {
     }
     this._showGuides(true);
     this._showGrid(true);
+
+    if (this.scalePreviewMesh !== null) {
+      this.scalePreviewMesh.dispose();
+      this.scalePreviewMesh = null;
+    }
   }
   _sceneAddDefaultObjects() {
     this.scene.clearColor = GLOBALUTIL.color('.7,.7,.7');
@@ -688,84 +820,5 @@ class cContext {
   }
   _url(fireUrl) {
     return fireUrl.replace(gAPPP.storagePrefix, '');
-  }
-  _createTextMesh(name, options) {
-    let canvas = document.getElementById("highresolutionhiddencanvas");
-    let context2D = canvas.getContext("2d");
-    let size = 100;
-
-    let vectorOptions = {
-      polygons: true,
-      textBaseline: "top",
-      fontStyle: 'normal',
-      fontVariant: 'normal',
-      fontWeight: 'normal',
-      fontFamily: 'Arial',
-      size: size,
-      stroke: false
-    };
-
-    for (let i in vectorOptions)
-      if (options[i])
-        vectorOptions[i] = options[i];
-    if (options['size'])
-      size = Number(options['size']);
-
-    let vectorData = vectorizeText(options['text'], renderCanvas, context2D, vectorOptions);
-    let x = 0;
-    let y = 0;
-    let z = 0;
-    let thick = 10;
-    if (options['depth'])
-      thick = Number(options['depth']);
-    let scale = size / 10;
-    let lenX = 0;
-    let lenY = 0;
-    let textWrapperMesh = null;
-    for (var i = 0; i < vectorData.length; i++) {
-      var letter = vectorData[i];
-      var conners = [];
-      for (var k = 0; k < letter[0].length; k++) {
-        conners[k] = new BABYLON.Vector2(scale * letter[0][k][1], scale * letter[0][k][0]);
-        if (lenX < conners[k].x) lenX = conners[k].x;
-        if (lenY < conners[k].y) lenY = conners[k].y;
-      }
-      var polyBuilder = new BABYLON.PolygonMeshBuilder("pBuilder" + i, conners, this.scene);
-
-      for (var j = 1; j < letter.length; j++) {
-        var hole = [];
-        for (var k = 0; k < letter[j].length; k++) {
-          hole[k] = new BABYLON.Vector2(scale * letter[j][k][1], scale * letter[j][k][0]);
-        }
-        hole.reverse();
-        polyBuilder.addHole(hole);
-      }
-      var polygon = polyBuilder.build(false, thick);
-      polygon.receiveShadows = true;
-
-      if (textWrapperMesh)
-        polygon.setParent(textWrapperMesh);
-      else
-        textWrapperMesh = polygon;
-    }
-
-    if (lenY === 0)
-      lenY = 0.001;
-    if (lenX === 0)
-      lenX = 0.001;
-
-    if (textWrapperMesh === null)
-      return null;
-
-    textWrapperMesh.position.x = -lenY / 2 + x;
-    textWrapperMesh.position.y = lenX / 2 + y;
-    textWrapperMesh.position.z = z;
-
-    textWrapperMesh.rotation.y = Math.PI / 2;
-    textWrapperMesh.rotation.z = -Math.PI / 2;
-    textWrapperMesh.lenX = lenX;
-    textWrapperMesh.lenY = lenY;
-
-    return textWrapperMesh;
   }
 }

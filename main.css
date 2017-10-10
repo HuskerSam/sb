@@ -466,11 +466,26 @@ button i.material-icons {
   white-space: pre;
 }
 .selected-mesh-bounds-helper-box {
-  background:rgba(0,120,0,.5);
-  color:blue;
+  background:rgba(255,255,100,.3);
+  color:rgb(0,0,100);
   font-size:.6em;
   font-family: monospace;
   padding-left: 2px;
   margin-left: 2px;
   white-space: pre;
+  text-align:center;
+}
+.selected-mesh-bounds-helper-box .action-area input {
+  width: 5em;
+  text-align:right;
+}
+.selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  width: 10em;
+  position:relative;
+  top: .5em;
+  display: inline-block;
+}
+.selected-mesh-bounds-helper-box .action-area .preview,
+.selected-mesh-bounds-helper-box .action-area button {
+  color: rgb(127, 64, 0);
 }
