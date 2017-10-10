@@ -45,6 +45,7 @@ class gApplication {
     document.querySelector('#global-toolbar-decrease-fontsize').addEventListener('click', e => this._increaseFontSize(true), false);
     document.querySelector('#global-toolbar-increase-fontsize').addEventListener('click', e => this._increaseFontSize(), false);
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile(), false);
+
   }
   handleDataUpdate() {
     this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
@@ -86,7 +87,7 @@ class gApplication {
 
     let innerHTML = '';
     for (let i in this.shapeTypes)
-        innerHTML += '<option>' + this.shapeTypes[i] + '</option>';
+      innerHTML += '<option>' + this.shapeTypes[i] + '</option>';
     this._domShapeList.innerHTML = innerHTML;
 
     document.body.appendChild(this._domShapeList);

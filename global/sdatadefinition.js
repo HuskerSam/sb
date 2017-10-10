@@ -529,6 +529,73 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayKey: 'shapeType',
   displayType: 'number',
   group: 'tweaks'
+}, {
+  title: 'Text',
+  fireSetField: 'textText',
+  contextObjectField: null,
+  shapeOption: 'text',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  group: 'text'
+}, {
+  title: 'Open Face',
+  fireSetField: 'textStroke',
+  contextObjectField: null,
+  shapeOption: 'stroke',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  type: 'boolean',
+  group: 'text2'
+}, {
+  title: 'Depth',
+  fireSetField: 'textDepth',
+  contextObjectField: null,
+  shapeOption: 'depth',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'text2'
+}, {
+  title: 'tessellation',
+  fireSetField: 'textSize',
+  contextObjectField: null,
+  shapeOption: 'size',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'font'
+}, {
+  title: 'Font Family',
+  fireSetField: 'textFontFamily',
+  contextObjectField: null,
+  shapeOption: 'fontFamily',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  group: 'font'
+}, {
+  title: 'Font Weight',
+  fireSetField: 'textFontWeight',
+  contextObjectField: null,
+  shapeOption: 'fontWeight',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  group: 'font'
+}, {
+  title: 'Font Variant',
+  fireSetField: 'textFontVariant',
+  contextObjectField: null,
+  shapeOption: 'fontVariant',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  group: 'fontExtra'
+}, {
+  title: 'Font Style',
+  fireSetField: 'textFontStyle',
+  contextObjectField: null,
+  shapeOption: 'fontStyle',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  group: 'fontExtra'
 }];
 __defaultData['shape'] = {
   title: 'Shape',

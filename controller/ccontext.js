@@ -287,9 +287,13 @@ class cContext {
     for (let i in fields) {
       let field = fields[i];
       if (field.shapeOption)
-        if (field.displayGroup === objectData['shapeType'])
-        if (GLOBALUTIL.isNumeric(objectData[field.fireSetField]))
-          options[field.shapeOption] = Number(objectData[field.fireSetField]);
+        if (field.displayGroup === objectData['shapeType']) {
+          if (field.displayType === 'number') {
+            if (GLOBALUTIL.isNumeric(objectData[field.fireSetField]))
+              options[field.shapeOption] = Number(objectData[field.fireSetField]);
+          } else
+            options[field.shapeOption] = objectData[field.fireSetField];
+        }
     }
 
     if (objectData['shapeType'] === 'sphere')
@@ -300,6 +304,9 @@ class cContext {
 
     if (objectData['shapeType'] === 'cylinder')
       sceneObject = BABYLON.MeshBuilder.CreateCylinder(name, options, this.scene);
+
+    if (objectData['shapeType'] === 'text')
+      sceneObject = this._createTextMesh(name, options);
 
     if (!sceneObject)
       sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.scene);
@@ -604,5 +611,80 @@ class cContext {
   }
   _url(fireUrl) {
     return fireUrl.replace(gAPPP.storagePrefix, '');
+  }
+
+  _createTextMesh(name, options) {
+    let canvas = document.getElementById("highresolutionhiddencanvas");
+    let context2D = canvas.getContext("2d");
+    let size = 100;
+
+    let vectorOptions = {
+      polygons: true,
+      textBaseline: "top",
+      fontStyle: 'normal',
+      fontVariant: 'normal',
+      fontWeight: 'normal',
+      fontFamily: 'Arial',
+      size: size,
+      stroke: false
+    };
+
+    for (let i in vectorOptions)
+      if (options[i])
+        vectorOptions[i] = options[i];
+    if (options['size'])
+      size = Number(options['size']);
+
+    let vectorData = vectorizeText(options['text'], renderCanvas, context2D, vectorOptions);
+    let material = new BABYLON.StandardMaterial('material', this.scene);
+    material.diffuseColor = GLOBALUTIL.color("1,0,1");
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    let thick = 10;
+    if (options['depth'])
+      thick = Number(options['depth']);
+    let scale = size;
+    let lenX = 0;
+    let lenY = 0;
+    let textWrapperMesh = null;
+    for (var i = 0; i < vectorData.length; i++) {
+      var letter = vectorData[i];
+      var conners = [];
+      for (var k = 0; k < letter[0].length; k++) {
+        conners[k] = new BABYLON.Vector2(scale * letter[0][k][1], scale * letter[0][k][0]);
+        if (lenX < conners[k].x) lenX = conners[k].x;
+        if (lenY < conners[k].y) lenY = conners[k].y;
+      }
+      var polyBuilder = new BABYLON.PolygonMeshBuilder("pBuilder" + i, conners, this.scene);
+
+      for (var j = 1; j < letter.length; j++) {
+        var hole = [];
+        for (var k = 0; k < letter[j].length; k++) {
+          hole[k] = new BABYLON.Vector2(scale * letter[j][k][1], scale * letter[j][k][0]);
+        }
+        hole.reverse();
+        polyBuilder.addHole(hole);
+      }
+      var polygon = polyBuilder.build(false, thick);
+      polygon.material = material;
+      polygon.receiveShadows = true;
+
+      if (textWrapperMesh)
+        polygon.setParent(textWrapperMesh);
+      else
+        textWrapperMesh = polygon;
+    }
+
+    textWrapperMesh.position.x = -lenY / 2 + x;
+    textWrapperMesh.position.y = lenX / 2 + y;
+    textWrapperMesh.position.z = z;
+
+    textWrapperMesh.rotation.y = Math.PI / 2;
+    textWrapperMesh.rotation.z = -Math.PI / 2;
+    textWrapperMesh.lenX = lenX;
+    textWrapperMesh.lenY = lenY;
+
+    return textWrapperMesh;
   }
 }
