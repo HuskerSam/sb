@@ -190,7 +190,8 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   title: 'Font Family',
   fireSetField: 'fontFamily',
   contextObjectField: null,
-  group: 'font'
+  group: 'font',
+  dataListId: 'fontfamilydatalist'
 }, {
   title: 'Font Size (pt)',
   fireSetField: 'fontSize',
@@ -565,22 +566,14 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayType: 'number',
   group: 'text2'
 }, {
-  title: 'tessellation',
-  fireSetField: 'textSize',
-  contextObjectField: null,
-  shapeOption: 'size',
-  displayGroup: 'text',
-  displayKey: 'shapeType',
-  displayType: 'number',
-  group: 'font'
-}, {
   title: 'Font Family',
   fireSetField: 'textFontFamily',
   contextObjectField: null,
   shapeOption: 'fontFamily',
   displayGroup: 'text',
   displayKey: 'shapeType',
-  group: 'font'
+  group: 'font',
+  dataListId: 'fontfamilydatalist'
 }, {
   title: 'Font Weight',
   fireSetField: 'textFontWeight',

@@ -600,6 +600,10 @@ class cContext {
 
         let m = this._material(tD);
         object.material = m;
+        for (let i in this.scene.meshes) {
+          if (this.scene.meshes[i].parent === object)
+            this.scene.meshes[i].material = m;
+        }
         return;
       }
 
@@ -612,7 +616,6 @@ class cContext {
   _url(fireUrl) {
     return fireUrl.replace(gAPPP.storagePrefix, '');
   }
-
   _createTextMesh(name, options) {
     let canvas = document.getElementById("highresolutionhiddencanvas");
     let context2D = canvas.getContext("2d");
@@ -636,8 +639,6 @@ class cContext {
       size = Number(options['size']);
 
     let vectorData = vectorizeText(options['text'], renderCanvas, context2D, vectorOptions);
-    let material = new BABYLON.StandardMaterial('material', this.scene);
-    material.diffuseColor = GLOBALUTIL.color("1,0,1");
     let x = 0;
     let y = 0;
     let z = 0;
@@ -667,7 +668,6 @@ class cContext {
         polyBuilder.addHole(hole);
       }
       var polygon = polyBuilder.build(false, thick);
-      polygon.material = material;
       polygon.receiveShadows = true;
 
       if (textWrapperMesh)
@@ -675,6 +675,14 @@ class cContext {
       else
         textWrapperMesh = polygon;
     }
+
+    if (lenY === 0)
+      lenY = 0.001;
+    if (lenX === 0)
+      lenX = 0.001;
+
+    if (textWrapperMesh === null)
+      return null;
 
     textWrapperMesh.position.x = -lenY / 2 + x;
     textWrapperMesh.position.y = lenX / 2 + y;

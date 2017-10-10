@@ -242,6 +242,9 @@ class cDataView {
       c.appendChild(p_bar);
       field.progressBar = p_bar;
     }
+
+    if (field.dataListId)
+      element.setAttribute('list', field.dataListId);
   }
   _updateFieldDom(f) {
     let updateShown = false;
