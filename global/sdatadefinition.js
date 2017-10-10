@@ -227,7 +227,18 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   contextObjectField: null,
   group: 'extras'
 }, {
-  title: 'Grid Depth',
+  title: 'Show Mesh Details',
+  fireSetField: 'showMeshDetails',
+  type: 'boolean',
+  contextObjectField: null
+}, {
+  title: 'Hide Bounds Box',
+  fireSetField: 'hideBoundsBox',
+  type: 'boolean',
+  contextObjectField: null,
+  group: 'extras'
+}, {
+  title: 'UI Depth',
   fireSetField: 'floorGridDepth',
   contextObjectField: null,
   group: 'extras',
@@ -264,12 +275,23 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   fireSetField: 'lightVector',
   contextObjectField: null
 }, {
+  title: 'Hide Bounds Box',
+  fireSetField: 'hideBoundsBox',
+  type: 'boolean',
+  contextObjectField: null,
+  group: 'extras'
+}, {
   title: 'Show Grid',
   fireSetField: 'showFloorGrid',
   type: 'boolean',
   contextObjectField: null
 }, {
-  title: 'Grid and Guides Depth',
+  title: 'Show Mesh Details',
+  fireSetField: 'showMeshDetails',
+  type: 'boolean',
+  contextObjectField: null
+}, {
+  title: 'UI Depth',
   fireSetField: 'gridAndGuidesDepth',
   contextObjectField: null,
   displayType: 'number'
@@ -494,7 +516,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayKey: 'shapeType',
   displayType: 'number',
   group: 'dimensions'
-},{
+}, {
   title: 'Diameter',
   fireSetField: 'cylinderDiameter',
   contextObjectField: null,

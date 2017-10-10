@@ -80,10 +80,12 @@ class cToolband {
     }
     if (this.tag === 'material') {
       this.__addMenuItem(ul, 'To Shape', e => this.materialToShape(e, key), true);
-      this.__addMenuItem(ul, 'To Mesh', e => this.materialToShape(e, key));
     }
     if (this.tag === 'mesh') {
-      this.__addMenuItem(ul, 'To Scene', e => this.materialToShape(e, key), true);
+      this.__addMenuItem(ul, 'Add To Scene', e => this.addMeshToScene(e, key), true);
+    }
+    if (this.tag === 'shape') {
+      this.__addMenuItem(ul, 'Add To Scene', e => this.addShapeToScene(e, key), true);
     }
 
     this.__addMenuItem(ul, 'Remove', e => this.removeElement(e, key), true);
@@ -154,7 +156,34 @@ class cToolband {
     gAPPP.dialogs[this.tag + '-create'].show();
   }
   textureToMaterial(e, key) {
-    alert('soon');
+    let materialData = sDataDefinition.getDefaultDataCloned('material');
+    let textureSet = gAPPP.a.modelSets['texture'];
+    let materialSet = gAPPP.a.modelSets['material'];
+    let texture = textureSet.getCache(key);
+
+    materialData.title = texture.title;
+    materialData.diffuseTextureName = texture.title;
+
+    materialSet.createWithBlobString(materialData).then(r => {});
+  }
+  textureToShape(e, key) {
+    let materialData = sDataDefinition.getDefaultDataCloned('material');
+    let textureSet = gAPPP.a.modelSets['texture'];
+    let materialSet = gAPPP.a.modelSets['material'];
+    let texture = textureSet.getCache(key);
+
+    materialData.title = texture.title;
+    materialData.diffuseTextureName = texture.title;
+
+    materialSet.createWithBlobString(materialData).then(r => {
+      let shapeData = sDataDefinition.getDefaultDataCloned('shape');
+      let shapeSet = gAPPP.a.modelSets['shape'];
+
+      shapeData.title = texture.title;
+      shapeData.materialName = texture.title;
+      shapeSet.createWithBlobString(shapeData).then(r2 => {});
+    });
+
   }
   toggle(forceValue) {
     if (forceValue === undefined)

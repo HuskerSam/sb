@@ -200,6 +200,7 @@ class cContext {
       }
       // field.fireSetField === 'gridAndGuidesDepth'
     }
+    this._refreshActiveObjectInfo();
   }
   updateObjectURL(objectType, key, file) {
     return new Promise((resolve, reject) => {
@@ -255,12 +256,32 @@ class cContext {
         this.light.intensity = li;
     let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
     this.camera.position = cameraVector;
+
+    this._refreshActiveObjectInfo();
   }
   setContextActiveObject(contextObject) {
     this._clearActiveContextObject();
-    this._activeContextObject = contextObject;
-    this.sceneTools.activate();
+    this.activeContextObject = contextObject;
+
+    this._refreshActiveObjectInfo();
   }
+  _refreshActiveObjectInfo() {
+    if (!this.activeContextObject)
+      return;
+    if (gAPPP.a.profile.hideBoundsBox)
+      this.activeContextObject.sceneObject.showBoundingBox = false;
+    else
+      this.activeContextObject.sceneObject.showBoundingBox = true;
+    if (gAPPP.a.profile.showMeshDetails)
+      this.sceneTools.meshDetailsLabel.style.display = 'inline-block';
+    else
+      this.sceneTools.meshDetailsLabel.style.display = 'none';
+
+      let boundingInfo = this.activeContextObject.sceneObject.getBoundingInfo();
+      let mn = boundingInfo.minimum;
+      let mx = boundingInfo.maximum;
+      this.sceneTools.meshDetailsLabel.innerHTML = `Minimum x:${mn.x} y:${mn.y} z:${mn.z}<br>Maximum x:${mx.x} y:${mx.y} z:${mx.z}`;
+    }
   _addOriginalAndClone(originalMesh) {
     this.importedMeshes.push(originalMesh);
     let newMesh = originalMesh.clone(originalMesh);
@@ -273,9 +294,8 @@ class cContext {
   }
   _clearActiveContextObject() {
     if (this.activeContextObject) {
+      this.activeContextObject.sceneObject.showBoundingBox = false;
       this.activeContextObject = null;
-      //remove boxes, outlines, etc
-      this.sceneTools.deactivate();
     }
   }
   _createSceneObject(objectData) {
