@@ -644,7 +644,7 @@ class cContext {
     let thick = 10;
     if (options['depth'])
       thick = Number(options['depth']);
-    let scale = size;
+    let scale = size / 10;
     let lenX = 0;
     let lenY = 0;
     let textWrapperMesh = null;

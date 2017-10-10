@@ -538,6 +538,15 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayKey: 'shapeType',
   group: 'text'
 }, {
+  title: 'Tessellation',
+  fireSetField: 'textSize',
+  contextObjectField: null,
+  shapeOption: 'size',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'text2'
+}, {
   title: 'Open Face',
   fireSetField: 'textStroke',
   contextObjectField: null,
@@ -616,6 +625,10 @@ __defaultData['shape'] = {
   face3UV: '',
   face4UV: '',
   face5UV: '',
+  textText: 'Text',
+  textFontFamily: 'Geneva',
+  textDepth: 4,
+  textSize: 100,
   simpleUIDetails: {
     scaleX: 1.0,
     scaleY: 1.0,
