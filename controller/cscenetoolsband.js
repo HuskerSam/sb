@@ -8,8 +8,8 @@ class cSceneToolsBand {
     this.context.canvas.parentNode.appendChild(this.container);
 
     this.collapseButton = document.createElement('button');
-    this.collapseButton.innerHTML = '<i class="material-icons">menu</i>';
-    this.collapseButton.setAttribute('class', 'btn btn-primary-outline');
+    this.collapseButton.innerHTML = '<i class="material-icons">aspect_ratio</i>';
+    this.collapseButton.setAttribute('class', 'btn btn-toolbar-icon');
     this.collapseButton.addEventListener('click', e => this.toggle(), false);
     this.container.appendChild(this.collapseButton);
 

@@ -126,8 +126,8 @@ class cDialogSuper {
     if (this.splitInstance)
       this.splitInstance.destroy();
 
-    let t = this.dialog.querySelector('.popup-canvas');
-    let b = this.dialog.querySelector('.fields-container');
+    let t = this.dialog.querySelector('.popup-canvas-wrapper');
+    let b = this.dialog.querySelector('.edit-popup-fields.fields-container');
     let mb = this.dialog.querySelector('.popup-main-body');
 
     if (this.rotateState === 'horizontal') {

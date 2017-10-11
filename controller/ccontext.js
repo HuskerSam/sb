@@ -16,7 +16,7 @@ class cContext {
 
     this.importedMeshes = [];
     this.importedMeshClones = [];
-    this.helperPanels = null;
+    this.helperPanels = {};
 
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
@@ -67,6 +67,9 @@ class cContext {
       this.guidesSceneObjects = {};
       this.gridObject = null;
       this.offPreviewMesh = null;
+      this.scalePreviewMesh = null;
+      this.rotatePreviewMesh = null;
+      this.offsetPreviewMesh = null;
     }
 
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
@@ -552,11 +555,13 @@ class cContext {
 
       hp.infoDom.innerHTML = html;
 
-      if (this.scalePreviewMesh !== null)
+      if (this.scalePreviewMesh !== null) {
         this.scalePreviewMesh.dispose();
+        this.scalePreviewMesh = null;
+      }
 
       if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
-        hp.preview.innerHTML = ' ';
+        hp.preview.innerHTML = '';
       } else {
         this.alphaFadeMesh = true;
         let val = Number(hp.input.value) / 100.0;
@@ -586,11 +591,13 @@ class cContext {
       html += `\n       z-min${this._formatNumber(wDim.minimum.z)}  z-max${this._formatNumber(wDim.maximum.z)}`;
 
       hp.infoDom.innerHTML = html;
-      if (this.offsetPreviewMesh !== null)
+      if (this.offsetPreviewMesh !== null) {
         this.offsetPreviewMesh.dispose();
+        this.offsetPreviewMesh = null;
+      }
 
       if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
-        hp.preview.innerHTML = ' ';
+        hp.preview.innerHTML = '';
       } else {
         this.alphaFadeMesh = true;
         let val = Number(hp.input.value);
@@ -626,26 +633,28 @@ class cContext {
       html += ` z ${this._formatNumber(r.z * 57.2958).trim()}&deg;`;
 
       hp.infoDom.innerHTML = html;
-      if (this.rotatePreviewMesh !== null)
+      if (this.rotatePreviewMesh !== null) {
         this.rotatePreviewMesh.dispose();
+        this.rotatePreviewMesh = null;
+      }
 
       if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
-        hp.preview.innerHTML = ' ';
+        hp.preview.innerHTML = '';
       } else {
         this.alphaFadeMesh = true;
         let val = Number(hp.input.value);
         let type = hp.select.value;
         this.rotatePreviewMesh = sObj.clone('rotateClonePreview');
 
-          let x2 = Number(sObj.rotation.x);
-          let y2 = Number(sObj.rotation.y);
-          let z2 = Number(sObj.rotation.z);
-          let vector = new BABYLON.Vector3(x2, y2, z2);
-          vector[type.toLowerCase()] = val / 57.2958;
-          this.rotatePreviewMesh.rotation = vector;
-          let x = this._formatNumber(this.rotatePreviewMesh.rotation.x * 57.2958).trim();
-          let y = this._formatNumber(this.rotatePreviewMesh.rotation.y * 57.2958).trim();
-          let z = this._formatNumber(this.rotatePreviewMesh.rotation.z * 57.2958).trim();
+        let x2 = Number(sObj.rotation.x);
+        let y2 = Number(sObj.rotation.y);
+        let z2 = Number(sObj.rotation.z);
+        let vector = new BABYLON.Vector3(x2, y2, z2);
+        vector[type.toLowerCase()] = val / 57.2958;
+        this.rotatePreviewMesh.rotation = vector;
+        let x = this._formatNumber(this.rotatePreviewMesh.rotation.x * 57.2958).trim();
+        let y = this._formatNumber(this.rotatePreviewMesh.rotation.y * 57.2958).trim();
+        let z = this._formatNumber(this.rotatePreviewMesh.rotation.z * 57.2958).trim();
         let html = `x ${x}&deg; y ${y}&deg; z ${z}&deg;`;
 
         this.rotatePreviewMesh.visibility = 1;
