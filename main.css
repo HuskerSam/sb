@@ -468,7 +468,7 @@ button i.material-icons {
   display: inline-block;
 }
 .selected-mesh-bounds-helper-box .action-area input {
-  width: 5em;
+  width: 6em;
   text-align:right;
 }
 .selected-mesh-bounds-helper-box .action-area input[type="range"] {
@@ -484,4 +484,9 @@ button i.material-icons {
 .selected-mesh-bounds-helper-box .action-area.offset .preview,
 .selected-mesh-bounds-helper-box .action-area.offset button {
   color: rgb(20, 100, 0);
+}
+
+.selected-mesh-bounds-helper-box .action-area.rotate .preview,
+.selected-mesh-bounds-helper-box .action-area.rotate button {
+  color: rgb(0, 64, 127);
 }
