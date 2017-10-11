@@ -451,20 +451,6 @@ button i.material-icons {
   display: inline-block;
   touch-action: none;
 }
-.scene-tools-mesh-details-label {
-  display: inline-block;
-  position:absolute;
-  right: 2px;
-  top: 2px;
-  background: rgba(255,255,255,.2);
-  padding: 3px;
-  border-radius: 5px;
-  font-size: .6em;
-  max-height: 30%;
-  max-width: 20em;
-  overflow: auto;
-  white-space: pre;
-}
 .selected-mesh-bounds-helper-box {
   background:rgba(255,255,100,.3);
   color:rgb(0,0,100);

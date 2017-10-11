@@ -47,7 +47,6 @@ class mFirebaseSuper {
     for (let i in this.childListeners)
       this.childListeners[i](this.getCache(fireData.key), type, fireData);
   }
-  commitData(values, key) {}
   getCache(key) {
     return this.values;
   }

@@ -35,6 +35,7 @@ class cDialogEditItem extends cDialogSuper {
       hp.sliderInput = aD.querySelector('input[type=range]');
       hp.scaleInput.addEventListener('input', e => this._handleScaleInputChange(hp, hp.scaleInput), false);
       hp.sliderInput.addEventListener('input', e => this._handleScaleInputChange(hp, hp.sliderInput), false);
+      hp.scaleButton.addEventListener('click', e => this._handleScaleInputCommit(hp), false);
       hp.scalePreview = aD.querySelector('.preview');
     }
     if (groups['offset']) {
@@ -45,6 +46,9 @@ class cDialogEditItem extends cDialogSuper {
     }
 
     this.context.helperPanels = helperPanels;
+  }
+  _handleScaleInputCommit(helperPanel) {
+    this.context.scaleChangeApply(helperPanel, this.fireSet, this.key);
   }
   _handleScaleInputChange(helperPanel, sender) {
     helperPanel.scaleInput.value = sender.value;

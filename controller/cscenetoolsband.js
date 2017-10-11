@@ -22,10 +22,6 @@ class cSceneToolsBand {
     this.fieldsContainer.setAttribute('class', 'fields-container');
     this.innerContainer.appendChild(this.fieldsContainer);
 
-    this.meshDetailsLabel = document.createElement('div');
-    this.meshDetailsLabel.setAttribute('class', 'scene-tools-mesh-details-label');
-    this.context.canvas.parentNode.appendChild(this.meshDetailsLabel);
-
     this.fireSet = gAPPP.a.modelSets['userProfile'];
     this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
     this.fireSet.childListeners.push((values, type, fireData) =>

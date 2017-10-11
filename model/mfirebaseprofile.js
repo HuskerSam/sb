@@ -21,9 +21,6 @@ class mFirebaseProfile extends mFirebaseSuper {
     this.profile = profile;
     firebase.database().ref(this.referencePath).set(this.profile);
   }
-  commitData(values, key) {
-    setObject(values);
-  }
   getCache(key) {
     return this.profile;
   }

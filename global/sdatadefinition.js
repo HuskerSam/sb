@@ -227,11 +227,6 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   contextObjectField: null,
   group: 'extras'
 }, {
-  title: 'Show Mesh Details',
-  fireSetField: 'showMeshDetails',
-  type: 'boolean',
-  contextObjectField: null
-}, {
   title: 'Hide Bounds Box',
   fireSetField: 'hideBoundsBox',
   type: 'boolean',
@@ -283,11 +278,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'Show Grid',
   fireSetField: 'showFloorGrid',
-  type: 'boolean',
-  contextObjectField: null
-}, {
-  title: 'Show Mesh Details',
-  fireSetField: 'showMeshDetails',
   type: 'boolean',
   contextObjectField: null
 }, {

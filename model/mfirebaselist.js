@@ -41,9 +41,6 @@ class mFirebaseList extends mFirebaseSuper {
     updates['/' + this.referencePath + '/' + id] = jsonData;
     return firebase.database().ref().update(updates);
   }
-  commitData(values, key) {
-    this.set(key, values);
-  }
   setString(id, dataString, filename) {
     return new Promise((resolve, reject) => {
       let storageRef = firebase.storage().ref();

@@ -2,7 +2,7 @@ class cContext {
   constructor(canvas, initEngine) {
     this.gridShown = false;
     this.gridObject = null;
-    this.scaleClone = null;
+    this.scalePreviewMesh = null;
     this.guidesSceneObjects = [];
     this.light = null;
     this.camera = null;
@@ -62,6 +62,7 @@ class cContext {
       this._sceneAddDefaultObjects();
       this.guidesSceneObjects = {};
       this.gridObject = null;
+      this.scalePreviewMesh = null;
     }
 
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
@@ -520,10 +521,6 @@ class cContext {
       this.activeContextObject.sceneObject.showBoundingBox = false;
     else
       this.activeContextObject.sceneObject.showBoundingBox = true;
-    if (gAPPP.a.profile.showMeshDetails)
-      this.sceneTools.meshDetailsLabel.style.display = 'inline-block';
-    else
-      this.sceneTools.meshDetailsLabel.style.display = 'none';
 
     let sObj = this.activeContextObject.sceneObject;
     let boundingBox = sObj.getBoundingInfo().boundingBox;
@@ -539,7 +536,6 @@ class cContext {
       minimum: boundingBox.minimumWorld,
       maximum: boundingBox.maximumWorld
     };
-    this.sceneTools.meshDetailsLabel.innerHTML = JSON.stringify(boundingBox, null, 2);
 
     this.alphaFadeMesh = false;
 
@@ -553,6 +549,8 @@ class cContext {
 
       let scaleValue = hp.scaleInput.value;
       let scalePreview = hp.scalePreview;
+      if (this.scalePreviewMesh !== null)
+        this.scalePreviewMesh.dispose();
 
       if (scaleValue === "100" || !GLOBALUTIL.isNumeric(scaleValue)) {
         scalePreview.innerHTML = ' ';
@@ -565,14 +563,14 @@ class cContext {
         let html = '';
         html += `Scaled w${this._formatNumber(width)} h${this._formatNumber(height)} d${this._formatNumber(depth)}`;
 
-        if (this.scalePreviewMesh !== null)
-          this.scalePreviewMesh.dispose();
-
         this.scalePreviewMesh = sObj.clone('scaleClonePreview');
-        this.scalePreviewMesh.scaling.x = width / oDim.size.x * sObj.scaling.x;
-        this.scalePreviewMesh.scaling.y = height / oDim.size.y * sObj.scaling.y;
-        this.scalePreviewMesh.scaling.z = depth / oDim.size.z * sObj.scaling.z;
+        this.scalePreviewMesh.scaling.x = val * sObj.scaling.x;
+        this.scalePreviewMesh.scaling.y = val * sObj.scaling.y;
+        this.scalePreviewMesh.scaling.z = val * sObj.scaling.z;
         this.scalePreviewMesh.visibility = 1;
+        this.scalePreviewMesh.material = new BABYLON.StandardMaterial('material', this.scene);
+        this.scalePreviewMesh.material.diffuseColor = GLOBALUTIL.color('1,.5,0');
+        this.scalePreviewMesh.material.diffuseColor.alpha = 0.7;
         scalePreview.innerHTML = html;
       }
     }
@@ -607,6 +605,35 @@ class cContext {
     } else {
       sObj.visibility = 1.0;
     }
+  }
+  scaleChangeApply(helperPanel, fireSet, key) {
+    let scaleValue = helperPanel.scaleInput.value;
+    if (scaleValue === '100' || !GLOBALUTIL.isNumeric(scaleValue))
+      return;
+
+    let sObj = this.activeContextObject.sceneObject;
+    let nObj = this.scalePreviewMesh;
+    let updates = [];
+    updates.push({
+      field: 'simpleUIDetails.scaleX',
+      newValue: nObj.scaling.x.toString(),
+      oldValue: sObj.scaling.x.toString()
+    });
+    updates.push({
+      field: 'simpleUIDetails.scaleY',
+      newValue: nObj.scaling.y.toString(),
+      oldValue: sObj.scaling.y.toString()
+    });
+    updates.push({
+      field: 'simpleUIDetails.scaleZ',
+      newValue: nObj.scaling.z.toString(),
+      oldValue: sObj.scaling.z.toString()
+    });
+
+    helperPanel.scaleInput.value = 100;
+    helperPanel.sliderInput.value = 100;
+    fireSet.commitUpdateList(updates, key);
+    this._refreshActiveObjectInfo();
   }
   _sceneDisposeDefaultObjects(leaveCameraAndLight) {
     if (!leaveCameraAndLight) {
