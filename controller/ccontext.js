@@ -3,6 +3,7 @@ class cContext {
     this.gridShown = false;
     this.gridObject = null;
     this.scalePreviewMesh = null;
+    this.offsetPreviewMesh = null;
     this.guidesSceneObjects = [];
     this.light = null;
     this.camera = null;
@@ -35,6 +36,7 @@ class cContext {
     this.guidesSceneObjects = [];
     this.guidesShown = false;
     this.scalePreviewMesh = null;
+    this.offsetPreviewMesh = null;
     this.alphaFadeMesh = false;
     this._scene = newScene;
   }
@@ -62,7 +64,7 @@ class cContext {
       this._sceneAddDefaultObjects();
       this.guidesSceneObjects = {};
       this.gridObject = null;
-      this.scalePreviewMesh = null;
+      this.offPreviewMesh = null;
     }
 
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
@@ -407,6 +409,7 @@ class cContext {
     let rightSide = 3;
     if (!GLOBALUTIL.isNumeric(num))
       num = 0;
+    num = Number(num);
     let str = num.toFixed(rightSide);
     let parts = str.split('.');
     let left = parts[0];
@@ -547,16 +550,14 @@ class cContext {
 
       hp.infoDom.innerHTML = html;
 
-      let scaleValue = hp.scaleInput.value;
-      let scalePreview = hp.scalePreview;
       if (this.scalePreviewMesh !== null)
         this.scalePreviewMesh.dispose();
 
-      if (scaleValue === "100" || !GLOBALUTIL.isNumeric(scaleValue)) {
-        scalePreview.innerHTML = ' ';
+      if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
+        hp.preview.innerHTML = ' ';
       } else {
         this.alphaFadeMesh = true;
-        let val = Number(scaleValue) / 100.0;
+        let val = Number(hp.input.value) / 100.0;
         let width = wDim.size.x * val;
         let height = wDim.size.y * val;
         let depth = wDim.size.z * val;
@@ -571,22 +572,47 @@ class cContext {
         this.scalePreviewMesh.material = new BABYLON.StandardMaterial('material', this.scene);
         this.scalePreviewMesh.material.diffuseColor = GLOBALUTIL.color('1,.5,0');
         this.scalePreviewMesh.material.diffuseColor.alpha = 0.7;
-        scalePreview.innerHTML = html;
+        hp.preview.innerHTML = html;
       }
     }
 
     if (this.helperPanels['offset']) {
       let hp = this.helperPanels['offset'];
 
-      let html = `  Mesh x-min${this._formatNumber(oDim.minimum.x)}  x-max${this._formatNumber(oDim.maximum.x)}`;
-      html += `\n       floor${this._formatNumber(oDim.minimum.y)}  ceil ${this._formatNumber(oDim.maximum.y)}`;
-      html += `\n       z-min${this._formatNumber(oDim.minimum.z)}  z-max${this._formatNumber(oDim.maximum.z)}`;
-
-      html += `\nActual x-max${this._formatNumber(wDim.minimum.x)}  x-max${this._formatNumber(wDim.maximum.x)}`;
-      html += `\n       floor${this._formatNumber(wDim.minimum.z)}  ceil ${this._formatNumber(wDim.maximum.y)}`;
+      let html = `Bounds x-min${this._formatNumber(wDim.minimum.x)}  x-max${this._formatNumber(wDim.maximum.x)}`;
+      html += `\n       floor${this._formatNumber(wDim.minimum.y)}  ceil ${this._formatNumber(wDim.maximum.y)}`;
       html += `\n       z-min${this._formatNumber(wDim.minimum.z)}  z-max${this._formatNumber(wDim.maximum.z)}`;
 
       hp.infoDom.innerHTML = html;
+      if (this.offsetPreviewMesh !== null)
+        this.offsetPreviewMesh.dispose();
+
+      if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
+        hp.preview.innerHTML = ' ';
+      } else {
+        this.alphaFadeMesh = true;
+        let val = Number(hp.input.value);
+        let type = hp.select.value;
+        this.offsetPreviewMesh = sObj.clone('offetClonePreview');
+        let x = (type === 'X') ? 1 : 0.0;
+        let y = (type === 'Y') ? 1 : 0.0;
+        let z = (type === 'Z') ? 1 : 0.0;
+
+        let vector = new BABYLON.Vector3(x, y, z );
+        this.offsetPreviewMesh.translate(vector, val, BABYLON.Space.WORLD);
+
+        let x2 = this.offsetPreviewMesh.position.x;
+        let y2 = this.offsetPreviewMesh.position.y;
+        let z2 = this.offsetPreviewMesh.position.z;
+
+        let html = `x ${this._formatNumber(x2)} y ${this._formatNumber(y2)} z ${this._formatNumber(z2)}`;
+
+        this.offsetPreviewMesh.visibility = 1;
+        this.offsetPreviewMesh.material = new BABYLON.StandardMaterial('material', this.scene);
+        this.offsetPreviewMesh.material.diffuseColor = GLOBALUTIL.color('.2,.8,0');
+        this.offsetPreviewMesh.material.diffuseColor.alpha = 0.7;
+        hp.preview.innerHTML = html;
+      }
     }
 
     if (this.helperPanels['rotate']) {
@@ -607,8 +633,7 @@ class cContext {
     }
   }
   scaleChangeApply(helperPanel, fireSet, key) {
-    let scaleValue = helperPanel.scaleInput.value;
-    if (scaleValue === '100' || !GLOBALUTIL.isNumeric(scaleValue))
+    if (helperPanel.input.value === '100' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
       return;
 
     let sObj = this.activeContextObject.sceneObject;
@@ -616,22 +641,50 @@ class cContext {
     let updates = [];
     updates.push({
       field: 'simpleUIDetails.scaleX',
-      newValue: nObj.scaling.x.toString(),
-      oldValue: sObj.scaling.x.toString()
+      newValue: this._formatNumber(nObj.scaling.x).trim(),
+      oldValue: this._formatNumber(sObj.scaling.x).trim()
     });
     updates.push({
       field: 'simpleUIDetails.scaleY',
-      newValue: nObj.scaling.y.toString(),
-      oldValue: sObj.scaling.y.toString()
+      newValue: this._formatNumber(nObj.scaling.y).trim(),
+      oldValue: this._formatNumber(sObj.scaling.y).trim()
     });
     updates.push({
       field: 'simpleUIDetails.scaleZ',
-      newValue: nObj.scaling.z.toString(),
-      oldValue: sObj.scaling.z.toString()
+      newValue: this._formatNumber(nObj.scaling.z).trim(),
+      oldValue: this._formatNumber(sObj.scaling.z).trim()
     });
 
-    helperPanel.scaleInput.value = 100;
-    helperPanel.sliderInput.value = 100;
+    helperPanel.input.value = 100;
+    helperPanel.slider.value = 100;
+    fireSet.commitUpdateList(updates, key);
+    this._refreshActiveObjectInfo();
+  }
+  offsetChangeApply(helperPanel, fireSet, key) {
+    if (helperPanel.input.value === '0' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
+      return;
+
+    let sObj = this.activeContextObject.sceneObject;
+    let nObj = this.offsetPreviewMesh;
+    let updates = [];
+    updates.push({
+      field: 'simpleUIDetails.positionX',
+      newValue: this._formatNumber(nObj.position.x).trim(),
+      oldValue: this._formatNumber(sObj.position.x).trim()
+    });
+    updates.push({
+      field: 'simpleUIDetails.positionY',
+      newValue: this._formatNumber(nObj.position.y).trim(),
+      oldValue: this._formatNumber(sObj.position.y).trim()
+    });
+    updates.push({
+      field: 'simpleUIDetails.positionZ',
+      newValue: this._formatNumber(nObj.position.z).trim(),
+      oldValue: this._formatNumber(sObj.position.z).trim()
+    });
+
+    helperPanel.input.value = 0;
+    helperPanel.slider.value = 0;
     fireSet.commitUpdateList(updates, key);
     this._refreshActiveObjectInfo();
   }
@@ -648,10 +701,14 @@ class cContext {
     this._showGuides(true);
     this._showGrid(true);
 
-    if (this.scalePreviewMesh !== null) {
-      this.scalePreviewMesh.dispose();
-      this.scalePreviewMesh = null;
-    }
+        if (this.scalePreviewMesh !== null) {
+          this.scalePreviewMesh.dispose();
+          this.scalePreviewMesh = null;
+        }
+            if (this.offsetPreviewMesh !== null) {
+              this.offsetPreviewMesh.dispose();
+              this.offsetPreviewMesh = null;
+            }
   }
   _sceneAddDefaultObjects() {
     this.scene.clearColor = GLOBALUTIL.color('.7,.7,.7');

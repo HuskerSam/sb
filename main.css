@@ -460,13 +460,19 @@ button i.material-icons {
   margin-left: 2px;
   white-space: pre;
   text-align:center;
+  padding: .2em;
+  border-radius: .5em;
+}
+.selected-mesh-bounds-helper-box .form-control {
+  width: auto;
+  display: inline-block;
 }
 .selected-mesh-bounds-helper-box .action-area input {
   width: 5em;
   text-align:right;
 }
 .selected-mesh-bounds-helper-box .action-area input[type="range"] {
-  width: 10em;
+  width: 8em;
   position:relative;
   top: .5em;
   display: inline-block;
@@ -474,4 +480,8 @@ button i.material-icons {
 .selected-mesh-bounds-helper-box .action-area .preview,
 .selected-mesh-bounds-helper-box .action-area button {
   color: rgb(127, 64, 0);
+}
+.selected-mesh-bounds-helper-box .action-area.offset .preview,
+.selected-mesh-bounds-helper-box .action-area.offset button {
+  color: rgb(20, 100, 0);
 }

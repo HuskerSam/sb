@@ -29,17 +29,31 @@ class cDialogEditItem extends cDialogSuper {
       helperPanels['scale'] = this._createHelperDOM(groups['scale']);
       let hp = helperPanels['scale'];
       let aD = hp.actionDom;
-      aD.innerHTML = '<input type="range" min="1" max="500" value="100" /><input type="text" value="100" />% <button>Scale</button><div class="preview"></div>';
+      aD.innerHTML = '<input type="range" min="1" max="500" step=".1" value="100" /> <input class="form-control" type="text" value="100" />% <button class="btn">Scale</button><div class="preview"></div>';
       hp.scaleButton = aD.querySelector('button');
-      hp.scaleInput = aD.querySelector('input[type=text]');
-      hp.sliderInput = aD.querySelector('input[type=range]');
-      hp.scaleInput.addEventListener('input', e => this._handleScaleInputChange(hp, hp.scaleInput), false);
-      hp.sliderInput.addEventListener('input', e => this._handleScaleInputChange(hp, hp.sliderInput), false);
+      hp.input = aD.querySelector('input[type=text]');
+      hp.slider = aD.querySelector('input[type=range]');
+      hp.input.addEventListener('input', e => this._handleInputChange(hp, hp.scale), false);
+      hp.slider.addEventListener('input', e => this._handleInputChange(hp, hp.slider), false);
       hp.scaleButton.addEventListener('click', e => this._handleScaleInputCommit(hp), false);
-      hp.scalePreview = aD.querySelector('.preview');
+      hp.preview = aD.querySelector('.preview');
     }
     if (groups['offset']) {
       helperPanels['offset'] = this._createHelperDOM(groups['offset']);
+      let hp = helperPanels['offset'];
+      let aD = hp.actionDom;
+      aD.classList.add('offset');
+      let html = '<select class="form-control"><option>X</option><option selected>Y</option><option>Z</option></select>';
+      html += ' <input type="range" min="-15" max="15" step=".01" value="0" /> <input class="form-control" type="text" value="0" /> <button class="btn">Move</button><div class="preview"></div>';
+      aD.innerHTML = html;
+      hp.moveButton = aD.querySelector('button');
+      hp.select = aD.querySelector('select');
+      hp.input = aD.querySelector('input[type=text]');
+      hp.slider = aD.querySelector('input[type=range]');
+      hp.input.addEventListener('input', e => this._handleInputChange(hp, hp.input), false);
+      hp.slider.addEventListener('input', e => this._handleInputChange(hp, hp.slider), false);
+      hp.moveButton.addEventListener('click', e => this._handleOffsetInputCommit(hp), false);
+      hp.preview = aD.querySelector('.preview');
     }
     if (groups['rotate']) {
       helperPanels['rotate'] = this._createHelperDOM(groups['rotate']);
@@ -50,9 +64,12 @@ class cDialogEditItem extends cDialogSuper {
   _handleScaleInputCommit(helperPanel) {
     this.context.scaleChangeApply(helperPanel, this.fireSet, this.key);
   }
-  _handleScaleInputChange(helperPanel, sender) {
-    helperPanel.scaleInput.value = sender.value;
-    helperPanel.sliderInput.value = sender.value;
+  _handleOffsetInputCommit(helperPanel) {
+    this.context.offsetChangeApply(helperPanel, this.fireSet, this.key);
+  }
+  _handleInputChange(helperPanel, sender) {
+    helperPanel.input.value = sender.value;
+    helperPanel.slider.value = sender.value;
     this.fireFields.paint(this.contextObject);
   }
   _createHelperDOM(groupDom) {
