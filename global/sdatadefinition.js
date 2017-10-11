@@ -205,46 +205,6 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   type: 'color',
   group: 'main'
 }, {
-  title: 'Camera Vector',
-  fireSetField: 'cameraVector',
-  contextObjectField: null,
-  group: 'camera'
-}, {
-  title: 'Light Intensity',
-  fireSetField: 'lightIntensity',
-  contextObjectField: null,
-  group: 'light',
-  displayType: 'number'
-}, {
-  title: 'Light Vector',
-  fireSetField: 'lightVector',
-  contextObjectField: null,
-  group: 'light'
-}, {
-  title: 'Show Grid',
-  fireSetField: 'showFloorGrid',
-  type: 'boolean',
-  contextObjectField: null,
-  group: 'extras'
-}, {
-  title: 'Hide Bounds Box',
-  fireSetField: 'hideBoundsBox',
-  type: 'boolean',
-  contextObjectField: null,
-  group: 'extras'
-}, {
-  title: 'UI Depth',
-  fireSetField: 'floorGridDepth',
-  contextObjectField: null,
-  group: 'extras',
-  displayType: 'number'
-}, {
-  title: 'Show Guides',
-  fireSetField: 'showSceneGuides',
-  contextObjectField: null,
-  type: 'boolean',
-  group: 'extras'
-}, {
   title: 'Disable focus lock',
   fireSetField: 'inputFocusLock',
   contextObjectField: null,
@@ -252,43 +212,82 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   group: 'inputFocusLock'
 }];
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
-  title: 'Canvas Color',
+  title: 'Background',
   fireSetField: 'canvasColor',
   contextObjectField: null,
-  type: 'color'
+  type: 'color',
+  displayType: 'shortvector',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.01'
 }, {
-  title: 'Camera Vector',
+  title: 'Camera Type',
+  fireSetField: 'cameraType',
+  contextObjectField: null,
+  group: 'cameraType',
+  dataListId: 'cameratypeoptionslist',
+  floatLeft: true
+}, {
+  title: 'Origin',
   fireSetField: 'cameraVector',
-  contextObjectField: null
+  contextObjectField: null,
+  displayType: 'longvector',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '100',
+  rangeStep: '1',
+  group: 'cameraType'
 }, {
-  title: 'Light Intensity',
+  title: 'Light',
   fireSetField: 'lightIntensity',
   contextObjectField: null,
-  displayType: 'number'
+  displayType: 'number',
+  group: 'light',
+  floatLeft: true
 }, {
-  title: 'Light Vector',
+  title: 'Direction',
   fireSetField: 'lightVector',
-  contextObjectField: null
-}, {
-  title: 'Hide Bounds Box',
-  fireSetField: 'hideBoundsBox',
-  type: 'boolean',
   contextObjectField: null,
-  group: 'extras'
-}, {
-  title: 'Show Grid',
-  fireSetField: 'showFloorGrid',
-  type: 'boolean',
-  contextObjectField: null
+  helperType: 'vector',
+  displayType: 'shortvector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.01',
+  group: 'light'
 }, {
   title: 'UI Depth',
   fireSetField: 'gridAndGuidesDepth',
   contextObjectField: null,
-  displayType: 'number'
+  displayType: 'number',
+  group: 'extras',
+  floatLeft: true
 }, {
-  title: 'Show Guides',
+  title: 'Bounds',
+  fireSetField: 'showBoundsBox',
+  type: 'boolean',
+  contextObjectField: null,
+  group: 'extras',
+  addLineBreak: true
+}, {
+  title: 'Grid',
+  fireSetField: 'showFloorGrid',
+  type: 'boolean',
+  group: 'extras',
+  contextObjectField: null,
+  addLineBreak: true,
+}, {
+  title: 'Wireframe',
+  fireSetField: 'showForceWireframe',
+  type: 'boolean',
+  group: 'extras',
+  contextObjectField: null,
+  addLineBreak: true
+}, {
+  title: 'Guides',
   fireSetField: 'showSceneGuides',
   contextObjectField: null,
+  group: 'extras',
   type: 'boolean'
 }];
 __localStaticStorageForBindingFields['simpleUIDetails'] = [{

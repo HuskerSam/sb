@@ -26,7 +26,7 @@ class cDialogEditItem extends cDialogSuper {
 
     let groups = this.fireFields.groups;
     if (groups['scale']) {
-      helperPanels['scale'] = this._createHelperDOM(groups['scale']);
+      helperPanels['scale'] = this.fireFields.createHelperDOM(groups['scale']);
       let hp = helperPanels['scale'];
       let aD = hp.actionDom;
       aD.innerHTML = '<input type="range" min="1" max="500" step=".1" value="100" /> <input class="form-control" type="text" value="100" />% <button class="btn">Scale</button><div class="preview"></div>';
@@ -39,7 +39,7 @@ class cDialogEditItem extends cDialogSuper {
       hp.preview = aD.querySelector('.preview');
     }
     if (groups['offset']) {
-      helperPanels['offset'] = this._createHelperDOM(groups['offset']);
+      helperPanels['offset'] = this.fireFields.createHelperDOM(groups['offset']);
       let hp = helperPanels['offset'];
       let aD = hp.actionDom;
       aD.classList.add('offset');
@@ -57,7 +57,7 @@ class cDialogEditItem extends cDialogSuper {
       hp.preview = aD.querySelector('.preview');
     }
     if (groups['rotate']) {
-      helperPanels['rotate'] = this._createHelperDOM(groups['rotate']);
+      helperPanels['rotate'] = this.fireFields.createHelperDOM(groups['rotate']);
       let hp = helperPanels['rotate'];
       let aD = hp.actionDom;
       aD.classList.add('rotate');
@@ -92,22 +92,5 @@ class cDialogEditItem extends cDialogSuper {
       helperPanel.slider.value = sender.value;
     }
     this.fireFields.paint(this.contextObject);
-  }
-  _createHelperDOM(groupDom) {
-    let helperDom = document.createElement('div');
-    helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box');
-    let infoDom = document.createElement('div');
-    infoDom.classList.add('info-area');
-    helperDom.appendChild(infoDom);
-    let actionDom = document.createElement('div');
-    actionDom.setAttribute('class', 'action-area');
-    helperDom.appendChild(actionDom);
-    groupDom.appendChild(helperDom);
-    return {
-      groupDom,
-      helperDom,
-      infoDom,
-      actionDom
-    };
   }
 }

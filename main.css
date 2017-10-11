@@ -159,13 +159,13 @@ html, body {
 }
 
 .form-group {
-  width: 9em;
+  width: 7em;
   display: inline-block;
   font-size: inherit;
   margin-right: 2px;
 }
 
-.cdataview-number-display {
+.form-group.number {
   width: 5em;
 }
 
@@ -218,7 +218,9 @@ html, body {
 .checkboxgroup label {
   font-size: .8em;
 }
-
+.checkboxgroup {
+  width: auto;
+}
 .modal-dialog {
   background: rgba(255, 255, 255, .1);
 }
@@ -515,7 +517,6 @@ button i.material-icons {
 }
 
 .selected-mesh-bounds-helper-box .action-area {
-  margin-top: -.5em;
 }
 
 .selected-mesh-bounds-helper-box .action-area input {
@@ -537,9 +538,8 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"] {
   width: 7em;
-  position: relative;
-  top: .5em;
   display: inline-block;
+  height: 0em;
 }
 
 .selected-mesh-bounds-helper-box .info-area {
@@ -562,4 +562,14 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box .action-area.rotate .preview, .selected-mesh-bounds-helper-box .action-area.rotate button {
   color: rgb(0, 64, 127);
+}
+
+.form-group.shortvector {
+  width: 5em;
+}
+.form-group.shortvector input[type="range"]{
+  width: 100%;
+}
+.form-group.longvector input[type="range"]{
+  width: 100%;
 }

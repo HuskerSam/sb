@@ -522,6 +522,9 @@ class cContext {
     if (!this.activeContextObject)
       return;
 
+    if (gAPPP.activeContext !== this)
+      return;
+
     if (!timeoutCall) //do this twice - once after it renders a frame
       setTimeout(() => this._refreshActiveObjectInfo(true), 100);
 

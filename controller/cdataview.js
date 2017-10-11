@@ -49,9 +49,13 @@ class cDataView {
     t.addEventListener('blur', e => this._blurField(t, f, e), false);
     f.domContainer = c;
     f.domLabel = l;
-    if (g)
+    if (g) {
       g.appendChild(c);
-    else {
+      if (f.addLineBreak)
+        g.appendChild(document.createElement('br'));
+      if (f.floatLeft)
+        f.domContainer.style.float = 'left';
+    } else {
       let w = document.createElement('div');
       w.classList.add('form-group-container-group');
       w.appendChild(c);
@@ -242,9 +246,40 @@ class cDataView {
       c.appendChild(p_bar);
       field.progressBar = p_bar;
     }
+    if (field.helperType === 'vector') {
+      let hp = this.createHelperDOM(field.domContainer);
+
+      let aD = hp.actionDom;
+      let sliderText0 = `<input type="range" min="${field.rangeMin}" max="${field.rangeMax}" step="${field.rangeStep}" value="0" /><br>`;
+      let sliderText1 = `<input type="range" min="${field.rangeMin}" max="${field.rangeMax}" step="${field.rangeStep}" value="0" /><br>`;
+      let sliderText2 = `<input type="range" min="${field.rangeMin}" max="${field.rangeMax}" step="${field.rangeStep}" value="0" /><br>`;
+      let htmlAction = '<div class="preview"></div>';
+      aD.innerHTML = sliderText0 + sliderText1 + sliderText2 + htmlAction;
+      hp.slider = aD.querySelector('input[type=range]');
+      //hp.slider.addEventListener('input', e => this._handleInputChange(hp, hp.slider), false);
+      hp.preview = aD.querySelector('.preview');
+      field.helperPanel = hp;
+    }
 
     if (field.dataListId)
       element.setAttribute('list', field.dataListId);
+  }
+  createHelperDOM(containerDom) {
+    let helperDom = document.createElement('div');
+    helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box');
+    let infoDom = document.createElement('div');
+    infoDom.classList.add('info-area');
+    helperDom.appendChild(infoDom);
+    let actionDom = document.createElement('div');
+    actionDom.setAttribute('class', 'action-area');
+    helperDom.appendChild(actionDom);
+    containerDom.appendChild(helperDom);
+    return {
+      containerDom,
+      helperDom,
+      infoDom,
+      actionDom
+    };
   }
   _updateFieldDom(f) {
     let updateShown = false;
@@ -299,9 +334,8 @@ class cDataView {
       }
     }
 
-    if (f.displayType === 'number') {
-      f.domContainer.classList.add('cdataview-number-display');
-    }
+    if (f.displayType)
+      f.domContainer.classList.add(f.displayType);
 
     if (f.displayType === 'displayFilter') {
       this._updateDisplayFilters();

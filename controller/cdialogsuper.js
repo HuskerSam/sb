@@ -78,9 +78,10 @@ class cDialogSuper {
   }
   _finishShow(contextObject) {
     this.contextObject = contextObject;
-    if (this.contextObject.error) {
-      this.contextObject = null;
-    }
+    if (this.contextObject)
+      if (this.contextObject.error)
+        this.contextObject = null;
+
     if (this.context)
       if (this.contextObject)
         this.context.setContextActiveObject(contextObject);
