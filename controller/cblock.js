@@ -99,11 +99,12 @@ class cBlock {
     this._pushObj(grid, false);
   }
   dispose() {
-    if (!this.context.sceneObject)
-      this.context.sceneObject.dispose();
-    this.context.sceneObject = null;
+    if (this.sceneObject)
+      this.sceneObject.dispose();
+    this.sceneObject = null;
     for (let i in this.childBlocks)
       this.childBlocks[i].dispose();
+    this.childBlocks = [];
     this.blockType = 'sceneObject';
     this.displayType = 'mesh';
   }
@@ -146,9 +147,6 @@ class cBlock {
 
     if (this.displayType === 'shape')
       this._setShape(valueCache);
-
-    if (this.displayType === 'sceneTools')
-      this.setSceneToolsDetails(valueCache);
 
     this.context.refreshFocus();
   }

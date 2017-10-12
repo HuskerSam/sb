@@ -92,9 +92,11 @@ class cDataView {
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
 
-    if (cT)
+    if (cT) {
       if (cT.activeBlock)
         cT.activeBlock.setData(valueCache);
+      cT.refreshFocus();
+    }
     this.loadedURL = this.valueCache['url'];
 
     this._updateDisplayFilters();
@@ -132,8 +134,6 @@ class cDataView {
 
       if (f.fileDom.files.length > 0) {
         this.parent.context.updateObjectURL('mesh', this.parent.key, f.fileDom.files[0]).then(results => {
-
-
           f.fileDom.value = '';
           f.progressBar.style.display = 'none';
           f.dom.style.display = '';
@@ -159,7 +159,6 @@ class cDataView {
         if (f.fireSetField)
           GLOBALUTIL.path(this.values, f.fireSetField, newValues[f.fireSetField]);
       }
-
       this.renderImageUpdateNeeded = true;
     }
   }

@@ -131,6 +131,28 @@ class cContext {
     if (gAPPP.activeContext)
       gAPPP.activeContext.engine.stopRenderLoop();
   }
+  refreshFocus(timeoutCall) {
+    if (!this.activeBlock)
+      return;
+
+    if (gAPPP.activeContext !== this)
+      return;
+
+    if (!timeoutCall) //do this twice - once after it renders a frame
+      setTimeout(() => this.refreshFocus(true), 50);
+
+    let event = new CustomEvent('contextRefreshActiveObject', {
+      detail: {
+        context: this,
+        block: this.activeBlock
+      },
+      bubbles: true
+    });
+    this.canvas.dispatchEvent(event);
+
+    this._renderFocusDetails();
+    this._updateScaffoldingData();
+  }
 
   loadSceneFromDomFile(file) {
     return new Promise((resolve, reject) => {
@@ -176,31 +198,8 @@ class cContext {
         }], key));
     });
   }
-  setSceneToolsDetails(valueCache) {
-    let fields = sDataDefinition.bindingFields('sceneToolsBar');
-    for (let i in fields) {
-      let field = fields[i];
-      let value = valueCache[field.fireSetField];
 
-      if (field.fireSetField === 'lightIntensity') {
-        this.light.intensity = Number(value);
-      }
-      if (field.fireSetField === 'lightVector') {
-        this.light.direction = GLOBALUTIL.getVector(value, 0, 1, 0);
-      }
-      if (field.fireSetField === 'cameraVector') {
-        this.camera.position = GLOBALUTIL.getVector(value, 3, 15, -25);
-      }
-      if (field.fireSetField === 'showFloorGrid') {
-        this.showHideGrid(!value);
-      }
-      if (field.fireSetField === 'showSceneGuides') {
-        this.showHideGuides(!value);
-      }
-      // field.fireSetField === 'gridAndGuidesDepth'
-    }
-    this.refreshFocus();
-  }
+
   updateObjectURL(objectType, key, file) {
     return new Promise((resolve, reject) => {
       if (objectType === 'mesh') {
@@ -224,20 +223,17 @@ class cContext {
         resolve({});
     });
   }
-  updateSceneObjects() {
-    this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
-
+  _updateScaffoldingData() {
+    let profile = gAPPP.a.profile;
+    this.scene.clearColor = GLOBALUTIL.color(profile.canvasColor);
     if (!this.camera)
       return;
 
-    let li = gAPPP.a.profile.lightIntensity;
-    if (li !== undefined)
-      if (li !== '')
-        this.light.intensity = li;
-    let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
-    this.camera.position = cameraVector;
-
-    this.refreshFocus();
+    this.light.intensity = Number(profile.lightIntensity);
+    this.light.direction = GLOBALUTIL.getVector(profile.lightVector, 0, 1, 0);
+    this.camera.position = GLOBALUTIL.getVector(profile.cameraVector, 3, 15, -25);
+    this.showHideGrid(profile.showFloorGrid);
+    this.showHideGuides(profile.showSceneGuides);
   }
   setActiveBlock(block) {
     this._clearActiveBlock();
@@ -277,27 +273,6 @@ class cContext {
         context: this
       });
     });
-  }
-  refreshFocus(timeoutCall) {
-    if (!this.activeBlock)
-      return;
-
-    if (gAPPP.activeContext !== this)
-      return;
-
-    if (!timeoutCall) //do this twice - once after it renders a frame
-      setTimeout(() => this.refreshFocus(true), 50);
-
-    let event = new CustomEvent('contextRefreshActiveObject', {
-      detail: {
-        context: this,
-        block: this.activeBlock
-      },
-      bubbles: true
-    });
-    this.canvas.dispatchEvent(event);
-
-    this._renderFocusDetails();
   }
   _renderFocusDetails() {
     if (!this.activeBlock)
@@ -343,7 +318,7 @@ class cContext {
     this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
     this.light.intensity = .7;
 
-    this.updateSceneObjects();
+    this._updateScaffoldingData();
   }
   _serializeScene() {
     return JSON.stringify(BABYLON.SceneSerializer.Serialize(this.scene));
@@ -356,7 +331,7 @@ class cContext {
     if (hide)
       return this.setGhostBlock('guides', null);
     let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-    let obj = new cBlock(this.context);
+    let obj = new cBlock(this);
     obj.createGuides();
     this.setGhostBlock('guides', obj);
   }
@@ -364,7 +339,7 @@ class cContext {
     if (hide)
       return this.setGhostBlock('grid', null);
     let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-    let obj = new cBlock(this.context);
+    let obj = new cBlock(this);
     obj.createGrid();
     this.setGhostBlock('grid', obj);
   }
