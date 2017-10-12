@@ -199,7 +199,7 @@ class cContext {
       }
       // field.fireSetField === 'gridAndGuidesDepth'
     }
-    this._refreshActiveObjectInfo();
+    this.refreshFocus();
   }
   updateObjectURL(objectType, key, file) {
     return new Promise((resolve, reject) => {
@@ -237,11 +237,12 @@ class cContext {
     let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
     this.camera.position = cameraVector;
 
-    this._refreshActiveObjectInfo();
+    this.refreshFocus();
   }
   setActiveBlock(block) {
     this._clearActiveBlock();
-    this._refreshActiveObjectInfo();
+    this.activeBlock = block;
+    this.refreshFocus();
   }
   _addOriginalAndClone(originalMesh) {
     this.importedMeshes.push(originalMesh);
@@ -264,30 +265,6 @@ class cContext {
         err => resolve(null));
     });
   }
-  _loadSceneMesh(objectData) {
-    return new Promise((resolve, reject) => {
-      let path = gAPPP.storagePrefix;
-      let filename = this._url(objectData['url']);
-      let meshCount = this.scene.meshes.length;
-      BABYLON.SceneLoader.ImportMesh('', path, filename, this.scene,
-        (newMeshes, particleSystems, skeletons) => {
-          resolve({
-            type: 'mesh',
-            sceneObject: newMeshes[0],
-            context: this
-          });
-        },
-        progress => {},
-        (scene, msg, err) => {
-          console.log('_loadSceneMesh', msg, err);
-          reject({
-            error: true,
-            message: msg,
-            errorObject: err
-          });
-        });
-    });
-  }
   _loadSceneTexture(textureData) {
     return new Promise((resolve, reject) => {
       let s = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, this.scene);
@@ -301,7 +278,7 @@ class cContext {
       });
     });
   }
-  _refreshActiveObjectInfo(timeoutCall) {
+  refreshFocus(timeoutCall) {
     if (!this.activeBlock)
       return;
 
@@ -309,7 +286,7 @@ class cContext {
       return;
 
     if (!timeoutCall) //do this twice - once after it renders a frame
-      setTimeout(() => this._refreshActiveObjectInfo(true), 50);
+      setTimeout(() => this.refreshFocus(true), 50);
 
     let event = new CustomEvent('contextRefreshActiveObject', {
       detail: {
@@ -320,19 +297,24 @@ class cContext {
     });
     this.canvas.dispatchEvent(event);
 
-    if (gAPPP.a.profile.hideBoundsBox)
-      this.activeBlock.sceneObject.showBoundingBox = false;
-    else
-      this.activeBlock.sceneObject.showBoundingBox = true;
-
-    this._updateSelectedObjectFade();
+    this._renderFocusDetails();
   }
-  _updateSelectedObjectFade() {
+  _renderFocusDetails() {
+    if (!this.activeBlock)
+      return;
+
+    if (!this.activeBlock.sceneObject)
+      return;
+
     if (this.alphaFadeMesh) {
       this.activeBlock.sceneObject.visibility = .5;
     } else {
       this.activeBlock.sceneObject.visibility = 1.0;
     }
+    if (gAPPP.a.profile.hideBoundsBox)
+      this.activeBlock.sceneObject.showBoundingBox = false;
+    else
+      this.activeBlock.sceneObject.showBoundingBox = true;
   }
   _sceneDisposeDefaultObjects() {
     if (this.camera)

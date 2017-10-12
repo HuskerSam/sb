@@ -65,14 +65,14 @@ class cDataView {
     f.dom = t;
     this._specialDomFeatures(f);
   }
-  paint(contextObject) {
-    this.contextObject = contextObject;
+  paint() {
+    let cT = this.parent.context;
     this.active = true;
     let scrapes = {};
     let valueCache = {};
     let contextReloadRequired = false;
 
-    this.helpers.updateConfig(this.contextObject, this.parent.tag, this.parent.key);
+    this.helpers.updateConfig(cT, this.parent.tag, this.parent.key);
 
     for (let i in this.fields) {
       let f = this.fields[i]
@@ -91,8 +91,10 @@ class cDataView {
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
-    if (contextObject)
-      contextObject.context.activeBlock.setBlock(valueCache);
+
+    if (cT)
+      if (cT.activeBlock)
+        cT.activeBlock.setData(valueCache);
     this.loadedURL = this.valueCache['url'];
 
     this._updateDisplayFilters();
@@ -115,8 +117,8 @@ class cDataView {
         GLOBALUTIL.setColorLabel(f.dom);
     }
 
-    if (this.contextObject)
-      this.contextObject.context.setSceneObject(this.contextObject, this.valueCache);
+    if (this.parent.context)
+      this.parent.context.activeBlock.setData(this.valueCache);
     this._commitUpdates(this.valueCache);
   }
   uploadURL(f) {
@@ -187,22 +189,12 @@ class cDataView {
     }
 
     this.values = values;
-    let contextReloadRequired = this.paint(this.contextObject);
+    let contextReloadRequired = this.paint();
     if (contextReloadRequired) {
-      if (this.parent.tag === 'mesh' && this.contextObject) {
-        let context = this.parent.context;
-        let oldMesh = context.activeContextObject;
-        if (oldMesh)
-          oldMesh.dispose();
-        context.activeContextObject = null;
+      let cT = this.parent.context;
+      if (this.parent.tag === 'mesh' && cT)
+        cT.activeBlock.loadMesh().then(() => this.paint());
 
-        context.loadMesh(gAPPP.storagePrefix, context._url(this.values['url']), context.scene).then(
-          meshSceneObject => {
-            this.contextObject.sceneObject = meshSceneObject;
-            context.activeContextObject = this.contextObject;
-            this.paint(this.contextObject);
-          });
-      }
     }
   }
   _specialDomFeatures(field) {

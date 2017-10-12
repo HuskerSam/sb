@@ -63,11 +63,21 @@ class cDialogSuper {
 
     if (this.initScene) {
       this.context.activate(null);
-      this.context.loadScene(this.tag, this.fireFields.values).then(
-        r => this._finishShow(r),
-        e => this._finishShow(e));
+      if (this.tag === 'mesh') {
+        this.context.setActiveBlock(new cBlock(this.context, null));
+        this.context.activeBlock.displayType = 'mesh';
+        this.context.activeBlock.setData(this.fireFields.values);
+        this.context.activeBlock.loadMesh().then(
+          mesh => this._finishShow(),
+          err => this._finishShow());
+        return;
+      }
+
+      this.context.loadScene(this.fireFields.values).then(
+        r => this._finishShow(),
+        e => this._finishShow());
     } else
-      this._finishShow(null);
+      this._finishShow();
   }
   _endLoad() {
     this._showDom(this.popupButtons);
@@ -76,19 +86,10 @@ class cDialogSuper {
 
     this._splitView();
   }
-  _finishShow(contextObject) {
-    this.contextObject = contextObject;
-    if (this.contextObject)
-      if (this.contextObject.error)
-        this.contextObject = null;
-
-    if (this.context)
-      if (this.contextObject)
-        this.context.setContextActiveObject(contextObject);
-
+  _finishShow() {
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];
-      let sceneReloadRequired = this.fireFields.paint(this.contextObject);
+      let sceneReloadRequired = this.fireFields.paint();
     }
 
     this._endLoad();

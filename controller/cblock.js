@@ -7,6 +7,7 @@ class cBlock {
     this.parent = parent;
     this.displayType = 'mesh';
     this.inheritMaterial = true;
+    this.data = {};
   }
   createShape(valueCache) {
     this.dispose();
@@ -106,7 +107,31 @@ class cBlock {
     this.blockType = 'sceneObject';
     this.displayType = 'mesh';
   }
-  setBlock(valueCache) {
+  loadMesh() {
+    return new Promise((resolve, reject) => {
+      let path = gAPPP.storagePrefix;
+      let filename = this.context._url(this.data['url']);
+      BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
+        (newMeshes, particleSystems, skeletons) => {
+          if (this.sceneObject)
+            this.sceneObject.dispose();
+          this.sceneObject = newMeshes[0];
+          resolve();
+        },
+        progress => {},
+        (scene, msg, err) => {
+          console.log('cBlock.loadMesh', msg, err);
+          reject({
+            error: true,
+            message: msg,
+            errorObject: err,
+            scene: scene
+          });
+        });
+    });
+  }
+  setData(valueCache) {
+    this.data = valueCache;
     if (this.context !== gAPPP.activeContext)
       return;
 
@@ -125,7 +150,7 @@ class cBlock {
     if (this.displayType === 'sceneTools')
       this.setSceneToolsDetails(valueCache);
 
-    this._refreshActiveObjectInfo();
+    this.context.refreshFocus();
   }
   _pushObj(obj, inheritMaterial = true) {
     let child = new cBlock(this.context, this);
@@ -141,7 +166,8 @@ class cBlock {
       let value = values[field.fireSetField];
 
       if (field.contextObjectField)
-        this.__updateObjectValue(field, value, this.context.sceneObject);
+        if (this.sceneObject)
+          this.__updateObjectValue(field, value, this.sceneObject);
     }
   }
   _setShape(contextObject, values) {
