@@ -128,28 +128,36 @@ class cBlock {
         });
     });
   }
+  __setpreviewshape(values) {
+    let shape = values['previewShape'];
+    if (!shape)
+      shape = 'box';
+    this.data = {
+      shapeType: shape,
+      cylinderDiameter: 5,
+      cylinderHeight: 5,
+      sphereDiameter: 10,
+      boxSize: 5,
+      textText: 'Preview',
+      textDepth: 2,
+      textSize: 30
+    };
+  }
   setData(values) {
     if (this.context !== gAPPP.activeContext)
       return;
 
     if (this.displayOverride === 'texture') {
-      this.data = {
-        shapeType: 'cylinder',
-        cylinderDiameter: 10,
-        cylinderDiameter: 4
-      };
+      this.__setpreviewshape(values);
       this._createShape();
       this.sceneObject.material = new BABYLON.StandardMaterial('texturepopupmaterial');
       this.sceneObject.material.diffuseTexture = this.__texture(values);
       return;
     }
     if (this.displayOverride === 'material') {
-      this.data = {
-        shapeType: 'sphere',
-        sphereDiameter: 10
-      };
+      this.__setpreviewshape(values);
       this._createShape();
-      this.sceneObject.material = this.__material(values);
+      this.__setMaterialObj(this.__material(values), this.sceneObject);
       return;
     }
 
@@ -319,18 +327,12 @@ class cBlock {
 
       if (field.type === 'material') {
         let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
-        if (!tD) {
-          let m = new BABYLON.StandardMaterial('material');
-          object.material = m;
-          return;
-        }
-
-        let m = this.__material(tD);
-        object.material = m;
-        for (let i in this.context.scene.meshes) {
-          if (this.context.scene.meshes[i].parent === object)
-            this.context.scene.meshes[i].material = m;
-        }
+        let m;
+        if (!tD)
+          m = new BABYLON.StandardMaterial('material');
+        else
+          m = this.__material(tD);
+        this.__setMaterialObj(m, object);
         return;
       }
 
@@ -354,5 +356,15 @@ class cBlock {
 
     texture.hasAlpha = values['hasAlpha'];
     return texture;
+  }
+  __setMaterialObj(materialObject, sceneObject) {
+    if (!sceneObject)
+      return;
+    sceneObject.material = materialObject;
+
+    for (let i in this.context.scene.meshes) {
+      if (this.context.scene.meshes[i].parent === sceneObject)
+        this.context.scene.meshes[i].material = materialObject;
+    }
   }
 }

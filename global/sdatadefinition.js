@@ -50,6 +50,12 @@ __localStaticStorageForBindingFields['material'] = [{
   type: 'id',
   group: 'title'
 }, {
+  title: 'Preview Shape',
+  fireSetField: 'previewShape',
+  contextObjectField: null,
+  group: 'options',
+  dataListId: 'applicationdynamicshapelistlookuplist'
+}, {
   title: 'Wireframe',
   fireSetField: 'wireframe',
   contextObjectField: 'wireframe',
@@ -136,6 +142,12 @@ __localStaticStorageForBindingFields['texture'] = [{
   fireSetField: 'title',
   contextObjectField: null,
   group: 'title'
+}, {
+  title: 'Preview Shape',
+  fireSetField: 'previewShape',
+  contextObjectField: null,
+  group: 'options',
+  dataListId: 'applicationdynamicshapelistlookuplist'
 }, {
   title: 'has Alpha',
   fireSetField: 'hasAlpha',
