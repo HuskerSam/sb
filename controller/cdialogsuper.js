@@ -64,12 +64,21 @@ class cDialogSuper {
     if (this.initScene) {
       this.context.activate(null);
       if (this.tag === 'mesh') {
-        this.context.setActiveBlock(new cBlock(this.context, null));
-        this.context.activeBlock.displayType = 'mesh';
+        this.context.setActiveBlock(new cBlock(this.context));
         this.context.activeBlock.setData(this.fireFields.values);
         this.context.activeBlock.loadMesh().then(
           mesh => this._finishShow(),
           err => this._finishShow());
+        return;
+      }
+      if (this.tag === 'shape') {
+        let b = new cBlock(this.context);
+        b.displayOverride = 'none';
+        b.blockType = 'shape';
+        b.setData(this.fireFields.values);
+        this.context.setActiveBlock(b);
+
+        this._finishShow();
         return;
       }
 

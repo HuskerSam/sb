@@ -5,24 +5,6 @@ class cHelperPanels {
     this.context = null;
     document.addEventListener('contextRefreshActiveObject', e => this.handleDataUpdate(e), false);
   }
-  __updateBoundingInfo() {
-    this._sObj = this.context.activeBlock.sceneObject;
-    if (! this._sObj)
-      return;
-    this._boundingBox = this._sObj.getBoundingInfo().boundingBox;
-    this._oDim = {
-      center: this._boundingBox.center,
-      size: this._boundingBox.extendSize,
-      minimum: this._boundingBox.minimum,
-      maximum: this._boundingBox.maximum
-    };
-    this._wDim = {
-      center: this._boundingBox.centerWorld,
-      size: this._boundingBox.extendSizeWorld,
-      minimum: this._boundingBox.minimumWorld,
-      maximum: this._boundingBox.maximumWorld
-    };
-  }
   updateConfig(context, tag, key) {
     this.context = null;
     this.tag = null;
@@ -39,10 +21,10 @@ class cHelperPanels {
 
     if (!this.context)
       return;
+    if (!this.context.activeBlock)
+      return;
 
     this.__updateBoundingInfo();
-    this.context.alphaFadeMesh = false;
-
     if (this.helperPanels['scale']) this._scaleDataUpdate();
     if (this.helperPanels['offset']) this._offsetDataUpdate();
     if (this.helperPanels['rotate']) this._rotateDataUpdate();
@@ -100,6 +82,11 @@ class cHelperPanels {
     let hp = this.helperPanels['offset'];
     let sObj = this.context.activeBlock.sceneObject;
 
+    if (!sObj) {
+      hp.infoDom.innerHTML = ' ';
+      hp.preview.innerHTML = ' ';
+      return;
+    }
     let html = `Bounds x-min${GLOBALUTIL.formatNumber(this._wDim.minimum.x)}  x-max${GLOBALUTIL.formatNumber(this._wDim.maximum.x)}`;
     html += `\n       floor${GLOBALUTIL.formatNumber(this._wDim.minimum.y)}  ceil ${GLOBALUTIL.formatNumber(this._wDim.maximum.y)}`;
     html += `\n       z-min${GLOBALUTIL.formatNumber(this._wDim.minimum.z)}  z-max${GLOBALUTIL.formatNumber(this._wDim.maximum.z)}`;
@@ -108,9 +95,8 @@ class cHelperPanels {
 
     if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
       this.context.setGhostBlock('offsetPreview', null);
-      hp.preview.innerHTML = '';
+      hp.preview.innerHTML = ' ';
     } else {
-      this.context.alphaFadeMesh = true;
       let val = Number(hp.input.value);
       let type = hp.select.value;
       let tNode = sObj.clone('offetClonePreview');
@@ -188,17 +174,22 @@ class cHelperPanels {
     let hp = this.helperPanels['rotate'];
     let sObj = this.context.activeBlock.sceneObject;
 
+    if (!sObj) {
+      hp.infoDom.innerHTML = ' ';
+      hp.preview.innerHTML = ' ';
+      return;
+    }
+
     let r = sObj.rotation;
     let html = `x ${GLOBALUTIL.formatNumber(r.x * 57.2958).trim()}&deg;`;
     html += ` y ${GLOBALUTIL.formatNumber(r.y * 57.2958).trim()}&deg;`;
     html += ` z ${GLOBALUTIL.formatNumber(r.z * 57.2958).trim()}&deg;`;
-
     hp.infoDom.innerHTML = html;
+
     if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
       this.context.setGhostBlock('rotatePreview', null);
-      hp.preview.innerHTML = '';
+      hp.preview.innerHTML = ' ';
     } else {
-      this.context.alphaFadeMesh = true;
       let val = Number(hp.input.value);
       let type = hp.select.value;
       let tNode = sObj.clone('rotateClonePreview');
@@ -274,6 +265,12 @@ class cHelperPanels {
   _scaleDataUpdate() {
     let hp = this.helperPanels['scale'];
 
+    if (! this.context.activeBlock.sceneObject) {
+      hp.infoDom.innerHTML = ' ';
+      hp.preview.innerHTML = ' ';
+      return;
+    }
+
     let html = `Original w${GLOBALUTIL.formatNumber(this._oDim.size.x)} h${GLOBALUTIL.formatNumber(this._oDim.size.y)} d${GLOBALUTIL.formatNumber(this._oDim.size.z)}`;
     html += `\n  Actual w${GLOBALUTIL.formatNumber(this._wDim.size.x)} h${GLOBALUTIL.formatNumber(this._wDim.size.y)} d${GLOBALUTIL.formatNumber(this._wDim.size.z)}`;
 
@@ -281,9 +278,8 @@ class cHelperPanels {
 
     if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
       this.context.setGhostBlock('scalePreview', null);
-      hp.preview.innerHTML = '';
+      hp.preview.innerHTML = ' ';
     } else {
-      this.context.alphaFadeMesh = true;
       let val = Number(hp.input.value) / 100.0;
       let width = this._wDim.size.x * val;
       let height = this._wDim.size.y * val;
@@ -342,5 +338,23 @@ class cHelperPanels {
       helperPanel.slider.value = sender.value;
     }
     this.context.refreshFocus();
+  }
+  __updateBoundingInfo() {
+    this._sObj = this.context.activeBlock.sceneObject;
+    if (!this._sObj)
+      return;
+    this._boundingBox = this._sObj.getBoundingInfo().boundingBox;
+    this._oDim = {
+      center: this._boundingBox.center,
+      size: this._boundingBox.extendSize,
+      minimum: this._boundingBox.minimum,
+      maximum: this._boundingBox.maximum
+    };
+    this._wDim = {
+      center: this._boundingBox.centerWorld,
+      size: this._boundingBox.extendSizeWorld,
+      minimum: this._boundingBox.minimumWorld,
+      maximum: this._boundingBox.maximumWorld
+    };
   }
 }

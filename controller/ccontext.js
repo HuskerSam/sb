@@ -43,7 +43,6 @@ class cContext {
     this.gridObject = null;
     this.gridShown = false;
     this.clearGhostBlocks();
-    this.alphaFadeMesh = false;
     this._scene = newScene;
   }
   get scene() {
@@ -62,14 +61,16 @@ class cContext {
     }
 
     if (scene !== undefined) {
+      this.gridObject = null;
+      this.activeBlock = null;
+      this.clearGhostBlocks();
+
       if (scene === null)
         this.scene = new BABYLON.Scene(this.engine);
       else if (scene !== undefined)
         this.scene = scene;
 
       this._sceneAddDefaultObjects();
-      this.gridObject = null;
-      this.clearGhostBlocks();
     }
 
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
@@ -132,17 +133,14 @@ class cContext {
       gAPPP.activeContext.engine.stopRenderLoop();
   }
   refreshFocus(timeoutCall) {
+    if (gAPPP.activeContext !== this)
+      return;
+
     this._renderFocusDetails();
     this._updateScaffoldingData();
 
     if (!this.activeBlock)
       return;
-
-    if (gAPPP.activeContext !== this)
-      return;
-
-    if (!timeoutCall) //do this twice - once after it renders a frame
-      setTimeout(() => this.refreshFocus(true), 50);
 
     let event = new CustomEvent('contextRefreshActiveObject', {
       detail: {
@@ -151,9 +149,11 @@ class cContext {
       },
       bubbles: true
     });
-    this.canvas.dispatchEvent(event);
-  }
+    document.dispatchEvent(event);
 
+    if (!timeoutCall) //do this twice - once after it renders a frame
+      setTimeout(() => this.refreshFocus(true), 50);
+  }
   loadSceneFromDomFile(file) {
     return new Promise((resolve, reject) => {
       BABYLON.SceneLoader.ShowLoadingScreen = false;
@@ -198,8 +198,6 @@ class cContext {
         }], key));
     });
   }
-
-
   updateObjectURL(objectType, key, file) {
     return new Promise((resolve, reject) => {
       if (objectType === 'mesh') {
@@ -224,7 +222,7 @@ class cContext {
     });
   }
   _updateScaffoldingData() {
-    if (! this.scene)
+    if (!this.scene)
       return;
     let profile = gAPPP.a.profile;
     this.scene.clearColor = GLOBALUTIL.color(profile.canvasColor);
@@ -283,15 +281,27 @@ class cContext {
     if (!this.activeBlock.sceneObject)
       return;
 
-    if (this.alphaFadeMesh) {
-      this.activeBlock.sceneObject.visibility = .5;
-    } else {
-      this.activeBlock.sceneObject.visibility = 1.0;
-    }
+    this.__fadeSelectedObject();
+
     if (gAPPP.a.profile.hideBoundsBox)
       this.activeBlock.sceneObject.showBoundingBox = false;
     else
       this.activeBlock.sceneObject.showBoundingBox = true;
+  }
+  __fadeSelectedObject() {
+    let fade = false;
+    if (this.ghostBlocks['scalePreview'])
+      fade = true;
+    if (this.ghostBlocks['rotatePreview'])
+      fade = true;
+    if (this.ghostBlocks['offsetPreview'])
+      fade = true;
+
+    if (fade) {
+      this.activeBlock.sceneObject.visibility = .5;
+    } else {
+      this.activeBlock.sceneObject.visibility = 1.0;
+    }
   }
   _sceneDisposeDefaultObjects() {
     if (this.camera)
@@ -328,7 +338,6 @@ class cContext {
   _url(fireUrl) {
     return fireUrl.replace(gAPPP.storagePrefix, '');
   }
-
   showHideGuides(hide = false) {
     if (hide)
       return this.setGhostBlock('guides', null);

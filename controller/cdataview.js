@@ -100,6 +100,7 @@ class cDataView {
     this.loadedURL = this.valueCache['url'];
 
     this._updateDisplayFilters();
+
     return contextReloadRequired;
   }
   scrape(e) {
@@ -190,12 +191,13 @@ class cDataView {
 
     this.values = values;
     let contextReloadRequired = this.paint();
+
+    let cT = this.parent.context;
     if (contextReloadRequired) {
-      let cT = this.parent.context;
       if (this.parent.tag === 'mesh' && cT)
         cT.activeBlock.loadMesh().then(() => this.paint());
-
     }
+
   }
   _specialDomFeatures(field) {
     let element = field.dom;

@@ -1,15 +1,15 @@
 class cBlock {
   constructor(context, parent = null, sceneObject = null) {
-    this.blockType = 'sceneObject';
+    this.blockType = 'mesh';
     this.sceneObject = sceneObject;
     this.childBlocks = [];
     this.context = context;
     this.parent = parent;
-    this.displayType = 'mesh';
+    this.displayOverride = 'none';
     this.inheritMaterial = true;
     this.data = {};
   }
-  createShape(valueCache) {
+  _createShape() {
     this.dispose();
     let name = 'singleShapeObject';
 
@@ -18,28 +18,28 @@ class cBlock {
     for (let i in fields) {
       let field = fields[i];
       if (field.shapeOption)
-        if (field.displayGroup === valueCache['shapeType']) {
+        if (field.displayGroup === this.data['shapeType']) {
           if (field.displayType === 'number') {
-            if (GLOBALUTIL.isNumeric(valueCache[field.fireSetField]))
-              options[field.shapeOption] = Number(valueCache[field.fireSetField]);
+            if (GLOBALUTIL.isNumeric(this.data[field.fireSetField]))
+              options[field.shapeOption] = Number(this.data[field.fireSetField]);
           } else
-            options[field.shapeOption] = valueCache[field.fireSetField];
+            options[field.shapeOption] = this.data[field.fireSetField];
         }
     }
 
-    if (valueCache['shapeType'] === 'sphere')
+    if (this.data['shapeType'] === 'sphere')
       return this.sceneObject = BABYLON.MeshBuilder.CreateSphere(name, options, this.context.scene);
 
-    if (valueCache['shapeType'] === 'box')
+    if (this.data['shapeType'] === 'box')
       return this.sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
 
-    if (valueCache['shapeType'] === 'cylinder')
+    if (this.data['shapeType'] === 'cylinder')
       return this.sceneObject = BABYLON.MeshBuilder.CreateCylinder(name, options, this.context.scene);
 
-    if (valueCache['shapeType'] === 'text')
+    if (this.data['shapeType'] === 'text')
       return this.__createTextMesh(name, options);
 
-    this.shapeObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
+    this.sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
   }
   createGuides(size) {
     this.dispose();
@@ -105,8 +105,6 @@ class cBlock {
     for (let i in this.childBlocks)
       this.childBlocks[i].dispose();
     this.childBlocks = [];
-    this.blockType = 'sceneObject';
-    this.displayType = 'mesh';
   }
   loadMesh() {
     return new Promise((resolve, reject) => {
@@ -114,8 +112,7 @@ class cBlock {
       let filename = this.context._url(this.data['url']);
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
         (newMeshes, particleSystems, skeletons) => {
-          if (this.sceneObject)
-            this.sceneObject.dispose();
+          this.dispose();
           this.sceneObject = newMeshes[0];
           resolve();
         },
@@ -131,22 +128,22 @@ class cBlock {
         });
     });
   }
-  setData(valueCache) {
-    this.data = valueCache;
+  setData(values) {
     if (this.context !== gAPPP.activeContext)
       return;
 
-    if (this.displayType === 'texture')
-      this.context.sceneObject.material.diffuseTexture = this.__texture(valueCache);
+    if (this.displayOverride === 'texture') {
+      this.sceneObject.material.diffuseTexture = this.__texture(values);
+      return;
+    }
+    if (this.displayOverride === 'material') {
+      this.sceneObject.material = this.__material(values);
+      return;
+    }
 
-    if (this.displayType === 'material')
-      this.context.sceneObject.material = this.__material(valueCache);
-
-    if (this.displayType === 'mesh')
-      this._setObj(valueCache);
-
-    if (this.displayType === 'shape')
-      this._setShape(valueCache);
+    this.data = values;
+    if (this.blockType === 'mesh') this._meshHandleUpdate();
+    if (this.blockType === 'shape') this._shapeHandleUpdate();
 
     this.context.refreshFocus();
   }
@@ -157,32 +154,31 @@ class cBlock {
     this.childBlocks.push(child);
     return child;
   }
-  _setObj(values) {
+  _meshHandleUpdate() {
     let fields = sDataDefinition.bindingFields('mesh');
     for (let i in fields) {
       let field = fields[i];
-      let value = values[field.fireSetField];
+      let value = this.data[field.fireSetField];
 
       if (field.contextObjectField)
         if (this.sceneObject)
           this.__updateObjectValue(field, value, this.sceneObject);
     }
   }
-  _setShape(contextObject, values) {
+  _shapeHandleUpdate() {
     this.dispose();
-    let newShape = this._createSceneObject(values);
+    let newShape = this._createShape();
     if (!newShape) {
       return;
     }
-    this.context.sceneObject = newShape;
 
     let fields = sDataDefinition.bindingFields('shape');
     for (let i in fields) {
       let field = fields[i];
-      let value = values[field.fireSetField];
+      let value = this.data[field.fireSetField];
 
       if (field.contextObjectField)
-        this.__updateObjectValue(field, value, this.context.sceneObject);
+        this.__updateObjectValue(field, value, this.sceneObject);
     }
   }
   __createTextMesh(name, options) {
