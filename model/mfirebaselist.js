@@ -182,4 +182,11 @@ class mFirebaseList extends mFirebaseSuper {
         innerHTML += '<option>' + this.fireDataValuesByKey[i]['title'] + '</option>';
     this.domTitleList.innerHTML = innerHTML;
   }
+  commitUpdateList(fieldUpdates, key) {
+    if (!key) {
+      console.log('commitUpdateList no key error', fieldUpdates, key);
+      return;
+    }
+    super.commitUpdateList(fieldUpdates, key);
+  }
 }

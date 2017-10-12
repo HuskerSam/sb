@@ -8,15 +8,16 @@ class cDataView {
     this.focusLock = true;
     this.renderImageUpdateNeeded = false;
     this.loadedURL = '';
-
+    this.helpers = new cHelperPanels(this);
     this.groups = {};
     this.scrapeCache = [];
     this.valueCache = {};
 
-    for (let i in this.fields)
-      this._initField(this.fields[i], i.toString());
+    for (let i in this.fields) this._initField(this.fields[i]);
+
+    this.helpers.initHelperGroups();
   }
-  _initField(f, index) {
+  _initField(f) {
     let c = document.createElement('div');
     let g = null;
     let t = document.createElement('input');
@@ -70,6 +71,8 @@ class cDataView {
     let scrapes = {};
     let valueCache = {};
     let contextReloadRequired = false;
+
+    this.helpers.updateConfig(this.contextObject, this.parent.tag, this.parent.key);
 
     for (let i in this.fields) {
       let f = this.fields[i]
@@ -246,40 +249,11 @@ class cDataView {
       c.appendChild(p_bar);
       field.progressBar = p_bar;
     }
-    if (field.helperType === 'vector') {
-      let hp = this.createHelperDOM(field.domContainer);
-
-      let aD = hp.actionDom;
-      let sliderText0 = `<input type="range" min="${field.rangeMin}" max="${field.rangeMax}" step="${field.rangeStep}" value="0" /><br>`;
-      let sliderText1 = `<input type="range" min="${field.rangeMin}" max="${field.rangeMax}" step="${field.rangeStep}" value="0" /><br>`;
-      let sliderText2 = `<input type="range" min="${field.rangeMin}" max="${field.rangeMax}" step="${field.rangeStep}" value="0" /><br>`;
-      let htmlAction = '<div class="preview"></div>';
-      aD.innerHTML = sliderText0 + sliderText1 + sliderText2 + htmlAction;
-      hp.slider = aD.querySelector('input[type=range]');
-      //hp.slider.addEventListener('input', e => this._handleInputChange(hp, hp.slider), false);
-      hp.preview = aD.querySelector('.preview');
-      field.helperPanel = hp;
-    }
 
     if (field.dataListId)
       element.setAttribute('list', field.dataListId);
-  }
-  createHelperDOM(containerDom) {
-    let helperDom = document.createElement('div');
-    helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box');
-    let infoDom = document.createElement('div');
-    infoDom.classList.add('info-area');
-    helperDom.appendChild(infoDom);
-    let actionDom = document.createElement('div');
-    actionDom.setAttribute('class', 'action-area');
-    helperDom.appendChild(actionDom);
-    containerDom.appendChild(helperDom);
-    return {
-      containerDom,
-      helperDom,
-      infoDom,
-      actionDom
-    };
+
+    this.helpers.initHelperField(field);
   }
   _updateFieldDom(f) {
     let updateShown = false;

@@ -82,4 +82,18 @@ class GLOBALUTIL {
       rgb = this.colorRGB255(v);
     dom.parentNode.style.background = rgb;
   }
+  static formatNumber(num) {
+    let leftSide = 3;
+    let rightSide = 3;
+    if (!this.isNumeric(num))
+      num = 0;
+    num = Number(num);
+    let str = num.toFixed(rightSide);
+    let parts = str.split('.');
+    let left = parts[0];
+    let right = parts[1];
+    let leftFinal = left.padStart(leftSide, ' ');
+    let rightFinal = right.padEnd(rightSide, ' ');
+    return leftFinal + '.' + rightFinal;
+  }
 }

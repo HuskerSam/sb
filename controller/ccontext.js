@@ -2,9 +2,7 @@ class cContext {
   constructor(canvas, initEngine) {
     this.gridShown = false;
     this.gridObject = null;
-    this.scalePreviewMesh = null;
-    this.offsetPreviewMesh = null;
-    this.rotatePreviewMesh = null;
+    this.ghostObjects = {};
     this.guidesSceneObjects = [];
     this.light = null;
     this.camera = null;
@@ -16,7 +14,6 @@ class cContext {
 
     this.importedMeshes = [];
     this.importedMeshClones = [];
-    this.helperPanels = {};
 
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
@@ -24,6 +21,20 @@ class cContext {
       });
       this.engine.enableOfflineSupport = false;
     }
+  }
+  setGhostObject(name, obj) {
+    if (this.ghostObjects[name] === obj)
+      return;
+
+    if (this.ghostObjects[name])
+      this.ghostObjects[name].dispose();
+    this.ghostObjects[name] = obj;
+  }
+  clearGhostObjects() {
+    for (let i in this.ghostObjects)
+      if (this.ghostObjects[i])
+        this.ghostObjects[i].dispose();
+    this.ghostObjects = [];
   }
   set scene(newScene) {
     if (gAPPP.activeContext)
@@ -36,9 +47,7 @@ class cContext {
     this.gridShown = false;
     this.guidesSceneObjects = [];
     this.guidesShown = false;
-    this.scalePreviewMesh = null;
-    this.offsetPreviewMesh = null;
-    this.rotatePreviewMesh = null;
+    this.clearGhostObjects();
     this.alphaFadeMesh = false;
     this._scene = newScene;
   }
@@ -66,10 +75,7 @@ class cContext {
       this._sceneAddDefaultObjects();
       this.guidesSceneObjects = {};
       this.gridObject = null;
-      this.offPreviewMesh = null;
-      this.scalePreviewMesh = null;
-      this.rotatePreviewMesh = null;
-      this.offsetPreviewMesh = null;
+      this.clearGhostObjects();
     }
 
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
@@ -409,20 +415,6 @@ class cContext {
 
     return textWrapperMesh;
   }
-  _formatNumber(num) {
-    let leftSide = 3;
-    let rightSide = 3;
-    if (!GLOBALUTIL.isNumeric(num))
-      num = 0;
-    num = Number(num);
-    let str = num.toFixed(rightSide);
-    let parts = str.split('.');
-    let left = parts[0];
-    let right = parts[1];
-    let leftFinal = left.padStart(leftSide, ' ');
-    let rightFinal = right.padEnd(rightSide, ' ');
-    return leftFinal + '.' + rightFinal;
-  }
   _loadMeshFromDomFile(file) {
     return new Promise((resolve, reject) => {
       let URI = URL.createObjectURL(file);
@@ -526,237 +518,29 @@ class cContext {
       return;
 
     if (!timeoutCall) //do this twice - once after it renders a frame
-      setTimeout(() => this._refreshActiveObjectInfo(true), 100);
+      setTimeout(() => this._refreshActiveObjectInfo(true), 50);
+
+    let event = new CustomEvent('contextRefreshActiveObject', {
+      detail: {
+        context: this
+      },
+      bubbles: true
+    });
+    this.canvas.dispatchEvent(event);
 
     if (gAPPP.a.profile.hideBoundsBox)
       this.activeContextObject.sceneObject.showBoundingBox = false;
     else
       this.activeContextObject.sceneObject.showBoundingBox = true;
 
-    let sObj = this.activeContextObject.sceneObject;
-    let boundingBox = sObj.getBoundingInfo().boundingBox;
-    let oDim = {
-      center: boundingBox.center,
-      size: boundingBox.extendSize,
-      minimum: boundingBox.minimum,
-      maximum: boundingBox.maximum
-    };
-    let wDim = {
-      center: boundingBox.centerWorld,
-      size: boundingBox.extendSizeWorld,
-      minimum: boundingBox.minimumWorld,
-      maximum: boundingBox.maximumWorld
-    };
-
-    this.alphaFadeMesh = false;
-
-    if (this.helperPanels['scale']) {
-      let hp = this.helperPanels['scale'];
-
-      let html = `Original w${this._formatNumber(oDim.size.x)} h${this._formatNumber(oDim.size.y)} d${this._formatNumber(oDim.size.z)}`;
-      html += `\n  Actual w${this._formatNumber(wDim.size.x)} h${this._formatNumber(wDim.size.y)} d${this._formatNumber(wDim.size.z)}`;
-
-      hp.infoDom.innerHTML = html;
-
-      if (this.scalePreviewMesh !== null) {
-        this.scalePreviewMesh.dispose();
-        this.scalePreviewMesh = null;
-      }
-
-      if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
-        hp.preview.innerHTML = '';
-      } else {
-        this.alphaFadeMesh = true;
-        let val = Number(hp.input.value) / 100.0;
-        let width = wDim.size.x * val;
-        let height = wDim.size.y * val;
-        let depth = wDim.size.z * val;
-        let html = '';
-        html += `Scaled w${this._formatNumber(width)} h${this._formatNumber(height)} d${this._formatNumber(depth)}`;
-
-        this.scalePreviewMesh = sObj.clone('scaleClonePreview');
-        this.scalePreviewMesh.scaling.x = val * sObj.scaling.x;
-        this.scalePreviewMesh.scaling.y = val * sObj.scaling.y;
-        this.scalePreviewMesh.scaling.z = val * sObj.scaling.z;
-        this.scalePreviewMesh.visibility = 1;
-        this.scalePreviewMesh.material = new BABYLON.StandardMaterial('material', this.scene);
-        this.scalePreviewMesh.material.diffuseColor = GLOBALUTIL.color('1,.5,0');
-        this.scalePreviewMesh.material.diffuseColor.alpha = 0.7;
-        hp.preview.innerHTML = html;
-      }
-    }
-
-    if (this.helperPanels['offset']) {
-      let hp = this.helperPanels['offset'];
-
-      let html = `Bounds x-min${this._formatNumber(wDim.minimum.x)}  x-max${this._formatNumber(wDim.maximum.x)}`;
-      html += `\n       floor${this._formatNumber(wDim.minimum.y)}  ceil ${this._formatNumber(wDim.maximum.y)}`;
-      html += `\n       z-min${this._formatNumber(wDim.minimum.z)}  z-max${this._formatNumber(wDim.maximum.z)}`;
-
-      hp.infoDom.innerHTML = html;
-      if (this.offsetPreviewMesh !== null) {
-        this.offsetPreviewMesh.dispose();
-        this.offsetPreviewMesh = null;
-      }
-
-      if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
-        hp.preview.innerHTML = '';
-      } else {
-        this.alphaFadeMesh = true;
-        let val = Number(hp.input.value);
-        let type = hp.select.value;
-        this.offsetPreviewMesh = sObj.clone('offetClonePreview');
-        let x = (type === 'X') ? 1 : 0.0;
-        let y = (type === 'Y') ? 1 : 0.0;
-        let z = (type === 'Z') ? 1 : 0.0;
-
-        let vector = new BABYLON.Vector3(x, y, z);
-        this.offsetPreviewMesh.translate(vector, val, BABYLON.Space.WORLD);
-
-        let x2 = this.offsetPreviewMesh.position.x;
-        let y2 = this.offsetPreviewMesh.position.y;
-        let z2 = this.offsetPreviewMesh.position.z;
-
-        let html = `x ${this._formatNumber(x2)} y ${this._formatNumber(y2)} z ${this._formatNumber(z2)}`;
-
-        this.offsetPreviewMesh.visibility = 1;
-        this.offsetPreviewMesh.material = new BABYLON.StandardMaterial('material', this.scene);
-        this.offsetPreviewMesh.material.diffuseColor = GLOBALUTIL.color('.2,.8,0');
-        this.offsetPreviewMesh.material.diffuseColor.alpha = 0.7;
-        hp.preview.innerHTML = html;
-      }
-    }
-
-    if (this.helperPanels['rotate']) {
-      let hp = this.helperPanels['rotate'];
-
-      let r = sObj.rotation;
-      let html = `x ${this._formatNumber(r.x * 57.2958).trim()}&deg;`;
-      html += ` y ${this._formatNumber(r.y * 57.2958).trim()}&deg;`;
-      html += ` z ${this._formatNumber(r.z * 57.2958).trim()}&deg;`;
-
-      hp.infoDom.innerHTML = html;
-      if (this.rotatePreviewMesh !== null) {
-        this.rotatePreviewMesh.dispose();
-        this.rotatePreviewMesh = null;
-      }
-
-      if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
-        hp.preview.innerHTML = '';
-      } else {
-        this.alphaFadeMesh = true;
-        let val = Number(hp.input.value);
-        let type = hp.select.value;
-        this.rotatePreviewMesh = sObj.clone('rotateClonePreview');
-
-        let x2 = Number(sObj.rotation.x);
-        let y2 = Number(sObj.rotation.y);
-        let z2 = Number(sObj.rotation.z);
-        let vector = new BABYLON.Vector3(x2, y2, z2);
-        vector[type.toLowerCase()] = val / 57.2958;
-        this.rotatePreviewMesh.rotation = vector;
-        let x = this._formatNumber(this.rotatePreviewMesh.rotation.x * 57.2958).trim();
-        let y = this._formatNumber(this.rotatePreviewMesh.rotation.y * 57.2958).trim();
-        let z = this._formatNumber(this.rotatePreviewMesh.rotation.z * 57.2958).trim();
-        let html = `x ${x}&deg; y ${y}&deg; z ${z}&deg;`;
-
-        this.rotatePreviewMesh.visibility = 1;
-        this.rotatePreviewMesh.material = new BABYLON.StandardMaterial('material', this.scene);
-        this.rotatePreviewMesh.material.diffuseColor = GLOBALUTIL.color('0,.3,.8');
-        this.rotatePreviewMesh.material.diffuseColor.alpha = 0.7;
-        hp.preview.innerHTML = html;
-      }
-    }
-
+    this._updateSelectedObjectFade();
+  }
+  _updateSelectedObjectFade() {
     if (this.alphaFadeMesh) {
-      sObj.visibility = .5;
+      this.activeContextObject.sceneObject.visibility = .5;
     } else {
-      sObj.visibility = 1.0;
+      this.activeContextObject.sceneObject.visibility = 1.0;
     }
-  }
-  scaleChangeApply(helperPanel, fireSet, key) {
-    if (helperPanel.input.value === '100' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
-      return;
-
-    let sObj = this.activeContextObject.sceneObject;
-    let nObj = this.scalePreviewMesh;
-    let updates = [];
-    updates.push({
-      field: 'simpleUIDetails.scaleX',
-      newValue: this._formatNumber(nObj.scaling.x).trim(),
-      oldValue: this._formatNumber(sObj.scaling.x).trim()
-    });
-    updates.push({
-      field: 'simpleUIDetails.scaleY',
-      newValue: this._formatNumber(nObj.scaling.y).trim(),
-      oldValue: this._formatNumber(sObj.scaling.y).trim()
-    });
-    updates.push({
-      field: 'simpleUIDetails.scaleZ',
-      newValue: this._formatNumber(nObj.scaling.z).trim(),
-      oldValue: this._formatNumber(sObj.scaling.z).trim()
-    });
-
-    helperPanel.input.value = 100;
-    helperPanel.slider.value = 100;
-    fireSet.commitUpdateList(updates, key);
-    this._refreshActiveObjectInfo();
-  }
-  offsetChangeApply(helperPanel, fireSet, key) {
-    if (helperPanel.input.value === '0' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
-      return;
-
-    let sObj = this.activeContextObject.sceneObject;
-    let nObj = this.offsetPreviewMesh;
-    let updates = [];
-    updates.push({
-      field: 'simpleUIDetails.positionX',
-      newValue: this._formatNumber(nObj.position.x).trim(),
-      oldValue: this._formatNumber(sObj.position.x).trim()
-    });
-    updates.push({
-      field: 'simpleUIDetails.positionY',
-      newValue: this._formatNumber(nObj.position.y).trim(),
-      oldValue: this._formatNumber(sObj.position.y).trim()
-    });
-    updates.push({
-      field: 'simpleUIDetails.positionZ',
-      newValue: this._formatNumber(nObj.position.z).trim(),
-      oldValue: this._formatNumber(sObj.position.z).trim()
-    });
-
-    helperPanel.input.value = 0;
-    helperPanel.slider.value = 0;
-    fireSet.commitUpdateList(updates, key);
-    this._refreshActiveObjectInfo();
-  }
-  rotateChangeApply(helperPanel, fireSet, key) {
-    if (helperPanel.input.value === '0' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
-      return;
-
-    let sObj = this.activeContextObject.sceneObject;
-    let nObj = this.rotatePreviewMesh;
-    let updates = [];
-    updates.push({
-      field: 'simpleUIDetails.rotateX',
-      newValue: this._formatNumber(nObj.rotation.x).trim(),
-      oldValue: this._formatNumber(sObj.rotation.x).trim()
-    });
-    updates.push({
-      field: 'simpleUIDetails.rotateY',
-      newValue: this._formatNumber(nObj.rotation.y).trim(),
-      oldValue: this._formatNumber(sObj.rotation.y).trim()
-    });
-    updates.push({
-      field: 'simpleUIDetails.rotateZ',
-      newValue: this._formatNumber(nObj.rotation.z).trim(),
-      oldValue: this._formatNumber(sObj.rotation.z).trim()
-    });
-
-    helperPanel.input.value = 0;
-    helperPanel.slider.value = 0;
-    fireSet.commitUpdateList(updates, key);
-    this._refreshActiveObjectInfo();
   }
   _sceneDisposeDefaultObjects(leaveCameraAndLight) {
     if (!leaveCameraAndLight) {
@@ -771,18 +555,9 @@ class cContext {
     this._showGuides(true);
     this._showGrid(true);
 
-    if (this.scalePreviewMesh !== null) {
-      this.scalePreviewMesh.dispose();
-      this.scalePreviewMesh = null;
-    }
-    if (this.offsetPreviewMesh !== null) {
-      this.offsetPreviewMesh.dispose();
-      this.offsetPreviewMesh = null;
-    }
-    if (this.rotatePreviewMesh !== null) {
-      this.rotatePreviewMesh.dispose();
-      this.rotatePreviewMesh = null;
-    }
+    this.setGhostObject('scalePreview', null);
+    this.setGhostObject('offsetPreview', null);
+    this.setGhostObject('rotatePreview', null);
   }
   _sceneAddDefaultObjects() {
     this.scene.clearColor = GLOBALUTIL.color('.7,.7,.7');
