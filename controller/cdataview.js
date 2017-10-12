@@ -120,7 +120,8 @@ class cDataView {
     }
 
     if (this.parent.context)
-      this.parent.context.activeBlock.setData(this.valueCache);
+      if (this.parent.context.activeBlock)
+        this.parent.context.activeBlock.setData(this.valueCache);
     this._commitUpdates(this.valueCache);
   }
   uploadURL(f) {

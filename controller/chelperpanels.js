@@ -6,7 +6,9 @@ class cHelperPanels {
     document.addEventListener('contextRefreshActiveObject', e => this.handleDataUpdate(e), false);
   }
   __updateBoundingInfo() {
-    this._sObj = this.context.activeContextObject.sceneObject;
+    this._sObj = this.context.activeBlock.sceneObject;
+    if (! this._sObj)
+      return;
     this._boundingBox = this._sObj.getBoundingInfo().boundingBox;
     this._oDim = {
       center: this._boundingBox.center,
@@ -21,13 +23,13 @@ class cHelperPanels {
       maximum: this._boundingBox.maximumWorld
     };
   }
-  updateConfig(contextObject, tag, key) {
+  updateConfig(context, tag, key) {
     this.context = null;
     this.tag = null;
     this.key = null;
-    if (!contextObject)
+    if (!context)
       return;
-    this.context = contextObject.context;
+    this.context = context;
     this.tag = tag;
     this.key = key;
   }
@@ -44,8 +46,6 @@ class cHelperPanels {
     if (this.helperPanels['scale']) this._scaleDataUpdate();
     if (this.helperPanels['offset']) this._offsetDataUpdate();
     if (this.helperPanels['rotate']) this._rotateDataUpdate();
-
-    this.context._updateSelectedObjectFade();
   }
   initHelperField(field) {
     if (field.helperType === 'vector') {
@@ -73,7 +73,7 @@ class cHelperPanels {
     if (helperPanel.input.value === '0' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
       return;
 
-    let sObj = this.context.activeContextObject.sceneObject;
+    let sObj = this.context.activeBlock.sceneObject;
     let nObj = this.context.ghostBlocks['offsetPreview'].sceneObject;
     let updates = [];
     updates.push({
@@ -98,16 +98,16 @@ class cHelperPanels {
   }
   _offsetDataUpdate() {
     let hp = this.helperPanels['offset'];
-    let sObj = this.context.activeContextObject.sceneObject;
+    let sObj = this.context.activeBlock.sceneObject;
 
     let html = `Bounds x-min${GLOBALUTIL.formatNumber(this._wDim.minimum.x)}  x-max${GLOBALUTIL.formatNumber(this._wDim.maximum.x)}`;
     html += `\n       floor${GLOBALUTIL.formatNumber(this._wDim.minimum.y)}  ceil ${GLOBALUTIL.formatNumber(this._wDim.maximum.y)}`;
     html += `\n       z-min${GLOBALUTIL.formatNumber(this._wDim.minimum.z)}  z-max${GLOBALUTIL.formatNumber(this._wDim.maximum.z)}`;
 
     hp.infoDom.innerHTML = html;
-    this.context.setGhostBlock('offsetPreview', null);
 
     if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
+      this.context.setGhostBlock('offsetPreview', null);
       hp.preview.innerHTML = '';
     } else {
       this.context.alphaFadeMesh = true;
@@ -161,7 +161,7 @@ class cHelperPanels {
     if (helperPanel.input.value === '0' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
       return;
 
-    let sObj = this.context.activeContextObject.sceneObject;
+    let sObj = this.context.activeBlock.sceneObject;
     let nObj = this.context.ghostBlocks['rotatePreview'].sceneObject;
     let updates = [];
     updates.push({
@@ -186,7 +186,7 @@ class cHelperPanels {
   }
   _rotateDataUpdate() {
     let hp = this.helperPanels['rotate'];
-    let sObj = this.context.activeContextObject.sceneObject;
+    let sObj = this.context.activeBlock.sceneObject;
 
     let r = sObj.rotation;
     let html = `x ${GLOBALUTIL.formatNumber(r.x * 57.2958).trim()}&deg;`;
@@ -194,9 +194,8 @@ class cHelperPanels {
     html += ` z ${GLOBALUTIL.formatNumber(r.z * 57.2958).trim()}&deg;`;
 
     hp.infoDom.innerHTML = html;
-    this.context.setGhostBlock('rotatePreview', null);
-
     if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
+      this.context.setGhostBlock('rotatePreview', null);
       hp.preview.innerHTML = '';
     } else {
       this.context.alphaFadeMesh = true;
@@ -249,7 +248,7 @@ class cHelperPanels {
     if (helperPanel.input.value === '100' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
       return;
 
-    let sObj = this.context.activeContextObject.sceneObject;
+    let sObj = this.context.activeBlock.sceneObject;
     let nObj = this.context.ghostBlocks['scalePreview'].sceneObject;
     let updates = [];
     updates.push({
@@ -280,9 +279,8 @@ class cHelperPanels {
 
     hp.infoDom.innerHTML = html;
 
-    this.context.setGhostBlocks('scalePreview', null);
-
     if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
+      this.context.setGhostBlock('scalePreview', null);
       hp.preview.innerHTML = '';
     } else {
       this.context.alphaFadeMesh = true;
@@ -343,10 +341,6 @@ class cHelperPanels {
       helperPanel.input.value = sender.value;
       helperPanel.slider.value = sender.value;
     }
-    this.handleDataUpdate({
-      detail: {
-        context: this.context
-      }
-    });
+    this.context.refreshFocus();
   }
 }

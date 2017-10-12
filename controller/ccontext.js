@@ -132,6 +132,9 @@ class cContext {
       gAPPP.activeContext.engine.stopRenderLoop();
   }
   refreshFocus(timeoutCall) {
+    this._renderFocusDetails();
+    this._updateScaffoldingData();
+
     if (!this.activeBlock)
       return;
 
@@ -149,9 +152,6 @@ class cContext {
       bubbles: true
     });
     this.canvas.dispatchEvent(event);
-
-    this._renderFocusDetails();
-    this._updateScaffoldingData();
   }
 
   loadSceneFromDomFile(file) {
@@ -224,6 +224,8 @@ class cContext {
     });
   }
   _updateScaffoldingData() {
+    if (! this.scene)
+      return;
     let profile = gAPPP.a.profile;
     this.scene.clearColor = GLOBALUTIL.color(profile.canvasColor);
     if (!this.camera)
