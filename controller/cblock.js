@@ -133,10 +133,22 @@ class cBlock {
       return;
 
     if (this.displayOverride === 'texture') {
+      this.data = {
+        shapeType: 'cylinder',
+        cylinderDiameter: 10,
+        cylinderDiameter: 4
+      };
+      this._createShape();
+      this.sceneObject.material = new BABYLON.StandardMaterial('texturepopupmaterial');
       this.sceneObject.material.diffuseTexture = this.__texture(values);
       return;
     }
     if (this.displayOverride === 'material') {
+      this.data = {
+        shapeType: 'sphere',
+        sphereDiameter: 10
+      };
+      this._createShape();
       this.sceneObject.material = this.__material(values);
       return;
     }

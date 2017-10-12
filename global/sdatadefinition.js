@@ -143,36 +143,36 @@ __localStaticStorageForBindingFields['texture'] = [{
   type: 'boolean',
   group: 'options'
 }, {
-  title: 'Offset v (0-1)',
-  fireSetField: 'vOffset',
-  contextObjectField: 'vOffset',
-  group: 'offset',
-  displayType: 'number'
-}, {
-  title: 'Offset u (0-1)',
-  fireSetField: 'uOffset',
-  contextObjectField: 'uOffset',
-  group: 'offset',
-  displayType: 'number'
-}, {
-  title: 'Scale v (1/x)',
-  fireSetField: 'vScale',
-  contextObjectField: 'vScale',
-  group: 'scale',
-  displayType: 'number'
-}, {
-  title: 'Scale u (1/x)',
-  fireSetField: 'uScale',
-  contextObjectField: 'uScale',
-  group: 'scale',
-  displayType: 'number'
-}, {
   title: 'Url (Image)',
   fireSetField: 'url',
   contextObjectField: null,
   type: 'url',
   uploadType: 'texture',
   group: 'url'
+}, {
+  title: 'Offset v (0-1)',
+  fireSetField: 'vOffset',
+  contextObjectField: 'vOffset',
+  group: 'textureoffset',
+  displayType: 'number'
+}, {
+  title: 'Offset u (0-1)',
+  fireSetField: 'uOffset',
+  contextObjectField: 'uOffset',
+  group: 'textureoffset',
+  displayType: 'number'
+}, {
+  title: 'Scale v (1/x)',
+  fireSetField: 'vScale',
+  contextObjectField: 'vScale',
+  group: 'texturescale',
+  displayType: 'number'
+}, {
+  title: 'Scale u (1/x)',
+  fireSetField: 'uScale',
+  contextObjectField: 'uScale',
+  group: 'texturescale',
+  displayType: 'number'
 }];
 __localStaticStorageForBindingFields['scene'] = [{
   title: 'Title',

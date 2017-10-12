@@ -77,7 +77,24 @@ class cDialogSuper {
         b.blockType = 'shape';
         b.setData(this.fireFields.values);
         this.context.setActiveBlock(b);
-
+        this._finishShow();
+        return;
+      }
+      if (this.tag === 'material') {
+        let b = new cBlock(this.context);
+        b.displayOverride = 'material';
+        b.blockType = 'shape';
+        b.setData(this.fireFields.values);
+        this.context.setActiveBlock(b);
+        this._finishShow();
+        return;
+      }
+      if (this.tag === 'texture') {
+        let b = new cBlock(this.context);
+        b.displayOverride = 'texture';
+        b.blockType = 'shape';
+        b.setData(this.fireFields.values);
+        this.context.setActiveBlock(b);
         this._finishShow();
         return;
       }
