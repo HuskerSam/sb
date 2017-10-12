@@ -92,7 +92,7 @@ class cDataView {
     this.scrapeCache = scrapes;
     this.focusLock = gAPPP.a.profile['inputFocusLock'];
     if (contextObject)
-      contextObject.context.setSceneObject(this.contextObject, valueCache);
+      contextObject.context.activeBlock.setBlock(valueCache);
     this.loadedURL = this.valueCache['url'];
 
     this._updateDisplayFilters();

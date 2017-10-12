@@ -74,7 +74,7 @@ class cHelperPanels {
       return;
 
     let sObj = this.context.activeContextObject.sceneObject;
-    let nObj = this.context.ghostObjects['offsetPreview'];
+    let nObj = this.context.ghostBlocks['offsetPreview'].sceneObject;
     let updates = [];
     updates.push({
       field: 'simpleUIDetails.positionX',
@@ -105,7 +105,7 @@ class cHelperPanels {
     html += `\n       z-min${GLOBALUTIL.formatNumber(this._wDim.minimum.z)}  z-max${GLOBALUTIL.formatNumber(this._wDim.maximum.z)}`;
 
     hp.infoDom.innerHTML = html;
-    this.context.setGhostObject('offsetPreview', null);
+    this.context.setGhostBlock('offsetPreview', null);
 
     if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
       hp.preview.innerHTML = '';
@@ -131,7 +131,7 @@ class cHelperPanels {
       tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
       tNode.material.diffuseColor = GLOBALUTIL.color('.2,.8,0');
       tNode.material.diffuseColor.alpha = 0.7;
-      this.context.setGhostObject('offsetPreview', tNode);
+      this.context.setGhostBlock('offsetPreview', new cBlock(this.context, null, tNode));
       hp.preview.innerHTML = html;
     }
 
@@ -162,7 +162,7 @@ class cHelperPanels {
       return;
 
     let sObj = this.context.activeContextObject.sceneObject;
-    let nObj = this.context.ghostObjects['rotatePreview'];
+    let nObj = this.context.ghostBlocks['rotatePreview'].sceneObject;
     let updates = [];
     updates.push({
       field: 'simpleUIDetails.rotateX',
@@ -194,7 +194,7 @@ class cHelperPanels {
     html += ` z ${GLOBALUTIL.formatNumber(r.z * 57.2958).trim()}&deg;`;
 
     hp.infoDom.innerHTML = html;
-    this.context.setGhostObject('rotatePreview', null);
+    this.context.setGhostBlock('rotatePreview', null);
 
     if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
       hp.preview.innerHTML = '';
@@ -219,7 +219,7 @@ class cHelperPanels {
       tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
       tNode.material.diffuseColor = GLOBALUTIL.color('0,.3,.8');
       tNode.material.diffuseColor.alpha = 0.7;
-      this.context.setGhostObject('rotatePreview', tNode);
+      this.context.setGhostBlock('rotatePreview', new cBlock(this.context, null, tNode));
       hp.preview.innerHTML = html;
     }
   }
@@ -250,7 +250,7 @@ class cHelperPanels {
       return;
 
     let sObj = this.context.activeContextObject.sceneObject;
-    let nObj = this.context.ghostObjects['scalePreview'];
+    let nObj = this.context.ghostBlocks['scalePreview'].sceneObject;
     let updates = [];
     updates.push({
       field: 'simpleUIDetails.scaleX',
@@ -280,7 +280,7 @@ class cHelperPanels {
 
     hp.infoDom.innerHTML = html;
 
-    this.context.setGhostObject('scalePreview', null);
+    this.context.setGhostBlocks('scalePreview', null);
 
     if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
       hp.preview.innerHTML = '';
@@ -301,7 +301,7 @@ class cHelperPanels {
       tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
       tNode.material.diffuseColor = GLOBALUTIL.color('1,.5,0');
       tNode.material.diffuseColor.alpha = 0.7;
-      this.context.setGhostObject('scalePreview', tNode);
+      this.context.setGhostBlock('scalePreview', new cBlock(this.context, null, tNode));
       hp.preview.innerHTML = html;
     }
   }
