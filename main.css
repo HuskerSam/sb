@@ -551,6 +551,7 @@ button i.material-icons {
 .selected-mesh-bounds-helper-box .preview {
   font-size: .7em;
   background: rgba(255, 255, 255, .5);
+  clear:both;
 }
 
 .selected-mesh-bounds-helper-box .action-area .preview, .selected-mesh-bounds-helper-box .action-area button {

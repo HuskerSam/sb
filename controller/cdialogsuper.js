@@ -63,6 +63,7 @@ class cDialogSuper {
 
     if (this.initScene) {
       this.context.activate(null);
+
       if (this.tag === 'mesh') {
         this.context.setActiveBlock(new cBlock(this.context));
         this.context.activeBlock.setData(this.fireFields.values);
@@ -99,9 +100,11 @@ class cDialogSuper {
         return;
       }
 
-      this.context.loadScene(this.fireFields.values).then(
-        r => this._finishShow(),
-        e => this._finishShow());
+      if (this.tag === 'scene') {
+        this.context.loadSceneURL(this.fireFields.values['url']).then(
+          r => this._finishShow(),
+          e => this._finishShow());
+      }
     } else
       this._finishShow();
   }

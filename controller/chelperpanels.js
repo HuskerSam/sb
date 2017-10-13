@@ -24,7 +24,6 @@ class cHelperPanels {
     if (!this.context.activeBlock)
       return;
 
-    this.__updateBoundingInfo();
     if (this.helperPanels['scale']) this._scaleDataUpdate();
     if (this.helperPanels['offset']) this._offsetDataUpdate();
     if (this.helperPanels['rotate']) this._rotateDataUpdate();
@@ -52,8 +51,6 @@ class cHelperPanels {
   }
   _offsetChangeApply() {
     let helperPanel = this.helperPanels['offset'];
-    if (helperPanel.input.value === '0' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
-      return;
 
     let sObj = this.context.activeBlock.sceneObject;
     let nObj = this.context.ghostBlocks['offsetPreview'].sceneObject;
@@ -74,8 +71,12 @@ class cHelperPanels {
       oldValue: GLOBALUTIL.formatNumber(sObj.position.z).trim()
     });
 
-    helperPanel.input.value = 0;
-    helperPanel.slider.value = 0;
+    helperPanel.input[0].value = 0;
+    helperPanel.slider[0].value = 0;
+    helperPanel.input[1].value = 0;
+    helperPanel.slider[1].value = 0;
+    helperPanel.input[2].value = 0;
+    helperPanel.slider[2].value = 0;
     gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);
   }
   _offsetDataUpdate() {
@@ -87,25 +88,25 @@ class cHelperPanels {
       hp.preview.innerHTML = ' ';
       return;
     }
+
+    this.__updateBoundingInfo();
     let html = `Bounds x-min${GLOBALUTIL.formatNumber(this._wDim.minimum.x)}  x-max${GLOBALUTIL.formatNumber(this._wDim.maximum.x)}`;
     html += `\n       floor${GLOBALUTIL.formatNumber(this._wDim.minimum.y)}  ceil ${GLOBALUTIL.formatNumber(this._wDim.maximum.y)}`;
     html += `\n       z-min${GLOBALUTIL.formatNumber(this._wDim.minimum.z)}  z-max${GLOBALUTIL.formatNumber(this._wDim.maximum.z)}`;
 
     hp.infoDom.innerHTML = html;
 
-    if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
+    if (hp.input[0].value === "0" || !GLOBALUTIL.isNumeric(hp.input[0].value)) {
       this.context.setGhostBlock('offsetPreview', null);
       hp.preview.innerHTML = ' ';
     } else {
-      let val = Number(hp.input.value);
-      let type = hp.select.value;
+      let x = hp.input[0].value;
+      let y = hp.input[1].value;
+      let z = hp.input[2].value;
       let tNode = sObj.clone('offetClonePreview');
-      let x = (type === 'X') ? 1 : 0.0;
-      let y = (type === 'Y') ? 1 : 0.0;
-      let z = (type === 'Z') ? 1 : 0.0;
 
-      let vector = new BABYLON.Vector3(x, y, z);
-      tNode.translate(vector, val, BABYLON.Space.WORLD);
+      let vector = GLOBALUTIL.getVector(x + ',' + y + ',' + z, 0, 0, 0);
+      tNode.translate(vector, 1, BABYLON.Space.WORLD);
 
       let x2 = tNode.position.x;
       let y2 = tNode.position.y;
@@ -120,27 +121,41 @@ class cHelperPanels {
       this.context.setGhostBlock('offsetPreview', new cBlock(this.context, null, tNode));
       hp.preview.innerHTML = html;
     }
-
   }
   _offsetInitDom() {
     this.helperPanels['offset'] = this.__initDOMWrapper(this.fireFields.groups['offset']);
     let hp = this.helperPanels['offset'];
     let aD = hp.actionDom;
     aD.classList.add('offset');
-    let html = '<select class="form-control"><option>X</option><option selected>Y</option><option>Z</option></select>';
-    html += ' <input type="range" min="-15" max="15" step=".01" value="0" />' +
-      ' <input class="form-control" type="text" value="0" />' +
-      ' <button class="btn">Move</button><div class="preview"></div>';
+    let html = '<div style="float:left">x <input type="range" min="-15" max="15" step=".01" value="0" />' +
+      ' <input class="form-control" type="text" value="0" /><br>' +
+      'y <input type="range" min="-15" max="15" step=".01" value="0" />' +
+      ' <input class="form-control" type="text" value="0" /><br>' +
+      'z <input type="range" min="-15" max="15" step=".01" value="0" />' +
+      ' <input class="form-control" type="text" value="0" /><br></div>' +
+      '<button style="float:right" class="btn">Move</button><div class="preview"></div>';
     aD.innerHTML = html;
     hp.moveButton = aD.querySelector('button');
-    hp.select = aD.querySelector('select');
-    hp.input = aD.querySelector('input[type=text]');
-    hp.slider = aD.querySelector('input[type=range]');
-    hp.select.addEventListener('input', e => this.__sliderHandleInputChange(hp, null), false);
-    hp.input.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.input), false);
-    hp.slider.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.slider), false);
+    hp.input = aD.querySelectorAll('input[type=text]');
+    hp.slider = aD.querySelectorAll('input[type=range]');
+
+    for (let c = 0, l = hp.input.length; c < l; c++)
+      hp.input[c].addEventListener('input', e => this._offsetHandleDomChange(hp.input[c]), false);
+    for (let c = 0, l = hp.slider.length; c < l; c++)
+      hp.slider[c].addEventListener('input', e => this._offsetHandleDomChange(hp.slider[c]), false);
+
     hp.moveButton.addEventListener('click', e => this._offsetChangeApply(hp), false);
     hp.preview = aD.querySelector('.preview');
+  }
+  _offsetHandleDomChange(sender) {
+    let hp = this.helperPanels['offset'];
+    for (let c = 0, l = hp.input.length; c < l; c++) {
+      if (hp.input[c] === sender)
+        hp.slider[c].value = hp.input[c].value;
+      if (hp.slider[c] === sender)
+        hp.input[c].value = hp.slider[c].value;
+    }
+    this.context.refreshFocus();
   }
   _rotateChangeApply() {
     let helperPanel = this.helperPanels['rotate'];
@@ -179,6 +194,7 @@ class cHelperPanels {
       hp.preview.innerHTML = ' ';
       return;
     }
+    this.__updateBoundingInfo();
 
     let r = sObj.rotation;
     let html = `x ${GLOBALUTIL.formatNumber(r.x * 57.2958).trim()}&deg;`;
@@ -265,11 +281,12 @@ class cHelperPanels {
   _scaleDataUpdate() {
     let hp = this.helperPanels['scale'];
 
-    if (! this.context.activeBlock.sceneObject) {
+    if (!this.context.activeBlock.sceneObject) {
       hp.infoDom.innerHTML = ' ';
       hp.preview.innerHTML = ' ';
       return;
     }
+    this.__updateBoundingInfo();
 
     let html = `Original w${GLOBALUTIL.formatNumber(this._oDim.size.x)} h${GLOBALUTIL.formatNumber(this._oDim.size.y)} d${GLOBALUTIL.formatNumber(this._oDim.size.z)}`;
     html += `\n  Actual w${GLOBALUTIL.formatNumber(this._wDim.size.x)} h${GLOBALUTIL.formatNumber(this._wDim.size.y)} d${GLOBALUTIL.formatNumber(this._wDim.size.z)}`;
