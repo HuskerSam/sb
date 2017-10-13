@@ -6,7 +6,6 @@ class cDataView {
     this.parent = parent;
     this.container = container;
     this.focusLock = true;
-    this.renderImageUpdateNeeded = false;
     this.loadedURL = '';
     this.helpers = new cHelperPanels(this);
     this.groups = {};
@@ -161,7 +160,6 @@ class cDataView {
         if (f.fireSetField)
           GLOBALUTIL.path(this.values, f.fireSetField, newValues[f.fireSetField]);
       }
-      this.renderImageUpdateNeeded = true;
     }
   }
   _generateUpdateList(newValues) {

@@ -288,14 +288,25 @@ class cContext {
       return;
 
     this.__fadeSelectedObject();
+    this.__updateBoundsBox();
+  }
+  __updateBoundsBox() {
+    let sceneObject = this.activeBlock.sceneObject;
+    if (!sceneObject)
+      return;
 
+    let show = false;
     if (gAPPP.a.profile.showBoundsBox)
-      this.activeBlock.sceneObject.showBoundingBox = true;
-    else
-      this.activeBlock.sceneObject.showBoundingBox = false;
-
+      show = true;
+    sceneObject.showBoundingBox = show;
+    for (let i in this.scene.meshes)
+      if (this.scene.meshes[i].parent === sceneObject)
+        this.scene.meshes[i].showBoundingBox = show;
   }
   __fadeSelectedObject() {
+    let sceneObject = this.activeBlock.sceneObject;
+    if (!sceneObject)
+      return;
     let fade = false;
     if (this.ghostBlocks['scalePreview'])
       fade = true;
@@ -304,11 +315,14 @@ class cContext {
     if (this.ghostBlocks['offsetPreview'])
       fade = true;
 
-    if (fade) {
-      this.activeBlock.sceneObject.visibility = .5;
-    } else {
-      this.activeBlock.sceneObject.visibility = 1.0;
-    }
+    let fadeLevel = 1;
+    if (fade)
+      fadeLevel = .5;
+
+    sceneObject.visibility = fadeLevel;
+    for (let i in this.scene.meshes)
+      if (this.scene.meshes[i].parent === sceneObject)
+        this.scene.meshes[i].visibility = fadeLevel;
   }
   _sceneDisposeDefaultObjects() {
     if (this.camera)
@@ -360,5 +374,15 @@ class cContext {
     let block = new cBlock(this);
     block.createGrid(gridDepth);
     this.setGhostBlock('grid', block);
+  }
+  __setMaterialOnObj(sceneObject, materialObject) {
+    if (!sceneObject)
+      return;
+    sceneObject.material = materialObject;
+
+    for (let i in this.scene.meshes) {
+      if (this.scene.meshes[i].parent === sceneObject)
+        this.scene.meshes[i].material = materialObject;
+    }
   }
 }

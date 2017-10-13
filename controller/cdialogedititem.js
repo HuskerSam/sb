@@ -14,7 +14,7 @@ class cDialogEditItem extends cDialogSuper {
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
 
     if (!this.fireFields.values['renderImageURL'])
-      this.fireFields.renderImageUpdateNeeded = true;
+      this.fireSet.renderImageUpdateNeeded = true;
     super.show();
   }
 }

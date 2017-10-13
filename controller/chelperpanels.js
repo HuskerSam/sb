@@ -173,9 +173,10 @@ class cHelperPanels {
 
     let htmlPreview = `x ${GLOBALUTIL.formatNumber(x2)} y ${GLOBALUTIL.formatNumber(y2)} z ${GLOBALUTIL.formatNumber(z2)}`;
 
-    tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
-    tNode.material.diffuseColor = GLOBALUTIL.color('.2,.8,0');
-    tNode.material.diffuseColor.alpha = 0.7;
+    let m = new BABYLON.StandardMaterial('material', this.context.scene);
+    m.diffuseColor = GLOBALUTIL.color('.2,.8,0');
+    m.diffuseColor.alpha = 0.7;
+    this.context.__setMaterialOnObj(tNode, m);
     this.context.setGhostBlock('offsetPreview', new cBlock(this.context, null, tNode));
     hp.preview.innerHTML = htmlPreview;
 
@@ -290,9 +291,10 @@ class cHelperPanels {
     let previewHtml = `x ${xDegrees}&deg; y ${yDegrees}&deg; z ${zDegrees}&deg;`;
     hp.preview.innerHTML = previewHtml;
 
-    tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
-    tNode.material.diffuseColor = GLOBALUTIL.color('0,.3,.8');
-    tNode.material.diffuseColor.alpha = 0.7;
+    let m = new BABYLON.StandardMaterial('material', this.context.scene);
+    m.diffuseColor = GLOBALUTIL.color('0,.3,.8');
+    m.diffuseColor.alpha = 0.7;
+    this.context.__setMaterialOnObj(tNode, m);
     this.context.setGhostBlock('rotatePreview', new cBlock(this.context, null, tNode));
 
     hp.moveButton.disabled = false;
@@ -348,7 +350,7 @@ class cHelperPanels {
 
     helperPanel.input.value = 100;
     helperPanel.slider.value = 100;
-    gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);
+    gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);    
   }
   _scaleDataUpdate() {
     let hp = this.helperPanels['scale'];
@@ -382,9 +384,10 @@ class cHelperPanels {
       tNode.scaling.y = val * this._sObj.scaling.y;
       tNode.scaling.z = val * this._sObj.scaling.z;
 
-      tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
-      tNode.material.diffuseColor = GLOBALUTIL.color('1,.5,0');
-      tNode.material.diffuseColor.alpha = 0.7;
+      let m = new BABYLON.StandardMaterial('material', this.context.scene);
+      m.diffuseColor = GLOBALUTIL.color('1,.5,0');
+      m.diffuseColor.alpha = 0.7;
+      this.context.__setMaterialOnObj(tNode, m);
       this.context.setGhostBlock('scalePreview', new cBlock(this.context, null, tNode));
       hp.preview.innerHTML = html;
       hp.scaleButton.disabled = false;

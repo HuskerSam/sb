@@ -44,8 +44,8 @@ class cDialogSuper {
   close() {
     if (this.fireFields)
       this.fireFields.active = false;
-    if (this.fireFields.renderImageUpdateNeeded) {
-      this.fireFields.renderImageUpdateNeeded = false;
+    if (this.fireSet.renderImageUpdateNeeded) {
+      this.fireSet.renderImageUpdateNeeded = false;
       if (this.context)
         this.context.renderPreview(this.tag, this.key);
     }

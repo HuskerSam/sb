@@ -150,14 +150,15 @@ class cBlock {
     if (this.displayOverride === 'texture') {
       this.__setpreviewshape(values);
       this._createShape();
-      this.sceneObject.material = new BABYLON.StandardMaterial('texturepopupmaterial');
-      this.sceneObject.material.diffuseTexture = this.__texture(values);
+      let m = new BABYLON.StandardMaterial('texturepopupmaterial');
+      m.diffuseTexture = this.__texture(values);
+      this.context.__setMaterialOnObj(this.sceneObject, m);
       return;
     }
     if (this.displayOverride === 'material') {
       this.__setpreviewshape(values);
       this._createShape();
-      this.__setMaterialObj(this.__material(values), this.sceneObject);
+      this.context.__setMaterialOnObj(this.sceneObject, this.__material(values));
       return;
     }
 
@@ -188,9 +189,8 @@ class cBlock {
   _shapeHandleUpdate() {
     this.dispose();
     let newShape = this._createShape();
-    if (!newShape) {
+    if (!this.sceneObject)
       return;
-    }
 
     let fields = sDataDefinition.bindingFields('shape');
     for (let i in fields) {
@@ -265,17 +265,7 @@ class cBlock {
     if (lenX === 0)
       lenX = 0.001;
 
-    if (textWrapperMesh) {
-      textWrapperMesh.position.x = -lenY / 2 + x;
-      textWrapperMesh.position.y = lenX / 2 + y;
-      textWrapperMesh.position.z = z;
-
-      textWrapperMesh.rotation.y = Math.PI / 2;
-      textWrapperMesh.rotation.z = -Math.PI / 2;
-      textWrapperMesh.lenX = lenX;
-      textWrapperMesh.lenY = lenY;
-      this.sceneObject = textWrapperMesh;
-    }
+    this.sceneObject = textWrapperMesh;
   }
   __make2DTextMesh(text, color, size) {
     let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, this.context.scene, true);
@@ -332,7 +322,7 @@ class cBlock {
           m = new BABYLON.StandardMaterial('material');
         else
           m = this.__material(tD);
-        this.__setMaterialObj(m, object);
+        this.context.__setMaterialOnObj(object, m);
         return;
       }
 
@@ -356,15 +346,5 @@ class cBlock {
 
     texture.hasAlpha = values['hasAlpha'];
     return texture;
-  }
-  __setMaterialObj(materialObject, sceneObject) {
-    if (!sceneObject)
-      return;
-    sceneObject.material = materialObject;
-
-    for (let i in this.context.scene.meshes) {
-      if (this.context.scene.meshes[i].parent === sceneObject)
-        this.context.scene.meshes[i].material = materialObject;
-    }
   }
 }
