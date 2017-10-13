@@ -1,11 +1,11 @@
 class cSceneToolsBand {
-  constructor(context) {
-    this.context = context;
+  constructor(domContainer, context) {
     this.expanded = false;
+    this.readonlyContext = context;
 
     this.container = document.createElement('div');
     this.container.setAttribute('class', 'scene-tools-band-container sb-floating-toolbar-item');
-    this.context.canvas.parentNode.appendChild(this.container);
+    domContainer.appendChild(this.container);
 
     this.collapseButton = document.createElement('button');
     this.collapseButton.innerHTML = '<i class="material-icons">aspect_ratio</i>';
@@ -24,8 +24,10 @@ class cSceneToolsBand {
 
     this.fireSet = gAPPP.a.modelSets['userProfile'];
     this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
-    this.fireSet.childListeners.push((values, type, fireData) =>
-      this.fireFields._handleDataChange(values, type, fireData));
+    this.fireSet.childListeners.push((values, type, fireData) =>{
+      this.fireFields._handleDataChange(values, type, fireData);
+      this.readonlyContext.refreshFocus();
+    });
   }
   activate() {
     this.fireFields.paint();
@@ -46,17 +48,6 @@ class cSceneToolsBand {
       this.collapseButton.style.background = 'rgba(0,0,0,.2)';
       this.container.style.display = 'flex';
       this.container.style.width = '100%';
-    }
-  }
-  _addButton(btn) {
-    this.buttonContainer.appendChild(btn);
-    this.buttonContainer.appendChild(document.createElement('br'));
-  }
-  _showGrid() {
-    if (this.gridShown) {
-      this.showSceneFloorGridBtn.style.background = 'rgba(0,0,0,.2)';
-    } else {
-      this.showSceneFloorGridBtn.style.background = '';
     }
   }
 }

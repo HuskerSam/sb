@@ -7,7 +7,7 @@ class cContext {
     this.activeBlock = null;
     this.canvas = canvas;
     this.engine = null;
-    this.sceneTools = new cSceneToolsBand(this);
+    this.sceneTools = new cSceneToolsBand(this.canvas.parentNode, this);
 
     this.importedMeshes = [];
     this.importedMeshClones = [];
@@ -283,10 +283,14 @@ class cContext {
 
     this.__fadeSelectedObject();
 
-    if (gAPPP.a.profile.hideBoundsBox)
-      this.activeBlock.sceneObject.showBoundingBox = false;
-    else
+    if (gAPPP.a.profile.showBoundsBox)
       this.activeBlock.sceneObject.showBoundingBox = true;
+    else
+      this.activeBlock.sceneObject.showBoundingBox = false;
+    if (gAPPP.a.profile.showForceWireframe)
+      this.scene.forceWireframe = true;
+    else
+      this.scene.forceWireframe = false;
   }
   __fadeSelectedObject() {
     let fade = false;
@@ -338,20 +342,20 @@ class cContext {
   _url(fireUrl) {
     return fireUrl.replace(gAPPP.storagePrefix, '');
   }
-  showHideGuides(hide = false) {
-    if (hide)
+  showHideGuides(show = true) {
+    if (!show)
       return this.setGhostBlock('guides', null);
     let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-    let obj = new cBlock(this);
-    obj.createGuides();
-    this.setGhostBlock('guides', obj);
+    let block = new cBlock(this);
+    block.createGuides(gridDepth);
+    this.setGhostBlock('guides', block);
   }
-  showHideGrid(hide = false) {
-    if (hide)
+  showHideGrid(show = true) {
+    if (!show)
       return this.setGhostBlock('grid', null);
     let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-    let obj = new cBlock(this);
-    obj.createGrid();
-    this.setGhostBlock('grid', obj);
+    let block = new cBlock(this);
+    block.createGrid(gridDepth);
+    this.setGhostBlock('grid', block);
   }
 }

@@ -96,7 +96,7 @@ class cBlock {
     texture.vScale = gridDepth;
     texture.uScale = gridDepth;
     grid.material = material;
-    this._pushObj(grid, false);
+    this.sceneObject = grid;
   }
   dispose() {
     if (this.sceneObject)
