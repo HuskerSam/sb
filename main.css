@@ -336,7 +336,7 @@ html, body {
   display: inline-block;
   border-radius: 5px;
   margin: 2px;
-  background: rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, .8);
   padding-top: 0px;
   float:left;
 }
@@ -502,7 +502,6 @@ button i.material-icons {
 }
 
 .selected-mesh-bounds-helper-box {
-  background: rgba(255, 255, 100, .3);
   color: rgb(0, 0, 100);
   padding-left: 2px;
   margin-left: 2px;
@@ -550,7 +549,6 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box .preview {
   font-size: .7em;
-  background: rgba(255, 255, 255, .5);
   clear:both;
 }
 
@@ -574,4 +572,17 @@ button i.material-icons {
 }
 .form-group.longvector input[type="range"]{
   width: 100%;
+}
+.edit-modal-times-close-button {
+  position:absolute;
+  top: 2px;
+  right: 2px;
+  z-index:10;
+  background: rgba(255,255,255,.2);
+  color: rgb(50,50,50);
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  cursor: pointer;
+  background: rgba(0,0,0,.2);
 }

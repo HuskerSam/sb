@@ -1,10 +1,16 @@
 class sDataDefinition {
   static bindingFields(tag) {
-    let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
-    if (tag === 'mesh' || tag === 'shape') {
-      localCopy = localCopy.concat(this.bindingFields('simpleUIDetails'));
+    if (tag === 'shape') {
+      let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
+      return localCopy.concat(this.bindingFields('simpleUIDetails'));
     }
-    return localCopy;
+    if (tag === 'mesh') {
+      let localCopy = __localStaticStorageForBindingFields[tag].slice(0,2);
+      localCopy = localCopy.concat(this.bindingFields('simpleUIDetails'));
+      return localCopy.concat(__localStaticStorageForBindingFields[tag].slice(2));
+    }
+
+    return __localStaticStorageForBindingFields[tag].slice(0);
   }
   static bindingFieldsCloned(tag) {
     return JSON.parse(JSON.stringify(this.bindingFields(tag)));

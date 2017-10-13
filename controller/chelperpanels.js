@@ -15,6 +15,33 @@ class cHelperPanels {
     this.tag = tag;
     this.key = key;
   }
+  resetUI() {
+    let helperPanel = this.helperPanels['offset'];
+    if (helperPanel) {
+      helperPanel.input[0].value = 0;
+      helperPanel.slider[0].value = 0;
+      helperPanel.input[1].value = 0;
+      helperPanel.slider[1].value = 0;
+      helperPanel.input[2].value = 0;
+      helperPanel.slider[2].value = 0;
+    }
+
+    helperPanel = this.helperPanels['rotate'];
+    if (helperPanel) {
+      helperPanel.input[0].value = 0;
+      helperPanel.slider[0].value = 0;
+      helperPanel.input[1].value = 0;
+      helperPanel.slider[1].value = 0;
+      helperPanel.input[2].value = 0;
+      helperPanel.slider[2].value = 0;
+    }
+
+    helperPanel = this.helperPanels['scale'];
+    if (helperPanel) {
+      helperPanel.input.value = 100;
+      helperPanel.slider.value = 100;
+    }
+  }
   handleDataUpdate(event) {
     if (event.detail.context !== this.context)
       return;
@@ -82,6 +109,7 @@ class cHelperPanels {
   _offsetDataUpdate() {
     let hp = this.helperPanels['offset'];
     let sObj = this.context.activeBlock.sceneObject;
+    hp.moveButton.disabled = true;
 
     this.context.setGhostBlock('offsetPreview', null);
     if (!sObj) {
@@ -101,7 +129,7 @@ class cHelperPanels {
     let z = hp.input[2].value;
 
     if (x === '0' && y === '0' && z === '0') {
-      hp.preview.innerHTML = '';
+      hp.preview.innerHTML = ' ';
       return;
     }
 
@@ -115,12 +143,13 @@ class cHelperPanels {
 
     let htmlPreview = `x ${GLOBALUTIL.formatNumber(x2)} y ${GLOBALUTIL.formatNumber(y2)} z ${GLOBALUTIL.formatNumber(z2)}`;
 
-    tNode.visibility = 1;
     tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
     tNode.material.diffuseColor = GLOBALUTIL.color('.2,.8,0');
     tNode.material.diffuseColor.alpha = 0.7;
     this.context.setGhostBlock('offsetPreview', new cBlock(this.context, null, tNode));
     hp.preview.innerHTML = htmlPreview;
+
+    hp.moveButton.disabled = false;
   }
   _offsetInitDom() {
     this.helperPanels['offset'] = this.__initDOMWrapper(this.fireFields.groups['offset']);
@@ -188,6 +217,7 @@ class cHelperPanels {
   _rotateDataUpdate() {
     let hp = this.helperPanels['rotate'];
     let sObj = this.context.activeBlock.sceneObject;
+    hp.moveButton.disabled = true;
 
     this.context.setGhostBlock('rotatePreview', null);
     if (!sObj) {
@@ -234,6 +264,8 @@ class cHelperPanels {
     tNode.material.diffuseColor = GLOBALUTIL.color('0,.3,.8');
     tNode.material.diffuseColor.alpha = 0.7;
     this.context.setGhostBlock('rotatePreview', new cBlock(this.context, null, tNode));
+
+    hp.moveButton.disabled = false;
   }
   _rotateInitDom() {
     this.helperPanels['rotate'] = this.__initDOMWrapper(this.fireFields.groups['rotate']);
@@ -291,6 +323,7 @@ class cHelperPanels {
   _scaleDataUpdate() {
     let hp = this.helperPanels['scale'];
     this.context.setGhostBlock('scalePreview', null);
+    hp.scaleButton.disabled = true;
 
     if (!this.context.activeBlock.sceneObject) {
       hp.infoDom.innerHTML = ' ';
@@ -318,12 +351,13 @@ class cHelperPanels {
       tNode.scaling.x = val * this._sObj.scaling.x;
       tNode.scaling.y = val * this._sObj.scaling.y;
       tNode.scaling.z = val * this._sObj.scaling.z;
-      tNode.visibility = 1;
+
       tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
       tNode.material.diffuseColor = GLOBALUTIL.color('1,.5,0');
       tNode.material.diffuseColor.alpha = 0.7;
       this.context.setGhostBlock('scalePreview', new cBlock(this.context, null, tNode));
       hp.preview.innerHTML = html;
+      hp.scaleButton.disabled = false;
     }
   }
   _scaleInitDom() {

@@ -251,6 +251,7 @@ class cContext {
         this.activeBlock.sceneObject.showBoundingBox = false;
       this.activeBlock = null;
     }
+    this.clearGhostBlocks();
   }
   _loadMeshFromDomFile(file) {
     return new Promise((resolve, reject) => {
