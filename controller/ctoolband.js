@@ -32,7 +32,7 @@ class cToolband {
     gAPPP.a.modelSets[this.tag].childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
   }
   childAdded(fireData) {
-    this.childrenContainer.insertBefore(this.createDOM(fireData), this.childrenContainer.firstChild);
+    this._createDOM(fireData);
   }
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);
@@ -47,25 +47,21 @@ class cToolband {
   cloneElement(e, key) {
     gAPPP.a.modelSets[this.tag].cloneByKey(key).then(key => {});
   }
-  createDOM(fireData) {
+  _createDOM(fireData) {
     let values = fireData.val();
     let key = fireData.key;
-    let html = `<div class="firebase-item ${this.tag}-${key} band-background-preview">`;
-
-    html += '<div class="dropdown band-menu-button">';
-    html += '<button class="btn-toolbar-icon" type="button" data-toggle="dropdown">';
-    html += '<i class="material-icons">menu</i></button>';
+    let html = `<button class="firebase-item ${this.tag}-${key} band-background-preview band-title" type="button" data-toggle="dropdown">`;
+    html += '123</button>';
     html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
     html += '</ul>';
-    html += '</div>';
-    html += `<br><button class="band-title"></button>`;
-    html += `</div>`
 
     let outer = document.createElement('div');
+    outer.classList.add('dropdown');
+    outer.style.display = 'inline-block';
+    outer.style.position = 'initial';
     outer.innerHTML = html.trim();
-    let newNode = outer.childNodes[0];
-
-    let ul = newNode.querySelector('ul');
+    let button = outer.childNodes[0];
+    let ul = outer.childNodes[1];
 
     if (this.tag === 'scene') {
       this.__addMenuItem(ul, '<b>Select</b>', e => this.selectScene(e, key));
@@ -90,14 +86,15 @@ class cToolband {
 
     this.__addMenuItem(ul, 'Remove', e => this.removeElement(e, key), true);
 
-    this.nodeApplyValues(values, newNode);
+    this.nodeApplyValues(values, button);
 
-    newNode.querySelector('.band-title').addEventListener('click', e => this.defaultAction(e, key), false);
-    return newNode;
-  }
-  defaultAction(e, key) {
-    if (this.tag === 'scene')
-      this.selectScene(e, key);
+    $(outer).on('show.bs.dropdown', function () {
+      ul.style.left = button.offsetLeft + 'px';
+      ul.style.top = button.offsetTop + button.offsetHeight + 'px';
+      ul.style.position = 'absolute';
+    });
+
+    this.childrenContainer.insertBefore(outer, this.childrenContainer.firstChild);
   }
   handleDataChange(fireData, type) {
     if (type === 'add')

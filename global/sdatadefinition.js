@@ -230,7 +230,7 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   group: 'inputFocusLock'
 }];
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
-  title: 'Background',
+  title: 'Color',
   fireSetField: 'canvasColor',
   contextObjectField: null,
   type: 'color',
@@ -274,39 +274,35 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeStep: '.01',
   group: 'light'
 }, {
-  title: 'UI Depth',
-  fireSetField: 'gridAndGuidesDepth',
-  contextObjectField: null,
-  displayType: 'number',
-  group: 'extras',
-  floatLeft: true
-}, {
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
   type: 'boolean',
   contextObjectField: null,
-  group: 'extras',
-  addLineBreak: true
+  group: 'extras'
 }, {
-  title: 'Grid',
+  title: 'Floor Grid',
   fireSetField: 'showFloorGrid',
   type: 'boolean',
   group: 'extras',
   contextObjectField: null,
-  addLineBreak: true,
+  addLineBreak: true
 }, {
   title: 'Wireframe',
   fireSetField: 'showForceWireframe',
   type: 'boolean',
   group: 'extras',
-  contextObjectField: null,
-  addLineBreak: true
+  contextObjectField: null
 }, {
   title: 'Guides',
   fireSetField: 'showSceneGuides',
   contextObjectField: null,
   group: 'extras',
   type: 'boolean'
+}, {
+  title: 'UI Depth',
+  fireSetField: 'gridAndGuidesDepth',
+  contextObjectField: null,
+  displayType: 'number'
 }];
 __localStaticStorageForBindingFields['simpleUIDetails'] = [{
   title: 'Scale X',
