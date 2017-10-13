@@ -83,6 +83,7 @@ class cHelperPanels {
     let hp = this.helperPanels['offset'];
     let sObj = this.context.activeBlock.sceneObject;
 
+    this.context.setGhostBlock('offsetPreview', null);
     if (!sObj) {
       hp.infoDom.innerHTML = ' ';
       hp.preview.innerHTML = ' ';
@@ -95,32 +96,31 @@ class cHelperPanels {
     html += `\n       z-min${GLOBALUTIL.formatNumber(this._wDim.minimum.z)}  z-max${GLOBALUTIL.formatNumber(this._wDim.maximum.z)}`;
 
     hp.infoDom.innerHTML = html;
+    let x = hp.input[0].value;
+    let y = hp.input[1].value;
+    let z = hp.input[2].value;
 
-    if (hp.input[0].value === "0" || !GLOBALUTIL.isNumeric(hp.input[0].value)) {
-      this.context.setGhostBlock('offsetPreview', null);
-      hp.preview.innerHTML = ' ';
-    } else {
-      let x = hp.input[0].value;
-      let y = hp.input[1].value;
-      let z = hp.input[2].value;
-      let tNode = sObj.clone('offetClonePreview');
-
-      let vector = GLOBALUTIL.getVector(x + ',' + y + ',' + z, 0, 0, 0);
-      tNode.translate(vector, 1, BABYLON.Space.WORLD);
-
-      let x2 = tNode.position.x;
-      let y2 = tNode.position.y;
-      let z2 = tNode.position.z;
-
-      let html = `x ${GLOBALUTIL.formatNumber(x2)} y ${GLOBALUTIL.formatNumber(y2)} z ${GLOBALUTIL.formatNumber(z2)}`;
-
-      tNode.visibility = 1;
-      tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
-      tNode.material.diffuseColor = GLOBALUTIL.color('.2,.8,0');
-      tNode.material.diffuseColor.alpha = 0.7;
-      this.context.setGhostBlock('offsetPreview', new cBlock(this.context, null, tNode));
-      hp.preview.innerHTML = html;
+    if (x === '0' && y === '0' && z === '0') {
+      hp.preview.innerHTML = '';
+      return;
     }
+
+    let tNode = sObj.clone('offetClonePreview');
+    let vector = GLOBALUTIL.getVector(x + ',' + y + ',' + z, 0, 0, 0);
+    tNode.translate(vector, 1, BABYLON.Space.WORLD);
+
+    let x2 = tNode.position.x;
+    let y2 = tNode.position.y;
+    let z2 = tNode.position.z;
+
+    let htmlPreview = `x ${GLOBALUTIL.formatNumber(x2)} y ${GLOBALUTIL.formatNumber(y2)} z ${GLOBALUTIL.formatNumber(z2)}`;
+
+    tNode.visibility = 1;
+    tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
+    tNode.material.diffuseColor = GLOBALUTIL.color('.2,.8,0');
+    tNode.material.diffuseColor.alpha = 0.7;
+    this.context.setGhostBlock('offsetPreview', new cBlock(this.context, null, tNode));
+    hp.preview.innerHTML = htmlPreview;
   }
   _offsetInitDom() {
     this.helperPanels['offset'] = this.__initDOMWrapper(this.fireFields.groups['offset']);
@@ -140,15 +140,14 @@ class cHelperPanels {
     hp.slider = aD.querySelectorAll('input[type=range]');
 
     for (let c = 0, l = hp.input.length; c < l; c++)
-      hp.input[c].addEventListener('input', e => this._offsetHandleDomChange(hp.input[c]), false);
+      hp.input[c].addEventListener('input', e => this.__inputarrayHandleDomChange(hp, hp.input[c]), false);
     for (let c = 0, l = hp.slider.length; c < l; c++)
-      hp.slider[c].addEventListener('input', e => this._offsetHandleDomChange(hp.slider[c]), false);
+      hp.slider[c].addEventListener('input', e => this.__inputarrayHandleDomChange(hp, hp.slider[c]), false);
 
     hp.moveButton.addEventListener('click', e => this._offsetChangeApply(hp), false);
     hp.preview = aD.querySelector('.preview');
   }
-  _offsetHandleDomChange(sender) {
-    let hp = this.helperPanels['offset'];
+  __inputarrayHandleDomChange(hp, sender) {
     for (let c = 0, l = hp.input.length; c < l; c++) {
       if (hp.input[c] === sender)
         hp.slider[c].value = hp.input[c].value;
@@ -159,9 +158,6 @@ class cHelperPanels {
   }
   _rotateChangeApply() {
     let helperPanel = this.helperPanels['rotate'];
-    if (helperPanel.input.value === '0' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
-      return;
-
     let sObj = this.context.activeBlock.sceneObject;
     let nObj = this.context.ghostBlocks['rotatePreview'].sceneObject;
     let updates = [];
@@ -181,14 +177,19 @@ class cHelperPanels {
       oldValue: GLOBALUTIL.formatNumber(sObj.rotation.z).trim()
     });
 
-    helperPanel.input.value = 0;
-    helperPanel.slider.value = 0;
+    helperPanel.input[0].value = 0;
+    helperPanel.slider[0].value = 0;
+    helperPanel.input[1].value = 0;
+    helperPanel.slider[1].value = 0;
+    helperPanel.input[2].value = 0;
+    helperPanel.slider[2].value = 0;
     gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);
   }
   _rotateDataUpdate() {
     let hp = this.helperPanels['rotate'];
     let sObj = this.context.activeBlock.sceneObject;
 
+    this.context.setGhostBlock('rotatePreview', null);
     if (!sObj) {
       hp.infoDom.innerHTML = ' ';
       hp.preview.innerHTML = ' ';
@@ -202,51 +203,60 @@ class cHelperPanels {
     html += ` z ${GLOBALUTIL.formatNumber(r.z * 57.2958).trim()}&deg;`;
     hp.infoDom.innerHTML = html;
 
-    if (hp.input.value === "0" || !GLOBALUTIL.isNumeric(hp.input.value)) {
-      this.context.setGhostBlock('rotatePreview', null);
+    let x = hp.input[0].value;
+    let y = hp.input[1].value;
+    let z = hp.input[2].value;
+
+    if (x === '0' && y === '0' && z === '0') {
       hp.preview.innerHTML = ' ';
-    } else {
-      let val = Number(hp.input.value);
-      let type = hp.select.value;
-      let tNode = sObj.clone('rotateClonePreview');
-
-      let x2 = Number(sObj.rotation.x);
-      let y2 = Number(sObj.rotation.y);
-      let z2 = Number(sObj.rotation.z);
-      let vector = new BABYLON.Vector3(x2, y2, z2);
-      vector[type.toLowerCase()] = val / 57.2958;
-      tNode.rotation = vector;
-      let x = GLOBALUTIL.formatNumber(tNode.rotation.x * 57.2958).trim();
-      let y = GLOBALUTIL.formatNumber(tNode.rotation.y * 57.2958).trim();
-      let z = GLOBALUTIL.formatNumber(tNode.rotation.z * 57.2958).trim();
-      let html = `x ${x}&deg; y ${y}&deg; z ${z}&deg;`;
-
-      tNode.visibility = 1;
-      tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
-      tNode.material.diffuseColor = GLOBALUTIL.color('0,.3,.8');
-      tNode.material.diffuseColor.alpha = 0.7;
-      this.context.setGhostBlock('rotatePreview', new cBlock(this.context, null, tNode));
-      hp.preview.innerHTML = html;
+      return;
     }
+
+    let tNode = sObj.clone('rotateClonePreview');
+    let x2 = Number(sObj.rotation.x);
+    let y2 = Number(sObj.rotation.y);
+    let z2 = Number(sObj.rotation.z);
+    let vector = new BABYLON.Vector3(x2, y2, z2);
+    tNode.rotation = vector;
+
+    let adjVector = GLOBALUTIL.getVector(x + ',' + y + ',' + z, 0, 0, 0);
+    tNode.rotation.x += (adjVector.x / 57.2958);
+    tNode.rotation.y += (adjVector.y / 57.2958);
+    tNode.rotation.z += (adjVector.z / 57.2958);
+
+    let xDegrees = GLOBALUTIL.formatNumber(tNode.rotation.x * 57.2958).trim();
+    let yDegrees = GLOBALUTIL.formatNumber(tNode.rotation.y * 57.2958).trim();
+    let zDegrees = GLOBALUTIL.formatNumber(tNode.rotation.z * 57.2958).trim();
+    let previewHtml = `x ${xDegrees}&deg; y ${yDegrees}&deg; z ${zDegrees}&deg;`;
+    hp.preview.innerHTML = previewHtml;
+
+    tNode.material = new BABYLON.StandardMaterial('material', this.context.scene);
+    tNode.material.diffuseColor = GLOBALUTIL.color('0,.3,.8');
+    tNode.material.diffuseColor.alpha = 0.7;
+    this.context.setGhostBlock('rotatePreview', new cBlock(this.context, null, tNode));
   }
   _rotateInitDom() {
-    let c = this.fireFields.groups['rotate'];
-    this.helperPanels['rotate'] = this.__initDOMWrapper(c);
+    this.helperPanels['rotate'] = this.__initDOMWrapper(this.fireFields.groups['rotate']);
     let hp = this.helperPanels['rotate'];
     let aD = hp.actionDom;
     aD.classList.add('rotate');
-    let html = '<select class="form-control axis"><option>X</option><option>Y</option><option>Z</option></select>';
-    html += ' <input type="range" min="0" max="360" step=".01" value="0" />' +
-      ' <input class="form-control" type="text" value="0" />&deg;' +
-      ' <button class="btn">Rotate</button><div class="preview"></div>';
+    let html = '<div style="float:left">x <input type="range" min="-360" max="360" step=".01" value="0" />' +
+      ' <input class="form-control" type="text" value="0" />&deg;<br>' +
+      'y <input type="range" min="-360" max="360" step=".01" value="0" />' +
+      ' <input class="form-control" type="text" value="0" />&deg;<br>' +
+      'z <input type="range" min="-360" max="360" step=".01" value="0" />' +
+      ' <input class="form-control" type="text" value="0" />&deg;<br></div>' +
+      '<button style="float:right" class="btn">Rotate</button><div class="preview"></div>';
     aD.innerHTML = html;
     hp.moveButton = aD.querySelector('button');
-    hp.select = aD.querySelector('select.axis');
-    hp.input = aD.querySelector('input[type=text]');
-    hp.slider = aD.querySelector('input[type=range]');
-    hp.select.addEventListener('input', e => this.__sliderHandleInputChange(hp, null), false);
-    hp.input.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.input), false);
-    hp.slider.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.slider), false);
+    hp.input = aD.querySelectorAll('input[type=text]');
+    hp.slider = aD.querySelectorAll('input[type=range]');
+
+    for (let c = 0, l = hp.input.length; c < l; c++)
+      hp.input[c].addEventListener('input', e => this.__inputarrayHandleDomChange(hp, hp.input[c]), false);
+    for (let c = 0, l = hp.slider.length; c < l; c++)
+      hp.slider[c].addEventListener('input', e => this.__inputarrayHandleDomChange(hp, hp.slider[c]), false);
+
     hp.moveButton.addEventListener('click', e => this._rotateChangeApply(hp), false);
     hp.preview = aD.querySelector('.preview');
   }
@@ -280,6 +290,7 @@ class cHelperPanels {
   }
   _scaleDataUpdate() {
     let hp = this.helperPanels['scale'];
+    this.context.setGhostBlock('scalePreview', null);
 
     if (!this.context.activeBlock.sceneObject) {
       hp.infoDom.innerHTML = ' ';
@@ -294,7 +305,6 @@ class cHelperPanels {
     hp.infoDom.innerHTML = html;
 
     if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
-      this.context.setGhostBlock('scalePreview', null);
       hp.preview.innerHTML = ' ';
     } else {
       let val = Number(hp.input.value) / 100.0;

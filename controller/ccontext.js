@@ -275,6 +275,11 @@ class cContext {
     });
   }
   _renderFocusDetails() {
+    if (gAPPP.a.profile.showForceWireframe)
+      this.scene.forceWireframe = true;
+    else
+      this.scene.forceWireframe = false;
+
     if (!this.activeBlock)
       return;
 
@@ -287,10 +292,7 @@ class cContext {
       this.activeBlock.sceneObject.showBoundingBox = true;
     else
       this.activeBlock.sceneObject.showBoundingBox = false;
-    if (gAPPP.a.profile.showForceWireframe)
-      this.scene.forceWireframe = true;
-    else
-      this.scene.forceWireframe = false;
+
   }
   __fadeSelectedObject() {
     let fade = false;
