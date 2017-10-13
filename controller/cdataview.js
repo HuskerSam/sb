@@ -246,7 +246,7 @@ class cDataView {
     if (field.dataListId)
       element.setAttribute('list', field.dataListId);
 
-    this.helpers.initHelperField(field);
+    this.helpers.initHelperField(field, this.parent.fireSet);
   }
   _updateFieldDom(f) {
     let updateShown = false;
@@ -301,12 +301,14 @@ class cDataView {
       }
     }
 
+    if (f.helperType === 'vector')
+      this.helpers.fieldVectorUpdateData(f, this.parent.fireSet, this.parent.key);
+
     if (f.displayType)
       f.domContainer.classList.add(f.displayType);
 
-    if (f.displayType === 'displayFilter') {
+    if (f.displayType === 'displayFilter')
       this._updateDisplayFilters();
-    }
 
     if (updateShown) {
       if (f.type === 'color')

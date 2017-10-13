@@ -65,11 +65,41 @@ class cHelperPanels {
       let sliderText2 = `<input type="range" min="${field.rangeMin}" max="${field.rangeMax}" step="${field.rangeStep}" value="0" /><br>`;
       let htmlAction = '<div class="preview"></div>';
       aD.innerHTML = sliderText0 + sliderText1 + sliderText2 + htmlAction;
-      hp.slider = aD.querySelector('input[type=range]');
-      //hp.slider.addEventListener('input', e => this._handleInputChange(hp, hp.slider), false);
+      hp.slider = aD.querySelectorAll('input[type=range]');
+      hp.slider[0].addEventListener('input', e => this._fieldHandleVectorChange(field), false);
+      hp.slider[1].addEventListener('input', e => this._fieldHandleVectorChange(field), false);
+      hp.slider[2].addEventListener('input', e => this._fieldHandleVectorChange(field), false);
       hp.preview = aD.querySelector('.preview');
       field.helperPanel = hp;
     }
+  }
+  _fieldHandleVectorChange(field) {
+    let hp = field.helperPanel;
+    let oldValue = field.dom.value;
+    let r = hp.slider[0].value;
+    let g = hp.slider[1].value;
+    let b = hp.slider[2].value;
+
+    let str = r + ',' + g + ',' + b;
+
+    if (! hp.fireSet)
+      return;
+
+    hp.fireSet.commitUpdateList([{
+      field: field.fireSetField,
+      newValue: str,
+      oldValue: oldValue
+    }], hp.key);
+  }
+  fieldVectorUpdateData(field, fireSet, key) {
+    let hp = field.helperPanel;
+    hp.fireSet = fireSet;
+    hp.key = key;
+
+    let vector = GLOBALUTIL.getVector(field.dom.value, 0, 0, 0);
+    hp.slider[0].value = vector.x.toFixed(3);
+    hp.slider[1].value = vector.y.toFixed(3);
+    hp.slider[2].value = vector.z.toFixed(3);
   }
   initHelperGroups() {
     if (this.fireFields.groups['scale']) this._scaleInitDom();
