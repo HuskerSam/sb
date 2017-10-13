@@ -379,6 +379,20 @@ class cHelperPanels {
   __initDOMWrapper(containerDom) {
     let helperDom = document.createElement('div');
     helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box');
+    helperDom.style.display = 'none';
+    let collapseButton = document.createElement('button');
+    collapseButton.setAttribute('class', 'selected-mesh-helper-collapse-button');
+    collapseButton.innerHTML = '+';
+    collapseButton.addEventListener('click', e => {
+      if (helperDom.style.display === 'none') {
+        helperDom.style.display = 'block';
+        collapseButton.innerHTML = '-';
+      } else {
+        helperDom.style.display = 'none';
+        collapseButton.innerHTML = '+';
+      }
+    });
+    containerDom.appendChild(collapseButton);
     let infoDom = document.createElement('div');
     infoDom.classList.add('info-area');
     helperDom.appendChild(infoDom);
@@ -390,7 +404,8 @@ class cHelperPanels {
       containerDom,
       helperDom,
       infoDom,
-      actionDom
+      actionDom,
+      collapseButton
     };
   }
   __sliderHandleInputChange(helperPanel, sender) {

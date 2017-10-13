@@ -178,9 +178,10 @@ html, body {
 
 .form-group input {
   font-size: 1em;
-  height: 2em;
-  padding: 12px 4px;
+  height: 1.9em;
+  padding: 1em .1em;
   font-weight: normal;
+  text-align: center;
 }
 
 .checkboxgroup input {
@@ -188,39 +189,42 @@ html, body {
   height: 1em;
 }
 
-.url-form-group label {
+.url-form-group a {
+  margin-left: .5em;
+  margin-bottom: 0;
+  float: left;
   text-decoration: underline;
-  padding: 2px;
-  border-radius: 3px;
-  color: blue;
-  background: rgba(255, 255, 255, .5);
+  color: rgb(0, 0, 127);
+  font-size: 1.1em;
 }
 
-.url-form-group a {
-  padding-left: 5px;
-  padding-right: 5px;
+.url-form-group {
+  line-height: 1em;
 }
 
 .url-form-group button {
   float: right;
   font-size: .7em;
-  margin-top: 5px;
+  margin: 0px;
+  margin-top: 1px;
+  margin-right: 1px;
   border: solid 1px silver;
   border-radius: 3px;
   background: rgba(255, 255, 255, .5);
 }
 
 .url-form-group input {
-  margin-top: 2px;
   font-size: .5em;
 }
 
 .checkboxgroup label {
   font-size: .8em;
 }
+
 .checkboxgroup {
   width: auto;
 }
+
 .modal-dialog {
   background: rgba(255, 255, 255, .1);
 }
@@ -337,19 +341,18 @@ html, body {
   border-radius: 5px;
   margin: 2px;
   background: rgba(255, 255, 255, .8);
-  padding-top: 0px;
-  float:left;
+  float: left;
+  position: relative;
 }
 
 .form-group-container-group .form-group {
-  margin: 2px;
+  margin: 0px;
 }
 
 .form-group-container-group label {
   border-radius: 10px;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-bottom: 2px;
+  padding: 0;
+  margin: 0;
 }
 
 .floating-right-profile-buttons {
@@ -471,7 +474,7 @@ button i.material-icons {
 }
 
 .url-type-input-group {
-  width: 25em;
+  width: 15em;
 }
 
 .popup-title {
@@ -509,6 +512,7 @@ button i.material-icons {
   text-align: center;
   padding: .2em;
   border-radius: .5em;
+  font-size: inherit;
 }
 
 .selected-mesh-bounds-helper-box .form-control {
@@ -516,14 +520,14 @@ button i.material-icons {
   display: inline-block;
 }
 
-.selected-mesh-bounds-helper-box .action-area {
-}
+.selected-mesh-bounds-helper-box .action-area {}
 
 .selected-mesh-bounds-helper-box .action-area input {
   width: 5em;
   text-align: right;
   height: 2em;
-  padding: 12px 4px;
+  padding: .5em .2em;
+  font-size: .8em;
 }
 
 .selected-mesh-bounds-helper-box .action-area select {
@@ -540,6 +544,9 @@ button i.material-icons {
   width: 7em;
   display: inline-block;
   height: 0em;
+  position: relative;
+  top: .3em;
+  font-size: inherit;
 }
 
 .selected-mesh-bounds-helper-box .info-area {
@@ -549,7 +556,18 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box .preview {
   font-size: .7em;
-  clear:both;
+  clear: both;
+}
+
+.selected-mesh-helper-collapse-button {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  margin: 0px;
+  padding: .1em .5em;
+  border: solid 1px silver;
+  font-size: .5em;
+  border-radius: 25%;
 }
 
 .selected-mesh-bounds-helper-box .action-area .preview, .selected-mesh-bounds-helper-box .action-area button {
@@ -567,22 +585,38 @@ button i.material-icons {
 .form-group.shortvector {
   width: 5em;
 }
-.form-group.shortvector input[type="range"]{
+
+.form-group.shortvector input[type="range"] {
   width: 100%;
 }
-.form-group.longvector input[type="range"]{
+
+.form-group.longvector input[type="range"] {
   width: 100%;
 }
+
 .edit-modal-times-close-button {
-  position:absolute;
+  position: absolute;
   top: 2px;
   right: 2px;
-  z-index:10;
-  background: rgba(255,255,255,.2);
-  color: rgb(50,50,50);
+  z-index: 10;
+  background: rgba(255, 255, 255, .2);
+  color: rgb(50, 50, 50);
+}
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+  margin: 0;
 }
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   cursor: pointer;
-  background: rgba(0,0,0,.2);
+  background: rgba(0, 0, 0, .2);
+  height: 1.2em;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 1.2em;
+  width: .8em;
+  background: green;
+  -webkit-appearance: none;
 }
