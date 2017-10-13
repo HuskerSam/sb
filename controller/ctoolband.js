@@ -50,8 +50,8 @@ class cToolband {
   _createDOM(fireData) {
     let values = fireData.val();
     let key = fireData.key;
-    let html = `<button class="firebase-item ${this.tag}-${key} band-background-preview band-title" type="button" data-toggle="dropdown">`;
-    html += '123</button>';
+    let html = `<button class="firebase-item ${this.tag}-${key} band-background-preview" type="button" data-toggle="dropdown">`;
+    html += '<span class="band-title"></span></button>';
     html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
     html += '</ul>';
 
@@ -89,8 +89,8 @@ class cToolband {
     this.nodeApplyValues(values, button);
 
     $(outer).on('show.bs.dropdown', function () {
-      ul.style.left = button.offsetLeft + 'px';
-      ul.style.top = button.offsetTop + button.offsetHeight + 'px';
+      ul.style.left = button.offsetLeft - ul.parentElement.parentElement.scrollLeft + 'px';
+      ul.style.top = button.offsetTop + button.offsetHeight - 8 + 'px';
       ul.style.position = 'absolute';
     });
 
