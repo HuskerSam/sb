@@ -82,7 +82,7 @@ class cHelperPanels {
 
     let str = r + ',' + g + ',' + b;
 
-    if (! hp.fireSet)
+    if (!hp.fireSet)
       return;
 
     hp.fireSet.commitUpdateList([{
@@ -350,7 +350,7 @@ class cHelperPanels {
 
     helperPanel.input.value = 100;
     helperPanel.slider.value = 100;
-    gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);    
+    gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);
   }
   _scaleDataUpdate() {
     let hp = this.helperPanels['scale'];
@@ -408,6 +408,20 @@ class cHelperPanels {
     hp.slider.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.slider), false);
     hp.scaleButton.addEventListener('click', e => this._scaleChangeApply(hp), false);
     hp.preview = aD.querySelector('.preview');
+  }
+  collapseAll() {
+    for (let i in this.helperPanels) {
+      let hp = this.helperPanels[i];
+      hp.helperDom.style.display = 'none';
+      hp.collapseButton.innerHTML = '+';
+    }
+  }
+  expandAll() {
+    for (let i in this.helperPanels) {
+      let hp = this.helperPanels[i];
+      hp.helperDom.style.display = 'block';
+      hp.collapseButton.innerHTML = '-';
+    }
   }
   __initDOMWrapper(containerDom) {
     let helperDom = document.createElement('div');

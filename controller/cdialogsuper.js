@@ -41,6 +41,12 @@ class cDialogSuper {
 
     this.rotateState = 'vertical';
   }
+  expandAll() {
+    this.fireFields.helpers.expandAll();
+  }
+  collapseAll() {
+    this.fireFields.helpers.collapseAll();
+  }
   close() {
     if (this.fireFields)
       this.fireFields.active = false;

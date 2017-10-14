@@ -56,10 +56,18 @@ class gApplication {
       this.activeContext.engine.resize();
   }
   _collaspseAllBands() {
+    let dialog = this.__detectIfEditDialogShown();
+    if (dialog)
+      return dialog.collapseAll();
+
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(false);
   }
   _expandAllBands() {
+    let dialog = this.__detectIfEditDialogShown();
+    if (dialog)
+      return dialog.expandAll();
+
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(true);
   }
@@ -122,5 +130,11 @@ class gApplication {
     this.styleProfileDom = document.createElement('style');
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
+  }
+  __detectIfEditDialogShown() {
+    for (let i in this.dialogs)
+      if ($(this.dialogs[i].dialog).hasClass('in'))
+        return this.dialogs[i];
+    return null;
   }
 }

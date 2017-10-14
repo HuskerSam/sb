@@ -232,6 +232,7 @@ class cContext {
     this.light.intensity = Number(profile.lightIntensity);
     this.light.direction = GLOBALUTIL.getVector(profile.lightVector, 0, 1, 0);
     this.camera.position = GLOBALUTIL.getVector(profile.cameraVector, 3, 15, -25);
+    this.camera.setTarget(BABYLON.Vector3.Zero());
     this.showHideGrid(profile.showFloorGrid);
     this.showHideGuides(profile.showSceneGuides);
   }

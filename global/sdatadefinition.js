@@ -252,7 +252,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   contextObjectField: null,
   displayType: 'longvector',
   helperType: 'vector',
-  rangeMin: '0',
+  rangeMin: '-100',
   rangeMax: '100',
   rangeStep: '1',
   group: 'cameraType'
@@ -269,7 +269,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   contextObjectField: null,
   helperType: 'vector',
   displayType: 'shortvector',
-  rangeMin: '0',
+  rangeMin: '-1',
   rangeMax: '1',
   rangeStep: '.01',
   group: 'light'
