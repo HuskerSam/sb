@@ -2,6 +2,7 @@ class cHelperPanels {
   constructor(fireFields) {
     this.fireFields = fireFields;
     this.helperPanels = {};
+    this.fieldPanels = [];
     this.context = null;
     document.addEventListener('contextRefreshActiveObject', e => this.handleDataUpdate(e), false);
   }
@@ -71,6 +72,20 @@ class cHelperPanels {
       hp.slider[2].addEventListener('input', e => this._fieldHandleVectorChange(field), false);
       hp.preview = aD.querySelector('.preview');
       field.helperPanel = hp;
+      this.fieldPanels.push(hp);
+    }
+    if (field.helperType === 'singleSlider') {
+      let hp = this.__initDOMWrapper(field.domContainer);
+
+      let aD = hp.actionDom;
+      let sliderText0 = `<input type="range" class="singleslider" min="${field.rangeMin}" max="${field.rangeMax}" step="${field.rangeStep}" value="0" /><br>`;
+      let htmlAction = '<div class="preview"></div>';
+      aD.innerHTML = sliderText0 + htmlAction;
+      hp.slider = aD.querySelector('input[type=range]');
+      hp.slider.addEventListener('input', e => this._fieldHandleSliderChange(field), false);
+      hp.preview = aD.querySelector('.preview');
+      field.helperPanel = hp;
+      this.fieldPanels.push(hp);
     }
   }
   _fieldHandleVectorChange(field) {
@@ -91,6 +106,20 @@ class cHelperPanels {
       oldValue: oldValue
     }], hp.key);
   }
+  _fieldHandleSliderChange(field) {
+    let hp = field.helperPanel;
+    let oldValue = field.dom.value;
+    let str = hp.slider.value;
+
+    if (!hp.fireSet)
+      return;
+
+    hp.fireSet.commitUpdateList([{
+      field: field.fireSetField,
+      newValue: str,
+      oldValue: oldValue
+    }], hp.key);
+  }
   fieldVectorUpdateData(field, fireSet, key) {
     let hp = field.helperPanel;
     hp.fireSet = fireSet;
@@ -100,6 +129,13 @@ class cHelperPanels {
     hp.slider[0].value = vector.x.toFixed(3);
     hp.slider[1].value = vector.y.toFixed(3);
     hp.slider[2].value = vector.z.toFixed(3);
+  }
+  fieldSliderUpdateData(field, fireSet, key) {
+    let hp = field.helperPanel;
+    hp.fireSet = fireSet;
+    hp.key = key;
+
+    hp.slider.value = field.dom.value;
   }
   initHelperGroups() {
     if (this.fireFields.groups['scale']) this._scaleInitDom();
@@ -415,12 +451,22 @@ class cHelperPanels {
       hp.helperDom.style.display = 'none';
       hp.collapseButton.innerHTML = '+';
     }
+    for (let c = 0, l = this.fieldPanels.length; c < l; c++) {
+      let fp = this.fieldPanels[c];
+      fp.helperDom.style.display = 'none';
+      fp.collapseButton.innerHTML = '+';
+    }
   }
   expandAll() {
     for (let i in this.helperPanels) {
       let hp = this.helperPanels[i];
       hp.helperDom.style.display = 'block';
       hp.collapseButton.innerHTML = '-';
+    }
+    for (let c = 0, l = this.fieldPanels.length; c < l; c++) {
+      let fp = this.fieldPanels[c];
+      fp.helperDom.style.display = 'block';
+      fp.collapseButton.innerHTML = '-';
     }
   }
   __initDOMWrapper(containerDom) {

@@ -5,7 +5,7 @@ class sDataDefinition {
       return localCopy.concat(this.bindingFields('simpleUIDetails'));
     }
     if (tag === 'mesh') {
-      let localCopy = __localStaticStorageForBindingFields[tag].slice(0,2);
+      let localCopy = __localStaticStorageForBindingFields[tag].slice(0, 2);
       localCopy = localCopy.concat(this.bindingFields('simpleUIDetails'));
       return localCopy.concat(__localStaticStorageForBindingFields[tag].slice(2));
     }
@@ -240,28 +240,15 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeMax: '1',
   rangeStep: '.01'
 }, {
-  title: 'Camera Type',
-  fireSetField: 'cameraType',
-  contextObjectField: null,
-  group: 'cameraType',
-  dataListId: 'cameratypeoptionslist',
-  floatLeft: true
-}, {
-  title: 'Origin',
-  fireSetField: 'cameraVector',
-  contextObjectField: null,
-  displayType: 'longvector',
-  helperType: 'vector',
-  rangeMin: '-100',
-  rangeMax: '100',
-  rangeStep: '1',
-  group: 'cameraType'
-}, {
-  title: 'Light',
+  title: 'Sun Light',
   fireSetField: 'lightIntensity',
   contextObjectField: null,
   displayType: 'number',
   group: 'light',
+  helperType: 'singleSlider',
+  rangeMin: '0',
+  rangeMax: '1.5',
+  rangeStep: '.01',
   floatLeft: true
 }, {
   title: 'Direction',
@@ -274,35 +261,72 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeStep: '.01',
   group: 'light'
 }, {
+  title: 'Camera Type',
+  fireSetField: 'cameraType',
+  contextObjectField: null,
+  group: 'cameraType',
+  dataListId: 'cameratypeoptionslist',
+  floatLeft: true
+}, {
+  title: 'Aim Center',
+  fireSetField: 'cameraAimCenter',
+  contextObjectField: null,
+  group: 'cameraType',
+  type: 'boolean',
+  floatLeft: true,
+  clearFloat: true
+}, {
+  title: 'Origin',
+  fireSetField: 'cameraVector',
+  contextObjectField: null,
+  displayType: 'longvector',
+  helperType: 'vector',
+  rangeMin: '-100',
+  rangeMax: '100',
+  rangeStep: '1',
+  group: 'cameraType',
+  paddingRight: '.5em'
+}, {
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
   type: 'boolean',
   contextObjectField: null,
-  group: 'extras'
-}, {
-  title: 'Floor Grid',
-  fireSetField: 'showFloorGrid',
-  type: 'boolean',
   group: 'extras',
-  contextObjectField: null,
   addLineBreak: true
 }, {
   title: 'Wireframe',
   fireSetField: 'showForceWireframe',
   type: 'boolean',
   group: 'extras',
-  contextObjectField: null
+  contextObjectField: null,
+  addLineBreak: true
+}, {
+  title: 'Floor Grid',
+  fireSetField: 'showFloorGrid',
+  type: 'boolean',
+  group: 'depthExtras',
+  contextObjectField: null,
+  floatLeft: true
 }, {
   title: 'Guides',
   fireSetField: 'showSceneGuides',
   contextObjectField: null,
-  group: 'extras',
+  group: 'depthExtras',
+  floatLeft: true,
+  clearFloat: true,
   type: 'boolean'
 }, {
   title: 'UI Depth',
   fireSetField: 'gridAndGuidesDepth',
   contextObjectField: null,
-  displayType: 'number'
+  displayType: 'number',
+  group: 'depthExtras',
+  helperType: 'singleSlider',
+  rangeMin: '0',
+  rangeMax: '100',
+  rangeStep: '1',
+  paddingRight: '1.2em',
+  paddingBottom: '2.7em'
 }];
 __localStaticStorageForBindingFields['simpleUIDetails'] = [{
   title: 'Scale X',

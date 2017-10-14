@@ -55,6 +55,15 @@ class cDataView {
         g.appendChild(document.createElement('br'));
       if (f.floatLeft)
         f.domContainer.style.float = 'left';
+      if (f.clearFloat)
+        f.domContainer.style.clear = 'both';
+      if (f.paddingRight !== undefined)
+        f.domContainer.style.paddingRight = f.paddingRight;
+      if (f.paddingBottom !== undefined)
+        f.domContainer.style.paddingBottom = f.paddingBottom;
+      let floatBreak = document.createElement('div');
+      floatBreak.style.clear = 'both';
+      f.domContainer.appendChild(floatBreak);
     } else {
       let w = document.createElement('div');
       w.classList.add('form-group-container-group');
@@ -301,6 +310,8 @@ class cDataView {
 
     if (f.helperType === 'vector')
       this.helpers.fieldVectorUpdateData(f, this.parent.fireSet, this.parent.key);
+    if (f.helperType === 'singleSlider')
+      this.helpers.fieldSliderUpdateData(f, this.parent.fireSet, this.parent.key);
 
     if (f.displayType)
       f.domContainer.classList.add(f.displayType);

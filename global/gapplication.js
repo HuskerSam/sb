@@ -62,6 +62,8 @@ class gApplication {
 
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(false);
+    this.mV.context.sceneTools.expand = true;
+    this.mV.context.sceneTools.toggle();
   }
   _expandAllBands() {
     let dialog = this.__detectIfEditDialogShown();
@@ -70,6 +72,9 @@ class gApplication {
 
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(true);
+
+    this.mV.context.sceneTools.expand = false;
+    this.mV.context.sceneTools.toggle();
   }
   _increaseFontSize(decrease) {
     let originalFontSize = this.a.profile.fontSize;

@@ -24,6 +24,9 @@ class cSceneToolsBand {
 
     this.fireSet = gAPPP.a.modelSets['userProfile'];
     this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
+
+    this.fireFields.helpers.expandAll();
+
     this.fireSet.childListeners.push((values, type, fireData) =>{
       this.fireFields._handleDataChange(values, type, fireData);
       this.readonlyContext.refreshFocus();

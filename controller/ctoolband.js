@@ -37,7 +37,7 @@ class cToolband {
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);
     let values = fireData.val();
-    this.nodeApplyValues(values, div);
+    this.nodeApplyValues(values, div.childNodes[0]);
   }
   childRemoved(fireData) {
     let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);
@@ -50,13 +50,13 @@ class cToolband {
   _createDOM(fireData) {
     let values = fireData.val();
     let key = fireData.key;
-    let html = `<div class="firebase-item ${this.tag}-${key} band-background-preview" type="button" data-toggle="dropdown">`;
+    let html = `<div class="band-background-preview" type="button" data-toggle="dropdown">`;
     html += '<span class="band-title"></span></div>';
     html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
     html += '</ul>';
 
     let outer = document.createElement('div');
-    outer.classList.add('dropdown');
+    outer.setAttribute('class', `${this.tag}-${key} band-background-outer dropdown`);
     outer.style.display = 'inline-block';
     outer.style.position = 'initial';
     outer.innerHTML = html.trim();
