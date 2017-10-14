@@ -291,22 +291,25 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   fireSetField: 'showBoundsBox',
   type: 'boolean',
   contextObjectField: null,
-  group: 'extras',
-  addLineBreak: true
+  group: 'depthExtras',
+  floatLeft: true,
+  clearFloat: true
 }, {
   title: 'Wireframe',
   fireSetField: 'showForceWireframe',
   type: 'boolean',
-  group: 'extras',
+  group: 'depthExtras',
   contextObjectField: null,
-  addLineBreak: true
+  floatLeft: true,
+  clearFloat: true
 }, {
   title: 'Floor Grid',
   fireSetField: 'showFloorGrid',
   type: 'boolean',
   group: 'depthExtras',
   contextObjectField: null,
-  floatLeft: true
+  floatLeft: true,
+  clearFloat: true
 }, {
   title: 'Guides',
   fireSetField: 'showSceneGuides',
@@ -683,3 +686,57 @@ __defaultData['shape'] = {
     rotateZ: 0.0
   }
 };
+
+__defaultData['block'] = {
+  title: 'Block',
+  blockType: 'container',
+  outWidth: 2,
+  outDepth: 2,
+  outHeight: 1,
+  inWidth: 20,
+  inDepth: 20,
+  inHeight: 10,
+  children: {}
+};
+__localStaticStorageForBindingFields['block'] = [{
+  title: 'Title',
+  fireSetField: 'title',
+  contextObjectField: null,
+  group: 'main'
+}, {
+  title: 'Out Width',
+  fireSetField: 'outWidth',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'outDim'
+}, {
+  title: 'Out Depth',
+  fireSetField: 'outDepth',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'outDim'
+}, {
+  title: 'Out Height',
+  fireSetField: 'outHeight',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'outDim'
+}, {
+  title: 'In Width',
+  fireSetField: 'inWidth',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'inDim'
+}, {
+  title: 'In Depth',
+  fireSetField: 'inDepth',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'inDim'
+}, {
+  title: 'In Height',
+  fireSetField: 'inHeight',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'inDim'
+}];

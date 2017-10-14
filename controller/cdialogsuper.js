@@ -87,6 +87,13 @@ class cDialogSuper {
         this._finishShow();
         return;
       }
+      if (this.tag === 'block') {
+
+
+        
+        this._finishShow();
+        return;
+      }
       if (this.tag === 'material') {
         let b = new cBlock(this.context);
         b.displayOverride = 'material';
@@ -110,7 +117,10 @@ class cDialogSuper {
         this.context.loadSceneURL(this.fireFields.values['url']).then(
           r => this._finishShow(),
           e => this._finishShow());
+        return;
       }
+
+      this._finishShow();
     } else
       this._finishShow();
   }

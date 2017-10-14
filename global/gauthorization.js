@@ -12,6 +12,8 @@ class gAuthorization {
     this.fireSets.push(this.modelSets['mesh']);
     this.modelSets['shape'] = new mFirebaseList('lib_shapes', 'shape');
     this.fireSets.push(this.modelSets['shape']);
+    this.modelSets['block'] = new mFirebaseList('lib_blocks', 'block');
+    this.fireSets.push(this.modelSets['block']);
     this.modelSets['texture'] = new mFirebaseList('lib_textures', 'texture');
     this.fireSets.push(this.modelSets['texture']);
     this.modelSets['material'] = new mFirebaseList('lib_materials', 'material');

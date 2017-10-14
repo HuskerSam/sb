@@ -19,19 +19,22 @@ class gApplication {
     window.addEventListener("resize", () => this.resize());
 
     this.toolbarItems['scene'] = new cToolband('scene', 'Scenes');
+    this.toolbarItems['block'] = new cToolband('block', 'Blocks');
     this.toolbarItems['mesh'] = new cToolband('mesh', 'Meshes');
-    this.toolbarItems['shapes'] = new cToolband('shape', 'Shapes');
+    this.toolbarItems['shape'] = new cToolband('shape', 'Shapes');
     this.toolbarItems['material'] = new cToolband('material', "Materials");
     this.toolbarItems['texture'] = new cToolband('texture', 'Textures');
 
     this.dialogs['mesh-edit'] = new cDialogEditItem('mesh', 'Mesh Options');
-    this.dialogs['shape-edit'] = new cDialogEditItem('shape', 'Shape Options');
-    this.dialogs['material-edit'] = new cDialogEditItem('material', 'Material Options');
+    this.dialogs['shape-edit'] = new cDialogEditItem('shape', 'Shape Editor');
+    this.dialogs['block-edit'] = new cDialogEditItem('block', 'Block Editor');
+    this.dialogs['material-edit'] = new cDialogEditItem('material', 'Material Editor');
     this.dialogs['texture-edit'] = new cDialogEditItem('texture', 'Texture Options');
     this.dialogs['scene-edit'] = new cDialogEditItem('scene', 'Scene Options');
 
     this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', 'Add Mesh');
     this.dialogs['shape-create'] = new cDialogCreateItem('shape', 'Add Shape', true);
+    this.dialogs['block-create'] = new cDialogCreateItem('block', 'Add Block', true);
     this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
     this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material', true);
     this.dialogs['scene-create'] = new cDialogCreateItem('scene', 'Add Scene');
