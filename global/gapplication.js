@@ -23,7 +23,6 @@ class gApplication {
     this.toolbarItems['shapes'] = new cToolband('shape', 'Shapes');
     this.toolbarItems['material'] = new cToolband('material', "Materials");
     this.toolbarItems['texture'] = new cToolband('texture', 'Textures');
-    this.toolbarItems['scene'].toggle();
 
     this.dialogs['mesh-edit'] = new cDialogEditItem('mesh', 'Mesh Options');
     this.dialogs['shape-edit'] = new cDialogEditItem('shape', 'Shape Options');

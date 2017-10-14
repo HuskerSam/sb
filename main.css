@@ -27,6 +27,8 @@ html, body {
   height: 100%;
   touch-action: none;
   position: absolute;
+  z-index: 0;
+  left:0px;
 }
 
 #main-page {
@@ -34,6 +36,7 @@ html, body {
   width: 100%;
   height: 100%;
   display: none;
+  text-align:center;
 }
 
 .split, .split-flex {
@@ -74,15 +77,16 @@ html, body {
 #sb-floating-toolbar {
   clear: both;
   pointer-events: none;
-  padding-top: 1px;
+  text-align:left;
 }
 
 .btn-toolbar-icon {
   background: transparent;
-  border-radius: 5px;
-  border: none;
+  border-radius: .5em;
   color: inherit;
   border: solid 1px silver;
+  z-index: 1;
+  position:relative;
 }
 
 .sb-floating-toolbar-item {
@@ -90,20 +94,18 @@ html, body {
   clear: both;
   position: relative;
   pointer-events: none;
+  margin-top: -.2em;
 }
 
 #sb-floating-toolbar-expanded {
   pointer-events: none;
-  padding-top: 2px;
-  position: relative;
 }
 
 .sb-floating-toolbar-content {
   pointer-events: auto;
   white-space: nowrap;
-  overflow: auto;
   display: none;
-  border-radius: 10px;
+  overflow:auto;
   color: black;
 }
 
@@ -111,25 +113,38 @@ html, body {
   display: none;
 }
 
-.sb-floating-toolbar-item .button-wrapper .option-buttons {
-}
-
 .sb-floating-toolbar-item .button-wrapper {
   display: inline-block;
   text-align: center;
   float: left;
-  margin: 1px 2px;
-  width: 5em;
-  height: 3.5em;
-  padding: 2px;
+  margin: .3em .02em;
+  padding: .05em .25em;
+  border: solid 1px rgba(0,0,0,.15);
+  border-radius: 10%;
   color: white;
-  background: rgba(0, 0, 0, .25);
-  border-radius: 10px;
   pointer-events: auto;
   white-space: nowrap;
-  font-size: .75em;
+}
+.button-wrapper .btn-toolbar-icon {
+  color:black;
+  background: rgba(255,255,255,.15);
+}
+.sb-floating-toolbar-item .button-wrapper .button-title {
+  background: rgba(0, 0, 0, .15);
+  padding: .05em;
+  border-radius: 10%;
+}
+.sb-floating-toolbar-item .button-wrapper .option-buttons {
+  display:inline-block;
+  white-space:nowrap;
 }
 
+#sb-floating-toolbar-expanded .button-wrapper .option-buttons {
+  display:block;
+}
+#sb-floating-toolbar-expanded .sb-floating-toolbar-item .button-wrapper {
+  height: 4em;
+}
 .scene-tools-band-container button {
   pointer-events: auto;
   padding: .1em .33em;
@@ -300,18 +315,8 @@ html, body {
   overflow-y: hidden;
 }
 
-.btn-primary-outline {
-  background-color: transparent;
-  border-color: #ccc;
-  padding-bottom: 0px;
-}
-
 .popup-buttons .save-details {
   padding-bottom: 0px;
-}
-
-.single-toolbar-btn {
-  padding-top: 0px;
 }
 
 .vertical-split-display {
@@ -339,7 +344,7 @@ html, body {
 .form-group-container-group {
   display: inline-block;
   border-radius: 5px;
-  margin: 2px;
+  margin: .05em;
   background: rgba(255, 255, 255, .8);
   float: left;
   position: relative;
@@ -354,20 +359,6 @@ html, body {
   padding: 0;
   margin: 0;
 }
-
-.floating-right-profile-buttons {
-  position: absolute;
-  z-index: 100;
-  right: 1px;
-  bottom: 2px;
-  margin-right: -5px;
-}
-
-.floating-right-profile-buttons button {
-  background: rgba(255, 255, 255, .15);
-  margin: 1px;
-}
-
 .btn {
   font-size: inherit;
 }
@@ -420,19 +411,22 @@ button i.material-icons {
 }
 
 .band-background-preview {
-   width: 5em;
-   height: 2.7em;
+   width: 6em;
+   height: 4em;
    white-space: nowrap;
    display: inline-block;
    border: solid 1px silver;
    border-radius: .25em;
    text-align: center;
-   margin: .02em .05em;
+   margin: 0em .05em;
    background-position: center;
    background-size: cover;
    background-repeat: no-repeat;
    overflow: hidden;
    pointer-events: auto;
+   cursor: pointer;
+   position: relative;
+   top: .3em;
 }
 .band-background-preview .band-title {
   padding: .07em;
@@ -460,7 +454,7 @@ button i.material-icons {
   width: auto;
 }
 
-.popup-buttons .btn-primary-outline {
+.popup-buttons .{
   font-size: 1.4em;
 }
 

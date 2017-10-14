@@ -50,8 +50,8 @@ class cToolband {
   _createDOM(fireData) {
     let values = fireData.val();
     let key = fireData.key;
-    let html = `<button class="firebase-item ${this.tag}-${key} band-background-preview" type="button" data-toggle="dropdown">`;
-    html += '<span class="band-title"></span></button>';
+    let html = `<div class="firebase-item ${this.tag}-${key} band-background-preview" type="button" data-toggle="dropdown">`;
+    html += '<span class="band-title"></span></div>';
     html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
     html += '</ul>';
 
