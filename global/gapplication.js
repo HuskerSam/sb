@@ -62,7 +62,7 @@ class gApplication {
 
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(false);
-    this.mV.context.sceneTools.expand = true;
+    this.mV.context.sceneTools.expanded = true;
     this.mV.context.sceneTools.toggle();
   }
   _expandAllBands() {
@@ -73,7 +73,7 @@ class gApplication {
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(true);
 
-    this.mV.context.sceneTools.expand = false;
+    this.mV.context.sceneTools.expanded = false;
     this.mV.context.sceneTools.toggle();
   }
   _increaseFontSize(decrease) {

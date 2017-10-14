@@ -3,6 +3,7 @@ class cContext {
     this.ghostBlocks = {};
     this.light = null;
     this.camera = null;
+    this.cameraType = '';
     this._scene = null;
     this.activeBlock = null;
     this.canvas = canvas;
@@ -221,6 +222,28 @@ class cContext {
         resolve({});
     });
   }
+  _updateCamera() {
+    let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 3, 15, 15);
+    let cameraType = gAPPP.a.profile.cameraType;
+
+    if (cameraType !== this.cameraType || !this.camera) {
+      if (this.camera)
+        this.camera.dispose();
+      if (cameraType === 'Arc Rotate')
+        this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera", 1, 0.8, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
+      else
+        this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
+      this.cameraType = cameraType;
+      this.camera.attachControl(this.canvas, false);
+    }
+
+    if (cameraType === 'Arc Rotate') {
+      this.camera.setPosition(cameraVector);
+    } else {
+      this.camera.position = cameraVector;
+      this.camera.setTarget(BABYLON.Vector3.Zero());
+    }
+  }
   _updateScaffoldingData() {
     if (!this.scene)
       return;
@@ -231,8 +254,8 @@ class cContext {
 
     this.light.intensity = Number(profile.lightIntensity);
     this.light.direction = GLOBALUTIL.getVector(profile.lightVector, 0, 1, 0);
-    this.camera.position = GLOBALUTIL.getVector(profile.cameraVector, 3, 15, -25);
-    this.camera.setTarget(BABYLON.Vector3.Zero());
+
+    this._updateCamera();
     this.showHideGrid(profile.showFloorGrid);
     this.showHideGuides(profile.showSceneGuides);
   }
@@ -343,10 +366,7 @@ class cContext {
   _sceneAddDefaultObjects() {
     this.scene.clearColor = GLOBALUTIL.color('.7,.7,.7');
     this._sceneDisposeDefaultObjects();
-    let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 0, 10, -10);
-
-    this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
-    this.camera.setTarget(BABYLON.Vector3.Zero());
+    this._updateCamera();
 
     let lightVector = GLOBALUTIL.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
     this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
