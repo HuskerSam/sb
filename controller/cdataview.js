@@ -55,8 +55,10 @@ class cDataView {
         g.appendChild(document.createElement('br'));
       if (f.floatLeft)
         f.domContainer.style.float = 'left';
-      if (f.clearFloat)
-        f.domContainer.style.clear = 'both';
+      if (f.floatRight)
+        f.domContainer.style.float = 'right';
+      if (f.clearLeft)
+        f.domContainer.style.clear = 'left';
       if (f.paddingRight !== undefined)
         f.domContainer.style.paddingRight = f.paddingRight;
       if (f.paddingBottom !== undefined)

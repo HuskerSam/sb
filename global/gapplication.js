@@ -16,6 +16,12 @@ class gApplication {
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
     this.mV = new gMainView();
 
+    this.sceneToolsButton = document.querySelector('#canvas-settings-tool-button');
+    this.sceneToolsContainer = document.querySelector('.global-floating-toolbar .toolbar-content');
+    this.sceneTools = new cSceneToolsBand(this.sceneToolsButton, this.sceneToolsContainer);
+    this.renderLogButton = document.querySelector('#toolbar-render-log-button');
+    this.renderLog = new cRenderLog(this.renderLogButton, this.sceneToolsContainer);
+    
     window.addEventListener("resize", () => this.resize());
 
     this.toolbarItems['scene'] = new cToolband('scene', 'Scenes');

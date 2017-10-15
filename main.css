@@ -36,7 +36,6 @@ html, body {
   width: 100%;
   height: 100%;
   display: none;
-  text-align: center;
 }
 
 .split, .split-flex {
@@ -86,7 +85,6 @@ html, body {
   color: inherit;
   border: solid 1px silver;
   z-index: 1;
-  position: relative;
 }
 
 .sb-floating-toolbar-item {
@@ -99,9 +97,11 @@ html, body {
 
 #sb-floating-toolbar-expanded {
   pointer-events: none;
-  position: relative;
-  top: -.25em;
   margin-bottom: -.2em;
+}
+
+#sb-floating-toolbar-expanded div {
+  pointer-events: auto;
 }
 
 .sb-floating-toolbar-content {
@@ -111,9 +111,11 @@ html, body {
   overflow: auto;
   color: black;
 }
+
 .sb-floating-toolbar-content .fields-container {
   padding-right: 1.5em;
 }
+
 .sb-floating-toolbar-create-btn {
   display: none;
 }
@@ -152,13 +154,7 @@ html, body {
   margin-top: .4em;
 }
 
-#sb-floating-toolbar-expanded .sb-floating-toolbar-item .button-wrapper {}
-
-.scene-tools-band-container button {
-  pointer-events: auto;
-}
-
-.scene-tools-band-container .selected-mesh-helper-collapse-button {
+.context-scene-tools-panel .selected-mesh-helper-collapse-button {
   display: none;
 }
 
@@ -396,6 +392,10 @@ html, body {
   float: left;
 }
 
+i.material-icons {
+  font-size: inherit;
+}
+
 button i.material-icons {
   position: relative;
   top: 3px;
@@ -404,23 +404,6 @@ button i.material-icons {
 
 .band-menu-button .dropdown-menu {
   font-size: inherit;
-}
-
-.scene-tools-band-container {
-  position: absolute;
-  bottom: 3px;
-  left: 3px;
-}
-
-.create-dialog .scene-tools-band-container {
-  display: none;
-}
-
-#main-page .scene-tools-band-container {
-  bottom: 2px;
-  left: 1px;
-  top: initial;
-  pointer-events: auto;
 }
 
 .band-background-preview {
@@ -455,12 +438,6 @@ button i.material-icons {
   font-size: inherit;
 }
 
-.scene-tools-band-container .button-container {
-  white-space: nowrap;
-  overflow-y: hidden;
-  overflow-x: scroll;
-}
-
 .user-profile-info-block {
   padding: 12px;
   background: rgba(0, 0, 0, .3);
@@ -481,9 +458,9 @@ button i.material-icons {
 
 .popup-title {
   text-align: center;
-  padding: 4px 12px;
+  padding: .05em .1em;
   font-weight: bold;
-  border-radius: 8px;
+  border-radius: .5em;
   color: silver;
   background: rgba(0, 0, 0, .5);
   float: left;
@@ -632,5 +609,56 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .super-button-bar {
+  background: rgba(255, 255, 255, .2);
+}
+
+.global-floating-toolbar {
   z-index: 20000;
+  pointer-events: none;
+  position: relative;
+}
+
+.global-floating-toolbar .toolbar-content {
+  pointer-events: none;
+}
+
+.global-floating-toolbar div, .global-floating-toolbar .toolbar-content div {
+  pointer-events: auto;
+}
+
+.global-floating-toolbar button, .global-floating-toolbar .toolbar-content button {
+  pointer-events: auto;
+}
+
+.block-editor-children-bar-wrapper {}
+
+.block-editor-children-bar-wrapper .block-options-collapse {
+  background: rgba(0, 0, 0, .2);
+  color: white;
+}
+
+.block-editor-child {
+  display: inline-block;
+  background: rgba(127, 127, 127, .5);
+  color: black;
+  border-radius: .1em;
+  border: solid 1px silver;
+  margin: .1em;
+  padding: .1em;
+  height: 1.5em;
+}
+
+.block-editor-child.selected {
+  background: rgba(0, 0, 255, .5);
+  color: white;
+}
+
+.block-editor-child.add-button {
+  background: rgba(127, 255, 127, .5);
+  color: white;
+}
+
+.block-editor-child.options-button {
+  background: rgba(255, 127, 127, .5);
+  color: white;
 }

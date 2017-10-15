@@ -261,6 +261,18 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeStep: '.01',
   group: 'light'
 }, {
+  title: 'Origin',
+  fireSetField: 'cameraVector',
+  contextObjectField: null,
+  displayType: 'longvector',
+  helperType: 'vector',
+  rangeMin: '-100',
+  rangeMax: '100',
+  rangeStep: '1',
+  floatRight: true,
+  group: 'cameraType',
+  paddingRight: '.5em'
+}, {
   title: 'Camera Type',
   fireSetField: 'cameraType',
   contextObjectField: null,
@@ -274,18 +286,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   group: 'cameraType',
   type: 'boolean',
   floatLeft: true,
-  clearFloat: true
-}, {
-  title: 'Origin',
-  fireSetField: 'cameraVector',
-  contextObjectField: null,
-  displayType: 'longvector',
-  helperType: 'vector',
-  rangeMin: '-100',
-  rangeMax: '100',
-  rangeStep: '1',
-  group: 'cameraType',
-  paddingRight: '.5em'
+  clearLeft: true
 }, {
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
@@ -293,7 +294,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   contextObjectField: null,
   group: 'depthExtras',
   floatLeft: true,
-  clearFloat: true
+  clearLeft: true
 }, {
   title: 'Wireframe',
   fireSetField: 'showForceWireframe',
@@ -301,7 +302,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   group: 'depthExtras',
   contextObjectField: null,
   floatLeft: true,
-  clearFloat: true
+  clearLeft: true
 }, {
   title: 'Floor Grid',
   fireSetField: 'showFloorGrid',
@@ -309,21 +310,21 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   group: 'depthExtras',
   contextObjectField: null,
   floatLeft: true,
-  clearFloat: true
+  clearLeft: true
 }, {
   title: 'Guides',
   fireSetField: 'showSceneGuides',
   contextObjectField: null,
   group: 'depthExtras',
   floatLeft: true,
-  clearFloat: true,
+  clearLeft: true,
   type: 'boolean'
 }, {
   title: 'UI Depth',
   fireSetField: 'gridAndGuidesDepth',
   contextObjectField: null,
   displayType: 'number',
-  group: 'depthExtras',
+  group: 'depthextra',
   helperType: 'singleSlider',
   rangeMin: '0',
   rangeMax: '100',

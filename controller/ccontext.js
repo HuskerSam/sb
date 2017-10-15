@@ -8,8 +8,7 @@ class cContext {
     this.activeBlock = null;
     this.canvas = canvas;
     this.engine = null;
-    this.sceneTools = new cSceneToolsBand(this.canvas.parentNode, this);
-
+    this.renderLog = new cRenderLog(this);
     this.importedMeshes = [];
     this.importedMeshClones = [];
 
@@ -76,7 +75,6 @@ class cContext {
 
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
     this.camera.attachControl(this.canvas, false);
-    this.sceneTools.activate();
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => this.scene.render());
     });
@@ -129,7 +127,6 @@ class cContext {
     });
   }
   deactivate() {
-    this.sceneTools.deactivate();
     if (gAPPP.activeContext)
       gAPPP.activeContext.engine.stopRenderLoop();
   }

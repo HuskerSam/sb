@@ -15,20 +15,30 @@
   </div>
   <div id="main-page" style="display:none;">
     <canvas id="renderCanvas"></canvas>
-    <button id="expand-all-toolbands" class="btn-toolbar-icon super-button-bar" style="float:left;">
-      <i class="material-icons" style="transform: rotate(145deg)">rotate_right</i>
-    </button>
-    <button id="collapse-all-toolbands" class="btn-toolbar-icon super-button-bar" style="float:left;">
-      <i class="material-icons" style="transform: rotate(35deg)">rotate_left</i>
-    </button>
-    <button id="global-toolbar-decrease-fontsize" class="btn-toolbar-icon super-button-bar">
-      <i class="material-icons" style="transform: rotateY(180deg)">format_size</i>
-    </button><button id="global-toolbar-increase-fontsize" class="btn-toolbar-icon super-button-bar">
-      <i class="material-icons">format_size</i>
-    </button>
-    <button id="user-profile-settings-button" class="btn-toolbar-icon" style="float:right;">
-      <i class="material-icons">settings_applications</i>
-    </button>
+    <div class="global-floating-toolbar">
+      <button id="expand-all-toolbands" class="btn-toolbar-icon super-button-bar" style="float:left;">
+        <i class="material-icons" style="transform: rotate(145deg)">rotate_right</i>
+      </button>
+      <button id="collapse-all-toolbands" class="btn-toolbar-icon super-button-bar" style="float:left;">
+        <i class="material-icons" style="transform: rotate(35deg)">rotate_left</i>
+      </button>
+      <button id="global-toolbar-decrease-fontsize" class="btn-toolbar-icon super-button-bar" style="float:left;margin-left:1em;">
+        <i class="material-icons" style="transform: rotateY(180deg)">format_size</i>
+      </button>
+      <button id="global-toolbar-increase-fontsize" class="btn-toolbar-icon super-button-bar" style="float:left;">
+        <i class="material-icons">format_size</i>
+      </button>
+      <button id="user-profile-settings-button" class="btn-toolbar-icon super-button-bar" style="float:right;">
+        <i class="material-icons">settings_applications</i>
+      </button>
+      <button id="canvas-settings-tool-button" class="btn-toolbar-icon super-button-bar" style="float:right;margin-right:1em;">
+        <i class="material-icons">aspect_ratio</i>
+      </button>
+      <button id="toolbar-render-log-button" class="btn-toolbar-icon super-button-bar" style="float:right;">
+        <i class="material-icons">event_note</i>
+      </button>
+      <div class="toolbar-content"></div>
+    </div>
     <div id="sb-floating-toolbar-expanded">
     </div>
     <div id="sb-floating-toolbar">
@@ -56,7 +66,7 @@
           <button type="button" class="btn btn-primary save-details" style="float:right;margin:5px;">Close</button>
         </div>
         <div class="popup-main-body">
-          <div class="popup-content">
+          <div class="popup-content" style="padding-top:3em;">
             <img class="user-image-display" />
             <div class="form-group user-profile-info-block">
               <button id="sign-out-button" style="float:right;font-size:1.3em;" class="btn ">
@@ -81,7 +91,6 @@
   <div id="scene-builder-create-dialog-template" style="display:none;">
     <div class="modal-dialog">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
@@ -112,7 +121,6 @@
   <div id="scene-builder-edit-dialog-template" style="display:none;">
     <div class="modal-dialog">
       <div class="modal-body">
-        <button class="edit-modal-times-close-button" type="button" class="close" data-dismiss="modal">&times;</button>
         <div class="popup-main-body">
           <div class="popup-canvas-wrapper">
             <canvas class="popup-canvas"></canvas>
@@ -216,6 +224,7 @@
   <script src="controller/cscenetoolsband.js"></script>
   <script src="controller/cdialoguserprofile.js"></script>
   <script src="controller/chelperpanels.js"></script>
+  <script src="controller/crenderlog.js"></script>
 </body>
 
 </html>
