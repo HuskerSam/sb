@@ -1,8 +1,17 @@
 class cRenderLog {
   constructor(btn, container) {
-    this.status = 0;
-    this.button = btn;
-    this.container = container;
+    this.expanded = false;
+
+    this.collapseButton = btn;
+    this.collapseButton.addEventListener('click', e => this.toggle(), false);
+
+    this.panel = document.createElement('div');
+    this.panel.style.display = 'none';
+    this.panel.style.float = 'left';
+    this.panel.setAttribute('class', 'context-scene-tools-panel');
+    this.panel.innerHTML = 'render info panel';
+    this.panelContainer = container;
+    this.panelContainer.appendChild(this.panel);
   }
   statusText() {
     if (this.status === 0)
@@ -16,5 +25,18 @@ class cRenderLog {
   }
   statusColor(){
 
+  }
+  toggle() {
+    if (this.expanded) {
+      this.expanded = false;
+      this.panel.style.display = 'none';
+      this.collapseButton.style.background = 'rgba(255,255,255,.2)';
+      this.collapseButton.style.color = 'black';
+    } else {
+      this.expanded = true;
+      this.panel.style.display = 'inline-block';
+      this.collapseButton.style.background = 'rgba(0,0,0,.5)';
+      this.collapseButton.style.color = 'white';
+    }
   }
 }

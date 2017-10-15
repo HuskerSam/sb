@@ -18,7 +18,7 @@ class gApplication {
 
     this.sceneToolsButton = document.querySelector('#canvas-settings-tool-button');
     this.sceneToolsContainer = document.querySelector('.global-floating-toolbar .toolbar-content');
-    this.sceneTools = new cSceneToolsBand(this.sceneToolsButton, this.sceneToolsContainer);
+    this.sceneTools = new cCanvasOptionsBand(this.sceneToolsButton, this.sceneToolsContainer);
     this.renderLogButton = document.querySelector('#toolbar-render-log-button');
     this.renderLog = new cRenderLog(this.renderLogButton, this.sceneToolsContainer);
 
@@ -56,9 +56,9 @@ class gApplication {
 
   }
   handleDataUpdate() {
-    this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
     this.mV._updateSelectedScene();
+    this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
   }
   resize() {
     if (this.activeContext)

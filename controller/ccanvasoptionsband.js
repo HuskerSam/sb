@@ -1,4 +1,4 @@
-class cSceneToolsBand {
+class cCanvasOptionsBand {
   constructor(btn, container) {
     this.expanded = false;
 

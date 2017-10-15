@@ -188,6 +188,7 @@ class cDialogSuper {
 
     this.splitInstance = window.Split([t, b], {
       sizes: [50, 50],
+      gutterSize: 16,
       direction: this.rotateState,
       onDragEnd: () => this._splitDragEnd(),
       onDrag: () => this._splitDragEnd()

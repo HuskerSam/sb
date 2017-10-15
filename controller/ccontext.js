@@ -8,7 +8,6 @@ class cContext {
     this.activeBlock = null;
     this.canvas = canvas;
     this.engine = null;
-    this.renderLog = new cRenderLog(this);
     this.importedMeshes = [];
     this.importedMeshClones = [];
 

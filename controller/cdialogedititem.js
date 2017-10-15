@@ -19,7 +19,7 @@ class cDialogEditItem extends cDialogSuper {
     let c = this.fieldsContainer;
     c.insertBefore(childBar, c.childNodes[0]);
     c.setAttribute('class', 'block-editor-children-bar-wrapper');
-    let html = '<div class="block-editor-child options-button"> 4 x 2 x 2 </div>';
+    let html = '<div class="block-editor-child options-button">4 x 2 x 2</div>';
     html += '<div class="block-editor-child add-button"><i class="material-icons">add</i></div>';
     html += '<div class="block-editor-child selected">M: mesh1</div>';
     html += '<div class="block-editor-child">M: mesh1</div>';

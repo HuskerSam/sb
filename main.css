@@ -80,11 +80,11 @@ html, body {
 }
 
 .btn-toolbar-icon {
-  background: transparent;
-  border-radius: .5em;
-  color: inherit;
+  border-radius: .3em;
+  color: black;
   border: solid 1px silver;
   z-index: 1;
+  background: rgba(255, 255, 255, .3);
 }
 
 .sb-floating-toolbar-item {
@@ -316,8 +316,10 @@ html, body {
 }
 
 .popup-main-body {
-  height: calc(100% - 2.5em);
+  height: calc(100% - 4.5em);
   overflow-y: hidden;
+  position: relative;
+  top: 2em;
 }
 
 .popup-buttons .save-details {
@@ -603,7 +605,6 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .super-button-bar {
-  background: rgba(255, 255, 255, .2);
 }
 
 .global-floating-toolbar {
