@@ -21,7 +21,7 @@ class gApplication {
     this.sceneTools = new cSceneToolsBand(this.sceneToolsButton, this.sceneToolsContainer);
     this.renderLogButton = document.querySelector('#toolbar-render-log-button');
     this.renderLog = new cRenderLog(this.renderLogButton, this.sceneToolsContainer);
-    
+
     window.addEventListener("resize", () => this.resize());
 
     this.toolbarItems['scene'] = new cToolband('scene', 'Scenes');
@@ -71,8 +71,6 @@ class gApplication {
 
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(false);
-    this.mV.context.sceneTools.expanded = true;
-    this.mV.context.sceneTools.toggle();
   }
   _expandAllBands() {
     let dialog = this.__detectIfEditDialogShown();
@@ -81,9 +79,6 @@ class gApplication {
 
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggle(true);
-
-    this.mV.context.sceneTools.expanded = false;
-    this.mV.context.sceneTools.toggle();
   }
   _increaseFontSize(decrease) {
     let originalFontSize = this.a.profile.fontSize;

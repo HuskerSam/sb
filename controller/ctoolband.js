@@ -56,12 +56,13 @@ class cToolband {
     html += '</ul>';
 
     let outer = document.createElement('div');
-    outer.setAttribute('class', `${this.tag}-${key} band-background-outer dropdown`);
-    outer.style.display = 'inline-block';
-    outer.style.position = 'initial';
+    outer.setAttribute('class', `band-background-outer dropdown`);
     outer.innerHTML = html.trim();
     let button = outer.childNodes[0];
     let ul = outer.childNodes[1];
+    let dd = document.createElement('div');
+    dd.setAttribute('class', `${this.tag}-${key} bs-menu-clipper-wrapper`);
+    dd.appendChild(outer);
 
     if (this.tag === 'scene') {
       this.__addMenuItem(ul, '<b>Select</b>', e => this.selectScene(e, key));
@@ -89,12 +90,12 @@ class cToolband {
     this.nodeApplyValues(values, button);
 
     $(outer).on('show.bs.dropdown', function () {
-      ul.style.left = button.offsetLeft - ul.parentElement.parentElement.scrollLeft + 'px';
+      ul.style.left = button.offsetLeft - ul.parentElement.parentElement.parentElement.scrollLeft + 'px';
       ul.style.top = button.offsetTop + button.offsetHeight - 8 + 'px';
       ul.style.position = 'absolute';
     });
 
-    this.childrenContainer.insertBefore(outer, this.childrenContainer.firstChild);
+    this.childrenContainer.insertBefore(dd, this.childrenContainer.firstChild);
   }
   handleDataChange(fireData, type) {
     if (type === 'add')
