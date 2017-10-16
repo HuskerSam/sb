@@ -1,19 +1,23 @@
 class cDialogSuper {
-  constructor(dialogQuerySelector, tag, dialog) {
+  constructor(dialog, tag, dataViewContainer = null, fieldsContainer = null) {
     this.tag = tag;
     this.key = null;
     this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.fireSet = gAPPP.a.modelSets[this.tag];
     this.fireFields = null;
     this.uiJSON = 'N/A';
+    this.dialog = dialog;
 
-    this.dialogQuerySelector = dialogQuerySelector;
-    if (!dialog)
-      this.dialog = document.querySelector(this.dialogQuerySelector);
+    if (fieldsContainer)
+      this.fieldsContainer = fieldsContainer;
     else
-      this.dialog = dialog;
+      this.fieldsContainer = this.dialog.querySelector('.fields-container');
 
-    this.fieldsContainer = this.dialog.querySelector('.fields-container');
+    if (this.dataViewContainer)
+      this.dataViewContainer = dataViewContainer;
+    else
+      this.dataViewContainer = this.fieldsContainer;
+
     if (this.fields) {
       this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
       this.fireSet.childListeners.push((values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData));
@@ -126,7 +130,7 @@ class cDialogSuper {
   }
   _endLoad() {
     this._showDom(this.popupButtons);
-    this._showDom(this.fieldsContainer);
+    this._showDom(this.dataViewContainer);
     this._hideDom(this.progressBar);
 
     this._splitView();
@@ -175,7 +179,7 @@ class cDialogSuper {
       this.splitInstance.destroy();
 
     let t = this.dialog.querySelector('.popup-canvas-wrapper');
-    let b = this.fieldsContainer;
+    let b = this.dataViewContainer;
     let mb = this.dialog.querySelector('.popup-main-body');
 
     if (this.rotateState === 'horizontal') {
@@ -197,7 +201,7 @@ class cDialogSuper {
   }
   _startLoad() {
     this._hideDom(this.popupButtons);
-    this._hideDom(this.fieldsContainer);
+    this._hideDom(this.dataViewContainer);
     this._showDom(this.progressBar);
   }
 }

@@ -20,13 +20,15 @@ class cToolband {
     this.wrapper.id = 'sb-' + this.tag + '-floating-toolbar-item';
     this.childrenContainer = this.wrapper.querySelector('.sb-floating-toolbar-content');
     this.containerCollapsed.appendChild(this.wrapper);
-    this.wrapper.querySelector('.button-title').innerHTML = this.title;
+    this.titleDom = this.wrapper.querySelector('.button-title');
+    this.titleDom.innerHTML = this.title;
 
     this.bar = this.wrapper.querySelector('.sb-floating-toolbar-content');
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
     this.expandBtn = this.wrapper.querySelector('.sb-floating-toolbar-expand-btn')
 
     this.expandBtn.addEventListener('click', e => this.toggle(), false);
+    this.titleDom.addEventListener('click', e => this.toggle(), false);
     this.createBtn.addEventListener('click', e => this.showPopup(), false);
 
     gAPPP.a.modelSets[this.tag].childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
@@ -37,7 +39,7 @@ class cToolband {
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);
     let values = fireData.val();
-    this.nodeApplyValues(values, div.childNodes[0]);
+    this.nodeApplyValues(values, div.querySelector('.band-background-preview'));
   }
   childRemoved(fireData) {
     let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);

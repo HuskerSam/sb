@@ -33,7 +33,7 @@ class gApplication {
 
     this.dialogs['mesh-edit'] = new cDialogEditItem('mesh', 'Mesh Options');
     this.dialogs['shape-edit'] = new cDialogEditItem('shape', 'Shape Editor');
-    this.dialogs['block-edit'] = new cDialogEditItem('block', 'Block Editor');
+    this.dialogs['block-edit'] = new cDialogBlock();
     this.dialogs['material-edit'] = new cDialogEditItem('material', 'Material Editor');
     this.dialogs['texture-edit'] = new cDialogEditItem('texture', 'Texture Options');
     this.dialogs['scene-edit'] = new cDialogEditItem('scene', 'Scene Options');
@@ -44,8 +44,7 @@ class gApplication {
     this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
     this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material', true);
     this.dialogs['scene-create'] = new cDialogCreateItem('scene', 'Add Scene');
-
-    this.dialogs['user-profile'] = new cDialogUserProfile('#user-profile-settings-dialog', 'userProfile');
+    this.dialogs['user-profile'] = new cDialogUserProfile(document.querySelector('#user-profile-settings-dialog'), 'userProfile');
 
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => this._expandAllBands(), false);
     document.querySelector('#collapse-all-toolbands').addEventListener('click', e => this._collaspseAllBands(), false);

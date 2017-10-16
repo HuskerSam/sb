@@ -1,15 +1,18 @@
-class cDialogEditItem extends cDialogSuper {
-  constructor(tag, title) {
+class cDialogBlock extends cDialogSuper {
+  constructor() {
     let d = document.createElement('div');
     d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;
     d.setAttribute('role', 'dialog');
     d.setAttribute('class', 'modal fade edit-modal');
-    d.querySelector('.popup-title').innerHTML = title;
+    d.querySelector('.popup-title').innerHTML = 'Block Editor';
 
-    super(d, tag);
+    super(d, 'block');
 
     this._splitViewAlive = true;
     this.initScene = true;
+
+    if (this.tag === 'block')
+      this.childBand = new cChildBlockBand(this.dataViewContainer);
   }
   show(key) {
     this.key = key;

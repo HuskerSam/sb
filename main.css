@@ -108,7 +108,6 @@ html, body {
   overflow: auto;
   color: black;
   overflow-y: hidden;
-  pointer-events: none;
 }
 
 .sb-floating-toolbar-content .fields-container {
@@ -139,6 +138,7 @@ html, body {
   background: rgba(0, 0, 0, .15);
   padding: .05em .5em;
   border-radius: .3em;
+  cursor: pointer;
 }
 
 .sb-floating-toolbar-item .button-wrapper .option-buttons {
@@ -627,7 +627,9 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: auto;
 }
 
-.block-editor-children-bar-wrapper {}
+.block-editor-children-bar-wrapper {
+  display: flex;
+}
 
 .block-editor-children-bar-wrapper .block-options-collapse {
   background: rgba(0, 0, 0, .2);
@@ -658,6 +660,12 @@ input[type=range]::-webkit-slider-thumb {
 .block-editor-child.options-button {
   background: rgba(255, 127, 127, .5);
   color: white;
+}
+
+.block-editor-children-bar-wrapper .childwrapper {
+  flex: 1;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .band-background-outer {
