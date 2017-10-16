@@ -1,4 +1,4 @@
-class cHelperPanels {
+class cPanelHelpers {
   constructor(fireFields) {
     this.fireFields = fireFields;
     this.helperPanels = {};
@@ -213,7 +213,7 @@ class cHelperPanels {
     m.diffuseColor = GLOBALUTIL.color('.2,.8,0');
     m.diffuseColor.alpha = 0.7;
     this.context.__setMaterialOnObj(tNode, m);
-    this.context.setGhostBlock('offsetPreview', new cBlock(this.context, null, tNode));
+    this.context.setGhostBlock('offsetPreview', new wBlock(this.context, null, tNode));
     hp.preview.innerHTML = htmlPreview;
 
     hp.moveButton.disabled = false;
@@ -331,7 +331,7 @@ class cHelperPanels {
     m.diffuseColor = GLOBALUTIL.color('0,.3,.8');
     m.diffuseColor.alpha = 0.7;
     this.context.__setMaterialOnObj(tNode, m);
-    this.context.setGhostBlock('rotatePreview', new cBlock(this.context, null, tNode));
+    this.context.setGhostBlock('rotatePreview', new wBlock(this.context, null, tNode));
 
     hp.moveButton.disabled = false;
   }
@@ -424,7 +424,7 @@ class cHelperPanels {
       m.diffuseColor = GLOBALUTIL.color('1,.5,0');
       m.diffuseColor.alpha = 0.7;
       this.context.__setMaterialOnObj(tNode, m);
-      this.context.setGhostBlock('scalePreview', new cBlock(this.context, null, tNode));
+      this.context.setGhostBlock('scalePreview', new wBlock(this.context, null, tNode));
       hp.preview.innerHTML = html;
       hp.scaleButton.disabled = false;
     }

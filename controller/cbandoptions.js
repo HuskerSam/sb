@@ -1,4 +1,4 @@
-class cCanvasOptionsBand {
+class cBandOptions {
   constructor(btn, container) {
     this.expanded = false;
 
@@ -18,7 +18,7 @@ class cCanvasOptionsBand {
     this.panel.appendChild(this.fieldsContainer);
 
     this.fireSet = gAPPP.a.modelSets['userProfile'];
-    this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
+    this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
 
     this.fireFields.helpers.expandAll();
 

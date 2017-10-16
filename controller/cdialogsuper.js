@@ -19,7 +19,7 @@ class cDialogSuper {
       this.dataViewContainer = this.fieldsContainer;
 
     if (this.fields) {
-      this.fireFields = new cDataView(this.fields, this.fieldsContainer, this);
+      this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
       this.fireSet.childListeners.push((values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData));
     }
 
@@ -41,7 +41,7 @@ class cDialogSuper {
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas)
-      this.context = new cContext(this.canvas);
+      this.context = new wContext(this.canvas);
 
     this.rotateState = 'vertical';
   }
@@ -75,7 +75,7 @@ class cDialogSuper {
       this.context.activate(null);
 
       if (this.tag === 'mesh') {
-        this.context.setActiveBlock(new cBlock(this.context));
+        this.context.setActiveBlock(new wBlock(this.context));
         this.context.activeBlock.setData(this.fireFields.values);
         this.context.activeBlock.loadMesh().then(
           mesh => this._finishShow(),
@@ -83,7 +83,7 @@ class cDialogSuper {
         return;
       }
       if (this.tag === 'shape') {
-        let b = new cBlock(this.context);
+        let b = new wBlock(this.context);
         b.displayOverride = 'none';
         b.blockType = 'shape';
         b.setData(this.fireFields.values);
@@ -99,7 +99,7 @@ class cDialogSuper {
         return;
       }
       if (this.tag === 'material') {
-        let b = new cBlock(this.context);
+        let b = new wBlock(this.context);
         b.displayOverride = 'material';
         b.blockType = 'shape';
         b.setData(this.fireFields.values);
@@ -108,7 +108,7 @@ class cDialogSuper {
         return;
       }
       if (this.tag === 'texture') {
-        let b = new cBlock(this.context);
+        let b = new wBlock(this.context);
         b.displayOverride = 'texture';
         b.blockType = 'shape';
         b.setData(this.fireFields.values);

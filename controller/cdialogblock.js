@@ -10,9 +10,8 @@ class cDialogBlock extends cDialogSuper {
 
     this._splitViewAlive = true;
     this.initScene = true;
-
-    if (this.tag === 'block')
-      this.childBand = new cChildBlockBand(this.dataViewContainer);
+    this.childBand = new cBandChildren(this.dataViewContainer);
+    this.panelFrames = new cPanelFrames();
   }
   show(key) {
     this.key = key;

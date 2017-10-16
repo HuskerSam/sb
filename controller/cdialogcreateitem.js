@@ -9,7 +9,7 @@ class cDialogCreateItem {
     this.dialog = d;
 
     this.canvas = this.dialog.querySelector('.create-preview-canvas');
-    this.context = new cContext(this.canvas);
+    this.context = new wContext(this.canvas);
     if (this.tag === 'scene' || this.tag === 'mesh')
       this.canvas.style.display = 'block';
     else

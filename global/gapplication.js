@@ -14,22 +14,22 @@ class gApplication {
     ];
     this._initShapesList();
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
-    this.mV = new gMainView();
+    this.mV = new cViewMain();
 
     this.sceneToolsButton = document.querySelector('#canvas-settings-tool-button');
     this.sceneToolsContainer = document.querySelector('.global-floating-toolbar .toolbar-content');
-    this.sceneTools = new cCanvasOptionsBand(this.sceneToolsButton, this.sceneToolsContainer);
+    this.sceneTools = new cBandOptions(this.sceneToolsButton, this.sceneToolsContainer);
     this.renderLogButton = document.querySelector('#toolbar-render-log-button');
-    this.renderLog = new cRenderLog(this.renderLogButton, this.sceneToolsContainer);
+    this.renderLog = new cPanelLog(this.renderLogButton, this.sceneToolsContainer);
 
     window.addEventListener("resize", () => this.resize());
 
-    this.toolbarItems['scene'] = new cToolband('scene', 'Scenes');
-    this.toolbarItems['block'] = new cToolband('block', 'Blocks');
-    this.toolbarItems['mesh'] = new cToolband('mesh', 'Meshes');
-    this.toolbarItems['shape'] = new cToolband('shape', 'Shapes');
-    this.toolbarItems['material'] = new cToolband('material', "Materials");
-    this.toolbarItems['texture'] = new cToolband('texture', 'Textures');
+    this.toolbarItems['scene'] = new cBandRecords('scene', 'Scenes');
+    this.toolbarItems['block'] = new cBandRecords('block', 'Blocks');
+    this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes');
+    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes');
+    this.toolbarItems['material'] = new cBandRecords('material', "Materials");
+    this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures');
 
     this.dialogs['mesh-edit'] = new cDialogEditItem('mesh', 'Mesh Options');
     this.dialogs['shape-edit'] = new cDialogEditItem('shape', 'Shape Editor');

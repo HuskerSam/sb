@@ -1,4 +1,4 @@
-class cRenderLog {
+class cPanelLog {
   constructor(btn, container) {
     this.expanded = false;
 

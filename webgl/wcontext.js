@@ -1,4 +1,4 @@
-class cContext {
+class wContext {
   constructor(canvas, initEngine) {
     this.ghostBlocks = {};
     this.light = null;
@@ -380,7 +380,7 @@ class cContext {
     if (!show)
       return this.setGhostBlock('guides', null);
     let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-    let block = new cBlock(this);
+    let block = new wBlock(this);
     block.createGuides(gridDepth);
     this.setGhostBlock('guides', block);
   }
@@ -388,7 +388,7 @@ class cContext {
     if (!show)
       return this.setGhostBlock('grid', null);
     let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
-    let block = new cBlock(this);
+    let block = new wBlock(this);
     block.createGrid(gridDepth);
     this.setGhostBlock('grid', block);
   }

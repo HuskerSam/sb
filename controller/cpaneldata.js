@@ -1,4 +1,4 @@
-class cDataView {
+class cPanelData {
   constructor(boundFields, container, parent) {
     this.fields = boundFields;
     this.values = {};
@@ -7,7 +7,7 @@ class cDataView {
     this.container = container;
     this.focusLock = true;
     this.loadedURL = '';
-    this.helpers = new cHelperPanels(this);
+    this.helpers = new cPanelHelpers(this);
     this.groups = {};
     this.scrapeCache = [];
     this.valueCache = {};

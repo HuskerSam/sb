@@ -1,4 +1,4 @@
-class cToolband {
+class cBandRecords {
   constructor(tag, title) {
     this.tag = tag;
     this.title = title;

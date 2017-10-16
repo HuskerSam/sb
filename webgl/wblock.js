@@ -1,4 +1,4 @@
-class cBlock {
+class wBlock {
   constructor(context, parent = null, sceneObject = null) {
     this.blockType = 'mesh';
     this.sceneObject = sceneObject;
@@ -118,7 +118,7 @@ class cBlock {
         },
         progress => {},
         (scene, msg, err) => {
-          console.log('cBlock.loadMesh', msg, err);
+          console.log('wBlock.loadMesh', msg, err);
           reject({
             error: true,
             message: msg,
@@ -169,7 +169,7 @@ class cBlock {
     this.context.refreshFocus();
   }
   _pushObj(obj, inheritMaterial = true) {
-    let child = new cBlock(this.context, this);
+    let child = new wBlock(this.context, this);
     child.sceneObject = obj;
     child.inheritMaterial = inheritMaterial;
     this.childBlocks.push(child);

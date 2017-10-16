@@ -1,4 +1,4 @@
-class cChildBlockBand {
+class cBandChildren {
   constructor(container) {
     this.parentContainer = container;
     this._addChildBlockList();

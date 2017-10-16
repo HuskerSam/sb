@@ -1,7 +1,7 @@
-class gMainView {
+class cViewMain {
   constructor() {
     this.canvasDOM = document.querySelector('#renderCanvas');
-    this.context = new cContext(this.canvasDOM, true);
+    this.context = new wContext(this.canvasDOM, true);
     this.context.activate(null);
     this.key = null;
     this.loadedSceneURL = '';
