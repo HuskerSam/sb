@@ -1,6 +1,7 @@
-class cBandRecords {
+class cBandRecords extends cBandSuper {
   constructor(tag, title) {
-    this.tag = tag;
+    super(gAPPP.a.modelSets[tag], tag);
+
     this.title = title;
     this.bindingsList = [{
         dataName: 'title',
@@ -27,29 +28,11 @@ class cBandRecords {
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
     this.expandBtn = this.wrapper.querySelector('.sb-floating-toolbar-expand-btn')
 
-    this.expandBtn.addEventListener('click', e => this.toggle(), false);
-    this.titleDom.addEventListener('click', e => this.toggle(), false);
-    this.createBtn.addEventListener('click', e => this.showPopup(), false);
-
-    gAPPP.a.modelSets[this.tag].childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
+    this.expandBtn.addEventListener('click', e => this._toggle(), false);
+    this.titleDom.addEventListener('click', e => this._toggle(), false);
+    this.createBtn.addEventListener('click', e => this._showCreatePopup(), false);
   }
-  childAdded(fireData) {
-    this._createDOM(fireData);
-  }
-  childChanged(fireData) {
-    let div = document.querySelector('.' + this.tag + '-' + fireData.key);
-    let values = fireData.val();
-    this.nodeApplyValues(values, div.querySelector('.band-background-preview'));
-  }
-  childRemoved(fireData) {
-    let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);
-    if (post)
-      this.childrenContainer.removeChild(post);
-  }
-  cloneElement(e, key) {
-    gAPPP.a.modelSets[this.tag].cloneByKey(key).then(key => {});
-  }
-  _createDOM(fireData) {
+  createDOM(fireData) {
     let values = fireData.val();
     let key = fireData.key;
     let html = `<div class="band-background-preview" type="button" data-toggle="dropdown">`;
@@ -67,18 +50,18 @@ class cBandRecords {
     dd.appendChild(outer);
 
     if (this.tag === 'scene') {
-      this.__addMenuItem(ul, '<b>Select</b>', e => this.selectScene(e, key));
+      this.__addMenuItem(ul, '<b>Select</b>', e => this._selectScene(e, key));
     }
 
-    this.__addMenuItem(ul, 'Edit', e => this.showEditPopup(e, key));
-    this.__addMenuItem(ul, 'Clone', e => this.cloneElement(e, key));
+    this.__addMenuItem(ul, 'Edit', e => this._showEditPopup(e, key));
+    this.__addMenuItem(ul, 'Clone', e => this._cloneElement(e, key));
 
     if (this.tag === 'texture') {
-      this.__addMenuItem(ul, 'To Material', e => this.textureToMaterial(e, key), true);
-      this.__addMenuItem(ul, 'To Shape', e => this.textureToShape(e, key), true);
+      this.__addMenuItem(ul, 'To Material', e => this._textureToMaterial(e, key), true);
+      this.__addMenuItem(ul, 'To Shape', e => this._textureToShape(e, key), true);
     }
     if (this.tag === 'material') {
-      this.__addMenuItem(ul, 'To Shape', e => this.materialToShape(e, key), true);
+      this.__addMenuItem(ul, 'To Shape', e => this._materialToShape(e, key), true);
     }
     if (this.tag === 'mesh') {
       this.__addMenuItem(ul, 'Add To Scene', e => this.addMeshToScene(e, key), true);
@@ -87,9 +70,9 @@ class cBandRecords {
       this.__addMenuItem(ul, 'Add To Scene', e => this.addShapeToScene(e, key), true);
     }
 
-    this.__addMenuItem(ul, 'Remove', e => this.removeElement(e, key), true);
+    this.__addMenuItem(ul, 'Remove', e => this._removeElement(e, key), true);
 
-    this.nodeApplyValues(values, button);
+    this._nodeApplyValues(values, button);
 
     $(outer).on('show.bs.dropdown', function () {
       ul.style.left = button.offsetLeft - ul.parentElement.parentElement.parentElement.scrollLeft + 'px';
@@ -99,18 +82,13 @@ class cBandRecords {
 
     this.childrenContainer.insertBefore(dd, this.childrenContainer.firstChild);
   }
-  handleDataChange(fireData, type) {
-    if (type === 'add')
-      return this.childAdded(fireData);
-    if (type === 'change')
-      return this.childChanged(fireData);
-    if (type === 'remove')
-      return this.childRemoved(fireData);
+  _cloneElement(e, key) {
+    gAPPP.a.modelSets[this.tag].cloneByKey(key).then(key => {});
   }
-  materialToShape(e, key) {
+  _materialToShape(e, key) {
     alert('soon');
   }
-  nodeApplyValues(values, outer) {
+  _nodeApplyValues(values, outer) {
     for (let i in this.bindingsList) {
       let binding = this.bindingsList[i];
       try {
@@ -135,12 +113,12 @@ class cBandRecords {
       }
     }
   }
-  removeElement(e, key) {
+  _removeElement(e, key) {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
       return;
     gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
-  selectScene(e, key) {
+  _selectScene(e, key) {
     let updates = [{
       field: 'selectedSceneKey',
       newValue: key,
@@ -148,14 +126,14 @@ class cBandRecords {
     }];
     gAPPP.a.modelSets['userProfile'].commitUpdateList(updates);
   }
-  showEditPopup(e, key) {
+  _showEditPopup(e, key) {
     if (gAPPP.dialogs[this.tag + '-edit'])
       return gAPPP.dialogs[this.tag + '-edit'].show(key);
   }
-  showPopup() {
+  _showCreatePopup() {
     gAPPP.dialogs[this.tag + '-create'].show();
   }
-  textureToMaterial(e, key) {
+  _textureToMaterial(e, key) {
     let materialData = sDataDefinition.getDefaultDataCloned('material');
     let textureSet = gAPPP.a.modelSets['texture'];
     let materialSet = gAPPP.a.modelSets['material'];
@@ -166,7 +144,7 @@ class cBandRecords {
 
     materialSet.createWithBlobString(materialData).then(r => {});
   }
-  textureToShape(e, key) {
+  _textureToShape(e, key) {
     let materialData = sDataDefinition.getDefaultDataCloned('material');
     let textureSet = gAPPP.a.modelSets['texture'];
     let materialSet = gAPPP.a.modelSets['material'];
@@ -185,7 +163,7 @@ class cBandRecords {
     });
 
   }
-  toggle(forceValue) {
+  _toggle(forceValue) {
     if (forceValue === undefined)
       forceValue = (this.bar.style.display !== 'inline-block');
 
