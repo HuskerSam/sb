@@ -1,4 +1,4 @@
-class cBandChildren {
+class cBandChildren extends cBandSuper {
   constructor(domContainer) {
     this.parentContainer = domContainer;
   }

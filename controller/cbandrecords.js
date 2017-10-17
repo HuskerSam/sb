@@ -27,7 +27,7 @@ class cBandRecords extends cBandSuper {
     let key = fireData.key;
     let html = `<div class="band-background-preview" type="button" data-toggle="dropdown">`;
     html += '<span class="band-title"></span></div>';
-    html += '<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">';
+    html += '<ul class="dropdown-menu" role="menu">';
     html += '</ul>';
 
     let outer = document.createElement('div');
