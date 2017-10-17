@@ -626,48 +626,6 @@ input[type=range]::-webkit-slider-thumb {
 .global-floating-toolbar button, .global-floating-toolbar .toolbar-content button {
   pointer-events: auto;
 }
-
-.block-editor-children-bar-wrapper {
-  display: flex;
-}
-
-.block-editor-children-bar-wrapper .block-options-collapse {
-  background: rgba(0, 0, 0, .2);
-  color: white;
-}
-
-.block-editor-child {
-  display: inline-block;
-  background: rgba(127, 127, 127, .5);
-  color: black;
-  border-radius: .1em;
-  border: solid 1px silver;
-  margin: .1em;
-  padding: .1em;
-  height: 1.5em;
-}
-
-.block-editor-child.selected {
-  background: rgba(0, 0, 255, .5);
-  color: white;
-}
-
-.block-editor-child.add-button {
-  background: rgba(127, 255, 127, .5);
-  color: white;
-}
-
-.block-editor-child.options-button {
-  background: rgba(255, 127, 127, .5);
-  color: white;
-}
-
-.block-editor-children-bar-wrapper .childwrapper {
-  flex: 1;
-  white-space: nowrap;
-  overflow-x: auto;
-}
-
 .band-background-outer {
   position: initial;
 }
@@ -677,3 +635,50 @@ input[type=range]::-webkit-slider-thumb {
   margin-bottom: -.75em;
   overflow: hidden;
 }
+
+.cblock-editor-wrapper {
+  overflow:hidden;
+}
+.main-band-first-row {
+  display:flex;
+}
+.main-band-toggle {
+  background: rgba(255, 127, 127, .5);
+  color: white;
+  border-radius: .1em;
+  border: solid 1px silver;
+  margin: .1em;
+  padding: .1em;
+}
+.main-band-details-element {
+  background: rgba(127, 127, 127, .5);
+  color: white;
+  border-radius: .1em;
+  border: solid 1px silver;
+  margin: .1em;
+  padding: .1em;
+}
+.main-band-flex-children {
+  flex: 1;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.cblock-details-panel {}
+.cblock-child-details-panel {}
+.frames-panel{}
+
+  .block-editor-child {
+    display: inline-block;
+    background: rgba(127, 127, 127, .5);
+    color: black;
+    border-radius: .1em;
+    border: solid 1px silver;
+    margin: .1em;
+    padding: .1em;
+    height: 1.5em;
+  }
+
+  .block-editor-child.selected {
+    background: rgba(0, 0, 255, .5);
+    color: white;
+  }

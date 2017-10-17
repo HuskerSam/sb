@@ -13,7 +13,7 @@ class cDialogSuper {
     else
       this.fieldsContainer = this.dialog.querySelector('.fields-container');
 
-    if (this.dataViewContainer)
+    if (dataViewContainer)
       this.dataViewContainer = dataViewContainer;
     else
       this.dataViewContainer = this.fieldsContainer;
