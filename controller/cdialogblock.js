@@ -20,11 +20,30 @@ class cDialogBlock extends cDialogSuper {
     this._splitViewAlive = true;
     this.initScene = true;
 
-    this.toggleDom = this.dataViewContainer.querySelector('.main-band-details-element');
-    this.toggleDom.innerHTML = '4x2x2';
+    this.rootElementDom = this.dataViewContainer.querySelector('.main-band-details-element');
+    this.rootElementDom.innerHTML = '<i class="material-icons">developer_board</i>';
     this.childBandDom = this.dataViewContainer.querySelector('.main-band-flex-children');
+    this.toggleDetailsDom = this.dataViewContainer.querySelector('.main-band-toggle');
+    this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_more</i>';
+    this.detailsShown = true;
+    this.toggleDetailsDom.addEventListener('click', e => this.toggleDetails());
     this.childBand = new cBandChildren(this.childBandDom);
     this.panelFrames = new cPanelFrames();
+    this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
+  }
+  toggleDetails() {
+    this.detailsShown = ! this.detailsShown;
+
+    if (this.detailsShown) {
+      this.fieldsContainer.style.display = '';
+      this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_more</i>';
+      this.toggleDetailsDom.classList.add('selected');
+    }
+    else {
+      this.fieldsContainer.style.display = 'none';
+      this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_less</i>';
+      this.toggleDetailsDom.classList.remove('selected');
+    }
   }
   show(key) {
     this.key = key;

@@ -94,8 +94,7 @@ html, body {
   pointer-events: none;
 }
 
-#sb-floating-toolbar-expanded {
-}
+#sb-floating-toolbar-expanded {}
 
 .sb-floating-toolbar-content div {
   pointer-events: auto;
@@ -604,8 +603,7 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
 }
 
-.super-button-bar {
-}
+.super-button-bar {}
 
 .global-floating-toolbar {
   z-index: 20000;
@@ -626,6 +624,7 @@ input[type=range]::-webkit-slider-thumb {
 .global-floating-toolbar button, .global-floating-toolbar .toolbar-content button {
   pointer-events: auto;
 }
+
 .band-background-outer {
   position: initial;
 }
@@ -637,48 +636,45 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .cblock-editor-wrapper {
-  overflow:hidden;
+  overflow: hidden;
 }
+
 .main-band-first-row {
-  display:flex;
+  display: flex;
 }
-.main-band-toggle {
-  background: rgba(255, 127, 127, .5);
-  color: white;
-  border-radius: .1em;
-  border: solid 1px silver;
-  margin: .1em;
-  padding: .1em;
-}
-.main-band-details-element {
-  background: rgba(127, 127, 127, .5);
-  color: white;
-  border-radius: .1em;
-  border: solid 1px silver;
-  margin: .1em;
-  padding: .1em;
-}
+
 .main-band-flex-children {
   flex: 1;
   white-space: nowrap;
   overflow-x: auto;
 }
+
 .cblock-details-panel {}
+
 .cblock-child-details-panel {}
-.frames-panel{}
 
-  .block-editor-child {
-    display: inline-block;
-    background: rgba(127, 127, 127, .5);
-    color: black;
-    border-radius: .1em;
-    border: solid 1px silver;
-    margin: .1em;
-    padding: .1em;
-    height: 1.5em;
-  }
+.frames-panel {}
 
-  .block-editor-child.selected {
-    background: rgba(0, 0, 255, .5);
-    color: white;
-  }
+.block-editor-child, .main-band-details-element, .main-band-toggle, .main-band-add-child {
+  background: rgba(255, 255, 255, .5);
+  color: black;
+  border-radius: .1em;
+  border: solid .15em silver;
+  margin: .1em;
+  padding: .1em;
+}
+
+.main-band-toggle.selected {
+  background: rgba(127, 127, 127, .5);
+  color: white;
+}
+
+.block-editor-child.selected {
+  color: yellow;
+  background: rgba(127, 127, 127, .5);
+}
+
+.main-band-add-child {
+  background: rgba(127, 127, 127, .5);
+  color: rgb(0, 255, 0);
+}
