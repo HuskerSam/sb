@@ -69,7 +69,7 @@ class gApplication {
       return dialog.collapseAll();
 
     for (let i in this.toolbarItems)
-      this.toolbarItems[i].toggle(false);
+      this.toolbarItems[i].toggleChildBandDisplay(false);
   }
   _expandAllBands() {
     let dialog = this.__detectIfEditDialogShown();
@@ -77,7 +77,7 @@ class gApplication {
       return dialog.expandAll();
 
     for (let i in this.toolbarItems)
-      this.toolbarItems[i].toggle(true);
+      this.toolbarItems[i].toggleChildBandDisplay(true);
   }
   _increaseFontSize(decrease) {
     let originalFontSize = this.a.profile.fontSize;

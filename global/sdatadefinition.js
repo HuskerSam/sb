@@ -741,3 +741,19 @@ __localStaticStorageForBindingFields['block'] = [{
   displayType: 'number',
   group: 'inDim'
 }];
+__defaultData['blockchild'] = {
+  childType: 'mesh',
+  childName: '',
+  order: 0
+};
+__localStaticStorageForBindingFields['blockchild'] = [{
+    title: 'Type',
+    fireSetField: 'objectType',
+    contextObjectField: null,
+    group: 'main'
+  }, {
+    title: 'Name',
+    fireSetField: 'childName',
+    contextObjectField: null,
+    group: 'main'
+  }];

@@ -30,6 +30,13 @@ class cDialogBlock extends cDialogSuper {
     this.childBand = new cBandChildren(this.childBandDom);
     this.panelFrames = new cPanelFrames();
     this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
+    this.addChildButton.addEventListener('click', e => me.addChild());
+  }
+  addChild() {
+    let childData = 
+    fireSet.createWithBlobString(objectData).then(r => {
+
+    });
   }
   toggleDetails() {
     this.detailsShown = ! this.detailsShown;

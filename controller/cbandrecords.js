@@ -3,16 +3,6 @@ class cBandRecords extends cBandSuper {
     super(gAPPP.a.modelSets[tag], tag);
 
     this.title = title;
-    this.bindingsList = [{
-        dataName: 'title',
-        type: 'innerText'
-      },
-      {
-        dataName: 'renderImageURL',
-        type: 'background-image',
-        classKey: 'OUTER'
-      }
-    ];
     this.containerCollapsed = document.querySelector('#sb-floating-toolbar');
     this.containerExpanded = document.querySelector('#sb-floating-toolbar-expanded');
     let d = this.containerCollapsed.querySelector('#sb-floating-toolbar-item-template').cloneNode(true);
@@ -28,8 +18,8 @@ class cBandRecords extends cBandSuper {
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
     this.expandBtn = this.wrapper.querySelector('.sb-floating-toolbar-expand-btn')
 
-    this.expandBtn.addEventListener('click', e => this._toggle(), false);
-    this.titleDom.addEventListener('click', e => this._toggle(), false);
+    this.expandBtn.addEventListener('click', e => this.toggleChildBandDisplay(), false);
+    this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(), false);
     this.createBtn.addEventListener('click', e => this._showCreatePopup(), false);
   }
   createDOM(fireData) {
@@ -88,31 +78,6 @@ class cBandRecords extends cBandSuper {
   _materialToShape(e, key) {
     alert('soon');
   }
-  _nodeApplyValues(values, outer) {
-    for (let i in this.bindingsList) {
-      let binding = this.bindingsList[i];
-      try {
-        let classKey = binding.dataName;
-        if (binding.classKey)
-          classKey = binding.classKey;
-        let element = outer.querySelector('.band-' + classKey);
-        if (classKey === 'OUTER')
-          element = outer;
-        if (element === null)
-          continue;
-        let val = values[binding.dataName];
-        if (val === undefined)
-          continue;
-        if (binding.type === 'innerText')
-          element.innerText = val;
-        if (binding.type === 'background-image') {
-          element.style.backgroundImage = 'url("' + val + '")';
-        }
-      } catch (e) {
-        console.log('clstoolbandcontroller.js', e, binding);
-      }
-    }
-  }
   _removeElement(e, key) {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
       return;
@@ -161,9 +126,8 @@ class cBandRecords extends cBandSuper {
       shapeData.materialName = texture.title;
       shapeSet.createWithBlobString(shapeData).then(r2 => {});
     });
-
   }
-  _toggle(forceValue) {
+  toggleChildBandDisplay(forceValue) {
     if (forceValue === undefined)
       forceValue = (this.bar.style.display !== 'inline-block');
 
