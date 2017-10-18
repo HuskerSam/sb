@@ -748,7 +748,7 @@ __defaultData['blockchild'] = {
 };
 __localStaticStorageForBindingFields['blockchild'] = [{
     title: 'Type',
-    fireSetField: 'objectType',
+    fireSetField: 'childType',
     contextObjectField: null,
     group: 'main'
   }, {

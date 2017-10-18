@@ -669,7 +669,7 @@ input[type=range]::-webkit-slider-thumb {
   color: white;
 }
 
-.block-editor-child.selected {
+.block-editor-child.selected, .main-band-details-element.selected {
   color: yellow;
   background: rgba(127, 127, 127, .5);
 }
