@@ -30,11 +30,13 @@ class cDialogBlock extends cDialogSuper {
     this.childBand = new cBandChildren(this.childBandDom);
     this.panelFrames = new cPanelFrames();
     this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
-    this.addChildButton.addEventListener('click', e => me.addChild());
+    this.addChildButton.addEventListener('click', e => this.addChild());
   }
   addChild() {
-    let childData = 
-    fireSet.createWithBlobString(objectData).then(r => {
+    let childData = {};
+    let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
+    objectData.parentKey = this.key;
+    gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData).then(r => {
 
     });
   }
@@ -55,6 +57,8 @@ class cDialogBlock extends cDialogSuper {
   show(key) {
     this.key = key;
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
+
+    gAPPP.a.modelSets['blockchild'].setFilter(this.key);
 
     if (!this.fireFields.values['renderImageURL'])
       this.fireSet.renderImageUpdateNeeded = true;

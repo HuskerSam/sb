@@ -1,11 +1,13 @@
 class mFirebaseSuper {
-  constructor(referencePath, activate) {
+  constructor(referencePath, activate, filterKey = null, filterValue = null) {
     this.referencePath = referencePath;
     this.active = false;
     this.childListeners = [];
     this.values = {};
     this.keyList = false;
     this.renderImageUpdateNeeded = false;
+    this.filterKey = filterKey;
+    this.filterValue = filterValue;
 
     if (activate)
       this.activate();
@@ -23,10 +25,29 @@ class mFirebaseSuper {
       this.referencePath = referencePath;
 
     this.active = true;
-    this.notiRef = firebase.database().ref(this.referencePath);
+    this._createFireDBRef();
+  }
+  _createFireDBRef() {
+    if (this.filterKey !== null)
+      this.notiRef = firebase.database().ref(this.referencePath).orderByChild(this.filterKey).equalTo(this.filterValue);
+    else
+      this.notiRef = firebase.database().ref(this.referencePath);
+
     this.notiRef.on('child_added', e => this.childAdded(e));
     this.notiRef.on('child_changed', e => this.childChanged(e));
     this.notiRef.on('child_removed', e => this.childRemoved(e));
+  }
+  setFilter(filterValue) {
+    this.deactivate();
+    this.clear();
+    this.filterValue = filterValue;
+    this.activate();
+  }
+  clear() {
+    this.values = {};
+    this.fireDataByKey = {};
+    this.fireDataValuesByKey = {};
+    this.notifyChildren(null, 'clear');
   }
   childAdded(fireData) {
     this.updateStash(fireData);
@@ -46,7 +67,7 @@ class mFirebaseSuper {
   }
   notifyChildren(fireData, type) {
     for (let i in this.childListeners)
-      this.childListeners[i](this.getCache(fireData.key), type, fireData);
+        this.childListeners[i](fireData !== null ? this.getCache(fireData.key) : null, type, fireData);
   }
   getCache(key) {
     return this.values;

@@ -15,12 +15,12 @@ class cBandSuper {
     this.modelSet.childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
   }
   childAdded(fireData) {
-    this.createDOM(fireData);
+    this._getDomForChild(fireData);
   }
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);
     let values = fireData.val();
-    this.nodeApplyValues(values, div.querySelector('.band-background-preview'));
+    this._nodeApplyValues(values, div.querySelector('.band-background-preview'));
   }
   childRemoved(fireData) {
     let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);
@@ -34,11 +34,11 @@ class cBandSuper {
       return this.childChanged(fireData);
     if (type === 'remove')
       return this.childRemoved(fireData);
+    if (type === 'clear')
+      return this.clearChildren();
   }
-  createDOM(fireData) {
-    let values = fireData.val();
-    let key = fireData.key;
-
+  clearChildren() {
+    this.childrenContainer.innerHTML = '';
   }
   _nodeApplyValues(values, outer) {
     for (let i in this.bindingsList) {
