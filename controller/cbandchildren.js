@@ -1,10 +1,14 @@
 class cBandChildren extends cBandSuper {
-  constructor(domContainer, parent){
+  constructor(domContainer, parent, editPanel){
 
-    super(gAPPP.a.modelSets['blockchild'], 'blockchildren');
+    super(gAPPP.a.modelSets['blockchild'], 'blockchild');
     this.childrenContainer = domContainer;
     this.parent = parent;
-  }
+    this.childEditPanel = editPanel;
+
+    this.childFields = sDataDefinition.bindingFieldsCloned(this.tag);
+    this.childEditFields = new cPanelData(this.childFields, this.childEditPanel, this);
+}
   _getDomForChild(fireData) {
     let d = document.createElement('button');
     d.setAttribute('class', 'block-editor-child');

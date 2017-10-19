@@ -32,11 +32,11 @@ class cDialogBlock extends cDialogSuper {
     this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_more</i>';
     this.detailsShown = true;
     this.toggleDetailsDom.addEventListener('click', e => this.toggleDetails());
-    this.childBand = new cBandChildren(this.childBandDom, this);
+    this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
+    this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
     this.panelFrames = new cPanelFrames();
     this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
-    this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
   }
   addChild() {
     let childData = {};
