@@ -1,5 +1,9 @@
 class sDataDefinition {
   static bindingFields(tag) {
+    if (tag === 'frame') {
+      let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
+      return localCopy.concat(this.bindingFields('simpleUIDetails'));
+    }
     if (tag === 'shape') {
       let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
       return localCopy.concat(this.bindingFields('simpleUIDetails'));
@@ -747,13 +751,39 @@ __defaultData['blockchild'] = {
   order: 0
 };
 __localStaticStorageForBindingFields['blockchild'] = [{
-    title: 'Type',
-    fireSetField: 'childType',
-    contextObjectField: null,
-    group: 'main'
-  }, {
-    title: 'Name',
-    fireSetField: 'childName',
-    contextObjectField: null,
-    group: 'main'
-  }];
+  title: 'Type',
+  fireSetField: 'childType',
+  contextObjectField: null,
+  group: 'main'
+}, {
+  title: 'Name',
+  fireSetField: 'childName',
+  contextObjectField: null,
+  group: 'main'
+}];
+__defaultData['blockchild'] = {
+  childType: 'mesh',
+  childName: '',
+  order: 0
+};
+__localStaticStorageForBindingFields['frame'] = [{
+  title: 'Time',
+  fireSetField: 'frameTime',
+  contextObjectField: null,
+  group: 'time'
+}];
+__defaultData['frame'] = {
+  time: '0',
+  parentKey: null,
+  simpleUIDetails: {
+    scaleX: 1.0,
+    scaleY: 1.0,
+    scaleZ: 1.0,
+    positionX: 0.0,
+    positionY: 0.0,
+    positionZ: 0.0,
+    rotateX: 0.0,
+    rotateY: 0.0,
+    rotateZ: 0.0
+  }
+};

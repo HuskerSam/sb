@@ -14,9 +14,9 @@ class gAuthorization {
     this.fireSets.push(this.modelSets['shape']);
     this.modelSets['block'] = new mFirebaseList('lib_blocks', 'block');
     this.fireSets.push(this.modelSets['block']);
-    this.modelSets['blockchild'] = new mFirebaseList('lib_blockchildren', '', 'parentKey', 'emptykey');
+    this.modelSets['blockchild'] = new mFirebaseList('lib_blockchildren', 'blockchildren', 'parentKey', 'emptykey');
     this.fireSets.push(this.modelSets['blockchild']);
-    this.modelSets['frame'] = new mFirebaseList('lib_frames', 'frame');
+    this.modelSets['frame'] = new mFirebaseList('lib_frames', 'frame', 'parentKey', 'emptyKey');
     this.fireSets.push(this.modelSets['frame']);
     this.modelSets['texture'] = new mFirebaseList('lib_textures', 'texture');
     this.fireSets.push(this.modelSets['texture']);

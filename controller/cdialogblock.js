@@ -34,12 +34,32 @@ class cDialogBlock extends cDialogSuper {
     this.toggleDetailsDom.addEventListener('click', e => this.toggleDetails());
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
-    this.panelFrames = new cPanelFrames();
     this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
+
+    this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
+    this.framesBand = new cBandFrames(this.framesPanel);
+
+    this.addRootFrameButton = document.createElement('button');
+    this.addRootFrameButton.innerHTML = 'Add Root Frame';
+    this.addRootFrameButton.setAttribute('class', '');
+    this.fieldsContainer.insertBefore(this.addRootFrameButton, this.fieldsContainer.childNodes[0]);
+    this.addRootFrameButton.addEventListener('click', e => this.addFrame(this.key));
+
+    this.addChildFrameButton = document.createElement('button');
+    this.addChildFrameButton.innerHTML = 'Add Child Frame';
+    this.addChildFrameButton.setAttribute('class', '');
+    this.childEditPanel.insertBefore(this.addChildFrameButton, this.childEditPanel.childNodes[0]);
+    this.addChildFrameButton.addEventListener('click', e => this.addFrame(this.childKey));
+  }
+  addFrame(parentKey) {
+      let objectData = sDataDefinition.getDefaultDataCloned('frame');
+      objectData.parentKey = parentKey;
+      gAPPP.a.modelSets['frame'].createWithBlobString(objectData).then(r => {
+
+      });
   }
   addChild() {
-    let childData = {};
     let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
     objectData.parentKey = this.key;
     gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData).then(r => {
@@ -57,6 +77,11 @@ class cDialogBlock extends cDialogSuper {
       this.childEditPanel.style.display = 'block';
       this.rootElementDom.classList.remove('selected');
     }
+
+    if (this.childKey)
+      gAPPP.a.modelSets['frame'].setFilter(this.childKey);
+    else
+      gAPPP.a.modelSets['frame'].setFilter(this.key);
   }
   toggleDetails() {
     this.detailsShown = !this.detailsShown;
