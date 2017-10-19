@@ -80,5 +80,6 @@ class cDialogBlock extends cDialogSuper {
     if (!this.fireFields.values['renderImageURL'])
       this.fireSet.renderImageUpdateNeeded = true;
     super.show();
+    this.childBand.setKey(null);
   }
 }
