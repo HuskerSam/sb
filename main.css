@@ -682,3 +682,7 @@ input[type=range]::-webkit-slider-thumb {
   background: rgba(127, 127, 127, .5);
   color: rgb(0, 255, 0);
 }
+
+.frame-fields-container {
+  clear: both;
+}

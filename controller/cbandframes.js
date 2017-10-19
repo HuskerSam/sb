@@ -9,6 +9,7 @@ class cBandFrames extends cBandSuper {
     let values = fireData.val();
     let key = fireData.key;
     let framesContainer = document.createElement('div');
+    framesContainer.setAttribute('class', 'frame-fields-container');
 
     let instance = {};
     instance.frameFields = sDataDefinition.bindingFieldsCloned('frame');
