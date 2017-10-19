@@ -22,6 +22,10 @@ class cBandFrames extends cBandSuper {
     this.frameDataViewInstances[key] = instance;
 
     this.childrenContainer.appendChild(framesContainer);
+    instance.dataPanel.paint(values);
+  }
+  childChanged(fireData) {
+    //edit fields handle this
   }
   clearChildren() {
     for (let i in this.frameDataViewInstances) {
