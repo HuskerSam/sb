@@ -1,14 +1,15 @@
 class cBandChildren extends cBandSuper {
-  constructor(domContainer, parent, editPanel){
+  constructor(domContainer, parent, editPanel) {
 
     super(gAPPP.a.modelSets['blockchild'], 'blockchild');
     this.childrenContainer = domContainer;
     this.parent = parent;
     this.childEditPanel = editPanel;
+    this.fireSet = gAPPP.a.modelSets['blockchild'];
 
     this.childFields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.childEditFields = new cPanelData(this.childFields, this.childEditPanel, this);
-}
+  }
   _getDomForChild(fireData) {
     let d = document.createElement('button');
     d.setAttribute('class', 'block-editor-child');
@@ -42,5 +43,8 @@ class cBandChildren extends cBandSuper {
       let d = this.childrenContainer.querySelector(`.${this.tag}-${this.parent.childKey}`);
       d.classList.add('selected');
     }
+
+    this.key = childKey;
+    this.childEditFields.paint(this.fireSet.getCache(this.key));
   }
 }

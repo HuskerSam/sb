@@ -75,13 +75,16 @@ class cPanelData {
     f.dom = t;
     this._specialDomFeatures(f);
   }
-  paint() {
+  paint(newValues) {
     let cT = this.parent.context;
     this.active = true;
     let scrapes = {};
     let valueCache = {};
     let contextReloadRequired = false;
 
+    if (newValues)
+      this.values = newValues;
+      
     this.helpers.updateConfig(cT, this.parent.tag, this.parent.key);
 
     for (let i in this.fields) {
