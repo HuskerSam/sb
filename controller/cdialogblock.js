@@ -41,15 +41,18 @@ class cDialogBlock extends cDialogSuper {
     this.framesBand = new cBandFrames(this.framesPanel);
 
     this.addRootFrameButton = document.createElement('button');
-    this.addRootFrameButton.innerHTML = 'Add Root Frame';
+    this.addRootFrameButton.innerHTML = '<i class="material-icons">add</i> Block Frame';
     this.addRootFrameButton.setAttribute('class', '');
+    this.addRootFrameButton.style.float = 'left';
     this.fieldsContainer.insertBefore(this.addRootFrameButton, this.fieldsContainer.childNodes[0]);
     this.addRootFrameButton.addEventListener('click', e => this.addFrame(this.key));
 
     this.addChildFrameButton = document.createElement('button');
-    this.addChildFrameButton.innerHTML = 'Add Child Frame';
+    this.addChildFrameButton.innerHTML = '<i class="material-icons">add</i> Child Frame';
+    this.addChildFrameButton.style.float = 'left';
+    this.addChildFrameButton.style.clear = 'both';
     this.addChildFrameButton.setAttribute('class', '');
-    this.childEditPanel.insertBefore(this.addChildFrameButton, this.childEditPanel.childNodes[0]);
+    this.childBand.buttonWrapperPanel.appendChild(this.addChildFrameButton);
     this.addChildFrameButton.addEventListener('click', e => this.addFrame(this.childKey));
   }
   addFrame(parentKey) {

@@ -25,6 +25,14 @@ class mFirebaseList extends mFirebaseSuper {
       return this.fireDataValuesByKey[key];
     return null;
   }
+  getCacheByParent(parentKey) {
+    let results = [];
+    for (let i in this.fireDataValuesByKey)
+      if (this.fireDataValuesByKey[i].parentKey === parentKey)
+        results.push(i);
+
+    return results;
+  }
   updateStash(fireData, remove) {
     let key = fireData.key;
     if (remove) {
@@ -132,6 +140,10 @@ class mFirebaseList extends mFirebaseSuper {
     });
   }
   removeByKey(key) {
+    if (!key) {
+      alert('invalid removebykey (empty key)');
+      return;
+    }
     let values = this.getCache(key);
     if (values === null)
       return new Promise(r => r(null));

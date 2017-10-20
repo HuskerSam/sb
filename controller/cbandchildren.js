@@ -9,6 +9,15 @@ class cBandChildren extends cBandSuper {
 
     this.childFields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.childEditFields = new cPanelData(this.childFields, this.childEditPanel, this);
+    this.buttonWrapperPanel = document.createElement('div');
+    this.buttonWrapperPanel.style.float = "left";
+    this.deleteChildButton = document.createElement('button');
+    this.deleteChildButton.innerHTML = '<i class="material-icons">delete</i> Child';
+    this.deleteChildButton.style.float = 'left';
+    this.deleteChildButton.style.clear = 'both';
+    this.deleteChildButton.addEventListener('click', e => this.deleteChildBlock());
+    this.buttonWrapperPanel.appendChild(this.deleteChildButton);
+    this.childEditPanel.insertBefore(this.buttonWrapperPanel, this.childEditPanel.childNodes[0]);
   }
   _getDomForChild(fireData) {
     let d = document.createElement('button');
@@ -32,6 +41,23 @@ class cBandChildren extends cBandSuper {
 
     let ele = div.querySelector('.band-title');
     ele.innerHTML = values.childType + ':' + values.childName;
+  }
+  childRemoved(fireData) {
+    if (this.key === fireData.key)
+      this.setKey(null);
+
+    let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);
+    if (post)
+      this.childrenContainer.removeChild(post);
+  }
+  deleteChildBlock() {
+    if (confirm('Remove this child block?')){
+      let key = this.key;
+      let childKeys = gAPPP.a.modelSets['frame'].getCacheByParent(this.key)
+      for (let c = 0, l = childKeys.length; c < l; c++)
+         gAPPP.a.modelSets['frame'].removeByKey(childKeys[c]);
+      this.fireSet.removeByKey(this.key);
+    }
   }
   setKey(childKey) {
     this.parent.setChildKey(childKey);
