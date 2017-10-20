@@ -1,6 +1,7 @@
 class mFirebaseSuper {
-  constructor(referencePath, activate, filterKey = null, filterValue = null) {
-    this.referencePath = referencePath;
+  constructor(tag, activate, filterKey = null, filterValue = null) {
+    this.tag = tag;
+    this.referencePath = 'data_' + this.tag;
     this.active = false;
     this.childListeners = [];
     this.values = {};

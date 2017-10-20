@@ -8,21 +8,24 @@ class gAuthorization {
     this.modelSets['userProfile'] = new mFirebaseProfile();
     this.fireSets.push(this.modelSets['userProfile']);
 
-    this.modelSets['mesh'] = new mFirebaseList('lib_meshes', 'mesh');
+    this.modelSets['mesh'] = new mFirebaseList('mesh', true);
     this.fireSets.push(this.modelSets['mesh']);
-    this.modelSets['shape'] = new mFirebaseList('lib_shapes', 'shape');
+    this.modelSets['shape'] = new mFirebaseList('shape', true);
     this.fireSets.push(this.modelSets['shape']);
-    this.modelSets['block'] = new mFirebaseList('lib_blocks', 'block');
+    this.modelSets['block'] = new mFirebaseList('block', true);
+    this.modelSets['block'].childSets.push('blockchild');
+    this.modelSets['block'].childSets.push('frame');
     this.fireSets.push(this.modelSets['block']);
-    this.modelSets['blockchild'] = new mFirebaseList('lib_blockchildren', 'blockchildren', 'parentKey', 'emptykey');
+    this.modelSets['blockchild'] = new mFirebaseList('blockchildren', false, 'parentKey', 'emptykey');
+    this.modelSets['blockchild'].childSets.push('frame');
     this.fireSets.push(this.modelSets['blockchild']);
-    this.modelSets['frame'] = new mFirebaseList('lib_frames', 'frame', 'parentKey', 'emptyKey');
+    this.modelSets['frame'] = new mFirebaseList('frame', false, 'parentKey', 'emptyKey');
     this.fireSets.push(this.modelSets['frame']);
-    this.modelSets['texture'] = new mFirebaseList('lib_textures', 'texture');
+    this.modelSets['texture'] = new mFirebaseList('texture', true);
     this.fireSets.push(this.modelSets['texture']);
-    this.modelSets['material'] = new mFirebaseList('lib_materials', 'material');
+    this.modelSets['material'] = new mFirebaseList('material', true);
     this.fireSets.push(this.modelSets['material']);
-    this.modelSets['scene'] = new mFirebaseList('lib_scenes', 'scene');
+    this.modelSets['scene'] = new mFirebaseList('scene', true);
     this.fireSets.push(this.modelSets['scene']);
     this.modelSets['scene'].childListeners.push(v => gAPPP.handleDataUpdate());
 

@@ -1,15 +1,16 @@
 class mFirebaseList extends mFirebaseSuper {
-  constructor(referencePath, listtag, filterKey, filterValue) {
-    super(referencePath, false, filterKey, filterValue);
+  constructor(tag, datalist = false, filterKey, filterValue) {
+    super(tag, false, filterKey, filterValue);
 
     this.keyList = true;
     this.fireDataByKey = {};
     this.fireDataValuesByKey = {};
+    this.childSets = [];
 
     this.domTitleList = null;
-    if (listtag) {
+    if (datalist) {
       this.domTitleList = document.createElement('datalist');
-      this.domTitleList.id = listtag + 'datatitlelookuplist';
+      this.domTitleList.id = this.tag + 'datatitlelookuplist';
       document.body.appendChild(this.domTitleList);
     }
   }
