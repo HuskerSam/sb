@@ -754,12 +754,26 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   title: 'Type',
   fireSetField: 'childType',
   contextObjectField: null,
-  group: 'main'
+  group: 'main',
+  displayType: 'displayListFilter',
+  dataListId: 'blockchildtypelist'
 }, {
-  title: 'Name',
+  title: 'Mesh',
   fireSetField: 'childName',
   contextObjectField: null,
-  group: 'main'
+  group: 'main',
+  listKey: 'childType',
+  titlesByKey: {
+    mesh: 'Mesh',
+    block: 'Block',
+    shape: 'Shape'
+  },
+  listsByKey: {
+    mesh: 'meshdatatitlelookuplist',
+    block: 'blockdatatitlelookuplist',
+    shape: 'shapedatatitlelookuplist'
+  },
+  dataListId: 'meshdatatitlelookuplist'
 }];
 __defaultData['blockchild'] = {
   childType: 'mesh',

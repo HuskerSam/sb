@@ -32,12 +32,12 @@ class cPanelData {
     }
     if (f.type === 'boolean') {
       t.setAttribute('type', 'checkbox');
-      l.innerText = f.title;
+      l.innerHTML = '<span>' + f.title + '</span>';
       l.insertBefore(t, l.childNodes[0]);
       c.appendChild(l);
       c.classList.add('checkboxgroup');
     } else {
-      l.innerText = f.title;
+      l.innerHTML = '<span>' + f.title + '</span>';
       l.appendChild(t);
       t.classList.add('form-control');
       c.appendChild(l);
@@ -84,7 +84,7 @@ class cPanelData {
 
     if (newValues)
       this.values = newValues;
-      
+
     this.helpers.updateConfig(cT, this.parent.tag, this.parent.key);
 
     for (let i in this.fields) {
@@ -113,6 +113,7 @@ class cPanelData {
     this.loadedURL = this.valueCache['url'];
 
     this._updateDisplayFilters();
+    this._updateDisplayListFilters();
 
     return contextReloadRequired;
   }
@@ -137,6 +138,9 @@ class cPanelData {
       if (this.parent.context.activeBlock)
         this.parent.context.activeBlock.setData(this.valueCache);
     this._commitUpdates(this.valueCache);
+
+    this._updateDisplayFilters();
+    this._updateDisplayListFilters();
   }
   uploadURL(f) {
     if (f.fileDom.files.length === 0)
@@ -323,6 +327,8 @@ class cPanelData {
 
     if (f.displayType === 'displayFilter')
       this._updateDisplayFilters();
+    if (f.displayType === 'displayListFilter')
+      this._updateDisplayListFilters();
 
     if (updateShown) {
       if (f.type === 'color')
@@ -360,4 +366,22 @@ class cPanelData {
       }
     }
   }
+  _updateDisplayListFilters() {
+    for (let inner in this.fields) {
+      let innerField = this.fields[inner];
+      let keyValue = '';
+      if (innerField.listKey)
+        keyValue = this.valueCache[innerField.listKey];
+      else
+        continue;
+
+      let title = innerField.titlesByKey[keyValue];
+      let lists = innerField.listsByKey[keyValue];
+      if (!title)
+        title = ""
+      innerField.domLabel.querySelector('span').innerHTML = title;
+      innerField.dom.setAttribute('list', lists);
+    }
+  }
+
 }
