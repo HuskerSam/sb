@@ -77,6 +77,7 @@ class cDialogSuper {
       if (this.tag === 'mesh') {
         let b = new wBlock(this.context);
         b.staticLoad = true;
+        b.staticType = 'mesh';
         this.context.setActiveBlock(b);
         this.context.activeBlock.setData(this.fireFields.values);
         this.context.activeBlock.loadMesh().then(
@@ -86,7 +87,7 @@ class cDialogSuper {
       }
       if (this.tag === 'shape') {
         let b = new wBlock(this.context);
-        b.displayOverride = 'none';
+        b.staticType = 'shape';
         b.staticLoad = true;
         b.setData(this.fireFields.values);
         this.context.setActiveBlock(b);
@@ -95,8 +96,8 @@ class cDialogSuper {
       }
       if (this.tag === 'block') {
         let b = new wBlock(this.context);
-        b.displayOverride = 'none';
-        b.blockType = 'container';
+        b.staticType = 'block';
+        b.staticLoad = true;
         b.blockKey = this.key;
         b.setData(this.fireFields.values);
         this.context.setActiveBlock(b);
@@ -106,8 +107,8 @@ class cDialogSuper {
       }
       if (this.tag === 'material') {
         let b = new wBlock(this.context);
-        b.displayOverride = 'material';
-        b.blockType = 'shapeStub';
+        b.staticType = 'material';
+        b.staticLoad = true;
         b.setData(this.fireFields.values);
         this.context.setActiveBlock(b);
         this._finishShow();
@@ -115,8 +116,8 @@ class cDialogSuper {
       }
       if (this.tag === 'texture') {
         let b = new wBlock(this.context);
-        b.displayOverride = 'texture';
-        b.blockType = 'shapeStub';
+        b.staticType = 'texture';
+        b.staticLoad = true;
         b.setData(this.fireFields.values);
         this.context.setActiveBlock(b);
         this._finishShow();

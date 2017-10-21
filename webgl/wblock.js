@@ -5,7 +5,7 @@ class wBlock {
     this.childBlocks = {};
     this.context = context;
     this.parent = parent;
-    this.displayOverride = 'none';
+    this.staticType = '';
     this.inheritMaterial = true;
     this.blockRenderData = {};
     this.blockRawData = {};
@@ -152,7 +152,7 @@ class wBlock {
     if (this.context !== gAPPP.activeContext)
       return;
 
-    if (this.displayOverride === 'texture') {
+    if (this.staticType === 'texture') {
       this.__setpreviewshape(values);
       this._createShape();
       let m = new BABYLON.StandardMaterial('texturepopupmaterial');
@@ -160,7 +160,7 @@ class wBlock {
       this.context.__setMaterialOnObj(this.sceneObject, m);
       return;
     }
-    if (this.displayOverride === 'material') {
+    if (this.staticType === 'material') {
       this.__setpreviewshape(values);
       this._createShape();
       this.context.__setMaterialOnObj(this.sceneObject, this.__material(values));
@@ -168,16 +168,18 @@ class wBlock {
     }
 
     this.blockRawData = values;
-    if (this.staticLoad)
+    if (this.staticLoad) {
       this.blockRenderData = this.blockRawData;
-    else
+      this.blockRenderData.childType = this.staticType;
+      this._renderBlock();
+    } else
       this._loadBlock();
 
     this.context.refreshFocus();
   }
   _loadBlock(data) {
-    if (this.blockRawData.childType === 'mesh') {
-      gAPPP.a.modelSets['mesh'].fetchList('title', this.blockRawData.childName).then(matchData => {
+    gAPPP.a.modelSets[this.blockRawData.childType].fetchList('title', this.blockRawData.childName)
+      .then(matchData => {
         let matches = matchData.val();
         let keys = Object.keys(matches);
         if (keys.length === 0) {
@@ -188,9 +190,19 @@ class wBlock {
           console.log('_loadBlock:: fetchList > 1 results', this);
         }
         this.blockRenderData = matches[keys[0]];
-        this.loadMesh().then(r => this._meshHandleUpdate());
+        if (this.blockRawData.childType === 'mesh')
+          this.loadMesh().then(r => this._renderBlock());
+        else
+          this._renderBlock();
       });
-    }
+  }
+  _renderBlock() {
+    if (this.blockRawData.childType === 'mesh')
+      this._meshHandleUpdate();
+    if (this.blockRawData.childType === 'shape')
+      this._shapeHandleUpdate();
+    if (this.blockRawData.childType === 'block')
+      this._containerHandleUpdate();
   }
   _meshHandleUpdate() {
     let fields = sDataDefinition.bindingFields('mesh');
