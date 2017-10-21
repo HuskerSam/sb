@@ -26,14 +26,6 @@ class mFirebaseList extends mFirebaseSuper {
       return this.fireDataValuesByKey[key];
     return null;
   }
-  getCacheByParent(parentKey) {
-    let results = [];
-    for (let i in this.fireDataValuesByKey)
-      if (this.fireDataValuesByKey[i].parentKey === parentKey)
-        results.push(i);
-
-    return results;
-  }
   updateStash(fireData, remove) {
     let key = fireData.key;
     if (remove) {
@@ -139,6 +131,16 @@ class mFirebaseList extends mFirebaseSuper {
         }));
       }
     });
+  }
+  fetchKeyList(keyName, keyValue) {
+    return new Promise((resolve, reject) => {
+      let once = firebase.database().ref(this.referencePath).orderByChild(keyName).equalTo(keyValue);
+
+      once.once(snapshot => {
+        console.log(snapshot);
+        resolve(snapshot);
+      });
+});
   }
   removeByKey(key) {
     if (!key) {
