@@ -132,15 +132,11 @@ class mFirebaseList extends mFirebaseSuper {
       }
     });
   }
-  fetchKeyList(keyName, keyValue) {
+  fetchList(keyName, keyValue) {
     return new Promise((resolve, reject) => {
       let once = firebase.database().ref(this.referencePath).orderByChild(keyName).equalTo(keyValue);
-
-      once.once(snapshot => {
-        console.log(snapshot);
-        resolve(snapshot);
-      });
-});
+      once.once('value', snapshot => resolve(snapshot));
+    });
   }
   removeByKey(key) {
     if (!key) {
@@ -148,13 +144,20 @@ class mFirebaseList extends mFirebaseSuper {
       return;
     }
     let values = this.getCache(key);
-    if (values === null)
-      return new Promise(r => r(null));
     return new Promise((resolve, reject) => {
       let updates = {};
       updates['/' + this.referencePath + '/' + key] = null;
 
+      for (let c = 0, l = this.childSets.length; c < l; c++)
+        gAPPP.a.modelSets[this.childSets[c]].fetchList('parentKey', key).then(children => {
+          let cA = children.val();
+          for (let i in cA)
+            gAPPP.a.modelSets[this.childSets[c]].removeByKey(i).then(final => {});
+        });
+
       firebase.database().ref().update(updates).then(e => {
+        if (!values)
+          return resolve(e);
         let url = values['url'];
         if (url === undefined)
           url = '';
@@ -164,9 +167,7 @@ class mFirebaseList extends mFirebaseSuper {
           shortPath = shortPath.substr(0, shortPath.indexOf('?'));
           let storageRef = firebase.storage().ref();
           let ref = storageRef.child(shortPath);
-          ref.delete().then(d => resolve(e));
-
-          return;
+          return ref.delete().then(e => resolve(e));
         }
 
         resolve(e);

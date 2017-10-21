@@ -51,13 +51,8 @@ class cBandChildren extends cBandSuper {
       this.childrenContainer.removeChild(post);
   }
   deleteChildBlock() {
-    if (confirm('Remove this child block?')){
-      let key = this.key;
-      let childKeys = gAPPP.a.modelSets['frame'].getCacheByParent(this.key)
-      for (let c = 0, l = childKeys.length; c < l; c++)
-         gAPPP.a.modelSets['frame'].removeByKey(childKeys[c]);
+    if (confirm('Remove this child block?'))
       this.fireSet.removeByKey(this.key);
-    }
   }
   setKey(childKey) {
     this.parent.setChildKey(childKey);
