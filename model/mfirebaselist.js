@@ -138,6 +138,20 @@ class mFirebaseList extends mFirebaseSuper {
       once.once('value', snapshot => resolve(snapshot));
     });
   }
+  fetchByKeyNOTUSED(key) {
+    return new new Promise((resolve, reject) => {
+      if (!key)
+        return resolve(null);
+
+      let cache = this.getCache(key);
+
+      if (cache)
+        return resolve(cache);
+
+      let once = firebase.database().ref(this.referencePath + '/' + key);
+      once.once('value', snapshot => resolve(snapshot.val()));
+    });
+  }
   removeByKey(key) {
     if (!key) {
       alert('invalid removebykey (empty key)');

@@ -695,12 +695,10 @@ __defaultData['shape'] = {
 __defaultData['block'] = {
   title: 'Block',
   blockType: 'container',
-  outWidth: 2,
-  outDepth: 2,
-  outHeight: 1,
-  inWidth: 20,
-  inDepth: 20,
-  inHeight: 10,
+  width: 2,
+  depth: 2,
+  height: 1,
+  blockScale: 10,
   children: {}
 };
 __localStaticStorageForBindingFields['block'] = [{
@@ -709,41 +707,47 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: null,
   group: 'main'
 }, {
-  title: 'Out Width',
-  fireSetField: 'outWidth',
+  title: 'Width',
+  fireSetField: 'width',
   contextObjectField: null,
   displayType: 'number',
-  group: 'outDim'
+  group: 'main'
 }, {
-  title: 'Out Depth',
-  fireSetField: 'outDepth',
+  title: 'Depth',
+  fireSetField: 'depth',
   contextObjectField: null,
   displayType: 'number',
-  group: 'outDim'
+  group: 'main'
 }, {
-  title: 'Out Height',
-  fireSetField: 'outHeight',
+  title: 'Height',
+  fireSetField: 'height',
   contextObjectField: null,
   displayType: 'number',
-  group: 'outDim'
+  group: 'main'
 }, {
-  title: 'In Width',
-  fireSetField: 'inWidth',
+  title: 'Block Scale',
+  fireSetField: 'blockScale',
   contextObjectField: null,
-  displayType: 'number',
-  group: 'inDim'
+  helperType: 'number',
+  group: 'main'
 }, {
-  title: 'In Depth',
-  fireSetField: 'inDepth',
+  title: 'Center',
+  fireSetField: 'centerVector',
   contextObjectField: null,
-  displayType: 'number',
-  group: 'inDim'
+  helperType: 'vector',
+  group: 'center',
+  rangeMin: '-10',
+  rangeMax: '10',
+  rangeStep: '1'
 }, {
-  title: 'In Height',
-  fireSetField: 'inHeight',
+  title: 'Direction',
+  fireSetField: 'directionVector',
   contextObjectField: null,
-  displayType: 'number',
-  group: 'inDim'
+  helperType: 'vector',
+  group: 'direction',
+  rangeMin: '-1',
+  rangeMax: '1',
+  rangeStep: '.01'
 }];
 __defaultData['blockchild'] = {
   childType: 'mesh',
@@ -781,9 +785,10 @@ __defaultData['blockchild'] = {
   order: 0
 };
 __localStaticStorageForBindingFields['frame'] = [{
-  title: 'Time',
+  title: 'Time (ms)',
   fireSetField: 'frameTime',
   contextObjectField: null,
+  displayType: 'number',
   group: 'time'
 }];
 __defaultData['frame'] = {

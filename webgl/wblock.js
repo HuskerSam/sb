@@ -1,13 +1,14 @@
 class wBlock {
   constructor(context, parent = null, sceneObject = null) {
-    this.blockType = 'mesh';
+    this.blockKey = null;
     this.sceneObject = sceneObject;
-    this.childBlocks = [];
+    this.childBlocks = {};
     this.context = context;
     this.parent = parent;
     this.displayOverride = 'none';
     this.inheritMaterial = true;
-    this.data = {};
+    this.blockRenderData = {};
+    this.blockRawData = {};
   }
   _createShape() {
     this.dispose();
@@ -18,31 +19,33 @@ class wBlock {
     for (let i in fields) {
       let field = fields[i];
       if (field.shapeOption)
-        if (field.displayGroup === this.data['shapeType']) {
+        if (field.displayGroup === this.blockRenderData['shapeType']) {
           if (field.displayType === 'number') {
-            if (GLOBALUTIL.isNumeric(this.data[field.fireSetField]))
-              options[field.shapeOption] = Number(this.data[field.fireSetField]);
+            if (GLOBALUTIL.isNumeric(this.blockRenderData[field.fireSetField]))
+              options[field.shapeOption] = Number(this.blockRenderData[field.fireSetField]);
           } else
-            options[field.shapeOption] = this.data[field.fireSetField];
+            options[field.shapeOption] = this.blockRenderData[field.fireSetField];
         }
     }
 
-    if (this.data['shapeType'] === 'sphere')
+    if (this.blockRenderData['shapeType'] === 'sphere')
       return this.sceneObject = BABYLON.MeshBuilder.CreateSphere(name, options, this.context.scene);
 
-    if (this.data['shapeType'] === 'box')
+    if (this.blockRenderData['shapeType'] === 'box')
       return this.sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
 
-    if (this.data['shapeType'] === 'cylinder')
+    if (this.blockRenderData['shapeType'] === 'cylinder')
       return this.sceneObject = BABYLON.MeshBuilder.CreateCylinder(name, options, this.context.scene);
 
-    if (this.data['shapeType'] === 'text')
+    if (this.blockRenderData['shapeType'] === 'text')
       return this.__createTextMesh(name, options);
 
     this.sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
   }
   createGuides(size) {
     this.dispose();
+
+    let wrapper = null;
     let sObjects = [];
     let axisX = BABYLON.Mesh.CreateLines("axisX", [
       new BABYLON.Vector3.Zero(),
@@ -52,11 +55,11 @@ class wBlock {
       new BABYLON.Vector3(size * 0.95, -0.05 * size, 0)
     ], this.context.scene);
     axisX.color = new BABYLON.Color3(1, 0, 0);
-    this._pushObj(axisX, false);
+    wrapper = axisX;
 
     let xChar = this.__make2DTextMesh("X", "red", size / 10);
     xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
-    this._pushObj(xChar, false);
+    xChar.setParent(wrapper);
 
     let axisY = BABYLON.Mesh.CreateLines("axisY", [
       new BABYLON.Vector3.Zero(),
@@ -66,11 +69,11 @@ class wBlock {
       new BABYLON.Vector3(0.05 * size, size * 0.95, 0)
     ], this.context.scene);
     axisY.color = new BABYLON.Color3(0, 1, 0);
-    this._pushObj(axisY, false);
+    axisY.setParent(wrapper);
 
     let yChar = this.__make2DTextMesh("Y", "green", size / 10);
     yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
-    this._pushObj(yChar, false);
+    yChar.setParent(wrapper);
 
     let axisZ = BABYLON.Mesh.CreateLines("axisZ", [
       new BABYLON.Vector3.Zero(),
@@ -80,11 +83,13 @@ class wBlock {
       new BABYLON.Vector3(0, 0.05 * size, size * 0.95)
     ], this.context.scene);
     axisZ.color = new BABYLON.Color3(0, 0, 1);
-    this._pushObj(axisZ, false);
+    axisZ.setParent(wrapper);
 
     let zChar = this.__make2DTextMesh("Z", "blue", size / 10);
     zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
-    this._pushObj(zChar, false);
+    zChar.setParent(wrapper);
+
+    this.sceneObject = wrapper;
   }
   createGrid(gridDepth) {
     this.dispose();
@@ -104,12 +109,12 @@ class wBlock {
     this.sceneObject = null;
     for (let i in this.childBlocks)
       this.childBlocks[i].dispose();
-    this.childBlocks = [];
+    this.childBlocks = {};
   }
   loadMesh() {
     return new Promise((resolve, reject) => {
       let path = gAPPP.storagePrefix;
-      let filename = this.context._url(this.data['url']);
+      let filename = this.context._url(this.blockRenderData['url']);
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
         (newMeshes, particleSystems, skeletons) => {
           this.dispose();
@@ -132,7 +137,7 @@ class wBlock {
     let shape = values['previewShape'];
     if (!shape)
       shape = 'box';
-    this.data = {
+    this.blockRenderData = {
       shapeType: shape,
       cylinderDiameter: 5,
       cylinderHeight: 5,
@@ -162,24 +167,36 @@ class wBlock {
       return;
     }
 
-    this.data = values;
-    if (this.blockType === 'mesh') this._meshHandleUpdate();
-    if (this.blockType === 'shape') this._shapeHandleUpdate();
+    this.blockRawData = values;
+    if (this.staticLoad)
+      this.blockRenderData = this.blockRawData;
+    else
+      this._loadBlock();
 
     this.context.refreshFocus();
   }
-  _pushObj(obj, inheritMaterial = true) {
-    let child = new wBlock(this.context, this);
-    child.sceneObject = obj;
-    child.inheritMaterial = inheritMaterial;
-    this.childBlocks.push(child);
-    return child;
+  _loadBlock(data) {
+    if (this.blockRawData.childType === 'mesh') {
+      gAPPP.a.modelSets['mesh'].fetchList('title', this.blockRawData.childName).then(matchData => {
+        let matches = matchData.val();
+        let keys = Object.keys(matches);
+        if (keys.length === 0) {
+          console.log('_loadBlock:: fetchList 0 results', this);
+          return;
+        }
+        if (keys.length > 1) {
+          console.log('_loadBlock:: fetchList > 1 results', this);
+        }
+        this.blockRenderData = matches[keys[0]];
+        this.loadMesh().then(r => this._meshHandleUpdate());
+      });
+    }
   }
   _meshHandleUpdate() {
     let fields = sDataDefinition.bindingFields('mesh');
     for (let i in fields) {
       let field = fields[i];
-      let value = this.data[field.fireSetField];
+      let value = this.blockRenderData[field.fireSetField];
 
       if (field.contextObjectField)
         if (this.sceneObject)
@@ -195,11 +212,26 @@ class wBlock {
     let fields = sDataDefinition.bindingFields('shape');
     for (let i in fields) {
       let field = fields[i];
-      let value = this.data[field.fireSetField];
+      let value = this.blockRenderData[field.fireSetField];
 
       if (field.contextObjectField)
         this.__updateObjectValue(field, value, this.sceneObject);
     }
+  }
+  _containerHandleUpdate() {
+    if (!this.blockKey)
+      return;
+    gAPPP.a.modelSets['blockchild'].fetchList('parentKey', this.blockKey).then(children => {
+      let cA = children.val();
+      for (let i in cA)
+        this.__updateChild(i, cA[i]);
+    });
+  }
+  __updateChild(key, data) {
+    if (!this.childBlocks[key])
+      this.childBlocks[key] = new wBlock(this.context, this);
+
+    this.childBlocks[key].setData(data);
   }
   __createTextMesh(name, options) {
     this.dispose();
