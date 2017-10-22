@@ -132,12 +132,6 @@ class mFirebaseList extends mFirebaseSuper {
       }
     });
   }
-  fetchList(keyName, keyValue) {
-    return new Promise((resolve, reject) => {
-      let once = firebase.database().ref(this.referencePath).orderByChild(keyName).equalTo(keyValue);
-      once.once('value', snapshot => resolve(snapshot));
-    });
-  }
   queryCache(keyName, keyValue) {
     let results = {};
     for (let i in this.fireDataValuesByKey)
@@ -170,13 +164,12 @@ class mFirebaseList extends mFirebaseSuper {
       let updates = {};
       updates['/' + this.referencePath + '/' + key] = null;
 
-      for (let c = 0, l = this.childSets.length; c < l; c++)
-        gAPPP.a.modelSets[this.childSets[c]].fetchList('parentKey', key).then(children => {
-          let cA = children.val();
-          for (let i in cA)
-            gAPPP.a.modelSets[this.childSets[c]].removeByKey(i).then(final => {});
-        });
+      for (let c = 0, l = this.childSets.length; c < l; c++) {
+        let children = gAPPP.a.modelSets[this.childSets[c]].queryCache('parentKey', key)
 
+        for (let i in children)
+          gAPPP.a.modelSets[this.childSets[c]].removeByKey(i).then(final => {});
+      }
       firebase.database().ref().update(updates).then(e => {
         if (!values)
           return resolve(e);

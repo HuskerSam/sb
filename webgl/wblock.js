@@ -178,23 +178,21 @@ class wBlock {
     this.context.refreshFocus();
   }
   _loadBlock(data) {
-    gAPPP.a.modelSets[this.blockRawData.childType].fetchList('title', this.blockRawData.childName)
-      .then(matchData => {
-        let matches = matchData.val();
-        if (! matches) {
-          console.log('_loadBlock:: fetchList 0 results', this);
-          return;
-        }
-        let keys = Object.keys(matches);
-        if (keys.length > 1) {
-          console.log('_loadBlock:: fetchList > 1 results', this);
-        }
-        this.blockRenderData = matches[keys[0]];
-        if (this.blockRawData.childType === 'mesh')
-          this.loadMesh().then(r => this._renderBlock());
-        else
-          this._renderBlock();
-      });
+    let children = gAPPP.a.modelSets[this.blockRawData.childType].queryCache('title', this.blockRawData.childName);
+
+    let keys = Object.keys(children);
+    if (keys.length === 0) {
+      console.log('_loadBlock:: fetchList 0 results', this);
+      return;
+    }
+    if (keys.length > 1) {
+      console.log('_loadBlock:: fetchList > 1 results', this);
+    }
+    this.blockRenderData = children[keys[0]];
+    if (this.blockRawData.childType === 'mesh')
+      this.loadMesh().then(r => this._renderBlock());
+    else
+      this._renderBlock();
   }
   _renderBlock() {
     if (this.blockRawData.childType === 'mesh')
@@ -233,11 +231,9 @@ class wBlock {
   _containerHandleUpdate() {
     if (!this.blockKey)
       return;
-    gAPPP.a.modelSets['blockchild'].fetchList('parentKey', this.blockKey).then(children => {
-      let cA = children.val();
-      for (let i in cA)
-        this.__updateChild(i, cA[i]);
-    });
+    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', this.blockKey);
+    for (let i in children)
+      this.__updateChild(i, children[i]);
   }
   __updateChild(key, data) {
     if (!this.childBlocks[key])
