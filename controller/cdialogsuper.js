@@ -101,6 +101,7 @@ class cDialogSuper {
         b.blockKey = this.key;
         b.setData(this.fireFields.values);
         this.context.setActiveBlock(b);
+        this.rootBlock = b;
 
         this._finishShow();
         return;

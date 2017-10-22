@@ -8,7 +8,19 @@ class wBlock {
     this.staticType = '';
     this.inheritMaterial = true;
     this.blockRenderData = {};
-    this.blockRawData = {};
+  }
+  recursiveGetBlockForKey(key) {
+    if (this.blockKey === key)
+      return this;
+    for (let i in this.childBlocks) {
+      if (i === key)
+        return this.childBlocks[key];
+      
+      let block = this.childBlocks[i].recursiveGetBlockForKey(key);
+      if (block !== null)
+        return block;
+    }
+    return null;
   }
   _createShape() {
     this.dispose();
@@ -110,6 +122,9 @@ class wBlock {
     for (let i in this.childBlocks)
       this.childBlocks[i].dispose();
     this.childBlocks = {};
+  }
+  handleDataChange(tag, keyList) {
+    this._renderBlock();
   }
   loadMesh() {
     return new Promise((resolve, reject) => {

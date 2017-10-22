@@ -75,11 +75,18 @@ class cDialogBlock extends cDialogSuper {
       this.fieldsContainer.style.display = 'block';
       this.childEditPanel.style.display = 'none';
       this.rootElementDom.classList.add('selected');
+      this.context.setActiveBlock(this.rootBlock);
     } else {
       this.fieldsContainer.style.display = 'none';
       this.childEditPanel.style.display = 'block';
       this.rootElementDom.classList.remove('selected');
+      let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+      if (block)
+        this.context.setActiveBlock(block);
+      else
+        this.context.setActiveBlock(this.rootBlock);      
     }
+
     this.framesBand.refreshUIFromCache();
   }
   toggleDetails() {
