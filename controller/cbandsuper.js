@@ -15,7 +15,7 @@ class cBandSuper {
     this.modelSet.childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
   }
   childAdded(fireData) {
-    this._getDomForChild(fireData);
+    this._getDomForChild(fireData.key, fireData.val());
   }
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);

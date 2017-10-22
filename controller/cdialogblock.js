@@ -38,7 +38,7 @@ class cDialogBlock extends cDialogSuper {
     this.addChildButton.addEventListener('click', e => this.addChild());
 
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
-    this.framesBand = new cBandFrames(this.framesPanel);
+    this.framesBand = new cBandFrames(this.framesPanel, this);
 
     this.addRootFrameButton = document.createElement('button');
     this.addRootFrameButton.innerHTML = '<i class="material-icons">add</i> Block Frame';
@@ -80,11 +80,7 @@ class cDialogBlock extends cDialogSuper {
       this.childEditPanel.style.display = 'block';
       this.rootElementDom.classList.remove('selected');
     }
-
-    if (this.childKey)
-      gAPPP.a.modelSets['frame'].setFilter(this.childKey);
-    else
-      gAPPP.a.modelSets['frame'].setFilter(this.key);
+    this.framesBand.refreshUIFromCache();
   }
   toggleDetails() {
     this.detailsShown = !this.detailsShown;
@@ -103,11 +99,11 @@ class cDialogBlock extends cDialogSuper {
     this.key = key;
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
 
-    gAPPP.a.modelSets['blockchild'].setFilter(this.key);
-
     if (!this.fireFields.values['renderImageURL'])
       this.fireSet.renderImageUpdateNeeded = true;
     super.show();
+
+    this.childBand.refreshUIFromCache();
     this.childBand.setKey(null);
   }
 }

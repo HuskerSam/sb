@@ -1,13 +1,12 @@
 class cBandFrames extends cBandSuper {
-  constructor(childrenContainer) {
+  constructor(childrenContainer, parent) {
     super(gAPPP.a.modelSets['frame'], 'frame');
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.childrenContainer = childrenContainer;
     this.frameDataViewInstances = {};
+    this.parent = parent;
   }
-  _getDomForChild(fireData) {
-    let values = fireData.val();
-    let key = fireData.key;
+  _getDomForChild(key, values) {
     let framesContainer = document.createElement('div');
     framesContainer.setAttribute('class', 'frame-fields-container');
 
@@ -29,6 +28,34 @@ class cBandFrames extends cBandSuper {
     framesContainer.insertBefore(deleteButton, framesContainer.childNodes[0]);
     this.childrenContainer.appendChild(framesContainer);
     instance.dataPanel.paint(values);
+  }
+  __getKey() {
+    let filter = this.parent.childKey;
+    if (! filter)
+      filter = this.parent.key;
+    return filter;
+  }
+  refreshUIFromCache() {
+    this.clearChildren();
+
+    let children = this.fireSet.queryCache('parentKey', this.__getKey());
+
+    for (let i in children)
+      this._getDomForChild(i, children[i]);
+  }
+  handleDataChange(fireData, type) {
+    if (type === 'clear')
+      return this.clearChildren();
+
+    if (fireData.val().parentKey !== this.__getKey())
+      return;
+
+    if (type === 'add')
+      return this.childAdded(fireData);
+    if (type === 'change')
+      return this.childChanged(fireData);
+    if (type === 'remove')
+      return this.childRemoved(fireData);
   }
   childChanged(fireData) {
     //edit fields handle this

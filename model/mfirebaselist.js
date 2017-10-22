@@ -1,6 +1,6 @@
 class mFirebaseList extends mFirebaseSuper {
-  constructor(tag, datalist = false, filterKey, filterValue) {
-    super(tag, false, filterKey, filterValue);
+  constructor(tag, datalist = false) {
+    super(tag, false);
 
     this.keyList = true;
     this.fireDataByKey = {};
@@ -137,6 +137,14 @@ class mFirebaseList extends mFirebaseSuper {
       let once = firebase.database().ref(this.referencePath).orderByChild(keyName).equalTo(keyValue);
       once.once('value', snapshot => resolve(snapshot));
     });
+  }
+  queryCache(keyName, keyValue) {
+    let results = {};
+    for (let i in this.fireDataValuesByKey)
+      if (this.fireDataValuesByKey[i][keyName] === keyValue)
+        results[i] = this.fireDataValuesByKey[i];
+
+    return results;
   }
   fetchByKeyNOTUSED(key) {
     return new new Promise((resolve, reject) => {

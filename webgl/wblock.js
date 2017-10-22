@@ -181,11 +181,11 @@ class wBlock {
     gAPPP.a.modelSets[this.blockRawData.childType].fetchList('title', this.blockRawData.childName)
       .then(matchData => {
         let matches = matchData.val();
-        let keys = Object.keys(matches);
-        if (keys.length === 0) {
+        if (! matches) {
           console.log('_loadBlock:: fetchList 0 results', this);
           return;
         }
+        let keys = Object.keys(matches);
         if (keys.length > 1) {
           console.log('_loadBlock:: fetchList > 1 results', this);
         }

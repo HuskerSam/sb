@@ -1,5 +1,5 @@
 class mFirebaseSuper {
-  constructor(tag, activate, filterKey = null, filterValue = null) {
+  constructor(tag, activate) {
     this.tag = tag;
     this.referencePath = 'data_' + this.tag;
     this.active = false;
@@ -7,8 +7,6 @@ class mFirebaseSuper {
     this.values = {};
     this.keyList = false;
     this.renderImageUpdateNeeded = false;
-    this.filterKey = filterKey;
-    this.filterValue = filterValue;
 
     if (activate)
       this.activate();
@@ -29,20 +27,11 @@ class mFirebaseSuper {
     this._createFireDBRef();
   }
   _createFireDBRef() {
-    if (this.filterKey !== null)
-      this.notiRef = firebase.database().ref(this.referencePath).orderByChild(this.filterKey).equalTo(this.filterValue);
-    else
-      this.notiRef = firebase.database().ref(this.referencePath);
+    this.notiRef = firebase.database().ref(this.referencePath);
 
     this.notiRef.on('child_added', e => this.childAdded(e));
     this.notiRef.on('child_changed', e => this.childChanged(e));
     this.notiRef.on('child_removed', e => this.childRemoved(e));
-  }
-  setFilter(filterValue) {
-    this.deactivate();
-    this.clear();
-    this.filterValue = filterValue;
-    this.activate();
   }
   clear() {
     this.values = {};

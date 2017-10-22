@@ -22,9 +22,7 @@ class cBandRecords extends cBandSuper {
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(), false);
     this.createBtn.addEventListener('click', e => this._showCreatePopup(), false);
   }
-  _getDomForChild(fireData) {
-    let values = fireData.val();
-    let key = fireData.key;
+  _getDomForChild(key, values) {
     let html = `<div class="band-background-preview" type="button" data-toggle="dropdown">`;
     html += '<span class="band-title"></span></div>';
     html += '<ul class="dropdown-menu" role="menu">';

@@ -16,10 +16,10 @@ class gAuthorization {
     this.modelSets['block'].childSets.push('blockchild');
     this.modelSets['block'].childSets.push('frame');
     this.fireSets.push(this.modelSets['block']);
-    this.modelSets['blockchild'] = new mFirebaseList('blockchildren', false, 'parentKey', 'emptykey');
+    this.modelSets['blockchild'] = new mFirebaseList('blockchild', false);
     this.modelSets['blockchild'].childSets.push('frame');
     this.fireSets.push(this.modelSets['blockchild']);
-    this.modelSets['frame'] = new mFirebaseList('frame', false, 'parentKey', 'emptyKey');
+    this.modelSets['frame'] = new mFirebaseList('frame', false);
     this.fireSets.push(this.modelSets['frame']);
     this.modelSets['texture'] = new mFirebaseList('texture', true);
     this.fireSets.push(this.modelSets['texture']);

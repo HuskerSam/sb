@@ -19,17 +19,38 @@ class cBandChildren extends cBandSuper {
     this.buttonWrapperPanel.appendChild(this.deleteChildButton);
     this.childEditPanel.insertBefore(this.buttonWrapperPanel, this.childEditPanel.childNodes[0]);
   }
-  _getDomForChild(fireData) {
+  refreshUIFromCache() {
+    this.clearChildren();
+    let children = this.fireSet.queryCache('parentKey', this.parent.key);
+
+    for (let i in children)
+      this._getDomForChild(i, children[i]);
+  }
+  handleDataChange(fireData, type) {
+    if (type === 'clear')
+      return this.clearChildren();
+
+    if (fireData.val().parentKey !== this.parent.key)
+      return;
+
+    if (type === 'add')
+      return this.childAdded(fireData);
+    if (type === 'change')
+      return this.childChanged(fireData);
+    if (type === 'remove')
+      return this.childRemoved(fireData);
+  }
+  _getDomForChild(key, values) {
     let d = document.createElement('button');
     d.setAttribute('class', 'block-editor-child');
     this.childrenContainer.appendChild(d);
-    d.addEventListener('click', e => this.setKey(fireData.key));
+    d.addEventListener('click', e => this.setKey(key));
 
     let html = '<span class="band-title"></span>';
     d.innerHTML = html;
-    d.setAttribute('class', `${this.tag}-${fireData.key} block-editor-child`);
+    d.setAttribute('class', `${this.tag}-${key} block-editor-child`);
 
-    this._nodeApplyValues(fireData.val(), d);
+    this._nodeApplyValues(values, d);
   }
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);
