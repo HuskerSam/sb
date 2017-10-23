@@ -8,6 +8,7 @@ class wBlock {
     this.staticType = '';
     this.inheritMaterial = true;
     this.blockRenderData = {};
+    this.blockRawData = {};
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (this.blockKey === fireData.key)
@@ -15,7 +16,7 @@ class wBlock {
 
     if (this.blockRawData.childType === tag)
       if (values.title === this.blockRawData.childName)
-        return this._loadBlock()
+        return this.setData();
 
     let materialList = [];
     if (tag === 'material')
@@ -39,7 +40,7 @@ class wBlock {
 
     if (tag === 'material' || tag === 'texture') {
       if (materialList.indexOf(this.blockRenderData.materialName) !== -1)
-        return this._loadBlock();
+        return this.setData();
     }
 
     if (type === 'add' && tag === 'blockchild')
@@ -258,7 +259,10 @@ class wBlock {
     }
     this.blockRenderData = children[keys[0]];
     if (this.blockRawData.childType === 'mesh')
-      this.loadMesh().then(r => this._renderBlock());
+      this.loadMesh().then(r => {
+        this._renderBlock();
+        this.context.refreshFocus();
+      });
     else
       this._renderBlock();
   }
@@ -424,6 +428,10 @@ class wBlock {
       }
 
       if (field.type === 'material') {
+        if (this.parent)
+          if (this.blockRawData.inheritMaterial)
+            value = this.parent.blockRawData.materialName;
+
         let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
         let m;
         if (!tD)

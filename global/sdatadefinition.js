@@ -391,57 +391,6 @@ __localStaticStorageForBindingFields['simpleUIDetails'] = [{
   group: 'rotate',
   displayType: 'number'
 }];
-__defaultData['mesh'] = {
-  title: 'Mesh',
-  name: '',
-  materialName: '',
-  url: '',
-  type: 'url',
-  size: 0,
-  scalingX: 1.0,
-  scalingY: 1.0,
-  scalingZ: 1.0,
-  positionX: 0.0,
-  positionY: 0.0,
-  positionZ: 0.0,
-  rotationX: 0.0,
-  rotationY: 0.0,
-  rotationZ: 0.0
-};
-__defaultData['scene'] = {
-  title: 'Scene',
-  url: '',
-  type: 'url',
-  size: 0
-};
-__defaultData['texture'] = {
-  title: 'Texture',
-  url: '',
-  vOffset: 0.0,
-  uOffset: 0.0,
-  vScale: 1.0,
-  uScale: 1.0,
-  hasAlpha: false
-};
-__defaultData['material'] = {
-  title: 'Material',
-  name: '',
-  alpha: 1.0,
-  diffuseColor: '',
-  diffuseTextureName: '',
-  emissiveColor: '',
-  emissiveTextureName: '',
-  ambientColor: '',
-  ambientTextureName: '',
-  specularColor: '',
-  specularTextureName: '',
-  specularPower: 64.0,
-  useSpecularOverAlpha: false,
-  useGlossinessFromSpecularMapAlpha: false,
-  backFaceCulling: true,
-  wireframe: false
-};
-
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -654,6 +603,148 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayKey: 'shapeType',
   group: 'fontExtra'
 }];
+__localStaticStorageForBindingFields['block'] = [{
+  title: 'Title',
+  fireSetField: 'title',
+  contextObjectField: null,
+  group: 'title'
+}, {
+  title: 'Block Scale',
+  fireSetField: 'blockScale',
+  contextObjectField: null,
+  helperType: 'number',
+  group: 'title'
+}, {
+  title: 'Width',
+  fireSetField: 'width',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'main'
+}, {
+  title: 'Depth',
+  fireSetField: 'depth',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'main'
+}, {
+  title: 'Height',
+  fireSetField: 'height',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'main'
+}, {
+  title: 'Center',
+  fireSetField: 'centerVector',
+  contextObjectField: null,
+  helperType: 'vector',
+  group: 'center',
+  rangeMin: '-10',
+  rangeMax: '10',
+  rangeStep: '1'
+}, {
+  title: 'Direction',
+  fireSetField: 'directionVector',
+  contextObjectField: null,
+  helperType: 'vector',
+  group: 'direction',
+  rangeMin: '-1',
+  rangeMax: '1',
+  rangeStep: '.01'
+}, {
+  title: 'Material Name',
+  fireSetField: 'materialName',
+  contextObjectField: 'material',
+  group: 'material',
+  type: 'material'
+}];
+__localStaticStorageForBindingFields['blockchild'] = [{
+  title: 'Type',
+  fireSetField: 'childType',
+  contextObjectField: null,
+  group: 'main',
+  displayType: 'displayListFilter',
+  dataListId: 'blockchildtypelist'
+}, {
+  title: 'Mesh',
+  fireSetField: 'childName',
+  contextObjectField: null,
+  group: 'main',
+  listKey: 'childType',
+  titlesByKey: {
+    mesh: 'Mesh',
+    block: 'Block',
+    shape: 'Shape'
+  },
+  listsByKey: {
+    mesh: 'meshdatatitlelookuplist',
+    block: 'blockdatatitlelookuplist',
+    shape: 'shapedatatitlelookuplist'
+  },
+  dataListId: 'meshdatatitlelookuplist'
+},{
+  title: 'Inherit Material',
+  fireSetField: 'inheritMaterial',
+  contextObjectField: null,
+  group: 'options',
+  type: 'boolean'
+}];
+__localStaticStorageForBindingFields['frame'] = [{
+  title: 'Time (ms)',
+  fireSetField: 'frameTime',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'time'
+}];
+__defaultData['mesh'] = {
+  title: 'Mesh',
+  name: '',
+  materialName: '',
+  url: '',
+  type: 'url',
+  size: 0,
+  scalingX: 1.0,
+  scalingY: 1.0,
+  scalingZ: 1.0,
+  positionX: 0.0,
+  positionY: 0.0,
+  positionZ: 0.0,
+  rotationX: 0.0,
+  rotationY: 0.0,
+  rotationZ: 0.0
+};
+__defaultData['scene'] = {
+  title: 'Scene',
+  url: '',
+  type: 'url',
+  size: 0
+};
+__defaultData['texture'] = {
+  title: 'Texture',
+  url: '',
+  vOffset: 0.0,
+  uOffset: 0.0,
+  vScale: 1.0,
+  uScale: 1.0,
+  hasAlpha: false
+};
+__defaultData['material'] = {
+  title: 'Material',
+  name: '',
+  alpha: 1.0,
+  diffuseColor: '',
+  diffuseTextureName: '',
+  emissiveColor: '',
+  emissiveTextureName: '',
+  ambientColor: '',
+  ambientTextureName: '',
+  specularColor: '',
+  specularTextureName: '',
+  specularPower: 64.0,
+  useSpecularOverAlpha: false,
+  useGlossinessFromSpecularMapAlpha: false,
+  backFaceCulling: true,
+  wireframe: false
+};
 __defaultData['shape'] = {
   title: 'Shape',
   shapeType: 'box',
@@ -687,7 +778,6 @@ __defaultData['shape'] = {
   rotationY: 0.0,
   rotationZ: 0.0
 };
-
 __defaultData['block'] = {
   title: 'Block',
   blockType: 'container',
@@ -697,103 +787,12 @@ __defaultData['block'] = {
   blockScale: 10,
   children: {}
 };
-__localStaticStorageForBindingFields['block'] = [{
-  title: 'Title',
-  fireSetField: 'title',
-  contextObjectField: null,
-  group: 'main'
-}, {
-  title: 'Width',
-  fireSetField: 'width',
-  contextObjectField: null,
-  displayType: 'number',
-  group: 'main'
-}, {
-  title: 'Depth',
-  fireSetField: 'depth',
-  contextObjectField: null,
-  displayType: 'number',
-  group: 'main'
-}, {
-  title: 'Height',
-  fireSetField: 'height',
-  contextObjectField: null,
-  displayType: 'number',
-  group: 'main'
-}, {
-  title: 'Block Scale',
-  fireSetField: 'blockScale',
-  contextObjectField: null,
-  helperType: 'number',
-  group: 'main'
-}, {
-  title: 'Center',
-  fireSetField: 'centerVector',
-  contextObjectField: null,
-  helperType: 'vector',
-  group: 'center',
-  rangeMin: '-10',
-  rangeMax: '10',
-  rangeStep: '1'
-}, {
-  title: 'Direction',
-  fireSetField: 'directionVector',
-  contextObjectField: null,
-  helperType: 'vector',
-  group: 'direction',
-  rangeMin: '-1',
-  rangeMax: '1',
-  rangeStep: '.01'
-}];
 __defaultData['blockchild'] = {
   childType: 'mesh',
   childName: '',
   inheritMaterial: true,
   order: 0
 };
-__localStaticStorageForBindingFields['blockchild'] = [{
-  title: 'Type',
-  fireSetField: 'childType',
-  contextObjectField: null,
-  group: 'main',
-  displayType: 'displayListFilter',
-  dataListId: 'blockchildtypelist'
-}, {
-  title: 'Mesh',
-  fireSetField: 'childName',
-  contextObjectField: null,
-  group: 'main',
-  listKey: 'childType',
-  titlesByKey: {
-    mesh: 'Mesh',
-    block: 'Block',
-    shape: 'Shape'
-  },
-  listsByKey: {
-    mesh: 'meshdatatitlelookuplist',
-    block: 'blockdatatitlelookuplist',
-    shape: 'shapedatatitlelookuplist'
-  },
-  dataListId: 'meshdatatitlelookuplist'
-},{
-  title: 'Inherit Material',
-  fireSetField: 'inheritMaterial',
-  contextObjectField: null,
-  group: 'options',
-  type: 'boolean'
-}];
-__defaultData['blockchild'] = {
-  childType: 'mesh',
-  childName: '',
-  order: 0
-};
-__localStaticStorageForBindingFields['frame'] = [{
-  title: 'Time (ms)',
-  fireSetField: 'frameTime',
-  contextObjectField: null,
-  displayType: 'number',
-  group: 'time'
-}];
 __defaultData['frame'] = {
   time: '0',
   parentKey: null,
