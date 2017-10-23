@@ -752,6 +752,7 @@ __localStaticStorageForBindingFields['block'] = [{
 __defaultData['blockchild'] = {
   childType: 'mesh',
   childName: '',
+  inheritMaterial: true,
   order: 0
 };
 __localStaticStorageForBindingFields['blockchild'] = [{
@@ -778,6 +779,12 @@ __localStaticStorageForBindingFields['blockchild'] = [{
     shape: 'shapedatatitlelookuplist'
   },
   dataListId: 'meshdatatitlelookuplist'
+},{
+  title: 'Inherit Material',
+  fireSetField: 'inheritMaterial',
+  contextObjectField: null,
+  group: 'options',
+  type: 'boolean'
 }];
 __defaultData['blockchild'] = {
   childType: 'mesh',

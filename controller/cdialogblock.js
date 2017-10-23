@@ -54,6 +54,13 @@ class cDialogBlock extends cDialogSuper {
     this.addChildFrameButton.setAttribute('class', '');
     this.childBand.buttonWrapperPanel.appendChild(this.addChildFrameButton);
     this.addChildFrameButton.addEventListener('click', e => this.addFrame(this.childKey));
+
+    gAPPP.a.modelSets['blockchild'].childListeners.push(
+        (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
+  }
+  _updateContextWithDataChange(tag, values, type, fireData) {
+    if (this.rootBlock)
+      this.rootBlock.handleDataUpdate(tag, values, type, fireData);
   }
   addFrame(parentKey) {
       let objectData = sDataDefinition.getDefaultDataCloned('frame');
@@ -84,7 +91,7 @@ class cDialogBlock extends cDialogSuper {
       if (block)
         this.context.setActiveBlock(block);
       else
-        this.context.setActiveBlock(this.rootBlock);      
+        this.context.setActiveBlock(this.rootBlock);
     }
 
     this.framesBand.refreshUIFromCache();

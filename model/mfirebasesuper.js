@@ -48,7 +48,7 @@ class mFirebaseSuper {
     this.notifyChildren(fireData, 'change');
   }
   childRemoved(fireData) {
-    this.updateStash(fireData);
+    this.updateStash(fireData, true);
     this.notifyChildren(fireData, 'remove');
   }
   updateStash(fireData) {

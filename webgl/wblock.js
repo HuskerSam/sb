@@ -9,13 +9,37 @@ class wBlock {
     this.inheritMaterial = true;
     this.blockRenderData = {};
   }
+  handleDataUpdate(tag, values, type, fireData) {
+    if (this.blockKey === fireData.key)
+      this.setData(values);
+
+    if (type === 'add' && tag === 'blockchild')
+      if (values.parentKey === this.blockKey)
+        this.setData();
+
+    for (let i in this.childBlocks) {
+      if (type === 'remove') {
+        if (i === fireData.key) {
+          this.childBlocks[i].dispose();
+          delete this.childBlocks[i];
+          break;
+        }
+        continue;
+      }
+
+      if (i === fireData.key) {
+        this.childBlocks[i].setData(values);
+      }
+      this.childBlocks[i].handleDataUpdate(tag, values, type, fireData);
+    }
+  }
   recursiveGetBlockForKey(key) {
     if (this.blockKey === key)
       return this;
     for (let i in this.childBlocks) {
       if (i === key)
         return this.childBlocks[key];
-      
+
       let block = this.childBlocks[i].recursiveGetBlockForKey(key);
       if (block !== null)
         return block;
@@ -123,9 +147,6 @@ class wBlock {
       this.childBlocks[i].dispose();
     this.childBlocks = {};
   }
-  handleDataChange(tag, keyList) {
-    this._renderBlock();
-  }
   loadMesh() {
     return new Promise((resolve, reject) => {
       let path = gAPPP.storagePrefix;
@@ -163,7 +184,7 @@ class wBlock {
       textSize: 30
     };
   }
-  setData(values) {
+  setData(values = null) {
     if (this.context !== gAPPP.activeContext)
       return;
 
@@ -182,7 +203,8 @@ class wBlock {
       return;
     }
 
-    this.blockRawData = values;
+    if (values)
+      this.blockRawData = values;
     if (this.staticLoad) {
       this.blockRenderData = this.blockRawData;
       this.blockRenderData.childType = this.staticType;
@@ -192,16 +214,18 @@ class wBlock {
 
     this.context.refreshFocus();
   }
-  _loadBlock(data) {
-    let children = gAPPP.a.modelSets[this.blockRawData.childType].queryCache('title', this.blockRawData.childName);
+  _loadBlock() {
+    let children = {};
+    if (gAPPP.a.modelSets[this.blockRawData.childType])
+      children = gAPPP.a.modelSets[this.blockRawData.childType].queryCache('title', this.blockRawData.childName);
 
     let keys = Object.keys(children);
     if (keys.length === 0) {
-      console.log('_loadBlock:: fetchList 0 results', this);
+    //  console.log('_loadBlock:: fetchList 0 results', this);
       return;
     }
     if (keys.length > 1) {
-      console.log('_loadBlock:: fetchList > 1 results', this);
+      //console.log('_loadBlock:: fetchList > 1 results', this);
     }
     this.blockRenderData = children[keys[0]];
     if (this.blockRawData.childType === 'mesh')

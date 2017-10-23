@@ -4,6 +4,7 @@ class wContext {
     this.light = null;
     this.camera = null;
     this.cameraType = '';
+    this.cameraVector = '';
     this._scene = null;
     this.activeBlock = null;
     this.canvas = canvas;
@@ -225,19 +226,27 @@ class wContext {
     if (cameraType !== this.cameraType || !this.camera) {
       if (this.camera)
         this.camera.dispose();
+
       if (cameraType === 'Arc Rotate')
         this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera", 1, 0.8, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
       else
         this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
+
       this.cameraType = cameraType;
       this.camera.attachControl(this.canvas, false);
+
+      this.cameraVector = null;
     }
 
-    if (cameraType === 'Arc Rotate') {
-      this.camera.setPosition(cameraVector);
-    } else {
-      this.camera.position = cameraVector;
-      this.camera.setTarget(BABYLON.Vector3.Zero());
+    let strCameraVector = cameraVector.x + ',' + cameraVector.y + ',' + cameraVector.z;
+    if (this.cameraVector !== strCameraVector) {
+      if (cameraType === 'Arc Rotate') {
+        this.camera.setPosition(cameraVector);
+      } else {
+        this.camera.position = cameraVector;
+        this.camera.setTarget(BABYLON.Vector3.Zero());
+      }
+      this.cameraVector = strCameraVector;
     }
   }
   _updateScaffoldingData() {
@@ -267,8 +276,7 @@ class wContext {
   }
   _clearActiveBlock() {
     if (this.activeBlock) {
-      if (this.activeBlock.sceneObject)
-        this.activeBlock.sceneObject.showBoundingBox = false;
+      this.__setBoundsBox(this.activeBlock, false);
       this.activeBlock = null;
     }
     this.clearGhostBlocks();
@@ -318,6 +326,16 @@ class wContext {
     let show = false;
     if (gAPPP.a.profile.showBoundsBox)
       show = true;
+    sceneObject.showBoundingBox = show;
+    for (let i in this.scene.meshes)
+      if (this.scene.meshes[i].parent === sceneObject)
+        this.scene.meshes[i].showBoundingBox = show;
+  }
+  __setBoundsBox(block, show = true) {
+    let sceneObject = block.sceneObject;
+    if (!sceneObject)
+      return;
+
     sceneObject.showBoundingBox = show;
     for (let i in this.scene.meshes)
       if (this.scene.meshes[i].parent === sceneObject)
