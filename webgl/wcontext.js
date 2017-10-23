@@ -108,17 +108,17 @@ class wContext {
             this._sceneAddDefaultObjects();
             this.activate();
 
-            objectData.simpleUIDetails.scaleX = newMesh.scaling.x;
-            objectData.simpleUIDetails.scaleY = newMesh.scaling.y;
-            objectData.simpleUIDetails.scaleZ = newMesh.scaling.z;
+            objectData.scalingX = newMesh.scaling.x;
+            objectData.scalingY = newMesh.scaling.y;
+            objectData.scalingZ = newMesh.scaling.z;
 
-            objectData.simpleUIDetails.positionX = newMesh.position.x;
-            objectData.simpleUIDetails.positionY = newMesh.position.y;
-            objectData.simpleUIDetails.positionZ = newMesh.position.z;
+            objectData.positionX = newMesh.position.x;
+            objectData.positionY = newMesh.position.y;
+            objectData.positionZ = newMesh.position.z;
 
-            objectData.simpleUIDetails.rotateX = newMesh.rotation.x;
-            objectData.simpleUIDetails.rotateY = newMesh.rotation.y;
-            objectData.simpleUIDetails.rotateZ = newMesh.rotation.z;
+            objectData.rotationX = newMesh.rotation.x;
+            objectData.rotationY = newMesh.rotation.y;
+            objectData.rotationZ = newMesh.rotation.z;
 
             fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
               r => resolve(r));

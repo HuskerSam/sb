@@ -338,55 +338,55 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }];
 __localStaticStorageForBindingFields['simpleUIDetails'] = [{
   title: 'Scale X',
-  fireSetField: 'simpleUIDetails.scaleX',
+  fireSetField: 'scalingX',
   contextObjectField: 'scaling.x',
   group: 'scale',
   displayType: 'number'
 }, {
   title: 'Scale Y',
-  fireSetField: 'simpleUIDetails.scaleY',
+  fireSetField: 'scalingY',
   contextObjectField: 'scaling.y',
   group: 'scale',
   displayType: 'number'
 }, {
   title: 'Scale Z',
-  fireSetField: 'simpleUIDetails.scaleZ',
+  fireSetField: 'scalingZ',
   contextObjectField: 'scaling.z',
   group: 'scale',
   displayType: 'number'
 }, {
   title: 'Offset X',
-  fireSetField: 'simpleUIDetails.positionX',
+  fireSetField: 'positionX',
   contextObjectField: 'position.x',
   group: 'offset',
   displayType: 'number'
 }, {
   title: 'Offset Y',
-  fireSetField: 'simpleUIDetails.positionY',
+  fireSetField: 'positionY',
   contextObjectField: 'position.y',
   group: 'offset',
   displayType: 'number'
 }, {
   title: 'Offset Z',
-  fireSetField: 'simpleUIDetails.positionZ',
+  fireSetField: 'positionZ',
   contextObjectField: 'position.z',
   group: 'offset',
   displayType: 'number'
 }, {
   title: 'Rotate X',
-  fireSetField: 'simpleUIDetails.rotateX',
+  fireSetField: 'rotationX',
   contextObjectField: 'rotation.x',
   group: 'rotate',
   displayType: 'number'
 }, {
   title: 'Rotate Y',
-  fireSetField: 'simpleUIDetails.rotateY',
+  fireSetField: 'rotationY',
   contextObjectField: 'rotation.y',
   group: 'rotate',
   displayType: 'number'
 }, {
   title: 'Rotate Z',
-  fireSetField: 'simpleUIDetails.rotateZ',
+  fireSetField: 'rotationZ',
   contextObjectField: 'rotation.z',
   group: 'rotate',
   displayType: 'number'
@@ -398,17 +398,15 @@ __defaultData['mesh'] = {
   url: '',
   type: 'url',
   size: 0,
-  simpleUIDetails: {
-    scaleX: 1.0,
-    scaleY: 1.0,
-    scaleZ: 1.0,
-    positionX: 0.0,
-    positionY: 0.0,
-    positionZ: 0.0,
-    rotateX: 0.0,
-    rotateY: 0.0,
-    rotateZ: 0.0
-  }
+  scalingX: 1.0,
+  scalingY: 1.0,
+  scalingZ: 1.0,
+  positionX: 0.0,
+  positionY: 0.0,
+  positionZ: 0.0,
+  rotationX: 0.0,
+  rotationY: 0.0,
+  rotationZ: 0.0
 };
 __defaultData['scene'] = {
   title: 'Scene',
@@ -679,17 +677,15 @@ __defaultData['shape'] = {
   textFontFamily: 'Geneva',
   textDepth: 4,
   textSize: 100,
-  simpleUIDetails: {
-    scaleX: 1.0,
-    scaleY: 1.0,
-    scaleZ: 1.0,
-    positionX: 0.0,
-    positionY: 0.0,
-    positionZ: 0.0,
-    rotateX: 0.0,
-    rotateY: 0.0,
-    rotateZ: 0.0
-  }
+  scalingX: 1.0,
+  scalingY: 1.0,
+  scalingZ: 1.0,
+  positionX: 0.0,
+  positionY: 0.0,
+  positionZ: 0.0,
+  rotationX: 0.0,
+  rotationY: 0.0,
+  rotationZ: 0.0
 };
 
 __defaultData['block'] = {
@@ -801,15 +797,13 @@ __localStaticStorageForBindingFields['frame'] = [{
 __defaultData['frame'] = {
   time: '0',
   parentKey: null,
-  simpleUIDetails: {
-    scaleX: 1.0,
-    scaleY: 1.0,
-    scaleZ: 1.0,
-    positionX: 0.0,
-    positionY: 0.0,
-    positionZ: 0.0,
-    rotateX: 0.0,
-    rotateY: 0.0,
-    rotateZ: 0.0
-  }
+  scalingX: 1.0,
+  scalingY: 1.0,
+  scalingZ: 1.0,
+  positionX: 0.0,
+  positionY: 0.0,
+  positionZ: 0.0,
+  rotationX: 0.0,
+  rotationY: 0.0,
+  rotationZ: 0.0
 };

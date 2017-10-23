@@ -149,17 +149,17 @@ class cPanelHelpers {
     let nObj = this.context.ghostBlocks['offsetPreview'].sceneObject;
     let updates = [];
     updates.push({
-      field: 'simpleUIDetails.positionX',
+      field: 'positionX',
       newValue: GLOBALUTIL.formatNumber(nObj.position.x).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.position.x).trim()
     });
     updates.push({
-      field: 'simpleUIDetails.positionY',
+      field: 'positionY',
       newValue: GLOBALUTIL.formatNumber(nObj.position.y).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.position.y).trim()
     });
     updates.push({
-      field: 'simpleUIDetails.positionZ',
+      field: 'positionZ',
       newValue: GLOBALUTIL.formatNumber(nObj.position.z).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.position.z).trim()
     });
@@ -258,17 +258,17 @@ class cPanelHelpers {
     let nObj = this.context.ghostBlocks['rotatePreview'].sceneObject;
     let updates = [];
     updates.push({
-      field: 'simpleUIDetails.rotateX',
+      field: 'rotationX',
       newValue: GLOBALUTIL.formatNumber(nObj.rotation.x).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.rotation.x).trim()
     });
     updates.push({
-      field: 'simpleUIDetails.rotateY',
+      field: 'rotationY',
       newValue: GLOBALUTIL.formatNumber(nObj.rotation.y).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.rotation.y).trim()
     });
     updates.push({
-      field: 'simpleUIDetails.rotateZ',
+      field: 'rotationZ',
       newValue: GLOBALUTIL.formatNumber(nObj.rotation.z).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.rotation.z).trim()
     });
@@ -369,17 +369,17 @@ class cPanelHelpers {
     let nObj = this.context.ghostBlocks['scalePreview'].sceneObject;
     let updates = [];
     updates.push({
-      field: 'simpleUIDetails.scaleX',
+      field: 'scalingX',
       newValue: GLOBALUTIL.formatNumber(nObj.scaling.x).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.scaling.x).trim()
     });
     updates.push({
-      field: 'simpleUIDetails.scaleY',
+      field: 'scalingY',
       newValue: GLOBALUTIL.formatNumber(nObj.scaling.y).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.scaling.y).trim()
     });
     updates.push({
-      field: 'simpleUIDetails.scaleZ',
+      field: 'scalingZ',
       newValue: GLOBALUTIL.formatNumber(nObj.scaling.z).trim(),
       oldValue: GLOBALUTIL.formatNumber(sObj.scaling.z).trim()
     });
