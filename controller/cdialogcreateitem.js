@@ -72,10 +72,13 @@ class cDialogCreateItem {
           newValue: results.url
         }], results.key);
       }
+
       this.clear();
       this.popupButtons.style.display = 'block';
       this.progressBar.style.display = 'none';
       this.close();
+
+      setTimeout(() => gAPPP.dialogs[this.tag + '-edit'].show(results.key), 600);
     });
   }
   fileDomChange(e) {

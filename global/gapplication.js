@@ -23,7 +23,14 @@ class gApplication {
     this.renderLog = new cPanelLog(this.renderLogButton, this.sceneToolsContainer);
 
     window.addEventListener("resize", () => this.resize());
+    document.addEventListener("keyup", e => {
+      if (e.keyCode === 27) {
+        let dialog = this.__detectIfEditDialogShown();
 
+        if (dialog)
+          dialog.close();
+      }
+    });
     this.toolbarItems['scene'] = new cBandRecords('scene', 'Scenes');
     this.toolbarItems['block'] = new cBandRecords('block', 'Blocks');
     this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes');
