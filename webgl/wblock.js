@@ -17,9 +17,34 @@ class wBlock {
       if (values.title === this.blockRawData.childName)
         return this._loadBlock()
 
+    let materialList = [];
+    if (tag === 'material')
+      if (values.title)
+        materialList.push(values.title);
+
+    if (tag === 'texture') {
+      let allMaterials = gAPPP.a.modelSets['material'].fireDataValuesByKey;
+
+      for (let i in allMaterials) {
+        if (allMaterials[i].diffuseTextureName === values.title)
+          materialList.push(allMaterials[i].title);
+        if (allMaterials[i].emissiveTextureName === values.title)
+          materialList.push(allMaterials[i].title);
+        if (allMaterials[i].specularTextureName === values.title)
+          materialList.push(allMaterials[i].title);
+        if (allMaterials[i].ambientTextureName === values.title)
+          materialList.push(allMaterials[i].title);
+      }
+    }
+
+    if (tag === 'material' || tag === 'texture') {
+      if (materialList.indexOf(this.blockRenderData.materialName) !== -1)
+        return this._loadBlock();
+    }
+
     if (type === 'add' && tag === 'blockchild')
       if (values.parentKey === this.blockKey)
-        this.setData();
+        return this.setData();
 
     for (let i in this.childBlocks) {
       if (type === 'remove') {
@@ -225,7 +250,7 @@ class wBlock {
 
     let keys = Object.keys(children);
     if (keys.length === 0) {
-    //  console.log('_loadBlock:: fetchList 0 results', this);
+      //  console.log('_loadBlock:: fetchList 0 results', this);
       return;
     }
     if (keys.length > 1) {

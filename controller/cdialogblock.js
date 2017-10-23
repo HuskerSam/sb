@@ -56,20 +56,26 @@ class cDialogBlock extends cDialogSuper {
     this.addChildFrameButton.addEventListener('click', e => this.addFrame(this.childKey));
 
     gAPPP.a.modelSets['blockchild'].childListeners.push(
-        (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
+      (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
     gAPPP.a.modelSets['mesh'].childListeners.push(
-        (values, type, fireData) => this._updateContextWithDataChange('mesh', values, type, fireData));
+      (values, type, fireData) => this._updateContextWithDataChange('mesh', values, type, fireData));
+    gAPPP.a.modelSets['shape'].childListeners.push(
+      (values, type, fireData) => this._updateContextWithDataChange('shape', values, type, fireData));
+    gAPPP.a.modelSets['material'].childListeners.push(
+      (values, type, fireData) => this._updateContextWithDataChange('material', values, type, fireData));
+    gAPPP.a.modelSets['texture'].childListeners.push(
+      (values, type, fireData) => this._updateContextWithDataChange('texture', values, type, fireData));
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock)
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
   }
   addFrame(parentKey) {
-      let objectData = sDataDefinition.getDefaultDataCloned('frame');
-      objectData.parentKey = parentKey;
-      gAPPP.a.modelSets['frame'].createWithBlobString(objectData).then(r => {
+    let objectData = sDataDefinition.getDefaultDataCloned('frame');
+    objectData.parentKey = parentKey;
+    gAPPP.a.modelSets['frame'].createWithBlobString(objectData).then(r => {
 
-      });
+    });
   }
   addChild() {
     let objectData = sDataDefinition.getDefaultDataCloned('blockchild');

@@ -43,7 +43,6 @@ class cDialogSuper {
     if (this.canvas)
       this.context = new wContext(this.canvas);
 
-    this.rotateState = 'vertical';
   }
   expandAll() {
     this.fireFields.helpers.expandAll();
@@ -69,6 +68,10 @@ class cDialogSuper {
     this._startLoad();
     $(this.dialog).modal('show');
 
+    this.rotateState = gAPPP.a.profile.editFormRotateState;
+    if (! this.rotateState)
+      this.rotateState = 'vertical';
+      
     this._showFocus();
 
     if (this.initScene) {
@@ -163,6 +166,12 @@ class cDialogSuper {
     } else {
       this.rotateState = 'vertical';
     }
+
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'editFormRotateState',
+      newValue: this.rotateState
+    }]);
+
     this._splitView();
   }
   _showDom(element) {
