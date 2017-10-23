@@ -13,6 +13,10 @@ class wBlock {
     if (this.blockKey === fireData.key)
       this.setData(values);
 
+    if (this.blockRawData.childType === tag)
+      if (values.title === this.blockRawData.childName)
+        return this._loadBlock()
+
     if (type === 'add' && tag === 'blockchild')
       if (values.parentKey === this.blockKey)
         this.setData();
