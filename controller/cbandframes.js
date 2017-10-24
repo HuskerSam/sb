@@ -4,6 +4,7 @@ class cBandFrames extends cBandSuper {
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.childrenContainer = childrenContainer;
     this.frameDataViewInstances = {};
+    this.framesOrdered = [];
     this.parent = parent;
   }
   _getDomForChild(key, values) {
@@ -34,7 +35,7 @@ class cBandFrames extends cBandSuper {
   }
   __getKey() {
     let filter = this.parent.childKey;
-    if (! filter)
+    if (!filter)
       filter = this.parent.key;
     return filter;
   }
@@ -53,12 +54,17 @@ class cBandFrames extends cBandSuper {
     if (fireData.val().parentKey !== this.__getKey())
       return;
 
+    let result = null;
     if (type === 'add')
-      return this.childAdded(fireData);
+      result = this.childAdded(fireData);
     if (type === 'change')
-      return this.childChanged(fireData);
+      result = this.childChanged(fireData);
     if (type === 'remove')
-      return this.childRemoved(fireData);
+      result = this.childRemoved(fireData);
+
+    this._sortFrames();
+
+    return result;
   }
   childChanged(fireData) {
     //edit fields handle this
@@ -83,6 +89,49 @@ class cBandFrames extends cBandSuper {
     }
     this.childrenContainer.removeChild(inst.framesContainer);
     delete this.frameDataViewInstances[inst.key];
+  }
+  _sortFrames() {
+    this.framesOrdered = [];
+
+    for (let i in this.frameDataViewInstances)
+      this.framesOrdered.push(this.frameDataViewInstances[i]);
+
+    this.framesOrdered.sort((a, b) => {
+      let a_order = 0;
+      let b_order = 0;
+      if (GLOBALUTIL.isNumeric(a.fireSet.getCache(a.key).frameOrder))
+        a_order = Number(a.fireSet.getCache(a.key).frameOrder);
+      if (GLOBALUTIL.isNumeric(b.fireSet.getCache(b.key).frameOrder))
+        b_order = Number(b.fireSet.getCache(b.key).frameOrder);
+      a.lastOrder = a_order;
+      b.lastOrder = b_order;
+
+      if (a_order !== b_order)
+        return a_order - b_order;
+
+      if (a.key > b.key)
+        return 1;
+
+      if (a.key < b.key)
+        return -1;
+
+      return 0;
+    });
+    this.__applyFrameOrderToDom();
+  }
+  __applyFrameOrderToDom() {
+    for (let c = 0, l = this.framesOrdered.length; c < l; c++) {
+      let panelDom = this.framesOrdered[c].framesContainer;
+      let currentPanel = this.childrenContainer.childNodes[c];
+
+      if (panelDom !== currentPanel)
+        if (!panelDom.contains(document.activeElement))
+          this.childrenContainer.insertBefore(panelDom, currentPanel);
+        else {
+          this.childrenContainer.appendChild(currentPanel);
+          this.__applyFrameOrderToDom();
+        }
+    }
   }
   childRemoved(fireData) {
     let inst = this.frameDataViewInstances[fireData.key];
