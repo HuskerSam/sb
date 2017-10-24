@@ -353,13 +353,18 @@ class wContext {
     if (this.ghostBlocks['offsetPreview'])
       fade = true;
 
-    let fadeLevel = 1;
+    let fadeLevel = this.activeBlock.blockRenderData.visibility;
+    if (fadeLevel === '')
+      fadeLevel = 1;
     if (fade)
       fadeLevel = .5;
 
-    sceneObject.visibility = fadeLevel;
+    this.__fadeObject(sceneObject, fadeLevel);
+  }
+  __fadeObject(obj, fadeLevel) {
+    obj.visibility = fadeLevel;
     for (let i in this.scene.meshes)
-      if (this.scene.meshes[i].parent === sceneObject)
+      if (this.scene.meshes[i].parent === obj)
         this.scene.meshes[i].visibility = fadeLevel;
   }
   _sceneDisposeDefaultObjects() {

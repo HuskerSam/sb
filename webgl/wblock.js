@@ -404,12 +404,11 @@ class wBlock {
   }
   __updateObjectValue(field, value, object) {
     try {
-      if (value === '')
-        return;
-      if (value === undefined)
-        return;
-      if (field.type === undefined)
-        return GLOBALUTIL.path(object, field.contextObjectField, value);
+      if (value === '') return;
+      if (value === undefined) return;
+      if (field.type === undefined) return GLOBALUTIL.path(object, field.contextObjectField, value);
+
+      if (field.type === 'visibility') return this.context.__fadeObject(object, value);
 
       if (field.type === 'color') {
         let parts = value.split(',');

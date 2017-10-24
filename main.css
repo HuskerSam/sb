@@ -396,7 +396,7 @@ i.material-icons {
 
 button i.material-icons {
   position: relative;
-  top: 3px;
+  top: .15em;
   font-size: 1.1em;
 }
 
@@ -656,7 +656,7 @@ input[type=range]::-webkit-slider-thumb {
 .cblock-child-details-panel {}
 
 .frames-panel {
-  overflow:auto;
+  overflow: auto;
 }
 
 .block-editor-child, .main-band-details-element, .main-band-toggle, .main-band-add-child {
@@ -676,7 +676,7 @@ input[type=range]::-webkit-slider-thumb {
 .block-editor-child.selected, .main-band-details-element.selected {
   color: yellow;
   background: rgba(127, 127, 127, .5);
-  border-color:yellow;
+  border-color: yellow;
 }
 
 .main-band-add-child {
@@ -686,4 +686,49 @@ input[type=range]::-webkit-slider-thumb {
 
 .frame-fields-container {
   clear: both;
+}
+
+.render-log-panel {
+  width: 100%;
+  height: 6.5em;
+  overflow: auto;
+  background: rgba(255, 255, 255, .4);
+  white-space: pre;
+}
+
+.frames-panel .frame-fields-container label span {
+  display:none;
+}
+
+.frames-panel > div:nth-child(1) label span {
+  display:block;
+}
+.frames-panel > div:nth-child(1) .selected-mesh-helper-collapse-button {
+  margin-top: 2.2em;
+}
+.frames-panel > div:nth-child(1) button.delete-button {
+
+}
+.frames-panel input {
+  padding: 0em;
+  height: 1.4em;
+}
+
+.frames-panel .form-group-container-group .form-group {
+  padding: 0px;
+  margin: 0px;
+}
+
+.frames-panel button.delete-button {
+  padding: 0em;
+  background: rgba(255,255,255,.6);
+  font-size: .8em;
+}
+
+.frames-panel .form-group-container-group {
+  float: none;
+}
+
+.frames-panel {
+  white-space: nowrap;
 }

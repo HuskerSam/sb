@@ -390,6 +390,13 @@ __localStaticStorageForBindingFields['simpleUIDetails'] = [{
   contextObjectField: 'rotation.z',
   group: 'rotate',
   displayType: 'number'
+}, {
+  title: 'Visibility',
+  fireSetField: 'visibility',
+  contextObjectField: 'visibility',
+  group: 'visi',
+  displayType: 'number',
+  type: 'visibility'
 }];
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
@@ -694,6 +701,12 @@ __localStaticStorageForBindingFields['frame'] = [{
   contextObjectField: null,
   displayType: 'number',
   group: 'time'
+}, {
+  title: 'Order',
+  fireSetField: 'frameOrder',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'time'
 }];
 __defaultData['mesh'] = {
   title: 'Mesh',
@@ -794,7 +807,8 @@ __defaultData['blockchild'] = {
   order: 0
 };
 __defaultData['frame'] = {
-  time: '0',
+  frameTime: '0',
+  frameOrder: '1',
   parentKey: null,
   scalingX: 1.0,
   scalingY: 1.0,

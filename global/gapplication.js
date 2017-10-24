@@ -25,7 +25,7 @@ class gApplication {
     window.addEventListener("resize", () => this.resize());
     document.addEventListener("keyup", e => {
       if (e.keyCode === 27) {
-        let dialog = this.__detectIfEditDialogShown();
+        let dialog = this.closeAllDialogs();
 
         if (dialog)
           dialog.close();
@@ -71,6 +71,11 @@ class gApplication {
       this.activeContext.engine.resize();
   }
   _collaspseAllBands() {
+    this.sceneTools.expanded = true;
+    this.sceneTools.toggle();
+    this.renderLog.expanded = true;
+    this.renderLog.toggle();
+
     let dialog = this.__detectIfEditDialogShown();
     if (dialog)
       return dialog.collapseAll();
@@ -151,5 +156,14 @@ class gApplication {
       if ($(this.dialogs[i].dialog).hasClass('in'))
         return this.dialogs[i];
     return null;
+  }
+  closeAllDialogs() {
+    for (let i in this.dialogs)
+      if ($(this.dialogs[i].dialog).hasClass('in'))
+        this.dialogs[i].close();
+    this.sceneTools.expanded = true;
+    this.sceneTools.toggle();
+    this.renderLog.expanded = true;
+    this.renderLog.toggle();
   }
 }

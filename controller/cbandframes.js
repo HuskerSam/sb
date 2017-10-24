@@ -23,9 +23,12 @@ class cBandFrames extends cBandSuper {
 
     let deleteButton = document.createElement('button');
     deleteButton.innerHTML = '<i class="material-icons">delete</i>';
-    deleteButton.style.float = 'left';
+    deleteButton.setAttribute('class', 'btn delete-button');
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
-    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[0]);
+    framesContainer.appendChild(deleteButton);
+    let clearDiv = document.createElement('div');
+    clearDiv.style.clear = 'both';
+    framesContainer.appendChild(clearDiv);
     this.childrenContainer.appendChild(framesContainer);
     instance.dataPanel.paint(values);
   }

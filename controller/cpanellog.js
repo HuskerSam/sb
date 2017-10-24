@@ -8,10 +8,11 @@ class cPanelLog {
     this.panel = document.createElement('div');
     this.panel.style.display = 'none';
     this.panel.style.float = 'left';
-    this.panel.setAttribute('class', 'context-scene-tools-panel');
-    this.panel.innerHTML = 'render info panel';
+    this.panel.setAttribute('class', 'context-scene-tools-panel render-log-panel');
+    this.panel.innerHTML = '';
     this.panelContainer = container;
     this.panelContainer.appendChild(this.panel);
+
   }
   statusText() {
     if (this.status === 0)
