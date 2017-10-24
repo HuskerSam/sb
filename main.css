@@ -315,10 +315,10 @@ html, body {
 }
 
 .popup-main-body {
-  height: calc(100% - 4.5em);
+  height: calc(100% - 4.2em);
   overflow-y: hidden;
   position: relative;
-  top: 2em;
+  top: 1.8em;
 }
 
 .popup-buttons .save-details {
@@ -610,6 +610,7 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: none;
   position: relative;
   padding: .1em;
+  text-align: center;
 }
 
 .global-floating-toolbar .toolbar-content {
@@ -731,4 +732,11 @@ input[type=range]::-webkit-slider-thumb {
 
 .frames-panel {
   white-space: nowrap;
+}
+
+#html-main-page-size-slider {
+  width: 20%;
+  display: inline-block;
+  height: 1.5em;
+  pointer-events: auto;
 }

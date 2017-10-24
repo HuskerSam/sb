@@ -86,15 +86,20 @@ class cDialogBlock extends cDialogSuper {
   }
   setChildKey(key) {
     this.childKey = key;
+    this.childEditPanel.style.display = 'none';
+    this.fieldsContainer.style.display = 'none';
+
     if (this.childKey === null) {
-      this.fieldsContainer.style.display = 'block';
-      this.childEditPanel.style.display = 'none';
       this.rootElementDom.classList.add('selected');
+
+      if (this.detailsShown)
+        this.fieldsContainer.style.display = 'block';
       this.context.setActiveBlock(this.rootBlock);
     } else {
-      this.fieldsContainer.style.display = 'none';
-      this.childEditPanel.style.display = 'block';
       this.rootElementDom.classList.remove('selected');
+      if (this.detailsShown)
+        this.childEditPanel.style.display = 'block';
+
       let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
       if (block)
         this.context.setActiveBlock(block);
@@ -116,6 +121,7 @@ class cDialogBlock extends cDialogSuper {
       this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_less</i>';
       this.toggleDetailsDom.classList.remove('selected');
     }
+    this.setChildKey(this.childKey);
   }
   show(key) {
     this.key = key;

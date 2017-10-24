@@ -4,7 +4,7 @@ class cBandFrames extends cBandSuper {
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.childrenContainer = childrenContainer;
     this.frameDataViewInstances = {};
-    this.framesOrdered = [];
+    this.framesHelper = new wFrames();
     this.parent = parent;
   }
   _getDomForChild(key, values) {
@@ -46,6 +46,8 @@ class cBandFrames extends cBandSuper {
 
     for (let i in children)
       this._getDomForChild(i, children[i]);
+
+    this._sortFrames();
   }
   handleDataChange(fireData, type) {
     if (type === 'clear')
@@ -91,37 +93,13 @@ class cBandFrames extends cBandSuper {
     delete this.frameDataViewInstances[inst.key];
   }
   _sortFrames() {
-    this.framesOrdered = [];
-
-    for (let i in this.frameDataViewInstances)
-      this.framesOrdered.push(this.frameDataViewInstances[i]);
-
-    this.framesOrdered.sort((a, b) => {
-      let a_order = 0;
-      let b_order = 0;
-      if (GLOBALUTIL.isNumeric(a.fireSet.getCache(a.key).frameOrder))
-        a_order = Number(a.fireSet.getCache(a.key).frameOrder);
-      if (GLOBALUTIL.isNumeric(b.fireSet.getCache(b.key).frameOrder))
-        b_order = Number(b.fireSet.getCache(b.key).frameOrder);
-      a.lastOrder = a_order;
-      b.lastOrder = b_order;
-
-      if (a_order !== b_order)
-        return a_order - b_order;
-
-      if (a.key > b.key)
-        return 1;
-
-      if (a.key < b.key)
-        return -1;
-
-      return 0;
-    });
+    this.framesHelper.setParentKey(this.__getKey());
     this.__applyFrameOrderToDom();
   }
   __applyFrameOrderToDom() {
-    for (let c = 0, l = this.framesOrdered.length; c < l; c++) {
-      let panelDom = this.framesOrdered[c].framesContainer;
+    for (let c = 0, l = this.framesHelper.orderedKeys.length; c < l; c++) {
+      let key = this.framesHelper.orderedKeys[c];
+      let panelDom = this.frameDataViewInstances[key].framesContainer;
       let currentPanel = this.childrenContainer.childNodes[c];
 
       if (panelDom !== currentPanel)

@@ -53,12 +53,13 @@ class gApplication {
     this.dialogs['scene-create'] = new cDialogCreateItem('scene', 'Add Scene');
     this.dialogs['user-profile'] = new cDialogUserProfile(document.querySelector('#user-profile-settings-dialog'), 'userProfile');
 
-    document.querySelector('#expand-all-toolbands').addEventListener('click', e => this._expandAllBands(), false);
-    document.querySelector('#collapse-all-toolbands').addEventListener('click', e => this._collaspseAllBands(), false);
-    document.querySelector('#user-profile-settings-button').addEventListener('click', e => this.dialogs['user-profile'].show(), false);
-    document.querySelector('#global-toolbar-decrease-fontsize').addEventListener('click', e => this._increaseFontSize(true), false);
-    document.querySelector('#global-toolbar-increase-fontsize').addEventListener('click', e => this._increaseFontSize(), false);
-    document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile(), false);
+    document.querySelector('#expand-all-toolbands').addEventListener('click', e => this._expandAllBands());
+    document.querySelector('#collapse-all-toolbands').addEventListener('click', e => this._collaspseAllBands());
+    document.querySelector('#user-profile-settings-button').addEventListener('click', e => this.dialogs['user-profile'].show());
+    this.fontSizeSlider = document.querySelector('#html-main-page-size-slider');
+    this.fontSizeSlider.value = this.a.profile.fontSize;
+    this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
+    document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile());
 
   }
   handleDataUpdate() {
@@ -91,33 +92,15 @@ class gApplication {
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggleChildBandDisplay(true);
   }
-  _increaseFontSize(decrease) {
+  _handleFontSizeChange() {
+    let newSize = this.fontSizeSlider.value;
     let originalFontSize = this.a.profile.fontSize;
-    let size = this._parseFontSize(originalFontSize);
-
-    if (decrease)
-      size -= 1;
-    else
-      size += 1;
-    let newFontSize = size.toString();
-
     let fontUpdate = {
       field: 'fontSize',
-      newValue: newFontSize,
+      newValue: newSize,
       oldValue: originalFontSize
     }
     gAPPP.a.modelSets['userProfile'].commitUpdateList([fontUpdate]);
-  }
-  _initShapesList() {
-    this._domShapeList = document.createElement('datalist');
-    this._domShapeList.id = 'applicationdynamicshapelistlookuplist';
-
-    let innerHTML = '';
-    for (let i in this.shapeTypes)
-      innerHTML += '<option>' + this.shapeTypes[i] + '</option>';
-    this._domShapeList.innerHTML = innerHTML;
-
-    document.body.appendChild(this._domShapeList);
   }
   _parseFontSize(str) {
     if (str === undefined)
@@ -130,6 +113,17 @@ class gApplication {
     if (size > 36)
       size = 36;
     return size;
+  }
+  _initShapesList() {
+    this._domShapeList = document.createElement('datalist');
+    this._domShapeList.id = 'applicationdynamicshapelistlookuplist';
+
+    let innerHTML = '';
+    for (let i in this.shapeTypes)
+      innerHTML += '<option>' + this.shapeTypes[i] + '</option>';
+    this._domShapeList.innerHTML = innerHTML;
+
+    document.body.appendChild(this._domShapeList);
   }
   _updateApplicationStyle() {
     let css = 'html, body { ';
@@ -150,6 +144,7 @@ class gApplication {
     this.styleProfileDom = document.createElement('style');
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
+    this.resize();
   }
   __detectIfEditDialogShown() {
     for (let i in this.dialogs)
