@@ -462,4 +462,17 @@ class wBlock {
     texture.hasAlpha = values['hasAlpha'];
     return texture;
   }
+  getBlockDimDesc() {
+    let width = 1;
+    if (GLOBALUTIL.isNumeric(this.blockRawData.width))
+      width = Math.round(Number(this.blockRawData.width));
+    let height = 1;
+    if (GLOBALUTIL.isNumeric(this.blockRawData.height))
+      height = Math.round(Number(this.blockRawData.height));
+    let depth = 1;
+    if (GLOBALUTIL.isNumeric(this.blockRawData.depth))
+      depth = Math.round(Number(this.blockRawData.depth));
+
+    return width + ' x ' + depth + ' x ' + height;
+  }
 }

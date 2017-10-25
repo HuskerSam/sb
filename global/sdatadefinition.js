@@ -616,6 +616,16 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: null,
   group: 'title'
 }, {
+  title: 'Run Time',
+  fireSetField: 'runTime',
+  contextObjectField: null,
+  group: 'runTime'
+}, {
+  title: 'Repeat',
+  fireSetField: 'repeat',
+  contextObjectField: null,
+  group: 'runTime'
+}, {
   title: 'Block Scale',
   fireSetField: 'blockScale',
   contextObjectField: null,
@@ -688,7 +698,7 @@ __localStaticStorageForBindingFields['blockchild'] = [{
     shape: 'shapedatatitlelookuplist'
   },
   dataListId: 'meshdatatitlelookuplist'
-},{
+}, {
   title: 'Inherit Material',
   fireSetField: 'inheritMaterial',
   contextObjectField: null,
@@ -797,6 +807,7 @@ __defaultData['block'] = {
   width: 2,
   depth: 2,
   height: 1,
+  runTime: 10000,
   blockScale: 10,
   children: {}
 };

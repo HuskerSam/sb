@@ -25,7 +25,6 @@ class cDialogBlock extends cDialogSuper {
     this.childKey = null;
 
     this.rootElementDom = this.dataViewContainer.querySelector('.main-band-details-element');
-    this.rootElementDom.innerHTML = '<i class="material-icons">developer_board</i>';
     this.rootElementDom.addEventListener('click', e => this.childBand.setKey(null));
     this.childBandDom = this.dataViewContainer.querySelector('.main-band-flex-children');
     this.toggleDetailsDom = this.dataViewContainer.querySelector('.main-band-toggle');
@@ -34,14 +33,20 @@ class cDialogBlock extends cDialogSuper {
     this.toggleDetailsDom.addEventListener('click', e => this.toggleDetails());
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
-    this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
+
+    this.addChildButton = document.createElement('button');
+    this.addChildButton.innerHTML = '<i class="material-icons">add</i> Child Block';
+    this.addChildButton.setAttribute('class', 'main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
+    this.fieldsContainer.insertBefore(this.addChildButton, this.fieldsContainer.childNodes[0]);
 
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
 
     gAPPP.a.modelSets['blockchild'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
+    gAPPP.a.modelSets['block'].childListeners.push(
+      (values, type, fireData) => this._updateContextWithDataChange('block', values, type, fireData));
     gAPPP.a.modelSets['mesh'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('mesh', values, type, fireData));
     gAPPP.a.modelSets['shape'].childListeners.push(
@@ -52,13 +57,20 @@ class cDialogBlock extends cDialogSuper {
       (values, type, fireData) => this._updateContextWithDataChange('texture', values, type, fireData));
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
-    if (this.rootBlock)
+    if (this.rootBlock) {
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
+      this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+    }
   }
   addChild() {
     let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
     objectData.parentKey = this.key;
-    gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData).then(r => {});
+    gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData).then(r => {
+      this.childBand.setKey(r.key);
+      setTimeout(() => {
+        this.childBand.setKey(r.key);
+      }, 100);
+    });
   }
   setChildKey(key) {
     this.childKey = key;
@@ -106,6 +118,8 @@ class cDialogBlock extends cDialogSuper {
     if (!this.fireFields.values['renderImageURL'])
       this.fireSet.renderImageUpdateNeeded = true;
     super.show();
+
+    this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
 
     this.childBand.refreshUIFromCache();
     this.childBand.setKey(null);
