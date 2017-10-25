@@ -40,21 +40,6 @@ class cDialogBlock extends cDialogSuper {
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
 
-    this.addRootFrameButton = document.createElement('button');
-    this.addRootFrameButton.innerHTML = '<i class="material-icons">add</i> Block Frame';
-    this.addRootFrameButton.setAttribute('class', '');
-    this.addRootFrameButton.style.float = 'left';
-    this.fieldsContainer.insertBefore(this.addRootFrameButton, this.fieldsContainer.childNodes[0]);
-    this.addRootFrameButton.addEventListener('click', e => this.addFrame(this.key));
-
-    this.addChildFrameButton = document.createElement('button');
-    this.addChildFrameButton.innerHTML = '<i class="material-icons">add</i> Child Frame';
-    this.addChildFrameButton.style.float = 'left';
-    this.addChildFrameButton.style.clear = 'both';
-    this.addChildFrameButton.setAttribute('class', '');
-    this.childBand.buttonWrapperPanel.appendChild(this.addChildFrameButton);
-    this.addChildFrameButton.addEventListener('click', e => this.addFrame(this.childKey));
-
     gAPPP.a.modelSets['blockchild'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
     gAPPP.a.modelSets['mesh'].childListeners.push(
@@ -70,19 +55,10 @@ class cDialogBlock extends cDialogSuper {
     if (this.rootBlock)
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
   }
-  addFrame(parentKey) {
-    let objectData = sDataDefinition.getDefaultDataCloned('frame');
-    objectData.parentKey = parentKey;
-    gAPPP.a.modelSets['frame'].createWithBlobString(objectData).then(r => {
-
-    });
-  }
   addChild() {
     let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
     objectData.parentKey = this.key;
-    gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData).then(r => {
-
-    });
+    gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData).then(r => {});
   }
   setChildKey(key) {
     this.childKey = key;

@@ -9,15 +9,6 @@ class cBandChildren extends cBandSuper {
 
     this.childFields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.childEditFields = new cPanelData(this.childFields, this.childEditPanel, this);
-    this.buttonWrapperPanel = document.createElement('div');
-    this.buttonWrapperPanel.style.float = "left";
-    this.deleteChildButton = document.createElement('button');
-    this.deleteChildButton.innerHTML = '<i class="material-icons">delete</i> Child';
-    this.deleteChildButton.style.float = 'left';
-    this.deleteChildButton.style.clear = 'both';
-    this.deleteChildButton.addEventListener('click', e => this.deleteChildBlock());
-    this.buttonWrapperPanel.appendChild(this.deleteChildButton);
-    this.childEditPanel.insertBefore(this.buttonWrapperPanel, this.childEditPanel.childNodes[0]);
   }
   refreshUIFromCache() {
     this.clearChildren();
@@ -41,7 +32,7 @@ class cBandChildren extends cBandSuper {
       return this.childRemoved(fireData);
   }
   _getDomForChild(key, values) {
-    let d = document.createElement('button');
+    let d = document.createElement('div');
     d.setAttribute('class', 'block-editor-child');
     this.childrenContainer.appendChild(d);
     d.addEventListener('click', e => this.setKey(key));
@@ -49,6 +40,12 @@ class cBandChildren extends cBandSuper {
     let html = '<span class="band-title"></span>';
     d.innerHTML = html;
     d.setAttribute('class', `${this.tag}-${key} block-editor-child`);
+
+    this.deleteChildButton = document.createElement('button');
+    this.deleteChildButton.innerHTML = '<i class="material-icons">delete</i>';
+    let deleteKey = key;
+    this.deleteChildButton.addEventListener('click', e => this.deleteChildBlock(deleteKey, e));
+    d.appendChild(this.deleteChildButton);
 
     this._nodeApplyValues(values, d);
   }
@@ -71,9 +68,12 @@ class cBandChildren extends cBandSuper {
     if (post)
       this.childrenContainer.removeChild(post);
   }
-  deleteChildBlock() {
+  deleteChildBlock(deleteKey, e) {
     if (confirm('Remove this child block?'))
-      this.fireSet.removeByKey(this.key);
+      this.fireSet.removeByKey(deleteKey);
+
+    if (e)
+      e.stopPropagation();
   }
   setKey(childKey) {
     this.parent.setChildKey(childKey);

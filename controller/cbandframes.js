@@ -6,6 +6,18 @@ class cBandFrames extends cBandSuper {
     this.frameDataViewInstances = {};
     this.framesHelper = new wFrames();
     this.parent = parent;
+
+    this.addFrameButton = document.createElement('button');
+    this.addFrameButton.innerHTML = '<i class="material-icons">add</i> Frame';
+    this.addFrameButton.setAttribute('class', 'btn add-button');
+    this.addFrameButton.style.float = 'left';
+    this.childrenContainer.appendChild(this.addFrameButton);
+    this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
+  }
+  addFrame(parentKey) {
+    let objectData = sDataDefinition.getDefaultDataCloned('frame');
+    objectData.parentKey = parentKey;
+    gAPPP.a.modelSets['frame'].createWithBlobString(objectData).then(r => {});
   }
   _getDomForChild(key, values) {
     let framesContainer = document.createElement('div');
@@ -30,7 +42,7 @@ class cBandFrames extends cBandSuper {
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';
     framesContainer.appendChild(clearDiv);
-    this.childrenContainer.appendChild(framesContainer);
+    this.childrenContainer.insertBefore(framesContainer, this.addFrameButton);
     instance.dataPanel.paint(values);
   }
   __getKey() {
@@ -80,7 +92,6 @@ class cBandFrames extends cBandSuper {
       this.__removeInst(this.frameDataViewInstances[i]);
 
     this.frameDataViewInstances = {};
-    super.clearChildren();
   }
   __removeInst(inst) {
     for (let c = 0, l = this.fireSet.childListeners.length; c < l; c++) {
@@ -106,7 +117,7 @@ class cBandFrames extends cBandSuper {
         if (!panelDom.contains(document.activeElement))
           this.childrenContainer.insertBefore(panelDom, currentPanel);
         else {
-          this.childrenContainer.appendChild(currentPanel);
+          this.childrenContainer.insertBefore(currentPanel, this.addFrameButton);
           this.__applyFrameOrderToDom();
         }
     }

@@ -354,14 +354,14 @@ class wContext {
       fade = true;
 
     let fadeLevel = this.activeBlock.blockRenderData.visibility;
-    if (fadeLevel === '')
-      fadeLevel = 1;
     if (fade)
       fadeLevel = .5;
 
     this.__fadeObject(sceneObject, fadeLevel);
   }
   __fadeObject(obj, fadeLevel) {
+    if (fadeLevel === '' || fadeLevel === undefined)
+      fadeLevel = 1;
     obj.visibility = fadeLevel;
     for (let i in this.scene.meshes)
       if (this.scene.meshes[i].parent === obj)

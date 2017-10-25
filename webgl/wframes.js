@@ -10,9 +10,7 @@ class wFrames {
   handleFrameChanges() {
     this._compileFrames();
   }
-  applyFrameValues(block, time) {
-
-  }
+  applyFrameValues(block, time) { }
   setParentKey(parentKey) {
     this.parentKey = parentKey;
     this._compileFrames();

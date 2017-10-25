@@ -667,8 +667,15 @@ input[type=range]::-webkit-slider-thumb {
   border: solid .15em silver;
   margin: .1em;
   padding: .1em;
+  display: inline-block;
+  cursor: pointer;
 }
-
+.block-editor-child button {
+  background:rgba(0,0,0,.2);
+  color: silver;
+  border-radius: .35em;
+  margin-left: 1em;
+}
 .main-band-toggle.selected {
   background: rgba(127, 127, 127, .5);
   color: white;

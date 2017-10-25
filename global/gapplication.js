@@ -57,15 +57,15 @@ class gApplication {
     document.querySelector('#collapse-all-toolbands').addEventListener('click', e => this._collaspseAllBands());
     document.querySelector('#user-profile-settings-button').addEventListener('click', e => this.dialogs['user-profile'].show());
     this.fontSizeSlider = document.querySelector('#html-main-page-size-slider');
-    this.fontSizeSlider.value = this.a.profile.fontSize;
     this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile());
 
   }
   handleDataUpdate() {
+    this.fontSizeSlider.value = this.a.profile.fontSize;
+    this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
     this.mV._updateSelectedScene();
-    this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
   }
   resize() {
     if (this.activeContext)

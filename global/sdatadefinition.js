@@ -611,7 +611,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   group: 'fontExtra'
 }];
 __localStaticStorageForBindingFields['block'] = [{
-  title: 'Title',
+  title: 'Block Title',
   fireSetField: 'title',
   contextObjectField: null,
   group: 'title'
