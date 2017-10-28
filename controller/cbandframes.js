@@ -20,9 +20,42 @@ class cBandFrames extends cBandSuper {
     objectData.frameOrder = this.framesHelper.getNextOrder();
     gAPPP.a.modelSets['frame'].createWithBlobString(objectData).then(r => {});
   }
+  __initDOMWrapper(containerDom) {
+    let helperDom = document.createElement('div');
+    helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box');
+    helperDom.style.display = 'none';
+    let collapseButton = document.createElement('button');
+    collapseButton.setAttribute('class', 'selected-mesh-helper-collapse-button');
+    collapseButton.innerHTML = '+';
+    collapseButton.addEventListener('click', e => {
+      if (helperDom.style.display === 'none') {
+        helperDom.style.display = 'block';
+        collapseButton.innerHTML = '-';
+      } else {
+        helperDom.style.display = 'none';
+        collapseButton.innerHTML = '+';
+      }
+    });
+    containerDom.appendChild(collapseButton);
+    let infoDom = document.createElement('div');
+    infoDom.classList.add('info-area');
+    helperDom.appendChild(infoDom);
+    let actionDom = document.createElement('div');
+    actionDom.setAttribute('class', 'action-area');
+    helperDom.appendChild(actionDom);
+    containerDom.appendChild(helperDom);
+    return {
+      containerDom,
+      helperDom,
+      infoDom,
+      actionDom,
+      collapseButton
+    };
+  }
   _getDomForChild(key, values) {
     let framesContainer = document.createElement('div');
     framesContainer.setAttribute('class', 'frame-fields-container');
+    let domParts = this.__initDOMWrapper(framesContainer);
 
     let instance = {};
     instance.frameFields = sDataDefinition.bindingFieldsCloned('frame');
@@ -39,12 +72,15 @@ class cBandFrames extends cBandSuper {
     deleteButton.innerHTML = '<i class="material-icons">delete</i>';
     deleteButton.setAttribute('class', 'btn delete-button');
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
-    framesContainer.appendChild(deleteButton);
+    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[0]);
+    domParts.helperDom.append(deleteButton);
+
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';
     framesContainer.appendChild(clearDiv);
     this.childrenContainer.insertBefore(framesContainer, this.addFrameButton);
     instance.dataPanel.paint(values);
+
   }
   __getKey() {
     let filter = this.parent.childKey;

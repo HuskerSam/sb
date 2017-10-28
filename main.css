@@ -699,6 +699,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .frame-fields-container {
   clear: both;
+  position: relative;
 }
 
 .render-log-panel {

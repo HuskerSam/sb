@@ -7,6 +7,8 @@ class wFrames {
     this.orderedKeys = [];
     this._compileFrames();
     this.runLength = 0;
+    this.frameAttributeFields = [ 'scaleX', 'scaleY', 'scaleZ', 'offsetX', 'offsetY', 'offsetZ',
+          'rotateX', 'rotateY', 'rotateZ', 'visibility', 'materialName'];
   }
   handleFrameChanges() {
     this._compileFrames();
