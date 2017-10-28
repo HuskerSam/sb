@@ -17,6 +17,7 @@ class cBandFrames extends cBandSuper {
   addFrame(parentKey) {
     let objectData = sDataDefinition.getDefaultDataCloned('frame');
     objectData.parentKey = parentKey;
+    objectData.frameOrder = this.framesHelper.getNextOrder();
     gAPPP.a.modelSets['frame'].createWithBlobString(objectData).then(r => {});
   }
   _getDomForChild(key, values) {

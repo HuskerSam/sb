@@ -6,6 +6,7 @@ class wFrames {
     this.rawFrames = {};
     this.orderedKeys = [];
     this._compileFrames();
+    this.runLength = 0;
   }
   handleFrameChanges() {
     this._compileFrames();
@@ -43,5 +44,19 @@ class wFrames {
 
       return 0;
     });
+  }
+  getNextOrder() {
+    let next = 1;
+    for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
+      let frameCache = this.fireSet.getCache(this.orderedKeys[c]);
+      if (! GLOBALUTIL.isNumeric(frameCache.frameOrder))
+        continue;
+
+      let order = Number(frameCache.frameOrder);
+      if (order >= next)
+        next = order + 1;
+    }
+
+    return next;
   }
 }
