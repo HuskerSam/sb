@@ -13,6 +13,39 @@ class cBandFrames extends cBandSuper {
     this.addFrameButton.style.float = 'left';
     this.childrenContainer.appendChild(this.addFrameButton);
     this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
+
+    this.expandAllFrameHelpersButton = document.createElement('button');
+    this.expandAllFrameHelpersButton.innerHTML = '+';
+    this.allFrameHelpersExpanded = false;
+    this.expandAllFrameHelpersButton.addEventListener('click', e => this.expandAllFrameHelpers());
+    this.expandAllFrameHelpersButton.classList.add('expand-all-helpers');
+    this.expandAllFrameHelpersButton.classList.add('btn-toolbar-icon');
+
+    let headerBar = document.createElement('div');
+    headerBar.classList.add('frames-header-bar');
+    headerBar.append(this.expandAllFrameHelpersButton);
+    this.childrenContainer.insertBefore(headerBar, this.childrenContainer.childNodes[0]);
+    this.headerBar = headerBar;
+  }
+  expandAllFrameHelpers() {
+    if (this.allFrameHelpersExpanded)  {
+      this.expandAllFrameHelpersButton.innerHTML = '+';
+      this.allFrameHelpersExpanded = false;
+
+      for (let i in this.frameDataViewInstances) {
+        this.frameDataViewInstances[i].domParts.helperDom.style.display = 'none';
+        this.frameDataViewInstances[i].domParts.collapseButton.innerHTML = '+';
+      }
+    }
+    else {
+      this.expandAllFrameHelpersButton.innerHTML = '-';
+      this.allFrameHelpersExpanded = true;
+
+      for (let i in this.frameDataViewInstances) {
+        this.frameDataViewInstances[i].domParts.helperDom.style.display = 'block';
+        this.frameDataViewInstances[i].domParts.collapseButton.innerHTML = '-';
+      }
+    }
   }
   addFrame(parentKey) {
     let objectData = sDataDefinition.getDefaultDataCloned('frame');
@@ -28,6 +61,17 @@ class cBandFrames extends cBandSuper {
     collapseButton.setAttribute('class', 'selected-mesh-helper-collapse-button');
     collapseButton.innerHTML = '+';
     collapseButton.addEventListener('click', e => {
+      this.__toggleRowHelper(helperDom, collapseButton);
+    });
+    containerDom.childNodes[0].append(collapseButton);
+    containerDom.append(helperDom);
+      return {
+      containerDom,
+      helperDom,
+      collapseButton
+    };
+  }
+  __toggleRowHelper(helperDom, collapseButton) {
       if (helperDom.style.display === 'none') {
         helperDom.style.display = 'block';
         collapseButton.innerHTML = '-';
@@ -35,27 +79,10 @@ class cBandFrames extends cBandSuper {
         helperDom.style.display = 'none';
         collapseButton.innerHTML = '+';
       }
-    });
-    containerDom.appendChild(collapseButton);
-    let infoDom = document.createElement('div');
-    infoDom.classList.add('info-area');
-    helperDom.appendChild(infoDom);
-    let actionDom = document.createElement('div');
-    actionDom.setAttribute('class', 'action-area');
-    helperDom.appendChild(actionDom);
-    containerDom.appendChild(helperDom);
-    return {
-      containerDom,
-      helperDom,
-      infoDom,
-      actionDom,
-      collapseButton
-    };
   }
   _getDomForChild(key, values) {
     let framesContainer = document.createElement('div');
     framesContainer.setAttribute('class', 'frame-fields-container');
-    let domParts = this.__initDOMWrapper(framesContainer);
 
     let instance = {};
     instance.frameFields = sDataDefinition.bindingFieldsCloned('frame');
@@ -68,12 +95,16 @@ class cBandFrames extends cBandSuper {
     this.fireSet.childListeners.push(instance.childListener);
     this.frameDataViewInstances[key] = instance;
 
+    instance.domParts = this.__initDOMWrapper(framesContainer);
     let deleteButton = document.createElement('button');
     deleteButton.innerHTML = '<i class="material-icons">delete</i>';
     deleteButton.setAttribute('class', 'btn delete-button');
+    deleteButton.style.float = 'left';
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
-    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[0]);
-    domParts.helperDom.append(deleteButton);
+    instance.domParts.helperDom.append(deleteButton);
+    let clear = document.createElement('div');
+    clear.style.clear = 'both';
+    instance.domParts.helperDom.append(clear);
 
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';

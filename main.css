@@ -444,7 +444,7 @@ button i.material-icons {
   width: auto;
 }
 
-.popup-buttons . {
+.popup-buttons {
   font-size: 1.4em;
 }
 
@@ -488,6 +488,7 @@ button i.material-icons {
   padding: .2em;
   border-radius: .5em;
   font-size: inherit;
+  background: rgba(255, 255, 255, .5);
 }
 
 .selected-mesh-bounds-helper-box .form-control {
@@ -751,6 +752,9 @@ input[type=range]::-webkit-slider-thumb {
 
 .frames-panel {
   white-space: nowrap;
+  position:relative;
+}
+.frames-panel button.expand-all-helpers {
 }
 
 #html-main-page-size-slider {
