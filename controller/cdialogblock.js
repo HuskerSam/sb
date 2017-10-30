@@ -30,7 +30,7 @@ class cDialogBlock extends cDialogSuper {
     this.toggleDetailsDom = this.dataViewContainer.querySelector('.main-band-toggle');
     this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_more</i>';
     this.detailsShown = true;
-    this.toggleDetailsDom.addEventListener('click', e => this.toggleDetails());
+    this.toggleDetailsDom.addEventListener('click', e => this.toggleDetails(true));
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
 
@@ -97,7 +97,7 @@ class cDialogBlock extends cDialogSuper {
 
     this.framesBand.refreshUIFromCache();
   }
-  toggleDetails() {
+  toggleDetails(saveValue = false) {
     this.detailsShown = !this.detailsShown;
 
     if (this.detailsShown) {
@@ -110,6 +110,12 @@ class cDialogBlock extends cDialogSuper {
       this.toggleDetailsDom.classList.remove('selected');
     }
     this.setChildKey(this.childKey);
+
+    if (saveValue)
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'cDialogBlockToggleDetailsValue',
+        newValue: this.detailsShown
+      }]);
   }
   show(key) {
     this.key = key;
@@ -123,5 +129,8 @@ class cDialogBlock extends cDialogSuper {
 
     this.childBand.refreshUIFromCache();
     this.childBand.setKey(null);
+
+    this.detailsShown = ! gAPPP.a.profile.cDialogBlockToggleDetailsValue; 
+    this.toggleDetails();
   }
 }

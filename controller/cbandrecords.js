@@ -18,9 +18,9 @@ class cBandRecords extends cBandSuper {
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
     this.expandBtn = this.wrapper.querySelector('.sb-floating-toolbar-expand-btn')
 
-    this.expandBtn.addEventListener('click', e => this.toggleChildBandDisplay(), false);
-    this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(), false);
-    this.createBtn.addEventListener('click', e => this._showCreatePopup(), false);
+    this.expandBtn.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
+    this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
+    this.createBtn.addEventListener('click', e => this._showCreatePopup());
   }
   _getDomForChild(key, values) {
     let html = `<div class="band-background-preview" type="button" data-toggle="dropdown">`;
@@ -125,7 +125,7 @@ class cBandRecords extends cBandSuper {
       shapeSet.createWithBlobString(shapeData).then(r2 => {});
     });
   }
-  toggleChildBandDisplay(forceValue) {
+  toggleChildBandDisplay(forceValue = undefined, saveValue = false) {
     if (forceValue === undefined)
       forceValue = (this.bar.style.display !== 'inline-block');
 
@@ -145,6 +145,12 @@ class cBandRecords extends cBandSuper {
       this.containerCollapsed.insertBefore(this.bar.parentNode, null);
       this.wrapper.style.float = '';
     }
+
+    if (saveValue)
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'mainRecordsExpanded' + this.tag,
+        newValue: forceValue
+      }]);
   }
   __addMenuItem(ul, title, clickHandler, prependDivider) {
     let html = '<a role="menuitem" tabindex="-1">' + title + '</a>';

@@ -60,8 +60,18 @@ class gApplication {
     this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile());
 
+    this.initialUILoad = true;
   }
   handleDataUpdate() {
+    if (this.initialUILoad) {
+      setTimeout(() => {
+        for (let i in this.toolbarItems)
+          if (gAPPP.a.profile['mainRecordsExpanded' + i])
+            this.toolbarItems[i].toggleChildBandDisplay(true);
+      }, 50);
+    }
+
+    this.initialUILoad = false;
     this.fontSizeSlider.value = this.a.profile.fontSize;
     this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
