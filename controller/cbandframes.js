@@ -7,12 +7,10 @@ class cBandFrames extends cBandSuper {
     this.framesHelper = new wFrames();
     this.parent = parent;
 
-    this.addFrameButton = document.createElement('button');
-    this.addFrameButton.innerHTML = '<i class="material-icons">add</i> Frame';
-    this.addFrameButton.setAttribute('class', 'btn add-button');
-    this.addFrameButton.style.float = 'left';
-    this.childrenContainer.appendChild(this.addFrameButton);
-    this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
+    let headerBar = document.createElement('div');
+    headerBar.classList.add('frames-header-bar');
+    this.childrenContainer.append(headerBar);
+    this.headerBar = headerBar;
 
     this.expandAllFrameHelpersButton = document.createElement('button');
     this.expandAllFrameHelpersButton.innerHTML = '+';
@@ -20,15 +18,23 @@ class cBandFrames extends cBandSuper {
     this.expandAllFrameHelpersButton.addEventListener('click', e => this.expandAllFrameHelpers());
     this.expandAllFrameHelpersButton.classList.add('expand-all-helpers');
     this.expandAllFrameHelpersButton.classList.add('btn-toolbar-icon');
-
-    let headerBar = document.createElement('div');
-    headerBar.classList.add('frames-header-bar');
     headerBar.append(this.expandAllFrameHelpersButton);
-    this.childrenContainer.insertBefore(headerBar, this.childrenContainer.childNodes[0]);
-    this.headerBar = headerBar;
+
+    this.addFrameButton = document.createElement('button');
+    this.addFrameButton.innerHTML = '<i class="material-icons">add</i> Frame';
+    this.addFrameButton.setAttribute('class', 'btn add-button');
+    this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
+    this.headerBar.append(this.addFrameButton);
+
+    this.baseFrameInfoSpan = document.createElement('span');
+    this.headerBar.append(this.baseFrameInfoSpan);
+
+    let clearDiv = document.createElement('div');
+    clearDiv.style.clear = 'both';
+    this.headerBar.append(clearDiv);
   }
   expandAllFrameHelpers() {
-    if (this.allFrameHelpersExpanded)  {
+    if (this.allFrameHelpersExpanded) {
       this.expandAllFrameHelpersButton.innerHTML = '+';
       this.allFrameHelpersExpanded = false;
 
@@ -36,8 +42,7 @@ class cBandFrames extends cBandSuper {
         this.frameDataViewInstances[i].domParts.helperDom.style.display = 'none';
         this.frameDataViewInstances[i].domParts.collapseButton.innerHTML = '+';
       }
-    }
-    else {
+    } else {
       this.expandAllFrameHelpersButton.innerHTML = '-';
       this.allFrameHelpersExpanded = true;
 
@@ -65,20 +70,20 @@ class cBandFrames extends cBandSuper {
     });
     containerDom.childNodes[0].append(collapseButton);
     containerDom.append(helperDom);
-      return {
+    return {
       containerDom,
       helperDom,
       collapseButton
     };
   }
   __toggleRowHelper(helperDom, collapseButton) {
-      if (helperDom.style.display === 'none') {
-        helperDom.style.display = 'block';
-        collapseButton.innerHTML = '-';
-      } else {
-        helperDom.style.display = 'none';
-        collapseButton.innerHTML = '+';
-      }
+    if (helperDom.style.display === 'none') {
+      helperDom.style.display = 'block';
+      collapseButton.innerHTML = '-';
+    } else {
+      helperDom.style.display = 'none';
+      collapseButton.innerHTML = '+';
+    }
   }
   _getDomForChild(key, values) {
     let framesContainer = document.createElement('div');
@@ -109,9 +114,8 @@ class cBandFrames extends cBandSuper {
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';
     framesContainer.appendChild(clearDiv);
-    this.childrenContainer.insertBefore(framesContainer, this.addFrameButton);
+    this.childrenContainer.append(framesContainer);
     instance.dataPanel.paint(values);
-
   }
   __getKey() {
     let filter = this.parent.childKey;
@@ -179,13 +183,13 @@ class cBandFrames extends cBandSuper {
     for (let c = 0, l = this.framesHelper.orderedKeys.length; c < l; c++) {
       let key = this.framesHelper.orderedKeys[c];
       let panelDom = this.frameDataViewInstances[key].framesContainer;
-      let currentPanel = this.childrenContainer.childNodes[c];
+      let currentPanel = this.childrenContainer.childNodes[c + 1]; //offset the header
 
       if (panelDom !== currentPanel)
         if (!panelDom.contains(document.activeElement))
           this.childrenContainer.insertBefore(panelDom, currentPanel);
         else {
-          this.childrenContainer.insertBefore(currentPanel, this.addFrameButton);
+          this.childrenContainer.append(currentPanel);
           this.__applyFrameOrderToDom();
         }
     }

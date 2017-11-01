@@ -43,6 +43,8 @@ class cDialogBlock extends cDialogSuper {
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
 
+    document.addEventListener('contextRefreshActiveObject', e => this._handleActiveObjectUpdate(e), false);
+
     gAPPP.a.modelSets['blockchild'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
     gAPPP.a.modelSets['block'].childListeners.push(
@@ -97,6 +99,10 @@ class cDialogBlock extends cDialogSuper {
 
     this.framesBand.refreshUIFromCache();
   }
+  _handleActiveObjectUpdate(e) {
+    let desc = this.context.activeBlock.baseFrameDescription;
+    this.framesBand.baseFrameInfoSpan.innerHTML = desc;
+  }
   toggleDetails(saveValue = false) {
     this.detailsShown = !this.detailsShown;
 
@@ -130,7 +136,7 @@ class cDialogBlock extends cDialogSuper {
     this.childBand.refreshUIFromCache();
     this.childBand.setKey(null);
 
-    this.detailsShown = ! gAPPP.a.profile.cDialogBlockToggleDetailsValue; 
+    this.detailsShown = !gAPPP.a.profile.cDialogBlockToggleDetailsValue;
     this.toggleDetails();
   }
 }

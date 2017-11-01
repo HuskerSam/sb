@@ -715,15 +715,15 @@ input[type=range]::-webkit-slider-thumb {
   display: none;
 }
 
-.frames-panel>div:nth-child(1) label span {
+.frames-panel>div:nth-child(2) label span {
   display: block;
 }
 
-.frames-panel>div:nth-child(1) .selected-mesh-helper-collapse-button {
+.frames-panel>div:nth-child(2) .selected-mesh-helper-collapse-button {
   margin-top: 2.2em;
 }
 
-.frames-panel>div:nth-child(1) button.delete-button {}
+.frames-panel>div:nth-child(2) button.delete-button {}
 
 .frames-panel input {
   padding: 0em;
@@ -762,4 +762,8 @@ input[type=range]::-webkit-slider-thumb {
   display: inline-block;
   height: 1.5em;
   pointer-events: auto;
+}
+
+.frames-header-bar {
+  background: rgba(255,255,255,.6);
 }
