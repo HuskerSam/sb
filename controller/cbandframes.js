@@ -95,7 +95,7 @@ class cBandFrames extends cBandSuper {
     instance.tag = 'frame';
     instance.fireSet = this.fireSet;
     instance.framesContainer = framesContainer;
-    instance.dataPanel = new cPanelData(instance.frameFields, framesContainer, instance);
+    instance.dataPanel = new cPanelData(instance.frameFields, framesContainer, instance, false);
     instance.childListener = (values, type, fireData) => instance.dataPanel._handleDataChange(values, type, fireData);
     this.fireSet.childListeners.push(instance.childListener);
     this.frameDataViewInstances[key] = instance;

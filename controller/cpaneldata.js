@@ -1,5 +1,5 @@
 class cPanelData {
-  constructor(boundFields, container, parent) {
+  constructor(boundFields, container, parent, initHelpers = true) {
     this.fields = boundFields;
     this.values = {};
     this.active = false;
@@ -14,7 +14,8 @@ class cPanelData {
 
     for (let i in this.fields) this._initField(this.fields[i]);
 
-    this.helpers.initHelperGroups();
+    if (initHelpers)
+      this.helpers.initHelperGroups();
   }
   _initField(f) {
     let c = document.createElement('div');
