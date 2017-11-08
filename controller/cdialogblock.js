@@ -15,8 +15,14 @@ class cDialogBlock extends cDialogSuper {
     let b = d.querySelector('.popup-main-body');
     b.insertBefore(editPanel, old);
     b.removeChild(old);
+
+    let compiledFramePanel = document.createElement('div');
+    compiledFramePanel.classList.add('compiled-frames-panel');
+    b.insertBefore(compiledFramePanel, editPanel);
+
     super(d, 'block', editPanel, fieldsPanel);
 
+    this.compiledFramePanel = compiledFramePanel;
     this._constructor();
   }
   _constructor() {
@@ -63,6 +69,36 @@ class cDialogBlock extends cDialogSuper {
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
       this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
     }
+  }
+  _splitView() {
+    if (!this._splitViewAlive)
+      return;
+    if (this.splitInstance)
+      this.splitInstance.destroy();
+
+    let t = this.dialog.querySelector('.popup-canvas-wrapper');
+    let b = this.dataViewContainer;
+    let b2 = this.compiledFramePanel;
+    let mb = this.dialog.querySelector('.popup-main-body');
+
+    if (this.rotateState === 'horizontal') {
+      t.classList.add('vertical-split-display');
+      b.classList.add('vertical-split-display');
+      b2.classList.add('vertical-split-display');
+    } else {
+      t.classList.remove('vertical-split-display');
+      b.classList.remove('vertical-split-display');
+      b2.classList.remove('vertical-split-display');
+    }
+
+    this.splitInstance = window.Split([t, b2, b], {
+      sizes: [40, 30, 30],
+      gutterSize: 16,
+      direction: this.rotateState,
+      onDragEnd: () => this._splitDragEnd(),
+      onDrag: () => this._splitDragEnd()
+    });
+    gAPPP.resize();
   }
   addChild() {
     let objectData = sDataDefinition.getDefaultDataCloned('blockchild');

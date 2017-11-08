@@ -672,9 +672,11 @@ input[type=range]::-webkit-slider-thumb {
   display: inline-block;
   cursor: pointer;
 }
+
 .main-band-add-child {
-    float: left;
+  float: left;
 }
+
 .block-editor-child button {
   background: rgba(0, 0, 0, .2);
   color: silver;
@@ -729,12 +731,14 @@ input[type=range]::-webkit-slider-thumb {
   padding: 0em;
   height: 1.4em;
 }
+
 .frames-panel .add-button {
-  background: rgba(0,0,0,.4);
+  background: rgba(0, 0, 0, .4);
   color: white;
-  margin:.25em;
+  margin: .25em;
   padding: .2em;
 }
+
 .frames-panel .form-group-container-group .form-group {
   padding: 0px;
   margin: 0px;
@@ -752,10 +756,10 @@ input[type=range]::-webkit-slider-thumb {
 
 .frames-panel {
   white-space: nowrap;
-  position:relative;
+  position: relative;
 }
-.frames-panel button.expand-all-helpers {
-}
+
+.frames-panel button.expand-all-helpers {}
 
 #html-main-page-size-slider {
   width: 20%;
@@ -765,5 +769,11 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frames-header-bar {
-  background: rgba(255,255,255,.6);
+  background: rgba(255, 255, 255, .6);
+}
+
+.compiled-frames-panel {
+  background: rgba(255, 255, 255, .8);
+  margin-bottom: 6px;
+  border-radius: .2em;
 }
