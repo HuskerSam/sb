@@ -49,6 +49,8 @@ class cDialogBlock extends cDialogSuper {
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
 
+    this.bandResults = new cBandResults(this.compiledFramePanel, this.framesBand.framesHelper);
+
     document.addEventListener('contextRefreshActiveObject', e => this._handleActiveObjectUpdate(e), false);
 
     gAPPP.a.modelSets['blockchild'].childListeners.push(

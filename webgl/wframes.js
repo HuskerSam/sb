@@ -11,6 +11,7 @@ class wFrames {
           'rotateX', 'rotateY', 'rotateZ', 'visibility'];
     this.processedFrames = [];
     this.baseOffset = 0;
+    this.updateHandlers = [];
   }
   handleFrameChanges() {
     this._compileFrames();
@@ -63,6 +64,8 @@ class wFrames {
     this._sortFrames();
 
     this._calcFrameTimes();
+
+    this.notifyHandlers();
   }
   _sortFrames() {
     this.orderedKeys = [];
@@ -98,5 +101,9 @@ class wFrames {
     }
 
     return next;
+  }
+  notifyHandlers() {
+    for (let i in this.updateHandlers)
+        this.updateHandlers[i]();
   }
 }
