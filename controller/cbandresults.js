@@ -5,6 +5,16 @@ class cBandResults {
     this.container = panel;
   }
   handleUpdate() {
-    let a = 10;
+
+    let parsedFramesHTML = '';
+
+    let wF = this.webFrames;
+    for (let c = 0, l = wF.orderedKeys.length; c < l; c++) {
+      let key = wF.orderedKeys[c];
+      let stash = wF.framesStash[key];
+      parsedFramesHTML += 'start: ' + stash._frame_start + 'ms key: ' + key + ' gen:' + stash.auto_gen.type + '<br>';
+    }
+
+    this.container.innerHTML = parsedFramesHTML;
   }
 }
