@@ -6,7 +6,6 @@ class wFrames {
     this.rawFrames = {};
     this.framesStash = {};
     this.orderedKeys = [];
-    this._compileFrames();
     this.runLength = 0;
     this.baseOffset = 0;
     this.maxLength = 0;
@@ -16,6 +15,7 @@ class wFrames {
     ];
     this.processedFrames = [];
     this.updateHandlers = [];
+    this._compileFrames();
   }
   handleFrameChanges() {
     this._compileFrames();
@@ -145,6 +145,11 @@ class wFrames {
     let details = {};
     for (let c = 0, l = this.frameAttributeFields.length; c < l; c++)
       details[this.frameAttributeFields[c]] = '';
+    details.auto_gen = {
+      type: 'n',
+      time_ms: 0
+    };
+
     return details;
   }
   __runningValue(css_str) {
@@ -238,13 +243,13 @@ class wFrames {
         dataValue = css_state.value.toString() + css_state.unit_type;
       }
 
-      //  frame_details.dgrid_rows[i]['actual'] = merged_css_str_value;
+      frame[i] = dataValue;
     }
-
-
   }
   __getFrame(index) {
-
+    let key = this.orderedKeys[index];
+    let frame = this.framesStash[key];
+    return frame;
   }
   _processFrames() {
     this.runningState = {
@@ -256,12 +261,11 @@ class wFrames {
     let rap_index = -1;
     let cp_frame_times = {};
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
-      let key = this.orderedKeys[c];
-      let frame = this.framesStash[key];
+      let frame = this.__getFrame(c);
       this._processRunningValues(frame);
 
       let autoType = frame.auto_gen.type;
-      if (['cp', 'cplf', 'cprap'].indexof(autoType) !== -1) {
+      if (['cp', 'cplf', 'cprap'].indexOf(autoType) !== -1) {
         let time_ms = frame.auto_gen.time_ms;
         time_ms = parseInt(time_ms);
         if (isNaN(time_ms))
@@ -279,61 +283,55 @@ class wFrames {
       }
     }
 
-    let rip_length = this.properties.run_length;
+    let rip_length = 0;
     let rip_frame_count = this.orderedKeys.length;
     if (rap_index !== -1) {
-      let lf = node.frames[rap_index];
+      let lf = this.__getFrame(rap_index);
       rip_length = lf._frame_start;
       rip_frame_count = rap_index + 1;
     }
 
-    let f = node.base_frame;
-    if (f._frame_start != 0)
-      if (f.time.indexOf('nff') == -1)
-        css_frames += this.__wrap_css_value_with_time(0, f.frame_middle_css, rip_length);
-    css_frames += this.__wrap_css_value_with_time(f._frame_start, f.frame_middle_css, rip_length);
-    if (cp_frames[0] != undefined)
-      css_frames += this.__wrap_css_value_with_time(cp_frames[0], f.frame_middle_css, rip_length);
-    for (let i = 0; i < rip_frame_count; i++) {
-      f = node.frames[i];
-      css_frames += this.__wrap_css_value_with_time(f._frame_start, f.frame_middle_css, rip_length);
+    let f = this.__baseDetails();
+    let processed_frames = [];
+    processed_frames.push({
+      actualTime: 0,
+      frameStash: f,
+      gen: false
+    });
+    if (cp_frame_times[0] != undefined)
+      processed_frames.push({
+        actualTime: cp_frame_times[0],
+        frameStash: f,
+        gen: true
+      });
+
+    for (let c = 0; c < rip_frame_count; c++) {
+      let f = this.__getFrame(c);
+      processed_frames.push({
+        actualTime: 0,
+        frameStash: f,
+        gen: false
+      });
+
       //add next clone frame if needed
-      if (cp_frames[i + 1] != undefined)
-        css_frames += this.__wrap_css_value_with_time(cp_frames[i + 1], f.frame_middle_css, rip_length);
+      if (cp_frame_times[c + 1] !== undefined)
+        processed_frames.push({
+          actualTime: cp_frame_times[c + 1],
+          frameStash: f,
+          gen: true
+        });
     }
     //add last frame if needed
     if (rip_frame_count > 0)
-      if (f._frame_start != rip_length)
-        if ((frame.auto_gen.type == 'lf') || (frame.auto_gen.type == 'cplf'))
-          css_frames += this.__wrap_css_value_with_time(rip_length, f.frame_middle_css, rip_length);
+      if (f._frame_start !== rip_length)
+        if ((f.auto_gen.type === 'lf') || (f.auto_gen.type === 'cplf'))
+          processed_frames.push({
+            actualTime: 0,
+            frameStash: f,
+            gen: true
+          });
 
-    var css_frame_internal = css_frames;
-    if (node.frames.length > 0) {
-      css_frames = '\n\n@-webkit-keyframes ' + node_class_name + '_keyframes\n{\n';
-      css_frames += css_frame_internal + ' }\n';
-      css_frames += '\n\n@keyframes ' + node_class_name + '_keyframes\n{\n';
-      css_frames += css_frame_internal + ' }\n';
-    } else
-      css_frames = '';
-
-    var runtime_s = rip_length / (this.time_scale_factor * 1000);
-    var base_frame_style = node.base_frame.frame_middle_css;
-    css_frames += '.' + node_class_name + ' { ' + base_frame_style;
-
-    if (node.frames.length > 0) {
-      var timing_f = 'infinite';
-      var iterate_count = Number(node['iteration_count']);
-      if (!isNaN(iterate_count))
-        if (iterate_count != 0)
-          timing_f = iterate_count.toString();
-
-      css_frames += ' -webkit-animation: ' +
-        node_class_name + '_keyframes ' +
-        runtime_s.toString() + 's ' + timing_f + ';' +
-        'animation: ' +
-        node_class_name + '_keyframes ' +
-        runtime_s.toString() + 's ' + timing_f + ';';
-    }
+    console.log(processed_frames);
   }
   setParentKey(parentKey) {
     this.parentKey = parentKey;
