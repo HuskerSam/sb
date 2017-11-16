@@ -67,7 +67,7 @@ class cBandRecords extends cBandSuper {
       ul.style.top = button.offsetTop + button.offsetHeight - 8 + 'px';
       ul.style.position = 'absolute';
     });
-
+    outer.addEventListener('dblclick', e => this._showEditPopup(e, key));
     this.childrenContainer.insertBefore(dd, this.childrenContainer.firstChild);
   }
   _cloneElement(e, key) {
