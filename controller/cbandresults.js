@@ -9,11 +9,23 @@ class cBandResults {
     let parsedFramesHTML = '';
 
     let wF = this.webFrames;
-    for (let c = 0, l = wF.orderedKeys.length; c < l; c++) {
-      let key = wF.orderedKeys[c];
-      let stash = wF.framesStash[key];
-      parsedFramesHTML += 'start: ' + stash._frame_start + 'ms key: ' + key + ' gen:' + stash.auto_gen.type + '<br>';
+    let resultFrames = this.webFrames.processedFrames;
+    for (let c = 0, l = resultFrames.length; c < l; c++) {
+      let rFrame = resultFrames[c];
+      let className = '';
+      if (rFrame.gen)
+        className = 'genFrame';
+      parsedFramesHTML += `<div class="${className}">start: ` + rFrame.actualTime +
+        'ms key: ' + rFrame.key +
+        ' gen:' + rFrame.frameStash.auto_gen.type + '</div>';
     }
+
+    parsedFramesHTML += '<br>';
+    parsedFramesHTML += `raw count: ${this.webFrames.orderedKeys.length}`;
+
+    parsedFramesHTML += '<br>';
+    parsedFramesHTML += `processed count: ${resultFrames.length}`;
+
 
     this.container.innerHTML = parsedFramesHTML;
   }

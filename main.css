@@ -776,4 +776,5 @@ input[type=range]::-webkit-slider-thumb {
   background: rgba(255, 255, 255, .8);
   margin-bottom: 6px;
   border-radius: .2em;
+  overflow: auto;
 }
