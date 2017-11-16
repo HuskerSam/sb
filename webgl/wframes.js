@@ -293,16 +293,12 @@ class wFrames {
 
     let f = this.__baseDetails();
     let processed_frames = [];
-    processed_frames.push({
-      actualTime: 0,
-      frameStash: f,
-      gen: false
-    });
-    if (cp_frame_times[0] != undefined)
+    if (cp_frame_times[0] !== undefined)
       processed_frames.push({
         actualTime: cp_frame_times[0],
         frameStash: f,
-        gen: true
+        gen: true,
+        key: 'gen'
       });
 
     for (let c = 0; c < rip_frame_count; c++) {
@@ -310,7 +306,8 @@ class wFrames {
       processed_frames.push({
         actualTime: 0,
         frameStash: f,
-        gen: false
+        gen: false,
+        key: this.orderedKeys[c]
       });
 
       //add next clone frame if needed
@@ -318,7 +315,7 @@ class wFrames {
         processed_frames.push({
           actualTime: cp_frame_times[c + 1],
           frameStash: f,
-          gen: true
+          key: 'gen'
         });
     }
     //add last frame if needed
@@ -328,10 +325,10 @@ class wFrames {
           processed_frames.push({
             actualTime: 0,
             frameStash: f,
-            gen: true
+            key: 'gen'
           });
 
-    console.log(processed_frames);
+    this.processedFrames = processed_frames;
   }
   setParentKey(parentKey) {
     this.parentKey = parentKey;
