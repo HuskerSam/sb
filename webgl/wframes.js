@@ -23,121 +23,97 @@ class wFrames {
   applyFrameValues(block, time) {
 
   }
-  __str_to_frame_time(str) {
-    let offset_type = 'n';
-    let auto_gen = {
-      type: 'n'
-    };
-    let working_str = str;
-    if (!working_str || (working_str == ''))
-      working_str = '0';
+  __frameFromTimeToken(timeToken) {
+    timeToken = timeToken.trim();
+    if (timeToken === '')
+      timeToken = '0';
 
-    let rap_pos = working_str.indexOf('rap');
-    let cprap_pos = working_str.indexOf('cprap');
-    let cplf_pos = working_str.indexOf('cplf');
-    let cp_pos = working_str.indexOf('cp');
-    let lf_pos = working_str.indexOf('lf');
-
-    if (cplf_pos > -1) {
-      let str_array = working_str.split('cplf');
-      working_str = str_array[0];
-      let str_2 = str_array[1];
-      let time_ms = this.__str_to_frame_time(str_2).time_ms;
-      auto_gen = {
-        type: 'cplf',
-        time_ms: time_ms
-      };
-    } else if (cprap_pos > -1) {
-      let str_array = working_str.split('cprap');
-      working_str = str_array[0];
-      let str_2 = str_array[1];
-      let time_ms = this.__str_to_frame_time(str_2).time_ms;
-      auto_gen = {
-        type: 'cprap',
-        time_ms: time_ms
-      };
-    } else if (rap_pos > -1) {
-      let str_array = working_str.split('rap');
-      working_str = str_array[0];
-      auto_gen = {
-        type: 'r'
-      };
-    } else if (cp_pos > -1) {
-      let str_array = working_str.split('cp');
-      working_str = str_array[0];
-      let str_2 = str_array[1];
-      let time_ms = this.__str_to_frame_time(str_2).time_ms;
-      auto_gen = {
-        type: 'cp',
-        time_ms: time_ms
-      };
-    } else if (lf_pos > -1) {
-      let str_array = working_str.split('lf');
-      working_str = str_array[0];
-      auto_gen = {
-        type: 'lf'
-      };
+    let autoGen = 'n';
+    let autoTime = '';
+    let actualTime = timeToken;
+    let parts = [timeToken];
+    if (timeToken.indexOf('cprap') > -1) {
+      parts = timeToken.split('cprap');
+      autoGen = 'cprap';
+    }
+    if (timeToken.indexOf('rap') > -1) {
+      parts = timeToken.split('rap');
+      autoGen = 'rap';
+    }
+    if (timeToken.indexOf('cp') > -1) {
+      parts = timeToken.split('cp');
+      autoGen = 'cp';
     }
 
-    if (working_str.length > 1) {
-      var first_trail = working_str.substr(working_str.length - 1);
-      if (first_trail == '+') {
-        var second_trail = working_str.substr(working_str.length - 2, 1);
-        if (second_trail == '+') { //++ case - offset time from last frame
-          offset_type = 'p';
-          working_str = working_str.substring(0, working_str.length - 2);
+    if (parts.length > 0) {
+      actualTime = parts[0];
+      autoTime = this.__frameFromTimeToken(parts[1]).timeMS;
+    }
+
+    let timeOffsetType = 'none';
+    if (actualTime.length > 1) {
+      let firstTrail = actualTime.substr(actualTime.length - 1);
+      if (firstTrail === '+') {
+        let secondTrail = actualTime.substr(actualTime.length - 2, 1);
+        if (secondTrail === '+') { //++ case - offset time from last frame
+          timeOffsetType = 'previous';
+          actualTime = actualTime.substring(0, actualTime.length - 2);
         } else { //+ case - offset time from base frame
-          offset_type = 'b';
-          working_str = working_str.substring(0, working_str.length - 1);
+          timeOffsetType = 'base';
+          actualTime = actualTime.substring(0, actualTime.length - 1);
         }
       }
     }
-    var unit_factor = 1.0;
-    if (working_str.length > 1) {
-      var first_trail = working_str.substr(working_str.length - 1);
-      var second_trail = working_str.substr(working_str.length - 2, 1);
-      if (first_trail == '%') { //is %
-        unit_factor = this.properties.run_length / 100.0;
-        working_str = working_str.substring(0, working_str.length - 1);
-      } else if (first_trail == 's') { //is seconds or ms
-        if (second_trail != 'm') { //not ms
-          unit_factor = 1000;
-          working_str = working_str.substring(0, working_str.length - 1);
+    let unitFactor = 1.0;
+    if (actualTime.length > 1) {
+      let firstTrail = actualTime.substr(actualTime.length - 1);
+      let secondTrail = actualTime.substr(actualTime.length - 2, 1);
+      if (firstTrail === '%') { //is %
+        unitFactor = this.maxLength / 100.0;
+        actualTime = actualTime.substring(0, actualTime.length - 1);
+      } else if (firstTrail === 's') { //is seconds or ms
+        if (secondTrail !== 'm') { //not ms
+          unitFactor = 1000;
+          actualTime = actualTime.substring(0, actualTime.length - 1);
         } else {
-          working_str = working_str.substring(0, working_str.length - 2);
+          actualTime = actualTime.substring(0, actualTime.length - 2);
         }
-      } else if (first_trail == 'm') { //minutes - for slow animations?
-        unit_factor = 60000;
-        working_str = working_str.substring(0, working_str.length - 1);
+      } else if (firstTrail === 'm') { //minutes - for slow animations?
+        unitFactor = 60000;
+        actualTime = actualTime.substring(0, actualTime.length - 1);
       }
     }
-    var time = parseFloat(working_str);
-    if (!time)
-      time = 0;
+    let timeRaw = parseFloat(actualTime);
+    if (!timeRaw)
+      timeRaw = 0;
+    let timeMS = timeRaw * unit_factor;
+
     return {
-      offset_type: offset_type,
-      time_ms: time * unit_factor,
-      auto_gen: auto_gen
+      autoGen,
+      autoTime,
+      timeMS,
+      timeToken,
+      timeOffsetType
     };
   }
   _calcFrameTimes() {
-    let previous_frame_start = this.baseOffset;
-    let max_frame_start = previous_frame_start;
+    let previousFrameTime = this.baseOffset;
+    let max_frame_start = previousFrameTime;
     this.framesStash = {};
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let key = this.orderedKeys[c];
-      this.framesStash[key] = this.__str_to_frame_time(this.rawFrames[key].frameTime);
+      this.framesStash[key] = this.__frameFromTimeToken(this.rawFrames[key].frameTime);
 
       if (this.framesStash[key].offset_type === 'n') // use leading offset only
-        previous_frame_start = 0;
+        previousFrameTime = 0;
       else if (this.framesStash[key].offset_type === 'p') // offset from previous frame
-        previous_frame_start = previous_frame_start;
+        previousFrameTime = previousFrameTime;
       else if (this.framesStash[key].offset_type === 'b') // offset from base frame
-        previous_frame_start = this.baseOffset;
+        previousFrameTime = this.baseOffset;
 
-      previous_frame_start += this.framesStash[key].time_ms;
-      this.framesStash[key]._frame_start = previous_frame_start;
-      max_frame_start = Math.max(max_frame_start, previous_frame_start);
+      previousFrameTime += this.framesStash[key].time_ms;
+      this.framesStash[key]._frame_start = previousFrameTime;
+      max_frame_start = Math.max(max_frame_start, previousFrameTime);
     }
     this.maxLength = max_frame_start;
   }
@@ -145,11 +121,8 @@ class wFrames {
     let details = {};
     for (let c = 0, l = this.frameAttributeFields.length; c < l; c++)
       details[this.frameAttributeFields[c]] = '';
-    details.auto_gen = {
-      type: 'n',
-      time_ms: 0
-    };
 
+    details.timeMS = 0;
     return details;
   }
   __runningValue(css_str) {
