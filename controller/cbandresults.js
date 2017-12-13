@@ -12,12 +12,16 @@ class cBandResults {
     let resultFrames = this.webFrames.processedFrames;
     for (let c = 0, l = resultFrames.length; c < l; c++) {
       let rFrame = resultFrames[c];
+      let stash = resultFrames[c].frameStash;
+
       let className = '';
       if (rFrame.gen)
         className = 'genFrame';
-      parsedFramesHTML += `<div class="${className}">start: ` + rFrame.actualTime +
+      parsedFramesHTML += `<div class="${className}">start: ` + rFrame.actualTime.toFixed(0) +
         'ms key: ' + rFrame.key +
-        ' gen:' + rFrame.frameStash.auto_gen.type + '</div>';
+        ' gen: ' + stash.autoGen +
+        ` autoTime: ${stash.autoTime}` +
+         '</div>';
     }
 
     parsedFramesHTML += '<br>';

@@ -45,7 +45,7 @@ class wFrames {
       autoGen = 'cp';
     }
 
-    if (parts.length > 0) {
+    if (parts.length > 1) {
       actualTime = parts[0];
       autoTime = this.__frameFromTimeToken(parts[1]).timeMS;
     }
@@ -86,7 +86,7 @@ class wFrames {
     let timeRaw = parseFloat(actualTime);
     if (!timeRaw)
       timeRaw = 0;
-    let timeMS = timeRaw * unit_factor;
+    let timeMS = timeRaw * unitFactor;
 
     return {
       autoGen,
@@ -111,8 +111,8 @@ class wFrames {
       else if (this.framesStash[key].offset_type === 'b') // offset from base frame
         previousFrameTime = this.baseOffset;
 
-      previousFrameTime += this.framesStash[key].time_ms;
-      this.framesStash[key]._frame_start = previousFrameTime;
+      previousFrameTime += this.framesStash[key].timeMS;
+      this.framesStash[key].processedTime = previousFrameTime;
       max_frame_start = Math.max(max_frame_start, previousFrameTime);
     }
     this.maxLength = max_frame_start;
@@ -237,9 +237,9 @@ class wFrames {
       let frame = this.__getFrame(c);
       this._processRunningValues(frame);
 
-      let autoType = frame.auto_gen.type;
-      if (['cp', 'cplf', 'cprap'].indexOf(autoType) !== -1) {
-        let time_ms = frame.auto_gen.time_ms;
+      let autoType = frame.autoGen;
+      if (['cp', 'cprap'].indexOf(autoType) !== -1) {
+        let time_ms = frame.autoTime;
         time_ms = parseInt(time_ms);
         if (isNaN(time_ms))
           time_ms = 0;
@@ -247,7 +247,7 @@ class wFrames {
           time_ms = 50;
         else if (time_ms < 0)
           time_ms *= -1;
-        cp_frame_times[c] = frame._frame_start - time_ms;
+        cp_frame_times[c] = frame.processedTime - time_ms;
       }
 
       if ((autoType === 'r') || (autoType === 'cprap')) {
@@ -259,8 +259,8 @@ class wFrames {
     let rip_length = 0;
     let rip_frame_count = this.orderedKeys.length;
     if (rap_index !== -1) {
-      let lf = this.__getFrame(rap_index);
-      rip_length = lf._frame_start;
+      let lastFrame = this.__getFrame(rap_index);
+      rip_length = lastFrame.processedTime;
       rip_frame_count = rap_index + 1;
     }
 
@@ -277,7 +277,7 @@ class wFrames {
     for (let c = 0; c < rip_frame_count; c++) {
       let f = this.__getFrame(c);
       processed_frames.push({
-        actualTime: 0,
+        actualTime: f.processedTime,
         frameStash: f,
         gen: false,
         key: this.orderedKeys[c]
@@ -291,15 +291,6 @@ class wFrames {
           key: 'gen'
         });
     }
-    //add last frame if needed
-    if (rip_frame_count > 0)
-      if (f._frame_start !== rip_length)
-        if ((f.auto_gen.type === 'lf') || (f.auto_gen.type === 'cplf'))
-          processed_frames.push({
-            actualTime: 0,
-            frameStash: f,
-            key: 'gen'
-          });
 
     this.processedFrames = processed_frames;
   }
