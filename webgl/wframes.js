@@ -29,7 +29,7 @@ class wFrames {
       timeToken = '0';
 
     let autoGen = 'n';
-    let autoTime = '';
+    let autoTime = 0;
     let actualTime = timeToken;
     let parts = [timeToken];
     if (timeToken.indexOf('cprap') > -1) {
@@ -97,23 +97,26 @@ class wFrames {
     };
   }
   _calcFrameTimes() {
-    let previousFrameTime = this.baseOffset;
+    let previousFrameTime = 0;
     let max_frame_start = previousFrameTime;
     this.framesStash = {};
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let key = this.orderedKeys[c];
       this.framesStash[key] = this.__frameFromTimeToken(this.rawFrames[key].frameTime);
 
-      if (this.framesStash[key].offset_type === 'n') // use leading offset only
+      if (this.framesStash[key].timeOffsetType === 'none')
         previousFrameTime = 0;
-      else if (this.framesStash[key].offset_type === 'p') // offset from previous frame
+      else if (this.framesStash[key].timeOffsetType === 'previous')
         previousFrameTime = previousFrameTime;
-      else if (this.framesStash[key].offset_type === 'b') // offset from base frame
+      else if (this.framesStash[key].timeOffsetType === 'base')
         previousFrameTime = this.baseOffset;
 
       previousFrameTime += this.framesStash[key].timeMS;
       this.framesStash[key].processedTime = previousFrameTime;
       max_frame_start = Math.max(max_frame_start, previousFrameTime);
+
+      if (c === 0)
+        this.baseOffset = previousFrameTime;
     }
     this.maxLength = max_frame_start;
   }
@@ -244,7 +247,7 @@ class wFrames {
         if (isNaN(time_ms))
           time_ms = 0;
         if (time_ms === 0)
-          time_ms = 50;
+          time_ms = 1;
         else if (time_ms < 0)
           time_ms *= -1;
         cp_frame_times[c] = frame.processedTime - time_ms;
@@ -276,6 +279,13 @@ class wFrames {
 
     for (let c = 0; c < rip_frame_count; c++) {
       let f = this.__getFrame(c);
+      if (c === 0 && f.processedTime !== 0)
+        processed_frames.push({
+          actualTime: 0,
+          frameStash: f,
+          gen: true,
+          key: 'first frame'
+        });
       processed_frames.push({
         actualTime: f.processedTime,
         frameStash: f,
@@ -288,7 +298,8 @@ class wFrames {
         processed_frames.push({
           actualTime: cp_frame_times[c + 1],
           frameStash: f,
-          key: 'gen'
+          gen: true,
+          key: 'clone previous'
         });
     }
 

@@ -709,6 +709,7 @@ __localStaticStorageForBindingFields['frame'] = [{
   title: 'Time (ms)',
   fireSetField: 'frameTime',
   contextObjectField: null,
+  wrapperClass: 'frame-time',
   group: 'time'
 }, {
   title: 'Order',

@@ -74,6 +74,8 @@ class cPanelData {
       this.container.appendChild(w);
     }
     f.dom = t;
+    if (f.wrapperClass)
+      f.domContainer.classList.add(f.wrapperClass);
     this._specialDomFeatures(f);
   }
   paint(newValues) {

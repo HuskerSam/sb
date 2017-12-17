@@ -17,11 +17,13 @@ class cBandResults {
       let className = '';
       if (rFrame.gen)
         className = 'genFrame';
-      parsedFramesHTML += `<div class="${className}">start: ` + rFrame.actualTime.toFixed(0) +
-        'ms key: ' + rFrame.key +
-        ' gen: ' + stash.autoGen +
-        ` autoTime: ${stash.autoTime}` +
-         '</div>';
+
+      parsedFramesHTML += `<div class="${className}">` +
+      rFrame.actualTime.toFixed(0).padStart(7) + 'ms  ' +
+      stash.autoGen.padEnd(5) +
+      rFrame.key.padEnd(21) +
+      stash.autoTime.toFixed(0).padStart(6) + 'ms  ' +
+        '</div>';
     }
 
     parsedFramesHTML += '<br>';

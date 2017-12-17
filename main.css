@@ -777,4 +777,14 @@ input[type=range]::-webkit-slider-thumb {
   margin-bottom: 6px;
   border-radius: .2em;
   overflow: auto;
+  font-family: monospace;
+  white-space: pre;
+}
+
+.genFrame {
+  background: rgba(255,255,255,.5);
+}
+
+.frame-fields-container .frame-time {
+  width: 10em;
 }
