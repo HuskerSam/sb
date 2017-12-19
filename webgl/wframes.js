@@ -17,6 +17,20 @@ class wFrames {
     this.updateHandlers = [];
     this._compileFrames();
   }
+  __defaultAttributes() {
+    return {
+      scaleX: 1,
+      scaleY: 1,
+      scaleZ: 1,
+      offsetX: 0,
+      offsetY: 0,
+      offsetZ: 0,
+      rotateX: 0,
+      rotateY: 0,
+      rotateZ: 0,
+      visibility: 1
+    };
+  }
   handleFrameChanges() {
     this._compileFrames();
   }
@@ -123,8 +137,14 @@ class wFrames {
   __baseDetails() {
     let details = {};
     for (let c = 0, l = this.frameAttributeFields.length; c < l; c++)
-      details[this.frameAttributeFields[c]] = '';
 
+      if (this.orderedKeys.length > 1) {
+
+
+      }
+      else {
+        details[this.frameAttributeFields[c]] = '';
+      }
     details.timeMS = 0;
     return details;
   }
