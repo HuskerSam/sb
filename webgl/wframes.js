@@ -135,16 +135,20 @@ class wFrames {
     this.maxLength = max_frame_start;
   }
   __baseDetails() {
+    if (this.orderedKeys.length === 0)
+      return this.__defaultAttributes();
+
     let details = {};
-    for (let c = 0, l = this.frameAttributeFields.length; c < l; c++)
+    let frameData = this.rawFrames[this.orderedKeys[0]];
+    let defaults = this.__defaultAttributes();
 
-      if (this.orderedKeys.length > 1) {
+    for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
+      let field = this.frameAttributeFields[c];
+      details[field] = frameData[field];
+      if (details[field] === undefined)
+        details[field] = defaults[field];
+    }
 
-
-      }
-      else {
-        details[this.frameAttributeFields[c]] = '';
-      }
     details.timeMS = 0;
     return details;
   }
@@ -322,7 +326,8 @@ class wFrames {
           key: 'clone previous'
         });
     }
-
+    console.log(processed_frames);
+    console.log(this.runningState);
     this.processedFrames = processed_frames;
   }
   setParentKey(parentKey) {
