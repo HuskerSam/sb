@@ -270,13 +270,14 @@ class wFrames {
 
     return processedValues;
   }
-  __pushFrame(time, stash, gen, key, values) {
+  __pushFrame(time, stash, gen, key, values, ownerKey) {
     this.processedFrames.push({
       actualTime: time,
       frameStash: stash,
       gen,
       key,
-      values
+      values,
+      ownerKey
     });
   }
   _processFrames() {
@@ -326,21 +327,21 @@ class wFrames {
       let firstFrame = this.__getFrame(0);
       let firstKey = this.orderedKeys[0];
       if (firstFrame.processedTime !== 0)
-        this.__pushFrame(0, firstFrame, true, 'first frame', this.processedFrameValues[firstKey]);
+        this.__pushFrame(0, firstFrame, true, 'first frame', this.processedFrameValues[firstKey], firstKey);
 
       if (clonePreviousTimes[0] !== undefined)
-        this.__pushFrame(clonePreviousTimes[0], firstFrame, true, 'clone previous', this.processedFrameValues[firstKey]);
+        this.__pushFrame(clonePreviousTimes[0], firstFrame, true, 'clone previous', this.processedFrameValues[firstKey], firstKey);
     }
 
     for (let c = 0; c < frameCount; c++) {
       let f = this.__getFrame(c);
       let key =  this.orderedKeys[c];
 
-      this.__pushFrame(f.processedTime, f, false, key, this.processedFrameValues[key]);
+      this.__pushFrame(f.processedTime, f, false, key, this.processedFrameValues[key], key);
 
       //add next clone frame if needed
       if (clonePreviousTimes[c + 1] !== undefined)
-        this.__pushFrame(clonePreviousTimes[c + 1], f, true, 'clone previous', this.processedFrameValues[key]);
+        this.__pushFrame(clonePreviousTimes[c + 1], f, true, 'clone previous', this.processedFrameValues[key], this.orderedKeys[c + 1]);
     }
   }
   _sortFrames() {

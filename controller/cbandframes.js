@@ -107,6 +107,10 @@ class cBandFrames extends cBandSuper {
     deleteButton.style.float = 'left';
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
     instance.domParts.helperDom.append(deleteButton);
+    let frameInfoPanel = document.createElement('div');
+    frameInfoPanel.classList.add('frame-info-panel');
+    instance.domParts.helperDom.append(frameInfoPanel);
+    instance.frameInfoPanel = frameInfoPanel;
     let clear = document.createElement('div');
     clear.style.clear = 'both';
     instance.domParts.helperDom.append(clear);
@@ -131,7 +135,7 @@ class cBandFrames extends cBandSuper {
     for (let i in children)
       this._getDomForChild(i, children[i]);
 
-    this._sortFrames();
+    this._processFrames();
   }
   handleDataChange(fireData, type) {
     if (type === 'clear')
@@ -148,8 +152,7 @@ class cBandFrames extends cBandSuper {
     if (type === 'remove')
       result = this.childRemoved(fireData);
 
-    this._sortFrames();
-
+    this._processFrames();
     return result;
   }
   childChanged(fireData) {
@@ -175,7 +178,7 @@ class cBandFrames extends cBandSuper {
     this.childrenContainer.removeChild(inst.framesContainer);
     delete this.frameDataViewInstances[inst.key];
   }
-  _sortFrames() {
+  _processFrames() {
     this.framesHelper.setParentKey(this.__getKey());
     this.__applyFrameOrderToDom();
   }
@@ -192,7 +195,52 @@ class cBandFrames extends cBandSuper {
           this.childrenContainer.append(currentPanel);
           this.__applyFrameOrderToDom();
         }
+
+      let infoPanel = this.frameDataViewInstances[key].frameInfoPanel;
+      infoPanel.innerHTML = this.__processedRowsHTML(key);
     }
+  }
+  __processedRowsHTML(key) {
+    let parsedFramesHTML = '';
+    let resultFrames = this.framesHelper.processedFrames;
+    for (let c = 0, l = resultFrames.length; c < l; c++) {
+      let rFrame = resultFrames[c];
+      if (key !== rFrame.ownerKey)
+        continue;
+
+      let stash = resultFrames[c].frameStash;
+
+      let className = '';
+      if (rFrame.gen)
+        className = 'genFrame';
+
+      parsedFramesHTML += `<div class="${className}">` +
+        rFrame.actualTime.toFixed(0).padStart(7) + 'ms  ' +
+        stash.autoGen.padEnd(5) +
+        rFrame.key.padEnd(21) +
+        stash.autoTime.toFixed(0).padStart(6) + 'ms  ' +
+
+        '  Scale (' +
+        rFrame.values['scalingX'].value.toFixed(3).padStart(10) +
+        rFrame.values['scalingY'].value.toFixed(3).padStart(10) +
+        rFrame.values['scalingZ'].value.toFixed(3).padStart(10) +
+        ')    ' +
+
+        '  Offset (' +
+        rFrame.values['positionX'].value.toFixed(3).padStart(10) +
+        rFrame.values['positionY'].value.toFixed(3).padStart(10) +
+        rFrame.values['positionZ'].value.toFixed(3).padStart(10) +
+        ')    ' +
+
+        '  Rotate (' +
+        rFrame.values['rotationX'].value.toFixed(3).padStart(10) +
+        rFrame.values['rotationY'].value.toFixed(3).padStart(10) +
+        rFrame.values['rotationZ'].value.toFixed(3).padStart(10) +
+        ')    ' +
+
+        '</div>';
+    }
+    return parsedFramesHTML;
   }
   childRemoved(fireData) {
     let inst = this.frameDataViewInstances[fireData.key];
