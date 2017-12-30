@@ -10,32 +10,44 @@ class wFrames {
     this.baseOffset = 0;
     this.maxLength = 0;
     this.runningState = {};
-    this.frameAttributeFields = ['scaleX', 'scaleY', 'scaleZ', 'offsetX', 'offsetY', 'offsetZ',
-      'rotateX', 'rotateY', 'rotateZ', 'visibility'
+    this.frameAttributeFields = ['scalingX', 'scalingY', 'scalingZ', 'positionX', 'positionY', 'positionZ',
+      'rotationX', 'rotationY', 'rotationZ', 'visibility'
     ];
     this.processedFrames = [];
     this.updateHandlers = [];
     this._compileFrames();
   }
+  __baseDetails() {
+    if (this.orderedKeys.length === 0)
+      return this.__defaultAttributes();
+
+    let details = {};
+    let frameData = this.rawFrames[this.orderedKeys[0]];
+    let defaults = this.__defaultAttributes();
+
+    for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
+      let field = this.frameAttributeFields[c];
+      details[field] = frameData[field];
+      if (details[field] === undefined)
+        details[field] = defaults[field];
+    }
+
+    details.timeMS = 0;
+    return details;
+  }
   __defaultAttributes() {
     return {
-      scaleX: 1,
-      scaleY: 1,
-      scaleZ: 1,
-      offsetX: 0,
-      offsetY: 0,
-      offsetZ: 0,
-      rotateX: 0,
-      rotateY: 0,
-      rotateZ: 0,
+      scalingX: 1,
+      scalingY: 1,
+      scalingZ: 1,
+      positionX: 0,
+      positionY: 0,
+      positionZ: 0,
+      rotationX: 0,
+      rotationY: 0,
+      rotationZ: 0,
       visibility: 1
     };
-  }
-  handleFrameChanges() {
-    this._compileFrames();
-  }
-  applyFrameValues(block, time) {
-
   }
   __frameFromTimeToken(timeToken) {
     timeToken = timeToken.trim();
@@ -110,6 +122,51 @@ class wFrames {
       timeOffsetType
     };
   }
+  __getFrame(index) {
+    let key = this.orderedKeys[index];
+    let frame = this.framesStash[key];
+    return frame;
+  }
+  __runningValue(frameValue) {
+    let valueOffset = 'none';
+    let rawFrameValue = frameValue;
+    if (!rawFrameValue || (rawFrameValue === ''))
+      rawFrameValue = '0';
+
+    if (rawFrameValue.length > 1) {
+      let firstTrail = rawFrameValue.substr(rawFrameValue.length - 1);
+      if (firstTrail === '+') {
+        let secondTrail = rawFrameValue.substr(rawFrameValue.length - 2, 1);
+        if (secondTrail === '+') { //++ case - offset value from last frame
+          valueOffset = 'previous';
+          rawFrameValue = rawFrameValue.substring(0, rawFrameValue.length - 2);
+        } else { //+ case - offset value from base frame
+          valueOffset = 'base';
+          rawFrameValue = rawFrameValue.substring(0, rawFrameValue.length - 1);
+        }
+      }
+    }
+
+    let unitDesc = '';
+    while (rawFrameValue.length > 0) {
+      let firstTrail = rawFrameValue.substr(rawFrameValue.length - 1);
+      if ((firstTrail >= '0') && (firstTrail <= '9'))
+        break;
+
+      rawFrameValue = rawFrameValue.substring(0, rawFrameValue.length - 1);
+      unitDesc = firstTrail + unitDesc;
+    }
+    let value = parseFloat(rawFrameValue);
+    if (isNaN(value))
+      value = 0.0;
+
+    return {
+      valueOffset,
+      value,
+      unitDesc,
+      rawFrameValue
+    };
+  }
   _calcFrameTimes() {
     let previousFrameTime = 0;
     let max_frame_start = previousFrameTime;
@@ -134,135 +191,108 @@ class wFrames {
     }
     this.maxLength = max_frame_start;
   }
-  __baseDetails() {
-    if (this.orderedKeys.length === 0)
-      return this.__defaultAttributes();
+  _compileFrames() {
+    if (!this.parentKey)
+      this.rawFrames = {};
+    else
+      this.rawFrames = this.fireSet.queryCache('parentKey', this.parentKey);
 
-    let details = {};
-    let frameData = this.rawFrames[this.orderedKeys[0]];
-    let defaults = this.__defaultAttributes();
-
-    for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
-      let field = this.frameAttributeFields[c];
-      details[field] = frameData[field];
-      if (details[field] === undefined)
-        details[field] = defaults[field];
-    }
-
-    details.timeMS = 0;
-    return details;
+    this._sortFrames();
+    this._calcFrameTimes();
+    this._processFrames();
+    this._notifyHandlers();
   }
-  __runningValue(css_str) {
-    let offset_type = 'n';
-    let working_str = css_str;
-    if (!working_str || (working_str === ''))
-      working_str = '0';
-
-    if (working_str.length > 1) {
-      let first_trail = working_str.substr(working_str.length - 1);
-      if (first_trail === '+') {
-        let second_trail = working_str.substr(working_str.length - 2, 1);
-        if (second_trail === '+') { //++ case - offset value from last frame
-          offset_type = 'p';
-          working_str = working_str.substring(0, working_str.length - 2);
-        } else { //+ case - offset value from base frame
-          offset_type = 'b';
-          working_str = working_str.substring(0, working_str.length - 1);
-        }
-      }
-    }
-
-    let unit_type = '';
-    while (working_str.length > 0) {
-      let first_trail = working_str.substr(working_str.length - 1);
-      if ((first_trail >= '0') && (first_trail <= '9'))
-        break;
-
-      working_str = working_str.substring(0, working_str.length - 1);
-      unit_type = first_trail + unit_type;
-    }
-    let value = parseFloat(working_str);
-    if (isNaN(value))
-      value = 0.0;
-
-    return {
-      offset_type: offset_type,
-      value: value,
-      unit_type: unit_type,
-      orig_value: css_str
-    };
+  _notifyHandlers() {
+    for (let i in this.updateHandlers)
+      this.updateHandlers[i]();
   }
-  _processRunningValues(frame, isBaseFrame = false) {
+  _processFrameValues(key) {
     let runningState = this.runningState;
     let baseDetails = this.__baseDetails();
+    let frameValues = {};
+    let isRoot = false;
+    if (key === 'root') {
+      frameValues = baseDetails;
+      isRoot = true;
+    } else
+      frameValues = this.rawFrames[key];
 
+    let processedValues = {};
     for (let i in baseDetails) {
-      let runningValue = this.__runningValue(baseDetails[i]);
+      let runningValue = this.__runningValue(frameValues[i]);
       let skip = false;
       let dataValue;
-      if (isBaseFrame) {
+      if (isRoot) {
         runningState.base[i] = runningValue;
         runningState.running[i] = runningValue;
-        dataValue = runningValue.orig_value;
-      } else if (runningValue.offset_type === 'n') {
+        dataValue = runningValue.rawFrameValue;
+      } else if (runningValue.valueOffset === 'none') {
         runningState.running[i] = runningValue;
-        dataValue = runningValue.orig_value;
-      } else if (runningValue.offset_type === 'b') {
+        dataValue = runningValue.rawFrameValue;
+      } else if (runningValue.valueOffset === 'base') {
         let base_data = runningState.base[i];
         if (base_data == undefined)
           runningState.base[i] = base_data = {
-            offset_type: 'n',
+            valueOffset: 'none',
             value: 0,
-            unit_type: '',
-            orig_value: '0'
+            unitDesc: '',
+            rawFrameValue: '0'
           };
 
         //convert the running value into absolute units
-        runningValue.value = baseDetails.value + runningValue.value;
+        runningValue.value = base_data.value + runningValue.value;
         //use the original units if they exist
-        if (baseDetails.unit_type != '')
-          css_state.unit_type = base_data.unit_type;
-        runningState.running[i] = css_state;
-        dataValue = css_state.value.toString() + css_state.unit_type;
-      } else if (css_state.offset_type === 'p') {
+        if (baseDetails.unitDesc != '')
+          runningValue.unitDesc = base_data.unitDesc;
+        runningState.running[i] = runningValue;
+        dataValue = runningValue.value.toString() + runningValue.unitDesc;
+      } else if (runningValue.valueOffset === 'previous') {
         let rData = runningState.running[i];
         if (rData === undefined)
           runningState.running[i] = rData = {
-            offset_type: 'n',
+            valueOffset: 'none',
             value: 0,
-            unit_type: '',
-            orig_value: '0'
+            unitDesc: '',
+            rawFrameValue: '0'
           };
 
         //convert the running value into absolute units
-        css_state.value = rData.value + css_state.value;
+        runningValue.value = rData.value + runningValue.value;
         //use the original units if they exist
-        if (rData.unit_type != '')
-          css_state.unit_type = rData.unit_type;
-        runningState.running[i] = css_state;
-        dataValue = css_state.value.toString() + css_state.unit_type;
+        if (rData.unitDesc != '')
+          runningValue.unitDesc = rData.unitDesc;
+        runningState.running[i] = runningValue;
+        dataValue = runningValue.value.toString() + runningValue.unitDesc;
       }
 
-      frame[i] = dataValue;
+      processedValues[i] = runningValue;
     }
+
+    return processedValues;
   }
-  __getFrame(index) {
-    let key = this.orderedKeys[index];
-    let frame = this.framesStash[key];
-    return frame;
+  __pushFrame(time, stash, gen, key, values) {
+    this.processedFrames.push({
+      actualTime: time,
+      frameStash: stash,
+      gen,
+      key,
+      values
+    });
   }
   _processFrames() {
     this.runningState = {
       base: {},
       running: {}
     };
-
-    this._processRunningValues(this.__baseDetails(), true);
-    let rap_index = -1;
-    let cp_frame_times = {};
+    this.processedFrames = [];
+    this.processedFrameValues = {};
+    this.processedFrameValues['root'] = this._processFrameValues('root');
+    let repeatAllIndex = -1;
+    let clonePreviousTimes = {};
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let frame = this.__getFrame(c);
-      this._processRunningValues(frame);
+      let key = this.orderedKeys[c];
+      this.processedFrameValues[key] = this._processFrameValues(key);
 
       let autoType = frame.autoGen;
       if (['cp', 'cprap'].indexOf(autoType) !== -1) {
@@ -274,76 +304,44 @@ class wFrames {
           time_ms = 1;
         else if (time_ms < 0)
           time_ms *= -1;
-        cp_frame_times[c] = frame.processedTime - time_ms;
+        clonePreviousTimes[c] = frame.processedTime - time_ms;
       }
 
-      if ((autoType === 'r') || (autoType === 'cprap')) {
-        rap_index = c;
+      if ((autoType === 'rap') || (autoType === 'cprap')) {
+        repeatAllIndex = c;
         break;
       }
     }
 
     let rip_length = 0;
-    let rip_frame_count = this.orderedKeys.length;
-    if (rap_index !== -1) {
-      let lastFrame = this.__getFrame(rap_index);
+    let frameCount = this.orderedKeys.length;
+    if (repeatAllIndex !== -1) {
+      let lastFrame = this.__getFrame(repeatAllIndex);
       rip_length = lastFrame.processedTime;
-      rip_frame_count = rap_index + 1;
+      frameCount = repeatAllIndex + 1;
     }
 
     let f = this.__baseDetails();
-    let processed_frames = [];
-    if (cp_frame_times[0] !== undefined)
-      processed_frames.push({
-        actualTime: cp_frame_times[0],
-        frameStash: f,
-        gen: true,
-        key: 'gen'
-      });
+    if (frameCount > 0) {
+      let firstFrame = this.__getFrame(0);
+      let firstKey = this.orderedKeys[0];
+      if (firstFrame.processedTime !== 0)
+        this.__pushFrame(0, firstFrame, true, 'first frame', this.processedFrameValues[firstKey]);
 
-    for (let c = 0; c < rip_frame_count; c++) {
+      if (clonePreviousTimes[0] !== undefined)
+        this.__pushFrame(clonePreviousTimes[0], firstFrame, true, 'clone previous', this.processedFrameValues[firstKey]);
+    }
+
+    for (let c = 0; c < frameCount; c++) {
       let f = this.__getFrame(c);
-      if (c === 0 && f.processedTime !== 0)
-        processed_frames.push({
-          actualTime: 0,
-          frameStash: f,
-          gen: true,
-          key: 'first frame'
-        });
-      processed_frames.push({
-        actualTime: f.processedTime,
-        frameStash: f,
-        gen: false,
-        key: this.orderedKeys[c]
-      });
+      let key =  this.orderedKeys[c];
+
+      this.__pushFrame(f.processedTime, f, false, key, this.processedFrameValues[key]);
 
       //add next clone frame if needed
-      if (cp_frame_times[c + 1] !== undefined)
-        processed_frames.push({
-          actualTime: cp_frame_times[c + 1],
-          frameStash: f,
-          gen: true,
-          key: 'clone previous'
-        });
+      if (clonePreviousTimes[c + 1] !== undefined)
+        this.__pushFrame(clonePreviousTimes[c + 1], f, true, 'clone previous', this.processedFrameValues[key]);
     }
-    console.log(processed_frames);
-    console.log(this.runningState);
-    this.processedFrames = processed_frames;
-  }
-  setParentKey(parentKey) {
-    this.parentKey = parentKey;
-    this._compileFrames();
-  }
-  _compileFrames() {
-    if (!this.parentKey)
-      this.rawFrames = {};
-    else
-      this.rawFrames = this.fireSet.queryCache('parentKey', this.parentKey);
-
-    this._sortFrames();
-    this._calcFrameTimes();
-    this._processFrames();
-    this.notifyHandlers();
   }
   _sortFrames() {
     this.orderedKeys = [];
@@ -366,7 +364,7 @@ class wFrames {
       return 0;
     });
   }
-  getNextOrder() {
+  nextFrameOrder() {
     let next = 1;
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let frameCache = this.fireSet.getCache(this.orderedKeys[c]);
@@ -380,8 +378,8 @@ class wFrames {
 
     return next;
   }
-  notifyHandlers() {
-    for (let i in this.updateHandlers)
-      this.updateHandlers[i]();
+  setParentKey(parentKey) {
+    this.parentKey = parentKey;
+    this._compileFrames();
   }
 }
