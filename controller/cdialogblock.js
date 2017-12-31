@@ -141,16 +141,16 @@ class cDialogBlock extends cDialogSuper {
   }
   expandAll() {
     super.expandAll();
-    this.framesBand.allFrameHelpersExpanded = false;
-    this.framesBand.expandAllFrameHelpers();
     this.detailsShown = false;
     this.toggleDetails();
+    this.framesBand.allFrameHelpersExpanded = false;
+    this.framesBand.expandAllFrameHelpers();
   }
   collapseAll() {
     super.collapseAll();
-    this.framesBand.allFrameHelpersExpanded = true;
-    this.framesBand.expandAllFrameHelpers();
     this.detailsShown = true;
     this.toggleDetails();
+    this.framesBand.allFrameHelpersExpanded = true;
+    this.framesBand.expandAllFrameHelpers();
   }
 }

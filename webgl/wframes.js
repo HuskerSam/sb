@@ -10,33 +10,7 @@ class wFrames {
     this.baseOffset = 0;
     this.maxLength = 0;
     this.runningState = {};
-    this.frameAttributeFields = ['scalingX', 'scalingY', 'scalingZ', 'positionX', 'positionY', 'positionZ',
-      'rotationX', 'rotationY', 'rotationZ', 'visibility'
-    ];
-    this.processedFrames = [];
-    this.updateHandlers = [];
-    this._compileFrames();
-  }
-  __baseDetails() {
-    if (this.orderedKeys.length === 0)
-      return this.__defaultAttributes();
-
-    let details = {};
-    let frameData = this.rawFrames[this.orderedKeys[0]];
-    let defaults = this.__defaultAttributes();
-
-    for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
-      let field = this.frameAttributeFields[c];
-      details[field] = frameData[field];
-      if (details[field] === undefined)
-        details[field] = defaults[field];
-    }
-
-    details.timeMS = 0;
-    return details;
-  }
-  __defaultAttributes() {
-    return {
+    this.meshValues =  {
       scalingX: 1,
       scalingY: 1,
       scalingZ: 1,
@@ -48,6 +22,29 @@ class wFrames {
       rotationZ: 0,
       visibility: 1
     };
+    this.frameAttributeFields = ['scalingX', 'scalingY', 'scalingZ', 'positionX', 'positionY', 'positionZ',
+      'rotationX', 'rotationY', 'rotationZ', 'visibility'
+    ];
+    this.processedFrames = [];
+    this.updateHandlers = [];
+    this._compileFrames();
+  }
+  __baseDetails() {
+    if (this.orderedKeys.length === 0)
+      return this.meshValues;
+
+    let details = {};
+    let frameData = this.rawFrames[this.orderedKeys[0]];
+
+    for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
+      let field = this.frameAttributeFields[c];
+      details[field] = frameData[field];
+      if (details[field] === undefined)
+        details[field] = this.meshValues[field];
+    }
+
+    details.timeMS = 0;
+    return details;
   }
   __frameFromTimeToken(timeToken) {
     timeToken = timeToken.trim();

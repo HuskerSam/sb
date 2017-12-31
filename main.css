@@ -485,7 +485,6 @@ button i.material-icons {
   margin-left: 2px;
   white-space: pre;
   text-align: center;
-  padding: .2em;
   border-radius: .5em;
   font-size: inherit;
   background: rgba(255, 255, 255, .5);
@@ -779,6 +778,7 @@ input[type=range]::-webkit-slider-thumb {
   overflow: auto;
   font-family: monospace;
   white-space: pre;
+  text-align: left;
 }
 
 .genFrame {

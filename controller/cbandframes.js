@@ -220,24 +220,20 @@ class cBandFrames extends cBandSuper {
         rFrame.key.padEnd(21) +
         stash.autoTime.toFixed(0).padStart(6) + 'ms  ' +
 
-        '  Scale (' +
-        rFrame.values['scalingX'].value.toFixed(3).padStart(10) +
-        rFrame.values['scalingY'].value.toFixed(3).padStart(10) +
-        rFrame.values['scalingZ'].value.toFixed(3).padStart(10) +
-        ')    ' +
+        ' Scale ' +
+        rFrame.values['scalingX'].value.toFixed(2) + ',' +
+        rFrame.values['scalingY'].value.toFixed(2) + ',' +
+        rFrame.values['scalingZ'].value.toFixed(2) +
 
-        '  Offset (' +
-        rFrame.values['positionX'].value.toFixed(3).padStart(10) +
-        rFrame.values['positionY'].value.toFixed(3).padStart(10) +
-        rFrame.values['positionZ'].value.toFixed(3).padStart(10) +
-        ')    ' +
+        ' Position ' +
+        rFrame.values['positionX'].value.toFixed(2) + ',' +
+        rFrame.values['positionY'].value.toFixed(2) + ',' +
+        rFrame.values['positionZ'].value.toFixed(2) +
 
-        '  Rotate (' +
-        rFrame.values['rotationX'].value.toFixed(3).padStart(10) +
-        rFrame.values['rotationY'].value.toFixed(3).padStart(10) +
-        rFrame.values['rotationZ'].value.toFixed(3).padStart(10) +
-        ')    ' +
-
+        ' Rotation ' +
+        rFrame.values['rotationX'].value.toFixed(2) + ',' +
+        rFrame.values['rotationY'].value.toFixed(2) + ',' +
+        rFrame.values['rotationZ'].value.toFixed(2) +
         '</div>';
     }
     return parsedFramesHTML;
