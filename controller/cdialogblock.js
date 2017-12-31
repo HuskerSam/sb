@@ -139,4 +139,18 @@ class cDialogBlock extends cDialogSuper {
     this.detailsShown = !gAPPP.a.profile.cDialogBlockToggleDetailsValue;
     this.toggleDetails();
   }
+  expandAll() {
+    super.expandAll();
+    this.framesBand.allFrameHelpersExpanded = false;
+    this.framesBand.expandAllFrameHelpers();
+    this.detailsShown = false;
+    this.toggleDetails();
+  }
+  collapseAll() {
+    super.collapseAll();
+    this.framesBand.allFrameHelpersExpanded = true;
+    this.framesBand.expandAllFrameHelpers();
+    this.detailsShown = true;
+    this.toggleDetails();
+  }
 }
