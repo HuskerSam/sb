@@ -481,13 +481,12 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box {
   color: rgb(0, 0, 100);
-  padding-left: 2px;
-  margin-left: 2px;
+  padding-left: .2em;
   white-space: pre;
   text-align: center;
   border-radius: .5em;
   font-size: inherit;
-  background: rgba(255, 255, 255, .5);
+  margin-bottom: -.4em;
 }
 
 .selected-mesh-bounds-helper-box .form-control {
@@ -747,6 +746,7 @@ input[type=range]::-webkit-slider-thumb {
   padding: 0em;
   background: rgba(255, 255, 255, .6);
   font-size: .8em;
+  margin-right: .3em;
 }
 
 .frames-panel .form-group-container-group {
@@ -772,13 +772,14 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frame-info-panel {
-  background: rgba(255, 255, 255, .8);
+  background: rgba(255, 255, 255, .2);
   margin-bottom: 6px;
   border-radius: .2em;
   overflow: auto;
   font-family: monospace;
   white-space: pre;
   text-align: left;
+  font-size: .9em;
 }
 
 .genFrame {

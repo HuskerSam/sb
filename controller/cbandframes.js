@@ -39,16 +39,18 @@ class cBandFrames extends cBandSuper {
       this.allFrameHelpersExpanded = false;
 
       for (let i in this.frameDataViewInstances) {
-        this.frameDataViewInstances[i].domParts.helperDom.style.display = 'none';
-        this.frameDataViewInstances[i].domParts.collapseButton.innerHTML = '+';
+        let d = this.frameDataViewInstances[i].dataPanel;
+        for (let ii in d.groupDisplays)
+          d.groupDisplays[ii].style.display = 'none';
       }
     } else {
       this.expandAllFrameHelpersButton.innerHTML = '-';
       this.allFrameHelpersExpanded = true;
 
       for (let i in this.frameDataViewInstances) {
-        this.frameDataViewInstances[i].domParts.helperDom.style.display = 'block';
-        this.frameDataViewInstances[i].domParts.collapseButton.innerHTML = '-';
+        let d = this.frameDataViewInstances[i].dataPanel;
+        for (let ii in d.groupDisplays)
+          d.groupDisplays[ii].style.display = 'block';
       }
     }
   }
@@ -57,24 +59,6 @@ class cBandFrames extends cBandSuper {
     objectData.parentKey = parentKey;
     objectData.frameOrder = this.framesHelper.nextFrameOrder();
     gAPPP.a.modelSets['frame'].createWithBlobString(objectData).then(r => {});
-  }
-  __initDOMWrapper(containerDom) {
-    let helperDom = document.createElement('div');
-    helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box');
-    helperDom.style.display = 'none';
-    let collapseButton = document.createElement('button');
-    collapseButton.setAttribute('class', 'selected-mesh-helper-collapse-button');
-    collapseButton.innerHTML = '+';
-    collapseButton.addEventListener('click', e => {
-      this.__toggleRowHelper(helperDom, collapseButton);
-    });
-    containerDom.childNodes[0].append(collapseButton);
-    containerDom.append(helperDom);
-    return {
-      containerDom,
-      helperDom,
-      collapseButton
-    };
   }
   __toggleRowHelper(helperDom, collapseButton) {
     if (helperDom.style.display === 'none') {
@@ -100,25 +84,30 @@ class cBandFrames extends cBandSuper {
     this.fireSet.childListeners.push(instance.childListener);
     this.frameDataViewInstances[key] = instance;
 
-    instance.domParts = this.__initDOMWrapper(framesContainer);
+    let clearDiv = document.createElement('div');
+    clearDiv.style.clear = 'both';
+    framesContainer.appendChild(clearDiv);
+    this.childrenContainer.append(framesContainer);
+
+    instance.dataPanel.groupDisplays = {};
+    let firstGroup = null;
+    for (let i in instance.dataPanel.groups) {
+      let g = instance.dataPanel.groups[i];
+      let helperDom = document.createElement('div');
+      helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box frame-info-panel');
+      helperDom.style.display = 'none';
+      g.append(helperDom);
+      instance.dataPanel.groupDisplays[i] = helperDom;
+      if (!firstGroup)
+        firstGroup = helperDom;
+    }
     let deleteButton = document.createElement('button');
     deleteButton.innerHTML = '<i class="material-icons">delete</i>';
     deleteButton.setAttribute('class', 'btn delete-button');
     deleteButton.style.float = 'left';
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
-    instance.domParts.helperDom.append(deleteButton);
-    let frameInfoPanel = document.createElement('div');
-    frameInfoPanel.classList.add('frame-info-panel');
-    instance.domParts.helperDom.append(frameInfoPanel);
-    instance.frameInfoPanel = frameInfoPanel;
-    let clear = document.createElement('div');
-    clear.style.clear = 'both';
-    instance.domParts.helperDom.append(clear);
+    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[0]);
 
-    let clearDiv = document.createElement('div');
-    clearDiv.style.clear = 'both';
-    framesContainer.appendChild(clearDiv);
-    this.childrenContainer.append(framesContainer);
     instance.dataPanel.paint(values);
   }
   __getKey() {
@@ -195,14 +184,17 @@ class cBandFrames extends cBandSuper {
           this.childrenContainer.append(currentPanel);
           this.__applyFrameOrderToDom();
         }
-
-      let infoPanel = this.frameDataViewInstances[key].frameInfoPanel;
-      infoPanel.innerHTML = this.__processedRowsHTML(key);
+      this._updateProcessedRowUI(key);
     }
   }
-  __processedRowsHTML(key) {
-    let parsedFramesHTML = '';
+  _updateProcessedRowUI(key) {
+    let groupDisplays = this.frameDataViewInstances[key].dataPanel.groupDisplays;
     let resultFrames = this.framesHelper.processedFrames;
+
+    groupDisplays.time.innerHTML = '';
+    groupDisplays.scale.innerHTML = '';
+    groupDisplays.offset.innerHTML = '';
+    groupDisplays.rotate.innerHTML = '';
     for (let c = 0, l = resultFrames.length; c < l; c++) {
       let rFrame = resultFrames[c];
       if (key !== rFrame.ownerKey)
@@ -214,29 +206,27 @@ class cBandFrames extends cBandSuper {
       if (rFrame.gen)
         className = 'genFrame';
 
-      parsedFramesHTML += `<div class="${className}">` +
+      groupDisplays.time.innerHTML += `<div class="${className}">` +
         rFrame.actualTime.toFixed(0).padStart(7) + 'ms  ' +
-        stash.autoGen.padEnd(5) +
-        rFrame.key.padEnd(21) +
-        stash.autoTime.toFixed(0).padStart(6) + 'ms  ' +
+        rFrame.key.padEnd(21) + '</div>';
 
-        ' Scale ' +
-        rFrame.values['scalingX'].value.toFixed(2) + ',' +
-        rFrame.values['scalingY'].value.toFixed(2) + ',' +
-        rFrame.values['scalingZ'].value.toFixed(2) +
+      groupDisplays.scale.innerHTML += `<div class="${className}">` +
+        GLOBALUTIL.formatNumber(rFrame.values['scalingX'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['scalingY'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['scalingZ'].value) + '</div>';
 
-        ' Position ' +
-        rFrame.values['positionX'].value.toFixed(2) + ',' +
-        rFrame.values['positionY'].value.toFixed(2) + ',' +
-        rFrame.values['positionZ'].value.toFixed(2) +
+      groupDisplays.offset.innerHTML += `<div class="${className}">` +
+        GLOBALUTIL.formatNumber(rFrame.values['positionX'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['positionY'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['positionZ'].value) + '</div>';
 
-        ' Rotation ' +
-        rFrame.values['rotationX'].value.toFixed(2) + ',' +
-        rFrame.values['rotationY'].value.toFixed(2) + ',' +
-        rFrame.values['rotationZ'].value.toFixed(2) +
-        '</div>';
+      groupDisplays.rotate.innerHTML += `<div class="${className}">` +
+        GLOBALUTIL.formatNumber(rFrame.values['rotationX'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['rotationY'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['rotationZ'].value) + '</div>';
     }
-    return parsedFramesHTML;
+
+
   }
   childRemoved(fireData) {
     let inst = this.frameDataViewInstances[fireData.key];
