@@ -195,6 +195,8 @@ class cBandFrames extends cBandSuper {
     groupDisplays.scale.innerHTML = '';
     groupDisplays.offset.innerHTML = '';
     groupDisplays.rotate.innerHTML = '';
+    groupDisplays.visi.innerHTML = '';
+
     for (let c = 0, l = resultFrames.length; c < l; c++) {
       let rFrame = resultFrames[c];
       if (key !== rFrame.ownerKey)
@@ -224,6 +226,9 @@ class cBandFrames extends cBandSuper {
         GLOBALUTIL.formatNumber(rFrame.values['rotationX'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['rotationY'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['rotationZ'].value) + '</div>';
+
+      groupDisplays.visi.innerHTML += `<div class="${className}">` +
+        GLOBALUTIL.formatNumber(rFrame.values['visibility'].value) + '</div>';
     }
 
 

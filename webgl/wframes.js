@@ -128,7 +128,7 @@ class wFrames {
     let valueOffset = 'none';
     let rawFrameValue = frameValue;
     if (!rawFrameValue || (rawFrameValue === ''))
-      rawFrameValue = '0';
+      rawFrameValue = '0++';
 
     if (rawFrameValue.length > 1) {
       let firstTrail = rawFrameValue.substr(rawFrameValue.length - 1);

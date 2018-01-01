@@ -819,13 +819,13 @@ __defaultData['frame'] = {
   frameTime: '0',
   frameOrder: '1',
   parentKey: null,
-  scalingX: 1.0,
-  scalingY: 1.0,
-  scalingZ: 1.0,
-  positionX: 0.0,
-  positionY: 0.0,
-  positionZ: 0.0,
-  rotationX: 0.0,
-  rotationY: 0.0,
-  rotationZ: 0.0
+  scalingX: '',
+  scalingY: '',
+  scalingZ: '',
+  positionX: '',
+  positionY: '',
+  positionZ: '',
+  rotationX: '',
+  rotationY: '',
+  rotationZ: ''
 };
