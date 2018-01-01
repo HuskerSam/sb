@@ -34,11 +34,8 @@ class cDialogBlock extends cDialogSuper {
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
 
-    this.addChildButton = document.createElement('button');
-    this.addChildButton.innerHTML = '<i class="material-icons">add</i> Child Block';
-    this.addChildButton.setAttribute('class', 'main-band-add-child');
+    this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
-    this.fieldsContainer.insertBefore(this.addChildButton, this.fieldsContainer.childNodes[0]);
 
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
@@ -99,10 +96,7 @@ class cDialogBlock extends cDialogSuper {
 
     this.framesBand.refreshUIFromCache();
   }
-  _handleActiveObjectUpdate(e) {
-    let desc = this.context.activeBlock.baseFrameDescription;
-    this.framesBand.baseFrameInfoSpan.innerHTML = desc;
-  }
+  _handleActiveObjectUpdate(e) {}
   toggleDetails(saveValue = false) {
     this.detailsShown = !this.detailsShown;
 

@@ -1,5 +1,6 @@
 class wFrames {
-  constructor(parentKey = null) {
+  constructor(context, parentKey = null) {
+    this.context = context;
     this.parentKey = parentKey;
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.compiledFrames = [];
@@ -30,12 +31,20 @@ class wFrames {
     this._compileFrames();
   }
   __baseDetails() {
-    if (this.orderedKeys.length === 0)
-      return this.meshValues;
+    let root = true;
+    if (this.context.activeBlock)
+      if (this.context.activeBlock.parent !== null)
+        root = false;
 
+    let frameData = this.meshValues;
+    if (root)
+      if (this.orderedKeys.length > 0)
+        frameData = this.rawFrames[this.orderedKeys[0]];
+
+    if (!root) {
+        frameData = this.context.activeBlock.blockRenderData;
+    }
     let details = {};
-    let frameData = this.rawFrames[this.orderedKeys[0]];
-
     for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
       let field = this.frameAttributeFields[c];
       details[field] = frameData[field];

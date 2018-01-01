@@ -4,49 +4,25 @@ class cBandFrames extends cBandSuper {
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.childrenContainer = childrenContainer;
     this.frameDataViewInstances = {};
-    this.framesHelper = new wFrames();
     this.parent = parent;
-
-    let headerBar = document.createElement('div');
-    headerBar.classList.add('frames-header-bar');
-    this.childrenContainer.append(headerBar);
-    this.headerBar = headerBar;
-
-    this.expandAllFrameHelpersButton = document.createElement('button');
-    this.expandAllFrameHelpersButton.innerHTML = '+';
-    this.allFrameHelpersExpanded = false;
-    this.expandAllFrameHelpersButton.addEventListener('click', e => this.expandAllFrameHelpers());
-    this.expandAllFrameHelpersButton.classList.add('expand-all-helpers');
-    this.expandAllFrameHelpersButton.classList.add('btn-toolbar-icon');
-    headerBar.append(this.expandAllFrameHelpersButton);
+    this.framesHelper = new wFrames(this.parent.context);
 
     this.addFrameButton = document.createElement('button');
-    this.addFrameButton.innerHTML = '<i class="material-icons">add</i> Frame';
+    this.addFrameButton.innerHTML = '<i class="material-icons">add</i>';
     this.addFrameButton.setAttribute('class', 'btn add-button');
     this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
-    this.headerBar.append(this.addFrameButton);
-
-    this.baseFrameInfoSpan = document.createElement('span');
-    this.headerBar.append(this.baseFrameInfoSpan);
-
-    let clearDiv = document.createElement('div');
-    clearDiv.style.clear = 'both';
-    this.headerBar.append(clearDiv);
+    this.childrenContainer.appendChild(this.addFrameButton);
   }
   expandAllFrameHelpers() {
     if (this.allFrameHelpersExpanded) {
-      this.expandAllFrameHelpersButton.innerHTML = '+';
       this.allFrameHelpersExpanded = false;
-
       for (let i in this.frameDataViewInstances) {
         let d = this.frameDataViewInstances[i].dataPanel;
         for (let ii in d.groupDisplays)
           d.groupDisplays[ii].style.display = 'none';
       }
     } else {
-      this.expandAllFrameHelpersButton.innerHTML = '-';
       this.allFrameHelpersExpanded = true;
-
       for (let i in this.frameDataViewInstances) {
         let d = this.frameDataViewInstances[i].dataPanel;
         for (let ii in d.groupDisplays)
@@ -169,7 +145,9 @@ class cBandFrames extends cBandSuper {
   }
   _processFrames() {
     this.framesHelper.setParentKey(this.__getKey());
+    this.childrenContainer.removeChild(this.addFrameButton);
     this.__applyFrameOrderToDom();
+    this.childrenContainer.appendChild(this.addFrameButton);
   }
   __applyFrameOrderToDom() {
     for (let c = 0, l = this.framesHelper.orderedKeys.length; c < l; c++) {

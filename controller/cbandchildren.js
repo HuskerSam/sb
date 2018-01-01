@@ -71,7 +71,7 @@ class cBandChildren extends cBandSuper {
   deleteChildBlock(deleteKey, e) {
     if (confirm('Remove this child block?'))
       this.fireSet.removeByKey(deleteKey);
-    
+
     if (e)
       e.stopPropagation();
   }

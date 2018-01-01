@@ -9,7 +9,6 @@ class wBlock {
     this.inheritMaterial = true;
     this.blockRenderData = {};
     this.blockRawData = {};
-    this.baseFrameDescription = '';
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (this.blockKey === fireData.key)
@@ -63,26 +62,6 @@ class wBlock {
       }
       this.childBlocks[i].handleDataUpdate(tag, values, type, fireData);
     }
-
-    this._updateBlockSummary();
-  }
-  _updateBlockSummary() {
-    if (this.parent === null)
-      this.baseFrameDescription = 'Time: 0ms';
-    else {
-      this.baseFrameDescription = this.__blockSummary();
-    }
-  }
-  __blockSummary() {
-    let outText = 'Time (0ms) ';
-
-    let x = GLOBALUTIL.getNumberOrDefault(this.blockRenderData.positionX, 0);
-    let y =  GLOBALUTIL.getNumberOrDefault(this.blockRenderData.positionY, 0);
-    let z =  GLOBALUTIL.getNumberOrDefault(this.blockRenderData.positionZ, 0);
-
-    outText += 'P (' + x.toFixed(2) + ', ' + y.toFixed(2) + ', ' + z.toFixed(2) + ')';
-
-    return outText;
   }
   recursiveGetBlockForKey(key) {
     if (this.blockKey === key)
@@ -294,8 +273,6 @@ class wBlock {
       this._shapeHandleUpdate();
     if (this.blockRawData.childType === 'block')
       this._containerHandleUpdate();
-
-    this._updateBlockSummary();
   }
   _meshHandleUpdate() {
     let fields = sDataDefinition.bindingFields('mesh');

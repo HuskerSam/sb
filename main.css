@@ -715,15 +715,9 @@ input[type=range]::-webkit-slider-thumb {
   display: none;
 }
 
-.frames-panel>div:nth-child(2) label span {
+.frames-panel>div:nth-child(1) label span {
   display: block;
 }
-
-.frames-panel>div:nth-child(2) .selected-mesh-helper-collapse-button {
-  margin-top: 2.2em;
-}
-
-.frames-panel>div:nth-child(2) button.delete-button {}
 
 .frames-panel input {
   padding: 0em;
@@ -772,14 +766,11 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frame-info-panel {
-  background: rgba(255, 255, 255, .2);
-  margin-bottom: 6px;
   border-radius: .2em;
   overflow: auto;
-  font-family: monospace;
-  white-space: pre;
+  margin:0px;
   text-align: left;
-  font-size: .9em;
+  font-size:.9em;
 }
 
 .genFrame {
