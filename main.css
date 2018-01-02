@@ -660,7 +660,7 @@ input[type=range]::-webkit-slider-thumb {
   overflow: auto;
 }
 
-.block-editor-child, .main-band-details-element, .main-band-toggle, .main-band-add-child {
+.block-editor-child, .main-band-details-element, .main-band-add-child {
   background: rgba(255, 255, 255, .5);
   color: black;
   border-radius: .1em;
@@ -680,11 +680,6 @@ input[type=range]::-webkit-slider-thumb {
   color: silver;
   border-radius: .35em;
   margin-left: .5em;
-}
-
-.main-band-toggle.selected {
-  background: rgba(127, 127, 127, .5);
-  color: white;
 }
 
 .block-editor-child.selected, .main-band-details-element.selected {

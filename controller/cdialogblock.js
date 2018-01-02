@@ -27,10 +27,6 @@ class cDialogBlock extends cDialogSuper {
     this.rootElementDom = this.dataViewContainer.querySelector('.main-band-details-element');
     this.rootElementDom.addEventListener('click', e => this.childBand.setKey(null));
     this.childBandDom = this.dataViewContainer.querySelector('.main-band-flex-children');
-    this.toggleDetailsDom = this.dataViewContainer.querySelector('.main-band-toggle');
-    this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_more</i>';
-    this.detailsShown = true;
-    this.toggleDetailsDom.addEventListener('click', e => this.toggleDetails(true));
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
 
@@ -102,12 +98,9 @@ class cDialogBlock extends cDialogSuper {
 
     if (this.detailsShown) {
       this.fieldsContainer.style.display = '';
-      this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_more</i>';
-      this.toggleDetailsDom.classList.add('selected');
     } else {
       this.fieldsContainer.style.display = 'none';
-      this.toggleDetailsDom.innerHTML = '<i class="material-icons">expand_less</i>';
-      this.toggleDetailsDom.classList.remove('selected');
+
     }
     this.setChildKey(this.childKey);
 
@@ -136,15 +129,13 @@ class cDialogBlock extends cDialogSuper {
   expandAll() {
     super.expandAll();
     this.detailsShown = false;
-    this.toggleDetails();
-    this.framesBand.allFrameHelpersExpanded = false;
-    this.framesBand.expandAllFrameHelpers();
+    this.toggleDetails(true);
+    this.framesBand._updateFrameHelpersUI();
   }
   collapseAll() {
     super.collapseAll();
     this.detailsShown = true;
-    this.toggleDetails();
-    this.framesBand.allFrameHelpersExpanded = true;
-    this.framesBand.expandAllFrameHelpers();
+    this.toggleDetails(true);
+    this.framesBand._updateFrameHelpersUI();
   }
 }

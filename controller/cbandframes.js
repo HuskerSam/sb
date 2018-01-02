@@ -13,22 +13,21 @@ class cBandFrames extends cBandSuper {
     this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
     this.childrenContainer.appendChild(this.addFrameButton);
   }
-  expandAllFrameHelpers() {
-    if (this.allFrameHelpersExpanded) {
-      this.allFrameHelpersExpanded = false;
+  _updateFrameHelpersUI() {
+    if (!this.parent.detailsShown) {
       for (let i in this.frameDataViewInstances) {
         let d = this.frameDataViewInstances[i].dataPanel;
         for (let ii in d.groupDisplays)
           d.groupDisplays[ii].style.display = 'none';
       }
     } else {
-      this.allFrameHelpersExpanded = true;
       for (let i in this.frameDataViewInstances) {
         let d = this.frameDataViewInstances[i].dataPanel;
         for (let ii in d.groupDisplays)
           d.groupDisplays[ii].style.display = 'block';
       }
     }
+
   }
   addFrame(parentKey) {
     let objectData = sDataDefinition.getDefaultDataCloned('frame');
@@ -99,7 +98,7 @@ class cBandFrames extends cBandSuper {
 
     for (let i in children)
       this._getDomForChild(i, children[i]);
-
+    this._updateFrameHelpersUI();
     this._processFrames();
   }
   handleDataChange(fireData, type) {
@@ -153,15 +152,16 @@ class cBandFrames extends cBandSuper {
     for (let c = 0, l = this.framesHelper.orderedKeys.length; c < l; c++) {
       let key = this.framesHelper.orderedKeys[c];
       let panelDom = this.frameDataViewInstances[key].framesContainer;
-      let currentPanel = this.childrenContainer.childNodes[c + 1]; //offset the header
+      let currentPanel = this.childrenContainer.childNodes[c];
 
-      if (panelDom !== currentPanel)
+      if (panelDom !== currentPanel) {
         if (!panelDom.contains(document.activeElement))
           this.childrenContainer.insertBefore(panelDom, currentPanel);
         else {
           this.childrenContainer.append(currentPanel);
-          this.__applyFrameOrderToDom();
+          return this.__applyFrameOrderToDom();
         }
+      }
       this._updateProcessedRowUI(key);
     }
   }
