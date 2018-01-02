@@ -58,7 +58,7 @@ class wFrames {
   __frameFromTimeToken(timeToken) {
     timeToken = timeToken.trim();
     if (timeToken === '')
-      timeToken = '0';
+      timeToken = '0++';
 
     let autoGen = 'n';
     let autoTime = 0;
@@ -308,7 +308,7 @@ class wFrames {
         if (isNaN(time_ms))
           time_ms = 0;
         if (time_ms === 0)
-          time_ms = 1;
+          time_ms = 0;
         else if (time_ms < 0)
           time_ms *= -1;
         clonePreviousTimes[c] = frame.processedTime - time_ms;

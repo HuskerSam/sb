@@ -816,7 +816,7 @@ __defaultData['blockchild'] = {
   order: 0
 };
 __defaultData['frame'] = {
-  frameTime: '0',
+  frameTime: '',
   frameOrder: '1',
   parentKey: null,
   scalingX: '',

@@ -98,7 +98,6 @@ class cBandFrames extends cBandSuper {
 
     for (let i in children)
       this._getDomForChild(i, children[i]);
-    this._updateFrameHelpersUI();
     this._processFrames();
   }
   handleDataChange(fireData, type) {
@@ -147,6 +146,7 @@ class cBandFrames extends cBandSuper {
     this.childrenContainer.removeChild(this.addFrameButton);
     this.__applyFrameOrderToDom();
     this.childrenContainer.appendChild(this.addFrameButton);
+    this._updateFrameHelpersUI();
   }
   __applyFrameOrderToDom() {
     for (let c = 0, l = this.framesHelper.orderedKeys.length; c < l; c++) {
