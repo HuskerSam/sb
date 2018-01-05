@@ -616,22 +616,6 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: null,
   group: 'title'
 }, {
-  title: 'Run Time',
-  fireSetField: 'runTime',
-  contextObjectField: null,
-  group: 'runTime'
-}, {
-  title: 'Repeat',
-  fireSetField: 'repeat',
-  contextObjectField: null,
-  group: 'runTime'
-}, {
-  title: 'Block Scale',
-  fireSetField: 'blockScale',
-  contextObjectField: null,
-  helperType: 'number',
-  group: 'title'
-}, {
   title: 'Width',
   fireSetField: 'width',
   contextObjectField: null,
@@ -805,7 +789,6 @@ __defaultData['block'] = {
   width: 2,
   depth: 2,
   height: 1,
-  runTime: 10000,
   blockScale: 10,
   children: {}
 };

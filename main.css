@@ -51,6 +51,7 @@ html, body {
   border-radius: 10px;
   line-height: 1px;
   margin-top: -5px;
+  background: rgb(150, 150, 150);
 }
 
 .gutter.gutter-horizontal {
@@ -252,6 +253,7 @@ html, body {
 .edit-modal .modal-dialog {
   margin: 0vh auto;
   width: 100%;
+  background: rgba(0, 100, 200, .6);
 }
 
 .edit-modal .modal-body {

@@ -9,6 +9,17 @@ class wBlock {
     this.inheritMaterial = true;
     this.blockRenderData = {};
     this.blockRawData = {};
+    this.containerDimensions = {};
+    this.containerCenter = {
+      x: 0,
+      y: 0,
+      z: 0
+    };
+    this.containerDirection = {
+      x: 1,
+      y: 0,
+      z: .5
+    };
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (this.blockKey === fireData.key)
@@ -268,13 +279,13 @@ class wBlock {
   }
   _renderBlock() {
     if (this.blockRawData.childType === 'mesh')
-      this._meshHandleUpdate();
+      this.__renderMeshBlock();
     if (this.blockRawData.childType === 'shape')
-      this._shapeHandleUpdate();
+      this.__renderShapeBlock();
     if (this.blockRawData.childType === 'block')
-      this._containerHandleUpdate();
+      this.__renderContainerBlock();
   }
-  _meshHandleUpdate() {
+  __renderMeshBlock() {
     let fields = sDataDefinition.bindingFields('mesh');
     for (let i in fields) {
       let field = fields[i];
@@ -285,7 +296,7 @@ class wBlock {
           this.__updateObjectValue(field, value, this.sceneObject);
     }
   }
-  _shapeHandleUpdate() {
+  __renderShapeBlock() {
     this.dispose();
     let newShape = this._createShape();
     if (!this.sceneObject)
@@ -300,12 +311,36 @@ class wBlock {
         this.__updateObjectValue(field, value, this.sceneObject);
     }
   }
-  _containerHandleUpdate() {
+  __renderContainerBlock() {
     if (!this.blockKey)
       return;
+
+    let oldContainerMesh = null;
+    let width = this.blockRenderData['width'];
+    let height = this.blockRenderData['height'];
+    let depth = this.blockRenderData['depth'];
+
+    if (this.containerDimensions.width !== width ||
+      this.containerDimensions.height !== height ||
+      this.containerDimensions.depth !== depth
+    ) {
+      oldContainerMesh = this.sceneObject;
+      this.sceneObject = BABYLON.MeshBuilder.CreateBox(this.blockKey, { width, height, depth}, this.context.scene);
+      let material = new BABYLON.StandardMaterial(this.blockKey + 'material', this.context.scene);
+      material.alpha = 0;
+      this.sceneObject.material = material;
+
+      this.containerDimensions.width = width;
+      this.containerDimensions.height = height;
+      this.containerDimensions.depth = depth;
+    }
+
     let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', this.blockKey);
     for (let i in children)
       this.__updateChild(i, children[i]);
+
+    if (oldContainerMesh !== null)
+      oldContainerMesh.dispose();
   }
   __updateChild(key, data) {
     if (!this.childBlocks[key])
