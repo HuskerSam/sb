@@ -284,6 +284,9 @@ class wBlock {
       this.__renderShapeBlock();
     if (this.blockRawData.childType === 'block')
       this.__renderContainerBlock();
+
+    if (this.parent)
+      this.sceneObject.parent = this.parent.sceneObject;
   }
   __renderMeshBlock() {
     let fields = sDataDefinition.bindingFields('mesh');

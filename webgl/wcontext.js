@@ -276,7 +276,7 @@ class wContext {
   }
   _clearActiveBlock() {
     if (this.activeBlock) {
-      this.__setBoundsBox(this.activeBlock, false);
+      this.__clearBoundsBox(this.activeBlock);
       this.activeBlock = null;
     }
     this.clearGhostBlocks();
@@ -327,19 +327,20 @@ class wContext {
     if (gAPPP.a.profile.showBoundsBox)
       show = true;
     sceneObject.showBoundingBox = show;
-    for (let i in this.scene.meshes)
-      if (this.scene.meshes[i].parent === sceneObject)
-        this.scene.meshes[i].showBoundingBox = show;
+    if (this.activeBlock.blockRawData.childType !== 'block')
+      for (let i in this.scene.meshes)
+        if (this.scene.meshes[i].parent === sceneObject)
+          this.scene.meshes[i].showBoundingBox = show;
   }
-  __setBoundsBox(block, show = true) {
+  __clearBoundsBox(block) {
     let sceneObject = block.sceneObject;
     if (!sceneObject)
       return;
 
-    sceneObject.showBoundingBox = show;
+    sceneObject.showBoundingBox = false;
     for (let i in this.scene.meshes)
       if (this.scene.meshes[i].parent === sceneObject)
-        this.scene.meshes[i].showBoundingBox = show;
+        this.scene.meshes[i].showBoundingBox = false;
   }
   __fadeSelectedObject() {
     let sceneObject = this.activeBlock.sceneObject;
