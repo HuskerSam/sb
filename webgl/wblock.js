@@ -30,6 +30,17 @@ class wBlock {
     return this._blockKey;
   }
   handleDataUpdate(tag, values, type, fireData) {
+    if (tag === 'frame') {
+      if (values.parentKey === this._blockKey) {
+        this.framesHelper.compileFrames();
+        this.__applyFirstFrameValues();
+      }
+
+      for (let i in this.childBlocks)
+        this.childBlocks[i].handleDataUpdate(tag, values, type, fireData);
+      return;
+    }
+
     if (this._blockKey === fireData.key)
       this.setData(values);
 
@@ -350,7 +361,11 @@ class wBlock {
       this.containerDimensions.depth !== depth
     ) {
       oldContainerMesh = this.sceneObject;
-      this.sceneObject = BABYLON.MeshBuilder.CreateBox(this._blockKey, { width, height, depth}, this.context.scene);
+      this.sceneObject = BABYLON.MeshBuilder.CreateBox(this._blockKey, {
+        width,
+        height,
+        depth
+      }, this.context.scene);
       let material = new BABYLON.StandardMaterial(this._blockKey + 'material', this.context.scene);
       material.alpha = 0;
       this.sceneObject.material = material;

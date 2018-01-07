@@ -50,6 +50,8 @@ class cDialogBlock extends cDialogSuper {
       (values, type, fireData) => this._updateContextWithDataChange('material', values, type, fireData));
     gAPPP.a.modelSets['texture'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('texture', values, type, fireData));
+    gAPPP.a.modelSets['frame'].childListeners.push(
+      (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {

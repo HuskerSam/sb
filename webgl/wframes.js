@@ -29,7 +29,7 @@ class wFrames {
     ];
     this.processedFrames = [];
     this.updateHandlers = [];
-    this._compileFrames();
+    this.compileFrames();
   }
   __baseDetails() {
     let root = true;
@@ -209,7 +209,7 @@ class wFrames {
     }
     this.maxLength = max_frame_start;
   }
-  _compileFrames() {
+  compileFrames() {
     if (!this.parentKey)
       this.rawFrames = {};
     else
@@ -238,6 +238,9 @@ class wFrames {
     let processedValues = {};
     for (let i in baseDetails) {
       let runningValue = this.__runningValue(frameValues[i]);
+      if (runningValue.unitDesc === 'deg')
+        runningValue.value *=  2 * Math.PI / 360.0;
+
       let skip = false;
       let dataValue;
       if (isRoot) {
@@ -400,6 +403,6 @@ class wFrames {
   setParentKey(parentKey, parentBlock) {
     this.parentKey = parentKey;
     this.parentBlock = parentBlock;
-    this._compileFrames();
+    this.compileFrames();
   }
 }
