@@ -1,7 +1,8 @@
 class wFrames {
-  constructor(context, parentKey = null) {
+  constructor(context, parentKey = null, parentBlock = null) {
     this.context = context;
     this.parentKey = parentKey;
+    this.parentBlock = parentBlock;
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.compiledFrames = [];
     this.rawFrames = {};
@@ -11,7 +12,7 @@ class wFrames {
     this.baseOffset = 0;
     this.maxLength = 0;
     this.runningState = {};
-    this.meshValues =  {
+    this.meshValues = {
       scalingX: 1,
       scalingY: 1,
       scalingZ: 1,
@@ -32,8 +33,8 @@ class wFrames {
   }
   __baseDetails() {
     let root = true;
-    if (this.context.activeBlock)
-      if (this.context.activeBlock.parent !== null)
+    if (this.parentBlock)
+      if (this.parentBlock.parent !== null)
         root = false;
 
     let frameData = this.meshValues;
@@ -42,18 +43,29 @@ class wFrames {
         frameData = this.rawFrames[this.orderedKeys[0]];
 
     if (!root) {
-        frameData = this.context.activeBlock.blockRenderData;
+      frameData = this.parentBlock.blockRenderData;
     }
     let details = {};
     for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
       let field = this.frameAttributeFields[c];
       details[field] = frameData[field];
-      if (details[field] === undefined)
+      if (details[field] === undefined || details[field] === '')
         details[field] = this.meshValues[field];
     }
 
     details.timeMS = 0;
     return details;
+  }
+  firstFrameValues() {
+    if (this.processedFrames.length === 0)
+      return this.__baseDetails();
+
+    let result = {};
+    let data = this.processedFrames[0].values;
+    for (let i in data)
+      result[i] = data[i].value;
+
+    return result;
   }
   __frameFromTimeToken(timeToken) {
     timeToken = timeToken.trim();
@@ -341,7 +353,7 @@ class wFrames {
 
     for (let c = 0; c < frameCount; c++) {
       let f = this.__getFrame(c);
-      let key =  this.orderedKeys[c];
+      let key = this.orderedKeys[c];
 
       this.__pushFrame(f.processedTime, f, false, key, this.processedFrameValues[key], key);
 
@@ -385,8 +397,9 @@ class wFrames {
 
     return next;
   }
-  setParentKey(parentKey) {
+  setParentKey(parentKey, parentBlock) {
     this.parentKey = parentKey;
+    this.parentBlock = parentBlock;
     this._compileFrames();
   }
 }

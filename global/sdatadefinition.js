@@ -2,15 +2,15 @@ class sDataDefinition {
   static bindingFields(tag) {
     if (tag === 'frame') {
       let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
-      return localCopy.concat(this.bindingFields('simpleUIDetails'));
+      return localCopy.concat(this.bindingFields('baseMesh'));
     }
     if (tag === 'shape') {
       let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
-      return localCopy.concat(this.bindingFields('simpleUIDetails'));
+      return localCopy.concat(this.bindingFields('baseMesh'));
     }
     if (tag === 'mesh') {
       let localCopy = __localStaticStorageForBindingFields[tag].slice(0, 2);
-      localCopy = localCopy.concat(this.bindingFields('simpleUIDetails'));
+      localCopy = localCopy.concat(this.bindingFields('baseMesh'));
       return localCopy.concat(__localStaticStorageForBindingFields[tag].slice(2));
     }
 
@@ -336,7 +336,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   paddingRight: '1.2em',
   paddingBottom: '2.7em'
 }];
-__localStaticStorageForBindingFields['simpleUIDetails'] = [{
+__localStaticStorageForBindingFields['baseMesh'] = [{
   title: 'Scale X',
   fireSetField: 'scalingX',
   contextObjectField: 'scaling.x',

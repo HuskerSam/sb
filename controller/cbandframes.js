@@ -142,7 +142,11 @@ class cBandFrames extends cBandSuper {
     delete this.frameDataViewInstances[inst.key];
   }
   _processFrames() {
-    this.framesHelper.setParentKey(this.__getKey());
+    if (this.parent.context.activeBlock)
+      this.framesHelper = this.parent.context.activeBlock.framesHelper;
+    else
+      this.framesHelper = new wFrames(this.parent.context);
+
     this.childrenContainer.removeChild(this.addFrameButton);
     this.__applyFrameOrderToDom();
     this.childrenContainer.appendChild(this.addFrameButton);

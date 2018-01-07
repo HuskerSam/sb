@@ -1,6 +1,6 @@
 class wBlock {
   constructor(context, parent = null, sceneObject = null) {
-    this.blockKey = null;
+    this._blockKey = null;
     this.sceneObject = sceneObject;
     this.childBlocks = {};
     this.context = context;
@@ -20,9 +20,17 @@ class wBlock {
       y: 0,
       z: .5
     };
+    this.framesHelper = new wFrames(this.context);
+  }
+  set blockKey(key) {
+    this._blockKey = key;
+    this.framesHelper.setParentKey(key, this);
+  }
+  get blockKey() {
+    return this._blockKey;
   }
   handleDataUpdate(tag, values, type, fireData) {
-    if (this.blockKey === fireData.key)
+    if (this._blockKey === fireData.key)
       this.setData(values);
 
     if (this.blockRawData.childType === tag)
@@ -55,7 +63,7 @@ class wBlock {
     }
 
     if (type === 'add' && tag === 'blockchild')
-      if (values.parentKey === this.blockKey)
+      if (values.parentKey === this._blockKey)
         return this.setData();
 
     for (let i in this.childBlocks) {
@@ -75,7 +83,7 @@ class wBlock {
     }
   }
   recursiveGetBlockForKey(key) {
-    if (this.blockKey === key)
+    if (this._blockKey === key)
       return this;
     for (let i in this.childBlocks) {
       if (i === key)
@@ -118,6 +126,18 @@ class wBlock {
       return this.__createTextMesh(name, options);
 
     this.sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
+  }
+  __applyFirstFrameValues() {
+    let values = this.framesHelper.firstFrameValues();
+
+    let fields = sDataDefinition.bindingFields('baseMesh');
+    for (let i in fields) {
+      let field = fields[i];
+      let value = values[field.fireSetField];
+
+      if (field.contextObjectField)
+        this.__updateObjectValue(field, value, this.sceneObject);
+    }
   }
   createGuides(size) {
     this.dispose();
@@ -285,6 +305,8 @@ class wBlock {
     if (this.blockRawData.childType === 'block')
       this.__renderContainerBlock();
 
+    this.__applyFirstFrameValues();
+
     if (this.parent)
       this.sceneObject.parent = this.parent.sceneObject;
   }
@@ -315,7 +337,7 @@ class wBlock {
     }
   }
   __renderContainerBlock() {
-    if (!this.blockKey)
+    if (!this._blockKey)
       return;
 
     let oldContainerMesh = null;
@@ -328,8 +350,8 @@ class wBlock {
       this.containerDimensions.depth !== depth
     ) {
       oldContainerMesh = this.sceneObject;
-      this.sceneObject = BABYLON.MeshBuilder.CreateBox(this.blockKey, { width, height, depth}, this.context.scene);
-      let material = new BABYLON.StandardMaterial(this.blockKey + 'material', this.context.scene);
+      this.sceneObject = BABYLON.MeshBuilder.CreateBox(this._blockKey, { width, height, depth}, this.context.scene);
+      let material = new BABYLON.StandardMaterial(this._blockKey + 'material', this.context.scene);
       material.alpha = 0;
       this.sceneObject.material = material;
 
@@ -338,7 +360,7 @@ class wBlock {
       this.containerDimensions.depth = depth;
     }
 
-    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', this.blockKey);
+    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', this._blockKey);
     for (let i in children)
       this.__updateChild(i, children[i]);
 
@@ -348,7 +370,7 @@ class wBlock {
   __updateChild(key, data) {
     if (!this.childBlocks[key])
       this.childBlocks[key] = new wBlock(this.context, this);
-
+    this.childBlocks[key].blockKey = key;
     this.childBlocks[key].setData(data);
   }
   __createTextMesh(name, options) {
