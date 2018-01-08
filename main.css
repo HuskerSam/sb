@@ -658,8 +658,9 @@ input[type=range]::-webkit-slider-thumb {
   white-space: nowrap;
   overflow: auto;
 }
+
 .cblock-details-panel .form-group-container-group {
-  float:none;
+  float: none;
 }
 
 .cblock-child-details-panel {}
@@ -771,15 +772,36 @@ input[type=range]::-webkit-slider-thumb {
 .frame-info-panel {
   border-radius: .2em;
   overflow: auto;
-  margin:0px;
+  margin: 0px;
   text-align: left;
-  font-size:.9em;
+  font-size: .9em;
 }
 
 .genFrame {
-  background: rgba(255,255,255,.5);
+  background: rgba(255, 255, 255, .5);
 }
 
 .frame-fields-container .frame-time {
   width: 10em;
+}
+
+.play-bar-wrapper {
+  position: absolute;
+  bottom: 0px;
+  height: 2em;
+  background: rgba(127, 127, 127, .2);
+  width: 100%;
+}
+
+.play-bar-wrapper .play-button {
+  padding: 0em;
+  background: rgba(255, 255, 255, .6);
+  font-size: .8em;
+}
+
+.play-bar-wrapper input[type="range"] {
+  width: calc(100% - 3.5em);
+  margin-top:.2em;
+  margin-left: 1em;
+  display: inline-block;
 }
