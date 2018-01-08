@@ -1,6 +1,7 @@
 class wBlock {
   constructor(context, parent = null, sceneObject = null) {
     this._blockKey = null;
+    this.blockTargetKey = null;
     this.sceneObject = sceneObject;
     this.childBlocks = {};
     this.context = context;
@@ -299,6 +300,7 @@ class wBlock {
     if (keys.length > 1) {
       //console.log('_loadBlock:: fetchList > 1 results', this);
     }
+    this.blockTargetKey = keys[0];
     this.blockRenderData = children[keys[0]];
     if (this.blockRawData.childType === 'mesh')
       this.loadMesh().then(r => {
@@ -375,7 +377,11 @@ class wBlock {
       this.containerDimensions.depth = depth;
     }
 
-    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', this._blockKey);
+    let containerKey = this.blockKey;
+    if (! this.staticLoad) {
+      containerKey = this.blockTargetKey;
+    }
+    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', containerKey);
     for (let i in children)
       this.__updateChild(i, children[i]);
 

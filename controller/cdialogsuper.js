@@ -71,7 +71,7 @@ class cDialogSuper {
     this.rotateState = gAPPP.a.profile.editFormRotateState;
     if (! this.rotateState)
       this.rotateState = 'vertical';
-      
+
     this._showFocus();
 
     if (this.initScene) {
@@ -102,6 +102,7 @@ class cDialogSuper {
         b.staticType = 'block';
         b.staticLoad = true;
         b.blockKey = this.key;
+        b.isContainer = true;
         b.setData(this.fireFields.values);
         this.context.setActiveBlock(b);
         this.rootBlock = b;

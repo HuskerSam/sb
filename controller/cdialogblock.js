@@ -128,6 +128,10 @@ class cDialogBlock extends cDialogSuper {
     this.detailsShown = !gAPPP.a.profile.cDialogBlockToggleDetailsValue;
     this.toggleDetails();
   }
+  close() {
+    this.fireSet.renderImageUpdateNeeded = true;
+    super.close();
+  }
   expandAll() {
     super.expandAll();
     this.detailsShown = false;
