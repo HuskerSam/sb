@@ -108,8 +108,14 @@ class cBandFrames extends cBandSuper {
       return;
 
     let result = null;
-    if (type === 'add')
-      result = this.childAdded(fireData);
+    if (type === 'add'){
+      //let frames helpers process add first
+      setTimeout(() => {
+        result = this.childAdded(fireData);
+        this._processFrames();
+      }, 1);
+      return null;
+    }
     if (type === 'change')
       result = this.childChanged(fireData);
     if (type === 'remove')
@@ -120,6 +126,9 @@ class cBandFrames extends cBandSuper {
   }
   childChanged(fireData) {
     //edit fields handle this
+  }
+  childAdded(fireData) {
+    this._getDomForChild(fireData.key, fireData.val());
   }
   _removeFrame(instance) {
     if (confirm('Delete this frame?'))
@@ -147,6 +156,7 @@ class cBandFrames extends cBandSuper {
     else
       this.framesHelper = new wFrames(this.parent.context);
 
+    this.framesHelper._sortFrames();
     this.childrenContainer.removeChild(this.addFrameButton);
     this.__applyFrameOrderToDom();
     this.childrenContainer.appendChild(this.addFrameButton);
