@@ -29,6 +29,7 @@ class wFrames {
     ];
     this.processedFrames = [];
     this.updateHandlers = [];
+    this.animations = {};
     this.compileFrames();
   }
   __baseDetails() {
@@ -239,7 +240,7 @@ class wFrames {
     for (let i in baseDetails) {
       let runningValue = this.__runningValue(frameValues[i]);
       if (runningValue.unitDesc === 'deg')
-        runningValue.value *=  2 * Math.PI / 360.0;
+        runningValue.value *= 2 * Math.PI / 360.0;
 
       let skip = false;
       let dataValue;
@@ -404,5 +405,36 @@ class wFrames {
     this.parentKey = parentKey;
     this.parentBlock = parentBlock;
     this.compileFrames();
+  }
+
+  processAnimationFrames() {
+    this.animations = {};
+    let fields = sDataDefinition.bindingFieldsLookup('frame');
+
+
+    //for (let i in this.frameAttributeFields) {
+    let i = '0';
+      let fieldKey = this.frameAttributeFields[i];
+      let field = fields[fieldKey];
+
+      this.animations[i] = new BABYLON.Animation(this.parentKey + i + 'anim',
+        field.contextObjectField, 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+
+      let fieldKeys = [];
+      for (let ii in this.processedFrames) {
+        let frame = this.processedFrames[ii];
+
+        fieldKeys.push({
+          frame: frame.actualTime,
+          value: frame.values[fieldKey].value
+        });
+      }
+      this.animations[i].setKeys(fieldKeys);
+//    }
+
+    this.animationsArray = [];
+    for (let i in this.animations)
+      this.animationsArray.push(this.animations[i]);
+    this.parentBlock.sceneObject.animations = this.animationsArray;
   }
 }

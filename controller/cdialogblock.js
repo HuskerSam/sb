@@ -66,20 +66,23 @@ class cDialogBlock extends cDialogSuper {
     this.animateCloseButton = this.dialog.querySelector('.animate-close');
     this.animateCloseButton.addEventListener('click', e => this.hideAnimation());
   }
-  hideAnimation() {
-
-  }
   playAnimation() {
-    
+    this.context.activeBlock.framesHelper.processAnimationFrames();
+    this.context.scene.beginAnimation(this.rootBlock.sceneObject, 0, 100, true);
   }
   showAnimation() {
-    this.animateCanvas.style.display = '';
-    this.canvas.style.display = 'none';
     this.animateButton.style.display = 'none';
     this.playButton.style.display = '';
-    this.animateSlider.style.display = 'inline-block';
-    this.animateCloseButton.style.display = 'inline-block';
+    this.animateSlider.style.display = '';
+    this.animateCloseButton.style.display = '';
 
+    this.animateHelper = new wAnimate(this);
+  }
+  hideAnimation() {
+    this.animateButton.style.display = '';
+    this.playButton.style.display = 'none';
+    this.animateSlider.style.display = 'none';
+    this.animateCloseButton.style.display = 'none';
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {

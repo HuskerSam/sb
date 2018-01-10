@@ -22,6 +22,7 @@ class wBlock {
       z: .5
     };
     this.framesHelper = new wFrames(this.context);
+    this.animateHelper = new wAnimate(this);
   }
   set blockKey(key) {
     this._blockKey = key;

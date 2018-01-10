@@ -16,6 +16,14 @@ class sDataDefinition {
 
     return __localStaticStorageForBindingFields[tag].slice(0);
   }
+  static bindingFieldsLookup(tag) {
+    let arr = this.bindingFields(tag);
+    let result = {};
+    for (let i in arr)
+      result[arr[i].fireSetField] = arr[i];
+      
+    return result;
+  }
   static bindingFieldsCloned(tag) {
     return JSON.parse(JSON.stringify(this.bindingFields(tag)));
   }
