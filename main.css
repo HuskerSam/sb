@@ -160,7 +160,7 @@ html, body {
   width: 100%;
 }
 
-.popup-canvas {
+.popup-canvas, .animate-canvas {
   touch-action: none;
   width: 100%;
   height: 100%;
@@ -785,22 +785,31 @@ input[type=range]::-webkit-slider-thumb {
   width: 10em;
 }
 
-.play-bar-wrapper {
+.canvas-actions {
   position: absolute;
-  bottom: 0px;
-  height: 2em;
-  background: rgba(127, 127, 127, .2);
+  bottom: .1em;
+  left: .1em;
   width: 100%;
 }
 
-.play-bar-wrapper .play-button {
-  padding: 0em;
+.canvas-actions .animate-button, .canvas-actions .play-button {
+  padding: .1em;
+  background: rgba(255, 255, 255, .6);
+}
+
+.canvas-actions .animate-close {
+    padding: .2em;
+}
+
+.canvas-actions .play-button {
+  color: green;
+  padding: .2em;
   background: rgba(255, 255, 255, .6);
   font-size: .8em;
 }
 
-.play-bar-wrapper input[type="range"] {
-  width: calc(100% - 3.5em);
+.canvas-actions input[type="range"] {
+  width: calc(50% - 8em);
   margin-top:.2em;
   margin-left: 1em;
   display: inline-block;

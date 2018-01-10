@@ -52,22 +52,33 @@ class cDialogBlock extends cDialogSuper {
       (values, type, fireData) => this._updateContextWithDataChange('texture', values, type, fireData));
     gAPPP.a.modelSets['frame'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
-    this._addPlayBarToCanvas();
+    this._addAnimationContext();
   }
-  _addPlayBarToCanvas() {
-    this.playBarWrapper = document.createElement('div');
-    this.playBarWrapper.classList.add('play-bar-wrapper');
-    let canvasWrapper = this.dialog.querySelector('.popup-canvas-wrapper');
-    canvasWrapper.appendChild(this.playBarWrapper);
+  _addAnimationContext() {
+    this.animateButton = this.dialog.querySelector('.animate-button');
+    this.animateButton.addEventListener('click', e => this.showAnimation());
 
-    this.playBarPlayButton = document.createElement('button');
-    this.playBarWrapper.append(this.playBarPlayButton);
-    this.playBarPlayButton.innerHTML = '<i class="material-icons">play_arrow</i>';
-    this.playBarPlayButton.setAttribute('class', 'btn play-button');
+    this.playButton = this.dialog.querySelector('.play-button');
+    this.playButton.addEventListener('click', e => this.playAnimation());
 
-    this.playBarSlider = document.createElement('input');
-    this.playBarWrapper.append(this.playBarSlider);
-    this.playBarSlider.setAttribute('type', 'range');
+    this.animateCanvas = this.dialog.querySelector('.animate-canvas');
+    this.animateSlider = this.dialog.querySelector('.animate-range');
+    this.animateCloseButton = this.dialog.querySelector('.animate-close');
+    this.animateCloseButton.addEventListener('click', e => this.hideAnimation());
+  }
+  hideAnimation() {
+
+  }
+  playAnimation() {
+    
+  }
+  showAnimation() {
+    this.animateCanvas.style.display = '';
+    this.canvas.style.display = 'none';
+    this.animateButton.style.display = 'none';
+    this.playButton.style.display = '';
+    this.animateSlider.style.display = 'inline-block';
+    this.animateCloseButton.style.display = 'inline-block';
 
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
