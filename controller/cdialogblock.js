@@ -55,34 +55,14 @@ class cDialogBlock extends cDialogSuper {
     this._addAnimationContext();
   }
   _addAnimationContext() {
-    this.animateButton = this.dialog.querySelector('.animate-button');
-    this.animateButton.addEventListener('click', e => this.showAnimation());
-
     this.playButton = this.dialog.querySelector('.play-button');
     this.playButton.addEventListener('click', e => this.playAnimation());
 
-    this.animateCanvas = this.dialog.querySelector('.animate-canvas');
     this.animateSlider = this.dialog.querySelector('.animate-range');
-    this.animateCloseButton = this.dialog.querySelector('.animate-close');
-    this.animateCloseButton.addEventListener('click', e => this.hideAnimation());
   }
   playAnimation() {
     this.context.activeBlock.framesHelper.processAnimationFrames();
-    this.context.scene.beginAnimation(this.rootBlock.sceneObject, 0, 100, true);
-  }
-  showAnimation() {
-    this.animateButton.style.display = 'none';
-    this.playButton.style.display = '';
-    this.animateSlider.style.display = '';
-    this.animateCloseButton.style.display = '';
-
-    this.animateHelper = new wAnimate(this);
-  }
-  hideAnimation() {
-    this.animateButton.style.display = '';
-    this.playButton.style.display = 'none';
-    this.animateSlider.style.display = 'none';
-    this.animateCloseButton.style.display = 'none';
+    this.context.scene.beginAnimation(this.rootBlock.sceneObject, 0, this.context.activeBlock.framesHelper.lastFrame, true);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {

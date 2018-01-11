@@ -12,6 +12,7 @@ class wFrames {
     this.baseOffset = 0;
     this.maxLength = 0;
     this.runningState = {};
+    this.fps = 30;
     this.meshValues = {
       scalingX: 1,
       scalingY: 1,
@@ -411,30 +412,31 @@ class wFrames {
     this.animations = {};
     let fields = sDataDefinition.bindingFieldsLookup('frame');
 
-
-    //for (let i in this.frameAttributeFields) {
-    let i = '0';
+    for (let i in this.frameAttributeFields) {
       let fieldKey = this.frameAttributeFields[i];
       let field = fields[fieldKey];
 
       this.animations[i] = new BABYLON.Animation(this.parentKey + i + 'anim',
-        field.contextObjectField, 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        field.contextObjectField, this.fps, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
       let fieldKeys = [];
       for (let ii in this.processedFrames) {
         let frame = this.processedFrames[ii];
 
+        let frameNumber = Math.round(frame.actualTime / 1000.0 * this.fps);
+
         fieldKeys.push({
-          frame: frame.actualTime,
+          frame: frameNumber,
           value: frame.values[fieldKey].value
         });
       }
       this.animations[i].setKeys(fieldKeys);
-//    }
+    }
 
     this.animationsArray = [];
     for (let i in this.animations)
       this.animationsArray.push(this.animations[i]);
     this.parentBlock.sceneObject.animations = this.animationsArray;
+    this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps)
   }
 }

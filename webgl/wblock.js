@@ -22,7 +22,6 @@ class wBlock {
       z: .5
     };
     this.framesHelper = new wFrames(this.context);
-    this.animateHelper = new wAnimate(this);
   }
   set blockKey(key) {
     this._blockKey = key;
@@ -556,5 +555,9 @@ class wBlock {
       depth = Math.round(Number(this.blockRawData.depth));
 
     return width + ' x ' + depth + ' x ' + height;
+  }
+
+  _renderAnimations() {
+    
   }
 }
