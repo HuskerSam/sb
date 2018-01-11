@@ -23,6 +23,9 @@ class cDialogBlock extends cDialogSuper {
     this._splitViewAlive = true;
     this.initScene = true;
     this.childKey = null;
+    this.activeAnimation = {
+      _paused: false
+    };
 
     this.rootElementDom = this.dataViewContainer.querySelector('.main-band-details-element');
     this.rootElementDom.addEventListener('click', e => this.childBand.setKey(null));
@@ -57,12 +60,72 @@ class cDialogBlock extends cDialogSuper {
   _addAnimationContext() {
     this.playButton = this.dialog.querySelector('.play-button');
     this.playButton.addEventListener('click', e => this.playAnimation());
+    this.stopButton = this.dialog.querySelector('.stop-button');
+    this.stopButton.addEventListener('click', e => this.stopAnimation());
+    this.pauseButton = this.dialog.querySelector('.pause-button');
+    this.pauseButton.addEventListener('click', e => this.pauseAnimation());
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
+    this.animateSlider.addEventListener('input', e => this.setAnimationFromSlider());
+  }
+  stopAnimation() {
+    this.playButton.removeAttribute('disabled');
+    this.stopButton.setAttribute('disabled', "true");
+    this.pauseButton.setAttribute('disabled', "true");
+    this.activeAnimation.stop();
+    this.activeAnimation.goToFrame(0);
+
+    this.activateSliderUpdates(false);
+  }
+  activateSliderUpdates(updateSlider = true) {
+    this._updateSliderPosition();
+    clearTimeout(this.sliderTimeout);
+
+    if (updateSlider)
+      this.sliderTimeout = setTimeout(() => {
+        this._updateSliderPosition();
+        this.activateSliderUpdates();
+      }, 50);
+  }
+  setAnimationFromSlider(e) {
+    let frame = Math.round(this.animateSlider.value / 100.0 * this.context.activeBlock.framesHelper.lastFrame);
+    let paused = this.activeAnimation._paused;
+
+    if (! paused)
+      this.activeAnimation.pause();
+
+    this.activeAnimation.goToFrame(frame);
+console.log(frame);
+    if (! paused)
+      this.activeAnimation.restart();
+  }
+  _updateSliderPosition(startTimer = true) {
+    let elapsed = this.activeAnimation._runtimeAnimations[0].currentFrame;
+    let total = this.activeAnimation.toFrame;
+
+    this.animateSlider.value = elapsed / total * 100.0;
+  }
+  pauseAnimation() {
+    this.playButton.removeAttribute('disabled');
+    this.stopButton.removeAttribute('disabled');
+    this.pauseButton.setAttribute('disabled', "true");
+
+    this.activeAnimation.pause();
+    this.activateSliderUpdates(false);
   }
   playAnimation() {
-    this.context.activeBlock.framesHelper.processAnimationFrames();
-    this.context.scene.beginAnimation(this.rootBlock.sceneObject, 0, this.context.activeBlock.framesHelper.lastFrame, true);
+    this.playButton.setAttribute('disabled', "true");
+    this.pauseButton.removeAttribute('disabled');
+    this.stopButton.removeAttribute('disabled');
+
+    if (this.activeAnimation._paused)
+      this.activeAnimation.restart();
+    else {
+      this.context.activeBlock.framesHelper.processAnimationFrames();
+      this.activeAnimation = this.context.scene.beginAnimation(this.rootBlock.sceneObject, 0, this.context.activeBlock.framesHelper.lastFrame, true);
+    }
+
+    this.activateSliderUpdates();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {
