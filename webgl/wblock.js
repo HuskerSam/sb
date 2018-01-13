@@ -320,8 +320,11 @@ class wBlock {
 
     this.__applyFirstFrameValues();
 
-    if (this.parent)
+    if (this.parent) {
       this.sceneObject.parent = this.parent.sceneObject;
+    } else {
+      this.framesHelper.updateAnimation()
+    }
   }
   __renderMeshBlock() {
     let fields = sDataDefinition.bindingFields('mesh');
@@ -378,7 +381,7 @@ class wBlock {
     }
 
     let containerKey = this.blockKey;
-    if (! this.staticLoad) {
+    if (!this.staticLoad) {
       containerKey = this.blockTargetKey;
     }
     let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', containerKey);
@@ -558,6 +561,6 @@ class wBlock {
   }
 
   _renderAnimations() {
-    
+
   }
 }

@@ -23,9 +23,6 @@ class cDialogBlock extends cDialogSuper {
     this._splitViewAlive = true;
     this.initScene = true;
     this.childKey = null;
-    this.activeAnimation = {
-      _paused: false
-    };
 
     this.rootElementDom = this.dataViewContainer.querySelector('.main-band-details-element');
     this.rootElementDom.addEventListener('click', e => this.childBand.setKey(null));
@@ -56,6 +53,12 @@ class cDialogBlock extends cDialogSuper {
     gAPPP.a.modelSets['frame'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
     this._addAnimationContext();
+
+    this.stopButton.setAttribute('disabled', "true");
+    this.pauseButton.setAttribute('disabled', "true");
+  }
+  get activeAnimation() {
+    return this.rootBlock.framesHelper.activeAnimation;
   }
   _addAnimationContext() {
     this.playButton = this.dialog.querySelector('.play-button');
@@ -72,9 +75,11 @@ class cDialogBlock extends cDialogSuper {
     this.playButton.removeAttribute('disabled');
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
-    this.activeAnimation.stop();
     this.activeAnimation.goToFrame(0);
-
+    this.activeAnimation.stop();
+    this.activeAnimation.reset();
+    this.rootBlock.framesHelper.playState = 0;
+    
     this.activateSliderUpdates(false);
   }
   activateSliderUpdates(updateSlider = true) {
@@ -91,12 +96,11 @@ class cDialogBlock extends cDialogSuper {
     let frame = Math.round(this.animateSlider.value / 100.0 * this.context.activeBlock.framesHelper.lastFrame);
     let paused = this.activeAnimation._paused;
 
-    if (! paused)
+    if (!paused)
       this.activeAnimation.pause();
 
     this.activeAnimation.goToFrame(frame);
-console.log(frame);
-    if (! paused)
+    if (!paused)
       this.activeAnimation.restart();
   }
   _updateSliderPosition(startTimer = true) {
@@ -106,11 +110,13 @@ console.log(frame);
     this.animateSlider.value = elapsed / total * 100.0;
   }
   pauseAnimation() {
+
     this.playButton.removeAttribute('disabled');
     this.stopButton.removeAttribute('disabled');
     this.pauseButton.setAttribute('disabled', "true");
 
     this.activeAnimation.pause();
+    this.rootBlock.framesHelper.playState = 2;
     this.activateSliderUpdates(false);
   }
   playAnimation() {
@@ -121,10 +127,12 @@ console.log(frame);
     if (this.activeAnimation._paused)
       this.activeAnimation.restart();
     else {
-      this.context.activeBlock.framesHelper.processAnimationFrames();
-      this.activeAnimation = this.context.scene.beginAnimation(this.rootBlock.sceneObject, 0, this.context.activeBlock.framesHelper.lastFrame, true);
+      let frameIndex = this.animateSlider.value / 100.0 * this.context.activeBlock.framesHelper.lastFrame;
+      console.log(frameIndex);
+      this.rootBlock.framesHelper.startAnimation(frameIndex);
     }
 
+    this.rootBlock.framesHelper.playState = 1;
     this.activateSliderUpdates();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {

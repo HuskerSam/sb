@@ -13,6 +13,8 @@ class wFrames {
     this.maxLength = 0;
     this.runningState = {};
     this.fps = 30;
+    this.activeAnimation = null;
+    this.playState = 0;
     this.meshValues = {
       scalingX: 1,
       scalingY: 1,
@@ -213,14 +215,45 @@ class wFrames {
   }
   compileFrames() {
     if (!this.parentKey)
-      this.rawFrames = {};
-    else
-      this.rawFrames = this.fireSet.queryCache('parentKey', this.parentKey);
+      return;
+
+    this.rawFrames = this.fireSet.queryCache('parentKey', this.parentKey);
 
     this._sortFrames();
     this._calcFrameTimes();
     this._processFrames();
+    this.updateAnimation();
     this._notifyHandlers();
+  }
+  updateAnimation() {
+    if (this.parentBlock.parent === null) {
+      if (!this.parentBlock.sceneObject)
+        return;
+      this.processAnimationFrames();
+
+      let frameIndex = 0;
+      let restartAnimation = false;
+      if (this.activeAnimation) {
+        frameIndex = this.activeAnimation._runtimeAnimations[0].currentFrame;
+        if (this.activeAnimation.animationStarted)
+          restartAnimation = true;
+      }
+      this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
+
+      if (this.playState === 0) {
+          this.activeAnimation.stop();
+          this.activeAnimation.reset();
+      } else if (this.playState === 1) {
+        this.activeAnimation.goToFrame(frameIndex);
+      } else {
+        this.activeAnimation.goToFrame(frameIndex);
+        this.activeAnimation.pause();
+      }
+    }
+  }
+  startAnimation(frameIndex) {
+    this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
+    this.activeAnimation.goToFrame(frameIndex);
   }
   _notifyHandlers() {
     for (let i in this.updateHandlers)
