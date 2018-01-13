@@ -156,7 +156,7 @@ class cBandFrames extends cBandSuper {
     else
       this.framesHelper = new wFrames(this.parent.context);
 
-    this.framesHelper._sortFrames();
+    this.framesHelper.compileFrames();
     this.childrenContainer.removeChild(this.addFrameButton);
     this.__applyFrameOrderToDom();
     this.childrenContainer.appendChild(this.addFrameButton);
@@ -182,6 +182,7 @@ class cBandFrames extends cBandSuper {
   _updateProcessedRowUI(key) {
     let groupDisplays = this.frameDataViewInstances[key].dataPanel.groupDisplays;
     let resultFrames = this.framesHelper.processedFrames;
+    console.log(resultFrames);
 
     groupDisplays.time.innerHTML = '';
     groupDisplays.scale.innerHTML = '';
