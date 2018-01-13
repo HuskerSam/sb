@@ -79,7 +79,7 @@ class cDialogBlock extends cDialogSuper {
     this.activeAnimation.stop();
     this.activeAnimation.reset();
     this.rootBlock.framesHelper.playState = 0;
-    
+
     this.activateSliderUpdates(false);
   }
   activateSliderUpdates(updateSlider = true) {
@@ -123,16 +123,7 @@ class cDialogBlock extends cDialogSuper {
     this.playButton.setAttribute('disabled', "true");
     this.pauseButton.removeAttribute('disabled');
     this.stopButton.removeAttribute('disabled');
-
-    if (this.activeAnimation._paused)
-      this.activeAnimation.restart();
-    else {
-      let frameIndex = this.animateSlider.value / 100.0 * this.context.activeBlock.framesHelper.lastFrame;
-      console.log(frameIndex);
-      this.rootBlock.framesHelper.startAnimation(frameIndex);
-    }
-
-    this.rootBlock.framesHelper.playState = 1;
+    this.rootBlock.playAnimation(this.animateSlider.value);
     this.activateSliderUpdates();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {

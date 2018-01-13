@@ -225,31 +225,32 @@ class wFrames {
     this.updateAnimation();
     this._notifyHandlers();
   }
-  updateAnimation() {
-    if (this.parentBlock.parent === null) {
-      if (!this.parentBlock.sceneObject)
-        return;
-      this.processAnimationFrames();
+  updateAnimation(playState = null) {
+    if (playState === null)
+      playState = this.playState;
 
-      let frameIndex = 0;
-      let restartAnimation = false;
-      if (this.activeAnimation) {
-        frameIndex = this.activeAnimation._runtimeAnimations[0].currentFrame;
-        if (this.activeAnimation.animationStarted)
-          restartAnimation = true;
-      }
-      this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
+    if (!this.parentBlock.sceneObject)
+      return;
+    this.processAnimationFrames();
 
-      if (this.playState === 0) {
-          this.activeAnimation.stop();
-          this.activeAnimation.reset();
-      } else if (this.playState === 1) {
-        this.activeAnimation.goToFrame(frameIndex);
-      } else {
-        this.activeAnimation.goToFrame(frameIndex);
-        this.activeAnimation.pause();
-      }
+    let frameIndex = 0;
+    if (this.activeAnimation) {
+      frameIndex = this.activeAnimation._runtimeAnimations[0].currentFrame;
     }
+    this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
+
+    if (this.playState === 0) {
+      this.activeAnimation.stop();
+      this.activeAnimation.reset();
+    } else if (this.playState === 1) {
+      this.activeAnimation.goToFrame(frameIndex);
+    } else {
+      this.activeAnimation.goToFrame(frameIndex);
+      this.activeAnimation.pause();
+    }
+
+    for (let i in this.parentBlock.childBlocks)
+      this.parentBlock.childBlocks[i].framesHelper.updateAnimation(playState);
   }
   startAnimation(frameIndex) {
     this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
@@ -440,7 +441,6 @@ class wFrames {
     this.parentBlock = parentBlock;
     this.compileFrames();
   }
-
   processAnimationFrames() {
     this.animations = {};
     let fields = sDataDefinition.bindingFieldsLookup('frame');

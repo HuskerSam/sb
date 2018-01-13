@@ -559,8 +559,22 @@ class wBlock {
 
     return width + ' x ' + depth + ' x ' + height;
   }
+  get activeAnimation() {
+    if (! this.framesHelper.activeAnimation)
+      this.framesHelper.compileFrames();
+    return this.framesHelper.activeAnimation;
+  }
+  playAnimation(startPercent = 0) {
+    if (this.activeAnimation._paused)
+      this.activeAnimation.restart();
+    else {
+      let frameIndex = startPercent / 100.0 * this.framesHelper.lastFrame;
+      this.framesHelper.startAnimation(frameIndex);
+    }
 
-  _renderAnimations() {
+    this.framesHelper.playState = 1;
 
+    for (let i in this.childBlocks)
+      this.childBlocks[i].playAnimation(startPercent);
   }
 }

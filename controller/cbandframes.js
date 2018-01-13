@@ -182,7 +182,6 @@ class cBandFrames extends cBandSuper {
   _updateProcessedRowUI(key) {
     let groupDisplays = this.frameDataViewInstances[key].dataPanel.groupDisplays;
     let resultFrames = this.framesHelper.processedFrames;
-    console.log(resultFrames);
 
     groupDisplays.time.innerHTML = '';
     groupDisplays.scale.innerHTML = '';
