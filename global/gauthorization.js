@@ -28,6 +28,8 @@ class gAuthorization {
     this.modelSets['scene'] = new mFirebaseList('scene', true);
     this.fireSets.push(this.modelSets['scene']);
     this.modelSets['scene'].childListeners.push(v => gAPPP.handleDataUpdate());
+    this.modelSets['project'] = new mFirebaseList('project', true);
+    this.fireSets.push(this.modelSets['project']);
 
     document.querySelector(signInQS).addEventListener('click', e => this.signIn(), false);
     document.querySelector(signOutQS).addEventListener('click', e => this.signOut(), false);

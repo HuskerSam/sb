@@ -69,16 +69,13 @@ class cDialogBlock extends cDialogSuper {
     this.pauseButton.addEventListener('click', e => this.pauseAnimation());
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
-    this.animateSlider.addEventListener('input', e => this.setAnimationFromSlider());
+    this.animateSlider.addEventListener('input', e => this.rootBlock.setAnimationPosition(this.animateSlider.value));
   }
   stopAnimation() {
     this.playButton.removeAttribute('disabled');
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
-    this.activeAnimation.goToFrame(0);
-    this.activeAnimation.stop();
-    this.activeAnimation.reset();
-    this.rootBlock.framesHelper.playState = 0;
+    this.rootBlock.stopAnimation();
 
     this.activateSliderUpdates(false);
   }
@@ -92,17 +89,6 @@ class cDialogBlock extends cDialogSuper {
         this.activateSliderUpdates();
       }, 50);
   }
-  setAnimationFromSlider(e) {
-    let frame = Math.round(this.animateSlider.value / 100.0 * this.context.activeBlock.framesHelper.lastFrame);
-    let paused = this.activeAnimation._paused;
-
-    if (!paused)
-      this.activeAnimation.pause();
-
-    this.activeAnimation.goToFrame(frame);
-    if (!paused)
-      this.activeAnimation.restart();
-  }
   _updateSliderPosition(startTimer = true) {
     let elapsed = this.activeAnimation._runtimeAnimations[0].currentFrame;
     let total = this.activeAnimation.toFrame;
@@ -115,8 +101,7 @@ class cDialogBlock extends cDialogSuper {
     this.stopButton.removeAttribute('disabled');
     this.pauseButton.setAttribute('disabled', "true");
 
-    this.activeAnimation.pause();
-    this.rootBlock.framesHelper.playState = 2;
+    this.rootBlock.pauseAnimation();
     this.activateSliderUpdates(false);
   }
   playAnimation() {

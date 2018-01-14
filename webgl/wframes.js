@@ -45,6 +45,8 @@ class wFrames {
     if (root)
       if (this.orderedKeys.length > 0)
         frameData = this.rawFrames[this.orderedKeys[0]];
+      else
+        frameData = this.parentBlock.blockRenderData;
 
     if (!root) {
       frameData = this.parentBlock.blockRenderData;

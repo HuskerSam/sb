@@ -38,6 +38,12 @@ html, body {
   display: none;
 }
 
+#workspaces-select {
+  float:left;
+  background: rgba(255,255,255, .5);
+  margin-left: .2em;
+  margin-top: .1em;
+}
 .split, .split-flex {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -807,6 +813,7 @@ input[type=range]::-webkit-slider-thumb {
   border: none;
   background: none;
   font-size: 1.3em;
+  color: black;
 }
 .canvas-actions input[type="range"] {
   width: calc(100% - 6.5em);

@@ -281,6 +281,7 @@ class wBlock {
     if (this.staticLoad) {
       this.blockRenderData = this.blockRawData;
       this.blockRenderData.childType = this.staticType;
+      this.framesHelper.parentBlock = this;
       this._renderBlock();
     } else
       this._loadBlock();
@@ -560,7 +561,7 @@ class wBlock {
     return width + ' x ' + depth + ' x ' + height;
   }
   get activeAnimation() {
-    if (! this.framesHelper.activeAnimation)
+    if (!this.framesHelper.activeAnimation)
       this.framesHelper.compileFrames();
     return this.framesHelper.activeAnimation;
   }
@@ -576,5 +577,27 @@ class wBlock {
 
     for (let i in this.childBlocks)
       this.childBlocks[i].playAnimation(startPercent);
+  }
+  setAnimationPosition(currentPercent = 0) {
+    let frame = Math.round(currentPercent / 100.0 * this.framesHelper.lastFrame);
+    this.activeAnimation.goToFrame(frame);
+
+    for (let i in this.childBlocks)
+      this.childBlocks[i].setAnimationPosition(currentPercent);
+  }
+  pauseAnimation() {
+    this.activeAnimation.pause();
+    this.framesHelper.playState = 2;
+    for (let i in this.childBlocks)
+      this.childBlocks[i].pauseAnimation();
+  }
+  stopAnimation() {
+    this.activeAnimation.goToFrame(0);
+    this.activeAnimation.stop();
+    this.activeAnimation.reset();
+    this.framesHelper.playState = 0;
+
+    for (let i in this.childBlocks)
+      this.childBlocks[i].stopAnimation();
   }
 }
