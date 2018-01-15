@@ -514,7 +514,7 @@ class wBlock {
       if (field.type === 'material') {
         if (this.parent)
           if (this.blockRawData.inheritMaterial)
-            value = this.parent.blockRawData.materialName;
+            value = this.parent.blockRenderData.materialName;
 
         let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
         let m;
