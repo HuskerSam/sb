@@ -10,6 +10,7 @@ class wBlock {
     this.inheritMaterial = true;
     this.blockRenderData = {};
     this.blockRawData = {};
+    this.currentMaterialName = '';
     this.containerDimensions = {};
     this.containerCenter = {
       x: 0,
@@ -69,10 +70,13 @@ class wBlock {
       }
     }
 
-    if (tag === 'material' || tag === 'texture') {
-      if (materialList.indexOf(this.blockRenderData.materialName) !== -1)
-        return this.setData();
+    //    if (tag === 'material' || tag === 'texture') {
+    if (this.currentMaterialName !== this.blockRenderData.materialName) {
+      this.currentMaterialName = this.blockRenderData.materialName;
+      //    if (materialList.indexOf(this.blockRenderData.materialName) !== -1)
+      return this.setData();
     }
+    //  }
 
     if (type === 'add' && tag === 'blockchild')
       if (values.parentKey === this._blockKey)
@@ -489,9 +493,25 @@ class wBlock {
   }
   __updateObjectValue(field, value, object) {
     try {
-      if (value === '') return;
       if (value === undefined) return;
       if (field.type === undefined) return GLOBALUTIL.path(object, field.contextObjectField, value);
+
+      if (field.type === 'material') {
+        if (this.parent)
+          if (this.blockRawData.inheritMaterial)
+            value = this.parent.blockRenderData.materialName;
+
+        let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
+        let m;
+        if (!tD)
+          m = new BABYLON.StandardMaterial('material');
+        else
+          m = this.__material(tD);
+        this.context.__setMaterialOnObj(object, m);
+        return;
+      }
+
+      if (value === '') return;
 
       if (field.type === 'visibility') return this.context.__fadeObject(object, value);
 
@@ -509,21 +529,6 @@ class wBlock {
 
         let t = this.__texture(tD);
         return GLOBALUTIL.path(object, field.contextObjectField, t);
-      }
-
-      if (field.type === 'material') {
-        if (this.parent)
-          if (this.blockRawData.inheritMaterial)
-            value = this.parent.blockRenderData.materialName;
-
-        let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
-        let m;
-        if (!tD)
-          m = new BABYLON.StandardMaterial('material');
-        else
-          m = this.__material(tD);
-        this.context.__setMaterialOnObj(object, m);
-        return;
       }
 
       //default

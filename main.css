@@ -822,6 +822,7 @@ input[type=range]::-webkit-slider-thumb {
   margin-left: .2em;
   margin-top: .1em;
   pointer-events: auto;
+  float:left;
 }
 
 #project-panel {
