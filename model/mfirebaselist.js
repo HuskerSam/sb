@@ -1,7 +1,9 @@
 class mFirebaseList extends mFirebaseSuper {
-  constructor(tag, datalist = false) {
+  constructor(workspaceid, tag, datalist = false) {
     super(tag, false);
 
+    if (workspaceid)
+      this.referencePath = '/project/' + workspaceid + '/' + tag + '/';
     this.keyList = true;
     this.fireDataByKey = {};
     this.fireDataValuesByKey = {};

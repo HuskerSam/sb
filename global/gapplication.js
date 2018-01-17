@@ -31,6 +31,11 @@ class gApplication {
           dialog.close();
       }
     });
+
+    this.initialUILoad = true;
+    this.waitingOnProfileLoad = false;
+  }
+  _initDataUI() {
     this.toolbarItems['scene'] = new cBandRecords('scene', 'Scenes');
     this.toolbarItems['block'] = new cBandRecords('block', 'Blocks');
     this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes');
@@ -51,6 +56,7 @@ class gApplication {
     this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
     this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material', true);
     this.dialogs['scene-create'] = new cDialogCreateItem('scene', 'Add Scene');
+
     this.dialogs['user-profile'] = new cDialogUserProfile(document.querySelector('#user-profile-settings-dialog'), 'userProfile');
 
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => this._expandAllBands());
@@ -59,16 +65,32 @@ class gApplication {
     this.fontSizeSlider = document.querySelector('#html-main-page-size-slider');
     this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile());
-
-    this.initialUILoad = true;
   }
   handleDataUpdate() {
+    if (this.initialUILoad) {
+      if (!this.waitingOnProfileLoad) {
+        setTimeout(() => this._handleDataUpdate(), 0);
+        this.waitingOnProfileLoad = true;
+      }
+    } else {
+      this._handleDataUpdate();
+    }
+  }
+  _handleDataUpdate() {
     if (this.initialUILoad) {
       setTimeout(() => {
         for (let i in this.toolbarItems)
           if (gAPPP.a.profile['mainRecordsExpanded' + i])
             this.toolbarItems[i].toggleChildBandDisplay(true);
       }, 50);
+
+      let workspace = this.a.profile.selectedWorkspace;
+      if (!workspace)
+        workspace = 'default';
+
+      this.a.initProjectModels(workspace);
+      this._initDataUI();
+      this.a._activateModels();
     }
 
     this.initialUILoad = false;

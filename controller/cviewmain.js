@@ -5,7 +5,9 @@ class cViewMain {
     this.context.activate(null);
     this.key = null;
     this.loadedSceneURL = '';
-    this.fireSet = gAPPP.a.modelSets['scene'];
+    gAPPP.a.modelSets['project'].childListeners.push((values, type, fireData) => this.updateProjectList(values, type, fireData));
+    this.workplacesSelect = document.querySelector('#workspaces-select');
+    this.workplacesSelect.addEventListener('input', e => this.selectProject());
   }
   _updateSelectedScene() {
     if (gAPPP.activeContext !== this.context)
@@ -16,7 +18,7 @@ class cViewMain {
       return;
 
     if (this.key !== profileKey) {
-      let sceneData = this.fireSet.getCache(profileKey);
+      let sceneData = gAPPP.a.modelSets['scene'].getCache(profileKey);
       if (sceneData) {
         this.key = profileKey;
         let url = sceneData.url;
@@ -26,5 +28,21 @@ class cViewMain {
         }
       }
     }
+  }
+  updateProjectList(values, type, fireData) {
+    let records = gAPPP.a.modelSets['project'].fireDataValuesByKey;
+    let html = '';
+
+    for (let i in records)
+      html += `<option value=${i}>${records[i].title}</option>`;
+    this.workplacesSelect.innerHTML = html;
+    this.workplacesSelect.value = gAPPP.a.profile.selectedWorkspace;
+  }
+  selectProject() {
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'selectedWorkspace',
+      newValue: gAPPP.mV.workplacesSelect.value
+    }]);
+    setTimeout(() => location.reload(), 100);
   }
 }

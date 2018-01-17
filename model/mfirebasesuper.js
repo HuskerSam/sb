@@ -1,7 +1,7 @@
 class mFirebaseSuper {
   constructor(tag, activate) {
     this.tag = tag;
-    this.referencePath = 'data_' + this.tag;
+    this.referencePath = this.tag;
     this.active = false;
     this.childListeners = [];
     this.values = {};
@@ -24,6 +24,7 @@ class mFirebaseSuper {
       this.referencePath = referencePath;
 
     this.active = true;
+    this.pendingLoad = false;
     this._createFireDBRef();
   }
   _createFireDBRef() {
@@ -57,7 +58,7 @@ class mFirebaseSuper {
   }
   notifyChildren(fireData, type) {
     for (let i in this.childListeners)
-        this.childListeners[i](fireData !== null ? this.getCache(fireData.key) : null, type, fireData);
+      this.childListeners[i](fireData !== null ? this.getCache(fireData.key) : null, type, fireData);
   }
   getCache(key) {
     return this.values;

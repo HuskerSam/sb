@@ -41,7 +41,8 @@
       <div style="display:none;" id="sb-floating-toolbar-item-template">
         <div class="sb-floating-toolbar-item">
           <div class="button-wrapper">
-            <span class="button-title"></span><div class="option-buttons">
+            <span class="button-title"></span>
+            <div class="option-buttons">
               <button class="btn-toolbar-icon sb-floating-toolbar-expand-btn"><i class="material-icons">expand_less</i></button>
               <button class="btn-toolbar-icon sb-floating-toolbar-create-btn"><i class="material-icons">add</i></button>
             </div>
@@ -77,12 +78,15 @@
             <div style="clear:both"></div>
             <div class="fields-container"></div>
             <hr>
-            <div id="workspace-operations">
-              <input id="new-workspace-name" />
-              <button>Add Workspace</button>
-              <br>
-              <button>Remove Current Workspace</button>
-
+            <div id="project-panel">
+              <div id="workspace-operations">
+                Workspaces
+                <br>
+                <input id="new-workspace-name" />
+                <button id="add-workspace-button">Add Workspace</button>
+                <br>
+                <button id="remove-workspace">Remove Current Workspace</button>
+              </div>
             </div>
           </div>
         </div>
@@ -241,6 +245,7 @@
   <script src="model/mfirebasesuper.js"></script>
   <script src="model/mfirebaselist.js"></script>
   <script src="model/mfirebaseprofile.js"></script>
+  <script src="model/mfirebaseproject.js"></script>
 
   <script src="webgl/wframes.js"></script>
   <script src="webgl/wblock.js"></script>

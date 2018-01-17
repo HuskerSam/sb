@@ -8,27 +8,7 @@ class gAuthorization {
     this.modelSets['userProfile'] = new mFirebaseProfile();
     this.fireSets.push(this.modelSets['userProfile']);
 
-    this.modelSets['mesh'] = new mFirebaseList('mesh', true);
-    this.fireSets.push(this.modelSets['mesh']);
-    this.modelSets['shape'] = new mFirebaseList('shape', true);
-    this.fireSets.push(this.modelSets['shape']);
-    this.modelSets['block'] = new mFirebaseList('block', true);
-    this.modelSets['block'].childSets.push('blockchild');
-    this.modelSets['block'].childSets.push('frame');
-    this.fireSets.push(this.modelSets['block']);
-    this.modelSets['blockchild'] = new mFirebaseList('blockchild', false);
-    this.modelSets['blockchild'].childSets.push('frame');
-    this.fireSets.push(this.modelSets['blockchild']);
-    this.modelSets['frame'] = new mFirebaseList('frame', false);
-    this.fireSets.push(this.modelSets['frame']);
-    this.modelSets['texture'] = new mFirebaseList('texture', true);
-    this.fireSets.push(this.modelSets['texture']);
-    this.modelSets['material'] = new mFirebaseList('material', true);
-    this.fireSets.push(this.modelSets['material']);
-    this.modelSets['scene'] = new mFirebaseList('scene', true);
-    this.fireSets.push(this.modelSets['scene']);
-    this.modelSets['scene'].childListeners.push(v => gAPPP.handleDataUpdate());
-    this.modelSets['project'] = new mFirebaseList('project', true);
+    this.modelSets['project'] = new mFirebaseProject('project', true);
     this.fireSets.push(this.modelSets['project']);
 
     document.querySelector(signInQS).addEventListener('click', e => this.signIn(), false);
@@ -52,10 +32,7 @@ class gAuthorization {
       if (searchParams.get('reset') === 'true')
         this.resetProfile();
 
-      //save user data to firebase (WWWHHHYYYY?)
-      firebase.database().ref('users/' + this.currentUser.uid).set(this.currentUser.toJSON());
-
-      this._activateModels();
+      this.loadProfile();
     } else {
       this.currentUser = null;
       this.loggedIn = false;
@@ -98,8 +75,9 @@ class gAuthorization {
   resetProfile() {
     this.modelSets['userProfile'].setObject({
       fontSize: '12',
-      canvasColor: '.4,.9,1',
-      lightIntensity: '.8'
+      canvasColor: '.4,.9,.5',
+      lightIntensity: '.8',
+      selectedWorkspace: 'default'
     });
   }
   _activateModels() {
@@ -109,5 +87,31 @@ class gAuthorization {
   _deactivateModels() {
     for (let c in this.fireSets)
       this.fireSets[c].deactivate();
+  }
+  initProjectModels(workspaceId) {
+    this.modelSets['mesh'] = new mFirebaseList(workspaceId, 'mesh', true);
+    this.fireSets.push(this.modelSets['mesh']);
+    this.modelSets['shape'] = new mFirebaseList(workspaceId, 'shape', true);
+    this.fireSets.push(this.modelSets['shape']);
+    this.modelSets['block'] = new mFirebaseList(workspaceId, 'block', true);
+    this.modelSets['block'].childSets.push('blockchild');
+    this.modelSets['block'].childSets.push('frame');
+    this.fireSets.push(this.modelSets['block']);
+    this.modelSets['blockchild'] = new mFirebaseList(workspaceId, 'blockchild', false);
+    this.modelSets['blockchild'].childSets.push('frame');
+    this.fireSets.push(this.modelSets['blockchild']);
+    this.modelSets['frame'] = new mFirebaseList(workspaceId, 'frame', false);
+    this.fireSets.push(this.modelSets['frame']);
+    this.modelSets['texture'] = new mFirebaseList(workspaceId, 'texture', true);
+    this.fireSets.push(this.modelSets['texture']);
+    this.modelSets['material'] = new mFirebaseList(workspaceId, 'material', true);
+    this.fireSets.push(this.modelSets['material']);
+    this.modelSets['scene'] = new mFirebaseList(workspaceId, 'scene', true);
+    this.fireSets.push(this.modelSets['scene']);
+    this.modelSets['scene'].childListeners.push(v => gAPPP.handleDataUpdate());
+  }
+  loadProfile() {
+    this.modelSets['userProfile'].activate();
+    this.modelSets['project'].activate();
   }
 }
