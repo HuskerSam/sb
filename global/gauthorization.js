@@ -77,7 +77,16 @@ class gAuthorization {
       fontSize: '12',
       canvasColor: '.4,.9,.5',
       lightIntensity: '.8',
-      selectedWorkspace: 'default'
+      selectedWorkspace: 'default',
+      cameraVector: '15,15,15',
+      showBoundsBox: true,
+      showFloorGrid: true,
+      showForceWireframe: false,
+      showSceneGuides: true,
+      cameraType: "Arc Rotate",
+      cameraAimCenter: true,
+      gridAndGuidesDepth: 15,
+      lightVector: '-.5,.5,.5'
     });
   }
   _activateModels() {

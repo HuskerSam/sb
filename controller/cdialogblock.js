@@ -56,6 +56,9 @@ class cDialogBlock extends cDialogSuper {
 
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
+
+    this.canvasActions = this.dialog.querySelector('.canvas-actions');
+    this.canvasActions.style.display = '';
   }
   get activeAnimation() {
     return this.rootBlock.framesHelper.activeAnimation;
@@ -90,8 +93,12 @@ class cDialogBlock extends cDialogSuper {
       }, 50);
   }
   _updateSliderPosition(startTimer = true) {
-    let elapsed = this.activeAnimation._runtimeAnimations[0].currentFrame;
-    let total = this.activeAnimation.toFrame;
+    let elapsed = 0;
+    let total = 100;
+    if (this.activeAnimation) {
+      elapsed = this.activeAnimation._runtimeAnimations[0].currentFrame;
+      total = this.activeAnimation.toFrame;
+    }
 
     this.animateSlider.value = elapsed / total * 100.0;
   }

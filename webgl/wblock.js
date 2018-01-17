@@ -571,11 +571,13 @@ class wBlock {
     return this.framesHelper.activeAnimation;
   }
   playAnimation(startPercent = 0) {
-    if (this.activeAnimation._paused)
-      this.activeAnimation.restart();
-    else {
-      let frameIndex = startPercent / 100.0 * this.framesHelper.lastFrame;
-      this.framesHelper.startAnimation(frameIndex);
+    if (this.activeAnimation) {
+      if (this.activeAnimation._paused)
+        this.activeAnimation.restart();
+      else {
+        let frameIndex = startPercent / 100.0 * this.framesHelper.lastFrame;
+        this.framesHelper.startAnimation(frameIndex);
+      }
     }
 
     this.framesHelper.playState = 1;
@@ -584,22 +586,27 @@ class wBlock {
       this.childBlocks[i].playAnimation(startPercent);
   }
   setAnimationPosition(currentPercent = 0) {
-    let frame = Math.round(currentPercent / 100.0 * this.framesHelper.lastFrame);
-    this.activeAnimation.goToFrame(frame);
+    if (this.activeAnimation) {
+      let frame = Math.round(currentPercent / 100.0 * this.framesHelper.lastFrame);
+      this.activeAnimation.goToFrame(frame);
+    }
 
     for (let i in this.childBlocks)
       this.childBlocks[i].setAnimationPosition(currentPercent);
   }
   pauseAnimation() {
-    this.activeAnimation.pause();
+    if (this.activeAnimation)
+      this.activeAnimation.pause();
     this.framesHelper.playState = 2;
     for (let i in this.childBlocks)
       this.childBlocks[i].pauseAnimation();
   }
   stopAnimation() {
-    this.activeAnimation.goToFrame(0);
-    this.activeAnimation.stop();
-    this.activeAnimation.reset();
+    if (this.activeAnimation) {
+      this.activeAnimation.goToFrame(0);
+      this.activeAnimation.stop();
+      this.activeAnimation.reset();
+    }
     this.framesHelper.playState = 0;
 
     for (let i in this.childBlocks)

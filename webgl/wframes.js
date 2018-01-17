@@ -235,22 +235,23 @@ class wFrames {
       return;
     this.processAnimationFrames();
 
-    let frameIndex = 0;
-    if (this.activeAnimation) {
-      frameIndex = this.activeAnimation._runtimeAnimations[0].currentFrame;
-    }
-    this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
+    if (this.processedFrames.length > 1) {
+      let frameIndex = 0;
+      if (this.activeAnimation) {
+        frameIndex = this.activeAnimation._runtimeAnimations[0].currentFrame;
+      }
+      this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
 
-    if (this.playState === 0) {
-      this.activeAnimation.stop();
-      this.activeAnimation.reset();
-    } else if (this.playState === 1) {
-      this.activeAnimation.goToFrame(frameIndex);
-    } else {
-      this.activeAnimation.goToFrame(frameIndex);
-      this.activeAnimation.pause();
+      if (this.playState === 0) {
+        this.activeAnimation.stop();
+        this.activeAnimation.reset();
+      } else if (this.playState === 1) {
+        this.activeAnimation.goToFrame(frameIndex);
+      } else {
+        this.activeAnimation.goToFrame(frameIndex);
+        this.activeAnimation.pause();
+      }
     }
-
     for (let i in this.parentBlock.childBlocks)
       this.parentBlock.childBlocks[i].framesHelper.updateAnimation(playState);
   }
@@ -445,32 +446,35 @@ class wFrames {
   }
   processAnimationFrames() {
     this.animations = {};
+    this.animationsArray = [];
     let fields = sDataDefinition.bindingFieldsLookup('frame');
 
-    for (let i in this.frameAttributeFields) {
-      let fieldKey = this.frameAttributeFields[i];
-      let field = fields[fieldKey];
+    if (this.processedFrames.length < 2) {
 
-      this.animations[i] = new BABYLON.Animation(this.parentKey + i + 'anim',
-        field.contextObjectField, this.fps, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    } else {
+      for (let i in this.frameAttributeFields) {
+        let fieldKey = this.frameAttributeFields[i];
+        let field = fields[fieldKey];
 
-      let fieldKeys = [];
-      for (let ii in this.processedFrames) {
-        let frame = this.processedFrames[ii];
+        this.animations[i] = new BABYLON.Animation(this.parentKey + i + 'anim',
+          field.contextObjectField, this.fps, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
-        let frameNumber = Math.round(frame.actualTime / 1000.0 * this.fps);
+        let fieldKeys = [];
+        for (let ii in this.processedFrames) {
+          let frame = this.processedFrames[ii];
 
-        fieldKeys.push({
-          frame: frameNumber,
-          value: frame.values[fieldKey].value
-        });
+          let frameNumber = Math.round(frame.actualTime / 1000.0 * this.fps);
+
+          fieldKeys.push({
+            frame: frameNumber,
+            value: frame.values[fieldKey].value
+          });
+        }
+        this.animations[i].setKeys(fieldKeys);
       }
-      this.animations[i].setKeys(fieldKeys);
+      for (let i in this.animations)
+        this.animationsArray.push(this.animations[i]);
     }
-
-    this.animationsArray = [];
-    for (let i in this.animations)
-      this.animationsArray.push(this.animations[i]);
     this.parentBlock.sceneObject.animations = this.animationsArray;
     this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps)
   }
