@@ -75,6 +75,13 @@ class wFrames {
   }
   __frameFromTimeToken(timeToken) {
     timeToken = timeToken.trim();
+    let easingFunction = 'n';
+    let timeParts = timeToken.split(':');
+    if (timeParts.length > 1) {
+      timeToken = timeParts[0].trim();
+      easingFunction = timeParts[1].trim().toLowerCase();
+    }
+
     if (timeToken === '')
       timeToken = '0++';
 
@@ -143,7 +150,8 @@ class wFrames {
       autoTime,
       timeMS,
       timeToken,
-      timeOffsetType
+      timeOffsetType,
+      easingFunction
     };
   }
   __getFrame(index) {
@@ -452,6 +460,7 @@ class wFrames {
     if (this.processedFrames.length < 2) {
 
     } else {
+      let eF = this.processedFrames[0].frameStash.easingFunction;
       for (let i in this.frameAttributeFields) {
         let fieldKey = this.frameAttributeFields[i];
         let field = fields[fieldKey];
@@ -471,6 +480,20 @@ class wFrames {
           });
         }
         this.animations[i].setKeys(fieldKeys);
+
+        let eFunc = new BABYLON.SineEase();
+        if (eF === 'eio') {
+          eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+          this.animations[i].setEasingFunction(eFunc);
+        }
+        if (eF === 'ei') {
+          eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEIN);
+          this.animations[i].setEasingFunction(eFunc);
+        }
+        if (eF === 'eo') {
+          eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEOUT);
+          this.animations[i].setEasingFunction(eFunc);
+        }
       }
       for (let i in this.animations)
         this.animationsArray.push(this.animations[i]);
