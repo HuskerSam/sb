@@ -86,12 +86,15 @@ class cDialogBlock extends cDialogSuper {
   }
   downloadVideo() {
     this.stopAnimation();
-    this.captureStream = this.canvas.captureStream(30);
+    this.captureStream = this.canvas.captureStream(33);
     this.record();
     this.playAnimation();
+
+    let length = this.activeAnimation.toFrame * 1000 / this.rootBlock.framesHelper.fps;
+
     setTimeout(() => {
       this.stop();
-    }, 5000);
+    }, length);
   }
   record() {
     let options = {

@@ -144,6 +144,8 @@ class wBlock {
     this.sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
   }
   __applyFirstFrameValues() {
+    if (!this.sceneObject)
+      return;
     let values = this.framesHelper.firstFrameValues();
 
     let fields = sDataDefinition.bindingFields('baseMesh');
@@ -326,7 +328,8 @@ class wBlock {
     this.__applyFirstFrameValues();
 
     if (this.parent) {
-      this.sceneObject.parent = this.parent.sceneObject;
+      if (this.sceneObject)
+        this.sceneObject.parent = this.parent.sceneObject;
     } else {
       this.framesHelper.updateAnimation()
     }
@@ -538,7 +541,11 @@ class wBlock {
     }
   }
   __texture(values) {
-    let texture = new BABYLON.Texture(values['url'], this.context.scene);
+    let texture;
+    if (values.isVideo)
+      texture = new BABYLON.VideoTexture("video", [values['url']], this.context.scene, false);
+    else
+      texture = new BABYLON.Texture(values['url'], this.context.scene);
 
     if (GLOBALUTIL.isNumeric(values['vScale']))
       texture.vScale = Number(values['vScale']);

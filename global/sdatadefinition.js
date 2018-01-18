@@ -21,7 +21,7 @@ class sDataDefinition {
     let result = {};
     for (let i in arr)
       result[arr[i].fireSetField] = arr[i];
-      
+
     return result;
   }
   static bindingFieldsCloned(tag) {
@@ -167,13 +167,19 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'options',
   dataListId: 'applicationdynamicshapelistlookuplist'
 }, {
+  title: 'is Video',
+  fireSetField: 'isVideo',
+  contextObjectField: 'isVideo',
+  type: 'boolean',
+  group: 'options'
+}, {
   title: 'has Alpha',
   fireSetField: 'hasAlpha',
   contextObjectField: 'hasAlpha',
   type: 'boolean',
   group: 'options'
 }, {
-  title: 'Url (Image)',
+  title: 'Url',
   fireSetField: 'url',
   contextObjectField: null,
   type: 'url',
@@ -738,7 +744,8 @@ __defaultData['texture'] = {
   uOffset: 0.0,
   vScale: 1.0,
   uScale: 1.0,
-  hasAlpha: false
+  hasAlpha: false,
+  isVideo: false
 };
 __defaultData['material'] = {
   title: 'Material',
