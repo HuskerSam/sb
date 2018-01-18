@@ -29,6 +29,14 @@ class cDialogUserProfile extends cDialogSuper {
     });
   }
   deleteProject() {
-    alert('phone home ET');
+    if (confirm('Are you sure you want to delete this project?'))
+      if (confirm('Really?  Really sure?  this won\'t come back...')) {
+        gAPPP.a.modelSets['project'].removeByKey(gAPPP.mV.workplacesSelect.value);
+        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+          field: 'selectedWorkspace',
+          newValue: 'default'
+        }]);
+        setTimeout(() => location.reload(), 100);
+      }
   }
 }

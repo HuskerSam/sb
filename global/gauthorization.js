@@ -75,7 +75,7 @@ class gAuthorization {
   resetProfile() {
     this.modelSets['userProfile'].setObject({
       fontSize: '12',
-      canvasColor: '.4,.9,.5',
+      canvasColor: '.1,.3,.1',
       lightIntensity: '.8',
       selectedWorkspace: 'default',
       cameraVector: '15,15,15',
