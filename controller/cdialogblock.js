@@ -70,6 +70,8 @@ class cDialogBlock extends cDialogSuper {
     this.stopButton.addEventListener('click', e => this.stopAnimation());
     this.pauseButton = this.dialog.querySelector('.pause-button');
     this.pauseButton.addEventListener('click', e => this.pauseAnimation());
+    this.downloadVideoButton = this.dialog.querySelector('.video-button');
+    this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
     this.animateSlider.addEventListener('input', e => this.rootBlock.setAnimationPosition(this.animateSlider.value));
@@ -81,6 +83,47 @@ class cDialogBlock extends cDialogSuper {
     this.rootBlock.stopAnimation();
 
     this.activateSliderUpdates(false);
+  }
+  downloadVideo() {
+    this.stopAnimation();
+    this.captureStream = this.canvas.captureStream(30);
+    this.record();
+    this.playAnimation();
+    setTimeout(() => {
+      this.stop();
+    }, 5000);
+  }
+  record() {
+    let options = {
+      mimeType: 'video/webm'
+    };
+    this.recordedBlobs = [];
+    this.recStream = new MediaStream();
+    this.canvasStream = this.canvas.captureStream();
+    //this.recStream.addTrack(this.stream.getAudioTracks()[0]);
+    this.recStream.addTrack(this.canvasStream.getVideoTracks()[0]);
+    console.dir(this.recStream);
+    this.mediaRecorder = new MediaRecorder(this.recStream, options);
+    this.mediaRecorder.ondataavailable = event => this.recordedBlobs.push(event.data);
+    this.mediaRecorder.start(33);
+  }
+  stop() {
+    this.recStream.getTracks().forEach(track => track.stop());
+
+    let recordedBlob = new Blob(this.recordedBlobs, {
+      type: "video/webm"
+    });
+    var url = window.URL.createObjectURL(recordedBlob);
+    var a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'canvaWithAudio.webm';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 100);
   }
   activateSliderUpdates(updateSlider = true) {
     this._updateSliderPosition();
@@ -103,7 +146,6 @@ class cDialogBlock extends cDialogSuper {
     this.animateSlider.value = elapsed / total * 100.0;
   }
   pauseAnimation() {
-
     this.playButton.removeAttribute('disabled');
     this.stopButton.removeAttribute('disabled');
     this.pauseButton.setAttribute('disabled', "true");
