@@ -37,8 +37,8 @@ class cBandRecords extends cBandSuper {
     dd.setAttribute('class', `${this.tag}-${key} bs-menu-clipper-wrapper`);
     dd.appendChild(outer);
 
-    if (this.tag === 'scene') {
-      this.__addMenuItem(ul, '<b>Select</b>', e => this._selectScene(e, key));
+    if (this.tag === 'block') {
+      this.__addMenuItem(ul, '<b>Select</b>', e => this._selectBlock(e, key));
     }
 
     this.__addMenuItem(ul, 'Edit', e => this._showEditPopup(e, key));
@@ -81,11 +81,11 @@ class cBandRecords extends cBandSuper {
       return;
     gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
-  _selectScene(e, key) {
+  _selectBlock(e, key) {
     let updates = [{
-      field: 'selectedSceneKey',
+      field: 'selectedBlockKey',
       newValue: key,
-      oldValue: gAPPP.a.profile.selectedSceneKey
+      oldValue: gAPPP.a.profile.selectedBlockKey
     }];
     gAPPP.a.modelSets['userProfile'].commitUpdateList(updates);
   }

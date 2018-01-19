@@ -115,9 +115,6 @@ class gAuthorization {
     this.fireSets.push(this.modelSets['texture']);
     this.modelSets['material'] = new mFirebaseList(workspaceId, 'material', true);
     this.fireSets.push(this.modelSets['material']);
-    this.modelSets['scene'] = new mFirebaseList(workspaceId, 'scene', true);
-    this.fireSets.push(this.modelSets['scene']);
-    this.modelSets['scene'].childListeners.push(v => gAPPP.handleDataUpdate());
   }
   loadProfile() {
     this.modelSets['userProfile'].activate();

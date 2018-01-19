@@ -210,18 +210,6 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'texturescale',
   displayType: 'number'
 }];
-__localStaticStorageForBindingFields['scene'] = [{
-  title: 'Title',
-  fireSetField: 'title',
-  contextObjectField: null,
-  group: 'title'
-}, {
-  title: 'Scene Url',
-  fireSetField: 'url',
-  contextObjectField: null,
-  type: 'url',
-  group: 'options'
-}];
 __localStaticStorageForBindingFields['userProfile'] = [{
   title: 'Font Family',
   fireSetField: 'fontFamily',
@@ -669,6 +657,42 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: 'material',
   group: 'material',
   type: 'material'
+}, {
+  title: 'Light Source',
+  fireSetField: 'lightSource',
+  contextObjectField: null,
+  type: 'boolean',
+  group: 'light'
+}, {
+  title: 'Light Origin',
+  fireSetField: 'lightOrigin',
+  contextObjectField: null,
+  group: 'light'
+}, {
+  title: 'Light Intensity',
+  fireSetField: 'lightIntensity',
+  contextObjectField: null,
+  group: 'light'
+},{
+  title: 'Camera Position',
+  fireSetField: 'cameraOrigin',
+  contextObjectField: null,
+  group: 'camera'
+}, {
+  title: 'Parent Block',
+  fireSetField: 'cameraParentBlock',
+  contextObjectField: null,
+  group: 'camera'
+}, {
+  title: 'Aim at Position',
+  fireSetField: 'cameraTargetVector',
+  contextObjectField: null,
+  group: 'camera'
+}, {
+  title: 'Aim at Block',
+  fireSetField: 'cameraTargetBlock',
+  contextObjectField: null,
+  group: 'camera'
 }];
 __localStaticStorageForBindingFields['blockchild'] = [{
   title: 'Type',
@@ -730,12 +754,6 @@ __defaultData['mesh'] = {
   rotationX: 0.0,
   rotationY: 0.0,
   rotationZ: 0.0
-};
-__defaultData['scene'] = {
-  title: 'Scene',
-  url: '',
-  type: 'url',
-  size: 0
 };
 __defaultData['texture'] = {
   title: 'Texture',

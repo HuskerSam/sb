@@ -24,7 +24,8 @@ class cBandOptions {
 
     this.fireSet.childListeners.push((values, type, fireData) =>{
       this.fireFields._handleDataChange(values, type, fireData);
-      gAPPP.activeContext.refreshFocus();
+      if (gAPPP.activeContext)
+        gAPPP.activeContext.refreshFocus();
     });
   }
   activate() {

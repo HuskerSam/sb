@@ -31,6 +31,17 @@ class wBlock {
   get blockKey() {
     return this._blockKey;
   }
+  _addSkyBox() {
+    let skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
+    let skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+    skyboxMaterial.backFaceCulling = false;
+    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
+    skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+    skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+    skyboxMaterial.disableLighting = true;
+    skybox.material = skyboxMaterial;
+  }
   handleDataUpdate(tag, values, type, fireData) {
     if (tag === 'frame') {
       if (values.parentKey === this._blockKey) {
@@ -328,10 +339,12 @@ class wBlock {
     this.__applyFirstFrameValues();
 
     if (this.parent) {
-      if (this.sceneObject)
+      if (this.sceneObject) {
         this.sceneObject.parent = this.parent.sceneObject;
+        this.framesHelper.updateAnimation();
+      }
     } else {
-      this.framesHelper.updateAnimation()
+      this.framesHelper.updateAnimation();
     }
   }
   __renderMeshBlock() {

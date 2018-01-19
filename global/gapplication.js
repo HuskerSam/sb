@@ -14,7 +14,6 @@ class gApplication {
     ];
     this._initShapesList();
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
-    this.mV = new cViewMain();
 
     this.sceneToolsButton = document.querySelector('#canvas-settings-tool-button');
     this.sceneToolsContainer = document.querySelector('.global-floating-toolbar .toolbar-content');
@@ -36,7 +35,6 @@ class gApplication {
     this.waitingOnProfileLoad = false;
   }
   _initDataUI() {
-    this.toolbarItems['scene'] = new cBandRecords('scene', 'Scenes');
     this.toolbarItems['block'] = new cBandRecords('block', 'Blocks');
     this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes');
     this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes');
@@ -48,16 +46,15 @@ class gApplication {
     this.dialogs['block-edit'] = new cDialogBlock();
     this.dialogs['material-edit'] = new cDialogEditItem('material', 'Material Editor');
     this.dialogs['texture-edit'] = new cDialogEditItem('texture', 'Texture Options');
-    this.dialogs['scene-edit'] = new cDialogEditItem('scene', 'Scene Options');
 
     this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', 'Add Mesh');
     this.dialogs['shape-create'] = new cDialogCreateItem('shape', 'Add Shape', true);
     this.dialogs['block-create'] = new cDialogCreateItem('block', 'Add Block', true);
     this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
     this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material', true);
-    this.dialogs['scene-create'] = new cDialogCreateItem('scene', 'Add Scene');
 
     this.dialogs['user-profile'] = new cDialogUserProfile(document.querySelector('#user-profile-settings-dialog'), 'userProfile');
+    this.mV = new cViewMain();
 
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => this._expandAllBands());
     document.querySelector('#collapse-all-toolbands').addEventListener('click', e => this._collaspseAllBands());
@@ -97,7 +94,7 @@ class gApplication {
     this.fontSizeSlider.value = this.a.profile.fontSize;
     this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
-    this.mV._updateSelectedScene();
+    this.mV._updateSelectedBlock();
   }
   resize() {
     if (this.activeContext)

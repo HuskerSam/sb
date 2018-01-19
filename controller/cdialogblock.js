@@ -239,6 +239,7 @@ class cDialogBlock extends cDialogSuper {
     this.toggleDetails();
   }
   close() {
+    this.stopAnimation();
     this.fireSet.renderImageUpdateNeeded = true;
     super.close();
   }
