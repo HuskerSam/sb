@@ -507,15 +507,25 @@ class wBlock {
     }
     return material;
   }
+  __getMaterialFromParent(value) {
+    let parent = this;
+
+    while (parent.parent) {
+      if (parent.blockRawData.inheritMaterial)
+        value = parent.parent.blockRenderData.materialName;
+
+      parent = parent.parent;
+    }
+
+    return value;
+  }
   __updateObjectValue(field, value, object) {
     try {
       if (value === undefined) return;
       if (field.type === undefined) return GLOBALUTIL.path(object, field.contextObjectField, value);
 
       if (field.type === 'material') {
-        if (this.parent)
-          if (this.blockRawData.inheritMaterial)
-            value = this.parent.blockRenderData.materialName;
+        value = this.__getMaterialFromParent(value);
 
         let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
         let m;

@@ -1,14 +1,14 @@
 class cViewMain {
   constructor() {
-    this.canvasDOM = document.querySelector('#renderCanvas');
-    this.context = new wContext(this.canvasDOM, true);
+    this.canvas = document.querySelector('#renderCanvas');
+    this.context = new wContext(this.canvas, true);
     this.context.activate(null);
     this.dialog = document.querySelector('#main-page');
     this.key = null;
     this.loadedSceneURL = '';
     gAPPP.a.modelSets['project'].childListeners.push((values, type, fireData) => this.updateProjectList(values, type, fireData));
     this.workplacesSelect = document.querySelector('#workspaces-select');
-    this.workplacesSelect.addEventListener('input', e => this.selectBlock());
+    this.workplacesSelect.addEventListener('input', e => this.selectProject());
 
     this._updateSelectedBlock();
 
@@ -30,7 +30,7 @@ class cViewMain {
     this._addAnimationContext();
 
     setTimeout(() => this._updateSelectedBlock(), 1);
-    
+
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
   }
