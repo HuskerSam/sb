@@ -680,7 +680,7 @@ __localStaticStorageForBindingFields['blockchild'] = [{
     mesh: 'meshdatatitlelookuplist',
     block: 'blockdatatitlelookuplist',
     shape: 'shapedatatitlelookuplist',
-    light: null,
+    light: 'lightsourceslist',
     camera: null
   },
   dataListId: 'meshdatatitlelookuplist'
@@ -693,7 +693,7 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   displayGroup: ['mesh', 'shape', 'block'],
   displayKey: 'childType'
 }, {
-  title: 'Inherit Ground Material',
+  title: 'Inherit Ground',
   fireSetField: 'inheritGround',
   contextObjectField: null,
   group: 'options',
@@ -701,22 +701,63 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   displayGroup: ['mesh', 'shape', 'block'],
   displayKey: 'childType'
 }, {
-  title: 'Light Source',
-  fireSetField: 'lightSource',
+  title: 'from',
+  fireSetField: 'lightFrom',
   contextObjectField: null,
+  group: 'light',
+  displayType: 'shortvector',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'direction',
+  fireSetField: 'lightDirection',
+  contextObjectField: null,
+  displayType: 'shortvector',
   group: 'light',
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
-  title: 'Light Origin',
-  fireSetField: 'lightOrigin',
-  contextObjectField: null,
-  group: 'light',
-  displayGroup: 'light',
-  displayKey: 'childType'
-}, {
-  title: 'Light Intensity',
+  title: 'intensity',
   fireSetField: 'lightIntensity',
+  contextObjectField: null,
+  group: 'lightsub',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'diffuse',
+  fireSetField: 'lightDiffuse',
+  contextObjectField: null,
+  group: 'lightsub',
+  displayType: 'shortVector',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'specular',
+  fireSetField: 'lightSpecular',
+  contextObjectField: null,
+  group: 'lightsub',
+  displayType: 'shortVector',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'ground color',
+  fireSetField: 'lightGroundColor',
+  contextObjectField: null,
+  group: 'lightsub',
+  displayType: 'shortVector',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'angle',
+  fireSetField: 'lightAngle',
+  contextObjectField: null,
+  group: 'light',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'decay',
+  fireSetField: 'lightDecay',
   contextObjectField: null,
   group: 'light',
   displayGroup: 'light',
@@ -737,7 +778,7 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   group: 'camera'
 }, {
   title: 'Aim at Position',
-  fireSetField: 'cameraTargetVector',
+  fireSetField: 'cameraAimTarget',
   contextObjectField: null,
   displayGroup: 'camera',
   displayKey: 'childType',
@@ -854,6 +895,17 @@ __defaultData['blockchild'] = {
   childType: 'mesh',
   childName: '',
   inheritMaterial: true,
+  inheritGround: true,
+  lightSource: '',
+  lightOrigin: '',
+  lightIntensity: '',
+  lightDiffuse: '',
+  lightSpecular: '',
+  cameraType: '',
+  cameraOrigin: '',
+  cameraTargetBlock: '',
+  cameraParentBlock: '',
+  cameraAimTarget: '',
   order: 0
 };
 __defaultData['frame'] = {

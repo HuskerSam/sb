@@ -27,6 +27,11 @@ class cDialogUserProfile extends cDialogSuper {
     firebase.database().ref('project/' + key).set({
       title: newTitle
     });
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'selectedWorkspace',
+      newValue: key
+    }]);
+    setTimeout(() => location.reload(), 100);
   }
   deleteProject() {
     if (confirm('Are you sure you want to delete this project?'))

@@ -84,7 +84,7 @@ class wBlock {
 
     if (tag === 'blockchild') {
       if (this.cachedInheritGround !== values.inheritGround) {
-    //    this.cachedInheritMaterial = values.inheritMaterial;
+        //    this.cachedInheritMaterial = values.inheritMaterial;
         this.cachedInheritGround = values.inheritGround;
         //this.setData(values);
         this._addGround();
@@ -327,8 +327,13 @@ class wBlock {
       return;
     }
 
-    if (values)
+    if (values) {
       this.blockRawData = values;
+      if (values.childType === 'light') {
+        this.staticLoad = true;
+        this.staticType = values.childType;
+      }
+    }
     if (this.staticLoad) {
       this.blockRenderData = this.blockRawData;
       this.blockRenderData.childType = this.staticType;
@@ -369,6 +374,8 @@ class wBlock {
       this.__renderShapeBlock();
     if (this.blockRawData.childType === 'block')
       this.__renderContainerBlock();
+    if (this.blockRawData.childType === 'light')
+      this.__renderLightBlock();
 
     this.__applyFirstFrameValues();
 
@@ -452,6 +459,60 @@ class wBlock {
 
     if (oldContainerMesh !== null)
       oldContainerMesh.dispose();
+  }
+  __renderLightBlock() {
+    let oldContainerMesh = null;
+    let from = GLOBALUTIL.getVector(this.blockRawData['lightFrom'], 100, 100, 100);
+    let dir = GLOBALUTIL.getVector(this.blockRawData['lightDirection'], 0, -1, 0);
+    let intensity = this.blockRawData['lightIntensity'];
+    let angle = this.blockRawData['lightAngle'];
+    let decay = this.blockRawData['lightDecay'];
+    let light = this.blockRawData['childName'];
+
+    if (this.lightObject) {
+      this.lightObject.dispose();
+      this.lightObject = null;
+    }
+
+    if (light === 'Hemispheric') {
+      dir = GLOBALUTIL.getVector(this.blockRawData['lightDirection'], 0, 1, 0);
+      this.lightObject = new BABYLON.HemisphericLight("HemiLight", dir, this.context.scene);
+    }
+    if (light === 'Point') {
+      this.lightObject = new BABYLON.PointLight("PointLight", from, this.context.scene);
+    }
+    if (light === 'Directional') {
+      this.lightObject = new BABYLON.DirectionalLight("DirectionalLight", dir, this.context.scene);
+    }
+    if (light === 'Spot') {
+      if (angle)
+        angle = Number(intensity);
+      else
+        angle = Math.PI / 2;
+      if (decay)
+        decay = Number(decay);
+      else
+        decay = 1;
+      from = GLOBALUTIL.getVector(this.blockRawData['lightFrom'], 100, 100, 100);
+      dir = GLOBALUTIL.getVector(this.blockRawData['lightDirection'], -100, -100, -100);
+
+      this.lightObject = new BABYLON.SpotLight("SpotLight", from, dir, angle, decay, this.context.scene);
+    }
+
+    let specular = GLOBALUTIL.color(this.blockRawData['lightSpecular']);
+    let diffuse = GLOBALUTIL.color(this.blockRawData['lightDiffuse']);
+    let gS = this.blockRawData['lightGroundColor'];
+    if (! gS)
+      gS = '0,0,0';
+    let groundC = GLOBALUTIL.color(gS);
+    this.lightObject.diffuse = diffuse;
+    this.lightObject.specular = specular;
+    this.lightObject.groundColor = groundC;
+
+    if (intensity === '')
+      this.lightObject.intensity = 1;
+    else
+      this.lightObject.intensity = Number(intensity);
   }
   __updateChild(key, data) {
     if (!this.childBlocks[key])
