@@ -362,7 +362,15 @@ class cPanelData {
         else
           continue;
 
+        let show = false;
+        if (Array.isArray(innerField.displayGroup)) {
+          if (innerField.displayGroup.indexOf(group) !== -1)
+            show = true;
+        } else
         if (innerField.displayGroup === group)
+          show = true;
+
+        if (show)
           innerField.domContainer.style.display = 'inline-block';
         else
           innerField.domContainer.style.display = 'none';
@@ -381,9 +389,10 @@ class cPanelData {
       let title = innerField.titlesByKey[keyValue];
       let lists = innerField.listsByKey[keyValue];
       if (!title)
-        title = ""
+        title = "";
       innerField.domLabel.querySelector('span').innerHTML = title;
-      innerField.dom.setAttribute('list', lists);
+      if (lists !== null)
+        innerField.dom.setAttribute('list', lists);
     }
   }
 

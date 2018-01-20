@@ -654,42 +654,6 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: null,
   type: 'material',
   group: 'ground'
-}, {
-  title: 'Light Source',
-  fireSetField: 'lightSource',
-  contextObjectField: null,
-  type: 'boolean',
-  group: 'light'
-}, {
-  title: 'Light Origin',
-  fireSetField: 'lightOrigin',
-  contextObjectField: null,
-  group: 'light'
-}, {
-  title: 'Light Intensity',
-  fireSetField: 'lightIntensity',
-  contextObjectField: null,
-  group: 'light'
-},{
-  title: 'Camera Position',
-  fireSetField: 'cameraOrigin',
-  contextObjectField: null,
-  group: 'camera'
-}, {
-  title: 'Parent Block',
-  fireSetField: 'cameraParentBlock',
-  contextObjectField: null,
-  group: 'camera'
-}, {
-  title: 'Aim at Position',
-  fireSetField: 'cameraTargetVector',
-  contextObjectField: null,
-  group: 'camera'
-}, {
-  title: 'Aim at Block',
-  fireSetField: 'cameraTargetBlock',
-  contextObjectField: null,
-  group: 'camera'
 }];
 __localStaticStorageForBindingFields['blockchild'] = [{
   title: 'Type',
@@ -697,7 +661,8 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   contextObjectField: null,
   group: 'main',
   displayType: 'displayListFilter',
-  dataListId: 'blockchildtypelist'
+  dataListId: 'blockchildtypelist',
+  displayType: 'displayFilter'
 }, {
   title: 'Mesh',
   fireSetField: 'childName',
@@ -707,12 +672,16 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   titlesByKey: {
     mesh: 'Mesh',
     block: 'Block',
-    shape: 'Shape'
+    shape: 'Shape',
+    light: 'Light',
+    camera: 'Camera'
   },
   listsByKey: {
     mesh: 'meshdatatitlelookuplist',
     block: 'blockdatatitlelookuplist',
-    shape: 'shapedatatitlelookuplist'
+    shape: 'shapedatatitlelookuplist',
+    light: null,
+    camera: null
   },
   dataListId: 'meshdatatitlelookuplist'
 }, {
@@ -720,7 +689,66 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   fireSetField: 'inheritMaterial',
   contextObjectField: null,
   group: 'options',
-  type: 'boolean'
+  type: 'boolean',
+  displayGroup: ['mesh', 'shape', 'block'],
+  displayKey: 'childType'
+}, {
+  title: 'Inherit Ground Material',
+  fireSetField: 'inheritGround',
+  contextObjectField: null,
+  group: 'options',
+  type: 'boolean',
+  displayGroup: ['mesh', 'shape', 'block'],
+  displayKey: 'childType'
+}, {
+  title: 'Light Source',
+  fireSetField: 'lightSource',
+  contextObjectField: null,
+  group: 'light',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'Light Origin',
+  fireSetField: 'lightOrigin',
+  contextObjectField: null,
+  group: 'light',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'Light Intensity',
+  fireSetField: 'lightIntensity',
+  contextObjectField: null,
+  group: 'light',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'Camera Position',
+  fireSetField: 'cameraOrigin',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  contextObjectField: null,
+  group: 'camera'
+}, {
+  title: 'Parent Block',
+  fireSetField: 'cameraParentBlock',
+  contextObjectField: null,
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  group: 'camera'
+}, {
+  title: 'Aim at Position',
+  fireSetField: 'cameraTargetVector',
+  contextObjectField: null,
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  group: 'camera'
+}, {
+  title: 'Aim at Block',
+  fireSetField: 'cameraTargetBlock',
+  contextObjectField: null,
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  group: 'camera'
 }];
 __localStaticStorageForBindingFields['frame'] = [{
   title: 'Time (ms)',
