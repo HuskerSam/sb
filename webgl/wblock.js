@@ -23,6 +23,7 @@ class wBlock {
       z: .5
     };
     this.framesHelper = new wFrames(this.context);
+    this.skyboxObject = null;
   }
   set blockKey(key) {
     this._blockKey = key;
@@ -32,15 +33,22 @@ class wBlock {
     return this._blockKey;
   }
   _addSkyBox() {
-    let skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
-    let skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+    if (this.skyboxObject)
+      this.skyboxObject.dispose();
+    this.skyboxObject = null;
+    if (!this.blockRawData.skybox)
+      return;
+    let skyboxPath = 'https://s3.amazonaws.com/sceneassets/skybox/' + this.blockRawData.skybox + '/skybox';
+    let skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, this.context.scene);
+    let skyboxMaterial = new BABYLON.StandardMaterial(skyboxPath, this.context.scene);
     skyboxMaterial.backFaceCulling = false;
-    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
+    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(skyboxPath, this.context.scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.disableLighting = true;
     skybox.material = skyboxMaterial;
+    this.skyboxObject = skybox;
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (tag === 'frame') {
@@ -381,10 +389,12 @@ class wBlock {
     let width = this.blockRenderData['width'];
     let height = this.blockRenderData['height'];
     let depth = this.blockRenderData['depth'];
+    let skybox = this.blockRenderData['skybox'];
 
     if (this.containerDimensions.width !== width ||
       this.containerDimensions.height !== height ||
-      this.containerDimensions.depth !== depth
+      this.containerDimensions.depth !== depth ||
+      this.skyboxCache !== skybox
     ) {
       oldContainerMesh = this.sceneObject;
       this.sceneObject = BABYLON.MeshBuilder.CreateBox(this._blockKey, {
@@ -399,6 +409,10 @@ class wBlock {
       this.containerDimensions.width = width;
       this.containerDimensions.height = height;
       this.containerDimensions.depth = depth;
+      this.skyboxCache = skybox;
+
+      if (!this.parent)
+        this._addSkyBox();
     }
 
     let containerKey = this.blockKey;
@@ -512,7 +526,8 @@ class wBlock {
 
     while (parent.parent) {
       if (parent.blockRawData.inheritMaterial)
-        value = parent.parent.blockRenderData.materialName;
+        if (parent.parent.blockRenderData.materialName)
+          value = parent.parent.blockRenderData.materialName;
 
       parent = parent.parent;
     }

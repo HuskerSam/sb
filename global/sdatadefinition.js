@@ -636,6 +636,12 @@ __localStaticStorageForBindingFields['block'] = [{
   displayType: 'number',
   group: 'main'
 }, {
+  title: 'Skybox',
+  fireSetField: 'skybox',
+  contextObjectField: null,
+  dataListId: 'skyboxlist',
+  group: 'skybox'
+}, {
   title: 'Center',
   fireSetField: 'centerVector',
   contextObjectField: null,
@@ -822,7 +828,7 @@ __defaultData['block'] = {
   width: 2,
   depth: 2,
   height: 1,
-  blockScale: 10,
+  skybox: '',
   children: {}
 };
 __defaultData['blockchild'] = {
