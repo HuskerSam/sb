@@ -184,6 +184,7 @@ __localStaticStorageForBindingFields['texture'] = [{
   contextObjectField: null,
   type: 'url',
   uploadType: 'texture',
+  dataListId: 'sbimageslist',
   group: 'url'
 }, {
   title: 'Offset v (0-1)',
@@ -618,6 +619,12 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: null,
   group: 'title'
 }, {
+  title: 'Material',
+  fireSetField: 'materialName',
+  contextObjectField: 'material',
+  group: 'material',
+  type: 'material'
+}, {
   title: 'Width',
   fireSetField: 'width',
   contextObjectField: null,
@@ -642,27 +649,11 @@ __localStaticStorageForBindingFields['block'] = [{
   dataListId: 'skyboxlist',
   group: 'skybox'
 }, {
-  title: 'Center',
-  fireSetField: 'centerVector',
+  title: 'Ground Material',
+  fireSetField: 'groundMaterial',
   contextObjectField: null,
-  group: 'center',
-  rangeMin: '-10',
-  rangeMax: '10',
-  rangeStep: '1'
-}, {
-  title: 'Direction',
-  fireSetField: 'directionVector',
-  contextObjectField: null,
-  group: 'direction',
-  rangeMin: '-1',
-  rangeMax: '1',
-  rangeStep: '.01'
-}, {
-  title: 'Material Name',
-  fireSetField: 'materialName',
-  contextObjectField: 'material',
-  group: 'material',
-  type: 'material'
+  type: 'material',
+  group: 'ground'
 }, {
   title: 'Light Source',
   fireSetField: 'lightSource',

@@ -290,19 +290,6 @@ class wContext {
         err => resolve(null));
     });
   }
-  _loadSceneTexture(textureData) {
-    return new Promise((resolve, reject) => {
-      let s = BABYLON.Mesh.CreateGround("ground1", 12, 12, 2, this.scene);
-      let material = new BABYLON.StandardMaterial('material', this.scene);
-      s.material = material;
-      resolve({
-        type: 'texture',
-        sceneObject: s,
-        material,
-        context: this
-      });
-    });
-  }
   _renderFocusDetails() {
     if (gAPPP.a.profile.showForceWireframe)
       this.scene.forceWireframe = true;

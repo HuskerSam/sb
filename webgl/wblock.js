@@ -11,7 +11,8 @@ class wBlock {
     this.blockRenderData = {};
     this.blockRawData = {};
     this.currentMaterialName = '';
-    this.containerDimensions = {};
+    this.containerFieldList = ['width', 'height', 'depth', 'skybox', 'groundMaterial'];
+    this.containerCache = {};
     this.containerCenter = {
       x: 0,
       y: 0,
@@ -24,6 +25,7 @@ class wBlock {
     };
     this.framesHelper = new wFrames(this.context);
     this.skyboxObject = null;
+    this.groundObject = null;
   }
   set blockKey(key) {
     this._blockKey = key;
@@ -49,6 +51,21 @@ class wBlock {
     skyboxMaterial.disableLighting = true;
     skybox.material = skyboxMaterial;
     this.skyboxObject = skybox;
+  }
+  _addGround() {
+    if (this.groundObject)
+      this.groundObject.dispose();
+    this.groundObject = null;
+    if (!this.blockRenderData.groundMaterial)
+      return;
+
+    let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', this.blockRenderData.groundMaterial);
+    if (!tD)
+      return;
+    this.groundObject = BABYLON.Mesh.CreateGround("ground1", this.blockRenderData.width, this.blockRenderData.depth, 1, this.context.scene, false);
+  //  this.groundObject.position.y = -1.0 * Number(this.blockRenderData.height) / 2.0;
+    this.groundObject.material = this.__material(tD);
+    this.groundObject.parent = this.sceneObject;
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (tag === 'frame') {
@@ -389,13 +406,16 @@ class wBlock {
     let width = this.blockRenderData['width'];
     let height = this.blockRenderData['height'];
     let depth = this.blockRenderData['depth'];
-    let skybox = this.blockRenderData['skybox'];
 
-    if (this.containerDimensions.width !== width ||
-      this.containerDimensions.height !== height ||
-      this.containerDimensions.depth !== depth ||
-      this.skyboxCache !== skybox
-    ) {
+    let fieldDirty = false;
+    for (let i in this.containerFieldList) {
+      let f = this.containerFieldList[i];
+      if (this.containerCache[f] !== this.blockRenderData[f]) {
+        fieldDirty = true;
+        this.containerCache[f] = this.blockRenderData[f];
+      }
+    }
+    if (fieldDirty) {
       oldContainerMesh = this.sceneObject;
       this.sceneObject = BABYLON.MeshBuilder.CreateBox(this._blockKey, {
         width,
@@ -406,13 +426,11 @@ class wBlock {
       material.alpha = 0;
       this.sceneObject.material = material;
 
-      this.containerDimensions.width = width;
-      this.containerDimensions.height = height;
-      this.containerDimensions.depth = depth;
-      this.skyboxCache = skybox;
-
-      if (!this.parent)
+      if (!this.parent) {
         this._addSkyBox();
+      }
+
+      this._addGround();
     }
 
     let containerKey = this.blockKey;
@@ -579,11 +597,15 @@ class wBlock {
     }
   }
   __texture(values) {
+    let url = values['url'];
     let texture;
+    if (url.substring(0, 3) === 'sb:')
+      url = 'https://s3.amazonaws.com/sceneassets/sbtextures/' + url.substring(3);
+
     if (values.isVideo)
-      texture = new BABYLON.VideoTexture("video", [values['url']], this.context.scene, false);
+      texture = new BABYLON.VideoTexture("video", [url], this.context.scene, false);
     else
-      texture = new BABYLON.Texture(values['url'], this.context.scene);
+      texture = new BABYLON.Texture(url, this.context.scene);
 
     if (GLOBALUTIL.isNumeric(values['vScale']))
       texture.vScale = Number(values['vScale']);
