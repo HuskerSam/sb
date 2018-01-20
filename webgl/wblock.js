@@ -274,7 +274,15 @@ class wBlock {
   loadMesh() {
     return new Promise((resolve, reject) => {
       let path = gAPPP.storagePrefix;
-      let filename = this.context._url(this.blockRenderData['url']);
+      let url = this.blockRenderData['url'];
+      let filename = '';
+      let texture;
+      if (url.substring(0, 3) === 'sb:') {
+        path = 'https://s3.amazonaws.com/sceneassets/sbmeshes/';
+        filename = url.substring(3);
+      } else
+        filename = this.context._url(url);
+
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
         (newMeshes, particleSystems, skeletons) => {
           this.dispose();
@@ -502,7 +510,7 @@ class wBlock {
     let specular = GLOBALUTIL.color(this.blockRawData['lightSpecular']);
     let diffuse = GLOBALUTIL.color(this.blockRawData['lightDiffuse']);
     let gS = this.blockRawData['lightGroundColor'];
-    if (! gS)
+    if (!gS)
       gS = '0,0,0';
     let groundC = GLOBALUTIL.color(gS);
     this.lightObject.diffuse = diffuse;

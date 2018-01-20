@@ -54,6 +54,7 @@ __localStaticStorageForBindingFields['mesh'] = [{
   contextObjectField: null,
   type: 'url',
   uploadType: 'mesh',
+  dataListId: 'sbmesheslist',
   group: 'url'
 }];
 __localStaticStorageForBindingFields['material'] = [{
