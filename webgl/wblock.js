@@ -507,6 +507,8 @@ class wBlock {
       this.lightObject = new BABYLON.SpotLight("SpotLight", from, dir, angle, decay, this.context.scene);
     }
 
+    if (! this.lightObject)
+      return;
     let specular = GLOBALUTIL.color(this.blockRawData['lightSpecular']);
     let diffuse = GLOBALUTIL.color(this.blockRawData['lightDiffuse']);
     let gS = this.blockRawData['lightGroundColor'];

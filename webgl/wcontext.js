@@ -150,7 +150,10 @@ class wContext {
     document.dispatchEvent(event);
 
     if (!timeoutCall) //do this twice - once after it renders a frame
-      setTimeout(() => this.refreshFocus(true), 50);
+    {
+        clearTimeout(this.delayFocus);
+        this.delayFocus = setTimeout(() => this.refreshFocus(true), 50);
+    }
   }
   loadSceneFromDomFile(file) {
     return new Promise((resolve, reject) => {

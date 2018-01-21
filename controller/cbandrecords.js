@@ -88,6 +88,7 @@ class cBandRecords extends cBandSuper {
       oldValue: gAPPP.a.profile.selectedBlockKey
     }];
     gAPPP.a.modelSets['userProfile'].commitUpdateList(updates);
+    gAPPP.mV._updateSelectedBlock(gAPPP.a.profile.selectedBlockKey);
   }
   _showEditPopup(e, key) {
     if (gAPPP.dialogs[this.tag + '-edit'])

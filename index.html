@@ -14,8 +14,10 @@
     </div>
   </div>
   <div id="main-page" style="display:none;">
+    <div id="renderLoadingCanvas" style="display:none;">LOADING...</div>
     <canvas id="renderCanvas"></canvas>
     <div class="canvas-actions">
+      <select class="camera-select"></select>
       <button class="btn play-button"><i class="material-icons">play_circle_outline</i></button>
       <button class="btn stop-button"><i class="material-icons">stop</i></button>
       <button class="btn pause-button"><i class="material-icons">pause_circle_outline</i></button>
@@ -139,6 +141,7 @@
           <div class="popup-canvas-wrapper">
             <canvas class="popup-canvas"></canvas>
             <div class="canvas-actions" style="display:none;">
+              <select class="camera-select"></select>
               <button class="btn play-button"><i class="material-icons">play_circle_outline</i></button>
               <button class="btn stop-button"><i class="material-icons">stop</i></button>
               <button class="btn pause-button"><i class="material-icons">pause_circle_outline</i></button>
@@ -352,6 +355,7 @@
   <script src="controller/cdialoguserprofile.js"></script>
   <script src="controller/cpanelhelpers.js"></script>
   <script src="controller/cpanellog.js"></script>
+  <script src="controller/cpanelcanvas.js"></script>
 </body>
 
 </html>

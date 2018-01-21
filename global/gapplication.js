@@ -88,13 +88,13 @@ class gApplication {
       this.a.initProjectModels(workspace);
       this._initDataUI();
       this.a._activateModels();
+      setTimeout(() => this.mV._updateSelectedBlock(gAPPP.a.profile.selectedBlockKey), 100);
     }
 
     this.initialUILoad = false;
     this.fontSizeSlider.value = this.a.profile.fontSize;
     this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
-    this.mV._updateSelectedBlock();
   }
   resize() {
     if (this.activeContext)
