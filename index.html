@@ -14,7 +14,7 @@
     </div>
   </div>
   <div id="main-page" style="display:none;">
-    <div id="renderLoadingCanvas" style="display:none;">LOADING...</div>
+    <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <canvas id="renderCanvas"></canvas>
     <div class="canvas-actions">
       <select class="camera-select"></select>
@@ -198,15 +198,24 @@
     <option>light</option>
     <option>camera</option>
   </datalist>
-  <datalist id="cameratypeoptionslist">
-    <option>Fixed Point</option>
-    <option>Arc Rotate</option>
-  </datalist>
   <datalist id="lightsourceslist">
     <option>Point</option>
     <option>Directional</option>
     <option>Spot</option>
     <option>Hemispheric</option>
+  </datalist>
+  <datalist id="camerasourceslist">
+    <option>Universal</option>
+    <option>FreeCamera</option>
+    <option>ArcRotate</option>
+    <option>FollowCamera</option>
+    <option>AnaglyphUniversalCamera</option>
+    <option>AnaglyphArcRotateCamera</option>
+    <option>DeviceOrientationCamera</option>
+    <option>VirtualJoysticksCamera</option>
+    <option>VRDeviceOrientationFreeCamera</option>
+    <option>VRDeviceOrientationArcRotateCamera</option>
+    <option>WebVRFreeCamera</option>
   </datalist>
   <datalist id="fontfamilydatalist">
     <option>Arial</option>

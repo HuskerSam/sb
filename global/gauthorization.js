@@ -84,7 +84,6 @@ class gAuthorization {
       showForceWireframe: false,
       showSceneGuides: true,
       cameraType: "Arc Rotate",
-      cameraAimCenter: true,
       gridAndGuidesDepth: 15,
       lightVector: '-.5,.5,.5'
     });

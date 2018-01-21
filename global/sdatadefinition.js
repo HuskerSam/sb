@@ -269,7 +269,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeStep: '.01',
   group: 'light'
 }, {
-  title: 'Origin',
+  title: 'Camera Vector',
   fireSetField: 'cameraVector',
   contextObjectField: null,
   displayType: 'longvector',
@@ -280,21 +280,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   floatRight: true,
   group: 'cameraType',
   paddingRight: '.5em'
-}, {
-  title: 'Camera Type',
-  fireSetField: 'cameraType',
-  contextObjectField: null,
-  group: 'cameraType',
-  dataListId: 'cameratypeoptionslist',
-  floatLeft: true
-}, {
-  title: 'Aim Center',
-  fireSetField: 'cameraAimCenter',
-  contextObjectField: null,
-  group: 'cameraType',
-  type: 'boolean',
-  floatLeft: true,
-  clearLeft: true
 }, {
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
@@ -682,7 +667,7 @@ __localStaticStorageForBindingFields['blockchild'] = [{
     block: 'blockdatatitlelookuplist',
     shape: 'shapedatatitlelookuplist',
     light: 'lightsourceslist',
-    camera: null
+    camera: 'camerasourceslist'
   },
   dataListId: 'meshdatatitlelookuplist'
 }, {
@@ -764,7 +749,14 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
-  title: 'Camera Position',
+  title: 'Name',
+  fireSetField: 'cameraName',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  contextObjectField: null,
+  group: 'camera'
+},  {
+  title: 'Position',
   fireSetField: 'cameraOrigin',
   displayGroup: 'camera',
   displayKey: 'childType',
@@ -903,6 +895,7 @@ __defaultData['blockchild'] = {
   lightDiffuse: '',
   lightSpecular: '',
   cameraType: '',
+  cameraName: '',
   cameraOrigin: '',
   cameraTargetBlock: '',
   cameraParentBlock: '',

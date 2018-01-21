@@ -11,6 +11,7 @@ class wBlock {
     this.blockRawData = {};
     this.currentMaterialName = '';
     this.containerFieldList = ['width', 'height', 'depth', 'skybox', 'groundMaterial'];
+    this.cameraList = [];
     this.containerCache = {};
     this.containerCenter = {
       x: 0,
@@ -465,6 +466,10 @@ class wBlock {
     for (let i in children)
       this.__updateChild(i, children[i]);
 
+    if (!this.parent) {
+      this.updateCamera();
+    }
+
     if (oldContainerMesh !== null)
       oldContainerMesh.dispose();
   }
@@ -507,7 +512,7 @@ class wBlock {
       this.lightObject = new BABYLON.SpotLight("SpotLight", from, dir, angle, decay, this.context.scene);
     }
 
-    if (! this.lightObject)
+    if (!this.lightObject)
       return;
     let specular = GLOBALUTIL.color(this.blockRawData['lightSpecular']);
     let diffuse = GLOBALUTIL.color(this.blockRawData['lightDiffuse']);
@@ -771,5 +776,34 @@ class wBlock {
 
     for (let i in this.childBlocks)
       this.childBlocks[i].stopAnimation();
+  }
+  updateCamera() {
+    let cameraList = this.traverseCameraList();
+    if (cameraList.join(',') !== this.cameraList.join(',')) {
+      let sel = gAPPP.mV.canvasHelper.cameraSelect;
+      let startValue = sel.value;
+      this.cameraList = cameraList;
+      let html = '';
+      for (let i in this.cameraList)
+        html += '<option>' + this.cameraList[i] + '</option>';
+
+      sel.innerHTML = html;
+      sel.value = startValue;
+      if (sel.selectedIndex === -1)
+        sel.selectedIndex = 0;
+    }
+  }
+  traverseCameraList(cameraList = null) {
+    if (cameraList === null){
+      cameraList = ['Arc Rotate', 'Fixed Point'];
+    }
+
+    if (this.blockRawData.childType === 'camera')
+      cameraList.push(this.blockRawData.cameraName);
+
+    for (let i in this.childBlocks)
+      this.childBlocks[i].traverseCameraList(cameraList);
+
+    return cameraList;
   }
 }
