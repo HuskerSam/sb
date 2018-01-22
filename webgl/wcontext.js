@@ -1,9 +1,9 @@
 class wContext {
-  constructor(canvas, initEngine) {
+  constructor(canvas, initEngine, canvasHelper = null) {
     this.ghostBlocks = {};
     this.light = null;
     this.camera = null;
-    this.cameraType = '';
+    this.cameraName = '';
     this.cameraVector = '';
     this._scene = null;
     this.activeBlock = null;
@@ -11,6 +11,7 @@ class wContext {
     this.engine = null;
     this.importedMeshes = [];
     this.importedMeshClones = [];
+    this.canvasHelper = canvasHelper;
 
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
@@ -224,18 +225,14 @@ class wContext {
   }
   _updateCamera() {
     let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 3, 15, 15);
-    let cameraType = gAPPP.a.profile.cameraType;
+    let cameraName = gAPPP.a.profile.cameraName;
 
-    if (cameraType !== this.cameraType || !this.camera) {
+    if (cameraName !== this.cameraName || !this.camera) {
       if (this.camera)
         this.camera.dispose();
 
-      if (cameraType === 'Arc Rotate')
-        this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera", 1, 0.8, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
-      else
-        this.camera = new BABYLON.FreeCamera("defaultSceneBuilderCamera", cameraVector, this.scene);
-
-      this.cameraType = cameraType;
+      this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera", .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
+      this.cameraName = cameraName;
       this.camera.attachControl(this.canvas, false);
 
       this.cameraVector = null;
@@ -243,11 +240,8 @@ class wContext {
 
     let strCameraVector = cameraVector.x + ',' + cameraVector.y + ',' + cameraVector.z;
     if (this.cameraVector !== strCameraVector) {
-      if (cameraType === 'Arc Rotate') {
+      if (cameraName === 'Arc Rotate') {
         this.camera.setPosition(cameraVector);
-      } else {
-        this.camera.position = cameraVector;
-        this.camera.setTarget(BABYLON.Vector3.Zero());
       }
       this.cameraVector = strCameraVector;
     }

@@ -6,6 +6,9 @@ class cDialogEditItem extends cDialogSuper {
     d.setAttribute('class', 'modal fade edit-modal');
     d.querySelector('.popup-title').innerHTML = title;
 
+    let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
+    d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
+
     super(d, tag);
 
     this._splitViewAlive = true;

@@ -7,7 +7,6 @@ class cBandOptions {
 
     this.panel = document.createElement('div');
     this.panel.style.display = 'none';
-    this.panel.style.float = 'left';
     this.panel.setAttribute('class', 'context-scene-tools-panel');
     this.panelContainer = container;
     this.panelContainer.appendChild(this.panel);

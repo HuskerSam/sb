@@ -11,7 +11,6 @@ class wBlock {
     this.blockRawData = {};
     this.currentMaterialName = '';
     this.containerFieldList = ['width', 'height', 'depth', 'skybox', 'groundMaterial'];
-    this.cameraList = [];
     this.containerCache = {};
     this.containerCenter = {
       x: 0,
@@ -556,7 +555,7 @@ class wBlock {
     if (options['size'])
       size = Number(options['size']);
 
-    let vectorData = vectorizeText(options['text'], renderCanvas, context2D, vectorOptions);
+    let vectorData = vectorizeText(options['text'], canvas, context2D, vectorOptions);
     let x = 0;
     let y = 0;
     let z = 0;
@@ -778,14 +777,16 @@ class wBlock {
       this.childBlocks[i].stopAnimation();
   }
   updateCamera() {
-    let cameraList = this.traverseCameraList();
-    if (cameraList.join(',') !== this.cameraList.join(',')) {
-      let sel = gAPPP.mV.canvasHelper.cameraSelect;
+    let cameras = this.traverseCameraList();
+    let camerasS = JSON.stringify(cameras);
+    if (camerasS !== this.cameraS) {
+      let sel = this.context.canvasHelper.cameraSelect;
       let startValue = sel.value;
-      this.cameraList = cameraList;
+      this.context.canvasHelper.cameraDetails = cameras;
+      this.context.canvasHelper.camerasS = camerasS;
       let html = '';
-      for (let i in this.cameraList)
-        html += '<option>' + this.cameraList[i] + '</option>';
+      for (let i in this.context.canvasHelper.cameraDetails)
+        html += `<option value="${i}">${this.context.canvasHelper.cameraDetails[i].cameraName}</option>`;
 
       sel.innerHTML = html;
       sel.value = startValue;
@@ -793,17 +794,16 @@ class wBlock {
         sel.selectedIndex = 0;
     }
   }
-  traverseCameraList(cameraList = null) {
-    if (cameraList === null){
-      cameraList = ['Arc Rotate', 'Fixed Point'];
-    }
+  traverseCameraList(cameras = null) {
+    if (cameras === null)
+      cameras = this.context.canvasHelper.defaultCameras;
 
     if (this.blockRawData.childType === 'camera')
-      cameraList.push(this.blockRawData.cameraName);
+      cameras[this._blockKey] = this.blockRawData;
 
     for (let i in this.childBlocks)
-      this.childBlocks[i].traverseCameraList(cameraList);
+      this.childBlocks[i].traverseCameraList(cameras);
 
-    return cameraList;
+    return cameras;
   }
 }

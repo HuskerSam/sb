@@ -1,9 +1,17 @@
 class cViewMain {
   constructor() {
-    this.canvas = document.querySelector('#renderCanvas');
+    this.dialog = document.querySelector('#main-page');
+
+    let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
+    this.dialog.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
+
+    this.canvas = this.dialog.querySelector('.popup-canvas');
     this.context = new wContext(this.canvas, true);
     this.context.activate(null);
-    this.dialog = document.querySelector('#main-page');
+
+    this.canvasActions = this.dialog.querySelector('.canvas-actions');
+    this.canvasActions.style.display = '';
+
     this.key = null;
     this.loadedSceneURL = '';
     gAPPP.a.modelSets['project'].childListeners.push((values, type, fireData) => this.updateProjectList(values, type, fireData));
@@ -26,6 +34,7 @@ class cViewMain {
       (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
 
     this.canvasHelper = new cPanelCanvas(this);
+    this.context.canvasHelper = this.canvasHelper;
     this.canvasHelper.hide();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {

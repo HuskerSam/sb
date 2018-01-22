@@ -15,15 +15,7 @@
   </div>
   <div id="main-page" style="display:none;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
-    <canvas id="renderCanvas"></canvas>
-    <div class="canvas-actions">
-      <select class="camera-select"></select>
-      <button class="btn play-button"><i class="material-icons">play_circle_outline</i></button>
-      <button class="btn stop-button"><i class="material-icons">stop</i></button>
-      <button class="btn pause-button"><i class="material-icons">pause_circle_outline</i></button>
-      <button class="btn video-button"><i class="material-icons">video_library</i></button>
-      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-    </div>
+    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div class="global-floating-toolbar">
       <button id="expand-all-toolbands" class="btn-toolbar-icon super-button-bar" style="float:left;">
         <i class="material-icons" style="transform: rotate(145deg)">rotate_right</i>
@@ -35,9 +27,6 @@
       <input type="range" min="7" max="36" id="html-main-page-size-slider">
       <button id="user-profile-settings-button" class="btn-toolbar-icon super-button-bar" style="float:right;">
         <i class="material-icons">settings_applications</i>
-      </button>
-      <button id="canvas-settings-tool-button" class="btn-toolbar-icon super-button-bar" style="float:right;margin-right:1em;">
-        <i class="material-icons">settings_brightness</i>
       </button>
       <button id="toolbar-render-log-button" class="btn-toolbar-icon super-button-bar" style="float:right;">
         <i class="material-icons">event_available</i>
@@ -133,21 +122,27 @@
     </div>
   </div>
 
+  <!-- CANVAS 3D PLAYER TEMPLATE -->
+  <div id="canvas-d3-player-template" style="display:none;">
+    <canvas class="popup-canvas"></canvas>
+    <div class="canvas-actions" style="display:none;">
+      <div class="expanded-toolbar-content"></div>
+      <select class="camera-select"></select>
+      <button class="btn camera-options"><i class="material-icons">settings_brightness</i></button>
+      <button class="btn play-button"><i class="material-icons">play_circle_outline</i></button>
+      <button class="btn stop-button"><i class="material-icons">stop</i></button>
+      <button class="btn pause-button"><i class="material-icons">pause_circle_outline</i></button>
+      <button class="btn video-button"><i class="material-icons">video_library</i></button>
+      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+    </div>
+  </div>
+
   <!-- OBJECT EDIT DIALOG -->
   <div id="scene-builder-edit-dialog-template" style="display:none;">
     <div class="modal-dialog">
       <div class="modal-body">
         <div class="popup-main-body">
           <div class="popup-canvas-wrapper">
-            <canvas class="popup-canvas"></canvas>
-            <div class="canvas-actions" style="display:none;">
-              <select class="camera-select"></select>
-              <button class="btn play-button"><i class="material-icons">play_circle_outline</i></button>
-              <button class="btn stop-button"><i class="material-icons">stop</i></button>
-              <button class="btn pause-button"><i class="material-icons">pause_circle_outline</i></button>
-              <button class="btn video-button"><i class="material-icons">video_library</i></button>
-              <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-            </div>
           </div>
           <div class="edit-popup-fields fields-container">
           </div>

@@ -15,11 +15,9 @@ class gApplication {
     this._initShapesList();
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
 
-    this.sceneToolsButton = document.querySelector('#canvas-settings-tool-button');
-    this.sceneToolsContainer = document.querySelector('.global-floating-toolbar .toolbar-content');
-    this.sceneTools = new cBandOptions(this.sceneToolsButton, this.sceneToolsContainer);
+    this.topExpandedContainer = document.querySelector('.global-floating-toolbar .toolbar-content');
     this.renderLogButton = document.querySelector('#toolbar-render-log-button');
-    this.renderLog = new cPanelLog(this.renderLogButton, this.sceneToolsContainer);
+    this.renderLog = new cPanelLog(this.renderLogButton, this.topExpandedContainer);
 
     window.addEventListener("resize", () => this.resize());
     document.addEventListener("keyup", e => {
@@ -185,8 +183,6 @@ class gApplication {
     for (let i in this.dialogs)
       if ($(this.dialogs[i].dialog).hasClass('in'))
         this.dialogs[i].close();
-    this.sceneTools.expanded = true;
-    this.sceneTools.toggle();
     this.renderLog.expanded = true;
     this.renderLog.toggle();
   }

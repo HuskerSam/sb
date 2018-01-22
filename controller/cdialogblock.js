@@ -6,6 +6,9 @@ class cDialogBlock extends cDialogSuper {
     d.setAttribute('class', 'modal fade edit-modal');
     d.querySelector('.popup-title').innerHTML = 'Block Editor';
 
+    let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
+    d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
+
     let editPanelTemplate = document.getElementById('cblock-editor-panel-template');
     let editPanel = document.createElement('div');
     editPanel.setAttribute('class', 'cblock-editor-wrapper');
@@ -53,8 +56,8 @@ class cDialogBlock extends cDialogSuper {
     gAPPP.a.modelSets['frame'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
 
-
     this.canvasHelper = new cPanelCanvas(this);
+    this.context.canvasHelper = this.canvasHelper;
 
     this.canvasActions = this.dialog.querySelector('.canvas-actions');
     this.canvasActions.style.display = '';

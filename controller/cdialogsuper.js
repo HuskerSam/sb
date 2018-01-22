@@ -42,7 +42,6 @@ class cDialogSuper {
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas)
       this.context = new wContext(this.canvas);
-
   }
   expandAll() {
     this.fireFields.helpers.expandAll();
@@ -59,6 +58,11 @@ class cDialogSuper {
         this.context.renderPreview(this.tag, this.key);
     }
     $(this.dialog).modal('hide');
+
+    if (this.canvasHelper) {
+      this.canvasHelper.sceneTools.expanded = true;
+      this.canvasHelper.sceneTools.toggle();
+    }
     gAPPP.mV.context.activate();
   }
   save() {
@@ -69,7 +73,7 @@ class cDialogSuper {
     $(this.dialog).modal('show');
 
     this.rotateState = gAPPP.a.profile.editFormRotateState;
-    if (! this.rotateState)
+    if (!this.rotateState)
       this.rotateState = 'vertical';
 
     this._showFocus();

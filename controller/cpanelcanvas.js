@@ -3,6 +3,8 @@ class cPanelCanvas {
     this.parent = parent;
     this._addAnimationContext();
     this.loadingScreen = this.dialog.querySelector('#renderLoadingCanvas');
+    this.cameraDetails = {};
+    this.camerasS = '';
   }
   get rootBlock() {
     return this.parent.rootBlock;
@@ -15,6 +17,13 @@ class cPanelCanvas {
   }
   get activeAnimation() {
     return this.parent.activeAnimation;
+  }
+  get defaultCameras() {
+    return {
+      default: {
+        cameraName: 'Arc Rotate (default)'
+      }
+    };
   }
   _addAnimationContext() {
     this.playButton = this.dialog.querySelector('.play-button');
@@ -30,6 +39,10 @@ class cPanelCanvas {
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
     this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
+
+    this.sceneToolsButton = this.dialog.querySelector('.camera-options');
+    this.sceneToolsContainer = this.dialog.querySelector('.expanded-toolbar-content');
+    this.sceneTools = new cBandOptions(this.sceneToolsButton, this.sceneToolsContainer);
 
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
@@ -125,11 +138,8 @@ class cPanelCanvas {
   }
   show() {
     this.loadingScreen.style.display = 'none';
-  //  this.canvas.style.visibility = 'visible';
   }
   hide() {
     this.loadingScreen.style.display = '';
-  //  this.canvas.style.visibility = 'hidden';
-  //  let abc = this.canvas.offsetHeight;
   }
 }

@@ -278,7 +278,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeMax: '100',
   rangeStep: '1',
   floatRight: true,
-  group: 'cameraType',
   paddingRight: '.5em'
 }, {
   title: 'Bounds',
@@ -894,7 +893,7 @@ __defaultData['blockchild'] = {
   lightIntensity: '',
   lightDiffuse: '',
   lightSpecular: '',
-  cameraType: '',
+  cameraName: '',
   cameraName: '',
   cameraOrigin: '',
   cameraTargetBlock: '',

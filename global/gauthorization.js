@@ -83,7 +83,7 @@ class gAuthorization {
       showFloorGrid: true,
       showForceWireframe: false,
       showSceneGuides: true,
-      cameraType: "Arc Rotate",
+      cameraName: "Default Camera",
       gridAndGuidesDepth: 15,
       lightVector: '-.5,.5,.5'
     });
