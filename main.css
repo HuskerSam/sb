@@ -815,7 +815,7 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: auto;
 }
 
-.canvas-actions .play-button, .canvas-actions .pause-button, .canvas-actions .stop-button, .canvas-actions .video-button, .canvas-actions .camera-options {
+.canvas-actions .btn {
   padding: 0em 0.2em;
   margin: 0;
   border: none;
@@ -825,7 +825,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .canvas-actions input[type="range"] {
-  width: calc(100% - 20em);
+  width: calc(100% - 15em);
   display: inline-block;
   position: relative;
   top: .4em;
@@ -833,7 +833,6 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .canvas-actions .camera-select {
-  width: 7em;
   margin-left: .2em;
   background: rgba(255, 255, 255, .5);
 }

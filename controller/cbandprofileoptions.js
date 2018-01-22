@@ -1,26 +1,12 @@
 class cBandProfileOptions {
-  constructor(btn, container, fields, fieldsContainer, panel) {
+  constructor(btn, fields, fieldsContainer, panel) {
     this.expanded = false;
 
     this.collapseButton = btn;
     this.collapseButton.addEventListener('click', e => this.toggle(), false);
 
-    if (container) {
-      this.panel = document.createElement('div');
-      this.panel.style.display = 'none';
-      this.panel.setAttribute('class', 'context-scene-tools-panel');
-      this.panelContainer = container;
-      this.panelContainer.appendChild(this.panel);
-      this.fieldsContainer = document.createElement('div');
-      this.fieldsContainer.setAttribute('class', 'fields-container');
-      this.panel.appendChild(this.fieldsContainer);
-    }
-    else {
-      this.fieldsContainer = fieldsContainer;
-      this.panel = panel;
-    }
-
-
+    this.fieldsContainer = fieldsContainer;
+    this.panel = panel;
     this.fields = fields;
     this.fireSet = gAPPP.a.modelSets['userProfile'];
     this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);

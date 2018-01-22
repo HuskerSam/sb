@@ -14,7 +14,7 @@ class cDialogBlock extends cDialogSuper {
     editPanel.setAttribute('class', 'cblock-editor-wrapper');
     editPanel.innerHTML = editPanelTemplate.innerHTML;
     let fieldsPanel = editPanel.querySelector('.cblock-details-panel');
-    let old = d.querySelector('.fields-container');
+    let old = d.querySelector('.edit-popup-fields');
     let b = d.querySelector('.popup-main-body');
     b.insertBefore(editPanel, old);
     b.removeChild(old);

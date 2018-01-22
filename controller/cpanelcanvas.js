@@ -41,16 +41,18 @@ class cPanelCanvas {
     this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
 
     this.sceneToolsButton = this.dialog.querySelector('.scene-options');
-    this.sceneToolsContainer = this.dialog.querySelector('.expanded-toolbar-content');
+    this.sceneToolsContainer = this.dialog.querySelector('.context-scene-tools-panel');
     this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
-    this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneToolsContainer, this.sceneFields);
+    this.sceneFieldsContainer = this.sceneToolsContainer.querySelector('.fields-container');
+    this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneFields, this.sceneFieldsContainer, this.sceneToolsContainer);
     this.sceneTools.fireFields.values = gAPPP.a.profile;
     this.sceneTools.activate();
 
     this.cameraToolsButton = this.dialog.querySelector('.camera-options');
-    this.cameraToolsContainer = this.dialog.querySelector('.expanded-toolbar-content');
+    this.cameraToolsContainer = this.dialog.querySelector('.camera-options-panel');
     this.cameraFields = sDataDefinition.bindingFieldsCloned('cameraToolsBar');
-    this.cameraTools = new cBandProfileOptions(this.cameraToolsButton, this.cameraToolsContainer, this.cameraFields);
+    this.cameraFieldsContainer = this.cameraToolsContainer.querySelector('.fields-container');
+    this.cameraTools = new cBandProfileOptions(this.cameraToolsButton, this.cameraFields, this.cameraFieldsContainer, this.cameraToolsContainer);
     this.cameraTools.fireFields.values = gAPPP.a.profile;
     this.cameraTools.activate();
 

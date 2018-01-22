@@ -44,7 +44,7 @@ class cViewMain {
     this.userProfileFields = sDataDefinition.bindingFieldsCloned('userProfile');
     this.userProfileToggleBtn = this.dialog.querySelector('#user-profile-settings-button');
     this.userFieldsContainer = this.dialog.querySelector('.user-profile-fields-container');
-    this.userProfileBand = new cBandProfileOptions(this.userProfileToggleBtn, null, this.userProfileFields, this.userFieldsContainer, this.userProfileContainer);
+    this.userProfileBand = new cBandProfileOptions(this.userProfileToggleBtn, this.userProfileFields, this.userFieldsContainer, this.userProfileContainer);
     this.userProfileBand.fireFields.values = gAPPP.a.profile;
     this.userProfileBand.activate();
 
