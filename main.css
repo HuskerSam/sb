@@ -605,7 +605,7 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]::-webkit-slider-thumb {
   height: 1.2em;
   width: .8em;
-  background: green;
+  background: rgba(0, 0, 0, .8);
   -webkit-appearance: none;
 }
 

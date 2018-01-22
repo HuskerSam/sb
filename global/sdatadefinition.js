@@ -237,49 +237,27 @@ __localStaticStorageForBindingFields['userProfile'] = [{
   type: 'boolean',
   group: 'inputFocusLock'
 }];
-__localStaticStorageForBindingFields['sceneToolsBar'] = [{
-  title: 'Color',
-  fireSetField: 'canvasColor',
-  contextObjectField: null,
-  type: 'color',
-  displayType: 'shortvector',
-  helperType: 'vector',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.01'
-}, {
-  title: 'Sun Light',
-  fireSetField: 'lightIntensity',
-  contextObjectField: null,
-  displayType: 'number',
-  group: 'light',
-  helperType: 'singleSlider',
-  rangeMin: '0',
-  rangeMax: '1.5',
-  rangeStep: '.01',
-  floatLeft: true
-}, {
+__localStaticStorageForBindingFields['sceneToolsBar'] = [  {
   title: 'Direction',
   fireSetField: 'lightVector',
   contextObjectField: null,
-  helperType: 'vector',
   displayType: 'shortvector',
-  rangeMin: '-1',
-  rangeMax: '1',
-  rangeStep: '.01',
+  floatLeft: true,
+  clearLeft: true,
   group: 'light'
 }, {
-  title: 'Camera Vector',
-  fireSetField: 'cameraVector',
+  title: 'Light Intensity',
+  fireSetField: 'lightIntensity',
   contextObjectField: null,
-  displayType: 'longvector',
-  helperType: 'vector',
-  rangeMin: '-100',
-  rangeMax: '100',
-  rangeStep: '1',
-  floatRight: true,
-  paddingRight: '.5em'
+  displayType: 'number',
+  group: 'light'
 }, {
+  title: 'UI Depth',
+  fireSetField: 'gridAndGuidesDepth',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'light'
+},{
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
   type: 'boolean',
@@ -293,8 +271,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   type: 'boolean',
   group: 'depthExtras',
   contextObjectField: null,
-  floatLeft: true,
-  clearLeft: true
+  floatLeft: true
 }, {
   title: 'Floor Grid',
   fireSetField: 'showFloorGrid',
@@ -309,20 +286,19 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   contextObjectField: null,
   group: 'depthExtras',
   floatLeft: true,
-  clearLeft: true,
   type: 'boolean'
-}, {
-  title: 'UI Depth',
-  fireSetField: 'gridAndGuidesDepth',
+}];
+__localStaticStorageForBindingFields['cameraToolsBar'] = [ {
+  title: 'Camera Vector',
+  fireSetField: 'cameraVector',
   contextObjectField: null,
-  displayType: 'number',
-  group: 'depthextra',
-  helperType: 'singleSlider',
-  rangeMin: '0',
+  displayType: 'longvector',
+  helperType: 'vector',
+  rangeMin: '-100',
   rangeMax: '100',
   rangeStep: '1',
-  paddingRight: '1.2em',
-  paddingBottom: '2.7em'
+  floatRight: true,
+  paddingRight: '.5em'
 }];
 __localStaticStorageForBindingFields['baseMesh'] = [{
   title: 'Scale X',

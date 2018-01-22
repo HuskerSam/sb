@@ -40,12 +40,19 @@ class cPanelCanvas {
     this.animateSlider = this.dialog.querySelector('.animate-range');
     this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
 
-    this.sceneToolsButton = this.dialog.querySelector('.camera-options');
+    this.sceneToolsButton = this.dialog.querySelector('.scene-options');
     this.sceneToolsContainer = this.dialog.querySelector('.expanded-toolbar-content');
     this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
     this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneToolsContainer, this.sceneFields);
     this.sceneTools.fireFields.values = gAPPP.a.profile;
     this.sceneTools.activate();
+
+    this.cameraToolsButton = this.dialog.querySelector('.camera-options');
+    this.cameraToolsContainer = this.dialog.querySelector('.expanded-toolbar-content');
+    this.cameraFields = sDataDefinition.bindingFieldsCloned('cameraToolsBar');
+    this.cameraTools = new cBandProfileOptions(this.cameraToolsButton, this.cameraToolsContainer, this.cameraFields);
+    this.cameraTools.fireFields.values = gAPPP.a.profile;
+    this.cameraTools.activate();
 
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
