@@ -42,7 +42,10 @@ class cPanelCanvas {
 
     this.sceneToolsButton = this.dialog.querySelector('.camera-options');
     this.sceneToolsContainer = this.dialog.querySelector('.expanded-toolbar-content');
-    this.sceneTools = new cBandOptions(this.sceneToolsButton, this.sceneToolsContainer);
+    this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
+    this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneToolsContainer, this.sceneFields);
+    this.sceneTools.fireFields.values = gAPPP.a.profile;
+    this.sceneTools.activate();
 
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");

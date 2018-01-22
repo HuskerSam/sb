@@ -36,6 +36,27 @@ class cViewMain {
     this.canvasHelper = new cPanelCanvas(this);
     this.context.canvasHelper = this.canvasHelper;
     this.canvasHelper.hide();
+
+    //cBandOptions
+    this.userProfileName = this.dialog.querySelector('.user-info');
+    this.userProfileImage = this.dialog.querySelector('.user-image-display');
+    this.userProfileContainer = this.dialog.querySelector('.user-profile-expanded-wrapper');
+    this.userProfileFields = sDataDefinition.bindingFieldsCloned('userProfile');
+    this.userProfileToggleBtn = this.dialog.querySelector('#user-profile-settings-button');
+    this.userFieldsContainer = this.dialog.querySelector('.user-profile-fields-container');
+    this.userProfileBand = new cBandProfileOptions(this.userProfileToggleBtn, null, this.userProfileFields, this.userFieldsContainer, this.userProfileContainer);
+    this.userProfileBand.fireFields.values = gAPPP.a.profile;
+    this.userProfileBand.activate();
+
+    this.addProjectButton = document.querySelector('#add-workspace-button');
+    this.addProjectButton.addEventListener('click', e => this.addProject());
+    this.addProjectName = document.querySelector('#new-workspace-name');
+    this.deleteWorkspaceButton = document.querySelector('#remove-workspace');
+    this.deleteWorkspaceButton.addEventListener('click', e => this.deleteProject());
+
+    let user = gAPPP.a.currentUser;
+    this.userProfileName.innerHTML = user.displayName + '<br>' + user.email;
+    this.userProfileImage.setAttribute('src', user.photoURL);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {
@@ -46,7 +67,7 @@ class cViewMain {
     if (gAPPP.activeContext !== this.context)
       return;
 
-    if (!profileKey){
+    if (!profileKey) {
       return;
     }
 
@@ -91,5 +112,33 @@ class cViewMain {
       newValue: gAPPP.mV.workplacesSelect.value
     }]);
     setTimeout(() => location.reload(), 100);
+  }
+
+  addProject() {
+    let newTitle = this.addProjectName.value.trim();
+    if (newTitle.length === 0) {
+      alert('need a name for workspace');
+      return;
+    }
+    let key = gAPPP.a.modelSets['project'].getKey();
+    firebase.database().ref('project/' + key).set({
+      title: newTitle
+    });
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'selectedWorkspace',
+      newValue: key
+    }]);
+    setTimeout(() => location.reload(), 100);
+  }
+  deleteProject() {
+    if (confirm('Are you sure you want to delete this project?'))
+      if (confirm('Really?  Really sure?  this won\'t come back...')) {
+        gAPPP.a.modelSets['project'].removeByKey(this.workplacesSelect.value);
+        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+          field: 'selectedWorkspace',
+          newValue: 'default'
+        }]);
+        setTimeout(() => location.reload(), 100);
+      }
   }
 }

@@ -51,12 +51,10 @@ class gApplication {
     this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
     this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material', true);
 
-    this.dialogs['user-profile'] = new cDialogUserProfile(document.querySelector('#user-profile-settings-dialog'), 'userProfile');
     this.mV = new cViewMain();
 
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => this._expandAllBands());
     document.querySelector('#collapse-all-toolbands').addEventListener('click', e => this._collaspseAllBands());
-    document.querySelector('#user-profile-settings-button').addEventListener('click', e => this.dialogs['user-profile'].show());
     this.fontSizeSlider = document.querySelector('#html-main-page-size-slider');
     this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile());
