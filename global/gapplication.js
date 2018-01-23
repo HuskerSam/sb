@@ -4,8 +4,6 @@ class gApplication {
   constructor() {
     window.gAPPP = this;
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
-    this.toolbarItems = {};
-    this.dialogs = {};
     this.styleProfileDom = null;
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
@@ -15,47 +13,18 @@ class gApplication {
     this._initShapesList();
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
 
-    this.topExpandedContainer = document.querySelector('.global-floating-toolbar .toolbar-content');
-  //  this.renderLogButton = document.querySelector('#toolbar-render-log-button');
-  //  this.renderLog = new cPanelLog(this.renderLogButton, this.topExpandedContainer);
-
     window.addEventListener("resize", () => this.resize());
     document.addEventListener("keyup", e => {
       if (e.keyCode === 27) {
-        let dialog = this.closeAllDialogs();
-
-        if (dialog)
-          dialog.close();
+         this.mV.closeAllDialogs();
       }
     });
 
     this.initialUILoad = true;
     this.waitingOnProfileLoad = false;
   }
-  _initDataUI() {
-    this.toolbarItems['block'] = new cBandRecords('block', 'Blocks');
-    this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes');
-    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes');
-    this.toolbarItems['material'] = new cBandRecords('material', "Materials");
-    this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures');
-
-    this.dialogs['mesh-edit'] = new cDialogEditItem('mesh', 'Mesh Options');
-    this.dialogs['shape-edit'] = new cDialogEditItem('shape', 'Shape Editor');
-    this.dialogs['block-edit'] = new cDialogBlock();
-    this.dialogs['material-edit'] = new cDialogEditItem('material', 'Material Editor');
-    this.dialogs['texture-edit'] = new cDialogEditItem('texture', 'Texture Options');
-
-    this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', 'Add Mesh');
-    this.dialogs['shape-create'] = new cDialogCreateItem('shape', 'Add Shape', true);
-    this.dialogs['block-create'] = new cDialogCreateItem('block', 'Add Block', true);
-    this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
-    this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material', true);
-
-    this.mV = new cViewMain();
-
-    document.querySelector('#expand-all-toolbands').addEventListener('click', e => this._expandAllBands());
-    document.querySelector('#collapse-all-toolbands').addEventListener('click', e => this._collaspseAllBands());
-    document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile());
+  get dialogs() {
+    return this.mV.dialogs;
   }
   handleDataUpdate() {
     if (this.initialUILoad) {
@@ -69,18 +38,12 @@ class gApplication {
   }
   _handleDataUpdate() {
     if (this.initialUILoad) {
-      setTimeout(() => {
-        for (let i in this.toolbarItems)
-          if (gAPPP.a.profile['mainRecordsExpanded' + i])
-            this.toolbarItems[i].toggleChildBandDisplay(true);
-      }, 50);
-
       let workspace = this.a.profile.selectedWorkspace;
       if (!workspace)
         workspace = 'default';
 
       this.a.initProjectModels(workspace);
-      this._initDataUI();
+      this.mV = new cViewMain();
       this.a._activateModels();
       setTimeout(() => this.mV._updateSelectedBlock(gAPPP.a.profile.selectedBlockKey), 100);
     }
@@ -92,27 +55,6 @@ class gApplication {
   resize() {
     if (this.activeContext)
       this.activeContext.engine.resize();
-  }
-  _collaspseAllBands() {
-    this.sceneTools.expanded = true;
-    this.sceneTools.toggle();
-    this.renderLog.expanded = true;
-    this.renderLog.toggle();
-
-    let dialog = this.__detectIfEditDialogShown();
-    if (dialog)
-      return dialog.collapseAll();
-
-    for (let i in this.toolbarItems)
-      this.toolbarItems[i].toggleChildBandDisplay(false);
-  }
-  _expandAllBands() {
-    let dialog = this.__detectIfEditDialogShown();
-    if (dialog)
-      return dialog.expandAll();
-
-    for (let i in this.toolbarItems)
-      this.toolbarItems[i].toggleChildBandDisplay(true);
   }
   _handleFontSizeChange() {
     let newSize = this.fontSizeSlider.value;
@@ -167,18 +109,5 @@ class gApplication {
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
     this.resize();
-  }
-  __detectIfEditDialogShown() {
-    for (let i in this.dialogs)
-      if ($(this.dialogs[i].dialog).hasClass('in'))
-        return this.dialogs[i];
-    return null;
-  }
-  closeAllDialogs() {
-    for (let i in this.dialogs)
-      if ($(this.dialogs[i].dialog).hasClass('in'))
-        this.dialogs[i].close();
-    this.renderLog.expanded = true;
-    this.renderLog.toggle();
   }
 }

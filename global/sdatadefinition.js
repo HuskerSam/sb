@@ -37,7 +37,6 @@ class sDataDefinition {
 let __localStaticStorageForBindingFields = {};
 let __defaultData = {};
 
-__localStaticStorageForBindingFields['project'] = [];
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
   fireSetField: 'title',

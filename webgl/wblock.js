@@ -660,7 +660,7 @@ class wBlock {
         let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
         let m;
         if (!tD)
-          m = new BABYLON.StandardMaterial('material');
+          m = new BABYLON.StandardMaterial('material', this.context.scene);
         else
           m = this.__material(tD);
         this.context.__setMaterialOnObj(object, m);

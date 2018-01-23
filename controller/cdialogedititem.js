@@ -9,7 +9,9 @@ class cDialogEditItem extends cDialogSuper {
     let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
     d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
 
-    super(d, tag);
+
+    let fieldsContainer = d.querySelector('.edit-popup-fields');
+    super(d, tag, fieldsContainer, fieldsContainer);
 
     this._splitViewAlive = true;
     this.initScene = true;

@@ -21,6 +21,10 @@ class cBandRecords extends cBandSuper {
     this.expandBtn.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.createBtn.addEventListener('click', e => this._showCreatePopup());
+
+    let forceExpand = gAPPP.a.profile['mainRecordsExpanded' + this.tag];
+    if (forceExpand)
+      this.toggleChildBandDisplay(true);
   }
   _getDomForChild(key, values) {
     let html = `<div class="band-background-preview" type="button" data-toggle="dropdown">`;

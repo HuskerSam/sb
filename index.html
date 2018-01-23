@@ -17,19 +17,14 @@
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div class="global-floating-toolbar">
-      <button id="expand-all-toolbands" class="btn-toolbar-icon super-button-bar">
-        <i class="material-icons" style="transform: rotate(145deg)">rotate_right</i>
+      <button id="toggle-all-toolbands" class="btn-toolbar-icon" style="float:left;">
+        <i class="material-icons">expand_less</i>
       </button>
-      <button id="collapse-all-toolbands" class="btn-toolbar-icon super-button-bar">
-        <i class="material-icons" style="transform: rotate(35deg)">rotate_left</i>
+      <button id="user-profile-settings-button" class="btn-toolbar-icon" style="float:right;">
+        <i class="material-icons" style="color:green">verified_user</i>
       </button>
-      &nbsp;
-      <button id="user-profile-settings-button" class="btn-toolbar-icon super-button-bar">
-        <i class="material-icons">verified_user</i>
-      </button>
-      &nbsp;
       <select id="workspaces-select"></select>
-      <button id="workspace-settings-button" class="btn-toolbar-icon super-button-bar">
+      <button id="workspace-settings-button" class="btn-toolbar-icon">
         <i class="material-icons">group_work</i>
       </button>
 
@@ -117,6 +112,10 @@
           <div class="fields-container"></div>
         </div>
         <div class="context-scene-tools-panel" style="display:none;">
+          <div class="fields-container"></div>
+        </div>
+        <div class="render-log-panel" style="display:none;">
+          <div class="render-note">Render Errors / Logging</div>
           <div class="fields-container"></div>
         </div>
       </div>
@@ -352,7 +351,6 @@
   <script src="controller/cbandprofileoptions.js"></script>
   <script src="controller/cdialogblock.js"></script>
   <script src="controller/cpanelhelpers.js"></script>
-  <script src="controller/cpanellog.js"></script>
   <script src="controller/cpanelcanvas.js"></script>
 </body>
 

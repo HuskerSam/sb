@@ -1,7 +1,41 @@
 class cPanelCanvas {
   constructor(parent) {
     this.parent = parent;
-    this._addAnimationContext();
+    this.playButton = this.dialog.querySelector('.play-button');
+    this.playButton.addEventListener('click', e => this.playAnimation());
+    this.stopButton = this.dialog.querySelector('.stop-button');
+    this.stopButton.addEventListener('click', e => this.stopAnimation());
+    this.pauseButton = this.dialog.querySelector('.pause-button');
+    this.pauseButton.addEventListener('click', e => this.pauseAnimation());
+    this.downloadVideoButton = this.dialog.querySelector('.video-button');
+    this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
+
+    this.cameraSelect = this.dialog.querySelector('.camera-select');
+
+    this.animateSlider = this.dialog.querySelector('.animate-range');
+    this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
+
+    this.bandButtons = [];
+    this.sceneToolsButton = this.dialog.querySelector('.scene-options');
+    this.sceneToolsContainer = this.dialog.querySelector('.context-scene-tools-panel');
+    this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
+    this.sceneFieldsContainer = this.sceneToolsContainer.querySelector('.fields-container');
+    this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneFields, this.sceneFieldsContainer, this.sceneToolsContainer);
+    this.sceneTools.fireFields.values = gAPPP.a.profile;
+    this.sceneTools.activate();
+    this.bandButtons.push(this.sceneTools);
+
+    this.cameraToolsButton = this.dialog.querySelector('.camera-options');
+    this.cameraToolsContainer = this.dialog.querySelector('.camera-options-panel');
+    this.cameraFields = sDataDefinition.bindingFieldsCloned('cameraToolsBar');
+    this.cameraFieldsContainer = this.cameraToolsContainer.querySelector('.fields-container');
+    this.cameraTools = new cBandProfileOptions(this.cameraToolsButton, this.cameraFields, this.cameraFieldsContainer, this.cameraToolsContainer);
+    this.cameraTools.fireFields.values = gAPPP.a.profile;
+    this.cameraTools.activate();
+    this.bandButtons.push(this.cameraTools);
+
+    this.stopButton.setAttribute('disabled', "true");
+    this.pauseButton.setAttribute('disabled', "true");
     this.loadingScreen = this.dialog.querySelector('#renderLoadingCanvas');
     this.cameraDetails = {};
     this.camerasS = '';
@@ -24,40 +58,6 @@ class cPanelCanvas {
         cameraName: 'Arc Rotate (default)'
       }
     };
-  }
-  _addAnimationContext() {
-    this.playButton = this.dialog.querySelector('.play-button');
-    this.playButton.addEventListener('click', e => this.playAnimation());
-    this.stopButton = this.dialog.querySelector('.stop-button');
-    this.stopButton.addEventListener('click', e => this.stopAnimation());
-    this.pauseButton = this.dialog.querySelector('.pause-button');
-    this.pauseButton.addEventListener('click', e => this.pauseAnimation());
-    this.downloadVideoButton = this.dialog.querySelector('.video-button');
-    this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
-
-    this.cameraSelect = this.dialog.querySelector('.camera-select');
-
-    this.animateSlider = this.dialog.querySelector('.animate-range');
-    this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
-
-    this.sceneToolsButton = this.dialog.querySelector('.scene-options');
-    this.sceneToolsContainer = this.dialog.querySelector('.context-scene-tools-panel');
-    this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
-    this.sceneFieldsContainer = this.sceneToolsContainer.querySelector('.fields-container');
-    this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneFields, this.sceneFieldsContainer, this.sceneToolsContainer);
-    this.sceneTools.fireFields.values = gAPPP.a.profile;
-    this.sceneTools.activate();
-
-    this.cameraToolsButton = this.dialog.querySelector('.camera-options');
-    this.cameraToolsContainer = this.dialog.querySelector('.camera-options-panel');
-    this.cameraFields = sDataDefinition.bindingFieldsCloned('cameraToolsBar');
-    this.cameraFieldsContainer = this.cameraToolsContainer.querySelector('.fields-container');
-    this.cameraTools = new cBandProfileOptions(this.cameraToolsButton, this.cameraFields, this.cameraFieldsContainer, this.cameraToolsContainer);
-    this.cameraTools.fireFields.values = gAPPP.a.profile;
-    this.cameraTools.activate();
-
-    this.stopButton.setAttribute('disabled', "true");
-    this.pauseButton.setAttribute('disabled', "true");
   }
   stopAnimation() {
     this.playButton.removeAttribute('disabled');
@@ -153,5 +153,11 @@ class cPanelCanvas {
   }
   hide() {
     this.loadingScreen.style.display = '';
+  }
+  collapseAll() {
+    for (let i in this.bandButtons) {
+      this.bandButtons[i].expanded = true;
+      this.bandButtons[i].toggle();
+    }
   }
 }

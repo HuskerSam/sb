@@ -84,14 +84,6 @@ html, body {
   text-align: left;
 }
 
-.btn-toolbar-icon {
-  border-radius: .3em;
-  color: black;
-  border: solid 1px silver;
-  z-index: 1;
-  background: rgba(255, 255, 255, .3);
-}
-
 .sb-floating-toolbar-item {
   display: inline-block;
   clear: both;
@@ -133,13 +125,29 @@ html, body {
   white-space: nowrap;
 }
 
-.button-wrapper .btn-toolbar-icon {
-  color: black;
-  background: rgba(255, 255, 255, .1);
+.btn-toolbar-icon {
+  border: solid 2px silver;
+  z-index: 1;
+  background: white;
+  font-weight: bold;
+  border-radius: .3em;
+  border: solid 1px silver;
+  z-index: 1;
+  background: white;
+  font-weight: bold;
 }
 
+.button-wrapper .btn-toolbar-icon {
+  color: black;
+  background: white;
+  font-weight: normal;
+}
+
+.btn-toolbar-icon {}
+
 .sb-floating-toolbar-item .button-wrapper .button-title {
-  background: rgba(0, 0, 0, .15);
+  background: white;
+  color: black;
   padding: .05em .5em;
   border-radius: .3em;
   cursor: pointer;
@@ -440,7 +448,7 @@ button i.material-icons {
 }
 
 .user-profile-info-block {
-  background: rgba(255, 255, 255, .6);
+  background: white;
   font-weight: bold;
   width: auto;
   padding: .25em;
@@ -606,13 +614,12 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
 }
 
-.super-button-bar {}
-
 .global-floating-toolbar {
   z-index: 20000;
   pointer-events: none;
   position: relative;
   padding: .25em;
+  text-align:center;
 }
 
 .global-floating-toolbar .toolbar-content {
@@ -787,8 +794,7 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: none;
 }
 
-.canvas-actions .context-scene-tools-panel {
-}
+.canvas-actions .context-scene-tools-panel {}
 
 .canvas-actions .expanded-toolbar-content {
   display: inline-block;
@@ -796,7 +802,9 @@ input[type=range]::-webkit-slider-thumb {
 
 .user-profile-expanded-wrapper {
   pointer-events: none!important;
+  float:right;
 }
+
 .user-profile-expanded-wrapper * {
   pointer-events: auto;
 }
@@ -805,6 +813,7 @@ input[type=range]::-webkit-slider-thumb {
   padding-bottom: .25em;
   padding-left: .25em;
 }
+
 .canvas-actions * {
   pointer-events: auto;
 }
@@ -828,12 +837,9 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .canvas-actions .camera-select {
-  margin-left: .2em;
-  background: rgba(255, 255, 255, .5);
 }
 
 #workspaces-select {
-  background: rgba(255, 255, 255, .5);
   margin-left: .2em;
   margin-top: .1em;
   pointer-events: auto;
