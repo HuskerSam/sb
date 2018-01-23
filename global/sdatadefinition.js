@@ -37,6 +37,7 @@ class sDataDefinition {
 let __localStaticStorageForBindingFields = {};
 let __defaultData = {};
 
+__localStaticStorageForBindingFields['project'] = [];
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
   fireSetField: 'title',
@@ -212,31 +213,7 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'texturescale',
   displayType: 'number'
 }];
-__localStaticStorageForBindingFields['userProfile'] = [{
-  title: 'Font Family',
-  fireSetField: 'fontFamily',
-  contextObjectField: null,
-  group: 'font',
-  dataListId: 'fontfamilydatalist'
-}, {
-  title: 'Font Size (pt)',
-  fireSetField: 'fontSize',
-  contextObjectField: null,
-  group: 'font',
-  displayType: 'number'
-}, {
-  title: 'Canvas Color',
-  fireSetField: 'canvasColor',
-  contextObjectField: null,
-  type: 'color',
-  group: 'main'
-}, {
-  title: 'Disable focus lock',
-  fireSetField: 'inputFocusLock',
-  contextObjectField: null,
-  type: 'boolean',
-  group: 'inputFocusLock'
-}];
+__localStaticStorageForBindingFields['userProfile'] = [];
 __localStaticStorageForBindingFields['sceneToolsBar'] = [  {
   title: 'Direction',
   fireSetField: 'lightVector',
@@ -287,6 +264,30 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [  {
   group: 'depthExtras',
   floatLeft: true,
   type: 'boolean'
+},{
+  title: 'Font Family',
+  fireSetField: 'fontFamily',
+  contextObjectField: null,
+  group: 'font',
+  dataListId: 'fontfamilydatalist'
+}, {
+  title: 'Font Size (pt)',
+  fireSetField: 'fontSize',
+  contextObjectField: null,
+  group: 'font',
+  displayType: 'number'
+}, {
+  title: 'Canvas Color',
+  fireSetField: 'canvasColor',
+  contextObjectField: null,
+  type: 'color',
+  group: 'main'
+}, {
+  title: 'Disable focus lock',
+  fireSetField: 'inputFocusLock',
+  contextObjectField: null,
+  type: 'boolean',
+  group: 'inputFocusLock'
 }];
 __localStaticStorageForBindingFields['cameraToolsBar'] = [ {
   title: 'Camera Vector',

@@ -17,46 +17,44 @@
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div class="global-floating-toolbar">
-      <button id="expand-all-toolbands" class="btn-toolbar-icon super-button-bar" style="float:left;">
+      <button id="expand-all-toolbands" class="btn-toolbar-icon super-button-bar">
         <i class="material-icons" style="transform: rotate(145deg)">rotate_right</i>
       </button>
-      <button id="collapse-all-toolbands" class="btn-toolbar-icon super-button-bar" style="float:left;">
+      <button id="collapse-all-toolbands" class="btn-toolbar-icon super-button-bar">
         <i class="material-icons" style="transform: rotate(35deg)">rotate_left</i>
       </button>
+      &nbsp;
+      <button id="user-profile-settings-button" class="btn-toolbar-icon super-button-bar">
+        <i class="material-icons">verified_user</i>
+      </button>
+      &nbsp;
       <select id="workspaces-select"></select>
-      <input type="range" min="7" max="36" id="html-main-page-size-slider">
-      <button id="user-profile-settings-button" class="btn-toolbar-icon super-button-bar" style="float:right;">
-        <i class="material-icons">settings_applications</i>
+      <button id="workspace-settings-button" class="btn-toolbar-icon super-button-bar">
+        <i class="material-icons">group_work</i>
       </button>
-      <button id="toolbar-render-log-button" class="btn-toolbar-icon super-button-bar" style="float:right;">
-        <i class="material-icons">event_available</i>
-      </button>
+
       <div class="toolbar-content">
         <div class="user-profile-expanded-wrapper" style="display:none;">
           <img class="user-image-display" />
           <div class="form-group user-profile-info-block">
-            <button id="sign-out-button" style="float:right;font-size:1.3em;" class="btn ">
-              <i class="material-icons">account_box</i> Sign out
-            </button>
-            <label>User Profile Information</label>
-            <br>
             <span class="user-info"></span>
-            <button id="user-profile-dialog-reset-button" style="float:right;clear:both;" class="btn ">
+            <br>
+            <button id="user-profile-dialog-reset-button" class="btn ">
               <i class="material-icons">account_circle</i> Reset Profile
             </button>
+            <button id="sign-out-button" class="btn ">
+              <i class="material-icons">account_box</i> Sign out
+            </button>
+
           </div>
           <div class="user-profile-fields-container"></div>
-          <hr>
-          <div id="project-panel">
-            <div id="workspace-operations">
-              Workspaces
-              <br>
-              <input id="new-workspace-name" />
-              <button id="add-workspace-button">Add Workspace</button>
-              <br>
-              <button id="remove-workspace">Remove Current Workspace</button>
-            </div>
-          </div>
+        </div>
+        <div id="project-panel" style="display:none;">
+          <input id="new-workspace-name" />
+          <button id="add-workspace-button" class="btn" style="float:right;">Add Workspace</button>
+          <br>
+          <button id="remove-workspace" class="btn" style="float:right;clear:right;">Remove Workspace</button>
+          <div class="project-fields-container"></div>
         </div>
       </div>
     </div>
@@ -128,8 +126,9 @@
       <button class="btn play-button"><i class="material-icons">play_circle_outline</i></button>
       <button class="btn stop-button"><i class="material-icons">stop</i></button>
       <button class="btn pause-button"><i class="material-icons">pause_circle_outline</i></button>
-      <button class="btn video-button"><i class="material-icons">video_library</i></button>
       <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+      <button class="btn render-log-button"><i class="material-icons">event_available</i></button>
+      <button class="btn video-button"><i class="material-icons">video_library</i></button>
     </div>
   </div>
 

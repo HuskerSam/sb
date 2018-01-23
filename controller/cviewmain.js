@@ -57,6 +57,15 @@ class cViewMain {
     let user = gAPPP.a.currentUser;
     this.userProfileName.innerHTML = user.displayName + '<br>' + user.email;
     this.userProfileImage.setAttribute('src', user.photoURL);
+
+    this.addProjectButton = document.querySelector("workspace-settings-button");
+    this.projectFields = sDataDefinition.bindingFieldsCloned('project');
+    this.projectToggleBtn = this.dialog.querySelector('#workspace-settings-button');
+    this.projectFieldsContainer = this.dialog.querySelector('.project-fields-container');
+    this.projectPanelContainer = this.dialog.querySelector('#project-panel');
+    this.projectPanelBand = new cBandProfileOptions(this.projectToggleBtn, this.projectFields, this.projectFieldsContainer, this.projectPanelContainer);
+    this.projectPanelBand.fireFields.values = gAPPP.a.profile;
+    this.projectPanelBand.activate();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {

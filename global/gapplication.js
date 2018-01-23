@@ -16,8 +16,8 @@ class gApplication {
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');
 
     this.topExpandedContainer = document.querySelector('.global-floating-toolbar .toolbar-content');
-    this.renderLogButton = document.querySelector('#toolbar-render-log-button');
-    this.renderLog = new cPanelLog(this.renderLogButton, this.topExpandedContainer);
+  //  this.renderLogButton = document.querySelector('#toolbar-render-log-button');
+  //  this.renderLog = new cPanelLog(this.renderLogButton, this.topExpandedContainer);
 
     window.addEventListener("resize", () => this.resize());
     document.addEventListener("keyup", e => {
@@ -55,8 +55,6 @@ class gApplication {
 
     document.querySelector('#expand-all-toolbands').addEventListener('click', e => this._expandAllBands());
     document.querySelector('#collapse-all-toolbands').addEventListener('click', e => this._collaspseAllBands());
-    this.fontSizeSlider = document.querySelector('#html-main-page-size-slider');
-    this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
     document.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => this.a.resetProfile());
   }
   handleDataUpdate() {
@@ -88,7 +86,6 @@ class gApplication {
     }
 
     this.initialUILoad = false;
-    this.fontSizeSlider.value = this.a.profile.fontSize;
     this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
   }

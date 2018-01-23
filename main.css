@@ -387,13 +387,12 @@ html, body {
 }
 
 .user-image-display {
-  max-height: 7em;
-  max-width: 7em;
-  margin-top: 5px;
-  margin-right: 15px;
-  border-radius: 20%;
-  margin-left: 10px;
-  border: solid 1px silver;
+  max-height: 4em;
+  max-width: 4em;
+  margin-top: .1em;
+  margin-right: .25em;
+  border-radius: .25em;
+  border: solid .1em silver;
   float: left;
 }
 
@@ -441,13 +440,11 @@ button i.material-icons {
 }
 
 .user-profile-info-block {
-  padding: 12px;
-  background: rgba(0, 0, 0, .3);
-  color: white;
+  background: rgba(255, 255, 255, .6);
   font-weight: bold;
-  border-radius: 10px;
-  border: solid silver 2px;
   width: auto;
+  padding: .25em;
+  border-radius: .25em;
 }
 
 .popup-buttons {
@@ -598,14 +595,14 @@ input[type=range] {
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   cursor: pointer;
-  background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, .6);
   height: 1.2em;
 }
 
 input[type=range]::-webkit-slider-thumb {
   height: 1.2em;
   width: .8em;
-  background: rgba(0, 0, 0, .8);
+  background: rgba(255, 255, 255, .8);
   -webkit-appearance: none;
 }
 
@@ -615,11 +612,11 @@ input[type=range]::-webkit-slider-thumb {
   z-index: 20000;
   pointer-events: none;
   position: relative;
-  padding: .1em;
-  text-align: center;
+  padding: .25em;
 }
 
 .global-floating-toolbar .toolbar-content {
+  padding-top: .25em;
   pointer-events: none;
   clear: both;
 }
@@ -762,13 +759,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .frames-panel button.expand-all-helpers {}
 
-#html-main-page-size-slider {
-  width: 20%;
-  display: inline-block;
-  height: 1.5em;
-  pointer-events: auto;
-}
-
 .frames-header-bar {
   background: rgba(255, 255, 255, .6);
 }
@@ -811,6 +801,10 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: auto;
 }
 
+.canvas-actions {
+  padding-bottom: .25em;
+  padding-left: .25em;
+}
 .canvas-actions * {
   pointer-events: auto;
 }
@@ -825,11 +819,12 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .canvas-actions input[type="range"] {
-  width: calc(100% - 15em);
+  width: calc(100% - 16.5em);
   display: inline-block;
   position: relative;
   top: .4em;
   left: .2em;
+  margin-right: .5em;
 }
 
 .canvas-actions .camera-select {
@@ -842,7 +837,6 @@ input[type=range]::-webkit-slider-thumb {
   margin-left: .2em;
   margin-top: .1em;
   pointer-events: auto;
-  float: left;
 }
 
 #project-panel {
