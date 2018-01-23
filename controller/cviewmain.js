@@ -141,19 +141,27 @@ class cViewMain {
       }, 10);
     }
   }
-  updateProjectList(records) {
+  updateProjectList(records, selectedWorkspace = null) {
     let html = '';
 
     for (let i in records)
       html += `<option value=${i}>${records[i].title}</option>`;
 
-    let val = this.workplacesSelect.value;
+    let val = selectedWorkspace;
+    if (val === null)
+      val = this.workplacesSelect.value;
     this.workplacesSelect.innerHTML = html;
     this.workplacesSelect.value = val;
+    if (this.workplacesSelect.selectedIndex === -1) {
+      this.workplacesSelect.selectedIndex = 0;
+      this.selectProject();
+    }
 
     val = this.workplacesSelectRemove.value;
     this.workplacesSelectRemove.innerHTML = html;
     this.workplacesSelectRemove.value = val;
+    if (this.workplacesSelectRemove.selectedIndex === -1)
+      this.workplacesSelectRemove.selectedIndex = 0;
   }
   selectProject() {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -169,6 +177,9 @@ class cViewMain {
       return;
     }
     let key = gAPPP.a.modelSets['projectTitles'].getKey();
+    firebase.database().ref('projectTitles/' + key).set({
+      title: newTitle
+    });
     firebase.database().ref('project/' + key).set({
       title: newTitle
     });
@@ -179,14 +190,17 @@ class cViewMain {
     setTimeout(() => location.reload(), 100);
   }
   deleteProject() {
-    if (confirm('Are you sure you want to delete this project?'))
+    if (this.workplacesSelectRemove.value === 'default') {
+      alert ('Please select a workspace to delete other then default');
+      return;
+    }
+    if (confirm(`Are you sure you want to delete the project: ${this.workplacesSelectRemove.selectedOptions[0].innerText}?`))
       if (confirm('Really?  Really sure?  this won\'t come back...')) {
-        gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelect.value);
+        gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelectRemove.value);
         gAPPP.a.modelSets['userProfile'].commitUpdateList([{
           field: 'selectedWorkspace',
           newValue: 'default'
         }]);
-        setTimeout(() => location.reload(), 100);
       }
   }
   _collaspseAllBands() {

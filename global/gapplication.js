@@ -16,7 +16,7 @@ class gApplication {
     window.addEventListener("resize", () => this.resize());
     document.addEventListener("keyup", e => {
       if (e.keyCode === 27) {
-         this.mV.closeAllDialogs();
+        this.mV.closeAllDialogs();
       }
     });
 
@@ -29,15 +29,15 @@ class gApplication {
     this._handleDataUpdate();
   }
   profileReady() {
-    if (! this.initialUILoad)
+    if (!this.initialUILoad)
       return;
     if (this.profileLoaded && this.workspaceListLoaded) {
       this.a.initProjectModels(this.workspace);
       this.mV = new cViewMain();
       this.a._activateModels();
-      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey);
-      this.mV.workplacesSelect.value = gAPPP.a.profile.selectedWorkspace;
+      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
       this.initialUILoad = false;
+      this._updateApplicationStyle();
     }
   }
   get workspace() {
@@ -50,7 +50,10 @@ class gApplication {
     if (this.initialUILoad)
       return;
 
-    this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
+    if (this.a.profile.canvasColor !== this.lastClearColor) {
+      this.lastClearColor = this.a.profile.canvasColor
+      this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
+    }
     this._updateApplicationStyle();
   }
   resize() {

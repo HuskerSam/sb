@@ -27,7 +27,7 @@ class gAuthorization {
     }
 
     if (gAPPP.mV)
-      gAPPP.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, type, fireData);
+      gAPPP.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, null);
   }
   onAuthStateChanged(user) {
     //ignore unwanted events
@@ -63,7 +63,7 @@ class gAuthorization {
       return;
     let workspaceLoaded = true;
     for (let i in this.modelSets)
-      if (! this.modelSetsInited[i]) {
+      if (!this.modelSetsInited[i]) {
         workspaceLoaded = false;
         break;
       }
@@ -72,8 +72,11 @@ class gAuthorization {
       this.workspaceLoaded();
   }
   workspaceLoaded() {
-    let key = 'selectedBlockKey' + gAPPP.workspace;
-    gAPPP.mV._updateSelectedBlock(gAPPP.a.profile[key]);
+    if (!this.initialBlockLoad) {
+      let key = 'selectedBlockKey' + gAPPP.workspace;
+      gAPPP.mV._updateSelectedBlock(gAPPP.a.profile[key]);
+      this.initialBlockLoad = true;
+    }
   }
   get profile() {
     let model = this.modelSets['userProfile'];
