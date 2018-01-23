@@ -86,13 +86,14 @@ class cBandRecords extends cBandSuper {
     gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
   _selectBlock(e, key) {
+    let field = 'selectedBlockKey' + gAPPP.a.profile.selectedWorkspace;
     let updates = [{
-      field: 'selectedBlockKey',
+      field,
       newValue: key,
       oldValue: gAPPP.a.profile.selectedBlockKey
     }];
     gAPPP.a.modelSets['userProfile'].commitUpdateList(updates);
-    gAPPP.mV._updateSelectedBlock(gAPPP.a.profile.selectedBlockKey);
+    gAPPP.mV._updateSelectedBlock(key);
   }
   _showEditPopup(e, key) {
     if (gAPPP.dialogs[this.tag + '-edit'])

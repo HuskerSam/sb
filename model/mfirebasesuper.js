@@ -24,12 +24,13 @@ class mFirebaseSuper {
       this.referencePath = referencePath;
 
     this.active = true;
-    this.pendingLoad = false;
+    this.pendingLoad = true;
     this._createFireDBRef();
   }
   _createFireDBRef() {
     this.notiRef = firebase.database().ref(this.referencePath);
 
+    this.notiRef.on('value', e => this.valueChanged(e));
     this.notiRef.on('child_added', e => this.childAdded(e));
     this.notiRef.on('child_changed', e => this.childChanged(e));
     this.notiRef.on('child_removed', e => this.childRemoved(e));
@@ -41,8 +42,20 @@ class mFirebaseSuper {
     this.notifyChildren(null, 'clear');
   }
   childAdded(fireData) {
+    if (this.valueChangedEvents)
+      if (this.pendingLoad) {
+        return;
+      }
     this.updateStash(fireData);
     this.notifyChildren(fireData, 'add');
+  }
+  valueChanged(fireData) {
+    this.pendingLoad = false;
+    gAPPP.a.initModelSet(this.tag);
+    if (!this.valueChangedEvents)
+      return;
+    this.updateStash(fireData);
+    this.notifyChildren(fireData, 'value');
   }
   childChanged(fireData) {
     this.updateStash(fireData);

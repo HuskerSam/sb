@@ -26,6 +26,7 @@ class gAuthorization {
       this.currentUser = user;
       this.uid = user.uid;
       this.loggedIn = true;
+      this.modelSetsInited = {};
 
       //check for profile reset
       let searchParams = new URLSearchParams(window.location.search);
@@ -41,6 +42,22 @@ class gAuthorization {
     }
 
     this.updateAuthUI();
+  }
+  initModelSet(setTag) {
+    this.modelSetsInited[setTag] = true;
+    let workspaceLoaded = true;
+    for (let i in this.modelSets)
+      if (! this.modelSetsInited[i]) {
+        workspaceLoaded = false;
+        break;
+      }
+
+    if (workspaceLoaded)
+      this.workspaceLoaded();
+  }
+  workspaceLoaded() {
+    let key = 'selectedBlockKey' + gAPPP.workspace;
+    gAPPP.mV._updateSelectedBlock(gAPPP.a.profile[key]);
   }
   get profile() {
     let model = this.modelSets['userProfile'];

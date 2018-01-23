@@ -21,33 +21,27 @@ class gApplication {
     });
 
     this.initialUILoad = true;
-    this.waitingOnProfileLoad = false;
   }
   get dialogs() {
     return this.mV.dialogs;
   }
   handleDataUpdate() {
-    if (this.initialUILoad) {
-      if (!this.waitingOnProfileLoad) {
-        setTimeout(() => this._handleDataUpdate(), 0);
-        this.waitingOnProfileLoad = true;
-      }
-    } else {
-      this._handleDataUpdate();
-    }
+    this._handleDataUpdate();
+  }
+  get workspace() {
+    let workspace = this.a.profile.selectedWorkspace;
+    if (!workspace)
+      workspace = 'default';
+    return workspace;
+  }
+  _initialUILoad() {
+    this.a.initProjectModels(this.workspace);
+    this.mV = new cViewMain();
+    this.a._activateModels();
   }
   _handleDataUpdate() {
-    if (this.initialUILoad) {
-      let workspace = this.a.profile.selectedWorkspace;
-      if (!workspace)
-        workspace = 'default';
-
-      this.a.initProjectModels(workspace);
-      this.mV = new cViewMain();
-      this.a._activateModels();
-      setTimeout(() => this.mV._updateSelectedBlock(gAPPP.a.profile.selectedBlockKey), 100);
-    }
-
+    if (this.initialUILoad)
+      this._initialUILoad();
     this.initialUILoad = false;
     this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();

@@ -26,7 +26,7 @@ class cBandChildren extends cBandSuper {
 
     if (type === 'add')
       return this.childAdded(fireData);
-    if (type === 'change')
+    if (type === 'change' || type === 'value')
       return this.childChanged(fireData);
     if (type === 'remove')
       return this.childRemoved(fireData);

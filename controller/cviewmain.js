@@ -110,6 +110,8 @@ class cViewMain {
       return;
 
     if (!profileKey) {
+      this.key = '';
+      this.canvasHelper.show();
       return;
     }
 
@@ -131,7 +133,7 @@ class cViewMain {
           this.rootBlock.setData();
           setTimeout(() => {
             this.canvasHelper.show();
-          }, 300);
+          }, 50);
         } else {
           this.key = '';
           this.canvasHelper.show();
@@ -155,7 +157,6 @@ class cViewMain {
     }]);
     setTimeout(() => location.reload(), 100);
   }
-
   addProject() {
     let newTitle = this.addProjectName.value.trim();
     if (newTitle.length === 0) {
