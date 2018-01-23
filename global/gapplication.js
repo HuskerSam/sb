@@ -28,21 +28,28 @@ class gApplication {
   handleDataUpdate() {
     this._handleDataUpdate();
   }
+  profileReady() {
+    if (! this.initialUILoad)
+      return;
+    if (this.profileLoaded && this.workspaceListLoaded) {
+      this.a.initProjectModels(this.workspace);
+      this.mV = new cViewMain();
+      this.a._activateModels();
+      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey);
+      this.mV.workplacesSelect.value = gAPPP.a.profile.selectedWorkspace;
+      this.initialUILoad = false;
+    }
+  }
   get workspace() {
     let workspace = this.a.profile.selectedWorkspace;
     if (!workspace)
       workspace = 'default';
     return workspace;
   }
-  _initialUILoad() {
-    this.a.initProjectModels(this.workspace);
-    this.mV = new cViewMain();
-    this.a._activateModels();
-  }
   _handleDataUpdate() {
     if (this.initialUILoad)
-      this._initialUILoad();
-    this.initialUILoad = false;
+      return;
+
     this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     this._updateApplicationStyle();
   }

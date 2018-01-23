@@ -8,13 +8,26 @@ class gAuthorization {
     this.modelSets['userProfile'] = new mFirebaseProfile();
     this.fireSets.push(this.modelSets['userProfile']);
 
-    this.modelSets['project'] = new mFirebaseProject('project', true);
-    this.fireSets.push(this.modelSets['project']);
+    this.modelSets['projectTitles'] = new mFirebaseProject('projectTitles', true);
+    this.modelSets['projectTitles'].valueChangedEvents = true;
+    this.modelSets['projectTitles'].childListeners.push((values, type, fireData) => this.onProjectTitlesChange(values, type, fireData));
+    this.fireSets.push(this.modelSets['projectTitles']);
 
     document.querySelector(signInQS).addEventListener('click', e => this.signIn(), false);
     document.querySelector(signOutQS).addEventListener('click', e => this.signOut(), false);
 
     firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
+  }
+  onProjectTitlesChange(values, type, fireData) {
+    if (type === 'value') {
+      gAPPP.workspaceListLoaded = true;
+      gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey = values;
+      gAPPP.profileReady();
+      return;
+    }
+
+    if (gAPPP.mV)
+      gAPPP.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, type, fireData);
   }
   onAuthStateChanged(user) {
     //ignore unwanted events
@@ -45,6 +58,9 @@ class gAuthorization {
   }
   initModelSet(setTag) {
     this.modelSetsInited[setTag] = true;
+
+    if (gAPPP.initialUILoad)
+      return;
     let workspaceLoaded = true;
     for (let i in this.modelSets)
       if (! this.modelSetsInited[i]) {
@@ -134,6 +150,6 @@ class gAuthorization {
   }
   loadProfile() {
     this.modelSets['userProfile'].activate();
-    this.modelSets['project'].activate();
+    this.modelSets['projectTitles'].activate();
   }
 }

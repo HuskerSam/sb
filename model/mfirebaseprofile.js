@@ -13,11 +13,14 @@ class mFirebaseProfile extends mFirebaseSuper {
       let key = fireData.key;
       this.fireData = fireData;
       this.profile[key] = value;
+
+      gAPPP.handleDataUpdate();
     }
     else {
       this.profile = fireData.val();
+      gAPPP.profileLoaded = true;
+      gAPPP.profileReady();
     }
-    gAPPP.handleDataUpdate();
   }
   activate() {
     this.user = gAPPP.a.currentUser;

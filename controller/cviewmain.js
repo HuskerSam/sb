@@ -25,8 +25,8 @@ class cViewMain {
 
     this.key = null;
     this.loadedSceneURL = '';
-    gAPPP.a.modelSets['project'].childListeners.push((values, type, fireData) => this.updateProjectList(values, type, fireData));
     this.workplacesSelect = document.querySelector('#workspaces-select');
+    this.workplacesSelectRemove = document.querySelector('#remove-workspace-list');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
 
     this.toolbarItems = {};
@@ -141,14 +141,19 @@ class cViewMain {
       }, 10);
     }
   }
-  updateProjectList(values, type, fireData) {
-    let records = gAPPP.a.modelSets['project'].fireDataValuesByKey;
+  updateProjectList(records) {
     let html = '';
 
     for (let i in records)
       html += `<option value=${i}>${records[i].title}</option>`;
+
+    let val = this.workplacesSelect.value;
     this.workplacesSelect.innerHTML = html;
-    this.workplacesSelect.value = gAPPP.a.profile.selectedWorkspace;
+    this.workplacesSelect.value = val;
+
+    val = this.workplacesSelectRemove.value;
+    this.workplacesSelectRemove.innerHTML = html;
+    this.workplacesSelectRemove.value = val;
   }
   selectProject() {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -163,7 +168,7 @@ class cViewMain {
       alert('need a name for workspace');
       return;
     }
-    let key = gAPPP.a.modelSets['project'].getKey();
+    let key = gAPPP.a.modelSets['projectTitles'].getKey();
     firebase.database().ref('project/' + key).set({
       title: newTitle
     });
@@ -176,7 +181,7 @@ class cViewMain {
   deleteProject() {
     if (confirm('Are you sure you want to delete this project?'))
       if (confirm('Really?  Really sure?  this won\'t come back...')) {
-        gAPPP.a.modelSets['project'].removeByKey(this.workplacesSelect.value);
+        gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelect.value);
         gAPPP.a.modelSets['userProfile'].commitUpdateList([{
           field: 'selectedWorkspace',
           newValue: 'default'

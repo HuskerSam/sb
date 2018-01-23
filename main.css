@@ -126,21 +126,19 @@ html, body {
 }
 
 .btn-toolbar-icon {
-  border: solid 2px silver;
+  border: solid .1em silver;
   z-index: 1;
   background: white;
-  font-weight: bold;
   border-radius: .3em;
   border: solid 1px silver;
   z-index: 1;
   background: white;
-  font-weight: bold;
 }
 
 .button-wrapper .btn-toolbar-icon {
   color: black;
   background: white;
-  font-weight: normal;
+  font-weight: bold;
 }
 
 .btn-toolbar-icon {}
@@ -626,6 +624,7 @@ input[type=range]::-webkit-slider-thumb {
   padding-top: .25em;
   pointer-events: none;
   clear: both;
+  text-align:center;
 }
 
 .global-floating-toolbar div, .global-floating-toolbar .toolbar-content div {
@@ -846,7 +845,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #project-panel {
-  background: rgba(255, 255, 255, .5);
-  float: left;
+  background: rgba(255, 255, 255, .7);
   padding: .25em;
+  border-radius: .25em;
 }
