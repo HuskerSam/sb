@@ -11,6 +11,7 @@ class wContext {
     this.engine = null;
     this.importedMeshes = [];
     this.importedMeshClones = [];
+    this.cachedProfile = {};
     this.canvasHelper = canvasHelper;
 
     if (initEngine) {
@@ -29,6 +30,9 @@ class wContext {
     this.ghostBlocks[name] = block;
   }
   clearGhostBlocks() {
+    this.cachedProfile = {};
+    this.floorGuidesShown = false;
+    this.floorGridShown = false;
     for (let i in this.ghostBlocks)
       if (this.ghostBlocks[i])
         this.ghostBlocks[i].dispose();
@@ -40,6 +44,7 @@ class wContext {
 
     if (this._scene)
       this._scene.dispose();
+
 
     this.gridObject = null;
     this.gridShown = false;
@@ -134,7 +139,12 @@ class wContext {
   refreshFocus(timeoutCall) {
     if (gAPPP.activeContext !== this)
       return;
-
+    if (!timeoutCall) //do this after it renders a frame
+    {
+      clearTimeout(this.delayFocus);
+      this.delayFocus = setTimeout(() => this.refreshFocus(true), 50);
+      return;
+    }
     this._renderFocusDetails();
     this._updateScaffoldingData();
 
@@ -149,12 +159,6 @@ class wContext {
       bubbles: true
     });
     document.dispatchEvent(event);
-
-    if (!timeoutCall) //do this twice - once after it renders a frame
-    {
-        clearTimeout(this.delayFocus);
-        this.delayFocus = setTimeout(() => this.refreshFocus(true), 50);
-    }
   }
   loadSceneFromDomFile(file) {
     return new Promise((resolve, reject) => {
@@ -234,28 +238,34 @@ class wContext {
       this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera", .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
       this.cameraName = cameraName;
       this.camera.attachControl(this.canvas, false);
-
+      let radius = 10;
+      let newRadius = Number(gAPPP.a.profile.arcCameraRadius);
+      if (newRadius > 1 && newRadius < 500)
+        radius = newRadius;
+      this.camera.radius = radius;
       this.cameraVector = null;
-    }
-
-    let strCameraVector = cameraVector.x + ',' + cameraVector.y + ',' + cameraVector.z;
-    if (this.cameraVector !== strCameraVector) {
-      if (cameraName === 'Arc Rotate') {
-        this.camera.setPosition(cameraVector);
-      }
-      this.cameraVector = strCameraVector;
     }
   }
   _updateScaffoldingData() {
     if (!this.scene)
       return;
     let profile = gAPPP.a.profile;
-    this.scene.clearColor = GLOBALUTIL.color(profile.canvasColor);
+
+    if (this.cachedProfile.canvasColor !== profile.canvasColor) {
+      this.cachedProfile.canvasColor = profile.canvasColor;
+      this.scene.clearColor = GLOBALUTIL.color(profile.canvasColor);
+    }
     if (!this.camera)
       return;
 
-    this.light.intensity = Number(profile.lightIntensity);
-    this.light.direction = GLOBALUTIL.getVector(profile.lightVector, 0, 1, 0);
+    if (this.cachedProfile.lightIntensity !== profile.lightIntensity) {
+      this.cachedProfile.lightIntensity = profile.lightIntensity;
+      this.light.intensity = Number(profile.lightIntensity);
+    }
+    if (this.cachedProfile.lightVector !== profile.lightVector) {
+      this.cachedProfile.lightVector = profile.lightVector;
+      this.light.direction = GLOBALUTIL.getVector(profile.lightVector, 0, 1, 0);
+    }
 
     this._updateCamera();
     this.showHideGrid(profile.showFloorGrid);
@@ -387,15 +397,56 @@ class wContext {
   showHideGuides(show = true) {
     if (!show)
       return this.setGhostBlock('guides', null);
-    let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
+
+    if (!show) {
+      if (this.floorGuidesShown === false)
+        return;
+      this.floorGuidesShown = false;
+      return this.setGhostBlock('guides', null);
+    }
+
+
+    let redraw = false;
+    if (this.cachedProfile.gridAndGuidesDepth !== gAPPP.a.profile.gridAndGuidesDepth) {
+      redraw = true;
+      this.cachedProfile.gridAndGuidesDepth = gAPPP.a.profile.gridAndGuidesDepth;
+    }
+    if (!this.floorGuidesShown) {
+      redraw = true;
+    }
+
+    if (!redraw)
+      return;
+
+    this.floorGuidesShown = true;
+
+    let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.gridAndGuidesDepth, 5);
     let block = new wBlock(this);
     block.createGuides(gridDepth);
     this.setGhostBlock('guides', block);
   }
   showHideGrid(show = true) {
-    if (!show)
+    if (!show) {
+      if (this.floorGridShown === false)
+        return;
+      this.floorGridShown = false;
       return this.setGhostBlock('grid', null);
-    let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['gridAndGuidesDepth'], 5);
+    }
+
+    let redraw = false;
+    if (this.cachedProfile.gridAndGuidesDepth !== gAPPP.a.profile.gridAndGuidesDepth) {
+      redraw = true;
+      this.cachedProfile.gridAndGuidesDepth = gAPPP.a.profile.gridAndGuidesDepth;
+    }
+    if (!this.floorGridShown) {
+      redraw = true;
+    }
+
+    if (!redraw)
+      return;
+
+    this.floorGridShown = true;
+    let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.gridAndGuidesDepth, 5);
     let block = new wBlock(this);
     block.createGrid(gridDepth);
     this.setGhostBlock('grid', block);

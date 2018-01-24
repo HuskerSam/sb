@@ -11,6 +11,10 @@ class cPanelCanvas {
     this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
 
     this.cameraSelect = this.dialog.querySelector('.camera-select');
+    this.cameraSelect.addEventListener('input', e => this.updateArcRangeSlider());
+    this.arcRangeSlider = this.dialog.querySelector('.camera-select-range-slider');
+    this.arcRangeSlider.addEventListener('input', e => this.arcRangeSliderChange());
+    this.arcRangeSlider.value = gAPPP.a.profile.arcCameraRadius;
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
     this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
@@ -36,9 +40,17 @@ class cPanelCanvas {
 
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
+    this.pauseButton.style.display = 'none';
     this.loadingScreen = this.dialog.querySelector('#renderLoadingCanvas');
     this.cameraDetails = {};
     this.camerasS = '';
+  }
+  arcRangeSliderChange() {
+    this.parent.context.camera.radius = this.arcRangeSlider.value;
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'arcCameraRadius',
+      newValue: this.arcRangeSlider.value
+    }]);
   }
   get rootBlock() {
     return this.parent.rootBlock;
@@ -59,10 +71,18 @@ class cPanelCanvas {
       }
     };
   }
+  updateArcRangeSlider() {
+    if (this.cameraSelect.selectedIndex === 0)
+      this.arcRangeSlider.style.display = '';
+    else
+      this.arcRangeSlider.style.display = 'none';
+  }
   stopAnimation() {
     this.playButton.removeAttribute('disabled');
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
+    this.pauseButton.style.display = 'none';
+    this.playButton.style.display = '';
     this.rootBlock.stopAnimation();
 
     this.activateSliderUpdates(false);
@@ -137,6 +157,8 @@ class cPanelCanvas {
     this.playButton.removeAttribute('disabled');
     this.stopButton.removeAttribute('disabled');
     this.pauseButton.setAttribute('disabled', "true");
+    this.pauseButton.style.display = 'none';
+    this.playButton.style.display = '';
 
     this.rootBlock.pauseAnimation();
     this.activateSliderUpdates(false);
@@ -145,6 +167,8 @@ class cPanelCanvas {
     this.playButton.setAttribute('disabled', "true");
     this.pauseButton.removeAttribute('disabled');
     this.stopButton.removeAttribute('disabled');
+    this.pauseButton.style.display = '';
+    this.playButton.style.display = 'none';
     this.rootBlock.playAnimation(this.animateSlider.value);
     this.activateSliderUpdates();
   }

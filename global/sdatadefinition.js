@@ -288,18 +288,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [  {
   type: 'boolean',
   group: 'inputFocusLock'
 }];
-__localStaticStorageForBindingFields['cameraToolsBar'] = [ {
-  title: 'Camera Vector',
-  fireSetField: 'cameraVector',
-  contextObjectField: null,
-  displayType: 'longvector',
-  helperType: 'vector',
-  rangeMin: '-100',
-  rangeMax: '100',
-  rangeStep: '1',
-  floatRight: true,
-  paddingRight: '.5em'
-}];
+__localStaticStorageForBindingFields['cameraToolsBar'] = [];
 __localStaticStorageForBindingFields['baseMesh'] = [{
   title: 'Scale X',
   fireSetField: 'scalingX',

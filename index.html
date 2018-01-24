@@ -17,15 +17,15 @@
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div class="global-floating-toolbar">
-      <button id="toggle-all-toolbands" class="btn-toolbar-icon" style="float:left;">
+      <button id="toggle-all-toolbands" class="btn-toolbar-icon">
         <i class="material-icons">expand_less</i>
       </button>
-      <button id="user-profile-settings-button" class="btn-toolbar-icon" style="float:right;">
-        <i class="material-icons" style="color:green">verified_user</i>
+      <button id="user-profile-settings-button" class="btn-toolbar-icon">
+        <i class="material-icons">verified_user</i>
       </button>
       <select id="workspaces-select"></select>
       <button id="workspace-settings-button" class="btn-toolbar-icon">
-        <i class="material-icons">group_work</i>
+        <i class="material-icons">group</i>
       </button>
 
       <div class="toolbar-content">
@@ -110,8 +110,9 @@
     <div class="canvas-actions" style="display:none;">
       <div class="expanded-toolbar-content">
         <div class="camera-options-panel" style="display:none;">
-          <select class="camera-select"></select>
-          <div class="fields-container"></div>
+          <select class="camera-select" style="float:left;"></select>
+          <input class="camera-select-range-slider" type="range" step="1" min="1" max="80" />
+          <div class="fields-container" style="float:left"></div>
         </div>
         <div class="context-scene-tools-panel" style="display:none;">
           <div class="fields-container"></div>
@@ -122,14 +123,14 @@
         </div>
       </div>
       <div style="clear:both;"></div>
-      <button class="btn camera-options"><i class="material-icons">switch_camera</i></button>
-      <button class="btn scene-options"><i class="material-icons">settings_brightness</i></button>
-      <button class="btn play-button"><i class="material-icons">play_circle_outline</i></button>
+      <button class="btn play-button"><i class="material-icons">play_arrow</i></button>
+      <button class="btn pause-button"><i class="material-icons">pause</i></button>
       <button class="btn stop-button"><i class="material-icons">stop</i></button>
-      <button class="btn pause-button"><i class="material-icons">pause_circle_outline</i></button>
+      <button class="btn camera-options"><i class="material-icons">camera_alt</i></button>
+      <button class="btn scene-options"><i class="material-icons">settings_brightness</i></button>
       <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-      <button class="btn render-log-button"><i class="material-icons">event_available</i></button>
       <button class="btn video-button"><i class="material-icons">video_library</i></button>
+      <button class="btn render-log-button"><i class="material-icons">event_available</i></button>
     </div>
   </div>
 
