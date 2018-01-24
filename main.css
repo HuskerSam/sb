@@ -87,6 +87,7 @@ html, body {
 #sb-floating-toolbar .sb-floating-toolbar-item {
   pointer-events: none;
 }
+
 .sb-floating-toolbar-item {
   display: inline-block;
   clear: both;
@@ -158,11 +159,10 @@ html, body {
   font-size: 1em;
 }
 
-
 .btn-toolbar-icon {}
 
 .sb-floating-toolbar-item .button-wrapper .button-title {
-  background: rgb(50,50,50);
+  background: rgb(50, 50, 50);
   color: white;
   padding: .3em .5em;
   border-radius: .3em;
@@ -178,9 +178,11 @@ html, body {
 .button-wrapper {
   pointer-events: none!important;
 }
+
 .button-wrapper * {
   pointer-events: auto;
 }
+
 #sb-floating-toolbar-expanded .button-wrapper .option-buttons {
   font-size: 1.1em;
   display: inline-block;
@@ -569,7 +571,6 @@ button i.material-icons {
   clear: both;
 }
 
-
 .selected-mesh-bounds-helper-box .action-area .preview, .selected-mesh-bounds-helper-box .action-area button {
   color: rgb(127, 64, 0);
 }
@@ -628,7 +629,6 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: none;
   position: relative;
   padding: .25em;
-  margin-bottom: .3em;
 }
 
 .global-floating-toolbar .toolbar-content {
@@ -805,7 +805,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .canvas-actions .expanded-toolbar-content {
   display: block;
-  pointer-events:none;
+  pointer-events: none;
 }
 
 .user-profile-expanded-wrapper {
@@ -825,7 +825,6 @@ input[type=range]::-webkit-slider-thumb {
 .canvas-actions * {
   pointer-events: auto;
 }
-
 
 .canvas-actions .scene-options {}
 
@@ -869,6 +868,9 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: auto;
   border: solid .1em silver;
   font-size: 1.1em;
+  border-radius: .25em;
+  font-size: 1.1em;
+  padding: .2em;
 }
 
 #project-panel {
@@ -885,12 +887,13 @@ input[type=range]::-webkit-slider-thumb {
 .context-scene-tools-panel {
   pointer-events: none;
 }
+
 .context-scene-tools-panel .fields-container {
   pointer-events: none;
 }
 
 .doubled-up-first {
-  position:absolute!important;
+  position: absolute!important;
   top: .30em!important;
 }
 
@@ -911,13 +914,16 @@ input[type=range]::-webkit-slider-thumb {
   padding: 0;
   margin: 0;
 }
+
 .font-family-panel {
   pointer-events: none!important;
   margin-top: -.9em;
 }
+
 .font-family-panel * {
   pointer-events: auto;
 }
+
 .font-family-panel .fields-container {
   pointer-events: none!important;
   display: inline-block ! important;
@@ -936,4 +942,10 @@ input[type=range]::-webkit-slider-thumb {
   border: solid .1em silver;
   position: relative;
   top: .25em;
+}
+
+#new-workspace-name {
+  border-radius: .25em;
+  border: solid .1em silver;
+  padding: .1em;
 }
