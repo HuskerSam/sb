@@ -29,6 +29,7 @@ class cPanelCanvas {
     this.sceneTools.activate();
     this.bandButtons.push(this.sceneTools);
 
+
     this.cameraToolsButton = this.dialog.querySelector('.camera-options');
     this.cameraToolsContainer = this.dialog.querySelector('.camera-options-panel');
     this.cameraFields = sDataDefinition.bindingFieldsCloned('cameraToolsBar');

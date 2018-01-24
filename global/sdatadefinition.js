@@ -213,7 +213,20 @@ __localStaticStorageForBindingFields['texture'] = [{
   displayType: 'number'
 }];
 __localStaticStorageForBindingFields['userProfile'] = [];
-__localStaticStorageForBindingFields['sceneToolsBar'] = [  {
+__localStaticStorageForBindingFields['fontFamilyProfile'] = [{
+  title: 'Font Family',
+  fireSetField: 'fontFamily',
+  contextObjectField: null,
+  group: 'font',
+  dataListId: 'fontfamilydatalist'
+}, {
+  title: 'Font Size (pt)',
+  fireSetField: 'fontSize',
+  contextObjectField: null,
+  group: 'font',
+  displayType: 'number'
+}];
+__localStaticStorageForBindingFields['sceneToolsBar'] = [{
   title: 'Direction',
   fireSetField: 'lightVector',
   contextObjectField: null,
@@ -263,18 +276,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [  {
   group: 'depthExtras',
   floatLeft: true,
   type: 'boolean'
-},{
-  title: 'Font Family',
-  fireSetField: 'fontFamily',
-  contextObjectField: null,
-  group: 'font',
-  dataListId: 'fontfamilydatalist'
-}, {
-  title: 'Font Size (pt)',
-  fireSetField: 'fontSize',
-  contextObjectField: null,
-  group: 'font',
-  displayType: 'number'
 }, {
   title: 'Canvas Color',
   fireSetField: 'canvasColor',

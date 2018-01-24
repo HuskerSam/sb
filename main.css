@@ -117,8 +117,6 @@ html, body {
 .sb-floating-toolbar-item .button-wrapper {
   display: inline-block;
   text-align: center;
-  float: left;
-  border: solid 2px transparent;
   border-radius: .25em;
   color: white;
   pointer-events: auto;
@@ -146,12 +144,12 @@ html, body {
 .btn-toolbar-icon {}
 
 .sb-floating-toolbar-item .button-wrapper .button-title {
-  background: silver;
-  color: black;
-  font-weight: bold;
-  padding: .05em .5em;
+  background: rgb(50,50,50);
+  color: white;
+  padding: .3em .5em;
   border-radius: .3em;
   cursor: pointer;
+  border: solid .05em white;
 }
 
 .sb-floating-toolbar-item .button-wrapper .option-buttons {
@@ -162,10 +160,6 @@ html, body {
 #sb-floating-toolbar-expanded .button-wrapper .option-buttons {
   display: block;
   margin-top: .4em;
-}
-
-.context-scene-tools-panel .selected-mesh-helper-collapse-button {
-  display: none;
 }
 
 .popup-canvas-body {
@@ -550,16 +544,6 @@ button i.material-icons {
   clear: both;
 }
 
-.selected-mesh-helper-collapse-button {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  margin: 0px;
-  padding: .1em .5em;
-  border: solid 1px silver;
-  font-size: .5em;
-  border-radius: 25%;
-}
 
 .selected-mesh-bounds-helper-box .action-area .preview, .selected-mesh-bounds-helper-box .action-area button {
   color: rgb(127, 64, 0);
@@ -619,7 +603,6 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: none;
   position: relative;
   padding: .25em;
-  text-align: center;
 }
 
 .global-floating-toolbar .toolbar-content {
@@ -795,8 +778,6 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: none;
 }
 
-.canvas-actions .context-scene-tools-panel {}
-
 .canvas-actions .expanded-toolbar-content {
   display: block;
   pointer-events:none;
@@ -850,7 +831,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .canvas-actions input[type="range"] {
-  width: calc(100% - 15.5em);
+  width: calc(100% - 18em);
   display: inline-block;
   position: relative;
   top: .4em;
@@ -861,7 +842,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .camera-select-range-slider {
   top: 0!important;
-  width: 30vh!important;
+  width: 50vh!important;
 }
 
 .canvas-actions .camera-select {}
@@ -880,17 +861,15 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #user-profile-settings-button {
-  background: white;
   color: rgb(127, 127, 0);
   float: right;
 }
 
 #workspace-settings-button {}
 
-#toggle-all-toolbands {
-  float: left;
+.context-scene-tools-panel {
+  pointer-events: none;
 }
-
-#toggle-all-toolbands i {
-  font-weight: bold;
+.context-scene-tools-panel .fields-container {
+  pointer-events: none;
 }

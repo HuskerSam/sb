@@ -68,6 +68,15 @@ class cViewMain {
     this.userProfileBand.activate();
     this.bandButtons.push(this.userProfileBand);
 
+    this.fontToolsButton = this.dialog.querySelector('.font-options');
+    this.fontToolsContainer = this.dialog.querySelector('.font-family-panel');
+    this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
+    this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);
+    this.fontTools.fireFields.values = gAPPP.a.profile;
+    this.fontTools.activate();
+    this.bandButtons.push(this.fontTools);
+
     this.addProjectButton = document.querySelector('#add-workspace-button');
     this.addProjectButton.addEventListener('click', e => this.addProject());
     this.addProjectName = document.querySelector('#new-workspace-name');

@@ -17,17 +17,6 @@
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div class="global-floating-toolbar">
-      <button id="toggle-all-toolbands" class="btn-toolbar-icon">
-        <i class="material-icons">expand_less</i>
-      </button>
-      <button id="user-profile-settings-button" class="btn-toolbar-icon">
-        <i class="material-icons">verified_user</i>
-      </button>
-      <select id="workspaces-select"></select>
-      <button id="workspace-settings-button" class="btn-toolbar-icon">
-        <i class="material-icons">group</i>
-      </button>
-
       <div class="toolbar-content">
         <div class="user-profile-expanded-wrapper" style="display:none;">
           <img class="user-image-display" />
@@ -45,6 +34,8 @@
           <div class="user-profile-fields-container"></div>
         </div>
         <div id="project-panel" style="display:none;">
+          <label>Current <select id="workspaces-select"></select></label>
+          <br>
           <input id="new-workspace-name" />
           <button id="add-workspace-button" class="btn-toolbar-icon">Add Workspace</button>
           <br>
@@ -53,24 +44,35 @@
           <button id="remove-workspace" class="btn-toolbar-icon" style="float:right;clear:right;">Remove Workspace</button>
           <div class="project-fields-container"></div>
         </div>
-      </div>
-    </div>
-    <div id="sb-floating-toolbar-expanded">
-    </div>
-    <div id="sb-floating-toolbar">
-      <div style="display:none;" id="sb-floating-toolbar-item-template">
-        <div class="sb-floating-toolbar-item">
-          <div class="button-wrapper">
-            <span class="button-title"></span>
-            <div class="option-buttons">
-              <button class="btn-toolbar-icon sb-floating-toolbar-expand-btn"><i class="material-icons">expand_less</i></button>
-              <button class="btn-toolbar-icon sb-floating-toolbar-create-btn"><i class="material-icons">add</i></button>
-            </div>
-          </div>
-          <div class="sb-floating-toolbar-content">
-          </div>
+        <div class="font-family-panel" style="display:none">
+          <div class="fields-container"></div>
         </div>
       </div>
+      <button id="toggle-all-toolbands" class="btn-toolbar-icon"><i class="material-icons">expand_less</i></button>
+      <button id="user-profile-settings-button" class="btn-toolbar-icon"><i class="material-icons">verified_user</i></button>
+      <button class="btn-toolbar-icon font-options" style="float:right;"><i class="material-icons">text_format</i></button>
+      <button id="workspace-settings-button" class="btn-toolbar-icon"><i class="material-icons">group</i></button>
+      <div id="sb-floating-toolbar" style="display:inline-block;">
+        <div style="display:none;" id="sb-floating-toolbar-item-template">
+          <div class="sb-floating-toolbar-item">
+            <div class="button-wrapper">
+              <span class="button-title"></span>
+              <div class="option-buttons">
+                <button class="btn-toolbar-icon sb-floating-toolbar-expand-btn"><i class="material-icons">expand_less</i></button>
+                <button class="btn-toolbar-icon sb-floating-toolbar-create-btn"><i class="material-icons">add</i></button>
+              </div>
+            </div>
+            <div class="sb-floating-toolbar-content">
+            </div>
+          </div>
+        </div>
+        <div class="static-buttons-toolbar">
+        </div>
+      </div>
+
+    </div>
+
+    <div id="sb-floating-toolbar-expanded">
     </div>
   </div>
 
@@ -108,17 +110,13 @@
   <div id="canvas-d3-player-template" style="display:none;">
     <canvas class="popup-canvas"></canvas>
     <div class="canvas-actions" style="display:none;">
-      <div class="expanded-toolbar-content">
-        <div class="camera-options-panel" style="display:none;">
+      <div class="expanded-toolbar-content" style="text-align:right;">
+        <div class="camera-options-panel" style="display:none;float:left;">
           <select class="camera-select" style="float:left;"></select>
-          <input class="camera-select-range-slider" type="range" step="1" min="1" max="80" />
+          <input class="camera-select-range-slider" type="range" step="1" min="1" max="250" />
           <div class="fields-container" style="float:left"></div>
         </div>
         <div class="context-scene-tools-panel" style="display:none;">
-          <div class="fields-container"></div>
-        </div>
-        <div class="render-log-panel" style="display:none;">
-          <div class="render-note">Render Errors / Logging</div>
           <div class="fields-container"></div>
         </div>
       </div>
@@ -126,11 +124,17 @@
       <button class="btn play-button"><i class="material-icons">play_arrow</i></button>
       <button class="btn pause-button"><i class="material-icons">pause</i></button>
       <button class="btn stop-button"><i class="material-icons">stop</i></button>
+      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
       <button class="btn camera-options"><i class="material-icons">camera_alt</i></button>
       <button class="btn scene-options"><i class="material-icons">settings_brightness</i></button>
-      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
       <button class="btn video-button"><i class="material-icons">video_library</i></button>
       <button class="btn render-log-button"><i class="material-icons">event_available</i></button>
+      <div class="expanded-toolbar-content">
+        <div class="render-log-panel" style="display:none;">
+          <div class="render-note">Render Errors / Logging</div>
+          <div class="fields-container"></div>
+        </div>
+      </div>
     </div>
   </div>
 
