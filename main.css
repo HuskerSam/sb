@@ -82,6 +82,8 @@ html, body {
   clear: both;
   pointer-events: none;
   text-align: left;
+  position: relative;
+  top: -.15em;
 }
 
 #sb-floating-toolbar .sb-floating-toolbar-item {
@@ -441,28 +443,42 @@ button i.material-icons {
 }
 
 .band-background-preview {
-  width: 6em;
-  height: 4em;
   white-space: nowrap;
   display: inline-block;
-  border: solid 1px silver;
-  border-radius: .5em;
+  border: solid .1em silver;
+  border-radius: .25em;
   text-align: center;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
   pointer-events: auto;
-  cursor: pointer;
+  height: 6em;
+  width: 10em;
+  margin-bottom: -.35em;
+  position: relative;
 }
-
+.band-background-preview .extend-panel {
+  position: absolute;
+  bottom: .15em;
+  left: 2.3em;
+}
 .band-background-preview .band-title {
-  padding: .1em;
-  background: silver;
-  border-radius: .2em;
-  opacity: 1;
+  padding: .15em;
+  background: rgba(255,255,255,.5);
+  color: black;
+  border-radius: .25em;
+  margin: .15em;
+  float:left;
 }
-
+.band-background-preview .toggle-btn {
+  clear: both;
+  background: rgba(255,255,255,.2);
+  font-weight: bold;
+  position: absolute;
+  bottom: .15em;
+  left: .15em;
+}
 .dropdown-menu {
   min-width: 7em;
   font-size: inherit;
@@ -645,14 +661,8 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: auto;
 }
 
-.band-background-outer {
-  position: initial;
-}
-
-.bs-menu-clipper-wrapper {
+.menu-clipper-wrapper {
   display: inline-block;
-  margin-bottom: -.75em;
-  overflow: hidden;
 }
 
 .cblock-editor-wrapper {
