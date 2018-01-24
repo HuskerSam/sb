@@ -18,6 +18,7 @@ class cBandProfileOptions {
       if (gAPPP.activeContext)
         gAPPP.activeContext.refreshFocus();
     });
+    this.closeOthersCallback = null;
   }
   activate() {
     this.fireFields.paint();
@@ -25,13 +26,15 @@ class cBandProfileOptions {
   deactivate() {
     this.fireFields.active = false;
   }
-  toggle() {
+  toggle(callback = true) {
     if (this.expanded) {
       this.expanded = false;
       this.panel.style.display = 'none';
       this.collapseButton.style.background = '';
       this.collapseButton.style.color = '';
     } else {
+      if (this.closeOthersCallback && callback)
+        this.closeOthersCallback();
       this.expanded = true;
       this.panel.style.display = 'inline-block';
       this.collapseButton.style.background = 'rgba(0,0,0,.5)';

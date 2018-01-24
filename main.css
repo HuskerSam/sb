@@ -84,6 +84,9 @@ html, body {
   text-align: left;
 }
 
+#sb-floating-toolbar .sb-floating-toolbar-item {
+  pointer-events: none;
+}
 .sb-floating-toolbar-item {
   display: inline-block;
   clear: both;
@@ -119,8 +122,11 @@ html, body {
   text-align: center;
   border-radius: .25em;
   color: white;
-  pointer-events: auto;
   white-space: nowrap;
+  padding: .25em;
+  padding-top: .25em;
+  padding-bottom: 0em;
+  font-size: 1.1em;
 }
 
 .btn-toolbar-icon {
@@ -134,12 +140,24 @@ html, body {
   font-size: 1.1em;
 }
 
-.button-wrapper .btn-toolbar-icon {
-  color: black;
+.btn_toolbar_v2 {
+  padding: 0em 0.2em;
+  margin: 0;
+  border: none;
   background: rgb(255, 255, 255);
+  font-size: 1.3em;
+  color: black;
+  border: solid .05em silver;
+  border-radius: .25em;
+}
+
+.button-wrapper .btn-toolbar-icon {
+  color: rgb(50, 50, 50);
+  background: rgb(0, 200, 0);
   font-weight: bold;
   font-size: 1em;
 }
+
 
 .btn-toolbar-icon {}
 
@@ -149,17 +167,24 @@ html, body {
   padding: .3em .5em;
   border-radius: .3em;
   cursor: pointer;
-  border: solid .05em white;
+  border: solid .1em silver;
 }
 
-.sb-floating-toolbar-item .button-wrapper .option-buttons {
-  display: inline-block;
-  white-space: nowrap;
+.sb-floating-toolbar-item .button-wrapper-invert .button-title {
+  color: black;
+  background: white;
 }
 
+.button-wrapper {
+  pointer-events: none!important;
+}
+.button-wrapper * {
+  pointer-events: auto;
+}
 #sb-floating-toolbar-expanded .button-wrapper .option-buttons {
-  display: block;
-  margin-top: .4em;
+  font-size: 1.1em;
+  display: inline-block;
+  margin-top: .6em;
 }
 
 .popup-canvas-body {
@@ -300,7 +325,7 @@ html, body {
   padding-bottom: 2px;
   text-align: center;
   width: 100%;
-  height: 2.5em;
+  height: 3.5em;
 }
 
 .popup-action-bar .nav-tabs {
@@ -330,10 +355,10 @@ html, body {
 }
 
 .popup-main-body {
-  height: calc(100% - 4.2em);
+  height: calc(100% - 6.2em);
   overflow-y: hidden;
   position: relative;
-  top: 1.8em;
+  top: 2.8em;
 }
 
 .popup-buttons .save-details {
@@ -364,7 +389,7 @@ html, body {
 
 .form-group-container-group {
   display: inline-block;
-  border-radius: 5px;
+  border-radius: .25em;
   margin: .05em;
   background: rgba(255, 255, 255, .8);
   float: left;
@@ -372,11 +397,11 @@ html, body {
 }
 
 .form-group-container-group .form-group {
-  margin: .05em .1em;
+  margin: .1em;
 }
 
 .form-group-container-group label {
-  border-radius: 10px;
+  border-radius: .25em;
   padding: 0;
   margin: 0;
 }
@@ -603,13 +628,13 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: none;
   position: relative;
   padding: .25em;
+  margin-bottom: .3em;
 }
 
 .global-floating-toolbar .toolbar-content {
-  padding-top: .25em;
+  padding-top: .05em;
   pointer-events: none;
   clear: both;
-  text-align: center;
 }
 
 .global-floating-toolbar div, .global-floating-toolbar .toolbar-content div {
@@ -801,15 +826,6 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: auto;
 }
 
-.canvas-actions .btn {
-  padding: 0em 0.2em;
-  margin: 0;
-  border: none;
-  background: rgb(255, 255, 255);
-  font-size: 1.3em;
-  color: black;
-  border: solid .05em silver;
-}
 
 .canvas-actions .scene-options {}
 
@@ -834,7 +850,7 @@ input[type=range]::-webkit-slider-thumb {
   width: calc(100% - 18em);
   display: inline-block;
   position: relative;
-  top: .4em;
+  top: .2em;
   left: .2em;
   margin-right: .5em;
   border: solid .1em silver;
@@ -862,7 +878,6 @@ input[type=range]::-webkit-slider-thumb {
 
 #user-profile-settings-button {
   color: rgb(127, 127, 0);
-  float: right;
 }
 
 #workspace-settings-button {}
@@ -872,4 +887,53 @@ input[type=range]::-webkit-slider-thumb {
 }
 .context-scene-tools-panel .fields-container {
   pointer-events: none;
+}
+
+.doubled-up-first {
+  position:absolute!important;
+  top: .30em!important;
+}
+
+.doubled-up-second {
+  top: .0em!important;
+}
+
+#toggle-all-toolbands-down {
+  margin-left: -.3em;
+  position: relative;
+}
+
+#toggle-all-toolbands {
+  position: relative;
+}
+
+.font-family-panel .form-group input {
+  padding: 0;
+  margin: 0;
+}
+.font-family-panel {
+  pointer-events: none!important;
+  margin-top: -.9em;
+}
+.font-family-panel * {
+  pointer-events: auto;
+}
+.font-family-panel .fields-container {
+  pointer-events: none!important;
+  display: inline-block ! important;
+  position: relative;
+  top: .7em;
+}
+
+.font-family-panel .fields-container * {
+  pointer-events: auto;
+}
+
+#fontsize-toolbar-slider {
+  width: 30vh;
+  font-size: 1.1em;
+  display: inline-block;
+  border: solid .1em silver;
+  position: relative;
+  top: .25em;
 }

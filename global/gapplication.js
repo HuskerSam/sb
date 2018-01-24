@@ -60,16 +60,6 @@ class gApplication {
     if (this.activeContext)
       this.activeContext.engine.resize();
   }
-  _handleFontSizeChange() {
-    let newSize = this.fontSizeSlider.value;
-    let originalFontSize = this.a.profile.fontSize;
-    let fontUpdate = {
-      field: 'fontSize',
-      newValue: newSize,
-      oldValue: originalFontSize
-    }
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([fontUpdate]);
-  }
   _parseFontSize(str) {
     if (str === undefined)
       str = '';
@@ -100,6 +90,9 @@ class gApplication {
     if (this.a.profile.fontFamily)
       css += 'font-family:' + this.a.profile.fontFamily + ';';
     css += '}';
+
+    if (this.mV)
+      this.mV.fontSizeSlider.value = this.a.profile.fontSize;
 
     if (this.lastStyleProfileCSS === css)
       return;

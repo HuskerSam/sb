@@ -16,11 +16,11 @@ class cBandRecords extends cBandSuper {
 
     this.bar = this.wrapper.querySelector('.sb-floating-toolbar-content');
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
-    this.expandBtn = this.wrapper.querySelector('.sb-floating-toolbar-expand-btn')
 
-    this.expandBtn.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.createBtn.addEventListener('click', e => this._showCreatePopup());
+
+    this.buttonWrapper = this.wrapper.querySelector('.button-wrapper');
 
     let forceExpand = gAPPP.a.profile['mainRecordsExpanded' + this.tag];
     if (forceExpand)
@@ -140,14 +140,14 @@ class cBandRecords extends cBandSuper {
       this.bar.style.display = 'inline-block';
       this.createBtn.style.display = 'inline-block';
       this.bar.parentNode.style.display = 'flex';
-      this.expandBtn.querySelector('i').innerHTML = 'expand_more';
+      this.buttonWrapper.classList.add('button-wrapper-invert');
       this.containerExpanded.insertBefore(this.bar.parentNode, null);
       this.wrapper.style.display = 'left';
     } else {
       this.bar.style.display = 'none';
       this.createBtn.style.display = 'none';
       this.bar.parentNode.style.display = 'inline-block';
-      this.expandBtn.querySelector('i').innerHTML = 'expand_less';
+      this.buttonWrapper.classList.remove('button-wrapper-invert');
       this.containerCollapsed.insertBefore(this.bar.parentNode, null);
       this.wrapper.style.float = '';
     }

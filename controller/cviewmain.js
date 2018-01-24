@@ -26,7 +26,7 @@ class cViewMain {
     this.key = null;
     this.loadedSceneURL = '';
     this.workplacesSelect = document.querySelector('#workspaces-select');
-    this.workplacesSelectRemove = document.querySelector('#remove-workspace-list');
+    this.workplacesRemoveButton = document.querySelector('#remove-workspace-button');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
 
     this.toolbarItems = {};
@@ -64,6 +64,7 @@ class cViewMain {
     this.userProfileToggleBtn = this.dialog.querySelector('#user-profile-settings-button');
     this.userFieldsContainer = this.dialog.querySelector('.user-profile-fields-container');
     this.userProfileBand = new cBandProfileOptions(this.userProfileToggleBtn, this.userProfileFields, this.userFieldsContainer, this.userProfileContainer);
+    this.userProfileBand.closeOthersCallback = () => this.closeHeaderBands();
     this.userProfileBand.fireFields.values = gAPPP.a.profile;
     this.userProfileBand.activate();
     this.bandButtons.push(this.userProfileBand);
@@ -73,6 +74,7 @@ class cViewMain {
     this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
     this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
     this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);
+    this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
     this.fontTools.fireFields.values = gAPPP.a.profile;
     this.fontTools.activate();
     this.bandButtons.push(this.fontTools);
@@ -80,8 +82,7 @@ class cViewMain {
     this.addProjectButton = document.querySelector('#add-workspace-button');
     this.addProjectButton.addEventListener('click', e => this.addProject());
     this.addProjectName = document.querySelector('#new-workspace-name');
-    this.deleteWorkspaceButton = document.querySelector('#remove-workspace');
-    this.deleteWorkspaceButton.addEventListener('click', e => this.deleteProject());
+    this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
 
     let user = gAPPP.a.currentUser;
     this.userProfileName.innerHTML = user.displayName + '<br>' + user.email;
@@ -92,13 +93,16 @@ class cViewMain {
     this.projectFieldsContainer = this.dialog.querySelector('.project-fields-container');
     this.projectPanelContainer = this.dialog.querySelector('#project-panel');
     this.projectPanelBand = new cBandProfileOptions(this.projectToggleBtn, [], this.projectFieldsContainer, this.projectPanelContainer);
+    this.projectPanelBand.closeOthersCallback = () => this.closeHeaderBands();
     this.projectPanelBand.fireFields.values = gAPPP.a.profile;
     this.projectPanelBand.activate();
     this.bandButtons.push(this.projectPanelBand);
 
-    this.allExpanded = false;
     this.toggleButton = this.dialog.querySelector('#toggle-all-toolbands');
-    this.toggleButton.addEventListener('click', e => this._toggleAllBands());
+    this.toggleButton.addEventListener('click', e => this._collaspseAllBands());
+    this.toggleButtonDown = this.dialog.querySelector('#toggle-all-toolbands-down');
+    this.toggleButtonDown.addEventListener('click', e => this._expandAllBands());
+
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
 
     this.renderToggleBtn = this.dialog.querySelector('.render-log-button');
@@ -108,6 +112,28 @@ class cViewMain {
     this.renderPanelBand.fireFields.values = gAPPP.a.profile;
     this.renderPanelBand.activate();
     this.bandButtons.push(this.renderPanelBand);
+
+    this.fontSizeSlider = document.querySelector('#fontsize-toolbar-slider');
+    this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
+  }
+  _handleFontSizeChange() {
+    let newSize = this.fontSizeSlider.value;
+    let originalFontSize = gAPPP.a.profile.fontSize;
+    let fontUpdate = {
+      field: 'fontSize',
+      newValue: newSize,
+      oldValue: originalFontSize
+    }
+    //gAPPP.a.profile.fontSize = newSize;
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([fontUpdate]);
+  }
+  closeHeaderBands() {
+    this.projectPanelBand.expanded = true;
+    this.projectPanelBand.toggle(false);
+    this.fontTools.expanded = true;
+    this.fontTools.toggle(false);
+    this.userProfileBand.expanded = true;
+    this.userProfileBand.toggle(false);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {
@@ -165,12 +191,6 @@ class cViewMain {
       this.workplacesSelect.selectedIndex = 0;
       this.selectProject();
     }
-
-    val = this.workplacesSelectRemove.value;
-    this.workplacesSelectRemove.innerHTML = html;
-    this.workplacesSelectRemove.value = val;
-    if (this.workplacesSelectRemove.selectedIndex === -1)
-      this.workplacesSelectRemove.selectedIndex = 0;
   }
   selectProject() {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -199,13 +219,13 @@ class cViewMain {
     setTimeout(() => location.reload(), 100);
   }
   deleteProject() {
-    if (this.workplacesSelectRemove.value === 'default') {
-      alert ('Please select a workspace to delete other then default');
+    if (this.workplacesSelect.value === 'default') {
+      alert('Please select a workspace to delete other then default');
       return;
     }
-    if (confirm(`Are you sure you want to delete the project: ${this.workplacesSelectRemove.selectedOptions[0].innerText}?`))
+    if (confirm(`Are you sure you want to delete the project: ${this.workplacesSelect.selectedOptions[0].innerText}?`))
       if (confirm('Really?  Really sure?  this won\'t come back...')) {
-        gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelectRemove.value);
+        gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelect.value);
         gAPPP.a.modelSets['userProfile'].commitUpdateList([{
           field: 'selectedWorkspace',
           newValue: 'default'
@@ -226,17 +246,7 @@ class cViewMain {
     }
 
     this.canvasHelper.collapseAll();
-  }
-  _toggleAllBands() {
-    if (this.allExpanded) {
-      this.allExpanded = false;
-      this._collaspseAllBands();
-      this.toggleButton.querySelector('i').innerHTML = 'expand_less';
-    } else {
-      this.allExpanded = true;
-      this._expandAllBands();
-      this.toggleButton.querySelector('i').innerHTML = 'expand_more';
-    }
+    this.closeHeaderBands();
   }
   _expandAllBands() {
     let dialog = this.__detectIfEditDialogShown();

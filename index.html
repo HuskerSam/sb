@@ -23,42 +23,43 @@
           <div class="form-group user-profile-info-block">
             <span class="user-info"></span>
             <br>
-            <button id="user-profile-dialog-reset-button" class="btn ">
+            <button id="user-profile-dialog-reset-button" class="btn_toolbar_v2">
               <i class="material-icons">account_circle</i> Reset Profile
             </button>
-            <button id="sign-out-button" class="btn ">
+            <button id="sign-out-button" class="btn_toolbar_v2">
               <i class="material-icons">account_box</i> Sign out
             </button>
 
           </div>
           <div class="user-profile-fields-container"></div>
         </div>
-        <div id="project-panel" style="display:none;">
-          <label>Current <select id="workspaces-select"></select></label>
-          <br>
-          <input id="new-workspace-name" />
-          <button id="add-workspace-button" class="btn-toolbar-icon">Add Workspace</button>
-          <br>
+      </div>
+      <div style="float:right;">
+        <div class="font-family-panel" style="display:none;float:right;">
+          <div class="fields-container"></div>
+          <input type="range" min="7" max="36" id="fontsize-toolbar-slider" />
+        </div>
+        <button id="user-profile-settings-button" class="btn_toolbar_v2"><i class="material-icons">verified_user</i></button>
+        <button id="workspace-settings-button" class="btn_toolbar_v2"><i class="material-icons">group</i></button>
+        <button class="btn_toolbar_v2 font-options"><i class="material-icons">text_format</i></button>
 
-          <select id="remove-workspace-list"></select>
-          <button id="remove-workspace" class="btn-toolbar-icon" style="float:right;clear:right;">Remove Workspace</button>
+        <div id="project-panel" style="display:none;">
+          <select id="workspaces-select"></select>
+          <button id="remove-workspace-button" class="btn-toolbar-icon"><i class="material-icons">delete</i></button>
+          &nbsp; &nbsp;
+          <input id="new-workspace-name" />
+          <button id="add-workspace-button" class="btn-toolbar-icon"><i class="material-icons">add</i></button>
           <div class="project-fields-container"></div>
         </div>
-        <div class="font-family-panel" style="display:none">
-          <div class="fields-container"></div>
-        </div>
       </div>
-      <button id="toggle-all-toolbands" class="btn-toolbar-icon"><i class="material-icons">expand_less</i></button>
-      <button id="user-profile-settings-button" class="btn-toolbar-icon"><i class="material-icons">verified_user</i></button>
-      <button class="btn-toolbar-icon font-options" style="float:right;"><i class="material-icons">text_format</i></button>
-      <button id="workspace-settings-button" class="btn-toolbar-icon"><i class="material-icons">group</i></button>
+      <button id="toggle-all-toolbands" class="btn_toolbar_v2" style="color:white;background:black;"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
+      <button id="toggle-all-toolbands-down" class="btn_toolbar_v2"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
       <div id="sb-floating-toolbar" style="display:inline-block;">
         <div style="display:none;" id="sb-floating-toolbar-item-template">
           <div class="sb-floating-toolbar-item">
             <div class="button-wrapper">
               <span class="button-title"></span>
               <div class="option-buttons">
-                <button class="btn-toolbar-icon sb-floating-toolbar-expand-btn"><i class="material-icons">expand_less</i></button>
                 <button class="btn-toolbar-icon sb-floating-toolbar-create-btn"><i class="material-icons">add</i></button>
               </div>
             </div>
@@ -119,22 +120,20 @@
         <div class="context-scene-tools-panel" style="display:none;">
           <div class="fields-container"></div>
         </div>
-      </div>
-      <div style="clear:both;"></div>
-      <button class="btn play-button"><i class="material-icons">play_arrow</i></button>
-      <button class="btn pause-button"><i class="material-icons">pause</i></button>
-      <button class="btn stop-button"><i class="material-icons">stop</i></button>
-      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-      <button class="btn camera-options"><i class="material-icons">camera_alt</i></button>
-      <button class="btn scene-options"><i class="material-icons">settings_brightness</i></button>
-      <button class="btn video-button"><i class="material-icons">video_library</i></button>
-      <button class="btn render-log-button"><i class="material-icons">event_available</i></button>
-      <div class="expanded-toolbar-content">
         <div class="render-log-panel" style="display:none;">
           <div class="render-note">Render Errors / Logging</div>
           <div class="fields-container"></div>
         </div>
       </div>
+      <div style="clear:both;"></div>
+      <button class="btn_toolbar_v2 play-button"><i class="material-icons">play_arrow</i></button>
+      <button class="btn_toolbar_v2 pause-button"><i class="material-icons">pause</i></button>
+      <button class="btn_toolbar_v2 stop-button"><i class="material-icons">stop</i></button>
+      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+      <button class="btn_toolbar_v2 camera-options"><i class="material-icons">camera_alt</i></button>
+      <button class="btn_toolbar_v2 scene-options"><i class="material-icons">settings_brightness</i></button>
+      <button class="btn_toolbar_v2 video-button"><i class="material-icons">video_library</i></button>
+      <button class="btn_toolbar_v2 render-log-button"><i class="material-icons">event_available</i></button>
     </div>
   </div>
 

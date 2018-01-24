@@ -214,13 +214,13 @@ __localStaticStorageForBindingFields['texture'] = [{
 }];
 __localStaticStorageForBindingFields['userProfile'] = [];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
-  title: 'Font Family',
+  title: '',
   fireSetField: 'fontFamily',
   contextObjectField: null,
   group: 'font',
   dataListId: 'fontfamilydatalist'
 }, {
-  title: 'Font Size (pt)',
+  title: '',
   fireSetField: 'fontSize',
   contextObjectField: null,
   group: 'font',
