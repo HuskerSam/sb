@@ -11,7 +11,7 @@ class cPanelCanvas {
     this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
 
     this.cameraSelect = this.dialog.querySelector('.camera-select');
-    this.cameraSelect.addEventListener('input', e => this.updateArcRangeSlider());
+    this.cameraSelect.addEventListener('input', e => this.cameraChangeHandler());
     this.arcRangeSlider = this.dialog.querySelector('.camera-select-range-slider');
     this.arcRangeSlider.addEventListener('input', e => this.arcRangeSliderChange());
     this.arcRangeSlider.value = gAPPP.a.profile.arcCameraRadius;
@@ -29,15 +29,13 @@ class cPanelCanvas {
     this.sceneTools.activate();
     this.bandButtons.push(this.sceneTools);
 
-
-    this.cameraToolsButton = this.dialog.querySelector('.camera-options');
-    this.cameraToolsContainer = this.dialog.querySelector('.camera-options-panel');
-    this.cameraFields = sDataDefinition.bindingFieldsCloned('cameraToolsBar');
-    this.cameraFieldsContainer = this.cameraToolsContainer.querySelector('.fields-container');
-    this.cameraTools = new cBandProfileOptions(this.cameraToolsButton, this.cameraFields, this.cameraFieldsContainer, this.cameraToolsContainer);
-    this.cameraTools.fireFields.values = gAPPP.a.profile;
-    this.cameraTools.activate();
-    this.bandButtons.push(this.cameraTools);
+    this.renderToggleBtn = this.dialog.querySelector('.render-log-button');
+    this.renderFieldsContainer = this.dialog.querySelector('.render-log-panel .fields-container');
+    this.renderPanelContainer = this.dialog.querySelector('.render-log-panel');
+    this.renderPanelBand = new cBandProfileOptions(this.renderToggleBtn, [], this.renderFieldsContainer, this.renderPanelContainer);
+    this.renderPanelBand.fireFields.values = gAPPP.a.profile;
+    this.renderPanelBand.activate();
+    this.bandButtons.push(this.renderPanelBand);
 
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
@@ -68,15 +66,17 @@ class cPanelCanvas {
   get defaultCameras() {
     return {
       default: {
-        cameraName: 'Arc Rotate (default)'
+        cameraName: 'default'
       }
     };
   }
-  updateArcRangeSlider() {
+  cameraChangeHandler() {
     if (this.cameraSelect.selectedIndex === 0)
       this.arcRangeSlider.style.display = '';
     else
       this.arcRangeSlider.style.display = 'none';
+
+    this.parent.context.selectCamera(this.cameraSelect.value, this.parent);
   }
   stopAnimation() {
     this.playButton.removeAttribute('disabled');

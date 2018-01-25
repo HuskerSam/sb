@@ -26,10 +26,10 @@ html, body {
   width: 100%;
   height: 100%;
   touch-action: none;
-  background: rgb(100, 100, 100);
-  font-size: 5em;
+  background: silver;
+  font-size: 2em;
   text-align: center;
-  color: black;
+  color: rgb(50,50,50);
   position: absolute;
   z-index: 1;
   left: 0px;
@@ -152,6 +152,11 @@ html, body {
   color: black;
   border: solid .05em silver;
   border-radius: .25em;
+}
+
+.btn_toolbar_v2[disabled] {
+  background: silver;
+  opacity: .3;
 }
 
 .button-wrapper .btn-toolbar-icon {
@@ -455,30 +460,35 @@ button i.material-icons {
   pointer-events: auto;
   height: 6em;
   width: 10em;
-  margin-bottom: -.35em;
+  margin: .1em;
+  margin-bottom: -.1em;
   position: relative;
 }
+
 .band-background-preview .extend-panel {
   position: absolute;
   bottom: .15em;
   left: 2.3em;
 }
+
 .band-background-preview .band-title {
   padding: .15em;
-  background: rgba(255,255,255,.5);
+  background: rgba(255, 255, 255, .5);
   color: black;
   border-radius: .25em;
   margin: .15em;
-  float:left;
+  float: left;
 }
+
 .band-background-preview .toggle-btn {
   clear: both;
-  background: rgba(255,255,255,.2);
+  background: rgba(255, 255, 255, .2);
   font-weight: bold;
   position: absolute;
   bottom: .15em;
   left: .15em;
 }
+
 .dropdown-menu {
   min-width: 7em;
   font-size: inherit;
@@ -735,7 +745,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .render-log-panel {
-  width: 100%;
+  width: 100vw;
   height: 6.5em;
   overflow: auto;
   background: rgba(255, 255, 255, .4);
@@ -848,15 +858,9 @@ input[type=range]::-webkit-slider-thumb {
   color: red;
 }
 
-.canvas-actions .camera-options {}
-
-.canvas-actions .btn[disabled] {
-  background: silver;
-  opacity: .3;
-}
 
 .canvas-actions input[type="range"] {
-  width: calc(100% - 18em);
+  width: 25vw;
   display: inline-block;
   position: relative;
   top: .2em;
@@ -866,11 +870,16 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .camera-select-range-slider {
-  top: 0!important;
-  width: 50vh!important;
 }
 
-.canvas-actions .camera-select {}
+.canvas-actions .camera-select {
+  border-radius: .25em;
+  border: solid .1em silver;
+  position: relative;
+  top: -.2em;
+  font-size: .9em;
+  left: .4em;
+}
 
 #workspaces-select {
   margin-left: .2em;
@@ -912,12 +921,14 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #toggle-all-toolbands-down {
-  margin-left: -.3em;
+  margin-left: -.25em;
   position: relative;
+  font-size: 1.5em;
 }
 
 #toggle-all-toolbands {
   position: relative;
+  font-size: 1.5em;
 }
 
 .font-family-panel .form-group input {
@@ -946,7 +957,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #fontsize-toolbar-slider {
-  width: 30vh;
+  width: 30vw;
   font-size: 1.1em;
   display: inline-block;
   border: solid .1em silver;
@@ -958,4 +969,12 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: .25em;
   border: solid .1em silver;
   padding: .1em;
+}
+
+.select-block-animation-button {
+  position: absolute;
+  top: .1em;
+  right: .1em;
+  background: rgba(0, 0, 0, .25);
+  color: white;
 }

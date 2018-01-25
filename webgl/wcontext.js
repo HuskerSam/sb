@@ -4,6 +4,7 @@ class wContext {
     this.light = null;
     this.camera = null;
     this.cameraName = '';
+    this.blockCameraId = 'default';
     this.cameraVector = '';
     this._scene = null;
     this.activeBlock = null;
@@ -79,8 +80,11 @@ class wContext {
       this._sceneAddDefaultObjects();
     }
 
+    if (this.cameraTypeShown !== 'default')
+      this._renderDefaultCamera();
+
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
-    this.camera.attachControl(this.canvas, false);
+    this.camera.attachControl(this.canvas, true);
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => this.scene.render());
     });
@@ -226,25 +230,6 @@ class wContext {
       } else
         resolve({});
     });
-  }
-  _updateCamera() {
-    let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 3, 15, 15);
-    let cameraName = gAPPP.a.profile.cameraName;
-
-    if (cameraName !== this.cameraName || !this.camera) {
-      if (this.camera)
-        this.camera.dispose();
-
-      this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera", .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
-      this.cameraName = cameraName;
-      this.camera.attachControl(this.canvas, false);
-      let radius = 10;
-      let newRadius = Number(gAPPP.a.profile.arcCameraRadius);
-      if (newRadius > 1 && newRadius < 500)
-        radius = newRadius;
-      this.camera.radius = radius;
-      this.cameraVector = null;
-    }
   }
   _updateScaffoldingData() {
     if (!this.scene)
@@ -460,5 +445,65 @@ class wContext {
       if (this.scene.meshes[i].parent === sceneObject)
         this.scene.meshes[i].material = materialObject;
     }
+  }
+  _updateCamera(blockCameraId = null) {
+
+    if (blockCameraId || !this.camera) {
+      if (this.camera)
+        this.camera.dispose();
+      this.camera = null;
+      if (blockCameraId)
+        this.blockCameraId = blockCameraId;
+      if (this.blockCameraId === 'default') {
+        this._renderDefaultCamera();
+      } else {
+        let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
+
+
+        if (cameraDetails.childName === 'FollowCamera') {
+          this._renderFollowCamera();
+        } else {
+          this._renderDefaultCamera();
+        }
+      }
+
+    }
+  }
+  _renderFollowCamera() {
+    this.cameraTypeShown = 'FollowCamera';
+    if (this.camera)
+      this.camera.dispose();
+    let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
+    let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 3, 15, 15);
+    this.camera = new BABYLON.FollowCamera("FollowCam", cameraOrigin, this.scene);
+    this.camera.attachControl(this.canvas, true);
+
+    let targetBlock = this.dialogForCamera.rootBlock;
+    let mesh = targetBlock._findBestTargetObject(cameraDetails.cameraTargetBlock);
+    if (!mesh)
+      mesh = targetBlock.sceneObject;
+    if (mesh)
+      this.camera.lockedTarget = mesh.sceneObject;
+  }
+  _renderDefaultCamera() {
+    this.cameraTypeShown = 'default';
+    if (this.camera)
+      this.camera.dispose();
+    let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 3, 15, 15);
+    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera", .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
+    this.camera.attachControl(this.canvas, true);
+    let radius = 10;
+    let newRadius = Number(gAPPP.a.profile.arcCameraRadius);
+    if (newRadius > 1 && newRadius < 500)
+      radius = newRadius;
+    this.camera.radius = radius;
+    this.cameraVector = null;
+  }
+  selectCamera(blockCameraId, dialogForCamera) {
+    if (!this.canvasHelper.cameraDetails[blockCameraId])
+      blockCameraId = 'default';
+    this.dialogForCamera = dialogForCamera;
+    this._updateCamera(blockCameraId);
+    //  gAPPP.a.profile.blockCameraId = blockCameraId;
   }
 }

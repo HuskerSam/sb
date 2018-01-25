@@ -289,7 +289,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   type: 'boolean',
   group: 'inputFocusLock'
 }];
-__localStaticStorageForBindingFields['cameraToolsBar'] = [];
 __localStaticStorageForBindingFields['baseMesh'] = [{
   title: 'Scale X',
   fireSetField: 'scalingX',

@@ -20,7 +20,7 @@ class cBandSuper {
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);
     let values = fireData.val();
-    this._nodeApplyValues(values, div);
+    this._nodeApplyValues(values, div.querySelector('.band-background-preview'));
   }
   childRemoved(fireData) {
     let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);

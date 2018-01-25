@@ -47,7 +47,7 @@ class cDialogCreateItem {
   }
   close() {
     $(this.dialog).modal('hide');
-    gAPPP.mV.context.activate();
+    gAPPP.mV.show();
   }
   create() {
     if (this.titleDom.value.trim() === '') {

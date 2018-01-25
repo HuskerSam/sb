@@ -18,7 +18,8 @@ class cViewMain {
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     this.context = new wContext(this.canvas, true);
-    this.context.activate(null);
+    this.dialog.context = this.context;
+    this.show(null);
 
     this.canvasActions = this.dialog.querySelector('.canvas-actions');
     this.canvasActions.style.display = '';
@@ -105,14 +106,6 @@ class cViewMain {
 
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
 
-    this.renderToggleBtn = this.dialog.querySelector('.render-log-button');
-    this.renderFieldsContainer = this.dialog.querySelector('.render-log-panel .fields-container');
-    this.renderPanelContainer = this.dialog.querySelector('.render-log-panel');
-    this.renderPanelBand = new cBandProfileOptions(this.renderToggleBtn, [], this.renderFieldsContainer, this.renderPanelContainer);
-    this.renderPanelBand.fireFields.values = gAPPP.a.profile;
-    this.renderPanelBand.activate();
-    this.bandButtons.push(this.renderPanelBand);
-
     this.fontSizeSlider = document.querySelector('#fontsize-toolbar-slider');
     this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
   }
@@ -137,6 +130,8 @@ class cViewMain {
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {
+      if (type === 'remove')
+        return;
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
     }
   }
@@ -151,7 +146,7 @@ class cViewMain {
     }
 
     if (this.key !== profileKey) {
-      this.context.activate(null);
+      this.show(null);
       this.canvasHelper.hide();
       setTimeout(() => {
         let blockData = gAPPP.a.modelSets['block'].getCache(profileKey);
@@ -266,5 +261,11 @@ class cViewMain {
     for (let i in this.dialogs)
       if ($(this.dialogs[i].dialog).hasClass('in'))
         this.dialogs[i].close();
+  }
+
+  show(scene) {
+    this.context.activate(scene);
+    if (this.canvasHelper)
+      this.canvasHelper.cameraSelect.value = 'default';
   }
 }

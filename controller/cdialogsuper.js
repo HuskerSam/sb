@@ -63,7 +63,7 @@ class cDialogSuper {
       this.canvasHelper.sceneTools.expanded = true;
       this.canvasHelper.sceneTools.toggle();
     }
-    gAPPP.mV.context.activate();
+    gAPPP.mV.show();
   }
   save() {
     this.close();
@@ -79,6 +79,7 @@ class cDialogSuper {
     this._showFocus();
 
     if (this.initScene) {
+      this.canvasHelper.cameraSelect.value = 'default';
       this.context.activate(null);
 
       if (this.tag === 'mesh') {

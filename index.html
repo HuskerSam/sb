@@ -111,12 +111,7 @@
   <div id="canvas-d3-player-template" style="display:none;">
     <canvas class="popup-canvas"></canvas>
     <div class="canvas-actions" style="display:none;">
-      <div class="expanded-toolbar-content" style="text-align:right;">
-        <div class="camera-options-panel" style="display:none;float:left;">
-          <select class="camera-select" style="float:left;"></select>
-          <input class="camera-select-range-slider" type="range" step="1" min="1" max="250" />
-          <div class="fields-container" style="float:left"></div>
-        </div>
+      <div class="expanded-toolbar-content" style="float:right;">
         <div class="context-scene-tools-panel" style="display:none;">
           <div class="fields-container"></div>
         </div>
@@ -129,11 +124,15 @@
       <button class="btn_toolbar_v2 play-button"><i class="material-icons">play_arrow</i></button>
       <button class="btn_toolbar_v2 pause-button"><i class="material-icons">pause</i></button>
       <button class="btn_toolbar_v2 stop-button"><i class="material-icons">stop</i></button>
-      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-      <button class="btn_toolbar_v2 camera-options"><i class="material-icons">camera_alt</i></button>
-      <button class="btn_toolbar_v2 scene-options"><i class="material-icons">settings_brightness</i></button>
       <button class="btn_toolbar_v2 video-button"><i class="material-icons">video_library</i></button>
+      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+      <button class="btn_toolbar_v2 scene-options"><i class="material-icons">settings_brightness</i></button>
       <button class="btn_toolbar_v2 render-log-button"><i class="material-icons">event_available</i></button>
+      <div class="camera-options-panel" style="display:inline-block;">
+        <select class="camera-select" style=""></select>
+        <input class="camera-select-range-slider" type="range" step="1" min="1" max="250" />
+        <div class="fields-container" style="float:left"></div>
+      </div>
     </div>
   </div>
 

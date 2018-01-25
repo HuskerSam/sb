@@ -41,8 +41,10 @@ class cBandRecords extends cBandSuper {
     dd.appendChild(outer);
     let toggle = outer.querySelector('.toggle-btn');
     toggle.addEventListener('click', e => this.toggleState(toggle, exPanel));
-    if (this.tag === 'block')
-        this.__addMenuItem(exPanel, 'switch_video', e => this._selectBlock(e, key));
+    if (this.tag === 'block'){
+        let btn = this.__addMenuItem(outer, 'switch_video', e => this._selectBlock(e, key));
+        btn.classList.add('select-block-animation-button');
+    }
 
     this.__addMenuItem(exPanel, 'edit', e => this._showEditPopup(e, key));
     this.__addMenuItem(exPanel, 'delete', e => this._removeElement(e, key), true);
@@ -116,5 +118,6 @@ class cBandRecords extends cBandSuper {
     btn.classList.add('btn_toolbar_v2');
     button.appendChild(btn);
     btn.addEventListener('click', e => clickHandler(e), false);
+    return btn;
   }
 }

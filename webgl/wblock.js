@@ -115,13 +115,17 @@ class wBlock {
       }
     }
 
-    //    if (tag === 'material' || tag === 'texture') {
+
+    let materialDirty = false;
     if (this.currentMaterialName !== this.blockRenderData.materialName) {
+      materialDirty = true;
       this.currentMaterialName = this.blockRenderData.materialName;
-      //    if (materialList.indexOf(this.blockRenderData.materialName) !== -1)
-      return this.setData();
     }
-    //  }
+    if (tag === 'material' && this.blockRenderData.materialName === values.title)
+      materialDirty = true;
+
+    if (materialDirty)
+      return this.setData();
 
     if (type === 'add' && tag === 'blockchild')
       if (values.parentKey === this._blockKey)
@@ -781,6 +785,7 @@ class wBlock {
     let camerasS = JSON.stringify(cameras);
     if (camerasS !== this.cameraS) {
       let sel = this.context.canvasHelper.cameraSelect;
+      this.camerasCache = cameras;
       let startValue = sel.value;
       this.context.canvasHelper.cameraDetails = cameras;
       this.context.canvasHelper.camerasS = camerasS;
@@ -805,5 +810,19 @@ class wBlock {
       this.childBlocks[i].traverseCameraList(cameras);
 
     return cameras;
+  }
+  _findBestTargetObject(findString) {
+    let parts = findString.split(':');
+    let childType = parts[0].trim();
+    let childName = parts[1].trim();
+    for (let i in this.childBlocks) {
+      if (this.childBlocks[i].blockRawData.childType === childType)
+        if (this.childBlocks[i].blockRawData.childName === childName)
+          return this.childBlocks[i];
+        let childResult = this.childBlocks[i]._findBestTargetObject(findString);
+        if (childResult)
+          return childResult;
+    }
+    return null;
   }
 }
