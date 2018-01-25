@@ -36,8 +36,8 @@ class cDialogSuper {
       this.okBtn.addEventListener('click', () => this.save(), false);
     if (this.rotateBtn)
       this.rotateBtn.addEventListener('click', () => this._rotateView(), false);
-    $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
-    $(this.dialog).on('shown.bs.modal', () => this._showFocus());
+  //  $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
+//    $(this.dialog).on('shown.bs.modal', () => this._showFocus());
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas)
@@ -57,7 +57,7 @@ class cDialogSuper {
       if (this.context)
         this.context.renderPreview(this.tag, this.key);
     }
-    $(this.dialog).modal('hide');
+    this.dialog.close();
 
     if (this.canvasHelper) {
       this.canvasHelper.sceneTools.expanded = true;
@@ -70,7 +70,7 @@ class cDialogSuper {
   }
   show() {
     this._startLoad();
-    $(this.dialog).modal('show');
+    this.dialog.showModal();
 
     this.rotateState = gAPPP.a.profile.editFormRotateState;
     if (!this.rotateState)

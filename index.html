@@ -47,8 +47,7 @@
 
         <div id="project-panel" style="display:none;">
           <select id="workspaces-select"></select>
-          <button id="remove-workspace-button" class="btn-toolbar-icon"><i class="material-icons">delete</i></button>
-          &nbsp; &nbsp;
+          <button id="remove-workspace-button" class="btn-toolbar-icon"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
           <input id="new-workspace-name" />
           <button id="add-workspace-button" class="btn-toolbar-icon"><i class="material-icons">add</i></button>
           <div class="project-fields-container"></div>
@@ -141,34 +140,21 @@
 
   <!-- OBJECT EDIT DIALOG -->
   <div id="scene-builder-edit-dialog-template" style="display:none;">
-    <div class="modal-dialog">
-      <div class="modal-body">
-        <div class="popup-main-body">
-          <div class="popup-canvas-wrapper">
-          </div>
-          <div class="edit-popup-fields fields-container">
-          </div>
+    <div class="popup-action-bar">
+      <div class="progress progress-striped active popup-progress-bar">
+        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
         </div>
-        <div class="popup-action-bar">
-          <div class="progress progress-striped active popup-progress-bar">
-            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
-            </div>
-          </div>
-          <div class="popup-buttons">
-            <div class="popup-title"></div>
-            <div class="popup-mid-buttons">
-              <button type="button" class="btn-toolbar-icon rotate-details">
-                <i class="material-icons">rotate_90_degrees_ccw</i>
-              </button>
-            </div>
-            <div style="float:right;">
-              <button type="button" class="btn-toolbar-icon close-details">
-                <i class="material-icons">close</i> Close
-              </button>
-            </div>
-            <div style="clear:both;"></div>
-          </div>
-        </div>
+      </div>
+      <div class="popup-buttons">
+        <div class="popup-title"></div>
+        <button type="button" class="btn-toolbar-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button>
+        <button type="button" style="float:right;" class="btn-toolbar-icon close-details"><i class="material-icons">close</i></button>
+      </div>
+    </div>
+    <div class="popup-main-body">
+      <div class="popup-canvas-wrapper">
+      </div>
+      <div class="edit-popup-fields fields-container">
       </div>
     </div>
   </div>
@@ -315,10 +301,6 @@
   </datalist>
 
   <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <script src="https://cdn.babylonjs.com/babylon.max.js"></script>

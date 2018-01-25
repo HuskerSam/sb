@@ -2,6 +2,7 @@ class cPanelHelpers {
   constructor(fireFields) {
     this.fireFields = fireFields;
     this.helperPanels = {};
+    this.toggleButtons = [];
     this.fieldPanels = [];
     this.context = null;
     document.addEventListener('contextRefreshActiveObject', e => this.handleDataUpdate(e), false);
@@ -446,28 +447,12 @@ class cPanelHelpers {
     hp.preview = aD.querySelector('.preview');
   }
   collapseAll() {
-    for (let i in this.helperPanels) {
-      let hp = this.helperPanels[i];
-      hp.helperDom.style.display = 'none';
-      hp.collapseButton.innerHTML = '+';
-    }
-    for (let c = 0, l = this.fieldPanels.length; c < l; c++) {
-      let fp = this.fieldPanels[c];
-      fp.helperDom.style.display = 'none';
-      fp.collapseButton.innerHTML = '+';
-    }
+    for (let c = 0, l = this.toggleButtons.length; c < l; c++)
+      this.__toggleHelper(this.toggleButtons[c], this.toggleButtons[c], false);
   }
   expandAll() {
-    for (let i in this.helperPanels) {
-      let hp = this.helperPanels[i];
-      hp.helperDom.style.display = 'block';
-      hp.collapseButton.innerHTML = '-';
-    }
-    for (let c = 0, l = this.fieldPanels.length; c < l; c++) {
-      let fp = this.fieldPanels[c];
-      fp.helperDom.style.display = 'block';
-      fp.collapseButton.innerHTML = '-';
-    }
+    for (let c = 0, l = this.toggleButtons.length; c < l; c++)
+      this.__toggleHelper(this.toggleButtons[c], this.toggleButtons[c], true);
   }
   __initDOMWrapper(containerDom) {
     let helperDom = document.createElement('div');
@@ -475,16 +460,11 @@ class cPanelHelpers {
     helperDom.style.display = 'none';
     let collapseButton = document.createElement('button');
     collapseButton.setAttribute('class', 'selected-mesh-helper-collapse-button');
-    collapseButton.innerHTML = '+';
-    collapseButton.addEventListener('click', e => {
-      if (helperDom.style.display === 'none') {
-        helperDom.style.display = 'block';
-        collapseButton.innerHTML = '-';
-      } else {
-        helperDom.style.display = 'none';
-        collapseButton.innerHTML = '+';
-      }
-    });
+    collapseButton.innerHTML = '<i class="material-icons">expand_more</i>';
+    collapseButton.addEventListener('click', e => this.__toggleHelper(helperDom, collapseButton));
+    collapseButton.helperDom = helperDom;
+    this.toggleButtons.push(collapseButton);
+
     containerDom.appendChild(collapseButton);
     let infoDom = document.createElement('div');
     infoDom.classList.add('info-area');
@@ -500,6 +480,27 @@ class cPanelHelpers {
       actionDom,
       collapseButton
     };
+  }
+  __toggleHelper(helperDom, collapseButton, forceState = undefined) {
+    let vState = false;
+
+    if (helperDom.style.display === 'none')
+      vState = true;
+
+    if (forceState !== undefined)
+      vState = forceState;
+
+    if (vState){
+      helperDom.style.display = 'block';
+      collapseButton.innerHTML = '<i class="material-icons">expand_less</i>';
+      collapseButton.style.color = 'white';
+      collapseButton.style.background = 'rgb(50,50,50)';
+    } else {
+      helperDom.style.display = 'none';
+      collapseButton.innerHTML = '<i class="material-icons">expand_more</i>';
+      collapseButton.style.color = 'black';
+      collapseButton.style.background = 'rgb(240,240,240)';
+    }
   }
   __sliderHandleInputChange(helperPanel, sender) {
     if (sender) {

@@ -228,10 +228,6 @@ class cViewMain {
       }
   }
   _collaspseAllBands() {
-    let dialog = this.__detectIfEditDialogShown();
-    if (dialog)
-      return dialog.collapseAll();
-
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggleChildBandDisplay(false);
 
@@ -244,25 +240,14 @@ class cViewMain {
     this.closeHeaderBands();
   }
   _expandAllBands() {
-    let dialog = this.__detectIfEditDialogShown();
-    if (dialog)
-      return dialog.expandAll();
-
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggleChildBandDisplay(true);
   }
-  __detectIfEditDialogShown() {
-    for (let i in this.dialogs)
-      if ($(this.dialogs[i].dialog).hasClass('in'))
-        return this.dialogs[i];
-    return null;
-  }
   closeAllDialogs() {
-    for (let i in this.dialogs)
-      if ($(this.dialogs[i].dialog).hasClass('in'))
-        this.dialogs[i].close();
+//    for (let i in this.dialogs)
+  //    if ($(this.dialogs[i].dialog).hasClass('in'))
+    //    this.dialogs[i].close();
   }
-
   show(scene) {
     this.context.activate(scene);
     if (this.canvasHelper)

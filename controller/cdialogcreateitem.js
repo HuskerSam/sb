@@ -34,8 +34,8 @@ class cDialogCreateItem {
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.dialog.querySelector('.modal-title').innerHTML = title;
     this.titleDom = this.dialog.querySelector('.input-title');
-    $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
-    $(this.dialog).on('shown.bs.modal', () => this._shown());
+//    $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
+//    $(this.dialog).on('shown.bs.modal', () => this._shown());
 
     this.cancelBtn.addEventListener('click', e => this.close(), false);
     this.createBtn.addEventListener('click', e => this.create(), false);

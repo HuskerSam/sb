@@ -1,14 +1,13 @@
 class cDialogEditItem extends cDialogSuper {
   constructor(tag, title) {
-    let d = document.createElement('div');
+    let d = document.createElement('dialog');
     d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;
-    d.setAttribute('role', 'dialog');
-    d.setAttribute('class', 'modal fade edit-modal');
+    d.classList.add('modal-dialog');
     d.querySelector('.popup-title').innerHTML = title;
+    document.body.append(d);
 
     let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
     d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
-
 
     let fieldsContainer = d.querySelector('.edit-popup-fields');
     super(d, tag, fieldsContainer, fieldsContainer);
