@@ -727,22 +727,50 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   contextObjectField: null,
   group: 'camera'
 }, {
-  title: 'Parent Block',
-  fireSetField: 'cameraParentBlock',
+  title: 'Target Block',
+  fireSetField: 'cameraTargetBlock',
   contextObjectField: null,
   displayGroup: 'camera',
   displayKey: 'childType',
+  group: 'camera'
+}, {
+  title: 'Radius',
+  fireSetField: 'cameraRadius',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  contextObjectField: null,
+  group: 'camera'
+}, {
+  title: 'Height',
+  fireSetField: 'cameraHeightOffset',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  contextObjectField: null,
+  group: 'camera'
+}, {
+  title: 'Rotation Offset',
+  fireSetField: 'cameraRotationOffset',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  contextObjectField: null,
+  group: 'camera'
+},  {
+  title: 'Acceleration',
+  fireSetField: 'cameraAcceleration',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  contextObjectField: null,
+  group: 'camera'
+}, {
+  title: 'Max Speed',
+  fireSetField: 'maxCameraSpeed',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  contextObjectField: null,
   group: 'camera'
 }, {
   title: 'Aim at Position',
   fireSetField: 'cameraAimTarget',
-  contextObjectField: null,
-  displayGroup: 'camera',
-  displayKey: 'childType',
-  group: 'camera'
-}, {
-  title: 'Aim at Block',
-  fireSetField: 'cameraTargetBlock',
   contextObjectField: null,
   displayGroup: 'camera',
   displayKey: 'childType',

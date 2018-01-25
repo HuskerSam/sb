@@ -474,8 +474,26 @@ class wContext {
     if (this.camera)
       this.camera.dispose();
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
-    let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 3, 15, 15);
+    let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 0, 15, -15);
     this.camera = new BABYLON.FollowCamera("FollowCam", cameraOrigin, this.scene);
+
+    let cameraRadius = cameraDetails.cameraRadius;
+    let heightOffset = cameraDetails.cameraHeightOffset;
+    let rotationOffset = cameraDetails.cameraRotationOffset;
+    let cameraAcceleration = cameraDetails.cameraAcceleration;
+    let maxCameraSpeed = cameraDetails.maxCameraSpeed;
+
+    if (cameraRadius)
+      this.camera.radius = cameraRadius;
+    if (heightOffset)
+      this.camera.heightOffset = heightOffset;
+    if (rotationOffset)
+      this.camera.rotationOffset = rotationOffset;
+    if (cameraAcceleration)
+      this.camera.cameraAcceleration = cameraAcceleration;
+    if (maxCameraSpeed)
+      this.camera.maxCameraSpeed = maxCameraSpeed;
+
     this.camera.attachControl(this.canvas, true);
 
     let targetBlock = this.dialogForCamera.rootBlock;
