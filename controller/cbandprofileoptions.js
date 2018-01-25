@@ -37,7 +37,7 @@ class cBandProfileOptions {
         this.closeOthersCallback();
       this.expanded = true;
       this.panel.style.display = 'inline-block';
-      this.collapseButton.style.background = 'rgba(0,0,0,.5)';
+      this.collapseButton.style.background = 'rgb(50,50,50)';
       this.collapseButton.style.color = 'white';
     }
   }

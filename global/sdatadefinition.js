@@ -214,37 +214,62 @@ __localStaticStorageForBindingFields['texture'] = [{
 }];
 __localStaticStorageForBindingFields['userProfile'] = [];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
-  title: '',
+  title: 'Font',
   fireSetField: 'fontFamily',
   contextObjectField: null,
   group: 'font',
   dataListId: 'fontfamilydatalist'
 }, {
-  title: '',
+  title: 'Size',
   fireSetField: 'fontSize',
   contextObjectField: null,
   group: 'font',
   displayType: 'number'
-}];
-__localStaticStorageForBindingFields['sceneToolsBar'] = [{
-  title: 'Direction',
-  fireSetField: 'lightVector',
-  contextObjectField: null,
-  displayType: 'shortvector',
-  floatLeft: true,
-  clearLeft: true,
-  group: 'light'
-}, {
-  title: 'Light Intensity',
-  fireSetField: 'lightIntensity',
-  contextObjectField: null,
-  displayType: 'number',
-  group: 'light'
 }, {
   title: 'UI Depth',
   fireSetField: 'gridAndGuidesDepth',
   contextObjectField: null,
   displayType: 'number',
+  helperType: 'singleSlider',
+  rangeMin: '0',
+  rangeMax: '100',
+  rangeStep: '1',
+  group: 'main',
+  floatLeft: true
+}, {
+  title: 'Canvas Color',
+  fireSetField: 'canvasColor',
+  contextObjectField: null,
+  type: 'color',
+  group: 'main',
+  displayType: 'shortVector',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.01',
+  floatLeft: true
+}];
+__localStaticStorageForBindingFields['sceneToolsBar'] = [{
+  title: 'Light Intensity',
+  fireSetField: 'lightIntensity',
+  contextObjectField: null,
+  helperType: 'singleSlider',
+  rangeMin: '0',
+  rangeMax: '2',
+  rangeStep: '.01',
+  displayType: 'number',
+  group: 'light',
+  floatLeft: true
+}, {
+  title: 'Direction',
+  fireSetField: 'lightVector',
+  contextObjectField: null,
+  displayType: 'shortVector',
+  helperType: 'vector',
+  rangeMin: '-1',
+  rangeMax: '1',
+  rangeStep: '.01',
+  floatLeft: true,
   group: 'light'
 },{
   title: 'Bounds',
@@ -260,9 +285,10 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   type: 'boolean',
   group: 'depthExtras',
   contextObjectField: null,
-  floatLeft: true
+  floatLeft: true,
+  clearLeft: true,
 }, {
-  title: 'Floor Grid',
+  title: 'Grid',
   fireSetField: 'showFloorGrid',
   type: 'boolean',
   group: 'depthExtras',
@@ -274,20 +300,9 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   fireSetField: 'showSceneGuides',
   contextObjectField: null,
   group: 'depthExtras',
-  floatLeft: true,
-  type: 'boolean'
-}, {
-  title: 'Canvas Color',
-  fireSetField: 'canvasColor',
-  contextObjectField: null,
-  type: 'color',
-  group: 'main'
-}, {
-  title: 'Disable focus lock',
-  fireSetField: 'inputFocusLock',
-  contextObjectField: null,
   type: 'boolean',
-  group: 'inputFocusLock'
+  floatLeft: true,
+  clearLeft: true
 }];
 __localStaticStorageForBindingFields['baseMesh'] = [{
   title: 'Scale X',
@@ -655,14 +670,14 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   fireSetField: 'lightFrom',
   contextObjectField: null,
   group: 'light',
-  displayType: 'shortvector',
+  displayType: 'shortVector',
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
   title: 'direction',
   fireSetField: 'lightDirection',
   contextObjectField: null,
-  displayType: 'shortvector',
+  displayType: 'shortVector',
   group: 'light',
   displayGroup: 'light',
   displayKey: 'childType'

@@ -21,7 +21,7 @@ class cPanelCanvas {
 
     this.bandButtons = [];
     this.sceneToolsButton = this.dialog.querySelector('.scene-options');
-    this.sceneToolsContainer = this.dialog.querySelector('.context-scene-tools-panel');
+    this.sceneToolsContainer = this.dialog.querySelector('.scene-options-panel');
     this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
     this.sceneFieldsContainer = this.sceneToolsContainer.querySelector('.fields-container');
     this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneFields, this.sceneFieldsContainer, this.sceneToolsContainer);
@@ -66,7 +66,7 @@ class cPanelCanvas {
   get defaultCameras() {
     return {
       default: {
-        cameraName: 'default'
+        cameraName: 'Camera'
       }
     };
   }
