@@ -127,6 +127,7 @@ class cDialogBlock extends cDialogSuper {
   show(key) {
     this.key = key;
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
+    this.canvasHelper.cameraSelect.value = 'default';
 
     if (!this.fireFields.values['renderImageURL'])
       this.fireSet.renderImageUpdateNeeded = true;

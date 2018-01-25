@@ -79,7 +79,6 @@ class cDialogSuper {
     this._showFocus();
 
     if (this.initScene) {
-      this.canvasHelper.cameraSelect.value = 'default';
       this.context.activate(null);
 
       if (this.tag === 'mesh') {
