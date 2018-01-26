@@ -2,11 +2,11 @@ class cDialogCreateItem {
   constructor(tag, title, hideFileDom) {
     this.tag = tag;
 
-    let d = document.createElement('div');
+    let d = document.createElement('dialog');
     d.innerHTML = document.getElementById('scene-builder-create-dialog-template').innerHTML;
-    d.setAttribute('role', 'dialog');
-    d.setAttribute('class', 'modal fade create-dialog');
+    d.setAttribute('class', 'modal-dialog');
     this.dialog = d;
+    document.body.append(d);
 
     this.canvas = this.dialog.querySelector('.create-preview-canvas');
     this.context = new wContext(this.canvas);
@@ -46,7 +46,7 @@ class cDialogCreateItem {
     this.fileDom.value = '';
   }
   close() {
-    $(this.dialog).modal('hide');
+    this.dialog.close();
     gAPPP.mV.show();
   }
   create() {
@@ -90,7 +90,7 @@ class cDialogCreateItem {
     this.clear();
     this.context.activate(null);
 
-    $(this.dialog).modal('show');
+    this.dialog.showModal();
   }
   updateFilePreview() {
     if (this.tag === 'mesh' || this.tag === 'scene') {

@@ -1,11 +1,10 @@
 class cDialogBlock extends cDialogSuper {
   constructor() {
-    let d = document.createElement('div');
+    let d = document.createElement('dialog');
     d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;
-    d.setAttribute('role', 'dialog');
-    d.setAttribute('class', 'modal fade edit-modal');
+    d.setAttribute('class', 'modal-dialog');
     d.querySelector('.popup-title').innerHTML = 'Block Editor';
-
+    document.body.append(d);
     let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
     d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
 

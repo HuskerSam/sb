@@ -18,40 +18,6 @@
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div class="global-floating-toolbar">
       <div class="toolbar-content">
-        <div class="user-profile-expanded-wrapper" style="display:none;">
-          <img class="user-image-display" />
-          <div class="form-group user-profile-info-block">
-            <span class="user-info"></span>
-            <br>
-            <button id="user-profile-dialog-reset-button" class="btn_toolbar_v2">
-              <i class="material-icons">account_circle</i> Reset Profile
-            </button>
-            <button id="sign-out-button" class="btn_toolbar_v2">
-              <i class="material-icons">account_box</i> Sign out
-            </button>
-
-          </div>
-          <div class="user-profile-fields-container"></div>
-        </div>
-      </div>
-      <div style="float:right;pointer-events: none">
-        <div class="font-family-panel" style="display:none;float:right;">
-          <input type="range" min="7" max="36" id="fontsize-toolbar-slider" />
-          <br>
-          <div class="fields-container"></div>
-          <div style="clear:both"></div>
-        </div>
-        <button id="user-profile-settings-button" class="btn_toolbar_v2"><i class="material-icons">verified_user</i></button>
-        <button id="workspace-settings-button" class="btn_toolbar_v2"><i class="material-icons">group</i></button>
-        <button class="btn_toolbar_v2 font-options"><i class="material-icons">text_format</i></button>
-
-        <div id="project-panel" style="display:none;">
-          <select id="workspaces-select"></select>
-          <button id="remove-workspace-button" class="btn-toolbar-icon"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
-          <input id="new-workspace-name" />
-          <button id="add-workspace-button" class="btn-toolbar-icon"><i class="material-icons">add</i></button>
-          <div class="project-fields-container"></div>
-        </div>
       </div>
       <button id="toggle-all-toolbands" class="btn_toolbar_v2" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
       <button id="toggle-all-toolbands-down" class="btn_toolbar_v2"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
@@ -71,7 +37,41 @@
         <div class="static-buttons-toolbar">
         </div>
       </div>
+      <div style="float:right;">
+        <button id="user-profile-settings-button" class="btn_toolbar_v2"><i class="material-icons">verified_user</i></button>
+        <button id="workspace-settings-button" class="btn_toolbar_v2"><i class="material-icons">group</i></button>
+        <button class="btn_toolbar_v2 font-options"><i class="material-icons">text_format</i></button>
+      </div>
+      <div style="float:right;pointer-events: none;clear:right;">
+        <div class="font-family-panel" style="display:none;float:right;">
+          <input type="range" min="7" max="36" id="fontsize-toolbar-slider" />
+          <br>
+          <div class="fields-container"></div>
+          <div style="clear:both"></div>
+        </div>
+        <div id="project-panel" style="display:none;">
+          <select id="workspaces-select"></select>
+          <button id="remove-workspace-button" class="btn-toolbar-icon"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
+          <input id="new-workspace-name" />
+          <button id="add-workspace-button" class="btn-toolbar-icon" style="color:rgb(0,127,0)"><i class="material-icons">add</i></button>
+          <div class="project-fields-container"></div>
+        </div>
+        <div class="user-profile-expanded-wrapper" style="display:none;">
+          <img class="user-image-display" />
+          <div class="form-group user-profile-info-block">
+            <span class="user-info"></span>
+            <br>
+            <button id="user-profile-dialog-reset-button" class="btn_toolbar_v2">
+              <i class="material-icons">account_circle</i> Reset Profile
+            </button>
+            <button id="sign-out-button" class="btn_toolbar_v2">
+              <i class="material-icons">account_box</i> Sign out
+            </button>
 
+          </div>
+          <div class="user-profile-fields-container"></div>
+        </div>
+      </div>
     </div>
 
     <div id="sb-floating-toolbar-expanded">
@@ -81,21 +81,21 @@
   <!-- OBJECT CREATE DIALOG -->
   <div id="scene-builder-create-dialog-template" style="display:none;">
     <div class="modal-dialog">
-      <div class="modal-header">
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body">
-        <div class="popup-content">
-          <div class="form-group">
-            <label>Title <input type="text" class="input-title form-control" /></label>
-          </div>
-          <canvas class="create-preview-canvas"></canvas>
-          <img class="create-preview-image" />
-          <br>
-          <input type="file" />
+      <div class="create-dialog-inner-wrapper">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
         </div>
-      </div>
-      <div class="modal-footer">
+        <div class="modal-body">
+          <div class="popup-content">
+            <div class="form-group">
+              <label>Title <input type="text" class="input-title form-control" /></label>
+            </div>
+            <canvas class="create-preview-canvas"></canvas>
+            <img class="create-preview-image" />
+            <br>
+            <input type="file" />
+          </div>
+        </div>
         <div class="progress progress-striped active popup-progress-bar">
           <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
           </div>

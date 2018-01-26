@@ -527,15 +527,6 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayType: 'number',
   group: 'text2'
 }, {
-  title: 'Open Face',
-  fireSetField: 'textStroke',
-  contextObjectField: null,
-  shapeOption: 'stroke',
-  displayGroup: 'text',
-  displayKey: 'shapeType',
-  type: 'boolean',
-  group: 'text2'
-}, {
   title: 'Depth',
   fireSetField: 'textDepth',
   contextObjectField: null,
@@ -544,6 +535,15 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayKey: 'shapeType',
   displayType: 'number',
   group: 'text2'
+}, {
+  title: 'Open Face',
+  fireSetField: 'textStroke',
+  contextObjectField: null,
+  shapeOption: 'stroke',
+  displayGroup: 'text',
+  displayKey: 'shapeType',
+  type: 'boolean',
+  group: 'openface'
 }, {
   title: 'Font Family',
   fireSetField: 'textFontFamily',

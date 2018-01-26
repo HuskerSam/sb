@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  font-size: 1em;
+  line-height: 1.5em;
 }
 
 h3 {
@@ -252,6 +254,7 @@ html, body {
   padding: .25em;
   border-radius: .25em;
   padding-bottom: .5em;
+  display: inline-block;
 }
 
 .form-group input {
@@ -260,11 +263,12 @@ html, body {
   border-radius: .25em;
   border: none;
   font-size: 1em;
+  float:left;
 }
 
 .checkboxgroup input {
   width: 1.5em;
-  height: 1em;
+  height: 1.5em;
 }
 
 .url-form-group a {
@@ -302,11 +306,9 @@ html, body {
 }
 
 .checkboxgroup label span {
-  padding: .25em;
-  position: relative;
-  top: -.4em;
-  left: -.25em;
+  padding: .15em .25em;
   border-radius: .25em;
+  font-size: 1.2em;
 }
 
 .modal-dialog {
@@ -387,21 +389,18 @@ html, body {
 
 .form-group-container-group {
   display: inline-block;
-  border-radius: .25em;
-  margin: .25em;
-  padding: .1em;
-  background: silver;
+  border-radius: .5em;
+  background: rgb(200,200,200);
   float: left;
   position: relative;
 }
-
+#main-page .form-group-container-group {
+  background: none;
+}
 .form-group-container-group .form-group {}
 
 .form-group-container-group .checkboxgroup {
-  margin-right: -.4em!important;
   width: auto;
-  margin-bottom: -.3em;
-  margin-top: -.1em;
 }
 
 .form-group-container-group label {
@@ -522,12 +521,12 @@ button i.material-icons {
   text-align: right;
   height: 2em;
   padding: .5em .2em;
-  font-size: .8em;
+  font-size: 1em;
 }
 
 .selected-mesh-bounds-helper-box .action-area select {
   padding: 0px;
-  font-size: .7em;
+  font-size: 1em;
 }
 
 .selected-mesh-bounds-helper-box .action-area button {
@@ -549,17 +548,17 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
   transform: rotate(-90deg);
-  width: 4em;
-  top: 1.5em;
+  width: 4.5em;
+  top: 1.8em;
 }
 
 .selected-mesh-bounds-helper-box .info-area {
-  font-size: .6em;
+  font-size: .8em;
   font-family: monospace;
 }
 
 .selected-mesh-bounds-helper-box .preview {
-  font-size: .7em;
+  font-size: 1em;
   clear: both;
 }
 
@@ -978,9 +977,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .scene-options-panel {
   float: right;
-  position: relative;
-  top: 2em;
-  left: -.5em;
   pointer-events: none;
 }
 
@@ -1003,6 +999,22 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .scene-options-panel .shortVector, .font-family-panel .shortVector {
-  margin-bottom: 1.5em;
-  margin-right: .5em;
+  padding-bottom: 1em;
+}
+
+.font-family-panel .selected-mesh-bounds-helper-box {
+}
+.scene-options-panel .selected-mesh-bounds-helper-box input[type="range"] {
+  margin: .25em 0em;
+}
+
+.font-family-panel .selected-mesh-bounds-helper-box input[type="range"] {
+  margin: .75em 0;
+}
+.create-dialog-inner-wrapper {
+  width: 50%;
+  margin-left: 25%;
+  display: inline-block;
+  padding: 5em;
+  background: rgb(240, 240, 240);
 }

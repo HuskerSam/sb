@@ -448,11 +448,11 @@ class cPanelHelpers {
   }
   collapseAll() {
     for (let c = 0, l = this.toggleButtons.length; c < l; c++)
-      this.__toggleHelper(this.toggleButtons[c], this.toggleButtons[c], false);
+      this.__toggleHelper(this.toggleButtons[c].helperDom, this.toggleButtons[c], false);
   }
   expandAll() {
     for (let c = 0, l = this.toggleButtons.length; c < l; c++)
-      this.__toggleHelper(this.toggleButtons[c], this.toggleButtons[c], true);
+      this.__toggleHelper(this.toggleButtons[c].helperDom, this.toggleButtons[c], true);
   }
   __initDOMWrapper(containerDom) {
     let helperDom = document.createElement('div');
