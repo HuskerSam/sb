@@ -17,17 +17,23 @@
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div class="global-floating-toolbar">
-      <div class="toolbar-content">
+      <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
+      <div id="project-panel" style="display:none;">
+        <select id="workspaces-select"></select>
+        <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
+        <input id="new-workspace-name" />
+        <button id="add-workspace-button" class="btn-sb-icon" style="color:rgb(0,127,0)"><i class="material-icons">add</i></button>
+        <div class="project-fields-container"></div>
       </div>
-      <button id="toggle-all-toolbands" class="btn_toolbar_v2" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
-      <button id="toggle-all-toolbands-down" class="btn_toolbar_v2"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
+      <button id="toggle-all-toolbands" class="btn-sb-icon" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
+      <button id="toggle-all-toolbands-down" class="btn-sb-icon"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
       <div id="sb-floating-toolbar" style="display:inline-block;">
         <div style="display:none;" id="sb-floating-toolbar-item-template">
           <div class="sb-floating-toolbar-item">
             <div class="button-wrapper">
               <span class="button-title"></span>
               <div class="option-buttons">
-                <button class="btn-toolbar-icon sb-floating-toolbar-create-btn"><i class="material-icons">add</i></button>
+                <button class="btn-sb-icon sb-floating-toolbar-create-btn"><i class="material-icons">add</i></button>
               </div>
             </div>
             <div class="sb-floating-toolbar-content">
@@ -38,9 +44,8 @@
         </div>
       </div>
       <div style="float:right;">
-        <button id="user-profile-settings-button" class="btn_toolbar_v2"><i class="material-icons">verified_user</i></button>
-        <button id="workspace-settings-button" class="btn_toolbar_v2"><i class="material-icons">group</i></button>
-        <button class="btn_toolbar_v2 font-options"><i class="material-icons">text_format</i></button>
+        <button id="user-profile-settings-button" class="btn-sb-icon"><i class="material-icons">verified_user</i></button>
+        <button class="btn-sb-icon font-options"><i class="material-icons">text_format</i></button>
       </div>
       <div style="float:right;pointer-events: none;clear:right;">
         <div class="font-family-panel" style="display:none;float:right;">
@@ -49,22 +54,15 @@
           <div class="fields-container"></div>
           <div style="clear:both"></div>
         </div>
-        <div id="project-panel" style="display:none;">
-          <select id="workspaces-select"></select>
-          <button id="remove-workspace-button" class="btn-toolbar-icon"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
-          <input id="new-workspace-name" />
-          <button id="add-workspace-button" class="btn-toolbar-icon" style="color:rgb(0,127,0)"><i class="material-icons">add</i></button>
-          <div class="project-fields-container"></div>
-        </div>
         <div class="user-profile-expanded-wrapper" style="display:none;">
           <img class="user-image-display" />
           <div class="form-group user-profile-info-block">
             <span class="user-info"></span>
             <br>
-            <button id="user-profile-dialog-reset-button" class="btn_toolbar_v2">
+            <button id="user-profile-dialog-reset-button" class="btn-sb-icon">
               <i class="material-icons">account_circle</i> Reset Profile
             </button>
-            <button id="sign-out-button" class="btn_toolbar_v2">
+            <button id="sign-out-button" class="btn-sb-icon">
               <i class="material-icons">account_box</i> Sign out
             </button>
 
@@ -80,30 +78,22 @@
 
   <!-- OBJECT CREATE DIALOG -->
   <div id="scene-builder-create-dialog-template" style="display:none;">
-    <div class="modal-dialog">
-      <div class="create-dialog-inner-wrapper">
-        <div class="modal-header">
-          <h4 class="modal-title"></h4>
-        </div>
-        <div class="modal-body">
-          <div class="popup-content">
-            <div class="form-group">
-              <label>Title <input type="text" class="input-title form-control" /></label>
-            </div>
-            <canvas class="create-preview-canvas"></canvas>
-            <img class="create-preview-image" />
-            <br>
-            <input type="file" />
-          </div>
-        </div>
-        <div class="progress progress-striped active popup-progress-bar">
-          <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
-          </div>
-        </div>
-        <div class="popup-buttons">
-          <button type="button" class="btn btn-primary create">Create</button>
-          <button type="button" class="btn cancel">Cancel</button>
-        </div>
+    <div class="create-dialog-inner-wrapper">
+      <h1 class="modal-title" style="font-size:2em;"></h1>
+      <label>Title <input type="text" class="input-title form-control" /></label>
+      <br>
+      <canvas class="create-preview-canvas"></canvas>
+      <img class="create-preview-image" />
+      <br>
+      <input type="file" />
+      <br>
+      <br>
+      <div class="popup-progress-bar">
+        Loading...
+      </div>
+      <div class="popup-buttons">
+        <button type="button" class="btn btn-primary create">Create</button>
+        <button type="button" class="btn cancel">Cancel</button>
       </div>
     </div>
   </div>
@@ -123,18 +113,18 @@
         </div>
       </div>
       <div style="clear:both;"></div>
-      <button class="btn_toolbar_v2 play-button"><i class="material-icons">play_arrow</i></button>
-      <button class="btn_toolbar_v2 pause-button"><i class="material-icons">pause</i></button>
-      <button class="btn_toolbar_v2 stop-button"><i class="material-icons">stop</i></button>
-      <button class="btn_toolbar_v2 video-button"><i class="material-icons">video_library</i></button>
-      <button class="btn_toolbar_v2 render-log-button"><i class="material-icons">event_available</i></button>
+      <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
+      <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
+      <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+      <button class="btn-sb-icon video-button"><i class="material-icons">video_library</i></button>
+      <button class="btn-sb-icon render-log-button"><i class="material-icons">event_available</i></button>
       <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
       <div class="camera-options-panel" style="display:inline-block;">
         <select class="camera-select" style=""></select>
         <input class="camera-select-range-slider" type="range" step="1" min="1" max="250" />
         <div class="fields-container" style="float:left"></div>
       </div>
-      <button class="btn_toolbar_v2 scene-options"><i class="material-icons">settings_brightness</i></button>
+      <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
     </div>
   </div>
 
@@ -146,9 +136,15 @@
         </div>
       </div>
       <div class="popup-buttons">
+        <button class="btn-sb-icon toggle-bands-up" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
+        <button class="btn-sb-icon toggle-bands-down"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
+
         <div class="popup-title"></div>
-        <button type="button" class="btn-toolbar-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button>
-        <button type="button" style="float:right;" class="btn-toolbar-icon close-details"><i class="material-icons">close</i></button>
+        <button type="button" class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
+        <button type="button" class="btn-sb-icon export-frames-details" style="display:none;"><i class="material-icons">cloud_download</i></button>
+        <button type="button" class="btn-sb-icon import-frames-details" style="display:none;"><i class="material-icons">cloud_upload</i></button>
+
+        <button type="button" style="float:right;" class="btn-sb-icon close-details"><i class="material-icons">close</i></button>
       </div>
     </div>
     <div class="popup-main-body">
@@ -162,7 +158,24 @@
   <!-- cBlock editor panel -->
   <div id="cblock-editor-panel-template" style="display:none;">
     <div class="main-band-wrapper">
+      <div>
+        <div class="export-frames-details-panel" style="display:none;">
+          <textarea class="frames-textarea-export"></textarea>
+          <br>
+          <button>Export frames to JSON</button>
+          <button>Export frames to CSV</button>
+          <button>to clipboard</button>
+        </div>
+        <div class="import-frames-details-panel" style="display:none;">
+          <textarea class="frames-textarea-import"></textarea>
+          <br>
+          <button>Import frames from JSON</button>
+          <button>Import frames from CSV</button>
+          <button>from clipboard</button>
+        </div>
+      </div>
       <div class="main-band-first-row">
+
         <button class="main-band-details-element"></button>
         <button class="main-band-add-child"><i class="material-icons">add</i></button>
         <div class="main-band-flex-children"></div>

@@ -60,6 +60,26 @@ class cDialogBlock extends cDialogSuper {
 
     this.canvasActions = this.dialog.querySelector('.canvas-actions');
     this.canvasActions.style.display = '';
+
+    this.collapseAllButton = this.dialog.querySelector('.toggle-bands-up');
+    this.collapseAllButton.addEventListener('click', e => this.collapseAll());
+    this.expandAllButton = this.dialog.querySelector('.toggle-bands-down');
+    this.expandAllButton.addEventListener('click', e => this.expandAll());
+
+    this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
+    this.exportFramesButton = this.dialog.querySelector('.export-frames-details');
+    this.exportFramesButton.style.display = 'inline-block';
+    this.exportFramesButton.addEventListener('click', e => this.exportFrames());
+    this.importFramesDetailsPanel = this.dialog.querySelector('.import-frames-details-panel');
+    this.importFramesButton = this.dialog.querySelector('.import-frames-details');
+    this.importFramesButton.style.display = 'inline-block';
+    this.importFramesButton.addEventListener('click', e => this.importFrames());
+  }
+  exportFrames() {
+    alert('hi');
+  }
+  importFrames() {
+
   }
   get activeAnimation() {
     return this.rootBlock.framesHelper.activeAnimation;

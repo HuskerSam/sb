@@ -2,7 +2,8 @@ class sDataDefinition {
   static bindingFields(tag) {
     if (tag === 'frame') {
       let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
-      return localCopy.concat(this.bindingFields('baseMesh'));
+      localCopy = localCopy.concat(this.bindingFields('baseMesh'));
+      return localCopy.concat(this.bindingFields('framep2'));
     }
     if (tag === 'shape') {
       let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
@@ -804,6 +805,79 @@ __localStaticStorageForBindingFields['frame'] = [{
   displayType: 'number',
   group: 'time'
 }];
+__localStaticStorageForBindingFields['framep2'] = [{
+  title: 'Diffuse Color',
+  fireSetField: 'diffuseColorR',
+  contextObjectField: 'material.diffuseColor.r',
+  displayType: 'number',
+  group: 'diffuse'
+}, {
+  title: 'r g b',
+  fireSetField: 'diffuseColorG',
+  contextObjectField: 'material.diffuseColor.g',
+  displayType: 'number',
+  group: 'diffuse'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'diffuseColorB',
+  contextObjectField: 'material.diffuseColor.b',
+  displayType: 'number',
+  group: 'diffuse'
+},{
+  title: 'Emissive Color',
+  fireSetField: 'emissiveColorR',
+  contextObjectField: 'material.emissiveColor.r',
+  displayType: 'number',
+  group: 'emissive'
+}, {
+  title: 'r g b',
+  fireSetField: 'emissiveColorG',
+  contextObjectField: 'material.emissiveColor.g',
+  displayType: 'number',
+  group: 'emissive'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'emissiveColorB',
+  contextObjectField: 'material.emissiveColor.b',
+  displayType: 'number',
+  group: 'emissive'
+},{
+  title: 'Ambient Color',
+  fireSetField: 'ambientColorR',
+  contextObjectField: 'material.ambientColor.r',
+  displayType: 'number',
+  group: 'ambient'
+}, {
+  title: 'r g b',
+  fireSetField: 'ambientColorG',
+  contextObjectField: 'material.ambientColor.g',
+  displayType: 'number',
+  group: 'ambient'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'ambientColorB',
+  contextObjectField: 'material.ambientColor.b',
+  displayType: 'number',
+  group: 'ambient'
+},{
+  title: 'Specular Color',
+  fireSetField: 'specularColorR',
+  contextObjectField: 'material.specularColor.r',
+  displayType: 'number',
+  group: 'specular'
+}, {
+  title: 'r g b',
+  fireSetField: 'specularColorG',
+  contextObjectField: 'material.specularColor.g',
+  displayType: 'number',
+  group: 'specular'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'specularColorB',
+  contextObjectField: 'material.specularColor.b',
+  displayType: 'number',
+  group: 'specular'
+}];
 __defaultData['mesh'] = {
   title: 'Mesh',
   name: '',
@@ -921,5 +995,17 @@ __defaultData['frame'] = {
   positionZ: '',
   rotationX: '',
   rotationY: '',
-  rotationZ: ''
+  rotationZ: '',
+  diffuseColorR: '',
+  diffuseColorG: '',
+  diffuseColorB: '',
+  emissiveColorR: '',
+  emissiveColorG: '',
+  emissiveColorB: '',
+  ambientColorR: '',
+  ambientColorG: '',
+  ambientColorB: '',
+  specularColorR: '',
+  specularColorG: '',
+  specularColorB: ''
 };

@@ -94,7 +94,6 @@ class cViewMain {
     this.projectFieldsContainer = this.dialog.querySelector('.project-fields-container');
     this.projectPanelContainer = this.dialog.querySelector('#project-panel');
     this.projectPanelBand = new cBandProfileOptions(this.projectToggleBtn, [], this.projectFieldsContainer, this.projectPanelContainer);
-    this.projectPanelBand.closeOthersCallback = () => this.closeHeaderBands();
     this.projectPanelBand.fireFields.values = gAPPP.a.profile;
     this.projectPanelBand.activate();
     this.bandButtons.push(this.projectPanelBand);
@@ -121,8 +120,6 @@ class cViewMain {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([fontUpdate]);
   }
   closeHeaderBands() {
-    this.projectPanelBand.expanded = true;
-    this.projectPanelBand.toggle(false);
     this.fontTools.expanded = true;
     this.fontTools.toggle(false);
     this.userProfileBand.expanded = true;

@@ -197,13 +197,15 @@ class wBlock {
       return;
     let values = this.framesHelper.firstFrameValues();
 
-    let fields = sDataDefinition.bindingFields('baseMesh');
+    let fields = sDataDefinition.bindingFields('baseMesh').slice(0);
+    fields = fields.concat(sDataDefinition.bindingFields('framep2')).slice(0);
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
 
       if (field.contextObjectField)
-        this.__updateObjectValue(field, value, this.sceneObject);
+        if (value !== '')
+          this.__updateObjectValue(field, value, this.sceneObject);
     }
   }
   createGuides(size) {

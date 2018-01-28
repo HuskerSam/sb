@@ -28,7 +28,7 @@ class cBandRecords extends cBandSuper {
   }
   _getDomForChild(key, values) {
     let html = '<div class="band-title"></div><br>'
-    + '<button class="btn_toolbar_v2 toggle-btn"><i class="material-icons">chevron_right</i></button>'
+    + '<button class="btn-sb-icon toggle-btn"><i class="material-icons">chevron_right</i></button>'
     + '<div class="extend-panel" style="display:none;"></div>';
 
     let outer = document.createElement('div');
@@ -115,7 +115,7 @@ class cBandRecords extends cBandSuper {
   __addMenuItem(button, title, clickHandler, prependDivider) {
     let btn = document.createElement('button');
     btn.innerHTML = '<i class="material-icons">' + title + '</i>';
-    btn.classList.add('btn_toolbar_v2');
+    btn.classList.add('btn-sb-icon');
     button.appendChild(btn);
     btn.addEventListener('click', e => clickHandler(e), false);
     return btn;

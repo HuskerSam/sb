@@ -25,10 +25,24 @@ class wFrames {
       rotationX: 0,
       rotationY: 0,
       rotationZ: 0,
-      visibility: 1
+      visibility: 1,
+      diffuseColorR: '',
+      diffuseColorG: '',
+      diffuseColorB: '',
+      emissiveColorR: '',
+      emissiveColorG: '',
+      emissiveColorB: '',
+      ambientColorR: '',
+      ambientColorG: '',
+      ambientColorB: '',
+      specularColorR: '',
+      specularColorG: '',
+      specularColorB: ''
     };
     this.frameAttributeFields = ['scalingX', 'scalingY', 'scalingZ', 'positionX', 'positionY', 'positionZ',
-      'rotationX', 'rotationY', 'rotationZ', 'visibility'
+      'rotationX', 'rotationY', 'rotationZ', 'visibility', 'diffuseColorR', 'diffuseColorG', 'diffuseColorB',
+      'emissiveColorR', 'emissiveColorG', 'emissiveColorB', 'ambientColorR', 'ambientColorG', 'ambientColorB',
+      'specularColorR', 'specularColorG', 'specularColorB'
     ];
     this.processedFrames = [];
     this.updateHandlers = [];
@@ -159,11 +173,17 @@ class wFrames {
     let frame = this.framesStash[key];
     return frame;
   }
-  __runningValue(frameValue) {
+  __runningValue(frameValue, fieldKey) {
     let valueOffset = 'none';
     let rawFrameValue = frameValue;
-    if (!rawFrameValue || (rawFrameValue === ''))
-      rawFrameValue = '0++';
+
+    if (rawFrameValue === undefined)
+      rawFrameValue = '';
+
+    let isColor = fieldKey.indexOf('Color') !== -1;
+    if (!isColor)
+      if (rawFrameValue === '')
+        rawFrameValue = '0++';
 
     if (rawFrameValue.length > 1) {
       let firstTrail = rawFrameValue.substr(rawFrameValue.length - 1);
@@ -188,15 +208,21 @@ class wFrames {
       rawFrameValue = rawFrameValue.substring(0, rawFrameValue.length - 1);
       unitDesc = firstTrail + unitDesc;
     }
-    let value = parseFloat(rawFrameValue);
-    if (isNaN(value))
-      value = 0.0;
+    let value = '';
+    if (!isColor || rawFrameValue !== ''){
+      value = parseFloat(rawFrameValue);
+      if (isNaN(value)){
+        value = 0.0;
+      }
+}
 
     return {
       valueOffset,
       value,
       unitDesc,
-      rawFrameValue
+      rawFrameValue,
+      isColor,
+      origValue: frameValue
     };
   }
   _calcFrameTimes() {
@@ -284,7 +310,7 @@ class wFrames {
 
     let processedValues = {};
     for (let i in baseDetails) {
-      let runningValue = this.__runningValue(frameValues[i]);
+      let runningValue = this.__runningValue(frameValues[i], i);
       if (runningValue.unitDesc === 'deg')
         runningValue.value *= 2 * Math.PI / 360.0;
 
@@ -465,34 +491,43 @@ class wFrames {
         let fieldKey = this.frameAttributeFields[i];
         let field = fields[fieldKey];
 
-        this.animations[i] = new BABYLON.Animation(this.parentKey + i + 'anim',
-          field.contextObjectField, this.fps, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        let frameEmpty = true;
+        for (let c in this.rawFrames)
+          if (this.rawFrames[c][fieldKey] !== '') {
+            frameEmpty = false;
+            break;
+          }
+        if (!frameEmpty) {
+          let fieldKeys = [];
+          for (let ii in this.processedFrames) {
+            let frame = this.processedFrames[ii];
 
-        let fieldKeys = [];
-        for (let ii in this.processedFrames) {
-          let frame = this.processedFrames[ii];
+            let frameNumber = Math.round(frame.actualTime / 1000.0 * this.fps);
 
-          let frameNumber = Math.round(frame.actualTime / 1000.0 * this.fps);
+            let value = frame.values[fieldKey].value;
+            fieldKeys.push({
+              frame: frameNumber,
+              value
+            });
+          }
+          this.animations[i] = new BABYLON.Animation(this.parentKey + i + 'anim',
+            field.contextObjectField, this.fps, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+          this.animations[i].setKeys(fieldKeys);
 
-          fieldKeys.push({
-            frame: frameNumber,
-            value: frame.values[fieldKey].value
-          });
-        }
-        this.animations[i].setKeys(fieldKeys);
 
-        let eFunc = new BABYLON.SineEase();
-        if (eF === 'eio') {
-          eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
-          this.animations[i].setEasingFunction(eFunc);
-        }
-        if (eF === 'ei') {
-          eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEIN);
-          this.animations[i].setEasingFunction(eFunc);
-        }
-        if (eF === 'eo') {
-          eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEOUT);
-          this.animations[i].setEasingFunction(eFunc);
+          let eFunc = new BABYLON.SineEase();
+          if (eF === 'eio') {
+            eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+            this.animations[i].setEasingFunction(eFunc);
+          }
+          if (eF === 'ei') {
+            eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEIN);
+            this.animations[i].setEasingFunction(eFunc);
+          }
+          if (eF === 'eo') {
+            eFunc.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEOUT);
+            this.animations[i].setEasingFunction(eFunc);
+          }
         }
       }
       for (let i in this.animations)

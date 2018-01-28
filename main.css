@@ -1,7 +1,6 @@
 * {
   box-sizing: border-box;
   font-size: 1em;
-  line-height: 1.5em;
 }
 
 h3 {
@@ -138,18 +137,7 @@ html, body {
   font-size: 1.1em;
 }
 
-.btn-toolbar-icon {
-  border: solid .1em silver;
-  z-index: 1;
-  background: white;
-  border-radius: .3em;
-  border: solid .1em silver;
-  z-index: 1;
-  background: white;
-  font-size: 1.1em;
-}
-
-.btn_toolbar_v2 {
+.btn-sb-icon {
   padding: 0em 0.2em;
   margin: 0;
   border: none;
@@ -164,15 +152,6 @@ html, body {
   background: silver;
   opacity: .6;
 }
-
-.button-wrapper .btn-toolbar-icon {
-  color: rgb(50, 50, 50);
-  background: rgb(0, 200, 0);
-  font-weight: bold;
-  font-size: 1em;
-}
-
-.btn-toolbar-icon {}
 
 .sb-floating-toolbar-item .button-wrapper .button-title {
   background: rgb(50, 50, 50);
@@ -199,18 +178,21 @@ html, body {
 #sb-floating-toolbar-expanded .button-wrapper .option-buttons {
   font-size: 1.1em;
   display: inline-block;
-  margin-top: .6em;
+  position: relative;
+  top: .25em;
 }
 
 .popup-canvas-body {
   flex: 1;
   width: 100%;
 }
+
 .selected-mesh-helper-collapse-button {
   border-radius: .25em;
   border: none;
   background: rgb(240, 240, 240);
 }
+
 .popup-canvas {
   touch-action: none;
   width: 100%;
@@ -263,7 +245,7 @@ html, body {
   border-radius: .25em;
   border: none;
   font-size: 1em;
-  float:left;
+  float: left;
 }
 
 .checkboxgroup input {
@@ -298,8 +280,7 @@ html, body {
   top: -.15em;
 }
 
-.url-form-group input {
-}
+.url-form-group input {}
 
 .checkboxgroup label {
   font-size: 1em;
@@ -314,7 +295,7 @@ html, body {
 .modal-dialog {
   margin: 0vh auto;
   width: 100vw;
-  background: rgb(50, 50, 50);
+  background: rgba(127, 127, 127, .85);
   height: 100vh;
   overflow-y: auto;
   padding: 0;
@@ -323,8 +304,8 @@ html, body {
 
 .popup-buttons {
   overflow: hidden;
-  font-size: 1.3em;
   padding: .1em .25em;
+  background: rgb(50, 50, 50);
 }
 
 .popup-title {
@@ -348,8 +329,8 @@ html, body {
 }
 
 .create-preview-canvas, .create-preview-image {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 30vh;
   display: inline-block;
   touch-action: none;
 }
@@ -365,7 +346,7 @@ html, body {
 }
 
 .popup-main-body {
-  height: calc(100% - 2.75em);
+  height: calc(100% - 2.5em);
   overflow-y: hidden;
   position: relative;
 }
@@ -380,23 +361,29 @@ html, body {
 }
 
 .popup-progress-bar {
-  width: 80%;
+  width: 8em;
   display: inline-block;
   margin-left: 10%;
   position: absolute;
-  bottom: 5px;
+  background: blue;
+  color: white;
+  font-weight: bold;
 }
 
 .form-group-container-group {
   display: inline-block;
   border-radius: .5em;
-  background: rgb(200,200,200);
+  background: rgb(200, 200, 200);
   float: left;
   position: relative;
 }
+
 #main-page .form-group-container-group {
-  background: none;
+  background: rgba(255, 255, 255, .2);
+  padding: .25em;
+  overflow: hidden;
 }
+
 .form-group-container-group .form-group {}
 
 .form-group-container-group .checkboxgroup {
@@ -548,8 +535,9 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
   transform: rotate(-90deg);
-  width: 4.5em;
-  top: 1.8em;
+  width: 5.5em;
+  top: 2em;
+  left: -.5em;
 }
 
 .selected-mesh-bounds-helper-box .info-area {
@@ -616,23 +604,13 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .global-floating-toolbar {
-  z-index: 20000;
+  z-index: 5000;
   pointer-events: none;
   position: relative;
   padding: .25em;
 }
 
-.global-floating-toolbar .toolbar-content {
-  padding-top: .05em;
-  pointer-events: none;
-  clear: both;
-}
-
-.global-floating-toolbar div, .global-floating-toolbar .toolbar-content div {
-  pointer-events: auto;
-}
-
-.global-floating-toolbar button, .global-floating-toolbar .toolbar-content button {
+.global-floating-toolbar * {
   pointer-events: auto;
 }
 
@@ -767,7 +745,7 @@ input[type=range]::-webkit-slider-thumb {
   overflow: auto;
   margin: 0px;
   text-align: left;
-  font-size: .9em;
+  font-size: 1em;
 }
 
 .genFrame {
@@ -899,6 +877,7 @@ input[type=range]::-webkit-slider-thumb {
 .font-family-panel .form-group input {
   padding: 0;
   margin: 0;
+  padding: .2em .1em;
 }
 
 .font-family-panel {
@@ -978,6 +957,9 @@ input[type=range]::-webkit-slider-thumb {
 .scene-options-panel {
   float: right;
   pointer-events: none;
+  position:relative;
+  top: 1.2em;
+  z-index: 100;
 }
 
 .scene-options-panel .fields-container {
@@ -999,22 +981,31 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .scene-options-panel .shortVector, .font-family-panel .shortVector {
-  padding-bottom: 1em;
+  padding-bottom: .25em;
 }
 
-.font-family-panel .selected-mesh-bounds-helper-box {
-}
+.font-family-panel .selected-mesh-bounds-helper-box {}
+
 .scene-options-panel .selected-mesh-bounds-helper-box input[type="range"] {
-  margin: .25em 0em;
+  margin: .55em 0em;
 }
 
 .font-family-panel .selected-mesh-bounds-helper-box input[type="range"] {
   margin: .75em 0;
 }
+
 .create-dialog-inner-wrapper {
+  margin-top: 4em;
+  border-radius: .25em;
+  border: solid .1em rgb(50, 50, 50);
+  text-align: center;
   width: 50%;
   margin-left: 25%;
   display: inline-block;
   padding: 5em;
   background: rgb(240, 240, 240);
+}
+
+.toggle-bands-down, .toggle-bands-up {
+  float: left;
 }

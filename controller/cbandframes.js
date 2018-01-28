@@ -108,7 +108,7 @@ class cBandFrames extends cBandSuper {
       return;
 
     let result = null;
-    if (type === 'add'){
+    if (type === 'add') {
       //let frames helpers process add first
       setTimeout(() => {
         result = this.childAdded(fireData);
@@ -188,6 +188,10 @@ class cBandFrames extends cBandSuper {
     groupDisplays.offset.innerHTML = '';
     groupDisplays.rotate.innerHTML = '';
     groupDisplays.visi.innerHTML = '';
+    groupDisplays.diffuse.innerHTML = '';
+    groupDisplays.emissive.innerHTML = '';
+    groupDisplays.ambient.innerHTML = '';
+    groupDisplays.specular.innerHTML = '';
 
     for (let c = 0, l = resultFrames.length; c < l; c++) {
       let rFrame = resultFrames[c];
@@ -221,6 +225,26 @@ class cBandFrames extends cBandSuper {
 
       groupDisplays.visi.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['visibility'].value) + '</div>';
+
+      groupDisplays.diffuse.innerHTML += `<div class="${className}">` +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
+
+      groupDisplays.emissive.innerHTML += `<div class="${className}">` +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
+
+      groupDisplays.ambient.innerHTML += `<div class="${className}">` +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
+
+      groupDisplays.specular.innerHTML += `<div class="${className}">` +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
     }
 
 
