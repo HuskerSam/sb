@@ -541,4 +541,14 @@ class wFrames {
     this.parentBlock.sceneObject.animations = this.animationsArray;
     this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps)
   }
+  importFrames(importArray) {
+    for (let i in this.rawFrames)
+      this.fireSet.removeByKey(i);
+
+    for (let i in importArray) {
+      importArray[i].parentKey = this.parentKey;
+      gAPPP.a.modelSets['frame'].createWithBlobString(importArray[i]).then(r => {});
+    }
+
+  }
 }

@@ -141,8 +141,7 @@
 
         <div class="popup-title"></div>
         <button type="button" class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
-        <button type="button" class="btn-sb-icon export-frames-details" style="display:none;"><i class="material-icons">cloud_download</i></button>
-        <button type="button" class="btn-sb-icon import-frames-details" style="display:none;"><i class="material-icons">cloud_upload</i></button>
+        <button type="button" class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button>
 
         <button type="button" style="float:right;" class="btn-sb-icon close-details"><i class="material-icons">close</i></button>
       </div>
@@ -158,24 +157,7 @@
   <!-- cBlock editor panel -->
   <div id="cblock-editor-panel-template" style="display:none;">
     <div class="main-band-wrapper">
-      <div>
-        <div class="export-frames-details-panel" style="display:none;">
-          <textarea class="frames-textarea-export"></textarea>
-          <br>
-          <button>Export frames to JSON</button>
-          <button>Export frames to CSV</button>
-          <button>to clipboard</button>
-        </div>
-        <div class="import-frames-details-panel" style="display:none;">
-          <textarea class="frames-textarea-import"></textarea>
-          <br>
-          <button>Import frames from JSON</button>
-          <button>Import frames from CSV</button>
-          <button>from clipboard</button>
-        </div>
-      </div>
       <div class="main-band-first-row">
-
         <button class="main-band-details-element"></button>
         <button class="main-band-add-child"><i class="material-icons">add</i></button>
         <div class="main-band-flex-children"></div>
@@ -183,6 +165,18 @@
       <div class="cblock-details-panel"></div>
       <div class="cblock-child-details-panel"></div>
       <div style="clear:both;"></div>
+    </div>
+    <div>
+      <div class="export-frames-details-panel" style="display:none;">
+        <div style="float:left;text-align:center;">
+          <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
+          <br>
+          <br>
+          <button class="btn-sb-icon import-frames-button">Import</button>
+        </div>
+        <textarea class="frames-textarea-export" rows="6" cols="6" style="float:left;flex:1;overflow:scroll;white-space:pre"></textarea>
+        <div style="clear:both"></div>
+      </div>
     </div>
     <div class="frames-panel"></div>
   </div>

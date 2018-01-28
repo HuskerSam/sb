@@ -1016,3 +1016,9 @@ input[type=range]::-webkit-slider-thumb {
 .toggle-bands-down, .toggle-bands-up {
   float: left;
 }
+
+.export-frames-details-panel {
+  padding: .5em;
+  border: solid .1em silver;
+  background: rgb(50, 50, 50);
+}

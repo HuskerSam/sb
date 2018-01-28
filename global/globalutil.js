@@ -80,7 +80,7 @@ class GLOBALUTIL {
     let rgb = '';
     if (v !== '')
       rgb = this.colorRGB255(v);
-    dom.parentNode.style.background = rgb;
+    dom.parentNode.querySelector('span').style.background = rgb;
   }
   static formatNumber(num) {
     let leftSide = 3;

@@ -61,19 +61,62 @@ class cDialogBlock extends cDialogSuper {
     this.expandAllButton.addEventListener('click', e => this.expandAll());
 
     this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
-    this.exportFramesButton = this.dialog.querySelector('.export-frames-details');
+    this.exportFramesButton = this.dialog.querySelector('.ie-frames-details');
     this.exportFramesButton.style.display = 'inline-block';
-    this.exportFramesButton.addEventListener('click', e => this.exportFrames());
-    this.importFramesDetailsPanel = this.dialog.querySelector('.import-frames-details-panel');
-    this.importFramesButton = this.dialog.querySelector('.import-frames-details');
-    this.importFramesButton.style.display = 'inline-block';
-    this.importFramesButton.addEventListener('click', e => this.importFrames());
-  }
-  exportFrames() {
-    alert('hi');
-  }
-  importFrames() {
+    this.exportFramesButton.addEventListener('click', e => this.toggleFramesIEDisplay());
+    this.iePanelShown = false;
 
+    this.refreshExportButton = this.dialog.querySelector('.refresh-export-frames-button');
+    this.refreshExportButton.addEventListener('click', e => this.refreshExportText())
+    this.importButton = this.dialog.querySelector('.import-frames-button');
+    this.importButton.addEventListener('click', e => this.importFramesFromText());
+
+    this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
+  }
+  refreshExportText() {
+    let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+    if (!block)
+      block = this.rootBlock;
+    let outFrames = [];
+    for (let i in block.framesHelper.rawFrames)
+      outFrames.push(block.framesHelper.rawFrames[i]);
+
+    this.ieTextArea.value = JSON.stringify(outFrames).replace(/},/g, '},\n');
+  }
+  importFramesFromText() {
+    let obj;
+    let rawJSON = this.ieTextArea.value;
+    try {
+      obj = JSON.parse(rawJSON);
+    } catch (e) {
+      console.log('frames import error (JSON.parse)', e);
+      alert('Error parsing JSON, refer to console for more details: ' + e.toString());
+      return;
+    }
+
+    if (! Array.isArray(obj)) {
+      alert('Frames need to be in an array');
+    }
+
+    let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+    if (!block)
+      block = this.rootBlock;
+
+    block.framesHelper.importFrames(obj);
+  }
+  toggleFramesIEDisplay() {
+    if (this.iePanelShown) {
+      this.iePanelShown = false;
+      this.exportFramesDetailsPanel.style.display = 'none';
+      this.exportFramesButton.style.background = 'rgb(240,240,240)';
+      this.exportFramesButton.style.color = 'black';
+    } else {
+      this.iePanelShown = true;
+      this.exportFramesDetailsPanel.style.display = 'flex';
+      this.exportFramesButton.style.background = 'rgb(50,50,50)';
+      this.exportFramesButton.style.color = 'white';
+      this.refreshExportText();
+    }
   }
   get activeAnimation() {
     return this.rootBlock.framesHelper.activeAnimation;

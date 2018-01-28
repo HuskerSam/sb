@@ -112,6 +112,7 @@ class cBandFrames extends cBandSuper {
       //let frames helpers process add first
       setTimeout(() => {
         result = this.childAdded(fireData);
+        this.framesHelper.compileFrames();
         this._processFrames();
       }, 1);
       return null;
@@ -132,7 +133,7 @@ class cBandFrames extends cBandSuper {
   }
   _removeFrame(instance) {
     if (confirm('Delete this frame?'))
-      this.fireSet.removeByKey(instance.key)
+      this.fireSet.removeByKey(instance.key);
   }
   clearChildren() {
     for (let i in this.frameDataViewInstances)
@@ -165,6 +166,9 @@ class cBandFrames extends cBandSuper {
   __applyFrameOrderToDom() {
     for (let c = 0, l = this.framesHelper.orderedKeys.length; c < l; c++) {
       let key = this.framesHelper.orderedKeys[c];
+
+      if (!this.frameDataViewInstances[key])
+        continue;
       let panelDom = this.frameDataViewInstances[key].framesContainer;
       let currentPanel = this.childrenContainer.childNodes[c];
 
@@ -232,19 +236,19 @@ class cBandFrames extends cBandSuper {
         GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
 
       groupDisplays.emissive.innerHTML += `<div class="${className}">` +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + ',' +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
+        GLOBALUTIL.formatNumber(rFrame.values['emissiveColorR'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['emissiveColorB'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['emissiveColorG'].value) + '</div>';
 
       groupDisplays.ambient.innerHTML += `<div class="${className}">` +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + ',' +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
+        GLOBALUTIL.formatNumber(rFrame.values['ambientColorR'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['ambientColorB'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['ambientColorG'].value) + '</div>';
 
       groupDisplays.specular.innerHTML += `<div class="${className}">` +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + ',' +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
+        GLOBALUTIL.formatNumber(rFrame.values['specularColorR'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['specularColorB'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['specularColorG'].value) + '</div>';
     }
 
 

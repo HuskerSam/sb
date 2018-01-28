@@ -69,6 +69,8 @@ class wBlock {
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (tag === 'frame') {
+      if (type === 'remove') {
+      } else
       if (values.parentKey === this._blockKey) {
         this.framesHelper.compileFrames();
         this.__applyFirstFrameValues();
@@ -821,9 +823,9 @@ class wBlock {
       if (this.childBlocks[i].blockRawData.childType === childType)
         if (this.childBlocks[i].blockRawData.childName === childName)
           return this.childBlocks[i];
-        let childResult = this.childBlocks[i]._findBestTargetObject(findString);
-        if (childResult)
-          return childResult;
+      let childResult = this.childBlocks[i]._findBestTargetObject(findString);
+      if (childResult)
+        return childResult;
     }
     return null;
   }
