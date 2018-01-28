@@ -36,12 +36,15 @@ class cDialogSuper {
       this.okBtn.addEventListener('click', () => this.save(), false);
     if (this.rotateBtn)
       this.rotateBtn.addEventListener('click', () => this._rotateView(), false);
-  //  $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
-//    $(this.dialog).on('shown.bs.modal', () => this._showFocus());
+    //  $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
+    //    $(this.dialog).on('shown.bs.modal', () => this._showFocus());
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
-    if (this.canvas)
+    if (this.canvas) {
       this.context = new wContext(this.canvas);
+      this.canvasHelper = new cPanelCanvas(this);
+      this.context.canvasHelper = this.canvasHelper;
+    }
   }
   expandAll() {
     this.fireFields.helpers.expandAll();
@@ -148,6 +151,8 @@ class cDialogSuper {
     this._showDom(this.popupButtons);
     this._showDom(this.dataViewContainer);
     this._hideDom(this.progressBar);
+    this.canvasHelper.cameraSelect.value = 'default';
+    this.canvasHelper.show();
 
     this._splitView();
   }

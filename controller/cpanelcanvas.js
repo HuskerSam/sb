@@ -40,7 +40,7 @@ class cPanelCanvas {
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
     this.pauseButton.style.display = 'none';
-    this.loadingScreen = this.dialog.querySelector('#renderLoadingCanvas');
+    this.loadingScreen = document.querySelector('#renderLoadingCanvas');
     this.cameraDetails = {};
     this.camerasS = '';
   }
@@ -89,6 +89,9 @@ class cPanelCanvas {
     this.activateSliderUpdates(false);
   }
   downloadVideo() {
+    if (this.rootBlock.framesHelper.maxLength === 0)
+      return;
+
     this.stopAnimation();
     this.captureStream = this.canvas.captureStream(33);
     this.record();
@@ -174,6 +177,7 @@ class cPanelCanvas {
     this.activateSliderUpdates();
   }
   show() {
+    this.updateButtonStatus();
     this.loadingScreen.style.display = 'none';
   }
   hide() {
@@ -183,6 +187,24 @@ class cPanelCanvas {
     for (let i in this.bandButtons) {
       this.bandButtons[i].expanded = true;
       this.bandButtons[i].toggle();
+    }
+  }
+  updateButtonStatus() {
+    if (!this.rootBlock || this.rootBlock.framesHelper.maxLength === 0) {
+      this.animateSlider.setAttribute('disabled', 'true');
+      this.downloadVideoButton.setAttribute('disabled', 'true');
+      this.pauseButton.setAttribute('disabled', 'true');
+      this.stopButton.setAttribute('disabled', 'true');
+      this.playButton.setAttribute('disabled', 'true');
+      this.pauseButton.style.display = 'none';
+      this.playButton.style.display = '';
+    } else {
+      this.animateSlider.removeAttribute('disabled');
+      this.downloadVideoButton.removeAttribute('disabled');
+      this.stopButton.setAttribute('disabled', 'true');
+      this.playButton.removeAttribute('disabled');
+      this.pauseButton.style.display = 'none';
+      this.playButton.style.display = '';
     }
   }
 }

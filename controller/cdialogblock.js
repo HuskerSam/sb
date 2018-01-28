@@ -55,12 +55,6 @@ class cDialogBlock extends cDialogSuper {
     gAPPP.a.modelSets['frame'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
 
-    this.canvasHelper = new cPanelCanvas(this);
-    this.context.canvasHelper = this.canvasHelper;
-
-    this.canvasActions = this.dialog.querySelector('.canvas-actions');
-    this.canvasActions.style.display = '';
-
     this.collapseAllButton = this.dialog.querySelector('.toggle-bands-up');
     this.collapseAllButton.addEventListener('click', e => this.collapseAll());
     this.expandAllButton = this.dialog.querySelector('.toggle-bands-down');
@@ -146,7 +140,6 @@ class cDialogBlock extends cDialogSuper {
   show(key) {
     this.key = key;
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
-    this.canvasHelper.cameraSelect.value = 'default';
 
     if (!this.fireFields.values['renderImageURL'])
       this.fireSet.renderImageUpdateNeeded = true;
@@ -156,6 +149,7 @@ class cDialogBlock extends cDialogSuper {
 
     this.childBand.refreshUIFromCache();
     this.childBand.setKey(null);
+
 
     this.detailsShown = !gAPPP.a.profile.cDialogBlockToggleDetailsValue;
     this.toggleDetails();

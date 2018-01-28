@@ -8,7 +8,6 @@ class wFrames {
     this.rawFrames = {};
     this.framesStash = {};
     this.orderedKeys = [];
-    this.runLength = 0;
     this.baseOffset = 0;
     this.maxLength = 0;
     this.runningState = {};
@@ -209,12 +208,12 @@ class wFrames {
       unitDesc = firstTrail + unitDesc;
     }
     let value = '';
-    if (!isColor || rawFrameValue !== ''){
+    if (!isColor || rawFrameValue !== '') {
       value = parseFloat(rawFrameValue);
-      if (isNaN(value)){
+      if (isNaN(value)) {
         value = 0.0;
       }
-}
+    }
 
     return {
       valueOffset,
@@ -269,7 +268,7 @@ class wFrames {
       return;
     this.processAnimationFrames();
 
-    if (this.processedFrames.length > 1) {
+    if (this.processedFrames.length > 1 && this.maxLength > 0) {
       let frameIndex = 0;
       if (this.activeAnimation) {
         frameIndex = this.activeAnimation._runtimeAnimations[0].currentFrame;
@@ -286,6 +285,7 @@ class wFrames {
         this.activeAnimation.pause();
       }
     }
+
     for (let i in this.parentBlock.childBlocks)
       this.parentBlock.childBlocks[i].framesHelper.updateAnimation(playState);
   }
@@ -483,9 +483,10 @@ class wFrames {
     this.animationsArray = [];
     let fields = sDataDefinition.bindingFieldsLookup('frame');
 
-    if (this.processedFrames.length < 2) {
+    if (this.processedFrames.length < 2 || this.maxLength === 0) {
 
     } else {
+      let keySetCreated = false;
       let eF = this.processedFrames[0].frameStash.easingFunction;
       for (let i in this.frameAttributeFields) {
         let fieldKey = this.frameAttributeFields[i];
@@ -493,11 +494,12 @@ class wFrames {
 
         let frameEmpty = true;
         for (let c in this.rawFrames)
-          if (this.rawFrames[c][fieldKey] !== '') {
+          if (this.rawFrames[c][fieldKey] !== '' && this.rawFrames[c][fieldKey] !== undefined) {
             frameEmpty = false;
             break;
           }
         if (!frameEmpty) {
+          keySetCreated = true;
           let fieldKeys = [];
           for (let ii in this.processedFrames) {
             let frame = this.processedFrames[ii];
@@ -532,6 +534,9 @@ class wFrames {
       }
       for (let i in this.animations)
         this.animationsArray.push(this.animations[i]);
+
+      if (!keySetCreated)
+        this.maxLength = 0;
     }
     this.parentBlock.sceneObject.animations = this.animationsArray;
     this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps)
