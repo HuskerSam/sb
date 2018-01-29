@@ -380,16 +380,12 @@ class wContext {
     return fireUrl.replace(gAPPP.storagePrefix, '');
   }
   showHideGuides(show = true) {
-    if (!show)
-      return this.setGhostBlock('guides', null);
-
     if (!show) {
       if (this.floorGuidesShown === false)
         return;
       this.floorGuidesShown = false;
       return this.setGhostBlock('guides', null);
     }
-
 
     let redraw = false;
     if (this.cachedProfile.gridAndGuidesDepth !== gAPPP.a.profile.gridAndGuidesDepth) {
