@@ -775,9 +775,10 @@ class wBlock {
   }
   stopAnimation() {
     if (this.activeAnimation) {
-      this.activeAnimation.goToFrame(0);
       this.activeAnimation.stop();
       this.activeAnimation.reset();
+      this.setAnimationPosition(0);
+      this.context.scene._animationTime = 0;
     }
     this.framesHelper.playState = 0;
 

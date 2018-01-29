@@ -36,8 +36,8 @@ class cDialogSuper {
       this.okBtn.addEventListener('click', () => this.save(), false);
     if (this.rotateBtn)
       this.rotateBtn.addEventListener('click', () => this._rotateView(), false);
-    //  $(this.dialog).on('hidden.bs.modal', () => this.close()); //force cleanup if closed via escape
-    //    $(this.dialog).on('shown.bs.modal', () => this._showFocus());
+
+    this.dialog.addEventListener('close', e => this.close());
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     if (this.canvas) {

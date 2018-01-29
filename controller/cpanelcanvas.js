@@ -100,7 +100,7 @@ class cPanelCanvas {
     let length = this.activeAnimation.toFrame * 1000 / this.rootBlock.framesHelper.fps;
 
     setTimeout(() => {
-      this.stop();
+      this.stopRecord();
     }, length);
   }
   record() {
@@ -116,7 +116,7 @@ class cPanelCanvas {
     this.mediaRecorder.ondataavailable = event => this.recordedBlobs.push(event.data);
     this.mediaRecorder.start(33);
   }
-  stop() {
+  stopRecord() {
     this.recStream.getTracks().forEach(track => track.stop());
 
     let recordedBlob = new Blob(this.recordedBlobs, {
