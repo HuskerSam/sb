@@ -146,6 +146,7 @@ html, body {
   color: black;
   border: solid .05em silver;
   border-radius: .25em;
+  position: relative;
 }
 
 *[disabled] {
@@ -313,16 +314,15 @@ html, body {
   overflow: hidden;
   padding: .1em .25em;
   background: rgb(50, 50, 50);
+  padding-top: .25em;
+  height: inherit;
 }
 
 .popup-title {
-  text-align: center;
-  padding: .5em;
-  border-radius: .25em;
   color: white;
-  background: rgba(50, 50, 50);
-  display: inline-block;
-  margin-right: 1em;
+  float: left;
+  margin-left: .5em;
+  font-size: 1.6em;
 }
 
 .create-dialog .modal-dialog {
@@ -1025,4 +1025,8 @@ input[type=range]::-webkit-slider-thumb {
   padding: .5em;
   border: solid .1em silver;
   background: rgb(50, 50, 50);
+}
+
+.camera-options-panel {
+  padding-top: .5em;
 }

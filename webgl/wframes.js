@@ -493,19 +493,19 @@ class wFrames {
       let eF = this.processedFrames[0].frameStash.easingFunction;
       let forceFirstAnimation = true;
       if (!this.isRoot)
-        firstFrame = false;
+        forceFirstAnimation = false;
       for (let i in this.frameAttributeFields) {
         let fieldKey = this.frameAttributeFields[i];
         let field = fields[fieldKey];
 
         let frameEmpty = true;
-        if (!forceFirstAnimation)
+        if (!forceFirstAnimation) {
           for (let c in this.rawFrames)
             if (this.rawFrames[c][fieldKey] !== '' && this.rawFrames[c][fieldKey] !== undefined) {
               frameEmpty = false;
               break;
             }
-        else
+        } else
           frameEmpty = false;
 
         if (!frameEmpty) {
