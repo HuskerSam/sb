@@ -15,13 +15,9 @@ class gAuthorization {
 
     document.querySelector(signInQS).addEventListener('click', e => this.signIn(), false);
     document.querySelector(signOutQS).addEventListener('click', e => this.signOut(), false);
-    
+
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
-    this.signInEmail = document.querySelector('#sign-in-email-button');
-    this.signInEmailField = document.querySelector('#sign-in-acct');
-
-    this.signInEmail.addEventListener('click', e => this.signInWithEmailAndPassword());
   }
   onProjectTitlesChange(values, type, fireData) {
     if (type === 'value') {
@@ -158,10 +154,5 @@ class gAuthorization {
   loadProfile() {
     this.modelSets['userProfile'].activate();
     this.modelSets['projectTitles'].activate();
-  }
-  signInWithEmailAndPassword() {
-    if (this.signInEmailField.value === '1234')
-      firebase.auth().signInAnonymously();
-//      firebase.auth().signInWithEmailAndPassword('sam@sceneblocks.com', '1234567*');
   }
 }

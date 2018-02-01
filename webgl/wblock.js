@@ -69,8 +69,7 @@ class wBlock {
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (tag === 'frame') {
-      if (type === 'remove') {
-      } else
+      if (type === 'remove') {} else
       if (values.parentKey === this._blockKey) {
         this.framesHelper.compileFrames();
         this.__applyFirstFrameValues();
@@ -360,8 +359,21 @@ class wBlock {
 
     this.context.refreshFocus();
   }
+  _circularTest(blockName) {
+    if (!this.parent)
+      return false;
+
+    if (this.parent.blockRawData.title === blockName)
+      return true;
+
+    return this.parent._circularTest(this.blockRawData.childName);
+  }
   _loadBlock() {
     let children = {};
+    if (this._circularTest(this.blockRawData.childName)) {
+      console.log('Circular Reference Error');
+      return;
+    }
     if (gAPPP.a.modelSets[this.blockRawData.childType])
       children = gAPPP.a.modelSets[this.blockRawData.childType].queryCache('title', this.blockRawData.childName);
 

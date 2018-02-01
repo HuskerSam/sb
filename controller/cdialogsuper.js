@@ -165,6 +165,7 @@ class cDialogSuper {
 
     this._endLoad();
     this._showFocus();
+    this.expandAll();
   }
   _hideDom(element) {
     if (element)
