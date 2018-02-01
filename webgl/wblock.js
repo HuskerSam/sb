@@ -749,6 +749,8 @@ class wBlock {
       else {
         let frameIndex = startPercent / 100.0 * this.framesHelper.lastFrame;
         this.framesHelper.startAnimation(frameIndex);
+        if (frameIndex === 0)
+          this.setAnimationPosition(0);
       }
     }
 
@@ -779,6 +781,7 @@ class wBlock {
       this.activeAnimation.reset();
       this.setAnimationPosition(0);
       this.context.scene._animationTime = 0;
+      this.context.scene._animationTimeLast = BABYLON.Tools.Now;
     }
     this.framesHelper.playState = 0;
 

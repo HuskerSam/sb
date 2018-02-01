@@ -311,7 +311,7 @@ class wFrames {
     let processedValues = {};
     for (let i in baseDetails) {
       let runningValue = this.__runningValue(frameValues[i], i);
-      if (runningValue.unitDesc === 'deg')
+      if (runningValue.unitDesc.toLowerCase() === 'deg')
         runningValue.value *= 2 * Math.PI / 360.0;
 
       let skip = false;

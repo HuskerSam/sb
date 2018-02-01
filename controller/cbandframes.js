@@ -62,7 +62,7 @@ class cBandFrames extends cBandSuper {
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';
     framesContainer.appendChild(clearDiv);
-    this.childrenContainer.append(framesContainer);
+    this.childrenContainer.appendChild(framesContainer);
 
     instance.dataPanel.groupDisplays = {};
     let firstGroup = null;
@@ -71,7 +71,7 @@ class cBandFrames extends cBandSuper {
       let helperDom = document.createElement('div');
       helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box frame-info-panel');
       helperDom.style.display = 'none';
-      g.append(helperDom);
+      g.appendChild(helperDom);
       instance.dataPanel.groupDisplays[i] = helperDom;
       if (!firstGroup)
         firstGroup = helperDom;
@@ -176,7 +176,7 @@ class cBandFrames extends cBandSuper {
         if (!panelDom.contains(document.activeElement))
           this.childrenContainer.insertBefore(panelDom, currentPanel);
         else {
-          this.childrenContainer.append(currentPanel);
+          this.childrenContainer.appendChild(currentPanel);
           return this.__applyFrameOrderToDom();
         }
       }

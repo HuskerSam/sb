@@ -6,7 +6,7 @@ class cDialogCreateItem {
     d.innerHTML = document.getElementById('scene-builder-create-dialog-template').innerHTML;
     d.setAttribute('class', 'modal-dialog');
     this.dialog = d;
-    document.body.append(d);
+    document.body.appendChild(d);
 
     this.canvas = this.dialog.querySelector('.create-preview-canvas');
     this.context = new wContext(this.canvas);
