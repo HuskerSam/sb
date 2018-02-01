@@ -43,6 +43,7 @@ class cPanelCanvas {
     this.loadingScreen = document.querySelector('#renderLoadingCanvas');
     this.cameraDetails = {};
     this.camerasS = '';
+    this.isValidAnimation = false;
   }
   arcRangeSliderChange() {
     this.parent.context.camera.radius = this.arcRangeSlider.value;
@@ -71,12 +72,8 @@ class cPanelCanvas {
     };
   }
   cameraChangeHandler() {
-    if (this.cameraSelect.selectedIndex < 1)
-      this.arcRangeSlider.style.display = '';
-    else
-      this.arcRangeSlider.style.display = 'none';
-
     this.parent.context.selectCamera(this.cameraSelect.value, this.parent);
+    this.refresh();
   }
   stopAnimation() {
     this.playButton.removeAttribute('disabled');
@@ -199,6 +196,7 @@ class cPanelCanvas {
       this.playButton.setAttribute('disabled', 'true');
       this.pauseButton.style.display = 'none';
       this.playButton.style.display = '';
+      this.isValidAnimation = false;
     } else {
       this.animateSlider.removeAttribute('disabled');
       this.downloadVideoButton.removeAttribute('disabled');
@@ -206,6 +204,20 @@ class cPanelCanvas {
       this.playButton.removeAttribute('disabled');
       this.pauseButton.style.display = 'none';
       this.playButton.style.display = '';
+      this.isValidAnimation = true;
     }
+  }
+  refresh() {
+    if (this.cameraSelect.selectedIndex < 1)
+      this.arcRangeSlider.style.display = '';
+    else
+      this.arcRangeSlider.style.display = 'none';
+
+    let animStatus = true;
+    if (!this.rootBlock || this.rootBlock.framesHelper.maxLength === 0)
+      animStatus = false;
+
+    if (this.isValidAnimation !== animStatus)
+      this.updateButtonStatus();
   }
 }

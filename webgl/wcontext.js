@@ -151,8 +151,8 @@ class wContext {
     }
     this._renderFocusDetails();
     this._updateScaffoldingData();
-    this.canvasHelper.show();
-    
+    this.canvasHelper.refresh();
+
     if (!this.activeBlock)
       return;
 
