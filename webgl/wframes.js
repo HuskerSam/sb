@@ -48,12 +48,15 @@ class wFrames {
     this.animations = {};
     this.compileFrames();
   }
-  __baseDetails() {
+  get isRoot() {
     let root = true;
     if (this.parentBlock)
       if (this.parentBlock.parent !== null)
         root = false;
-
+    return root;
+  }
+  __baseDetails() {
+    let root = this.isRoot;
     let frameData = this.meshValues;
     if (root)
       if (this.orderedKeys.length > 0)
@@ -267,7 +270,7 @@ class wFrames {
     if (!this.parentBlock.sceneObject)
       return;
     this.processAnimationFrames();
-
+    this.context.refreshFocus();
     if (this.processedFrames.length > 1 && this.maxLength > 0) {
       let frameIndex = 0;
       if (this.activeAnimation) {
@@ -488,16 +491,23 @@ class wFrames {
     } else {
       let keySetCreated = false;
       let eF = this.processedFrames[0].frameStash.easingFunction;
+      let forceFirstAnimation = true;
+      if (!this.isRoot)
+        firstFrame = false;
       for (let i in this.frameAttributeFields) {
         let fieldKey = this.frameAttributeFields[i];
         let field = fields[fieldKey];
 
         let frameEmpty = true;
-        for (let c in this.rawFrames)
-          if (this.rawFrames[c][fieldKey] !== '' && this.rawFrames[c][fieldKey] !== undefined) {
-            frameEmpty = false;
-            break;
-          }
+        if (!forceFirstAnimation)
+          for (let c in this.rawFrames)
+            if (this.rawFrames[c][fieldKey] !== '' && this.rawFrames[c][fieldKey] !== undefined) {
+              frameEmpty = false;
+              break;
+            }
+        else
+          frameEmpty = false;
+
         if (!frameEmpty) {
           keySetCreated = true;
           let fieldKeys = [];
@@ -531,6 +541,8 @@ class wFrames {
             this.animations[i].setEasingFunction(eFunc);
           }
         }
+
+        forceFirstAnimation = false;
       }
       for (let i in this.animations)
         this.animationsArray.push(this.animations[i]);
