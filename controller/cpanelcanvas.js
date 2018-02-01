@@ -71,7 +71,7 @@ class cPanelCanvas {
     };
   }
   cameraChangeHandler() {
-    if (this.cameraSelect.selectedIndex === 0)
+    if (this.cameraSelect.selectedIndex < 1)
       this.arcRangeSlider.style.display = '';
     else
       this.arcRangeSlider.style.display = 'none';
@@ -178,6 +178,7 @@ class cPanelCanvas {
   }
   show() {
     this.updateButtonStatus();
+    this.cameraChangeHandler();
     this.loadingScreen.style.display = 'none';
   }
   hide() {

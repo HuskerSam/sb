@@ -16,7 +16,7 @@ class gApplication {
     window.addEventListener("resize", () => this.resize());
     document.addEventListener("keyup", e => {
       if (e.keyCode === 27) {
-        this.mV.closeAllDialogs();
+        this.mV.closeOpenPanels();
       }
     });
 

@@ -240,9 +240,7 @@ class cViewMain {
     for (let i in this.toolbarItems)
       this.toolbarItems[i].toggleChildBandDisplay(true);
   }
-  closeAllDialogs() {
-//    for (let i in this.dialogs)
-//      this.dialogs[i].close();
+  closeOpenPanels() {
     this.canvasHelper.sceneTools.expanded = true;
     this.canvasHelper.sceneTools.toggle();
 
