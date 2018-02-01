@@ -88,7 +88,7 @@ html, body {
   pointer-events: none;
   text-align: left;
   position: relative;
-  top: -.25em;
+  top: -.15em;
 }
 
 #sb-floating-toolbar .sb-floating-toolbar-item {
@@ -156,7 +156,7 @@ html, body {
 .sb-floating-toolbar-item .button-wrapper .button-title {
   background: rgb(50, 50, 50);
   color: white;
-  padding: .3em .5em;
+  padding: .15em .5em;
   border-radius: .3em;
   cursor: pointer;
   border: solid .1em silver;
@@ -835,18 +835,20 @@ input[type=range]::-webkit-slider-thumb {
 
 #workspaces-select {
   margin-left: .2em;
-  margin-top: .1em;
   pointer-events: auto;
   border: solid .1em silver;
   font-size: 1.1em;
   border-radius: .25em;
   font-size: 1.1em;
-  padding: .2em;
+  padding: .1em;
+  position: relative;
+  top: -.1em;
 }
 
 #project-panel {
-  padding: .25em;
+  padding: 0em;
   border-radius: .25em;
+  margin-bottom: -.25em;
 }
 
 #user-profile-settings-button {
@@ -875,12 +877,10 @@ input[type=range]::-webkit-slider-thumb {
 #toggle-all-toolbands-down {
   margin-left: -.25em;
   position: relative;
-  font-size: 1.5em;
 }
 
 #toggle-all-toolbands {
   position: relative;
-  font-size: 1.5em;
 }
 
 .font-family-panel .form-group input {
@@ -925,7 +925,9 @@ input[type=range]::-webkit-slider-thumb {
 #new-workspace-name {
   border-radius: .25em;
   border: solid .1em silver;
-  padding: .1em;
+  padding: .15em;
+  position: relative;
+  top: -.15em;
 }
 
 .select-block-animation-button {
@@ -966,7 +968,7 @@ input[type=range]::-webkit-slider-thumb {
 .scene-options-panel {
   float: right;
   pointer-events: none;
-  position:relative;
+  position: relative;
   top: 1.2em;
   z-index: 100;
 }

@@ -242,8 +242,16 @@ class cViewMain {
   }
   closeAllDialogs() {
 //    for (let i in this.dialogs)
-  //    if ($(this.dialogs[i].dialog).hasClass('in'))
-    //    this.dialogs[i].close();
+//      this.dialogs[i].close();
+    this.canvasHelper.sceneTools.expanded = true;
+    this.canvasHelper.sceneTools.toggle();
+
+    this.fontTools.expanded = true;
+    this.fontTools.toggle();
+    this.userProfileBand.expanded = true;
+    this.userProfileBand.toggle();
+    this.projectPanelBand.expanded = true;
+    this.projectPanelBand.toggle();
   }
   show(scene) {
     this.context.activate(scene);
