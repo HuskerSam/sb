@@ -198,7 +198,7 @@ class wBlock {
     if (!this.sceneObject)
       return;
     if (this.blockRawData.childType === 'light')
-        return;
+      return;
     if (this.blockRawData.childType === 'camera')
       return;
 
@@ -483,8 +483,8 @@ class wBlock {
         this._addSkyBox();
       }
 
-      this._addGround();
     }
+    this._addGround();
 
     let containerKey = this.blockKey;
     if (!this.staticLoad) {
@@ -658,9 +658,12 @@ class wBlock {
     let parent = this;
 
     while (parent.parent) {
-      if (parent.blockRawData.inheritMaterial)
+      if (parent.blockRawData.inheritMaterial) {
         if (parent.parent.blockRenderData.materialName)
           value = parent.parent.blockRenderData.materialName;
+      } else {
+        return value;
+      }
 
       parent = parent.parent;
     }
@@ -671,9 +674,12 @@ class wBlock {
     let parent = this;
 
     while (parent.parent) {
-      if (parent.blockRawData.inheritGround)
+      if (parent.blockRawData.inheritGround) {
         if (parent.parent.blockRenderData.groundMaterial)
           value = parent.parent.blockRenderData.groundMaterial;
+      } else {
+        return value;
+      }
 
       parent = parent.parent;
     }

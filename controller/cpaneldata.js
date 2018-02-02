@@ -290,7 +290,7 @@ class cPanelData {
   }
   __handleColorInputChange(field) {
     let bColor = GLOBALUTIL.HexToRGB(field.colorPickerInput.value);
-    field.dom.value = bColor.r + ',' + bColor.g + ',' + bColor.b;
+    field.dom.value = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
     this.scrape(null);
   }
   _updateFieldDom(f) {
