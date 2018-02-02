@@ -134,7 +134,7 @@ class cPanelData {
       this.valueCache[f.fireSetField] = v;
 
       if (f.type === 'color')
-        GLOBALUTIL.setColorLabel(f.dom);
+        this.__updateColorLabel(f);
     }
 
     if (this.parent.context)
@@ -272,10 +272,26 @@ class cPanelData {
       c.appendChild(p_bar);
       field.progressBar = p_bar;
     }
+    if (field.type === 'color') {
+      let l = field.domLabel;
+      let cp = document.createElement('input');
+      cp.classList.add('color-picker-input');
+      cp.setAttribute('type', 'color');
+      l.insertBefore(cp, l.childNodes[1]);
+      field.colorPickerInput = cp;
+      l.classList.add('color-data-item');
+
+      field.colorPickerInput.addEventListener('input', e => this.__handleColorInputChange(field));
+    }
     if (field.dataListId)
       element.setAttribute('list', field.dataListId);
 
     this.helpers.initHelperField(field, this.parent.fireSet);
+  }
+  __handleColorInputChange(field) {
+    let bColor = GLOBALUTIL.HexToRGB(field.colorPickerInput.value);
+    field.dom.value = bColor.r + ',' + bColor.g + ',' + bColor.b;
+    this.scrape(null);
   }
   _updateFieldDom(f) {
     let updateShown = false;
@@ -344,9 +360,9 @@ class cPanelData {
       this._updateDisplayListFilters();
 
     if (updateShown) {
-      if (f.type === 'color')
-        GLOBALUTIL.setColorLabel(f.dom);
-
+      if (f.type === 'color') {
+        this.__updateColorLabel(f);
+      }
       if (f.type === 'url') {
         if (this.parent.tag === 'mesh') {
           if (this.loadedURL !== this.valueCache[f.fireSetField]) {
@@ -361,6 +377,23 @@ class cPanelData {
       value: v,
       contextReloadRequired
     };
+  }
+  __updateColorLabel(f) {
+    GLOBALUTIL.setColorLabel(f.dom);
+
+    let bColor = GLOBALUTIL.color(f.dom.value);
+    let rH = Math.round(bColor.r * 255).toString(16);
+    if (rH.length === 1)
+      rH = '0' + rH;
+    let gH = Math.round(bColor.g * 255).toString(16);
+    if (gH.length === 1)
+      gH = '0' + gH;
+    let bH = Math.round(bColor.b * 255).toString(16);
+    if (bH.length === 1)
+      bH = '0' + bH;
+
+    let hex = '#' + rH + gH + bH;
+    f.colorPickerInput.value = hex;
   }
   _updateDisplayFilters() {
     for (let inner in this.fields) {

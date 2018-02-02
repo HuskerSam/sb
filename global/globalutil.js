@@ -5,7 +5,17 @@ class GLOBALUTIL {
     }
     let parts = str.split(',');
     let cA = [];
-    return new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
+    let r = Number(parts[0]);
+    if (isNaN(r))
+      r = 0;
+    let g = Number(parts[1]);
+    if (isNaN(g))
+      g = 0;
+    let b = Number(parts[2]);
+    if (isNaN(b))
+      b = 0;
+
+    return new BABYLON.Color3(r, g, b);
   }
   static colorRGB255(str) {
     let bC = this.color(str);
@@ -95,5 +105,23 @@ class GLOBALUTIL {
     let leftFinal = left.padStart(leftSide, ' ');
     let rightFinal = right.padEnd(rightSide, ' ');
     return leftFinal + '.' + rightFinal;
+  }
+  static HexToRGB(hex) {
+    var r = this.HexToR(hex) / 255;
+    var g = this.HexToG(hex) / 255;
+    var b = this.HexToB(hex) / 255;
+    return new BABYLON.Color3(r, g, b);
+  }
+  static HexToR(h) {
+    return parseInt((this.CutHex(h)).substring(0, 2), 16)
+  }
+  static HexToG(h) {
+    return parseInt((this.CutHex(h)).substring(2, 4), 16)
+  }
+  static HexToB(h) {
+    return parseInt((this.CutHex(h)).substring(4, 6), 16)
+  }
+  static CutHex(h) {
+    return (h.charAt(0) == "#") ? h.substring(1, 7) : h
   }
 }
