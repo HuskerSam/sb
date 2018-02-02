@@ -537,6 +537,8 @@ class wBlock {
 
     if (!this.lightObject)
       return;
+
+    this.sceneObject = this.lightObject;
     let specular = GLOBALUTIL.color(this.blockRawData['lightSpecular']);
     let diffuse = GLOBALUTIL.color(this.blockRawData['lightDiffuse']);
     let gS = this.blockRawData['lightGroundColor'];

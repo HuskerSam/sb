@@ -194,6 +194,7 @@ class cPanelCanvas {
   show() {
     this.updateButtonStatus();
     this.cameraChangeHandler();
+    this.parent.context.camera.radius = this.arcRangeSlider.value;
     this.loadingScreen.style.display = 'none';
   }
   hide() {
@@ -227,6 +228,7 @@ class cPanelCanvas {
   }
   refresh() {
     this.arcRangeSlider.style.display = 'none';
+
     if (this.cameraSelect.selectedIndex < 1)
       this.arcRangeSlider.style.display = '';
     else {

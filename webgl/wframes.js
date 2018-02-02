@@ -267,9 +267,15 @@ class wFrames {
     if (playState === null)
       playState = this.playState;
 
+    if (this.parentBlock.blockRawData.childType === 'camera')
+      if (this.parentBlock.blockKey === this.context.blockCameraId)
+        this.parentBlock.sceneObject = this.context.camera;
+
     if (!this.parentBlock.sceneObject)
       return;
-    this.processAnimationFrames();
+
+    this.processAnimationFrames(this.parentBlock.sceneObject);
+
     this.context.refreshFocus();
     if (this.processedFrames.length > 1 && this.maxLength > 0) {
       let frameIndex = 0;
@@ -481,7 +487,7 @@ class wFrames {
     this.parentBlock = parentBlock;
     this.compileFrames();
   }
-  processAnimationFrames() {
+  processAnimationFrames(sceneObject) {
     this.animations = {};
     this.animationsArray = [];
     let fields = sDataDefinition.bindingFieldsLookup('frame');
@@ -550,7 +556,7 @@ class wFrames {
       if (!keySetCreated)
         this.maxLength = 0;
     }
-    this.parentBlock.sceneObject.animations = this.animationsArray;
+    sceneObject.animations = this.animationsArray;
     this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps)
   }
   importFrames(importArray) {
