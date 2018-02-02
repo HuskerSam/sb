@@ -107,6 +107,8 @@ class cViewMain {
 
     this.fontSizeSlider = document.querySelector('#fontsize-toolbar-slider');
     this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
+
+    this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
   }
   _handleFontSizeChange() {
     let newSize = this.fontSizeSlider.value;

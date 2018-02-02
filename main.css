@@ -508,6 +508,10 @@ button i.material-icons {
   background: rgb(50, 50, 50);
   color: silver;
 }
+
+.scene-options-panel .selected-mesh-bounds-helper-box {
+  background: none;
+}
 .selected-mesh-bounds-helper-box .form-control {
   width: auto;
   display: inline-block;
@@ -673,6 +677,12 @@ input[type=range]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
+.main-band-details-element {
+  background: rgb(240, 240, 240);
+  color: black;
+  border: solid .25em black;
+}
+
 .main-band-add-child {
   float: left;
 }
@@ -691,7 +701,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .main-band-add-child {
-  background: rgba(127, 127, 127, .5);
+  background: rgb(50, 50, 50);
   color: white;
   border-radius: .25em;
 }

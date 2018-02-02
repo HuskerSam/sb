@@ -71,7 +71,7 @@ class cDialogBlock extends cDialogSuper {
     this.refreshExportButton.addEventListener('click', e => this.refreshExportText())
     this.importButton = this.dialog.querySelector('.import-frames-button');
     this.importButton.addEventListener('click', e => this.importFramesFromText());
-
+    this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
     this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
   }
   refreshExportText() {

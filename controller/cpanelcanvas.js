@@ -37,6 +37,9 @@ class cPanelCanvas {
     this.renderPanelBand.activate();
     this.bandButtons.push(this.renderPanelBand);
 
+    this.downloadButton = this.dialog.querySelector('.canvas-actions .download-button');
+    this.downloadButton.addEventListener('click', e => this.exportBabylonFile());
+
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
     this.pauseButton.style.display = 'none';
@@ -44,6 +47,21 @@ class cPanelCanvas {
     this.cameraDetails = {};
     this.camerasS = '';
     this.isValidAnimation = false;
+  }
+  exportBabylonFile() {
+    let serializedScene = BABYLON.SceneSerializer.Serialize(this.parent.context.scene);
+    let strScene = JSON.stringify(serializedScene);
+
+    this.__download('scene.babylon', strScene);
+  }
+  __download(filename, text) {
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   }
   arcRangeSliderChange() {
     this.parent.context.camera.radius = this.arcRangeSlider.value;
