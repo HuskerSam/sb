@@ -405,6 +405,9 @@ class wBlock {
     if (this.blockRawData.childType === 'light')
       this.__renderLightBlock();
 
+    this.currentMaterialName = this.blockRenderData.materialName;
+    this.cachedInheritGround = this.blockRawData.inheritGround;
+
     this.__applyFirstFrameValues();
 
     if (this.parent) {

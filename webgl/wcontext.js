@@ -14,6 +14,9 @@ class wContext {
     this.importedMeshClones = [];
     this.cachedProfile = {};
     this.canvasHelper = canvasHelper;
+    this.previousCameraRadius = '';
+    this.previousCameraOrigin = '';
+    this.previousCameraHieghtOffset = '';
 
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
@@ -455,13 +458,36 @@ class wContext {
         this._renderDefaultCamera();
       } else {
         let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
-
-
         if (cameraDetails.childName === 'FollowCamera') {
           this._renderFollowCamera();
         } else {
           this._renderDefaultCamera();
         }
+      }
+
+      return;
+    }
+
+    if (! this.canvasHelper)
+      return;
+
+    let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
+    if (this.cameraTypeShown === 'FollowCamera') {
+
+      if (this.previousCameraRadius !== cameraDetails.cameraRadius) {
+        this.previousCameraRadius = cameraDetails.cameraRadius;
+        this.camera.radius = cameraDetails.cameraRadius;
+      }
+
+      if (this.previousCameraOrigin !== cameraDetails.cameraOrigin) {
+  //      this.previousCameraOrigin = cameraDetails.cameraOrigin;
+  //      let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 0, 15, -15);
+//        this.camera.origin = cameraOrigin;
+      }
+
+      if (this.cameraHeightOffset !== cameraDetails.cameraHeightOffset) {
+        this.cameraHeightOffset = cameraDetails.cameraHeightOffset;
+        this.camera.heightOffset = cameraDetails.cameraHeightOffset;
       }
 
     }
@@ -473,6 +499,7 @@ class wContext {
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
     let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 0, 15, -15);
     this.camera = new BABYLON.FollowCamera("FollowCam", cameraOrigin, this.scene);
+    this.camera._initCache();
 
     let cameraRadius = cameraDetails.cameraRadius;
     let heightOffset = cameraDetails.cameraHeightOffset;
@@ -480,6 +507,7 @@ class wContext {
     let cameraAcceleration = cameraDetails.cameraAcceleration;
     let maxCameraSpeed = cameraDetails.maxCameraSpeed;
 
+    this.previousCameraRadius = cameraRadius;
     if (cameraRadius)
       this.camera.radius = cameraRadius;
     if (heightOffset)
@@ -496,7 +524,7 @@ class wContext {
     let targetBlock = this.dialogForCamera.rootBlock;
     let mesh = targetBlock._findBestTargetObject(cameraDetails.cameraTargetBlock);
     if (!mesh)
-      mesh = targetBlock.sceneObject;
+      mesh = targetBlock;
     if (mesh)
       this.camera.lockedTarget = mesh.sceneObject;
   }

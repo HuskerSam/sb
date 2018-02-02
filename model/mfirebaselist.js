@@ -211,8 +211,10 @@ class mFirebaseList extends mFirebaseSuper {
       return;
     let innerHTML = '';
     for (let i in this.fireDataValuesByKey)
-      if (this.fireDataValuesByKey[i])
-        innerHTML += '<option>' + this.fireDataValuesByKey[i]['title'] + '</option>';
+      if (this.fireDataValuesByKey[i]) {
+        let option = '<option>' + this.fireDataValuesByKey[i]['title'] + '</option>';
+        innerHTML = option + innerHTML;
+      }
     this.domTitleList.innerHTML = innerHTML;
   }
   commitUpdateList(fieldUpdates, key) {
