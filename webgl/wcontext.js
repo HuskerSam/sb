@@ -231,6 +231,11 @@ class wContext {
             fireSet.updateBlobString(key, sceneJSON, filename).then(
               r => resolve(r));
           });
+      } else if (objectType === 'texture') {
+        let filename = file.name;
+        let fireSet = gAPPP.a.modelSets[objectType];
+        fireSet.updateBlob(key, file, filename).then(
+          r => resolve(r));
       } else
         resolve({});
     });

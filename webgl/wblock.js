@@ -197,6 +197,11 @@ class wBlock {
   __applyFirstFrameValues() {
     if (!this.sceneObject)
       return;
+    if (this.blockRawData.childType === 'light')
+        return;
+    if (this.blockRawData.childType === 'camera')
+      return;
+
     let values = this.framesHelper.firstFrameValues();
 
     let fields = sDataDefinition.bindingFields('baseMesh').slice(0);

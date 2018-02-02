@@ -162,7 +162,17 @@ class cPanelData {
         });
       }
     } else if (f.uploadType === 'texture') {
+      let fS = gAPPP.a.modelSets['texture'];
+      f.progressBar.style.display = '';
+      f.dom.style.display = 'none';
 
+      if (f.fileDom.files.length > 0) {
+        this.parent.context.updateObjectURL('texture', this.parent.key, f.fileDom.files[0]).then(results => {
+          f.fileDom.value = '';
+          f.progressBar.style.display = 'none';
+          f.dom.style.display = '';
+        });
+      }
     }
   }
   _blurField(domControl, field, e) {

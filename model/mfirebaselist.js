@@ -108,6 +108,26 @@ class mFirebaseList extends mFirebaseSuper {
       });
     });
   }
+  updateBlob(key, blob, filename) {
+    return new Promise((resolve, reject) => {
+      this.setBlob(key, blob, filename).then(snapshot => {
+        let updates = [{
+          field: 'url',
+          newValue: snapshot.downloadURL,
+          oldValue: this.getCache(key)['url']
+        }, {
+          field: 'size',
+          newValue: snapshot.totalBytes,
+          oldValue: this.getCache(key)['size']
+        }];
+        this.commitUpdateList(updates, key);
+        resolve({
+          result: snapshot,
+          url: snapshot.downloadURL
+        });
+      });
+    });
+  }
   createWithBlob(data, blob, filename) {
     return new Promise((resolve, reject) => {
       let key = this.getKey();
