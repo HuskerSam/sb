@@ -464,25 +464,28 @@ class wContext {
           this._renderDefaultCamera();
         }
       }
-
-      return;
     }
 
     if (! this.canvasHelper)
       return;
+    if (this.blockCameraId === 'default')
+      return;
 
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
-    if (this.cameraTypeShown === 'FollowCamera') {
+    if (! cameraDetails)
+      return;
 
+//    if (this.cameraTypeShown === 'FollowCamera') {
       if (this.previousCameraRadius !== cameraDetails.cameraRadius) {
         this.previousCameraRadius = cameraDetails.cameraRadius;
         this.camera.radius = cameraDetails.cameraRadius;
       }
 
       if (this.previousCameraOrigin !== cameraDetails.cameraOrigin) {
-  //      this.previousCameraOrigin = cameraDetails.cameraOrigin;
-  //      let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 0, 15, -15);
-//        this.camera.origin = cameraOrigin;
+        this.previousCameraOrigin = cameraDetails.cameraOrigin;
+        let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 0, 15, -15);
+        this.camera.origin = cameraOrigin;
+        this.camera.position = cameraOrigin;
       }
 
       if (this.cameraHeightOffset !== cameraDetails.cameraHeightOffset) {
@@ -490,7 +493,7 @@ class wContext {
         this.camera.heightOffset = cameraDetails.cameraHeightOffset;
       }
 
-    }
+  //  }
   }
   _renderFollowCamera() {
     this.cameraTypeShown = 'FollowCamera';

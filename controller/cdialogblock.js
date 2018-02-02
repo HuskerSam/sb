@@ -7,6 +7,7 @@ class cDialogBlock extends cDialogSuper {
     document.body.appendChild(d);
     let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
     d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
+    d.classList.add('block-dialog-popup');
 
     let editPanelTemplate = document.getElementById('cblock-editor-panel-template');
     let editPanel = document.createElement('div');

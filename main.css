@@ -495,7 +495,7 @@ button i.material-icons {
 }
 
 .selected-mesh-bounds-helper-box {
-  color: rgb(0, 0, 100);
+  color: black;
   padding-left: .2em;
   white-space: pre;
   text-align: center;
@@ -503,6 +503,10 @@ button i.material-icons {
   font-size: inherit;
 }
 
+.block-dialog-popup .selected-mesh-bounds-helper-box {
+  background: rgb(50, 50, 50);
+  color: white;
+}
 .selected-mesh-bounds-helper-box .form-control {
   width: auto;
   display: inline-block;
@@ -644,6 +648,7 @@ input[type=range]::-webkit-slider-thumb {
 .cblock-details-panel {
   white-space: nowrap;
   overflow: auto;
+  margin-top: .25em;
 }
 
 .cblock-details-panel .form-group-container-group {
@@ -686,12 +691,14 @@ input[type=range]::-webkit-slider-thumb {
 
 .main-band-add-child {
   background: rgba(127, 127, 127, .5);
-  color: rgb(0, 255, 0);
+  color: white;
+  border-radius: .25em;
 }
 
 .frame-fields-container {
   clear: both;
   position: relative;
+  margin: .25em;
 }
 
 .render-log-panel {
@@ -714,10 +721,9 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frames-panel .add-button {
-  background: rgba(0, 0, 0, .4);
-  color: white;
-  margin: .25em;
-  padding: .2em;
+  margin-bottom: .5em;
+  border: black;
+  margin-left: .5em;
 }
 
 .frames-panel .form-group-container-group .form-group {
@@ -727,9 +733,8 @@ input[type=range]::-webkit-slider-thumb {
 
 .frames-panel button.delete-button {
   padding: 0em;
-  background: rgba(255, 255, 255, .6);
-  font-size: .8em;
-  margin-right: .3em;
+  margin-left: .5em;
+  top: -.5em;
 }
 
 .frames-panel .form-group-container-group {
@@ -756,7 +761,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .genFrame {
-  background: rgba(255, 255, 255, .5);
+  color: rgb(200,200,255);
 }
 
 .frame-fields-container .frame-time {

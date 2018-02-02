@@ -208,10 +208,16 @@ class cPanelCanvas {
     }
   }
   refresh() {
+    this.arcRangeSlider.style.display = 'none';
     if (this.cameraSelect.selectedIndex < 1)
       this.arcRangeSlider.style.display = '';
-    else
-      this.arcRangeSlider.style.display = 'none';
+    else {
+      let camType = this.cameraDetails[this.cameraSelect.value].childName;
+
+      if (camType === 'ArcRotate' || camType === 'FollowCamera') {
+        this.arcRangeSlider.style.display = '';
+      }
+    }
 
     let animStatus = true;
     if (!this.rootBlock || this.rootBlock.framesHelper.maxLength === 0)

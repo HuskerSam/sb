@@ -9,7 +9,7 @@ class cBandFrames extends cBandSuper {
 
     this.addFrameButton = document.createElement('button');
     this.addFrameButton.innerHTML = '<i class="material-icons">add</i>';
-    this.addFrameButton.setAttribute('class', 'btn add-button');
+    this.addFrameButton.setAttribute('class', 'add-button btn-sb-icon');
     this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
     this.childrenContainer.appendChild(this.addFrameButton);
   }
@@ -78,10 +78,10 @@ class cBandFrames extends cBandSuper {
     }
     let deleteButton = document.createElement('button');
     deleteButton.innerHTML = '<i class="material-icons">delete</i>';
-    deleteButton.setAttribute('class', 'btn delete-button');
-    deleteButton.style.float = 'left';
+    deleteButton.setAttribute('class', 'delete-button btn-sb-icon');
+    //deleteButton.style.float = 'left';
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
-    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[0]);
+    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[framesContainer.childNodes.length - 1]);
 
     instance.dataPanel.paint(values);
   }
@@ -209,8 +209,7 @@ class cBandFrames extends cBandSuper {
         className = 'genFrame';
 
       groupDisplays.time.innerHTML += `<div class="${className}">` +
-        rFrame.actualTime.toFixed(0).padStart(7) + 'ms  ' +
-        rFrame.key.padEnd(21) + '</div>';
+        rFrame.actualTime.toFixed(0).padStart(7) + 'ms</div>';
 
       groupDisplays.scale.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['scalingX'].value) + ',' +
