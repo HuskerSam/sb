@@ -80,58 +80,59 @@ class wBlock {
       return;
     }
 
-    if (this._blockKey === fireData.key)
-      this.setData(values);
+    if (values) {
+      if (this._blockKey === fireData.key)
+        this.setData(values);
 
-    if (tag === 'blockchild') {
-      if (this.cachedInheritGround !== values.inheritGround) {
-        //    this.cachedInheritMaterial = values.inheritMaterial;
-        this.cachedInheritGround = values.inheritGround;
-        //this.setData(values);
-        this._addGround();
+      if (tag === 'blockchild') {
+        if (this.cachedInheritGround !== values.inheritGround) {
+          //    this.cachedInheritMaterial = values.inheritMaterial;
+          this.cachedInheritGround = values.inheritGround;
+          //this.setData(values);
+          this._addGround();
+        }
       }
-    }
 
-    if (this.blockRawData.childType === tag)
-      if (values.title === this.blockRawData.childName)
+      if (this.blockRawData.childType === tag)
+        if (values.title === this.blockRawData.childName)
+          return this.setData();
+
+      let materialList = [];
+      if (tag === 'material')
+        if (values.title)
+          materialList.push(values.title);
+
+      if (tag === 'texture') {
+        let allMaterials = gAPPP.a.modelSets['material'].fireDataValuesByKey;
+
+        for (let i in allMaterials) {
+          if (allMaterials[i].diffuseTextureName === values.title)
+            materialList.push(allMaterials[i].title);
+          if (allMaterials[i].emissiveTextureName === values.title)
+            materialList.push(allMaterials[i].title);
+          if (allMaterials[i].specularTextureName === values.title)
+            materialList.push(allMaterials[i].title);
+          if (allMaterials[i].ambientTextureName === values.title)
+            materialList.push(allMaterials[i].title);
+        }
+      }
+
+
+      let materialDirty = false;
+      if (this.currentMaterialName !== this.blockRenderData.materialName) {
+        materialDirty = true;
+        this.currentMaterialName = this.blockRenderData.materialName;
+      }
+      if (tag === 'material' && this.blockRenderData.materialName === values.title)
+        materialDirty = true;
+
+      if (materialDirty)
         return this.setData();
 
-    let materialList = [];
-    if (tag === 'material')
-      if (values.title)
-        materialList.push(values.title);
-
-    if (tag === 'texture') {
-      let allMaterials = gAPPP.a.modelSets['material'].fireDataValuesByKey;
-
-      for (let i in allMaterials) {
-        if (allMaterials[i].diffuseTextureName === values.title)
-          materialList.push(allMaterials[i].title);
-        if (allMaterials[i].emissiveTextureName === values.title)
-          materialList.push(allMaterials[i].title);
-        if (allMaterials[i].specularTextureName === values.title)
-          materialList.push(allMaterials[i].title);
-        if (allMaterials[i].ambientTextureName === values.title)
-          materialList.push(allMaterials[i].title);
-      }
+      if (type === 'add' && tag === 'blockchild')
+        if (values.parentKey === this._blockKey)
+          return this.setData();
     }
-
-
-    let materialDirty = false;
-    if (this.currentMaterialName !== this.blockRenderData.materialName) {
-      materialDirty = true;
-      this.currentMaterialName = this.blockRenderData.materialName;
-    }
-    if (tag === 'material' && this.blockRenderData.materialName === values.title)
-      materialDirty = true;
-
-    if (materialDirty)
-      return this.setData();
-
-    if (type === 'add' && tag === 'blockchild')
-      if (values.parentKey === this._blockKey)
-        return this.setData();
-
     for (let i in this.childBlocks) {
       if (type === 'remove') {
         if (i === fireData.key) {
@@ -142,7 +143,7 @@ class wBlock {
         continue;
       }
 
-      if (i === fireData.key) {
+      if (i === fireData.key && values) {
         this.childBlocks[i].setData(values);
       }
       this.childBlocks[i].handleDataUpdate(tag, values, type, fireData);

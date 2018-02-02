@@ -383,6 +383,7 @@ html, body {
   background: rgb(200, 200, 200);
   float: left;
   position: relative;
+  margin: 0 .25em;
 }
 
 #main-page .form-group-container-group {
@@ -505,7 +506,7 @@ button i.material-icons {
 
 .block-dialog-popup .selected-mesh-bounds-helper-box {
   background: rgb(50, 50, 50);
-  color: white;
+  color: silver;
 }
 .selected-mesh-bounds-helper-box .form-control {
   width: auto;
@@ -662,12 +663,12 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .block-editor-child, .main-band-details-element, .main-band-add-child {
-  background: rgba(255, 255, 255, .5);
-  color: black;
-  border-radius: .1em;
+  background: rgb(50, 50, 50);
+  color: white;
+  border-radius: 0em;
   border: solid .15em silver;
-  margin: .1em;
-  padding: .1em;
+  margin: .25em;
+  padding: .25em;
   display: inline-block;
   cursor: pointer;
 }
