@@ -70,7 +70,6 @@ class cBandFrames extends cBandSuper {
       let g = instance.dataPanel.groups[i];
       let helperDom = document.createElement('div');
       helperDom.setAttribute('class', 'selected-mesh-bounds-helper-box frame-info-panel');
-      helperDom.style.display = 'none';
       g.appendChild(helperDom);
       instance.dataPanel.groupDisplays[i] = helperDom;
       if (!firstGroup)

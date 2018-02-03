@@ -708,7 +708,15 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   contextObjectField: null,
   group: 'options',
   type: 'boolean',
-  displayGroup: ['mesh', 'shape', 'block'],
+  displayGroup: ['block'],
+  displayKey: 'childType'
+}, {
+  title: 'Use Child Block Frames',
+  fireSetField: 'useChildBlockFrames',
+  contextObjectField: null,
+  group: 'options',
+  type: 'boolean',
+  displayGroup: ['block'],
   displayKey: 'childType'
 }, {
   title: 'from',

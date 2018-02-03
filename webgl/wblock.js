@@ -490,6 +490,12 @@ class wBlock {
     if (!this.staticLoad) {
       containerKey = this.blockTargetKey;
     }
+
+    if (this.blockRawData.useChildBlockFrames)
+      this.framesHelper.setParentKey(this.blockTargetKey, this);
+    else
+      this.framesHelper.setParentKey(this.blockKey, this);
+
     let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', containerKey);
     for (let i in children)
       this.__updateChild(i, children[i]);
@@ -749,7 +755,7 @@ class wBlock {
       if (values.textFontSize)
         textFontSize = values.textFontSize;
       let font = fontWeight + ' ' + textFontSize + ' ' + textFontFamily;
-      let invertY = false;
+      let invertY = true;
       let clearColor = "black";
       let color = "white"
 
