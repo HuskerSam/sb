@@ -711,7 +711,7 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   displayGroup: ['block'],
   displayKey: 'childType'
 }, {
-  title: 'Use Child Block Frames',
+  title: 'Do not override frames from child',
   fireSetField: 'useChildBlockFrames',
   contextObjectField: null,
   group: 'options',

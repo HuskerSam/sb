@@ -300,6 +300,22 @@ class wBlock {
         (newMeshes, particleSystems, skeletons) => {
           this.dispose();
           this.sceneObject = newMeshes[0];
+          this.sceneObjectMeshData = {};
+          let newMesh = this.sceneObject;
+          let objectData = this.sceneObjectMeshData;
+
+          objectData.scalingX = newMesh.scaling.x;
+          objectData.scalingY = newMesh.scaling.y;
+          objectData.scalingZ = newMesh.scaling.z;
+
+          objectData.positionX = newMesh.position.x;
+          objectData.positionY = newMesh.position.y;
+          objectData.positionZ = newMesh.position.z;
+
+          objectData.rotationX = newMesh.rotation.x;
+          objectData.rotationY = newMesh.rotation.y;
+          objectData.rotationZ = newMesh.rotation.z;
+
           resolve();
         },
         progress => {},

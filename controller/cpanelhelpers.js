@@ -189,6 +189,10 @@ class cPanelHelpers {
     let html = `Bounds x-min${GLOBALUTIL.formatNumber(this._wDim.minimum.x)}  x-max${GLOBALUTIL.formatNumber(this._wDim.maximum.x)}`;
     html += `\n       floor${GLOBALUTIL.formatNumber(this._wDim.minimum.y)}  ceil ${GLOBALUTIL.formatNumber(this._wDim.maximum.y)}`;
     html += `\n       z-min${GLOBALUTIL.formatNumber(this._wDim.minimum.z)}  z-max${GLOBALUTIL.formatNumber(this._wDim.maximum.z)}`;
+    if (this.tag === 'mesh') {
+      let meshData = this.context.activeBlock.sceneObjectMeshData;
+      html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.positionX)} y${GLOBALUTIL.formatNumber(meshData.positionY)} z${GLOBALUTIL.formatNumber(meshData.positionZ)}`;
+    }
 
     hp.infoDom.innerHTML = html;
     let x = hp.input[0].value;
@@ -299,6 +303,11 @@ class cPanelHelpers {
     let html = `x ${GLOBALUTIL.formatNumber(r.x * 57.2958).trim()}&deg;`;
     html += ` y ${GLOBALUTIL.formatNumber(r.y * 57.2958).trim()}&deg;`;
     html += ` z ${GLOBALUTIL.formatNumber(r.z * 57.2958).trim()}&deg;`;
+    if (this.tag === 'mesh') {
+      let meshData = this.context.activeBlock.sceneObjectMeshData;
+      html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.rotationX)} y${GLOBALUTIL.formatNumber(meshData.rotationY)} z${GLOBALUTIL.formatNumber(meshData.rotationZ)}`;
+    }
+
     hp.infoDom.innerHTML = html;
 
     let x = hp.input[0].value;
@@ -403,7 +412,10 @@ class cPanelHelpers {
 
     let html = `Original w${GLOBALUTIL.formatNumber(this._oDim.size.x)} h${GLOBALUTIL.formatNumber(this._oDim.size.y)} d${GLOBALUTIL.formatNumber(this._oDim.size.z)}`;
     html += `\n  Actual w${GLOBALUTIL.formatNumber(this._wDim.size.x)} h${GLOBALUTIL.formatNumber(this._wDim.size.y)} d${GLOBALUTIL.formatNumber(this._wDim.size.z)}`;
-
+    if (this.tag === 'mesh') {
+      let meshData = this.context.activeBlock.sceneObjectMeshData;
+      html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.scalingX)} y${GLOBALUTIL.formatNumber(meshData.scalingY)} z${GLOBALUTIL.formatNumber(meshData.scalingZ)}`;
+    }
     hp.infoDom.innerHTML = html;
 
     if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
@@ -490,7 +502,7 @@ class cPanelHelpers {
     if (forceState !== undefined)
       vState = forceState;
 
-    if (vState){
+    if (vState) {
       helperDom.style.display = 'block';
       collapseButton.innerHTML = '<i class="material-icons">expand_less</i>';
       collapseButton.style.color = 'white';

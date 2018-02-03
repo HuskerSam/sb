@@ -228,8 +228,9 @@ class wContext {
             this._sceneAddDefaultObjects();
             this.activate();
             //this.activeBlock = newMesh;
+
             fireSet.updateBlobString(key, sceneJSON, filename).then(
-              r => resolve(r));
+              r => resolve({ r, newMesh }));
           });
       } else if (objectType === 'texture') {
         let filename = file.name;

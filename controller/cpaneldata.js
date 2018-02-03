@@ -159,6 +159,21 @@ class cPanelData {
           f.fileDom.value = '';
           f.progressBar.style.display = 'none';
           f.dom.style.display = '';
+
+          let newMesh = results.newMesh;
+          let objectData = this.valueCache;
+          objectData.scalingX = newMesh.scaling.x;
+          objectData.scalingY = newMesh.scaling.y;
+          objectData.scalingZ = newMesh.scaling.z;
+
+          objectData.positionX = newMesh.position.x;
+          objectData.positionY = newMesh.position.y;
+          objectData.positionZ = newMesh.position.z;
+
+          objectData.rotationX = newMesh.rotation.x;
+          objectData.rotationY = newMesh.rotation.y;
+          objectData.rotationZ = newMesh.rotation.z;
+          this._commitUpdates(this.valueCache);
         });
       }
     } else if (f.uploadType === 'texture') {
