@@ -169,6 +169,12 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'options',
   dataListId: 'applicationdynamicshapelistlookuplist'
 }, {
+  title: 'is Text',
+  fireSetField: 'isText',
+  contextObjectField: null,
+  type: 'boolean',
+  group: 'options'
+}, {
   title: 'is Video',
   fireSetField: 'isVideo',
   contextObjectField: 'isVideo',
@@ -189,29 +195,66 @@ __localStaticStorageForBindingFields['texture'] = [{
   dataListId: 'sbimageslist',
   group: 'url'
 }, {
-  title: 'Offset v (0-1)',
+  title: 'Offset v',
   fireSetField: 'vOffset',
   contextObjectField: 'vOffset',
   group: 'textureoffset',
   displayType: 'number'
 }, {
-  title: 'Offset u (0-1)',
+  title: 'Offset u',
   fireSetField: 'uOffset',
   contextObjectField: 'uOffset',
   group: 'textureoffset',
   displayType: 'number'
 }, {
-  title: 'Scale v (1/x)',
+  title: 'Scale v',
   fireSetField: 'vScale',
   contextObjectField: 'vScale',
   group: 'texturescale',
   displayType: 'number'
 }, {
-  title: 'Scale u (1/x)',
+  title: 'Scale u',
   fireSetField: 'uScale',
   contextObjectField: 'uScale',
   group: 'texturescale',
   displayType: 'number'
+}, {
+  title: '2D Text',
+  fireSetField: 'textureText',
+  contextObjectField: null,
+  group: 'texttext',
+  inlineWidth: '20em'
+}, {
+  title: 'Font Family',
+  fireSetField: 'textFontFamily',
+  contextObjectField: null,
+  dataListId: 'fontfamilydatalist',
+  group: 'textdetails',
+  inlineWidth: '10em'
+}, {
+  title: 'Font Size',
+  fireSetField: 'textFontSize',
+  contextObjectField: null,
+  group: 'textdetails'
+}, {
+  title: 'Font Weight',
+  fireSetField: 'textFontWeight',
+  contextObjectField: null,
+  shapeOption: 'fontWeight',
+  displayGroup: 'textdetails',
+  group: 'font'
+}, {
+  title: 'Font Color',
+  fireSetField: 'textFontColor',
+  contextObjectField: null,
+  type: 'color',
+  group: 'textColor'
+}, {
+  title: 'Clear Color',
+  fireSetField: 'textFontClearColor',
+  contextObjectField: null,
+  type: 'color',
+  group: 'textColor'
 }];
 __localStaticStorageForBindingFields['userProfile'] = [];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
@@ -516,6 +559,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   contextObjectField: null,
   shapeOption: 'text',
   displayGroup: 'text',
+  inlineWidth: '15em',
   displayKey: 'shapeType',
   group: 'text'
 }, {

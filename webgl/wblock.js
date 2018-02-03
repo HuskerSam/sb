@@ -736,7 +736,33 @@ class wBlock {
     if (url.substring(0, 3) === 'sb:')
       url = 'https://s3.amazonaws.com/sceneassets/sbtextures/' + url.substring(3);
 
-    if (values.isVideo)
+    if (values.isText) {
+      texture = new BABYLON.DynamicTexture("dynamic texture", 512, this.context.scene, true);
+
+      let fontWeight = 'normal';
+      if (values.textFontWeight)
+        fontWeight = values.textFontWeight;
+      let textFontFamily = 'Geneva';
+      if (values.textFontFamily)
+        textFontFamily = values.textFontFamily;
+      let textFontSize = '12px';
+      if (values.textFontSize)
+        textFontSize = values.textFontSize;
+      let font = fontWeight + ' ' + textFontSize + ' ' + textFontFamily;
+      let invertY = false;
+      let clearColor = "black";
+      let color = "white"
+
+      if (values.textFontColor)
+        color = GLOBALUTIL.colorRGB255(values.textFontColor);
+      if (values.textFontClearColor)
+        clearColor = GLOBALUTIL.colorRGB255(values.textFontClearColor);
+      var x = 10;
+      var y = 495;
+
+      texture.drawText(values.textureText, x, y, font, color, clearColor);
+
+    } else if (values.isVideo)
       texture = new BABYLON.VideoTexture("video", [url], this.context.scene, false);
     else
       texture = new BABYLON.Texture(url, this.context.scene);

@@ -223,8 +223,9 @@ class cPanelData {
 
     let cT = this.parent.context;
     if (contextReloadRequired) {
-      if (this.parent.tag === 'mesh' && cT)
-        cT.activeBlock.loadMesh().then(() => this.paint());
+      if (cT.activeBlock)
+        if (this.parent.tag === 'mesh' && cT)
+          cT.activeBlock.loadMesh().then(() => this.paint());
     }
 
   }
@@ -238,6 +239,9 @@ class cPanelData {
     }
     if (field.type === 'shapeType') {
       element.setAttribute('list', 'applicationdynamicshapelistlookuplist');
+    }
+    if (field.inlineWidth) {
+      field.domContainer.style.width = field.inlineWidth;
     }
     if (field.type === 'url') {
       let l = field.domLabel;
@@ -267,7 +271,7 @@ class cPanelData {
 
       let p_bar = document.createElement('div');
       p_bar.setAttribute('class', "progress progress-striped active");
-      p_bar.innerHTML = '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%;"></div>';
+      p_bar.innerHTML = '<div class="progress-bar" style="width:100%;">Uploading...</div>';
       p_bar.style.display = 'none';
       c.appendChild(p_bar);
       field.progressBar = p_bar;
