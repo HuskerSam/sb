@@ -7,11 +7,6 @@ class cViewMain {
     this.dialogs['block-edit'] = new cDialogBlock();
     this.dialogs['material-edit'] = new cDialogEditItem('material', 'Material Editor');
     this.dialogs['texture-edit'] = new cDialogEditItem('texture', 'Texture Options');
-    this.dialogs['mesh-create'] = new cDialogCreateItem('mesh', 'Add Mesh');
-    this.dialogs['shape-create'] = new cDialogCreateItem('shape', 'Add Shape', true);
-    this.dialogs['block-create'] = new cDialogCreateItem('block', 'Add Block', true);
-    this.dialogs['texture-create'] = new cDialogCreateItem('texture', 'Add Texture');
-    this.dialogs['material-create'] = new cDialogCreateItem('material', 'Add Material', true);
 
     let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
     this.dialog.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
@@ -31,11 +26,11 @@ class cViewMain {
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
 
     this.toolbarItems = {};
-    this.toolbarItems['block'] = new cBandRecords('block', 'Blocks');
-    this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes');
-    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes');
-    this.toolbarItems['material'] = new cBandRecords('material', "Materials");
-    this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures');
+    this.toolbarItems['block'] = new cBandRecords('block', 'Blocks', this.context);
+    this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes', this.context);
+    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes', this.context);
+    this.toolbarItems['material'] = new cBandRecords('material', "Materials", this.context);
+    this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures', this.context);
 
     gAPPP.a.modelSets['blockchild'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
@@ -157,6 +152,7 @@ class cViewMain {
           b.isContainer = true;
           b.setData(blockData);
           this.context.setActiveBlock(b);
+          this.scene = this.context.scene;
           this.rootBlock = b;
           this.key = profileKey;
           this.rootBlock.setData();
@@ -227,12 +223,16 @@ class cViewMain {
       }
   }
   _collaspseAllBands() {
-    for (let i in this.toolbarItems)
+    for (let i in this.toolbarItems) {
       this.toolbarItems[i].toggleChildBandDisplay(false);
 
+      this.toolbarItems[i].createPanelShown = true;
+      this.toolbarItems[i].toggleCreatePanel();
+    }
     for (let i in this.bandButtons) {
       this.bandButtons[i].expanded = true;
       this.bandButtons[i].toggle();
+
     }
 
     this.canvasHelper.collapseAll();

@@ -1,7 +1,8 @@
 class cBandRecords extends cBandSuper {
-  constructor(tag, title) {
+  constructor(tag, title, context) {
     super(gAPPP.a.modelSets[tag], tag);
 
+    this.context = context;
     this.title = title;
     this.containerCollapsed = document.querySelector('#sb-floating-toolbar');
     this.containerExpanded = document.querySelector('#sb-floating-toolbar-expanded');
@@ -16,9 +17,21 @@ class cBandRecords extends cBandSuper {
 
     this.bar = this.wrapper.querySelector('.sb-floating-toolbar-content');
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
+    this.createPanel = d.querySelector('.add-item-panel');
+    this.childrenContainer.appendChild(this.createPanel);
+    this.createFile = this.createPanel.querySelector('.file-upload');
+    this.createPanelCreateBtn = this.createPanel.querySelector('.add-button');
+    this.createPanelCreateBtn.addEventListener('click', e => this.createItem());
+    this.createPanelInput = this.createPanel.querySelector('.add-item-name');
+    this.createMesage = this.createPanel.querySelector('.creating-message');
+    this.createPanelShown = false;
 
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
-    this.createBtn.addEventListener('click', e => this._showCreatePopup());
+    this.createBtn.addEventListener('click', e => this.toggleCreatePanel());
+    if (this.tag !== 'mesh' && this.tag !== 'texture')
+      this.createFile.style.display = 'none';
+    else
+      this.context = new wContext(document.querySelector('#hiddenlowresolutioncanvas'));
 
     this.buttonWrapper = this.wrapper.querySelector('.button-wrapper');
 
@@ -26,10 +39,42 @@ class cBandRecords extends cBandSuper {
     if (forceExpand)
       this.toggleChildBandDisplay(true);
   }
+  createItem() {
+    let newName = this.createPanelInput.value.trim();
+    if (newName === '') {
+      alert('Please enter a name');
+      return;
+    }
+    let file = null;
+    let scene = gAPPP.mV.scene;
+    if (this.createFile.files.length > 0)
+      file = this.createFile.files[0];
+
+    this.createMesage.style.display = 'block';
+    this.buttonWrapper.setAttribute('disabled', 'true');
+
+    if (this.tag === 'mesh' || this.tag  === 'texture')
+      this.context.activate(null);
+
+    this.context.createObject(this.tag, newName, file).then(results => {
+      if (this.tag !== 'texture')
+        this.context.renderPreview(this.tag, results.key);
+      else {
+        gAPPP.a.modelSets['texture'].commitUpdateList([{
+          field: 'renderImageURL',
+          newValue: results.url
+        }], results.key);
+      }
+
+      this.createPanelShown = true;
+      this.toggleCreatePanel();
+      setTimeout(() => gAPPP.dialogs[this.tag + '-edit'].show(results.key), 600);
+    });
+  }
   _getDomForChild(key, values) {
-    let html = '<div class="band-title"></div><br>'
-    + '<button class="btn-sb-icon toggle-btn"><i class="material-icons">chevron_right</i></button>'
-    + '<div class="extend-panel" style="display:none;"></div>';
+    let html = '<div class="band-title"></div><br>' +
+      '<button class="btn-sb-icon toggle-btn"><i class="material-icons">chevron_right</i></button>' +
+      '<div class="extend-panel" style="display:none;"></div>';
 
     let outer = document.createElement('div');
     outer.setAttribute('class', `band-background-preview`);
@@ -41,9 +86,9 @@ class cBandRecords extends cBandSuper {
     dd.appendChild(outer);
     let toggle = outer.querySelector('.toggle-btn');
     toggle.addEventListener('click', e => this.toggleState(toggle, exPanel));
-    if (this.tag === 'block'){
-        let btn = this.__addMenuItem(outer, 'switch_video', e => this._selectBlock(e, key));
-        btn.classList.add('select-block-animation-button');
+    if (this.tag === 'block') {
+      let btn = this.__addMenuItem(outer, 'switch_video', e => this._selectBlock(e, key));
+      btn.classList.add('select-block-animation-button');
     }
 
     this.__addMenuItem(exPanel, 'edit', e => this._showEditPopup(e, key));
@@ -59,8 +104,8 @@ class cBandRecords extends cBandSuper {
       pnl.style.display = '';
       tgl.innerHTML = '<i class="material-icons">chevron_left</i>';
     } else {
-       pnl.style.display = 'none';
-       tgl.innerHTML = '<i class="material-icons">chevron_right</i>';
+      pnl.style.display = 'none';
+      tgl.innerHTML = '<i class="material-icons">chevron_right</i>';
     }
   }
   _removeElement(e, key) {
@@ -82,8 +127,24 @@ class cBandRecords extends cBandSuper {
     if (gAPPP.dialogs[this.tag + '-edit'])
       return gAPPP.dialogs[this.tag + '-edit'].show(key);
   }
-  _showCreatePopup() {
-    gAPPP.dialogs[this.tag + '-create'].show();
+  toggleCreatePanel() {
+    this.createFile.value = '';
+    this.createPanelInput.value = '';
+
+    this.createMesage.style.display = 'none';
+    this.buttonWrapper.removeAttribute('disabled');
+
+    if (this.createPanelShown) {
+      this.createPanelShown = false;
+      this.createPanel.style.display = 'none';
+      this.createBtn.style.background = 'rgb(240,240,240)';
+      this.createBtn.style.color = 'black';
+    } else {
+      this.createPanelShown = true;
+      this.createPanel.style.display = 'block';
+      this.createBtn.style.background = 'rgb(50,50,50)';
+      this.createBtn.style.color = 'white';
+    }
   }
   toggleChildBandDisplay(forceValue = undefined, saveValue = false) {
     if (forceValue === undefined)
@@ -104,6 +165,8 @@ class cBandRecords extends cBandSuper {
       this.buttonWrapper.classList.remove('button-wrapper-invert');
       this.containerCollapsed.insertBefore(this.bar.parentNode, null);
       this.wrapper.style.float = '';
+      this.createPanelShown = true;
+      this.toggleCreatePanel();
     }
 
     if (saveValue)

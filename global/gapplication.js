@@ -84,7 +84,7 @@ class gApplication {
     document.body.appendChild(this._domShapeList);
   }
   _updateApplicationStyle() {
-    let css = 'html, body { ';
+    let css = '* { ';
     let fontSize = this._parseFontSize(this.a.profile.fontSize);
     css += 'font-size:' + fontSize.toString() + 'pt;';
     if (this.a.profile.fontFamily)

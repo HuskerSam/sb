@@ -39,6 +39,12 @@
             <div class="sb-floating-toolbar-content">
             </div>
           </div>
+          <div class="add-item-panel" style="display:none;">
+            <input class="add-item-name" /><button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
+            <br>
+            <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
+            <input type="file" class="file-upload"/>
+          </div>
         </div>
         <div class="static-buttons-toolbar">
         </div>
@@ -301,6 +307,7 @@
     <option>sb:carshell.babylon</option>
   </datalist>
 
+  <canvas id="hiddenlowresolutioncanvas" width="50" height="50" style="display:none"></canvas>
   <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -332,7 +339,6 @@
   <script src="controller/cdialogsuper.js"></script>
   <script src="controller/cbandframes.js"></script>
   <script src="controller/cbandchildren.js"></script>
-  <script src="controller/cdialogcreateitem.js"></script>
   <script src="controller/cdialogedititem.js"></script>
   <script src="controller/cbandrecords.js"></script>
   <script src="controller/cpaneldata.js"></script>

@@ -1067,3 +1067,21 @@ input[type=range]::-webkit-slider-thumb {
 .color-data-item > span {
   padding-right: 2.5em!important;
 }
+
+.add-item-panel {
+  padding: .25em;
+  border-radius: .25em;
+  background: rgb(50,50,50);
+  float:left;
+  border: solid .1em silver;
+  margin-right: .25em;
+}
+
+.add-item-panel input {
+  margin: .25em;
+  border-radius: .25em;
+  border: solid .1em silver;
+}
+.add-item-panel input[type="file"] {
+  background: silver;
+}
