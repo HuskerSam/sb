@@ -1,4 +1,4 @@
-class cDialogBlock extends cDialogSuper {
+class cDialogBlock extends cDialogEdit {
   constructor() {
     let d = document.createElement('dialog');
     d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;
@@ -19,7 +19,8 @@ class cDialogBlock extends cDialogSuper {
     b.insertBefore(editPanel, old);
     b.removeChild(old);
 
-    super(d, 'block', editPanel, fieldsPanel);
+    super(null);
+    this._init(d, 'block', editPanel, fieldsPanel);
     this._constructor();
   }
   _constructor() {
@@ -180,23 +181,6 @@ class cDialogBlock extends cDialogSuper {
         field: 'cDialogBlockToggleDetailsValue',
         newValue: this.detailsShown
       }]);
-  }
-  show(key) {
-    this.key = key;
-    this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
-
-    if (!this.fireFields.values['renderImageURL'])
-      this.fireSet.renderImageUpdateNeeded = true;
-    super.show();
-
-    this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
-
-    this.childBand.refreshUIFromCache();
-    this.childBand.setKey(null);
-
-
-    this.detailsShown = !gAPPP.a.profile.cDialogBlockToggleDetailsValue;
-    this.toggleDetails();
   }
   close() {
     this.canvasHelper.stopAnimation();

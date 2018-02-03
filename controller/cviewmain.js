@@ -2,11 +2,11 @@ class cViewMain {
   constructor() {
     this.dialog = document.querySelector('#main-page');
     this.dialogs = {};
-    this.dialogs['mesh-edit'] = new cDialogEditItem('mesh', 'Mesh Options');
-    this.dialogs['shape-edit'] = new cDialogEditItem('shape', 'Shape Editor');
+    this.dialogs['mesh-edit'] = new cDialogEdit('mesh', 'Mesh Options');
+    this.dialogs['shape-edit'] = new cDialogEdit('shape', 'Shape Editor');
     this.dialogs['block-edit'] = new cDialogBlock();
-    this.dialogs['material-edit'] = new cDialogEditItem('material', 'Material Editor');
-    this.dialogs['texture-edit'] = new cDialogEditItem('texture', 'Texture Options');
+    this.dialogs['material-edit'] = new cDialogEdit('material', 'Material Editor');
+    this.dialogs['texture-edit'] = new cDialogEdit('texture', 'Texture Options');
 
     let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
     this.dialog.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;

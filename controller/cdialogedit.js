@@ -1,5 +1,20 @@
-class cDialogSuper {
-  constructor(dialog, tag, dataViewContainer = null, fieldsContainer = null) {
+class cDialogEdit {
+  constructor(tag, title) {
+    if (tag !== null) {
+      let d = document.createElement('dialog');
+      d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;
+      d.classList.add('modal-dialog');
+      d.querySelector('.popup-title').innerHTML = title;
+      document.body.appendChild(d);
+
+      let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
+      d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
+
+      let fieldsContainer = d.querySelector('.edit-popup-fields');
+      this._init(d, tag, fieldsContainer, fieldsContainer);
+    }
+  }
+  _init(dialog, tag, dataViewContainer = null, fieldsContainer = null) {
     this.tag = tag;
     this.key = null;
     this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
@@ -45,6 +60,14 @@ class cDialogSuper {
       this.canvasHelper = new cPanelCanvas(this);
       this.context.canvasHelper = this.canvasHelper;
     }
+
+    this._splitViewAlive = true;
+    this.initScene = true;
+
+    this.collapseAllButton = this.dialog.querySelector('.toggle-bands-up');
+    this.collapseAllButton.addEventListener('click', e => this.collapseAll());
+    this.expandAllButton = this.dialog.querySelector('.toggle-bands-down');
+    this.expandAllButton.addEventListener('click', e => this.expandAll());
   }
   expandAll() {
     this.fireFields.helpers.expandAll();
@@ -56,9 +79,9 @@ class cDialogSuper {
     if (this.fireFields)
       this.fireFields.active = false;
     //if (this.fireSet.renderImageUpdateNeeded) {
-      this.fireSet.renderImageUpdateNeeded = false;
-      if (this.context)
-        this.context.renderPreview(this.tag, this.key);
+    this.fireSet.renderImageUpdateNeeded = false;
+    if (this.context)
+      this.context.renderPreview(this.tag, this.key);
     //}
     this.dialog.close();
 
@@ -71,7 +94,10 @@ class cDialogSuper {
   save() {
     this.close();
   }
-  show() {
+  show(key) {
+    this.key = key;
+    this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
+
     this._startLoad();
     this.dialog.showModal();
 
@@ -105,16 +131,14 @@ class cDialogSuper {
         return;
       }
       if (this.tag === 'block') {
-        let b = new wBlock(this.context);
-        b.staticType = 'block';
-        b.staticLoad = true;
-        b.blockKey = this.key;
-        b.isContainer = true;
-        b.setData(this.fireFields.values);
-        this.context.setActiveBlock(b);
-        this.rootBlock = b;
+        if (this.fireFields.values.url) {
+          this.context.loadSceneURL(this.fireFields.values.url).then(result => {
+            this.__loadBlock();
+          });
+          return;
+        }
 
-        this._finishShow();
+        this.__loadBlock();
         return;
       }
       if (this.tag === 'material') {
@@ -136,16 +160,25 @@ class cDialogSuper {
         return;
       }
 
-      if (this.tag === 'scene') {
-        this.context.loadSceneURL(this.fireFields.values['url']).then(
-          r => this._finishShow(),
-          e => this._finishShow());
-        return;
-      }
-
       this._finishShow();
     } else
       this._finishShow();
+  }
+  __loadBlock() {
+    let b = new wBlock(this.context);
+    b.staticType = 'block';
+    b.staticLoad = true;
+    b.blockKey = this.key;
+    b.isContainer = true;
+    b.setData(this.fireFields.values);
+    this.context.setActiveBlock(b);
+    this.rootBlock = b;
+    this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+
+    this.childBand.refreshUIFromCache();
+    this.childBand.setKey(null);
+
+    this._finishShow();
   }
   _endLoad() {
     this._showDom(this.popupButtons);
@@ -166,6 +199,8 @@ class cDialogSuper {
     this._endLoad();
     this._showFocus();
     this.expandAll();
+
+    this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
   _hideDom(element) {
     if (element)
