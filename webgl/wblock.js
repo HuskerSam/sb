@@ -296,6 +296,10 @@ class wBlock {
       } else
         filename = this.context._url(url);
 
+      if (filename === '') {
+        this.dispose();
+        return resolve();
+      }
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
         (newMeshes, particleSystems, skeletons) => {
           this.dispose();
