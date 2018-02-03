@@ -192,7 +192,8 @@ class wContext {
           this.activate(newScene);
           resolve({
             type: 'scene',
-            context: this
+            context: this,
+            scene: newScene
           });
         },
         p => {},
@@ -230,9 +231,17 @@ class wContext {
             //this.activeBlock = newMesh;
 
             fireSet.updateBlobString(key, sceneJSON, filename).then(
-              r => resolve({ r, newMesh }));
+              r => resolve({
+                r,
+                newMesh
+              }));
           });
       } else if (objectType === 'texture') {
+        let filename = file.name;
+        let fireSet = gAPPP.a.modelSets[objectType];
+        fireSet.updateBlob(key, file, filename).then(
+          r => resolve(r));
+      } else if (objectType === 'block') {
         let filename = file.name;
         let fireSet = gAPPP.a.modelSets[objectType];
         fireSet.updateBlob(key, file, filename).then(
@@ -561,7 +570,7 @@ class wContext {
     if (this.camera)
       this.camera.dispose();
     let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 3, 15, 15);
-    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera", .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
+    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
     this.camera.attachControl(this.canvas, true);
     let radius = 10;
     let newRadius = Number(gAPPP.a.profile.arcCameraRadius);

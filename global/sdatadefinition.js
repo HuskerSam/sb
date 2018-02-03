@@ -653,17 +653,25 @@ __localStaticStorageForBindingFields['block'] = [{
   displayType: 'number',
   group: 'main'
 }, {
+  title: 'Ground Material',
+  fireSetField: 'groundMaterial',
+  contextObjectField: null,
+  type: 'material',
+  group: 'ground'
+}, {
   title: 'Skybox',
   fireSetField: 'skybox',
   contextObjectField: null,
   dataListId: 'skyboxlist',
   group: 'skybox'
 }, {
-  title: 'Ground Material',
-  fireSetField: 'groundMaterial',
+  title: 'Initial Scene',
+  fireSetField: 'url',
   contextObjectField: null,
-  type: 'material',
-  group: 'ground'
+  type: 'url',
+  uploadType: 'scene',
+  floatRight: true,
+  group: 'skybox'
 }];
 __localStaticStorageForBindingFields['blockchild'] = [{
   title: 'Type',
@@ -1015,6 +1023,7 @@ __defaultData['block'] = {
   depth: 2,
   height: 1,
   skybox: '',
+  url: '',
   children: {}
 };
 __defaultData['blockchild'] = {

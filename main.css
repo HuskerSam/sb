@@ -832,7 +832,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .canvas-actions input[type="range"] {
-  width: 20vw;
+  width: 30vw;
   display: inline-block;
   position: relative;
   top: .2em;
@@ -841,7 +841,8 @@ input[type=range]::-webkit-slider-thumb {
   border: solid .1em silver;
 }
 
-.camera-select-range-slider {}
+.camera-select-range-slider {
+}
 
 .camera-select-height-slider {
 

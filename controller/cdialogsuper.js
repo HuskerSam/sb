@@ -55,11 +55,11 @@ class cDialogSuper {
   close() {
     if (this.fireFields)
       this.fireFields.active = false;
-    if (this.fireSet.renderImageUpdateNeeded) {
+    //if (this.fireSet.renderImageUpdateNeeded) {
       this.fireSet.renderImageUpdateNeeded = false;
       if (this.context)
         this.context.renderPreview(this.tag, this.key);
-    }
+    //}
     this.dialog.close();
 
     if (this.canvasHelper) {

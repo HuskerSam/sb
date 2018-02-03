@@ -145,20 +145,12 @@ class cViewMain {
       setTimeout(() => {
         let blockData = gAPPP.a.modelSets['block'].getCache(profileKey);
         if (blockData) {
-          let b = new wBlock(this.context);
-          b.staticType = 'block';
-          b.staticLoad = true;
-          b.blockKey = profileKey;
-          b.isContainer = true;
-          b.setData(blockData);
-          this.context.setActiveBlock(b);
-          this.scene = this.context.scene;
-          this.rootBlock = b;
-          this.key = profileKey;
-          this.rootBlock.setData();
-          setTimeout(() => {
-            this.canvasHelper.show();
-          }, 50);
+          if (blockData.url)
+            this.context.loadSceneURL(blockData.url).then(result => {
+              this.__loadBlock(profileKey, blockData);
+            });
+          else
+            this.__loadBlock(profileKey, blockData);
         } else {
           this.key = '';
           this.canvasHelper.show();
@@ -188,6 +180,23 @@ class cViewMain {
       newValue: gAPPP.mV.workplacesSelect.value
     }]);
     setTimeout(() => location.reload(), 100);
+  }
+  __loadBlock(profileKey, blockData) {
+    let b = new wBlock(this.context);
+    b.staticType = 'block';
+    b.staticLoad = true;
+    b.blockKey = profileKey;
+    b.isContainer = true;
+    b.setData(blockData);
+    this.context.setActiveBlock(b);
+    this.scene = this.context.scene;
+    this.rootBlock = b;
+    this.key = profileKey;
+    this.rootBlock.setData();
+    setTimeout(() => {
+      this.canvasHelper.show();
+      this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+    }, 50);
   }
   addProject() {
     let newTitle = this.addProjectName.value.trim();
