@@ -383,7 +383,7 @@ html, body {
   background: rgb(200, 200, 200);
   float: left;
   position: relative;
-  margin: 0 .25em;
+  margin: .1em;
 }
 
 #main-page .form-group-container-group {
@@ -710,7 +710,7 @@ input[type=range]::-webkit-slider-thumb {
 .frame-fields-container {
   clear: both;
   position: relative;
-  margin: .25em;
+  margin: 0em;
 }
 
 .render-log-panel {
@@ -747,10 +747,12 @@ input[type=range]::-webkit-slider-thumb {
   padding: 0em;
   margin-left: .5em;
   top: -.5em;
+  font-size:.9em;
 }
 
 .frames-panel .form-group-container-group {
   float: none;
+  margin: 0 .15em;
 }
 
 .frames-panel {

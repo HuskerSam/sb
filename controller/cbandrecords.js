@@ -23,6 +23,7 @@ class cBandRecords extends cBandSuper {
     this.createPanelCreateBtn = this.createPanel.querySelector('.add-button');
     this.createPanelCreateBtn.addEventListener('click', e => this.createItem());
     this.createPanelInput = this.createPanel.querySelector('.add-item-name');
+    this.createPanelInput.addEventListener('keypress', e => this._titleKeyPress(e), false);
     this.createMesage = this.createPanel.querySelector('.creating-message');
     this.createPanelShown = false;
 
@@ -53,7 +54,7 @@ class cBandRecords extends cBandSuper {
     this.createMesage.style.display = 'block';
     this.buttonWrapper.setAttribute('disabled', 'true');
 
-    if (this.tag === 'mesh' || this.tag  === 'texture')
+    if (this.tag === 'mesh' || this.tag === 'texture')
       this.context.activate(null);
 
     this.context.createObject(this.tag, newName, file).then(results => {
@@ -145,6 +146,10 @@ class cBandRecords extends cBandSuper {
       this.createBtn.style.background = 'rgb(50,50,50)';
       this.createBtn.style.color = 'white';
     }
+  }
+  _titleKeyPress(e) {
+    if (e.code === 'Enter')
+      this.createItem();
   }
   toggleChildBandDisplay(forceValue = undefined, saveValue = false) {
     if (forceValue === undefined)
