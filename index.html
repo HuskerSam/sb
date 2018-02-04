@@ -43,7 +43,16 @@
             <input class="add-item-name" /><button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
             <br>
             <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
-            <input type="file" class="file-upload"/>
+            <input type="file" class="file-upload" />
+            <div class="material-add-options" style="display:none;">
+              <label><input type="checkbox" class="diffuse-color-checkbox" checked />Diffuse</label>
+              <label><input type="checkbox" class="emissive-color-checkbox" />Emissive</label>
+              <label><input type="checkbox" class="ambient-color-checkbox" />Ambient</label>
+              <label><input type="checkbox" class="specular-color-checkbox" />Specular</label>
+              <br>
+              <label>Color <input class="material-color-add" type="text" value=".7,.7,.7" /></label>
+              <input type="color" class="material-color-add-colorinput" />
+            </div>
           </div>
         </div>
         <div class="static-buttons-toolbar">
@@ -82,28 +91,6 @@
     </div>
   </div>
 
-  <!-- OBJECT CREATE DIALOG -->
-  <div id="scene-builder-create-dialog-template" style="display:none;">
-    <div class="create-dialog-inner-wrapper">
-      <h1 class="modal-title" style="font-size:2em;"></h1>
-      <label>Title <input type="text" class="input-title form-control" /></label>
-      <br>
-      <canvas class="create-preview-canvas"></canvas>
-      <img class="create-preview-image" />
-      <br>
-      <input type="file" />
-      <br>
-      <br>
-      <div class="popup-progress-bar">
-        Loading...
-      </div>
-      <div class="popup-buttons">
-        <button type="button" class="btn btn-primary create">Create</button>
-        <button type="button" class="btn cancel">Cancel</button>
-      </div>
-    </div>
-  </div>
-
   <!-- CANVAS 3D PLAYER TEMPLATE -->
   <div id="canvas-d3-player-template" style="display:none;">
     <canvas class="popup-canvas"></canvas>
@@ -129,7 +116,7 @@
       <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
       <div class="camera-options-panel" style="display:inline-block;">
         <select class="camera-select" style=""></select>
-        <input class="camera-select-range-slider" type="range" step=".25" min="0" max="75" />
+        <input class="camera-select-range-slider" type="range" step=".25" min="-25" max="75" />
         <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
         <div class="fields-container" style="float:left"></div>
       </div>

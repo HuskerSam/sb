@@ -496,6 +496,7 @@ button i.material-icons {
 .scene-options-panel .selected-mesh-bounds-helper-box {
   background: none;
 }
+
 .selected-mesh-bounds-helper-box .form-control {
   width: auto;
   display: inline-block;
@@ -730,7 +731,7 @@ input[type=range]::-webkit-slider-thumb {
   padding: 0em;
   margin-left: .5em;
   top: -.5em;
-  font-size:.9em;
+  font-size: .9em;
 }
 
 .frames-panel .form-group-container-group {
@@ -758,7 +759,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .genFrame {
-  color: rgb(200,200,255);
+  color: rgb(200, 200, 255);
 }
 
 .frame-fields-container .frame-time {
@@ -824,12 +825,9 @@ input[type=range]::-webkit-slider-thumb {
   border: solid .1em silver;
 }
 
-.camera-select-range-slider {
-}
+.camera-select-range-slider {}
 
-.camera-select-height-slider {
-
-}
+.camera-select-height-slider {}
 
 .canvas-actions .camera-select {
   border-radius: .25em;
@@ -1050,15 +1048,15 @@ input[type=range]::-webkit-slider-thumb {
   width: 7em;
 }
 
-.color-data-item > span {
+.color-data-item>span {
   padding-right: 2.5em!important;
 }
 
 .add-item-panel {
   padding: .25em;
   border-radius: .25em;
-  background: rgb(50,50,50);
-  float:left;
+  background: rgb(50, 50, 50);
+  float: left;
   border: solid .1em silver;
   margin-right: .25em;
 }
@@ -1068,6 +1066,26 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: .25em;
   border: solid .1em silver;
 }
+
 .add-item-panel input[type="file"] {
   background: silver;
+}
+
+.material-add-options {
+  text-align: center;
+  background: rgb(240, 240, 240);
+  float: right;
+}
+
+.material-add-options .material-color-add {
+  border-radius: .25em;
+  width: 8em;
+  text-align:center;
+  margin-right: 0;
+}
+
+.material-add-options .material-color-add-colorinput {
+  border-radius: .25em;
+  width: 2.5em;
+  margin-left: 0;
 }

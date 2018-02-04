@@ -797,7 +797,7 @@ class wBlock {
       texture.drawText(values.textureText, x, y, font, color, clearColor);
 
     } else if (values.isVideo)
-      texture = new BABYLON.VideoTexture("video", [url], this.context.scene, false);
+      texture = new BABYLON.VideoTexture("video", [url], this.context.scene, true);
     else
       texture = new BABYLON.Texture(url, this.context.scene);
 

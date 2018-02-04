@@ -161,9 +161,14 @@ class cViewMain {
   updateProjectList(records, selectedWorkspace = null) {
     let html = '';
 
-    for (let i in records)
-      html += `<option value=${i}>${records[i].title}</option>`;
+    for (let i in records) {
+      let o = `<option value=${i}>${records[i].title}</option>`;
 
+      if (i === 'default')
+        html += o;
+      else
+        html = o + html;
+    }
     let val = selectedWorkspace;
     if (val === null)
       val = this.workplacesSelect.value;

@@ -93,10 +93,13 @@ class wContext {
     });
     this.engine.resize();
   }
-  createObject(objectType, title, file) {
+  createObject(objectType, title, file, mixinData = {}) {
     let objectData = sDataDefinition.getDefaultDataCloned(objectType);
     let fireSet = gAPPP.a.modelSets[objectType];
     objectData.title = title;
+
+    for (let i in mixinData)
+      objectData[i] = mixinData[i];
 
     if (!file)
       return fireSet.createWithBlobString(objectData);

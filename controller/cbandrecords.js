@@ -27,6 +27,18 @@ class cBandRecords extends cBandSuper {
     this.createMesage = this.createPanel.querySelector('.creating-message');
     this.createPanelShown = false;
 
+    this.addMaterialOptionsPanel = this.createPanel.querySelector('.material-add-options');
+    if (this.tag === 'material')
+      this.addMaterialOptionsPanel.style.display = 'block';
+    this.materialColorInput = this.createPanel.querySelector('.material-color-add');
+    this.materialColorPicker = this.createPanel.querySelector('.material-color-add-colorinput');
+    this.diffuseCheckBox = this.createPanel.querySelector('.diffuse-color-checkbox');
+    this.emissiveCheckBox = this.createPanel.querySelector('.emissive-color-checkbox');
+    this.ambientCheckBox = this.createPanel.querySelector('.ambient-color-checkbox');
+    this.specularCheckBox = this.createPanel.querySelector('.specular-color-checkbox');
+    this.materialColorPicker.addEventListener('input', e => this.__handleMaterialColorInputChange());
+    this.materialColorInput.addEventListener('input', e => this.__handleMaterialColorTextChange());
+
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.createBtn.addEventListener('click', e => this.toggleCreatePanel());
     if (this.tag !== 'mesh' && this.tag !== 'texture')
@@ -39,6 +51,26 @@ class cBandRecords extends cBandSuper {
     let forceExpand = gAPPP.a.profile['mainRecordsExpanded' + this.tag];
     if (forceExpand)
       this.toggleChildBandDisplay(true);
+    this.__handleMaterialColorTextChange();
+  }
+  __handleMaterialColorInputChange() {
+    let bColor = GLOBALUTIL.HexToRGB(this.materialColorPicker.value);
+    this.materialColorInput.value = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
+  }
+  __handleMaterialColorTextChange() {
+    let bColor = GLOBALUTIL.color(this.materialColorInput.value);
+    let rH = Math.round(bColor.r * 255).toString(16);
+    if (rH.length === 1)
+      rH = '0' + rH;
+    let gH = Math.round(bColor.g * 255).toString(16);
+    if (gH.length === 1)
+      gH = '0' + gH;
+    let bH = Math.round(bColor.b * 255).toString(16);
+    if (bH.length === 1)
+      bH = '0' + bH;
+
+    let hex = '#' + rH + gH + bH;
+    this.materialColorPicker.value = hex;
   }
   createItem() {
     let newName = this.createPanelInput.value.trim();
@@ -57,7 +89,20 @@ class cBandRecords extends cBandSuper {
     if (this.tag === 'mesh' || this.tag === 'texture')
       this.context.activate(null);
 
-    this.context.createObject(this.tag, newName, file).then(results => {
+    let mixin = {};
+    if (this.tag === 'material') {
+      let color = this.materialColorInput.value;
+      if (this.diffuseCheckBox.checked)
+        mixin.diffuseColor = color;
+      if (this.emissiveCheckBox.checked)
+        mixin.emissiveColor = color;
+      if (this.ambientCheckBox.checked)
+        mixin.ambientColor = color;
+      if (this.specularCheckBox.checked)
+        mixin.specularColor = color;
+    }
+
+    this.context.createObject(this.tag, newName, file, mixin).then(results => {
       if (this.tag !== 'texture')
         this.context.renderPreview(this.tag, results.key);
       else {
