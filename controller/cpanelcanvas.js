@@ -15,6 +15,9 @@ class cPanelCanvas {
     this.arcRangeSlider = this.dialog.querySelector('.camera-select-range-slider');
     this.arcRangeSlider.addEventListener('input', e => this.arcRangeSliderChange());
     this.arcRangeSlider.value = gAPPP.a.profile.arcCameraRadius;
+    this.heightSlider = this.dialog.querySelector('.camera-select-range-height-slider');
+    this.heightSlider.addEventListener('input', e => this.cameraHeightChange());
+    this.heightSlider.value = gAPPP.a.profile.cameraHeight;
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
     this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
@@ -65,10 +68,17 @@ class cPanelCanvas {
     document.body.removeChild(element);
   }
   arcRangeSliderChange() {
-    this.parent.context.camera.radius = this.arcRangeSlider.value;
+    this.parent.context.camera.radius = Number(this.arcRangeSlider.value);
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'arcCameraRadius',
       newValue: this.arcRangeSlider.value
+    }]);
+  }
+  cameraHeightChange() {
+    this.parent.context.camera.heightOffset = Number(this.heightSlider.value);
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'cameraHeight',
+      newValue: this.heightSlider.value
     }]);
   }
   get rootBlock() {
@@ -195,7 +205,8 @@ class cPanelCanvas {
   show() {
     this.updateButtonStatus();
     this.cameraChangeHandler();
-    this.parent.context.camera.radius = this.arcRangeSlider.value;
+    if (this.cameraSelect.selectedIndex === 0)
+      this.parent.context.camera.radius = this.arcRangeSlider.value;
     this.loadingScreen.style.display = 'none';
   }
   hide() {
@@ -229,6 +240,7 @@ class cPanelCanvas {
   }
   refresh() {
     this.arcRangeSlider.style.display = 'none';
+    this.heightSlider.style.display = 'none';
 
     if (this.cameraSelect.selectedIndex < 1)
       this.arcRangeSlider.style.display = '';
@@ -238,6 +250,9 @@ class cPanelCanvas {
       if (camType === 'ArcRotate' || camType === 'FollowCamera') {
         this.arcRangeSlider.style.display = '';
       }
+
+      if (camType === 'FollowCamera')
+        this.heightSlider.style.display = '';
     }
 
     let animStatus = true;
