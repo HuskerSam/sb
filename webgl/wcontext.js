@@ -509,7 +509,7 @@ class wContext {
 
     if (this.previousCameraRadius !== cameraDetails.cameraRadius) {
       this.previousCameraRadius = cameraDetails.cameraRadius;
-      this.camera.radius = cameraDetails.cameraRadius;
+      this.camera.radius = Number(cameraDetails.cameraRadius);
     }
 
     if (this.previousCameraOrigin !== cameraDetails.cameraOrigin) {
@@ -521,7 +521,7 @@ class wContext {
 
     if (this.cameraHeightOffset !== cameraDetails.cameraHeightOffset) {
       this.cameraHeightOffset = cameraDetails.cameraHeightOffset;
-      this.camera.heightOffset = cameraDetails.cameraHeightOffset;
+      this.camera.heightOffset = Number(cameraDetails.cameraHeightOffset);
     }
 
     if (this.cameraAimTarget !== cameraDetails.cameraAimTarget) {
@@ -546,15 +546,15 @@ class wContext {
 
     this.previousCameraRadius = cameraRadius;
     if (cameraRadius)
-      this.camera.radius = cameraRadius;
+      this.camera.radius = Number(cameraRadius);
     if (heightOffset)
-      this.camera.heightOffset = heightOffset;
+      this.camera.heightOffset = Number(heightOffset);
     if (rotationOffset)
-      this.camera.rotationOffset = rotationOffset;
+      this.camera.rotationOffset = Number(rotationOffset);
     if (cameraAcceleration)
-      this.camera.cameraAcceleration = cameraAcceleration;
+      this.camera.cameraAcceleration = Number(cameraAcceleration);
     if (maxCameraSpeed)
-      this.camera.maxCameraSpeed = maxCameraSpeed;
+      this.camera.maxCameraSpeed = Number(maxCameraSpeed);
 
     this.camera.attachControl(this.canvas, true);
 

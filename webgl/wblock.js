@@ -880,7 +880,6 @@ class wBlock {
   updateCamera() {
     let cameras = this.traverseCameraList();
     let camerasS = JSON.stringify(cameras);
-    console.log(cameras);
     if (camerasS !== this.cameraS) {
       let sel = this.context.canvasHelper.cameraSelect;
       this.camerasCache = cameras;
@@ -896,6 +895,9 @@ class wBlock {
       if (sel.selectedIndex === -1)
         sel.selectedIndex = 0;
     }
+
+    if (this.context.canvasHelper.cameraSelect.selectedIndex !== 0)
+      this.context._updateCamera(this.context.canvasHelper.cameraSelect.value);
   }
   traverseCameraList(cameras = null) {
     if (cameras === null)
