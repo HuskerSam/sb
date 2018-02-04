@@ -51,6 +51,14 @@ class wBlock {
     skybox.material = skyboxMaterial;
     this.skyboxObject = skybox;
   }
+  containsLight() {
+    if (this.blockRawData.childType === 'light')
+      return true;
+    for (let i in this.childBlocks)
+      if (this.childBlocks[i].containsLight())
+        return true;
+    return false;
+  }
   _addGround() {
     if (this.groundObject)
       this.groundObject.dispose();
@@ -872,6 +880,7 @@ class wBlock {
   updateCamera() {
     let cameras = this.traverseCameraList();
     let camerasS = JSON.stringify(cameras);
+    console.log(cameras);
     if (camerasS !== this.cameraS) {
       let sel = this.context.canvasHelper.cameraSelect;
       this.camerasCache = cameras;
@@ -902,6 +911,8 @@ class wBlock {
   }
   _findBestTargetObject(findString) {
     let parts = findString.split(':');
+    if (parts.length < 2)
+      return null;
     let childType = parts[0].trim();
     let childName = parts[1].trim();
     for (let i in this.childBlocks) {

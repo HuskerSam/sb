@@ -262,18 +262,39 @@ class wContext {
     if (!this.camera)
       return;
 
-    if (this.cachedProfile.lightIntensity !== profile.lightIntensity) {
-      this.cachedProfile.lightIntensity = profile.lightIntensity;
-      this.light.intensity = Number(profile.lightIntensity);
-    }
-    if (this.cachedProfile.lightVector !== profile.lightVector) {
-      this.cachedProfile.lightVector = profile.lightVector;
-      this.light.direction = GLOBALUTIL.getVector(profile.lightVector, 0, 1, 0);
-    }
-
     this._updateCamera();
+    this._updateDefaultLight();
     this.showHideGrid(profile.showFloorGrid);
     this.showHideGuides(profile.showSceneGuides);
+  }
+  _childLightExists() {
+    if (!this.activeBlock)
+      return false;
+
+    return this.activeBlock.containsLight();
+  }
+  _updateDefaultLight() {
+    let profile = gAPPP.a.profile;
+    if (this._childLightExists()) {
+      if (this.light)
+        this.light.dispose();
+      this.light = null;
+    }
+    else {
+      if (!this.light) {
+        let lightVector = GLOBALUTIL.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
+        this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
+        this.light.intensity = .7;
+      }
+      if (this.cachedProfile.lightIntensity !== profile.lightIntensity) {
+        this.cachedProfile.lightIntensity = profile.lightIntensity;
+        this.light.intensity = Number(profile.lightIntensity);
+      }
+      if (this.cachedProfile.lightVector !== profile.lightVector) {
+        this.cachedProfile.lightVector = profile.lightVector;
+        this.light.direction = GLOBALUTIL.getVector(profile.lightVector, 0, 1, 0);
+      }
+    }
   }
   setActiveBlock(block) {
     this._clearActiveBlock();
@@ -385,12 +406,6 @@ class wContext {
     this.scene.clearColor = GLOBALUTIL.color('.7,.7,.7');
     this._sceneDisposeDefaultObjects();
     this._updateCamera();
-
-    let lightVector = GLOBALUTIL.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
-    this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
-    this.light.intensity = .7;
-
-    this._updateScaffoldingData();
   }
   _serializeScene() {
     return JSON.stringify(BABYLON.SceneSerializer.Serialize(this.scene));

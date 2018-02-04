@@ -96,7 +96,7 @@ class cDialogBlock extends cDialogEdit {
       return;
     }
 
-    if (! Array.isArray(obj)) {
+    if (!Array.isArray(obj)) {
       alert('Frames need to be in an array');
     }
 
@@ -127,6 +127,9 @@ class cDialogBlock extends cDialogEdit {
     if (this.rootBlock) {
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
       this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+
+      if (tag === 'blockchild')
+        this.rootBlock.updateCamera();
     }
   }
   addChild() {
