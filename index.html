@@ -53,6 +53,31 @@
               <label>Color <input class="material-color-add" type="text" value=".7,.7,.7" /></label>
               <input type="color" class="material-color-add-colorinput" />
             </div>
+            <div class="shape-add-options" style="display:none;">
+              <label>&nbsp;Type <select class="shape-type-select">
+                <option selected>3D Text</option>
+                <option>Box</option>
+                <option>Sphere</option>
+                <option>Cylinder</option>
+              </select></label>
+              <div class="create-box-options">
+                <label><span>Width</span><input type="text" class="box-width" /></label>
+                <label><span>Height</span><input type="text" class="box-height" /></label>
+                <label><span>Depth</span><input type="text" class="box-depth" /></label>
+              </div>
+              <div class="create-sphere-options">
+                <label><span>Diameter</span><input class="sphere-diameter" /></label>
+              </div>
+              <div class="create-cylinder-options">
+                <label><span>Diameter</span><input class="cylinder-diameter"></label>
+                <label><span>Height</span><input class="cylinder-height"></label>
+              </div>
+              <div class="create-text-options">
+                <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
+                <br>
+                <label><span>Text</span><input class="text-shape-add" /></label>
+              </div>
+            </div>
           </div>
         </div>
         <div class="static-buttons-toolbar">

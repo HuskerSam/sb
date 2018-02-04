@@ -1089,3 +1089,24 @@ input[type=range]::-webkit-slider-thumb {
   width: 2.5em;
   margin-left: 0;
 }
+
+.shape-add-options {
+  background: rgb(240, 240, 240);
+}
+
+.shape-add-options label > span {
+  margin: .5em;
+  font-size: .8em;
+}
+
+.shape-add-options input {
+  width: 5em;
+}
+
+.shape-add-options .text-shape-add {
+  width: 20em;
+}
+
+.shape-add-options .font-family-shape-add {
+  width: 20em;
+}

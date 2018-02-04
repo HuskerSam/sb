@@ -27,17 +27,31 @@ class cBandRecords extends cBandSuper {
     this.createMesage = this.createPanel.querySelector('.creating-message');
     this.createPanelShown = false;
 
-    this.addMaterialOptionsPanel = this.createPanel.querySelector('.material-add-options');
-    if (this.tag === 'material')
+    if (this.tag === 'material') {
+      this.addMaterialOptionsPanel = this.createPanel.querySelector('.material-add-options');
       this.addMaterialOptionsPanel.style.display = 'block';
-    this.materialColorInput = this.createPanel.querySelector('.material-color-add');
-    this.materialColorPicker = this.createPanel.querySelector('.material-color-add-colorinput');
-    this.diffuseCheckBox = this.createPanel.querySelector('.diffuse-color-checkbox');
-    this.emissiveCheckBox = this.createPanel.querySelector('.emissive-color-checkbox');
-    this.ambientCheckBox = this.createPanel.querySelector('.ambient-color-checkbox');
-    this.specularCheckBox = this.createPanel.querySelector('.specular-color-checkbox');
-    this.materialColorPicker.addEventListener('input', e => this.__handleMaterialColorInputChange());
-    this.materialColorInput.addEventListener('input', e => this.__handleMaterialColorTextChange());
+      this.materialColorInput = this.createPanel.querySelector('.material-color-add');
+      this.materialColorPicker = this.createPanel.querySelector('.material-color-add-colorinput');
+      this.diffuseCheckBox = this.createPanel.querySelector('.diffuse-color-checkbox');
+      this.emissiveCheckBox = this.createPanel.querySelector('.emissive-color-checkbox');
+      this.ambientCheckBox = this.createPanel.querySelector('.ambient-color-checkbox');
+      this.specularCheckBox = this.createPanel.querySelector('.specular-color-checkbox');
+      this.materialColorPicker.addEventListener('input', e => this.__handleMaterialColorInputChange());
+      this.materialColorInput.addEventListener('input', e => this.__handleMaterialColorTextChange());
+      this.__handleMaterialColorTextChange();
+    }
+
+    if (this.tag === 'shape') {
+      this.addShapeOptionsPanel = this.createPanel.querySelector('.shape-add-options');
+      this.addShapeOptionsPanel.style.display = 'block';
+      this.createBoxOptions = this.addShapeOptionsPanel.querySelector('.create-box-options');
+      this.createSphereOptions = this.addShapeOptionsPanel.querySelector('.create-sphere-options');
+      this.createTextOptions = this.addShapeOptionsPanel.querySelector('.create-text-options');
+      this.createCylinderOptions = this.addShapeOptionsPanel.querySelector('.create-cylinder-options');
+      this.createShapesSelect = this.addShapeOptionsPanel.querySelector('.shape-type-select');
+      this.createShapesSelect.addEventListener('input', e => this.__handleShapesSelectChange());
+      this.__handleShapesSelectChange();
+    }
 
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.createBtn.addEventListener('click', e => this.toggleCreatePanel());
@@ -51,7 +65,12 @@ class cBandRecords extends cBandSuper {
     let forceExpand = gAPPP.a.profile['mainRecordsExpanded' + this.tag];
     if (forceExpand)
       this.toggleChildBandDisplay(true);
-    this.__handleMaterialColorTextChange();
+  }
+  __handleShapesSelectChange() {
+    this.createBoxOptions.style.display = this.createShapesSelect.value === 'Box' ? '' : 'none';
+    this.createSphereOptions.style.display = this.createShapesSelect.value === 'Sphere' ? '' : 'none';
+    this.createTextOptions.style.display = this.createShapesSelect.value === '3D Text' ? '' : 'none';
+    this.createCylinderOptions.style.display = this.createShapesSelect.value === 'Cylinder' ? '' : 'none';
   }
   __handleMaterialColorInputChange() {
     let bColor = GLOBALUTIL.HexToRGB(this.materialColorPicker.value);
@@ -100,6 +119,38 @@ class cBandRecords extends cBandSuper {
         mixin.ambientColor = color;
       if (this.specularCheckBox.checked)
         mixin.specularColor = color;
+    }
+
+    if (this.tag === 'shape') {
+      let sT = this.createShapesSelect.value;
+      let shapeType = 'box';
+      if (sT === 'Sphere')
+        shapeType = 'sphere';
+      else if (sT === '3D Text')
+        shapeType = 'text';
+      else if (sT === 'Cylinder')
+        shapeType = 'cylinder';
+
+      mixin.shapeType = shapeType;
+      if (shapeType === 'text') {
+        mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
+        mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
+        mixin.scalingX = ".2";
+        mixin.scalingY = ".2";
+        mixin.scalingZ = ".2";
+      }
+      if (shapeType === 'sphere') {
+        mixin.sphereDiameter = this.addShapeOptionsPanel.querySelector('.sphere-diameter').value;
+      }
+      if (shapeType === 'box') {
+        mixin.boxWidth = this.addShapeOptionsPanel.querySelector('.box-width').value;
+        mixin.boxHeight = this.addShapeOptionsPanel.querySelector('.box-height').value;
+        mixin.boxDepth = this.addShapeOptionsPanel.querySelector('.box-depth').value;
+      }
+      if (shapeType === 'cylinder') {
+        mixin.cylinderDiameter = this.addShapeOptionsPanel.querySelector('.cylinder-diameter').value;
+        mixin.cylinderHeight = this.addShapeOptionsPanel.querySelector('.cylinder-height').value;
+      }
     }
 
     this.context.createObject(this.tag, newName, file, mixin).then(results => {
