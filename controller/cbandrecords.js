@@ -135,9 +135,9 @@ class cBandRecords extends cBandSuper {
       if (shapeType === 'text') {
         mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
         mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
-        mixin.scalingX = ".2";
-        mixin.scalingY = ".2";
-        mixin.scalingZ = ".2";
+        mixin.scalingX = ".1";
+        mixin.scalingY = ".1";
+        mixin.scalingZ = ".1";
       }
       if (shapeType === 'sphere') {
         mixin.sphereDiameter = this.addShapeOptionsPanel.querySelector('.sphere-diameter').value;
