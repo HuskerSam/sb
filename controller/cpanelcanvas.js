@@ -9,6 +9,7 @@ class cPanelCanvas {
     this.pauseButton.addEventListener('click', e => this.pauseAnimation());
     this.downloadVideoButton = this.dialog.querySelector('.video-button');
     this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
+    this.canvasPlayBar = this.dialog.querySelector('.canvas-play-bar');
 
     this.cameraSelect = this.dialog.querySelector('.camera-select');
     this.cameraSelect.addEventListener('input', e => this.cameraChangeHandler());
@@ -59,7 +60,9 @@ class cPanelCanvas {
   }
   __download(filename, text) {
     let element = document.createElement('a');
-    let url = window.URL.createObjectURL(new Blob([text], {type : 'application/json'}));
+    let url = window.URL.createObjectURL(new Blob([text], {
+      type: 'application/json'
+    }));
     element.setAttribute('href', url);
     element.setAttribute('download', filename);
     element.style.display = 'none';
@@ -241,6 +244,14 @@ class cPanelCanvas {
   refresh() {
     this.arcRangeSlider.style.display = 'none';
     this.heightSlider.style.display = 'none';
+
+    if (this.cameraSelect.selectedIndex === -1) {
+      this.cameraSelect.style.display = 'none';
+      this.canvasPlayBar.style.display = 'none';
+    } else {
+      this.cameraSelect.style.display = '';
+      this.canvasPlayBar.style.display = '';
+    }
 
     if (this.cameraSelect.selectedIndex < 1)
       this.arcRangeSlider.style.display = '';

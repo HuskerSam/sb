@@ -450,6 +450,17 @@ class cPanelData {
           innerField.domContainer.style.display = 'none';
       }
     }
+
+    for (let i in this.groups) {
+      let childVisible = false;
+      this.groups[i].style.display = 'none';
+      let children = this.groups[i].childNodes
+      for (let ii = 0; ii < children.length; ii++)
+        if (children[ii].style.display !== 'none') {
+          this.groups[i].style.display = '';
+          continue;
+        }
+    }
   }
   _updateDisplayListFilters() {
     for (let inner in this.fields) {

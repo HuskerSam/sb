@@ -228,13 +228,13 @@ class cPanelHelpers {
     let hp = this.helperPanels['offset'];
     let aD = hp.actionDom;
     aD.classList.add('offset');
-    let html = '<div style="float:left">x <input type="range" min="-15" max="15" step=".01" value="0" />' +
+    let html = '<div>x <input type="range" min="-8" max="8" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" /><br>' +
-      'y <input type="range" min="-15" max="15" step=".01" value="0" />' +
+      'y <input type="range" min="-8" max="15" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" /><br>' +
-      'z <input type="range" min="-15" max="15" step=".01" value="0" />' +
+      'z <input type="range" min="-8" max="8" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" /><br></div>' +
-      '<button style="float:right" class="btn">Move</button><div class="preview"></div>';
+      '<button class="btn-sb-icon">Move</button><div class="preview"></div>';
     aD.innerHTML = html;
     hp.moveButton = aD.querySelector('button');
     hp.input = aD.querySelectorAll('input[type=text]');
@@ -350,13 +350,13 @@ class cPanelHelpers {
     let hp = this.helperPanels['rotate'];
     let aD = hp.actionDom;
     aD.classList.add('rotate');
-    let html = '<div style="float:left">x <input type="range" min="-360" max="360" step=".01" value="0" />' +
+    let html = '<div>x <input type="range" min="-360" max="360" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" />&deg;<br>' +
       'y <input type="range" min="-360" max="360" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" />&deg;<br>' +
       'z <input type="range" min="-360" max="360" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" />&deg;<br></div>' +
-      '<button style="float:right" class="btn">Rotate</button><div class="preview"></div>';
+      '<button class="btn-sb-icon">Rotate</button><div class="preview"></div>';
     aD.innerHTML = html;
     hp.moveButton = aD.querySelector('button');
     hp.input = aD.querySelectorAll('input[type=text]');
@@ -447,9 +447,9 @@ class cPanelHelpers {
     this.helperPanels['scale'] = this.__initDOMWrapper(c);
     let hp = this.helperPanels['scale'];
     let aD = hp.actionDom;
-    aD.innerHTML = '<input type="range" min="1" max="500" step=".1" value="100" />' +
-      ' <input class="form-control" type="text" value="100" />%' +
-      ' <button class="btn">Scale</button><div class="preview"></div>';
+    aD.innerHTML = '<input type="range" min="1" max="250" step=".1" value="100" />' +
+      ' <input class="form-control" type="text" value="100" />%<br>' +
+      ' <button class="btn-sb-icon">Scale</button><div class="preview"></div>';
     hp.scaleButton = aD.querySelector('button');
     hp.input = aD.querySelector('input[type=text]');
     hp.slider = aD.querySelector('input[type=range]');

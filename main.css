@@ -352,10 +352,13 @@ html, body {
 .form-group-container-group {
   display: inline-block;
   border-radius: .5em;
+  text-align:center;
   background: rgb(200, 200, 200);
   float: left;
   position: relative;
-  margin: .1em;
+  margin: .25em;
+  border: inset .25em silver;
+  padding: .25em;
 }
 
 #main-page .form-group-container-group {
@@ -523,7 +526,7 @@ button i.material-icons {
 }
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"] {
-  width: 7em;
+  width: 15em;
   display: inline-block;
   height: 0em;
   position: relative;
