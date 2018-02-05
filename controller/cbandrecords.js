@@ -36,6 +36,8 @@ class cBandRecords extends cBandSuper {
       this.emissiveCheckBox = this.createPanel.querySelector('.emissive-color-checkbox');
       this.ambientCheckBox = this.createPanel.querySelector('.ambient-color-checkbox');
       this.specularCheckBox = this.createPanel.querySelector('.specular-color-checkbox');
+      this.texturePickerMaterial = this.createPanel.querySelector('.texture-picker-select');
+
       this.materialColorPicker.addEventListener('input', e => this.__handleMaterialColorInputChange());
       this.materialColorInput.addEventListener('input', e => this.__handleMaterialColorTextChange());
       this.__handleMaterialColorTextChange();
@@ -50,7 +52,14 @@ class cBandRecords extends cBandSuper {
       this.createCylinderOptions = this.addShapeOptionsPanel.querySelector('.create-cylinder-options');
       this.createShapesSelect = this.addShapeOptionsPanel.querySelector('.shape-type-select');
       this.createShapesSelect.addEventListener('input', e => this.__handleShapesSelectChange());
+      this.shapeMaterialSelectPicker = this.createPanel.querySelector('.shape-material-picker-select');
       this.__handleShapesSelectChange();
+    }
+
+    if (this.tag === 'mesh') {
+      this.addMeshOptionsPanel = this.createPanel.querySelector('.mesh-add-options');
+      this.addMeshOptionsPanel.style.display = 'block';
+      this.meshMaterialSelectPicker = this.createPanel.querySelector('.mesh-material-picker-select');
     }
 
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
@@ -111,14 +120,23 @@ class cBandRecords extends cBandSuper {
     let mixin = {};
     if (this.tag === 'material') {
       let color = this.materialColorInput.value;
-      if (this.diffuseCheckBox.checked)
+      let texture = this.texturePickerMaterial.value;
+      if (this.diffuseCheckBox.checked) {
         mixin.diffuseColor = color;
-      if (this.emissiveCheckBox.checked)
+        mixin.diffuseTextureName = texture;
+      }
+      if (this.emissiveCheckBox.checked) {
         mixin.emissiveColor = color;
-      if (this.ambientCheckBox.checked)
+        mixin.emissiveTextureName = texture;
+      }
+      if (this.ambientCheckBox.checked) {
         mixin.ambientColor = color;
-      if (this.specularCheckBox.checked)
+        mixin.ambientTextureName = texture;
+      }
+      if (this.specularCheckBox.checked) {
         mixin.specularColor = color;
+        mixin.specularTextureName = texture;
+      }
     }
 
     if (this.tag === 'shape') {
@@ -151,6 +169,11 @@ class cBandRecords extends cBandSuper {
         mixin.cylinderDiameter = this.addShapeOptionsPanel.querySelector('.cylinder-diameter').value;
         mixin.cylinderHeight = this.addShapeOptionsPanel.querySelector('.cylinder-height').value;
       }
+      mixin.materialName = this.shapeMaterialSelectPicker.value;
+    }
+
+    if (this.tag === 'mesh') {
+      mixin.materialName = this.meshMaterialSelectPicker.value;
     }
 
     this.context.createObject(this.tag, newName, file, mixin).then(results => {

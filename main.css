@@ -1090,19 +1090,23 @@ input[type=range]::-webkit-slider-thumb {
   margin-left: 0;
 }
 
-.shape-add-options {
+.shape-add-options, .mesh-add-options {
   background: rgb(240, 240, 240);
 }
 
-.shape-add-options label > span {
+.add-item-panel label > span {
   margin: .5em;
-  font-size: .8em;
 }
 
-.shape-add-options input {
+.add-item-panel input[type="text"] {
+  text-align:center;
   width: 5em;
 }
 
+.add-item-panel select {
+  margin-top: .5em;
+  border-radius: .25em;
+}
 .shape-add-options .text-shape-add {
   width: 20em;
 }

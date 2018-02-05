@@ -40,7 +40,8 @@
             </div>
           </div>
           <div class="add-item-panel" style="display:none;">
-            <input class="add-item-name" /><button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
+            <label><span style="color:white;">Title</span><input style="width:15em;" class="add-item-name" /></label>
+            <button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
             <br>
             <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
             <input type="file" class="file-upload" />
@@ -50,8 +51,20 @@
               <label><input type="checkbox" class="ambient-color-checkbox" />Ambient</label>
               <label><input type="checkbox" class="specular-color-checkbox" />Specular</label>
               <br>
-              <label>Color <input class="material-color-add" type="text" value=".7,.7,.7" /></label>
+              <label>Color <input style="width:12em;" class="material-color-add" type="text" value=".7,.7,.7" /></label>
               <input type="color" class="material-color-add-colorinput" />
+              <br>
+              <label><span>Texture</span><input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>
+            </div>
+            <div class="mesh-add-options" style="display:none">
+              <div style="display:none;">
+                <label><input type="checkbox" />Scale to fit</label>
+                <br>
+                <label>Fit Height <input class="mesh-fit-height" type="text" value="5" /></label>
+                <label>Fit Width <input class="mesh-fit-width" type="text" value="5" /></label>
+                <label>Fit Depth <input class="mesh-fit-depth" type="text" value="5" /></label>
+              </div>
+              <label><span>Material</span><input type="text" style="width:15em;" class="mesh-material-picker-select" list="materialdatatitlelookuplist" /></label>
             </div>
             <div class="shape-add-options" style="display:none;">
               <label><span>Type</span><select class="shape-type-select">
@@ -66,17 +79,18 @@
                 <label><span>Depth</span><input type="text" class="box-depth" /></label>
               </div>
               <div class="create-sphere-options">
-                <label><span>Diameter</span><input class="sphere-diameter" /></label>
+                <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
               </div>
               <div class="create-cylinder-options">
-                <label><span>Diameter</span><input class="cylinder-diameter"></label>
-                <label><span>Height</span><input class="cylinder-height"></label>
+                <label><span>Diameter</span><input type="text" class="cylinder-diameter"></label>
+                <label><span>Height</span><input type="text" class="cylinder-height"></label>
               </div>
               <div class="create-text-options">
-                <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
-                <br>
                 <label><span>Text</span><input class="text-shape-add" /></label>
+                <br>
+                <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
               </div>
+              <label><span>Material</span><input type="text" style="width:15em;" class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
             </div>
           </div>
         </div>
