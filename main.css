@@ -171,7 +171,6 @@ html, body {
 }
 
 #sb-floating-toolbar-expanded .button-wrapper .option-buttons {
-  font-size: 1.1em;
   display: inline-block;
   position: relative;
   top: .25em;
@@ -234,7 +233,6 @@ html, body {
   font-size: .7em;
   padding: 0em;
   padding-left: .5em;
-  display: inline-block;
   font-weight: bold;
 }
 
@@ -608,6 +606,7 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: none;
   position: relative;
   padding: .25em;
+  line-height: 2.5em;
 }
 
 .global-floating-toolbar * {
@@ -870,12 +869,6 @@ input[type=range]::-webkit-slider-thumb {
   position: relative;
 }
 
-.font-family-panel .form-group input {
-  padding: 0;
-  margin: 0;
-  padding: .2em .1em;
-}
-
 .font-family-panel {
   pointer-events: none!important;
   padding-bottom: 1em;
@@ -1012,9 +1005,9 @@ input[type=range]::-webkit-slider-thumb {
 
 .color-picker-input {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 1.5em!important;
+  top: -.25em;
+  right: -2em;
+  width: 3em!important;
 }
 
 .color-data-item {
