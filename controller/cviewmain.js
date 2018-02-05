@@ -75,6 +75,16 @@ class cViewMain {
     this.fontTools.activate();
     this.bandButtons.push(this.fontTools);
 
+    this.helpToolsButton = this.dialog.querySelector('.help-options');
+    this.helpToolsContainer = this.dialog.querySelector('.help-options-panel');
+    this.helpFields = [];
+    this.helpFieldsContainer = this.helpToolsContainer.querySelector('.fields-container');
+    this.helpTools = new cBandProfileOptions(this.helpToolsButton, this.helpFields, this.helpFieldsContainer, this.helpToolsContainer);
+    this.helpTools.closeOthersCallback = () => this.closeHeaderBands();
+    this.helpTools.fireFields.values = gAPPP.a.profile;
+    this.helpTools.activate();
+    this.bandButtons.push(this.helpTools);
+
     this.addProjectButton = document.querySelector('#add-workspace-button');
     this.addProjectButton.addEventListener('click', e => this.addProject());
     this.addProjectName = document.querySelector('#new-workspace-name');
@@ -120,12 +130,38 @@ class cViewMain {
     this.fontTools.toggle(false);
     this.userProfileBand.expanded = true;
     this.userProfileBand.toggle(false);
+    this.helpTools.expanded = true;
+    this.helpTools.toggle(false);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {
       if (type === 'remove')
         return;
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
+    }
+  }
+  __updateSceneBlockBand(profileKey) {
+    let bandElement = document.querySelector('.block-' + profileKey);
+    if (bandElement) {
+      let p = bandElement.parentNode;
+      let children = p.querySelectorAll('.menu-clipper-wrapper');
+
+      for (let i = 0; i < children.length; i++) {
+        let ele = children[i];
+        let wrapper = ele.querySelector('.band-background-preview');
+        wrapper.style.borderStyle = '';
+        let btn = ele.querySelector('.select-block-animation-button');
+        btn.style.display = '';
+        let title = ele.querySelector('.band-title');
+        title.background = '';
+      }
+
+      let wrapper = bandElement.querySelector('.band-background-preview');
+      wrapper.style.borderStyle = 'inset';
+      let btn = bandElement.querySelector('.select-block-animation-button');
+      btn.style.display = 'none';
+      let title = bandElement.querySelector('.band-title');
+      title.background = 'rgb(240,240,240)';
     }
   }
   _updateSelectedBlock(profileKey) {
@@ -144,6 +180,8 @@ class cViewMain {
       setTimeout(() => {
         let blockData = gAPPP.a.modelSets['block'].getCache(profileKey);
         if (blockData) {
+          this.__updateSceneBlockBand(profileKey);
+
           if (blockData.url)
             this.context.loadSceneURL(blockData.url).then(result => {
               this.__loadBlock(profileKey, blockData);
@@ -263,6 +301,8 @@ class cViewMain {
 
     this.fontTools.expanded = true;
     this.fontTools.toggle();
+    this.helpTools.expanded = true;
+    this.helpTools.toggle();
     this.userProfileBand.expanded = true;
     this.userProfileBand.toggle();
     this.projectPanelBand.expanded = true;

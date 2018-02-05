@@ -69,7 +69,7 @@ class cBandChildren extends cBandSuper {
       this.childrenContainer.removeChild(post);
   }
   deleteChildBlock(deleteKey, e) {
-    if (confirm('Remove this child block?'))
+    if (confirm('Remove this child block (only the link)?'))
       this.fireSet.removeByKey(deleteKey);
 
     if (e)

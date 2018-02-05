@@ -32,6 +32,7 @@ class cBandProfileOptions {
       this.panel.style.display = 'none';
       this.collapseButton.style.background = '';
       this.collapseButton.style.color = '';
+      this.collapseButton.style.borderStyle = '';
     } else {
       if (this.closeOthersCallback && callback)
         this.closeOthersCallback();
@@ -39,6 +40,7 @@ class cBandProfileOptions {
       this.panel.style.display = 'inline-block';
       this.collapseButton.style.background = 'rgb(50,50,50)';
       this.collapseButton.style.color = 'white';
+      this.collapseButton.style.borderStyle = 'inset';
     }
   }
 }

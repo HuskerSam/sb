@@ -249,8 +249,8 @@ class cPanelCanvas {
       this.cameraSelect.style.display = 'none';
       this.canvasPlayBar.style.display = 'none';
     } else {
-      this.cameraSelect.style.display = '';
-      this.canvasPlayBar.style.display = '';
+      this.cameraSelect.style.display = 'inline-block';
+      this.canvasPlayBar.style.display = 'inline-block';
     }
 
     if (this.cameraSelect.selectedIndex < 1)

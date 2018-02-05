@@ -255,9 +255,15 @@ class cBandRecords extends cBandSuper {
     if (pnl.style.display === 'none') {
       pnl.style.display = '';
       tgl.innerHTML = '<i class="material-icons">chevron_left</i>';
+      tgl.style.borderStyle = 'inset';
+      tgl.style.background = 'rgb(50,50,50)';
+      tgl.style.color = 'white';
     } else {
       pnl.style.display = 'none';
       tgl.innerHTML = '<i class="material-icons">chevron_right</i>';
+      tgl.style.borderStyle = '';
+      tgl.style.background = '';
+      tgl.style.color = '';
     }
   }
   _removeElement(e, key) {
@@ -292,13 +298,15 @@ class cBandRecords extends cBandSuper {
     if (this.createPanelShown) {
       this.createPanelShown = false;
       this.createPanel.style.display = 'none';
-      this.createBtn.style.background = 'rgb(240,240,240)';
-      this.createBtn.style.color = 'black';
+      this.createBtn.style.background = 'rgb(50,50,50)';
+      this.createBtn.style.color = 'white';
+      this.createBtn.style.borderStyle = '';
     } else {
       this.createPanelShown = true;
       this.createPanel.style.display = 'block';
-      this.createBtn.style.background = 'rgb(50,50,50)';
-      this.createBtn.style.color = 'white';
+      this.createBtn.style.background = 'rgb(240,240,240)';
+      this.createBtn.style.color = 'black';
+      this.createBtn.style.borderStyle = 'inset';
     }
   }
   _titleKeyPress(e) {

@@ -122,10 +122,6 @@ html, body {
   padding-right: 1.5em;
 }
 
-.sb-floating-toolbar-create-btn {
-  display: none;
-}
-
 .sb-floating-toolbar-item .button-wrapper {
   display: inline-block;
   white-space: nowrap;
@@ -134,10 +130,15 @@ html, body {
 
 .btn-sb-icon {
   background: rgb(240, 240, 240);
-  font-size: 1.4em;
+  font-size: 1.5em;
   color: black;
-  border-radius: .25em;
-  position: relative;
+  border-radius: .5em;
+}
+
+.sb-floating-toolbar-create-btn {
+  display: none;
+  background: rgb(50, 50, 50);
+  color: white;
 }
 
 .main-band-add-child {
@@ -160,6 +161,7 @@ html, body {
 .sb-floating-toolbar-item .button-wrapper-invert .button-title {
   color: black;
   background: rgb(240, 240, 240);
+  border-style: inset;
 }
 
 .button-wrapper {
@@ -419,7 +421,7 @@ button i.material-icons {
 .band-background-preview {
   white-space: nowrap;
   display: inline-block;
-  border: inset .25em silver;
+  border: outset .25em silver;
   border-radius: .5em;
   text-align: center;
   background-position: center;
@@ -657,7 +659,7 @@ input[type=range]::-webkit-slider-thumb {
   background: rgb(50, 50, 50);
   color: white;
   border-radius: .5em;
-  border: outset .15em silver;
+  border: outset .25em silver;
   margin: .25em;
   padding: .25em;
   display: inline-block;
@@ -668,16 +670,14 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .block-editor-child button {
-  background: rgba(0, 0, 0, .2);
-  color: silver;
   border-radius: .35em;
   margin-left: .5em;
 }
 
 .block-editor-child.selected, .main-band-details-element.selected {
-  color: yellow;
-  background: rgba(127, 127, 127, .5);
-  border-color: yellow;
+  color: black;
+  background: yellow;
+  border-style: inset;
 }
 
 .frame-fields-container {
@@ -715,9 +715,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frames-panel button.delete-button {
-  padding: .25em;
   margin: .5em;
-  font-size: 1em;
 }
 .add-item-panel > label {
   position: relative;
@@ -916,8 +914,8 @@ input[type=range]::-webkit-slider-thumb {
   position: absolute;
   top: .1em;
   right: .1em;
-  background: rgba(0, 0, 0, .25);
-  color: white;
+  background: rgba(240, 240, 240, .5);
+  color: black;
 }
 
 .context-scene-freefloat-panel {
@@ -1023,18 +1021,17 @@ input[type=range]::-webkit-slider-thumb {
   padding-bottom: .75em!important;
 }
 .add-item-panel {
-  padding: .25em;
-  border-radius: .25em;
-  background: rgb(50, 50, 50);
+  padding: .5em;
+  border-radius: .5em;
+  background: rgb(240, 240, 240);
   float: left;
-  border: solid .1em silver;
-  margin-right: .25em;
+  border: inset .15em silver;
+  color: black;
 }
 
 .add-item-panel input {
   margin: .25em;
-  border-radius: .25em;
-  border: solid .1em silver;
+  border-radius: .5em;
 }
 
 .add-item-panel input[type="file"] {

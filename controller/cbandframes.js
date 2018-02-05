@@ -76,7 +76,7 @@ class cBandFrames extends cBandSuper {
         firstGroup = helperDom;
     }
     let deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '<i class="material-icons">delete</i>';
+    deleteButton.innerHTML = '<i class="material-icons">delete_sweep</i>';
     deleteButton.setAttribute('class', 'delete-button btn-sb-icon');
     deleteButton.style.float = 'left';
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
@@ -204,11 +204,13 @@ class cBandFrames extends cBandSuper {
       let stash = resultFrames[c].frameStash;
 
       let className = '';
-      if (rFrame.gen)
+      let prefix = '';
+      if (rFrame.gen) {
         className = 'genFrame';
-
+        prefix = '(gen) '
+      }
       groupDisplays.time.innerHTML += `<div class="${className}">` +
-        rFrame.actualTime.toFixed(0).padStart(7) + 'ms</div>';
+        rFrame.actualTime.toFixed(0) + `ms ${prefix}</div>`;
 
       groupDisplays.scale.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['scalingX'].value) + ',' +
