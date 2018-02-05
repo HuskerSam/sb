@@ -479,12 +479,13 @@ class cPanelHelpers {
     this.toggleButtons.push(collapseButton);
 
     containerDom.appendChild(collapseButton);
-    let infoDom = document.createElement('div');
-    infoDom.classList.add('info-area');
-    helperDom.appendChild(infoDom);
+
     let actionDom = document.createElement('div');
     actionDom.setAttribute('class', 'action-area');
     helperDom.appendChild(actionDom);
+    let infoDom = document.createElement('div');
+    infoDom.classList.add('info-area');
+    helperDom.appendChild(infoDom);
     containerDom.appendChild(helperDom);
     return {
       containerDom,

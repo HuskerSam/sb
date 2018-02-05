@@ -5,7 +5,13 @@
 
 h3 {
   font-size: 1.5em;
-  padding: 20px;
+  padding: .25em;
+}
+
+select {
+  border-width: .15em;
+  border-radius: .35em;
+  padding: .1em;
 }
 
 #login-page {
@@ -77,18 +83,13 @@ html, body {
   float: left;
 }
 
-.sb-title {
-  float: left;
-  padding-left: 15px;
-  padding-top: 3px;
-}
-
 #sb-floating-toolbar {
   clear: both;
   pointer-events: none;
   text-align: left;
   position: relative;
-  top: -.15em;
+  top: -.25em;
+  margin-bottom: -.2em;
 }
 
 #sb-floating-toolbar .sb-floating-toolbar-item {
@@ -127,22 +128,14 @@ html, body {
 
 .sb-floating-toolbar-item .button-wrapper {
   display: inline-block;
-  text-align: center;
-  border-radius: .25em;
-  color: white;
   white-space: nowrap;
-  padding: .25em;
-  padding-top: .25em;
-  padding-bottom: 0em;
-  font-size: 1.1em;
+  text-align: center;
 }
 
 .btn-sb-icon {
-  border: none;
   background: rgb(240, 240, 240);
   font-size: 1.4em;
   color: black;
-  border: solid .05em silver;
   border-radius: .25em;
   position: relative;
 }
@@ -159,10 +152,9 @@ html, body {
 .sb-floating-toolbar-item .button-wrapper .button-title {
   background: rgb(50, 50, 50);
   color: white;
-  padding: .2em .5em;
-  border-radius: .3em;
+  padding: .35em 1em;
+  border-radius: .5em;
   cursor: pointer;
-  border: solid .1em silver;
 }
 
 .sb-floating-toolbar-item .button-wrapper-invert .button-title {
@@ -249,11 +241,10 @@ html, body {
 .form-group input {
   text-align: center;
   width: 100%;
-  border-radius: .25em;
-  border: none;
+  border-radius: .5em;
   font-size: 1em;
   float: left;
-  padding: .25em;
+  padding: .25em .5em;
 }
 
 .checkboxgroup input {
@@ -427,16 +418,16 @@ button i.material-icons {
 .band-background-preview {
   white-space: nowrap;
   display: inline-block;
-  border: solid .1em silver;
-  border-radius: .25em;
+  border: inset .25em silver;
+  border-radius: .5em;
   text-align: center;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
   pointer-events: auto;
-  height: 5em;
-  width: 8em;
+  height: 6em;
+  width: 10em;
   margin: 0 .05em;
   margin-bottom: -.3em;
   position: relative;
@@ -445,7 +436,7 @@ button i.material-icons {
 .band-background-preview .extend-panel {
   position: absolute;
   bottom: .15em;
-  left: 2.3em;
+  left: 3em;
 }
 
 .band-background-preview .band-title {
@@ -455,6 +446,7 @@ button i.material-icons {
   border-radius: .25em;
   margin: .15em;
   float: left;
+  font-size: .8em;
 }
 
 .band-background-preview .toggle-btn {
@@ -490,8 +482,12 @@ button i.material-icons {
   text-align: center;
   border-radius: .25em;
   font-size: inherit;
+  padding-top: .35em;
 }
-
+.selected-mesh-bounds-helper-box input[type="text"] {
+  border-radius: .25em;
+  border: default;
+}
 .block-dialog-popup .selected-mesh-bounds-helper-box {
   background: rgb(50, 50, 50);
   color: silver;
@@ -523,10 +519,9 @@ button i.material-icons {
 }
 
 .selected-mesh-bounds-helper-box .action-area button {
-  padding: .1em;
   background: white;
-  border-radius: .25em;
-  border: solid .1em silver;
+  font-size: 1.25em;
+  margin: .25em;
 }
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"] {
@@ -536,7 +531,6 @@ button i.material-icons {
   position: relative;
   top: .3em;
   font-size: inherit;
-  border: none;
 }
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
@@ -595,14 +589,18 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   cursor: pointer;
   background: rgb(50, 50, 50);
-  height: 1.2em;
+  height: 1.75em;
+  border: outset .25em silver;
+  border-radius: .5em;
 }
 
 input[type=range]::-webkit-slider-thumb {
-  height: 1.2em;
-  width: .8em;
+  height: 1.3em;
+  width: 1em;
   background: rgb(255, 255, 255);
   -webkit-appearance: none;
+  border-radius: .25em;
+  border: outset .1em silver;
 }
 
 .global-floating-toolbar {
@@ -656,8 +654,8 @@ input[type=range]::-webkit-slider-thumb {
 .block-editor-child, .main-band-details-element {
   background: rgb(50, 50, 50);
   color: white;
-  border-radius: 0em;
-  border: solid .15em silver;
+  border-radius: .5em;
+  border: outset .15em silver;
   margin: .25em;
   padding: .25em;
   display: inline-block;
@@ -719,7 +717,10 @@ input[type=range]::-webkit-slider-thumb {
   margin: .5em;
   font-size: 1em;
 }
-
+.add-item-panel > label {
+  position: relative;
+  top: -.25em;
+}
 .frames-panel .form-group-container-group {
   float: none;
   margin: 0 .15em;
@@ -812,7 +813,6 @@ input[type=range]::-webkit-slider-thumb {
   top: .2em;
   left: .2em;
   margin-right: .5em;
-  border: solid .1em silver;
 }
 
 .camera-select-range-slider {}
@@ -820,29 +820,21 @@ input[type=range]::-webkit-slider-thumb {
 .camera-select-height-slider {}
 
 .canvas-actions .camera-select {
-  border-radius: .25em;
-  font-size: 1.3em;
-  left: .4em;
-  padding: .1em;
   color: blue;
-  background: rgb(240, 240, 240);
+  top: -.3em;
+  position: relative;
 }
 
 #workspaces-select {
   margin-left: .2em;
   pointer-events: auto;
-  border: solid .1em silver;
-  font-size: 1.1em;
-  border-radius: .25em;
-  font-size: 1.1em;
-  padding: .1em;
   position: relative;
   top: -.1em;
 }
 
 #project-panel {
   padding: 0em;
-  border-radius: .25em;
+  border-radius: .5em;
   margin-bottom: -.25em;
 }
 
@@ -911,7 +903,6 @@ input[type=range]::-webkit-slider-thumb {
   width: 40vw;
   font-size: 1.1em;
   display: inline-block;
-  border: solid .1em silver;
   float: right;
   margin-top: .25em;
   margin-left: .25em;
@@ -1100,4 +1091,5 @@ input[type=range]::-webkit-slider-thumb {
 
 .texture-add-options {
   background: rgb(240,240,240);
+  padding: .35em;
 }

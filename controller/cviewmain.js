@@ -244,10 +244,10 @@ class cViewMain {
       this.toolbarItems[i].createPanelShown = true;
       this.toolbarItems[i].toggleCreatePanel();
     }
+
     for (let i in this.bandButtons) {
       this.bandButtons[i].expanded = true;
       this.bandButtons[i].toggle();
-
     }
 
     this.canvasHelper.collapseAll();
@@ -267,6 +267,12 @@ class cViewMain {
     this.userProfileBand.toggle();
     this.projectPanelBand.expanded = true;
     this.projectPanelBand.toggle();
+
+
+    for (let i in this.toolbarItems) {
+      this.toolbarItems[i].createPanelShown = true;
+      this.toolbarItems[i].toggleCreatePanel();
+    }
   }
   show(scene) {
     this.context.activate(scene);
