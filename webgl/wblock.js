@@ -779,7 +779,7 @@ class wBlock {
       let textFontFamily = 'Geneva';
       if (values.textFontFamily)
         textFontFamily = values.textFontFamily;
-      let textFontSize = '12px';
+      let textFontSize = '75px';
       if (values.textFontSize)
         textFontSize = values.textFontSize;
       let font = fontWeight + ' ' + textFontSize + ' ' + textFontFamily;
@@ -792,7 +792,7 @@ class wBlock {
       if (values.textFontClearColor)
         clearColor = GLOBALUTIL.colorRGB255(values.textFontClearColor);
       var x = 10;
-      var y = 495;
+      var y = 100;
 
       texture.drawText(values.textureText, x, y, font, color, clearColor);
 
