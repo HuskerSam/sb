@@ -8,7 +8,7 @@ class cBandFrames extends cBandSuper {
     this.framesHelper = new wFrames(this.parent.context);
 
     this.addFrameButton = document.createElement('button');
-    this.addFrameButton.innerHTML = '<i class="material-icons">add</i>';
+    this.addFrameButton.innerHTML = '<i class="material-icons">playlist_add</i>';
     this.addFrameButton.setAttribute('class', 'add-button btn-sb-icon');
     this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
     this.childrenContainer.appendChild(this.addFrameButton);
@@ -78,9 +78,9 @@ class cBandFrames extends cBandSuper {
     let deleteButton = document.createElement('button');
     deleteButton.innerHTML = '<i class="material-icons">delete</i>';
     deleteButton.setAttribute('class', 'delete-button btn-sb-icon');
-    //deleteButton.style.float = 'left';
+    deleteButton.style.float = 'left';
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
-    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[framesContainer.childNodes.length - 1]);
+    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[0]);
 
     instance.dataPanel.paint(values);
   }

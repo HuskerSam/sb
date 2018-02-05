@@ -316,7 +316,7 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   floatLeft: true
 }];
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
-  title: 'Light Intensity',
+  title: 'Intensity',
   fireSetField: 'lightIntensity',
   contextObjectField: null,
   helperType: 'singleSlider',
@@ -892,13 +892,13 @@ __localStaticStorageForBindingFields['framep2'] = [{
   displayType: 'number',
   group: 'diffuse'
 }, {
-  title: 'r g b',
+  title: '&nbsp;',
   fireSetField: 'diffuseColorG',
   contextObjectField: 'material.diffuseColor.g',
   displayType: 'number',
   group: 'diffuse'
 }, {
-  title: '&nbsp;',
+  title: 'r g b',
   fireSetField: 'diffuseColorB',
   contextObjectField: 'material.diffuseColor.b',
   displayType: 'number',
@@ -910,13 +910,13 @@ __localStaticStorageForBindingFields['framep2'] = [{
   displayType: 'number',
   group: 'emissive'
 }, {
-  title: 'r g b',
+  title: '&nbsp;',
   fireSetField: 'emissiveColorG',
   contextObjectField: 'material.emissiveColor.g',
   displayType: 'number',
   group: 'emissive'
 }, {
-  title: '&nbsp;',
+  title: 'r g b',
   fireSetField: 'emissiveColorB',
   contextObjectField: 'material.emissiveColor.b',
   displayType: 'number',
@@ -928,13 +928,13 @@ __localStaticStorageForBindingFields['framep2'] = [{
   displayType: 'number',
   group: 'ambient'
 }, {
-  title: 'r g b',
+  title: '&nbsp;',
   fireSetField: 'ambientColorG',
   contextObjectField: 'material.ambientColor.g',
   displayType: 'number',
   group: 'ambient'
 }, {
-  title: '&nbsp;',
+  title: 'r g b',
   fireSetField: 'ambientColorB',
   contextObjectField: 'material.ambientColor.b',
   displayType: 'number',
@@ -946,13 +946,13 @@ __localStaticStorageForBindingFields['framep2'] = [{
   displayType: 'number',
   group: 'specular'
 }, {
-  title: 'r g b',
+  title: '&nbsp;',
   fireSetField: 'specularColorG',
   contextObjectField: 'material.specularColor.g',
   displayType: 'number',
   group: 'specular'
 }, {
-  title: '&nbsp;',
+  title: 'r g b',
   fireSetField: 'specularColorB',
   contextObjectField: 'material.specularColor.b',
   displayType: 'number',

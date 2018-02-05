@@ -138,15 +138,17 @@ html, body {
 }
 
 .btn-sb-icon {
-  padding: 0em 0.2em;
-  margin: 0;
   border: none;
   background: rgb(240, 240, 240);
-  font-size: 1.3em;
+  font-size: 1.4em;
   color: black;
   border: solid .05em silver;
   border-radius: .25em;
   position: relative;
+}
+
+.main-band-add-child {
+  margin: .25em;
 }
 
 *[disabled] {
@@ -237,13 +239,11 @@ html, body {
 .form-group label {}
 
 .form-group label span {
-  background: rgb(50, 50, 50);
-  color: white;
-  font-size: .75em;
-  padding: .25em;
-  border-radius: .25em;
-  padding-bottom: .5em;
+  font-size: .7em;
+  padding: 0em;
+  padding-left: .5em;
   display: inline-block;
+  font-weight: bold;
 }
 
 .form-group input {
@@ -295,9 +295,9 @@ html, body {
 }
 
 .checkboxgroup label span {
-  padding: .15em .25em;
+  padding: .25em .1em;
   border-radius: .25em;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .modal-dialog {
@@ -379,6 +379,10 @@ html, body {
 
 .form-group-container-group .checkboxgroup {
   width: auto;
+  margin-top: -1em;
+  padding: .5em;
+  top: .5em;
+  position: relative;
 }
 
 .form-group-container-group label {
@@ -491,6 +495,7 @@ button i.material-icons {
 .block-dialog-popup .selected-mesh-bounds-helper-box {
   background: rgb(50, 50, 50);
   color: silver;
+  text-align: center;
 }
 
 .scene-options-panel .selected-mesh-bounds-helper-box {
@@ -561,10 +566,6 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box .action-area.rotate .preview, .selected-mesh-bounds-helper-box .action-area.rotate button {
   color: rgb(0, 64, 127);
-}
-
-.form-group.shortVector {
-  width: 8em;
 }
 
 .form-group.shortVector input[type="range"] {
@@ -652,7 +653,7 @@ input[type=range]::-webkit-slider-thumb {
   overflow: auto;
 }
 
-.block-editor-child, .main-band-details-element, .main-band-add-child {
+.block-editor-child, .main-band-details-element {
   background: rgb(50, 50, 50);
   color: white;
   border-radius: 0em;
@@ -664,13 +665,6 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .main-band-details-element {
-  background: rgb(240, 240, 240);
-  color: black;
-  border: solid .25em black;
-}
-
-.main-band-add-child {
-  float: left;
 }
 
 .block-editor-child button {
@@ -684,12 +678,6 @@ input[type=range]::-webkit-slider-thumb {
   color: yellow;
   background: rgba(127, 127, 127, .5);
   border-color: yellow;
-}
-
-.main-band-add-child {
-  background: rgb(50, 50, 50);
-  color: white;
-  border-radius: .25em;
 }
 
 .frame-fields-container {
@@ -718,9 +706,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frames-panel .add-button {
-  margin-bottom: .5em;
-  border: black;
-  margin-left: .5em;
+  margin: .5em;
 }
 
 .frames-panel .form-group-container-group .form-group {
@@ -729,10 +715,9 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frames-panel button.delete-button {
-  padding: 0em;
-  margin-left: .5em;
-  top: -.5em;
-  font-size: .9em;
+  padding: .25em;
+  margin: .5em;
+  font-size: 1em;
 }
 
 .frames-panel .form-group-container-group {
@@ -757,6 +742,10 @@ input[type=range]::-webkit-slider-thumb {
   margin: 0px;
   text-align: left;
   font-size: 1em;
+}
+
+.frame-info-panel * {
+  font-size: .9em;
 }
 
 .genFrame {
@@ -1043,8 +1032,9 @@ input[type=range]::-webkit-slider-thumb {
 
 .color-data-item>span {
   padding-right: 2.5em!important;
+  padding-top: .75em!important;
+  padding-bottom: .75em!important;
 }
-
 .add-item-panel {
   padding: .25em;
   border-radius: .25em;

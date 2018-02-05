@@ -277,10 +277,10 @@ class wFrames {
     this.processAnimationFrames(this.parentBlock.sceneObject);
 
     this.context.refreshFocus();
-    if (this.processedFrames.length > 1 && this.maxLength > 0) {
+    if (this.processedFrames.length > 1 && this.maxLength > 10) {
       let frameIndex = 0;
       if (this.activeAnimation) {
-        frameIndex = this.activeAnimation._runtimeAnimations[0].currentFrame;
+        frameIndex = GLOBALUTIL.getNumberOrDefault(this.activeAnimation._runtimeAnimations[0].currentFrame, 1);
       }
       this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
 
@@ -439,6 +439,9 @@ class wFrames {
     for (let c = 0; c < frameCount; c++) {
       let f = this.__getFrame(c);
       let key = this.orderedKeys[c];
+
+      if (!f.processedTime && c > 0)
+        continue;
 
       this.__pushFrame(f.processedTime, f, false, key, this.processedFrameValues[key], key);
 
