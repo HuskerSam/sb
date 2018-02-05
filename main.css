@@ -1114,3 +1114,7 @@ input[type=range]::-webkit-slider-thumb {
 .shape-add-options .font-family-shape-add {
   width: 20em;
 }
+
+.texture-add-options {
+  background: rgb(240,240,240);
+}

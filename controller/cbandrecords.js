@@ -19,7 +19,6 @@ class cBandRecords extends cBandSuper {
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
     this.createPanel = d.querySelector('.add-item-panel');
     this.childrenContainer.appendChild(this.createPanel);
-    this.createFile = this.createPanel.querySelector('.file-upload');
     this.createPanelCreateBtn = this.createPanel.querySelector('.add-button');
     this.createPanelCreateBtn.addEventListener('click', e => this.createItem());
     this.createPanelInput = this.createPanel.querySelector('.add-item-name');
@@ -60,13 +59,23 @@ class cBandRecords extends cBandSuper {
       this.addMeshOptionsPanel = this.createPanel.querySelector('.mesh-add-options');
       this.addMeshOptionsPanel.style.display = 'block';
       this.meshMaterialSelectPicker = this.createPanel.querySelector('.mesh-material-picker-select');
+      this.meshFile = this.createPanel.querySelector('.mesh-file-upload');
+    }
+
+    if (this.tag === 'texture') {
+      this.texturePanel = this.createPanel.querySelector('.texture-add-options');
+      this.texturePanel.style.display = 'block';
+      this.selectTextureType = this.createPanel.querySelector('.texture-type-select');
+      this.selectTextureType.addEventListener('input', e => this.__handleTextureTypeChange());
+      this.textureFile = this.createPanel.querySelector('.file-upload-texture');
+      this.texturePathInputLabel = this.createPanel.querySelector('.texture-path-label');
+      this.texturePathInput = this.createPanel.querySelector('.text-path-texture');
+      this.__handleTextureTypeChange();
     }
 
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.createBtn.addEventListener('click', e => this.toggleCreatePanel());
-    if (this.tag !== 'mesh' && this.tag !== 'texture')
-      this.createFile.style.display = 'none';
-    else
+    if (this.tag === 'mesh' || this.tag === 'texture')
       this.context = new wContext(document.querySelector('#hiddenlowresolutioncanvas'));
 
     this.buttonWrapper = this.wrapper.querySelector('.button-wrapper');
@@ -74,6 +83,16 @@ class cBandRecords extends cBandSuper {
     let forceExpand = gAPPP.a.profile['mainRecordsExpanded' + this.tag];
     if (forceExpand)
       this.toggleChildBandDisplay(true);
+  }
+  __handleTextureTypeChange() {
+    this.texturePathInputLabel.style.display = 'none';
+    this.textureFile.style.display = 'none';
+
+    let sel = this.selectTextureType.value;
+    if (sel === 'Upload')
+      this.textureFile.style.display = '';
+    if (sel === 'Path')
+      this.texturePathInputLabel.style.display = '';
   }
   __handleShapesSelectChange() {
     this.createBoxOptions.style.display = this.createShapesSelect.value === 'Box' ? '' : 'none';
@@ -108,8 +127,6 @@ class cBandRecords extends cBandSuper {
     }
     let file = null;
     let scene = gAPPP.mV.scene;
-    if (this.createFile.files.length > 0)
-      file = this.createFile.files[0];
 
     this.createMesage.style.display = 'block';
     this.buttonWrapper.setAttribute('disabled', 'true');
@@ -174,6 +191,21 @@ class cBandRecords extends cBandSuper {
 
     if (this.tag === 'mesh') {
       mixin.materialName = this.meshMaterialSelectPicker.value;
+      if (this.meshFile.files.length > 0)
+        file = this.meshFile.files[0];
+    }
+
+    if (this.tag === 'texture') {
+      let sel = this.selectTextureType.value;
+      if (sel === 'Upload'){
+        if (this.textureFile.files.length > 0)
+          file = this.textureFile.files[0];
+      }
+      if (sel === 'Path'){
+        mixin.url = this.texturePathInput.value.trim();
+      }
+      if (sel === 'Text'){
+      }
     }
 
     this.context.createObject(this.tag, newName, file, mixin).then(results => {
@@ -248,8 +280,11 @@ class cBandRecords extends cBandSuper {
       return gAPPP.dialogs[this.tag + '-edit'].show(key);
   }
   toggleCreatePanel() {
-    this.createFile.value = '';
     this.createPanelInput.value = '';
+    if (this.meshFile)
+      this.meshFile.value = '';
+    if (this.textureFile)
+      this.textureFile.value = '';
 
     this.createMesage.style.display = 'none';
     this.buttonWrapper.removeAttribute('disabled');

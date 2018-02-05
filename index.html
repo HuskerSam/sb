@@ -44,7 +44,14 @@
             <button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
             <br>
             <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
-            <input type="file" class="file-upload" />
+            <div class="texture-add-options" style="display:none">
+              <select class="texture-type-select">
+                <option>Upload</option>
+                <option>Path</option>
+              </select>
+              <input type="file" class="file-upload-texture" />
+              <label class="texture-path-label"><span>Path</span><input type="text" style="width:20em;" class="text-path-texture" list="sbimageslist" /></label>
+            </div>
             <div class="material-add-options" style="display:none;">
               <label><input type="checkbox" class="diffuse-color-checkbox" checked />Diffuse</label>
               <label><input type="checkbox" class="emissive-color-checkbox" />Emissive</label>
@@ -57,13 +64,8 @@
               <label><span>Texture</span><input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>
             </div>
             <div class="mesh-add-options" style="display:none">
-              <div style="display:none;">
-                <label><input type="checkbox" />Scale to fit</label>
-                <br>
-                <label>Fit Height <input class="mesh-fit-height" type="text" value="5" /></label>
-                <label>Fit Width <input class="mesh-fit-width" type="text" value="5" /></label>
-                <label>Fit Depth <input class="mesh-fit-depth" type="text" value="5" /></label>
-              </div>
+              <input type="file" class="mesh-file-upload" />
+              <br>
               <label><span>Material</span><input type="text" style="width:15em;" class="mesh-material-picker-select" list="materialdatatitlelookuplist" /></label>
             </div>
             <div class="shape-add-options" style="display:none;">
