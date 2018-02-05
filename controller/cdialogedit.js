@@ -63,11 +63,6 @@ class cDialogEdit {
 
     this._splitViewAlive = true;
     this.initScene = true;
-
-    this.collapseAllButton = this.dialog.querySelector('.toggle-bands-up');
-    this.collapseAllButton.addEventListener('click', e => this.collapseAll());
-    this.expandAllButton = this.dialog.querySelector('.toggle-bands-down');
-    this.expandAllButton.addEventListener('click', e => this.expandAll());
   }
   expandAll() {
     this.fireFields.helpers.expandAll();

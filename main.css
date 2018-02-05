@@ -157,7 +157,7 @@ html, body {
 .sb-floating-toolbar-item .button-wrapper .button-title {
   background: rgb(50, 50, 50);
   color: white;
-  padding: .15em .5em;
+  padding: .2em .5em;
   border-radius: .3em;
   cursor: pointer;
   border: solid .1em silver;
@@ -224,7 +224,7 @@ html, body {
 }
 
 .form-group {
-  width: 7em;
+  width: 14em;
   display: inline-block;
   font-size: inherit;
   margin-right: .1em;
@@ -476,7 +476,7 @@ button i.material-icons {
 }
 
 .url-type-input-group {
-  width: 20em;
+  width: 45vw;
 }
 
 .selected-mesh-bounds-helper-box {
@@ -635,17 +635,18 @@ input[type=range]::-webkit-slider-thumb {
   overflow-x: auto;
 }
 
-.cblock-details-panel {
+.cblock-details-panel, .cblock-child-details-panel {
   white-space: nowrap;
   overflow: auto;
-  margin-top: .25em;
 }
 
 .cblock-details-panel .form-group-container-group {
   float: none;
 }
 
-.cblock-child-details-panel {}
+.cblock-child-details-panel .form-group-container-group {
+    float: none;
+}
 
 .frames-panel {
   overflow: auto;
@@ -966,10 +967,6 @@ input[type=range]::-webkit-slider-thumb {
   padding-right: .5em;
 }
 
-.scene-options-panel .selected-mesh-helper-collapse-button {
-  display: none;
-}
-
 .scene-options-panel {
   float: right;
   pointer-events: none;
@@ -991,10 +988,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .scene-options-panel .fields-container * {
   pointer-events: auto;
-}
-
-.font-family-panel .selected-mesh-helper-collapse-button {
-  display: none;
 }
 
 .scene-options-panel .shortVector, .font-family-panel .shortVector {

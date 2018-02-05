@@ -64,12 +64,6 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: null,
   group: 'title'
 }, {
-  title: 'Name (scene id)',
-  fireSetField: 'name',
-  contextObjectField: 'name',
-  type: 'id',
-  group: 'title'
-}, {
   title: 'Preview Shape',
   fireSetField: 'previewShape',
   contextObjectField: null,
@@ -91,37 +85,58 @@ __localStaticStorageForBindingFields['material'] = [{
   fireSetField: 'diffuseColor',
   contextObjectField: 'diffuseColor',
   type: 'color',
-  group: 'diffuseColor'
+  group: 'diffuseColor',
+  displayType: 'shortVector',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.01',
+  floatLeft: true
 }, {
   title: 'Diffuse Texture Name',
   fireSetField: 'diffuseTextureName',
   contextObjectField: 'diffuseTexture',
   type: 'texture',
-  group: 'diffuseColor'
+  group: 'diffuseColor',
+  floatLeft: true
 }, {
   title: 'Ambient Color (reflects)',
   fireSetField: 'ambientColor',
   contextObjectField: 'ambientColor',
   type: 'color',
-  group: 'ambientColor'
+  group: 'ambientColor',
+  displayType: 'shortVector',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.01',
+  floatLeft: true
 }, {
   title: 'Ambient Texture Name',
   fireSetField: 'ambientTextureName',
   contextObjectField: 'ambientTexture',
   type: 'texture',
-  group: 'ambientColor'
+  group: 'ambientColor',
+  floatLeft: true
 }, {
   title: 'Emissive Color (glows)',
   fireSetField: 'emissiveColor',
   contextObjectField: 'emissiveColor',
   type: 'color',
-  group: 'emissiveColor'
+  group: 'emissiveColor',
+  displayType: 'shortVector',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.01',
+  floatLeft: true
 }, {
   title: 'Emissive Texture Name',
   fireSetField: 'emissiveTextureName',
   contextObjectField: 'emissiveTexture',
   type: 'texture',
-  group: 'emissiveColor'
+  group: 'emissiveColor',
+  floatLeft: true
 }, {
   title: 'Specular Power',
   fireSetField: 'specularPower',
@@ -144,13 +159,20 @@ __localStaticStorageForBindingFields['material'] = [{
   fireSetField: 'specularColor',
   contextObjectField: 'specularColor',
   group: 'specularColor',
-  type: 'color'
+  type: 'color',
+  displayType: 'shortVector',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.01',
+  floatLeft: true
 }, {
   title: 'Specular Texture Name',
   fireSetField: 'specularTextureName',
   contextObjectField: 'specularTexture',
   group: 'specularColor',
-  type: 'texture'
+  type: 'texture',
+  floatLeft: true
 }, {
   title: 'Backface Culling',
   fireSetField: 'backfaceCulling',
@@ -349,6 +371,13 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   clearLeft: true
 }];
 __localStaticStorageForBindingFields['baseMesh'] = [{
+  title: 'Visibility',
+  fireSetField: 'visibility',
+  contextObjectField: 'visibility',
+  group: 'visi',
+  displayType: 'number',
+  type: 'visibility'
+}, {
   title: 'Scale X',
   fireSetField: 'scalingX',
   contextObjectField: 'scaling.x',
@@ -402,13 +431,6 @@ __localStaticStorageForBindingFields['baseMesh'] = [{
   contextObjectField: 'rotation.z',
   group: 'rotate',
   displayType: 'number'
-}, {
-  title: 'Visibility',
-  fireSetField: 'visibility',
-  contextObjectField: 'visibility',
-  group: 'visi',
-  displayType: 'number',
-  type: 'visibility'
 }];
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
@@ -668,10 +690,8 @@ __localStaticStorageForBindingFields['block'] = [{
   title: 'Initial Scene',
   fireSetField: 'url',
   contextObjectField: null,
-  type: 'url',
   uploadType: 'scene',
-  floatRight: true,
-  group: 'skybox'
+  group: 'scenefile'
 }];
 __localStaticStorageForBindingFields['blockchild'] = [{
   title: 'Type',
@@ -801,56 +821,56 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera'
+  group: 'camera0'
 }, {
   title: 'Target Block',
   fireSetField: 'cameraTargetBlock',
   contextObjectField: null,
   displayGroup: 'camera',
   displayKey: 'childType',
-  group: 'camera'
+  group: 'camera0'
 }, {
   title: 'Radius',
   fireSetField: 'cameraRadius',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera'
+  group: 'camera1'
 }, {
   title: 'Height',
   fireSetField: 'cameraHeightOffset',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera'
+  group: 'camera1'
 }, {
   title: 'Rotation Offset',
   fireSetField: 'cameraRotationOffset',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera'
+  group: 'camera3'
 },  {
   title: 'Acceleration',
   fireSetField: 'cameraAcceleration',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera'
+  group: 'camera3'
 }, {
   title: 'Max Speed',
   fireSetField: 'maxCameraSpeed',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera'
+  group: 'camera3'
 }, {
   title: 'Aim at Position',
   fireSetField: 'cameraAimTarget',
   contextObjectField: null,
   displayGroup: 'camera',
   displayKey: 'childType',
-  group: 'camera'
+  group: 'camera4'
 }];
 __localStaticStorageForBindingFields['frame'] = [{
   title: 'Time (ms)',

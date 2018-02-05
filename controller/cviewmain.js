@@ -28,7 +28,7 @@ class cViewMain {
     this.toolbarItems = {};
     this.toolbarItems['block'] = new cBandRecords('block', 'Scene Blocks', this.context);
     this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes', this.context);
-    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes', this.context);
+    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes and Text', this.context);
     this.toolbarItems['material'] = new cBandRecords('material', "Materials", this.context);
     this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures', this.context);
 
@@ -153,6 +153,7 @@ class cViewMain {
         } else {
           this.key = '';
           this.canvasHelper.show();
+          document.title = this.workplacesSelect.selectedOptions[0].innerText;
         }
       }, 10);
     }
@@ -187,6 +188,7 @@ class cViewMain {
   }
   __loadBlock(profileKey, blockData) {
     let b = new wBlock(this.context);
+    document.title = blockData.title + ' - ' + this.workplacesSelect.selectedOptions[0].innerText;
     b.staticType = 'block';
     b.staticLoad = true;
     b.blockKey = profileKey;

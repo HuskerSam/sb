@@ -472,6 +472,7 @@ class cPanelHelpers {
     helperDom.style.display = 'none';
     let collapseButton = document.createElement('button');
     collapseButton.setAttribute('class', 'selected-mesh-helper-collapse-button');
+    collapseButton.style.display = 'none';
     collapseButton.innerHTML = '<i class="material-icons">expand_more</i>';
     collapseButton.addEventListener('click', e => this.__toggleHelper(helperDom, collapseButton));
     collapseButton.helperDom = helperDom;

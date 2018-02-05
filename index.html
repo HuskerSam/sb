@@ -17,7 +17,12 @@
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div class="global-floating-toolbar">
+
+      <button id="toggle-all-toolbands" class="btn-sb-icon" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
+      <button id="toggle-all-toolbands-down" class="btn-sb-icon"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
+
       <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
+
       <div id="project-panel" style="display:none;">
         <select id="workspaces-select"></select>
         <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
@@ -25,8 +30,7 @@
         <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
         <div class="project-fields-container"></div>
       </div>
-      <button id="toggle-all-toolbands" class="btn-sb-icon" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
-      <button id="toggle-all-toolbands-down" class="btn-sb-icon"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
+
       <div id="sb-floating-toolbar" style="display:inline-block;">
         <div style="display:none;" id="sb-floating-toolbar-item-template">
           <div class="sb-floating-toolbar-item">
@@ -172,14 +176,10 @@
         Loading...
       </div>
       <div class="popup-buttons">
-        <button class="btn-sb-icon toggle-bands-up" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
-        <button class="btn-sb-icon toggle-bands-down"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
-
         <div class="popup-title"></div>
         <button type="button" class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
         <button type="button" class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button>
-
-        <button type="button" style="float:right;" class="btn-sb-icon close-details"><i class="material-icons">close</i></button>
+        <button type="button" style="float:right;" class="btn-sb-icon close-details"><i class="material-icons">close</i> [Esc]</button>
       </div>
     </div>
     <div class="popup-main-body">
@@ -214,6 +214,7 @@
         <div style="clear:both"></div>
       </div>
     </div>
+    <div style="color:white;font-size:.8em;font-weight:bold;background:rgb(50,50,50);padding: .25em;text-align:center;">Frames</div>
     <div class="frames-panel"></div>
   </div>
 

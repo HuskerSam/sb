@@ -230,8 +230,8 @@ class cBandFrames extends cBandSuper {
 
       groupDisplays.diffuse.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + ',' +
-        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + '</div>';
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + ',' +
+        GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + '</div>';
 
       groupDisplays.emissive.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['emissiveColorR'].value) + ',' +
