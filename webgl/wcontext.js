@@ -151,25 +151,23 @@ class wContext {
       return;
     if (!timeoutCall) //do this after it renders a frame
     {
+      if (this.activeBlock) {
+        let event = new CustomEvent('contextRefreshActiveObject', {
+          detail: {
+            context: this,
+            block: this.activeBlock
+          },
+          bubbles: true
+        });
+        document.dispatchEvent(event);
+      }
       clearTimeout(this.delayFocus);
-      this.delayFocus = setTimeout(() => this.refreshFocus(true), 50);
+      this.delayFocus = setTimeout(() => this.refreshFocus(true), 100);
       return;
     }
     this._renderFocusDetails();
     this._updateScaffoldingData();
     this.canvasHelper.refresh();
-
-    if (!this.activeBlock)
-      return;
-
-    let event = new CustomEvent('contextRefreshActiveObject', {
-      detail: {
-        context: this,
-        block: this.activeBlock
-      },
-      bubbles: true
-    });
-    document.dispatchEvent(event);
   }
   loadSceneFromDomFile(file) {
     return new Promise((resolve, reject) => {
@@ -282,8 +280,7 @@ class wContext {
       if (this.light)
         this.light.dispose();
       this.light = null;
-    }
-    else {
+    } else {
       if (!this.light) {
         let lightVector = GLOBALUTIL.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
         this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);

@@ -34,7 +34,7 @@ class cBandChildren extends cBandSuper {
   _getDomForChild(key, values) {
     let d = document.createElement('div');
     d.setAttribute('class', 'block-editor-child');
-    this.childrenContainer.appendChild(d);
+    this.childrenContainer.insertBefore(d, this.childrenContainer.childNodes[0]);
     d.addEventListener('click', e => this.setKey(key));
 
     let html = '<span class="band-title"></span>';
