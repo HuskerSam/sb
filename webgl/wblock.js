@@ -205,17 +205,10 @@ class wBlock {
   __applyFirstFrameValues() {
     if (!this.sceneObject)
       return;
-    if (this.blockRawData.childType === 'light')
-      return;
-    if (this.blockRawData.childType === 'camera')
-      return;
 
     let values = this.framesHelper.firstFrameValues();
-
-    let fields = sDataDefinition.bindingFields('frameMesh').slice(0);
-    fields = fields.concat(sDataDefinition.bindingFields('frameColor')).slice(0);
-    for (let i in fields) {
-      let field = fields[i];
+    for (let i in this.framesHelper.fieldsData) {
+      let field = this.framesHelper.fieldsData[i];
       let value = values[field.fireSetField];
 
       if (field.contextObjectField)
@@ -386,6 +379,7 @@ class wBlock {
     if (this.staticLoad) {
       this.blockRenderData = this.blockRawData;
       this.blockRenderData.childType = this.staticType;
+      this.framesHelper._validateFieldList(this.blockRenderData.childType);
       this.framesHelper.parentBlock = this;
       this._renderBlock();
     } else

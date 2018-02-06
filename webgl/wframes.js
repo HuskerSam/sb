@@ -74,6 +74,7 @@ class wFrames {
     return details;
   }
   firstFrameValues() {
+    this._validateFieldList();
     if (this.processedFrames.length === 0)
       return this.__baseDetails();
 
@@ -249,7 +250,7 @@ class wFrames {
   compileFrames() {
     if (!this.parentKey)
       return;
-
+    this._validateFieldList();
     this.rawFrames = this.fireSet.queryCache('parentKey', this.parentKey);
 
     this._sortFrames();
@@ -480,11 +481,12 @@ class wFrames {
 
     return next + 9;
   }
-  setParentKey(parentKey, parentBlock) {
-    this.parentKey = parentKey;
-    this.parentBlock = parentBlock;
+  _validateFieldList(childType = null) {
     let frameType = 'blockFrame';
-    let childType = this.parentBlock.blockRenderData.childType;
+    if (!childType)
+      childType = this.parentBlock.blockRawData.childType;
+    if (!childType)
+      childType = this.parentBlock.blockRenderData.childType;
 
     if (childType === 'mesh')
       frameType = 'meshFrame';
@@ -495,8 +497,17 @@ class wFrames {
     if (childType === 'light')
       frameType = 'lightFrame';
 
+    if (this.cachedChildType === childType && childType)
+      return;
+
+    this.cachedChildType = childType;
+
     this.fieldsData = sDataDefinition.bindingFieldsLookup(frameType);
     this.frameAttributeFields = this.getFieldList(this.fieldsData);
+  }
+  setParentKey(parentKey, parentBlock) {
+    this.parentKey = parentKey;
+    this.parentBlock = parentBlock;
 
     this.compileFrames();
   }
@@ -512,7 +523,6 @@ class wFrames {
     this.animations = {};
     this.animationsArray = [];
 
-
     if (this.processedFrames.length < 2 || this.maxLength === 0) {
 
     } else {
@@ -525,7 +535,7 @@ class wFrames {
         let fieldKey = this.frameAttributeFields[i];
         let field = this.fieldsData[fieldKey];
 
-        if (! field.contextObjectField)
+        if (!field.contextObjectField)
           continue;
         let frameEmpty = true;
         if (!forceFirstAnimation) {

@@ -1113,5 +1113,6 @@ __defaultData['frame'] = {
   ambientColorB: '',
   specularColorR: '',
   specularColorG: '',
-  specularColorB: ''
+  specularColorB: '',
+  visibility: ''
 };
