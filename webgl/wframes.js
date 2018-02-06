@@ -501,6 +501,7 @@ class wFrames {
       return;
 
     this.cachedChildType = childType;
+    this.cachedFrameType = frameType;
 
     this.fieldsData = sDataDefinition.bindingFieldsLookup(frameType);
     this.frameAttributeFields = this.getFieldList(this.fieldsData);

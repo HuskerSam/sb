@@ -44,18 +44,49 @@ class cBandFrames extends cBandSuper {
       collapseButton.innerHTML = '+';
     }
   }
+  __updateFieldsForAnimRow(instance) {
+    let fieldsFilter = sDataDefinition.getAnimFieldsFilter();
+    let fieldList = null;
+    if (this.framesHelper.cachedChildType === 'camera')
+      fieldList = fieldsFilter.animateCameraFields[this.parent.context.activeBlock.blockRawData.childName];
+    if (this.framesHelper.cachedChildType === 'light')
+      fieldList = fieldsFilter.animateLightFields[this.parent.context.activeBlock.blockRawData.childName];
+
+    if (fieldList !== null) {
+      for (let inner in instance.dataPanel.fields) {
+        let innerField = instance.dataPanel.fields[inner];
+        let key = innerField.fireSetField;
+
+        if (fieldList.indexOf(key) !== -1 || key === 'frameTime' || key === 'frameOrder')
+          innerField.domContainer.style.display = 'inline-block';
+        else
+          innerField.domContainer.style.display = 'none';
+      }
+
+      for (let i in instance.dataPanel.groups) {
+        let childVisible = false;
+        instance.dataPanel.groups[i].style.display = 'none';
+        let children = instance.dataPanel.groups[i].childNodes
+        for (let ii = 0; ii < children.length; ii++)
+          if (children[ii].style.display !== 'none') {
+            instance.dataPanel.groups[i].style.display = '';
+            continue;
+          }
+      }
+    }
+  }
   _getDomForChild(key, values) {
     let framesContainer = document.createElement('div');
     framesContainer.setAttribute('class', 'frame-fields-container');
 
     let instance = {};
-    instance.frameFields = this.framesHelper.fieldsData;
+    instance.frameFields = sDataDefinition.bindingFieldsCloned(this.framesHelper.cachedFrameType);
     instance.key = key;
     instance.tag = 'frame';
     instance.fireSet = this.fireSet;
     instance.framesContainer = framesContainer;
     instance.dataPanel = new cPanelData(instance.frameFields, framesContainer, instance, false);
-    instance.dataPanel._updateDisplayFilters = () => {};
+    instance.dataPanel._updateDisplayFilters = () => this.__updateFieldsForAnimRow(instance);
     instance.childListener = (values, type, fireData) => instance.dataPanel._handleDataChange(values, type, fireData);
     this.fireSet.childListeners.push(instance.childListener);
     this.frameDataViewInstances[key] = instance;

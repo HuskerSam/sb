@@ -57,9 +57,32 @@ class sDataDefinition {
   static getDefaultDataCloned(tag) {
     return JSON.parse(JSON.stringify(__defaultData[tag]));
   }
+  static getAnimFieldsFilter() {
+    return __animFieldFilters;
+  }
 }
 let __localStaticStorageForBindingFields = {};
 let __defaultData = {};
+let __animFieldFilters = {};
+
+__animFieldFilters.blockCameraFields = {};
+__animFieldFilters.animateCameraFields = {};
+__animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraOrigin'];
+__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOrigin', 'cameraRotation'];
+__animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraOrigin', 'cameraRadius'];
+__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOrigin'];
+__animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed', 'cameraOrigin', 'cameraTargetBlock'];
+__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed'];
+__animFieldFilters.blockLightFields = {};
+__animFieldFilters.animateLightFields = {};
+__animFieldFilters.blockLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.animateLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity'];
+__animFieldFilters.blockLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.animateLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity'];
+__animFieldFilters.blockLightFields['Directional'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.animateLightFields['Directional'] = ['lightDirection', 'lightIntensity'];
+__animFieldFilters.blockLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightAngle', 'lightDecay', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.animateLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightAngle', 'lightDecay'];
 
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
@@ -714,6 +737,13 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   displayKey: 'childType',
   contextObjectField: null,
   group: 'camera'
+}, {
+  title: 'Target Block',
+  fireSetField: 'cameraTargetBlock',
+  contextObjectField: null,
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  group: 'camera'
 }];
 __localStaticStorageForBindingFields['frameBase'] = [{
   title: 'Time (ms)',
@@ -861,11 +891,11 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   contextObjectField: null,
   group: 'camera0'
 }, {
-  title: 'Target Block',
-  fireSetField: 'cameraTargetBlock',
-  contextObjectField: null,
+  title: 'Rotation',
+  fireSetField: 'cameraRotation',
   displayGroup: 'camera',
   displayKey: 'childType',
+  contextObjectField: null,
   group: 'camera0'
 }, {
   title: 'Radius',

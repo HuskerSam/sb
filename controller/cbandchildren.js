@@ -17,6 +17,46 @@ class cBandChildren extends cBandSuper {
     this.deleteChildButton.style.float = 'left';
     this.deleteChildButton.addEventListener('click', e => this.deleteChildBlock(this.key, e));
     this.childEditPanel.insertBefore(this.deleteChildButton, this.childEditPanel.childNodes[0]);
+
+    this.childEditFields._superUpdateDisplayFilters = this.childEditFields._updateDisplayFilters;
+    this.childEditFields._updateDisplayFilters = () => this.__updateFieldsForAnimHeaderRow();
+  }
+  __updateFieldsForAnimHeaderRow() {
+    this.childEditFields._superUpdateDisplayFilters();
+    let fieldsFilter = sDataDefinition.getAnimFieldsFilter();
+    let fieldList = null;
+    if (this.parent.context.activeBlock.blockRawData.childType === 'camera')
+      fieldList = fieldsFilter.animateCameraFields[this.parent.context.activeBlock.blockRawData.childName];
+    if (this.parent.context.activeBlock.blockRawData.childType === 'light')
+      fieldList = fieldsFilter.animateLightFields[this.parent.context.activeBlock.blockRawData.childName];
+
+      let groupList = ['camera', 'light', 'camera0', 'light0'];
+
+    if (fieldList !== null) {
+      for (let inner in this.childEditFields.fields) {
+        let innerField = this.childEditFields.fields[inner];
+        let key = innerField.fireSetField;
+
+        if (groupList.indexOf(innerField.group) === -1)
+          continue;
+
+        if (fieldList.indexOf(key) !== -1)
+          innerField.domContainer.style.display = 'inline-block';
+        else
+          innerField.domContainer.style.display = 'none';
+      }
+
+      for (let i in this.childEditFields.groups) {
+        let childVisible = false;
+        this.childEditFields.groups[i].style.display = 'none';
+        let children = this.childEditFields.groups[i].childNodes
+        for (let ii = 0; ii < children.length; ii++)
+          if (children[ii].style.display !== 'none') {
+            this.childEditFields.groups[i].style.display = '';
+            continue;
+          }
+      }
+    }
   }
   refreshUIFromCache() {
     this.clearChildren();
