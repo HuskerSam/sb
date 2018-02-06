@@ -38,11 +38,6 @@ class wFrames {
       specularColorG: '',
       specularColorB: ''
     };
-    this.frameAttributeFields = ['scalingX', 'scalingY', 'scalingZ', 'positionX', 'positionY', 'positionZ',
-      'rotationX', 'rotationY', 'rotationZ', 'visibility', 'diffuseColorR', 'diffuseColorG', 'diffuseColorB',
-      'emissiveColorR', 'emissiveColorG', 'emissiveColorB', 'ambientColorR', 'ambientColorG', 'ambientColorB',
-      'specularColorR', 'specularColorG', 'specularColorB'
-    ];
     this.processedFrames = [];
     this.updateHandlers = [];
     this.animations = {};
@@ -488,12 +483,6 @@ class wFrames {
   setParentKey(parentKey, parentBlock) {
     this.parentKey = parentKey;
     this.parentBlock = parentBlock;
-    this.compileFrames();
-  }
-  processAnimationFrames(sceneObject) {
-    this.animations = {};
-    this.animationsArray = [];
-
     let frameType = 'blockFrame';
     let childType = this.parentBlock.blockRenderData.childType;
 
@@ -506,7 +495,23 @@ class wFrames {
     if (childType === 'light')
       frameType = 'lightFrame';
 
-    let fields = sDataDefinition.bindingFieldsLookup(frameType);
+    this.fieldsData = sDataDefinition.bindingFieldsLookup(frameType);
+    this.frameAttributeFields = this.getFieldList(this.fieldsData);
+
+    this.compileFrames();
+  }
+  getFieldList(fields) {
+    let fieldKeys = [];
+
+    for (let i in fields)
+      fieldKeys.push(fields[i].fireSetField);
+
+    return fieldKeys;
+  }
+  processAnimationFrames(sceneObject) {
+    this.animations = {};
+    this.animationsArray = [];
+
 
     if (this.processedFrames.length < 2 || this.maxLength === 0) {
 
@@ -518,8 +523,10 @@ class wFrames {
         forceFirstAnimation = false;
       for (let i in this.frameAttributeFields) {
         let fieldKey = this.frameAttributeFields[i];
-        let field = fields[fieldKey];
+        let field = this.fieldsData[fieldKey];
 
+        if (! field.contextObjectField)
+          continue;
         let frameEmpty = true;
         if (!forceFirstAnimation) {
           for (let c in this.rawFrames)
