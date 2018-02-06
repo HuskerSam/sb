@@ -1,20 +1,43 @@
 class sDataDefinition {
   static bindingFields(tag) {
     if (tag === 'frame') {
-      let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
-      localCopy = localCopy.concat(this.bindingFields('baseMesh'));
-      return localCopy.concat(this.bindingFields('framep2'));
+      alert('errror here');
     }
+    if (tag === 'meshFrame' || tag === 'shapeFrame') {
+      let localCopy = this.bindingFields('frameBase');
+      localCopy = localCopy.concat(this.bindingFields('frameMesh'));
+      return localCopy.concat(this.bindingFields('frameColor'));
+    }
+    if (tag === 'blockFrame') {
+      let localCopy = this.bindingFields('frameBase');
+      let meshCopy = this.bindingFields('frameMesh');
+      meshCopy = meshCopy.slice(1);
+      return localCopy.concat(meshCopy);
+    }
+    if (tag === 'cameraFrame') {
+      let localCopy = this.bindingFields('frameBase');
+      return localCopy.concat(this.bindingFields('frameCamera'));
+    }
+    if (tag === 'lightFrame') {
+      let localCopy = this.bindingFields('frameBase');
+      return localCopy.concat(this.bindingFields('frameLight'));
+    }
+
     if (tag === 'shape') {
       let localCopy = __localStaticStorageForBindingFields[tag].slice(0);
-      return localCopy.concat(this.bindingFields('baseMesh'));
+      return localCopy.concat(this.bindingFields('frameMesh'));
     }
     if (tag === 'mesh') {
       let localCopy = __localStaticStorageForBindingFields[tag].slice(0, 2);
-      localCopy = localCopy.concat(this.bindingFields('baseMesh'));
+      localCopy = localCopy.concat(this.bindingFields('frameMesh'));
       return localCopy.concat(__localStaticStorageForBindingFields[tag].slice(2));
     }
 
+    if (tag === 'blockchild') {
+      let localCopy = __localStaticStorageForBindingFields['childBlock'].slice(0);
+      localCopy = localCopy.concat(this.bindingFields('frameCamera'));
+      return localCopy.concat(this.bindingFields('frameLight'));
+    }
     return __localStaticStorageForBindingFields[tag].slice(0);
   }
   static bindingFieldsLookup(tag) {
@@ -337,7 +360,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeStep: '.01',
   floatLeft: true,
   group: 'light'
-},{
+}, {
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
   type: 'boolean',
@@ -369,68 +392,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   type: 'boolean',
   floatLeft: true,
   clearLeft: true
-}];
-__localStaticStorageForBindingFields['baseMesh'] = [{
-  title: 'Visibility',
-  fireSetField: 'visibility',
-  contextObjectField: 'visibility',
-  group: 'visi',
-  displayType: 'number',
-  type: 'visibility'
-}, {
-  title: 'Scale X',
-  fireSetField: 'scalingX',
-  contextObjectField: 'scaling.x',
-  group: 'scale',
-  displayType: 'number'
-}, {
-  title: 'Scale Y',
-  fireSetField: 'scalingY',
-  contextObjectField: 'scaling.y',
-  group: 'scale',
-  displayType: 'number'
-}, {
-  title: 'Scale Z',
-  fireSetField: 'scalingZ',
-  contextObjectField: 'scaling.z',
-  group: 'scale',
-  displayType: 'number'
-}, {
-  title: 'Offset X',
-  fireSetField: 'positionX',
-  contextObjectField: 'position.x',
-  group: 'offset',
-  displayType: 'number'
-}, {
-  title: 'Offset Y',
-  fireSetField: 'positionY',
-  contextObjectField: 'position.y',
-  group: 'offset',
-  displayType: 'number'
-}, {
-  title: 'Offset Z',
-  fireSetField: 'positionZ',
-  contextObjectField: 'position.z',
-  group: 'offset',
-  displayType: 'number'
-}, {
-  title: 'Rotate X',
-  fireSetField: 'rotationX',
-  contextObjectField: 'rotation.x',
-  group: 'rotate',
-  displayType: 'number'
-}, {
-  title: 'Rotate Y',
-  fireSetField: 'rotationY',
-  contextObjectField: 'rotation.y',
-  group: 'rotate',
-  displayType: 'number'
-}, {
-  title: 'Rotate Z',
-  fireSetField: 'rotationZ',
-  contextObjectField: 'rotation.z',
-  group: 'rotate',
-  displayType: 'number'
 }];
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
@@ -693,7 +654,7 @@ __localStaticStorageForBindingFields['block'] = [{
   uploadType: 'scene',
   group: 'scenefile'
 }];
-__localStaticStorageForBindingFields['blockchild'] = [{
+__localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',
   fireSetField: 'childType',
   contextObjectField: null,
@@ -747,6 +708,89 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   displayGroup: ['block'],
   displayKey: 'childType'
 }, {
+  title: 'Name',
+  fireSetField: 'cameraName',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  contextObjectField: null,
+  group: 'camera'
+}];
+__localStaticStorageForBindingFields['frameBase'] = [{
+  title: 'Time (ms)',
+  fireSetField: 'frameTime',
+  contextObjectField: null,
+  wrapperClass: 'frame-time',
+  group: 'time'
+}, {
+  title: 'Order',
+  fireSetField: 'frameOrder',
+  contextObjectField: null,
+  displayType: 'number',
+  group: 'time'
+}];
+__localStaticStorageForBindingFields['frameMesh'] = [{
+  title: 'Visibility',
+  fireSetField: 'visibility',
+  contextObjectField: 'visibility',
+  group: 'visi',
+  displayType: 'number',
+  type: 'visibility'
+}, {
+  title: 'Scale X',
+  fireSetField: 'scalingX',
+  contextObjectField: 'scaling.x',
+  group: 'scale',
+  displayType: 'number'
+}, {
+  title: 'Scale Y',
+  fireSetField: 'scalingY',
+  contextObjectField: 'scaling.y',
+  group: 'scale',
+  displayType: 'number'
+}, {
+  title: 'Scale Z',
+  fireSetField: 'scalingZ',
+  contextObjectField: 'scaling.z',
+  group: 'scale',
+  displayType: 'number'
+}, {
+  title: 'Offset X',
+  fireSetField: 'positionX',
+  contextObjectField: 'position.x',
+  group: 'offset',
+  displayType: 'number'
+}, {
+  title: 'Offset Y',
+  fireSetField: 'positionY',
+  contextObjectField: 'position.y',
+  group: 'offset',
+  displayType: 'number'
+}, {
+  title: 'Offset Z',
+  fireSetField: 'positionZ',
+  contextObjectField: 'position.z',
+  group: 'offset',
+  displayType: 'number'
+}, {
+  title: 'Rotate X',
+  fireSetField: 'rotationX',
+  contextObjectField: 'rotation.x',
+  group: 'rotate',
+  displayType: 'number'
+}, {
+  title: 'Rotate Y',
+  fireSetField: 'rotationY',
+  contextObjectField: 'rotation.y',
+  group: 'rotate',
+  displayType: 'number'
+}, {
+  title: 'Rotate Z',
+  fireSetField: 'rotationZ',
+  contextObjectField: 'rotation.z',
+  group: 'rotate',
+  displayType: 'number'
+}];
+__localStaticStorageForBindingFields['frameLight'] = [{
   title: 'from',
   fireSetField: 'lightFrom',
   contextObjectField: null,
@@ -808,14 +852,8 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   group: 'light',
   displayGroup: 'light',
   displayKey: 'childType'
-}, {
-  title: 'Name',
-  fireSetField: 'cameraName',
-  displayGroup: 'camera',
-  displayKey: 'childType',
-  contextObjectField: null,
-  group: 'camera'
-},  {
+}];
+__localStaticStorageForBindingFields['frameCamera'] = [{
   title: 'Position',
   fireSetField: 'cameraOrigin',
   displayGroup: 'camera',
@@ -835,57 +873,44 @@ __localStaticStorageForBindingFields['blockchild'] = [{
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera1'
+  group: 'camera0'
 }, {
   title: 'Height',
   fireSetField: 'cameraHeightOffset',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera1'
+  group: 'camera0'
 }, {
   title: 'Rotation Offset',
   fireSetField: 'cameraRotationOffset',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera3'
-},  {
+  group: 'camera0'
+}, {
   title: 'Acceleration',
   fireSetField: 'cameraAcceleration',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera3'
+  group: 'camera0'
 }, {
   title: 'Max Speed',
   fireSetField: 'maxCameraSpeed',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera3'
+  group: 'camera0'
 }, {
   title: 'Aim at Position',
   fireSetField: 'cameraAimTarget',
   contextObjectField: null,
   displayGroup: 'camera',
   displayKey: 'childType',
-  group: 'camera4'
+  group: 'camera0'
 }];
-__localStaticStorageForBindingFields['frame'] = [{
-  title: 'Time (ms)',
-  fireSetField: 'frameTime',
-  contextObjectField: null,
-  wrapperClass: 'frame-time',
-  group: 'time'
-}, {
-  title: 'Order',
-  fireSetField: 'frameOrder',
-  contextObjectField: null,
-  displayType: 'number',
-  group: 'time'
-}];
-__localStaticStorageForBindingFields['framep2'] = [{
+__localStaticStorageForBindingFields['frameColor'] = [{
   title: 'Diffuse Color',
   fireSetField: 'diffuseColorR',
   contextObjectField: 'material.diffuseColor.r',
@@ -903,7 +928,7 @@ __localStaticStorageForBindingFields['framep2'] = [{
   contextObjectField: 'material.diffuseColor.b',
   displayType: 'number',
   group: 'diffuse'
-},{
+}, {
   title: 'Emissive Color',
   fireSetField: 'emissiveColorR',
   contextObjectField: 'material.emissiveColor.r',
@@ -921,7 +946,7 @@ __localStaticStorageForBindingFields['framep2'] = [{
   contextObjectField: 'material.emissiveColor.b',
   displayType: 'number',
   group: 'emissive'
-},{
+}, {
   title: 'Ambient Color',
   fireSetField: 'ambientColorR',
   contextObjectField: 'material.ambientColor.r',
@@ -939,7 +964,7 @@ __localStaticStorageForBindingFields['framep2'] = [{
   contextObjectField: 'material.ambientColor.b',
   displayType: 'number',
   group: 'ambient'
-},{
+}, {
   title: 'Specular Color',
   fireSetField: 'specularColorR',
   contextObjectField: 'material.specularColor.r',

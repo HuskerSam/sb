@@ -212,8 +212,8 @@ class wBlock {
 
     let values = this.framesHelper.firstFrameValues();
 
-    let fields = sDataDefinition.bindingFields('baseMesh').slice(0);
-    fields = fields.concat(sDataDefinition.bindingFields('framep2')).slice(0);
+    let fields = sDataDefinition.bindingFields('frameMesh').slice(0);
+    fields = fields.concat(sDataDefinition.bindingFields('frameColor')).slice(0);
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];

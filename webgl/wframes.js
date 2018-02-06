@@ -493,7 +493,20 @@ class wFrames {
   processAnimationFrames(sceneObject) {
     this.animations = {};
     this.animationsArray = [];
-    let fields = sDataDefinition.bindingFieldsLookup('frame');
+
+    let frameType = 'blockFrame';
+    let childType = this.parentBlock.blockRenderData.childType;
+
+    if (childType === 'mesh')
+      frameType = 'meshFrame';
+    if (childType === 'shape')
+      frameType = 'shapeFrame';
+    if (childType === 'camera')
+      frameType = 'cameraFrame';
+    if (childType === 'light')
+      frameType = 'lightFrame';
+
+    let fields = sDataDefinition.bindingFieldsLookup(frameType);
 
     if (this.processedFrames.length < 2 || this.maxLength === 0) {
 

@@ -49,12 +49,32 @@ class cBandFrames extends cBandSuper {
     framesContainer.setAttribute('class', 'frame-fields-container');
 
     let instance = {};
-    instance.frameFields = sDataDefinition.bindingFieldsCloned('frame');
+    let frameType = 'meshFrame';
+    let childType = 'parent';
+
+    if (this.parent.childKey === null)
+      frameType = 'blockFrame';
+    else {
+      let childType = this.parent.childBand.fireSet.getCache(this.parent.childKey).childType;
+
+      if (childType === 'mesh')
+        frameType = 'meshFrame';
+      if (childType === 'block')
+        frameType = 'blockFrame';
+      if (childType === 'shape')
+        frameType = 'shapeFrame';
+      if (childType === 'camera')
+        frameType = 'cameraFrame';
+      if (childType === 'light')
+        frameType = 'lightFrame';
+    }
+    instance.frameFields = sDataDefinition.bindingFieldsCloned(frameType);
     instance.key = key;
     instance.tag = 'frame';
     instance.fireSet = this.fireSet;
     instance.framesContainer = framesContainer;
     instance.dataPanel = new cPanelData(instance.frameFields, framesContainer, instance, false);
+    instance.dataPanel._updateDisplayFilters = () => {};
     instance.childListener = (values, type, fireData) => instance.dataPanel._handleDataChange(values, type, fireData);
     this.fireSet.childListeners.push(instance.childListener);
     this.frameDataViewInstances[key] = instance;
@@ -186,15 +206,9 @@ class cBandFrames extends cBandSuper {
     let groupDisplays = this.frameDataViewInstances[key].dataPanel.groupDisplays;
     let resultFrames = this.framesHelper.processedFrames;
 
-    groupDisplays.time.innerHTML = '';
-    groupDisplays.scale.innerHTML = '';
-    groupDisplays.offset.innerHTML = '';
-    groupDisplays.rotate.innerHTML = '';
-    groupDisplays.visi.innerHTML = '';
-    groupDisplays.diffuse.innerHTML = '';
-    groupDisplays.emissive.innerHTML = '';
-    groupDisplays.ambient.innerHTML = '';
-    groupDisplays.specular.innerHTML = '';
+    for (let i in groupDisplays)
+      if (groupDisplays[i])
+        groupDisplays[i].innerHTML = '';
 
     for (let c = 0, l = resultFrames.length; c < l; c++) {
       let rFrame = resultFrames[c];
@@ -209,43 +223,62 @@ class cBandFrames extends cBandSuper {
         className = 'genFrame';
         prefix = '(gen) '
       }
-      groupDisplays.time.innerHTML += `<div class="${className}">` +
+
+      if (groupDisplays.time)
+        groupDisplays.time.innerHTML += `<div class="${className}">` +
         rFrame.actualTime.toFixed(0) + `ms ${prefix}</div>`;
 
-      groupDisplays.scale.innerHTML += `<div class="${className}">` +
+      if (groupDisplays.scale)
+        groupDisplays.scale.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['scalingX'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['scalingY'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['scalingZ'].value) + '</div>';
 
-      groupDisplays.offset.innerHTML += `<div class="${className}">` +
+      if (groupDisplays.offset)
+        groupDisplays.offset.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['positionX'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['positionY'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['positionZ'].value) + '</div>';
 
-      groupDisplays.rotate.innerHTML += `<div class="${className}">` +
+      if (groupDisplays.rotate)
+        groupDisplays.rotate.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['rotationX'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['rotationY'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['rotationZ'].value) + '</div>';
 
-      groupDisplays.visi.innerHTML += `<div class="${className}">` +
+      if (groupDisplays.visi)
+        groupDisplays.visi.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['visibility'].value) + '</div>';
 
-      groupDisplays.diffuse.innerHTML += `<div class="${className}">` +
+      if (groupDisplays.diffuse)
+        groupDisplays.diffuse.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + '</div>';
 
-      groupDisplays.emissive.innerHTML += `<div class="${className}">` +
+      if (groupDisplays.camera0)
+        groupDisplays.camera0.innerHTML += '&nbsp;';
+
+      if (groupDisplays.light)
+        groupDisplays.light.innerHTML += '&nbsp;';
+
+      if (groupDisplays.lightsub)
+        groupDisplays.lightsub.innerHTML += '&nbsp;';
+
+      if (groupDisplays.emissive)
+        groupDisplays.emissive.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['emissiveColorR'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['emissiveColorB'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['emissiveColorG'].value) + '</div>';
 
-      groupDisplays.ambient.innerHTML += `<div class="${className}">` +
+      if (groupDisplays.ambient)
+        groupDisplays.ambient.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['ambientColorR'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['ambientColorB'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['ambientColorG'].value) + '</div>';
 
-      groupDisplays.specular.innerHTML += `<div class="${className}">` +
+      if (groupDisplays.specular)
+        groupDisplays.specular.innerHTML += `<div class="${className}">` +
         GLOBALUTIL.formatNumber(rFrame.values['specularColorR'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['specularColorB'].value) + ',' +
         GLOBALUTIL.formatNumber(rFrame.values['specularColorG'].value) + '</div>';
