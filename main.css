@@ -660,8 +660,8 @@ input[type=range]::-webkit-slider-thumb {
   color: white;
   border-radius: .5em;
   border: outset .25em silver;
-  margin: .25em;
-  padding: .25em;
+  margin: .1em;
+  padding: .75em;
   display: inline-block;
   cursor: pointer;
 }
@@ -1085,4 +1085,8 @@ input[type=range]::-webkit-slider-thumb {
 .texture-add-options {
   background: rgb(240,240,240);
   padding: .35em;
+}
+
+.main-band-wrapper {
+  padding-top: .5em;
 }

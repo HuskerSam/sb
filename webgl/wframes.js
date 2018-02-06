@@ -483,7 +483,7 @@ class wFrames {
         next = order + 1;
     }
 
-    return next;
+    return next + 9;
   }
   setParentKey(parentKey, parentBlock) {
     this.parentKey = parentKey;
