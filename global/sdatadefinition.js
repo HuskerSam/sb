@@ -67,22 +67,24 @@ let __animFieldFilters = {};
 
 __animFieldFilters.blockCameraFields = {};
 __animFieldFilters.animateCameraFields = {};
-__animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraOrigin'];
-__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOrigin', 'cameraRotation'];
-__animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraOrigin', 'cameraRadius'];
+__animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraOrigin', 'cameraName'];
+__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOrigin', 'cameraRotation', 'cameraOrigin'];
+__animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraOrigin', 'cameraRadius', 'cameraName'];
 __animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOrigin'];
-__animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed', 'cameraOrigin', 'cameraTargetBlock'];
-__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed'];
+__animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset',
+  'cameraAcceleration', 'maxCameraSpeed', 'cameraOrigin', 'cameraTargetBlock', 'cameraName'
+];
+__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed', 'cameraOrigin'];
 __animFieldFilters.blockLightFields = {};
 __animFieldFilters.animateLightFields = {};
 __animFieldFilters.blockLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.animateLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity'];
+__animFieldFilters.animateLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity', 'lightSpecular', 'lightDiffuse'];
 __animFieldFilters.blockLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.animateLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity'];
+__animFieldFilters.animateLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightSpecular', 'lightDiffuse'];
 __animFieldFilters.blockLightFields['Directional'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.animateLightFields['Directional'] = ['lightDirection', 'lightIntensity'];
+__animFieldFilters.animateLightFields['Directional'] = ['lightDirection', 'lightIntensity', 'lightSpecular', 'lightDiffuse'];
 __animFieldFilters.blockLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightAngle', 'lightDecay', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.animateLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightAngle', 'lightDecay'];
+__animFieldFilters.animateLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightAngle', 'lightDecay', 'lightSpecular', 'lightDiffuse'];
 
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
@@ -741,7 +743,7 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Target Block',
   fireSetField: 'cameraTargetBlock',
   contextObjectField: null,
-  displayGroup: 'camera',
+  displayGroup: ['camera'],
   displayKey: 'childType',
   group: 'camera'
 }];
@@ -889,7 +891,7 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera0'
+  group: 'camera'
 }, {
   title: 'Rotation',
   fireSetField: 'cameraRotation',
@@ -917,28 +919,28 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera0'
+  group: 'camera1'
 }, {
   title: 'Acceleration',
   fireSetField: 'cameraAcceleration',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera0'
+  group: 'camera1'
 }, {
   title: 'Max Speed',
   fireSetField: 'maxCameraSpeed',
   displayGroup: 'camera',
   displayKey: 'childType',
   contextObjectField: null,
-  group: 'camera0'
+  group: 'camera1'
 }, {
   title: 'Aim at Position',
   fireSetField: 'cameraAimTarget',
   contextObjectField: null,
   displayGroup: 'camera',
   displayKey: 'childType',
-  group: 'camera0'
+  group: 'camera'
 }];
 __localStaticStorageForBindingFields['frameColor'] = [{
   title: 'Diffuse Color',

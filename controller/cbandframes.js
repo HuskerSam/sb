@@ -52,7 +52,7 @@ class cBandFrames extends cBandSuper {
     if (this.framesHelper.cachedChildType === 'light')
       fieldList = fieldsFilter.animateLightFields[this.parent.context.activeBlock.blockRawData.childName];
 
-    if (fieldList !== null) {
+    if (fieldList) {
       for (let inner in instance.dataPanel.fields) {
         let innerField = instance.dataPanel.fields[inner];
         let key = innerField.fireSetField;
@@ -66,12 +66,13 @@ class cBandFrames extends cBandSuper {
       for (let i in instance.dataPanel.groups) {
         let childVisible = false;
         instance.dataPanel.groups[i].style.display = 'none';
-        let children = instance.dataPanel.groups[i].childNodes
+        let children = instance.dataPanel.groups[i].childNodes;
         for (let ii = 0; ii < children.length; ii++)
-          if (children[ii].style.display !== 'none') {
-            instance.dataPanel.groups[i].style.display = '';
-            continue;
-          }
+          if (children[ii].classList.contains('form-group'))
+            if (children[ii].style.display !== 'none') {
+              instance.dataPanel.groups[i].style.display = '';
+              break;
+            }
       }
     }
   }
@@ -275,6 +276,12 @@ class cBandFrames extends cBandSuper {
 
         if (groupDisplays.camera0)
           groupDisplays.camera0.innerHTML += '&nbsp;';
+        if (groupDisplays.lightsub)
+          groupDisplays.lightsub.innerHTML += '&nbsp;';
+        if (groupDisplays.camera1)
+          groupDisplays.camera1.innerHTML += '&nbsp;';
+        if (groupDisplays.camera)
+          groupDisplays.camera.innerHTML += '&nbsp;';
 
         if (groupDisplays.light)
           groupDisplays.light.innerHTML += '&nbsp;';

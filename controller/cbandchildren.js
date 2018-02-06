@@ -26,11 +26,14 @@ class cBandChildren extends cBandSuper {
     let fieldsFilter = sDataDefinition.getAnimFieldsFilter();
     let fieldList = null;
     if (this.parent.context.activeBlock.blockRawData.childType === 'camera')
-      fieldList = fieldsFilter.animateCameraFields[this.parent.context.activeBlock.blockRawData.childName];
+      fieldList = fieldsFilter.blockCameraFields[this.parent.context.activeBlock.blockRawData.childName];
     if (this.parent.context.activeBlock.blockRawData.childType === 'light')
-      fieldList = fieldsFilter.animateLightFields[this.parent.context.activeBlock.blockRawData.childName];
+      fieldList = fieldsFilter.blockLightFields[this.parent.context.activeBlock.blockRawData.childName];
 
-      let groupList = ['camera', 'light', 'camera0', 'light0'];
+    if (!fieldList)
+      return;
+
+    let groupList = ['camera', 'light', 'camera0', 'light0', 'cmaera1', 'lightsub'];
 
     if (fieldList !== null) {
       for (let inner in this.childEditFields.fields) {
@@ -49,11 +52,11 @@ class cBandChildren extends cBandSuper {
       for (let i in this.childEditFields.groups) {
         let childVisible = false;
         this.childEditFields.groups[i].style.display = 'none';
-        let children = this.childEditFields.groups[i].childNodes
+        let children = this.childEditFields.groups[i].childNodes;
         for (let ii = 0; ii < children.length; ii++)
           if (children[ii].style.display !== 'none') {
             this.childEditFields.groups[i].style.display = '';
-            continue;
+            break;
           }
       }
     }
