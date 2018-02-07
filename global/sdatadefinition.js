@@ -1028,7 +1028,7 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayKey: 'childType',
   displayType: 'number',
   contextObjectField: 'radius',
-  group: 'camera0'
+  group: 'cameraArc'
 }, {
   title: 'Height',
   fireSetField: 'cameraHeightOffset',
@@ -1036,7 +1036,7 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayKey: 'childType',
   displayType: 'number',
   contextObjectField: 'heightOffset',
-  group: 'camera0'
+  group: 'cameraArc'
 }, {
   title: 'R Offset',
   fireSetField: 'cameraRotationOffset',
@@ -1282,5 +1282,13 @@ __defaultData['frame'] = {
   lightDiffuseB: '1',
   lightDiffuseG: '1',
   lightIntensity: '',
-  lightRadius: ''
+  lightRadius: '',
+  cameraRotationOffset: '0',
+  cameraAcceleration: '.005',
+  cameraHeightOffset: '10',
+  cameraRadius: '30',
+  maxCameraSpeed: '10',
+  cameraOriginX: '10',
+  cameraOriginY: '10',
+  cameraOriginZ: '10'
 };

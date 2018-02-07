@@ -279,19 +279,30 @@ class cBandFrames extends cBandSuper {
 
         if (groupDisplays.diffuse)
           groupDisplays.diffuse.innerHTML += `<div class="${className}">` +
-          GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ','
+          + GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + ',' +
           GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + '</div>';
 
-        if (groupDisplays.camera0)
-          groupDisplays.camera0.innerHTML += '&nbsp;';
-        if (groupDisplays.lightsub)
-          groupDisplays.lightsub.innerHTML += '&nbsp;';
         if (groupDisplays.camera1)
-          groupDisplays.camera1.innerHTML += '&nbsp;';
-        if (groupDisplays.camera)
-          groupDisplays.camera.innerHTML += '&nbsp;';
+          groupDisplays.camera1.innerHTML += `<div class="${className}">` +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraRotationOffset'].value) + ' &nbsp; ' +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraAcceleration'].value) + ' &nbsp; ' +
+          GLOBALUTIL.formatNumber(rFrame.values['maxCameraSpeed'].value) + '</div>';
 
+        if (groupDisplays.cameraArc)
+          groupDisplays.cameraArc.innerHTML += `<div class="${className}">` +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraRadius'].value) + ' &nbsp; ' +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraHeightOffset'].value) + '</div>';
+        if (groupDisplays.camera)
+          groupDisplays.camera.innerHTML += `<div class="${className}">` +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraOriginX'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraOriginY'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraOriginZ'].value) + '</div>';
+        if (groupDisplays.camera0)
+          groupDisplays.camera0.innerHTML += `<div class="${className}">` +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraRotationX'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraRotationY'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraRotationZ'].value) + '</div>';
         if (groupDisplays.light)
           groupDisplays.light.innerHTML += lightValues.directionX + ',' + lightValues.directionY + ',' + lightValues.directionZ;
 
