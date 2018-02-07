@@ -36,7 +36,7 @@ class cBandChildren extends cBandSuper {
     if (!fieldList)
       fieldList = [];
 
-    let groupList = ['camera', 'light', 'camera0', 'light0', 'camera1', 'lightsub', 'camera1', 'lightsubdif', 'lightsubspec', 'lightsubgnd', 'cameraArc'];
+    let groupList = ['camera', 'light', 'camera0', 'light0', 'camera1', 'lightsub', 'camera1', 'lightsubdif', 'lightsubspec', 'lightsubgnd', 'cameraArc', 'cameraFOV'];
 
     if (fieldList !== null) {
       for (let inner in this.childEditFields.fields) {

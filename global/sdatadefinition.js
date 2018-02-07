@@ -67,11 +67,12 @@ let __animFieldFilters = {};
 __animFieldFilters.blockCameraFields = {};
 __animFieldFilters.animateCameraFields = {};
 __animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraRotationX', 'cameraRotationY', 'cameraRotationZ', 'cameraOrigin'];
+__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraRotationX', 'cameraRotationY', 'cameraRotationZ', 'cameraOrigin', 'cameraFOV'];
 __animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ'];
+__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'];
 __animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraTargetBlock', 'cameraName'];
-__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ'];
+__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration',
+'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'];
 __animFieldFilters.blockLightFields = {};
 __animFieldFilters.animateLightFields = {};
 __animFieldFilters.blockLightFields['Hemispheric'] = [];
@@ -974,6 +975,14 @@ __localStaticStorageForBindingFields['frameLight'] = [{
   displayKey: 'childType'
 }];
 __localStaticStorageForBindingFields['frameCamera'] = [{
+  title: 'FOV (zoom)',
+  fireSetField: 'cameraFOV',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  displayType: 'number',
+  contextObjectField: 'fov',
+  group: 'cameraFOV'
+},{
   title: 'Position',
   fireSetField: 'cameraOriginX',
   displayGroup: 'camera',
@@ -1290,5 +1299,6 @@ __defaultData['frame'] = {
   maxCameraSpeed: '10',
   cameraOriginX: '10',
   cameraOriginY: '10',
-  cameraOriginZ: '10'
+  cameraOriginZ: '10',
+  cameraFOV: '.8'
 };

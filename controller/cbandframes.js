@@ -279,8 +279,8 @@ class cBandFrames extends cBandSuper {
 
         if (groupDisplays.diffuse)
           groupDisplays.diffuse.innerHTML += `<div class="${className}">` +
-          GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ','
-          + GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['diffuseColorR'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['diffuseColorG'].value) + ',' +
           GLOBALUTIL.formatNumber(rFrame.values['diffuseColorB'].value) + '</div>';
 
         if (groupDisplays.camera1)
@@ -293,11 +293,17 @@ class cBandFrames extends cBandSuper {
           groupDisplays.cameraArc.innerHTML += `<div class="${className}">` +
           GLOBALUTIL.formatNumber(rFrame.values['cameraRadius'].value) + ' &nbsp; ' +
           GLOBALUTIL.formatNumber(rFrame.values['cameraHeightOffset'].value) + '</div>';
+
+        if (groupDisplays.cameraFOV)
+          groupDisplays.cameraFOV.innerHTML += `<div class="${className}">` +
+          GLOBALUTIL.formatNumber(rFrame.values['cameraFOV'].value) + ' &nbsp; ' + '</div>';
+
         if (groupDisplays.camera)
           groupDisplays.camera.innerHTML += `<div class="${className}">` +
           GLOBALUTIL.formatNumber(rFrame.values['cameraOriginX'].value) + ',' +
           GLOBALUTIL.formatNumber(rFrame.values['cameraOriginY'].value) + ',' +
           GLOBALUTIL.formatNumber(rFrame.values['cameraOriginZ'].value) + '</div>';
+
         if (groupDisplays.camera0)
           groupDisplays.camera0.innerHTML += `<div class="${className}">` +
           GLOBALUTIL.formatNumber(rFrame.values['cameraRotationX'].value) + ',' +
