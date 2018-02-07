@@ -605,4 +605,34 @@ class wFrames {
     }
 
   }
+  __getLightDetails(values) {
+    let result = {};
+    result.originX = GLOBALUTIL.getNumberOrDefault(values['lightOriginX'], 10);
+    result.originY = GLOBALUTIL.getNumberOrDefault(values['lightOriginY'], 10);
+    result.originZ = GLOBALUTIL.getNumberOrDefault(values['lightOriginZ'], 10);
+    result.directionX = GLOBALUTIL.getNumberOrDefault(values['lightDirectionX'], 1);
+    result.directionY = GLOBALUTIL.getNumberOrDefault(values['lightDirectionY'], 1);
+    result.directionZ = GLOBALUTIL.getNumberOrDefault(values['lightDirectionZ'], 1);
+
+    result.origin = new BABYLON.Vector3(result.originX, result.originY, result.originZ);
+    result.direction = new BABYLON.Vector3(result.directionX, result.directionY, result.directionZ);
+
+    result.angle = GLOBALUTIL.getNumberOrDefault(values['lightAngle'], Math.PI / 2.0);
+    result.decay = GLOBALUTIL.getNumberOrDefault(values['lightDecay'], 1);
+    result.diffuseR = GLOBALUTIL.getNumberOrDefault(values['lightDiffuseR'], 1);
+    result.diffuseG = GLOBALUTIL.getNumberOrDefault(values['lightDiffuseG'], 1);
+    result.diffuseB = GLOBALUTIL.getNumberOrDefault(values['lightDiffuseB'], 1);
+    result.specularR = GLOBALUTIL.getNumberOrDefault(values['lightSpecularR'], 1);
+    result.specularG = GLOBALUTIL.getNumberOrDefault(values['lightSpecularG'], 1);
+    result.specularB = GLOBALUTIL.getNumberOrDefault(values['lightSpecularB'], 1);
+    result.groundR = GLOBALUTIL.getNumberOrDefault(values['lightGroundR'], 0);
+    result.groundG = GLOBALUTIL.getNumberOrDefault(values['lightGroundG'], 0);
+    result.groundB = GLOBALUTIL.getNumberOrDefault(values['lightGroundB'], 0);
+
+    result.specular = GLOBALUTIL.color(result.diffuseR + ',' + result.diffuseG + ',' + result.diffuseR);
+    result.diffuse = GLOBALUTIL.color(result.specularR + ',' + result.specularG + ',' + result.specularR);
+    result.ground = GLOBALUTIL.color(result.groundR + ',' + result.groundG + ',' + result.groundR);
+    result.intensity = GLOBALUTIL.getNumberOrDefault(values['lightIntensity'], .75);
+    return result;
+  }
 }

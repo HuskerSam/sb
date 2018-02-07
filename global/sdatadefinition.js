@@ -69,19 +69,28 @@ __animFieldFilters.animateCameraFields = {};
 __animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraName'];
 __animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraRotationX', 'cameraRotationY', 'cameraRotationZ', 'cameraOrigin'];
 __animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ' ];
-__animFieldFilters.blockCameraFields['FollowCamera'] = [ 'cameraTargetBlock', 'cameraName' ];
-__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ' ];
+__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ'];
+__animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraTargetBlock', 'cameraName'];
+__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ'];
 __animFieldFilters.blockLightFields = {};
 __animFieldFilters.animateLightFields = {};
 __animFieldFilters.blockLightFields['Hemispheric'] = [];
-__animFieldFilters.animateLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.animateLightFields['Hemispheric'] = ['lightDirectionX', 'lightDirectionY', 'lightDirectionZ', 'lightIntensity', 'lightGroundColorR', 'lightGroundColorG', 'lightGroundColorB',
+  'lightSpecularR', 'lightSpecularG', 'lightSpecularB', 'lightDiffuseR', 'lightDiffuseG', 'lightDiffuseB'
+];
 __animFieldFilters.blockLightFields['Point'] = [];
-__animFieldFilters.animateLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.animateLightFields['Point'] = ['lightOriginX', 'lightOriginY', 'lightOriginZ', 'lightIntensity', 'lightGroundColor', 'lightGroundColorR', 'lightGroundColorG', 'lightGroundColorB',
+  'lightSpecularR', 'lightSpecularG', 'lightSpecularB', 'lightDiffuseR', 'lightDiffuseG', 'lightDiffuseB'
+];
 __animFieldFilters.blockLightFields['Directional'] = [];
-__animFieldFilters.animateLightFields['Directional'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.animateLightFields['Directional'] = ['lightDirectionX', 'lightDirectionY', 'lightDirectionZ', 'lightIntensity', 'lightGroundColor', 'lightGroundColorR', 'lightGroundColorG', 'lightGroundColorB',
+  'lightSpecularR', 'lightSpecularG', 'lightSpecularB', 'lightDiffuseR', 'lightDiffuseG', 'lightDiffuseB'
+];
 __animFieldFilters.blockLightFields['Spot'] = [];
-__animFieldFilters.animateLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightAngle', 'lightDecay', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.animateLightFields['Spot'] = ['lightOriginX', 'lightOriginY', 'lightOriginZ', 'lightDirectionX', 'lightDirectionY', 'lightDirectionZ', 'lightIntensity', 'lightGroundColor', 'lightAngle', 'lightDecay',
+  'lightGroundColor', 'lightGroundColorR', 'lightGroundColorG', 'lightGroundColorB',
+  'lightSpecularR', 'lightSpecularG', 'lightSpecularB', 'lightDiffuseR', 'lightDiffuseG', 'lightDiffuseB'
+];
 
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
@@ -820,66 +829,148 @@ __localStaticStorageForBindingFields['frameMesh'] = [{
   displayType: 'number'
 }];
 __localStaticStorageForBindingFields['frameLight'] = [{
-  title: 'from',
-  fireSetField: 'lightFrom',
-  contextObjectField: null,
-  group: 'light',
-  displayType: 'shortVector',
+  title: 'Origin',
+  fireSetField: 'lightOriginX',
+  contextObjectField: 'position.x',
+  group: 'lightP',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'x y z',
+  fireSetField: 'lightOriginY',
+  contextObjectField: 'position.y',
+  group: 'lightP',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'lightOriginZ',
+  contextObjectField: 'position.z',
+  group: 'lightP',
+  displayType: 'number',
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
   title: 'direction',
-  fireSetField: 'lightDirection',
-  contextObjectField: null,
-  displayType: 'shortVector',
+  fireSetField: 'lightDirectionX',
+  contextObjectField: 'direction.x',
+  displayType: 'number',
+  group: 'light',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'x y z',
+  fireSetField: 'lightDirectionY',
+  contextObjectField: 'direction.y',
+  displayType: 'number',
+  group: 'light',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'lightDirectionZ',
+  contextObjectField: 'direction.z',
+  displayType: 'number',
   group: 'light',
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
   title: 'intensity',
   fireSetField: 'lightIntensity',
-  contextObjectField: null,
+  contextObjectField: 'intensity',
   group: 'lightsub',
   displayType: 'number',
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
   title: 'diffuse',
-  fireSetField: 'lightDiffuse',
-  contextObjectField: null,
-  group: 'lightsub',
-  displayType: 'shortVector',
+  fireSetField: 'lightDiffuseR',
+  contextObjectField: 'diffuse.r',
+  group: 'lightsubdif',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'r g b',
+  fireSetField: 'lightDiffuseG',
+  contextObjectField: 'diffuse.g',
+  group: 'lightsubdif',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'lightDiffuseB',
+  contextObjectField: 'diffuse.b',
+  group: 'lightsubdif',
+  displayType: 'number',
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
   title: 'specular',
-  fireSetField: 'lightSpecular',
-  contextObjectField: null,
-  group: 'lightsub',
-  displayType: 'shortVector',
+  fireSetField: 'lightSpecularR',
+  contextObjectField: 'specular.r',
+  group: 'lightsubspec',
+  displayType: 'number',
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
-  title: 'ground color',
-  fireSetField: 'lightGroundColor',
-  contextObjectField: null,
-  group: 'lightsub',
-  displayType: 'shortVector',
+  title: 'r g b',
+  fireSetField: 'lightSpecularG',
+  contextObjectField: 'specular.g',
+  group: 'lightsubspec',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'lightSpecularB',
+  contextObjectField: 'specular.b',
+  group: 'lightsubspec',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'ground',
+  fireSetField: 'lightGroundColorR',
+  contextObjectField: 'groundColor.r',
+  group: 'lightsubgnd',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: 'r g b',
+  fireSetField: 'lightGroundColorG',
+  contextObjectField: 'groundColor.g',
+  group: 'lightsubgnd',
+  displayType: 'number',
+  displayGroup: 'light',
+  displayKey: 'childType'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'lightGroundColorB',
+  contextObjectField: 'groundColor.b',
+  group: 'lightsubgnd',
+  displayType: 'number',
   displayGroup: 'light',
   displayKey: 'childType'
 }, {
   title: 'angle',
   fireSetField: 'lightAngle',
   contextObjectField: null,
-  group: 'light',
+  group: 'light4',
   displayGroup: 'light',
-  displayKey: 'childType'
+  displayKey: 'childType',
+  displayType: 'number'
 }, {
   title: 'decay',
   fireSetField: 'lightDecay',
   contextObjectField: null,
-  group: 'light',
+  group: 'light4',
   displayGroup: 'light',
+  displayType: 'number',
   displayKey: 'childType'
 }];
 __localStaticStorageForBindingFields['frameCamera'] = [{
@@ -887,23 +978,23 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   fireSetField: 'cameraOriginX',
   displayGroup: 'camera',
   displayKey: 'childType',
-  displayType:'number',
+  displayType: 'number',
   contextObjectField: 'position.x',
   group: 'camera'
-},{
+}, {
   title: 'x y z',
   fireSetField: 'cameraOriginY',
   displayGroup: 'camera',
   displayKey: 'childType',
-  displayType:'number',
+  displayType: 'number',
   contextObjectField: 'position.y',
   group: 'camera'
-},{
+}, {
   title: '&nbsp;',
   fireSetField: 'cameraOriginZ',
   displayGroup: 'camera',
   displayKey: 'childType',
-  displayType:'number',
+  displayType: 'number',
   contextObjectField: 'position.z',
   group: 'camera'
 }, {
@@ -1183,5 +1274,13 @@ __defaultData['frame'] = {
   specularColorR: '',
   specularColorG: '',
   specularColorB: '',
-  visibility: ''
+  visibility: '',
+  lightSpecularR: '1',
+  lightSpecularB: '1',
+  lightSpecularG: '1',
+  lightDiffuseR: '1',
+  lightDiffuseB: '1',
+  lightDiffuseG: '1',
+  lightIntensity: '',
+  lightRadius: ''
 };

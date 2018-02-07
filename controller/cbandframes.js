@@ -230,6 +230,15 @@ class cBandFrames extends cBandSuper {
 
     for (let c = 0, l = resultFrames.length; c < l; c++) {
       let rFrame = resultFrames[c];
+      let lightValues;
+
+      if (this.framesHelper.cachedFrameType === 'lightFrame') {
+        let lV = {};
+        for (let i in rFrame.values)
+          lV[i] = rFrame.values[i].value;
+        lightValues = this.framesHelper.__getLightDetails(lV);
+      }
+
       if (key !== rFrame.ownerKey)
         continue;
 
@@ -284,10 +293,25 @@ class cBandFrames extends cBandSuper {
           groupDisplays.camera.innerHTML += '&nbsp;';
 
         if (groupDisplays.light)
-          groupDisplays.light.innerHTML += '&nbsp;';
+          groupDisplays.light.innerHTML += lightValues.directionX + ',' + lightValues.directionY + ',' + lightValues.directionZ;
 
         if (groupDisplays.lightsub)
-          groupDisplays.lightsub.innerHTML += '&nbsp;';
+          groupDisplays.lightsub.innerHTML += lightValues.intensity;
+
+        if (groupDisplays.lightsubdif)
+          groupDisplays.lightsubdif.innerHTML += lightValues.diffuseR + ',' + lightValues.diffuseG + ',' + lightValues.diffuseB;
+
+        if (groupDisplays.lightsubspec)
+          groupDisplays.lightsubspec.innerHTML += lightValues.specularR + ',' + lightValues.specularG + ',' + lightValues.specularB;
+
+        if (groupDisplays.lightsubgnd)
+          groupDisplays.lightsubgnd.innerHTML += lightValues.groundR + ',' + lightValues.groundG + ',' + lightValues.groundB;
+
+        if (groupDisplays.lightP)
+          groupDisplays.lightP.innerHTML += lightValues.originX + ',' + lightValues.originY + ',' + lightValues.originZ;
+
+        if (groupDisplays.light4)
+          groupDisplays.light4.innerHTML += lightValues.angle + ',' + lightValues.decay;
 
         if (groupDisplays.emissive)
           groupDisplays.emissive.innerHTML += `<div class="${className}">` +
