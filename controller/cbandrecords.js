@@ -73,6 +73,29 @@ class cBandRecords extends cBandSuper {
       this.__handleTextureTypeChange();
     }
 
+
+    if (this.tag === 'block') {
+      this.addBlockOptionsPanel = this.createPanel.querySelector('.block-add-options');
+      this.addBlockOptionsPanel.style.display = 'block';
+      this.blockOptionsPicker = this.createPanel.querySelector('.block-type-select');
+      this.blockOptionsPicker.addEventListener('input', e => this.__handleBlockTypeSelectChange());
+
+      this.blockShapePicker = this.createPanel.querySelector('.block-add-shape-type-options');
+      this.blockShapePanel = this.createPanel.querySelector('.shape-and-text-block-options');
+      this.sceneBlockPanel = this.createPanel.querySelector('.scene-block-add-options');
+      this.emptyBlockPanel = this.createPanel.querySelector('.scene-empty-block-add-options');
+
+      this.skyBoxImages = this.createPanel.querySelector('.skybox-preview-images');
+      this.skyBoxInput = this.createPanel.querySelector('.block-skybox-picker-select');
+      this.skyBoxInput.addEventListener('input', e => this.__handleSkyboxChange());
+
+      this.cloudImageInput = this.createPanel.querySelector('.block-scene-cloudfile-picker-input');
+      this.groundImagePreview = this.createPanel.querySelector('.cloud-file-ground-preview');
+      this.cloudImageInput.addEventListener('input', e => this.__handleGroundChange());
+
+      this.__handleBlockTypeSelectChange();
+    }
+
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.createBtn.addEventListener('click', e => this.toggleCreatePanel());
     if (this.tag === 'mesh' || this.tag === 'texture')
@@ -84,6 +107,41 @@ class cBandRecords extends cBandSuper {
     if (forceExpand)
       this.toggleChildBandDisplay(true);
   }
+  __handleGroundChange() {
+    let cloudImage = this.cloudImageInput.value.trim();
+
+    this.groundImagePreview.style.display = '';
+    if (cloudImage !== '') {
+      let url = cloudImage;
+      if (url.substring(0, 3) === 'sb:'){
+        url = 'https://s3.amazonaws.com/sceneassets/sbtextures/' + url.substring(3);
+      }
+      this.groundImagePreview.setAttribute('src', url);
+    }
+    else {
+        this.groundImagePreview.style.display = 'none';
+    }
+
+  }
+  __handleSkyboxChange() {
+    let skybox = this.skyBoxInput.value.trim();
+
+    if (skybox === '')
+      this.skyBoxImages.style.display = 'none';
+    else {
+      this.skyBoxImages.style.display = '';
+      let imgs = this.skyBoxImages.querySelectorAll('img');
+
+      let skyboxPath = 'https://s3.amazonaws.com/sceneassets/skybox/' + skybox + '/skybox';
+
+      imgs[0].setAttribute('src', skyboxPath + '_nx.jpg');
+      imgs[1].setAttribute('src', skyboxPath + '_px.jpg');
+      imgs[2].setAttribute('src', skyboxPath + '_ny.jpg');
+      imgs[3].setAttribute('src', skyboxPath + '_py.jpg');
+      imgs[4].setAttribute('src', skyboxPath + '_nz.jpg');
+      imgs[5].setAttribute('src', skyboxPath + '_pz.jpg');
+    }
+  }
   __handleTextureTypeChange() {
     this.texturePathInputLabel.style.display = 'none';
     this.textureFile.style.display = 'none';
@@ -91,8 +149,21 @@ class cBandRecords extends cBandSuper {
     let sel = this.selectTextureType.value;
     if (sel === 'Upload')
       this.textureFile.style.display = '';
-    if (sel === 'Path')
+    else if (sel === 'Path')
       this.texturePathInputLabel.style.display = '';
+  }
+  __handleBlockTypeSelectChange() {
+    this.blockShapePanel.style.display = 'none';
+    this.sceneBlockPanel.style.display = 'none';
+    this.emptyBlockPanel.style.display = 'none';
+
+    let sel = this.blockOptionsPicker.value;
+    if (sel === 'Text and Shape')
+      this.blockShapePanel.style.display = '';
+    else if (sel === 'Scene')
+      this.sceneBlockPanel.style.display = '';
+    else
+      this.emptyBlockPanel.style.display = '';
   }
   __handleShapesSelectChange() {
     this.createBoxOptions.style.display = this.createShapesSelect.value === 'Box' ? '' : 'none';
@@ -197,15 +268,14 @@ class cBandRecords extends cBandSuper {
 
     if (this.tag === 'texture') {
       let sel = this.selectTextureType.value;
-      if (sel === 'Upload'){
+      if (sel === 'Upload') {
         if (this.textureFile.files.length > 0)
           file = this.textureFile.files[0];
       }
-      if (sel === 'Path'){
+      if (sel === 'Path') {
         mixin.url = this.texturePathInput.value.trim();
       }
-      if (sel === 'Text'){
-      }
+      if (sel === 'Text') {}
     }
 
     this.context.createObject(this.tag, newName, file, mixin).then(results => {

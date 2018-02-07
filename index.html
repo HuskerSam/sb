@@ -67,6 +67,49 @@
               <br>
               <label><span>Texture</span><input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>
             </div>
+            <div class="block-add-options" style="display:none">
+              <select class="block-type-select">
+                <option>Empty</option>
+                <option>Text and Shape</option>
+                <option>Scene</option>
+              </select>
+
+              <div class="scene-empty-block-add-options">
+                <label><span>Width</span><input type="text" class="block-box-width" value="" /></label>
+                <label><span>Height</span><input type="text" class="block-box-height" value="" /></label>
+                <label><span>Depth</span><input type="text" class="block-box-depth" value="" /></label>
+              </div>
+              <div class="shape-and-text-block-options">
+                <label><span>Width</span><input type="text" class="block-box-width" value="12" /></label>
+                <label><span>Height</span><input type="text" class="block-box-height" value="8" /></label>
+                <label><span>Depth</span><input type="text" class="block-box-depth" value="6" /></label>
+                <br>
+                <label><span>Text</span><input type="text" style="width:20em;" class="block-box-text" value="Text" /></label>
+                <br>
+                <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option>Cone</option>
+                  <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
+                <label class="block-shape-add-label"><span>Sides</span><input type="text" class="block-add-shape-sides" /></label>
+                <br>
+                <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
+                <label><span>Material</span><input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
+              </div>
+              <div class="scene-block-add-options" style="text-align:center;">
+                <label><span>Width</span><input type="text" class="block-box-width" value="50" /></label>
+                <label><span>Height</span><input type="text" class="block-box-height" value="16" /></label>
+                <label><span>Depth</span><input type="text" class="block-box-depth" value="50" /></label>
+                <hr>
+                <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemi Light</span></label>
+                <hr>
+                <label><input type="checkbox" class="block-generate-ground" /><span>Create Ground Material</span></label>
+                <br>
+                <label><span>Image Path</span><input type="text" style="width:15em;" class="block-scene-cloudfile-picker-input" list="sbimageslist" /></label>
+                <br>
+                <img class="cloud-file-ground-preview" style="width:5em;height:5em;display:none;">
+                <hr>
+                <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
+                <div class="skybox-preview-images"><img><img><img><img><img><img></div>
+              </div>
+            </div>
             <div class="mesh-add-options" style="display:none">
               <input type="file" class="mesh-file-upload" />
               <br>
@@ -116,10 +159,10 @@
           <div style="clear:both"></div>
         </div>
         <div class="help-options-panel" style="display:none;float:right;">
-            HELP INFO COMING SOME DAY
+          HELP INFO COMING SOME DAY
 
-            <div class="fields-container"></div>
-            <div style="clear:both"></div>
+          <div class="fields-container"></div>
+          <div style="clear:both"></div>
         </div>
         <div class="user-profile-expanded-wrapper" style="display:none;">
           <img class="user-image-display" />
@@ -183,14 +226,11 @@
       Loading...
     </div>
     <div class="popup-buttons">
-      <button style="color:white;background: rgb(0,100,0)" type="button" class="btn-sb-icon close-details"><i class="material-icons">close</i><span style="font-size:.75em;top:-.25em;position:relative;">[Esc]</span></button>
-      &nbsp;
+      <button style="color:white;background: rgb(0,100,0)" type="button" class="btn-sb-icon close-details"><i class="material-icons">close</i><span style="font-size:.75em;top:-.25em;position:relative;">[Esc]</span></button> &nbsp;
       <div class="popup-title"></div>
       &nbsp;
-      <button type="button" class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button>
-      &nbsp;
-      <button type="button" class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button>
-      &nbsp;
+      <button type="button" class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button> &nbsp;
+      <button type="button" class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
     </div>
     <div class="popup-main-body">
       <div class="popup-canvas-wrapper">
@@ -349,7 +389,7 @@
   <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-  <script src="https://cdn.babylonjs.com/babylon.max.js"></script>
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
   <script src="3dtext.js"></script>
   <script src="https://unpkg.com/split.js/split.min.js"></script>
 

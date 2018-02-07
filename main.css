@@ -110,7 +110,7 @@ html, body {
 }
 
 .sb-floating-toolbar-content {
-  pointer-events: auto;
+  pointer-events: none;
   white-space: nowrap;
   display: none;
   overflow: auto;
@@ -1109,4 +1109,9 @@ input[type=range]::-webkit-slider-thumb {
 
 .main-band-wrapper {
   padding-top: .5em;
+}
+
+.skybox-preview-images img {
+  max-height: 5em;
+  max-width: 5em;
 }

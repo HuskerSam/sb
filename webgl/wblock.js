@@ -66,7 +66,7 @@ class wBlock {
     if (!this.blockRenderData.groundMaterial)
       return;
 
-    let groundMaterial = this.__getGroundMaterialFromParent(this.blockRenderData.groundMaterial);
+    let groundMaterial = this.blockRenderData.groundMaterial;
     let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', groundMaterial);
     if (!tD)
       return;
@@ -91,15 +91,6 @@ class wBlock {
     if (values) {
       if (this._blockKey === fireData.key)
         this.setData(values);
-
-      if (tag === 'blockchild') {
-        if (this.cachedInheritGround !== values.inheritGround) {
-          //    this.cachedInheritMaterial = values.inheritMaterial;
-          this.cachedInheritGround = values.inheritGround;
-          //this.setData(values);
-          this._addGround();
-        }
-      }
 
       if (this.blockRawData.childType === tag)
         if (values.title === this.blockRawData.childName)
@@ -434,7 +425,6 @@ class wBlock {
       this.__renderLightBlock();
 
     this.currentMaterialName = this.blockRenderData.materialName;
-    this.cachedInheritGround = this.blockRawData.inheritGround;
 
     this.__applyFirstFrameValues();
 
@@ -668,22 +658,6 @@ class wBlock {
       if (parent.blockRawData.inheritMaterial) {
         if (parent.parent.blockRenderData.materialName)
           value = parent.parent.blockRenderData.materialName;
-      } else {
-        return value;
-      }
-
-      parent = parent.parent;
-    }
-
-    return value;
-  }
-  __getGroundMaterialFromParent(value) {
-    let parent = this;
-
-    while (parent.parent) {
-      if (parent.blockRawData.inheritGround) {
-        if (parent.parent.blockRenderData.groundMaterial)
-          value = parent.parent.blockRenderData.groundMaterial;
       } else {
         return value;
       }

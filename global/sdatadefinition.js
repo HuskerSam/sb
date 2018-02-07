@@ -724,15 +724,7 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   displayGroup: ['mesh', 'shape', 'block'],
   displayKey: 'childType'
 }, {
-  title: 'Inherit Ground',
-  fireSetField: 'inheritGround',
-  contextObjectField: null,
-  group: 'options',
-  type: 'boolean',
-  displayGroup: ['block'],
-  displayKey: 'childType'
-}, {
-  title: 'Do not override frames from child',
+  title: 'Use root frames from block',
   fireSetField: 'useChildBlockFrames',
   contextObjectField: null,
   group: 'options',
