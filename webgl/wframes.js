@@ -556,11 +556,13 @@ class wFrames {
 
             let frameNumber = Math.round(frame.actualTime / 1000.0 * this.fps);
 
-            let value = frame.values[fieldKey].value;
-            fieldKeys.push({
-              frame: frameNumber,
-              value
-            });
+            if (frame.values[fieldKey]) {
+              let value = frame.values[fieldKey].value;
+              fieldKeys.push({
+                frame: frameNumber,
+                value
+              });
+            }
           }
           this.animations[i] = new BABYLON.Animation(this.parentKey + i + 'anim',
             field.contextObjectField, this.fps, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);

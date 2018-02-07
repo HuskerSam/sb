@@ -15,6 +15,9 @@ class cBandChildren extends cBandSuper {
     this.deleteChildButton.classList.add('btn-sb-icon');
     this.deleteChildButton.style.margin = '.5em';
     this.deleteChildButton.style.float = 'left';
+    this.deleteChildButton.style.background = 'blue';
+    this.deleteChildButton.style.color = 'white';
+
     this.deleteChildButton.addEventListener('click', e => this.deleteChildBlock(this.key, e));
     this.childEditPanel.insertBefore(this.deleteChildButton, this.childEditPanel.childNodes[0]);
 
@@ -31,9 +34,9 @@ class cBandChildren extends cBandSuper {
       fieldList = fieldsFilter.blockLightFields[this.parent.context.activeBlock.blockRawData.childName];
 
     if (!fieldList)
-      return;
+      fieldList = [];
 
-    let groupList = ['camera', 'light', 'camera0', 'light0', 'cmaera1', 'lightsub'];
+    let groupList = ['camera', 'light', 'camera0', 'light0', 'camera1', 'lightsub'];
 
     if (fieldList !== null) {
       for (let inner in this.childEditFields.fields) {

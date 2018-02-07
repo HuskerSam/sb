@@ -5,7 +5,6 @@ class wContext {
     this.camera = null;
     this.cameraName = '';
     this.blockCameraId = 'default';
-    this.cameraVector = '';
     this._scene = null;
     this.activeBlock = null;
     this.canvas = canvas;
@@ -83,8 +82,7 @@ class wContext {
       this._sceneAddDefaultObjects();
     }
 
-    if (this.cameraTypeShown !== 'default')
-      this._renderDefaultCamera();
+    this._renderDefaultCamera();
 
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
     this.camera.attachControl(this.canvas, true);
@@ -492,57 +490,28 @@ class wContext {
           this._renderFollowCamera();
         } else if (cameraDetails.childName === 'UniversalCamera') {
           this._renderUniversalCamera();
+        } else if (cameraDetails.childName === 'ArcRotate') {
+          this._renderArcCamera();
         } else {
           this._renderDefaultCamera();
         }
       }
     }
-
-    if (!this.canvasHelper)
-      return;
-    if (this.blockCameraId === 'default')
-      return;
-
-    let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
-    if (!cameraDetails)
-      return;
-
-    if (this.previousCameraRadius !== cameraDetails.cameraRadius) {
-      this.previousCameraRadius = cameraDetails.cameraRadius;
-      this.camera.radius = Number(cameraDetails.cameraRadius);
-    }
-
-    if (this.previousCameraOrigin !== cameraDetails.cameraOrigin) {
-      this.previousCameraOrigin = cameraDetails.cameraOrigin;
-      let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 0, 15, -15);
-      this.camera.origin = cameraOrigin;
-      this.camera.position = cameraOrigin;
-    }
-
-    if (this.cameraHeightOffset !== cameraDetails.cameraHeightOffset) {
-      this.cameraHeightOffset = cameraDetails.cameraHeightOffset;
-      this.camera.heightOffset = Number(cameraDetails.cameraHeightOffset);
-    }
-
-    if (this.cameraAimTarget !== cameraDetails.cameraAimTarget) {
-      let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
-      this.camera.setTarget(aimTarget);
-      this.cameraAimTarget = cameraDetails.cameraAimTarget;
-    }
   }
   _renderFollowCamera() {
-    this.cameraTypeShown = 'FollowCamera';
     if (this.camera)
       this.camera.dispose();
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
-    let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 0, 15, -15);
+    let values = cameraDetails.firstFrameValues;
+    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+      values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.FollowCamera("FollowCam", cameraOrigin, this.scene);
 
-    let cameraRadius = cameraDetails.cameraRadius;
-    let heightOffset = cameraDetails.cameraHeightOffset;
-    let rotationOffset = cameraDetails.cameraRotationOffset;
-    let cameraAcceleration = cameraDetails.cameraAcceleration;
-    let maxCameraSpeed = cameraDetails.maxCameraSpeed;
+    let cameraRadius = values.cameraRadius;
+    let heightOffset = values.cameraHeightOffset;
+    let rotationOffset = values.cameraRotationOffset;
+    let cameraAcceleration = values.cameraAcceleration;
+    let maxCameraSpeed = values.maxCameraSpeed;
 
     this.previousCameraRadius = cameraRadius;
     if (cameraRadius)
@@ -566,12 +535,12 @@ class wContext {
       this.camera.lockedTarget = mesh.sceneObject;
   }
   _renderUniversalCamera() {
-    this.cameraTypeShown = 'FollowCamera';
     if (this.camera)
       this.camera.dispose();
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
-    let cameraOrigin = GLOBALUTIL.getVector(cameraDetails.cameraOrigin, 0, 15, -15);
-
+    let values = cameraDetails.firstFrameValues;
+    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+      values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.UniversalCamera("UniversalCamera", cameraOrigin, this.scene);
 
     let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
@@ -581,7 +550,6 @@ class wContext {
     this.camera.attachControl(this.canvas, true);
   }
   _renderDefaultCamera() {
-    this.cameraTypeShown = 'default';
     if (this.camera)
       this.camera.dispose();
     let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 3, 15, 15);
@@ -592,13 +560,28 @@ class wContext {
     if (newRadius > 1 && newRadius < 500)
       radius = newRadius;
     this.camera.radius = radius;
-    this.cameraVector = null;
+  }
+  _renderArcCamera() {
+    if (this.camera)
+      this.camera.dispose();
+
+    let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
+    let values = cameraDetails.firstFrameValues;
+    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+      values.cameraOriginZ, 0, 15, -15);
+    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, values.cameraOriginY, new BABYLON.Vector3(0, 0, 0), this.scene)
+    this.camera.attachControl(this.canvas, true);
+    if (values.cameraRadius)
+      this.camera.radius = Number(values.cameraRadius);
+    this.camera.position = cameraOrigin;
+    let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
+    this.camera.setTarget(aimTarget);
+    this.cameraAimTarget = cameraDetails.cameraAimTarget;
   }
   selectCamera(blockCameraId, dialogForCamera) {
     if (!this.canvasHelper.cameraDetails[blockCameraId])
       blockCameraId = 'default';
     this.dialogForCamera = dialogForCamera;
     this._updateCamera(blockCameraId);
-    //  gAPPP.a.profile.blockCameraId = blockCameraId;
   }
 }

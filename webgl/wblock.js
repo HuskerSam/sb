@@ -897,8 +897,10 @@ class wBlock {
     if (cameras === null)
       cameras = this.context.canvasHelper.defaultCameras;
 
-    if (this.blockRawData.childType === 'camera')
+    if (this.blockRawData.childType === 'camera') {
       cameras[this._blockKey] = this.blockRawData;
+      this.blockRawData.firstFrameValues = this.framesHelper.firstFrameValues();
+    }
 
     for (let i in this.childBlocks)
       this.childBlocks[i].traverseCameraList(cameras);

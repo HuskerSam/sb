@@ -35,8 +35,7 @@ class sDataDefinition {
 
     if (tag === 'blockchild') {
       let localCopy = __localStaticStorageForBindingFields['childBlock'].slice(0);
-      localCopy = localCopy.concat(this.bindingFields('frameCamera'));
-      return localCopy.concat(this.bindingFields('frameLight'));
+      return localCopy.concat(this.bindingFields('frameCamera'));
     }
     return __localStaticStorageForBindingFields[tag].slice(0);
   }
@@ -67,24 +66,22 @@ let __animFieldFilters = {};
 
 __animFieldFilters.blockCameraFields = {};
 __animFieldFilters.animateCameraFields = {};
-__animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraOrigin', 'cameraName'];
-__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOrigin', 'cameraRotation', 'cameraOrigin'];
-__animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraOrigin', 'cameraRadius', 'cameraName'];
-__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOrigin'];
-__animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset',
-  'cameraAcceleration', 'maxCameraSpeed', 'cameraOrigin', 'cameraTargetBlock', 'cameraName'
-];
-__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed', 'cameraOrigin'];
+__animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraName'];
+__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraRotationX', 'cameraRotationY', 'cameraRotationZ', 'cameraOrigin'];
+__animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraName'];
+__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ' ];
+__animFieldFilters.blockCameraFields['FollowCamera'] = [ 'cameraTargetBlock', 'cameraName' ];
+__animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration', 'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ' ];
 __animFieldFilters.blockLightFields = {};
 __animFieldFilters.animateLightFields = {};
-__animFieldFilters.blockLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.animateLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.blockLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.animateLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.blockLightFields['Directional'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.animateLightFields['Directional'] = ['lightDirection', 'lightIntensity', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.blockLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightAngle', 'lightDecay', 'lightSpecular', 'lightDiffuse'];
-__animFieldFilters.animateLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightAngle', 'lightDecay', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.blockLightFields['Hemispheric'] = [];
+__animFieldFilters.animateLightFields['Hemispheric'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.blockLightFields['Point'] = [];
+__animFieldFilters.animateLightFields['Point'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.blockLightFields['Directional'] = [];
+__animFieldFilters.animateLightFields['Directional'] = ['lightDirection', 'lightIntensity', 'lightGroundColor', 'lightSpecular', 'lightDiffuse'];
+__animFieldFilters.blockLightFields['Spot'] = [];
+__animFieldFilters.animateLightFields['Spot'] = ['lightFrom', 'lightDirection', 'lightIntensity', 'lightGroundColor', 'lightAngle', 'lightDecay', 'lightSpecular', 'lightDiffuse'];
 
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
@@ -887,58 +884,98 @@ __localStaticStorageForBindingFields['frameLight'] = [{
 }];
 __localStaticStorageForBindingFields['frameCamera'] = [{
   title: 'Position',
-  fireSetField: 'cameraOrigin',
+  fireSetField: 'cameraOriginX',
   displayGroup: 'camera',
   displayKey: 'childType',
-  contextObjectField: null,
+  displayType:'number',
+  contextObjectField: 'position.x',
+  group: 'camera'
+},{
+  title: 'x y z',
+  fireSetField: 'cameraOriginY',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  displayType:'number',
+  contextObjectField: 'position.y',
+  group: 'camera'
+},{
+  title: '&nbsp;',
+  fireSetField: 'cameraOriginZ',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  displayType:'number',
+  contextObjectField: 'position.z',
   group: 'camera'
 }, {
   title: 'Rotation',
-  fireSetField: 'cameraRotation',
+  fireSetField: 'cameraRotationX',
   displayGroup: 'camera',
   displayKey: 'childType',
-  contextObjectField: null,
+  displayType: 'number',
+  contextObjectField: 'rotation.x',
+  group: 'camera0'
+}, {
+  title: 'x y z',
+  fireSetField: 'cameraRotationY',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  displayType: 'number',
+  contextObjectField: 'rotation.y',
+  group: 'camera0'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'cameraRotationZ',
+  displayGroup: 'camera',
+  displayKey: 'childType',
+  displayType: 'number',
+  contextObjectField: 'rotation.z',
   group: 'camera0'
 }, {
   title: 'Radius',
   fireSetField: 'cameraRadius',
   displayGroup: 'camera',
   displayKey: 'childType',
-  contextObjectField: null,
+  displayType: 'number',
+  contextObjectField: 'radius',
   group: 'camera0'
 }, {
   title: 'Height',
   fireSetField: 'cameraHeightOffset',
   displayGroup: 'camera',
   displayKey: 'childType',
-  contextObjectField: null,
+  displayType: 'number',
+  contextObjectField: 'heightOffset',
   group: 'camera0'
 }, {
-  title: 'Rotation Offset',
+  title: 'R Offset',
   fireSetField: 'cameraRotationOffset',
   displayGroup: 'camera',
   displayKey: 'childType',
-  contextObjectField: null,
+  displayType: 'number',
+  contextObjectField: 'rotationOffset',
   group: 'camera1'
 }, {
-  title: 'Acceleration',
+  title: 'Accel',
   fireSetField: 'cameraAcceleration',
   displayGroup: 'camera',
   displayKey: 'childType',
-  contextObjectField: null,
+  displayType: 'number',
+  contextObjectField: 'acceleration',
   group: 'camera1'
 }, {
-  title: 'Max Speed',
+  title: 'Max Spd',
   fireSetField: 'maxCameraSpeed',
   displayGroup: 'camera',
   displayKey: 'childType',
-  contextObjectField: null,
+  displayType: 'number',
+  contextObjectField: 'maxCameraSpeed',
   group: 'camera1'
 }, {
   title: 'Aim at Position',
   fireSetField: 'cameraAimTarget',
   contextObjectField: null,
   displayGroup: 'camera',
+  displayType: 'shortVector',
   displayKey: 'childType',
   group: 'camera'
 }];

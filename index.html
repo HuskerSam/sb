@@ -169,7 +169,7 @@
       </div>
       <div class="camera-options-panel" style="display:inline-block;">
         <select class="camera-select" style=""></select>
-        <input class="camera-select-range-slider" type="range" step=".25" min="-25" max="75" />
+        <input class="camera-select-range-slider" type="range" step=".25" min="-25" max="200" />
         <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
         <div class="fields-container" style="float:left"></div>
       </div>
@@ -179,16 +179,18 @@
 
   <!-- OBJECT EDIT DIALOG -->
   <div id="scene-builder-edit-dialog-template" style="display:none;">
-    <div class="popup-action-bar">
-      <div class="progress progress-striped active popup-progress-bar">
-        Loading...
-      </div>
-      <div class="popup-buttons">
-        <div class="popup-title"></div>
-        <button type="button" class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
-        <button type="button" class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button>
-        <button type="button" style="float:right;" class="btn-sb-icon close-details"><i class="material-icons">close</i><span style="font-size:.75em;top:-.25em;position:relative;">[Esc]</span></button>
-      </div>
+    <div class="popup-progress-bar">
+      Loading...
+    </div>
+    <div class="popup-buttons">
+      <button style="color:white;background: rgb(0,100,0)" type="button" class="btn-sb-icon close-details"><i class="material-icons">close</i><span style="font-size:.75em;top:-.25em;position:relative;">[Esc]</span></button>
+      &nbsp;
+      <div class="popup-title"></div>
+      &nbsp;
+      <button type="button" class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button>
+      &nbsp;
+      <button type="button" class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button>
+      &nbsp;
     </div>
     <div class="popup-main-body">
       <div class="popup-canvas-wrapper">
@@ -202,7 +204,7 @@
   <div id="cblock-editor-panel-template" style="display:none;">
     <div class="main-band-wrapper">
       <div class="main-band-first-row">
-        <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add_box</i></button>
+        <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
         <button class="main-band-details-element"></button>
         <div class="main-band-flex-children"></div>
       </div>

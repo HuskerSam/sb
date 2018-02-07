@@ -142,6 +142,8 @@ html, body {
 }
 
 .main-band-add-child {
+  background: blue;
+  color: white;
   margin: .25em;
 }
 
@@ -232,7 +234,7 @@ html, body {
 .form-group label {}
 
 .form-group label span {
-  font-size: .7em;
+  font-size: .9em;
   padding: 0em;
   padding-left: .5em;
   font-weight: bold;
@@ -294,7 +296,7 @@ html, body {
 .modal-dialog {
   margin: 0vh auto;
   width: 100vw;
-  background: rgba(127, 127, 127, .85);
+  background: rgb(0, 75, 0);
   height: 100vh;
   overflow-y: auto;
   padding: 0;
@@ -304,14 +306,20 @@ html, body {
 .popup-buttons {
   overflow: hidden;
   padding: .1em .25em;
-  background: rgb(50, 50, 50);
+  pointer-events: none;
   padding-top: .25em;
   height: inherit;
+  position: absolute;
+  z-index: 1;
+}
+
+.popup-buttons * {
+  pointer-events: auto;
 }
 
 .popup-title {
   color: white;
-  float: left;
+  display: inline-block;
   margin-left: .5em;
   font-size: 1.6em;
 }
@@ -327,7 +335,7 @@ html, body {
 }
 
 .popup-main-body {
-  height: calc(100% - 2.5em);
+  height: 100vh;
   overflow-y: hidden;
   position: relative;
 }
@@ -359,8 +367,10 @@ html, body {
   float: left;
   position: relative;
   margin: .25em;
-  border: inset .25em silver;
+  border: outset .25em silver;
   padding: .25em;
+  padding-right: .5em;
+  padding-top:0;
 }
 
 #main-page .form-group-container-group {
@@ -493,8 +503,9 @@ button i.material-icons {
 }
 .block-dialog-popup .selected-mesh-bounds-helper-box {
   background: rgb(50, 50, 50);
-  color: silver;
+  color: rgb(255,255,255);
   text-align: center;
+  padding: 0;
 }
 
 .scene-options-panel .selected-mesh-bounds-helper-box {
@@ -666,6 +677,9 @@ input[type=range]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
+.block-editor-child {
+  background: blue;
+}
 .main-band-details-element {
 }
 
@@ -684,6 +698,7 @@ input[type=range]::-webkit-slider-thumb {
   clear: both;
   position: relative;
   margin: 0em;
+  padding-top: .5em;
 }
 
 .render-log-panel {
@@ -702,7 +717,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .frames-panel input {
   padding: 0em;
-  height: 1.4em;
 }
 
 .frames-panel .add-button {
@@ -724,8 +738,15 @@ input[type=range]::-webkit-slider-thumb {
 .frames-panel .form-group-container-group {
   float: none;
   margin: 0 .15em;
+  background: yellow;
+  margin-top: -.25em;
+  padding-top: .25em;
 }
 
+.cblock-details-panel .form-group-container-group,
+.cblock-child-details-panel .form-group-container-group {
+  background: yellow;
+}
 .frames-panel {
   white-space: nowrap;
   position: relative;
@@ -746,7 +767,6 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frame-info-panel * {
-  font-size: .9em;
 }
 
 .genFrame {
