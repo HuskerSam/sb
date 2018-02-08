@@ -371,7 +371,7 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   floatLeft: true
 }];
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
-  title: 'Intensity',
+  title: 'Light',
   fireSetField: 'lightIntensity',
   contextObjectField: null,
   helperType: 'singleSlider',
@@ -379,19 +379,8 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeMax: '2',
   rangeStep: '.01',
   displayType: 'number',
-  group: 'light',
+  group: 'lighting',
   floatLeft: true
-}, {
-  title: 'Direction',
-  fireSetField: 'lightVector',
-  contextObjectField: null,
-  displayType: 'shortVector',
-  helperType: 'vector',
-  rangeMin: '-1',
-  rangeMax: '1',
-  rangeStep: '.01',
-  floatLeft: true,
-  group: 'light'
 }, {
   title: 'Bounds',
   fireSetField: 'showBoundsBox',

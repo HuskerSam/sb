@@ -18,7 +18,6 @@ class cBandRecords extends cBandSuper {
     this.bar = this.wrapper.querySelector('.sb-floating-toolbar-content');
     this.createBtn = this.wrapper.querySelector('.sb-floating-toolbar-create-btn');
     this.createPanel = d.querySelector('.add-item-panel');
-    this.childrenContainer.appendChild(this.createPanel);
     this.createPanelCreateBtn = this.createPanel.querySelector('.add-button');
     this.createPanelCreateBtn.addEventListener('click', e => this.createItem());
     this.createPanelInput = this.createPanel.querySelector('.add-item-name');
@@ -93,6 +92,8 @@ class cBandRecords extends cBandSuper {
       this.groundImagePreview = this.createPanel.querySelector('.cloud-file-ground-preview');
       this.generateGroundMaterial = this.createPanel.querySelector('.block-generate-ground');
       this.cloudImageInput.addEventListener('input', e => this.__handleGroundChange());
+
+      this.addSceneLight = this.createPanel.querySelector('.block-add-hemi-light');
 
       this.__handleBlockTypeSelectChange();
       this.__handleSkyboxChange();
@@ -280,6 +281,7 @@ class cBandRecords extends cBandSuper {
 
 
     let generateGround = false;
+    let generateLight = false;
     if (this.tag === 'block') {
       let bType = this.blockOptionsPicker.value;
 
@@ -299,6 +301,8 @@ class cBandRecords extends cBandSuper {
           generateGround = true;
           mixin.groundMaterial = newName + '_groundmaterial';
         }
+        if (this.addSceneLight.checked)
+          generateLight = true;
       }
 
       if (bType === 'Text and Shape') {
@@ -313,11 +317,36 @@ class cBandRecords extends cBandSuper {
 
       if (generateGround)
         this.__generateGroundForScene(results.key, newName, mixin, this.cloudImageInput.value.trim());
-
+      if (generateLight)
+        this.__generateLightForScene(results.key, newName, mixin);
       this.createPanelShown = true;
       this.toggleCreatePanel();
       setTimeout(() => gAPPP.dialogs[this.tag + '-edit'].show(results.key), 600);
     });
+  }
+  __generateLightForScene(blockKey, blockTitle, mixin) {
+    this.context.createObject('blockchild', '', null, {
+      childType: 'light',
+      childName: 'Hemispheric',
+      parentKey: blockKey
+    }).then(results => {
+      this.context.createObject('frame', '', null, {
+        frameTime: '',
+        frameOrder: '10',
+        parentKey: results.key,
+        lightDiffuseR: '1',
+        lightIntensity: '.35',
+        lightDiffuseG: '1',
+        lightDiffuseB: '1',
+        lightSpecularR: '1',
+        lightSpecularG: '1',
+        lightSpecularB: '1',
+        lightDirectionX: '0',
+        lightDirectionY: '1',
+        lightDirectionZ: '0'
+      })
+    });
+
   }
   __generateGroundForScene(blockKey, blockTitle, mixin, imgPath) {
     let textureName = blockTitle + '_groundtexture';
@@ -415,6 +444,8 @@ class cBandRecords extends cBandSuper {
       this.createBtn.style.background = 'rgb(240,240,240)';
       this.createBtn.style.color = 'black';
       this.createBtn.style.borderStyle = 'inset';
+      let p = this.childrenContainer.parentNode.parentNode;
+      p.insertBefore(this.createPanel, this.childrenContainer.parentNode.nextSibling);
     }
   }
   _titleKeyPress(e) {

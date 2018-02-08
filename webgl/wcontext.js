@@ -267,8 +267,9 @@ class wContext {
     this.showHideGuides(profile.showSceneGuides);
   }
   _childLightExists() {
-    if (!this.activeBlock)
+    if (!this.activeBlock){
       return false;
+    }
 
     return this.activeBlock.containsLight();
   }
@@ -280,18 +281,14 @@ class wContext {
       this.light = null;
     } else {
       if (!this.light) {
-        let lightVector = GLOBALUTIL.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
+        let lightVector = GLOBALUTIL.getVector('0,1,0', 0, 1, 0);
         this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
-        this.light.intensity = .7;
+        this.light.intensity = .45;
         this.light.groundColor = GLOBALUTIL.color('0,0,0');
       }
       if (this.cachedProfile.lightIntensity !== profile.lightIntensity) {
         this.cachedProfile.lightIntensity = profile.lightIntensity;
         this.light.intensity = Number(profile.lightIntensity);
-      }
-      if (this.cachedProfile.lightVector !== profile.lightVector) {
-        this.cachedProfile.lightVector = profile.lightVector;
-        this.light.direction = GLOBALUTIL.getVector(profile.lightVector, 0, 1, 0);
       }
     }
   }
