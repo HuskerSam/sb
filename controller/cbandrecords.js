@@ -325,7 +325,7 @@ class cBandRecords extends cBandSuper {
         mixin.textText = this.blockShapePanel.querySelector('.block-box-text').value;
         mixin.textFontFamily = this.blockShapePanel.querySelector('.font-family-block-add').value;
         mixin.textMaterial = this.blockShapePanel.querySelector('.block-material-picker-select').value;
-
+        mixin.textDepth = this.blockShapePanel.querySelector('.block-text-depth').value;
         mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
         mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
 

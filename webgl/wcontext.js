@@ -588,7 +588,8 @@ class wContext {
 
     //text scale (2 char per block default)
     let scale = 2 * options.width / options.textText.length;
-    let depth = options.depth / 2;
+    let textDepth = GLOBALUTIL.getNumberOrDefault(options.textDepth, 1);
+    let depth = textDepth;
     if (!depth)
       depth = '.001';
 
@@ -611,7 +612,7 @@ class wContext {
           frameOrder: '10',
           parentKey: innerResults.key,
           rotationZ: '-90deg',
-          positionX: (depth / 2.0).toFixed(3)
+          positionX: (textDepth / 2.0).toFixed(3)
         });
       });
     });
