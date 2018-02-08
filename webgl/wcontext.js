@@ -623,6 +623,7 @@ class wContext {
     depth = GLOBALUTIL.getNumberOrDefault(options.depth, 1);
     let minDim = Math.min(Math.min(width, height), depth);
     let maxDim = Math.max(Math.max(width, height), depth);
+    let outDepth = depth;
 
     if (options.createShapeType === 'Cube') {
       shapeOptions.shapeType = 'box';
@@ -631,6 +632,7 @@ class wContext {
       shapeOptions.boxWidth = '';
       shapeOptions.boxHeight = '';
       shapeOptions.boxDepth = '';
+      outDepth = minDim;
     }
     if (options.createShapeType === 'Box') {
       shapeOptions.shapeType = 'box';
@@ -645,6 +647,7 @@ class wContext {
       shapeOptions.materialName = options.shapeMaterial;
       shapeOptions.cylinderHeight = height.toFixed(3);
       shapeOptions.cylinderDiameter = Math.min(width, depth).toFixed(3);
+      outDepth = shapeOptions.cylinderDiameter;
       shapeOptions.cylinderTessellation = options.shapeDivs;
       if (options.createShapeType === 'Cone')
         shapeOptions.cylinderDiameterTop = 0;
@@ -657,6 +660,7 @@ class wContext {
       shapeOptions.boxWidth = '';
       shapeOptions.boxHeight = '';
       shapeOptions.boxDepth = '';
+      outDepth = minDim;
     }
     if (options.createShapeType === 'Ellipsoid') {
       shapeOptions.shapeType = 'sphere';
@@ -678,7 +682,7 @@ class wContext {
           frameTime: '',
           frameOrder: '10',
           parentKey: innerResults.key,
-          positionX: (-1.0 * depth / 2.0).toFixed(3)
+          positionX: (-1.0 * outDepth / 2.0).toFixed(3)
         });
       });
     });
