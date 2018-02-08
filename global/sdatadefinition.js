@@ -28,9 +28,9 @@ class sDataDefinition {
       return localCopy.concat(this.bindingFields('frameMesh'));
     }
     if (tag === 'mesh') {
-      let localCopy = __localStaticStorageForBindingFields[tag].slice(0, 2);
+      let localCopy = __localStaticStorageForBindingFields[tag].slice(0, 3);
       localCopy = localCopy.concat(this.bindingFields('frameMesh'));
-      return localCopy.concat(__localStaticStorageForBindingFields[tag].slice(2));
+      return localCopy.concat(__localStaticStorageForBindingFields[tag].slice(3));
     }
 
     if (tag === 'blockchild') {

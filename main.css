@@ -549,7 +549,6 @@ button i.material-icons {
 .selected-mesh-bounds-helper-box .action-area input[type="range"] {
   width: 15em;
   display: inline-block;
-  height: 0em;
   position: relative;
   top: .3em;
   font-size: inherit;
@@ -1008,8 +1007,10 @@ input[type=range]::-webkit-slider-thumb {
 .color-picker-input {
   position: absolute;
   top: -.25em;
-  right: -2em;
+  right: -1em;
   width: 3em!important;
+  padding: 0em!important;
+  border-radius: .1em!important;
 }
 
 .color-data-item {
@@ -1018,8 +1019,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .color-data-item>span {
   padding-right: 2.5em!important;
-  padding-top: .75em!important;
-  padding-bottom: .75em!important;
 }
 
 .add-item-panel {

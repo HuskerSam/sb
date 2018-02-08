@@ -332,12 +332,12 @@ class wBlock {
       shape = 'box';
     this.blockRenderData = {
       shapeType: shape,
-      cylinderDiameter: 5,
-      cylinderHeight: 5,
-      sphereDiameter: 10,
-      boxSize: 5,
+      cylinderDiameter: 2,
+      cylinderHeight: 2,
+      sphereDiameter: 3,
+      boxSize: 2,
       textText: 'Preview',
-      textDepth: 2,
+      textDepth: 1,
       textSize: 30
     };
   }

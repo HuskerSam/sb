@@ -26,9 +26,9 @@ class cViewMain {
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
 
     this.toolbarItems = {};
-    this.toolbarItems['block'] = new cBandRecords('block', 'Scene Blocks', this.context);
+    this.toolbarItems['block'] = new cBandRecords('block', 'Blocks', this.context);
     this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes', this.context);
-    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes and Text', this.context);
+    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes', this.context);
     this.toolbarItems['material'] = new cBandRecords('material', "Materials", this.context);
     this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures', this.context);
 
