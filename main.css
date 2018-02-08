@@ -164,6 +164,8 @@ html, body {
   color: black;
   background: rgb(240, 240, 240);
   border-style: inset;
+  position: relative;
+  top: 3.25em;
 }
 
 .button-wrapper {
@@ -177,7 +179,7 @@ html, body {
 #sb-floating-toolbar-expanded .button-wrapper .option-buttons {
   display: inline-block;
   position: relative;
-  top: .25em;
+  top: 3.5em;
 }
 
 .popup-canvas-body {
@@ -362,7 +364,7 @@ html, body {
 .form-group-container-group {
   display: inline-block;
   border-radius: .5em;
-  text-align:center;
+  text-align: center;
   background: rgb(200, 200, 200);
   float: left;
   position: relative;
@@ -370,7 +372,7 @@ html, body {
   border: outset .25em silver;
   padding: .25em;
   padding-right: .5em;
-  padding-top:0;
+  padding-top: 0;
 }
 
 #main-page .form-group-container-group {
@@ -497,13 +499,15 @@ button i.material-icons {
   font-size: inherit;
   padding-top: .35em;
 }
+
 .selected-mesh-bounds-helper-box input[type="text"] {
   border-radius: .25em;
   border: default;
 }
+
 .block-dialog-popup .selected-mesh-bounds-helper-box {
   background: rgb(50, 50, 50);
-  color: rgb(255,255,255);
+  color: rgb(255, 255, 255);
   text-align: center;
   padding: 0;
 }
@@ -660,7 +664,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .cblock-child-details-panel .form-group-container-group {
-    float: none;
+  float: none;
 }
 
 .frames-panel {
@@ -681,8 +685,8 @@ input[type=range]::-webkit-slider-thumb {
 .block-editor-child {
   background: blue;
 }
-.main-band-details-element {
-}
+
+.main-band-details-element {}
 
 .block-editor-child button {
   border-radius: .35em;
@@ -732,10 +736,12 @@ input[type=range]::-webkit-slider-thumb {
 .frames-panel button.delete-button {
   margin: .5em;
 }
-.add-item-panel > label {
+
+.add-item-panel>label {
   position: relative;
   top: -.25em;
 }
+
 .frames-panel .form-group-container-group {
   float: none;
   margin: 0 .15em;
@@ -744,10 +750,10 @@ input[type=range]::-webkit-slider-thumb {
   padding-top: .25em;
 }
 
-.cblock-details-panel .form-group-container-group,
-.cblock-child-details-panel .form-group-container-group {
+.cblock-details-panel .form-group-container-group, .cblock-child-details-panel .form-group-container-group {
   background: yellow;
 }
+
 .frames-panel {
   white-space: nowrap;
   position: relative;
@@ -767,8 +773,7 @@ input[type=range]::-webkit-slider-thumb {
   font-size: 1em;
 }
 
-.frame-info-panel * {
-}
+.frame-info-panel * {}
 
 .genFrame {
   color: rgb(200, 200, 255);
@@ -1041,6 +1046,7 @@ input[type=range]::-webkit-slider-thumb {
   padding-top: .75em!important;
   padding-bottom: .75em!important;
 }
+
 .add-item-panel {
   padding: .5em;
   border-radius: .5em;
@@ -1049,6 +1055,8 @@ input[type=range]::-webkit-slider-thumb {
   border: inset .15em silver;
   color: black;
   position: relative;
+  margin-bottom: 1em;
+  margin-left: 7em;
 }
 
 .add-item-panel input {
@@ -1069,7 +1077,7 @@ input[type=range]::-webkit-slider-thumb {
 .material-add-options .material-color-add {
   border-radius: .25em;
   width: 8em;
-  text-align:center;
+  text-align: center;
   margin-right: 0;
 }
 
@@ -1083,12 +1091,12 @@ input[type=range]::-webkit-slider-thumb {
   background: rgb(240, 240, 240);
 }
 
-.add-item-panel label > span {
+.add-item-panel label>span {
   margin: .5em;
 }
 
 .add-item-panel input[type="text"] {
-  text-align:center;
+  text-align: center;
   width: 5em;
 }
 
@@ -1096,6 +1104,7 @@ input[type=range]::-webkit-slider-thumb {
   margin-top: .5em;
   border-radius: .25em;
 }
+
 .shape-add-options .text-shape-add {
   width: 20em;
 }
@@ -1105,7 +1114,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .texture-add-options {
-  background: rgb(240,240,240);
+  background: rgb(240, 240, 240);
   padding: .35em;
 }
 

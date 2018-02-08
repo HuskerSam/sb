@@ -435,13 +435,15 @@ class cBandRecords extends cBandSuper {
     if (this.createPanelShown) {
       this.createPanelShown = false;
       this.createPanel.style.display = 'none';
-      this.createBtn.style.background = 'rgb(50,50,50)';
+      this.createBtn.style.background = 'rgb(0,127,0)';
+      this.createBtn.innerHTML = '<i class="material-icons">add</i>';
       this.createBtn.style.color = 'white';
       this.createBtn.style.borderStyle = '';
     } else {
       this.createPanelShown = true;
       this.createPanel.style.display = 'block';
       this.createBtn.style.background = 'rgb(240,240,240)';
+      this.createBtn.innerHTML = '<i class="material-icons">chevron_left</i>';
       this.createBtn.style.color = 'black';
       this.createBtn.style.borderStyle = 'inset';
       let p = this.childrenContainer.parentNode.parentNode;
