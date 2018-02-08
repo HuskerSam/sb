@@ -10,17 +10,6 @@ class cBandChildren extends cBandSuper {
     this.childFields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.childEditFields = new cPanelData(this.childFields, this.childEditPanel, this);
 
-    this.deleteChildButton = document.createElement('button');
-    this.deleteChildButton.innerHTML = '<i class="material-icons">delete</i>';
-    this.deleteChildButton.classList.add('btn-sb-icon');
-    this.deleteChildButton.style.margin = '.5em';
-    this.deleteChildButton.style.float = 'left';
-    this.deleteChildButton.style.background = 'blue';
-    this.deleteChildButton.style.color = 'white';
-
-    this.deleteChildButton.addEventListener('click', e => this.deleteChildBlock(this.key, e));
-    this.childEditPanel.insertBefore(this.deleteChildButton, this.childEditPanel.childNodes[0]);
-
     this.childEditFields._superUpdateDisplayFilters = this.childEditFields._updateDisplayFilters;
     this.childEditFields._updateDisplayFilters = () => this.__updateFieldsForAnimHeaderRow();
   }
@@ -96,6 +85,14 @@ class cBandChildren extends cBandSuper {
     d.setAttribute('class', `${this.tag}-${key} block-editor-child`);
 
     this._nodeApplyValues(values, d);
+
+    let db = document.createElement('button');
+    db.innerHTML = '<i class="material-icons">delete</i>';
+    db.classList.add('btn-sb-icon');
+    db.classList.add('delete-button');
+
+    db.addEventListener('click', e => this.deleteChildBlock(key, e));
+    d.appendChild(db);
   }
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + '-' + fireData.key);

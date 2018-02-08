@@ -143,7 +143,7 @@ html, body {
 
 .main-band-add-child {
   background: blue;
-  color: white;
+  color: rgb(0, 255, 0);
   margin: .25em;
 }
 
@@ -671,34 +671,6 @@ input[type=range]::-webkit-slider-thumb {
   overflow: auto;
 }
 
-.block-editor-child, .main-band-details-element {
-  background: rgb(50, 50, 50);
-  color: white;
-  border-radius: .5em;
-  border: outset .25em silver;
-  margin: .1em;
-  padding: .75em;
-  display: inline-block;
-  cursor: pointer;
-}
-
-.block-editor-child {
-  background: blue;
-}
-
-.main-band-details-element {}
-
-.block-editor-child button {
-  border-radius: .35em;
-  margin-left: .5em;
-}
-
-.block-editor-child.selected, .main-band-details-element.selected {
-  color: black;
-  background: yellow;
-  border-style: inset;
-}
-
 .frame-fields-container {
   clear: both;
   position: relative;
@@ -1120,7 +1092,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .main-band-wrapper {
-  padding-top: .5em;
+  padding-top: .1em;
 }
 
 .skybox-preview-images img {
@@ -1130,4 +1102,56 @@ input[type=range]::-webkit-slider-thumb {
 
 .block-add-options {
   text-align: left;
+}
+
+.block-editor-child, .main-band-details-element {
+  background: rgb(50, 50, 50);
+  color: white;
+  border-radius: .5em;
+  border: outset .25em silver;
+  margin: .1em;
+  display: inline-block;
+  cursor: pointer;
+  padding-left: .5em;
+  min-height: 3em;
+}
+
+.block-editor-child {
+  background: blue;
+  position: relative;
+  text-align: center;
+}
+
+.block-editor-child.selected, .main-band-details-element.selected {
+  color: black;
+  background: yellow;
+  border-style: inset;
+  text-align: left;
+}
+
+.block-editor-child .delete-button {
+  display: none;
+  background: silver;
+  font-size: 1.1em;
+  color: black;
+  float: right;
+  top: .25em;
+  right: .1em;
+  position: absolute;
+}
+
+.block-editor-child.selected .delete-button {
+  display: inline-block;
+}
+
+.block-editor-child>span {
+  position: relative;
+  top: .7em;
+  padding-right: 1.5em;
+  padding-left:1.5em;
+}
+
+.block-editor-child.selected>span {
+  padding-right: 3em;
+  padding-left: 0em;
 }
