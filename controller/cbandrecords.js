@@ -329,7 +329,7 @@ class cBandRecords extends cBandSuper {
         mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
         mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
 
-        mixin.shapeType = this.blockShapePicker.value;
+        mixin.createShapeType = this.blockShapePicker.value;
         generateShapeAndText = true;
       }
     }

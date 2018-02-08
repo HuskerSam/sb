@@ -498,7 +498,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   title: 'Diameter Y',
   fireSetField: 'sphereDiameterY',
   contextObjectField: null,
-  shapeOption: 'diameterX',
+  shapeOption: 'diameterY',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
   displayType: 'number',

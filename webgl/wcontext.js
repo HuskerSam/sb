@@ -585,16 +585,101 @@ class wContext {
   __generateShapeAndText(blockId, blockTitle, options) {
     let shapeBlockName = blockTitle + '_shapeShape';
     let shapeTextName = blockTitle + '_shapeText';
+
+    //text scale (2 char per block default)
+    let scale = 2 * options.width / options.textText.length;
+    let depth = options.depth / 2;
+    if (!depth)
+      depth = '.001';
+
     this.createObject('shape', shapeTextName, null, {
       textText: options.textText,
       shapeType: 'text',
       textFontFamily: options.textFontFamily,
       materialName: options.textMaterial,
-      textDepth: '4'
+      scalingX: scale,
+      scalingZ: scale,
+      textDepth: depth
     }).then(results => {
+      this.createObject('blockchild', '', null, {
+        childType: 'shape',
+        childName: shapeTextName,
+        parentKey: blockId
+      }).then(innerResults => {
+        this.createObject('frame', '', null, {
+          frameTime: '',
+          frameOrder: '10',
+          parentKey: innerResults.key,
+          rotationZ: '-90deg',
+          positionX: (depth / 2.0).toFixed(3)
+        });
+      });
+    });
 
+    let shapeOptions = {};
+    let width = GLOBALUTIL.getNumberOrDefault(options.width, 1);
+    let height = GLOBALUTIL.getNumberOrDefault(options.height, 1);
+    depth = GLOBALUTIL.getNumberOrDefault(options.depth, 1);
+    let minDim = Math.min(Math.min(width, height), depth);
+    let maxDim = Math.max(Math.max(width, height), depth);
 
+    if (options.createShapeType === 'Cube') {
+      shapeOptions.shapeType = 'box';
+      shapeOptions.boxSize = minDim;
+      shapeOptions.materialName = options.shapeMaterial;
+      shapeOptions.boxWidth = '';
+      shapeOptions.boxHeight = '';
+      shapeOptions.boxDepth = '';
+    }
+    if (options.createShapeType === 'Box') {
+      shapeOptions.shapeType = 'box';
+      shapeOptions.boxSize = '';
+      shapeOptions.materialName = options.shapeMaterial;
+      shapeOptions.boxWidth = width.toFixed(3);
+      shapeOptions.boxHeight = height.toFixed(3);
+      shapeOptions.boxDepth = depth.toFixed(3);
+    }
+    if (options.createShapeType === 'Cone' || options.createShapeType === 'Cylinder') {
+      shapeOptions.shapeType = 'cylinder';
+      shapeOptions.materialName = options.shapeMaterial;
+      shapeOptions.cylinderHeight = height.toFixed(3);
+      shapeOptions.cylinderDiameter = Math.min(width, depth).toFixed(3);
+      shapeOptions.cylinderTessellation = options.shapeDivs;
+      if (options.createShapeType === 'Cone')
+        shapeOptions.cylinderDiameterTop = 0;
+    }
+    if (options.createShapeType === 'Sphere') {
+      shapeOptions.shapeType = 'sphere';
+      shapeOptions.sphereDiameter = minDim;
+      shapeOptions.materialName = options.shapeMaterial;
+      shapeOptions.sphereSegments = options.shapeDivs;
+      shapeOptions.boxWidth = '';
+      shapeOptions.boxHeight = '';
+      shapeOptions.boxDepth = '';
+    }
+    if (options.createShapeType === 'Ellipsoid') {
+      shapeOptions.shapeType = 'sphere';
+      shapeOptions.sphereDiameter = '';
+      shapeOptions.materialName = options.shapeMaterial;
+      shapeOptions.sphereDiameterZ = width.toFixed(3);
+      shapeOptions.sphereDiameterY = height.toFixed(3);
+      shapeOptions.sphereDiameterX = depth.toFixed(3);
+      shapeOptions.sphereSegments = options.shapeDivs;
+    }
 
+    this.createObject('shape', shapeBlockName, null, shapeOptions).then(results => {
+      this.createObject('blockchild', '', null, {
+        childType: 'shape',
+        childName: shapeBlockName,
+        parentKey: blockId
+      }).then(innerResults => {
+        this.createObject('frame', '', null, {
+          frameTime: '',
+          frameOrder: '10',
+          parentKey: innerResults.key,
+          positionX: (-1.0 * depth / 2.0).toFixed(3)
+        });
+      });
     });
   }
 }
