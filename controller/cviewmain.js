@@ -26,11 +26,11 @@ class cViewMain {
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
 
     this.toolbarItems = {};
-    this.toolbarItems['block'] = new cBandRecords('block', 'Blocks', this.context);
-    this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes', this.context);
-    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes', this.context);
-    this.toolbarItems['material'] = new cBandRecords('material', "Materials", this.context);
-    this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures', this.context);
+    this.toolbarItems['block'] = new cBandRecords('block', 'Blocks', this);
+    this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes', this);
+    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes', this);
+    this.toolbarItems['material'] = new cBandRecords('material', "Materials", this);
+    this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures', this);
 
     gAPPP.a.modelSets['blockchild'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));

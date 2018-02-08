@@ -1,8 +1,9 @@
 class cBandRecords extends cBandSuper {
-  constructor(tag, title, context) {
+  constructor(tag, title, dialog) {
     super(gAPPP.a.modelSets[tag], tag);
 
-    this.context = context;
+    this.context = dialog.context;
+    this.dialog = dialog;
     this.title = title;
     this.containerCollapsed = document.querySelector('#sb-floating-toolbar');
     this.containerExpanded = document.querySelector('#sb-floating-toolbar-expanded');
@@ -475,33 +476,52 @@ class cBandRecords extends cBandSuper {
     if (e.code === 'Enter')
       this.createItem();
   }
-  toggleChildBandDisplay(forceValue = undefined, saveValue = false) {
-    if (forceValue === undefined)
-      forceValue = (this.bar.style.display !== 'inline-block');
+  toggleChildBandDisplay(expandValue = undefined, saveValue = false) {
+    if (expandValue === undefined)
+      expandValue = (this.bar.style.display !== 'inline-block');
 
-    let expand = !forceValue;
-    if (forceValue) {
+    let tI = this.dialog.toolbarItems;
+    this.expandValue = expandValue;
+    if (expandValue) {
       this.bar.style.display = 'inline-block';
       this.createBtn.style.display = 'inline-block';
       this.bar.parentNode.style.display = 'flex';
       this.buttonWrapper.classList.add('button-wrapper-invert');
-      this.containerExpanded.insertBefore(this.bar.parentNode, null);
+
+      let nextSibling = this.containerExpanded.childNodes[0];
+      for (let i in tI) {
+        if (tI[i] === this)
+          break;
+
+        if (tI[i].expandValue)
+          nextSibling = tI[i].bar.parentNode.nextSibling;
+      }
+      this.containerExpanded.insertBefore(this.bar.parentNode, nextSibling);
       this.wrapper.style.display = 'left';
     } else {
       this.bar.style.display = 'none';
       this.createBtn.style.display = 'none';
       this.bar.parentNode.style.display = 'inline-block';
       this.buttonWrapper.classList.remove('button-wrapper-invert');
-      this.containerCollapsed.insertBefore(this.bar.parentNode, null);
       this.wrapper.style.float = '';
       this.createPanelShown = true;
+
+      let nextSibling = this.containerCollapsed.childNodes[0];
+      for (let i in tI) {
+        if (tI[i] === this)
+          break;
+
+        if (! tI[i].expandValue)
+          nextSibling = tI[i].bar.parentNode.nextSibling;
+      }
+      this.containerCollapsed.insertBefore(this.bar.parentNode, nextSibling);
       this.toggleCreatePanel();
     }
 
     if (saveValue)
       gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'mainRecordsExpanded' + this.tag,
-        newValue: forceValue
+        newValue: expandValue
       }]);
   }
   __addMenuItem(button, title, clickHandler, prependDivider) {
