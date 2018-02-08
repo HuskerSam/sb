@@ -44,7 +44,7 @@
             </div>
           </div>
           <div class="add-item-panel" style="display:none;">
-            <label><span>Title</span><input style="width:15em;" class="add-item-name" /></label>
+            <label><span>Title</span><input style="width:20em;" class="add-item-name" /></label>
             <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
             <br>
             <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
@@ -54,7 +54,7 @@
                 <option>Path</option>
               </select>
               <input type="file" class="file-upload-texture" />
-              <label class="texture-path-label"><span>Path</span><input type="text" style="width:20em;" class="text-path-texture" list="sbimageslist" /></label>
+              <label class="texture-path-label"><span>Path</span><input type="text" style="width:30em;" class="text-path-texture" list="sbimageslist" /></label>
             </div>
             <div class="material-add-options" style="display:none;">
               <label><input type="checkbox" class="diffuse-color-checkbox" checked />Diffuse</label>
@@ -75,28 +75,32 @@
               </select>
 
               <div class="scene-empty-block-add-options">
-                <label><span>Width</span><input type="text" class="block-box-width" value="" /></label>
-                <label><span>Height</span><input type="text" class="block-box-height" value="" /></label>
-                <label><span>Depth</span><input type="text" class="block-box-depth" value="" /></label>
+                <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
+                <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
+                <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
               </div>
               <div class="shape-and-text-block-options">
-                <label><span>Width</span><input type="text" class="block-box-width" value="12" /></label>
-                <label><span>Height</span><input type="text" class="block-box-height" value="8" /></label>
-                <label><span>Depth</span><input type="text" class="block-box-depth" value="6" /></label>
-                <br>
+                <label><span>W</span><input type="text" class="block-box-width" value="12" /></label>
+                <label><span>H</span><input type="text" class="block-box-height" value="8" /></label>
+                <label><span>D</span><input type="text" class="block-box-depth" value="6" /></label>
+                <hr>
                 <label><span>Text</span><input type="text" style="width:20em;" class="block-box-text" value="Text" /></label>
                 <br>
+                <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
+                <br>
+                <label><span>Material</span><input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
+                <hr>
+
                 <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option>Cone</option>
                   <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
-                <label class="block-shape-add-label"><span>Sides</span><input type="text" class="block-add-shape-sides" /></label>
+                <label class="block-shape-add-label"><span>Divs</span><input type="text" class="block-add-shape-sides" /></label>
                 <br>
-                <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
-                <label><span>Material</span><input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
+                <label><span>Material</span><input type="text" style="width:15em;" class="block-shapematerial-picker-select" list="materialdatatitlelookuplist" /></label>
               </div>
               <div class="scene-block-add-options" style="text-align:center;">
-                <label><span>Width</span><input type="text" class="block-box-width" value="50" /></label>
-                <label><span>Height</span><input type="text" class="block-box-height" value="16" /></label>
-                <label><span>Depth</span><input type="text" class="block-box-depth" value="50" /></label>
+                <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
+                <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
+                <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
                 <hr>
                 <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
                 <hr>

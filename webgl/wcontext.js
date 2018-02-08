@@ -267,7 +267,7 @@ class wContext {
     this.showHideGuides(profile.showSceneGuides);
   }
   _childLightExists() {
-    if (!this.activeBlock){
+    if (!this.activeBlock) {
       return false;
     }
 
@@ -581,5 +581,20 @@ class wContext {
       blockCameraId = 'default';
     this.dialogForCamera = dialogForCamera;
     this._updateCamera(blockCameraId);
+  }
+  __generateShapeAndText(blockId, blockTitle, options) {
+    let shapeBlockName = blockTitle + '_shapeShape';
+    let shapeTextName = blockTitle + '_shapeText';
+    this.createObject('shape', shapeTextName, null, {
+      textText: options.textText,
+      shapeType: 'text',
+      textFontFamily: options.textFontFamily,
+      materialName: options.textMaterial,
+      textDepth: '4'
+    }).then(results => {
+
+
+
+    });
   }
 }

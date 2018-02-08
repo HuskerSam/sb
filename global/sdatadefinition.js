@@ -1199,7 +1199,7 @@ __defaultData['shape'] = {
   face5UV: '',
   textText: 'Text',
   textFontFamily: 'Geneva',
-  textDepth: 4,
+  textDepth: '.5',
   textSize: 100,
   scalingX: 1.0,
   scalingY: 1.0,

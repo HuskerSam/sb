@@ -80,6 +80,7 @@ class cBandRecords extends cBandSuper {
       this.blockOptionsPicker.addEventListener('input', e => this.__handleBlockTypeSelectChange());
 
       this.blockShapePicker = this.createPanel.querySelector('.block-add-shape-type-options');
+      this.blockShapePicker.addEventListener('click', e => this.__handleShapeChange());
       this.blockShapePanel = this.createPanel.querySelector('.shape-and-text-block-options');
       this.sceneBlockPanel = this.createPanel.querySelector('.scene-block-add-options');
       this.emptyBlockPanel = this.createPanel.querySelector('.scene-empty-block-add-options');
@@ -94,8 +95,11 @@ class cBandRecords extends cBandSuper {
       this.cloudImageInput.addEventListener('input', e => this.__handleGroundChange());
 
       this.addSceneLight = this.createPanel.querySelector('.block-add-hemi-light');
+      this.shapeDetailsPanel = this.createPanel.querySelector('.block-shape-add-label');
+
 
       this.__handleBlockTypeSelectChange();
+      this.__handleShapeChange();
       this.__handleSkyboxChange();
     }
 
@@ -109,6 +113,13 @@ class cBandRecords extends cBandSuper {
     let forceExpand = gAPPP.a.profile['mainRecordsExpanded' + this.tag];
     if (forceExpand)
       this.toggleChildBandDisplay(true);
+  }
+  __handleShapeChange() {
+    this.shapeDetailsPanel.style.display = 'none';
+    let shape = this.blockShapePicker.value;
+
+    if (shape !== 'Box' && shape !== 'Cube')
+      this.shapeDetailsPanel.style.display = '';
   }
   __handleGroundChange() {
     let cloudImage = this.cloudImageInput.value.trim();
@@ -282,6 +293,7 @@ class cBandRecords extends cBandSuper {
 
     let generateGround = false;
     let generateLight = false;
+    let generateShapeAndText = false;
     if (this.tag === 'block') {
       let bType = this.blockOptionsPicker.value;
 
@@ -310,6 +322,15 @@ class cBandRecords extends cBandSuper {
         mixin.height = this.blockShapePanel.querySelector('.block-box-height').value;
         mixin.depth = this.blockShapePanel.querySelector('.block-box-depth').value;
 
+        mixin.textText = this.blockShapePanel.querySelector('.block-box-text').value;
+        mixin.textFontFamily = this.blockShapePanel.querySelector('.font-family-block-add').value;
+        mixin.textMaterial = this.blockShapePanel.querySelector('.block-material-picker-select').value;
+
+        mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
+        mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
+
+        mixin.shapeType = this.blockShapePicker.value;
+        generateShapeAndText = true;
       }
     }
 
@@ -319,6 +340,9 @@ class cBandRecords extends cBandSuper {
         this.__generateGroundForScene(results.key, newName, mixin, this.cloudImageInput.value.trim());
       if (generateLight)
         this.__generateLightForScene(results.key, newName, mixin);
+      if (generateShapeAndText)
+        this.context.__generateShapeAndText(results.key, newName, mixin);
+
       this.createPanelShown = true;
       this.toggleCreatePanel();
       setTimeout(() => gAPPP.dialogs[this.tag + '-edit'].show(results.key), 600);

@@ -487,10 +487,7 @@ class wBlock {
         height,
         depth
       }, this.context.scene);
-      let material = new BABYLON.StandardMaterial(this._blockKey + 'material', this.context.scene);
-      material.alpha = 0;
-      this.sceneObject.material = material;
-
+      this.sceneObject.isVisible = false;
       if (!this.parent) {
         this._addSkyBox();
       }
@@ -590,10 +587,11 @@ class wBlock {
     let thick = 10;
     if (options['depth'])
       thick = Number(options['depth']);
-    let scale = size / 10;
+    let scale = size / 100;
     let lenX = 0;
     let lenY = 0;
-    let textWrapperMesh = null;
+    let polies = [];
+
     for (var i = 0; i < vectorData.length; i++) {
       var letter = vectorData[i];
       var conners = [];
@@ -615,16 +613,27 @@ class wBlock {
       var polygon = polyBuilder.build(false, thick);
       polygon.receiveShadows = true;
 
-      if (textWrapperMesh)
-        polygon.setParent(textWrapperMesh);
-      else
-        textWrapperMesh = polygon;
+      polies.push(polygon);
     }
 
     if (lenY === 0)
       lenY = 0.001;
     if (lenX === 0)
       lenX = 0.001;
+
+    let deltaY = thick / 2.0;
+    let deltaX = lenX / 2.0;
+    let deltaZ = lenY / 2.0;
+
+    let textWrapperMesh = BABYLON.MeshBuilder.CreateBox(this._blockKey + 'textdetailswrapper',
+     { width: lenX, height: thick, depth: lenY}, this.context.scene);
+    textWrapperMesh.isVisible = false;
+    for (let i = 0, l = polies.length; i < l; i++) {
+      polies[i].position.x -= deltaX;
+      polies[i].position.y += deltaY;
+      polies[i].position.z -= deltaZ;
+      polies[i].setParent(textWrapperMesh);
+    }
 
     this.sceneObject = textWrapperMesh;
   }

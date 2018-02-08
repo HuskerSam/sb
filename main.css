@@ -9,9 +9,9 @@ h3 {
 }
 
 select {
-  border-width: .15em;
-  border-radius: .35em;
-  padding: .1em;
+  border-width: .25em;
+  border-radius: .5em;
+  padding: .25em;
 }
 
 #login-page {
@@ -1050,18 +1050,20 @@ input[type=range]::-webkit-slider-thumb {
 .add-item-panel {
   padding: .5em;
   border-radius: .5em;
-  background: rgb(240, 240, 240);
+  background: rgb(220, 240, 220);
   float: left;
-  border: inset .15em silver;
+  border: outset .25em silver;
   color: black;
   position: relative;
-  margin-bottom: 1em;
-  margin-left: 7em;
+  margin-bottom: .5em;
+  margin-left: .5em;
+  text-align: center;
 }
 
 .add-item-panel input {
   margin: .25em;
   border-radius: .5em;
+  padding: .25em;
 }
 
 .add-item-panel input[type="file"] {
@@ -1102,7 +1104,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .add-item-panel select {
   margin-top: .5em;
-  border-radius: .25em;
 }
 
 .shape-add-options .text-shape-add {
@@ -1125,4 +1126,8 @@ input[type=range]::-webkit-slider-thumb {
 .skybox-preview-images img {
   max-height: 5em;
   max-width: 5em;
+}
+
+.block-add-options {
+  text-align: left;
 }
