@@ -110,7 +110,7 @@ html, body {
 }
 
 .sb-floating-toolbar-content {
-  pointer-events: none;
+  pointer-events: auto;
   white-space: nowrap;
   display: none;
   overflow: auto;

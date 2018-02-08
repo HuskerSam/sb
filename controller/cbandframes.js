@@ -333,20 +333,20 @@ class cBandFrames extends cBandSuper {
         if (groupDisplays.emissive)
           groupDisplays.emissive.innerHTML += `<div class="${className}">` +
           GLOBALUTIL.formatNumber(rFrame.values['emissiveColorR'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['emissiveColorB'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['emissiveColorG'].value) + '</div>';
+          GLOBALUTIL.formatNumber(rFrame.values['emissiveColorG'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['emissiveColorB'].value) + '</div>';
 
         if (groupDisplays.ambient)
           groupDisplays.ambient.innerHTML += `<div class="${className}">` +
           GLOBALUTIL.formatNumber(rFrame.values['ambientColorR'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['ambientColorB'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['ambientColorG'].value) + '</div>';
+          GLOBALUTIL.formatNumber(rFrame.values['ambientColorG'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['ambientColorB'].value) + '</div>';
 
         if (groupDisplays.specular)
           groupDisplays.specular.innerHTML += `<div class="${className}">` +
           GLOBALUTIL.formatNumber(rFrame.values['specularColorR'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['specularColorB'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['specularColorG'].value) + '</div>';
+          GLOBALUTIL.formatNumber(rFrame.values['specularColorG'].value) + ',' +
+          GLOBALUTIL.formatNumber(rFrame.values['specularColorB'].value) + '</div>';
 
       } catch (e) {
         console.log(e);

@@ -283,6 +283,7 @@ class wContext {
         let lightVector = GLOBALUTIL.getVector(gAPPP.a.profile.lightVector, 0, 1, 0);
         this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
         this.light.intensity = .7;
+        this.light.groundColor = GLOBALUTIL.color('0,0,0');
       }
       if (this.cachedProfile.lightIntensity !== profile.lightIntensity) {
         this.cachedProfile.lightIntensity = profile.lightIntensity;
@@ -552,7 +553,7 @@ class wContext {
   _renderDefaultCamera() {
     if (this.camera)
       this.camera.dispose();
-    let cameraVector = GLOBALUTIL.getVector(gAPPP.a.profile.cameraVector, 3, 15, 15);
+    let cameraVector = GLOBALUTIL.getVector('3,15,15', 3, 15, 15);
     this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
     this.camera.attachControl(this.canvas, true);
     let radius = 10;

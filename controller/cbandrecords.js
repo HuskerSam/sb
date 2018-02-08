@@ -91,9 +91,11 @@ class cBandRecords extends cBandSuper {
 
       this.cloudImageInput = this.createPanel.querySelector('.block-scene-cloudfile-picker-input');
       this.groundImagePreview = this.createPanel.querySelector('.cloud-file-ground-preview');
+      this.generateGroundMaterial = this.createPanel.querySelector('.block-generate-ground');
       this.cloudImageInput.addEventListener('input', e => this.__handleGroundChange());
 
       this.__handleBlockTypeSelectChange();
+      this.__handleSkyboxChange();
     }
 
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
@@ -113,13 +115,12 @@ class cBandRecords extends cBandSuper {
     this.groundImagePreview.style.display = '';
     if (cloudImage !== '') {
       let url = cloudImage;
-      if (url.substring(0, 3) === 'sb:'){
-        url = 'https://s3.amazonaws.com/sceneassets/sbtextures/' + url.substring(3);
+      if (url.substring(0, 3) === 'sb:') {
+        url = 'https://s3.amazonaws.com/sceneassets/textures/' + url.substring(3);
       }
       this.groundImagePreview.setAttribute('src', url);
-    }
-    else {
-        this.groundImagePreview.style.display = 'none';
+    } else {
+      this.groundImagePreview.style.display = 'none';
     }
 
   }
@@ -132,7 +133,7 @@ class cBandRecords extends cBandSuper {
       this.skyBoxImages.style.display = '';
       let imgs = this.skyBoxImages.querySelectorAll('img');
 
-      let skyboxPath = 'https://s3.amazonaws.com/sceneassets/skybox/' + skybox + '/skybox';
+      let skyboxPath = 'https://s3.amazonaws.com/sceneassets/box/' + skybox + '/skybox';
 
       imgs[0].setAttribute('src', skyboxPath + '_nx.jpg');
       imgs[1].setAttribute('src', skyboxPath + '_px.jpg');
@@ -275,23 +276,60 @@ class cBandRecords extends cBandSuper {
       if (sel === 'Path') {
         mixin.url = this.texturePathInput.value.trim();
       }
-      if (sel === 'Text') {}
+    }
+
+
+    let generateGround = false;
+    if (this.tag === 'block') {
+      let bType = this.blockOptionsPicker.value;
+
+      if (bType === 'Empty') {
+        mixin.width = this.addBlockOptionsPanel.querySelector('.block-box-width').value;
+        mixin.height = this.addBlockOptionsPanel.querySelector('.block-box-height').value;
+        mixin.depth = this.addBlockOptionsPanel.querySelector('.block-box-depth').value;
+      }
+
+      if (bType === 'Scene') {
+        mixin.width = this.sceneBlockPanel.querySelector('.block-box-width').value;
+        mixin.height = this.sceneBlockPanel.querySelector('.block-box-height').value;
+        mixin.depth = this.sceneBlockPanel.querySelector('.block-box-depth').value;
+        mixin.skybox = this.skyBoxInput.value.trim();
+
+        if (this.generateGroundMaterial.checked) {
+          generateGround = true;
+          mixin.groundMaterial = newName + '_groundmaterial';
+        }
+      }
+
+      if (bType === 'Text and Shape') {
+        mixin.width = this.blockShapePanel.querySelector('.block-box-width').value;
+        mixin.height = this.blockShapePanel.querySelector('.block-box-height').value;
+        mixin.depth = this.blockShapePanel.querySelector('.block-box-depth').value;
+
+      }
     }
 
     this.context.createObject(this.tag, newName, file, mixin).then(results => {
-      if (this.tag !== 'texture')
-        this.context.renderPreview(this.tag, results.key);
-      else {
-        gAPPP.a.modelSets['texture'].commitUpdateList([{
-          field: 'renderImageURL',
-          newValue: results.url
-        }], results.key);
-      }
+
+      if (generateGround)
+        this.__generateGroundForScene(results.key, newName, mixin, this.cloudImageInput.value.trim());
 
       this.createPanelShown = true;
       this.toggleCreatePanel();
       setTimeout(() => gAPPP.dialogs[this.tag + '-edit'].show(results.key), 600);
     });
+  }
+  __generateGroundForScene(blockKey, blockTitle, mixin, imgPath) {
+    let textureName = blockTitle + '_groundtexture';
+    let materialName = blockTitle + '_groundmaterial';
+    this.context.createObject('texture', textureName, null, {
+      url: imgPath,
+      vScale: mixin.depth,
+      uScale: mixin.width
+    }).then(results => {});
+    this.context.createObject('material', materialName, null, {
+      diffuseTextureName: textureName
+    }).then(results => {});
   }
   _getDomForChild(key, values) {
     let html = '<div class="band-title"></div><br>' +
