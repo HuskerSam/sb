@@ -104,8 +104,6 @@ html, body {
   pointer-events: none;
 }
 
-#sb-floating-toolbar-expanded {}
-
 .sb-floating-toolbar-content div {
   pointer-events: auto;
 }
@@ -167,6 +165,7 @@ html, body {
   border-style: inset;
   position: relative;
   top: 3.25em;
+  width: 7.5em;
 }
 
 .button-wrapper {
@@ -180,7 +179,11 @@ html, body {
 #sb-floating-toolbar-expanded .button-wrapper .option-buttons {
   display: inline-block;
   position: relative;
-  top: 3.5em;
+  top: 3.6em;
+}
+
+#sb-floating-toolbar-expanded .button-wrapper {
+  height: 6em;
 }
 
 .popup-canvas-body {
@@ -372,7 +375,7 @@ html, body {
   float: left;
   position: relative;
   margin: .25em;
-  border: outset .25em silver;
+  border: outset .15em silver;
   padding: .25em;
   padding-right: .5em;
   padding-top: 0;
@@ -436,7 +439,7 @@ button i.material-icons {
 .band-background-preview {
   white-space: nowrap;
   display: inline-block;
-  border: outset .25em silver;
+  border: outset .15em silver;
   border-radius: .5em;
   text-align: center;
   background-position: center;
@@ -530,8 +533,6 @@ button i.material-icons {
 .selected-mesh-bounds-helper-box .action-area input {
   width: 5em;
   text-align: right;
-  height: 2em;
-  padding: .5em .2em;
   font-size: 1em;
 }
 
@@ -556,9 +557,9 @@ button i.material-icons {
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
   transform: rotate(-90deg);
-  width: 5.5em;
+  width: 6.5em;
   top: 2em;
-  left: -.5em;
+  left: -.75em;
 }
 
 .selected-mesh-bounds-helper-box .info-area {
@@ -970,14 +971,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .font-family-panel .selected-mesh-bounds-helper-box {}
 
-.scene-options-panel .selected-mesh-bounds-helper-box input[type="range"] {
-  margin: .55em 0em;
-}
-
-.font-family-panel .selected-mesh-bounds-helper-box input[type="range"] {
-  margin: .75em 0;
-}
-
 .create-dialog-inner-wrapper {
   margin-top: 4em;
   border-radius: .25em;
@@ -1026,7 +1019,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: .5em;
   background: rgb(220, 240, 220);
   float: left;
-  border: outset .25em silver;
+  border: outset .15em silver;
   color: black;
   position: relative;
   margin-bottom: .5em;
@@ -1110,7 +1103,7 @@ input[type=range]::-webkit-slider-thumb {
   background: rgb(50, 50, 50);
   color: white;
   border-radius: .5em;
-  border: outset .25em silver;
+  border: outset .15em silver;
   margin: .1em;
   display: inline-block;
   cursor: pointer;
