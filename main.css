@@ -12,6 +12,7 @@ select {
   border-width: .25em;
   border-radius: .5em;
   padding: .25em;
+    border: outset .15em silver;
 }
 
 #login-page {
@@ -293,6 +294,8 @@ html, body {
   padding: .25em .1em;
   border-radius: .25em;
   font-size: 1em;
+  position: relative;
+  top: .25em;
 }
 
 .modal-dialog {
@@ -705,9 +708,7 @@ input[type=range]::-webkit-slider-thumb {
   margin: 0px;
 }
 
-.frames-panel button.delete-button {
-  margin: .5em;
-}
+.frames-panel button.delete-button {}
 
 .add-item-panel>label {
   position: relative;
@@ -731,7 +732,9 @@ input[type=range]::-webkit-slider-thumb {
   position: relative;
 }
 
-.frames-panel button.expand-all-helpers {}
+.frames-panel button.expand-all-helpers {
+  margin: 0 .5em;
+}
 
 .frames-header-bar {
   background: rgba(255, 255, 255, .6);
