@@ -81,10 +81,11 @@ class cBandRecords extends cBandSuper {
       this.blockOptionsPicker.addEventListener('input', e => this.__handleBlockTypeSelectChange());
 
       this.blockShapePicker = this.createPanel.querySelector('.block-add-shape-type-options');
-      this.blockShapePicker.addEventListener('click', e => this.__handleShapeChange());
+      this.blockShapePicker.addEventListener('input', e => this.__handleShapeChange());
       this.blockShapePanel = this.createPanel.querySelector('.shape-and-text-block-options');
       this.sceneBlockPanel = this.createPanel.querySelector('.scene-block-add-options');
       this.emptyBlockPanel = this.createPanel.querySelector('.scene-empty-block-add-options');
+      this.animatedDashPanel = this.createPanel.querySelector('.animated-line-block-add-options');
 
       this.skyBoxImages = this.createPanel.querySelector('.skybox-preview-images');
       this.skyBoxInput = this.createPanel.querySelector('.block-skybox-picker-select');
@@ -97,7 +98,7 @@ class cBandRecords extends cBandSuper {
 
       this.addSceneLight = this.createPanel.querySelector('.block-add-hemi-light');
       this.shapeDetailsPanel = this.createPanel.querySelector('.block-shape-add-label');
-
+      this.stretchDetailsPanel = this.createPanel.querySelector('.block-stretch-along-width-label');
 
       this.__handleBlockTypeSelectChange();
       this.__handleShapeChange();
@@ -117,10 +118,14 @@ class cBandRecords extends cBandSuper {
   }
   __handleShapeChange() {
     this.shapeDetailsPanel.style.display = 'none';
+    this.stretchDetailsPanel.style.display = 'none';
     let shape = this.blockShapePicker.value;
 
     if (shape !== 'Box' && shape !== 'Cube')
       this.shapeDetailsPanel.style.display = '';
+
+    if (shape === 'Cone' || shape === 'Cylinder')
+      this.stretchDetailsPanel.style.display = '';
   }
   __handleGroundChange() {
     let cloudImage = this.cloudImageInput.value.trim();
@@ -170,12 +175,15 @@ class cBandRecords extends cBandSuper {
     this.blockShapePanel.style.display = 'none';
     this.sceneBlockPanel.style.display = 'none';
     this.emptyBlockPanel.style.display = 'none';
+    this.animatedDashPanel.style.display = 'none';
 
     let sel = this.blockOptionsPicker.value;
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
     else if (sel === 'Scene')
       this.sceneBlockPanel.style.display = '';
+    else if (sel === 'Animated Line')
+      this.animatedDashPanel.style.display = '';
     else
       this.emptyBlockPanel.style.display = '';
   }
@@ -326,9 +334,14 @@ class cBandRecords extends cBandSuper {
         mixin.textDepth = this.blockShapePanel.querySelector('.block-text-depth').value;
         mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
         mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
-
+        mixin.cylinderHorizontal = this.blockShapePanel.querySelector('.shape-stretch-checkbox').value;
         mixin.createShapeType = this.blockShapePicker.value;
         generateShapeAndText = true;
+      }
+
+      if (bType === 'Animated Line') {
+
+        
       }
     }
 
@@ -511,7 +524,7 @@ class cBandRecords extends cBandSuper {
         if (tI[i] === this)
           break;
 
-        if (! tI[i].expandValue)
+        if (!tI[i].expandValue)
           nextSibling = tI[i].bar.parentNode.nextSibling;
       }
       this.containerCollapsed.insertBefore(this.bar.parentNode, nextSibling);

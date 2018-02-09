@@ -488,6 +488,8 @@ class wBlock {
         depth
       }, this.context.scene);
       this.sceneObject.isVisible = false;
+      this.sceneObject.material = new BABYLON.StandardMaterial(this._blockKey + 'material', this.context.scene);
+      this.sceneObject.material.alpha = 0;
       if (!this.parent) {
         this._addSkyBox();
       }

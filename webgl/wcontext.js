@@ -342,6 +342,8 @@ class wContext {
     if (gAPPP.a.profile.showBoundsBox)
       show = true;
     sceneObject.showBoundingBox = show;
+    if (this.activeBlock.blockRawData.childType === 'block')
+      sceneObject.isVisible = true;
     if (this.activeBlock.blockRawData.childType !== 'block')
       for (let i in this.scene.meshes)
         if (this.scene.meshes[i].parent === sceneObject)
@@ -353,6 +355,8 @@ class wContext {
       return;
 
     sceneObject.showBoundingBox = false;
+    if (this.activeBlock.blockRawData.childType === 'block')
+      sceneObject.isVisible = false;
     for (let i in this.scene.meshes)
       if (this.scene.meshes[i].parent === sceneObject)
         this.scene.meshes[i].showBoundingBox = false;
@@ -611,8 +615,9 @@ class wContext {
           frameTime: '',
           frameOrder: '10',
           parentKey: innerResults.key,
+          rotationY: '-90deg',
           rotationZ: '-90deg',
-          positionX: (textDepth / 2.0).toFixed(3)
+          positionZ: (textDepth / 2.0).toFixed(3)
         });
       });
     });
@@ -645,9 +650,19 @@ class wContext {
     if (options.createShapeType === 'Cone' || options.createShapeType === 'Cylinder') {
       shapeOptions.shapeType = 'cylinder';
       shapeOptions.materialName = options.shapeMaterial;
-      shapeOptions.cylinderHeight = height.toFixed(3);
-      shapeOptions.cylinderDiameter = Math.min(width, depth).toFixed(3);
-      outDepth = shapeOptions.cylinderDiameter;
+
+      if (options.cylinderHorizontal) {
+        shapeOptions.cylinderHeight = width.toFixed(3);
+        shapeOptions.cylinderDiameter = Math.min(height, depth).toFixed(3);
+        shapeOptions.rotationZ = '90deg';
+        outDepth = shapeOptions.cylinderDiameter;
+      } else {
+        shapeOptions.cylinderHeight = height.toFixed(3);
+        shapeOptions.cylinderDiameter = Math.min(width, depth).toFixed(3);
+        outDepth = shapeOptions.cylinderDiameter;
+        shapeOptions.rotationZ = '';
+      }
+
       shapeOptions.cylinderTessellation = options.shapeDivs;
       if (options.createShapeType === 'Cone')
         shapeOptions.cylinderDiameterTop = 0;
@@ -666,9 +681,9 @@ class wContext {
       shapeOptions.shapeType = 'sphere';
       shapeOptions.sphereDiameter = '';
       shapeOptions.materialName = options.shapeMaterial;
-      shapeOptions.sphereDiameterZ = width.toFixed(3);
+      shapeOptions.sphereDiameterX = width.toFixed(3);
       shapeOptions.sphereDiameterY = height.toFixed(3);
-      shapeOptions.sphereDiameterX = depth.toFixed(3);
+      shapeOptions.sphereDiameterZ = depth.toFixed(3);
       shapeOptions.sphereSegments = options.shapeDivs;
     }
 
@@ -682,7 +697,8 @@ class wContext {
           frameTime: '',
           frameOrder: '10',
           parentKey: innerResults.key,
-          positionX: (-1.0 * outDepth / 2.0).toFixed(3)
+          rotationZ: shapeOptions.rotationZ,
+          positionZ: (-1.0 * outDepth / 2.0).toFixed(3)
         });
       });
     });

@@ -69,15 +69,52 @@
             </div>
             <div class="block-add-options" style="display:none">
               <select class="block-type-select">
-                <option>Empty</option>
-                <option>Text and Shape</option>
                 <option>Scene</option>
+                <option selected>Empty</option>
+                <option>Text and Shape</option>
+                <option>Animated Line</option>
               </select>
-
               <div class="scene-empty-block-add-options">
                 <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
                 <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
                 <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
+              </div>
+              <div class="animated-line-block-add-options">
+                <label><span>W</span><input type="text" class="block-box-width" value="2" /></label>
+                <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
+                <label><span>D</span><input type="text" class="block-box-depth" value="10" /></label>
+                <br>
+                <label><span>Dash Count</span><input type="text" class="animated-line-dash-count" value="7" /></label>
+                <label><span>Time</span><input type="text" class="animated-line-time" value="2000" /></label>
+                <label><span>Delay</span><input type="text" class="animated-line-delay" value="5000" /></label>
+                <br>
+                <label>
+                  <span>Dash</span>
+                  <select class="block-add-dash-shape-type-options">
+                    <option>Box</option>
+                    <option selected>Cone</option>
+                    <option>Cylinder</option>
+                    <option>Ellipsoid</option>
+                  </select>
+                </label>
+                <label><span>W</span><input type="text" class="dash-box-width" value="2" /></label>
+                <label><span>H</span><input type="text" class="dash-box-height" value="2" /></label>
+                <label><span>D</span><input type="text" class="dash-box-depth" value="1" /></label>
+                <br>
+                <label><span>Dash Material</span><input type="text" style="width:15em;" class="dash-shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+                <br>
+                <label><input type="checkbox" class="dash-tail-checkbox" checked />Tail</label>
+                <label><span>Length</span><input type="text" class="dash-tail-length" value="3" /></label>
+                <label><span>Sides</span><input type="text" class="dash-tail-length" value="" /></label>
+                <label><input type="checkbox" class="dash-tail-checkbox" />Invert dash on end</label>
+                <br>
+                <label><span>Tail Material</span><input type="text" style="width:15em;" class="dash-tail-picker-select" list="materialdatatitlelookuplist" /></label>
+                <br>
+                <label><input type="checkbox" class="dash-tail-rail-checkbox" />Include Rail</label>
+                <label><span>Diameter</span><input type="text" class="dash-rail-sides" value=".25" /></label>
+                <label><span>Sides</span><input type="text" class="dash-rail-sides" value="" /></label>
+                <br>
+                <label><span>Rail Material</span><input type="text" style="width:15em;" class="dash-tail-rail-material-picker-select" list="materialdatatitlelookuplist" /></label>
               </div>
               <div class="shape-and-text-block-options">
                 <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
@@ -95,6 +132,7 @@
                 <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option>Cone</option>
                   <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
                 <label class="block-shape-add-label"><span>Divs</span><input type="text" class="block-add-shape-sides" /></label>
+                <label class="block-stretch-along-width-label"><input type="checkbox" class="shape-stretch-checkbox" />Stretch along width</label>
                 <br>
                 <label><span>Material</span><input type="text" style="width:15em;" class="block-shapematerial-picker-select" list="materialdatatitlelookuplist" /></label>
               </div>
