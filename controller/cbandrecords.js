@@ -300,6 +300,7 @@ class cBandRecords extends cBandSuper {
     let generateGround = false;
     let generateLight = false;
     let generateShapeAndText = false;
+    let generateAnimatedLine = false;
     if (this.tag === 'block') {
       let bType = this.blockOptionsPicker.value;
 
@@ -340,19 +341,35 @@ class cBandRecords extends cBandSuper {
       }
 
       if (bType === 'Animated Line') {
+        mixin.width = this.animatedDashPanel.querySelector('.block-box-width').value;
+        mixin.height = this.animatedDashPanel.querySelector('.block-box-height').value;
+        mixin.depth = this.animatedDashPanel.querySelector('.block-box-depth').value;
 
-        
+        mixin.dashCount = this.animatedDashPanel.querySelector('.animated-line-dash-count').value;
+        mixin.dashTime = this.animatedDashPanel.querySelector('.animated-line-time').value;
+        mixin.lineDelay = this.animatedDashPanel.querySelector('.animated-line-delay').value;
+
+        mixin.createShapeType = this.animatedDashPanel.querySelector('.block-add-dash-shape-type-options').value;
+        mixin.dashWidth = this.animatedDashPanel.querySelector('.dash-box-width').value;
+        mixin.dashHeight = this.animatedDashPanel.querySelector('.dash-box-height').value;
+        mixin.dashDepth = this.animatedDashPanel.querySelector('.dash-box-depth').value;
+        mixin.shapeDivs = this.animatedDashPanel.querySelector('.dash-shape-sides').value;
+        mixin.materialName = this.animatedDashPanel.querySelector('.dash-shape-material-picker-select').value;
+
+        generateAnimatedLine = true;
       }
     }
 
     this.context.createObject(this.tag, newName, file, mixin).then(results => {
+      if (generateAnimatedLine)
+        wGenerate.generateAnimatedLine(this.context, results.key, newName, mixin);
 
       if (generateGround)
         this.__generateGroundForScene(results.key, newName, mixin, this.cloudImageInput.value.trim());
       if (generateLight)
         this.__generateLightForScene(results.key, newName, mixin);
       if (generateShapeAndText)
-        this.context.__generateShapeAndText(results.key, newName, mixin);
+        wGenerate.generateShapeAndText(this.context, results.key, newName, mixin);
 
       this.createPanelShown = true;
       this.toggleCreatePanel();
@@ -519,7 +536,7 @@ class cBandRecords extends cBandSuper {
       this.wrapper.style.float = '';
       this.createPanelShown = true;
 
-      let nextSibling = this.containerCollapsed.childNodes[0];
+      let nextSibling = this.containerCollapsed.querySelector('.static-buttons-toolbar').nextSibling;
       for (let i in tI) {
         if (tI[i] === this)
           break;

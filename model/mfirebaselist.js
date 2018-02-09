@@ -15,6 +15,10 @@ class mFirebaseList extends mFirebaseSuper {
       this.domTitleList.id = this.tag + 'datatitlelookuplist';
       document.body.appendChild(this.domTitleList);
     }
+
+    this.startingOptionList = '';
+    if (this.tag === 'material')
+      this.startingOptionList = '<option>color: 1,0,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option>'
   }
   notifyChildren(fireData, type) {
     super.notifyChildren(fireData, type);
@@ -229,7 +233,7 @@ class mFirebaseList extends mFirebaseSuper {
   _updateDomLookupList() {
     if (!this.domTitleList)
       return;
-    let innerHTML = '';
+    let innerHTML = this.startingOptionList;
     for (let i in this.fireDataValuesByKey)
       if (this.fireDataValuesByKey[i]) {
         let option = '<option>' + this.fireDataValuesByKey[i]['title'] + '</option>';

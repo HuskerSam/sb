@@ -627,8 +627,11 @@ class wBlock {
     let deltaX = lenX / 2.0;
     let deltaZ = lenY / 2.0;
 
-    let textWrapperMesh = BABYLON.MeshBuilder.CreateBox(this._blockKey + 'textdetailswrapper',
-     { width: lenX, height: thick, depth: lenY}, this.context.scene);
+    let textWrapperMesh = BABYLON.MeshBuilder.CreateBox(this._blockKey + 'textdetailswrapper', {
+      width: lenX,
+      height: thick,
+      depth: lenY
+    }, this.context.scene);
     textWrapperMesh.isVisible = false;
     for (let i = 0, l = polies.length; i < l; i++) {
       polies[i].position.x -= deltaX;
@@ -684,15 +687,8 @@ class wBlock {
       if (field.type === undefined) return GLOBALUTIL.path(object, field.contextObjectField, value);
 
       if (field.type === 'material') {
-        value = this.__getMaterialFromParent(value);
+        this.__updateMaterial(value, object);
 
-        let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', value);
-        let m;
-        if (!tD)
-          m = new BABYLON.StandardMaterial('material', this.context.scene);
-        else
-          m = this.__material(tD);
-        this.context.__setMaterialOnObj(object, m);
         return;
       }
 
@@ -720,6 +716,23 @@ class wBlock {
       GLOBALUTIL.path(object, field.contextObjectField, value);
     } catch (e) {
       console.log('set ui object error', e, field, object, value);
+    }
+  }
+  __updateMaterial(materialName, object) {
+    materialName = this.__getMaterialFromParent(materialName);
+    if (materialName.substring(0, 6) === 'color:') {
+      let color = materialName.substring(6).trim();
+      let m = new BABYLON.StandardMaterial('material', this.context.scene);
+      m.diffuseColor = GLOBALUTIL.color(color);
+      this.context.__setMaterialOnObj(object, m);
+    } else {
+      let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', materialName);
+      let m;
+      if (!tD)
+        m = new BABYLON.StandardMaterial('material', this.context.scene);
+      else
+        m = this.__material(tD);
+      this.context.__setMaterialOnObj(object, m);
     }
   }
   __texture(values) {

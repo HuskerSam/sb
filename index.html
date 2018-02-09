@@ -80,41 +80,31 @@
                 <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
               </div>
               <div class="animated-line-block-add-options">
-                <label><span>W</span><input type="text" class="block-box-width" value="2" /></label>
-                <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
-                <label><span>D</span><input type="text" class="block-box-depth" value="10" /></label>
-                <br>
-                <label><span>Dash Count</span><input type="text" class="animated-line-dash-count" value="7" /></label>
-                <label><span>Time</span><input type="text" class="animated-line-time" value="2000" /></label>
+                <div>
+                  <label><span>W</span><input type="text" class="block-box-width" value="2" /></label>
+                  <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
+                  <label><span>D</span><input type="text" class="block-box-depth" value="10" /></label>
+                </div>
+                <div style="clear:both;"></div>
+                <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="7" /></label>
+                <label><span>Time</span><input type="text" class="animated-line-time" value="10000" /></label>
                 <label><span>Delay</span><input type="text" class="animated-line-delay" value="5000" /></label>
-                <br>
+                <hr>
                 <label>
                   <span>Dash</span>
                   <select class="block-add-dash-shape-type-options">
-                    <option>Box</option>
-                    <option selected>Cone</option>
                     <option>Cylinder</option>
+                    <option selected>Cone</option>
                     <option>Ellipsoid</option>
                   </select>
                 </label>
+                <label><span>Sides</span><input type="text" class="dash-shape-sides" value="" /></label>
+                <br>
                 <label><span>W</span><input type="text" class="dash-box-width" value="2" /></label>
                 <label><span>H</span><input type="text" class="dash-box-height" value="2" /></label>
                 <label><span>D</span><input type="text" class="dash-box-depth" value="1" /></label>
                 <br>
                 <label><span>Dash Material</span><input type="text" style="width:15em;" class="dash-shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
-                <br>
-                <label><input type="checkbox" class="dash-tail-checkbox" checked />Tail</label>
-                <label><span>Length</span><input type="text" class="dash-tail-length" value="3" /></label>
-                <label><span>Sides</span><input type="text" class="dash-tail-length" value="" /></label>
-                <label><input type="checkbox" class="dash-tail-checkbox" />Invert dash on end</label>
-                <br>
-                <label><span>Tail Material</span><input type="text" style="width:15em;" class="dash-tail-picker-select" list="materialdatatitlelookuplist" /></label>
-                <br>
-                <label><input type="checkbox" class="dash-tail-rail-checkbox" />Include Rail</label>
-                <label><span>Diameter</span><input type="text" class="dash-rail-sides" value=".25" /></label>
-                <label><span>Sides</span><input type="text" class="dash-rail-sides" value="" /></label>
-                <br>
-                <label><span>Rail Material</span><input type="text" style="width:15em;" class="dash-tail-rail-material-picker-select" list="materialdatatitlelookuplist" /></label>
               </div>
               <div class="shape-and-text-block-options">
                 <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
@@ -247,10 +237,13 @@
       <div class="canvas-play-bar" style="display:inline-block">
         <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
         <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
-        <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
-        <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
-        <button class="btn-sb-icon download-button" style="display:none;"><i class="material-icons">file_download</i></button>
-        <button class="btn-sb-icon render-log-button"><i class="material-icons">event_available</i></button>
+        <button class="btn-sb-icon expand-button"><i class="material-icons">chevron_right</i></button>
+        <div class="additional-panel" style="display:none;">
+          <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+          <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+          <button class="btn-sb-icon download-button" style="display:none;"><i class="material-icons">file_download</i></button>
+          <button class="btn-sb-icon render-log-button"><i class="material-icons">event_available</i></button>
+        </div>
         <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
       </div>
       <div class="camera-options-panel" style="display:inline-block;">
@@ -454,6 +447,7 @@
   <script src="webgl/wframes.js"></script>
   <script src="webgl/wblock.js"></script>
   <script src="webgl/wcontext.js"></script>
+  <script src="webgl/wgenerate.js"></script>
 
   <script src="controller/cbandsuper.js"></script>
   <script src="controller/cviewmain.js"></script>

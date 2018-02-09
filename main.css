@@ -678,7 +678,6 @@ input[type=range]::-webkit-slider-thumb {
   clear: both;
   position: relative;
   margin: 0em;
-  padding-top: .5em;
 }
 
 .render-log-panel {
@@ -708,7 +707,11 @@ input[type=range]::-webkit-slider-thumb {
   margin: 0px;
 }
 
-.frames-panel button.delete-button {}
+.frames-panel button.delete-button {
+  font-size: 1.2em;
+  top: -.4em;
+  position: relative;
+}
 
 .add-item-panel>label {
   position: relative;
