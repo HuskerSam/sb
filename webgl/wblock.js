@@ -684,6 +684,10 @@ class wBlock {
   __updateObjectValue(field, value, object) {
     try {
       if (value === undefined) return;
+
+      if (field.displayType === 'number')
+        value = GLOBALUTIL.getNumberOrDefault(value, 0.0);
+
       if (field.type === undefined) return GLOBALUTIL.path(object, field.contextObjectField, value);
 
       if (field.type === 'material') {
@@ -712,7 +716,6 @@ class wBlock {
         return GLOBALUTIL.path(object, field.contextObjectField, t);
       }
 
-      //default
       GLOBALUTIL.path(object, field.contextObjectField, value);
     } catch (e) {
       console.log('set ui object error', e, field, object, value);
