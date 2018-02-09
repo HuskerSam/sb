@@ -41,7 +41,18 @@ class wGenerate {
       rotationZ: ''
     }
 
-    this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions);
+    this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions).then(resultsObj => {
+      let newObj = {
+        frameTime: '',
+        frameOrder: '10',
+        parentKey: resultsObj.blockChildResults.key
+      };
+
+      for (let i in resultsObj.firstFrameOptions)
+        newObj[i] = resultsObj.firstFrameOptions[i];
+
+      context.createObject('frame', '', null, newObj).then(resultB => {});
+    });
   }
   static createShapeBlockChild(context, blockId, shapeBlockName, shapeOptions) {
     let width = shapeOptions.width;
@@ -49,15 +60,9 @@ class wGenerate {
     let depth = shapeOptions.depth;
     let minDim = Math.min(Math.min(width, height), depth);
     let maxDim = Math.max(Math.max(width, height), depth);
+    let firstFrameOptions = {};
 
-    if (shapeOptions.rotationX === undefined)
-      shapeOptions.rotationX = '';
-    if (shapeOptions.rotationZ === undefined)
-      shapeOptions.rotationZ = '';
-    if (!shapeOptions.positionZ)
-      shapeOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
-    if (shapeOptions.scalingX === undefined)
-      shapeOptions.scalingX = '';
+    firstFrameOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
 
     if (shapeOptions.createShapeType === 'Cube') {
       shapeOptions.shapeType = 'box';
@@ -65,7 +70,7 @@ class wGenerate {
       shapeOptions.boxWidth = '';
       shapeOptions.boxHeight = '';
       shapeOptions.boxDepth = '';
-      shapeOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
+      firstFrameOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
     }
     if (shapeOptions.createShapeType === 'Box') {
       shapeOptions.shapeType = 'box';
@@ -83,11 +88,9 @@ class wGenerate {
       if (shapeOptions.cylinderHorizontal) {
         shapeOptions.cylinderHeight = width.toFixed(3);
         shapeOptions.cylinderDiameter = Math.min(height, depth).toFixed(3);
-        shapeOptions.rotationZ = '90deg';
-        shapeOptions.positionZ = (-1.0 * shapeOptions.cylinderDiameter / 2.0).toFixed(3);
+        firstFrameOptions.rotationZ = '90deg';
+        firstFrameOptions.positionZ = (-1.0 * shapeOptions.cylinderDiameter / 2.0).toFixed(3);
       }
-      console.log(shapeOptions);
-
       if (shapeOptions.createShapeType === 'Cone')
         shapeOptions.cylinderDiameterTop = 0;
     }
@@ -98,7 +101,7 @@ class wGenerate {
       shapeOptions.boxWidth = '';
       shapeOptions.boxHeight = '';
       shapeOptions.boxDepth = '';
-      shapeOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
+      firstFrameOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
     }
     if (shapeOptions.createShapeType === 'Ellipsoid') {
       shapeOptions.shapeType = 'sphere';
@@ -109,29 +112,27 @@ class wGenerate {
       shapeOptions.sphereSegments = shapeOptions.shapeDivs;
     }
 
-    context.createObject('shape', shapeBlockName, null, shapeOptions).then(results => {
-      context.createObject('blockchild', '', null, {
-        childType: 'shape',
-        childName: shapeBlockName,
-        parentKey: blockId
-      }).then(innerResults => {
-        context.createObject('frame', '', null, {
-          frameTime: '',
-          frameOrder: '10',
-          parentKey: innerResults.key,
-          rotationZ: shapeOptions.rotationZ,
-          rotationX: shapeOptions.rotationX,
-          positionZ: shapeOptions.positionZ,
-          scalingX: shapeOptions.scalingX
-        }).then(resultB => {});
+    return new Promise((resolve, reject) => {
+      context.createObject('shape', shapeBlockName, null, shapeOptions).then(results => {
+        context.createObject('blockchild', '', null, {
+          childType: 'shape',
+          childName: shapeBlockName,
+          parentKey: blockId
+        }).then(innerResults => resolve({
+          blockChildResults: innerResults,
+          shapeResults: results,
+          shapeOptions,
+          firstFrameOptions
+        }));
       });
     });
   }
   static generateAnimatedLine(context, blockId, blockTitle, options) {
+    let barLength = GLOBALUTIL.getNumberOrDefault(options.depth, 10);
     let shapeOptions = {
-      width: GLOBALUTIL.getNumberOrDefault(options.dashWidth, 1),
+      width: GLOBALUTIL.getNumberOrDefault(options.width, 1),
       depth: GLOBALUTIL.getNumberOrDefault(options.dashDepth, 1),
-      height: GLOBALUTIL.getNumberOrDefault(options.dashHeight, 1),
+      height: GLOBALUTIL.getNumberOrDefault(options.height, 1),
       createShapeType: options.createShapeType,
       materialName: options.materialName,
       shapeDivs: options.shapeDivs,
@@ -145,14 +146,84 @@ class wGenerate {
     if (shapeOptions.depth <= 0.0)
       shapeOptions.depth = 0.001;
 
-    shapeOptions.rotationX = '90deg';
-    if (shapeOptions.width !== shapeOptions.height) {
-      shapeOptions.scalingX = (shapeOptions.width / shapeOptions.height).toFixed(3);
-      shapeOptions.width = shapeOptions.height;
+    let moreOptions = {};
+    if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
+      if (shapeOptions.width !== shapeOptions.height) {
+        moreOptions.scalingX = (shapeOptions.width / shapeOptions.height).toFixed(3);
+        shapeOptions.width = shapeOptions.height;
+      }
+      moreOptions.rotationX = '90deg';
+    }
+    if (shapeOptions.createShapeType === 'Ellispoid') {
+      let width = shapeOptions.width;
+      let height = shapeOptions.height;
+      let depth = shapeOptions.depth;
+      shapeOptions.depth = width;
+      shapeOptions.width = depth;
     }
 
-    this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions);
+    moreOptions.positionZ = barLength / 2.0;
 
-    console.log(options);
+    moreOptions.runTime = GLOBALUTIL.getNumberOrDefault(options.runTime, 2000);
+    moreOptions.dashCount = GLOBALUTIL.getNumberOrDefault(options.dashCount, 1);
+    moreOptions.endTime = moreOptions.runTime;
+    moreOptions.timePerDash = moreOptions.runTime / moreOptions.dashCount;
+
+    for (let i = 0; i < moreOptions.dashCount; i++)
+      this.__createLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, i);
+
+    let blockFrame = {
+      frameTime: moreOptions.endTime.toFixed(3),
+      frameOrder: '10',
+      parentKey: blockId
+    };
+    context.createObject('frame', '', null, blockFrame).then(resultB => {});
+  }
+  static __createLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, index) {
+    this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions).then(resultsObj => {
+      let frameOrder = 10;
+      let newObj = {
+        parentKey: resultsObj.blockChildResults.key
+      };
+
+      for (let i in resultsObj.firstFrameOptions)
+        newObj[i] = resultsObj.firstFrameOptions[i];
+      for (let i in moreOptions)
+        newObj[i] = moreOptions[i];
+
+      let zLen = newObj.positionZ * 2;
+      let minZTime = index * moreOptions.timePerDash;
+
+      let startPos = (-0.5 * zLen) + (index * moreOptions.timePerDash / moreOptions.endTime * zLen);
+
+      newObj.positionZ = startPos;
+      newObj.frameOrder = frameOrder.toString();
+      newObj.frameTime = "0";
+      context.createObject('frame', '', null, newObj).then(resultB => {});
+      frameOrder += 10;
+
+      if (minZTime > .001) {
+        let zh = zLen / 2.0;
+        let iTime = moreOptions.endTime - minZTime;
+        newObj.frameTime = iTime.toString();
+        newObj.frameOrder = frameOrder.toString();
+        newObj.positionZ = zh.toFixed(3);
+        context.createObject('frame', '', null, newObj).then(resultB => {});
+        frameOrder += 10;
+
+        newObj.frameTime = (iTime + 5).toString();
+        newObj.frameOrder = frameOrder.toString();
+        newObj.positionZ = (-1.0 * zh).toFixed(3);
+        context.createObject('frame', '', null, newObj).then(resultB => {});
+        frameOrder += 10;
+      }
+
+      newObj.positionZ = startPos + zLen;
+      if (newObj.positionZ > (zLen / 2.0))
+        newObj.positionZ -= zLen;
+      newObj.frameOrder = frameOrder.toString();
+      newObj.frameTime = moreOptions.endTime.toFixed(3);
+      context.createObject('frame', '', null, newObj).then(resultB => {});
+    });
   }
 }

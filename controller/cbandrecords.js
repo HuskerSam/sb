@@ -346,12 +346,9 @@ class cBandRecords extends cBandSuper {
         mixin.depth = this.animatedDashPanel.querySelector('.block-box-depth').value;
 
         mixin.dashCount = this.animatedDashPanel.querySelector('.animated-line-dash-count').value;
-        mixin.dashTime = this.animatedDashPanel.querySelector('.animated-line-time').value;
-        mixin.lineDelay = this.animatedDashPanel.querySelector('.animated-line-delay').value;
+        mixin.runTime = this.animatedDashPanel.querySelector('.animated-run-time').value;
 
         mixin.createShapeType = this.animatedDashPanel.querySelector('.block-add-dash-shape-type-options').value;
-        mixin.dashWidth = this.animatedDashPanel.querySelector('.dash-box-width').value;
-        mixin.dashHeight = this.animatedDashPanel.querySelector('.dash-box-height').value;
         mixin.dashDepth = this.animatedDashPanel.querySelector('.dash-box-depth').value;
         mixin.shapeDivs = this.animatedDashPanel.querySelector('.dash-shape-sides').value;
         mixin.materialName = this.animatedDashPanel.querySelector('.dash-shape-material-picker-select').value;

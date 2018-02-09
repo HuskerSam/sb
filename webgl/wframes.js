@@ -86,7 +86,7 @@ class wFrames {
     return result;
   }
   __frameFromTimeToken(timeToken) {
-    timeToken = timeToken.trim();
+    timeToken = timeToken.toString().trim();
     let easingFunction = 'n';
     let timeParts = timeToken.split(':');
     if (timeParts.length > 1) {
