@@ -333,7 +333,6 @@ __localStaticStorageForBindingFields['texture'] = [{
   type: 'color',
   group: 'textColor'
 }];
-__localStaticStorageForBindingFields['userProfile'] = [];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   title: 'Font',
   fireSetField: 'fontFamily',
@@ -1222,7 +1221,7 @@ __defaultData['block'] = {
   children: {}
 };
 __defaultData['blockchild'] = {
-  childType: 'mesh',
+  childType: 'block',
   childName: '',
   inheritMaterial: true,
   inheritGround: true,

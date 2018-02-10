@@ -90,7 +90,9 @@ html, body {
   text-align: left;
   position: relative;
   top: -.25em;
-  margin-bottom: -.2em;
+  margin-bottom: -.5em;
+  padding-left: 6em;
+  float:left;
 }
 
 #sb-floating-toolbar .sb-floating-toolbar-item {
@@ -108,6 +110,9 @@ html, body {
   pointer-events: auto;
 }
 
+#sb-floating-toolbar .button-wrapper {
+  margin: .5em .25em;
+}
 .sb-floating-toolbar-content {
   pointer-events: auto;
   white-space: nowrap;
@@ -484,14 +489,6 @@ button i.material-icons {
   font-size: inherit;
 }
 
-.user-profile-info-block {
-  background: white;
-  font-weight: bold;
-  width: auto;
-  padding: .25em;
-  border-radius: .25em;
-}
-
 .url-type-input-group {
   width: 45vw;
 }
@@ -623,18 +620,6 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   border-radius: .25em;
   border: outset .1em silver;
-}
-
-.global-floating-toolbar {
-  z-index: 5000;
-  pointer-events: none;
-  position: relative;
-  padding: .25em;
-  line-height: 2.5em;
-}
-
-.global-floating-toolbar * {
-  pointer-events: auto;
 }
 
 .menu-clipper-wrapper {
@@ -836,17 +821,28 @@ input[type=range]::-webkit-slider-thumb {
   top: -.1em;
 }
 
-#project-panel {
-  padding: 0em;
+#user-profile-panel {
+  position:absolute;
+  right: .5em;
+  bottom: 3em;
+  background:rgb(50,50,50);
+  color: white;
+  padding: .5em;
   border-radius: .5em;
-  margin-bottom: -.25em;
+  border: inset .15em silver;
+  text-align: center;
 }
 
 #user-profile-settings-button {
   color: rgb(127, 127, 0);
 }
 
-#workspace-settings-button {}
+#workspace-settings-button {
+  position:absolute;
+  bottom: .25em;
+  right: .25em;
+  z-index:100;
+}
 
 .context-scene-tools-panel {
   pointer-events: none;
@@ -901,7 +897,6 @@ input[type=range]::-webkit-slider-thumb {
   width: 40vw;
   font-size: 1.1em;
   display: inline-block;
-  float: right;
   margin-top: .25em;
   margin-left: .25em;
 }
@@ -946,23 +941,15 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .scene-options-panel {
-  float: right;
   pointer-events: none;
-  position: relative;
-  top: 1.2em;
-  z-index: 100;
 }
 
 .scene-options-panel .fields-container {
   overflow: hidden;
   pointer-events: none;
+  display: inline-block;
 }
 
-.canvas-actions .scene-options {
-  float: right;
-  margin-right: .4em;
-  top: .25em;
-}
 
 .scene-options-panel .fields-container * {
   pointer-events: auto;

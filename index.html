@@ -16,244 +16,211 @@
   <div id="main-page" style="display:none;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
-    <div class="global-floating-toolbar">
-
+    <div style="position:absolute;top:0;left:0;z-index:1000;">
       <button id="toggle-all-toolbands" class="btn-sb-icon" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
-      <button id="toggle-all-toolbands-down" class="btn-sb-icon"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
-
-      <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
-
-      <div id="project-panel" style="display:none;">
-        <select id="workspaces-select"></select>
-        <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
-        <input id="new-workspace-name" />
-        <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
-        <div class="project-fields-container"></div>
-      </div>
-
-      <div id="sb-floating-toolbar" style="display:inline-block;">
-        <div style="display:none;" id="sb-floating-toolbar-item-template">
-          <div class="sb-floating-toolbar-item">
-            <div class="button-wrapper">
-              <button class="button-title"></button>
-              <div class="option-buttons">
-                <button class="btn-sb-icon sb-floating-toolbar-create-btn" style="background:rgb(0,127,0)"><i class="material-icons">add</i></button>
-              </div>
-            </div>
-            <div class="sb-floating-toolbar-content">
-            </div>
-          </div>
-          <div class="add-item-panel" style="display:none;">
-            <label><span>Title</span><input style="width:20em;" class="add-item-name" /></label>
-            <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
-            <br>
-            <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
-            <div class="texture-add-options" style="display:none">
-              <select class="texture-type-select">
-                <option>Upload</option>
-                <option>Path</option>
-              </select>
-              <input type="file" class="file-upload-texture" />
-              <label class="texture-path-label"><span>Path</span><input type="text" style="width:30em;" class="text-path-texture" list="sbimageslist" /></label>
-            </div>
-            <div class="material-add-options" style="display:none;">
-              <label><input type="checkbox" class="diffuse-color-checkbox" checked />Diffuse</label>
-              <label><input type="checkbox" class="emissive-color-checkbox" />Emissive</label>
-              <label><input type="checkbox" class="ambient-color-checkbox" />Ambient</label>
-              <label><input type="checkbox" class="specular-color-checkbox" />Specular</label>
-              <br>
-              <label>Color <input style="width:12em;" class="material-color-add" type="text" value=".7,.7,.7" /></label>
-              <input type="color" class="material-color-add-colorinput" />
-              <br>
-              <label><span>Texture</span><input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>
-            </div>
-            <div class="block-add-options" style="display:none">
-              <select class="block-type-select">
-                <option>Scene</option>
-                <option selected>Empty</option>
-                <option>Text and Shape</option>
-                <option>Animated Line</option>
-                <option>Connector Line</option>
-              </select>
-              <div class="scene-empty-block-add-options">
-                <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
-                <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
-                <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
-              </div>
-
-              <div class="connector-line-block-add-options" style="display:none;">
-                <label><span>Length</span><input type="text" class="line-length" value="10" /></label>
-                <label><span>Diameter</span><input type="text" class="line-diameter" value=".5" /></label>
-                <label><span>Sides</span><input type="text" class="line-sides" value="" /></label>
-                <br>
-                <label><span>Material</span><input type="text" style="width:15em;" class="line-material" list="materialdatatitlelookuplist" /></label>
-
-                <br>
-                <label>
-                  <span>Point</span>
-                  <select class="point-shape">
-                    <option>None</option>
-                    <option>Cylinder</option>
-                    <option selected>Cone</option>
-                    <option>Ellipsoid</option>
-                  </select>
-                </label>
-                <br>
-                <label><span>Length</span><input type="text" class="point-length" value="1" /></label>
-                <label><span>Diameter</span><input type="text" class="point-diameter" value="2" /></label>
-                <label><span>Sides</span><input type="text" class="point-sides" value="" /></label>
-                <br>
-                <label><span>Material</span><input type="text" style="width:15em;" class="point-material" list="materialdatatitlelookuplist" /></label>
-                <br>
-                <label>
-                  <span>Tail Shape</span>
-                  <select class="tail-shape">
-                    <option>None</option>
-                    <option>Cylinder</option>
-                    <option>Cone</option>
-                    <option selected>Ellipsoid</option>
-                  </select>
-                </label>
-                <br>
-                <label><span>Length</span><input type="text" class="tail-length" value="1" /></label>
-                <label><span>Diameter</span><input type="text" class="tail-diameter" value="1" /></label>
-                <label><span>Sides</span><input type="text" class="tail-sides" value="" /></label>
-                <br>
-                <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
-              </div>
-              <div class="animated-line-block-add-options">
-                <div>
-                  <label><span>W</span><input type="text" class="block-box-width" value="1" /></label>
-                  <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
-                  <label><span>D</span><input type="text" class="block-box-depth" value="10" /></label>
-                </div>
-                <div style="clear:both;"></div>
-                <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
-                <label><span>Run Time</span><input type="text" class="animated-run-time" value="1500" /></label>
-                <br>
-                <label>
-                  <span>Shape</span>
-                  <select class="block-add-dash-shape-type-options">
-                    <option>Cylinder</option>
-                    <option selected>Cone</option>
-                    <option>Ellipsoid</option>
-                  </select>
-                </label>
-                <label><span>Sides</span><input type="text" class="dash-shape-sides" value="" /></label>
-                <label><span>Length</span><input type="text" class="dash-box-depth" value=".5" /></label>
-                <br>
-                <label><span>Material</span><input type="text" style="width:15em;" class="dash-shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
-              </div>
-              <div class="shape-and-text-block-options">
-                <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
-                <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
-                <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>
-                <hr>
-                <label><span>Text</span><input type="text" style="width:15em;" class="block-box-text" value="Text" /></label>
-                <label><span>Depth</span><input type="text" class="block-text-depth" value=".25" /></label>
-                <br>
-                <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
-                <br>
-                <label><span>Material</span><input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
-                <hr>
-
-                <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option>Cone</option>
-                  <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
-                <label class="block-shape-add-label"><span>Divs</span><input type="text" class="block-add-shape-sides" /></label>
-                <label class="block-stretch-along-width-label"><input type="checkbox" class="shape-stretch-checkbox" />Stretch along width</label>
-                <br>
-                <label><span>Material</span><input type="text" style="width:15em;" class="block-shapematerial-picker-select" list="materialdatatitlelookuplist" /></label>
-              </div>
-              <div class="scene-block-add-options" style="text-align:center;">
-                <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
-                <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
-                <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
-                <hr>
-                <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
-                <hr>
-                <label><input type="checkbox" class="block-generate-ground" /><span>Create Ground Material</span></label>
-                <br>
-                <label><span>Image Path</span><input type="text" style="width:15em;" class="block-scene-cloudfile-picker-input" list="sbimageslist" /></label>
-                <br>
-                <img class="cloud-file-ground-preview" style="width:5em;height:5em;display:none;">
-                <hr>
-                <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
-                <div class="skybox-preview-images"><img><img><img><img><img><img></div>
-              </div>
-            </div>
-            <div class="mesh-add-options" style="display:none">
-              <input type="file" class="mesh-file-upload" />
-              <br>
-              <label><span>Material</span><input type="text" style="width:15em;" class="mesh-material-picker-select" list="materialdatatitlelookuplist" /></label>
-            </div>
-            <div class="shape-add-options" style="display:none;">
-              <label><span>Type</span><select class="shape-type-select">
-                <option selected>3D Text</option>
-                <option>Box</option>
-                <option>Sphere</option>
-                <option>Cylinder</option>
-              </select></label>
-              <div class="create-box-options">
-                <label><span>Width</span><input type="text" class="box-width" /></label>
-                <label><span>Height</span><input type="text" class="box-height" /></label>
-                <label><span>Depth</span><input type="text" class="box-depth" /></label>
-              </div>
-              <div class="create-sphere-options">
-                <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
-              </div>
-              <div class="create-cylinder-options">
-                <label><span>Diameter</span><input type="text" class="cylinder-diameter"></label>
-                <label><span>Height</span><input type="text" class="cylinder-height"></label>
-              </div>
-              <div class="create-text-options">
-                <label><span>Text</span><input class="text-shape-add" value="3D Text" /></label>
-                <br>
-                <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
-              </div>
-              <label><span>Material</span><input type="text" style="width:15em;" class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
-            </div>
-          </div>
-        </div>
-        <div class="static-buttons-toolbar">
-        </div>
-      </div>
-      <div style="float:right;">
-        <button id="user-profile-settings-button" class="btn-sb-icon"><i class="material-icons">verified_user</i></button>
-        <button class="btn-sb-icon font-options"><i class="material-icons">text_format</i></button>
-        <button class="btn-sb-icon help-options"><i class="material-icons">help</i></button>
-      </div>
-      <div style="float:right;pointer-events: none;clear:right;">
-        <div class="font-family-panel" style="display:none;float:right;">
-          <input type="range" min="7" max="36" id="fontsize-toolbar-slider" />
-          <br>
-          <div class="fields-container"></div>
-          <div style="clear:both"></div>
-        </div>
-        <div class="help-options-panel" style="display:none;float:right;">
-          HELP INFO COMING SOME DAY
-
-          <div class="fields-container"></div>
-          <div style="clear:both"></div>
-        </div>
-        <div class="user-profile-expanded-wrapper" style="display:none;">
-          <img class="user-image-display" />
-          <div class="form-group user-profile-info-block">
-            <span class="user-info"></span>
-            <br>
-            <button id="user-profile-dialog-reset-button" class="btn-sb-icon">
-              <i class="material-icons">account_circle</i> Reset Profile
-            </button>
-            <button id="sign-out-button" class="btn-sb-icon">
-              <i class="material-icons">account_box</i> Sign out
-            </button>
-
-          </div>
-          <div class="user-profile-fields-container"></div>
-        </div>
-      </div>
+      <button id="toggle-all-toolbands-down" class="btn-sb-icon" style="border-style:inset;"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
     </div>
 
+    <div id="sb-floating-toolbar" style="display:inline-block;"></div>
     <div id="sb-floating-toolbar-expanded">
+    </div>
+    <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
+    <div id="user-profile-panel" style="display:none;">
+      <label><span>Workspace</span><select id="workspaces-select"></select></label>
+      <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
+      <input id="new-workspace-name" />
+      <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
+      <hr>
+      <div class="project-fields-container"></div>
+      <input type="range" min="7" max="20" id="fontsize-toolbar-slider" />
+      <div class="fields-container" style="clear:both;"></div>
+      <img class="user-image-display" />
+      <span class="user-info"></span>
+      <br>
+      <button id="user-profile-dialog-reset-button" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
+      <button id="sign-out-button" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+    </div>
+  </div>
+  <div style="display:none;" id="sb-floating-toolbar-item-template">
+    <div class="sb-floating-toolbar-item">
+      <div class="button-wrapper">
+        <button class="button-title"></button>
+        <div class="option-buttons">
+          <button class="btn-sb-icon sb-floating-toolbar-create-btn" style="background:rgb(0,127,0)"><i class="material-icons">add</i></button>
+        </div>
+      </div>
+      <div class="sb-floating-toolbar-content">
+      </div>
+    </div>
+    <div class="add-item-panel" style="display:none;">
+      <label><span>Title</span><input style="width:20em;" class="add-item-name" /></label>
+      <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
+      <br>
+      <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
+      <div class="texture-add-options" style="display:none">
+        <select class="texture-type-select">
+          <option>Upload</option>
+          <option>Path</option>
+        </select>
+        <input type="file" class="file-upload-texture" />
+        <label class="texture-path-label"><span>Path</span><input type="text" style="width:30em;" class="text-path-texture" list="sbimageslist" /></label>
+      </div>
+      <div class="material-add-options" style="display:none;">
+        <label><input type="checkbox" class="diffuse-color-checkbox" checked />Diffuse</label>
+        <label><input type="checkbox" class="emissive-color-checkbox" />Emissive</label>
+        <label><input type="checkbox" class="ambient-color-checkbox" />Ambient</label>
+        <label><input type="checkbox" class="specular-color-checkbox" />Specular</label>
+        <br>
+        <label>Color <input style="width:12em;" class="material-color-add" type="text" value=".7,.7,.7" /></label>
+        <input type="color" class="material-color-add-colorinput" />
+        <br>
+        <label><span>Texture</span><input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>
+      </div>
+      <div class="block-add-options" style="display:none">
+        <select class="block-type-select">
+          <option>Scene</option>
+          <option selected>Empty</option>
+          <option>Text and Shape</option>
+          <option>Animated Line</option>
+          <option>Connector Line</option>
+        </select>
+        <div class="scene-empty-block-add-options">
+          <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
+        </div>
+
+        <div class="connector-line-block-add-options" style="display:none;">
+          <label><span>Length</span><input type="text" class="line-length" value="10" /></label>
+          <label><span>Diameter</span><input type="text" class="line-diameter" value=".5" /></label>
+          <label><span>Sides</span><input type="text" class="line-sides" value="" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="line-material" list="materialdatatitlelookuplist" /></label>
+
+          <br>
+          <label>
+            <span>Point</span>
+            <select class="point-shape">
+              <option>None</option>
+              <option>Cylinder</option>
+              <option selected>Cone</option>
+              <option>Ellipsoid</option>
+            </select>
+          </label>
+          <br>
+          <label><span>Length</span><input type="text" class="point-length" value="1" /></label>
+          <label><span>Diameter</span><input type="text" class="point-diameter" value="2" /></label>
+          <label><span>Sides</span><input type="text" class="point-sides" value="" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="point-material" list="materialdatatitlelookuplist" /></label>
+          <br>
+          <label>
+            <span>Tail Shape</span>
+            <select class="tail-shape">
+              <option>None</option>
+              <option>Cylinder</option>
+              <option>Cone</option>
+              <option selected>Ellipsoid</option>
+            </select>
+          </label>
+          <br>
+          <label><span>Length</span><input type="text" class="tail-length" value="1" /></label>
+          <label><span>Diameter</span><input type="text" class="tail-diameter" value="1" /></label>
+          <label><span>Sides</span><input type="text" class="tail-sides" value="" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
+        </div>
+        <div class="animated-line-block-add-options">
+          <div>
+            <label><span>W</span><input type="text" class="block-box-width" value="1" /></label>
+            <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
+            <label><span>D</span><input type="text" class="block-box-depth" value="10" /></label>
+          </div>
+          <div style="clear:both;"></div>
+          <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
+          <label><span>Run Time</span><input type="text" class="animated-run-time" value="1500" /></label>
+          <br>
+          <label>
+            <span>Shape</span>
+            <select class="block-add-dash-shape-type-options">
+              <option>Cylinder</option>
+              <option selected>Cone</option>
+              <option>Ellipsoid</option>
+            </select>
+          </label>
+          <label><span>Sides</span><input type="text" class="dash-shape-sides" value="" /></label>
+          <label><span>Length</span><input type="text" class="dash-box-depth" value=".5" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="dash-shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+        </div>
+        <div class="shape-and-text-block-options">
+          <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>
+          <hr>
+          <label><span>Text</span><input type="text" style="width:15em;" class="block-box-text" value="Text" /></label>
+          <label><span>Depth</span><input type="text" class="block-text-depth" value=".25" /></label>
+          <br>
+          <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
+          <hr>
+
+          <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option>Cone</option>
+            <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
+          <label class="block-shape-add-label"><span>Divs</span><input type="text" class="block-add-shape-sides" /></label>
+          <label class="block-stretch-along-width-label"><input type="checkbox" class="shape-stretch-checkbox" />Stretch along width</label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="block-shapematerial-picker-select" list="materialdatatitlelookuplist" /></label>
+        </div>
+        <div class="scene-block-add-options" style="text-align:center;">
+          <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
+          <hr>
+          <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
+          <hr>
+          <label><input type="checkbox" class="block-generate-ground" /><span>Create Ground Material</span></label>
+          <br>
+          <label><span>Image Path</span><input type="text" style="width:15em;" class="block-scene-cloudfile-picker-input" list="sbimageslist" /></label>
+          <br>
+          <img class="cloud-file-ground-preview" style="width:5em;height:5em;display:none;">
+          <hr>
+          <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
+          <div class="skybox-preview-images"><img><img><img><img><img><img></div>
+        </div>
+      </div>
+      <div class="mesh-add-options" style="display:none">
+        <input type="file" class="mesh-file-upload" />
+        <br>
+        <label><span>Material</span><input type="text" style="width:15em;" class="mesh-material-picker-select" list="materialdatatitlelookuplist" /></label>
+      </div>
+      <div class="shape-add-options" style="display:none;">
+        <label><span>Type</span><select class="shape-type-select">
+          <option selected>3D Text</option>
+          <option>Box</option>
+          <option>Sphere</option>
+          <option>Cylinder</option>
+        </select></label>
+        <div class="create-box-options">
+          <label><span>Width</span><input type="text" class="box-width" /></label>
+          <label><span>Height</span><input type="text" class="box-height" /></label>
+          <label><span>Depth</span><input type="text" class="box-depth" /></label>
+        </div>
+        <div class="create-sphere-options">
+          <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
+        </div>
+        <div class="create-cylinder-options">
+          <label><span>Diameter</span><input type="text" class="cylinder-diameter"></label>
+          <label><span>Height</span><input type="text" class="cylinder-height"></label>
+        </div>
+        <div class="create-text-options">
+          <label><span>Text</span><input class="text-shape-add" value="3D Text" /></label>
+          <br>
+          <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
+        </div>
+        <label><span>Material</span><input type="text" style="width:15em;" class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+      </div>
     </div>
   </div>
 
@@ -267,21 +234,18 @@
           <div class="fields-container"></div>
         </div>
         <div class="scene-options-panel" style="display:none;">
+          <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+          <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+          <button class="btn-sb-icon download-button" style="display:none;"><i class="material-icons">file_download</i></button>
+          <button class="btn-sb-icon render-log-button"><i class="material-icons">event_available</i></button>
           <div class="fields-container"></div>
-          <div style="clear:both;"></div>
         </div>
       </div>
       <div style="clear:both;"></div>
       <div class="canvas-play-bar" style="display:inline-block">
         <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
         <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
-        <button class="btn-sb-icon expand-button"><i class="material-icons">chevron_right</i></button>
-        <div class="additional-panel" style="display:none;">
-          <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
-          <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
-          <button class="btn-sb-icon download-button" style="display:none;"><i class="material-icons">file_download</i></button>
-          <button class="btn-sb-icon render-log-button"><i class="material-icons">event_available</i></button>
-        </div>
+        <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
         <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
       </div>
       <div class="camera-options-panel" style="display:inline-block;">
@@ -290,7 +254,6 @@
         <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
         <div class="fields-container" style="float:left"></div>
       </div>
-      <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
     </div>
   </div>
 

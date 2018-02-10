@@ -55,35 +55,15 @@ class cViewMain {
     //cBandOptions
     this.userProfileName = this.dialog.querySelector('.user-info');
     this.userProfileImage = this.dialog.querySelector('.user-image-display');
-    this.userProfileContainer = this.dialog.querySelector('.user-profile-expanded-wrapper');
-    this.userProfileFields = sDataDefinition.bindingFieldsCloned('userProfile');
-    this.userProfileToggleBtn = this.dialog.querySelector('#user-profile-settings-button');
-    this.userFieldsContainer = this.dialog.querySelector('.user-profile-fields-container');
-    this.userProfileBand = new cBandProfileOptions(this.userProfileToggleBtn, this.userProfileFields, this.userFieldsContainer, this.userProfileContainer);
-    this.userProfileBand.closeOthersCallback = () => this.closeHeaderBands();
-    this.userProfileBand.fireFields.values = gAPPP.a.profile;
-    this.userProfileBand.activate();
-    this.bandButtons.push(this.userProfileBand);
 
-    this.fontToolsButton = this.dialog.querySelector('.font-options');
-    this.fontToolsContainer = this.dialog.querySelector('.font-family-panel');
+    this.fontToolsButton = this.dialog.querySelector('#workspace-settings-button');
+    this.fontToolsContainer = this.dialog.querySelector('#user-profile-panel');
     this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
     this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
     this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);
-    this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
     this.fontTools.fireFields.values = gAPPP.a.profile;
     this.fontTools.activate();
     this.bandButtons.push(this.fontTools);
-
-    this.helpToolsButton = this.dialog.querySelector('.help-options');
-    this.helpToolsContainer = this.dialog.querySelector('.help-options-panel');
-    this.helpFields = [];
-    this.helpFieldsContainer = this.helpToolsContainer.querySelector('.fields-container');
-    this.helpTools = new cBandProfileOptions(this.helpToolsButton, this.helpFields, this.helpFieldsContainer, this.helpToolsContainer);
-    this.helpTools.closeOthersCallback = () => this.closeHeaderBands();
-    this.helpTools.fireFields.values = gAPPP.a.profile;
-    this.helpTools.activate();
-    this.bandButtons.push(this.helpTools);
 
     this.addProjectButton = document.querySelector('#add-workspace-button');
     this.addProjectButton.addEventListener('click', e => this.addProject());
@@ -93,15 +73,6 @@ class cViewMain {
     let user = gAPPP.a.currentUser;
     this.userProfileName.innerHTML = user.displayName + '<br>' + user.email;
     this.userProfileImage.setAttribute('src', user.photoURL);
-
-    this.addProjectButton = document.querySelector("workspace-settings-button");
-    this.projectToggleBtn = this.dialog.querySelector('#workspace-settings-button');
-    this.projectFieldsContainer = this.dialog.querySelector('.project-fields-container');
-    this.projectPanelContainer = this.dialog.querySelector('#project-panel');
-    this.projectPanelBand = new cBandProfileOptions(this.projectToggleBtn, [], this.projectFieldsContainer, this.projectPanelContainer);
-    this.projectPanelBand.fireFields.values = gAPPP.a.profile;
-    this.projectPanelBand.activate();
-    this.bandButtons.push(this.projectPanelBand);
 
     this.toggleButton = this.dialog.querySelector('#toggle-all-toolbands');
     this.toggleButton.addEventListener('click', e => this._collaspseAllBands());
@@ -128,10 +99,6 @@ class cViewMain {
   closeHeaderBands() {
     this.fontTools.expanded = true;
     this.fontTools.toggle(false);
-    this.userProfileBand.expanded = true;
-    this.userProfileBand.toggle(false);
-    this.helpTools.expanded = true;
-    this.helpTools.toggle(false);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {
@@ -301,13 +268,6 @@ class cViewMain {
 
     this.fontTools.expanded = true;
     this.fontTools.toggle();
-    this.helpTools.expanded = true;
-    this.helpTools.toggle();
-    this.userProfileBand.expanded = true;
-    this.userProfileBand.toggle();
-    this.projectPanelBand.expanded = true;
-    this.projectPanelBand.toggle();
-
 
     for (let i in this.toolbarItems) {
       this.toolbarItems[i].createPanelShown = true;

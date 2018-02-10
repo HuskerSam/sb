@@ -7,7 +7,7 @@ class cBandRecords extends cBandSuper {
     this.title = title;
     this.containerCollapsed = document.querySelector('#sb-floating-toolbar');
     this.containerExpanded = document.querySelector('#sb-floating-toolbar-expanded');
-    let d = this.containerCollapsed.querySelector('#sb-floating-toolbar-item-template').cloneNode(true);
+    let d = document.querySelector('#sb-floating-toolbar-item-template').cloneNode(true);
     this.wrapper = d.querySelector('.sb-floating-toolbar-item');
 
     this.wrapper.id = 'sb-' + this.tag + '-floating-toolbar-item';
@@ -580,7 +580,7 @@ class cBandRecords extends cBandSuper {
       this.wrapper.style.float = '';
       this.createPanelShown = true;
 
-      let nextSibling = this.containerCollapsed.querySelector('.static-buttons-toolbar').nextSibling;
+      let nextSibling = this.containerCollapsed.childNodes[0];
       for (let i in tI) {
         if (tI[i] === this)
           break;

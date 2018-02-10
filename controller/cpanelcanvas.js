@@ -7,9 +7,6 @@ class cPanelCanvas {
     this.stopButton.addEventListener('click', e => this.stopAnimation());
     this.pauseButton = this.dialog.querySelector('.pause-button');
     this.pauseButton.addEventListener('click', e => this.pauseAnimation());
-    this.expandButton = this.dialog.querySelector('.expand-button');
-    this.expandButton.addEventListener('click', e => this.expandOptions());
-    this.expandedOptionsPanel = this.dialog.querySelector('.additional-panel')
     this.downloadVideoButton = this.dialog.querySelector('.video-button');
     this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
     this.canvasPlayBar = this.dialog.querySelector('.canvas-play-bar');
@@ -54,22 +51,6 @@ class cPanelCanvas {
     this.cameraDetails = {};
     this.camerasS = '';
     this.isValidAnimation = false;
-  }
-  expandOptions() {
-    if (this.expandedOptionsPanel.style.display === 'none'){
-      this.expandedOptionsPanel.style.display = 'inline-block';
-      this.expandButton.style.color = 'white';
-      this.expandButton.style.background = 'rgb(50,50,50)';
-      this.expandButton.innerHTML = '<i class="material-icons">chevron_left</i>';
-      this.expandButton.style.borderStyle = 'inset';
-    }
-    else{
-      this.expandedOptionsPanel.style.display = 'none';
-      this.expandButton.style.color = '';
-      this.expandButton.style.background = '';
-      this.expandButton.innerHTML = '<i class="material-icons">chevron_right</i>';
-      this.expandButton.style.borderStyle = '';
-    }
   }
   exportBabylonFile() {
     let serializedScene = BABYLON.SceneSerializer.Serialize(this.parent.context.scene);

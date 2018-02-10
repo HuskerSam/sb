@@ -68,8 +68,8 @@ class gApplication {
       size = 9;
     if (size < 7)
       size = 7;
-    if (size > 36)
-      size = 36;
+    if (size > 22)
+      size = 22;
     return size;
   }
   _initShapesList() {
