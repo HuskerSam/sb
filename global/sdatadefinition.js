@@ -337,24 +337,15 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   title: 'Font',
   fireSetField: 'fontFamily',
   contextObjectField: null,
-  group: 'font',
-  dataListId: 'fontfamilydatalist'
+  group: 'main',
+  dataListId: 'fontfamilydatalist',
+  floatLeft: true
 }, {
   title: 'Size',
   fireSetField: 'fontSize',
   contextObjectField: null,
-  group: 'font',
-  displayType: 'number'
-}, {
-  title: 'UI Depth',
-  fireSetField: 'gridAndGuidesDepth',
-  contextObjectField: null,
-  displayType: 'number',
-  helperType: 'singleSlider',
-  rangeMin: '0',
-  rangeMax: '100',
-  rangeStep: '1',
   group: 'main',
+  displayType: 'number',
   floatLeft: true
 }, {
   title: 'Canvas Color',
@@ -362,12 +353,7 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   contextObjectField: null,
   type: 'color',
   group: 'main',
-  displayType: 'shortVector',
-  helperType: 'vector',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.01',
-  floatLeft: true
+  displayType: 'shortVector'
 }];
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   title: 'Light',
@@ -412,6 +398,17 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   type: 'boolean',
   floatLeft: true,
   clearLeft: true
+}, {
+  title: 'UI Depth',
+  fireSetField: 'gridAndGuidesDepth',
+  contextObjectField: null,
+  displayType: 'number',
+  helperType: 'singleSlider',
+  rangeMin: '0',
+  rangeMax: '100',
+  rangeStep: '1',
+  group: 'main',
+  floatLeft: true
 }];
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',

@@ -17,8 +17,8 @@
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div style="position:absolute;top:0;left:0;z-index:1000;">
-      <button id="toggle-all-toolbands" class="btn-sb-icon" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
       <button id="toggle-all-toolbands-down" class="btn-sb-icon" style="border-style:inset;"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
+      <button id="toggle-all-toolbands" class="btn-sb-icon" style="color:white;background:rgb(50,50,50);"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
     </div>
 
     <div id="sb-floating-toolbar" style="display:inline-block;"></div>
@@ -26,19 +26,25 @@
     </div>
     <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
     <div id="user-profile-panel" style="display:none;">
-      <label><span>Workspace</span><select id="workspaces-select"></select></label>
-      <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
-      <input id="new-workspace-name" />
-      <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
-      <hr>
-      <div class="project-fields-container"></div>
-      <input type="range" min="7" max="20" id="fontsize-toolbar-slider" />
+      <div style="text-align:left;">
+        <div style="float:right">
+          <img class="user-image-display" />
+          <span class="user-info"></span>
+        </div>
+        <label><span>Workspace</span><select id="workspaces-select"></select></label>
+        <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
+        <br>
+        <label><span>Add workspace</span>
+          <input id="new-workspace-name" />
+          <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
+        </label>
+      </div>
+      <hr style="clear:both;">
+      <input type="range" min="8" max="20" id="fontsize-toolbar-slider" />
       <div class="fields-container" style="clear:both;"></div>
-      <img class="user-image-display" />
-      <span class="user-info"></span>
-      <br>
-      <button id="user-profile-dialog-reset-button" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
-      <button id="sign-out-button" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+      <hr>
+      <button id="user-profile-dialog-reset-button" style="float:left;border-radius:0" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
+      <button id="sign-out-button" style="float:right;border-radius:0;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
     </div>
   </div>
   <div style="display:none;" id="sb-floating-toolbar-item-template">
@@ -233,19 +239,22 @@
           <div class="render-note">Render Errors / Logging</div>
           <div class="fields-container"></div>
         </div>
+
+      </div>
+      <div style="clear:both;"></div>
+      <div class="canvas-play-bar" style="display:inline-block;pointer-events:none;">
+        <button class="btn-sb-icon scene-options" style="margin-bottom: .5em;"><i class="material-icons">settings_brightness</i></button>
         <div class="scene-options-panel" style="display:none;">
+          <div class="fields-container" style="position:relative;left:-3.5em;"></div>
+          <br>
           <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
           <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
           <button class="btn-sb-icon download-button" style="display:none;"><i class="material-icons">file_download</i></button>
           <button class="btn-sb-icon render-log-button"><i class="material-icons">event_available</i></button>
-          <div class="fields-container"></div>
         </div>
-      </div>
-      <div style="clear:both;"></div>
-      <div class="canvas-play-bar" style="display:inline-block">
+        <br>
         <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
         <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
-        <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
         <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
       </div>
       <div class="camera-options-panel" style="display:inline-block;">
