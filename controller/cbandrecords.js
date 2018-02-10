@@ -85,6 +85,7 @@ class cBandRecords extends cBandSuper {
       this.blockShapePanel = this.createPanel.querySelector('.shape-and-text-block-options');
       this.sceneBlockPanel = this.createPanel.querySelector('.scene-block-add-options');
       this.emptyBlockPanel = this.createPanel.querySelector('.scene-empty-block-add-options');
+      this.connectorLinePanel = this.createPanel.querySelector('.connector-line-block-add-options');
       this.animatedDashPanel = this.createPanel.querySelector('.animated-line-block-add-options');
 
       this.skyBoxImages = this.createPanel.querySelector('.skybox-preview-images');
@@ -176,12 +177,15 @@ class cBandRecords extends cBandSuper {
     this.sceneBlockPanel.style.display = 'none';
     this.emptyBlockPanel.style.display = 'none';
     this.animatedDashPanel.style.display = 'none';
+    this.connectorLinePanel.style.display = 'none';
 
     let sel = this.blockOptionsPicker.value;
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
     else if (sel === 'Scene')
       this.sceneBlockPanel.style.display = '';
+    else if (sel === 'Connector Line')
+      this.connectorLinePanel.style.display = '';
     else if (sel === 'Animated Line')
       this.animatedDashPanel.style.display = '';
     else
@@ -301,6 +305,8 @@ class cBandRecords extends cBandSuper {
     let generateLight = false;
     let generateShapeAndText = false;
     let generateAnimatedLine = false;
+    let generateConnectorLine = false;
+    let callbackMixin = {};
     if (this.tag === 'block') {
       let bType = this.blockOptionsPicker.value;
 
@@ -355,6 +361,46 @@ class cBandRecords extends cBandSuper {
 
         generateAnimatedLine = true;
       }
+      if (bType === 'Connector Line') {
+        callbackMixin.lineLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-length').value, 1);
+        callbackMixin.lineDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-diameter').value, 1);
+        callbackMixin.lineMaterial = this.connectorLinePanel.querySelector('.line-material').value;
+        callbackMixin.lineSides = this.connectorLinePanel.querySelector('.line-sides').value;
+
+        callbackMixin.pointLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-length').value, 1);
+        callbackMixin.pointDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-diameter').value, 1);
+        callbackMixin.pointMaterial = this.connectorLinePanel.querySelector('.point-material').value;
+        callbackMixin.pointSides = this.connectorLinePanel.querySelector('.point-sides').value;
+        callbackMixin.pointShape = this.connectorLinePanel.querySelector('.point-shape').value;
+
+        callbackMixin.tailLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-length').value, 1);
+        callbackMixin.tailDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-diameter').value, 1);
+        callbackMixin.tailMaterial = this.connectorLinePanel.querySelector('.tail-material').value;
+        callbackMixin.tailSides = this.connectorLinePanel.querySelector('.tail-sides').value;
+        callbackMixin.tailShape = this.connectorLinePanel.querySelector('.tail-shape').value;
+
+        callbackMixin.adjPointLength = callbackMixin.pointLength;
+        callbackMixin.adjPointDiameter = callbackMixin.pointDiameter;
+        if (callbackMixin.pointShape === 'None') {
+          callbackMixin.adjPointLength = 0;
+          callbackMixin.adjPointDiameter = 0;
+        }
+        callbackMixin.adjTailLength = callbackMixin.tailLength;
+        callbackMixin.adjTailDiameter = callbackMixin.tailDiameter;
+        if (callbackMixin.tailShape === 'None') {
+          callbackMixin.adjTailLength = 0;
+          callbackMixin.adjTailDiameter = 0;
+        }
+        callbackMixin.depth = Math.max(callbackMixin.lineDiameter, Math.max(callbackMixin.adjTailDiameter, callbackMixin.adjPointDiameter));
+        callbackMixin.height = callbackMixin.depth;
+        callbackMixin.width = callbackMixin.lineLength + callbackMixin.adjPointLength / 2.0 + callbackMixin.adjTailLength / 2.0;
+
+        mixin.width = callbackMixin.width;
+        mixin.height = callbackMixin.height;
+        mixin.depth = callbackMixin.depth;
+
+        generateConnectorLine = true;
+      }
     }
 
     this.context.createObject(this.tag, newName, file, mixin).then(results => {
@@ -367,7 +413,8 @@ class cBandRecords extends cBandSuper {
         this.__generateLightForScene(results.key, newName, mixin);
       if (generateShapeAndText)
         wGenerate.generateShapeAndText(this.context, results.key, newName, mixin);
-
+      if (generateConnectorLine)
+        wGenerate.generateConnectorLine(this.context, results.key, newName, callbackMixin);
       this.createPanelShown = true;
       this.toggleCreatePanel();
       setTimeout(() => gAPPP.dialogs[this.tag + '-edit'].show(results.key), 600);

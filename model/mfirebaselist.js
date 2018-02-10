@@ -18,7 +18,7 @@ class mFirebaseList extends mFirebaseSuper {
 
     this.startingOptionList = '';
     if (this.tag === 'material')
-      this.startingOptionList = '<option>color: 1,0,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option>';
+      this.startingOptionList = '<option>color: 1,1,1</option><option>color: 0,0,0</option><option>color: 1,0,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option>';
 
     this._updateDomLookupList();
   }

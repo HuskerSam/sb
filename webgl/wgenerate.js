@@ -127,6 +127,73 @@ class wGenerate {
       });
     });
   }
+  static generateConnectorLine(context, blockId, blockTitle, options) {
+    let lineShapeOptions = {
+      width: options.lineDiameter,
+      shapeDivs: options.lineSides,
+      height: options.lineDiameter,
+      depth: options.lineLength,
+      materialName: options.lineMaterial,
+      cylinderHorizontal: false,
+      createShapeType: 'Cylinder'
+    };
+    this.createShapeBlockChild(context, blockId, blockTitle + '_connectorLineShape', lineShapeOptions).then(resultsObj => {
+      let frameOrder = 10;
+      let newObj = {
+        parentKey: resultsObj.blockChildResults.key
+      };
+      newObj.rotationZ = '90deg';
+      newObj.rotationX = '90deg'
+      newObj.frameOrder = frameOrder.toString();
+      newObj.frameTime = "0";
+      context.createObject('frame', '', null, newObj).then(resultB => {});
+    });
+    let pointShapeOptions = {
+      width: options.pointDiameter,
+      shapeDivs: options.pointSides,
+      height: options.pointDiameter,
+      depth: options.pointLength,
+      materialName: options.pointMaterial,
+      createShapeType: options.pointShape
+    };
+
+    if (options.pointShape !== 'None')
+      this.createShapeBlockChild(context, blockId, blockTitle + '_connectorPointShape', pointShapeOptions).then(resultsObj => {
+        let frameOrder = 10;
+        let newObj = {
+          parentKey: resultsObj.blockChildResults.key
+        };
+        if (options.pointShape !== 'Cone' && options.pointShape !== 'Cylinder')
+          newObj.rotationY = '90deg';
+        newObj.rotationZ = '90deg';
+        newObj.positionX = -1.0 * (options.lineLength) / 2.0;
+        newObj.frameOrder = frameOrder.toString();
+        newObj.frameTime = "0";
+        context.createObject('frame', '', null, newObj).then(resultB => {});
+      });
+    let tailShapeOptions = {
+      width: options.tailDiameter,
+      shapeDivs: options.tailSides,
+      height: options.tailDiameter,
+      depth: options.tailLength,
+      materialName: options.tailMaterial,
+      createShapeType: options.tailShape
+    };
+    if (options.tailShape !== 'None')
+      this.createShapeBlockChild(context, blockId, blockTitle + '_connectorTailShape', tailShapeOptions).then(resultsObj => {
+        let frameOrder = 10;
+        let newObj = {
+          parentKey: resultsObj.blockChildResults.key
+        };
+        if (options.tailShape !== 'Cone' && options.tailShape !== 'Cylinder')
+          newObj.rotationY = '90deg';
+        newObj.rotationZ = '90deg';
+        newObj.positionX = (options.lineLength) / 2.0;
+        newObj.frameOrder = frameOrder.toString();
+        newObj.frameTime = "0";
+        context.createObject('frame', '', null, newObj).then(resultB => {});
+      });
+  }
   static generateAnimatedLine(context, blockId, blockTitle, options) {
     let barLength = GLOBALUTIL.getNumberOrDefault(options.depth, 10);
     let shapeOptions = {

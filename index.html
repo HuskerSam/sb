@@ -73,11 +73,53 @@
                 <option selected>Empty</option>
                 <option>Text and Shape</option>
                 <option>Animated Line</option>
+                <option>Connector Line</option>
               </select>
               <div class="scene-empty-block-add-options">
                 <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
                 <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
                 <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
+              </div>
+
+              <div class="connector-line-block-add-options" style="display:none;">
+                <label><span>Length</span><input type="text" class="line-length" value="10" /></label>
+                <label><span>Diameter</span><input type="text" class="line-diameter" value=".5" /></label>
+                <label><span>Sides</span><input type="text" class="line-sides" value="" /></label>
+                <br>
+                <label><span>Material</span><input type="text" style="width:15em;" class="line-material" list="materialdatatitlelookuplist" /></label>
+
+                <br>
+                <label>
+                  <span>Point</span>
+                  <select class="point-shape">
+                    <option>None</option>
+                    <option>Cylinder</option>
+                    <option selected>Cone</option>
+                    <option>Ellipsoid</option>
+                  </select>
+                </label>
+                <br>
+                <label><span>Length</span><input type="text" class="point-length" value="1" /></label>
+                <label><span>Diameter</span><input type="text" class="point-diameter" value="2" /></label>
+                <label><span>Sides</span><input type="text" class="point-sides" value="" /></label>
+                <br>
+                <label><span>Material</span><input type="text" style="width:15em;" class="point-material" list="materialdatatitlelookuplist" /></label>
+                <br>
+                <label>
+                  <span>Tail Shape</span>
+                  <select class="tail-shape">
+                    <option>None</option>
+                    <option>Cylinder</option>
+                    <option>Cone</option>
+                    <option selected>Ellipsoid</option>
+                  </select>
+                </label>
+                <br>
+                <label><span>Length</span><input type="text" class="tail-length" value="1" /></label>
+                <label><span>Diameter</span><input type="text" class="tail-diameter" value="1" /></label>
+                <label><span>Sides</span><input type="text" class="tail-sides" value="" /></label>
+                <br>
+                <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
               </div>
               <div class="animated-line-block-add-options">
                 <div>
