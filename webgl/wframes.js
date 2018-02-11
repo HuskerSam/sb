@@ -275,19 +275,23 @@ class wFrames {
     this.context.refreshFocus();
     if (this.processedFrames.length > 1 && this.maxLength > 10) {
       let frameIndex = 0;
-      if (this.activeAnimation) {
-        frameIndex = GLOBALUTIL.getNumberOrDefault(this.activeAnimation._runtimeAnimations[0].currentFrame, 1);
-      }
-      this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
+      try {
+        if (this.activeAnimation) {
+          frameIndex = GLOBALUTIL.getNumberOrDefault(this.activeAnimation._runtimeAnimations[0].currentFrame, 1);
+        }
+        this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
 
-      if (this.playState === 0) {
-        this.activeAnimation.stop();
-        this.activeAnimation.reset();
-      } else if (this.playState === 1) {
-        this.activeAnimation.goToFrame(frameIndex);
-      } else {
-        this.activeAnimation.goToFrame(frameIndex);
-        this.activeAnimation.pause();
+        if (this.playState === 0) {
+          this.activeAnimation.stop();
+          this.activeAnimation.reset();
+        } else if (this.playState === 1) {
+          this.activeAnimation.goToFrame(frameIndex);
+        } else {
+          this.activeAnimation.goToFrame(frameIndex);
+          this.activeAnimation.pause();
+        }
+      } catch (e) {
+        console.log('play anim error', e);
       }
     }
 

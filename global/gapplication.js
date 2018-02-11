@@ -7,6 +7,7 @@ class gApplication {
     this.styleProfileDom = null;
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
+    this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
     this.shapeTypes = [
       'box', 'cylinder', 'sphere', 'text'
     ];

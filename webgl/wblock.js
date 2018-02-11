@@ -39,10 +39,11 @@ class wBlock {
     this.skyboxObject = null;
     if (!this.blockRawData.skybox)
       return;
-    let skyboxPath = 'https://s3.amazonaws.com/sceneassets/box/' + this.blockRawData.skybox + '/skybox';
+    let skyboxPath = gAPPP.cdnPrefix + 'box/' + this.blockRawData.skybox + '/skybox';
     let skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, this.context.scene);
     let skyboxMaterial = new BABYLON.StandardMaterial(skyboxPath, this.context.scene);
     skyboxMaterial.backFaceCulling = false;
+
     skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(skyboxPath, this.context.scene);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
@@ -283,7 +284,7 @@ class wBlock {
       let filename = '';
       let texture;
       if (url.substring(0, 3) === 'sb:') {
-        path = 'https://s3.amazonaws.com/sceneassets/meshes/';
+        path = gAPPP.cdnPrefix + 'meshes/';
         filename = url.substring(3);
       } else
         filename = this.context._url(url);
@@ -742,7 +743,7 @@ class wBlock {
     let url = values['url'];
     let texture;
     if (url.substring(0, 3) === 'sb:')
-      url = 'https://s3.amazonaws.com/sceneassets/textures/' + url.substring(3);
+      url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
 
     if (values.isText) {
       texture = new BABYLON.DynamicTexture("dynamic texture", 512, this.context.scene, true);

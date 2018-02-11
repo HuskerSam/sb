@@ -38,7 +38,8 @@ class wGenerate {
       materialName: options.shapeMaterial,
       shapeDivs: options.shapeDivs,
       cylinderHorizontal: options.cylinderHorizontal,
-      rotationZ: ''
+      rotationZ: '',
+      renderImageURL: 'lego.png'
     }
 
     this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions).then(resultsObj => {
@@ -112,6 +113,7 @@ class wGenerate {
       shapeOptions.sphereSegments = shapeOptions.shapeDivs;
     }
 
+    shapeOptions.renderImageURL = 'lego.png';
     return new Promise((resolve, reject) => {
       context.createObject('shape', shapeBlockName, null, shapeOptions).then(results => {
         context.createObject('blockchild', '', null, {

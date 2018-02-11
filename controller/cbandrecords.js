@@ -135,7 +135,7 @@ class cBandRecords extends cBandSuper {
     if (cloudImage !== '') {
       let url = cloudImage;
       if (url.substring(0, 3) === 'sb:') {
-        url = 'https://s3.amazonaws.com/sceneassets/textures/' + url.substring(3);
+        url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
       }
       this.groundImagePreview.setAttribute('src', url);
     } else {
@@ -152,7 +152,7 @@ class cBandRecords extends cBandSuper {
       this.skyBoxImages.style.display = '';
       let imgs = this.skyBoxImages.querySelectorAll('img');
 
-      let skyboxPath = 'https://s3.amazonaws.com/sceneassets/box/' + skybox + '/skybox';
+      let skyboxPath = gAPPP.cdnPrefix + 'box/' + skybox + '/skybox';
 
       imgs[0].setAttribute('src', skyboxPath + '_nx.jpg');
       imgs[1].setAttribute('src', skyboxPath + '_px.jpg');
@@ -450,10 +450,12 @@ class cBandRecords extends cBandSuper {
     this.context.createObject('texture', textureName, null, {
       url: imgPath,
       vScale: mixin.depth,
-      uScale: mixin.width
+      uScale: mixin.width,
+      renderImageURL: 'lego.png'
     }).then(results => {});
     this.context.createObject('material', materialName, null, {
-      diffuseTextureName: textureName
+      diffuseTextureName: textureName,
+      renderImageURL: 'lego.png'
     }).then(results => {});
   }
   _getDomForChild(key, values) {

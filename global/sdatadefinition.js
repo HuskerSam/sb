@@ -404,8 +404,8 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   contextObjectField: null,
   displayType: 'number',
   helperType: 'singleSlider',
-  rangeMin: '0',
-  rangeMax: '100',
+  rangeMin: '1',
+  rangeMax: '200',
   rangeStep: '1',
   group: 'main',
   floatLeft: true
