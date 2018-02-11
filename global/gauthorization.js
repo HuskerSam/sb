@@ -112,16 +112,14 @@ class gAuthorization {
     this.modelSets['userProfile'].setObject({
       fontSize: '12',
       canvasColor: '.1,.3,.1',
-      lightIntensity: '.8',
+      lightIntensity: '.4',
       selectedWorkspace: 'default',
-      cameraVector: '15,15,15',
       showBoundsBox: true,
       showFloorGrid: true,
       showForceWireframe: false,
       showSceneGuides: true,
       cameraName: "Default Camera",
-      gridAndGuidesDepth: 15,
-      lightVector: '-.5,.5,.5'
+      gridAndGuidesDepth: '15'
     });
   }
   _activateModels() {

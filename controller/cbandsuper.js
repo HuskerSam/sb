@@ -53,13 +53,18 @@ class cBandSuper {
         if (element === null)
           continue;
         let val = values[binding.dataName];
+
+        if (binding.type === 'background-image') {
+          let url = val;
+          if (! url)
+            url = 'lego.png';
+          element.style.backgroundImage = 'url("' + url + '")';
+        }
+
         if (val === undefined)
           continue;
         if (binding.type === 'innerText')
           element.innerText = val;
-        if (binding.type === 'background-image') {
-          element.style.backgroundImage = 'url("' + val + '")';
-        }
       } catch (e) {
         console.log('cbandsuper apply value', e, binding);
       }

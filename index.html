@@ -31,10 +31,10 @@
           <img class="user-image-display" />
           <span class="user-info"></span>
         </div>
-        <label><span>Workspace</span><select id="workspaces-select"></select></label>
+        <label><span style="display:inline-block;width:8.5em;">Workspace</span><select id="workspaces-select"></select></label>
         <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
         <br>
-        <label><span>Add workspace</span>
+        <label><span style="display:inline-block;width:8.5em;">Add workspace</span>
           <input id="new-workspace-name" />
           <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
         </label>
@@ -245,7 +245,9 @@
       <div class="canvas-play-bar" style="display:inline-block;pointer-events:none;">
         <button class="btn-sb-icon scene-options" style="margin-bottom: .5em;"><i class="material-icons">settings_brightness</i></button>
         <div class="scene-options-panel" style="display:none;">
-          <div class="fields-container" style="position:relative;left:-3.5em;"></div>
+          <div class="fields-container" style="position:relative;left:-3.5em;">
+            <div class="default-light-disabled">Default light disabled</div>
+          </div>
           <br>
           <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
           <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
@@ -256,12 +258,12 @@
         <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
         <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
         <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-      </div>
-      <div class="camera-options-panel" style="display:inline-block;">
-        <select class="camera-select" style=""></select>
-        <input class="camera-select-range-slider" type="range" step=".25" min="-25" max="80" />
-        <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
-        <div class="fields-container" style="float:left"></div>
+        <div class="camera-options-panel" style="display:inline-block;">
+          <select class="camera-select" style=""></select>
+          <input class="camera-select-range-slider" type="range" step=".25" min="-25" max="80" />
+          <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+          <div class="fields-container" style="float:left"></div>
+        </div>
       </div>
     </div>
   </div>

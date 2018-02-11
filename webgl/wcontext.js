@@ -275,20 +275,19 @@ class wContext {
   }
   _updateDefaultLight() {
     let profile = gAPPP.a.profile;
+    this.defaultLight = true;
     if (this._childLightExists()) {
-      if (this.light)
-        this.light.dispose();
-      this.light = null;
+      this.defaultLight = false;
     } else {
       if (!this.light) {
-        let lightVector = GLOBALUTIL.getVector('0,1,0', 0, 1, 0);
-        this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", lightVector, this.scene);
-        this.light.intensity = .45;
+        let l = GLOBALUTIL.getVector('0,1,0', 0, 1, 0);
+        this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", l, this.scene);
+        this.light.intensity = .4;
         this.light.groundColor = GLOBALUTIL.color('0,0,0');
       }
       if (this.cachedProfile.lightIntensity !== profile.lightIntensity) {
         this.cachedProfile.lightIntensity = profile.lightIntensity;
-        this.light.intensity = Number(profile.lightIntensity);
+        this.light.intensity = GLOBALUTIL.getNumberOrDefault(profile.lightIntensity, .4);
       }
     }
   }

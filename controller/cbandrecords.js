@@ -450,12 +450,10 @@ class cBandRecords extends cBandSuper {
     this.context.createObject('texture', textureName, null, {
       url: imgPath,
       vScale: mixin.depth,
-      uScale: mixin.width,
-      renderImageURL: 'lego.png'
+      uScale: mixin.width
     }).then(results => {});
     this.context.createObject('material', materialName, null, {
-      diffuseTextureName: textureName,
-      renderImageURL: 'lego.png'
+      diffuseTextureName: textureName
     }).then(results => {});
   }
   _getDomForChild(key, values) {

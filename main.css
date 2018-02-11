@@ -863,7 +863,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #toggle-all-toolbands-down {
-  margin-right: -.3em;
+  margin-right: -.1em;
   margin-left: .1em;
   position: relative;
   margin-top:.15em;
@@ -1146,4 +1146,11 @@ input[type=range]::-webkit-slider-thumb {
 .block-editor-child.selected>span {
   padding-right: 3em;
   padding-left: 0em;
+}
+
+.default-light-disabled {
+  float: left;
+  padding: .25em;
+  background: rgba(0,0,0,.6);
+  color: yellow;
 }

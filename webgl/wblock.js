@@ -349,7 +349,9 @@ class wBlock {
     if (this.staticType === 'texture') {
       this.__setpreviewshape(values);
       this._createShape();
-      let m = new BABYLON.StandardMaterial('texturepopupmaterial');
+
+      let objectData = sDataDefinition.getDefaultDataCloned('material');
+      let m = this.__material(objectData);
       m.diffuseTexture = this.__texture(values);
       this.context.__setMaterialOnObj(this.sceneObject, m);
       return;
@@ -357,7 +359,8 @@ class wBlock {
     if (this.staticType === 'material') {
       this.__setpreviewshape(values);
       this._createShape();
-      this.context.__setMaterialOnObj(this.sceneObject, this.__material(values));
+      let m = this.__material(values);
+      this.context.__setMaterialOnObj(this.sceneObject, m);
       return;
     }
 
@@ -655,12 +658,12 @@ class wBlock {
     return plane;
   }
   __material(values) {
-    let material = new BABYLON.StandardMaterial('material', this.context.scene);
+    let material = new BABYLON.StandardMaterial('material' + Math.random().toFixed(4), this.context.scene);
     let fields = sDataDefinition.bindingFields('material');
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
-
+      
       if (field.contextObjectField)
         this.__updateObjectValue(field, value, material);
     }
@@ -702,6 +705,7 @@ class wBlock {
       if (field.type === 'visibility') return this.context.__fadeObject(object, value);
 
       if (field.type === 'color') {
+        console.log(field);
         let parts = value.split(',');
         let cA = [];
         let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));

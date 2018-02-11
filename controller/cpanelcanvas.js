@@ -11,6 +11,7 @@ class cPanelCanvas {
     this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
     this.canvasPlayBar = this.dialog.querySelector('.canvas-play-bar');
 
+    this.noLightLabel = this.dialog.querySelector('.default-light-disabled');
     this.cameraSelect = this.dialog.querySelector('.camera-select');
     this.cameraSelect.addEventListener('input', e => this.cameraChangeHandler());
     this.arcRangeSlider = this.dialog.querySelector('.camera-select-range-slider');
@@ -247,10 +248,8 @@ class cPanelCanvas {
 
     if (this.cameraSelect.selectedIndex === -1) {
       this.cameraSelect.style.display = 'none';
-      this.canvasPlayBar.style.display = 'none';
     } else {
       this.cameraSelect.style.display = 'inline-block';
-      this.canvasPlayBar.style.display = 'inline-block';
     }
 
     if (this.cameraSelect.selectedIndex < 1)
@@ -272,5 +271,11 @@ class cPanelCanvas {
 
     if (this.isValidAnimation !== animStatus)
       this.updateButtonStatus();
+
+    if (this.parent.context.defaultLight) {
+      this.noLightLabel.style.display = 'none';
+    } else {
+      this.noLightLabel.style.display = '';
+    }
   }
 }
