@@ -663,7 +663,7 @@ class wBlock {
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
-      
+
       if (field.contextObjectField)
         this.__updateObjectValue(field, value, material);
     }
@@ -730,7 +730,9 @@ class wBlock {
     materialName = this.__getMaterialFromParent(materialName);
     if (materialName.substring(0, 6) === 'color:') {
       let color = materialName.substring(6).trim();
-      let m = new BABYLON.StandardMaterial('material', this.context.scene);
+      let objectData = sDataDefinition.getDefaultDataCloned('material');
+      let m = this.__material(objectData);
+
       m.diffuseColor = GLOBALUTIL.color(color);
       this.context.__setMaterialOnObj(object, m);
     } else {
