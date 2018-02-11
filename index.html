@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>Scene Blocks</title>
-  <link rel="shortcut icon" href="blocks.png">
+  <link rel="shortcut icon" href="logo.png">
 </head>
 
 <body>
@@ -26,11 +26,10 @@
     <div id="sb-floating-toolbar-expanded">
     </div>
     <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
-    <div id="user-profile-panel" style="display:none;">
+    <div id="user-profile-panel" style="display:none;white-space:nowrap;">
       <div style="text-align:left;">
         <div style="float:right">
           <img class="user-image-display" />
-          <span class="user-info"></span>
         </div>
         <label><span style="display:inline-block;width:8.5em;">Workspace</span><select id="workspaces-select"></select></label>
         <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
@@ -40,12 +39,11 @@
           <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
         </label>
       </div>
-      <hr style="clear:both;">
-      <input type="range" min="8" max="20" id="fontsize-toolbar-slider" />
       <div class="fields-container" style="clear:both;"></div>
-      <hr>
-      <button id="user-profile-dialog-reset-button" style="float:left;border-radius:0" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
-      <button id="sign-out-button" style="float:right;border-radius:0;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+
+      <span class="user-info" style="float:left;"></span>
+      <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
+      <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
     </div>
   </div>
   <div style="display:none;" id="sb-floating-toolbar-item-template">
@@ -240,13 +238,12 @@
           <div class="render-note">Render Errors / Logging</div>
           <div class="fields-container"></div>
         </div>
-
       </div>
       <div style="clear:both;"></div>
       <div class="canvas-play-bar" style="display:inline-block;pointer-events:none;">
-        <button class="btn-sb-icon scene-options" style="margin-bottom: .5em;"><i class="material-icons">settings_brightness</i></button>
+        <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
         <div class="scene-options-panel" style="display:none;">
-          <div class="fields-container" style="position:relative;left:-3.5em;">
+          <div class="fields-container">
             <div class="default-light-disabled">Default light disabled</div>
           </div>
           <br>

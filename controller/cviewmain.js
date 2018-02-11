@@ -80,21 +80,7 @@ class cViewMain {
     this.toggleButtonDown.addEventListener('click', e => this._expandAllBands());
 
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
-
-    this.fontSizeSlider = document.querySelector('#fontsize-toolbar-slider');
-    this.fontSizeSlider.addEventListener('input', e => this._handleFontSizeChange());
-
     this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
-  }
-  _handleFontSizeChange() {
-    let newSize = this.fontSizeSlider.value;
-    let originalFontSize = gAPPP.a.profile.fontSize;
-    let fontUpdate = {
-      field: 'fontSize',
-      newValue: newSize,
-      oldValue: originalFontSize
-    }
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([fontUpdate]);
   }
   closeHeaderBands() {
     this.fontTools.expanded = true;

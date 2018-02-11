@@ -92,9 +92,6 @@ class gApplication {
       css += 'font-family:' + this.a.profile.fontFamily + ';';
     css += '}';
 
-    if (this.mV)
-      this.mV.fontSizeSlider.value = this.a.profile.fontSize;
-
     if (this.lastStyleProfileCSS === css)
       return;
     this.lastStyleProfileCSS = css;

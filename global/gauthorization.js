@@ -89,6 +89,12 @@ class gAuthorization {
     return {};
   }
   signIn() {
+    let urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('server') === 'true') {
+      firebase.auth().signInAnonymously();
+      return;
+    }
+
     this.provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(this.provider);
   }
