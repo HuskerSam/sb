@@ -58,7 +58,9 @@ class cBandSuper {
           let url = val;
           if (! url)
             url = 'lego.png';
-          element.style.backgroundImage = 'url("' + url + '")';
+          let imgHolder = element.querySelector('.img-holder');
+          if (imgHolder)
+            imgHolder.style.backgroundImage = 'url("' + url + '")';
         }
 
         if (val === undefined)

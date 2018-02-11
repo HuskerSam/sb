@@ -12,7 +12,7 @@ select {
   border-width: .25em;
   border-radius: .5em;
   padding: .25em;
-    border: outset .15em silver;
+  border: outset .15em silver;
 }
 
 #login-page {
@@ -92,7 +92,7 @@ html, body {
   top: -.25em;
   margin-bottom: -.5em;
   padding-left: 5.75em;
-  float:left;
+  float: left;
 }
 
 #sb-floating-toolbar .sb-floating-toolbar-item {
@@ -113,6 +113,7 @@ html, body {
 #sb-floating-toolbar .button-wrapper {
   margin: .5em .25em;
 }
+
 .sb-floating-toolbar-content {
   pointer-events: auto;
   white-space: nowrap;
@@ -141,8 +142,9 @@ html, body {
 
 .sb-floating-toolbar-create-btn {
   display: none;
-  background: rgb(50, 50, 50);
+  background: rgba(0, 127, 0, .5);
   color: white;
+  margin-right: .25em;
 }
 
 .main-band-add-child {
@@ -157,7 +159,7 @@ html, body {
 }
 
 .sb-floating-toolbar-item .button-wrapper .button-title {
-  background: rgb(50, 50, 50);
+  background: rgba(0, 0, 0, .5);
   color: white;
   padding: .35em .5em;
   border-radius: .5em;
@@ -167,7 +169,7 @@ html, body {
 
 .sb-floating-toolbar-item .button-wrapper-invert .button-title {
   color: black;
-  background: rgb(240, 240, 240);
+  background: rgba(255, 255, 255, .5);
   border-style: inset;
   position: relative;
   top: 2.5em;
@@ -309,7 +311,7 @@ html, body {
 .modal-dialog {
   margin: 0vh auto;
   width: 100vw;
-  background: rgba(127,127,127,.6);
+  background: rgba(127, 127, 127, .6);
   height: 100vh;
   overflow-y: auto;
   padding: 0;
@@ -440,15 +442,29 @@ button i.material-icons {
   border: outset .15em silver;
   border-radius: .5em;
   text-align: center;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   overflow: hidden;
   pointer-events: auto;
   height: 6em;
   width: 10em;
   margin: 0 .05em;
   margin-bottom: -.3em;
+  position: relative;
+  background: none;
+}
+
+.band-background-preview .img-holder {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  opacity: .5;
+  top: 0;
+  left: 0;
+}
+
+.band-background-preview * {
   position: relative;
 }
 
@@ -465,12 +481,12 @@ button i.material-icons {
   border-radius: .25em;
   margin: .15em;
   float: left;
-  font-size: .8em;
+  font-size: 1em;
 }
 
 .band-background-preview .toggle-btn {
   clear: both;
-  background: rgba(255, 255, 255, .2);
+  background: rgba(255, 255, 255, .5);
   font-weight: bold;
   position: absolute;
   bottom: .15em;
@@ -815,7 +831,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #user-profile-panel {
-  position:absolute;
+  position: absolute;
   right: .5em;
   bottom: 2.75em;
   background: rgba(255, 255, 255, .5);
@@ -837,10 +853,10 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #workspace-settings-button {
-  position:absolute;
+  position: absolute;
   bottom: .25em;
   right: .25em;
-  z-index:100;
+  z-index: 100;
 }
 
 .context-scene-tools-panel {
@@ -864,14 +880,18 @@ input[type=range]::-webkit-slider-thumb {
   margin-right: -.1em;
   margin-left: .1em;
   position: relative;
-  margin-top:.15em;
+  margin-top: .15em;
   border-right: none;
+  background: rgba(255, 255, 255, .5);
+  border: inset;
 }
 
 #toggle-all-toolbands {
   position: relative;
   margin-top: .15em;
   border-left: none;
+  background: rgba(0, 0, 0, .5);
+  color: white;
 }
 
 .font-family-panel {
@@ -948,7 +968,6 @@ input[type=range]::-webkit-slider-thumb {
   left: -3em;
 }
 
-
 .scene-options-panel .fields-container * {
   pointer-events: auto;
 }
@@ -1006,7 +1025,7 @@ input[type=range]::-webkit-slider-thumb {
 .add-item-panel {
   padding: .5em;
   border-radius: .5em;
-  background: rgba(255,255,255,.5);
+  background: rgba(255, 255, 255, .5);
   float: left;
   border: outset .15em silver;
   color: black;
@@ -1037,7 +1056,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: .25em;
   width: 2.5em;
   margin-left: 0;
-  padding:0;
+  padding: 0;
 }
 
 .shape-add-options, .mesh-add-options {
@@ -1127,7 +1146,7 @@ input[type=range]::-webkit-slider-thumb {
   position: relative;
   top: .7em;
   padding-right: 1.5em;
-  padding-left:1.5em;
+  padding-left: 1.5em;
 }
 
 .block-editor-child.selected>span {
@@ -1138,6 +1157,6 @@ input[type=range]::-webkit-slider-thumb {
 .default-light-disabled {
   float: left;
   padding: .25em;
-  background: rgba(0,0,0,.6);
+  background: rgba(0, 0, 0, .6);
   color: yellow;
 }

@@ -457,7 +457,7 @@ class cBandRecords extends cBandSuper {
     }).then(results => {});
   }
   _getDomForChild(key, values) {
-    let html = '<div class="band-title"></div><br>' +
+    let html = '<span class="img-holder"></span><div class="band-title"></div><br>' +
       '<button class="btn-sb-icon toggle-btn"><i class="material-icons">chevron_right</i></button>' +
       '<div class="extend-panel" style="display:none;"></div>';
 
@@ -531,14 +531,14 @@ class cBandRecords extends cBandSuper {
     if (this.createPanelShown) {
       this.createPanelShown = false;
       this.createPanel.style.display = 'none';
-      this.createBtn.style.background = 'rgb(0,127,0)';
       this.createBtn.innerHTML = '<i class="material-icons">add</i>';
-      this.createBtn.style.color = 'white';
       this.createBtn.style.borderStyle = '';
+      this.createBtn.style.background = '';
+      this.createBtn.style.color = '';
     } else {
       this.createPanelShown = true;
       this.createPanel.style.display = 'block';
-      this.createBtn.style.background = 'rgb(240,240,240)';
+      this.createBtn.style.background = 'rgba(255,255,255,.5)';
       this.createBtn.innerHTML = '<i class="material-icons">chevron_left</i>';
       this.createBtn.style.color = 'black';
       this.createBtn.style.borderStyle = 'inset';
