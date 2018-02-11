@@ -34,6 +34,32 @@ class mFirebaseList extends mFirebaseSuper {
       return this.fireDataValuesByKey[key];
     return null;
   }
+  updateChildOrder() {
+    this.childOrderByKey = [];
+
+    for (let i in this.fireDataByKey)
+      this.childOrderByKey.push(i);
+
+    this.childOrderByKey.sort((a, b) => {
+      let valA = this.fireDataValuesByKey[a].sortKey;
+      let valB = this.fireDataValuesByKey[b].sortKey;
+
+      if (valA)
+        if (!valB)
+          return 1;
+
+      if (valB)
+        if (!valA)
+          return -1;
+
+      if (valA && valB)
+        return valA > valB ? 1 : -1;
+
+      return a > b ? 1 : -1;
+    });
+
+    this.childOrderByKey.reverse();
+  }
   updateStash(fireData, remove) {
     let key = fireData.key;
     if (remove) {

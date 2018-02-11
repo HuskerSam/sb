@@ -240,6 +240,9 @@ class cPanelData {
     return updates;
   }
   _handleDataChange(values, type, fireData) {
+    if (type === "moved")
+      return;
+
     if (this.parent.fireSet.keyList) {
       if (this.parent.key !== fireData.key)
         return;

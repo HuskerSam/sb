@@ -28,12 +28,13 @@ class mFirebaseSuper {
     this._createFireDBRef();
   }
   _createFireDBRef() {
-    this.notiRef = firebase.database().ref(this.referencePath);
+    this.notiRef = firebase.database().ref(this.referencePath).orderByChild('sortKey');
 
     this.notiRef.on('value', e => this.valueChanged(e));
     this.notiRef.on('child_added', e => this.childAdded(e));
     this.notiRef.on('child_changed', e => this.childChanged(e));
     this.notiRef.on('child_removed', e => this.childRemoved(e));
+    this.notiRef.on('child_moved', e => this.childMoved(e));
   }
   clear() {
     this.values = {};
@@ -48,6 +49,13 @@ class mFirebaseSuper {
       }
     this.updateStash(fireData);
     this.notifyChildren(fireData, 'add');
+  }
+  childMoved(fireData) {
+    if (this.valueChangedEvents)
+      if (this.pendingLoad)
+        return;
+
+    this.notifyChildren(fireData, 'moved');
   }
   valueChanged(fireData) {
     this.pendingLoad = false;

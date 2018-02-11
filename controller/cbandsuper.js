@@ -13,17 +13,20 @@ class cBandSuper {
       }];
 
     this.modelSet.childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
+    this.myKey = Math.floor(Math.random() * 100).toString();
   }
   childAdded(fireData) {
     this._getDomForChild(fireData.key, fireData.val());
   }
   childChanged(fireData) {
-    let div = document.querySelector('.' + this.tag + '-' + fireData.key);
+    let div = document.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
+    if (!div)
+      return console.log(fireData, 'changed cbandsuper missing dom');
     let values = fireData.val();
     this._nodeApplyValues(values, div.querySelector('.band-background-preview'));
   }
   childRemoved(fireData) {
-    let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);
+    let post = this.childrenContainer.querySelector('.'  + this.tag + this.myKey + '-' + fireData.key);
     if (post)
       this.childrenContainer.removeChild(post);
   }
@@ -36,7 +39,10 @@ class cBandSuper {
       return this.childRemoved(fireData);
     if (type === 'clear')
       return this.clearChildren();
+    if (type === 'moved')
+      return this.childMoved(fireData);
   }
+  childMoved(fireData) {}
   clearChildren() {
     this.childrenContainer.innerHTML = '';
   }

@@ -117,6 +117,18 @@ class cBandRecords extends cBandSuper {
     if (forceExpand)
       this.toggleChildBandDisplay(true);
   }
+  childMoved(fireData) {
+    this.modelSet.getCache(fireData.key).sortKey = fireData.val().sortKey;
+
+    this.modelSet.updateChildOrder();
+    let keyOrder = this.modelSet.childOrderByKey;
+    for (let i in keyOrder) {
+      let key = keyOrder[i];
+      let div = document.querySelector('.' + this.tag + this.myKey + '-' + key);
+      if (div)
+        this.childrenContainer.appendChild(div);
+    }
+  }
   __handleShapeChange() {
     this.shapeDetailsPanel.style.display = 'none';
     this.stretchDetailsPanel.style.display = 'none';
@@ -467,7 +479,7 @@ class cBandRecords extends cBandSuper {
     let button = outer.childNodes[0];
     let exPanel = outer.querySelector('.extend-panel');
     let dd = document.createElement('div');
-    dd.setAttribute('class', `${this.tag}-${key} menu-clipper-wrapper`);
+    dd.setAttribute('class', `${this.tag}${this.myKey}-${key} menu-clipper-wrapper`);
     dd.appendChild(outer);
     let toggle = outer.querySelector('.toggle-btn');
     toggle.addEventListener('click', e => this.toggleState(toggle, exPanel));

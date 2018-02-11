@@ -77,6 +77,9 @@ class wBlock {
     this.groundObject.parent = this.sceneObject;
   }
   handleDataUpdate(tag, values, type, fireData) {
+    if (type === 'moved')
+      return;
+
     if (tag === 'frame') {
       if (type === 'remove') {} else
       if (values.parentKey === this._blockKey) {
@@ -705,7 +708,6 @@ class wBlock {
       if (field.type === 'visibility') return this.context.__fadeObject(object, value);
 
       if (field.type === 'color') {
-        console.log(field);
         let parts = value.split(',');
         let cA = [];
         let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));

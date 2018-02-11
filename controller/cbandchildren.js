@@ -82,7 +82,7 @@ class cBandChildren extends cBandSuper {
 
     let html = '<span class="band-title"></span>';
     d.innerHTML = html;
-    d.setAttribute('class', `${this.tag}-${key} block-editor-child`);
+    d.setAttribute('class', `${this.tag}${this.myKey}-${key} block-editor-child`);
 
     this._nodeApplyValues(values, d);
 

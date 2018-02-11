@@ -209,6 +209,9 @@ class wContext {
         fireSet.commitUpdateList([{
           field: 'renderImageURL',
           newValue: uploadResult.downloadURL
+        }, {
+          field: 'sortKey',
+          newValue: new Date().getTime()
         }], key));
     });
   }
