@@ -34,13 +34,9 @@ class cPanelCanvas {
     this.sceneTools.activate();
     this.bandButtons.push(this.sceneTools);
 
-    this.renderToggleBtn = this.dialog.querySelector('.render-log-button');
-    this.renderFieldsContainer = this.dialog.querySelector('.render-log-panel .fields-container');
-    this.renderPanelContainer = this.dialog.querySelector('.render-log-panel');
-    this.renderPanelBand = new cBandProfileOptions(this.renderToggleBtn, [], this.renderFieldsContainer, this.renderPanelContainer);
-    this.renderPanelBand.fireFields.values = gAPPP.a.profile;
-    this.renderPanelBand.activate();
-    this.bandButtons.push(this.renderPanelBand);
+    this.renderPanel = this.sceneToolsContainer.querySelector('.render-log-panel');
+    this.renderPanelClear = this.sceneToolsContainer.querySelector('.log-clear');
+    this.renderPanelClear.addEventListener('click', e => this.logClear());
 
     this.downloadButton = this.dialog.querySelector('.canvas-actions .download-button');
     this.downloadButton.addEventListener('click', e => this.exportBabylonFile());
@@ -52,6 +48,8 @@ class cPanelCanvas {
     this.cameraDetails = {};
     this.camerasS = '';
     this.isValidAnimation = false;
+
+    this.errorCount = 0;
   }
   exportBabylonFile() {
     let serializedScene = BABYLON.SceneSerializer.Serialize(this.parent.context.scene);
@@ -277,5 +275,19 @@ class cPanelCanvas {
     } else {
       this.noLightLabel.style.display = '';
     }
+  }
+  logError(errorLine) {
+    this.errorCount++;
+    if (this.errorCount > 10000) {
+      this.errorCount = 0;
+      this.renderPanel.innerHTML = this.renderPanel.innerHTML.substring(this.renderPanel.innerHTML.length - 1000);
+    }
+    this.renderPanel.innerHTML += GLOBALUTIL.msToTime(Date.now()) + ' ' + errorLine + '\n';
+
+    this.sceneToolsButton.style.borderColor = 'rgb(255,0,0)';
+  }
+  logClear() {
+    this.renderPanel.innerHTML = '';
+    this.sceneToolsButton.style.borderColor = '';
   }
 }

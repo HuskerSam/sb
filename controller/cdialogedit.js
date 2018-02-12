@@ -185,6 +185,9 @@ class cDialogEdit {
     this._splitView();
   }
   _finishShow() {
+    if (this.canvasHelper)
+      this.canvasHelper.logClear();
+
     if (this.fireFields) {
       this.fireFields.loadedURL = this.fireFields.values['url'];
       let sceneReloadRequired = this.fireFields.paint();

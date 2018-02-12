@@ -238,24 +238,20 @@
   <div id="canvas-d3-player-template" style="display:none;">
     <canvas class="popup-canvas"></canvas>
     <div class="canvas-actions">
-      <div class="expanded-toolbar-content">
-        <div class="render-log-panel" style="display:none;">
-          <div class="render-note">Render Errors / Logging</div>
-          <div class="fields-container"></div>
-        </div>
-      </div>
-      <div style="clear:both;"></div>
       <div class="canvas-play-bar" style="display:inline-block;pointer-events:none;">
         <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
         <div class="scene-options-panel" style="display:none;">
           <div class="fields-container">
             <div class="default-light-disabled">Default light disabled</div>
           </div>
+          <div class="render-log-wrapper">
+            <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+            <div class="render-log-panel"></div>
+          </div>
           <br>
           <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
           <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
           <button class="btn-sb-icon download-button" style="display:none;"><i class="material-icons">file_download</i></button>
-          <button class="btn-sb-icon render-log-button"><i class="material-icons">event_available</i></button>
         </div>
         <br>
         <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>

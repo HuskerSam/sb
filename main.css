@@ -675,9 +675,30 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .render-log-panel {
+  clear:both;
+  float:left;
   overflow: auto;
-  background: rgba(255, 255, 255, .7);
+  background: rgba(255, 255, 255, .5);
   white-space: pre;
+  width: 25em;
+  height: 12em;
+  border-radius: .25em;
+  border: inset .1em silver;
+  font-size: .8em;
+}
+.scene-options-panel .log-clear {
+  float:left;
+}
+
+.canvas-actions .render-log-wrapper {
+  display:inline-block;
+  position: relative;
+  left: -3em;
+  top: 2em;
+  pointer-events: none;
+}
+.render-log-wrapper * {
+  pointer-events: auto;
 }
 
 .frames-panel .frame-fields-container label span {
@@ -784,12 +805,6 @@ input[type=range]::-webkit-slider-thumb {
 
 .canvas-actions * {
   pointer-events: auto;
-}
-
-.canvas-actions .render-log-button {
-  float: right;
-  margin-right: .25em;
-  display: none;
 }
 
 .canvas-actions .play-button {

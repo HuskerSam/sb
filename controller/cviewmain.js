@@ -175,6 +175,7 @@ class cViewMain {
     setTimeout(() => location.reload(), 100);
   }
   __loadBlock(profileKey, blockData) {
+    this.canvasHelper.logClear();
     let b = new wBlock(this.context);
     document.title = blockData.title + ' - ' + this.workplacesSelect.selectedOptions[0].innerText;
     b.staticType = 'block';

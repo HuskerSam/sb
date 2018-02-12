@@ -93,10 +93,7 @@ class wBlock {
     }
 
     if (values) {
-      if (this._blockKey === fireData.key){
-        if (tag === 'blockchild') {
-          console.log('bc', values);
-        }
+      if (this._blockKey === fireData.key) {
         this.setData(values);
       }
 
@@ -328,7 +325,7 @@ class wBlock {
         },
         progress => {},
         (scene, msg, err) => {
-          console.log('wBlock.loadMesh', msg, err);
+          this.context.logError('wBlock.loadMesh');
           reject({
             error: true,
             message: msg,
@@ -405,7 +402,7 @@ class wBlock {
   _loadBlock() {
     let children = {};
     if (this._circularTest(this.blockRawData.childName)) {
-      console.log('Circular Reference Error');
+      this.context.logError('Circular Reference Error  :' + this.__getParentRoute());
       return;
     }
     if (gAPPP.a.modelSets[this.blockRawData.childType])
@@ -414,11 +411,12 @@ class wBlock {
     let keys = Object.keys(children);
     if (keys.length === 0) {
       this.dispose();
+      this.context.logError('no block found: ' + this.__getParentRoute());
       return;
     }
 
     if (keys.length > 1) {
-      console.log('_loadBlock:: fetchList > 1 results', this, this.blockRawData.childType, this.blockRawData.childName);
+      this.context.logError('duplicate block name found: ' + this.__getParentRoute());
     }
     this.blockTargetKey = keys[0];
     this.blockRenderData = children[keys[0]];
@@ -429,6 +427,14 @@ class wBlock {
       });
     else
       this._renderBlock();
+  }
+  __getParentRoute() {
+    let thisPart =  '[' + this.blockRawData.childName + ' / ' + this.blockRawData.childType + ']';
+    if (this.parent)
+      thisPart += this.parent.__getParentRoute();
+    else
+        return '';
+    return thisPart;
   }
   _renderBlock() {
     if (this.blockRawData.childType === 'mesh')
@@ -735,7 +741,7 @@ class wBlock {
 
       GLOBALUTIL.path(object, field.contextObjectField, value);
     } catch (e) {
-      console.log('set ui object error', e, field, object, value);
+      this.context.logError('set ui object error: ' + field.contextObjectField + ' : ' + value + '  ' + this.__getParentRoute());
     }
   }
   __updateMaterial(materialName, object) {

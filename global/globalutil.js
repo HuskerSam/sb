@@ -124,4 +124,16 @@ class GLOBALUTIL {
   static CutHex(h) {
     return (h.charAt(0) == "#") ? h.substring(1, 7) : h
   }
+  static msToTime(duration) {
+    let milliseconds = (duration % 1000),
+      seconds = parseInt((duration / 1000) % 60),
+      minutes = parseInt((duration / (1000 * 60)) % 60),
+      hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  }
 }
