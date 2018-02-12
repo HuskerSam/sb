@@ -20,6 +20,7 @@ class mFirebaseList extends mFirebaseSuper {
     if (this.tag === 'material')
       this.startingOptionList = '<option>color: 1,1,1</option><option>color: 0,0,0</option><option>color: 1,0,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option>';
 
+    this.childOrderByKey = [];
     this._updateDomLookupList();
   }
   notifyChildren(fireData, type) {
@@ -59,6 +60,12 @@ class mFirebaseList extends mFirebaseSuper {
     });
 
     this.childOrderByKey.reverse();
+  }
+  childMoved(fireData) {
+    this.getCache(fireData.key).sortKey = fireData.val().sortKey;
+
+    this._updateDomLookupList();
+    super.childMoved(fireData);
   }
   updateStash(fireData, remove) {
     let key = fireData.key;
@@ -259,14 +266,18 @@ class mFirebaseList extends mFirebaseSuper {
     return null;
   }
   _updateDomLookupList() {
+    this.updateChildOrder();
     if (!this.domTitleList)
       return;
     let innerHTML = this.startingOptionList;
-    for (let i in this.fireDataValuesByKey)
-      if (this.fireDataValuesByKey[i]) {
-        let option = '<option>' + this.fireDataValuesByKey[i]['title'] + '</option>';
+    let list = this.childOrderByKey;
+    for (let i = list.length - 1; i >= 0; i--) {
+      if (this.fireDataValuesByKey[list[i]]) {
+        let option = '<option>' + this.fireDataValuesByKey[list[i]]['title'] + '</option>';
         innerHTML = option + innerHTML;
       }
+    }
+
     this.domTitleList.innerHTML = innerHTML;
   }
   commitUpdateList(fieldUpdates, key) {

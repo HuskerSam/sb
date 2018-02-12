@@ -95,7 +95,7 @@ class cBandChildren extends cBandSuper {
     d.appendChild(db);
   }
   childChanged(fireData) {
-    let div = document.querySelector('.' + this.tag + '-' + fireData.key);
+    let div = document.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
     let values = fireData.val();
     this._nodeApplyValues(values, div);
   }
@@ -109,7 +109,7 @@ class cBandChildren extends cBandSuper {
     if (this.key === fireData.key)
       this.setKey(null);
 
-    let post = this.childrenContainer.querySelector('.' + this.tag + '-' + fireData.key);
+    let post = this.childrenContainer.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
     if (post)
       this.childrenContainer.removeChild(post);
   }
@@ -127,7 +127,7 @@ class cBandChildren extends cBandSuper {
     for (let c = 0, l = selected.length; c < l; c++) selected[c].classList.remove('selected');
 
     if (this.parent.childKey) {
-      let d = this.childrenContainer.querySelector(`.${this.tag}-${this.parent.childKey}`);
+      let d = this.childrenContainer.querySelector(`.${this.tag}${this.myKey}-${this.parent.childKey}`);
       d.classList.add('selected');
     }
 

@@ -53,9 +53,9 @@ class mFirebaseSuper {
   childMoved(fireData) {
     if (this.valueChangedEvents)
       if (this.pendingLoad)
-        return;
-
+        return true;
     this.notifyChildren(fireData, 'moved');
+    return false;
   }
   valueChanged(fireData) {
     this.pendingLoad = false;

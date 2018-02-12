@@ -60,6 +60,12 @@ class cBandRecords extends cBandSuper {
       this.addMeshOptionsPanel.style.display = 'block';
       this.meshMaterialSelectPicker = this.createPanel.querySelector('.mesh-material-picker-select');
       this.meshFile = this.createPanel.querySelector('.mesh-file-upload');
+      this.selectMeshType = this.createPanel.querySelector('.mesh-type-select');
+      this.selectMeshType.addEventListener('input', e => this.__handleMeshTypeChange());
+      this.meshPathInputLabel = this.createPanel.querySelector('.mesh-path-label');
+      this.meshPathInput = this.createPanel.querySelector('.text-path-mesh');
+
+      this.__handleMeshTypeChange();
     }
 
     if (this.tag === 'texture') {
@@ -118,9 +124,6 @@ class cBandRecords extends cBandSuper {
       this.toggleChildBandDisplay(true);
   }
   childMoved(fireData) {
-    this.modelSet.getCache(fireData.key).sortKey = fireData.val().sortKey;
-
-    this.modelSet.updateChildOrder();
     let keyOrder = this.modelSet.childOrderByKey;
     for (let i in keyOrder) {
       let key = keyOrder[i];
@@ -128,6 +131,16 @@ class cBandRecords extends cBandSuper {
       if (div)
         this.childrenContainer.appendChild(div);
     }
+  }
+  __handleMeshTypeChange() {
+    this.meshPathInputLabel.style.display = 'none';
+    this.meshFile.style.display = 'none';
+
+    let sel = this.selectMeshType.value;
+    if (sel === 'Upload')
+      this.meshFile.style.display = '';
+    else if (sel === 'Path')
+      this.meshPathInputLabel.style.display = '';
   }
   __handleShapeChange() {
     this.shapeDetailsPanel.style.display = 'none';
@@ -297,8 +310,14 @@ class cBandRecords extends cBandSuper {
 
     if (this.tag === 'mesh') {
       mixin.materialName = this.meshMaterialSelectPicker.value;
-      if (this.meshFile.files.length > 0)
-        file = this.meshFile.files[0];
+      let sel = this.selectMeshType.value;
+      if (sel === 'Upload') {
+        if (this.meshFile.files.length > 0)
+          file = this.meshFile.files[0];
+      }
+      if (sel === 'Path') {
+        mixin.url = this.meshPathInput.value.trim();
+      }
     }
 
     if (this.tag === 'texture') {

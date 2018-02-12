@@ -448,15 +448,52 @@ class cPanelHelpers {
     let hp = this.helperPanels['scale'];
     let aD = hp.actionDom;
     aD.innerHTML = '<input type="range" min="1" max="250" step=".1" value="100" />' +
-      ' <input class="form-control" type="text" value="100" />%<br>' +
-      ' <button class="btn-sb-icon">Scale</button><div class="preview"></div>';
-    hp.scaleButton = aD.querySelector('button');
-    hp.input = aD.querySelector('input[type=text]');
+      ' <input class="form-control scale-value" type="text" value="100" />%<br>' +
+      ' <button class="btn-sb-icon scale-button">Scale</button><div class="preview"></div>' +
+      '<div class="scale-to-fit">' +
+      '<label><span>W</span><input type="text" class="mesh-width" value="1" /></label>' +
+      '<label><span>H</span><input type="text" class="mesh-height" value="1" /></label>' +
+      '<label><span>D</span><input type="text" class="mesh-depth" value="1" /></label>' +
+      '<button class="fit-button">Fit</button></div>';
+    hp.scaleButton = aD.querySelector('.scale-button');
+    hp.input = aD.querySelector('.scale-value');
     hp.slider = aD.querySelector('input[type=range]');
+    hp.fitButton = aD.querySelector('.fit-button');
+    hp.fitWidth = aD.querySelector('.mesh-width');
+    hp.fitHeight = aD.querySelector('.mesh-height');
+    hp.fitDepth = aD.querySelector('.mesh-depth');
+    hp.fitButton.addEventListener('click', e => this._fitChangeApply(hp), false);
     hp.input.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.input), false);
     hp.slider.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.slider), false);
     hp.scaleButton.addEventListener('click', e => this._scaleChangeApply(hp), false);
     hp.preview = aD.querySelector('.preview');
+  }
+  _fitChangeApply(hp) {
+    let fitWidth =  GLOBALUTIL.getNumberOrDefault(hp.fitWidth.value, 1);
+    let fitHeight = GLOBALUTIL.getNumberOrDefault(hp.fitHeight.value, 1);
+    let fitDepth = GLOBALUTIL.getNumberOrDefault(hp.fitDepth.value, 1);
+    this.__updateBoundingInfo();
+
+    let xF = fitWidth / this._oDim.size.x;
+    let xH = fitHeight / this._oDim.size.y;
+    let xD = fitDepth / this._oDim.size.z;
+
+    let factor = Math.min(xF, Math.min(xH, xD));
+
+    let updates = [];
+    updates.push({
+      field: 'scalingX',
+      newValue: factor.toFixed(6)
+    });
+    updates.push({
+      field: 'scalingY',
+      newValue: factor.toFixed(6)
+    });
+    updates.push({
+      field: 'scalingZ',
+      newValue: factor.toFixed(6)
+    });
+    gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);
   }
   collapseAll() {
     for (let c = 0, l = this.toggleButtons.length; c < l; c++)
