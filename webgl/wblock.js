@@ -103,27 +103,31 @@ class wBlock {
           return this.setData();
 
       let materialList = [];
-      if (tag === 'material')
+
+          let materialDirty = false;
+        if (tag === 'material')
         if (values.title)
-          materialList.push(values.title);
+          materialDirty = true;
 
       if (tag === 'texture') {
         let allMaterials = gAPPP.a.modelSets['material'].fireDataValuesByKey;
 
         for (let i in allMaterials) {
           if (allMaterials[i].diffuseTextureName === values.title)
-            materialList.push(allMaterials[i].title);
+            materialDirty = true;
           if (allMaterials[i].emissiveTextureName === values.title)
-            materialList.push(allMaterials[i].title);
+            materialDirty = true;
           if (allMaterials[i].specularTextureName === values.title)
-            materialList.push(allMaterials[i].title);
+            materialDirty = true;
           if (allMaterials[i].ambientTextureName === values.title)
-            materialList.push(allMaterials[i].title);
+            materialDirty = true;
+
+          if (materialDirty)
+            break;
         }
       }
 
 
-      let materialDirty = false;
       if (this.currentMaterialName !== this.blockRenderData.materialName) {
         materialDirty = true;
         this.currentMaterialName = this.blockRenderData.materialName;
@@ -797,6 +801,8 @@ class wBlock {
 
     } else if (values.isVideo)
       texture = new BABYLON.VideoTexture("video", [url], this.context.scene, true);
+    else if (url === '')
+      return null;
     else
       texture = new BABYLON.Texture(url, this.context.scene);
 
