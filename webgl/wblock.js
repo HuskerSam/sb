@@ -273,12 +273,13 @@ class wBlock {
     this.sceneObject = grid;
   }
   dispose() {
-    if (this.sceneObject)
-      this.sceneObject.dispose();
-    this.sceneObject = null;
     for (let i in this.childBlocks)
       this.childBlocks[i].dispose();
     this.childBlocks = {};
+
+    if (this.sceneObject)
+      this.sceneObject.dispose();
+    this.sceneObject = null;
   }
   loadMesh() {
     return new Promise((resolve, reject) => {

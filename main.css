@@ -459,7 +459,7 @@ button i.material-icons {
   position: absolute;
   width: inherit;
   height: inherit;
-  opacity: .5;
+  opacity: .75;
   top: 0;
   left: 0;
 }

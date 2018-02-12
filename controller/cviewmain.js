@@ -88,13 +88,11 @@ class cViewMain {
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock) {
-      if (type === 'remove')
-        return;
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
     }
   }
   __updateSceneBlockBand(profileKey) {
-    let bandElement = document.querySelector('.block-' + profileKey);
+    let bandElement = document.querySelector('.block' + this.toolbarItems['block'].myKey + '-' + profileKey);
     if (bandElement) {
       let p = bandElement.parentNode;
       let children = p.querySelectorAll('.menu-clipper-wrapper');

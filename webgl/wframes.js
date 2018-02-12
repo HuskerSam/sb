@@ -259,9 +259,18 @@ class wFrames {
     this.updateAnimation();
     this._notifyHandlers();
   }
+  getRootFrames() {
+    let root = this.parentBlock;
+
+    while (root.parent)
+      root = root.parent;
+
+    return root.framesHelper;
+  }
   updateAnimation(playState = null) {
+    let rootFrames = this.getRootFrames();
     if (playState === null)
-      playState = this.playState;
+      playState = rootFrames.playState;
 
     if (this.parentBlock.blockRawData.childType === 'camera')
       if (this.parentBlock.blockKey === this.context.blockCameraId)
@@ -278,13 +287,17 @@ class wFrames {
       try {
         if (this.activeAnimation) {
           frameIndex = GLOBALUTIL.getNumberOrDefault(this.activeAnimation._runtimeAnimations[0].currentFrame, 1);
+        } else {
+          if (rootFrames.activeAnimation)
+            frameIndex = GLOBALUTIL.getNumberOrDefault(rootFrames.activeAnimation._runtimeAnimations[0].currentFrame, 1);
         }
+
         this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
 
-        if (this.playState === 0) {
+        if (rootFrames.playState === 0) {
           this.activeAnimation.stop();
           this.activeAnimation.reset();
-        } else if (this.playState === 1) {
+        } else if (rootFrames.playState === 1) {
           this.activeAnimation.goToFrame(frameIndex);
         } else {
           this.activeAnimation.goToFrame(frameIndex);
