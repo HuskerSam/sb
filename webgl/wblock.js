@@ -10,7 +10,7 @@ class wBlock {
     this.blockRenderData = {};
     this.blockRawData = {};
     this.currentMaterialName = '';
-    this.containerFieldList = ['width', 'height', 'depth', 'skybox', 'groundMaterial'];
+    this.containerFieldList = ['width', 'height', 'depth', 'skybox', 'groundMaterial', 'childName', 'childType'];
     this.containerCache = {};
     this.containerCenter = {
       x: 0,
@@ -93,9 +93,14 @@ class wBlock {
     }
 
     if (values) {
-      if (this._blockKey === fireData.key)
+      if (this._blockKey === fireData.key){
+        if (tag === 'blockchild') {
+          console.log('bc', values);
+        }
         this.setData(values);
+      }
 
+      //handle if shape, mesh or block changed via name look up
       if (this.blockRawData.childType === tag)
         if (values.title === this.blockRawData.childName)
           return this.setData();
@@ -280,6 +285,8 @@ class wBlock {
     if (this.sceneObject)
       this.sceneObject.dispose();
     this.sceneObject = null;
+
+    this.containerCache = {};
   }
   loadMesh() {
     return new Promise((resolve, reject) => {
@@ -406,11 +413,12 @@ class wBlock {
 
     let keys = Object.keys(children);
     if (keys.length === 0) {
-      //  console.log('_loadBlock:: fetchList 0 results', this);
+      this.dispose();
       return;
     }
+
     if (keys.length > 1) {
-      //console.log('_loadBlock:: fetchList > 1 results', this);
+      console.log('_loadBlock:: fetchList > 1 results', this, this.blockRawData.childType, this.blockRawData.childName);
     }
     this.blockTargetKey = keys[0];
     this.blockRenderData = children[keys[0]];
@@ -434,16 +442,17 @@ class wBlock {
 
     this.currentMaterialName = this.blockRenderData.materialName;
 
-    this.__applyFirstFrameValues();
-
     if (this.parent) {
       if (this.sceneObject) {
         this.sceneObject.parent = this.parent.sceneObject;
-        this.framesHelper.updateAnimation();
+
+        this.framesHelper.compileFrames();
       }
     } else {
-      this.framesHelper.updateAnimation();
+      this.framesHelper.compileFrames();
     }
+
+    this.__applyFirstFrameValues();
   }
   __renderMeshBlock() {
     let fields = sDataDefinition.bindingFields('mesh');

@@ -664,12 +664,6 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: null,
   dataListId: 'skyboxlist',
   group: 'skybox'
-}, {
-  title: 'Initial Scene',
-  fireSetField: 'url',
-  contextObjectField: null,
-  uploadType: 'scene',
-  group: 'scenefile'
 }];
 __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',

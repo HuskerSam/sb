@@ -87,9 +87,8 @@ class cViewMain {
     this.fontTools.toggle(false);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
-    if (this.rootBlock) {
+    if (this.rootBlock)
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
-    }
   }
   __updateSceneBlockBand(profileKey) {
     let bandElement = document.querySelector('.block' + this.toolbarItems['block'].myKey + '-' + profileKey);
