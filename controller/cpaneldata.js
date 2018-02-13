@@ -60,6 +60,8 @@ class cPanelData {
         f.domContainer.style.float = 'right';
       if (f.clearLeft)
         f.domContainer.style.clear = 'left';
+      if (f.groupClass)
+        g.classList.add(f.groupClass);
       if (f.paddingRight !== undefined)
         f.domContainer.style.paddingRight = f.paddingRight;
       if (f.paddingBottom !== undefined)

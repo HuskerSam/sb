@@ -234,7 +234,7 @@ html, body {
 }
 
 .form-group {
-  width: 14em;
+  width: 12em;
   display: inline-block;
   font-size: inherit;
   margin-right: .1em;
@@ -388,8 +388,6 @@ html, body {
   padding-top: 0;
 }
 
-.form-group-container-group .form-group {}
-
 .form-group-container-group .checkboxgroup {
   width: auto;
   margin-top: -1em;
@@ -405,10 +403,6 @@ html, body {
   position: relative;
 }
 
-.btn {
-  font-size: inherit;
-}
-
 .user-profile-fields-container {
   float: left;
 }
@@ -419,7 +413,7 @@ html, body {
   margin: .25em;
   border-radius: .25em;
   border: outset .15em silver;
-  float: right;
+  float: left;
 }
 
 i.material-icons {
@@ -675,27 +669,26 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .render-log-panel {
-  clear:both;
-  float:left;
-  overflow: auto;
   background: rgba(255, 255, 255, .5);
   white-space: pre;
-  width: 25em;
-  height: 12em;
-  border-radius: .25em;
+  width: 15em;
+  height: 6em;
+  border-radius: 0em;
   border: inset .1em silver;
-  font-size: .8em;
+  font-size: .9em;
+  padding: .25em;
+  overflow: auto;
 }
 .scene-options-panel .log-clear {
-  float:left;
+  position: absolute;
+  right: 21px;
+  font-size: .8em;
 }
 
 .canvas-actions .render-log-wrapper {
   display:inline-block;
-  position: relative;
-  left: -3em;
-  top: 2em;
   pointer-events: none;
+  position: relative;
 }
 .render-log-wrapper * {
   pointer-events: auto;
@@ -979,8 +972,7 @@ input[type=range]::-webkit-slider-thumb {
   overflow: hidden;
   pointer-events: none;
   display: inline-block;
-  position: relative;
-  left: -3em;
+  margin-bottom: -.5em;
 }
 
 .scene-options-panel .fields-container * {
@@ -1174,4 +1166,10 @@ input[type=range]::-webkit-slider-thumb {
   padding: .25em;
   background: rgba(0, 0, 0, .6);
   color: yellow;
+}
+
+.light-intensity-main-page {}
+
+.scene-tools-checkboxes {
+  top: 1.25em;
 }

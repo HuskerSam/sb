@@ -54,7 +54,7 @@ class wGenerate {
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
   }
-  static createShapeBlockChild(context, blockId, shapeBlockName, shapeOptions) {
+  static createShapeBlockChild(context, blockId, shapeBlockName, shapeOptions, createShape = true) {
     let width = shapeOptions.width;
     let height = shapeOptions.height;
     let depth = shapeOptions.depth;
@@ -112,15 +112,18 @@ class wGenerate {
       shapeOptions.sphereSegments = shapeOptions.shapeDivs;
     }
 
+    let createShapePromise = new Promise((resolve) => resolve({}));
+    if (createShape)
+      createShapePromise = context.createObject('shape', shapeBlockName, null, shapeOptions);
+
     return new Promise((resolve, reject) => {
-      context.createObject('shape', shapeBlockName, null, shapeOptions).then(results => {
+      createShapePromise.then(results => {
         context.createObject('blockchild', '', null, {
           childType: 'shape',
           childName: shapeBlockName,
           parentKey: blockId
         }).then(innerResults => resolve({
           blockChildResults: innerResults,
-          shapeResults: results,
           shapeOptions,
           firstFrameOptions
         }));
@@ -237,7 +240,7 @@ class wGenerate {
     moreOptions.timePerDash = moreOptions.runTime / moreOptions.dashCount;
 
     for (let i = 0; i < moreOptions.dashCount; i++)
-      this.__createLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, i);
+      this.__createLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, i, (i === 0));
 
     let blockFrame = {
       frameTime: moreOptions.endTime.toFixed(3),
@@ -246,8 +249,8 @@ class wGenerate {
     };
     context.createObject('frame', '', null, blockFrame).then(resultB => {});
   }
-  static __createLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, index) {
-    this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions).then(resultsObj => {
+  static __createLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, index, createShape = true) {
+    this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions, createShape).then(resultsObj => {
       let frameOrder = 10;
       let newObj = {
         parentKey: resultsObj.blockChildResults.key

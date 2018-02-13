@@ -43,6 +43,7 @@ class cDialogEdit {
     this.progressBar = this.dialog.querySelector('.popup-progress-bar');
     this.okBtn = this.dialog.querySelector('.save-details');
     this.rotateBtn = this.dialog.querySelector('.rotate-details');
+    this.deleteBtn = this.dialog.querySelector('.delete-item');
     this.popupButtons = this.dialog.querySelector('.popup-buttons');
 
     if (this.cancelBtn)
@@ -51,6 +52,8 @@ class cDialogEdit {
       this.okBtn.addEventListener('click', () => this.save(), false);
     if (this.rotateBtn)
       this.rotateBtn.addEventListener('click', () => this._rotateView(), false);
+    if (this.deleteBtn)
+      this.deleteBtn.addEventListener('click', () => this._delete(), false);
 
     this.dialog.addEventListener('close', e => this.close());
 
@@ -70,17 +73,27 @@ class cDialogEdit {
   collapseAll() {
     this.fireFields.helpers.collapseAll();
   }
+  _delete() {
+    if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
+      return;
+
+    gAPPP.a.modelSets[this.tag].removeByKey(this.key);
+    this.renderPreview = false;
+
+    this.close();
+  }
   close() {
     if (this.fireFields)
       this.fireFields.active = false;
-    //if (this.fireSet.renderImageUpdateNeeded) {
-    this.fireSet.renderImageUpdateNeeded = false;
-    if (this.context)
-      this.context.renderPreview(this.tag, this.key);
-    //}
+
+    if (this.renderPreview)
+      if (this.context)
+        this.context.renderPreview(this.tag, this.key);
+
     this.dialog.close();
 
     if (this.canvasHelper) {
+      this.canvasHelper.stopAnimation();
       this.canvasHelper.sceneTools.expanded = true;
       this.canvasHelper.sceneTools.toggle();
     }
@@ -92,6 +105,7 @@ class cDialogEdit {
   show(key) {
     this.key = key;
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
+    this.renderPreview = true;
 
     this._startLoad();
     this.dialog.showModal();

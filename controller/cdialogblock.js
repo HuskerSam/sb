@@ -180,11 +180,6 @@ class cDialogBlock extends cDialogEdit {
         newValue: this.detailsShown
       }]);
   }
-  close() {
-    this.canvasHelper.stopAnimation();
-    this.fireSet.renderImageUpdateNeeded = true;
-    super.close();
-  }
   expandAll() {
     super.expandAll();
     this.detailsShown = false;

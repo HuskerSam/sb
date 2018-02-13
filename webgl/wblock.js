@@ -76,6 +76,9 @@ class wBlock {
     this.groundObject.parent = this.sceneObject;
   }
   handleDataUpdate(tag, values, type, fireData) {
+    if (! this.parent)
+        this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type);
+
     if (type === 'moved')
       return;
 

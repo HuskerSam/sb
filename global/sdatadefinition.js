@@ -352,28 +352,26 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   fireSetField: 'canvasColor',
   contextObjectField: null,
   type: 'color',
-  group: 'main',
+  group: 'color',
+  floatLeft: true,
   displayType: 'shortVector'
-}];
-__localStaticStorageForBindingFields['sceneToolsBar'] = [{
-  title: 'Light',
-  fireSetField: 'lightIntensity',
+},{
+  title: 'Focus Lock (Editing)',
+  fireSetField: 'inputFocusLock',
   contextObjectField: null,
-  helperType: 'singleSlider',
-  rangeMin: '0',
-  rangeMax: '2',
-  rangeStep: '.01',
-  displayType: 'number',
-  group: 'lighting',
-  floatLeft: true
-}, {
+  group: 'color',
+  type: 'boolean',
+  floatLeft: true,
+  clearLeft: true
+}];
+__localStaticStorageForBindingFields['sceneToolsBar'] = [ {
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
   type: 'boolean',
   contextObjectField: null,
   group: 'depthExtras',
   floatLeft: true,
-  clearLeft: true
+  groupClass: 'scene-tools-checkboxes'
 }, {
   title: 'Wireframe',
   fireSetField: 'showForceWireframe',
@@ -399,16 +397,23 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   floatLeft: true,
   clearLeft: true
 }, {
-  title: 'UI Depth',
+  title: 'Depth',
   fireSetField: 'gridAndGuidesDepth',
   contextObjectField: null,
   displayType: 'number',
+  group: 'depthExtras',
+  clearLeft: true
+}, {
+  title: 'Light',
+  fireSetField: 'lightIntensity',
+  contextObjectField: null,
   helperType: 'singleSlider',
-  rangeMin: '1',
-  rangeMax: '200',
-  rangeStep: '1',
-  group: 'main',
-  floatLeft: true
+  rangeMin: '0',
+  rangeMax: '2',
+  rangeStep: '.01',
+  displayType: 'number',
+  group: 'group2',
+  groupClass: 'light-intensity-main-page'
 }];
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',

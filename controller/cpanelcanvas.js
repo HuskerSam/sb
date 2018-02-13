@@ -112,7 +112,9 @@ class cPanelCanvas {
     this.pauseButton.setAttribute('disabled', "true");
     this.pauseButton.style.display = 'none';
     this.playButton.style.display = '';
-    this.rootBlock.stopAnimation();
+
+    if (this.rootBlock)
+      this.rootBlock.stopAnimation();
 
     this.activateSliderUpdates(false);
   }
@@ -302,7 +304,9 @@ class cPanelCanvas {
       this.errorCount = 0;
       this.renderPanel.innerHTML = this.renderPanel.innerHTML.substring(this.renderPanel.innerHTML.length - 1000);
     }
-    this.renderPanel.innerHTML += GLOBALUTIL.msToTime(Date.now()) + ' ' + errStr + ':' + str + '\n';
+    this.renderPanel.innerHTML += GLOBALUTIL.msToTime(Date.now()).substring(6) + ' ' + errStr + ' ' + str + '\n';
+
+
   }
   clearError() {
     this.sceneToolsButton.style.borderColor = '';

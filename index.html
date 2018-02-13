@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>Scene Blocks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="logo.png">
 </head>
 
@@ -28,20 +29,18 @@
     <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
     <div id="user-profile-panel" style="display:none;white-space:nowrap;">
       <div style="text-align:left;">
-        <div style="float:right">
-          <img class="user-image-display" />
-        </div>
-        <label><span style="display:inline-block;width:8.5em;">Workspace</span><select id="workspaces-select"></select></label>
-        <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp; &nbsp;
-        <br>
-        <label><span style="display:inline-block;width:8.5em;">Add workspace</span>
-          <input id="new-workspace-name" />
-          <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
+        <label><span>Workspace</span><select id="workspaces-select"></select></label>
+        <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp;
+        <input id="new-workspace-name" />
+        <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
         </label>
       </div>
       <div class="fields-container" style="clear:both;"></div>
 
-      <span class="user-info" style="float:left;"></span>
+      <div style="float:left;position:relative;top:-2em;margin-bottom:-2em;">
+        <img class="user-image-display" />
+        <span class="user-info"></span>
+      </div>
       <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
       <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
     </div>
@@ -239,14 +238,13 @@
     <canvas class="popup-canvas"></canvas>
     <div class="canvas-actions">
       <div class="canvas-play-bar" style="display:inline-block;pointer-events:none;">
-        <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
         <div class="scene-options-panel" style="display:none;">
           <div class="fields-container">
             <div class="default-light-disabled">Default light disabled</div>
           </div>
           <div class="render-log-wrapper">
             <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
-            <div class="render-log-panel"></div>
+            <textarea class="render-log-panel" spellcheck="false"></textarea>
           </div>
           <br>
           <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
@@ -254,6 +252,7 @@
           <button class="btn-sb-icon download-button" style="display:none;"><i class="material-icons">file_download</i></button>
         </div>
         <br>
+        <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
         <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
         <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
         <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
@@ -274,10 +273,10 @@
     </div>
     <div class="popup-buttons">
       <button style="color:white;background: rgb(0,100,0)" type="button" class="btn-sb-icon close-details"><i class="material-icons">close</i><span style="font-size:.75em;top:-.25em;position:relative;">[Esc]</span></button> &nbsp;
+      <button class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button> &nbsp;
+      <button class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
+      <button class="btn-sb-icon delete-item"><i class="material-icons">delete</i></button>&nbsp;
       <div class="popup-title"></div>
-      &nbsp;
-      <button type="button" class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button> &nbsp;
-      <button type="button" class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
     </div>
     <div class="popup-main-body">
       <div class="popup-canvas-wrapper">
