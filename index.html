@@ -28,10 +28,11 @@
     </div>
     <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
     <div id="user-profile-panel" style="display:none;white-space:nowrap;">
-      <div style="text-align:left;">
-        <label><span>Workspace</span><select id="workspaces-select"></select></label>
-        <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button> &nbsp;
-        <input id="new-workspace-name" />
+      <div>
+        <label><span>Workspace </span><select id="workspaces-select"></select></label>
+        <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button>
+        <br>
+        <label><span>New Workspace </span><input id="new-workspace-name" /></label>
         <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
         </label>
       </div>
@@ -240,7 +241,6 @@
       <div class="canvas-play-bar" style="display:inline-block;pointer-events:none;">
         <div class="scene-options-panel" style="display:none;">
           <div class="fields-container">
-            <div class="default-light-disabled">Default light disabled</div>
           </div>
           <div class="render-log-wrapper">
             <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>

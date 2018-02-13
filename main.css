@@ -121,6 +121,7 @@ html, body {
   overflow: auto;
   color: black;
   overflow-y: hidden;
+  margin-bottom: .25em;
 }
 
 .sb-floating-toolbar-content .fields-container {
@@ -142,7 +143,7 @@ html, body {
 
 .sb-floating-toolbar-create-btn {
   display: none;
-  background: rgba(0, 127, 0, .5);
+  background: rgb(0, 127, 0);
   color: white;
   margin-right: .25em;
 }
@@ -159,20 +160,21 @@ html, body {
 }
 
 .sb-floating-toolbar-item .button-wrapper .button-title {
-  background: rgba(0, 0, 0, .5);
-  color: white;
+
   padding: .35em .5em;
   border-radius: .5em;
   cursor: pointer;
   font-size: 1.1em;
+  color: black;
+  background: rgb(240, 240, 240);
 }
 
 .sb-floating-toolbar-item .button-wrapper-invert .button-title {
-  color: black;
-  background: rgba(255, 255, 255, .5);
+  background: rgb(50, 50, 50);
+  color: white;
   border-style: inset;
   position: relative;
-  top: 2.5em;
+  top: 3em;
 }
 
 .button-wrapper {
@@ -183,14 +185,19 @@ html, body {
   pointer-events: auto;
 }
 
+#sb-floating-toolbar-expanded {
+  margin-top: .35em;
+  margin-left: .25em;
+}
+
 #sb-floating-toolbar-expanded .button-wrapper .option-buttons {
   display: inline-block;
   position: relative;
-  top: 3.1em;
+  top: 3.5em;
 }
 
 #sb-floating-toolbar-expanded .button-wrapper {
-  height: 6em;
+  height: 4.5em;
 }
 
 .popup-canvas-body {
@@ -453,7 +460,6 @@ button i.material-icons {
   position: absolute;
   width: inherit;
   height: inherit;
-  opacity: .75;
   top: 0;
   left: 0;
 }
@@ -462,10 +468,18 @@ button i.material-icons {
   position: relative;
 }
 
-.band-background-preview .extend-panel {
+.band-background-preview .show-edit-panel-button {
   position: absolute;
   bottom: .15em;
-  left: 3em;
+  left: .15em;
+  background: rgba(255,255,255,.5);
+}
+
+.band-background-preview .delete-edit-panel-button {
+  position: absolute;
+  bottom: .15em;
+  right: .15em;
+  background: rgba(255,255,255,.5);
 }
 
 .band-background-preview .band-title {
@@ -885,21 +899,19 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #toggle-all-toolbands-down {
-  margin-right: -.1em;
+  margin-right: -.25em;
   margin-left: .1em;
   position: relative;
   margin-top: .15em;
-  border-right: none;
-  background: rgba(255, 255, 255, .5);
-  border: inset;
+  background: rgb(50, 50, 50);
+  color: white;
+  border-style: inset;
 }
 
 #toggle-all-toolbands {
   position: relative;
   margin-top: .15em;
-  border-left: none;
-  background: rgba(0, 0, 0, .5);
-  color: white;
+  background: rgb(240, 240, 240);
 }
 
 .font-family-panel {
@@ -935,8 +947,8 @@ input[type=range]::-webkit-slider-thumb {
 
 .select-block-animation-button {
   position: absolute;
-  top: .1em;
-  right: .1em;
+  bottom: .1em;
+  right: 2em;
   background: rgba(240, 240, 240, .5);
   color: black;
 }
@@ -1159,13 +1171,6 @@ input[type=range]::-webkit-slider-thumb {
 .block-editor-child.selected>span {
   padding-right: 3em;
   padding-left: 0em;
-}
-
-.default-light-disabled {
-  float: left;
-  padding: .25em;
-  background: rgba(0, 0, 0, .6);
-  color: yellow;
 }
 
 .light-intensity-main-page {}

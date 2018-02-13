@@ -11,7 +11,6 @@ class cPanelCanvas {
     this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
     this.canvasPlayBar = this.dialog.querySelector('.canvas-play-bar');
 
-    this.noLightLabel = this.dialog.querySelector('.default-light-disabled');
     this.cameraSelect = this.dialog.querySelector('.camera-select');
     this.cameraSelect.addEventListener('input', e => this.cameraChangeHandler());
     this.arcRangeSlider = this.dialog.querySelector('.camera-select-range-slider');
@@ -33,6 +32,9 @@ class cPanelCanvas {
     this.sceneTools.fireFields.values = gAPPP.a.profile;
     this.sceneTools.activate();
     this.bandButtons.push(this.sceneTools);
+
+    this.lightIntensityLabel = this.sceneToolsContainer.querySelector('.light-intensity-main-page span');
+
 
     this.renderPanel = this.sceneToolsContainer.querySelector('.render-log-panel');
     this.renderPanelClear = this.sceneToolsContainer.querySelector('.log-clear');
@@ -275,10 +277,10 @@ class cPanelCanvas {
     if (this.isValidAnimation !== animStatus)
       this.updateButtonStatus();
 
-    if (this.parent.context.defaultLight) {
-      this.noLightLabel.style.display = 'none';
+    if (! this.parent.context.defaultLight) {
+      this.lightIntensityLabel.innerHTML = '(disabled)';
     } else {
-      this.noLightLabel.style.display = '';
+      this.lightIntensityLabel.innerHTML = 'Light';
     }
   }
   logError(errorLine) {
@@ -306,7 +308,8 @@ class cPanelCanvas {
     }
     this.renderPanel.innerHTML += GLOBALUTIL.msToTime(Date.now()).substring(6) + ' ' + errStr + ' ' + str + '\n';
 
-
+    if (document.activeElement !== this.renderPanel)
+      this.renderPanel.scrollTop = this.renderPanel.scrollHeight;
   }
   clearError() {
     this.sceneToolsButton.style.borderColor = '';

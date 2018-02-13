@@ -488,47 +488,28 @@ class cBandRecords extends cBandSuper {
     }).then(results => {});
   }
   _getDomForChild(key, values) {
-    let html = '<span class="img-holder"></span><div class="band-title"></div><br>' +
-      '<button class="btn-sb-icon toggle-btn"><i class="material-icons">chevron_right</i></button>' +
-      '<div class="extend-panel" style="display:none;"></div>';
+    let html = '<span class="img-holder"></span><div class="band-title"></div>';
 
     let outer = document.createElement('div');
     outer.setAttribute('class', `band-background-preview`);
     outer.innerHTML = html.trim();
     let button = outer.childNodes[0];
-    let exPanel = outer.querySelector('.extend-panel');
     let dd = document.createElement('div');
     dd.setAttribute('class', `${this.tag}${this.myKey}-${key} menu-clipper-wrapper`);
     dd.appendChild(outer);
-    let toggle = outer.querySelector('.toggle-btn');
-    toggle.addEventListener('click', e => this.toggleState(toggle, exPanel));
     if (this.tag === 'block') {
       let btn = this.__addMenuItem(outer, 'switch_video', e => this._selectBlock(e, key));
       btn.classList.add('select-block-animation-button');
     }
 
-    this.__addMenuItem(exPanel, 'edit', e => this._showEditPopup(e, key));
-    this.__addMenuItem(exPanel, 'delete', e => this._removeElement(e, key), true);
+    let b = this.__addMenuItem(outer, 'edit', e => this._showEditPopup(e, key));
+    b.classList.add('show-edit-panel-button');
+    b = this.__addMenuItem(outer, 'delete', e => this._removeElement(e, key), true);
+    b.classList.add('delete-edit-panel-button');
 
     this._nodeApplyValues(values, outer);
 
-    outer.addEventListener('dblclick', e => this._showEditPopup(e, key));
     this.childrenContainer.insertBefore(dd, this.childrenContainer.firstChild);
-  }
-  toggleState(tgl, pnl) {
-    if (pnl.style.display === 'none') {
-      pnl.style.display = '';
-      tgl.innerHTML = '<i class="material-icons">chevron_left</i>';
-      tgl.style.borderStyle = 'inset';
-      tgl.style.background = 'rgb(50,50,50)';
-      tgl.style.color = 'white';
-    } else {
-      pnl.style.display = 'none';
-      tgl.innerHTML = '<i class="material-icons">chevron_right</i>';
-      tgl.style.borderStyle = '';
-      tgl.style.background = '';
-      tgl.style.color = '';
-    }
   }
   _removeElement(e, key) {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
