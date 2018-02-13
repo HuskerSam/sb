@@ -130,6 +130,8 @@ class GLOBALUTIL {
       minutes = parseInt((duration / (1000 * 60)) % 60),
       hours = parseInt((duration / (1000 * 60 * 60)) % 24);
 
+    milliseconds = (milliseconds < 10) ? "0" + milliseconds : milliseconds;
+    milliseconds = (milliseconds < 100) ? "0" + milliseconds : milliseconds;
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;

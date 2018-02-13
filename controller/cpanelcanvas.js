@@ -163,7 +163,10 @@ class cPanelCanvas {
     }, 100);
   }
   get activeAnimation() {
-    return this.rootBlock.framesHelper.activeAnimation;
+    if (this.rootBlock)
+      return this.rootBlock.framesHelper.activeAnimation;
+
+    return null;
   }
   activateSliderUpdates(updateSlider = true) {
     this._updateSliderPosition();
@@ -277,17 +280,34 @@ class cPanelCanvas {
     }
   }
   logError(errorLine) {
+    this.__addLogLine(errorLine, 'ERR');
+    this.sceneToolsButton.style.borderColor = 'rgb(255,0,0)';
+  }
+  logAnimDetails() {
+    if (! this.activeAnimation) {
+      this.logMessage('No animation found');
+    }
+    else {
+      let length = this.activeAnimation.toFrame / this.rootBlock.framesHelper.fps;
+      this.logMessage('Run Length ' + length.toString());
+    }
+  }
+  logClear() {
+    this.renderPanel.innerHTML = '';
+    this.sceneToolsButton.style.borderColor = '';
+  }
+  __addLogLine(str, errStr = '') {
     this.errorCount++;
     if (this.errorCount > 10000) {
       this.errorCount = 0;
       this.renderPanel.innerHTML = this.renderPanel.innerHTML.substring(this.renderPanel.innerHTML.length - 1000);
     }
-    this.renderPanel.innerHTML += GLOBALUTIL.msToTime(Date.now()) + ' ' + errorLine + '\n';
-
-    this.sceneToolsButton.style.borderColor = 'rgb(255,0,0)';
+    this.renderPanel.innerHTML += GLOBALUTIL.msToTime(Date.now()) + ' ' + errStr + ':' + str + '\n';
   }
-  logClear() {
-    this.renderPanel.innerHTML = '';
+  clearError() {
     this.sceneToolsButton.style.borderColor = '';
+  }
+  logMessage(str) {
+    this.__addLogLine(str);
   }
 }

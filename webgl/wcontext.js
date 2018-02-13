@@ -589,8 +589,12 @@ class wContext {
     this._updateCamera(blockCameraId);
   }
   logError(str) {
-    if (! this.canvasHelper)
-        return;
     this.canvasHelper.logError(str);
+  }
+  logMessage(str) {
+    this.canvasHelper.logMessage(str);
+  }
+  clearError() {
+    this.canvasHelper.clearError();
   }
 }

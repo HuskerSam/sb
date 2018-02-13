@@ -72,7 +72,6 @@ class wBlock {
     if (!tD)
       return;
     this.groundObject = BABYLON.Mesh.CreateGround("ground1", this.blockRenderData.width, this.blockRenderData.depth, 1, this.context.scene, false);
-    //  this.groundObject.position.y = -1.0 * Number(this.blockRenderData.height) / 2.0;
     this.groundObject.material = this.__material(tD);
     this.groundObject.parent = this.sceneObject;
   }
@@ -463,6 +462,9 @@ class wBlock {
     }
 
     this.__applyFirstFrameValues();
+
+    if (! this.parent)
+      this.context.canvasHelper.logAnimDetails();
   }
   __renderMeshBlock() {
     let fields = sDataDefinition.bindingFields('mesh');
@@ -644,7 +646,8 @@ class wBlock {
 
       polies.push(polygon);
     }
-
+    if (lenY < .001 && lenX < .001)
+      this.context.logError('Zero Length result for text shape ' + this.__getParentRoute());
     if (lenY === 0)
       lenY = 0.001;
     if (lenX === 0)
@@ -760,9 +763,11 @@ class wBlock {
     } else {
       let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', materialName);
       let m;
-      if (!tD)
+      if (!tD){
         m = new BABYLON.StandardMaterial('material', this.context.scene);
-      else
+        if (materialName !== '')
+          this.context.logError('materal missing' + materialName);
+      }else
         m = this.__material(tD);
       this.context.__setMaterialOnObj(object, m);
     }

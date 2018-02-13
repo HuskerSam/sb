@@ -176,22 +176,25 @@ class cViewMain {
   }
   __loadBlock(profileKey, blockData) {
     this.canvasHelper.logClear();
+    let startTime = Date.now();
+
     let b = new wBlock(this.context);
     document.title = blockData.title + ' - ' + this.workplacesSelect.selectedOptions[0].innerText;
     b.staticType = 'block';
     b.staticLoad = true;
     b.blockKey = profileKey;
     b.isContainer = true;
-    b.setData(blockData);
     this.context.setActiveBlock(b);
     this.scene = this.context.scene;
     this.rootBlock = b;
     this.key = profileKey;
-    this.rootBlock.setData();
+    this.rootBlock.setData(blockData);
     setTimeout(() => {
       this.canvasHelper.show();
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }, 50);
+
+    this.canvasHelper.logMessage('load block time: ' + (Date.now() - startTime).toString() + 'ms');
   }
   addProject() {
     let newTitle = this.addProjectName.value.trim();

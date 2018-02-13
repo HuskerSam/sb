@@ -250,6 +250,7 @@ class wFrames {
   compileFrames() {
     if (!this.parentKey)
       return;
+
     this._validateFieldList();
     this.rawFrames = this.fireSet.queryCache('parentKey', this.parentKey);
 
