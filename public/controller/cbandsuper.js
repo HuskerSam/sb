@@ -63,7 +63,7 @@ class cBandSuper {
         if (binding.type === 'background-image') {
           let url = val;
           if (! url)
-            url = 'lego.png';
+            url = 'logo64.png';
           let imgHolder = element.querySelector('.img-holder');
           if (imgHolder)
             imgHolder.style.backgroundImage = 'url("' + url + '")';
