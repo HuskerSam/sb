@@ -81,17 +81,6 @@ class GLOBALUTIL {
     let t = str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
     return str.replace(new RegExp(t, 'g'), replacement);
   }
-  static setColorLabel(dom, defaultValue) {
-    let v = dom.value;
-    if (v === '')
-      if (defaultValue)
-        v = defaultValue;
-
-    let rgb = '';
-    if (v !== '')
-      rgb = this.colorRGB255(v);
-    dom.parentNode.querySelector('span').style.background = rgb;
-  }
   static formatNumber(num) {
     let leftSide = 3;
     let rightSide = 3;

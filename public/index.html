@@ -39,10 +39,7 @@
         </label>
       </div>
       <div class="fields-container" style="clear:both;"></div>
-      <div style="float:left;position:relative;top:-2em;margin-bottom:-2em;">
-        <img class="user-image-display" />
-        <span class="user-info"></span>
-      </div>
+      <div class="user-info"></div>
       <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
       <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
     </div>
@@ -171,15 +168,6 @@
           <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
           <div class="skybox-preview-images"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"></div>
         </div>
-        <label><span>Block Type</span>
-            <select class="block-type-select">
-              <option>Scene</option>
-              <option selected>Empty</option>
-              <option>Text and Shape</option>
-              <option>Animated Line</option>
-              <option>Connector Line</option>
-            </select>
-        </label>
       </div>
       <div class="mesh-add-options" style="display:none">
         <select class="mesh-type-select">
@@ -192,12 +180,6 @@
         <label><span>Material</span><input type="text" style="width:15em;" class="mesh-material-picker-select" list="materialdatatitlelookuplist" /></label>
       </div>
       <div class="shape-add-options" style="display:none;">
-        <label><span>Type</span><select class="shape-type-select">
-          <option selected>3D Text</option>
-          <option>Box</option>
-          <option>Sphere</option>
-          <option>Cylinder</option>
-        </select></label>
         <div class="create-box-options">
           <label><span>Width</span><input type="text" class="box-width" /></label>
           <label><span>Height</span><input type="text" class="box-height" /></label>
@@ -219,7 +201,7 @@
       </div>
       <div class="fields-container" style="clear:both;"></div>
       <label>
-        <span>Element Type</span>
+        <span>Element</span>
         <select class="element-type">
           <option>Block</option>
           <option>Mesh</option>
@@ -227,7 +209,21 @@
           <option>Material</option>
           <option>Texture</option>
         </select>
+       <select class="shape-type-select">
+          <option selected>3D Text</option>
+          <option>Box</option>
+          <option>Sphere</option>
+          <option>Cylinder</option>
+        </select>
+        <select class="block-type-select">
+          <option>Scene</option>
+          <option selected>Empty</option>
+          <option>Text and Shape</option>
+          <option>Animated Line</option>
+          <option>Connector Line</option>
+        </select>
       </label>
+
       <br>
       <label><span>Title</span><input style="width:20em;" class="add-item-name" /></label>
       <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
@@ -301,8 +297,8 @@
   <div id="cblock-editor-panel-template" style="display:none;">
     <div class="main-band-wrapper">
       <div class="main-band-first-row">
-        <button class="main-band-details-element"></button>
         <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+        <button class="main-band-details-element"></button>
         <div class="main-band-flex-children"></div>
       </div>
       <div class="cblock-details-panel"></div>

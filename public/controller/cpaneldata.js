@@ -415,8 +415,6 @@ class cPanelData {
     };
   }
   __updateColorLabel(f) {
-    GLOBALUTIL.setColorLabel(f.dom);
-
     let bColor = GLOBALUTIL.color(f.dom.value);
     let rH = Math.round(bColor.r * 255).toString(16);
     if (rH.length === 1)

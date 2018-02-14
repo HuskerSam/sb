@@ -54,7 +54,6 @@ class cViewMain {
     this.bandButtons = [];
     //cBandOptions
     this.userProfileName = this.dialog.querySelector('.user-info');
-    this.userProfileImage = this.dialog.querySelector('.user-image-display');
 
     this.fontToolsButton = this.dialog.querySelector('#workspace-settings-button');
     this.fontToolsContainer = this.dialog.querySelector('#user-profile-panel');
@@ -84,8 +83,7 @@ class cViewMain {
     this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
 
     let user = gAPPP.a.currentUser;
-    this.userProfileName.innerHTML = user.displayName + '<br>' + user.email;
-    this.userProfileImage.setAttribute('src', user.photoURL);
+    this.userProfileName.innerHTML = user.email;
 
     this.toggleButton = this.dialog.querySelector('#toggle-all-toolbands');
     this.toggleButton.addEventListener('click', e => this._collaspseAllBands());
@@ -119,7 +117,7 @@ class cViewMain {
     this.createSphereOptions = this.addShapeOptionsPanel.querySelector('.create-sphere-options');
     this.createTextOptions = this.addShapeOptionsPanel.querySelector('.create-text-options');
     this.createCylinderOptions = this.addShapeOptionsPanel.querySelector('.create-cylinder-options');
-    this.createShapesSelect = this.addShapeOptionsPanel.querySelector('.shape-type-select');
+    this.createShapesSelect = this.createPanel.querySelector('.shape-type-select');
     this.createShapesSelect.addEventListener('input', e => this.__handleShapesSelectChange());
     this.shapeMaterialSelectPicker = this.createPanel.querySelector('.shape-material-picker-select');
     this.__handleShapesSelectChange();
@@ -203,7 +201,6 @@ class cViewMain {
       let btn = bandElement.querySelector('.select-block-animation-button');
       btn.style.display = 'none';
       let title = bandElement.querySelector('.band-title');
-      title.background = 'rgb(240,240,240)';
     }
   }
   _updateSelectedBlock(profileKey) {
@@ -286,7 +283,7 @@ class cViewMain {
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }, 50);
 
-    this.canvasHelper.logMessage('load block time: ' + (Date.now() - startTime).toString() + 'ms');
+    this.canvasHelper.logMessage('load: ' + (Date.now() - startTime).toString() + 'ms');
   }
   addProject() {
     let newTitle = this.addProjectName.value.trim();
@@ -358,12 +355,18 @@ class cViewMain {
     this.addMeshOptionsPanel.style.display = 'none';
     this.texturePanel.style.display = 'none';
     this.addBlockOptionsPanel.style.display = 'none';
+    this.createShapesSelect.style.display = 'none';
+    this.blockOptionsPicker.style.display = 'none';
 
     let sel = this.addPanelTypeSelect.value;
-    if (sel === 'Shape')
+    if (sel === 'Shape'){
       this.addShapeOptionsPanel.style.display = '';
-    else if (sel === 'Block')
+      this.createShapesSelect.style.display = '';
+    }
+    else if (sel === 'Block'){
       this.addBlockOptionsPanel.style.display = '';
+      this.blockOptionsPicker.style.display = '';
+    }
     else if (sel === 'Mesh')
       this.addMeshOptionsPanel.style.display = '';
     else if (sel === 'Material')

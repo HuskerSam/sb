@@ -230,7 +230,7 @@ class cPanelHelpers {
     aD.classList.add('offset');
     let html = '<div>x <input type="range" min="-8" max="8" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" /><br>' +
-      'y <input type="range" min="-8" max="15" step=".01" value="0" />' +
+      'y <input type="range" min="-8" max="8" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" /><br>' +
       'z <input type="range" min="-8" max="8" step=".01" value="0" />' +
       ' <input class="form-control" type="text" value="0" /><br></div>' +

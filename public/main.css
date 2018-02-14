@@ -12,7 +12,7 @@ select {
   border-width: .25em;
   border-radius: .5em;
   padding: .25em;
-  border: outset .15em silver;
+  border: outset .1em silver;
 }
 
 #login-page {
@@ -138,11 +138,12 @@ html, body {
   font-size: 1.5em;
   color: black;
   border-radius: .5em;
+  border-width: .08em;
 }
 
 .main-band-add-child {
-  background: blue;
-  color: rgb(0, 255, 0);
+  background: white;
+  color: rgb(0, 127, 0);
   margin: .25em;
 }
 
@@ -152,13 +153,12 @@ html, body {
 }
 
 .sb-floating-toolbar-item .button-wrapper .button-title {
-  padding: .35em .5em;
+  padding: .5em 0;
   border-radius: .5em;
   cursor: pointer;
-  font-size: 1.1em;
   color: black;
   background: rgb(240, 240, 240);
-  width: 5em;
+  width: 6em;
 }
 
 .sb-floating-toolbar-item .button-wrapper-invert .button-title {
@@ -166,10 +166,9 @@ html, body {
   color: white;
   transform: rotate(-90deg);
   position: relative;
-  top: 1.6em;
+  top: 1.75em;
   margin: 0;
-  width: 5em;
-  left: -1.45em;
+  left: -1.8em;
 }
 
 .button-wrapper {
@@ -375,7 +374,7 @@ html, body {
   display: inline-block;
   border-radius: .5em;
   text-align: center;
-  background: rgb(200, 200, 200);
+  background: rgba(255, 255, 255, .5);
   float: left;
   position: relative;
   margin: .25em;
@@ -401,15 +400,6 @@ html, body {
 }
 
 .user-profile-fields-container {
-  float: left;
-}
-
-.user-image-display {
-  max-height: 3em;
-  max-width: 3em;
-  margin: .25em;
-  border-radius: .25em;
-  border: outset .15em silver;
   float: left;
 }
 
@@ -462,14 +452,14 @@ button i.material-icons {
   position: absolute;
   bottom: .15em;
   left: .15em;
-  background: rgba(255,255,255,.5);
+  background: rgba(255, 255, 255, .5);
 }
 
 .band-background-preview .delete-edit-panel-button {
   position: absolute;
   bottom: .15em;
   right: .15em;
-  background: rgba(255,255,255,.5);
+  background: rgba(255, 255, 255, .5);
 }
 
 .band-background-preview .band-title {
@@ -535,7 +525,7 @@ button i.material-icons {
 .selected-mesh-bounds-helper-box .action-area {}
 
 .selected-mesh-bounds-helper-box .action-area input {
-  width: 5em;
+  width: 3em;
   text-align: right;
   font-size: 1em;
 }
@@ -552,7 +542,7 @@ button i.material-icons {
 }
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"] {
-  width: 15em;
+  width: 10em;
   display: inline-block;
   position: relative;
   top: .3em;
@@ -596,15 +586,6 @@ button i.material-icons {
   width: 100%;
 }
 
-.edit-modal-times-close-button {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  z-index: 10;
-  background: rgba(255, 255, 255, .2);
-  color: rgb(50, 50, 50);
-}
-
 input[type=range] {
   -webkit-appearance: none;
   background: transparent;
@@ -616,16 +597,16 @@ input[type=range]::-webkit-slider-runnable-track {
   cursor: pointer;
   background: rgb(50, 50, 50);
   height: 1.75em;
-  border: outset .25em silver;
-  border-radius: .5em;
+  border: outset .1em silver;
+  border-radius: .25em;
 }
 
 input[type=range]::-webkit-slider-thumb {
-  height: 1.3em;
-  width: 1em;
+  height: 1.55em;
+  width: 1.5em;
   background: rgb(255, 255, 255);
   -webkit-appearance: none;
-  border-radius: .25em;
+  border-radius: .15em;
   border: outset .1em silver;
 }
 
@@ -675,25 +656,28 @@ input[type=range]::-webkit-slider-thumb {
 .render-log-panel {
   background: rgba(255, 255, 255, .5);
   white-space: pre;
-  width: 15em;
-  height: 6em;
+  width: 14em;
+  height: 7em;
   border-radius: 0em;
   border: inset .1em silver;
   font-size: .9em;
   padding: .25em;
   overflow: auto;
-  float:left;
-  clear:both;
+  float: left;
+  clear: both;
 }
+
 .scene-options-panel .log-clear {
   float: right;
 }
 
 .canvas-actions .render-log-wrapper {
-  display:inline-block;
+  display: inline-block;
   pointer-events: none;
   position: relative;
+  top: -.5em;
 }
+
 .render-log-wrapper * {
   pointer-events: auto;
 }
@@ -733,13 +717,13 @@ input[type=range]::-webkit-slider-thumb {
 .frames-panel .form-group-container-group {
   float: none;
   margin: 0 .15em;
-  background: yellow;
+  background: rgba(255, 255, 255, .5);
   margin-top: -.25em;
   padding-top: .25em;
 }
 
 .cblock-details-panel .form-group-container-group, .cblock-child-details-panel .form-group-container-group {
-  background: yellow;
+  background: rgba(255, 255, 255, .5);
 }
 
 .frames-panel {
@@ -752,7 +736,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .frames-header-bar {
-  background: rgba(255, 255, 255, .6);
+  background: rgba(255, 255, 255, .5);
 }
 
 .frame-info-panel {
@@ -817,7 +801,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .canvas-actions input[type="range"] {
-  width: 20vw;
+  width: 30vw;
   display: inline-block;
   position: relative;
   top: .2em;
@@ -830,8 +814,7 @@ input[type=range]::-webkit-slider-thumb {
 .camera-select-height-slider {}
 
 .canvas-actions .camera-select {
-  color: blue;
-  top: -.3em;
+  top: -.4em;
   position: relative;
 }
 
@@ -846,7 +829,7 @@ input[type=range]::-webkit-slider-thumb {
   position: absolute;
   right: .5em;
   bottom: 3em;
-  background: rgba(255, 255, 255, .5);
+  background: rgba(255, 255, 255, .75);
   color: black;
   padding: .5em;
   border-radius: .5em;
@@ -863,12 +846,14 @@ input[type=range]::-webkit-slider-thumb {
 #user-profile-settings-button {
   color: rgb(127, 127, 0);
 }
+
 #sb-floating-toolbar-create-btn {
   position: absolute;
   bottom: .25em;
-  right: 2.15em;
+  right: 2.25em;
   z-index: 100;
 }
+
 #workspace-settings-button {
   position: absolute;
   bottom: .25em;
@@ -976,7 +961,6 @@ input[type=range]::-webkit-slider-thumb {
   overflow: hidden;
   pointer-events: none;
   display: inline-block;
-  margin-bottom: -.5em;
 }
 
 .scene-options-panel .fields-container * {
@@ -1038,7 +1022,7 @@ input[type=range]::-webkit-slider-thumb {
   position: absolute;
   right: .5em;
   bottom: 3em;
-  background: rgba(255, 255, 255, .5);
+  background: rgba(255, 255, 255, .75);
   color: black;
   padding: .5em;
   border-radius: .5em;
@@ -1101,8 +1085,8 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .block-editor-child, .main-band-details-element {
-  background: rgb(50, 50, 50);
-  color: white;
+  background: rgb(240, 240, 240);
+  color: black;
   border-radius: .5em;
   border: outset .15em silver;
   margin: .1em;
@@ -1113,21 +1097,20 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .block-editor-child {
-  background: blue;
+  background: rgb(240, 240, 240);
   position: relative;
   text-align: center;
 }
 
 .block-editor-child.selected, .main-band-details-element.selected {
-  color: black;
-  background: yellow;
+  color: white;
+  background: rgb(50, 50, 50);
   border-style: inset;
   text-align: left;
 }
 
 .block-editor-child .delete-button {
   display: none;
-  background: silver;
   font-size: 1.1em;
   color: black;
   float: right;

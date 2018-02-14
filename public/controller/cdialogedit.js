@@ -114,6 +114,7 @@ class cDialogEdit {
     if (!this.rotateState)
       this.rotateState = 'vertical';
 
+    gAPPP.mV.closeHeaderBands();
     this._showFocus();
 
     if (this.initScene) {

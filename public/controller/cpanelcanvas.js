@@ -57,12 +57,6 @@ class cPanelCanvas {
   }
   fovSliderChange() {
     this.parent.context.camera.fov = Number(this.fovSlider.value);
-    /*
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'arcCameraRadius',
-      newValue: this.arcRangeSlider.value
-    }]);
-    */
   }
   exportBabylonFile() {
     let serializedScene = BABYLON.SceneSerializer.Serialize(this.parent.context.scene);
@@ -261,6 +255,7 @@ class cPanelCanvas {
   refresh() {
     this.arcRangeSlider.style.display = 'none';
     this.heightSlider.style.display = 'none';
+    this.fovSlider.style.display = 'none';
 
     if (this.cameraSelect.selectedIndex === -1) {
       this.cameraSelect.style.display = 'none';
@@ -268,13 +263,17 @@ class cPanelCanvas {
       this.cameraSelect.style.display = 'inline-block';
     }
 
-    if (this.cameraSelect.selectedIndex < 1)
+    if (this.cameraSelect.selectedIndex < 1) {
       this.arcRangeSlider.style.display = '';
-    else {
+    } else {
       let camType = this.cameraDetails[this.cameraSelect.value].childName;
 
       if (camType === 'ArcRotate' || camType === 'FollowCamera') {
         this.arcRangeSlider.style.display = '';
+      }
+
+      if (camType === 'ArcRotate') {
+        this.fovSlider.style.display = '';
       }
 
       if (camType === 'FollowCamera')
@@ -288,7 +287,7 @@ class cPanelCanvas {
     if (this.isValidAnimation !== animStatus)
       this.updateButtonStatus();
 
-    if (! this.parent.context.defaultLight) {
+    if (!this.parent.context.defaultLight) {
       this.lightIntensityLabel.innerHTML = '(disabled)';
     } else {
       this.lightIntensityLabel.innerHTML = 'Light';
@@ -299,12 +298,11 @@ class cPanelCanvas {
     this.sceneToolsButton.style.borderColor = 'rgb(255,0,0)';
   }
   logAnimDetails() {
-    if (! this.activeAnimation) {
+    if (!this.activeAnimation) {
       this.logMessage('No animation found');
-    }
-    else {
-      let length = this.activeAnimation.toFrame / this.rootBlock.framesHelper.fps;
-      this.logMessage('Run Length ' + length.toString());
+    } else {
+      let length = GLOBALUTIL.formatNumber(this.activeAnimation.toFrame / this.rootBlock.framesHelper.fps).trim();
+      this.logMessage('Length ' + length.toString() + 's');
     }
   }
   logClear() {
