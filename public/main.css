@@ -63,7 +63,7 @@ html, body {
 }
 
 .gutter {
-  border: solid 1px silver;
+  border: outset 8px silver;
   border-radius: 10px;
   line-height: 1px;
   margin-top: -5px;
@@ -89,10 +89,9 @@ html, body {
   pointer-events: none;
   text-align: left;
   position: relative;
-  top: -.25em;
-  margin-bottom: -.5em;
-  padding-left: 5.75em;
+  margin-bottom: -.25em;
   float: left;
+  padding-left: .25em;
 }
 
 #sb-floating-toolbar .sb-floating-toolbar-item {
@@ -111,7 +110,7 @@ html, body {
 }
 
 #sb-floating-toolbar .button-wrapper {
-  margin: .5em .25em;
+  margin: .5em .1em;
 }
 
 .sb-floating-toolbar-content {
@@ -141,13 +140,6 @@ html, body {
   border-radius: .5em;
 }
 
-.sb-floating-toolbar-create-btn {
-  display: none;
-  background: rgb(0, 127, 0);
-  color: white;
-  margin-right: .25em;
-}
-
 .main-band-add-child {
   background: blue;
   color: rgb(0, 255, 0);
@@ -160,21 +152,24 @@ html, body {
 }
 
 .sb-floating-toolbar-item .button-wrapper .button-title {
-
   padding: .35em .5em;
   border-radius: .5em;
   cursor: pointer;
   font-size: 1.1em;
   color: black;
   background: rgb(240, 240, 240);
+  width: 5em;
 }
 
 .sb-floating-toolbar-item .button-wrapper-invert .button-title {
   background: rgb(50, 50, 50);
   color: white;
-  border-style: inset;
+  transform: rotate(-90deg);
   position: relative;
-  top: 3em;
+  top: 1.6em;
+  margin: 0;
+  width: 5em;
+  left: -1.45em;
 }
 
 .button-wrapper {
@@ -190,14 +185,9 @@ html, body {
   margin-left: .25em;
 }
 
-#sb-floating-toolbar-expanded .button-wrapper .option-buttons {
-  display: inline-block;
-  position: relative;
-  top: 3.5em;
-}
-
 #sb-floating-toolbar-expanded .button-wrapper {
-  height: 4.5em;
+  height: 6.2em;
+  width: 2.5em;
 }
 
 .popup-canvas-body {
@@ -692,11 +682,11 @@ input[type=range]::-webkit-slider-thumb {
   font-size: .9em;
   padding: .25em;
   overflow: auto;
+  float:left;
+  clear:both;
 }
 .scene-options-panel .log-clear {
-  position: absolute;
-  right: 21px;
-  font-size: .8em;
+  float: right;
 }
 
 .canvas-actions .render-log-wrapper {
@@ -855,7 +845,7 @@ input[type=range]::-webkit-slider-thumb {
 #user-profile-panel {
   position: absolute;
   right: .5em;
-  bottom: 2.75em;
+  bottom: 3em;
   background: rgba(255, 255, 255, .5);
   color: black;
   padding: .5em;
@@ -873,7 +863,12 @@ input[type=range]::-webkit-slider-thumb {
 #user-profile-settings-button {
   color: rgb(127, 127, 0);
 }
-
+#sb-floating-toolbar-create-btn {
+  position: absolute;
+  bottom: .25em;
+  right: 2.15em;
+  z-index: 100;
+}
 #workspace-settings-button {
   position: absolute;
   bottom: .25em;
@@ -899,13 +894,10 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #toggle-all-toolbands-down {
-  margin-right: -.25em;
-  margin-left: .1em;
   position: relative;
   margin-top: .15em;
   background: rgb(50, 50, 50);
   color: white;
-  border-style: inset;
 }
 
 #toggle-all-toolbands {
@@ -1021,6 +1013,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .camera-options-panel {
   padding-top: .5em;
+  margin-right: 5.5em;
 }
 
 .color-picker-input {
@@ -1042,15 +1035,14 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .add-item-panel {
+  position: absolute;
+  right: .5em;
+  bottom: 3em;
+  background: rgba(255, 255, 255, .5);
+  color: black;
   padding: .5em;
   border-radius: .5em;
-  background: rgba(255, 255, 255, .5);
-  float: left;
-  border: outset .15em silver;
-  color: black;
-  position: relative;
-  margin-bottom: .5em;
-  margin-left: .5em;
+  border: inset .15em silver;
   text-align: center;
 }
 
@@ -1078,10 +1070,6 @@ input[type=range]::-webkit-slider-thumb {
   padding: 0;
 }
 
-.shape-add-options, .mesh-add-options {
-  background: rgb(240, 240, 240);
-}
-
 .add-item-panel label>span {
   margin: .5em;
 }
@@ -1103,11 +1091,6 @@ input[type=range]::-webkit-slider-thumb {
   width: 20em;
 }
 
-.texture-add-options {
-  background: rgb(240, 240, 240);
-  padding: .35em;
-}
-
 .main-band-wrapper {
   padding-top: .1em;
 }
@@ -1115,10 +1098,6 @@ input[type=range]::-webkit-slider-thumb {
 .skybox-preview-images img {
   max-height: 5em;
   max-width: 5em;
-}
-
-.block-add-options {
-  text-align: left;
 }
 
 .block-editor-child, .main-band-details-element {

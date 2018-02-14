@@ -134,6 +134,7 @@ __localStaticStorageForBindingFields['material'] = [{
   title: 'Alpha Level',
   fireSetField: 'alpha',
   contextObjectField: 'alpha',
+  displayType: 'number',
   group: 'options'
 }, {
   title: 'Diffuse Color (main)',
@@ -196,7 +197,8 @@ __localStaticStorageForBindingFields['material'] = [{
   title: 'Specular Power',
   fireSetField: 'specularPower',
   contextObjectField: 'specularPower',
-  group: 'specularPower'
+  group: 'specularPower',
+  displayType: 'number'
 }, {
   title: 'Specular over Alpha',
   fireSetField: 'useSpecularOverAlpha',
@@ -228,6 +230,19 @@ __localStaticStorageForBindingFields['material'] = [{
   group: 'specularColor',
   type: 'texture',
   floatLeft: true
+}, {
+  title: 'Bump Texture Name',
+  fireSetField: 'bumpTextureName',
+  contextObjectField: 'bumpTexture',
+  group: 'roughness',
+  type: 'texture',
+  floatLeft: true
+}, {
+  title: 'Roughness',
+  fireSetField: 'roughness',
+  contextObjectField: 'roughness',
+  displayType: 'number',
+  group: 'roughness'
 }, {
   title: 'Backface Culling',
   fireSetField: 'backfaceCulling',

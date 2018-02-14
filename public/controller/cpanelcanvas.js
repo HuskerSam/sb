@@ -20,6 +20,9 @@ class cPanelCanvas {
     this.heightSlider.addEventListener('input', e => this.cameraHeightChange());
     this.heightSlider.value = gAPPP.a.profile.cameraHeight;
 
+    this.fovSlider = this.dialog.querySelector('.camera-select-range-fov-slider');
+    this.fovSlider.addEventListener('input', e => this.fovSliderChange());
+
     this.animateSlider = this.dialog.querySelector('.animate-range');
     this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
 
@@ -34,7 +37,6 @@ class cPanelCanvas {
     this.bandButtons.push(this.sceneTools);
 
     this.lightIntensityLabel = this.sceneToolsContainer.querySelector('.light-intensity-main-page span');
-
 
     this.renderPanel = this.sceneToolsContainer.querySelector('.render-log-panel');
     this.renderPanelClear = this.sceneToolsContainer.querySelector('.log-clear');
@@ -52,6 +54,15 @@ class cPanelCanvas {
     this.isValidAnimation = false;
 
     this.errorCount = 0;
+  }
+  fovSliderChange() {
+    this.parent.context.camera.fov = Number(this.fovSlider.value);
+    /*
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'arcCameraRadius',
+      newValue: this.arcRangeSlider.value
+    }]);
+    */
   }
   exportBabylonFile() {
     let serializedScene = BABYLON.SceneSerializer.Serialize(this.parent.context.scene);

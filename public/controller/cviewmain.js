@@ -64,6 +64,19 @@ class cViewMain {
     this.fontTools.fireFields.values = gAPPP.a.profile;
     this.fontTools.activate();
     this.bandButtons.push(this.fontTools);
+    this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.addPanelButton = this.dialog.querySelector('#sb-floating-toolbar-create-btn');
+    this.createPanel = document.querySelector('.add-item-panel');
+    this.fontFields = [];
+    this.addFieldsContainer = this.createPanel.querySelector('.fields-container');
+    this.addPanelTools = new cBandProfileOptions(this.addPanelButton, [], this.addFieldsContainer, this.createPanel);
+    this.addPanelTools.fireFields.values = gAPPP.a.profile;
+    this.addPanelTools.activate();
+    this.bandButtons.push(this.addPanelTools);
+    this.addPanelTools.closeOthersCallback = () => this.closeHeaderBands();
+    this.addPanelTypeSelect = this.createPanel.querySelector('.element-type');
+    this.addPanelTypeSelect.addEventListener('input', e => this.handleAddTypeSelect());
 
     this.addProjectButton = document.querySelector('#add-workspace-button');
     this.addProjectButton.addEventListener('click', e => this.addProject());
@@ -81,10 +94,89 @@ class cViewMain {
 
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
     this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
+
+    this.createPanelCreateBtn = this.createPanel.querySelector('.add-button');
+    this.createPanelCreateBtn.addEventListener('click', e => this.createItem());
+    this.createPanelInput = this.createPanel.querySelector('.add-item-name');
+    this.createPanelInput.addEventListener('keypress', e => this._titleKeyPress(e), false);
+    this.createMesage = this.createPanel.querySelector('.creating-message');
+
+    this.addMaterialOptionsPanel = this.createPanel.querySelector('.material-add-options');
+    this.materialColorInput = this.createPanel.querySelector('.material-color-add');
+    this.materialColorPicker = this.createPanel.querySelector('.material-color-add-colorinput');
+    this.diffuseCheckBox = this.createPanel.querySelector('.diffuse-color-checkbox');
+    this.emissiveCheckBox = this.createPanel.querySelector('.emissive-color-checkbox');
+    this.ambientCheckBox = this.createPanel.querySelector('.ambient-color-checkbox');
+    this.specularCheckBox = this.createPanel.querySelector('.specular-color-checkbox');
+    this.texturePickerMaterial = this.createPanel.querySelector('.texture-picker-select');
+
+    this.materialColorPicker.addEventListener('input', e => this.__handleMaterialColorInputChange());
+    this.materialColorInput.addEventListener('input', e => this.__handleMaterialColorTextChange());
+    this.__handleMaterialColorTextChange();
+
+    this.addShapeOptionsPanel = this.createPanel.querySelector('.shape-add-options');
+    this.createBoxOptions = this.addShapeOptionsPanel.querySelector('.create-box-options');
+    this.createSphereOptions = this.addShapeOptionsPanel.querySelector('.create-sphere-options');
+    this.createTextOptions = this.addShapeOptionsPanel.querySelector('.create-text-options');
+    this.createCylinderOptions = this.addShapeOptionsPanel.querySelector('.create-cylinder-options');
+    this.createShapesSelect = this.addShapeOptionsPanel.querySelector('.shape-type-select');
+    this.createShapesSelect.addEventListener('input', e => this.__handleShapesSelectChange());
+    this.shapeMaterialSelectPicker = this.createPanel.querySelector('.shape-material-picker-select');
+    this.__handleShapesSelectChange();
+
+    this.addMeshOptionsPanel = this.createPanel.querySelector('.mesh-add-options');
+    this.meshMaterialSelectPicker = this.createPanel.querySelector('.mesh-material-picker-select');
+    this.meshFile = this.createPanel.querySelector('.mesh-file-upload');
+    this.selectMeshType = this.createPanel.querySelector('.mesh-type-select');
+    this.selectMeshType.addEventListener('input', e => this.__handleMeshTypeChange());
+    this.meshPathInputLabel = this.createPanel.querySelector('.mesh-path-label');
+    this.meshPathInput = this.createPanel.querySelector('.text-path-mesh');
+
+    this.__handleMeshTypeChange();
+
+    this.texturePanel = this.createPanel.querySelector('.texture-add-options');
+    this.selectTextureType = this.createPanel.querySelector('.texture-type-select');
+    this.selectTextureType.addEventListener('input', e => this.__handleTextureTypeChange());
+    this.textureFile = this.createPanel.querySelector('.file-upload-texture');
+    this.texturePathInputLabel = this.createPanel.querySelector('.texture-path-label');
+    this.texturePathInput = this.createPanel.querySelector('.text-path-texture');
+    this.__handleTextureTypeChange();
+
+    this.addBlockOptionsPanel = this.createPanel.querySelector('.block-add-options');
+    this.blockOptionsPicker = this.createPanel.querySelector('.block-type-select');
+    this.blockOptionsPicker.addEventListener('input', e => this.__handleBlockTypeSelectChange());
+
+    this.blockShapePicker = this.createPanel.querySelector('.block-add-shape-type-options');
+    this.blockShapePicker.addEventListener('input', e => this.__handleShapeChange());
+    this.blockShapePanel = this.createPanel.querySelector('.shape-and-text-block-options');
+    this.sceneBlockPanel = this.createPanel.querySelector('.scene-block-add-options');
+    this.emptyBlockPanel = this.createPanel.querySelector('.scene-empty-block-add-options');
+    this.connectorLinePanel = this.createPanel.querySelector('.connector-line-block-add-options');
+    this.animatedDashPanel = this.createPanel.querySelector('.animated-line-block-add-options');
+
+    this.skyBoxImages = this.createPanel.querySelector('.skybox-preview-images');
+    this.skyBoxInput = this.createPanel.querySelector('.block-skybox-picker-select');
+    this.skyBoxInput.addEventListener('input', e => this.__handleSkyboxChange());
+
+    this.cloudImageInput = this.createPanel.querySelector('.block-scene-cloudfile-picker-input');
+    this.groundImagePreview = this.createPanel.querySelector('.cloud-file-ground-preview');
+    this.generateGroundMaterial = this.createPanel.querySelector('.block-generate-ground');
+    this.cloudImageInput.addEventListener('input', e => this.__handleGroundChange());
+
+    this.addSceneLight = this.createPanel.querySelector('.block-add-hemi-light');
+    this.shapeDetailsPanel = this.createPanel.querySelector('.block-shape-add-label');
+    this.stretchDetailsPanel = this.createPanel.querySelector('.block-stretch-along-width-label');
+
+    this.__handleBlockTypeSelectChange();
+    this.__handleShapeChange();
+    this.__handleSkyboxChange();
+    this.handleAddTypeSelect();
   }
   closeHeaderBands() {
     this.fontTools.expanded = true;
     this.fontTools.toggle(false);
+    this.addPanelTools.expanded = true;
+    this.addPanelTools.toggle(false);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock)
@@ -232,9 +324,6 @@ class cViewMain {
   _collaspseAllBands() {
     for (let i in this.toolbarItems) {
       this.toolbarItems[i].toggleChildBandDisplay(false);
-
-      this.toolbarItems[i].createPanelShown = true;
-      this.toolbarItems[i].toggleCreatePanel();
     }
 
     for (let i in this.bandButtons) {
@@ -255,15 +344,389 @@ class cViewMain {
 
     this.fontTools.expanded = true;
     this.fontTools.toggle();
-
-    for (let i in this.toolbarItems) {
-      this.toolbarItems[i].createPanelShown = true;
-      this.toolbarItems[i].toggleCreatePanel();
-    }
+    this.addPanelTools.expanded = true;
+    this.addPanelTools.toggle();
   }
   show(scene) {
     this.context.activate(scene);
     if (this.canvasHelper)
       this.canvasHelper.cameraSelect.value = 'default';
+  }
+  handleAddTypeSelect() {
+    this.addMaterialOptionsPanel.style.display = 'none';
+    this.addShapeOptionsPanel.style.display = 'none';
+    this.addMeshOptionsPanel.style.display = 'none';
+    this.texturePanel.style.display = 'none';
+    this.addBlockOptionsPanel.style.display = 'none';
+
+    let sel = this.addPanelTypeSelect.value;
+    if (sel === 'Shape')
+      this.addShapeOptionsPanel.style.display = '';
+    else if (sel === 'Block')
+      this.addBlockOptionsPanel.style.display = '';
+    else if (sel === 'Mesh')
+      this.addMeshOptionsPanel.style.display = '';
+    else if (sel === 'Material')
+      this.addMaterialOptionsPanel.style.display = '';
+    else if (sel === 'Texture')
+      this.texturePanel.style.display = '';
+  }
+  __handleMeshTypeChange() {
+    this.meshPathInputLabel.style.display = 'none';
+    this.meshFile.style.display = 'none';
+
+    let sel = this.selectMeshType.value;
+    if (sel === 'Upload')
+      this.meshFile.style.display = '';
+    else if (sel === 'Path')
+      this.meshPathInputLabel.style.display = '';
+  }
+  __handleShapeChange() {
+    this.shapeDetailsPanel.style.display = 'none';
+    this.stretchDetailsPanel.style.display = 'none';
+    let shape = this.blockShapePicker.value;
+
+    if (shape !== 'Box' && shape !== 'Cube')
+      this.shapeDetailsPanel.style.display = '';
+
+    if (shape === 'Cone' || shape === 'Cylinder')
+      this.stretchDetailsPanel.style.display = '';
+  }
+  __handleGroundChange() {
+    let cloudImage = this.cloudImageInput.value.trim();
+
+    this.groundImagePreview.style.display = '';
+    if (cloudImage !== '') {
+      let url = cloudImage;
+      if (url.substring(0, 3) === 'sb:') {
+        url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
+      }
+      this.groundImagePreview.setAttribute('src', url);
+    } else {
+      this.groundImagePreview.style.display = 'none';
+    }
+
+  }
+  __handleSkyboxChange() {
+    let skybox = this.skyBoxInput.value.trim();
+
+    if (skybox === '')
+      this.skyBoxImages.style.display = 'none';
+    else {
+      this.skyBoxImages.style.display = '';
+      let imgs = this.skyBoxImages.querySelectorAll('img');
+
+      let skyboxPath = gAPPP.cdnPrefix + 'box/' + skybox + '/skybox';
+
+      imgs[0].setAttribute('src', skyboxPath + '_nx.jpg');
+      imgs[1].setAttribute('src', skyboxPath + '_px.jpg');
+      imgs[2].setAttribute('src', skyboxPath + '_ny.jpg');
+      imgs[3].setAttribute('src', skyboxPath + '_py.jpg');
+      imgs[4].setAttribute('src', skyboxPath + '_nz.jpg');
+      imgs[5].setAttribute('src', skyboxPath + '_pz.jpg');
+    }
+  }
+  __handleTextureTypeChange() {
+    this.texturePathInputLabel.style.display = 'none';
+    this.textureFile.style.display = 'none';
+
+    let sel = this.selectTextureType.value;
+    if (sel === 'Upload')
+      this.textureFile.style.display = '';
+    else if (sel === 'Path')
+      this.texturePathInputLabel.style.display = '';
+  }
+  __handleBlockTypeSelectChange() {
+    this.blockShapePanel.style.display = 'none';
+    this.sceneBlockPanel.style.display = 'none';
+    this.emptyBlockPanel.style.display = 'none';
+    this.animatedDashPanel.style.display = 'none';
+    this.connectorLinePanel.style.display = 'none';
+
+    let sel = this.blockOptionsPicker.value;
+    if (sel === 'Text and Shape')
+      this.blockShapePanel.style.display = '';
+    else if (sel === 'Scene')
+      this.sceneBlockPanel.style.display = '';
+    else if (sel === 'Connector Line')
+      this.connectorLinePanel.style.display = '';
+    else if (sel === 'Animated Line')
+      this.animatedDashPanel.style.display = '';
+    else
+      this.emptyBlockPanel.style.display = '';
+  }
+  __handleShapesSelectChange() {
+    this.createBoxOptions.style.display = this.createShapesSelect.value === 'Box' ? '' : 'none';
+    this.createSphereOptions.style.display = this.createShapesSelect.value === 'Sphere' ? '' : 'none';
+    this.createTextOptions.style.display = this.createShapesSelect.value === '3D Text' ? '' : 'none';
+    this.createCylinderOptions.style.display = this.createShapesSelect.value === 'Cylinder' ? '' : 'none';
+  }
+  __handleMaterialColorInputChange() {
+    let bColor = GLOBALUTIL.HexToRGB(this.materialColorPicker.value);
+    this.materialColorInput.value = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
+  }
+  __handleMaterialColorTextChange() {
+    let bColor = GLOBALUTIL.color(this.materialColorInput.value);
+    let rH = Math.round(bColor.r * 255).toString(16);
+    if (rH.length === 1)
+      rH = '0' + rH;
+    let gH = Math.round(bColor.g * 255).toString(16);
+    if (gH.length === 1)
+      gH = '0' + gH;
+    let bH = Math.round(bColor.b * 255).toString(16);
+    if (bH.length === 1)
+      bH = '0' + bH;
+
+    let hex = '#' + rH + gH + bH;
+    this.materialColorPicker.value = hex;
+  }
+  createItem() {
+    let newName = this.createPanelInput.value.trim();
+    if (newName === '') {
+      alert('Please enter a name');
+      return;
+    }
+    this.createPanelInput.value = '';
+    let file = null;
+    let scene = gAPPP.mV.scene;
+    let tag = this.addPanelTypeSelect.value.toLowerCase();
+
+    this.createMesage.style.display = 'block';
+
+    let mixin = {};
+    if (tag === 'material') {
+      let color = this.materialColorInput.value;
+      let texture = this.texturePickerMaterial.value;
+      if (this.diffuseCheckBox.checked) {
+        mixin.diffuseColor = color;
+        mixin.diffuseTextureName = texture;
+      }
+      if (this.emissiveCheckBox.checked) {
+        mixin.emissiveColor = color;
+        mixin.emissiveTextureName = texture;
+      }
+      if (this.ambientCheckBox.checked) {
+        mixin.ambientColor = color;
+        mixin.ambientTextureName = texture;
+      }
+      if (this.specularCheckBox.checked) {
+        mixin.specularColor = color;
+        mixin.specularTextureName = texture;
+      }
+    }
+
+    if (tag === 'shape') {
+      let sT = this.createShapesSelect.value;
+      let shapeType = 'box';
+      if (sT === 'Sphere')
+        shapeType = 'sphere';
+      else if (sT === '3D Text')
+        shapeType = 'text';
+      else if (sT === 'Cylinder')
+        shapeType = 'cylinder';
+
+      mixin.shapeType = shapeType;
+      if (shapeType === 'text') {
+        mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
+        mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
+      }
+      if (shapeType === 'sphere') {
+        mixin.sphereDiameter = this.addShapeOptionsPanel.querySelector('.sphere-diameter').value;
+      }
+      if (shapeType === 'box') {
+        mixin.boxWidth = this.addShapeOptionsPanel.querySelector('.box-width').value;
+        mixin.boxHeight = this.addShapeOptionsPanel.querySelector('.box-height').value;
+        mixin.boxDepth = this.addShapeOptionsPanel.querySelector('.box-depth').value;
+      }
+      if (shapeType === 'cylinder') {
+        mixin.cylinderDiameter = this.addShapeOptionsPanel.querySelector('.cylinder-diameter').value;
+        mixin.cylinderHeight = this.addShapeOptionsPanel.querySelector('.cylinder-height').value;
+      }
+      mixin.materialName = this.shapeMaterialSelectPicker.value;
+    }
+
+    if (tag === 'mesh') {
+      mixin.materialName = this.meshMaterialSelectPicker.value;
+      let sel = this.selectMeshType.value;
+      if (sel === 'Upload') {
+        if (this.meshFile.files.length > 0)
+          file = this.meshFile.files[0];
+      }
+      if (sel === 'Path') {
+        mixin.url = this.meshPathInput.value.trim();
+      }
+    }
+
+    if (tag === 'texture') {
+      let sel = this.selectTextureType.value;
+      if (sel === 'Upload') {
+        if (this.textureFile.files.length > 0)
+          file = this.textureFile.files[0];
+      }
+      if (sel === 'Path') {
+        mixin.url = this.texturePathInput.value.trim();
+      }
+    }
+
+    let generateGround = false;
+    let generateLight = false;
+    let generateShapeAndText = false;
+    let generateAnimatedLine = false;
+    let generateConnectorLine = false;
+    let callbackMixin = {};
+    if (tag === 'block') {
+      let bType = this.blockOptionsPicker.value;
+
+      if (bType === 'Empty') {
+        mixin.width = this.addBlockOptionsPanel.querySelector('.block-box-width').value;
+        mixin.height = this.addBlockOptionsPanel.querySelector('.block-box-height').value;
+        mixin.depth = this.addBlockOptionsPanel.querySelector('.block-box-depth').value;
+      }
+
+      if (bType === 'Scene') {
+        mixin.width = this.sceneBlockPanel.querySelector('.block-box-width').value;
+        mixin.height = this.sceneBlockPanel.querySelector('.block-box-height').value;
+        mixin.depth = this.sceneBlockPanel.querySelector('.block-box-depth').value;
+        mixin.skybox = this.skyBoxInput.value.trim();
+
+        if (this.generateGroundMaterial.checked) {
+          generateGround = true;
+          mixin.groundMaterial = newName + '_groundmaterial';
+        }
+        if (this.addSceneLight.checked)
+          generateLight = true;
+      }
+
+      if (bType === 'Text and Shape') {
+        mixin.width = this.blockShapePanel.querySelector('.block-box-width').value;
+        mixin.height = this.blockShapePanel.querySelector('.block-box-height').value;
+        mixin.depth = this.blockShapePanel.querySelector('.block-box-depth').value;
+
+        mixin.textText = this.blockShapePanel.querySelector('.block-box-text').value;
+        mixin.textFontFamily = this.blockShapePanel.querySelector('.font-family-block-add').value;
+        mixin.textMaterial = this.blockShapePanel.querySelector('.block-material-picker-select').value;
+        mixin.textDepth = this.blockShapePanel.querySelector('.block-text-depth').value;
+        mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
+        mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
+        mixin.cylinderHorizontal = this.blockShapePanel.querySelector('.shape-stretch-checkbox').value;
+        mixin.createShapeType = this.blockShapePicker.value;
+        generateShapeAndText = true;
+      }
+
+      if (bType === 'Animated Line') {
+        mixin.width = this.animatedDashPanel.querySelector('.block-box-width').value;
+        mixin.height = this.animatedDashPanel.querySelector('.block-box-height').value;
+        mixin.depth = this.animatedDashPanel.querySelector('.block-box-depth').value;
+
+        mixin.dashCount = this.animatedDashPanel.querySelector('.animated-line-dash-count').value;
+        mixin.runTime = this.animatedDashPanel.querySelector('.animated-run-time').value;
+
+        mixin.createShapeType = this.animatedDashPanel.querySelector('.block-add-dash-shape-type-options').value;
+        mixin.dashDepth = this.animatedDashPanel.querySelector('.dash-box-depth').value;
+        mixin.shapeDivs = this.animatedDashPanel.querySelector('.dash-shape-sides').value;
+        mixin.materialName = this.animatedDashPanel.querySelector('.dash-shape-material-picker-select').value;
+
+        generateAnimatedLine = true;
+      }
+      if (bType === 'Connector Line') {
+        callbackMixin.lineLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-length').value, 1);
+        callbackMixin.lineDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-diameter').value, 1);
+        callbackMixin.lineMaterial = this.connectorLinePanel.querySelector('.line-material').value;
+        callbackMixin.lineSides = this.connectorLinePanel.querySelector('.line-sides').value;
+
+        callbackMixin.pointLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-length').value, 1);
+        callbackMixin.pointDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-diameter').value, 1);
+        callbackMixin.pointMaterial = this.connectorLinePanel.querySelector('.point-material').value;
+        callbackMixin.pointSides = this.connectorLinePanel.querySelector('.point-sides').value;
+        callbackMixin.pointShape = this.connectorLinePanel.querySelector('.point-shape').value;
+
+        callbackMixin.tailLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-length').value, 1);
+        callbackMixin.tailDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-diameter').value, 1);
+        callbackMixin.tailMaterial = this.connectorLinePanel.querySelector('.tail-material').value;
+        callbackMixin.tailSides = this.connectorLinePanel.querySelector('.tail-sides').value;
+        callbackMixin.tailShape = this.connectorLinePanel.querySelector('.tail-shape').value;
+
+        callbackMixin.adjPointLength = callbackMixin.pointLength;
+        callbackMixin.adjPointDiameter = callbackMixin.pointDiameter;
+        if (callbackMixin.pointShape === 'None') {
+          callbackMixin.adjPointLength = 0;
+          callbackMixin.adjPointDiameter = 0;
+        }
+        callbackMixin.adjTailLength = callbackMixin.tailLength;
+        callbackMixin.adjTailDiameter = callbackMixin.tailDiameter;
+        if (callbackMixin.tailShape === 'None') {
+          callbackMixin.adjTailLength = 0;
+          callbackMixin.adjTailDiameter = 0;
+        }
+        callbackMixin.depth = Math.max(callbackMixin.lineDiameter, Math.max(callbackMixin.adjTailDiameter, callbackMixin.adjPointDiameter));
+        callbackMixin.height = callbackMixin.depth;
+        callbackMixin.width = callbackMixin.lineLength + callbackMixin.adjPointLength / 2.0 + callbackMixin.adjTailLength / 2.0;
+
+        mixin.width = callbackMixin.width;
+        mixin.height = callbackMixin.height;
+        mixin.depth = callbackMixin.depth;
+
+        generateConnectorLine = true;
+      }
+    }
+
+    this.context.createObject(tag, newName, file, mixin).then(results => {
+      if (generateAnimatedLine)
+        wGenerate.generateAnimatedLine(this.context, results.key, newName, mixin);
+
+      if (generateGround)
+        this.__generateGroundForScene(results.key, newName, mixin, this.cloudImageInput.value.trim());
+      if (generateLight)
+        this.__generateLightForScene(results.key, newName, mixin);
+      if (generateShapeAndText)
+        wGenerate.generateShapeAndText(this.context, results.key, newName, mixin);
+      if (generateConnectorLine)
+        wGenerate.generateConnectorLine(this.context, results.key, newName, callbackMixin);
+
+      setTimeout(() => {
+        gAPPP.dialogs[tag + '-edit'].show(results.key);
+        this.createMesage.style.display = 'none';
+      }, 300);
+    });
+  }
+  __generateLightForScene(blockKey, blockTitle, mixin) {
+    this.context.createObject('blockchild', '', null, {
+      childType: 'light',
+      childName: 'Hemispheric',
+      parentKey: blockKey
+    }).then(results => {
+      this.context.createObject('frame', '', null, {
+        frameTime: '',
+        frameOrder: '10',
+        parentKey: results.key,
+        lightDiffuseR: '1',
+        lightIntensity: '.35',
+        lightDiffuseG: '1',
+        lightDiffuseB: '1',
+        lightSpecularR: '1',
+        lightSpecularG: '1',
+        lightSpecularB: '1',
+        lightDirectionX: '0',
+        lightDirectionY: '1',
+        lightDirectionZ: '0'
+      })
+    });
+
+  }
+  __generateGroundForScene(blockKey, blockTitle, mixin, imgPath) {
+    let textureName = blockTitle + '_groundtexture';
+    let materialName = blockTitle + '_groundmaterial';
+    this.context.createObject('texture', textureName, null, {
+      url: imgPath,
+      vScale: mixin.depth,
+      uScale: mixin.width
+    }).then(results => {});
+    this.context.createObject('material', materialName, null, {
+      diffuseTextureName: textureName
+    }).then(results => {});
+  }
+  _titleKeyPress(e) {
+    if (e.code === 'Enter')
+      this.createItem();
   }
 }

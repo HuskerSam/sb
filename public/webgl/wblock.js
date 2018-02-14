@@ -384,6 +384,10 @@ class wBlock {
         this.staticLoad = true;
         this.staticType = values.childType;
       }
+      if (values.childType === 'camera') {
+        this.staticLoad = true;
+        this.staticType = values.childType;
+      }
     }
     if (this.staticLoad) {
       this.blockRenderData = this.blockRawData;
