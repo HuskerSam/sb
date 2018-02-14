@@ -6,7 +6,6 @@ class mFirebaseSuper {
     this.childListeners = [];
     this.values = {};
     this.keyList = false;
-    this.renderImageUpdateNeeded = false;
 
     if (activate)
       this.activate();
@@ -97,7 +96,9 @@ class mFirebaseSuper {
       let refPath = basePath + '/' + fieldPath;
       fireUpdates[refPath] = upd.newValue;
     }
-    this.renderImageUpdateNeeded = true;
+
+    if (this.updatesCallback)
+      this.updatesCallback(fieldUpdates, key);
     return firebase.database().ref().update(fireUpdates);
   }
 }

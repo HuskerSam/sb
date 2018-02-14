@@ -483,5 +483,4 @@ class cPanelData {
         innerField.dom.setAttribute('list', lists);
     }
   }
-
 }

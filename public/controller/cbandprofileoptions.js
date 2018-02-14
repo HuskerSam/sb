@@ -18,7 +18,25 @@ class cBandProfileOptions {
       if (gAPPP.activeContext)
         gAPPP.activeContext.refreshFocus();
     });
+    this.fireSet.updatesCallback = (fieldUpdates, key) => this.profileUpdates(fieldUpdates, key);
     this.closeOthersCallback = null;
+  }
+  profileUpdates(fieldUpdates, key) {
+    for (let i = 0; i < fieldUpdates.length; i++) {
+      if (fieldUpdates[i].field === 'lightIntensity') {
+        gAPPP.a.profile.lightIntensity = fieldUpdates[i].newValue;
+        if (gAPPP.activeContext)
+          gAPPP.activeContext._updateDefaultLight();
+      }
+      if (fieldUpdates[i].field === 'fontSize') {
+        gAPPP.a.profile.fontSize = fieldUpdates[i].newValue;
+        gAPPP._handleDataUpdate();
+      }
+      if (fieldUpdates[i].field === 'canvasColor') {
+        gAPPP.a.profile.canvasColor = fieldUpdates[i].newValue;
+        gAPPP._handleDataUpdate();
+      }
+    }
   }
   activate() {
     this.fireFields.paint();

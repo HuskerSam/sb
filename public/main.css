@@ -63,7 +63,7 @@ html, body {
 }
 
 .gutter {
-  border: outset 8px silver;
+  border: outset 5px silver;
   border-radius: 10px;
   line-height: 1px;
   margin-top: -5px;
@@ -73,10 +73,14 @@ html, body {
 .gutter.gutter-horizontal {
   cursor: ew-resize;
   margin-top: 0px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .gutter.gutter-vertical {
   cursor: ns-resize;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .split.split-horizontal, .gutter.gutter-horizontal {
@@ -216,7 +220,6 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 4px;
   position: relative;
   margin-bottom: 5px;
 }
@@ -522,7 +525,9 @@ button i.material-icons {
   display: inline-block;
 }
 
-.selected-mesh-bounds-helper-box .action-area {}
+.selected-mesh-bounds-helper-box .action-area {
+  margin-top: -.5em;
+}
 
 .selected-mesh-bounds-helper-box .action-area input {
   width: 3em;
@@ -603,7 +608,7 @@ input[type=range]::-webkit-slider-runnable-track {
 
 input[type=range]::-webkit-slider-thumb {
   height: 1.55em;
-  width: 1.5em;
+  width: 2em;
   background: rgb(255, 255, 255);
   -webkit-appearance: none;
   border-radius: .15em;
@@ -827,11 +832,12 @@ input[type=range]::-webkit-slider-thumb {
 
 #user-profile-panel {
   position: absolute;
-  right: .5em;
+  right: 0;
   bottom: 3em;
   background: rgba(255, 255, 255, .75);
   color: black;
   padding: .5em;
+  padding-right: 0;
   border-radius: .5em;
   border: inset .15em silver;
   text-align: center;
@@ -1020,7 +1026,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .add-item-panel {
   position: absolute;
-  right: .5em;
+  right: 0;
   bottom: 3em;
   background: rgba(255, 255, 255, .75);
   color: black;
@@ -1139,4 +1145,17 @@ input[type=range]::-webkit-slider-thumb {
 
 .scene-tools-checkboxes {
   top: 1.25em;
+}
+
+.font-size-main-view {
+  height: 10.3em;
+  margin-right: 0;
+}
+
+.font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  transform:none;
+  width: 18em;
+  left: -12.75em;
+  top: .25em;
+  margin-bottom: .75em;
 }

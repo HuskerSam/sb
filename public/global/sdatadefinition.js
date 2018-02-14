@@ -72,7 +72,8 @@ __animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraN
 __animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'];
 __animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraTargetBlock', 'cameraName'];
 __animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration',
-'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'];
+  'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
+];
 __animFieldFilters.blockLightFields = {};
 __animFieldFilters.animateLightFields = {};
 __animFieldFilters.blockLightFields['Hemispheric'] = [];
@@ -349,6 +350,18 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'textColor'
 }];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
+  title: 'Canvas Color',
+  fireSetField: 'canvasColor',
+  contextObjectField: null,
+  type: 'color',
+  group: 'color',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.005',
+  floatLeft: true,
+  displayType: 'shortVector'
+}, {
   title: 'Font',
   fireSetField: 'fontFamily',
   contextObjectField: null,
@@ -361,25 +374,22 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   contextObjectField: null,
   group: 'main',
   displayType: 'number',
+  helperType: 'singleSlider',
+  rangeMin: '7',
+  rangeMax: '22',
+  rangeStep: '.25',
+  groupClass: 'font-size-main-view',
   floatLeft: true
-}, {
-  title: 'Canvas Color',
-  fireSetField: 'canvasColor',
-  contextObjectField: null,
-  type: 'color',
-  group: 'color',
-  floatLeft: true,
-  displayType: 'shortVector'
 },{
   title: 'Focus Lock (Editing)',
   fireSetField: 'inputFocusLock',
   contextObjectField: null,
-  group: 'color',
+  group: 'main',
   type: 'boolean',
   floatLeft: true,
   clearLeft: true
 }];
-__localStaticStorageForBindingFields['sceneToolsBar'] = [ {
+__localStaticStorageForBindingFields['sceneToolsBar'] = [{
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
   type: 'boolean',
@@ -973,7 +983,7 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayType: 'number',
   contextObjectField: 'fov',
   group: 'cameraFOV'
-},{
+}, {
   title: 'Position',
   fireSetField: 'cameraOriginX',
   displayGroup: 'camera',
