@@ -32,12 +32,15 @@ class gApplication {
   profileReady() {
     if (!this.initialUILoad)
       return;
+    if (this.loadStarted)
+      return;
     if (this.profileLoaded && this.workspaceListLoaded) {
+      this.loadStarted = true;
       this.a.initProjectModels(this.workspace);
       this.mV = new cViewMain();
       this.a._activateModels();
-      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
       this.initialUILoad = false;
+      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
       this._updateApplicationStyle();
     }
   }
@@ -52,7 +55,7 @@ class gApplication {
       return;
 
     if (this.a.profile.canvasColor !== this.lastClearColor) {
-      this.lastClearColor = this.a.profile.canvasColor
+      this.lastClearColor = this.a.profile.canvasColor;
       this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
     }
     this._updateApplicationStyle();
