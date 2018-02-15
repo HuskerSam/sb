@@ -80,18 +80,23 @@ class wGenerate {
       shapeOptions.boxDepth = depth.toFixed(3);
     }
     if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
+      if (shapeOptions.cylinderHorizontal) {
+        firstFrameOptions.rotationZ = '90deg';
+        let h = height;
+        height = width;
+        width = h;
+      }
+
       shapeOptions.shapeType = 'cylinder';
       shapeOptions.cylinderHeight = height.toFixed(3);
-      shapeOptions.cylinderDiameter = Math.min(width, depth).toFixed(3);
-      shapeOptions.cylinderTessellation = shapeOptions.shapeDivs;
-      firstFrameOptions.positionZ = (-1.0 * shapeOptions.cylinderDiameter / 2.0).toFixed(3);
-
-      if (shapeOptions.cylinderHorizontal) {
-        shapeOptions.cylinderHeight = height.toFixed(3);
-        shapeOptions.cylinderDiameter = Math.min(width, depth).toFixed(3);
-        firstFrameOptions.rotationZ = '90deg';
-        firstFrameOptions.positionZ = (-1.0 * shapeOptions.cylinderDiameter / 2.0).toFixed(3);
+      shapeOptions.cylinderDiameter = width.toFixed(3);
+      if (width !== depth) {
+        firstFrameOptions.scalingZ = (depth / width).toFixed(3);
       }
+
+      shapeOptions.cylinderTessellation = shapeOptions.shapeDivs;
+      firstFrameOptions.positionZ = (-1.0 * depth / 2.0).toFixed(3);
+
       if (shapeOptions.createShapeType === 'Cone')
         shapeOptions.cylinderDiameterTop = 0;
     }
