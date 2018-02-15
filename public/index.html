@@ -261,12 +261,22 @@
         <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
         <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
         <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
+        <div class="run-length-label"></div>
         <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
         <div class="camera-options-panel" style="display:inline-block;">
           <select class="camera-select" style=""></select>
-          <input class="camera-select-range-slider" type="range" step=".25" min="-25" max="80" />
-          <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
-          <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+          <div style="display:inline-block;">
+            <div class="camera-slider-label">Radius</div>
+            <input class="camera-select-range-slider" type="range" step=".25" min="-25" max="80" />
+          </div>
+          <div style="display:inline-block;">
+            <div class="camera-slider-label">FOV</div>
+            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+          </div>
+          <div style="display:inline-block;">
+            <div class="camera-slider-label">Height</div>
+            <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+          </div>
           <div class="fields-container" style="float:left"></div>
         </div>
       </div>

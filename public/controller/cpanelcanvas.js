@@ -24,7 +24,11 @@ class cPanelCanvas {
     this.fovSlider.addEventListener('input', e => this.fovSliderChange());
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
-    this.animateSlider.addEventListener('input', e => this.parent.rootBlock.setAnimationPosition(this.animateSlider.value));
+    this.animateSlider.addEventListener('input', e => {
+      this.parent.rootBlock.setAnimationPosition(this.animateSlider.value);
+      this._updateSliderPosition(false);
+    });
+    this.animateSliderLabel = this.dialog.querySelector('.run-length-label');
 
     this.bandButtons = [];
     this.sceneToolsButton = this.dialog.querySelector('.scene-options');
@@ -56,7 +60,11 @@ class cPanelCanvas {
     this.errorCount = 0;
   }
   fovSliderChange() {
+    this._updateFOVRangeSlider();
+  }
+  _updateFOVRangeSlider() {
     this.parent.context.camera.fov = Number(this.fovSlider.value);
+    this.fovSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'FOV: ' + this.fovSlider.value;
   }
   exportBabylonFile() {
     let serializedScene = BABYLON.SceneSerializer.Serialize(this.parent.context.scene);
@@ -76,19 +84,27 @@ class cPanelCanvas {
     element.click();
     document.body.removeChild(element);
   }
-  arcRangeSliderChange() {
+  _updateCameraRangeSlider() {
     this.parent.context.camera.radius = Number(this.arcRangeSlider.value);
+    this.arcRangeSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'Radius: ' + this.arcRangeSlider.value;
+  }
+  arcRangeSliderChange() {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'arcCameraRadius',
       newValue: this.arcRangeSlider.value
     }]);
+    this._updateCameraRangeSlider();
+  }
+  _updateCameraHeightSlider() {
+    this.parent.context.camera.heightOffset = Number(this.heightSlider.value);
+    this.heightSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'Height: ' + this.heightSlider.value;
   }
   cameraHeightChange() {
-    this.parent.context.camera.heightOffset = Number(this.heightSlider.value);
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'cameraHeight',
       newValue: this.heightSlider.value
     }]);
+    this._updateCameraHeightSlider();
   }
   get rootBlock() {
     return this.parent.rootBlock;
@@ -196,6 +212,13 @@ class cPanelCanvas {
     }
 
     this.animateSlider.value = elapsed / total * 100.0;
+
+    if (this.activeAnimation) {
+      let timeE = elapsed / this.rootBlock.framesHelper.fps;
+      let timeLength = total / this.rootBlock.framesHelper.fps;
+      this.animateSliderLabel.innerHTML = 'Time: ' + timeE.toFixed(1) + '/' + timeLength.toFixed(1) + 's';
+    } else
+      this.animateSliderLabel.innerHTML = '';
   }
   pauseAnimation() {
     this.playButton.removeAttribute('disabled');
@@ -219,9 +242,11 @@ class cPanelCanvas {
   show() {
     this.updateButtonStatus();
     this.cameraChangeHandler();
-    if (this.cameraSelect.selectedIndex === 0)
-      this.parent.context.camera.radius = this.arcRangeSlider.value;
     this.loadingScreen.style.display = 'none';
+    this._updateCameraRangeSlider();
+    this._updateCameraHeightSlider();
+    this.fovSlider.value = '.8';
+    this._updateFOVRangeSlider();
   }
   hide() {
     this.loadingScreen.style.display = '';
@@ -251,11 +276,12 @@ class cPanelCanvas {
       this.playButton.style.display = '';
       this.isValidAnimation = true;
     }
+    this._updateSliderPosition(false);
   }
   refresh() {
-    this.arcRangeSlider.style.display = 'none';
-    this.heightSlider.style.display = 'none';
-    this.fovSlider.style.display = 'none';
+    this.arcRangeSlider.parentNode.style.display = 'none';
+    this.heightSlider.parentNode.style.display = 'none';
+    this.fovSlider.parentNode.style.display = 'none';
 
     if (this.cameraSelect.selectedIndex === -1) {
       this.cameraSelect.style.display = 'none';
@@ -264,20 +290,17 @@ class cPanelCanvas {
     }
 
     if (this.cameraSelect.selectedIndex < 1) {
-      this.arcRangeSlider.style.display = '';
+      this.arcRangeSlider.parentNode.style.display = 'inline-block';
     } else {
       let camType = this.cameraDetails[this.cameraSelect.value].childName;
 
       if (camType === 'ArcRotate' || camType === 'FollowCamera') {
-        this.arcRangeSlider.style.display = '';
-      }
-
-      if (camType === 'ArcRotate') {
-        this.fovSlider.style.display = '';
+        this.arcRangeSlider.parentNode.style.display = 'inline-block';
+        this.fovSlider.parentNode.style.display = 'inline-block';
       }
 
       if (camType === 'FollowCamera')
-        this.heightSlider.style.display = '';
+        this.heightSlider.parentNode.style.display = 'inline-block';
     }
 
     let animStatus = true;

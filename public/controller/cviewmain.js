@@ -346,8 +346,9 @@ class cViewMain {
   }
   show(scene) {
     this.context.activate(scene);
-    if (this.canvasHelper)
-      this.canvasHelper.cameraSelect.value = 'default';
+    if (this.canvasHelper){
+      this.canvasHelper.show();
+    }
   }
   handleAddTypeSelect() {
     this.addMaterialOptionsPanel.style.display = 'none';
