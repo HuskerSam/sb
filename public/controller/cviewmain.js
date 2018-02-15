@@ -607,6 +607,7 @@ class cViewMain {
         mixin.depth = this.blockShapePanel.querySelector('.block-box-depth').value;
 
         mixin.textText = this.blockShapePanel.querySelector('.block-box-text').value;
+        mixin.textTextLine2 = this.blockShapePanel.querySelector('.block-box-text-line2').value;
         mixin.textFontFamily = this.blockShapePanel.querySelector('.font-family-block-add').value;
         mixin.textMaterial = this.blockShapePanel.querySelector('.block-material-picker-select').value;
         mixin.textDepth = this.blockShapePanel.querySelector('.block-text-depth').value;

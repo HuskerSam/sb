@@ -923,7 +923,7 @@ input[type=range]::-webkit-slider-thumb {
 .select-block-animation-button {
   position: absolute;
   bottom: .1em;
-  right: 2em;
+  right: 2.275em;
   background: rgba(240, 240, 240, .5);
   color: black;
 }

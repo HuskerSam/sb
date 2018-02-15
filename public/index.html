@@ -112,7 +112,7 @@
         <div class="animated-line-block-add-options">
           <div>
             <label><span>W</span><input type="text" class="block-box-width" value="1" /></label>
-            <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
+            <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
             <label><span>D</span><input type="text" class="block-box-depth" value="10" /></label>
           </div>
           <div style="clear:both;"></div>
@@ -134,18 +134,20 @@
         </div>
         <div class="shape-and-text-block-options">
           <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
-          <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
           <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>
           <hr>
-          <label><span>Text</span><input type="text" style="width:15em;" class="block-box-text" value="Text" /></label>
-          <label><span>Depth</span><input type="text" class="block-text-depth" value=".25" /></label>
+          <label><span>Line 1</span><input type="text" style="width:15em;" class="block-box-text" value="Block Text" /></label>
+          <br>
+          <label><span>Line 2</span><input type="text" style="width:15em;" class="block-box-text-line2" value="" /></label>
           <br>
           <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
+          <label><span>Depth</span><input type="text" class="block-text-depth" value=".1" /></label>
           <br>
           <label><span>Material</span><input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
           <hr>
 
-          <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option>Cone</option>
+          <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option selected>Cone</option>
             <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
           <label class="block-shape-add-label"><span>Divs</span><input type="text" class="block-add-shape-sides" /></label>
           <label class="block-stretch-along-width-label"><input type="checkbox" class="shape-stretch-checkbox" />Stretch along width</label>
@@ -202,10 +204,10 @@
       <div class="fields-container" style="clear:both;"></div>
       <label>
         <span>Element</span>
-        <select class="element-type">
-          <option>Block</option>
+        <select style="font-weight:bold" class="element-type">
+          <option selected>Block</option>
           <option>Mesh</option>
-          <option selected>Shape</option>
+          <option>Shape</option>
           <option>Material</option>
           <option>Texture</option>
         </select>
@@ -216,9 +218,9 @@
           <option>Cylinder</option>
         </select>
         <select class="block-type-select">
+          <option>Empty</option>
           <option>Scene</option>
-          <option selected>Empty</option>
-          <option>Text and Shape</option>
+          <option selected>Text and Shape</option>
           <option>Animated Line</option>
           <option>Connector Line</option>
         </select>

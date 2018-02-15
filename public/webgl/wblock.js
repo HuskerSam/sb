@@ -766,6 +766,7 @@ class wBlock {
       let m = this.__material(objectData);
 
       m.diffuseColor = GLOBALUTIL.color(color);
+      m.emissiveColor = GLOBALUTIL.color(color);
       this.context.__setMaterialOnObj(object, m);
     } else {
       let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', materialName);

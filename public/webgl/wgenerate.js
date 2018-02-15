@@ -1,10 +1,16 @@
 class wGenerate {
   static generateShapeAndText(context, blockId, blockTitle, options) {
     let shapeTextName = blockTitle + '_shapeText';
-    let scale = 2 * options.width / options.textText.length;
-    let textDepth = GLOBALUTIL.getNumberOrDefault(options.textDepth, 1);
+    let shapeTextNameLine2 = blockTitle + '_shapeTextLine2';
+    let textLen = Math.max(options.textText.length, options.textTextLine2.length);
+    let scale = 2 * options.width / textLen;
+    let textDepth = GLOBALUTIL.getNumberOrDefault(options.textDepth, .25);
+    let height = GLOBALUTIL.getNumberOrDefault(options.height, 1);
     let depth = textDepth;
     if (!depth) depth = '.001';
+    let positionY = scale * .5;
+    if (options.textTextLine2 === '')
+      positionY = 0;
     context.createObject('shape', shapeTextName, null, {
       textText: options.textText,
       shapeType: 'text',
@@ -12,6 +18,7 @@ class wGenerate {
       materialName: options.textMaterial,
       scalingX: scale,
       scalingZ: scale,
+      positionY: positionY.toFixed(3),
       textDepth: depth
     }).then(results => {
       context.createObject('blockchild', '', null, {
@@ -29,6 +36,34 @@ class wGenerate {
         });
       });
     });
+
+    if (options.textTextLine2 !== '') {
+      context.createObject('shape', shapeTextNameLine2, null, {
+        textText: options.textTextLine2,
+        shapeType: 'text',
+        textFontFamily: options.textFontFamily,
+        materialName: options.textMaterial,
+        scalingX: scale,
+        scalingZ: scale,
+        positionY: (-1 * positionY).toFixed(3),
+        textDepth: depth
+      }).then(results => {
+        context.createObject('blockchild', '', null, {
+          childType: 'shape',
+          childName: shapeTextNameLine2,
+          parentKey: blockId
+        }).then(innerResults => {
+          context.createObject('frame', '', null, {
+            frameTime: '',
+            frameOrder: '10',
+            parentKey: innerResults.key,
+            rotationY: '-90deg',
+            rotationZ: '-90deg',
+            positionZ: (textDepth / 2.0).toFixed(3)
+          });
+        });
+      });
+    }
 
     let shapeOptions = {
       width: GLOBALUTIL.getNumberOrDefault(options.width, 1),
