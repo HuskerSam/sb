@@ -34,7 +34,7 @@ class cPanelCanvas {
     this.sceneToolsButton = this.dialog.querySelector('.scene-options');
     this.sceneToolsContainer = this.dialog.querySelector('.scene-options-panel');
     this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
-    this.sceneFieldsContainer = this.sceneToolsContainer.querySelector('.fields-container');
+    this.sceneFieldsContainer = this.sceneToolsContainer.querySelector('.scene-fields-container');
     this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneFields, this.sceneFieldsContainer, this.sceneToolsContainer);
     this.sceneTools.fireFields.values = gAPPP.a.profile;
     this.sceneTools.activate();
@@ -42,9 +42,16 @@ class cPanelCanvas {
 
     this.lightIntensityLabel = this.sceneToolsContainer.querySelector('.light-intensity-main-page span');
 
+    this.renderShowBtn = this.sceneToolsContainer.querySelector('.show-hide-log');
     this.renderPanel = this.sceneToolsContainer.querySelector('.render-log-panel');
+    this.renderPanelWrapper = this.sceneToolsContainer.querySelector('.render-log-wrapper');
     this.renderPanelClear = this.sceneToolsContainer.querySelector('.log-clear');
     this.renderPanelClear.addEventListener('click', e => this.logClear());
+    this.renderFieldsContainer = this.renderPanel.parentElement.querySelector('.fields-container');
+    this.renderTools = new cBandProfileOptions(this.renderShowBtn, [], this.renderFieldsContainer, this.renderPanelWrapper);
+    this.renderTools.fireFields.values = gAPPP.a.profile;
+    this.renderTools.activate();
+    this.bandButtons.push(this.renderTools);
 
     this.downloadButton = this.dialog.querySelector('.canvas-actions .download-button');
     this.downloadButton.addEventListener('click', e => this.exportBabylonFile());
@@ -291,6 +298,7 @@ class cPanelCanvas {
 
     if (this.cameraSelect.selectedIndex < 1) {
       this.arcRangeSlider.parentNode.style.display = 'inline-block';
+      this.fovSlider.parentNode.style.display = 'inline-block';
     } else {
       let camType = this.cameraDetails[this.cameraSelect.value].childName;
 

@@ -612,7 +612,7 @@ class cViewMain {
         mixin.textDepth = this.blockShapePanel.querySelector('.block-text-depth').value;
         mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
         mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
-        mixin.cylinderHorizontal = this.blockShapePanel.querySelector('.shape-stretch-checkbox').value;
+        mixin.cylinderHorizontal = this.blockShapePanel.querySelector('.shape-stretch-checkbox').checked;
         mixin.createShapeType = this.blockShapePicker.value;
         generateShapeAndText = true;
       }

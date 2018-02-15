@@ -246,16 +246,18 @@
     <div class="canvas-actions">
       <div class="canvas-play-bar" style="display:inline-block;pointer-events:none;">
         <div class="scene-options-panel" style="display:none;">
-          <div class="fields-container">
+          <div class="scene-fields-container">
           </div>
-          <div class="render-log-wrapper">
+          <div class="render-log-wrapper" style="display:none;">
             <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
             <textarea class="render-log-panel" spellcheck="false"></textarea>
+            <div class="fields-container" style="display:none;"></div>
           </div>
           <br>
           <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
           <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
-          <button class="btn-sb-icon download-button" style="display:none;"><i class="material-icons">file_download</i></button>
+          <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+          <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
         </div>
         <br>
         <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>

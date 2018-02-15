@@ -661,8 +661,8 @@ input[type=range]::-webkit-slider-thumb {
 .render-log-panel {
   background: rgba(255, 255, 255, .5);
   white-space: pre;
-  width: 14em;
-  height: 7em;
+  width: 16em;
+  height: 10em;
   border-radius: 0em;
   border: inset .1em silver;
   font-size: .9em;
@@ -806,7 +806,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .canvas-actions input[type="range"] {
-  width: 25vw;
+  width: 22vw;
   display: inline-block;
   position: relative;
   top: .2em;
@@ -843,7 +843,7 @@ input[type=range]::-webkit-slider-thumb {
   text-align: center;
 }
 
-#main-page .form-group-container-group {
+.scene-options .form-group-container-group {
   background: rgba(255, 255, 255, .5);
   padding: .25em;
   overflow: hidden;
@@ -865,14 +865,6 @@ input[type=range]::-webkit-slider-thumb {
   bottom: .25em;
   right: .25em;
   z-index: 100;
-}
-
-.context-scene-tools-panel {
-  pointer-events: none;
-}
-
-.context-scene-tools-panel .fields-container {
-  pointer-events: none;
 }
 
 .doubled-up-first {
@@ -963,13 +955,13 @@ input[type=range]::-webkit-slider-thumb {
   pointer-events: none;
 }
 
-.scene-options-panel .fields-container {
+.scene-options-panel .scene-fields-container {
   overflow: hidden;
   pointer-events: none;
   display: inline-block;
 }
 
-.scene-options-panel .fields-container * {
+.scene-options-panel .scene-fields-container * {
   pointer-events: auto;
 }
 

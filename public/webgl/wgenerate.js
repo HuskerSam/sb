@@ -81,13 +81,14 @@ class wGenerate {
     }
     if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
       shapeOptions.shapeType = 'cylinder';
-      shapeOptions.cylinderHeight = depth.toFixed(3);
-      shapeOptions.cylinderDiameter = Math.min(width, height).toFixed(3);
+      shapeOptions.cylinderHeight = height.toFixed(3);
+      shapeOptions.cylinderDiameter = Math.min(width, depth).toFixed(3);
       shapeOptions.cylinderTessellation = shapeOptions.shapeDivs;
+      firstFrameOptions.positionZ = (-1.0 * shapeOptions.cylinderDiameter / 2.0).toFixed(3);
 
       if (shapeOptions.cylinderHorizontal) {
-        shapeOptions.cylinderHeight = width.toFixed(3);
-        shapeOptions.cylinderDiameter = Math.min(height, depth).toFixed(3);
+        shapeOptions.cylinderHeight = height.toFixed(3);
+        shapeOptions.cylinderDiameter = Math.min(width, depth).toFixed(3);
         firstFrameOptions.rotationZ = '90deg';
         firstFrameOptions.positionZ = (-1.0 * shapeOptions.cylinderDiameter / 2.0).toFixed(3);
       }
