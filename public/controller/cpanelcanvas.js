@@ -15,7 +15,12 @@ class cPanelCanvas {
     this.cameraSelect.addEventListener('input', e => this.cameraChangeHandler());
     this.arcRangeSlider = this.dialog.querySelector('.camera-select-range-slider');
     this.arcRangeSlider.addEventListener('input', e => this.arcRangeSliderChange());
-    this.arcRangeSlider.value = gAPPP.a.profile.arcCameraRadius;
+    this.minpos = 1;
+    this.maxpos = 200;
+    this.minlval = Math.log(1);
+    this.maxlval = Math.log(10000);
+    this.scale = (this.maxlval - this.minlval) / (this.maxpos - this.minpos);
+    this.arcRangeSlider.value = this.cameraSliderValue(gAPPP.a.profile.arcCameraRadius);
     this.heightSlider = this.dialog.querySelector('.camera-select-range-height-slider');
     this.heightSlider.addEventListener('input', e => this.cameraHeightChange());
     this.heightSlider.value = gAPPP.a.profile.cameraHeight;
@@ -92,13 +97,15 @@ class cPanelCanvas {
     document.body.removeChild(element);
   }
   _updateCameraRangeSlider() {
-    this.parent.context.camera.radius = Number(this.arcRangeSlider.value);
-    this.arcRangeSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'Radius: ' + this.arcRangeSlider.value;
+    let val = this.cameraSliderPosition(this.arcRangeSlider.value);
+    this.parent.context.camera.radius = val;
+    this.arcRangeSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'Radius: ' + val;
   }
   arcRangeSliderChange() {
+    let val = this.cameraSliderPosition(this.arcRangeSlider.value);
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'arcCameraRadius',
-      newValue: this.arcRangeSlider.value
+      newValue: val
     }]);
     this._updateCameraRangeSlider();
   }
@@ -356,5 +363,11 @@ class cPanelCanvas {
   }
   logMessage(str) {
     this.__addLogLine(str);
+  }
+  cameraSliderValue(position) {
+    return Math.exp((position - this.minpos) * this.scale + this.minlval);
+  }
+  cameraSliderPosition(value) {
+    return this.minpos + (Math.log(value) - this.minlval) / this.scale;
   }
 }
