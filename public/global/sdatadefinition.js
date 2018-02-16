@@ -118,36 +118,45 @@ __localStaticStorageForBindingFields['material'] = [{
   title: 'Title',
   fireSetField: 'title',
   contextObjectField: null,
-  group: 'title'
+  group: 'title',
+  floatLeft: true
 }, {
   title: 'Preview Shape',
   fireSetField: 'previewShape',
   contextObjectField: null,
+  group: 'title',
+  dataListId: 'applicationdynamicshapelistlookuplist',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'Alpha',
+  fireSetField: 'alpha',
+  contextObjectField: 'alpha',
+  displayType: 'number',
   group: 'options',
-  dataListId: 'applicationdynamicshapelistlookuplist'
+  floatLeft: true
 }, {
   title: 'Wireframe',
   fireSetField: 'wireframe',
   contextObjectField: 'wireframe',
   type: 'boolean',
+  group: 'options',
+  floatLeft: true
+}, {
+  title: 'Backface Culling',
+  fireSetField: 'backfaceCulling',
+  contextObjectField: 'backfaceCulling',
+  type: 'boolean',
+  floatLeft: true,
+  clearLeft: true,
   group: 'options'
 }, {
-  title: 'Alpha Level',
-  fireSetField: 'alpha',
-  contextObjectField: 'alpha',
-  displayType: 'number',
-  group: 'options'
-}, {
-  title: 'Diffuse Color (main)',
+  title: 'Diffuse (main)',
   fireSetField: 'diffuseColor',
   contextObjectField: 'diffuseColor',
   type: 'color',
   group: 'diffuseColor',
   displayType: 'shortVector',
-  helperType: 'vector',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.01',
   floatLeft: true
 }, {
   title: 'Diffuse Texture Name',
@@ -155,18 +164,15 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: 'diffuseTexture',
   type: 'texture',
   group: 'diffuseColor',
-  floatLeft: true
+  floatLeft: true,
+  clearLeft: true
 }, {
-  title: 'Ambient Color (reflects)',
+  title: 'Ambient (reflects)',
   fireSetField: 'ambientColor',
   contextObjectField: 'ambientColor',
   type: 'color',
   group: 'ambientColor',
   displayType: 'shortVector',
-  helperType: 'vector',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.01',
   floatLeft: true
 }, {
   title: 'Ambient Texture Name',
@@ -174,18 +180,15 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: 'ambientTexture',
   type: 'texture',
   group: 'ambientColor',
-  floatLeft: true
+  floatLeft: true,
+  clearLeft: true
 }, {
-  title: 'Emissive Color (glows)',
+  title: 'Emissive (glows)',
   fireSetField: 'emissiveColor',
   contextObjectField: 'emissiveColor',
   type: 'color',
   group: 'emissiveColor',
   displayType: 'shortVector',
-  helperType: 'vector',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.01',
   floatLeft: true
 }, {
   title: 'Emissive Texture Name',
@@ -193,36 +196,22 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: 'emissiveTexture',
   type: 'texture',
   group: 'emissiveColor',
-  floatLeft: true
+  floatLeft: true,
+  clearLeft: true
 }, {
-  title: 'Specular Power',
-  fireSetField: 'specularPower',
-  contextObjectField: 'specularPower',
-  group: 'specularPower',
-  displayType: 'number'
-}, {
-  title: 'Specular over Alpha',
-  fireSetField: 'useSpecularOverAlpha',
-  contextObjectField: 'useSpecularOverAlpha',
-  group: 'specularPower',
-  type: 'boolean'
-}, {
-  title: 'Gloss From Specular',
-  fireSetField: 'useGlossinessFromSpecularMapAlpha',
-  contextObjectField: 'specularPower',
-  group: 'specularPower',
-  type: 'boolean',
-}, {
-  title: 'Specular Color (shines)',
+  title: 'Specular (shines)',
   fireSetField: 'specularColor',
   contextObjectField: 'specularColor',
   group: 'specularColor',
   type: 'color',
   displayType: 'shortVector',
-  helperType: 'vector',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.01',
+  floatLeft: true
+}, {
+  title: 'Specular over Alpha',
+  fireSetField: 'useSpecularOverAlpha',
+  contextObjectField: 'useSpecularOverAlpha',
+  group: 'specularColor',
+  type: 'boolean',
   floatLeft: true
 }, {
   title: 'Specular Texture Name',
@@ -230,8 +219,22 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: 'specularTexture',
   group: 'specularColor',
   type: 'texture',
+  floatLeft: true,
+  clearLeft: true,
+},  {
+  title: 'Gloss From Specular',
+  fireSetField: 'useGlossinessFromSpecularMapAlpha',
+  contextObjectField: 'specularPower',
+  group: 'specularColor',
+  type: 'boolean',
   floatLeft: true
 }, {
+  title: 'Specular Power',
+  fireSetField: 'specularPower',
+  contextObjectField: 'specularPower',
+  group: 'specularColor',
+  displayType: 'number'
+},{
   title: 'Bump Texture Name',
   fireSetField: 'bumpTextureName',
   contextObjectField: 'bumpTexture',
@@ -244,11 +247,6 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: 'roughness',
   displayType: 'number',
   group: 'roughness'
-}, {
-  title: 'Backface Culling',
-  fireSetField: 'backfaceCulling',
-  contextObjectField: 'backfaceCulling',
-  type: 'boolean'
 }];
 __localStaticStorageForBindingFields['texture'] = [{
   title: 'Title',
@@ -261,12 +259,6 @@ __localStaticStorageForBindingFields['texture'] = [{
   contextObjectField: null,
   group: 'options',
   dataListId: 'applicationdynamicshapelistlookuplist'
-}, {
-  title: 'is Text',
-  fireSetField: 'isText',
-  contextObjectField: null,
-  type: 'boolean',
-  group: 'options'
 }, {
   title: 'is Video',
   fireSetField: 'isVideo',
@@ -311,43 +303,6 @@ __localStaticStorageForBindingFields['texture'] = [{
   contextObjectField: 'uScale',
   group: 'texturescale',
   displayType: 'number'
-}, {
-  title: '2D Text',
-  fireSetField: 'textureText',
-  contextObjectField: null,
-  group: 'texttext',
-  inlineWidth: '20em'
-}, {
-  title: 'Font Family',
-  fireSetField: 'textFontFamily',
-  contextObjectField: null,
-  dataListId: 'fontfamilydatalist',
-  group: 'textdetails',
-  inlineWidth: '10em'
-}, {
-  title: 'Font Size',
-  fireSetField: 'textFontSize',
-  contextObjectField: null,
-  group: 'textdetails'
-}, {
-  title: 'Font Weight',
-  fireSetField: 'textFontWeight',
-  contextObjectField: null,
-  shapeOption: 'fontWeight',
-  displayGroup: 'textdetails',
-  group: 'font'
-}, {
-  title: 'Font Color',
-  fireSetField: 'textFontColor',
-  contextObjectField: null,
-  type: 'color',
-  group: 'textColor'
-}, {
-  title: 'Clear Color',
-  fireSetField: 'textFontClearColor',
-  contextObjectField: null,
-  type: 'color',
-  group: 'textColor'
 }];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   title: 'Canvas Color',

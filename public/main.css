@@ -567,7 +567,7 @@ button i.material-icons {
 }
 
 .selected-mesh-bounds-helper-box .preview {
-  font-size: 1em;
+  font-size: .85em;
   clear: both;
 }
 
@@ -1059,7 +1059,7 @@ input[type=range]::-webkit-slider-thumb {
 
 .add-item-panel input[type="text"] {
   text-align: center;
-  width: 5em;
+  width: 4em;
 }
 
 .add-item-panel select {

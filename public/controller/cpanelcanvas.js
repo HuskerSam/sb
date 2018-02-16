@@ -17,10 +17,12 @@ class cPanelCanvas {
     this.arcRangeSlider.addEventListener('input', e => this.arcRangeSliderChange());
     this.minpos = 1;
     this.maxpos = 200;
-    this.minlval = Math.log(1);
-    this.maxlval = Math.log(10000);
+    this.scaleFactor = 100;
+    this.minlval = Math.log(10);
+    this.maxlval = Math.log(100000);
     this.scale = (this.maxlval - this.minlval) / (this.maxpos - this.minpos);
-    this.arcRangeSlider.value = this.cameraSliderValue(gAPPP.a.profile.arcCameraRadius);
+
+    this.arcRangeSlider.value = this.cameraSliderPosition(gAPPP.a.profile.arcCameraRadius);
     this.heightSlider = this.dialog.querySelector('.camera-select-range-height-slider');
     this.heightSlider.addEventListener('input', e => this.cameraHeightChange());
     this.heightSlider.value = gAPPP.a.profile.cameraHeight;
@@ -97,12 +99,12 @@ class cPanelCanvas {
     document.body.removeChild(element);
   }
   _updateCameraRangeSlider() {
-    let val = this.cameraSliderPosition(this.arcRangeSlider.value);
+    let val = this.cameraSliderValue(this.arcRangeSlider.value);
     this.parent.context.camera.radius = val;
     this.arcRangeSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'Radius: ' + val;
   }
   arcRangeSliderChange() {
-    let val = this.cameraSliderPosition(this.arcRangeSlider.value);
+    let val = this.cameraSliderValue(this.arcRangeSlider.value);
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'arcCameraRadius',
       newValue: val
@@ -305,7 +307,6 @@ class cPanelCanvas {
 
     if (this.cameraSelect.selectedIndex < 1) {
       this.arcRangeSlider.parentNode.style.display = 'inline-block';
-      this.fovSlider.parentNode.style.display = 'inline-block';
     } else {
       let camType = this.cameraDetails[this.cameraSelect.value].childName;
 
@@ -365,9 +366,9 @@ class cPanelCanvas {
     this.__addLogLine(str);
   }
   cameraSliderValue(position) {
-    return Math.exp((position - this.minpos) * this.scale + this.minlval);
+    return (Math.exp((position - this.minpos) * this.scale + this.minlval) / this.scaleFactor).toFixed(2);
   }
   cameraSliderPosition(value) {
-    return this.minpos + (Math.log(value) - this.minlval) / this.scale;
+    return ((this.minpos + (Math.log(value) - this.minlval) / this.scale) * this.scaleFactor).toFixed(2);
   }
 }
