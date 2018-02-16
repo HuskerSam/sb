@@ -74,8 +74,14 @@ class cViewMain {
     this.addPanelTools.activate();
     this.bandButtons.push(this.addPanelTools);
     this.addPanelTools.closeOthersCallback = () => this.closeHeaderBands();
-    this.addPanelTypeSelect = this.createPanel.querySelector('.element-type');
-    this.addPanelTypeSelect.addEventListener('input', e => this.handleAddTypeSelect());
+
+
+    this.addPanelTypeRadios = this.createPanel.querySelector('.block-type-radio-wrapper').querySelectorAll('input[type="radio"]');
+    for (let i = 0; i < this.addPanelTypeRadios.length; i++) {
+      let value = this.addPanelTypeRadios[i].value;
+      this.addPanelTypeRadios[i].addEventListener('change', e => this.handleAddTypeSelect(value));
+    }
+    this.addElementType = 'Block';
 
     this.addProjectButton = document.querySelector('#add-workspace-button');
     this.addProjectButton.addEventListener('click', e => this.addProject());
@@ -168,7 +174,7 @@ class cViewMain {
     this.__handleBlockTypeSelectChange();
     this.__handleShapeChange();
     this.__handleSkyboxChange();
-    this.handleAddTypeSelect();
+    this.handleAddTypeSelect('Block');
   }
   closeHeaderBands() {
     this.fontTools.expanded = true;
@@ -350,23 +356,20 @@ class cViewMain {
       this.canvasHelper.show();
     }
   }
-  handleAddTypeSelect() {
+  handleAddTypeSelect(elementType) {
+    this.addElementType = elementType;
     this.addMaterialOptionsPanel.style.display = 'none';
     this.addShapeOptionsPanel.style.display = 'none';
     this.addMeshOptionsPanel.style.display = 'none';
     this.texturePanel.style.display = 'none';
     this.addBlockOptionsPanel.style.display = 'none';
-    this.createShapesSelect.style.display = 'none';
-    this.blockOptionsPicker.style.display = 'none';
 
-    let sel = this.addPanelTypeSelect.value;
+    let sel = this.addElementType;
     if (sel === 'Shape'){
       this.addShapeOptionsPanel.style.display = '';
-      this.createShapesSelect.style.display = '';
     }
     else if (sel === 'Block'){
       this.addBlockOptionsPanel.style.display = '';
-      this.blockOptionsPicker.style.display = '';
     }
     else if (sel === 'Mesh')
       this.addMeshOptionsPanel.style.display = '';
@@ -493,7 +496,7 @@ class cViewMain {
     this.createPanelInput.value = '';
     let file = null;
     let scene = gAPPP.mV.scene;
-    let tag = this.addPanelTypeSelect.value.toLowerCase();
+    let tag = this.addElementType.toLowerCase();
 
     this.createMesage.style.display = 'block';
 

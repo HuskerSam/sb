@@ -776,24 +776,6 @@ __localStaticStorageForBindingFields['frameMesh'] = [{
   displayType: 'number',
   type: 'visibility'
 }, {
-  title: 'Scale',
-  fireSetField: 'scalingX',
-  contextObjectField: 'scaling.x',
-  group: 'scale',
-  displayType: 'number'
-}, {
-  title: '&nbsp;',
-  fireSetField: 'scalingY',
-  contextObjectField: 'scaling.y',
-  group: 'scale',
-  displayType: 'number'
-}, {
-  title: 'x y z',
-  fireSetField: 'scalingZ',
-  contextObjectField: 'scaling.z',
-  group: 'scale',
-  displayType: 'number'
-}, {
   title: 'Position',
   fireSetField: 'positionX',
   contextObjectField: 'position.x',
@@ -810,6 +792,24 @@ __localStaticStorageForBindingFields['frameMesh'] = [{
   fireSetField: 'positionZ',
   contextObjectField: 'position.z',
   group: 'offset',
+  displayType: 'number'
+}, {
+  title: 'Scale',
+  fireSetField: 'scalingX',
+  contextObjectField: 'scaling.x',
+  group: 'scale',
+  displayType: 'number'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'scalingY',
+  contextObjectField: 'scaling.y',
+  group: 'scale',
+  displayType: 'number'
+}, {
+  title: 'x y z',
+  fireSetField: 'scalingZ',
+  contextObjectField: 'scaling.z',
+  group: 'scale',
   displayType: 'number'
 }, {
   title: 'Rotation',

@@ -110,12 +110,6 @@
           <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
         </div>
         <div class="animated-line-block-add-options">
-          <div>
-            <label><span>W</span><input type="text" class="block-box-width" value="1" /></label>
-            <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
-            <label><span>D</span><input type="text" class="block-box-depth" value="10" /></label>
-          </div>
-          <div style="clear:both;"></div>
           <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
           <label><span>Run Time</span><input type="text" class="animated-run-time" value="1500" /></label>
           <br>
@@ -131,12 +125,12 @@
           <label><span>Length</span><input type="text" class="dash-box-depth" value=".5" /></label>
           <br>
           <label><span>Material</span><input type="text" style="width:15em;" class="dash-shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+          <br>
+          <label><span>W</span><input type="text" class="block-box-width" value="1" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="10" /></label>
         </div>
         <div class="shape-and-text-block-options">
-          <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
-          <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
-          <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>
-          <hr>
           <label><span>Line 1</span><input type="text" style="width:15em;" class="block-box-text" value="Block Text" /></label>
           <br>
           <label><span>Line 2</span><input type="text" style="width:15em;" class="block-box-text-line2" value="" /></label>
@@ -153,12 +147,12 @@
           <label class="block-stretch-along-width-label"><input type="checkbox" class="shape-stretch-checkbox" />Stretch along width</label>
           <br>
           <label><span>Material</span><input type="text" style="width:15em;" class="block-shapematerial-picker-select" list="materialdatatitlelookuplist" /></label>
+          <br>
+          <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>
         </div>
         <div class="scene-block-add-options" style="text-align:center;">
-          <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
-          <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
-          <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
-          <hr>
           <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
           <hr>
           <label><input type="checkbox" class="block-generate-ground" /><span>Create Ground Material</span></label>
@@ -169,7 +163,18 @@
           <hr>
           <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
           <div class="skybox-preview-images"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"></div>
+          <br>
+          <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
         </div>
+        <select class="block-type-select">
+         <option>Empty</option>
+         <option>Scene</option>
+         <option selected>Text and Shape</option>
+         <option>Animated Line</option>
+         <option>Connector Line</option>
+        </select>
       </div>
       <div class="mesh-add-options" style="display:none">
         <select class="mesh-type-select">
@@ -182,11 +187,6 @@
         <label><span>Material</span><input type="text" style="width:15em;" class="mesh-material-picker-select" list="materialdatatitlelookuplist" /></label>
       </div>
       <div class="shape-add-options" style="display:none;">
-        <div class="create-box-options">
-          <label><span>Width</span><input type="text" class="box-width" /></label>
-          <label><span>Height</span><input type="text" class="box-height" /></label>
-          <label><span>Depth</span><input type="text" class="box-depth" /></label>
-        </div>
         <div class="create-sphere-options">
           <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
         </div>
@@ -200,33 +200,28 @@
           <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
         </div>
         <label><span>Material</span><input type="text" style="width:15em;" class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+        <div class="create-box-options">
+          <label><span>Width</span><input type="text" class="box-width" /></label>
+          <label><span>Height</span><input type="text" class="box-height" /></label>
+          <label><span>Depth</span><input type="text" class="box-depth" /></label>
+        </div>
+        <br>
+        <select class="shape-type-select">
+         <option selected>3D Text</option>
+         <option>Box</option>
+         <option>Sphere</option>
+         <option>Cylinder</option>
+        </select>
       </div>
       <div class="fields-container" style="clear:both;"></div>
-      <label>
-        <span>Element</span>
-        <select style="font-weight:bold" class="element-type">
-          <option selected>Block</option>
-          <option>Mesh</option>
-          <option>Shape</option>
-          <option>Material</option>
-          <option>Texture</option>
-        </select>
-       <select class="shape-type-select">
-          <option selected>3D Text</option>
-          <option>Box</option>
-          <option>Sphere</option>
-          <option>Cylinder</option>
-        </select>
-        <select class="block-type-select">
-          <option>Empty</option>
-          <option>Scene</option>
-          <option selected>Text and Shape</option>
-          <option>Animated Line</option>
-          <option>Connector Line</option>
-        </select>
-      </label>
-
-      <br>
+      <hr>
+      <div class="block-type-radio-wrapper" style="white-space:nowrap;font-weight:bold;padding:.25em;">
+        <label><input type="radio" name="elementtyperadio" checked value="Block"><span>Block</span></label>
+        <label><input type="radio" name="elementtyperadio" value="Mesh"><span>Mesh</span></label>
+        <label><input type="radio" name="elementtyperadio" value="Shape"><span>Shape</span></label>
+        <label><input type="radio" name="elementtyperadio" value="Material"><span>Material</span></label>
+        <label><input type="radio" name="elementtyperadio" value="Texture"><span>Texture</span></label>
+      </div>
       <label><span>Title</span><input style="width:20em;" class="add-item-name" /></label>
       <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
       <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>

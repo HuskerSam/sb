@@ -283,7 +283,7 @@ class wContext {
       this.defaultLight = false;
     } else {
       if (!this.light) {
-        let l = GLOBALUTIL.getVector('0,1,0', 0, 1, 0);
+        let l = GLOBALUTIL.getVector('.2,.8,.2', 0, 1, 0);
         this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", l, this.scene);
         this.light.intensity = .4;
         this.light.groundColor = GLOBALUTIL.color('0,0,0');
@@ -405,7 +405,7 @@ class wContext {
     this.setGhostBlock('rotatePreview', null);
   }
   _sceneAddDefaultObjects() {
-    this.scene.clearColor = GLOBALUTIL.color('.7,.7,.7');
+    this.scene.clearColor = GLOBALUTIL.color('0,0,0');
     this._sceneDisposeDefaultObjects();
     this._updateCamera();
   }

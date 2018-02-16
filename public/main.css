@@ -841,6 +841,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: .5em;
   border: inset .15em silver;
   text-align: center;
+  z-index: 10000;
 }
 
 .scene-options .form-group-container-group {

@@ -18,17 +18,7 @@ class cPanelHelpers {
     this.key = key;
   }
   resetUI() {
-    let helperPanel = this.helperPanels['offset'];
-    if (helperPanel) {
-      helperPanel.input[0].value = 0;
-      helperPanel.slider[0].value = 0;
-      helperPanel.input[1].value = 0;
-      helperPanel.slider[1].value = 0;
-      helperPanel.input[2].value = 0;
-      helperPanel.slider[2].value = 0;
-    }
-
-    helperPanel = this.helperPanels['rotate'];
+    let helperPanel = this.helperPanels['rotate'];
     if (helperPanel) {
       helperPanel.input[0].value = 0;
       helperPanel.slider[0].value = 0;
@@ -41,7 +31,6 @@ class cPanelHelpers {
     helperPanel = this.helperPanels['scale'];
     if (helperPanel) {
       helperPanel.input.value = 100;
-      helperPanel.slider.value = 100;
     }
   }
   handleDataUpdate(event) {
@@ -54,7 +43,6 @@ class cPanelHelpers {
       return;
 
     if (this.helperPanels['scale']) this._scaleDataUpdate();
-    if (this.helperPanels['offset']) this._offsetDataUpdate();
     if (this.helperPanels['rotate']) this._rotateDataUpdate();
   }
   initHelperField(field) {
@@ -140,113 +128,7 @@ class cPanelHelpers {
   }
   initHelperGroups() {
     if (this.fireFields.groups['scale']) this._scaleInitDom();
-    if (this.fireFields.groups['offset']) this._offsetInitDom();
     if (this.fireFields.groups['rotate']) this._rotateInitDom();
-  }
-  _offsetChangeApply() {
-    let helperPanel = this.helperPanels['offset'];
-
-    let sObj = this.context.activeBlock.sceneObject;
-    let nObj = this.context.ghostBlocks['offsetPreview'].sceneObject;
-    let updates = [];
-    updates.push({
-      field: 'positionX',
-      newValue: GLOBALUTIL.formatNumber(nObj.position.x).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.position.x).trim()
-    });
-    updates.push({
-      field: 'positionY',
-      newValue: GLOBALUTIL.formatNumber(nObj.position.y).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.position.y).trim()
-    });
-    updates.push({
-      field: 'positionZ',
-      newValue: GLOBALUTIL.formatNumber(nObj.position.z).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.position.z).trim()
-    });
-
-    helperPanel.input[0].value = 0;
-    helperPanel.slider[0].value = 0;
-    helperPanel.input[1].value = 0;
-    helperPanel.slider[1].value = 0;
-    helperPanel.input[2].value = 0;
-    helperPanel.slider[2].value = 0;
-    gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);
-  }
-  _offsetDataUpdate() {
-    let hp = this.helperPanels['offset'];
-    let sObj = this.context.activeBlock.sceneObject;
-    hp.moveButton.disabled = true;
-
-    this.context.setGhostBlock('offsetPreview', null);
-    if (!sObj) {
-      hp.infoDom.innerHTML = ' ';
-      hp.preview.innerHTML = ' ';
-      return;
-    }
-
-    this.__updateBoundingInfo();
-    let html = `Bounds x-min${GLOBALUTIL.formatNumber(this._wDim.minimum.x)}  x-max${GLOBALUTIL.formatNumber(this._wDim.maximum.x)}`;
-    html += `\n       floor${GLOBALUTIL.formatNumber(this._wDim.minimum.y)}  ceil ${GLOBALUTIL.formatNumber(this._wDim.maximum.y)}`;
-    html += `\n       z-min${GLOBALUTIL.formatNumber(this._wDim.minimum.z)}  z-max${GLOBALUTIL.formatNumber(this._wDim.maximum.z)}`;
-    if (this.tag === 'mesh') {
-      let meshData = this.context.activeBlock.sceneObjectMeshData;
-      html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.positionX)} y${GLOBALUTIL.formatNumber(meshData.positionY)} z${GLOBALUTIL.formatNumber(meshData.positionZ)}`;
-    }
-
-    hp.infoDom.innerHTML = html;
-    let x = hp.input[0].value;
-    let y = hp.input[1].value;
-    let z = hp.input[2].value;
-
-    if (x === '0' && y === '0' && z === '0') {
-      hp.preview.innerHTML = ' ';
-      return;
-    }
-
-    let tNode = sObj.clone('offetClonePreview');
-    let vector = GLOBALUTIL.getVector(x + ',' + y + ',' + z, 0, 0, 0);
-    tNode.translate(vector, 1, BABYLON.Space.WORLD);
-
-    let x2 = tNode.position.x;
-    let y2 = tNode.position.y;
-    let z2 = tNode.position.z;
-
-    let htmlPreview = `x ${GLOBALUTIL.formatNumber(x2)} y ${GLOBALUTIL.formatNumber(y2)} z ${GLOBALUTIL.formatNumber(z2)}`;
-
-    let m = new BABYLON.StandardMaterial('material', this.context.scene);
-    m.diffuseColor = GLOBALUTIL.color('.2,.8,0');
-    m.diffuseColor.alpha = 0.7;
-    this.context.__setMaterialOnObj(tNode, m);
-    this.context.setGhostBlock('offsetPreview', new wBlock(this.context, null, tNode));
-    hp.preview.innerHTML = htmlPreview;
-
-    hp.moveButton.disabled = false;
-  }
-  _offsetInitDom() {
-    this.helperPanels['offset'] = this.__initDOMWrapper(this.fireFields.groups['offset']);
-    let hp = this.helperPanels['offset'];
-    let aD = hp.actionDom;
-    aD.classList.add('offset');
-    let html = '<div>x <input type="range" min="-8" max="8" step=".01" value="0" />' +
-      ' <input class="form-control" type="text" value="0" /><br>' +
-      'y <input type="range" min="-8" max="8" step=".01" value="0" />' +
-      ' <input class="form-control" type="text" value="0" /><br>' +
-      'z <input type="range" min="-8" max="8" step=".01" value="0" />' +
-      ' <input class="form-control" type="text" value="0" /><br></div>' +
-      '<button class="btn-sb-icon">Move</button><div class="preview"></div>';
-    aD.innerHTML = html;
-    hp.moveButton = aD.querySelector('button');
-    hp.input = aD.querySelectorAll('input[type=text]');
-    hp.slider = aD.querySelectorAll('input[type=range]');
-
-    for (let c = 0, l = hp.input.length; c < l; c++)
-      hp.input[c].addEventListener('input', e => this.__inputarrayHandleDomChange(hp, hp.input[c]), false);
-    for (let c = 0, l = hp.slider.length; c < l; c++)
-      hp.slider[c].addEventListener('input', e => this.__inputarrayHandleDomChange(hp, hp.slider[c]), false);
-
-    hp.moveButton.addEventListener('click', e => this._offsetChangeApply(hp), false);
-    hp.preview = aD.querySelector('.preview');
   }
   __inputarrayHandleDomChange(hp, sender) {
     for (let c = 0, l = hp.input.length; c < l; c++) {
@@ -395,7 +277,6 @@ class cPanelHelpers {
     });
 
     helperPanel.input.value = 100;
-    helperPanel.slider.value = 100;
     gAPPP.a.modelSets[this.tag].commitUpdateList(updates, this.key);
   }
   _scaleDataUpdate() {
@@ -447,9 +328,8 @@ class cPanelHelpers {
     this.helperPanels['scale'] = this.__initDOMWrapper(c);
     let hp = this.helperPanels['scale'];
     let aD = hp.actionDom;
-    aD.innerHTML = '<input type="range" min="1" max="250" step=".1" value="100" />' +
-      ' <input class="form-control scale-value" type="text" value="100" />%<br>' +
-      ' <button class="btn-sb-icon scale-button">Scale</button><div class="preview"></div>' +
+    aD.innerHTML = ' <input class="form-control scale-value" type="text" value="100" />% &nbsp;' +
+      '<button class="btn-sb-icon scale-button">Scale</button><div class="preview"></div>' +
       '<div class="scale-to-fit">' +
       '<label><span>W</span><input type="text" class="mesh-width" value="1" /></label>' +
       '<label><span>H</span><input type="text" class="mesh-height" value="1" /></label>' +
@@ -457,14 +337,12 @@ class cPanelHelpers {
       '<button class="fit-button">Fit</button></div>';
     hp.scaleButton = aD.querySelector('.scale-button');
     hp.input = aD.querySelector('.scale-value');
-    hp.slider = aD.querySelector('input[type=range]');
     hp.fitButton = aD.querySelector('.fit-button');
     hp.fitWidth = aD.querySelector('.mesh-width');
     hp.fitHeight = aD.querySelector('.mesh-height');
     hp.fitDepth = aD.querySelector('.mesh-depth');
     hp.fitButton.addEventListener('click', e => this._fitChangeApply(hp), false);
-    hp.input.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.input), false);
-    hp.slider.addEventListener('input', e => this.__sliderHandleInputChange(hp, hp.slider), false);
+    hp.input.addEventListener('input', e => this.context.refreshFocus(), false);
     hp.scaleButton.addEventListener('click', e => this._scaleChangeApply(hp), false);
     hp.preview = aD.querySelector('.preview');
   }
@@ -552,13 +430,6 @@ class cPanelHelpers {
       collapseButton.style.color = 'black';
       collapseButton.style.background = 'rgb(240,240,240)';
     }
-  }
-  __sliderHandleInputChange(helperPanel, sender) {
-    if (sender) {
-      helperPanel.input.value = sender.value;
-      helperPanel.slider.value = sender.value;
-    }
-    this.context.refreshFocus();
   }
   __updateBoundingInfo() {
     this._sObj = this.context.activeBlock.sceneObject;
