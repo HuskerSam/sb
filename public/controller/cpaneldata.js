@@ -5,7 +5,6 @@ class cPanelData {
     this.active = false;
     this.parent = parent;
     this.container = container;
-    this.focusLock = true;
     this.loadedURL = '';
     this.helpers = new cPanelHelpers(this);
     this.groups = {};
@@ -112,7 +111,6 @@ class cPanelData {
     }
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
-    this.focusLock = gAPPP.a.profile['inputFocusLock'];
 
     if (cT) {
       if (cT.activeBlock)
@@ -351,11 +349,12 @@ class cPanelData {
         if (f.dom.checked !== v)
           f.dom.checked = v;
       } else {
-        if (!this.focusLock) //if value hasn't changed with focus, update it
+        if (!gAPPP.a.profile.inputFocusLock) //if value hasn't changed with focus, update it
           if (o === f.dom.checked) {
             f.dom.checked = v;
             updateShown = true;
           }
+
         if (f.dom.checked !== v)
           f.dom.style.border = 'solid 2px red';
         else
@@ -369,12 +368,13 @@ class cPanelData {
         if (f.dom.value !== v)
           f.dom.value = v;
       } else {
-        if (!this.focusLock)
+        if (!gAPPP.a.profile.inputFocusLock)
           if (o === f.dom.value) { //if value hasn't changed with focus, update it
             f.dom.value = v;
             updateShown = true;
             f.dom.style.border = '';
           }
+
         if (f.dom.value !== v)
           f.dom.style.border = 'solid 2px red';
         else
