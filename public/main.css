@@ -1054,7 +1054,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .add-item-panel label>span {
-  margin: .5em;
+  margin: .1em;
 }
 
 .add-item-panel input[type="text"] {

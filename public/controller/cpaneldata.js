@@ -11,6 +11,7 @@ class cPanelData {
     this.groups = {};
     this.scrapeCache = [];
     this.valueCache = {};
+    this.fieldObjs = [];
 
     for (let i in this.fields) this._initField(this.fields[i]);
 
@@ -45,7 +46,9 @@ class cPanelData {
     }
 
     c.classList.add('form-group');
-    t.addEventListener('click', e => this.scrape(e), false);
+
+    if (f.type === 'boolean')
+      t.addEventListener('click', e => this.scrape(e), false);
     t.addEventListener('input', e => this.scrape(e), false);
     t.addEventListener('blur', e => this._blurField(t, f, e), false);
     f.domContainer = c;
@@ -79,6 +82,7 @@ class cPanelData {
     if (f.wrapperClass)
       f.domContainer.classList.add(f.wrapperClass);
     this._specialDomFeatures(f);
+    this.fieldObjs.push(f);
   }
   paint(newValues) {
     let cT = this.parent.context;

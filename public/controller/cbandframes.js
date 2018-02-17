@@ -76,6 +76,73 @@ class cBandFrames extends cBandSuper {
       }
     }
   }
+  _moveToNextFrame(instance, field, moveUp = false) {
+    for (let i = 0, l = this.framesHelper.orderedKeys.length; i < l; i++) {
+      let key = this.framesHelper.orderedKeys[i];
+      let inst = this.frameDataViewInstances[key];
+      if (instance === inst) {
+        let resultKey = null;
+
+        if (moveUp) {
+          if (i === 0)
+            resultKey = this.framesHelper.orderedKeys[l - 1];
+          else
+            resultKey = this.framesHelper.orderedKeys[i - 1];
+        } else {
+          if (i === l - 1)
+            resultKey = this.framesHelper.orderedKeys[0];
+          else
+            resultKey = this.framesHelper.orderedKeys[i + 1];
+        }
+
+        let resultInst = this.frameDataViewInstances[resultKey];
+        for (let x = 0, l = resultInst.frameFields.length; x < l; x++) {
+          if (resultInst.frameFields[x].fireSetField === field.fireSetField) {
+            resultInst.frameFields[x].dom.focus();
+            return;
+          }
+        }
+      }
+    }
+  }
+  _moveToNextField(instance, field, e, movePrevious = false) {
+    for (let x = 0, l = instance.frameFields.length; x < l; x++) {
+      if (instance.frameFields[x].fireSetField === field.fireSetField) {
+        if (!movePrevious) {
+          if (x < l - 1)
+            instance.frameFields[x + 1].dom.focus();
+          else {
+            instance.frameFields[0].dom.focus();
+            this._moveToNextFrame(instance, instance.frameFields[0]);
+          }
+        } else {
+          if (x === 0) {
+            instance.frameFields[l - 1].dom.focus();
+            this._moveToNextFrame(instance, instance.frameFields[l - 1], true);
+          } else
+            instance.frameFields[x - 1].dom.focus();
+        }
+        e.preventDefault();
+        return;
+      }
+    }
+  }
+  _handleFrameKeyPress(instance, field, e) {
+    if (e.keyCode === 16)
+      return;
+
+    if (e.keyCode === 40)
+      this._moveToNextFrame(instance, field);
+    else if (e.keyCode === 38)
+      this._moveToNextFrame(instance, field, true);
+    else if (e.keyCode === 39) {
+      if (field.dom.selectionEnd === field.dom.value.length)
+        this._moveToNextField(instance, field, e);
+    } else if (e.keyCode === 37) {
+      if (field.dom.selectionEnd === 0)
+        this._moveToNextField(instance, field, e, true);
+    }
+  }
   _getDomForChild(key, values) {
     let framesContainer = document.createElement('div');
     framesContainer.setAttribute('class', 'frame-fields-container');
@@ -115,6 +182,9 @@ class cBandFrames extends cBandSuper {
     framesContainer.insertBefore(deleteButton, framesContainer.childNodes[framesContainer.childNodes.length - 1]);
 
     instance.dataPanel.paint(values);
+
+    for (let i = 0; i < instance.dataPanel.fieldObjs.length; i++)
+      instance.dataPanel.fieldObjs[i].dom.addEventListener('keydown', e => this._handleFrameKeyPress(instance, instance.dataPanel.fieldObjs[i], e), false);
   }
   __getKey() {
     let filter = this.parent.childKey;

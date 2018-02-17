@@ -21,8 +21,8 @@ class cPanelCanvas {
     this.minlval = Math.log(10);
     this.maxlval = Math.log(100000);
     this.scale = (this.maxlval - this.minlval) / (this.maxpos - this.minpos);
-
     this.arcRangeSlider.value = this.cameraSliderPosition(gAPPP.a.profile.arcCameraRadius);
+
     this.heightSlider = this.dialog.querySelector('.camera-select-range-height-slider');
     this.heightSlider.addEventListener('input', e => this.cameraHeightChange());
     this.heightSlider.value = gAPPP.a.profile.cameraHeight;
@@ -369,6 +369,6 @@ class cPanelCanvas {
     return (Math.exp((position - this.minpos) * this.scale + this.minlval) / this.scaleFactor).toFixed(2);
   }
   cameraSliderPosition(value) {
-    return ((this.minpos + (Math.log(value) - this.minlval) / this.scale) * this.scaleFactor).toFixed(2);
+    return (this.minpos + (Math.log(value * this.scaleFactor) - this.minlval) / this.scale).toFixed(2);
   }
 }
