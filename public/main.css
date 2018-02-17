@@ -243,6 +243,10 @@ html, body {
   width: 5em;
 }
 
+.frames-panel .form-group.number {
+  width: 7em;
+}
+
 .form-group label {}
 
 .form-group label span {

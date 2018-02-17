@@ -145,18 +145,6 @@ class cPanelCanvas {
     this.parent.context.selectCamera(this.cameraSelect.value, this.parent);
     this.refresh();
   }
-  stopAnimation() {
-    this.playButton.removeAttribute('disabled');
-    this.stopButton.setAttribute('disabled', "true");
-    this.pauseButton.setAttribute('disabled', "true");
-    this.pauseButton.style.display = 'none';
-    this.playButton.style.display = '';
-
-    if (this.rootBlock)
-      this.rootBlock.stopAnimation();
-
-    this.activateSliderUpdates(false);
-  }
   downloadVideo() {
     if (this.rootBlock.framesHelper.maxLength === 0)
       return;
@@ -244,6 +232,18 @@ class cPanelCanvas {
     this.playButton.style.display = '';
 
     this.rootBlock.pauseAnimation();
+    this.activateSliderUpdates(false);
+  }
+  stopAnimation() {
+    this.playButton.removeAttribute('disabled');
+    this.stopButton.setAttribute('disabled', "true");
+    this.pauseButton.setAttribute('disabled', "true");
+    this.pauseButton.style.display = 'none';
+    this.playButton.style.display = '';
+
+    if (this.rootBlock)
+      this.rootBlock.stopAnimation();
+
     this.activateSliderUpdates(false);
   }
   playAnimation() {

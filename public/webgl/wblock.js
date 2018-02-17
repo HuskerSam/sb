@@ -886,6 +886,7 @@ class wBlock {
     if (this.activeAnimation) {
       this.activeAnimation.stop();
       this.activeAnimation.reset();
+      this.activeAnimation._paused = false;
       this.setAnimationPosition(0);
       this.context.scene._animationTime = 0;
       this.context.scene._animationTimeLast = BABYLON.Tools.Now;
