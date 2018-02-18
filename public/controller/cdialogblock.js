@@ -192,4 +192,7 @@ class cDialogBlock extends cDialogEdit {
     this.toggleDetails(true);
     this.framesBand._updateFrameHelpersUI();
   }
+  _updateFollowTargetListOptions() {
+  //  followblocktargetoptionslist
+  }
 }

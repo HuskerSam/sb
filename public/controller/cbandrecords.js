@@ -73,8 +73,10 @@ class cBandRecords extends cBandSuper {
     gAPPP.mV._updateSelectedBlock(key);
   }
   _showEditPopup(e, key) {
-    if (gAPPP.dialogs[this.tag + '-edit'])
-      return gAPPP.dialogs[this.tag + '-edit'].show(key);
+    if (gAPPP.dialogs[this.tag + '-edit']){
+      gAPPP.mV.canvasHelper.hide();
+      setTimeout(() => gAPPP.dialogs[this.tag + '-edit'].show(key), 10);
+    }
   }
   toggleChildBandDisplay(expandValue = undefined, saveValue = false) {
     if (expandValue === undefined)
