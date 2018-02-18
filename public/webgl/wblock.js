@@ -949,4 +949,14 @@ class wBlock {
     }
     return null;
   }
+  generateTargetFollowList() {
+    let resultTargets = [];
+    for (let i in this.childBlocks)
+      resultTargets = resultTargets.concat(this.childBlocks[i].generateTargetFollowList());
+
+    if (this.parent)
+      resultTargets.push(this.blockRawData.childType + ':' + this.blockRawData.childName);
+
+    return resultTargets;
+  }
 }

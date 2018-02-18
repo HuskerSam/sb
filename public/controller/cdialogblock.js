@@ -122,7 +122,8 @@ class cDialogBlock extends cDialogEdit {
     if (this.rootBlock) {
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
       this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
-
+      if (tag === 'blockchild')
+        this._updateFollowTargetListOptions();
       if (tag === 'blockchild')
         this.rootBlock.updateCamera();
     }
@@ -193,6 +194,15 @@ class cDialogBlock extends cDialogEdit {
     this.framesBand._updateFrameHelpersUI();
   }
   _updateFollowTargetListOptions() {
-  //  followblocktargetoptionslist
+    let optionText = '';
+    let options = this.rootBlock.generateTargetFollowList();
+    for (let i = 0; i < options.length; i++)
+      optionText += '<option>' + options[i] + '</option>';
+
+    document.getElementById('followblocktargetoptionslist').innerHTML = optionText;
+  }
+  show(key) {
+    super.show(key);
+    this._updateFollowTargetListOptions();
   }
 }

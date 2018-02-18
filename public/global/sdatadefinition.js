@@ -708,6 +708,7 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   contextObjectField: null,
   displayGroup: ['camera'],
   displayKey: 'childType',
+  dataListId: 'followblocktargetoptionslist',
   group: 'camera'
 }];
 __localStaticStorageForBindingFields['frameBase'] = [{
