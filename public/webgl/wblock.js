@@ -76,8 +76,8 @@ class wBlock {
     this.groundObject.parent = this.sceneObject;
   }
   handleDataUpdate(tag, values, type, fireData) {
-    if (! this.parent)
-        this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type);
+    if (!this.parent)
+      this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type);
 
     if (type === 'moved')
       return;
@@ -106,8 +106,8 @@ class wBlock {
 
       let materialList = [];
 
-          let materialDirty = false;
-        if (tag === 'material')
+      let materialDirty = false;
+      if (tag === 'material')
         if (values.title)
           materialDirty = true;
 
@@ -439,11 +439,11 @@ class wBlock {
       this._renderBlock();
   }
   __getParentRoute() {
-    let thisPart =  '[' + this.blockRawData.childName + ' / ' + this.blockRawData.childType + ']';
+    let thisPart = '[' + this.blockRawData.childName + ' / ' + this.blockRawData.childType + ']';
     if (this.parent)
       thisPart += this.parent.__getParentRoute();
     else
-        return '';
+      return '';
     return thisPart;
   }
   _renderBlock() {
@@ -470,7 +470,7 @@ class wBlock {
 
     this.__applyFirstFrameValues();
 
-    if (! this.parent)
+    if (!this.parent)
       this.context.canvasHelper.logAnimDetails();
   }
   __renderMeshBlock() {
@@ -771,11 +771,11 @@ class wBlock {
     } else {
       let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', materialName);
       let m;
-      if (!tD){
+      if (!tD) {
         m = new BABYLON.StandardMaterial('material', this.context.scene);
         if (materialName !== '')
           this.context.logError('materal missing' + materialName);
-      }else
+      } else
         m = this.__material(tD);
       this.context.__setMaterialOnObj(object, m);
     }
@@ -855,9 +855,9 @@ class wBlock {
         this.activeAnimation.restart();
       else {
         let frameIndex = startPercent / 100.0 * this.framesHelper.lastFrame;
+        this.context.scene._animationTimeLast = BABYLON.Tools.now;
+        this.context.scene._animationTime = 0;
         this.framesHelper.startAnimation(frameIndex);
-        if (frameIndex === 0)
-          this.setAnimationPosition(0);
       }
     }
 
@@ -884,16 +884,18 @@ class wBlock {
   }
   stopAnimation() {
     if (this.activeAnimation) {
+      this.setAnimationPosition(0);
       this.activeAnimation.stop();
       this.activeAnimation.reset();
-      this.setAnimationPosition(0);
-      this.context.scene._animationTime = 0;
-      this.context.scene._animationTimeLast = BABYLON.Tools.Now;
+      this.activeAnimation._paused = false;
     }
+
     this.framesHelper.playState = 0;
 
     for (let i in this.childBlocks)
       this.childBlocks[i].stopAnimation();
+
+
   }
   updateCamera() {
     let cameras = this.traverseCameraList();
