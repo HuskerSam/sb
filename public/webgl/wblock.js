@@ -67,12 +67,9 @@ class wBlock {
     if (!this.blockRenderData.groundMaterial)
       return;
 
-    let groundMaterial = this.blockRenderData.groundMaterial;
-    let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', groundMaterial);
-    if (!tD)
-      return;
+    let m = this._materialFromName(this.blockRenderData.groundMaterial);
     this.groundObject = BABYLON.Mesh.CreateGround("ground1", this.blockRenderData.width, this.blockRenderData.depth, 1, this.context.scene, false);
-    this.groundObject.material = this.__material(tD);
+    this.groundObject.material = m;
     this.groundObject.parent = this.sceneObject;
   }
   handleDataUpdate(tag, values, type, fireData) {
@@ -758,8 +755,7 @@ class wBlock {
       this.context.logError('set ui object error: ' + field.contextObjectField + ' : ' + value + '  ' + this.__getParentRoute());
     }
   }
-  __updateMaterial(materialName, object) {
-    materialName = this.__getMaterialFromParent(materialName);
+  _materialFromName(materialName) {
     if (materialName.substring(0, 6) === 'color:') {
       let color = materialName.substring(6).trim();
       let objectData = sDataDefinition.getDefaultDataCloned('material');
@@ -767,7 +763,7 @@ class wBlock {
 
       m.diffuseColor = GLOBALUTIL.color(color);
       m.emissiveColor = GLOBALUTIL.color(color);
-      this.context.__setMaterialOnObj(object, m);
+      return m;
     } else {
       let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', materialName);
       let m;
@@ -777,8 +773,14 @@ class wBlock {
           this.context.logError('materal missing' + materialName);
       } else
         m = this.__material(tD);
-      this.context.__setMaterialOnObj(object, m);
+
+      return m;
     }
+  }
+  __updateMaterial(materialName, object) {
+    materialName = this.__getMaterialFromParent(materialName);
+    let m = this._materialFromName(materialName);
+    this.context.__setMaterialOnObj(object, m);
   }
   __texture(values) {
     let url = values['url'];

@@ -557,12 +557,16 @@ class wFrames {
         if (!field.contextObjectField)
           continue;
         let frameEmpty = true;
+        let firstFrameKey = this.orderedKeys[0];
         if (!forceFirstAnimation) {
-          for (let c in this.rawFrames)
+          for (let c in this.rawFrames) {
+            if (c === firstFrameKey)
+              continue;
             if (this.rawFrames[c][fieldKey] !== '' && this.rawFrames[c][fieldKey] !== undefined) {
               frameEmpty = false;
               break;
             }
+          }
         } else
           frameEmpty = false;
 
