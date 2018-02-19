@@ -10,7 +10,7 @@ class wBlock {
     this.blockRenderData = {};
     this.blockRawData = {};
     this.currentMaterialName = '';
-    this.containerFieldList = ['width', 'height', 'depth', 'skybox', 'groundMaterial', 'childName', 'childType'];
+    this.containerFieldList = ['width', 'height', 'depth', 'skybox', 'childName', 'childType'];
     this.containerCache = {};
     this.containerCenter = {
       x: 0,
