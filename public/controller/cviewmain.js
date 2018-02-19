@@ -175,6 +175,11 @@ class cViewMain {
     this.__handleShapeChange();
     this.__handleSkyboxChange();
     this.handleAddTypeSelect('Block');
+
+    document.querySelector('#help-button-on-user-panel').addEventListener('click', e => this.showHelpPanel());
+  }
+  showHelpPanel() {
+    window.open('help.html', '_blank');
   }
   closeHeaderBands() {
     this.fontTools.expanded = true;
@@ -352,7 +357,7 @@ class cViewMain {
   }
   show(scene) {
     this.context.activate(scene);
-    if (this.canvasHelper){
+    if (this.canvasHelper) {
       this.canvasHelper.show();
     }
   }
@@ -365,13 +370,11 @@ class cViewMain {
     this.addBlockOptionsPanel.style.display = 'none';
 
     let sel = this.addElementType;
-    if (sel === 'Shape'){
+    if (sel === 'Shape') {
       this.addShapeOptionsPanel.style.display = '';
-    }
-    else if (sel === 'Block'){
+    } else if (sel === 'Block') {
       this.addBlockOptionsPanel.style.display = '';
-    }
-    else if (sel === 'Mesh')
+    } else if (sel === 'Mesh')
       this.addMeshOptionsPanel.style.display = '';
     else if (sel === 'Material')
       this.addMaterialOptionsPanel.style.display = '';
