@@ -10,15 +10,15 @@
 
 <body style="width:800px;margin:auto;">
   Disclaimer:
-  <br> This site is a tool for clients to collaborate with us to create stage web gl content. Should you be using this for your own purposes outside the scope of our activities, we are not in anyway responsible for problems you encounter. Any data contained
-  in our databases is exclusively ours. While you are free to export and use videos and data from this site, any and all copyrights are retained by us.
+  <br> This site is a tool for clients to collaborate with us (sceneblocks.com) to stage web gl content. Should you be using this for your own purposes outside the scope of our activities, we are not in anyway responsible for problems you encounter. Any data contained
+  in our databases is exclusively ours. While you are free to export and use videos and data from this site at this time, any and all copyrights are retained by sceneblocks.com.
   <br>
   <a href="#blockdiagrams">3D Block Diagrams</a> <a href="#blocks">Blocks</a> <a href="#meshes">Meshes</a>
   <a href="#materials">Materials and Textures</a> <a href="#frames">Frames</a>
   <br>
   <br>
   <h1>Intro</h1> This application is written using <a href="https://firebase.google.com/">Firebase</a> for the hosting and realtime data features.
-  <a href="http://www.babylonjs.com/">Babylon.js</a> is used for the WebGL functionality, and this libraries documentation is a secondary reference to the animation functionality. This application targets rapidly developing scenes for consumption by javascript
+  <a href="http://www.babylonjs.com/">Babylon.js</a> is used for the WebGL functionality, and their documentation is the technical reference to the animation functionality. This application targets rapidly developing scenes for consumption by javascript
   applications. Where features and functionality are quicker or easier to perform in code, they're left to be done there. That being said, for simple things like flowcharting and small animated videos this tool should do fine.
   <br>
   <br>
@@ -31,19 +31,44 @@
     <br>
     <img src="images/textandshapeexample.png" style="width:200px" />
   </div>
-
-  This dialog combines 1 or 2 lines of text to make a shape combined with text. This is intended to replace a 2D square or circle containing text. It's not a good idea to have too many characters in one animation - as the poly count can get high fast. <br>
+  This block creation helper combines 1 or 2 lines of text to make a shape combined with text. This is intended to replace a 2D square or circle containing text. It's not a good idea to have too many characters in one animation - as the poly count can get high fast. <br>
   <br> For the materials, you can either use a <a href="#materials">material</a> you have created, or you can use "color: 1,1,1" notation to specify a color as the material.
   <br>
   <br> For the shape, pick one of the presets, size it and the text and shape will be generated and placed into a box. The shape will be positioned on the negative Z axis, centered on Y and X. The text will be placed on the positive Z axis.
   <br>
+  <div style="clear:both"></div>
   <br>
-  The results are shown for the parameters below the dialog.
-  <div style="clear:both;"></div>
+  <br>
+  <h2>Connector Line</h2>
+  <div style="float:left;">
+    <img src="images/connectorlinedialog.jpg" style="width:200px" />
+    <br>
+    <img src="images/connectorlineexample.jpg" style="width:200px" />
+  </div>
+  This block creation helper combines 3 shapes into a block to form a connector line.  A cylinder shape is used for the
+  line - if you don't want it round, specify the number of div (min 3), i.e. 4 makes a box instead of a cylinder.
+
+  <div style="clear:both"></div>
+  <br>
+  <br>
+  <h2>Animated Line</h2>
+  <div style="float:left;">
+    <img src="images/animatedlinedialog.jpg" style="width:200px" />
+    <br>
+    <video width="200" autoplay loop>
+      <source src="images/animatedline.webm" type="video/webm">
+    </video>
+  </div>
+  This block creation helper combines shapes into a container block and adds frames.  To make the dashes move faster, decrease the
+  Run Time, or increase the D (Depth) of the line.  Use these in place of dashed lines or to show flow.
+  <br>
+  <div style="clear:both"></div>
+  <br>
   <br>
   <h1 id="blocks">Blocks</h1>
-  <br>
-  <br>
+    <img src="images/blockedit.jpg" style="width:100%" />
+    <br>
+    <br>
   <h1 id="meshes">Meshes</h1>
   <br>
   <br>
