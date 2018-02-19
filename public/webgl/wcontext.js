@@ -99,6 +99,8 @@ class wContext {
     for (let i in mixinData)
       objectData[i] = mixinData[i];
 
+    objectData.sortKey = new Date().getTime();
+    
     if (!file)
       return fireSet.createWithBlobString(objectData);
 

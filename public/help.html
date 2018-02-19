@@ -8,41 +8,38 @@
   <link rel="shortcut icon" href="logo.png">
 </head>
 
-<body>
+<body style="width:800px;margin:auto;">
   Disclaimer:
-  <br>
-  This site is a tool for clients to collaborate with us to create stage web gl content.
-  Should you be using this for your own purposes outside the scope of our activities,
-  we are not in anyway responsible for problems you encounter.  Any data contained in our
-  databases is exclusively ours.  While you are free to export and use videos and data
-  from this site, any and all copyrights are retained by us.
+  <br> This site is a tool for clients to collaborate with us to create stage web gl content. Should you be using this for your own purposes outside the scope of our activities, we are not in anyway responsible for problems you encounter. Any data contained
+  in our databases is exclusively ours. While you are free to export and use videos and data from this site, any and all copyrights are retained by us.
   <br>
   <a href="#blockdiagrams">3D Block Diagrams</a> <a href="#blocks">Blocks</a> <a href="#meshes">Meshes</a>
   <a href="#materials">Materials and Textures</a> <a href="#frames">Frames</a>
   <br>
   <br>
-  <h1>Intro</h1>
-  This application is written using <a href="https://firebase.google.com/">Firebase</a> for the hosting and realtime data features.
-  <a href="http://www.babylonjs.com/">Babylon.js</a> is used for the WebGL functionality, and this libraries documentation is a
-  secondary reference to the animation functionality.  This application targets rapidly developing scenes
-  for consumption by javascript applications.  Where features and functionality are quicker or easier
-  to perform in code, they're left to be done there.  That being said, for simple things like flowcharting and
-  small animated videos, this tool is a complete product.
+  <h1>Intro</h1> This application is written using <a href="https://firebase.google.com/">Firebase</a> for the hosting and realtime data features.
+  <a href="http://www.babylonjs.com/">Babylon.js</a> is used for the WebGL functionality, and this libraries documentation is a secondary reference to the animation functionality. This application targets rapidly developing scenes for consumption by javascript
+  applications. Where features and functionality are quicker or easier to perform in code, they're left to be done there. That being said, for simple things like flowcharting and small animated videos this tool should do fine.
   <br>
   <br>
-  <h1 id="blockdiagrams">3D Block Diagrams</h1>
-    There are 3 add helpers for quickly building diagrams.
-    <br>
-    <br>
-    <h2>Text and Shape</h2>
-    <img src="images/textandshapedialog.png" style="float:right;" />
-    This dialog combines 1 or 2 lines of text to make a shape combined with text.  This is intended to replace
-    a 2D square or circle containing text.  Since this is 3D text, it's not a good idea to have too many
-    characters in one animation - as the poly count can get high fast. <br>
-    
-    <br>
-    <br>
+  <h1 id="blockdiagrams">3D Block Diagrams</h1> There are 3 add helpers for quickly building diagrams.
   <br>
+  <br>
+  <h2>Text and Shape</h2>
+  <div style="float:left;">
+    <img src="images/textandshapedialog.png" style="width:200px" />
+    <br>
+    <img src="images/textandshapeexample.png" style="width:200px" />
+  </div>
+
+  This dialog combines 1 or 2 lines of text to make a shape combined with text. This is intended to replace a 2D square or circle containing text. It's not a good idea to have too many characters in one animation - as the poly count can get high fast. <br>
+  <br> For the materials, you can either use a <a href="#materials">material</a> you have created, or you can use "color: 1,1,1" notation to specify a color as the material.
+  <br>
+  <br> For the shape, pick one of the presets, size it and the text and shape will be generated and placed into a box. The shape will be positioned on the negative Z axis, centered on Y and X. The text will be placed on the positive Z axis.
+  <br>
+  <br>
+  The results are shown for the parameters below the dialog.
+  <div style="clear:both;"></div>
   <br>
   <h1 id="blocks">Blocks</h1>
   <br>
@@ -58,4 +55,5 @@
   <br>
 
 </body>
+
 </html>

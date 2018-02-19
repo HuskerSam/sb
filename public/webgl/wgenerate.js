@@ -175,8 +175,8 @@ class wGenerate {
     let lineShapeOptions = {
       width: options.lineDiameter,
       shapeDivs: options.lineSides,
-      height: options.lineDiameter,
-      depth: options.lineLength,
+      height: options.lineLength,
+      depth: options.lineDiameter,
       materialName: options.lineMaterial,
       cylinderHorizontal: false,
       createShapeType: 'Cylinder'
@@ -187,7 +187,7 @@ class wGenerate {
         parentKey: resultsObj.blockChildResults.key
       };
       newObj.rotationZ = '90deg';
-      newObj.rotationX = '90deg'
+      newObj.rotationX = '90deg';
       newObj.frameOrder = frameOrder.toString();
       newObj.frameTime = "0";
       context.createObject('frame', '', null, newObj).then(resultB => {});
@@ -260,7 +260,11 @@ class wGenerate {
     let moreOptions = {};
     if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
       if (shapeOptions.width !== shapeOptions.height) {
+        let h = shapeOptions.height;
+        shapeOptions.height = shapeOptions.depth;
+        shapeOptions.depth = h;
         moreOptions.scalingX = (shapeOptions.width / shapeOptions.height).toFixed(3);
+
         shapeOptions.width = shapeOptions.height;
       }
       moreOptions.rotationX = '90deg';
