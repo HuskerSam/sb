@@ -17,7 +17,8 @@ class cPanelCanvas {
     this.arcRangeSlider.addEventListener('input', e => this.arcRangeSliderChange());
     this.minpos = 1;
     this.maxpos = 200;
-    this.scaleFactor = 100;
+    this.negativeSize = 100;
+    this.scaleFactor = 50;
     this.minlval = Math.log(10);
     this.maxlval = Math.log(100000);
     this.scale = (this.maxlval - this.minlval) / (this.maxpos - this.minpos);
@@ -366,9 +367,15 @@ class cPanelCanvas {
     this.__addLogLine(str);
   }
   cameraSliderValue(position) {
-    return (Math.exp((position - this.minpos) * this.scale + this.minlval) / this.scaleFactor).toFixed(2);
+    if (position > this.negativeSize)
+      return (Math.exp(((position - this.negativeSize) - this.minpos) * this.scale + this.minlval) / this.scaleFactor).toFixed(2);
+
+    return (-1.0 * (Math.exp(((this.negativeSize - position) - this.minpos) * this.scale + this.minlval) / this.scaleFactor)).toFixed(2);
   }
   cameraSliderPosition(value) {
-    return (this.minpos + (Math.log(value * this.scaleFactor) - this.minlval) / this.scale).toFixed(2);
+    if (value > 0)
+      return (this.minpos + (Math.log(value * this.scaleFactor) - this.minlval) / this.scale + this.negativeSize).toFixed(2);
+
+    return (-1.0 * (this.minpos + (Math.log((this.negativeSize - value) * this.scaleFactor) - this.minlval) / this.scale)).toFixed(2);
   }
 }

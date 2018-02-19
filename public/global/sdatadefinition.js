@@ -221,7 +221,7 @@ __localStaticStorageForBindingFields['material'] = [{
   type: 'texture',
   floatLeft: true,
   clearLeft: true,
-},  {
+}, {
   title: 'Gloss From Specular',
   fireSetField: 'useGlossinessFromSpecularMapAlpha',
   contextObjectField: 'specularPower',
@@ -234,7 +234,7 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: 'specularPower',
   group: 'specularColor',
   displayType: 'number'
-},{
+}, {
   title: 'Bump Texture Name',
   fireSetField: 'bumpTextureName',
   contextObjectField: 'bumpTexture',
@@ -247,6 +247,13 @@ __localStaticStorageForBindingFields['material'] = [{
   contextObjectField: 'roughness',
   displayType: 'number',
   group: 'roughness'
+}, {
+  title: 'Reflection Texture Name',
+  fireSetField: 'reflectionTextureName',
+  contextObjectField: 'reflectionTexture',
+  group: 'reflection',
+  type: 'texture',
+  floatLeft: true
 }];
 __localStaticStorageForBindingFields['texture'] = [{
   title: 'Title',
@@ -335,7 +342,7 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   rangeStep: '.25',
   groupClass: 'font-size-main-view',
   floatLeft: true
-},{
+}, {
   title: 'Focus Lock (Editing)',
   fireSetField: 'inputFocusLock',
   contextObjectField: null,

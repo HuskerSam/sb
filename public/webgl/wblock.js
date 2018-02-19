@@ -120,6 +120,10 @@ class wBlock {
             materialDirty = true;
           if (allMaterials[i].ambientTextureName === values.title)
             materialDirty = true;
+          if (allMaterials[i].bumpTextureName === values.title)
+            materialDirty = true;
+          if (allMaterials[i].reflectionTextureName === values.title)
+            materialDirty = true;
 
           if (materialDirty)
             break;
