@@ -471,7 +471,7 @@ button i.material-icons {
 
 .band-background-preview .band-title {
   padding: .15em;
-  background: rgba(0,0,0, .4);
+  background: rgba(0, 0, 0, .4);
   color: white;
   border-radius: .25em;
   margin: .15em;
@@ -627,6 +627,7 @@ input[type=range]::-webkit-slider-thumb {
   overflow: hidden;
   display: flex ! important;
   flex-direction: column;
+  padding-bottom: 3px;
 }
 
 .main-band-first-row {
@@ -1138,7 +1139,9 @@ input[type=range]::-webkit-slider-thumb {
   padding-left: 0em;
 }
 
-.light-intensity-main-page {}
+.light-intensity-main-page {
+  padding-bottom: .65em;
+}
 
 .scene-tools-checkboxes {
   top: 1.25em;
@@ -1150,7 +1153,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
-  transform:none;
+  transform: none;
   width: 18em;
   left: -12.75em;
   top: .25em;

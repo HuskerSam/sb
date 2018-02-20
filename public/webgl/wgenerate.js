@@ -259,12 +259,11 @@ class wGenerate {
 
     let moreOptions = {};
     if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
+      let h = shapeOptions.height;
+      shapeOptions.height = shapeOptions.depth;
+      shapeOptions.depth = h;
       if (shapeOptions.width !== shapeOptions.height) {
-        let h = shapeOptions.height;
-        shapeOptions.height = shapeOptions.depth;
-        shapeOptions.depth = h;
         moreOptions.scalingX = (shapeOptions.width / shapeOptions.height).toFixed(3);
-
         shapeOptions.width = shapeOptions.height;
       }
       moreOptions.rotationX = '90deg';
