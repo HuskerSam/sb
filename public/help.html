@@ -100,12 +100,16 @@
   The outer most block controls the animation length, all internal blocks will repeat.  So for a 30s animation, the root block should have at least one frame with a time of 30s.
   <img src="images/rootframe30s.jpg" style="width:100%" />
   The application generates a first frame here, and the last frame is 30s as specified by the time.
-
-
-
   <br>
+  <h2>Clone Previous Frame</h2>
+  The example below shows the use of the cp operator for time.  Also times by default are in ms, but 20s = 20000, m also works for minutes.
+  The cp (clone previous) operator clones the previous frame and sets the time (in this case 1 ms before).  This creates an instant
+  transition without coding the duplicate frame (it's just save you the time of entering 2 frames instead of one). As you can see from the data
+  below the data 2 rows results - the blue one is from the cp operator.
+  <img src="images/framecpexample.jpg" style="width:100%" />
   <br>
-
+  <h2>Relative + and ++ operators</h2>
+  The 
 </body>
 
 </html>
