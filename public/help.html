@@ -9,18 +9,30 @@
 </head>
 
 <body style="width:800px;margin:auto;">
-  Disclaimer:
-  <br> This site is a tool for clients to collaborate with us (sceneblocks.com) to stage web gl content. Should you be using this for your own purposes outside the scope of our activities, we are not in anyway responsible for problems you encounter. Any data contained
-  in our databases is exclusively ours. While you are free to export and use videos and data from this site at this time, any and all copyrights are retained by sceneblocks.com.
+  <b>Disclaimer:</b> This site is a tool for clients to collaborate with us (sceneblocks.com) to stage web gl content. Should you be using this for your own purposes outside the scope of our activities, we are not in anyway responsible for problems you encounter. Any
+  data contained in our databases is exclusively ours. While you are free to export and use videos and data from this site at this time, any and all copyrights are retained by sceneblocks.com.
   <br>
-  <a href="#blockdiagrams">3D Block Diagrams</a> <a href="#blocks">Blocks</a> <a href="#meshes">Meshes</a>
-  <a href="#materials">Materials and Textures</a> <a href="#frames">Frames</a>
+  <br>
+  <a href="#blockdiagrams">3D Block Diagrams</a>
+  <a href="#blocks">Blocks</a>
+  <a href="#meshes">Meshes and Shapes</a>
+  <a href="#frames">Frames</a>
   <br>
   <br>
   <h1>Intro</h1> This application is written using <a href="https://firebase.google.com/">Firebase</a> for the hosting and realtime data features.
   <a href="http://www.babylonjs.com/">Babylon.js</a> is used for the WebGL functionality, and their documentation is the technical reference to the animation functionality. This application targets rapidly developing scenes for consumption by javascript
   applications. Where features and functionality are quicker or easier to perform in code, they're left to be done there. That being said, for simple things like flowcharting and small animated videos this tool should do fine.
   <br>
+  <br>
+  <h2>Quick Tips</h2>
+  The default camera provided for scenes is the Arc Rotate camera.  You can zoom in and out with the mouse wheel, or on touch enabled devices you can use gestures.
+  Hold down the right mouse button to move the camera target, and the left mouse button allows you to rotate around the target.
+  <br>
+  The default light provided is a hemispheric light, from (0.2, 0.8, 0.2).  The intensity is adjustable - 1.0 is approximately sunlight.  If you add a light to a block (or any child block), the default light is disabled.
+  <br>
+  Blocks also function as scenes, and a skybox and ground can be added to a block.  The skybox doesn't show if the block is being used as a child block.
+  <br>
+
   <br>
   <h1 id="blockdiagrams">3D Block Diagrams</h1> There are 3 add helpers for quickly building diagrams.
   <br>
@@ -31,7 +43,8 @@
     <br>
     <img src="images/textandshapeexample.png" style="width:200px" />
   </div>
-  This block creation helper combines 1 or 2 lines of text to make a shape combined with text. This is intended to replace a 2D square or circle containing text. It's not a good idea to have too many characters in one animation - as the poly count can get high fast. <br>
+  This block creation helper combines 1 or 2 lines of text to make a shape combined with text. This is intended to replace a 2D square or circle containing text. It's not a good idea to have too many characters in one animation - as the poly count can get
+  high fast. <br>
   <br> For the materials, you can either use a <a href="#materials">material</a> you have created, or you can use "color: 1,1,1" notation to specify a color as the material.
   <br>
   <br> For the shape, pick one of the presets, size it and the text and shape will be generated and placed into a box. The shape will be positioned on the negative Z axis, centered on Y and X. The text will be placed on the positive Z axis.
@@ -45,8 +58,7 @@
     <br>
     <img src="images/connectorlineexample.jpg" style="width:200px" />
   </div>
-  This block creation helper combines 3 shapes into a block to form a connector line.  A cylinder shape is used for the
-  line - if you don't want it round, specify the number of div (min 3), i.e. 4 makes a box instead of a cylinder.
+  This block creation helper combines 3 shapes into a block to form a connector line. A cylinder shape is used for the line - if you don't want it round, specify the number of div (min 3), i.e. 4 makes a box instead of a cylinder.
 
   <div style="clear:both"></div>
   <br>
@@ -59,23 +71,38 @@
       <source src="images/animatedline.webm" type="video/webm">
     </video>
   </div>
-  This block creation helper combines shapes into a container block and adds frames.  To make the dashes move faster, decrease the
-  Run Time, or increase the D (Depth) of the line.  Use these in place of dashed lines or to show flow.
+  This block creation helper combines shapes into a container block and adds frames. To make the dashes move faster, decrease the Run Time, or increase the D (Depth) of the line. Use these in place of dashed lines or to show flow.
   <br>
   <div style="clear:both"></div>
   <br>
   <br>
-  <h1 id="blocks">Blocks</h1>
-    <img src="images/blockedit.jpg" style="width:100%" />
-    <br>
-    <br>
-  <h1 id="meshes">Meshes</h1>
+  <h1 id="blocks">Blocks</h1> The concept of a block is to be a virtual lego block - with a specified size such as 2x4 or 1x8, etc. Then a scene and animation is built from a collection of blocks.
+  <br>
+  <br> Blocks are containers holding members in the form of meshes, shapes and other blocks. Blocks are rendered as a box mesh containing all of the child elements. The isVisible of the box is set to false, leaving the child elements visible, but not
+  the block wrapper. Scaling, position and rotation are fully animatable features of a block - not color, visibility though. While materials can be applied to an entire block, animating the materials is not possible.
+  The block root contains frames, when it's a child you can choose either to these frames, or override (default) them with new ones.
+  <br>
+  ... to add - inherit material, follow camera example, skybox and ground, block dimensions
   <br>
   <br>
-  <h1 id="materials">Materials and Textures</h1>
+  <h1 id="meshes">Meshes and Shapes</h1>
+  Meshes can be difficult to export from blender and import.  If you see red lines in the console (from images missing) - these textures can be removed by
+  opening the .babylon file and removing them.  Just empty the path and leave "".  Try to keep the mesh in one piece, otherwise once imported you'll have to wrap it in a
+  block to size it, etc and lose some of the native abilities.  Try to delete as many other objects out of the blender scene as possible, so only the mesh is left.  The
+  import routine grabs the first mesh it finds coming in from the .babylon file (scene).
+  <br>
+  Once a mesh is loaded, use the [Fit] button to size it so you can see it, by default this will place the mesh in 1x1x1 box and you can size it from there.
+
   <br>
   <br>
   <h1 id="frames">Frames</h1>
+  <h2>Animation Length</h2>
+  The outer most block controls the animation length, all internal blocks will repeat.  So for a 30s animation, the root block should have at least one frame with a time of 30s.
+  <img src="images/rootframe30s.jpg" style="width:100%" />
+  The application generates a first frame here, and the last frame is 30s as specified by the time.
+
+
+
   <br>
   <br>
 
