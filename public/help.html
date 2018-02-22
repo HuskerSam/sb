@@ -17,11 +17,14 @@
   <a href="#blocks">Blocks</a>
   <a href="#meshes">Meshes and Shapes</a>
   <a href="#frames">Frames</a>
+  <a href="#materials">Material and Textures</a>
+  <a href="#cameras">Cameras and Lights</a>
   <br>
   <br>
   <h1>Intro</h1> This application is written using <a href="https://firebase.google.com/">Firebase</a> for the hosting and realtime data features.
   <a href="http://www.babylonjs.com/">Babylon.js</a> is used for the WebGL functionality, and their documentation is the technical reference to the animation functionality. This application targets rapidly developing scenes for consumption by javascript
   applications. Where features and functionality are quicker or easier to perform in code, they're left to be done there. That being said, for simple things like flowcharting and small animated videos this tool should do fine.
+  Babylonjs provides strong reference materials, here is <a href="https://doc.babylonjs.com/babylon101">short course</a> on it's abilities.
   <br>
   <br>
   <h2>Quick Tips</h2>
@@ -32,7 +35,16 @@
   <br>
   Blocks also function as scenes, and a skybox and ground can be added to a block.  The skybox doesn't show if the block is being used as a child block.
   <br>
-
+  A few shortcuts have been added to accelerate prototyping.
+  <br>
+  For materials, to specify a material that is just an rgb (0-1 levels) color, use the format  "color:r,g,b" - i.e. "color:1,0,0" is red.
+  <br>
+  For textures, there is an image library available using the prefix "sb: 123.jpg".
+  <br>
+  For meshes, there is an babylon file library available using the prefix "sb: mesh.babylon".
+  <br>
+  The idea of these files is to provide a number of usable images and meshes for quick consumption in your scene.  You can always upload the pictures and meshes you
+  need as your project matures.
   <br>
   <h1 id="blockdiagrams">3D Block Diagrams</h1> There are 3 add helpers for quickly building diagrams.
   <br>
@@ -112,7 +124,28 @@
   <img src="images/framesrelativeops.jpg" style="float:left;" />
   The + prefix operator adds the value to the first frame value to determine the current frame value.
   The ++ operator adds the value to the previous frame.
+  The example at the left shows 2000 starting time, the 2nd frame has an absolute time (3.5s).  The third
+  frame adds 2500 to the first frame time to get 4500 - and the last frame adds 500 to the previous frame for 5000.
 
+  <br>
+  <br>
+  <div style="clear:both"></div>
+  <h1 id="materials">Materials and Textures</h1>
+  Babylonjs has an overview of materials and textures for reference: <a href="https://doc.babylonjs.com/babylon101/materials">here</a>.
+  <h2>Bump Textures</h2>
+  Bump textures (aka normal maps) allow the gpu to render more light effects from a rough surface, without adding to the poly count.
+  Babylon has a little more reference: <a href="https://doc.babylonjs.com/how_to/more_materials">here</a>.
+  <h2>Video Textures</h2>
+  <h1 id="cameras">Cameras and Lights</h1>
+  Babylonjs has an overview of cameras for reference: <a href="https://doc.babylonjs.com/babylon101/cameras">here</a>.  The follow camera
+  is the one that is automated to track a position, the other cameras can be animated - but only their position and rotation, not their aim point.
+  If you're looking to follow a point, use a follow camera and point it at an empty block, then animate that block.
+  <h2>Follow Camera</h2>
+
+
+  <h1>and finally...</h1>
+    Don't let this system limit you - it's intended to compliment babylonjs, not constrain it.  For more interesting samples of what
+    babylon can do, refer to <a href="https://doc.babylonjs.com/samples">these</a>.
 </body>
 
 </html>
