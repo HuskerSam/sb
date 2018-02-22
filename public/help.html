@@ -135,17 +135,33 @@
   <h2>Bump Textures</h2>
   Bump textures (aka normal maps) allow the gpu to render more light effects from a rough surface, without adding to the poly count.
   Babylon has a little more reference: <a href="https://doc.babylonjs.com/how_to/more_materials">here</a>.
-  <h2>Video Textures</h2>
+  <br>
+  <img src="images/bmptextures.jpg" style="float:left;width:200px;" /> A number of bump textures (normal maps) are supplied for ease of use.
+  Check out the images prefixed with "sb: bmp-".
+  <div style="clear:both;"></div>
   <h1 id="cameras">Cameras and Lights</h1>
+  <h2>Cameras</h2>
   Babylonjs has an overview of cameras for reference: <a href="https://doc.babylonjs.com/babylon101/cameras">here</a>.  The follow camera
   is the one that is automated to track a position, the other cameras can be animated - but only their position and rotation, not their aim point.
   If you're looking to follow a point, use a follow camera and point it at an empty block, then animate that block.
   <h2>Follow Camera</h2>
-
-
+  <img src="images/followcamera.jpg" style="width:100%" />
+  The follow camera above is targeted at the shape named "followball".  A list of valid follow targets is supplied, the format is
+  blocktype:name (i.e. shape:followball).  Animate the shape's position to adjust where the camera is viewing.  The first frame
+  determines the camera's starting position and it's radius.  These can be animated as well, but the starting position won't do much
+  once the camera is already following.  The height and radius are key values in this case to animate on the camera.
+  <h2>Lights</h2>
+  Babylon only shades the first 4 lights, while this can be adjusted in code, the limit is there protect smaller devices from
+  having their shader memory overloaded.
   <h1>and finally...</h1>
     Don't let this system limit you - it's intended to compliment babylonjs, not constrain it.  For more interesting samples of what
     babylon can do, refer to <a href="https://doc.babylonjs.com/samples">these</a>.
+    <br>
+    <br>
+    <br>
+    <div style="text-align:center;">
+    All Rights Reserved.  2018 &copy;
+  </div>
 </body>
 
 </html>
