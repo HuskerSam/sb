@@ -128,6 +128,10 @@
   frame adds 2500 to the first frame time to get 4500 - and the last frame adds 500 to the previous frame for 5000.
 
   <div style="clear:both"></div>
+  <h2>* operator (parent time offset)</h2>
+  The * operator will find the first user created frame from the parent block and add it's time to this frame.  This is used to move an entire
+  block in time, for example a bouncing ball as a block can be started at 5s or 10s, and all animations underneath can the be
+  timed with relative operators so the same block can be moved in both position/scale/rotation and time.
   <h2>% operator (time only)</h2>
   The length of the animation is determined by the frames on the root block.  Any frames related to child blocks can have
   a time based as a % of animation length as a whole.

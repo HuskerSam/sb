@@ -118,10 +118,10 @@ class wFrames {
     }
 
     let timeOffsetType = 'none';
+    let firstTrail = actualTime.substr(actualTime.length - 1);
+    let secondTrail = actualTime.substr(actualTime.length - 2, 1);
     if (actualTime.length > 1) {
-      let firstTrail = actualTime.substr(actualTime.length - 1);
       if (firstTrail === '+') {
-        let secondTrail = actualTime.substr(actualTime.length - 2, 1);
         if (secondTrail === '+') { //++ case - offset time from last frame
           timeOffsetType = 'previous';
           actualTime = actualTime.substring(0, actualTime.length - 2);
@@ -130,11 +130,18 @@ class wFrames {
           actualTime = actualTime.substring(0, actualTime.length - 1);
         }
       }
+      if (firstTrail === '*') {
+        timeOffsetType = 'parent';
+        actualTime = actualTime.substring(0, actualTime.length - 1);
+        this.parentBaseOffset = 0;
+        if (this.parentBlock.parent) {
+          this.parentBaseOffset = this.parentBlock.parent.framesHelper.baseOffset;
+        }
+      }
     }
+
     let unitFactor = 1.0;
     if (actualTime.length > 1) {
-      let firstTrail = actualTime.substr(actualTime.length - 1);
-      let secondTrail = actualTime.substr(actualTime.length - 2, 1);
       if (firstTrail === '%') { //is %
         unitFactor = this.rootLength / 100.0;
         actualTime = actualTime.substring(0, actualTime.length - 1);
@@ -232,12 +239,13 @@ class wFrames {
       let key = this.orderedKeys[c];
       frame = this.__frameFromTimeToken(this.rawFrames[key].frameTime);
 
-      if (frame.timeOffsetType === 'none')
-        previousFrameTime = 0;
-      else if (frame.timeOffsetType === 'previous')
+      previousFrameTime = 0;
+      if (frame.timeOffsetType === 'previous')
         previousFrameTime = previousFrameTime;
       else if (frame.timeOffsetType === 'base')
         previousFrameTime = this.baseOffset;
+      else if (frame.timeOffsetType === 'parent')
+        previousFrameTime = this.parentBaseOffset;
 
       previousFrameTime += frame.timeMS;
 
