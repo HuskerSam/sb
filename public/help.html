@@ -127,9 +127,23 @@
   The example at the left shows 2000 starting time, the 2nd frame has an absolute time (3.5s).  The third
   frame adds 2500 to the first frame time to get 4500 - and the last frame adds 500 to the previous frame for 5000.
 
-  <br>
-  <br>
   <div style="clear:both"></div>
+  <h2>% operator (time only)</h2>
+  The length of the animation is determined by the frames on the root block.  Any frames related to child blocks can have
+  a time based as a % of animation length as a whole.
+  <br>
+  <h2>Easing functions</h2>
+  3 easing functions are provided, ease in (ei), ease out (eo) and ease in and out (eio).  You can use these by specifying on the first frame using a colon;
+  <br>
+  i.e. 0s:eio  1000:ei
+
+  <h2>Last Frame and First Frame generation</h2>
+  If you enter a time in the first raw frame, the system will automatically generate a frame at time 0.  This freezes the object in place until this time.
+
+  If you append lf to the last frame, a last frame will be generated with a time equal to the last frame of the root animation.  This way if you
+  move an object and want it to stay for the rest of the animation, add lf to it's time, i.e.  10slf  or 5500lf.
+  <div style="clear:both"></div>
+
   <h1 id="materials">Materials and Textures</h1>
   Babylonjs has an overview of materials and textures for reference: <a href="https://doc.babylonjs.com/babylon101/materials">here</a>.
   <h2>Bump Textures</h2>

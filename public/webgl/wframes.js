@@ -101,15 +101,13 @@ class wFrames {
     let autoTime = 0;
     let actualTime = timeToken;
     let parts = [timeToken];
-    if (timeToken.indexOf('cprap') > -1) {
-      parts = timeToken.split('cprap');
-      autoGen = 'cprap';
-    }
-    if (timeToken.indexOf('rap') > -1) {
-      parts = timeToken.split('rap');
-      autoGen = 'rap';
-    }
-    if (timeToken.indexOf('cp') > -1) {
+    if (timeToken.indexOf('cplf') > -1) {
+      parts = timeToken.split('cplf');
+      autoGen = 'cplf';
+    } else if (timeToken.indexOf('lf') > -1) {
+      parts = timeToken.split('lf');
+      autoGen = 'lf';
+    } else if (timeToken.indexOf('cp') > -1) {
       parts = timeToken.split('cp');
       autoGen = 'cp';
     }
@@ -138,7 +136,7 @@ class wFrames {
       let firstTrail = actualTime.substr(actualTime.length - 1);
       let secondTrail = actualTime.substr(actualTime.length - 2, 1);
       if (firstTrail === '%') { //is %
-        unitFactor = this.maxLength / 100.0;
+        unitFactor = this.rootLength / 100.0;
         actualTime = actualTime.substring(0, actualTime.length - 1);
       } else if (firstTrail === 's') { //is seconds or ms
         if (secondTrail !== 'm') { //not ms
@@ -225,20 +223,28 @@ class wFrames {
   }
   _calcFrameTimes() {
     let previousFrameTime = 0;
-    let max_frame_start = previousFrameTime;
+    let max_frame_start = 0;
     this.framesStash = {};
+    this.rootLength = this.getRootFrames().maxLength;
+
+    let frame;
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let key = this.orderedKeys[c];
-      this.framesStash[key] = this.__frameFromTimeToken(this.rawFrames[key].frameTime);
+      frame = this.__frameFromTimeToken(this.rawFrames[key].frameTime);
 
-      if (this.framesStash[key].timeOffsetType === 'none')
+      if (frame.timeOffsetType === 'none')
         previousFrameTime = 0;
-      else if (this.framesStash[key].timeOffsetType === 'previous')
+      else if (frame.timeOffsetType === 'previous')
         previousFrameTime = previousFrameTime;
-      else if (this.framesStash[key].timeOffsetType === 'base')
+      else if (frame.timeOffsetType === 'base')
         previousFrameTime = this.baseOffset;
 
-      previousFrameTime += this.framesStash[key].timeMS;
+      previousFrameTime += frame.timeMS;
+
+      if (previousFrameTime <= max_frame_start && max_frame_start !== 0)
+        break;
+
+      this.framesStash[key] = frame;
       this.framesStash[key].processedTime = previousFrameTime;
       max_frame_start = Math.max(max_frame_start, previousFrameTime);
 
@@ -246,6 +252,10 @@ class wFrames {
         this.baseOffset = previousFrameTime;
     }
     this.maxLength = max_frame_start;
+
+    if (frame)
+      if (['lf', 'cplf'].indexOf(frame.autoGen) !== -1)
+        this.maxLength = this.rootLength;
   }
   compileFrames() {
     if (!this.parentKey)
@@ -405,15 +415,17 @@ class wFrames {
     this.processedFrames = [];
     this.processedFrameValues = {};
     this.processedFrameValues['root'] = this._processFrameValues('root');
-    let repeatAllIndex = -1;
     let clonePreviousTimes = {};
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let frame = this.__getFrame(c);
+      if (!frame)
+        break;
+
       let key = this.orderedKeys[c];
       this.processedFrameValues[key] = this._processFrameValues(key);
 
       let autoType = frame.autoGen;
-      if (['cp', 'cprap'].indexOf(autoType) !== -1) {
+      if (['cp', 'cplf'].indexOf(autoType) !== -1) {
         let time_ms = frame.autoTime;
         time_ms = parseInt(time_ms);
         if (isNaN(time_ms))
@@ -424,21 +436,10 @@ class wFrames {
           time_ms *= -1;
         clonePreviousTimes[c] = frame.processedTime - time_ms;
       }
-
-      if ((autoType === 'rap') || (autoType === 'cprap')) {
-        repeatAllIndex = c;
-        break;
-      }
     }
 
     let rip_length = 0;
     let frameCount = this.orderedKeys.length;
-    if (repeatAllIndex !== -1) {
-      let lastFrame = this.__getFrame(repeatAllIndex);
-      rip_length = lastFrame.processedTime;
-      frameCount = repeatAllIndex + 1;
-    }
-
     let f = this.__baseDetails();
     if (frameCount > 0) {
       let firstFrame = this.__getFrame(0);
@@ -450,10 +451,12 @@ class wFrames {
         this.__pushFrame(clonePreviousTimes[0], firstFrame, true, 'clone previous', this.processedFrameValues[firstKey], firstKey);
     }
 
+    let key;
     for (let c = 0; c < frameCount; c++) {
-      let f = this.__getFrame(c);
-      let key = this.orderedKeys[c];
-
+      f = this.__getFrame(c);
+      key = this.orderedKeys[c];
+      if (!f)
+        break;
       if (!f.processedTime && c > 0)
         continue;
 
@@ -463,6 +466,9 @@ class wFrames {
       if (clonePreviousTimes[c + 1] !== undefined)
         this.__pushFrame(clonePreviousTimes[c + 1], f, true, 'clone previous', this.processedFrameValues[key], this.orderedKeys[c + 1]);
     }
+    if (f)
+      if (['lf', 'cplf'].indexOf(f.autoGen) !== -1)
+        this.__pushFrame(this.rootLength, f, true, 'last frame', this.processedFrameValues[key], key);
   }
   _sortFrames() {
     this.orderedKeys = [];
@@ -615,7 +621,7 @@ class wFrames {
         this.maxLength = 0;
     }
     sceneObject.animations = this.animationsArray;
-    this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps)
+    this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps);
   }
   importFrames(importArray) {
     for (let i in this.rawFrames)
