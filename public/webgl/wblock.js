@@ -826,8 +826,8 @@ class wBlock {
         color = GLOBALUTIL.colorRGB255(values.textFontColor);
       if (values.textFontClearColor)
         clearColor = GLOBALUTIL.colorRGB255(values.textFontClearColor);
-      var x = 10;
-      var y = GLOBALUTIL.getNumberOrDefault(textFontSize, 50);
+      let x = 10;
+      let y = GLOBALUTIL.getNumberOrDefault(textFontSize, 50);
 
       texture.drawText(values.textureText, x, y, font, color, clearColor);
 

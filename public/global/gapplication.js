@@ -95,6 +95,10 @@ class gApplication {
       css += 'font-family:' + this.a.profile.fontFamily + ';';
     css += '}';
 
+    if (this.a.profile.showDelete) {
+      css += '.band-background-preview .delete-edit-panel-button { display: inline-block; }';
+    }
+
     if (this.lastStyleProfileCSS === css)
       return;
     this.lastStyleProfileCSS = css;

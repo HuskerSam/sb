@@ -467,6 +467,7 @@ button i.material-icons {
   bottom: .15em;
   right: .15em;
   background: rgba(255, 255, 255, .5);
+  display: none;
 }
 
 .band-background-preview .band-title {
@@ -866,6 +867,13 @@ input[type=range]::-webkit-slider-thumb {
   z-index: 100;
 }
 
+#sb-floating-toolbar-import-btn {
+  position: absolute;
+  bottom: .25em;
+  right: 4.25em;
+  z-index: 100;
+}
+
 #workspace-settings-button {
   position: absolute;
   bottom: .25em;
@@ -1148,7 +1156,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .font-size-main-view {
-  height: 10.3em;
+  height: 10.7em;
   margin-right: 0;
 }
 
@@ -1171,4 +1179,16 @@ input[type=range]::-webkit-slider-thumb {
   color: white;
   z-index: 1;
   white-space: nowrap;
+}
+
+#import-export-panel-main-view {
+  position: absolute;
+  right: 0;
+  bottom: 3em;
+  background: rgba(255, 255, 255, .75);
+  color: black;
+  padding: .5em;
+  border-radius: .5em;
+  border: inset .15em silver;
+  text-align: center;
 }

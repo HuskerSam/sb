@@ -415,6 +415,14 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   type: 'boolean',
   floatLeft: true,
   clearLeft: true
+}, {
+  title: 'Show Delete',
+  fireSetField: 'showDelete',
+  contextObjectField: null,
+  group: 'main',
+  type: 'boolean',
+  floatLeft: true,
+  clearLeft: true
 }];
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   title: 'Bounds',

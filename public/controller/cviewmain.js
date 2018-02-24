@@ -67,7 +67,6 @@ class cViewMain {
 
     this.addPanelButton = this.dialog.querySelector('#sb-floating-toolbar-create-btn');
     this.createPanel = document.querySelector('.add-item-panel');
-    this.fontFields = [];
     this.addFieldsContainer = this.createPanel.querySelector('.fields-container');
     this.addPanelTools = new cBandProfileOptions(this.addPanelButton, [], this.addFieldsContainer, this.createPanel);
     this.addPanelTools.fireFields.values = gAPPP.a.profile;
@@ -75,6 +74,14 @@ class cViewMain {
     this.bandButtons.push(this.addPanelTools);
     this.addPanelTools.closeOthersCallback = () => this.closeHeaderBands();
 
+    this.importPanelButton = this.dialog.querySelector('#sb-floating-toolbar-import-btn');
+    this.importPanel = document.querySelector('#import-export-panel-main-view');
+    this.importFieldsContainer = this.importPanel.querySelector('.fields-container');
+    this.importPanelTools = new cBandProfileOptions(this.importPanelButton, [], this.importFieldsContainer, this.importPanel);
+    this.importPanelTools.fireFields.values = gAPPP.a.profile;
+    this.importPanelTools.activate();
+    this.bandButtons.push(this.importPanelTools);
+    this.importPanelTools.closeOthersCallback = () => this.closeHeaderBands();
 
     this.addPanelTypeRadios = this.createPanel.querySelector('.block-type-radio-wrapper').querySelectorAll('input[type="radio"]');
     for (let i = 0; i < this.addPanelTypeRadios.length; i++) {
@@ -187,6 +194,8 @@ class cViewMain {
     this.fontTools.toggle(false);
     this.addPanelTools.expanded = true;
     this.addPanelTools.toggle(false);
+    this.importPanelTools.expanded = true;
+    this.importPanelTools.toggle(false);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock)
