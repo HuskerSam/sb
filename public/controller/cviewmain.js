@@ -208,7 +208,37 @@ class cViewMain {
     }
 
     if (eleType !== 'block') {
-        let ele = gAPPP.a.modelSets[eleType].createWithBlobString(json);
+      json.sortKey = new Date().getTime();
+      gAPPP.a.modelSets[eleType].createWithBlobString(json).then(results => {});
+    } else {
+      json.sortKey = new Date().getTime();
+      let blockFrames = json.frames;
+      let blockChildren = json.children;
+
+      json.children = undefined;
+      delete json.children;
+      json.frames = undefined;
+      delete json.frames;
+      gAPPP.a.modelSets['block'].createWithBlobString(json).then(blockResults => {
+        this.__importFrames(blockFrames, blockResults.key);
+
+        for (let c = 0, l = blockChildren.length; c < l; c++) {
+          let child = blockChildren[c];
+          let childFrames = child.frames;
+          child.frames = undefined;
+          delete child.frames;
+          child.parentKey = blockResults.key;
+
+          gAPPP.a.modelSets['blockchild'].createWithBlobString(child).then(
+            childResults => this.__importFrames(childFrames, childResults.key));
+        }
+      });
+    }
+  }
+  __importFrames(frames, parentKey) {
+    for (let c = 0, l = frames.length; c < l; c++) {
+      frames[c].parentKey = parentKey;
+      gAPPP.a.modelSets['frame'].createWithBlobString(frames[c]).then(frameResult => {});
     }
   }
   _importElementRefreshExport() {
@@ -216,10 +246,37 @@ class cViewMain {
     let eleName = this.importRefreshElementName.value;
 
     if (eleType !== 'block') {
-        let ele = gAPPP.a.modelSets[eleType].getValuesByFieldLookup('title', eleName);
-        this.importRefreshTextArea.value = JSON.stringify(ele, null, 4);
-    }
+      let ele = gAPPP.a.modelSets[eleType].getValuesByFieldLookup('title', eleName);
+      this.importRefreshTextArea.value = JSON.stringify(ele, null, 4);
+    } else {
+      let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', eleName);
+      let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+      if (!ele) {
+        alert('block not found');
+        return;
+      }
 
+      let frames = gAPPP.a.modelSets['frame'].queryCache('parentKey', key);
+      let framesArray = [];
+      for (let i in frames)
+        framesArray.push(frames[i]);
+      ele.frames = framesArray;
+      ele.renderImageURL = undefined;
+
+      let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', key);
+      let childArray = [];
+      for (let childKey in children) {
+        let childFrames = gAPPP.a.modelSets['frame'].queryCache('parentKey', childKey);
+        let childFramesArray = [];
+        for (let i in childFrames)
+          childFramesArray.push(childFrames[i]);
+        children[childKey].frames = childFramesArray;
+        childArray.push(children[childKey]);
+      }
+      ele.children = childArray;
+
+      this.importRefreshTextArea.value = JSON.stringify(ele, null, 4);
+    }
   }
   updateElementImportRefresh() {
     let eleType = this.importRefreshElementSelect.value.toLowerCase();
