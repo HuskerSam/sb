@@ -9,7 +9,7 @@ class gApplication {
     this.lastStyleProfileCSS = '';
     this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
     this.shapeTypes = [
-      'box', 'cylinder', 'sphere', 'text'
+      'box', 'cylinder', 'sphere', 'text', 'plane'
     ];
     this._initShapesList();
     this.a = new gAuthorization('#sign-in-button', '#sign-out-button');

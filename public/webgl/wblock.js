@@ -182,14 +182,22 @@ class wBlock {
     let fields = sDataDefinition.bindingFields('shape');
     for (let i in fields) {
       let field = fields[i];
-      if (field.shapeOption)
-        if (field.displayGroup === this.blockRenderData['shapeType']) {
+      if (field.shapeOption) {
+        let addKey = false;
+        if (Array.isArray(field.displayGroup))
+          if (field.displayGroup.indexOf(this.blockRenderData['shapeType']) !== -1)
+            addKey = true;
+
+        if (field.displayGroup === this.blockRenderData['shapeType'])
+          addKey = true;
+          
+        if (addKey)
           if (field.displayType === 'number') {
             if (GLOBALUTIL.isNumeric(this.blockRenderData[field.fireSetField]))
               options[field.shapeOption] = Number(this.blockRenderData[field.fireSetField]);
           } else
             options[field.shapeOption] = this.blockRenderData[field.fireSetField];
-        }
+      }
     }
 
     if (this.blockRenderData['shapeType'] === 'sphere')
@@ -197,6 +205,9 @@ class wBlock {
 
     if (this.blockRenderData['shapeType'] === 'box')
       return this.sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
+
+    if (this.blockRenderData['shapeType'] === 'plane')
+      return this.sceneObject = BABYLON.MeshBuilder.CreatePlane(name, options, this.context.scene);
 
     if (this.blockRenderData['shapeType'] === 'cylinder')
       return this.sceneObject = BABYLON.MeshBuilder.CreateCylinder(name, options, this.context.scene);
@@ -351,6 +362,8 @@ class wBlock {
       cylinderDiameter: 2,
       cylinderHeight: 2,
       sphereDiameter: 3,
+      width: 2,
+      height: 2,
       boxSize: 2,
       textText: 'Preview',
       textDepth: 1,
@@ -801,22 +814,29 @@ class wBlock {
       let textFontFamily = 'Geneva';
       if (values.textFontFamily)
         textFontFamily = values.textFontFamily;
-      let textFontSize = '75px';
+      let textFontSize = '75';
       if (values.textFontSize)
         textFontSize = values.textFontSize;
-      let font = fontWeight + ' ' + textFontSize + ' ' + textFontFamily;
+      let font = fontWeight + ' ' + textFontSize + 'px ' + textFontFamily;
       let invertY = true;
-      let clearColor = "black";
-      let color = "white"
+      let clearColor = "transparent";
+      let color = "1,1,1"
 
       if (values.textFontColor)
         color = GLOBALUTIL.colorRGB255(values.textFontColor);
       if (values.textFontClearColor)
         clearColor = GLOBALUTIL.colorRGB255(values.textFontClearColor);
       var x = 10;
-      var y = 100;
+      var y = GLOBALUTIL.getNumberOrDefault(textFontSize, 50);
 
       texture.drawText(values.textureText, x, y, font, color, clearColor);
+
+      if (values.textureText2)
+        texture.drawText(values.textureText2, x, y * 2, font, color, clearColor);
+      if (values.textureText3)
+        texture.drawText(values.textureText3, x, y * 3, font, color, clearColor);
+      if (values.textureText4)
+        texture.drawText(values.textureText4, x, y * 4, font, color, clearColor);
 
     } else if (values.isVideo)
       texture = new BABYLON.VideoTexture("video", [url], this.context.scene, true);

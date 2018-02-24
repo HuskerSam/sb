@@ -100,7 +100,7 @@ class wContext {
       objectData[i] = mixinData[i];
 
     objectData.sortKey = new Date().getTime();
-    
+
     if (!file)
       return fireSet.createWithBlobString(objectData);
 
@@ -558,8 +558,9 @@ class wContext {
   _renderDefaultCamera() {
     if (this.camera)
       this.camera.dispose();
-    let cameraVector = GLOBALUTIL.getVector('3,15,15', 3, 15, 15);
-    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene)
+    let cameraVector = GLOBALUTIL.getVector('15,15,-15', 3, 15, 15);
+    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene);
+    this.camera.setPosition(cameraVector);
     this.camera.attachControl(this.canvas, true);
     let radius = 10;
     let newRadius = Number(gAPPP.a.profile.arcCameraRadius);

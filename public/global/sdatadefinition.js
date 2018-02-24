@@ -267,6 +267,12 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'options',
   dataListId: 'applicationdynamicshapelistlookuplist'
 }, {
+  title: 'is Text',
+  fireSetField: 'isText',
+  contextObjectField: null,
+  type: 'boolean',
+  group: 'options'
+}, {
   title: 'is Video',
   fireSetField: 'isVideo',
   contextObjectField: 'isVideo',
@@ -310,6 +316,65 @@ __localStaticStorageForBindingFields['texture'] = [{
   contextObjectField: 'uScale',
   group: 'texturescale',
   displayType: 'number'
+}, {
+  title: '2D Text',
+  fireSetField: 'textureText',
+  contextObjectField: null,
+  group: 'texttext',
+  inlineWidth: '20em',
+  noTrim: true
+},{
+  title: 'Line 2',
+  fireSetField: 'textureText2',
+  contextObjectField: null,
+  group: 'texttext2',
+  inlineWidth: '20em',
+  noTrim: true
+},{
+  title: 'Line 3',
+  fireSetField: 'textureText3',
+  contextObjectField: null,
+  group: 'texttext3',
+  inlineWidth: '20em',
+  noTrim: true
+},{
+  title: 'Line 4',
+  fireSetField: 'textureText4',
+  contextObjectField: null,
+  group: 'texttext4',
+  inlineWidth: '20em',
+  noTrim: true
+}, {
+  title: 'Font Family',
+  fireSetField: 'textFontFamily',
+  contextObjectField: null,
+  dataListId: 'fontfamilydatalist',
+  group: 'textdetails',
+  inlineWidth: '10em'
+}, {
+  title: 'Font Size',
+  fireSetField: 'textFontSize',
+  contextObjectField: null,
+  group: 'textdetails'
+}, {
+  title: 'Font Weight',
+  fireSetField: 'textFontWeight',
+  contextObjectField: null,
+  shapeOption: 'fontWeight',
+  displayGroup: 'textdetails',
+  group: 'font'
+}, {
+  title: 'Font Color',
+  fireSetField: 'textFontColor',
+  contextObjectField: null,
+  type: 'color',
+  group: 'textColor'
+}, {
+  title: 'Clear Color',
+  fireSetField: 'textFontClearColor',
+  contextObjectField: null,
+  type: 'color',
+  group: 'textColor'
 }];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   title: 'Canvas Color',
@@ -433,7 +498,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   fireSetField: 'boxWidth',
   contextObjectField: null,
   shapeOption: 'width',
-  displayGroup: 'box',
+  displayGroup: ['box', 'plane'],
   displayKey: 'shapeType',
   displayType: 'number',
   group: 'dimensions'
@@ -442,7 +507,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   fireSetField: 'boxHeight',
   contextObjectField: null,
   shapeOption: 'height',
-  displayGroup: 'box',
+  displayGroup: ['box', 'plane'],
   displayKey: 'shapeType',
   displayType: 'number',
   group: 'dimensions'

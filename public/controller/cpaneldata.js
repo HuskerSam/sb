@@ -130,7 +130,10 @@ class cPanelData {
     this.scrapeCache = [];
     for (let i in this.fields) {
       let f = this.fields[i];
-      let nV = f.dom.value.trim();
+      let nV = f.dom.value;
+      if (! f.noTrim)
+        nV = nV.trim();
+
       if (f.type === 'boolean')
         nV = f.dom.checked;
       let v = nV;
