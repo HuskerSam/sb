@@ -1192,3 +1192,10 @@ input[type=range]::-webkit-slider-thumb {
   border: inset .15em silver;
   text-align: center;
 }
+
+.element-textarea-export {
+  float: left;
+  overflow: scroll;
+  white-space: pre;
+  width: 30vw;
+}

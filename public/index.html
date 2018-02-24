@@ -46,7 +46,25 @@
       <div class="fields-container" style="clear:both;"></div>
     </div>
     <div id="import-export-panel-main-view" style="display:none;">
-      IMPORT EXPORT PANEL
+      <div style="float:left;text-align:center;">
+        <label>Element <select class="fetch-element-type">
+          <option>Block</option>
+          <option>Mesh</option>
+          <option>Shape</option>
+          <option>Material</option>
+          <option>Texture</option>
+        </select></label>
+        <br>
+        <label>Title <input class="fetch-element-name" /></label>
+        <br>
+        <button class="btn-sb-icon refresh-button">Fetch</button>
+        <br>
+        <br>
+        <br>
+        <button class="btn-sb-icon import-button">Import</button>
+      </div>
+      <textarea class="element-textarea-export" rows="6" cols="6"></textarea>
+      <div style="clear:both"></div>
       <div class="fields-container" style="clear:both;"></div>
     </div>
     <div class="add-item-panel" style="display:none;">

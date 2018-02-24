@@ -26,11 +26,11 @@ class cViewMain {
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
 
     this.toolbarItems = {};
-    this.toolbarItems['block'] = new cBandRecords('block', 'Blocks', this);
-    this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Meshes', this);
-    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shapes', this);
-    this.toolbarItems['material'] = new cBandRecords('material', "Materials", this);
-    this.toolbarItems['texture'] = new cBandRecords('texture', 'Textures', this);
+    this.toolbarItems['block'] = new cBandRecords('block', 'Block', this);
+    this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Mesh', this);
+    this.toolbarItems['shape'] = new cBandRecords('shape', 'Shape', this);
+    this.toolbarItems['material'] = new cBandRecords('material', "Material", this);
+    this.toolbarItems['texture'] = new cBandRecords('texture', 'Texture', this);
 
     gAPPP.a.modelSets['blockchild'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
@@ -82,6 +82,15 @@ class cViewMain {
     this.importPanelTools.activate();
     this.bandButtons.push(this.importPanelTools);
     this.importPanelTools.closeOthersCallback = () => this.closeHeaderBands();
+    this.importRefreshElementName = this.importPanel.querySelector('.fetch-element-name');
+    this.importRefreshElementSelect = this.importPanel.querySelector('.fetch-element-type');
+    this.importRefreshElementSelect.addEventListener('input', e => this.updateElementImportRefresh());
+    this.updateElementImportRefresh();
+    this.importRefreshFetchBtn = this.importPanel.querySelector('.refresh-button');
+    this.importRefreshFetchBtn.addEventListener('click', e => this._importElementRefreshExport());
+    this.importRefreshTextArea = this.importPanel.querySelector('.element-textarea-export');
+    this.importImportBtn = this.importPanel.querySelector('.import-button');
+    this.importImportBtn.addEventListener('click', e => this.importPanelImport());
 
     this.addPanelTypeRadios = this.createPanel.querySelector('.block-type-radio-wrapper').querySelectorAll('input[type="radio"]');
     for (let i = 0; i < this.addPanelTypeRadios.length; i++) {
@@ -185,6 +194,36 @@ class cViewMain {
     this.handleAddTypeSelect('Block');
 
     document.querySelector('#help-button-on-user-panel').addEventListener('click', e => this.showHelpPanel());
+  }
+  importPanelImport() {
+    let eleType = this.importRefreshElementSelect.value.toLowerCase();
+    let json = '';
+
+    try {
+      json = JSON.parse(this.importRefreshTextArea.value);
+    } catch (e) {
+      alert('error parsing json check console');
+      console.log('error parsing json for import', e);
+      return;
+    }
+
+    if (eleType !== 'block') {
+        let ele = gAPPP.a.modelSets[eleType].createWithBlobString(json);
+    }
+  }
+  _importElementRefreshExport() {
+    let eleType = this.importRefreshElementSelect.value.toLowerCase();
+    let eleName = this.importRefreshElementName.value;
+
+    if (eleType !== 'block') {
+        let ele = gAPPP.a.modelSets[eleType].getValuesByFieldLookup('title', eleName);
+        this.importRefreshTextArea.value = JSON.stringify(ele, null, 4);
+    }
+
+  }
+  updateElementImportRefresh() {
+    let eleType = this.importRefreshElementSelect.value.toLowerCase();
+    this.importRefreshElementName.setAttribute('list', eleType + 'datatitlelookuplist');
   }
   showHelpPanel() {
     window.open('help.html', '_blank');
