@@ -190,7 +190,7 @@ class wBlock {
 
         if (field.displayGroup === this.blockRenderData['shapeType'])
           addKey = true;
-          
+
         if (addKey)
           if (field.displayType === 'number') {
             if (GLOBALUTIL.isNumeric(this.blockRenderData[field.fireSetField]))
@@ -820,7 +820,7 @@ class wBlock {
       let font = fontWeight + ' ' + textFontSize + 'px ' + textFontFamily;
       let invertY = true;
       let clearColor = "transparent";
-      let color = "1,1,1"
+      let color = "white"
 
       if (values.textFontColor)
         color = GLOBALUTIL.colorRGB255(values.textFontColor);
