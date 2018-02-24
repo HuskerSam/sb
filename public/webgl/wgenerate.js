@@ -340,4 +340,13 @@ class wGenerate {
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
   }
+  static generate2DTexture(context, shapeId, shapeTitle, textOptions) {
+    context.createObject('material', shapeTitle + '_2d_material', null, {
+      diffuseTextureName: shapeTitle + '_2d_texture',
+      emissiveTextureName: shapeTitle + '_2d_texture'
+    }).then(() => {});
+    textOptions.isText = true;
+    textOptions.hasAlpha = true;
+    context.createObject('texture', shapeTitle + '_2d_texture', null, textOptions).then(() => {});
+  }
 }

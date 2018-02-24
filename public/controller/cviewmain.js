@@ -119,6 +119,7 @@ class cViewMain {
     this.__handleMaterialColorTextChange();
 
     this.addShapeOptionsPanel = this.createPanel.querySelector('.shape-add-options');
+    this.add2dTextPanel = this.createPanel.querySelector('.create-2d-text-plane');
     this.createBoxOptions = this.addShapeOptionsPanel.querySelector('.create-box-options');
     this.createSphereOptions = this.addShapeOptionsPanel.querySelector('.create-sphere-options');
     this.createTextOptions = this.addShapeOptionsPanel.querySelector('.create-text-options');
@@ -470,6 +471,8 @@ class cViewMain {
     this.createSphereOptions.style.display = this.createShapesSelect.value === 'Sphere' ? '' : 'none';
     this.createTextOptions.style.display = this.createShapesSelect.value === '3D Text' ? '' : 'none';
     this.createCylinderOptions.style.display = this.createShapesSelect.value === 'Cylinder' ? '' : 'none';
+    this.add2dTextPanel.style.display = this.createShapesSelect.value === '2D Text Plane' ? '' : 'none';
+    this.shapeMaterialSelectPicker.parentElement.style.display = this.createShapesSelect.value != '2D Text Plane' ? '' : 'none';
   }
   __handleMaterialColorInputChange() {
     let bColor = GLOBALUTIL.HexToRGB(this.materialColorPicker.value);
@@ -525,6 +528,8 @@ class cViewMain {
       }
     }
 
+    let generate2DTexture = false;
+    let callbackMixin = {};
     if (tag === 'shape') {
       let sT = this.createShapesSelect.value;
       let shapeType = 'box';
@@ -534,6 +539,8 @@ class cViewMain {
         shapeType = 'text';
       else if (sT === 'Cylinder')
         shapeType = 'cylinder';
+      else if (sT === '2D Text Plane')
+        shapeType = 'plane';
 
       mixin.shapeType = shapeType;
       if (shapeType === 'text') {
@@ -553,6 +560,21 @@ class cViewMain {
         mixin.cylinderHeight = this.addShapeOptionsPanel.querySelector('.cylinder-height').value;
       }
       mixin.materialName = this.shapeMaterialSelectPicker.value;
+
+      if (shapeType === 'plane') {
+        mixin.width = this.addShapeOptionsPanel.querySelector('.font-2d-plane-size').value;
+        mixin.height = mixin.width;
+        mixin.materialName = newName + '_2d_material';
+
+        callbackMixin.textureText = this.addShapeOptionsPanel.querySelector('.text-2d-line-1').value;
+        callbackMixin.textureText2 = this.addShapeOptionsPanel.querySelector('.text-2d-line-2').value;
+        callbackMixin.textureText3 = this.addShapeOptionsPanel.querySelector('.text-2d-line-3').value;
+        callbackMixin.textureText4 = this.addShapeOptionsPanel.querySelector('.text-2d-line-4').value;
+        callbackMixin.textFontFamily = this.addShapeOptionsPanel.querySelector('.font-family-2d-add').value;
+        callbackMixin.textFontColor = this.addShapeOptionsPanel.querySelector('.font-2d-color').value;
+        callbackMixin.textFontSize = this.addShapeOptionsPanel.querySelector('.font-2d-text-size').value;
+        generate2DTexture = true;
+      }
     }
 
     if (tag === 'mesh') {
@@ -583,7 +605,6 @@ class cViewMain {
     let generateShapeAndText = false;
     let generateAnimatedLine = false;
     let generateConnectorLine = false;
-    let callbackMixin = {};
     if (tag === 'block') {
       let bType = this.blockOptionsPicker.value;
 
@@ -693,6 +714,8 @@ class cViewMain {
         wGenerate.generateShapeAndText(this.context, results.key, newName, mixin);
       if (generateConnectorLine)
         wGenerate.generateConnectorLine(this.context, results.key, newName, callbackMixin);
+      if (generate2DTexture)
+        wGenerate.generate2DTexture(this.context, results.key, newName, callbackMixin);
 
       setTimeout(() => {
         gAPPP.dialogs[tag + '-edit'].show(results.key);
