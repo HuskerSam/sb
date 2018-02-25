@@ -247,6 +247,8 @@ class cViewMain {
 
     if (eleType !== 'block') {
       let ele = gAPPP.a.modelSets[eleType].getValuesByFieldLookup('title', eleName);
+      if (ele)
+        ele.renderImageURL = undefined;
       this.importRefreshTextArea.value = JSON.stringify(ele, null, 4);
     } else {
       let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', eleName);

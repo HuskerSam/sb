@@ -741,6 +741,7 @@ __localStaticStorageForBindingFields['childBlock'] = [{
 }, {
   title: 'Mesh',
   fireSetField: 'childName',
+  inlineWidth: '20em',
   contextObjectField: null,
   group: 'main',
   listKey: 'childType',
