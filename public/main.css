@@ -185,6 +185,10 @@ html, body {
 
 #sb-floating-toolbar-expanded {
   margin-bottom: -1em;
+  pointer-events: none;
+}
+#sb-floating-toolbar-expanded * {
+  pointer-events: auto;
 }
 
 #sb-floating-toolbar-expanded .button-wrapper {
