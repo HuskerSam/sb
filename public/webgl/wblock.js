@@ -759,11 +759,7 @@ class wBlock {
       }
 
       if (field.type === 'texture') {
-        let tD = gAPPP.a.modelSets['texture'].getValuesByFieldLookup('title', value);
-        if (tD === undefined)
-          return;
-
-        let t = this.__texture(tD);
+        let t = this._textureFromName(value);
         return GLOBALUTIL.path(object, field.contextObjectField, t);
       }
 
@@ -812,6 +808,19 @@ class wBlock {
     materialName = this.__getMaterialFromParent(materialName);
     let m = this._materialFromName(materialName);
     this.context.__setMaterialOnObj(object, m);
+  }
+  _textureFromName(textureName) {
+    let texture;
+    if (textureName.substring(0, 3) === 'sb:'){
+      let url = gAPPP.cdnPrefix + 'textures/' + textureName.substring(3);
+      return new BABYLON.Texture(url, this.context.scene);
+    }
+
+    let tD = gAPPP.a.modelSets['texture'].getValuesByFieldLookup('title', textureName);
+    if (tD === undefined)
+      return;
+
+    return this.__texture(tD);
   }
   __texture(values) {
     let url = values['url'];

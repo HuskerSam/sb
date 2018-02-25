@@ -102,13 +102,6 @@ html, body {
   pointer-events: none;
 }
 
-.sb-floating-toolbar-item {
-  display: inline-block;
-  clear: both;
-  position: relative;
-  pointer-events: none;
-}
-
 .sb-floating-toolbar-content div {
   pointer-events: auto;
 }
@@ -186,9 +179,6 @@ html, body {
 #sb-floating-toolbar-expanded {
   margin-bottom: -1em;
   pointer-events: none;
-}
-#sb-floating-toolbar-expanded * {
-  pointer-events: auto;
 }
 
 #sb-floating-toolbar-expanded .button-wrapper {
@@ -776,6 +766,13 @@ input[type=range]::-webkit-slider-thumb {
   bottom: .1em;
   left: .1em;
   width: 100%;
+  pointer-events: none;
+}
+
+.canvas-actions .sb-floating-toolbar-item {
+  display: inline-block;
+  clear: both;
+  position: relative;
   pointer-events: none;
 }
 

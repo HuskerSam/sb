@@ -20,6 +20,10 @@ class mFirebaseList extends mFirebaseSuper {
     if (this.tag === 'material')
       this.startingOptionList = '<option>color: 1,1,1</option><option>color: 0,0,0</option><option>color: 1,0,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option>';
 
+    if (this.tag === 'texture'){
+      this.startingOptionList = document.getElementById('sbimageslist').innerHTML;
+    }
+
     this.childOrderByKey = [];
     this._updateDomLookupList();
   }
