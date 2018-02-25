@@ -319,13 +319,13 @@ class wGenerate {
       if (minZTime > .001) {
         let zh = zLen / 2.0;
         let iTime = moreOptions.endTime - minZTime;
-        newObj.frameTime = iTime.toString();
+        newObj.frameTime = (iTime / moreOptions.endTime * 100.0).toFixed(2).toString() + '%';
         newObj.frameOrder = frameOrder.toString();
         newObj.positionZ = zh.toFixed(3);
         context.createObject('frame', '', null, newObj).then(resultB => {});
         frameOrder += 10;
 
-        newObj.frameTime = (iTime + 5).toString();
+        newObj.frameTime = ((iTime + 5) / moreOptions.endTime * 100.0).toFixed(2).toString() + '%';
         newObj.frameOrder = frameOrder.toString();
         newObj.positionZ = (-1.0 * zh).toFixed(3);
         context.createObject('frame', '', null, newObj).then(resultB => {});
@@ -336,7 +336,7 @@ class wGenerate {
       if (newObj.positionZ > (zLen / 2.0))
         newObj.positionZ -= zLen;
       newObj.frameOrder = frameOrder.toString();
-      newObj.frameTime = moreOptions.endTime.toFixed(3);
+      newObj.frameTime = '100%';
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
   }

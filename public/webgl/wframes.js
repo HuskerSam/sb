@@ -231,15 +231,26 @@ class wFrames {
   _getParentLength() {
     this.parentLength = 0;
     if (this.parentBlock.parent)
-      this.parentLength = this.parentBlock.parent.framesHelper.maxLength;
+      this.parentLength = this.parentBlock.parent.framesHelper.getRunLength();
 
     if (!this.parentLength)
-      this.parentLength = this.getRootFrames().maxLength;
+      this.parentLength = this.getRootFrames().getRunLength();
+  }
+  getRunLength() {
+    if (this.maxLength !== 0)
+      return this.maxLength;
+
+    if (this.processedFrames.length > 1 ) {
+      return this.processedFrames[this.processedFrames.length - 1].actualTime;
+    }
+
+    return 0;
   }
   _calcFrameTimes() {
     let previousFrameTime = 0;
     let max_frame_start = 0;
     this.framesStash = {};
+
     this._getParentLength();
 
     let frame;
@@ -565,8 +576,9 @@ class wFrames {
     this.animations = {};
     this.animationsArray = [];
 
-    if (this.processedFrames.length < 2 || this.maxLength === 0) {
-
+    if (this.processedFrames.length < 2) {
+    } else if (this.maxLength === 0) {
+  //    this.maxLength = this.processedFrames[this.processedFrames.length - 1].actualTime;
     } else {
       let keySetCreated = false;
       let eF = this.processedFrames[0].frameStash.easingFunction;
