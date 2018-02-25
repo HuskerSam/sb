@@ -184,8 +184,7 @@ html, body {
 }
 
 #sb-floating-toolbar-expanded {
-  margin-top: .35em;
-  margin-left: .25em;
+  margin-bottom: -1em;
 }
 
 #sb-floating-toolbar-expanded .button-wrapper {

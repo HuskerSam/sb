@@ -193,6 +193,9 @@ class cViewMain {
     this.__handleSkyboxChange();
     this.handleAddTypeSelect('Block');
 
+    this.expandedContainer = document.getElementById('sb-floating-toolbar-expanded');
+    this.canvasActions.insertBefore(this.expandedContainer, this.canvasActions.childNodes[0]);
+
     document.querySelector('#help-button-on-user-panel').addEventListener('click', e => this.showHelpPanel());
   }
   importPanelImport() {

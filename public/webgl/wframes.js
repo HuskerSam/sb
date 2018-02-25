@@ -143,7 +143,7 @@ class wFrames {
     let unitFactor = 1.0;
     if (actualTime.length > 1) {
       if (firstTrail === '%') { //is %
-        unitFactor = this.rootLength / 100.0;
+        unitFactor = this.parentLength / 100.0;
         actualTime = actualTime.substring(0, actualTime.length - 1);
       } else if (firstTrail === 's') { //is seconds or ms
         if (secondTrail !== 'm') { //not ms
@@ -228,24 +228,33 @@ class wFrames {
       origValue: frameValue
     };
   }
+  _getParentLength() {
+    this.parentLength = 0;
+    if (this.parentBlock.parent)
+      this.parentLength = this.parentBlock.parent.framesHelper.maxLength;
+
+    if (!this.parentLength)
+      this.parentLength = this.getRootFrames().maxLength;
+  }
   _calcFrameTimes() {
     let previousFrameTime = 0;
     let max_frame_start = 0;
     this.framesStash = {};
-    this.rootLength = this.getRootFrames().maxLength;
+    this._getParentLength();
 
     let frame;
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let key = this.orderedKeys[c];
       frame = this.__frameFromTimeToken(this.rawFrames[key].frameTime);
 
-      previousFrameTime = 0;
       if (frame.timeOffsetType === 'previous')
         previousFrameTime = previousFrameTime;
       else if (frame.timeOffsetType === 'base')
         previousFrameTime = this.baseOffset;
       else if (frame.timeOffsetType === 'parent')
         previousFrameTime = this.parentBaseOffset;
+      else
+        previousFrameTime = 0;
 
       previousFrameTime += frame.timeMS;
 
@@ -263,7 +272,7 @@ class wFrames {
 
     if (frame)
       if (['lf', 'cplf'].indexOf(frame.autoGen) !== -1)
-        this.maxLength = this.rootLength;
+        this.maxLength = this.parentLength;
   }
   compileFrames() {
     if (!this.parentKey)
@@ -476,7 +485,7 @@ class wFrames {
     }
     if (f)
       if (['lf', 'cplf'].indexOf(f.autoGen) !== -1)
-        this.__pushFrame(this.rootLength, f, true, 'last frame', this.processedFrameValues[key], key);
+        this.__pushFrame(this.parentLength, f, true, 'last frame', this.processedFrameValues[key], key);
   }
   _sortFrames() {
     this.orderedKeys = [];

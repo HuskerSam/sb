@@ -773,13 +773,27 @@ class wBlock {
     }
   }
   _materialFromName(materialName) {
-    if (materialName.substring(0, 6) === 'color:') {
-      let color = materialName.substring(6).trim();
+    if (materialName.substring(0, 8) === 'decolor:') {
+      let color = materialName.substring(8).trim();
       let objectData = sDataDefinition.getDefaultDataCloned('material');
       let m = this.__material(objectData);
 
       m.diffuseColor = GLOBALUTIL.color(color);
       m.emissiveColor = GLOBALUTIL.color(color);
+      return m;
+    } else if (materialName.substring(0, 7) === 'ecolor:') {
+      let color = materialName.substring(7).trim();
+      let objectData = sDataDefinition.getDefaultDataCloned('material');
+      let m = this.__material(objectData);
+
+      m.emissiveColor = GLOBALUTIL.color(color);
+      return m;
+    } else if (materialName.substring(0, 6) === 'color:') {
+      let color = materialName.substring(6).trim();
+      let objectData = sDataDefinition.getDefaultDataCloned('material');
+      let m = this.__material(objectData);
+
+      m.diffuseColor = GLOBALUTIL.color(color);
       return m;
     } else {
       let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', materialName);
