@@ -258,15 +258,24 @@ class cPanelCanvas {
   }
   show() {
     this.updateButtonStatus();
-    this.cameraChangeHandler();
-    this.loadingScreen.style.display = 'none';
-    this._updateCameraRangeSlider();
-    this._updateCameraHeightSlider();
-    this.fovSlider.value = '.8';
-    this._updateFOVRangeSlider();
+
+    if (!this.cameraShown) {
+      this.cameraChangeHandler();
+      this.loadingScreen.style.display = 'none';
+      this._updateCameraRangeSlider();
+      this._updateCameraHeightSlider();
+      this.fovSlider.value = '.8';
+      this._updateFOVRangeSlider();
+
+      if (this.cameraPosition)
+        this.parent.context.camera.setPosition(this.cameraPosition);
+      this.cameraShown = true;
+    }
   }
   hide() {
+    this.cameraPosition = this.parent.context.camera.position;
     this.loadingScreen.style.display = '';
+    this.cameraShown = false;
   }
   collapseAll() {
     for (let i in this.bandButtons) {
