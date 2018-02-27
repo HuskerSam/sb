@@ -736,6 +736,24 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: null,
   dataListId: 'skyboxlist',
   group: 'skybox'
+}, {
+  title: 'Fog',
+  fireSetField: 'showFog',
+  contextObjectField: null,
+  group: 'fog',
+  type: 'boolean'
+}, {
+  title: 'Density',
+  fireSetField: 'fogDensity',
+  contextObjectField: null,
+  group: 'fog',
+  type: 'number'
+}, {
+  title: 'Color',
+  fireSetField: 'fogColor',
+  contextObjectField: null,
+  group: 'fog',
+  type: 'color'
 }];
 __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',

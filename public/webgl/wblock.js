@@ -543,7 +543,23 @@ class wBlock {
       if (!this.parent) {
         this._addSkyBox();
       }
+    }
 
+    if (!this.parent) {
+      if (this.blockRenderData.showFog) {
+        this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
+        
+        if (this.blockRenderData.fogDensity)
+          this.context.scene.fogDensity = Number(this.blockRenderData.fogDensity);
+        else
+          this.context.scene.fogDensity = .02;
+
+        if (this.blockRenderData.fogColor)
+          this.context.scene.fogColor = GLOBALUTIL.color(this.blockRenderData.fogColor);
+        else
+          this.context.scene.fogColor = GLOBALUTIL.color('.2,.2,.3');
+      } else
+        this.context.scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
     }
     this._addGround();
 
@@ -811,7 +827,7 @@ class wBlock {
   }
   _textureFromName(textureName) {
     let texture;
-    if (textureName.substring(0, 3) === 'sb:'){
+    if (textureName.substring(0, 3) === 'sb:') {
       let url = gAPPP.cdnPrefix + 'textures/' + textureName.substring(3);
       return new BABYLON.Texture(url, this.context.scene);
     }

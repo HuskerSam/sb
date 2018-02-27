@@ -271,9 +271,9 @@ class cPanelCanvas {
     }
     if (this.parent.rootBlock) {
       this.__updateCameraFromSettings();
-      let camera = this.parent.context.camera;
 
       this.parent.context.preRenderFrame = () => {
+        let camera = this.parent.context.camera;
         let cp = GLOBALUTIL.vectorToStr(camera.position);
         let stored = gAPPP.a.profile['cameraPositionSave' + this.parent.rootBlock.blockKey];
 
@@ -291,6 +291,9 @@ class cPanelCanvas {
   __updateCameraFromSettings() {
     let camera = this.parent.context.camera;
     let cameraPosition = GLOBALUTIL.getVector(gAPPP.a.profile['cameraPositionSave' + this.parent.rootBlock.blockKey], 3, 15, -15);
+    if (! camera.setPosition)
+      return;
+      
     camera.setPosition(cameraPosition);
     let cameraRadius = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['cameraRadiusSave' + this.parent.rootBlock.blockKey], 18);
     camera.radius = cameraRadius;
