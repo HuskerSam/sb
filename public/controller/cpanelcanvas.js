@@ -22,7 +22,7 @@ class cPanelCanvas {
     this.minlval = Math.log(10);
     this.maxlval = Math.log(100000);
     this.scale = (this.maxlval - this.minlval) / (this.maxpos - this.minpos);
-    this.arcRangeSlider.value = this.cameraSliderPosition(gAPPP.a.profile.arcCameraRadius);
+    this.arcRangeSlider.value = this.cameraSliderPosition(18);
 
     this.heightSlider = this.dialog.querySelector('.camera-select-range-height-slider');
     this.heightSlider.addEventListener('input', e => this.cameraHeightChange());
@@ -106,10 +106,20 @@ class cPanelCanvas {
   }
   arcRangeSliderChange() {
     let val = this.cameraSliderValue(this.arcRangeSlider.value);
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'arcCameraRadius',
-      newValue: val
-    }]);
+
+    if (this.parent.rootBlock)
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'cameraRadiusSave' + this.parent.rootBlock.blockKey,
+        newValue: val
+      }]);
+    else {
+      /*
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'cameraRadiusSave' + this.parent.tag,
+        newValue: val
+      }]);
+*/
+    }
     this._updateCameraRangeSlider();
   }
   _updateCameraHeightSlider() {
@@ -139,12 +149,37 @@ class cPanelCanvas {
     return {
       default: {
         cameraName: 'Camera'
+      },
+      reset: {
+        cameraName: 'Reset'
       }
     };
   }
   cameraChangeHandler() {
-    this.parent.context.selectCamera(this.cameraSelect.value, this.parent);
-    this.refresh();
+    if (this.cameraSelect.value === 'reset') {
+      this.cameraSelect.value = 'default';
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'cameraPositionSave' + this.parent.rootBlock.blockKey,
+        newValue: false
+      }, {
+        field: 'cameraRadiusSave' + this.parent.rootBlock.blockKey,
+        newValue: false
+      }, {
+        field: 'cameraTargetSave' + this.parent.rootBlock.blockKey,
+        newValue: false
+      }]);
+
+      gAPPP.a.profile['cameraPositionSave' + this.parent.rootBlock.blockKey] = '3,15,-15';
+      gAPPP.a.profile['cameraRadiusSave' + this.parent.rootBlock.blockKey] = false;
+      gAPPP.a.profile['cameraTargetSave' + this.parent.rootBlock.blockKey] = '0,0,0';
+
+      this.parent.context.selectCamera(this.cameraSelect.value, this.parent);
+      this.refresh();
+      this.__updateCameraFromSettings();
+    } else {
+      this.parent.context.selectCamera(this.cameraSelect.value, this.parent);
+      this.refresh();
+    }
   }
   downloadVideo() {
     if (this.rootBlock.framesHelper.maxLength === 0)
@@ -262,7 +297,6 @@ class cPanelCanvas {
     if (!this.cameraShown) {
       this.cameraChangeHandler();
       this.loadingScreen.style.display = 'none';
-      this._updateCameraRangeSlider();
       this._updateCameraHeightSlider();
       this.fovSlider.value = '.8';
       this._updateFOVRangeSlider();
@@ -270,15 +304,20 @@ class cPanelCanvas {
       this.cameraShown = true;
     }
     if (this.parent.rootBlock) {
-      this.__updateCameraFromSettings();
+      if (this.cameraSelect.value === 'default')
+        this.__updateCameraFromSettings();
 
       this.parent.context.preRenderFrame = () => {
+        if (this.cameraSelect.value !== 'default')
+          return;
+
         let camera = this.parent.context.camera;
         let cp = GLOBALUTIL.vectorToStr(camera.position);
+        let tp = GLOBALUTIL.vectorToStr(camera.target);
         let stored = gAPPP.a.profile['cameraPositionSave' + this.parent.rootBlock.blockKey];
 
-        if (cp !== this.lastCP)
-          this.__saveCameraPosition(cp);
+        if (cp !== this.lastCP || tp !== this.lastTP || camera.radius !== this.lastRadius)
+          this.__saveCameraPosition(cp, tp);
         else {
           if (cp !== stored) {
             if (gAPPP.a.profile.cameraUpdates)
@@ -287,29 +326,40 @@ class cPanelCanvas {
         }
       }
     }
+
+    this._updateCameraRangeSlider();
   }
   __updateCameraFromSettings() {
     let camera = this.parent.context.camera;
     let cameraPosition = GLOBALUTIL.getVector(gAPPP.a.profile['cameraPositionSave' + this.parent.rootBlock.blockKey], 3, 15, -15);
-    if (! camera.setPosition)
+    let cameraTarget = GLOBALUTIL.getVector(gAPPP.a.profile['cameraTargetSave' + this.parent.rootBlock.blockKey], 0, 0, 0);
+    if (!camera.setPosition)
       return;
-      
+
     camera.setPosition(cameraPosition);
-    let cameraRadius = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['cameraRadiusSave' + this.parent.rootBlock.blockKey], 18);
-    camera.radius = cameraRadius;
-    this.arcRangeSlider.value = this.cameraSliderPosition(cameraRadius);
+    camera.setTarget(cameraTarget);
+
+    this.arcRangeSlider.value = this.cameraSliderPosition(camera.radius);
     this.lastCP = GLOBALUTIL.vectorToStr(camera.position);
+    this.lastTP = GLOBALUTIL.vectorToStr(camera.target);
+    this.lastRadius = camera.radius;
     this._updateCameraRangeSlider();
   }
-  __saveCameraPosition(cp) {
+  __saveCameraPosition(cp, tp) {
     this.lastCP = cp;
+    this.lastTP = tp;
     let camera = this.parent.context.camera;
+    this.lastRadius = camera.radius;
+
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'cameraPositionSave' + this.parent.rootBlock.blockKey,
       newValue: cp
     }, {
       field: 'cameraRadiusSave' + this.parent.rootBlock.blockKey,
       newValue: camera.radius
+    }, {
+      field: 'cameraTargetSave' + this.parent.rootBlock.blockKey,
+      newValue: tp
     }]);
   }
   hide() {
