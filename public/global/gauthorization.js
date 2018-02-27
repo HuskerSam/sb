@@ -94,6 +94,10 @@ class gAuthorization {
       firebase.auth().signInAnonymously();
       return;
     }
+    let code = document.getElementById('sign-in-special-code').value;
+
+    if (code !== '1234')
+      return;
 
     this.provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(this.provider);
