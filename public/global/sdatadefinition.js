@@ -421,6 +421,13 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   contextObjectField: null,
   group: 'main',
   type: 'boolean',
+  floatLeft: true
+}, {
+  title: 'Camera Updates',
+  fireSetField: 'cameraUpdates',
+  contextObjectField: null,
+  group: 'main',
+  type: 'boolean',
   floatLeft: true,
   clearLeft: true
 }];

@@ -267,13 +267,49 @@ class cPanelCanvas {
       this.fovSlider.value = '.8';
       this._updateFOVRangeSlider();
 
-      if (this.cameraPosition)
-        this.parent.context.camera.setPosition(this.cameraPosition);
       this.cameraShown = true;
     }
+    if (this.parent.rootBlock) {
+      this.__updateCameraFromSettings();
+      let camera = this.parent.context.camera;
+
+      this.parent.context.preRenderFrame = () => {
+        let cp = GLOBALUTIL.vectorToStr(camera.position);
+        let stored = gAPPP.a.profile['cameraPositionSave' + this.parent.rootBlock.blockKey];
+
+        if (cp !== this.lastCP)
+          this.__saveCameraPosition(cp);
+        else {
+          if (cp !== stored) {
+            if (gAPPP.a.profile.cameraUpdates)
+              this.__updateCameraFromSettings();
+          }
+        }
+      }
+    }
+  }
+  __updateCameraFromSettings() {
+    let camera = this.parent.context.camera;
+    let cameraPosition = GLOBALUTIL.getVector(gAPPP.a.profile['cameraPositionSave' + this.parent.rootBlock.blockKey], 3, 15, -15);
+    camera.setPosition(cameraPosition);
+    let cameraRadius = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['cameraRadiusSave' + this.parent.rootBlock.blockKey], 18);
+    camera.radius = cameraRadius;
+    this.arcRangeSlider.value = this.cameraSliderPosition(cameraRadius);
+    this.lastCP = GLOBALUTIL.vectorToStr(camera.position);
+    this._updateCameraRangeSlider();
+  }
+  __saveCameraPosition(cp) {
+    this.lastCP = cp;
+    let camera = this.parent.context.camera;
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'cameraPositionSave' + this.parent.rootBlock.blockKey,
+      newValue: cp
+    }, {
+      field: 'cameraRadiusSave' + this.parent.rootBlock.blockKey,
+      newValue: camera.radius
+    }]);
   }
   hide() {
-    this.cameraPosition = this.parent.context.camera.position;
     this.loadingScreen.style.display = '';
     this.cameraShown = false;
   }

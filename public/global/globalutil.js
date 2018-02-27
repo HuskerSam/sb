@@ -56,6 +56,9 @@ class GLOBALUTIL {
       }
     return new BABYLON.Vector3(x, y, z);
   }
+  static vectorToStr(v) {
+    return v.x.toFixed(3) + ',' + v.y.toFixed(3) + ',' + v.z.toFixed(3);   
+  }
   static isNumeric(v) {
     if (v === undefined)
       return false;

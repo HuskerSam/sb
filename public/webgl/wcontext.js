@@ -16,7 +16,8 @@ class wContext {
     this.previousCameraRadius = '';
     this.previousCameraOrigin = '';
     this.previousCameraHieghtOffset = '';
-
+    this.preRenderFrame = () => {};
+    
     if (initEngine) {
       this.engine = new BABYLON.Engine(this.canvas, false, {
         preserveDrawingBuffer: true
@@ -87,7 +88,10 @@ class wContext {
     this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
     this.camera.attachControl(this.canvas, true);
     this.scene.executeWhenReady(() => {
-      this.engine.runRenderLoop(() => this.scene.render());
+      this.engine.runRenderLoop(() => {
+        this.preRenderFrame();
+        this.scene.render();
+      });
     });
     this.engine.resize();
   }
@@ -558,14 +562,15 @@ class wContext {
   _renderDefaultCamera() {
     if (this.camera)
       this.camera.dispose();
-    let cameraVector = GLOBALUTIL.getVector('15,15,-15', 3, 15, 15);
-    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, cameraVector.y, new BABYLON.Vector3(0, 0, 0), this.scene);
-    this.camera.setPosition(cameraVector);
-    this.camera.attachControl(this.canvas, true);
+    let cameraVector = GLOBALUTIL.getVector(this.cameraVector, 3, 15, -15);
     let radius = 10;
     let newRadius = Number(gAPPP.a.profile.arcCameraRadius);
     if (newRadius > 1 && newRadius < 500)
       radius = newRadius;
+
+    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, radius, new BABYLON.Vector3(0, 0, 0), this.scene);
+    this.camera.setPosition(cameraVector);
+    this.camera.attachControl(this.canvas, true);
     this.camera.radius = radius;
   }
   _renderArcCamera() {
