@@ -10,7 +10,7 @@ class wBlock {
     this.blockRenderData = {};
     this.blockRawData = {};
     this.currentMaterialName = '';
-    this.containerFieldList = ['width', 'height', 'depth', 'skybox', 'childName', 'childType'];
+    this.containerFieldList = ['width', 'height', 'depth', 'childName', 'childType'];
     this.containerCache = {};
     this.containerCenter = {
       x: 0,
@@ -34,11 +34,17 @@ class wBlock {
     return this._blockKey;
   }
   _addSkyBox() {
+    if (this.lastSkyBox === this.blockRawData.skybox)
+      return;
+    this.lastSkyBox = this.blockRawData.skybox;
+
     if (this.skyboxObject)
       this.skyboxObject.dispose();
     this.skyboxObject = null;
+
     if (!this.blockRawData.skybox)
       return;
+
     let skyboxPath = gAPPP.cdnPrefix + 'box/' + this.blockRawData.skybox + '/skybox';
     let skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, this.context.scene);
     let skyboxMaterial = new BABYLON.StandardMaterial(skyboxPath, this.context.scene);
@@ -540,15 +546,14 @@ class wBlock {
       this.sceneObject.isVisible = false;
       this.sceneObject.material = new BABYLON.StandardMaterial(this._blockKey + 'material', this.context.scene);
       this.sceneObject.material.alpha = 0;
-      if (!this.parent) {
-        this._addSkyBox();
-      }
     }
 
     if (!this.parent) {
+      this._addSkyBox();
+
       if (this.blockRenderData.showFog) {
         this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
-        
+
         if (this.blockRenderData.fogDensity)
           this.context.scene.fogDensity = Number(this.blockRenderData.fogDensity);
         else
