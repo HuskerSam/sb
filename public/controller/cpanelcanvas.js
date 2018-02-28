@@ -72,6 +72,10 @@ class cPanelCanvas {
     this.camerasS = '';
     this.isValidAnimation = false;
 
+    this.canvas.addEventListener('click', e => {
+      gAPPP.mV.closeHeaderBands();
+    });
+
     this.errorCount = 0;
   }
   fovSliderChange() {
@@ -112,14 +116,7 @@ class cPanelCanvas {
         field: 'cameraRadiusSave' + this.parent.rootBlock.blockKey,
         newValue: val
       }]);
-    else {
-      /*
-      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-        field: 'cameraRadiusSave' + this.parent.tag,
-        newValue: val
-      }]);
-*/
-    }
+
     this._updateCameraRangeSlider();
   }
   _updateCameraHeightSlider() {
