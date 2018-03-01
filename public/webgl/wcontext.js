@@ -557,6 +557,7 @@ class wContext {
     this.camera.setTarget(aimTarget);
     this.cameraAimTarget = cameraDetails.cameraAimTarget;
 
+    this.camera.setPosition(cameraOrigin);
     this.camera.attachControl(this.canvas, true);
   }
   _renderDefaultCamera() {
@@ -585,10 +586,10 @@ class wContext {
     this.camera.attachControl(this.canvas, true);
     if (values.cameraRadius)
       this.camera.radius = Number(values.cameraRadius);
-    this.camera.position = cameraOrigin;
     let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
     this.camera.setTarget(aimTarget);
     this.cameraAimTarget = cameraDetails.cameraAimTarget;
+    this.camera.setPosition(cameraOrigin);
   }
   selectCamera(blockCameraId, dialogForCamera) {
     if (!this.canvasHelper.cameraDetails[blockCameraId])

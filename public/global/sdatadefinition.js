@@ -69,7 +69,7 @@ __animFieldFilters.animateCameraFields = {};
 __animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraName'];
 __animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraRotationX', 'cameraRotationY', 'cameraRotationZ', 'cameraOrigin', 'cameraFOV'];
 __animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'];
+__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraRadius', 'cameraHeightOffset', 'cameraFOV'];
 __animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraTargetBlock', 'cameraName'];
 __animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration',
   'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
