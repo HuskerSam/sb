@@ -23,6 +23,7 @@ class cPanelCanvas {
     this.maxlval = Math.log(100000);
     this.scale = (this.maxlval - this.minlval) / (this.maxpos - this.minpos);
     this.arcRangeSlider.value = this.cameraSliderPosition(18);
+    this.saveAnimState = false;
 
     this.heightSlider = this.dialog.querySelector('.camera-select-range-height-slider');
     this.heightSlider.addEventListener('input', e => this.cameraHeightChange());
@@ -32,10 +33,7 @@ class cPanelCanvas {
     this.fovSlider.addEventListener('input', e => this.fovSliderChange());
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
-    this.animateSlider.addEventListener('input', e => {
-      this.parent.rootBlock.setAnimationPosition(this.animateSlider.value);
-      this._updateSliderPosition(false);
-    });
+    this.animateSlider.addEventListener('input', e => this.animSliderChange());
     this.animateSliderLabel = this.dialog.querySelector('.run-length-label');
 
     this.bandButtons = [];
@@ -76,7 +74,16 @@ class cPanelCanvas {
       gAPPP.mV.closeHeaderBands();
     });
 
+    this._playState = 0;
     this.errorCount = 0;
+  }
+  animSliderChange() {
+    this.parent.rootBlock.setAnimationPosition(this.animateSlider.value);
+    this._updateSliderPosition(false);
+    if (this.playState === 0)
+      this.playState = 2;
+    else
+      this.playState = this.playState;
   }
   fovSliderChange() {
     this._updateFOVRangeSlider();
@@ -258,35 +265,67 @@ class cPanelCanvas {
       this.animateSliderLabel.innerHTML = '';
   }
   pauseAnimation() {
-    this.playButton.removeAttribute('disabled');
-    this.stopButton.removeAttribute('disabled');
-    this.pauseButton.setAttribute('disabled', "true");
-    this.pauseButton.style.display = 'none';
-    this.playButton.style.display = '';
-
-    this.rootBlock.pauseAnimation();
-    this.activateSliderUpdates(false);
+    this.playState = 2;
   }
   stopAnimation() {
-    this.playButton.removeAttribute('disabled');
-    this.stopButton.setAttribute('disabled', "true");
-    this.pauseButton.setAttribute('disabled', "true");
-    this.pauseButton.style.display = 'none';
-    this.playButton.style.display = '';
-
-    if (this.rootBlock)
-      this.rootBlock.stopAnimation();
-
-    this.activateSliderUpdates(false);
+    this.playState = 0;
   }
   playAnimation() {
-    this.playButton.setAttribute('disabled', "true");
-    this.pauseButton.removeAttribute('disabled');
-    this.stopButton.removeAttribute('disabled');
-    this.pauseButton.style.display = '';
-    this.playButton.style.display = 'none';
-    this.rootBlock.playAnimation(this.animateSlider.value);
-    this.activateSliderUpdates();
+    this.playState = 1;
+  }
+  get playState() {
+    return this._playState;
+  }
+  set playState(newState) {
+    this._playState = newState;
+
+    if (this.saveAnimState)
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'playState' + this.parent.rootBlock.blockKey,
+        newValue: this._playState
+      }, {
+        field: 'playStateAnimTime' + this.parent.rootBlock.blockKey,
+        newValue: this.animateSlider.value
+      }]);
+    this.__updatePlayState();
+  }
+  __updatePlayState() {
+    if (this.saveAnimState) {
+      let sliderValue = gAPPP.a.profile['playStateAnimTime' + this.parent.rootBlock.blockKey];
+      if (this.lastSliderValue !== sliderValue) {
+        this.lastSliderValue = sliderValue;
+        this.animateSlider.value = sliderValue;
+      }
+    }
+    if (this.playState === 0) {
+      this.playButton.removeAttribute('disabled');
+      this.stopButton.setAttribute('disabled', "true");
+      this.pauseButton.setAttribute('disabled', "true");
+      this.pauseButton.style.display = 'none';
+      this.playButton.style.display = '';
+
+      if (this.rootBlock)
+        this.rootBlock.stopAnimation();
+
+      this.activateSliderUpdates(false);
+    } else if (this.playState === 1) {
+      this.playButton.setAttribute('disabled', "true");
+      this.pauseButton.removeAttribute('disabled');
+      this.stopButton.removeAttribute('disabled');
+      this.pauseButton.style.display = '';
+      this.playButton.style.display = 'none';
+      this.rootBlock.playAnimation(this.animateSlider.value);
+      this.activateSliderUpdates();
+    } else if (this.playState === 2) {
+      this.playButton.removeAttribute('disabled');
+      this.stopButton.removeAttribute('disabled');
+      this.pauseButton.setAttribute('disabled', "true");
+      this.pauseButton.style.display = 'none';
+      this.playButton.style.display = '';
+
+      this.rootBlock.pauseAnimation();
+      this.activateSliderUpdates(false);
+    }
   }
   show() {
     this.updateButtonStatus();
@@ -431,6 +470,21 @@ class cPanelCanvas {
   logError(errorLine) {
     this.__addLogLine(errorLine, 'ERR');
     this.sceneToolsButton.style.borderColor = 'rgb(255,0,0)';
+    this.lastError = Date.now();
+  }
+  testError() {
+    clearTimeout(this.recompileTimeout);
+    this.recompileTimeout = setTimeout(() => this.__recompileTestError(), 500);
+  }
+  __recompileTestError() {
+    clearTimeout(this.recompileTimeout);
+
+    if (!this.lastError)
+      return;
+
+    this.lastError = null;
+    this.clearError();
+    this.parent.rootBlock.setData();
   }
   logAnimDetails() {
     if (!this.activeAnimation) {
@@ -444,7 +498,7 @@ class cPanelCanvas {
     this.renderPanel.innerHTML = '';
     this.sceneToolsButton.style.borderColor = '';
   }
-  __addLogLine(str, errStr = '') {
+  __addLogLine(str, errStr = '', testError = false) {
     this.errorCount++;
     if (this.errorCount > 10000) {
       this.errorCount = 0;
@@ -454,12 +508,15 @@ class cPanelCanvas {
 
     if (document.activeElement !== this.renderPanel)
       this.renderPanel.scrollTop = this.renderPanel.scrollHeight;
+
+    if (testError)
+      this.testError();
   }
   clearError() {
     this.sceneToolsButton.style.borderColor = '';
   }
-  logMessage(str) {
-    this.__addLogLine(str);
+  logMessage(str, testError = false) {
+    this.__addLogLine(str, '', testError);
   }
   cameraSliderValue(position) {
     if (position > this.negativeSize)

@@ -80,7 +80,7 @@ class wBlock {
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (!this.parent)
-      this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type);
+      this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type, true);
 
     if (type === 'moved')
       return;

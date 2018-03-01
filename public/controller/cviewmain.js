@@ -46,10 +46,13 @@ class cViewMain {
       (values, type, fireData) => this._updateContextWithDataChange('texture', values, type, fireData));
     gAPPP.a.modelSets['frame'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
+    gAPPP.a.modelSets['userProfile'].childListeners.push(
+      (values, type, fireData) => this._userProfileChange(values, type, fireData));
 
     this.canvasHelper = new cPanelCanvas(this);
     this.context.canvasHelper = this.canvasHelper;
     this.canvasHelper.hide();
+    this.canvasHelper.saveAnimState = true;
 
     this.bandButtons = [];
     //cBandOptions
@@ -298,9 +301,25 @@ class cViewMain {
     this.importPanelTools.expanded = true;
     this.importPanelTools.toggle(false);
   }
+  _userProfileChange(values, type, fireData) {
+    if (!gAPPP.a.profile.cameraUpdates)
+      return;
+
+    if (!this.rootBlock)
+      return;
+
+    let pS = gAPPP.a.profile['playState' + this.rootBlock.blockKey];
+    let pT = gAPPP.a.profile['playStateAnimTime' + this.rootBlock.blockKey];
+
+    if (pS !== this.canvasHelper.playState || pT !== this.canvasHelper.lastSliderValue) {
+      this.canvasHelper._playState = pS;
+      this.canvasHelper.__updatePlayState();
+    }
+  }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.rootBlock)
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
+    this.canvasHelper.testError();
   }
   __updateSceneBlockBand(profileKey) {
     let bandElement = document.querySelector('.block' + this.toolbarItems['block'].myKey + '-' + profileKey);
