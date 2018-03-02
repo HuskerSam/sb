@@ -7,6 +7,7 @@ class gAppSuper {
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
     this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
+    this.publishURL = 'https://publish.sceneblocks.com/pubapp/published.html'
     this.shapeTypes = [
       'box', 'cylinder', 'sphere', 'text', 'plane'
     ];

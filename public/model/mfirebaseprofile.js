@@ -23,8 +23,12 @@ class mFirebaseProfile extends mFirebaseSuper {
     }
   }
   activate() {
-    this.user = gAPPP.a.currentUser;
-    this.referencePath = 'usersprofile/' + this.user.uid;
+    let uid = 'anonymous';
+
+    if (! gAPPP.a.anonymous)
+      uid = gAPPP.a.currentUser.uid;
+
+    this.referencePath = 'usersprofile/' + uid;
     super.activate();
   }
   setObject(profile) {

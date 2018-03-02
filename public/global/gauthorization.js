@@ -81,9 +81,10 @@ class gAuthorization {
     if (model.active)
       if (model.profile)
         return model.profile;
-      else
+      else {
         this.resetProfile();
-    return {};
+        return model.profile;
+      }
   }
   signIn() {
     let urlParams = new URLSearchParams(window.location.search);
@@ -100,6 +101,7 @@ class gAuthorization {
     firebase.auth().signInWithPopup(this.provider);
   }
   signInAnon() {
+    this.anonymous = true;
     firebase.auth().signInAnonymously();
   }
   signOut() {
@@ -119,7 +121,7 @@ class gAuthorization {
     }
   }
   resetProfile() {
-    this.modelSets['userProfile'].setObject({
+    let profileData = {
       fontSize: '9',
       canvasColor: '.1,.3,.1',
       lightIntensity: '.4',
@@ -130,7 +132,15 @@ class gAuthorization {
       showSceneGuides: true,
       cameraName: "Default Camera",
       gridAndGuidesDepth: '15'
-    });
+    };
+
+    if (this.anonymous) {
+      profileData.cameraUpdates = true;
+      profileData.showSceneGuides = false;
+      profileData.showBoundsBox = false;
+      profileData.showFloorGrid = false;
+    }
+    this.modelSets['userProfile'].setObject(profileData);
   }
   _activateModels() {
     for (let c in this.fireSets)

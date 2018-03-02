@@ -306,8 +306,6 @@ class cViewMain extends cViewSuper {
       this.workplacesSelect.selectedIndex = 0;
       this.selectProject();
     }
-
-    document.getElementById('workspace-id-display').innerHTML = this.workplacesSelect.value;
   }
   addProject() {
     let newTitle = this.addProjectName.value.trim();
