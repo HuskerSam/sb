@@ -46,7 +46,7 @@ class cPanelCanvas {
     this.sceneTools.activate();
     this.bandButtons.push(this.sceneTools);
 
-    this.lightIntensityLabel = this.sceneToolsContainer.querySelector('.light-intensity-main-page span');
+    this.lightIntensityLabel = this.sceneToolsContainer.querySelector('.light-intensity-user-panel span');
 
     this.renderShowBtn = this.sceneToolsContainer.querySelector('.show-hide-log');
     this.renderPanel = this.sceneToolsContainer.querySelector('.render-log-panel');

@@ -184,6 +184,7 @@ class cDialogEdit {
     this.context.setActiveBlock(b);
     this.rootBlock = b;
     this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+    this.dialog.querySelector('.block-id-display-span').innerHTML = this.key;
 
     this.childBand.refreshUIFromCache();
     this.childBand.setKey(null);

@@ -480,7 +480,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   rangeStep: '.01',
   displayType: 'number',
   group: 'group2',
-  groupClass: 'light-intensity-main-page'
+  groupClass: 'light-intensity-user-panel'
 }];
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',

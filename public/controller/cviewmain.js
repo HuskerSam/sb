@@ -1,26 +1,13 @@
-class cViewMain {
+class cViewMain extends cViewSuper {
   constructor() {
-    this.dialog = document.querySelector('#main-page');
-    this.dialogs = {};
+    super();
+
     this.dialogs['mesh-edit'] = new cDialogEdit('mesh', 'Mesh Options');
     this.dialogs['shape-edit'] = new cDialogEdit('shape', 'Shape Editor');
     this.dialogs['block-edit'] = new cDialogBlock();
     this.dialogs['material-edit'] = new cDialogEdit('material', 'Material Editor');
     this.dialogs['texture-edit'] = new cDialogEdit('texture', 'Texture Options');
 
-    let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
-    this.dialog.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
-
-    this.canvas = this.dialog.querySelector('.popup-canvas');
-    this.context = new wContext(this.canvas, true);
-    this.dialog.context = this.context;
-    this.show(null);
-
-    this.canvasActions = this.dialog.querySelector('.canvas-actions');
-    this.canvasActions.style.display = '';
-
-    this.key = null;
-    this.loadedSceneURL = '';
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesRemoveButton = document.querySelector('#remove-workspace-button');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
@@ -32,32 +19,8 @@ class cViewMain {
     this.toolbarItems['material'] = new cBandRecords('material', "Material", this);
     this.toolbarItems['texture'] = new cBandRecords('texture', 'Texture', this);
 
-    gAPPP.a.modelSets['blockchild'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
-    gAPPP.a.modelSets['block'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('block', values, type, fireData));
-    gAPPP.a.modelSets['mesh'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('mesh', values, type, fireData));
-    gAPPP.a.modelSets['shape'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('shape', values, type, fireData));
-    gAPPP.a.modelSets['material'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('material', values, type, fireData));
-    gAPPP.a.modelSets['texture'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('texture', values, type, fireData));
-    gAPPP.a.modelSets['frame'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
-    gAPPP.a.modelSets['userProfile'].childListeners.push(
-      (values, type, fireData) => this._userProfileChange(values, type, fireData));
-
-    this.canvasHelper = new cPanelCanvas(this);
-    this.context.canvasHelper = this.canvasHelper;
-    this.canvasHelper.hide();
-    this.canvasHelper.saveAnimState = true;
-
     this.bandButtons = [];
-    //cBandOptions
     this.userProfileName = this.dialog.querySelector('.user-info');
-
     this.fontToolsButton = this.dialog.querySelector('#workspace-settings-button');
     this.fontToolsContainer = this.dialog.querySelector('#user-profile-panel');
     this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
@@ -107,8 +70,7 @@ class cViewMain {
     this.addProjectName = document.querySelector('#new-workspace-name');
     this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
 
-    let user = gAPPP.a.currentUser;
-    this.userProfileName.innerHTML = user.email;
+    this.userProfileName.innerHTML = gAPPP.a.currentUser.email;
 
     this.toggleButton = this.dialog.querySelector('#toggle-all-toolbands');
     this.toggleButton.addEventListener('click', e => this._collaspseAllBands());
@@ -301,26 +263,6 @@ class cViewMain {
     this.importPanelTools.expanded = true;
     this.importPanelTools.toggle(false);
   }
-  _userProfileChange(values, type, fireData) {
-    if (!gAPPP.a.profile.cameraUpdates)
-      return;
-
-    if (!this.rootBlock)
-      return;
-
-    let pS = gAPPP.a.profile['playState' + this.rootBlock.blockKey];
-    let pT = gAPPP.a.profile['playStateAnimTime' + this.rootBlock.blockKey];
-
-    if (pS !== this.canvasHelper.playState || pT !== this.canvasHelper.lastSliderValue) {
-      this.canvasHelper._playState = pS;
-      this.canvasHelper.__updatePlayState();
-    }
-  }
-  _updateContextWithDataChange(tag, values, type, fireData) {
-    if (this.rootBlock)
-      this.rootBlock.handleDataUpdate(tag, values, type, fireData);
-    this.canvasHelper.testError();
-  }
   __updateSceneBlockBand(profileKey) {
     let bandElement = document.querySelector('.block' + this.toolbarItems['block'].myKey + '-' + profileKey);
     if (bandElement) {
@@ -344,38 +286,6 @@ class cViewMain {
       let title = bandElement.querySelector('.band-title');
     }
   }
-  _updateSelectedBlock(profileKey) {
-    if (gAPPP.activeContext !== this.context)
-      return;
-
-    if (!profileKey) {
-      this.key = '';
-      this.canvasHelper.show();
-      return;
-    }
-
-    if (this.key !== profileKey) {
-      this.show(null);
-      this.canvasHelper.hide();
-      setTimeout(() => {
-        let blockData = gAPPP.a.modelSets['block'].getCache(profileKey);
-        if (blockData) {
-          this.__updateSceneBlockBand(profileKey);
-
-          if (blockData.url)
-            this.context.loadSceneURL(blockData.url).then(result => {
-              this.__loadBlock(profileKey, blockData);
-            });
-          else
-            this.__loadBlock(profileKey, blockData);
-        } else {
-          this.key = '';
-          this.canvasHelper.show();
-          document.title = this.workplacesSelect.selectedOptions[0].innerText;
-        }
-      }, 10);
-    }
-  }
   updateProjectList(records, selectedWorkspace = null) {
     let html = '';
 
@@ -396,35 +306,8 @@ class cViewMain {
       this.workplacesSelect.selectedIndex = 0;
       this.selectProject();
     }
-  }
-  selectProject() {
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'selectedWorkspace',
-      newValue: gAPPP.mV.workplacesSelect.value
-    }]);
-    setTimeout(() => location.reload(), 100);
-  }
-  __loadBlock(profileKey, blockData) {
-    this.canvasHelper.logClear();
-    let startTime = Date.now();
 
-    let b = new wBlock(this.context);
-    document.title = blockData.title + ' - ' + this.workplacesSelect.selectedOptions[0].innerText;
-    b.staticType = 'block';
-    b.staticLoad = true;
-    b.blockKey = profileKey;
-    b.isContainer = true;
-    this.context.setActiveBlock(b);
-    this.scene = this.context.scene;
-    this.rootBlock = b;
-    this.key = profileKey;
-    this.rootBlock.setData(blockData);
-    setTimeout(() => {
-      this.canvasHelper.show();
-      this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
-    }, 50);
-
-    this.canvasHelper.logMessage('load: ' + (Date.now() - startTime).toString() + 'ms');
+    document.getElementById('workspace-id-display').innerHTML = this.workplacesSelect.value;
   }
   addProject() {
     let newTitle = this.addProjectName.value.trim();
@@ -442,6 +325,13 @@ class cViewMain {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'selectedWorkspace',
       newValue: key
+    }]);
+    setTimeout(() => location.reload(), 100);
+  }
+  selectProject() {
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'selectedWorkspace',
+      newValue: gAPPP.mV.workplacesSelect.value
     }]);
     setTimeout(() => location.reload(), 100);
   }
@@ -484,12 +374,6 @@ class cViewMain {
     this.fontTools.toggle();
     this.addPanelTools.expanded = true;
     this.addPanelTools.toggle();
-  }
-  show(scene) {
-    this.context.activate(scene);
-    if (this.canvasHelper) {
-      this.canvasHelper.show();
-    }
   }
   handleAddTypeSelect(elementType) {
     this.addElementType = elementType;

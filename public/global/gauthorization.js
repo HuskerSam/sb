@@ -13,9 +13,6 @@ class gAuthorization {
     this.modelSets['projectTitles'].childListeners.push((values, type, fireData) => this.onProjectTitlesChange(values, type, fireData));
     this.fireSets.push(this.modelSets['projectTitles']);
 
-    document.querySelector(signInQS).addEventListener('click', e => this.signIn(), false);
-    document.querySelector(signOutQS).addEventListener('click', e => this.signOut(), false);
-
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
   }
@@ -91,7 +88,7 @@ class gAuthorization {
   signIn() {
     let urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('server') === 'true') {
-      firebase.auth().signInAnonymously();
+      this.signInAnon();
       return;
     }
     let code = document.getElementById('sign-in-special-code').value;
@@ -102,13 +99,16 @@ class gAuthorization {
     this.provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(this.provider);
   }
+  signInAnon() {
+    firebase.auth().signInAnonymously();
+  }
   signOut() {
     firebase.auth().signOut();
     location.reload(); // just dump the dom and restart
   }
   updateAuthUI() {
-    let loginPage = document.getElementById('login-page');
-    let mainPage = document.getElementById('main-page');
+    let loginPage = document.getElementById('firebase-app-login-page');
+    let mainPage = document.getElementById('firebase-app-main-page');
 
     if (this.loggedIn) {
       loginPage.style.display = 'none';

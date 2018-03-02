@@ -1,16 +1,22 @@
 'use strict';
-window.addEventListener('load', () => new gApplication());
-class gApplication {
+window.addEventListener('load', () => new gPublishApp());
+class gPublishApp extends gAppSuper  {
   constructor() {
-    window.gAPPP = this;
-    this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
-    this.styleProfileDom = null;
-    this.activeContext = null;
-    this.lastStyleProfileCSS = '';
-    this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
-    window.addEventListener("resize", () => this.resize());
-    document.addEventListener("keyup", e => {
-      if (e.keyCode === 27) {
-      }
-    });
+    super();
+    this.a = new gAuthorization();
+    this.a.signInAnon();
+  }
+  profileReadyAndLoaded() {
+    this.loadStarted = true;
+    this.a.profile.selectedWorkspace = '-L68zu9XhDvRv4Ovarit';
+    this.a.initProjectModels('-L68zu9XhDvRv4Ovarit');
+
+    gAPPP.a.profile['selectedBlockKey' + '-L68zu9XhDvRv4Ovarit'] = '-L69-1-gFwtSDsmFvgbv';
+    this.mV = new cViewPublished();
+    this.a._activateModels();
+    this.initialUILoad = false;
+    this._updateApplicationStyle();
+
+//    this.initialBlockLoad = true;
+  }
 }

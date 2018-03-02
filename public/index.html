@@ -9,14 +9,14 @@
 </head>
 
 <body>
-  <div id="login-page" style="display:none;">
+  <div id="firebase-app-login-page" style="display:none;">
     <h3>Scene Blocks</h3>
     <div>
       <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
       <label>Auth Code: <input id="sign-in-special-code" ></label>
     </div>
   </div>
-  <div id="main-page" style="display:none;">
+  <div id="firebase-app-main-page" style="display:none;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
     <div style="display:none;position:absolute;top:0;right:.25em;z-index:1000;">
@@ -36,6 +36,8 @@
       <div>
         <label><span>Workspace </span><select id="workspaces-select"></select></label>
         <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button>
+        <br>
+        <span id="workspace-id-display"></span>
         <br>
         <label><span>New Workspace </span><input id="new-workspace-name" /></label>
         <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
@@ -349,11 +351,13 @@
   <div id="cblock-editor-panel-template" style="display:none;">
     <div class="main-band-wrapper">
       <div class="main-band-first-row">
-        <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
         <button class="main-band-details-element"></button>
+        <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
         <div class="main-band-flex-children"></div>
       </div>
-      <div class="cblock-details-panel"></div>
+      <div class="cblock-details-panel">
+        <span class="block-id-display-span"></span>
+      </div>
       <div class="cblock-child-details-panel"></div>
       <div style="clear:both;"></div>
     </div>
@@ -544,8 +548,10 @@
   <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
   <script src="/__/firebase/init.js"></script>
 
+  <link rel="stylesheet" href="common.css">
   <link rel="stylesheet" href="main.css">
 
+  <script src="global/gappsuper.js"></script>
   <script src="global/gapplication.js"></script>
   <script src="global/gauthorization.js"></script>
   <script src="global/globalutil.js"></script>
@@ -562,6 +568,7 @@
   <script src="webgl/wgenerate.js"></script>
 
   <script src="controller/cbandsuper.js"></script>
+  <script src="controller/cviewsuper.js"></script>
   <script src="controller/cviewmain.js"></script>
   <script src="controller/cdialogedit.js"></script>
   <script src="controller/cbandframes.js"></script>
