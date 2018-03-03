@@ -430,6 +430,13 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   type: 'boolean',
   floatLeft: true,
   clearLeft: true
+}, {
+  title: 'Camera Saves',
+  fireSetField: 'cameraSaves',
+  contextObjectField: null,
+  group: 'main',
+  type: 'boolean',
+  floatLeft: true
 }];
 __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   title: 'Bounds',

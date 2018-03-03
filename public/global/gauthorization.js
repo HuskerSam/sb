@@ -136,6 +136,7 @@ class gAuthorization {
 
     if (this.anonymous) {
       profileData.cameraUpdates = true;
+      profileData.cameraSaves = true;
       profileData.showSceneGuides = false;
       profileData.showBoundsBox = false;
       profileData.showFloorGrid = false;

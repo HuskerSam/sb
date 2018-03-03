@@ -17,7 +17,7 @@ class cViewPublished extends cViewSuper {
   }
   setValue() {
     let t = this.elementSelect.value.toLowerCase();
-    let id = this.blockId.value.trim();
+    let id = this.blockId.value.split(' ')[0].trim();
     let field = this.blockField.value.trim();
     let v = this.fieldValue.value;
 
@@ -43,6 +43,8 @@ class cViewPublished extends cViewSuper {
 
     document.getElementById('elementidlist').innerHTML = options;
 
+    if (t === 'frame')
+      t = 'shapeFrame';
     let fields = sDataDefinition.bindingFields(t);
 
     let fieldOptions = '';

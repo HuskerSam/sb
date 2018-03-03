@@ -279,7 +279,7 @@ class cPanelCanvas {
   set playState(newState) {
     this._playState = newState;
 
-    if (this.saveAnimState)
+    if (this.saveAnimState && gAPPP.a.profile.cameraSaves)
       gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'playState' + this.parent.rootBlock.blockKey,
         newValue: this._playState
@@ -290,7 +290,7 @@ class cPanelCanvas {
     this.__updatePlayState();
   }
   __updatePlayState() {
-    if (this.saveAnimState) {
+    if (gAPPP.a.profile.cameraUpdates) {
       let sliderValue = gAPPP.a.profile['playStateAnimTime' + this.parent.rootBlock.blockKey];
       if (this.lastSliderValue !== sliderValue) {
         this.lastSliderValue = sliderValue;
@@ -382,6 +382,9 @@ class cPanelCanvas {
     this._updateCameraRangeSlider();
   }
   __saveCameraPosition(cp, tp) {
+    if (! gAPPP.a.profile.cameraSaves)
+      return;
+
     this.lastCP = cp;
     this.lastTP = tp;
     let camera = this.parent.context.camera;
