@@ -20,6 +20,7 @@ class cDialogBlock extends cDialogEdit {
     b.removeChild(old);
 
     super(null);
+    this.editMainPanel = editPanel;
     this._init(d, 'block', editPanel, fieldsPanel);
     this._constructor();
   }
@@ -38,7 +39,8 @@ class cDialogBlock extends cDialogEdit {
     this.addChildButton.addEventListener('click', e => this.addChild());
 
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
-    this.framesBand = new cBandFrames(this.framesPanel, this);
+    this.framesPanelHeader = this.dataViewContainer.querySelector('.frames-header-fields-panel');
+    this.framesBand = new cBandFrames(this.framesPanel, this, this.framesPanelHeader);
 
     document.addEventListener('contextRefreshActiveObject', e => this._handleActiveObjectUpdate(e), false);
 
@@ -144,12 +146,16 @@ class cDialogBlock extends cDialogEdit {
     this.fieldsContainer.style.display = 'none';
 
     if (this.childKey === null) {
+      this.editMainPanel.classList.add('root-block-display');
+      this.editMainPanel.classList.remove('child-block-display');
       this.rootElementDom.classList.add('selected');
 
       if (this.detailsShown)
         this.fieldsContainer.style.display = 'block';
       this.context.setActiveBlock(this.rootBlock);
     } else {
+      this.editMainPanel.classList.remove('root-block-display');
+      this.editMainPanel.classList.add('child-block-display');
       this.rootElementDom.classList.remove('selected');
       if (this.detailsShown)
         this.childEditPanel.style.display = 'block';

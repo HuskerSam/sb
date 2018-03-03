@@ -1,6 +1,7 @@
 class cBandFrames extends cBandSuper {
-  constructor(childrenContainer, parent) {
+  constructor(childrenContainer, parent, framesHeaderPanel) {
     super(gAPPP.a.modelSets['frame'], 'frame');
+    this.framesHeaderPanel = framesHeaderPanel;
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.childrenContainer = childrenContainer;
     this.frameDataViewInstances = {};
@@ -265,8 +266,10 @@ class cBandFrames extends cBandSuper {
 
     this.framesHelper.compileFrames();
     this.childrenContainer.removeChild(this.addFrameButton);
+    this.childrenContainer.removeChild(this.framesHeaderPanel);
     this.__applyFrameOrderToDom();
     this.childrenContainer.appendChild(this.addFrameButton);
+    this.childrenContainer.insertBefore(this.framesHeaderPanel, this.childrenContainer.childNodes[0]);
     this._updateFrameHelpersUI();
   }
   __applyFrameOrderToDom() {

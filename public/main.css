@@ -183,6 +183,7 @@
   display: inline-block;
   margin-left: .5em;
   font-size: 1.6em;
+  pointer-events: none;
 }
 
 .popup-action-bar {
@@ -690,4 +691,12 @@
   overflow: scroll;
   white-space: pre;
   width: 30vw;
+}
+
+.block-frames-details-button {
+  margin-left: -.25em;
+}
+
+.child-block-display .frames-header-fields-panel {
+  display: none;
 }

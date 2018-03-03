@@ -44,7 +44,7 @@ class cViewSuper {
     let startTime = Date.now();
 
     let b = new wBlock(this.context);
-    //document.title = blockData.title + ' - ' + this.workplacesSelect.selectedOptions[0].innerText;
+    document.title = blockData.title;
     b.staticType = 'block';
     b.staticLoad = true;
     b.blockKey = profileKey;
@@ -60,6 +60,7 @@ class cViewSuper {
     }, 50);
 
     this.canvasHelper.logMessage('load: ' + (Date.now() - startTime).toString() + 'ms');
+    this.canvasHelper.reportEngineDetails();
   }
   show(scene) {
     this.context.activate(scene);

@@ -533,4 +533,11 @@ class cPanelCanvas {
 
     return (-1.0 * (this.minpos + (Math.log((this.negativeSize - value) * this.scaleFactor) - this.minlval) / this.scale)).toFixed(2);
   }
+  reportEngineDetails() {
+    let info = this.parent.context.engine.getGlInfo();
+    this.logMessage('Renderer: ' + info.renderer);
+    this.logMessage('Version: ' + info.version);
+    this.logMessage('Vendor: ' + info.vendor);
+    this.logMessage('Hardware Scale: ' + this.parent.context.engine.getHardwareScalingLevel());
+  }
 }
