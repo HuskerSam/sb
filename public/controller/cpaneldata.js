@@ -345,6 +345,10 @@ class cPanelData {
     if (o === undefined)
       o = '';
 
+    f.dom.setAttribute('data-field', f.fireSetField);
+    f.dom.setAttribute('data-key', this.parent.key);
+    f.dom.setAttribute('data-set', this.parent.tag);
+
     if (f.type === 'boolean') {
       if (f.dom !== document.activeElement) {
         updateShown = true;

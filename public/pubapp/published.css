@@ -1,0 +1,14 @@
+#value-set-panel {
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  padding: .25em;
+  padding: .5em;
+  background: rgba(255,255,255,.7);
+}
+
+#value-set-panel label span {
+  padding-right: 1.5em;
+}

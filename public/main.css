@@ -691,8 +691,3 @@
   white-space: pre;
   width: 30vw;
 }
-
-.canvas-play-bar {
-  display:inline-block;
-  pointer-events:none;
-}

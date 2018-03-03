@@ -439,3 +439,8 @@ button i.material-icons {
 .selected-mesh-bounds-helper-box .action-area.rotate .preview, .selected-mesh-bounds-helper-box .action-area.rotate button {
   color: rgb(0, 64, 127);
 }
+
+.canvas-play-bar {
+  display:inline-block;
+  pointer-events:none;
+}

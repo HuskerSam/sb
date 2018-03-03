@@ -95,7 +95,6 @@ class cViewSuper {
         } else {
           this.key = '';
           this.canvasHelper.show();
-//          document.title = this.workplacesSelect.selectedOptions[0].innerText;
         }
       }, 10);
     }
