@@ -13,26 +13,32 @@
   <div id="firebase-app-main-page" style="display:none;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
-    <div id="value-set-panel">
-      <label><span>Element</span>
-      <select id="element-type-to-edit">
-        <option>Block</option>
-        <option>BlockChild</option>
-        <option>Shape</option>
-        <option>Mesh</option>
-        <option>Texture</option>
-        <option>Material</option>
-        <option>Frame</option>
-      </select>
-      </label>
-      <br>
-      <label><span>ID</span><input id="element-id-to-edit" type="text" list="elementidlist" /></label>
-      <br>
-      <label><span>Field</span><input id="field-name-to-edit" type="text" list="fieldnamelist" /></label>
-      <br>
-      <label><span>Value</span><input id="value-to-edit" type="text" /></label>
-      <br>
-      <button id="button-to-edit">Set</button>
+    <button id="publish-settings-button" class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
+    <div id="publish-profile-panel" style="display:none;">
+      <div id="value-set-panel">
+        <label><span>Element</span>
+        <select id="element-type-to-edit">
+          <option>Block</option>
+          <option>BlockChild</option>
+          <option>Shape</option>
+          <option>Mesh</option>
+          <option>Texture</option>
+          <option>Material</option>
+          <option>Frame</option>
+        </select>
+        </label>
+        <br>
+        <label><span>ID</span><input id="element-id-to-edit" type="text" list="elementidlist" /></label>
+        <br>
+        <label><span>Field</span><input id="field-name-to-edit" type="text" list="fieldnamelist" /></label>
+        <br>
+        <label><span>Value</span><input id="value-to-edit" type="text" /></label>
+        <br>
+        <button id="button-to-edit">Set</button>
+      </div>
+      <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
+
+      <div class="fields-container"></div>
     </div>
   </div>
 
@@ -116,6 +122,36 @@
   <datalist id="sbimageslist"></datalist>
   <datalist id="elementidlist"></datalist>
   <datalist id="fieldnamelist"></datalist>
+  <datalist id="fontfamilydatalist">
+    <option>Arial</option>
+    <option>Arial Black</option>
+    <option>Book Antiqua</option>
+    <option>Bookman</option>
+    <option>Charcoal</option>
+    <option>Comic Sans MS</option>
+    <option>Courier</option>
+    <option>Courier New</option>
+    <option>Cursive</option>
+    <option>Gadget</option>
+    <option>Garamond</option>
+    <option>Geneva</option>
+    <option>Georgia</option>
+    <option>Helvetica</option>
+    <option>Impact</option>
+    <option>Lucida Grande</option>
+    <option>Lucida Sans Unicode</option>
+    <option>Palatino</option>
+    <option>Palatino Linotype</option>
+    <option>Symbol</option>
+    <option>Tahoma</option>
+    <option>Times</option>
+    <option>Times New Roman</option>
+    <option>Trebuchet MS</option>
+    <option>Verdana</option>
+    <option>Vivaldi</option>
+    <option>Goudy Old Style</option>
+  </datalist>
+
 </body>
 
 </html>

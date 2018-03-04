@@ -376,6 +376,53 @@ __localStaticStorageForBindingFields['texture'] = [{
   type: 'color',
   group: 'textColor'
 }];
+__localStaticStorageForBindingFields['publishFontFamilyProfile'] = [{
+  title: 'Canvas Color',
+  fireSetField: 'canvasColor',
+  contextObjectField: null,
+  type: 'color',
+  group: 'color',
+  helperType: 'vector',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.005',
+  floatLeft: true,
+  displayType: 'shortVector'
+}, {
+  title: 'Font',
+  fireSetField: 'fontFamily',
+  contextObjectField: null,
+  group: 'main',
+  dataListId: 'fontfamilydatalist',
+  floatLeft: true
+}, {
+  title: 'Size',
+  fireSetField: 'fontSize',
+  contextObjectField: null,
+  group: 'main',
+  displayType: 'number',
+  helperType: 'singleSlider',
+  rangeMin: '7',
+  rangeMax: '22',
+  rangeStep: '.25',
+  groupClass: 'font-size-main-view',
+  floatLeft: true
+}, {
+  title: 'Camera Updates',
+  fireSetField: 'cameraUpdates',
+  contextObjectField: null,
+  group: 'main',
+  type: 'boolean',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'Camera Saves',
+  fireSetField: 'cameraSaves',
+  contextObjectField: null,
+  group: 'main',
+  type: 'boolean',
+  floatLeft: true
+}];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   title: 'Canvas Color',
   fireSetField: 'canvasColor',

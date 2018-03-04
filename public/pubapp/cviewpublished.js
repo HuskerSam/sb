@@ -10,6 +10,19 @@ class cViewPublished extends cViewSuper {
     this.setButton = document.getElementById('button-to-edit');
     this.setButton.addEventListener('click', e => this.setValue());
 
+    this.bandButtons = [];
+    this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
+    this.fontFields = sDataDefinition.bindingFieldsCloned('publishFontFamilyProfile');
+    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
+    this.fontToolsButton = this.dialog.querySelector('#publish-settings-button');
+    this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);
+    this.fontTools.fireFields.values = gAPPP.a.profile;
+    this.fontTools.activate();
+    this.bandButtons.push(this.fontTools);
+    this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
+
     this.elementTypeChange();
   }
   closeHeaderBands() {
