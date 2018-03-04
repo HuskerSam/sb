@@ -9,8 +9,12 @@ class cViewMain extends cViewSuper {
     this.dialogs['texture-edit'] = new cDialogEdit('texture', 'Texture Options');
 
     this.workplacesSelect = document.querySelector('#workspaces-select');
+    this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');
+    this.workplacesSelectEditCode = document.querySelector('#edit-workspace-code');
     this.workplacesRemoveButton = document.querySelector('#remove-workspace-button');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
+    this.workplacesSelectEditName.addEventListener('input', e => this.updateWorkspaceNameCode());
+    this.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
 
     this.toolbarItems = {};
     this.toolbarItems['block'] = new cBandRecords('block', 'Block', this);
@@ -68,6 +72,7 @@ class cViewMain extends cViewSuper {
     this.addProjectButton = document.querySelector('#add-workspace-button');
     this.addProjectButton.addEventListener('click', e => this.addProject());
     this.addProjectName = document.querySelector('#new-workspace-name');
+    this.addProjectCode = document.querySelector('#new-workspace-code');
     this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
 
     this.userProfileName.innerHTML = gAPPP.a.currentUser.email;
@@ -290,7 +295,10 @@ class cViewMain extends cViewSuper {
     let html = '';
 
     for (let i in records) {
-      let o = `<option value=${i}>${records[i].title}</option>`;
+      let code = '';
+      if (records[i].code)
+        code = records[i].code;
+      let o = `<option value=${i}>${records[i].title} (${code})</option>`;
 
       if (i === 'default')
         html += o;
@@ -302,10 +310,32 @@ class cViewMain extends cViewSuper {
       val = this.workplacesSelect.value;
     this.workplacesSelect.innerHTML = html;
     this.workplacesSelect.value = val;
+    this.workplacesSelectEditName.value = records[val].title;
+    let code = '';
+    if (records[val].code)
+      code = records[val].code;
+    this.workplacesSelectEditCode.value = code;
+    gAPPP.workspaceCode = code;
+
     if (this.workplacesSelect.selectedIndex === -1) {
       this.workplacesSelect.selectedIndex = 0;
       this.selectProject();
     }
+  }
+  updateWorkspaceNameCode() {
+    let name = this.workplacesSelectEditName.value.trim();
+    let code = this.workplacesSelectEditCode.value.trim();
+
+    if (name.length < 1)
+      return;
+
+    gAPPP.a.modelSets['projectTitles'].commitUpdateList([{
+      field: 'title',
+      newValue: name
+    }, {
+      field: 'code',
+      newValue: code
+    }], this.workplacesSelect.value);
   }
   addProject() {
     let newTitle = this.addProjectName.value.trim();
@@ -313,9 +343,11 @@ class cViewMain extends cViewSuper {
       alert('need a name for workspace');
       return;
     }
+    let newCode = this.addProjectCode.value.trim();
     let key = gAPPP.a.modelSets['projectTitles'].getKey();
     firebase.database().ref('projectTitles/' + key).set({
-      title: newTitle
+      title: newTitle,
+      code: newCode
     });
     firebase.database().ref('project/' + key).set({
       title: newTitle

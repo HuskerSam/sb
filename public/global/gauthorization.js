@@ -15,6 +15,8 @@ class gAuthorization {
 
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
+
+    this.workspaceLoadedCallback = null;
   }
   onProjectTitlesChange(values, type, fireData) {
     if (type === 'value') {
@@ -70,7 +72,10 @@ class gAuthorization {
       this.workspaceLoaded();
   }
   workspaceLoaded() {
-    if (!this.initialBlockLoad) {
+    if (!this.initialBlockLoad) {  
+      if (this.workspaceLoadedCallback)
+        this.workspaceLoadedCallback();
+
       let key = 'selectedBlockKey' + gAPPP.workspace;
       gAPPP.mV._updateSelectedBlock(gAPPP.a.profile[key]);
       this.initialBlockLoad = true;

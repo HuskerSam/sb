@@ -528,7 +528,7 @@
   pointer-events: auto;
 }
 
-#new-workspace-name {
+#new-workspace-name, #new-workspace-code, #edit-workspace-name, #edit-workspace-code {
   border-radius: .25em;
   border: solid .1em silver;
   padding: .15em;

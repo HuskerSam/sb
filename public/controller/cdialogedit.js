@@ -186,9 +186,7 @@ class cDialogEdit {
     this.context.setActiveBlock(b);
     this.rootBlock = b;
     this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
-
-    let link = gAPPP.publishURL + '?w=' + gAPPP.workspace + '&b=' + this.key;
-    this.dialog.querySelector('.block-id-display-span').setAttribute('href', link);
+    this.dialog.querySelector('.block-id-display-span').setAttribute('href', this.rootBlock.publishURL);
 
     this.childBand.refreshUIFromCache();
     this.childBand.setKey(null);
