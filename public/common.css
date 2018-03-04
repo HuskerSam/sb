@@ -323,6 +323,7 @@ button i.material-icons {
   overflow: hidden;
   pointer-events: none;
   display: inline-block;
+  padding-top: .75em;
 }
 
 .scene-options-panel .scene-fields-container * {

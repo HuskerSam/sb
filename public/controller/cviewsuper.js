@@ -103,10 +103,13 @@ class cViewSuper {
     }
   }
   _userProfileChange(values, type, fireData) {
-    if (!gAPPP.a.profile.cameraUpdates)
-      return;
-
     if (!this.rootBlock)
+      return;
+    if (this.lastNoBump !== gAPPP.a.profile.noBumpMaps) {
+      this.lastNoBump = gAPPP.a.profile.noBumpMaps;
+      this.rootBlock.setData();
+    }
+    if (!gAPPP.a.profile.cameraUpdates)
       return;
 
     let pS = gAPPP.a.profile['playState' + this.rootBlock.blockKey];

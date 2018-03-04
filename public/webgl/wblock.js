@@ -25,9 +25,18 @@ class wBlock {
     this.framesHelper = new wFrames(this.context);
     this.skyboxObject = null;
     this.groundObject = null;
+    this.updateNoBump();
+  }
+  updateNoBump() {
     this.noBump = false;
     if (this.context.info.version.indexOf('1.0') !== -1)
-      this.noBump = true;
+      return this.noBump = true;
+
+    if (gAPPP.a.profile.noBumpMaps)
+      return this.noBump = true;
+
+    for (let i in this.childBlocks)
+      this.childBlocks[i].updateNoBump();
   }
   get publishURL() {
     let link = gAPPP.publishURL + '?';
@@ -401,6 +410,8 @@ class wBlock {
   setData(values = null) {
     if (this.context !== gAPPP.activeContext)
       return;
+
+    this.updateNoBump();
 
     if (this.staticType === 'texture') {
       this.__setpreviewshape(values);

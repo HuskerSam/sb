@@ -407,21 +407,6 @@ __localStaticStorageForBindingFields['publishFontFamilyProfile'] = [{
   rangeStep: '.25',
   groupClass: 'font-size-main-view',
   floatLeft: true
-}, {
-  title: 'Camera Updates',
-  fireSetField: 'cameraUpdates',
-  contextObjectField: null,
-  group: 'main',
-  type: 'boolean',
-  floatLeft: true,
-  clearLeft: true
-}, {
-  title: 'Camera Saves',
-  fireSetField: 'cameraSaves',
-  contextObjectField: null,
-  group: 'main',
-  type: 'boolean',
-  floatLeft: true
 }];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   title: 'Canvas Color',
@@ -455,7 +440,7 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   groupClass: 'font-size-main-view',
   floatLeft: true
 }, {
-  title: 'Focus Lock (Editing)',
+  title: 'Focus Lock',
   fireSetField: 'inputFocusLock',
   contextObjectField: null,
   group: 'main',
@@ -465,21 +450,6 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
 }, {
   title: 'Show Delete',
   fireSetField: 'showDelete',
-  contextObjectField: null,
-  group: 'main',
-  type: 'boolean',
-  floatLeft: true
-}, {
-  title: 'Camera Updates',
-  fireSetField: 'cameraUpdates',
-  contextObjectField: null,
-  group: 'main',
-  type: 'boolean',
-  floatLeft: true,
-  clearLeft: true
-}, {
-  title: 'Camera Saves',
-  fireSetField: 'cameraSaves',
   contextObjectField: null,
   group: 'main',
   type: 'boolean',
@@ -535,6 +505,30 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   displayType: 'number',
   group: 'group2',
   groupClass: 'light-intensity-user-panel'
+}, {
+  title: 'Camera Updates',
+  fireSetField: 'cameraUpdates',
+  contextObjectField: null,
+  group: 'cameraTrack',
+  type: 'boolean',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'Camera Saves',
+  fireSetField: 'cameraSaves',
+  contextObjectField: null,
+  group: 'cameraTrack',
+  type: 'boolean',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'No Bump Maps',
+  fireSetField: 'noBumpMaps',
+  contextObjectField: null,
+  group: 'cameraTrack',
+  type: 'boolean',
+  floatLeft: true,
+  clearLeft: true
 }];
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
