@@ -168,6 +168,10 @@ class cViewMain extends cViewSuper {
 
     document.querySelector('#help-button-on-user-panel').addEventListener('click', e => this.showHelpPanel());
   }
+  updatePublishLink() {
+    if (this.rootBlock)
+      document.querySelector('#publish-link-url').setAttribute('href', this.rootBlock.publishURL);
+  }
   importPanelImport() {
     let eleType = this.importRefreshElementSelect.value.toLowerCase();
     let json = '';
@@ -805,5 +809,9 @@ class cViewMain extends cViewSuper {
   _titleKeyPress(e) {
     if (e.code === 'Enter')
       this.createItem();
+  }
+  _updateContextWithDataChange(tag, values, type, fireData) {
+    super._updateContextWithDataChange(tag, values, type, fireData);
+    this.updatePublishLink();
   }
 }

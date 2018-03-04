@@ -412,7 +412,6 @@
   padding: .25em .5em;
 }
 
-
 .cblock-details-panel .form-group-container-group, .cblock-child-details-panel .form-group-container-group {
   background: rgba(255, 255, 255, .5);
 }
@@ -724,15 +723,32 @@
 .block-id-display-span {
   padding: .25em;
   border-radius: .25em;
-  background: rgb(240,240,240);
+  background: rgb(240, 240, 240);
   position: relative;
   top: 1em;
   margin-left: .25em;
-  float:left;
+  float: left;
 }
 
 .block-scene-details-button {
   top: .75em;
   left: .15em;
   position: relative;
+}
+
+#publish-link-url {
+  position: absolute;
+  top: .5em;
+  right: 3.5em;
+  padding: .25em;
+  border-radius: .25em;
+  background: rgba(255,255,255, .7);
+  z-index: 1000;
+}
+
+#help-button-on-user-panel {
+  position: absolute;
+  top: .25em;
+  right: .25em;
+  z-index: 1000
 }

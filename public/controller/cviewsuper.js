@@ -56,6 +56,8 @@ class cViewSuper {
     this.rootBlock.setData(blockData);
     setTimeout(() => {
       this.canvasHelper.show();
+      this._updateContextWithDataChange();
+      this._userProfileChange();
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }, 50);
 
@@ -116,6 +118,8 @@ class cViewSuper {
     }
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
+    if (!tag)
+      return;
     if (this.rootBlock)
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
     this.canvasHelper.testError();
