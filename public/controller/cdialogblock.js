@@ -44,6 +44,8 @@ class cDialogBlock extends cDialogEdit {
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';
     this.framesPanelHeader.appendChild(clearDiv);
+    this.blockShowHideBtn = this.editMainPanel.querySelector('.block-scene-details-button');
+    this.blockShowHideBtn.addEventListener('click', () => this.showHideSceneDetails());
 
     this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
@@ -78,6 +80,17 @@ class cDialogBlock extends cDialogEdit {
     this.importButton.addEventListener('click', e => this.importFramesFromText());
     this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
     this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
+  }
+  showHideSceneDetails() {
+    if (this.framesPanelHeader.style.display === 'none') {
+      this.framesPanelHeader.style.display = '';
+      this.blockShowHideBtn.style.background = 'rgb(50,50,50)';
+      this.blockShowHideBtn.style.color = 'white';
+    } else {
+      this.framesPanelHeader.style.display = 'none';
+      this.blockShowHideBtn.style.background = 'rgb(240,240,240)';
+      this.blockShowHideBtn.style.color = 'black';
+    }
   }
   refreshExportText() {
     let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);

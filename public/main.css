@@ -394,12 +394,12 @@
 }
 
 .frames-panel .frames-header-fields-panel {
-  border: inset .15em silver; 
+  border: inset .15em silver;
+  margin-bottom: .5em;
 }
 
 .frames-panel .frames-header-fields-panel .form-group-container-group {
   float: left;
-
   display: inline-block;
   background: rgba(255, 255, 255, .5);
   margin: .25em;
@@ -729,4 +729,10 @@
   top: 1em;
   margin-left: .25em;
   float:left;
+}
+
+.block-scene-details-button {
+  top: .75em;
+  left: .15em;
+  position: relative;
 }
