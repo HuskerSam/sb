@@ -25,6 +25,9 @@ class wBlock {
     this.framesHelper = new wFrames(this.context);
     this.skyboxObject = null;
     this.groundObject = null;
+    this.noBump = false;
+    if (this.context.info.version.indexOf('1.0') !== -1)
+      this.noBump = true;
   }
   get publishURL() {
     let link = gAPPP.publishURL + '?';
@@ -233,6 +236,12 @@ class wBlock {
 
     if (this.blockRenderData['shapeType'] === 'text')
       return this.__createTextMesh(name, options);
+
+    if (this.blockRenderData['shapeType'] === 'torus')
+      return this.sceneObject = BABYLON.MeshBuilder.CreateTorus(name, options, this.context.scene);
+
+    if (this.blockRenderData['shapeType'] === 'torusknot')
+      return this.sceneObject = BABYLON.MeshBuilder.CreateTorusKnot(name, options, this.context.scene);
 
     this.sceneObject = BABYLON.MeshBuilder.CreateBox(name, options, this.context.scene);
   }
@@ -741,9 +750,14 @@ class wBlock {
   __material(values) {
     let material = new BABYLON.StandardMaterial('material' + Math.random().toFixed(4), this.context.scene);
     let fields = sDataDefinition.bindingFields('material');
+
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
+
+      if (this.noBump)
+        if (field.fireSetField === 'bumpTextureName')
+          continue;
 
       if (field.contextObjectField)
         this.__updateObjectValue(field, value, material);

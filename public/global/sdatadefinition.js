@@ -748,6 +748,87 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayGroup: 'text',
   displayKey: 'shapeType',
   group: 'fontExtra'
+}, {
+  title: 'Diameter',
+  fireSetField: 'torusDiameter',
+  contextObjectField: null,
+  shapeOption: 'diameter',
+  displayGroup: 'torus',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions'
+}, {
+  title: 'Thickness',
+  fireSetField: 'torusThickness',
+  contextObjectField: null,
+  shapeOption: 'thickness',
+  displayGroup: 'torus',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions'
+}, {
+  title: 'Tessellation',
+  fireSetField: 'torusTessellation',
+  contextObjectField: null,
+  shapeOption: 'tessellation',
+  displayGroup: 'torus',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions'
+}, {
+  title: 'Radius',
+  fireSetField: 'torusKnotRadius',
+  contextObjectField: null,
+  shapeOption: 'radius',
+  displayGroup: 'torusknot',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions'
+}, {
+  title: 'Thickness',
+  fireSetField: 'torusKnotThickness',
+  contextObjectField: null,
+  shapeOption: 'tube',
+  displayGroup: 'torusknot',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions'
+}, {
+  title: 'Radial Seg',
+  fireSetField: 'torusKnotRadialSeg',
+  contextObjectField: null,
+  shapeOption: 'radialSegments',
+  displayGroup: 'torusknot',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions2'
+}, {
+  title: 'Tube Seg',
+  fireSetField: 'torusKnotTubeSeg',
+  contextObjectField: null,
+  shapeOption: 'tubularSegments',
+  displayGroup: 'torusknot',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions2'
+}, {
+  title: 'p (windings)',
+  fireSetField: 'torusKnotP',
+  contextObjectField: null,
+  shapeOption: 'p',
+  displayGroup: 'torusknot',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions3'
+}, {
+  title: 'q (windings)',
+  fireSetField: 'torusKnotQ',
+  contextObjectField: null,
+  shapeOption: 'q',
+  displayGroup: 'torusknot',
+  displayKey: 'shapeType',
+  displayType: 'number',
+  group: 'dimensions3'
 }];
 __localStaticStorageForBindingFields['block'] = [{
   title: 'Block Title',

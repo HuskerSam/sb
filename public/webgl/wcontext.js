@@ -68,6 +68,8 @@ class wContext {
         preserveDrawingBuffer: true
       });
       this.engine.enableOfflineSupport = false;
+
+      this.info = this.engine.getGlInfo();
     }
 
     if (scene !== undefined) {

@@ -9,7 +9,7 @@ class gAppSuper {
     this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
     this.publishURL = 'https://publish.sceneblocks.com/pubapp/published.html'
     this.shapeTypes = [
-      'box', 'cylinder', 'sphere', 'text', 'plane'
+      'box', 'cylinder', 'sphere', 'text', 'plane', 'torus', 'torusknot'
     ];
     this._initShapesList();
     window.addEventListener("resize", () => this.resize());

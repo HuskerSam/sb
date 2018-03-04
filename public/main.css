@@ -357,7 +357,7 @@
   display: none;
 }
 
-.frames-panel>div:nth-child(1) label span {
+.frames-panel>div:nth-child(2) label span {
   display: inline-block;
 }
 
