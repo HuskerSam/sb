@@ -35,12 +35,19 @@ class cDialogBlock extends cDialogEdit {
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
 
-    this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
-    this.addChildButton.addEventListener('click', e => this.addChild());
-
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesPanelHeader = this.dataViewContainer.querySelector('.frames-header-fields-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this, this.framesPanelHeader);
+    this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneFields');
+    this.sceneFireFields = new cPanelData(this.sceneFields, this.framesPanelHeader, this);
+    this.fireSet.childListeners.push((values, type, fireData) => this.sceneFireFields._handleDataChange(values, type, fireData));
+    let clearDiv = document.createElement('div');
+    clearDiv.style.clear = 'both';
+    this.framesPanelHeader.appendChild(clearDiv);
+
+    this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
+    this.addChildButton.addEventListener('click', e => this.addChild());
+
 
     document.addEventListener('contextRefreshActiveObject', e => this._handleActiveObjectUpdate(e), false);
 
@@ -208,6 +215,7 @@ class cDialogBlock extends cDialogEdit {
     document.getElementById('followblocktargetoptionslist').innerHTML = optionText;
   }
   show(key) {
+    this.sceneFireFields.values = this.fireSet.fireDataByKey[key].val();
     super.show(key);
     this._updateFollowTargetListOptions();
   }

@@ -529,7 +529,7 @@ class wBlock {
     let depth = this.blockRenderData['depth'];
 
     let fieldDirty = false;
-    for (let i in this.containerFieldList) {
+    for (let i = 0; i < this.containerFieldList.length; i++) {
       let f = this.containerFieldList[i];
       if (this.containerCache[f] !== this.blockRenderData[f]) {
         fieldDirty = true;

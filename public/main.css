@@ -393,6 +393,26 @@
   padding-top: .25em;
 }
 
+.frames-panel .frames-header-fields-panel {
+  border: inset .15em silver; 
+}
+
+.frames-panel .frames-header-fields-panel .form-group-container-group {
+  float: left;
+
+  display: inline-block;
+  background: rgba(255, 255, 255, .5);
+  margin: .25em;
+  padding: .25em;
+  padding-right: .5em;
+  padding-top: 0;
+}
+
+.frames-panel .frames-header-fields-panel .form-group-container-group input {
+  padding: .25em .5em;
+}
+
+
 .cblock-details-panel .form-group-container-group, .cblock-child-details-panel .form-group-container-group {
   background: rgba(255, 255, 255, .5);
 }
@@ -699,4 +719,14 @@
 
 .child-block-display .frames-header-fields-panel {
   display: none;
+}
+
+.block-id-display-span {
+  padding: .25em;
+  border-radius: .25em;
+  background: rgb(240,240,240);
+  position: relative;
+  top: 1em;
+  margin-left: .25em;
+  float:left;
 }

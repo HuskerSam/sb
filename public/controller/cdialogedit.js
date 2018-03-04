@@ -85,6 +85,8 @@ class cDialogEdit {
   close() {
     if (this.fireFields)
       this.fireFields.active = false;
+    if (this.sceneFireFields)
+      this.sceneFireFields.active = false;
 
     if (this.renderPreview)
       if (this.context)
@@ -210,6 +212,10 @@ class cDialogEdit {
       this.fireFields.loadedURL = this.fireFields.values['url'];
       let sceneReloadRequired = this.fireFields.paint();
       this.fireFields.helpers.resetUI();
+    }
+    if (this.sceneFireFields) {
+      this.sceneFireFields.paint();
+      this.sceneFireFields.helpers.resetUI();
     }
 
     this._endLoad();

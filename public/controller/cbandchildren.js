@@ -9,6 +9,7 @@ class cBandChildren extends cBandSuper {
 
     this.childFields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.childEditFields = new cPanelData(this.childFields, this.childEditPanel, this);
+    this.fireSet.childListeners.push((values, type, fireData) => this.childEditFields._handleDataChange(values, type, fireData));
 
     this.childEditFields._superUpdateDisplayFilters = this.childEditFields._updateDisplayFilters;
     this.childEditFields._updateDisplayFilters = () => this.__updateFieldsForAnimHeaderRow();

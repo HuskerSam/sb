@@ -731,7 +731,8 @@ __localStaticStorageForBindingFields['block'] = [{
   contextObjectField: null,
   displayType: 'number',
   group: 'main'
-}, {
+}];
+__localStaticStorageForBindingFields['sceneFields'] = [{
   title: 'Ground Material',
   fireSetField: 'groundMaterial',
   contextObjectField: null,

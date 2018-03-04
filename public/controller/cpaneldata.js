@@ -114,7 +114,7 @@ class cPanelData {
 
     if (cT) {
       if (cT.activeBlock)
-        cT.activeBlock.setData(valueCache);
+        cT.activeBlock.setData(this.values);
       cT.refreshFocus();
     }
     this.loadedURL = this.valueCache['url'];
@@ -143,10 +143,6 @@ class cPanelData {
       if (f.type === 'color')
         this.__updateColorLabel(f);
     }
-
-    if (this.parent.context)
-      if (this.parent.context.activeBlock)
-        this.parent.context.activeBlock.setData(this.valueCache);
     this._commitUpdates(this.valueCache);
 
     this._updateDisplayFilters();
@@ -247,6 +243,8 @@ class cPanelData {
     return updates;
   }
   _handleDataChange(values, type, fireData) {
+    if (! this.active)
+      return;
     if (type === "moved")
       return;
 
