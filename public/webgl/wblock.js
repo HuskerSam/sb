@@ -321,7 +321,7 @@ class wBlock {
     this.dispose();
     let grid = BABYLON.Mesh.CreateGround("ground1", gridDepth, gridDepth, 2, this.context.scene);
     let material = new BABYLON.StandardMaterial('scenematerialforfloorgrid', this.context.scene);
-    let texture = new BABYLON.Texture('/greengrid.png', this.context.scene);
+    let texture = new BABYLON.Texture('/images/greengrid.png', this.context.scene);
     texture.hasAlpha = true;
     material.diffuseTexture = texture;
     texture.vScale = gridDepth;

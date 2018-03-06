@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Scene Blocks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/logo.png">
+</head>
+
+<body>
+  <div id="firebase-app-login-page" style="display:none;">
+    <h3>Scene Blocks</h3>
+    <div>
+      <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
+      <label>Auth Code: <input id="sign-in-special-code" ></label>
+    </div>
+  </div>
+  <div id="firebase-app-main-page" style="display:none;">
+    <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
+    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+    <div style="display:none;position:absolute;top:0;right:.25em;z-index:1000;">
+      <button id="toggle-all-toolbands-down" class="btn-sb-icon"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
+      <button id="toggle-all-toolbands" class="btn-sb-icon"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>
+    </div>
+    <a id="publish-link-url" target="_blank">Publish</a>
+    <button id="help-button-on-user-panel" class="btn-sb-icon"><i class="material-icons">help</i></button>
+
+    <div id="sb-floating-toolbar" style="display:inline-block;"></div>
+    <div id="sb-floating-toolbar-expanded">
+    </div>
+
+    <button class="btn-sb-icon" id="sb-floating-toolbar-import-btn"><i class="material-icons">import_export</i></button>
+    <button class="btn-sb-icon" id="sb-floating-toolbar-create-btn"><i class="material-icons">add</i></button>
+    <button id="workspace-settings-button" class="btn-sb-icon"><i class="material-icons">group</i></button>
+    <div id="user-profile-panel" style="display:none;white-space:nowrap;">
+      <div>
+        <label><span>Workspace </span><select id="workspaces-select"></select></label>
+        <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button>
+        <br>
+        <label><span>Name </span><input id="edit-workspace-name" /></label><label><span> Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
+        <br>
+        <label><span>New Workspace </span><input id="new-workspace-name" /></label><label><span> Code </span><input id="new-workspace-code" style="width:5em;" /></label>
+        <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
+        </label>
+      </div>
+      <div class="user-info"></div>
+      <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
+      <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+      <div class="fields-container" style="clear:both;"></div>
+    </div>
+    <div id="import-export-panel-main-view" style="display:none;">
+      <div style="float:left;text-align:center;">
+        <label>Element <select class="fetch-element-type">
+          <option>Block</option>
+          <option>Mesh</option>
+          <option>Shape</option>
+          <option>Material</option>
+          <option>Texture</option>
+        </select></label>
+        <br>
+        <label>Title <input class="fetch-element-name" /></label>
+        <br>
+        <button class="btn-sb-icon refresh-button">Fetch</button>
+        <br>
+        <br>
+        <br>
+        <button class="btn-sb-icon import-button">Import</button>
+      </div>
+      <textarea class="element-textarea-export" rows="6" cols="6"></textarea>
+      <div style="clear:both"></div>
+      <div class="fields-container" style="clear:both;"></div>
+    </div>
+    <div class="add-item-panel" style="display:none;">
+      <div class="texture-add-options" style="display:none">
+        <select class="texture-type-select">
+          <option>Upload</option>
+          <option>Path</option>
+        </select>
+        <input type="file" class="file-upload-texture" />
+        <label class="texture-path-label"><span>Path</span><input type="text" style="width:17em;" class="text-path-texture" list="sbimageslist" /></label>
+      </div>
+      <div class="material-add-options" style="display:none;">
+        <label><input type="checkbox" class="diffuse-color-checkbox" checked />Diffuse</label>
+        <label><input type="checkbox" class="ambient-color-checkbox" checked />Ambient</label>
+        <label><input type="checkbox" class="emissive-color-checkbox" />Emissive</label>
+        <label><input type="checkbox" class="specular-color-checkbox" />Specular</label>
+        <br>
+        <label>Color <input style="width:12em;" class="material-color-add" type="text" value="1,.5,0" /></label>
+        <input type="color" class="material-color-add-colorinput" />
+        <br>
+        <label><span>Texture</span><input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>
+      </div>
+      <div class="block-add-options" style="display:none">
+        <div class="scene-empty-block-add-options">
+          <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
+        </div>
+
+        <div class="connector-line-block-add-options" style="display:none;">
+          <label><span>Length</span><input type="text" class="line-length" value="10" /></label>
+          <label><span>Diameter</span><input type="text" class="line-diameter" value=".5" /></label>
+          <label><span>Sides</span><input type="text" class="line-sides" value="" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="line-material" list="materialdatatitlelookuplist" /></label>
+          <br>
+          <label>
+            <span>Point</span>
+            <select class="point-shape">
+              <option>None</option>
+              <option>Cylinder</option>
+              <option selected>Cone</option>
+              <option>Ellipsoid</option>
+            </select>
+          </label>
+          <br>
+          <label><span>Length</span><input type="text" class="point-length" value="1" /></label>
+          <label><span>Diameter</span><input type="text" class="point-diameter" value="2" /></label>
+          <label><span>Sides</span><input type="text" class="point-sides" value="" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="point-material" list="materialdatatitlelookuplist" /></label>
+          <br>
+          <label>
+            <span>Tail Shape</span>
+            <select class="tail-shape">
+              <option>None</option>
+              <option>Cylinder</option>
+              <option>Cone</option>
+              <option selected>Ellipsoid</option>
+            </select>
+          </label>
+          <br>
+          <label><span>Length</span><input type="text" class="tail-length" value="1" /></label>
+          <label><span>Diameter</span><input type="text" class="tail-diameter" value="1" /></label>
+          <label><span>Sides</span><input type="text" class="tail-sides" value="" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
+        </div>
+        <div class="animated-line-block-add-options">
+          <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
+          <label><span>Run Time</span><input type="text" class="animated-run-time" value="1500" /></label>
+          <br>
+          <label>
+            <span>Shape</span>
+            <select class="block-add-dash-shape-type-options">
+              <option>Cylinder</option>
+              <option selected>Cone</option>
+              <option>Ellipsoid</option>
+            </select>
+          </label>
+          <label><span>Sides</span><input type="text" class="dash-shape-sides" value="" /></label>
+          <label><span>Length</span><input type="text" class="dash-box-depth" value=".5" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="dash-shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+          <br>
+          <label><span>W</span><input type="text" class="block-box-width" value="1" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
+          <label><span>Len</span><input type="text" class="block-box-depth" value="10" /></label>
+        </div>
+        <div class="shape-and-text-block-options">
+          <label><span>Line 1</span><input type="text" style="width:15em;" class="block-box-text" value="Block Text" /></label>
+          <br>
+          <label><span>Line 2</span><input type="text" style="width:15em;" class="block-box-text-line2" value="" /></label>
+          <br>
+          <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
+          <label><span>Depth</span><input type="text" class="block-text-depth" value=".1" /></label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
+          <hr>
+
+          <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option selected>Cone</option>
+            <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
+          <label class="block-shape-add-label"><span>Divs</span><input type="text" class="block-add-shape-sides" /></label>
+          <label class="block-stretch-along-width-label"><input type="checkbox" class="shape-stretch-checkbox" />Horizontal</label>
+          <br>
+          <label><span>Material</span><input type="text" style="width:15em;" class="block-shapematerial-picker-select" list="materialdatatitlelookuplist" /></label>
+          <br>
+          <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>
+        </div>
+        <div class="scene-block-add-options" style="text-align:center;">
+          <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
+          <hr>
+          <label><input type="checkbox" class="block-generate-ground" /><span>Create Ground Material</span></label>
+          <br>
+          <label><span>Image Path</span><input type="text" style="width:15em;" class="block-scene-cloudfile-picker-input" list="sbimageslist" /></label>
+          <br>
+          <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
+          <hr>
+          <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
+          <div class="skybox-preview-images"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"></div>
+          <br>
+          <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
+          <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
+          <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
+        </div>
+        <select class="block-type-select">
+         <option>Empty</option>
+         <option>Scene</option>
+         <option selected>Text and Shape</option>
+         <option>Animated Line</option>
+         <option>Connector Line</option>
+        </select>
+      </div>
+      <div class="mesh-add-options" style="display:none">
+        <select class="mesh-type-select">
+            <option>Upload</option>
+            <option>Path</option>
+          </select>
+        <input type="file" class="mesh-file-upload" />
+        <label class="mesh-path-label"><span>Path</span><input type="text" style="width:17em;" class="text-path-mesh" list="sbmesheslist" /></label>
+        <br>
+        <label><span>Material</span><input type="text" style="width:15em;" class="mesh-material-picker-select" list="materialdatatitlelookuplist" /></label>
+      </div>
+      <div class="shape-add-options" style="display:none;">
+        <div class="create-sphere-options">
+          <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
+        </div>
+        <div class="create-2d-text-plane">
+          <label><span>Text</span><input class="text-2d-line-1" value="Text Line" /></label>
+          <br>
+          <label><span>Line 2</span><input class="text-2d-line-2" value="" /></label>
+          <br>
+          <label><span>Line 3</span><input class="text-2d-line-3" value="" /></label>
+          <br>
+          <label><span>Line 4</span><input class="text-2d-line-4" value="" /></label>
+          <br>
+          <label><span>Font</span><input class="font-family-2d-add" list="fontfamilydatalist" /></label>
+          <br>
+          <label><span>Color</span><input class="font-2d-color" color="0,0,0" /></label>
+          <br>
+          <label><span>Text Size</span><input class="font-2d-text-size" value="100" /></label>
+          <br>
+          <label><span>Plane Size</span><input class="font-2d-plane-size" value="4" /></label>
+        </div>
+        <div class="create-cylinder-options">
+          <label><span>Diameter</span><input type="text" class="cylinder-diameter"></label>
+          <label><span>Height</span><input type="text" class="cylinder-height"></label>
+        </div>
+        <div class="create-text-options">
+          <label><span>Text</span><input class="text-shape-add" value="3D Text" /></label>
+          <br>
+          <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
+        </div>
+        <label><span>Material</span><input type="text" style="width:15em;" class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+        <div class="create-box-options">
+          <label><span>Width</span><input type="text" class="box-width" /></label>
+          <label><span>Height</span><input type="text" class="box-height" /></label>
+          <label><span>Depth</span><input type="text" class="box-depth" /></label>
+        </div>
+        <br>
+        <select class="shape-type-select">
+         <option>2D Text Plane</option>
+         <option selected>3D Text</option>
+         <option>Box</option>
+         <option>Sphere</option>
+         <option>Cylinder</option>
+        </select>
+      </div>
+      <div class="fields-container" style="clear:both;"></div>
+      <hr>
+      <div class="block-type-radio-wrapper" style="white-space:nowrap;font-weight:bold;padding:.25em;">
+        <label><input type="radio" name="elementtyperadio" checked value="Block"><span>Block</span></label>
+        <label><input type="radio" name="elementtyperadio" value="Mesh"><span>Mesh</span></label>
+        <label><input type="radio" name="elementtyperadio" value="Shape"><span>Shape</span></label>
+        <label><input type="radio" name="elementtyperadio" value="Material"><span>Material</span></label>
+        <label><input type="radio" name="elementtyperadio" value="Texture"><span>Texture</span></label>
+      </div>
+      <label><span>Title</span><input style="width:20em;" class="add-item-name" /></label>
+      <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
+      <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
+    </div>
+  </div>
+  <div style="display:none;" id="sb-floating-toolbar-item-template">
+    <div class="sb-floating-toolbar-item">
+      <div class="button-wrapper">
+        <button class="button-title"></button>
+      </div>
+      <div class="sb-floating-toolbar-content">
+      </div>
+    </div>
+  </div>
+
+  <!-- CANVAS 3D PLAYER TEMPLATE -->
+  <div id="canvas-d3-player-template" style="display:none;">
+    <canvas class="popup-canvas"></canvas>
+    <div class="canvas-actions">
+      <div class="canvas-play-bar">
+        <div class="scene-options-panel" style="display:none;">
+          <div class="scene-fields-container">
+          </div>
+          <div class="render-log-wrapper" style="display:none;">
+            <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+            <textarea class="render-log-panel" spellcheck="false"></textarea>
+            <div class="fields-container" style="display:none;"></div>
+          </div>
+          <br>
+          <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+          <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+          <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+          <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+        </div>
+        <br>
+        <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
+        <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
+        <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
+        <div class="run-length-label"></div>
+        <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+        <div class="camera-options-panel" style="display:inline-block;">
+          <select class="camera-select" style=""></select>
+          <div style="display:inline-block;">
+            <div class="camera-slider-label">Radius</div>
+            <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+          </div>
+          <div style="display:inline-block;">
+            <div class="camera-slider-label">FOV</div>
+            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+          </div>
+          <div style="display:inline-block;">
+            <div class="camera-slider-label">Height</div>
+            <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+          </div>
+          <div class="fields-container" style="float:left"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBJECT EDIT DIALOG -->
+  <div id="scene-builder-edit-dialog-template" style="display:none;">
+    <div class="popup-progress-bar">
+      Loading...
+    </div>
+    <div class="popup-buttons">
+      <button style="color:white;background: rgb(0,100,0)" type="button" class="btn-sb-icon close-details"><i class="material-icons">close</i><span style="font-size:.75em;top:-.25em;position:relative;">[Esc]</span></button> &nbsp;
+      <button class="btn-sb-icon ie-frames-details" style="display:none;"><i class="material-icons">import_export</i></button> &nbsp;
+      <button class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
+      <button class="btn-sb-icon delete-item"><i class="material-icons">delete</i></button>&nbsp;
+      <div class="popup-title"></div>
+    </div>
+    <div class="popup-main-body">
+      <div class="popup-canvas-wrapper">
+      </div>
+      <div class="edit-popup-fields fields-container">
+      </div>
+    </div>
+  </div>
+
+  <!-- cBlock editor panel -->
+  <div id="cblock-editor-panel-template" style="display:none;">
+    <div class="main-band-wrapper">
+      <div class="main-band-first-row">
+        <button class="main-band-details-element"></button>
+        <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+        <div class="main-band-flex-children"></div>
+      </div>
+      <div class="cblock-details-panel">
+        <button class="block-scene-details-button btn-sb-icon"><i class="material-icons">dashboard</i></button>
+      </div>
+      <div class="cblock-child-details-panel"></div>
+      <div style="clear:both;"></div>
+    </div>
+    <div>
+      <div class="export-frames-details-panel" style="display:none;">
+        <div style="float:left;text-align:center;">
+          <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
+          <br>
+          <br>
+          <button class="btn-sb-icon import-frames-button">Import</button>
+        </div>
+        <textarea class="frames-textarea-export" rows="6" cols="6" style="float:left;flex:1;overflow:scroll;white-space:pre"></textarea>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="frames-panel">
+      <div class="frames-header-fields-panel" style="display:none;">
+        <a class="block-id-display-span" target="_blank">Publish Link</a>
+      </div>
+    </div>
+  </div>
+
+  <datalist id="blockchildtypelist">
+    <option>block</option>
+    <option>mesh</option>
+    <option>shape</option>
+    <option>light</option>
+    <option>camera</option>
+  </datalist>
+  <datalist id="lightsourceslist">
+    <option>Point</option>
+    <option>Directional</option>
+    <option>Spot</option>
+    <option>Hemispheric</option>
+  </datalist>
+  <datalist id="camerasourceslist">
+    <option>UniversalCamera</option>
+    <option>ArcRotate</option>
+    <option>FollowCamera</option>
+  </datalist>
+  <datalist id="fontfamilydatalist">
+    <option>Arial</option>
+    <option>Arial Black</option>
+    <option>Book Antiqua</option>
+    <option>Bookman</option>
+    <option>Charcoal</option>
+    <option>Comic Sans MS</option>
+    <option>Courier</option>
+    <option>Courier New</option>
+    <option>Cursive</option>
+    <option>Gadget</option>
+    <option>Garamond</option>
+    <option>Geneva</option>
+    <option>Georgia</option>
+    <option>Helvetica</option>
+    <option>Impact</option>
+    <option>Lucida Grande</option>
+    <option>Lucida Sans Unicode</option>
+    <option>Palatino</option>
+    <option>Palatino Linotype</option>
+    <option>Symbol</option>
+    <option>Tahoma</option>
+    <option>Times</option>
+    <option>Times New Roman</option>
+    <option>Trebuchet MS</option>
+    <option>Verdana</option>
+    <option>Vivaldi</option>
+    <option>Goudy Old Style</option>
+  </datalist>
+  <datalist id="skyboxlist">
+    <option>skybox1</option>
+    <option>skybox2</option>
+    <option>skybox3</option>
+    <option>skybox4</option>
+    <option>skybox5</option>
+    <option>skybox6</option>
+    <option>skybox7</option>
+    <option>skybox8</option>
+    <option>skybox9</option>
+    <option>skybox10</option>
+    <option>skybox11</option>
+    <option>skybox12</option>
+    <option>skybox13</option>
+    <option>skybox14</option>
+    <option>skybox15</option>
+    <option>skybox16</option>
+    <option>skybox17</option>
+    <option>skybox18</option>
+    <option>skybox19</option>
+    <option>skybox20</option>
+    <option>skybox21</option>
+    <option>skybox22</option>
+    <option>skybox23</option>
+    <option>skybox24</option>
+    <option>skybox25</option>
+    <option>skybox26</option>
+    <option>skybox27</option>
+    <option>skybox28</option>
+    <option>skybox29</option>
+    <option>skybox30</option>
+    <option>skybox31</option>
+    <option>skybox32</option>
+    <option>skybox33</option>
+    <option>skybox34</option>
+    <option>skybox35</option>
+    <option>skybox36</option>
+    <option>skybox37</option>
+    <option>skybox38</option>
+  </datalist>
+  <datalist id="sbimageslist">
+    <option>sb:redrug.jpg</option>
+    <option>sb:bricksmallgray.jpg</option>
+    <option>sb:goodgrass.jpg</option>
+    <option>sb:goodgrass2.jpg</option>
+    <option>sb:goodgrass3.jpg</option>
+    <option>sb:woodpanel.jpg</option>
+    <option>sb:bricks.jpg</option>
+    <option>sb:bricks2.jpg</option>
+    <option>sb:brittle.jpg</option>
+    <option>sb:asphalt.jpg</option>
+    <option>sb:floor.jpg</option>
+    <option>sb:grass.jpg</option>
+    <option>sb:grass.png</option>
+    <option>sb:grassn.png</option>
+    <option>sb:ground.jpg</option>
+    <option>sb:fire.png</option>
+    <option>sb:albedo.png</option>
+    <option>sb:rock.png</option>
+    <option>sb:sand.jpg</option>
+    <option>sb:co.png</option>
+    <option>sb:bloc.jpg</option>
+    <option>sb:distortion.png</option>
+    <option>sb:waterbump.png</option>
+    <option>sb:heightmap.png</option>
+    <option>sb:heightmaptriplanar.png</option>
+    <option>sb:normalmap.jpg</option>
+    <option>sb:worldheightmap.jpg</option>
+    <option>sb:floor_bump.png</option>
+    <option>sb:fur.jpg</option>
+    <option>sb:crate.png</option>
+    <option>sb:bmp-1011.jpg</option>
+    <option>sb:bmp-10505.jpg</option>
+    <option>sb:bmp-11268.jpg</option>
+    <option>sb:bmp-1324.jpg</option>
+    <option>sb:bmp-13241.jpg</option>
+    <option>sb:bmp-2122.jpg</option>
+    <option>sb:bmp-3155.jpg</option>
+    <option>sb:bmp-3203.jpg</option>
+    <option>sb:bmp-5523.jpg</option>
+    <option>sb:bmp-614.jpg</option>
+    <option>sb:bmp-6613.jpg</option>
+    <option>sb:bmp-6786.jpg</option>
+    <option>sb:bmp-7285.jpg</option>
+    <option>sb:bmp-7851.jpg</option>
+    <option>sb:bmp-8095.jpg</option>
+    <option>sb:bmp-8213.jpg</option>
+    <option>sb:bmp-9077.jpg</option>
+    <option>sb:bmp-9434.jpg</option>
+    <option>sb:bmp-brickwork.jpg</option>
+    <option>sb:bmp-checkers.png</option>
+    <option>sb:bmp-noise.jpg</option>
+    <option>sb:bmp-scales.jpg</option>
+  </datalist>
+  <datalist id="sbmesheslist">
+    <option>sb:dagger.babylon</option>
+    <option>sb:simpletree.babylon</option>
+    <option>sb:rat.babylon</option>
+    <option>sb:cow.babylon</option>
+    <option>sb:cat.babylon</option>
+    <option>sb:goat.babylon</option>
+    <option>sb:deer.babylon</option>
+    <option>sb:cat2.babylon</option>
+    <option>sb:gun.babylon</option>
+    <option>sb:pinetreetop.babylon</option>
+    <option>sb:knight.babylon</option>
+    <option>sb:queen.babylon</option>
+    <option>sb:king.babylon</option>
+    <option>sb:bishop.babylon</option>
+    <option>sb:rook.babylon</option>
+    <option>sb:pawn.babylon</option>
+    <option>sb:carshell.babylon</option>
+  </datalist>
+  <datalist id="followblocktargetoptionslist"></datalist>
+
+  <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="/global/3dtext.js"></script>
+  <script src="https://unpkg.com/split.js/split.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
+  <link rel="stylesheet" href="/global/common.css">
+  <link rel="stylesheet" href="/edit/main.css">
+
+  <script src="/global/gappsuper.js"></script>
+  <script src="/global/gauthorization.js"></script>
+  <script src="/global/globalutil.js"></script>
+  <script src="/global/sdatadefinition.js"></script>
+
+  <script src="/model/mfirebasesuper.js"></script>
+  <script src="/model/mfirebaselist.js"></script>
+  <script src="/model/mfirebaseprofile.js"></script>
+  <script src="/model/mfirebaseproject.js"></script>
+
+  <script src="/webgl/wframes.js"></script>
+  <script src="/webgl/wblock.js"></script>
+  <script src="/webgl/wcontext.js"></script>
+  <script src="/webgl/wgenerate.js"></script>
+
+  <script src="/controller/cbandsuper.js"></script>
+  <script src="/controller/cviewsuper.js"></script>
+  <script src="/controller/cviewmain.js"></script>
+  <script src="/controller/cdialogedit.js"></script>
+  <script src="/controller/cbandframes.js"></script>
+  <script src="/controller/cbandchildren.js"></script>
+  <script src="/controller/cbandrecords.js"></script>
+  <script src="/controller/cpaneldata.js"></script>
+  <script src="/controller/cbandprofileoptions.js"></script>
+  <script src="/controller/cdialogblock.js"></script>
+  <script src="/controller/cpanelhelpers.js"></script>
+  <script src="/controller/cpanelcanvas.js"></script>
+
+  <script src="/edit/gapplication.js"></script>
+</body>
+
+</html>
