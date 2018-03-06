@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>Help - Scene Blocks Editor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="/images/logo.png">
+  <link rel="shortcut icon" href="/https://s3-us-west-2.amazonaws.com/hcwebflow/himage/logo.png">
 </head>
 
 <body style="width:800px;margin:auto;">
@@ -53,9 +53,9 @@
   <br>
   <h2>Text and Shape</h2>
   <div style="float:left;">
-    <img src="images/textandshapedialog.png" style="width:200px" />
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/textandshapedialog.png" style="width:200px" />
     <br>
-    <img src="images/textandshapeexample.png" style="width:200px" />
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/textandshapeexample.png" style="width:200px" />
   </div>
   This block creation helper combines 1 or 2 lines of text to make a shape combined with text. This is intended to replace a 2D square or circle containing text. It's not a good idea to have too many characters in one animation - as the poly count can get
   high fast. <br>
@@ -68,9 +68,9 @@
   <br>
   <h2>Connector Line</h2>
   <div style="float:left;">
-    <img src="images/connectorlinedialog.jpg" style="width:200px" />
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/connectorlinedialog.jpg" style="width:200px" />
     <br>
-    <img src="images/connectorlineexample.jpg" style="width:200px" />
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/connectorlineexample.jpg" style="width:200px" />
   </div>
   This block creation helper combines 3 shapes into a block to form a connector line. A cylinder shape is used for the line - if you don't want it round, specify the number of div (min 3), i.e. 4 makes a box instead of a cylinder.
 
@@ -79,7 +79,7 @@
   <br>
   <h2>Animated Line</h2>
   <div style="float:left;">
-    <img src="images/animatedlinedialog.jpg" style="width:200px" />
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/animatedlinedialog.jpg" style="width:200px" />
     <br>
     <video width="200" autoplay loop>
       <source src="https://s3-us-west-2.amazonaws.com/hcwebflow/videos/animatedline.webm" type="video/webm">
@@ -112,7 +112,7 @@
   <h1 id="frames">Frames</h1>
   <h2>Animation Length</h2>
   The outer most block controls the animation length, all internal blocks will repeat.  So for a 30s animation, the root block should have at least one frame with a time of 30s.
-  <img src="images/rootframe30s.jpg" style="width:100%" />
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/rootframe30s.jpg" style="width:100%" />
   The application generates a first frame here, and the last frame is 30s as specified by the time.
   <br>
   <h2>Clone Previous Frame</h2>
@@ -120,10 +120,10 @@
   The cp (clone previous) operator clones the previous frame and sets the time (in this case 1 ms before).  This creates an instant
   transition without coding the duplicate frame (it's just save you the time of entering 2 frames instead of one). As you can see from the data
   below the data 2 rows results - the blue one is from the cp operator.
-  <img src="images/framecpexample.jpg" style="width:100%" />
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/framecpexample.jpg" style="width:100%" />
   <br>
   <h2>Relative + and ++ operators</h2>
-  <img src="images/framesrelativeops.jpg" style="float:left;" />
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/framesrelativeops.jpg" style="float:left;" />
   The + prefix operator adds the value to the first frame value to determine the current frame value.
   The ++ operator adds the value to the previous frame.
   The example at the left shows 2000 starting time, the 2nd frame has an absolute time (3.5s).  The third
@@ -156,7 +156,7 @@
   Bump textures (aka normal maps) allow the gpu to render more light effects from a rough surface, without adding to the poly count.
   Babylon has a little more reference: <a href="https://doc.babylonjs.com/how_to/more_materials">here</a>.
   <br>
-  <img src="images/bmptextures.jpg" style="float:left;width:200px;" /> A number of bump textures (normal maps) are supplied for ease of use.
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/bmptextures.jpg" style="float:left;width:200px;" /> A number of bump textures (normal maps) are supplied for ease of use.
   Check out the images prefixed with "sb: bmp-".
   <div style="clear:both;"></div>
   <h1 id="cameras">Cameras and Lights</h1>
@@ -165,7 +165,7 @@
   is the one that is automated to track a position, the other cameras can be animated - but only their position and rotation, not their aim point.
   If you're looking to follow a point, use a follow camera and point it at an empty block, then animate that block.
   <h2>Follow Camera</h2>
-  <img src="images/followcamera.jpg" style="width:100%" />
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/followcamera.jpg" style="width:100%" />
   The follow camera above is targeted at the shape named "followball".  A list of valid follow targets is supplied, the format is
   blocktype:name (i.e. shape:followball).  Animate the shape's position to adjust where the camera is viewing.  The first frame
   determines the camera's starting position and it's radius.  These can be animated as well, but the starting position won't do much
