@@ -38,9 +38,9 @@
         <label><span>Workspace </span><select id="workspaces-select"></select></label>
         <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button>
         <br>
-        <label><span>Name </span><input id="edit-workspace-name" /></label><label><span> Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
+        <label><span>Name </span><input id="edit-workspace-name" /></label><label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
         <br>
-        <label><span>New Workspace </span><input id="new-workspace-name" /></label><label><span> Code </span><input id="new-workspace-code" style="width:5em;" /></label>
+        <label><span>New Workspace </span><input id="new-workspace-name" /></label><label><span> Z Code </span><input id="new-workspace-code" style="width:5em;" /></label>
         <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
         </label>
       </div>
@@ -363,6 +363,7 @@
       </div>
       <div class="cblock-details-panel">
         <button class="block-scene-details-button btn-sb-icon"><i class="material-icons">dashboard</i></button>
+        <a class="block-id-display-span" target="_blank">Publish Link</a>
       </div>
       <div class="cblock-child-details-panel"></div>
       <div style="clear:both;"></div>
@@ -381,7 +382,6 @@
     </div>
     <div class="frames-panel">
       <div class="frames-header-fields-panel" style="display:none;">
-        <a class="block-id-display-span" target="_blank">Publish Link</a>
       </div>
     </div>
   </div>
@@ -392,6 +392,12 @@
     <option>shape</option>
     <option>light</option>
     <option>camera</option>
+  </datalist>
+  <datalist id="fogtypelist">
+    <option>none</option>
+    <option>EXP</option>
+    <option>EXP2</option>
+    <option>LINEAR</option>
   </datalist>
   <datalist id="lightsourceslist">
     <option>Point</option>

@@ -323,21 +323,21 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'texttext',
   inlineWidth: '20em',
   noTrim: true
-},{
+}, {
   title: 'Line 2',
   fireSetField: 'textureText2',
   contextObjectField: null,
   group: 'texttext2',
   inlineWidth: '20em',
   noTrim: true
-},{
+}, {
   title: 'Line 3',
   fireSetField: 'textureText3',
   contextObjectField: null,
   group: 'texttext3',
   inlineWidth: '20em',
   noTrim: true
-},{
+}, {
   title: 'Line 4',
   fireSetField: 'textureText4',
   contextObjectField: null,
@@ -377,18 +377,6 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'textColor'
 }];
 __localStaticStorageForBindingFields['publishFontFamilyProfile'] = [{
-  title: 'Canvas Color',
-  fireSetField: 'canvasColor',
-  contextObjectField: null,
-  type: 'color',
-  group: 'color',
-  helperType: 'vector',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.005',
-  floatLeft: true,
-  displayType: 'shortVector'
-}, {
   title: 'Font',
   fireSetField: 'fontFamily',
   contextObjectField: null,
@@ -524,6 +512,14 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'No Bump Maps',
   fireSetField: 'noBumpMaps',
+  contextObjectField: null,
+  group: 'cameraTrack',
+  type: 'boolean',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'Hide Video',
+  fireSetField: 'noVideo',
   contextObjectField: null,
   group: 'cameraTrack',
   type: 'boolean',
@@ -855,51 +851,115 @@ __localStaticStorageForBindingFields['block'] = [{
   group: 'main'
 }];
 __localStaticStorageForBindingFields['sceneFields'] = [{
-  title: 'Code',
+  title: 'Y Code',
   fireSetField: 'blockCode',
   contextObjectField: null,
-  group: 'blockCode'
+  group: 'ground',
+  floatLeft: true
 }, {
   title: 'Ground Material',
   fireSetField: 'groundMaterial',
   contextObjectField: null,
   type: 'material',
-  group: 'ground'
+  group: 'ground',
+  floatLeft: true,
+  clearLeft: true
 }, {
   title: 'Skybox',
   fireSetField: 'skybox',
   contextObjectField: null,
   dataListId: 'skyboxlist',
-  group: 'skybox'
+  group: 'ground',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'Clear Color',
+  fireSetField: 'clearColor',
+  contextObjectField: null,
+  group: 'sceneColor',
+  type: 'color',
+  floatLeft: true
+}, {
+  title: 'Ambient Color',
+  fireSetField: 'ambientColor',
+  contextObjectField: null,
+  group: 'sceneColor',
+  type: 'color',
+  clearLeft: true,
+  floatLeft: true
 }, {
   title: 'Fog',
-  fireSetField: 'showFog',
+  fireSetField: 'fogType',
   contextObjectField: null,
   group: 'fog',
-  type: 'boolean'
+  floatLeft: true,
+  dataListId: 'fogtypelist'
 }, {
   title: 'Density',
   fireSetField: 'fogDensity',
   contextObjectField: null,
   group: 'fog',
-  displayType: 'number'
+  displayType: 'number',
+  floatLeft: true,
+  clearLeft: true
 }, {
   title: 'Color',
   fireSetField: 'fogColor',
   contextObjectField: null,
   group: 'fog',
-  type: 'color'
+  type: 'color',
+  floatLeft: true
+}, {
+  title: 'Start',
+  fireSetField: 'fogStart',
+  contextObjectField: null,
+  group: 'fog',
+  displayType: 'number',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'End',
+  fireSetField: 'fogEnd',
+  contextObjectField: null,
+  group: 'fog',
+  displayType: 'number',
+  floatLeft: true
 }, {
   title: 'Video URL',
   fireSetField: 'videoURL',
   contextObjectField: null,
-  group: 'video'
+  group: 'video',
+  floatLeft: true
 }, {
   title: 'Height',
-  fireSetField: 'videoSize',
+  fireSetField: 'videoHeight',
   contextObjectField: null,
   group: 'video',
-  displayType: 'number'
+  displayType: 'number',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'Width',
+  fireSetField: 'videoWidth',
+  contextObjectField: null,
+  group: 'video',
+  displayType: 'number',
+  floatLeft: true
+}, {
+  title: 'Right Align',
+  fireSetField: 'videoRightAlign',
+  contextObjectField: null,
+  group: 'video',
+  type: 'boolean',
+  clearLeft: true,
+  floatLeft: true
+}, {
+  title: 'Bottom Align',
+  fireSetField: 'videoBottomAlign',
+  contextObjectField: null,
+  group: 'video',
+  type: 'boolean',
+  floatLeft: true
 }];
 __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',

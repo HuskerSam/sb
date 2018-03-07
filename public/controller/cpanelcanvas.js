@@ -386,7 +386,7 @@ class cPanelCanvas {
     this._updateCameraRangeSlider();
   }
   __saveCameraPosition(cp, tp) {
-    if (! gAPPP.a.profile.cameraSaves)
+    if (!gAPPP.a.profile.cameraSaves)
       return;
 
     this.lastCP = cp;
@@ -545,6 +545,9 @@ class cPanelCanvas {
     this.logMessage('Hardware Scale: ' + this.parent.context.engine.getHardwareScalingLevel());
   }
   updateVideoDisplay() {
+    let showVideo = false;
+    if (!gAPPP.a.profile.noVideo) {
 
+    }
   }
 }

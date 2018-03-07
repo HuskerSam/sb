@@ -87,7 +87,6 @@ class wContext {
 
     this._renderDefaultCamera();
 
-    this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
     this.camera.attachControl(this.canvas, true);
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => {
@@ -265,10 +264,6 @@ class wContext {
       return;
     let profile = gAPPP.a.profile;
 
-    if (this.cachedProfile.canvasColor !== profile.canvasColor) {
-      this.cachedProfile.canvasColor = profile.canvasColor;
-      this.scene.clearColor = GLOBALUTIL.color(profile.canvasColor);
-    }
     if (!this.camera)
       return;
 
@@ -413,7 +408,7 @@ class wContext {
     this.setGhostBlock('rotatePreview', null);
   }
   _sceneAddDefaultObjects() {
-    this.scene.clearColor = GLOBALUTIL.color('0,0,0');
+    this.scene.clearColor = GLOBALUTIL.color('.35,.2,.6');
     this._sceneDisposeDefaultObjects();
     this._updateCamera();
   }

@@ -49,11 +49,6 @@ class gAppSuper {
     if (this.initialUILoad)
       return;
 
-    if (this.a.profile.canvasColor !== this.lastClearColor) {
-      this.lastClearColor = this.a.profile.canvasColor;
-      if (this.activeContext)
-        this.activeContext.scene.clearColor = GLOBALUTIL.color(this.a.profile.canvasColor);
-    }
     this._updateApplicationStyle();
   }
   resize() {

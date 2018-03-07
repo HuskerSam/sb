@@ -583,21 +583,41 @@ class wBlock {
 
     if (!this.parent) {
       this._addSkyBox();
+      let fogMode = this.blockRenderData.fogType;
 
-      if (this.blockRenderData.showFog) {
-        this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
-
-        if (this.blockRenderData.fogDensity)
-          this.context.scene.fogDensity = Number(this.blockRenderData.fogDensity);
-        else
-          this.context.scene.fogDensity = .02;
+      this.context.scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
+      if (!fogMode)
+        fogMode === 'none';
+      if (fogMode != 'none') {
+        if (fogMode === 'EXP')
+          this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+        if (fogMode === 'EXP2')
+          this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
+        if (fogMode === 'LINEAR')
+          this.context.scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
+        this.context.scene.fogDensity = GLOBALUTIL.getNumberOrDefault(this.blockRenderData.fogDensity, .2);
+        this.context.scene.fogStart = GLOBALUTIL.getNumberOrDefault(this.blockRenderData.fogStart, 20.0);
+        this.context.scene.fogEnd = GLOBALUTIL.getNumberOrDefault(this.blockRenderData.fogEnd, 60.0);
 
         if (this.blockRenderData.fogColor)
           this.context.scene.fogColor = GLOBALUTIL.color(this.blockRenderData.fogColor);
         else
-          this.context.scene.fogColor = GLOBALUTIL.color('.2,.2,.3');
-      } else
-        this.context.scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
+          this.context.scene.fogColor = GLOBALUTIL.color('0.2,0.2,0.3');
+      }
+
+      if (this.blockRenderData.ambientColor)
+        this.context.scene.ambientColor = GLOBALUTIL.color(this.blockRenderData.ambientColor);
+      else
+        this.context.scene.ambientColor = GLOBALUTIL.color('0,0,0');
+
+      if (this.blockRenderData.clearColor)
+        this.context.scene.clearColor = GLOBALUTIL.color(this.blockRenderData.clearColor);
+      else {
+        if (gAPPP.a.profile.canvasColor)
+          this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+        else
+          this.context.scene.clearColor = GLOBALUTIL.color('.2,.4,.4');
+      }
     }
     this._addGround();
 

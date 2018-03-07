@@ -72,7 +72,7 @@ class gAuthorization {
       this.workspaceLoaded();
   }
   workspaceLoaded() {
-    if (!this.initialBlockLoad) {  
+    if (!this.initialBlockLoad) {
       if (this.workspaceLoadedCallback)
         this.workspaceLoadedCallback();
 
@@ -128,7 +128,6 @@ class gAuthorization {
   resetProfile() {
     let profileData = {
       fontSize: '9',
-      canvasColor: '.1,.3,.1',
       lightIntensity: '.4',
       selectedWorkspace: 'default',
       showBoundsBox: true,
