@@ -36,7 +36,7 @@ class cBandProfileOptions {
         if (gAPPP.a.profile.canvasColor !== fieldUpdates[i].newValue) {
           gAPPP.a.profile.canvasColor = fieldUpdates[i].newValue;
           if (gAPPP.mV.rootBlock)
-            gAPPP.mV.rootBlock.setData();
+            gAPPP.mV.rootBlock.__renderSceneOptions();
         }
       }
     }

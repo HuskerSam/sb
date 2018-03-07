@@ -95,11 +95,12 @@ class wBlock {
     if (this.groundObject)
       this.groundObject.dispose();
     this.groundObject = null;
-    if (!this.blockRenderData.groundMaterial)
+    if (!this.blockRawData.groundMaterial)
       return;
 
-    let m = this._materialFromName(this.blockRenderData.groundMaterial);
-    this.groundObject = BABYLON.Mesh.CreateGround("ground1", this.blockRenderData.width, this.blockRenderData.depth, 1, this.context.scene, false);
+    this.lastGroundMaterial = this.blockRawData.groundMaterial;
+    let m = this._materialFromName(this.blockRawData.groundMaterial);
+    this.groundObject = BABYLON.Mesh.CreateGround("ground1", this.blockRawData.width, this.blockRawData.depth, 1, this.context.scene, false);
     this.groundObject.material = m;
     this.groundObject.parent = this.sceneObject;
   }
@@ -109,73 +110,45 @@ class wBlock {
 
     if (type === 'moved')
       return;
-
-    if (tag === 'frame') {
-      if (type === 'remove') {} else
+    else if (tag === 'texture') {
+      return this._handleTextureUpdate(values);
+    } else if (tag === 'material') {
+      if (!values.title)
+        return;
+      let materialName = values.title;
+      if (materialName === this.blockRenderData.materialName)
+        return this.setData();
+      if (materialName === this.blockRenderData.groundMaterial) {
+        this._addGround();
+      }
+    } else if (type === 'add' && tag === 'blockchild') {
+      if (values.parentKey === this._blockKey)
+        return this.setData();
+    } else if (tag === 'frame') {
       if (values.parentKey === this._blockKey) {
         this.framesHelper.compileFrames();
         this.__applyFirstFrameValues();
+        return;
       }
-
-      for (let i in this.childBlocks)
-        this.childBlocks[i].handleDataUpdate(tag, values, type, fireData);
-      return;
     }
 
     if (values) {
       if (this._blockKey === fireData.key) {
-        this.setData(values);
-      }
+        if (tag === 'block') {
+          if (this.currentMaterialName == values.materialName) {
+            this.blockRawData = values;
+            return this.__renderSceneOptions();
+          }
 
-      //handle if shape, mesh or block changed via name look up
-      if (this.blockRawData.childType === tag)
-        if (values.title === this.blockRawData.childName)
-          return this.setData();
-
-      let materialList = [];
-
-      let materialDirty = false;
-      if (tag === 'material')
-        if (values.title)
-          materialDirty = true;
-
-      if (tag === 'texture') {
-        let allMaterials = gAPPP.a.modelSets['material'].fireDataValuesByKey;
-
-        for (let i in allMaterials) {
-          if (allMaterials[i].diffuseTextureName === values.title)
-            materialDirty = true;
-          if (allMaterials[i].emissiveTextureName === values.title)
-            materialDirty = true;
-          if (allMaterials[i].specularTextureName === values.title)
-            materialDirty = true;
-          if (allMaterials[i].ambientTextureName === values.title)
-            materialDirty = true;
-          if (allMaterials[i].bumpTextureName === values.title)
-            materialDirty = true;
-          if (allMaterials[i].reflectionTextureName === values.title)
-            materialDirty = true;
-
-          if (materialDirty)
-            break;
+          return this.setData(values);
         }
       }
 
-
-      if (this.currentMaterialName !== this.blockRenderData.materialName) {
-        materialDirty = true;
-        this.currentMaterialName = this.blockRenderData.materialName;
-      }
-      if (tag === 'material' && this.blockRenderData.materialName === values.title)
-        materialDirty = true;
-
-      if (materialDirty)
-        return this.setData();
-
-      if (type === 'add' && tag === 'blockchild')
-        if (values.parentKey === this._blockKey)
+      if (values.title)
+        if (this.blockRawData.childType === tag && values.title === this.blockRawData.childName)
           return this.setData();
     }
+
     for (let i in this.childBlocks) {
       if (type === 'remove') {
         if (i === fireData.key) {
@@ -186,11 +159,31 @@ class wBlock {
         continue;
       }
 
-      if (i === fireData.key && values) {
-        this.childBlocks[i].setData(values);
-      }
       this.childBlocks[i].handleDataUpdate(tag, values, type, fireData);
     }
+  }
+  _handleTextureUpdate(values) {
+    if (!values.title)
+      return;
+    let textureName = values.title;
+    let matDetails = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', this.blockRenderData.materialName);
+    let gnd = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', this.blockRenderData.groundMaterial);
+    if (matDetails)
+      if (matDetails.diffuseTextureName === textureName || matDetails.emissiveTextureName === textureName ||
+        matDetails.specularTextureName === textureName || matDetails.ambientTextureName === textureName ||
+        matDetails.bumpTextureName === textureName || matDetails.reflectionTextureName === textureName
+      )
+        return this.setData();
+
+    if (gnd)
+      if (gnd.diffuseTextureName === textureName || gnd.emissiveTextureName === textureName ||
+        gnd.specularTextureName === textureName || gnd.ambientTextureName === textureName ||
+        gnd.bumpTextureName === textureName || gnd.reflectionTextureName === textureName
+      )
+        this._addGround();
+
+    for (let i in this.childBlocks)
+      this.childBlocks[i]._handleTextureUpdate(values);
   }
   recursiveGetBlockForKey(key) {
     if (this._blockKey === key)
@@ -581,45 +574,7 @@ class wBlock {
       this.sceneObject.material.alpha = 0;
     }
 
-    if (!this.parent) {
-      this._addSkyBox();
-      let fogMode = this.blockRenderData.fogType;
-
-      this.context.scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
-      if (!fogMode)
-        fogMode === 'none';
-      if (fogMode != 'none') {
-        if (fogMode === 'EXP')
-          this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
-        if (fogMode === 'EXP2')
-          this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
-        if (fogMode === 'LINEAR')
-          this.context.scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
-        this.context.scene.fogDensity = GLOBALUTIL.getNumberOrDefault(this.blockRenderData.fogDensity, .2);
-        this.context.scene.fogStart = GLOBALUTIL.getNumberOrDefault(this.blockRenderData.fogStart, 20.0);
-        this.context.scene.fogEnd = GLOBALUTIL.getNumberOrDefault(this.blockRenderData.fogEnd, 60.0);
-
-        if (this.blockRenderData.fogColor)
-          this.context.scene.fogColor = GLOBALUTIL.color(this.blockRenderData.fogColor);
-        else
-          this.context.scene.fogColor = GLOBALUTIL.color('0.2,0.2,0.3');
-      }
-
-      if (this.blockRenderData.ambientColor)
-        this.context.scene.ambientColor = GLOBALUTIL.color(this.blockRenderData.ambientColor);
-      else
-        this.context.scene.ambientColor = GLOBALUTIL.color('0,0,0');
-
-      if (this.blockRenderData.clearColor)
-        this.context.scene.clearColor = GLOBALUTIL.color(this.blockRenderData.clearColor);
-      else {
-        if (gAPPP.a.profile.canvasColor)
-          this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
-        else
-          this.context.scene.clearColor = GLOBALUTIL.color('.2,.4,.4');
-      }
-    }
-    this._addGround();
+    this.__renderSceneOptions();
 
     let containerKey = this.blockKey;
     if (!this.staticLoad) {
@@ -641,6 +596,49 @@ class wBlock {
 
     if (oldContainerMesh !== null)
       oldContainerMesh.dispose();
+  }
+  __renderSceneOptions() {
+    this._addGround();
+
+    if (this.parent)
+      return;
+
+    this._addSkyBox();
+    let fogMode = this.blockRawData.fogType;
+
+    this.context.scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
+    if (!fogMode)
+      fogMode === 'none';
+    if (fogMode != 'none') {
+      if (fogMode === 'EXP')
+        this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+      if (fogMode === 'EXP2')
+        this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
+      if (fogMode === 'LINEAR')
+        this.context.scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
+      this.context.scene.fogDensity = GLOBALUTIL.getNumberOrDefault(this.blockRawData.fogDensity, .2);
+      this.context.scene.fogStart = GLOBALUTIL.getNumberOrDefault(this.blockRawData.fogStart, 20.0);
+      this.context.scene.fogEnd = GLOBALUTIL.getNumberOrDefault(this.blockRawData.fogEnd, 60.0);
+
+      if (this.blockRawData.fogColor)
+        this.context.scene.fogColor = GLOBALUTIL.color(this.blockRawData.fogColor);
+      else
+        this.context.scene.fogColor = GLOBALUTIL.color('0.2,0.2,0.3');
+    }
+
+    if (this.blockRawData.ambientColor)
+      this.context.scene.ambientColor = GLOBALUTIL.color(this.blockRawData.ambientColor);
+    else
+      this.context.scene.ambientColor = GLOBALUTIL.color('0,0,0');
+
+    if (this.blockRawData.clearColor)
+      this.context.scene.clearColor = GLOBALUTIL.color(this.blockRawData.clearColor);
+    else {
+      if (gAPPP.a.profile.canvasColor)
+        this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+      else
+        this.context.scene.clearColor = GLOBALUTIL.color('.2,.4,.4');
+    }
   }
   __renderLightBlock() {
     let values = this.framesHelper.firstFrameValues();
