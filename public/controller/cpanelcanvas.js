@@ -364,10 +364,42 @@ class cPanelCanvas {
               this.__updateCameraFromSettings();
           }
         }
-      }
+      };
+
+      this.rootBlock.updateVideoCallback = renderData => this.__updateVideo(renderData);
     }
 
     this._updateCameraRangeSlider();
+  }
+  __updateVideo(renderData) {
+    if (renderData.videoURL !== this.currentVideoURL) {
+      this.currentVideoURL = renderData.videoURL;
+      let videoURL = renderData.videoURL;
+      if (! videoURL)
+        videoURL = '';
+
+      if (videoURL === '') {
+        this.videoWrapper.style.display = 'none';
+      } else {
+        this.videoWrapper.style.display = 'block';
+      }
+    }
+    if (renderData.videoHeight !== this.currentVideoHeight) {
+      this.currentVideoHeight = renderData.videoHeight;
+      let videoHeight = renderData.videoHeight;
+      if (! videoHeight)
+        videoHeight = '';
+
+      this.videoWrapper.style.height = videoHeight;
+    }
+    if (renderData.videoWidth !== this.currentVideoWidth) {
+      this.currentVideoWidth = renderData.videoWidth;
+      let videoWidth = renderData.videoWidth;
+      if (! videoWidth)
+        videoWidth = '';
+
+      this.videoWrapper.style.width = videoWidth;
+    }
   }
   __updateCameraFromSettings() {
     let camera = this.parent.context.camera;

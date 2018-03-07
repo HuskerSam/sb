@@ -25,6 +25,7 @@ class wBlock {
     this.framesHelper = new wFrames(this.context);
     this.skyboxObject = null;
     this.groundObject = null;
+    this.updateVideoCallback = () => {};
     this.updateNoBump();
   }
   updateNoBump() {
@@ -91,18 +92,35 @@ class wBlock {
         return true;
     return false;
   }
-  _addGround() {
-    if (this.groundObject)
-      this.groundObject.dispose();
-    this.groundObject = null;
-    if (!this.blockRawData.groundMaterial)
-      return;
+  _renderGround() {
+    let gMat = this.blockRawData.groundMaterial;
+    if (! gMat)
+      gMat = '';
 
-    this.lastGroundMaterial = this.blockRawData.groundMaterial;
-    let m = this._materialFromName(this.blockRawData.groundMaterial);
-    this.groundObject = BABYLON.Mesh.CreateGround("ground1", this.blockRawData.width, this.blockRawData.depth, 1, this.context.scene, false);
-    this.groundObject.material = m;
-    this.groundObject.parent = this.sceneObject;
+    if (gMat === '') {
+      if (this.groundObject)
+        this.groundObject.dispose();
+      this.groundObject = null;
+      return;
+    }
+
+    let bWidth = this.blockRawData.width;
+    let bDepth = this.blockRawData.depth;
+    let setMat = false;
+    if (! this.groundObject || this.lastbWidth !== bWidth || this.lastbDepth !== bDepth) {
+      if (this.groundObject)
+        this.groundObject.dispose();
+      this.lastbWidth = bWidth;
+      this.thislastbDepth = bDepth;
+      this.groundObject = BABYLON.Mesh.CreateGround("ground1", bWidth, bDepth, 1, this.context.scene, false);
+      this.groundObject.parent = this.sceneObject;
+      setMat = true;
+    }
+
+    if (this.lastGroundMaterial !== this.blockRawData.groundMaterial || setMat) {
+      this.lastGroundMaterial = this.blockRawData.groundMaterial;
+      this.groundObject.material = this._materialFromName(this.blockRawData.groundMaterial);
+    }
   }
   handleDataUpdate(tag, values, type, fireData) {
     if (!this.parent)
@@ -119,7 +137,8 @@ class wBlock {
       if (materialName === this.blockRenderData.materialName)
         return this.setData();
       if (materialName === this.blockRenderData.groundMaterial) {
-        this._addGround();
+        this.lastGroundMaterial = undefined;
+        this._renderGround();
       }
     } else if (type === 'add' && tag === 'blockchild') {
       if (values.parentKey === this._blockKey)
@@ -137,7 +156,8 @@ class wBlock {
         if (tag === 'block') {
           if (this.currentMaterialName == values.materialName) {
             this.blockRawData = values;
-            return this.__renderSceneOptions();
+            this.blockRenderData = values;
+            return this.__renderSceneOptions(this.blockRenderData);
           }
 
           return this.setData(values);
@@ -179,8 +199,10 @@ class wBlock {
       if (gnd.diffuseTextureName === textureName || gnd.emissiveTextureName === textureName ||
         gnd.specularTextureName === textureName || gnd.ambientTextureName === textureName ||
         gnd.bumpTextureName === textureName || gnd.reflectionTextureName === textureName
-      )
-        this._addGround();
+      ){
+        this.lastGroundMaterial = undefined;
+        this._renderGround();
+      }
 
     for (let i in this.childBlocks)
       this.childBlocks[i]._handleTextureUpdate(values);
@@ -574,7 +596,7 @@ class wBlock {
       this.sceneObject.material.alpha = 0;
     }
 
-    this.__renderSceneOptions();
+    this.__renderSceneOptions(this.blockRenderData);
 
     let containerKey = this.blockKey;
     if (!this.staticLoad) {
@@ -597,14 +619,14 @@ class wBlock {
     if (oldContainerMesh !== null)
       oldContainerMesh.dispose();
   }
-  __renderSceneOptions() {
-    this._addGround();
+  __renderSceneOptions(renderData) {
+    this._renderGround();
 
     if (this.parent)
       return;
 
     this._addSkyBox();
-    let fogMode = this.blockRawData.fogType;
+    let fogMode = renderData.fogType;
 
     this.context.scene.fogMode = BABYLON.Scene.FOGMODE_NONE;
     if (!fogMode)
@@ -616,29 +638,31 @@ class wBlock {
         this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
       if (fogMode === 'LINEAR')
         this.context.scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
-      this.context.scene.fogDensity = GLOBALUTIL.getNumberOrDefault(this.blockRawData.fogDensity, .2);
-      this.context.scene.fogStart = GLOBALUTIL.getNumberOrDefault(this.blockRawData.fogStart, 20.0);
-      this.context.scene.fogEnd = GLOBALUTIL.getNumberOrDefault(this.blockRawData.fogEnd, 60.0);
+      this.context.scene.fogDensity = GLOBALUTIL.getNumberOrDefault(renderData.fogDensity, .2);
+      this.context.scene.fogStart = GLOBALUTIL.getNumberOrDefault(renderData.fogStart, 20.0);
+      this.context.scene.fogEnd = GLOBALUTIL.getNumberOrDefault(renderData.fogEnd, 60.0);
 
-      if (this.blockRawData.fogColor)
-        this.context.scene.fogColor = GLOBALUTIL.color(this.blockRawData.fogColor);
+      if (renderData.fogColor)
+        this.context.scene.fogColor = GLOBALUTIL.color(renderData.fogColor);
       else
         this.context.scene.fogColor = GLOBALUTIL.color('0.2,0.2,0.3');
     }
 
-    if (this.blockRawData.ambientColor)
-      this.context.scene.ambientColor = GLOBALUTIL.color(this.blockRawData.ambientColor);
+    if (renderData.ambientColor)
+      this.context.scene.ambientColor = GLOBALUTIL.color(renderData.ambientColor);
     else
       this.context.scene.ambientColor = GLOBALUTIL.color('0,0,0');
 
-    if (this.blockRawData.clearColor)
-      this.context.scene.clearColor = GLOBALUTIL.color(this.blockRawData.clearColor);
+    if (renderData.clearColor)
+      this.context.scene.clearColor = GLOBALUTIL.color(renderData.clearColor);
     else {
       if (gAPPP.a.profile.canvasColor)
         this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
       else
         this.context.scene.clearColor = GLOBALUTIL.color('.2,.4,.4');
     }
+
+    this.updateVideoCallback(renderData);
   }
   __renderLightBlock() {
     let values = this.framesHelper.firstFrameValues();
