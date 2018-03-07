@@ -11,6 +11,7 @@ class cPanelData {
     this.scrapeCache = [];
     this.valueCache = {};
     this.fieldObjs = [];
+    this.updateContextObject = false;
 
     for (let i in this.fields) this._initField(this.fields[i]);
 
@@ -84,7 +85,6 @@ class cPanelData {
     this.fieldObjs.push(f);
   }
   paint(newValues) {
-    let cT = this.parent.context;
     this.active = true;
     let scrapes = {};
     let valueCache = {};
@@ -93,7 +93,7 @@ class cPanelData {
     if (newValues)
       this.values = newValues;
 
-    this.helpers.updateConfig(cT, this.parent.tag, this.parent.key);
+    this.helpers.updateConfig(this.parent.context, this.parent.tag, this.parent.key);
 
     for (let i in this.fields) {
       let f = this.fields[i]
@@ -112,10 +112,10 @@ class cPanelData {
     this.valueCache = valueCache;
     this.scrapeCache = scrapes;
 
-    if (cT) {
-      if (cT.activeBlock)
-        cT.activeBlock.setData(this.values);
-      cT.refreshFocus();
+    if (this.parent.rootBlock) {
+      if (this.updateContextObject)
+        this.parent.rootBlock.setData(this.values);
+      this.parent.context.refreshFocus();
     }
     this.loadedURL = this.valueCache['url'];
 
@@ -131,7 +131,7 @@ class cPanelData {
     for (let i in this.fields) {
       let f = this.fields[i];
       let nV = f.dom.value;
-      if (! f.noTrim)
+      if (!f.noTrim)
         nV = nV.trim();
 
       if (f.type === 'boolean')
@@ -243,7 +243,7 @@ class cPanelData {
     return updates;
   }
   _handleDataChange(values, type, fireData) {
-    if (! this.active)
+    if (!this.active)
       return;
     if (type === "moved")
       return;

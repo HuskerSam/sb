@@ -35,6 +35,7 @@ class cDialogEdit {
 
     if (this.fields) {
       this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
+      this.fireFields.updateContextObject = true;
       this.fireSet.childListeners.push((values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData));
     }
 
@@ -123,22 +124,14 @@ class cDialogEdit {
       this.context.activate(null);
 
       if (this.tag === 'mesh') {
-        let b = new wBlock(this.context);
-        b.staticLoad = true;
-        b.staticType = 'mesh';
-        this.context.setActiveBlock(b);
-        this.context.activeBlock.setData(this.fireFields.values);
-        this.context.activeBlock.loadMesh().then(
+        this.__createRootBlock('mesh');
+        this.rootBlock.loadMesh().then(
           mesh => this._finishShow(),
           err => this._finishShow());
         return;
       }
       if (this.tag === 'shape') {
-        let b = new wBlock(this.context);
-        b.staticType = 'shape';
-        b.staticLoad = true;
-        b.setData(this.fireFields.values);
-        this.context.setActiveBlock(b);
+        this.__createRootBlock('shape');
         this._finishShow();
         return;
       }
@@ -154,20 +147,12 @@ class cDialogEdit {
         return;
       }
       if (this.tag === 'material') {
-        let b = new wBlock(this.context);
-        b.staticType = 'material';
-        b.staticLoad = true;
-        b.setData(this.fireFields.values);
-        this.context.setActiveBlock(b);
+        this.__createRootBlock('material');
         this._finishShow();
         return;
       }
       if (this.tag === 'texture') {
-        let b = new wBlock(this.context);
-        b.staticType = 'texture';
-        b.staticLoad = true;
-        b.setData(this.fireFields.values);
-        this.context.setActiveBlock(b);
+        this.__createRootBlock('texture');
         this._finishShow();
         return;
       }
@@ -176,15 +161,21 @@ class cDialogEdit {
     } else
       this._finishShow();
   }
-  __loadBlock() {
+  __createRootBlock(staticType, key) {
     let b = new wBlock(this.context);
-    b.staticType = 'block';
+    b.staticType = staticType;
     b.staticLoad = true;
-    b.blockKey = this.key;
-    b.isContainer = true;
+    if (key) {
+      b.blockKey = key;
+      b.isContainer = true;
+    }
     b.setData(this.fireFields.values);
     this.context.setActiveBlock(b);
     this.rootBlock = b;
+  }
+  __loadBlock() {
+    this.__createRootBlock('block', this.key);
+
     this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
     this.dialog.querySelector('.block-id-display-span').setAttribute('href', this.rootBlock.publishURL);
 
@@ -203,6 +194,7 @@ class cDialogEdit {
     this._splitView();
   }
   _finishShow() {
+    this.rootBlock = this.context.activeBlock;
     if (this.canvasHelper)
       this.canvasHelper.logClear();
 
@@ -215,7 +207,6 @@ class cDialogEdit {
       this.sceneFireFields.paint();
       this.sceneFireFields.helpers.resetUI();
     }
-
     this._endLoad();
     this._showFocus();
     this.expandAll();

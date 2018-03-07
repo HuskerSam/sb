@@ -112,7 +112,7 @@ class wBlock {
         this.groundObject.dispose();
       this.lastbWidth = bWidth;
       this.thislastbDepth = bDepth;
-      this.groundObject = BABYLON.Mesh.CreateGround("ground1", bWidth, bDepth, 1, this.context.scene, false);
+      this.groundObject = BABYLON.Mesh.CreateGround("sceneblocksdefaultground", bWidth, bDepth, 1, this.context.scene, false);
       this.groundObject.parent = this.sceneObject;
       setMat = true;
     }

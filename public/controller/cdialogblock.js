@@ -41,6 +41,8 @@ class cDialogBlock extends cDialogEdit {
     this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneFields');
     this.sceneFireFields = new cPanelData(this.sceneFields, this.framesPanelHeader, this);
     this.fireSet.childListeners.push((values, type, fireData) => this.sceneFireFields._handleDataChange(values, type, fireData));
+    this.sceneFireFields.updateContextObject = false;
+    this.fireFields.updateContextObject = false;
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';
     this.framesPanelHeader.appendChild(clearDiv);
