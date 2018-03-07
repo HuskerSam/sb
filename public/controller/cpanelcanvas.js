@@ -33,6 +33,7 @@ class cPanelCanvas {
 
     this.fovSlider = this.dialog.querySelector('.camera-select-range-fov-slider');
     this.fovSlider.addEventListener('input', e => this.fovSliderChange());
+    this.fovSlider.value = .8;
 
     this.animateSlider = this.dialog.querySelector('.animate-range');
     this.animateSlider.addEventListener('input', e => this.animSliderChange());
@@ -88,6 +89,12 @@ class cPanelCanvas {
       this.playState = this.playState;
   }
   fovSliderChange() {
+    if (this.rootBlock)
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'cameraFOVSave' + this.rootBlock.blockKey,
+        newValue: this.fovSlider.value
+      }]);
+
     this._updateFOVRangeSlider();
   }
   _updateFOVRangeSlider() {
@@ -173,11 +180,15 @@ class cPanelCanvas {
       }, {
         field: 'cameraTargetSave' + this.rootBlock.blockKey,
         newValue: false
+      }, {
+        field: 'cameraFOVSave' + this.rootBlock.blockKey,
+        newValue: false
       }]);
 
       gAPPP.a.profile['cameraPositionSave' + this.rootBlock.blockKey] = '3,15,-15';
       gAPPP.a.profile['cameraRadiusSave' + this.rootBlock.blockKey] = false;
       gAPPP.a.profile['cameraTargetSave' + this.rootBlock.blockKey] = '0,0,0';
+      gAPPP.a.profile['cameraFOVSave' + this.rootBlock.blockKey] = '.8';
 
       this.parent.context.selectCamera(this.cameraSelect.value, this.parent);
       this.refresh();
@@ -338,7 +349,6 @@ class cPanelCanvas {
       this.cameraChangeHandler();
       this.loadingScreen.style.display = 'none';
       this._updateCameraHeightSlider();
-      this.fovSlider.value = '.8';
       this._updateFOVRangeSlider();
 
       this.cameraShown = true;
@@ -355,11 +365,12 @@ class cPanelCanvas {
         let cp = GLOBALUTIL.vectorToStr(camera.position);
         let tp = GLOBALUTIL.vectorToStr(camera.target);
         let stored = gAPPP.a.profile['cameraPositionSave' + this.rootBlock.blockKey];
+        let storedFOV = gAPPP.a.profile['cameraFOVSave' + this.rootBlock.blockKey];
 
-        if (cp !== this.lastCP || tp !== this.lastTP || camera.radius !== this.lastRadius)
+        if (cp !== this.lastCP || tp !== this.lastTP || camera.radius !== this.lastRadius || this.lastFOV !== camera.fov)
           this.__saveCameraPosition(cp, tp);
         else {
-          if (cp !== stored) {
+          if (cp !== stored || camera.fov !== storedFOV) {
             if (gAPPP.a.profile.cameraUpdates)
               this.__updateCameraFromSettings();
           }
@@ -369,6 +380,7 @@ class cPanelCanvas {
       this.rootBlock.updateVideoCallback = renderData => this.__updateVideo(renderData);
     }
 
+    this._updateFOVRangeSlider();
     this._updateCameraRangeSlider();
   }
   __updateVideo(renderData) {
@@ -405,17 +417,22 @@ class cPanelCanvas {
     let camera = this.parent.context.camera;
     let cameraPosition = GLOBALUTIL.getVector(gAPPP.a.profile['cameraPositionSave' + this.rootBlock.blockKey], 3, 15, -15);
     let cameraTarget = GLOBALUTIL.getVector(gAPPP.a.profile['cameraTargetSave' + this.rootBlock.blockKey], 0, 0, 0);
+    let fov = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['cameraFOVSave' + this.rootBlock.blockKey], .8);
     if (!camera.setPosition)
       return;
 
     camera.setPosition(cameraPosition);
     camera.setTarget(cameraTarget);
+    camera.fov = fov;
 
     this.arcRangeSlider.value = this.cameraSliderPosition(camera.radius);
+    this.fovSlider.value = camera.fov;
     this.lastCP = GLOBALUTIL.vectorToStr(camera.position);
     this.lastTP = GLOBALUTIL.vectorToStr(camera.target);
+    this.lastFOV = fov;
     this.lastRadius = camera.radius;
     this._updateCameraRangeSlider();
+    this._updateFOVRangeSlider();
   }
   __saveCameraPosition(cp, tp) {
     if (!gAPPP.a.profile.cameraSaves)
@@ -425,6 +442,7 @@ class cPanelCanvas {
     this.lastTP = tp;
     let camera = this.parent.context.camera;
     this.lastRadius = camera.radius;
+    this.lastFOV = camera.fov;
 
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'cameraPositionSave' + this.rootBlock.blockKey,
@@ -435,6 +453,9 @@ class cPanelCanvas {
     }, {
       field: 'cameraTargetSave' + this.rootBlock.blockKey,
       newValue: tp
+    }, {
+      field: 'cameraFOVSave' + this.rootBlock.blockKey,
+      newValue: camera.fov
     }]);
   }
   hide() {
@@ -481,6 +502,7 @@ class cPanelCanvas {
 
     if (this.cameraSelect.selectedIndex < 1) {
       this.arcRangeSlider.parentNode.style.display = 'inline-block';
+      this.fovSlider.parentNode.style.display = 'inline-block';
     } else {
       let camType = this.cameraDetails[this.cameraSelect.value].childName;
 
