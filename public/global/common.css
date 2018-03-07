@@ -445,3 +445,21 @@ button i.material-icons {
   display:inline-block;
   pointer-events:none;
 }
+
+.video-overlay {
+  width: 100%;
+  pointer-events: none;
+  height: 25vh;
+  position: absolute;
+  top: 0;
+  display: none;
+}
+
+.video-overlay * {
+  pointer-events: auto;
+}
+
+.video-overlay video {
+  max-width: 100%;
+  max-height: 100%;
+}

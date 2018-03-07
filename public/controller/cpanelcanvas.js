@@ -10,6 +10,8 @@ class cPanelCanvas {
     this.downloadVideoButton = this.dialog.querySelector('.video-button');
     this.downloadVideoButton.addEventListener('click', e => this.downloadVideo());
     this.canvasPlayBar = this.dialog.querySelector('.canvas-play-bar');
+    this.videoWrapper = this.dialog.querySelector('.video-overlay');
+    this.videoDom = this.videoWrapper.querySelector('video');
 
     this.cameraSelect = this.dialog.querySelector('.camera-select');
     this.cameraSelect.addEventListener('input', e => this.cameraChangeHandler());
@@ -541,5 +543,8 @@ class cPanelCanvas {
     this.logMessage('Version: ' + info.version);
     this.logMessage('Vendor: ' + info.vendor);
     this.logMessage('Hardware Scale: ' + this.parent.context.engine.getHardwareScalingLevel());
+  }
+  updateVideoDisplay() {
+
   }
 }

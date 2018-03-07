@@ -43,3 +43,13 @@
 #publish-profile-panel .fields-container * {
   pointer-events: auto;
 }
+
+#change-view-anchor {
+  position: absolute;
+  z-index: 1000;
+  top: .25em;
+  right: .25em;
+  padding: .5em;
+  background: rgba(255, 255, 255, .3);
+  border-radius: .25em;
+}

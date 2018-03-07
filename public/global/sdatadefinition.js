@@ -882,13 +882,24 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   fireSetField: 'fogDensity',
   contextObjectField: null,
   group: 'fog',
-  type: 'number'
+  displayType: 'number'
 }, {
   title: 'Color',
   fireSetField: 'fogColor',
   contextObjectField: null,
   group: 'fog',
   type: 'color'
+}, {
+  title: 'Video URL',
+  fireSetField: 'videoURL',
+  contextObjectField: null,
+  group: 'video'
+}, {
+  title: 'Height',
+  fireSetField: 'videoSize',
+  contextObjectField: null,
+  group: 'video',
+  displayType: 'number'
 }];
 __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',
