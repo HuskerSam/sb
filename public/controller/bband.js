@@ -1,4 +1,4 @@
-class cBandSuper {
+class bBand {
   constructor(modelSet, tag) {
     this.modelSet = modelSet;
     this.tag = tag;
@@ -21,7 +21,7 @@ class cBandSuper {
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
     if (!div)
-      return console.log(fireData, 'changed cbandsuper missing dom');
+      return console.log(fireData, 'changed bBand missing dom');
     let values = fireData.val();
     this._nodeApplyValues(values, div.querySelector('.band-background-preview'));
   }
@@ -74,7 +74,7 @@ class cBandSuper {
         if (binding.type === 'innerText')
           element.innerText = val;
       } catch (e) {
-        console.log('cbandsuper apply value', e, binding);
+        console.log('bBand apply value', e, binding);
       }
     }
   }

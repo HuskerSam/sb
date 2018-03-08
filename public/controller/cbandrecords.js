@@ -1,4 +1,4 @@
-class cBandRecords extends cBandSuper {
+class cBandRecords extends bBand {
   constructor(tag, title, dialog) {
     super(gAPPP.a.modelSets[tag], tag);
 

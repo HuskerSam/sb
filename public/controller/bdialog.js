@@ -1,4 +1,4 @@
-class cDialogEdit {
+class bDialog {
   constructor(tag, title) {
     if (tag !== null) {
       let d = document.createElement('dialog');

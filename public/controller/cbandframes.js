@@ -1,4 +1,4 @@
-class cBandFrames extends cBandSuper {
+class cBandFrames extends bBand {
   constructor(childrenContainer, parent, framesHeaderPanel) {
     super(gAPPP.a.modelSets['frame'], 'frame');
     this.framesHeaderPanel = framesHeaderPanel;

@@ -1,4 +1,4 @@
-class cViewPublished extends cViewSuper {
+class cViewPublished extends bView {
   constructor() {
     super();
 

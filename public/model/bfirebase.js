@@ -1,4 +1,4 @@
-class mFirebaseSuper {
+class bFirebase {
   constructor(tag, activate) {
     this.tag = tag;
     this.referencePath = this.tag;

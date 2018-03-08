@@ -1,12 +1,12 @@
-class cViewMain extends cViewSuper {
+class cViewMain extends bView {
   constructor() {
     super();
 
-    this.dialogs['mesh-edit'] = new cDialogEdit('mesh', 'Mesh Options');
-    this.dialogs['shape-edit'] = new cDialogEdit('shape', 'Shape Editor');
+    this.dialogs['mesh-edit'] = new bDialog('mesh', 'Mesh Options');
+    this.dialogs['shape-edit'] = new bDialog('shape', 'Shape Editor');
     this.dialogs['block-edit'] = new cDialogBlock();
-    this.dialogs['material-edit'] = new cDialogEdit('material', 'Material Editor');
-    this.dialogs['texture-edit'] = new cDialogEdit('texture', 'Texture Options');
+    this.dialogs['material-edit'] = new bDialog('material', 'Material Editor');
+    this.dialogs['texture-edit'] = new bDialog('texture', 'Texture Options');
 
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');

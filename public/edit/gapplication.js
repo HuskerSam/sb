@@ -1,5 +1,4 @@
 'use strict';
-window.addEventListener('load', () => new gApplication());
 class gApplication extends gAppSuper {
   constructor() {
     super();

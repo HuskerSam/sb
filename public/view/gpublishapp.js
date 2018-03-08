@@ -1,5 +1,4 @@
 'use strict';
-window.addEventListener('load', () => new gPublishApp());
 class gPublishApp extends gAppSuper  {
   constructor() {
     super();

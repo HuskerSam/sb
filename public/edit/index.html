@@ -6,6 +6,10 @@
   <title>Scene Blocks</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo.png">
+  <script>
+    'use strict';
+    window.addEventListener('load', () => new gApplication());
+  </script>
 </head>
 
 <body>
@@ -561,7 +565,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <script src="https://cdn.babylonjs.com/babylon.js"></script>
-  <script src="/global/text3d.js"></script>
   <script src="https://unpkg.com/split.js/split.min.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
@@ -574,8 +577,9 @@
   <script src="/global/gauthorization.js"></script>
   <script src="/global/globalutil.js"></script>
   <script src="/global/sdatadefinition.js"></script>
+  <script src="/global/text3d.js"></script>
 
-  <script src="/model/mfirebasesuper.js"></script>
+  <script src="/model/bfirebase.js"></script>
   <script src="/model/mfirebaselist.js"></script>
   <script src="/model/mfirebaseprofile.js"></script>
   <script src="/model/mfirebaseproject.js"></script>
@@ -585,10 +589,10 @@
   <script src="/webgl/wcontext.js"></script>
   <script src="/webgl/wgenerate.js"></script>
 
-  <script src="/controller/cbandsuper.js"></script>
-  <script src="/controller/cviewsuper.js"></script>
+  <script src="/controller/bband.js"></script>
+  <script src="/controller/bview.js"></script>
   <script src="/controller/cviewmain.js"></script>
-  <script src="/controller/cdialogedit.js"></script>
+  <script src="/controller/bdialog.js"></script>
   <script src="/controller/cbandframes.js"></script>
   <script src="/controller/cbandchildren.js"></script>
   <script src="/controller/cbandrecords.js"></script>

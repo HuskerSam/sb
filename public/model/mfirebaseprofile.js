@@ -1,4 +1,4 @@
-class mFirebaseProfile extends mFirebaseSuper {
+class mFirebaseProfile extends bFirebase {
   constructor() {
     super();
     this.tag = 'userProfile';

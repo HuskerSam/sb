@@ -1,4 +1,4 @@
-class cDialogBlock extends cDialogEdit {
+class cDialogBlock extends bDialog {
   constructor() {
     let d = document.createElement('dialog');
     d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;

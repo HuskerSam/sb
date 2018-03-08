@@ -1,4 +1,4 @@
-class mFirebaseList extends mFirebaseSuper {
+class mFirebaseList extends bFirebase {
   constructor(workspaceid, tag, datalist = false) {
     super(tag, false);
 

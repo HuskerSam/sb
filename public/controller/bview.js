@@ -1,4 +1,4 @@
-class cViewSuper {
+class bView {
   constructor() {
     this.dialog = document.querySelector('#firebase-app-main-page');
     this.dialogs = {};

@@ -1,4 +1,4 @@
-class cBandChildren extends cBandSuper {
+class cBandChildren extends bBand {
   constructor(domContainer, parent, editPanel) {
 
     super(gAPPP.a.modelSets['blockchild'], 'blockchild');
