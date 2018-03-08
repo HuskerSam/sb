@@ -7,7 +7,7 @@ class gAppSuper {
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
     this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
-    this.publishURL = 'https://publish.sceneblocks.com/view/'
+    this.publishURL = 'https://publish.rapidscenes.com/view/'
     this.shapeTypes = [
       'box', 'cylinder', 'sphere', 'text', 'plane', 'torus', 'torusknot'
     ];

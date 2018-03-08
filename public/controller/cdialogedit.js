@@ -169,9 +169,10 @@ class cDialogEdit {
       b.blockKey = key;
       b.isContainer = true;
     }
-    b.setData(this.fireFields.values);
     this.context.setActiveBlock(b);
     this.rootBlock = b;
+    this.canvasHelper.__updateVideoCallback();
+    b.setData(this.fireFields.values);
   }
   __loadBlock() {
     this.__createRootBlock('block', this.key);

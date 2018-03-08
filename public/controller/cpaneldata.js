@@ -153,7 +153,6 @@ class cPanelData {
       return;
 
     if (f.uploadType === 'mesh') {
-      let fS = gAPPP.a.modelSets['mesh'];
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
@@ -180,7 +179,6 @@ class cPanelData {
         });
       }
     } else if (f.uploadType === 'texture') {
-      let fS = gAPPP.a.modelSets['texture'];
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
@@ -192,12 +190,22 @@ class cPanelData {
         });
       }
     } else if (f.uploadType === 'scene') {
-      let fS = gAPPP.a.modelSets['block'];
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 
       if (f.fileDom.files.length > 0) {
         this.parent.context.updateObjectURL('block', this.parent.key, f.fileDom.files[0]).then(results => {
+          f.fileDom.value = '';
+          f.progressBar.style.display = 'none';
+          f.dom.style.display = '';
+        });
+      }
+    } else if (f.uploadType === 'video') {
+      f.progressBar.style.display = '';
+      f.dom.style.display = 'none';
+
+      if (f.fileDom.files.length > 0) {
+        this.parent.context.updateObjectURL('video', this.parent.key, f.fileDom.files[0]).then(results => {
           f.fileDom.value = '';
           f.progressBar.style.display = 'none';
           f.dom.style.display = '';

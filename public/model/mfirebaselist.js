@@ -151,11 +151,11 @@ class mFirebaseList extends mFirebaseSuper {
       });
     });
   }
-  updateBlob(key, blob, filename) {
+  updateBlob(key, blob, filename, urlField = 'url') {
     return new Promise((resolve, reject) => {
       this.setBlob(key, blob, filename).then(snapshot => {
         let updates = [{
-          field: 'url',
+          field: urlField,
           newValue: snapshot.downloadURL,
           oldValue: this.getCache(key)['url']
         }, {

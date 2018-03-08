@@ -376,18 +376,30 @@ class cPanelCanvas {
           }
         }
       };
-
-      this.rootBlock.updateVideoCallback = renderData => this.__updateVideo(renderData);
     }
 
+    this.__updateVideoCallback();
     this._updateFOVRangeSlider();
     this._updateCameraRangeSlider();
   }
+  __updateVideoCallback() {
+    if (this.rootBlock)
+      this.rootBlock.updateVideoCallback = renderData => this.__updateVideo(renderData);
+  }
   __updateVideo(renderData) {
-    if (renderData.videoURL !== this.currentVideoURL) {
+    let showVideo = false;
+    //gAPPP.a.profile.noVideo
+    let src = document.createElement('source');
+    src.setAttribute('src', renderData.videoURL);
+    if (renderData.videoType)
+      src.setAttribute('type', renderData.videoType);
+    this.videoDom.innerHTML = '';
+    this.videoDom.appendChild(src);
+
+    if (renderData.videoURL !== this.currentVideoURL || gAPPP.a.profile.noVideo !== this.currentNoVideo) {
       this.currentVideoURL = renderData.videoURL;
       let videoURL = renderData.videoURL;
-      if (! videoURL)
+      if (!videoURL)
         videoURL = '';
 
       if (videoURL === '') {
@@ -399,7 +411,7 @@ class cPanelCanvas {
     if (renderData.videoHeight !== this.currentVideoHeight) {
       this.currentVideoHeight = renderData.videoHeight;
       let videoHeight = renderData.videoHeight;
-      if (! videoHeight)
+      if (!videoHeight)
         videoHeight = '';
 
       this.videoWrapper.style.height = videoHeight;
@@ -407,7 +419,7 @@ class cPanelCanvas {
     if (renderData.videoWidth !== this.currentVideoWidth) {
       this.currentVideoWidth = renderData.videoWidth;
       let videoWidth = renderData.videoWidth;
-      if (! videoWidth)
+      if (!videoWidth)
         videoWidth = '';
 
       this.videoWrapper.style.width = videoWidth;
@@ -597,11 +609,5 @@ class cPanelCanvas {
     this.logMessage('Version: ' + info.version);
     this.logMessage('Vendor: ' + info.vendor);
     this.logMessage('Hardware Scale: ' + this.parent.context.engine.getHardwareScalingLevel());
-  }
-  updateVideoDisplay() {
-    let showVideo = false;
-    if (!gAPPP.a.profile.noVideo) {
-
-    }
   }
 }

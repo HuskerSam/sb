@@ -52,6 +52,7 @@ class cViewSuper {
     this.context.setActiveBlock(b);
     this.scene = this.context.scene;
     this.rootBlock = b;
+    this.canvasHelper.__updateVideoCallback();
     this.key = profileKey;
     this.rootBlock.setData(blockData);
     setTimeout(() => {

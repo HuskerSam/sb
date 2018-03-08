@@ -397,7 +397,7 @@ __localStaticStorageForBindingFields['publishFontFamilyProfile'] = [{
   floatLeft: true
 }];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
-  title: 'Canvas Color',
+  title: 'Default Canvas Color',
   fireSetField: 'canvasColor',
   contextObjectField: null,
   type: 'color',
@@ -929,6 +929,8 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   fireSetField: 'videoURL',
   contextObjectField: null,
   group: 'video',
+  type: 'url',
+  uploadType: 'video',
   floatLeft: true
 }, {
   title: 'Height',
@@ -944,6 +946,13 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   contextObjectField: null,
   group: 'video',
   displayType: 'number',
+  floatLeft: true
+}, {
+  title: 'Video Type',
+  fireSetField: 'videoType',
+  contextObjectField: null,
+  group: 'video',
+  dataListId: 'htmlvideosourcelist',
   floatLeft: true
 }, {
   title: 'Right Align',

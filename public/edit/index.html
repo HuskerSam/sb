@@ -287,9 +287,7 @@
   <div id="canvas-d3-player-template" style="display:none;">
     <canvas class="popup-canvas"></canvas>
     <div class="video-overlay">
-      <video controls>
-        <source src="https://s3-us-west-2.amazonaws.com/hcwebflow/videos/preview.webm" type="video/webm">
-      </video>
+      <video controls autoplay loop></video>
     </div>
     <div class="canvas-actions">
       <div class="canvas-play-bar">
@@ -392,6 +390,11 @@
     <option>shape</option>
     <option>light</option>
     <option>camera</option>
+  </datalist>
+  <datalist id="htmlvideosourcelist">
+    <option>video/webm</option>
+    <option>video/mp4</option>
+    <option>video/ogg</option>
   </datalist>
   <datalist id="fogtypelist">
     <option>none</option>
