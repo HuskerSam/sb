@@ -99,7 +99,7 @@ class cPanelCanvas {
   }
   _updateFOVRangeSlider() {
     this.parent.context.camera.fov = Number(this.fovSlider.value);
-    this.fovSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'FOV: ' + this.fovSlider.value;
+    this.fovSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'FoV: ' + this.fovSlider.value;
   }
   exportBabylonFile() {
     let serializedScene = BABYLON.SceneSerializer.Serialize(this.parent.context.scene);
@@ -423,6 +423,31 @@ class cPanelCanvas {
         videoWidth = '';
 
       this.videoWrapper.style.width = videoWidth;
+    }
+    if (renderData.videoAlignBottom !== this.currentVideoAlignBottom) {
+      this.currentVideoAlignBottom = renderData.videoAlignBottom;
+
+      if (renderData.videoAlignBottom) {
+        this.videoWrapper.style.bottom = '0px';
+        this.videoWrapper.style.top = 'auto';
+      } else {
+        this.videoWrapper.style.bottom = '';
+        this.videoWrapper.style.top = '0px';
+      }
+    }
+
+    if (renderData.videoAlignRight !== this.currentVideoAlignRight) {
+      this.currentVideoAlignRight = renderData.videoAlignRight;
+
+      if (renderData.videoAlignRight) {
+        this.videoWrapper.style.textAlign = 'right';
+        this.videoWrapper.style.right = '0px';
+        this.videoWrapper.style.left = 'auto';
+      } else {
+        this.videoWrapper.style.textAlign = 'left';
+        this.videoWrapper.style.right = '';
+        this.videoWrapper.style.left = '0px';
+      }
     }
   }
   __updateCameraFromSettings() {

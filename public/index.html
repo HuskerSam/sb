@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Scene Blocks</title>
+  <title>Scene Select</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo.png">
 </head>
@@ -15,18 +15,21 @@
   <br>
   <br>
   <div style="background: rgba(255,255,255,.5);padding:1em;border-radius:.5em;display:inline-block;">
-    Enter the Y and Z code to access the view.
-    <br>
-    <br>
-    <label><span>Y-Code </span><input type="text" id="main-y-code" /></label>
-    <br>
-    <label><span>Z-Code </span><input type="text" id="main-z-code" /></label>
-    <br>
-    <br>
-    <button onclick="openView()">Open</button>
+    <form>
+      Enter the Y and Z code to access the view.
+      <br>
+      <br>
+      <label><span>Y-Code </span><input type="text" id="main-y-code" /></label>
+      <br>
+      <label><span>Z-Code </span><input type="text" id="main-z-code" /></label>
+      <br>
+      <br>
+      <button onclick="openView(event)" type="submit">Open</button>
+    </form>
   </div>
   <script>
-    function openView() {
+    function openView(e) {
+      e.preventDefault();
       window.location.href = '/view/?z=' + document.getElementById('main-z-code').value + '&y=' + document.getElementById('main-y-code').value;
     }
   </script>

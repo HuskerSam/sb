@@ -327,6 +327,27 @@ class cBandFrames extends bBand {
         groupDisplays.time.innerHTML += `<div class="${className}">` +
         rFrame.actualTime.toFixed(0) + `ms ${prefix}</div>`;
       try {
+        if (groupDisplays.command) {
+          if (rFrame.gen)
+            groupDisplays.command.innerHTML += `<div class="${className}"> </div>`;
+          else {
+            let cmd = rFrame.values['frameCommand'].origValue;
+            if (! cmd)
+              cmd = '';
+            let field = rFrame.values['frameCommandField'].origValue;
+            if (! field)
+              field = '';
+            let value = rFrame.values['frameCommandValue'].origValue;
+            if (! value)
+              value = '';
+            groupDisplays.command.innerHTML += `<div class="${className}">` +
+              cmd + ' ' +
+              field + ' ' +
+              value + ' ' +
+              '</div>';
+          }
+        }
+
         if (groupDisplays.scale)
           groupDisplays.scale.innerHTML += `<div class="${className}">` +
           GLOBALUTIL.formatNumber(rFrame.values['scalingX'].value) + ',' +

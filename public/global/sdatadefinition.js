@@ -11,8 +11,11 @@ class sDataDefinition {
     if (tag === 'blockFrame') {
       let localCopy = this.bindingFields('frameBase');
       let meshCopy = this.bindingFields('frameMesh');
+      let cmdCopy = this.bindingFields('frameCommand');
       meshCopy = meshCopy.slice(1);
-      return localCopy.concat(meshCopy);
+
+      localCopy = localCopy.concat(meshCopy);
+      return localCopy.concat(cmdCopy);
     }
     if (tag === 'cameraFrame') {
       let localCopy = this.bindingFields('frameBase');
@@ -97,7 +100,6 @@ __animFieldFilters.animateLightFields['Spot'] = ['lightOriginX', 'lightOriginY',
 __localStaticStorageForBindingFields['mesh'] = [{
   title: 'Title',
   fireSetField: 'title',
-  contextObjectField: null,
   group: 'title'
 }, {
   title: 'Material Name',
@@ -108,7 +110,6 @@ __localStaticStorageForBindingFields['mesh'] = [{
 }, {
   title: 'Mesh Url',
   fireSetField: 'url',
-  contextObjectField: null,
   type: 'url',
   uploadType: 'mesh',
   dataListId: 'sbmesheslist',
@@ -117,13 +118,11 @@ __localStaticStorageForBindingFields['mesh'] = [{
 __localStaticStorageForBindingFields['material'] = [{
   title: 'Title',
   fireSetField: 'title',
-  contextObjectField: null,
   group: 'title',
   floatLeft: true
 }, {
   title: 'Preview Shape',
   fireSetField: 'previewShape',
-  contextObjectField: null,
   group: 'title',
   dataListId: 'applicationdynamicshapelistlookuplist',
   floatLeft: true,
@@ -248,6 +247,12 @@ __localStaticStorageForBindingFields['material'] = [{
   displayType: 'number',
   group: 'roughness'
 }, {
+  title: 'Max Lights',
+  fireSetField: 'maxSimultaneousLights',
+  contextObjectField: 'maxSimultaneousLights',
+  displayType: 'number',
+  group: 'maxLights'
+}, {
   title: 'Reflection Texture Name',
   fireSetField: 'reflectionTextureName',
   contextObjectField: 'reflectionTexture',
@@ -258,18 +263,15 @@ __localStaticStorageForBindingFields['material'] = [{
 __localStaticStorageForBindingFields['texture'] = [{
   title: 'Title',
   fireSetField: 'title',
-  contextObjectField: null,
   group: 'title'
 }, {
   title: 'Preview Shape',
   fireSetField: 'previewShape',
-  contextObjectField: null,
   group: 'options',
   dataListId: 'applicationdynamicshapelistlookuplist'
 }, {
   title: 'is Text',
   fireSetField: 'isText',
-  contextObjectField: null,
   type: 'boolean',
   group: 'options'
 }, {
@@ -287,7 +289,6 @@ __localStaticStorageForBindingFields['texture'] = [{
 }, {
   title: 'Url',
   fireSetField: 'url',
-  contextObjectField: null,
   type: 'url',
   uploadType: 'texture',
   dataListId: 'sbimageslist',
@@ -319,74 +320,63 @@ __localStaticStorageForBindingFields['texture'] = [{
 }, {
   title: '2D Text',
   fireSetField: 'textureText',
-  contextObjectField: null,
   group: 'texttext',
   inlineWidth: '20em',
   noTrim: true
 }, {
   title: 'Line 2',
   fireSetField: 'textureText2',
-  contextObjectField: null,
   group: 'texttext2',
   inlineWidth: '20em',
   noTrim: true
 }, {
   title: 'Line 3',
   fireSetField: 'textureText3',
-  contextObjectField: null,
   group: 'texttext3',
   inlineWidth: '20em',
   noTrim: true
 }, {
   title: 'Line 4',
   fireSetField: 'textureText4',
-  contextObjectField: null,
   group: 'texttext4',
   inlineWidth: '20em',
   noTrim: true
 }, {
   title: 'Font Family',
   fireSetField: 'textFontFamily',
-  contextObjectField: null,
   dataListId: 'fontfamilydatalist',
   group: 'textdetails',
   inlineWidth: '10em'
 }, {
   title: 'Font Size',
   fireSetField: 'textFontSize',
-  contextObjectField: null,
   group: 'textdetails'
 }, {
   title: 'Font Weight',
   fireSetField: 'textFontWeight',
-  contextObjectField: null,
   shapeOption: 'fontWeight',
   displayGroup: 'textdetails',
   group: 'font'
 }, {
   title: 'Font Color',
   fireSetField: 'textFontColor',
-  contextObjectField: null,
   type: 'color',
   group: 'textColor'
 }, {
   title: 'Clear Color',
   fireSetField: 'textFontClearColor',
-  contextObjectField: null,
   type: 'color',
   group: 'textColor'
 }];
 __localStaticStorageForBindingFields['publishFontFamilyProfile'] = [{
   title: 'Font',
   fireSetField: 'fontFamily',
-  contextObjectField: null,
   group: 'main',
   dataListId: 'fontfamilydatalist',
   floatLeft: true
 }, {
   title: 'Size',
   fireSetField: 'fontSize',
-  contextObjectField: null,
   group: 'main',
   displayType: 'number',
   helperType: 'singleSlider',
@@ -399,7 +389,6 @@ __localStaticStorageForBindingFields['publishFontFamilyProfile'] = [{
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   title: 'Default Canvas Color',
   fireSetField: 'canvasColor',
-  contextObjectField: null,
   type: 'color',
   group: 'color',
   helperType: 'vector',
@@ -411,14 +400,12 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
 }, {
   title: 'Font',
   fireSetField: 'fontFamily',
-  contextObjectField: null,
   group: 'main',
   dataListId: 'fontfamilydatalist',
   floatLeft: true
 }, {
   title: 'Size',
   fireSetField: 'fontSize',
-  contextObjectField: null,
   group: 'main',
   displayType: 'number',
   helperType: 'singleSlider',
@@ -430,7 +417,6 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
 }, {
   title: 'Focus Lock',
   fireSetField: 'inputFocusLock',
-  contextObjectField: null,
   group: 'main',
   type: 'boolean',
   floatLeft: true,
@@ -438,7 +424,6 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
 }, {
   title: 'Show Delete',
   fireSetField: 'showDelete',
-  contextObjectField: null,
   group: 'main',
   type: 'boolean',
   floatLeft: true
@@ -447,7 +432,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   title: 'Bounds',
   fireSetField: 'showBoundsBox',
   type: 'boolean',
-  contextObjectField: null,
   group: 'depthExtras',
   floatLeft: true,
   groupClass: 'scene-tools-checkboxes'
@@ -456,7 +440,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   fireSetField: 'showForceWireframe',
   type: 'boolean',
   group: 'depthExtras',
-  contextObjectField: null,
   floatLeft: true,
   clearLeft: true,
 }, {
@@ -464,13 +447,12 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   fireSetField: 'showFloorGrid',
   type: 'boolean',
   group: 'depthExtras',
-  contextObjectField: null,
+
   floatLeft: true,
   clearLeft: true
 }, {
   title: 'Guides',
   fireSetField: 'showSceneGuides',
-  contextObjectField: null,
   group: 'depthExtras',
   type: 'boolean',
   floatLeft: true,
@@ -478,14 +460,13 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'Depth',
   fireSetField: 'gridAndGuidesDepth',
-  contextObjectField: null,
   displayType: 'number',
   group: 'depthExtras',
   clearLeft: true
 }, {
   title: 'Light',
   fireSetField: 'lightIntensity',
-  contextObjectField: null,
+
   helperType: 'singleSlider',
   rangeMin: '0',
   rangeMax: '2',
@@ -496,7 +477,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'Camera Updates',
   fireSetField: 'cameraUpdates',
-  contextObjectField: null,
+
   group: 'cameraTrack',
   type: 'boolean',
   floatLeft: true,
@@ -504,7 +485,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'Camera Saves',
   fireSetField: 'cameraSaves',
-  contextObjectField: null,
   group: 'cameraTrack',
   type: 'boolean',
   floatLeft: true,
@@ -512,7 +492,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'No Bump Maps',
   fireSetField: 'noBumpMaps',
-  contextObjectField: null,
   group: 'cameraTrack',
   type: 'boolean',
   floatLeft: true,
@@ -520,7 +499,7 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 }, {
   title: 'Hide Video',
   fireSetField: 'noVideo',
-  contextObjectField: null,
+
   group: 'cameraTrack',
   type: 'boolean',
   floatLeft: true,
@@ -529,12 +508,10 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
   fireSetField: 'title',
-  contextObjectField: null,
   group: 'main'
 }, {
   title: 'Shape Type',
   fireSetField: 'shapeType',
-  contextObjectField: null,
   type: 'shapeType',
   displayType: 'displayFilter',
   group: 'main'
@@ -546,7 +523,7 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Size',
   fireSetField: 'boxSize',
-  contextObjectField: null,
+
   shapeOption: 'size',
   displayGroup: 'box',
   displayKey: 'shapeType',
@@ -555,7 +532,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Width',
   fireSetField: 'boxWidth',
-  contextObjectField: null,
   shapeOption: 'width',
   displayGroup: ['box', 'plane'],
   displayKey: 'shapeType',
@@ -564,7 +540,7 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Height',
   fireSetField: 'boxHeight',
-  contextObjectField: null,
+
   shapeOption: 'height',
   displayGroup: ['box', 'plane'],
   displayKey: 'shapeType',
@@ -573,7 +549,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Depth',
   fireSetField: 'boxDepth',
-  contextObjectField: null,
   shapeOption: 'depth',
   displayGroup: 'box',
   displayKey: 'shapeType',
@@ -582,7 +557,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Diameter',
   fireSetField: 'sphereDiameter',
-  contextObjectField: null,
   shapeOption: 'diameter',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
@@ -591,7 +565,7 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Segments',
   fireSetField: 'sphereSegments',
-  contextObjectField: null,
+
   shapeOption: 'segments',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
@@ -600,7 +574,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Diameter X',
   fireSetField: 'sphereDiameterX',
-  contextObjectField: null,
   shapeOption: 'diameterX',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
@@ -609,7 +582,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Diameter Y',
   fireSetField: 'sphereDiameterY',
-  contextObjectField: null,
   shapeOption: 'diameterY',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
@@ -618,7 +590,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Diameter Z',
   fireSetField: 'sphereDiameterZ',
-  contextObjectField: null,
   shapeOption: 'diameterZ',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
@@ -627,7 +598,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Height',
   fireSetField: 'cylinderHeight',
-  contextObjectField: null,
   shapeOption: 'height',
   displayGroup: 'cylinder',
   displayKey: 'shapeType',
@@ -636,7 +606,7 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Diameter',
   fireSetField: 'cylinderDiameter',
-  contextObjectField: null,
+
   shapeOption: 'diameter',
   displayGroup: 'cylinder',
   displayKey: 'shapeType',
@@ -645,7 +615,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Tessellsation',
   fireSetField: 'cylinderTessellation',
-  contextObjectField: null,
   shapeOption: 'tessellation',
   displayGroup: 'cylinder',
   displayKey: 'shapeType',
@@ -654,7 +623,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Top',
   fireSetField: 'cylinderDiameterTop',
-  contextObjectField: null,
   shapeOption: 'diameterTop',
   displayGroup: 'cylinder',
   displayKey: 'shapeType',
@@ -663,7 +631,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Bottom',
   fireSetField: 'cylinderDiameterBottom',
-  contextObjectField: null,
   shapeOption: 'diameterBottom',
   displayGroup: 'cylinder',
   displayKey: 'shapeType',
@@ -672,7 +639,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Text',
   fireSetField: 'textText',
-  contextObjectField: null,
   shapeOption: 'text',
   displayGroup: 'text',
   inlineWidth: '15em',
@@ -681,7 +647,7 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Tessellation',
   fireSetField: 'textSize',
-  contextObjectField: null,
+
   shapeOption: 'size',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -690,7 +656,7 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Depth',
   fireSetField: 'textDepth',
-  contextObjectField: null,
+
   shapeOption: 'depth',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -699,7 +665,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Open Face',
   fireSetField: 'textStroke',
-  contextObjectField: null,
   shapeOption: 'stroke',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -708,7 +673,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Font Family',
   fireSetField: 'textFontFamily',
-  contextObjectField: null,
   shapeOption: 'fontFamily',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -717,7 +681,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Font Weight',
   fireSetField: 'textFontWeight',
-  contextObjectField: null,
   shapeOption: 'fontWeight',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -725,7 +688,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Font Variant',
   fireSetField: 'textFontVariant',
-  contextObjectField: null,
   shapeOption: 'fontVariant',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -733,7 +695,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Font Style',
   fireSetField: 'textFontStyle',
-  contextObjectField: null,
   shapeOption: 'fontStyle',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -741,7 +702,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Diameter',
   fireSetField: 'torusDiameter',
-  contextObjectField: null,
   shapeOption: 'diameter',
   displayGroup: 'torus',
   displayKey: 'shapeType',
@@ -750,7 +710,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Thickness',
   fireSetField: 'torusThickness',
-  contextObjectField: null,
   shapeOption: 'thickness',
   displayGroup: 'torus',
   displayKey: 'shapeType',
@@ -759,7 +718,7 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Tessellation',
   fireSetField: 'torusTessellation',
-  contextObjectField: null,
+
   shapeOption: 'tessellation',
   displayGroup: 'torus',
   displayKey: 'shapeType',
@@ -768,7 +727,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Radius',
   fireSetField: 'torusKnotRadius',
-  contextObjectField: null,
   shapeOption: 'radius',
   displayGroup: 'torusknot',
   displayKey: 'shapeType',
@@ -777,7 +735,7 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Thickness',
   fireSetField: 'torusKnotThickness',
-  contextObjectField: null,
+
   shapeOption: 'tube',
   displayGroup: 'torusknot',
   displayKey: 'shapeType',
@@ -786,7 +744,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Radial Seg',
   fireSetField: 'torusKnotRadialSeg',
-  contextObjectField: null,
   shapeOption: 'radialSegments',
   displayGroup: 'torusknot',
   displayKey: 'shapeType',
@@ -795,7 +752,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Tube Seg',
   fireSetField: 'torusKnotTubeSeg',
-  contextObjectField: null,
   shapeOption: 'tubularSegments',
   displayGroup: 'torusknot',
   displayKey: 'shapeType',
@@ -804,7 +760,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'p (windings)',
   fireSetField: 'torusKnotP',
-  contextObjectField: null,
   shapeOption: 'p',
   displayGroup: 'torusknot',
   displayKey: 'shapeType',
@@ -813,7 +768,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'q (windings)',
   fireSetField: 'torusKnotQ',
-  contextObjectField: null,
   shapeOption: 'q',
   displayGroup: 'torusknot',
   displayKey: 'shapeType',
@@ -823,7 +777,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 __localStaticStorageForBindingFields['block'] = [{
   title: 'Block Title',
   fireSetField: 'title',
-  contextObjectField: null,
   group: 'title'
 }, {
   title: 'Material',
@@ -834,32 +787,27 @@ __localStaticStorageForBindingFields['block'] = [{
 }, {
   title: 'Width',
   fireSetField: 'width',
-  contextObjectField: null,
   displayType: 'number',
   group: 'main'
 }, {
   title: 'Depth',
   fireSetField: 'depth',
-  contextObjectField: null,
   displayType: 'number',
   group: 'main'
 }, {
   title: 'Height',
   fireSetField: 'height',
-  contextObjectField: null,
   displayType: 'number',
   group: 'main'
 }];
 __localStaticStorageForBindingFields['sceneFields'] = [{
   title: 'Y Code',
   fireSetField: 'blockCode',
-  contextObjectField: null,
   group: 'ground',
   floatLeft: true
 }, {
   title: 'Ground Material',
   fireSetField: 'groundMaterial',
-  contextObjectField: null,
   type: 'material',
   group: 'ground',
   floatLeft: true,
@@ -867,7 +815,6 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
 }, {
   title: 'Skybox',
   fireSetField: 'skybox',
-  contextObjectField: null,
   dataListId: 'skyboxlist',
   group: 'ground',
   floatLeft: true,
@@ -875,14 +822,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
 }, {
   title: 'Clear Color',
   fireSetField: 'clearColor',
-  contextObjectField: null,
   group: 'sceneColor',
   type: 'color',
   floatLeft: true
 }, {
   title: 'Ambient Color',
   fireSetField: 'ambientColor',
-  contextObjectField: null,
   group: 'sceneColor',
   type: 'color',
   clearLeft: true,
@@ -890,14 +835,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
 }, {
   title: 'Fog',
   fireSetField: 'fogType',
-  contextObjectField: null,
   group: 'fog',
   floatLeft: true,
   dataListId: 'fogtypelist'
 }, {
   title: 'Density',
   fireSetField: 'fogDensity',
-  contextObjectField: null,
   group: 'fog',
   displayType: 'number',
   floatLeft: true,
@@ -905,14 +848,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
 }, {
   title: 'Color',
   fireSetField: 'fogColor',
-  contextObjectField: null,
   group: 'fog',
   type: 'color',
   floatLeft: true
 }, {
   title: 'Start',
   fireSetField: 'fogStart',
-  contextObjectField: null,
   group: 'fog',
   displayType: 'number',
   floatLeft: true,
@@ -920,14 +861,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
 }, {
   title: 'End',
   fireSetField: 'fogEnd',
-  contextObjectField: null,
   group: 'fog',
   displayType: 'number',
   floatLeft: true
 }, {
   title: 'Video URL',
   fireSetField: 'videoURL',
-  contextObjectField: null,
   group: 'video',
   type: 'url',
   uploadType: 'video',
@@ -935,7 +874,6 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
 }, {
   title: 'Height',
   fireSetField: 'videoHeight',
-  contextObjectField: null,
   group: 'video',
   displayType: 'number',
   floatLeft: true,
@@ -943,29 +881,25 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
 }, {
   title: 'Width',
   fireSetField: 'videoWidth',
-  contextObjectField: null,
   group: 'video',
   displayType: 'number',
   floatLeft: true
 }, {
   title: 'Video Type',
   fireSetField: 'videoType',
-  contextObjectField: null,
   group: 'video',
   dataListId: 'htmlvideosourcelist',
   floatLeft: true
 }, {
   title: 'Right Align',
-  fireSetField: 'videoRightAlign',
-  contextObjectField: null,
+  fireSetField: 'videoAlignRight',
   group: 'video',
   type: 'boolean',
   clearLeft: true,
   floatLeft: true
 }, {
   title: 'Bottom Align',
-  fireSetField: 'videoBottomAlign',
-  contextObjectField: null,
+  fireSetField: 'videoAlignBottom',
   group: 'video',
   type: 'boolean',
   floatLeft: true
@@ -973,7 +907,6 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
 __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',
   fireSetField: 'childType',
-  contextObjectField: null,
   group: 'main',
   displayType: 'displayListFilter',
   dataListId: 'blockchildtypelist',
@@ -982,7 +915,6 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Mesh',
   fireSetField: 'childName',
   inlineWidth: '20em',
-  contextObjectField: null,
   group: 'main',
   listKey: 'childType',
   titlesByKey: {
@@ -1003,7 +935,6 @@ __localStaticStorageForBindingFields['childBlock'] = [{
 }, {
   title: 'Inherit Material',
   fireSetField: 'inheritMaterial',
-  contextObjectField: null,
   group: 'options',
   type: 'boolean',
   displayGroup: ['mesh', 'shape', 'block'],
@@ -1011,7 +942,6 @@ __localStaticStorageForBindingFields['childBlock'] = [{
 }, {
   title: 'Use root frames from block',
   fireSetField: 'useChildBlockFrames',
-  contextObjectField: null,
   group: 'options',
   type: 'boolean',
   displayGroup: ['block'],
@@ -1021,12 +951,10 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   fireSetField: 'cameraName',
   displayGroup: 'camera',
   displayKey: 'childType',
-  contextObjectField: null,
   group: 'camera'
 }, {
   title: 'Target Block',
   fireSetField: 'cameraTargetBlock',
-  contextObjectField: null,
   displayGroup: ['camera'],
   displayKey: 'childType',
   dataListId: 'followblocktargetoptionslist',
@@ -1035,15 +963,28 @@ __localStaticStorageForBindingFields['childBlock'] = [{
 __localStaticStorageForBindingFields['frameBase'] = [{
   title: 'Time (ms)',
   fireSetField: 'frameTime',
-  contextObjectField: null,
   wrapperClass: 'frame-time',
   group: 'time'
 }, {
   title: 'Order',
   fireSetField: 'frameOrder',
-  contextObjectField: null,
   displayType: 'number',
   group: 'time'
+}];
+__localStaticStorageForBindingFields['frameCommand'] = [{
+  title: 'Command',
+  fireSetField: 'frameCommand',
+  group: 'command',
+  dataListId: 'framecommandoptionslist'
+}, {
+  title: 'field',
+  fireSetField: 'frameCommandField',
+  group: 'command',
+  dataListId: 'framecommandfieldslist'
+}, {
+  title: 'value',
+  fireSetField: 'frameCommandValue',
+  group: 'command'
 }];
 __localStaticStorageForBindingFields['frameMesh'] = [{
   title: 'Visibility',
@@ -1238,7 +1179,7 @@ __localStaticStorageForBindingFields['frameLight'] = [{
 }, {
   title: 'angle',
   fireSetField: 'lightAngle',
-  contextObjectField: null,
+
   group: 'light4',
   displayGroup: 'light',
   displayKey: 'childType',
@@ -1246,7 +1187,7 @@ __localStaticStorageForBindingFields['frameLight'] = [{
 }, {
   title: 'decay',
   fireSetField: 'lightDecay',
-  contextObjectField: null,
+
   group: 'light4',
   displayGroup: 'light',
   displayType: 'number',
@@ -1351,7 +1292,6 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
 }, {
   title: 'Aim at Position',
   fireSetField: 'cameraAimTarget',
-  contextObjectField: null,
   displayGroup: 'camera',
   displayType: 'shortVector',
   displayKey: 'childType',

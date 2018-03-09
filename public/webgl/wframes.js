@@ -39,7 +39,6 @@ class wFrames {
       specularColorB: ''
     };
     this.processedFrames = [];
-    this.updateHandlers = [];
     this.animations = {};
     this.compileFrames();
   }
@@ -296,7 +295,6 @@ class wFrames {
     this._calcFrameTimes();
     this._processFrames();
     this.updateAnimation();
-    this._notifyHandlers();
   }
   getRootFrames() {
     let root = this.parentBlock;
@@ -353,10 +351,6 @@ class wFrames {
   startAnimation(frameIndex) {
     this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
     this.activeAnimation.goToFrame(frameIndex);
-  }
-  _notifyHandlers() {
-    for (let i in this.updateHandlers)
-      this.updateHandlers[i]();
   }
   _processFrameValues(key) {
     let runningState = this.runningState;
@@ -624,7 +618,6 @@ class wFrames {
           this.animations[i] = new BABYLON.Animation(this.parentKey + i + 'anim',
             field.contextObjectField, this.fps, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
           this.animations[i].setKeys(fieldKeys);
-
 
           let eFunc = new BABYLON.SineEase();
           if (eF === 'eio') {
