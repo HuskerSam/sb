@@ -322,6 +322,7 @@ class cPanelCanvas {
       if (this.rootBlock)
         this.rootBlock.stopAnimation();
 
+      this._clearVideoURL();
       this.activateSliderUpdates(false);
     } else if (this.playState === 1) {
       this.playButton.setAttribute('disabled', "true");
@@ -342,6 +343,15 @@ class cPanelCanvas {
       this.activateSliderUpdates(false);
     }
   }
+  _clearVideoURL() {
+    if (gAPPP.a.profile.videoClearURL) {
+      gAPPP.a.modelSets['block'].getCache(this.rootBlock.blockKey).videoURL = '';
+      gAPPP.a.modelSets['block'].commitUpdateList([{
+        field: 'videoURL',
+        newValue: ''
+      }], this.rootBlock.blockKey);
+    }
+  }
   show() {
     this.updateButtonStatus();
 
@@ -356,6 +366,8 @@ class cPanelCanvas {
     if (this.rootBlock) {
       if (this.cameraSelect.value === 'default')
         this.__updateCameraFromSettings();
+
+      this._clearVideoURL();
 
       this.parent.context.preRenderFrame = () => {
         if (this.cameraSelect.value !== 'default')
@@ -387,15 +399,6 @@ class cPanelCanvas {
       this.rootBlock.updateVideoCallback = renderData => this.__updateVideo(renderData);
   }
   __updateVideo(renderData) {
-    let showVideo = false;
-    //gAPPP.a.profile.noVideo
-    let src = document.createElement('source');
-    src.setAttribute('src', renderData.videoURL);
-    if (renderData.videoType)
-      src.setAttribute('type', renderData.videoType);
-    this.videoDom.innerHTML = '';
-    this.videoDom.appendChild(src);
-
     if (renderData.videoURL !== this.currentVideoURL || gAPPP.a.profile.noVideo !== this.currentNoVideo) {
       this.currentVideoURL = renderData.videoURL;
       let videoURL = renderData.videoURL;
@@ -404,7 +407,18 @@ class cPanelCanvas {
 
       if (videoURL === '') {
         this.videoWrapper.style.display = 'none';
+        this.videoDom.innerHTML = '';
       } else {
+        let src = document.createElement('source');
+        src.setAttribute('src', renderData.videoURL);
+        if (renderData.videoType)
+          src.setAttribute('type', renderData.videoType);
+        this.videoDom = document.createElement('video');
+        this.videoDom.setAttribute('loop', '');
+        this.videoDom.setAttribute('autoplay', '');
+        this.videoDom.appendChild(src);
+        this.videoWrapper.innerHTML = '';
+        this.videoWrapper.appendChild(this.videoDom);
         this.videoWrapper.style.display = 'block';
       }
     }

@@ -94,7 +94,7 @@ class wBlock {
   }
   _renderGround() {
     let gMat = this.blockRawData.groundMaterial;
-    if (! gMat)
+    if (!gMat)
       gMat = '';
 
     if (gMat === '') {
@@ -107,7 +107,7 @@ class wBlock {
     let bWidth = this.blockRawData.width;
     let bDepth = this.blockRawData.depth;
     let setMat = false;
-    if (! this.groundObject || this.lastbWidth !== bWidth || this.lastbDepth !== bDepth) {
+    if (!this.groundObject || this.lastbWidth !== bWidth || this.lastbDepth !== bDepth) {
       if (this.groundObject)
         this.groundObject.dispose();
       this.lastbWidth = bWidth;
@@ -199,7 +199,7 @@ class wBlock {
       if (gnd.diffuseTextureName === textureName || gnd.emissiveTextureName === textureName ||
         gnd.specularTextureName === textureName || gnd.ambientTextureName === textureName ||
         gnd.bumpTextureName === textureName || gnd.reflectionTextureName === textureName
-      ){
+      ) {
         this.lastGroundMaterial = undefined;
         this._renderGround();
       }
@@ -529,11 +529,13 @@ class wBlock {
     if (this.parent) {
       if (this.sceneObject) {
         this.sceneObject.parent = this.parent.sceneObject;
-
-        this.framesHelper.compileFrames();
+        this.framesHelper.setParentKey(this.blockKey, this);
       }
     } else {
-      this.framesHelper.compileFrames();
+      if (this.blockRawData.useChildBlockFrames)
+        this.framesHelper.setParentKey(this.blockTargetKey, this);
+      else
+        this.framesHelper.setParentKey(this.blockKey, this);
     }
 
     this.__applyFirstFrameValues();
@@ -602,11 +604,6 @@ class wBlock {
     if (!this.staticLoad) {
       containerKey = this.blockTargetKey;
     }
-
-    if (this.blockRawData.useChildBlockFrames)
-      this.framesHelper.setParentKey(this.blockTargetKey, this);
-    else
-      this.framesHelper.setParentKey(this.blockKey, this);
 
     let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', containerKey);
     for (let i in children)

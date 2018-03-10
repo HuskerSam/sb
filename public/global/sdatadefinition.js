@@ -903,6 +903,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   group: 'video',
   type: 'boolean',
   floatLeft: true
+}, {
+  title: 'Clear URL on Stop/Play',
+  fireSetField: 'videoClearURL',
+  group: 'video',
+  type: 'boolean',
+  floatLeft: true
 }];
 __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',
@@ -974,16 +980,19 @@ __localStaticStorageForBindingFields['frameBase'] = [{
 __localStaticStorageForBindingFields['frameCommand'] = [{
   title: 'Command',
   fireSetField: 'frameCommand',
+  frameFieldType: 'command',
   group: 'command',
   dataListId: 'framecommandoptionslist'
 }, {
   title: 'field',
   fireSetField: 'frameCommandField',
+  frameFieldType: 'command',
   group: 'command',
   dataListId: 'framecommandfieldslist'
 }, {
   title: 'value',
   fireSetField: 'frameCommandValue',
+  frameFieldType: 'command',
   group: 'command'
 }];
 __localStaticStorageForBindingFields['frameMesh'] = [{

@@ -16,6 +16,7 @@ class bView {
 
     this.key = null;
     this.loadedSceneURL = '';
+    this.lastNoBump = gAPPP.a.profile.noBumpMaps;
 
     gAPPP.a.modelSets['blockchild'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
@@ -85,22 +86,20 @@ class bView {
     if (this.key !== profileKey) {
       this.show(null);
       this.canvasHelper.hide();
-      setTimeout(() => {
-        let blockData = gAPPP.a.modelSets['block'].getCache(profileKey);
-        if (blockData) {
-          this.__updateSceneBlockBand(profileKey);
+      let blockData = gAPPP.a.modelSets['block'].getCache(profileKey);
+      if (blockData) {
+        this.__updateSceneBlockBand(profileKey);
 
-          if (blockData.url)
-            this.context.loadSceneURL(blockData.url).then(result => {
-              this.__loadBlock(profileKey, blockData);
-            });
-          else
+        if (blockData.url)
+          this.context.loadSceneURL(blockData.url).then(result => {
             this.__loadBlock(profileKey, blockData);
-        } else {
-          this.key = '';
-          this.canvasHelper.show();
-        }
-      }, 10);
+          });
+        else
+          this.__loadBlock(profileKey, blockData);
+      } else {
+        this.key = '';
+        this.canvasHelper.show();
+      }
     }
   }
   _userProfileChange(values, type, fireData) {

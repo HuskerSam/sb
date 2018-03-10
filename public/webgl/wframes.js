@@ -239,7 +239,7 @@ class wFrames {
     if (this.maxLength !== 0)
       return this.maxLength;
 
-    if (this.processedFrames.length > 1 ) {
+    if (this.processedFrames.length > 1) {
       return this.processedFrames[this.processedFrames.length - 1].actualTime;
     }
 
@@ -569,10 +569,10 @@ class wFrames {
   processAnimationFrames(sceneObject) {
     this.animations = {};
     this.animationsArray = [];
+    this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps);
 
-    if (this.processedFrames.length < 2) {
-    } else if (this.maxLength === 0) {
-  //    this.maxLength = this.processedFrames[this.processedFrames.length - 1].actualTime;
+    if (this.processedFrames.length < 2) {} else if (this.maxLength === 0) {
+      //    this.maxLength = this.processedFrames[this.processedFrames.length - 1].actualTime;
     } else {
       let keySetCreated = false;
       let eF = this.processedFrames[0].frameStash.easingFunction;
@@ -639,11 +639,48 @@ class wFrames {
       for (let i in this.animations)
         this.animationsArray.push(this.animations[i]);
 
-      if (!keySetCreated)
+      if (this.isRoot) {
+        for (let ii in this.processedFrames) {
+          let frame = this.processedFrames[ii];
+          let frameNumber = Math.round(frame.actualTime / 1000.0 * this.fps);
+
+          if (frame.values.frameCommand.origValue && !frame.gen) {
+            let anim = this.animationsArray[0];
+            let fN = frameNumber;
+            if (fN === 0)
+              fN = 1;
+            if (fN > this.lastFrame - 1)
+              fN = this.lastFrame - 1;
+            let event = new BABYLON.AnimationEvent(fN, () => this.animationCallback(frame, frameNumber, anim));
+            anim.addEvent(event);
+          }
+        }
+      }
+
+      if (!keySetCreated){
         this.maxLength = 0;
+        this.lastFrame = 0;
+      }
     }
     sceneObject.animations = this.animationsArray;
-    this.lastFrame = Math.round(this.maxLength / 1000.0 * this.fps);
+  }
+  animationCallback(frame, frameNumber, anim) {
+    let cmd = frame.values.frameCommand.origValue.toLowerCase();
+    let cmdField = frame.values.frameCommandField.origValue;
+    let cmdValue = frame.values.frameCommandValue.origValue;
+
+    if (cmd === 'set') {
+      if (cmdField === 'videoURL') {
+        if (! cmdValue)
+          cmdValue = '';
+        gAPPP.a.modelSets['block'].commitUpdateList([{
+          field: 'videoURL',
+          newValue: cmdValue
+        }], this.parentKey);
+
+        console.log(frameNumber, cmdField, cmdValue);
+      }
+    }
   }
   importFrames(importArray) {
     for (let i in this.rawFrames)

@@ -14,6 +14,10 @@ class cBandFrames extends bBand {
     this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
     this.childrenContainer.appendChild(this.addFrameButton);
   }
+  childRemoved(fireData) {
+    let inst = this.frameDataViewInstances[fireData.key];
+    if (inst) this.__removeInst(inst);
+  }
   _updateFrameHelpersUI() {
     if (!this.parent.detailsShown) {
       for (let i in this.frameDataViewInstances) {
@@ -340,6 +344,8 @@ class cBandFrames extends bBand {
             let value = rFrame.values['frameCommandValue'].origValue;
             if (! value)
               value = '';
+            if (value.length > 23)
+              value = value.substr(0,20) + '...';
             groupDisplays.command.innerHTML += `<div class="${className}">` +
               cmd + ' ' +
               field + ' ' +
@@ -445,9 +451,5 @@ class cBandFrames extends bBand {
         console.log(e);
       }
     }
-  }
-  childRemoved(fireData) {
-    let inst = this.frameDataViewInstances[fireData.key];
-    if (inst) this.__removeInst(inst);
   }
 }
