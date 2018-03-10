@@ -144,11 +144,12 @@ class wBlock {
       if (values.parentKey === this._blockKey)
         return this.setData();
     } else if (tag === 'frame') {
-      if (values.parentKey === this._blockKey) {
-        this.framesHelper.compileFrames();
-        this.__applyFirstFrameValues();
-        return;
-      }
+      if (values)
+        if (values.parentKey === this._blockKey) {
+          this.framesHelper.compileFrames();
+          this.__applyFirstFrameValues();
+          return;
+        }
     }
 
     if (values) {
@@ -461,12 +462,17 @@ class wBlock {
       this.blockRenderData = this.blockRawData;
       this.blockRenderData.childType = this.staticType;
       this.framesHelper._validateFieldList(this.blockRenderData.childType);
-      this.framesHelper.parentBlock = this;
+      this.framesHelper.blockWrapper = this;
       this._renderBlock();
     } else
       this._loadBlock();
 
     this.context.refreshFocus();
+  }
+  get rootBlock() {
+    if (this.parent)
+      return this.parent.rootBlock;
+    return this;
   }
   _circularTest(blockName) {
     if (!this.parent)
@@ -593,7 +599,11 @@ class wBlock {
         height,
         depth
       }, this.context.scene);
+      this.sceneObject.isPickable = false;
+      this.sceneObject.isContainerBlock = true;
+      this.sceneObject._blockKey = this._blockKey;
       this.sceneObject.isVisible = false;
+      this.sceneObject.blockWrapper = this;
       this.sceneObject.material = new BABYLON.StandardMaterial(this._blockKey + 'material', this.context.scene);
       this.sceneObject.material.alpha = 0;
     }

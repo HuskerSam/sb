@@ -38,6 +38,7 @@ class sDataDefinition {
 
     if (tag === 'blockchild') {
       let localCopy = __localStaticStorageForBindingFields['childBlock'].slice(0);
+      localCopy = localCopy.concat(this.bindingFields('frameCommand'));
       return localCopy.concat(this.bindingFields('frameCamera'));
     }
     return __localStaticStorageForBindingFields[tag].slice(0);
@@ -523,7 +524,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Size',
   fireSetField: 'boxSize',
-
   shapeOption: 'size',
   displayGroup: 'box',
   displayKey: 'shapeType',
@@ -540,7 +540,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Height',
   fireSetField: 'boxHeight',
-
   shapeOption: 'height',
   displayGroup: ['box', 'plane'],
   displayKey: 'shapeType',
@@ -565,7 +564,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Segments',
   fireSetField: 'sphereSegments',
-
   shapeOption: 'segments',
   displayGroup: 'sphere',
   displayKey: 'shapeType',
@@ -606,7 +604,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Diameter',
   fireSetField: 'cylinderDiameter',
-
   shapeOption: 'diameter',
   displayGroup: 'cylinder',
   displayKey: 'shapeType',
@@ -647,7 +644,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Tessellation',
   fireSetField: 'textSize',
-
   shapeOption: 'size',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -656,7 +652,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Depth',
   fireSetField: 'textDepth',
-
   shapeOption: 'depth',
   displayGroup: 'text',
   displayKey: 'shapeType',
@@ -718,7 +713,6 @@ __localStaticStorageForBindingFields['shape'] = [{
 }, {
   title: 'Tessellation',
   fireSetField: 'torusTessellation',
-
   shapeOption: 'tessellation',
   displayGroup: 'torus',
   displayKey: 'shapeType',
@@ -1431,18 +1425,6 @@ __defaultData['shape'] = {
   boxHeight: 10,
   boxDepth: 10,
   materialName: '',
-  face0Color: '',
-  face1Color: '',
-  face2Color: '',
-  face3Color: '',
-  face4Color: '',
-  face5Color: '',
-  face0UV: '',
-  face1UV: '',
-  face2UV: '',
-  face3UV: '',
-  face4UV: '',
-  face5UV: '',
   textText: 'Text',
   textFontFamily: 'Geneva',
   textDepth: '.5',

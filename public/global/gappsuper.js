@@ -13,6 +13,8 @@ class gAppSuper {
     ];
     this._initShapesList();
     window.addEventListener("resize", () => this.resize());
+    firebase.database().ref('/.info/serverTimeOffset').once('value').then((data) => this.serverOffsetTime = data.val());
+
     this.initialUILoad = true;
   }
   get dialogs() {

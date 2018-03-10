@@ -665,22 +665,10 @@ class wFrames {
     sceneObject.animations = this.animationsArray;
   }
   animationCallback(frame, frameNumber, anim) {
-    let cmd = frame.values.frameCommand.origValue.toLowerCase();
+    let cmd = frame.values.frameCommand.origValue;
     let cmdField = frame.values.frameCommandField.origValue;
     let cmdValue = frame.values.frameCommandValue.origValue;
-
-    if (cmd === 'set') {
-      if (cmdField === 'videoURL') {
-        if (! cmdValue)
-          cmdValue = '';
-        gAPPP.a.modelSets['block'].commitUpdateList([{
-          field: 'videoURL',
-          newValue: cmdValue
-        }], this.parentKey);
-
-        console.log(frameNumber, cmdField, cmdValue);
-      }
-    }
+    this.context.sceneCommand(cmd, cmdField, cmdValue, this.parentKey);
   }
   importFrames(importArray) {
     for (let i in this.rawFrames)

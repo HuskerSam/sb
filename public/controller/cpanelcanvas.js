@@ -420,6 +420,14 @@ class cPanelCanvas {
         this.videoWrapper.innerHTML = '';
         this.videoWrapper.appendChild(this.videoDom);
         this.videoWrapper.style.display = 'block';
+
+        let start = renderData.videoStart;
+        this.videoDom.currentTime = start;
+
+        this.synced = false;
+        //        this.videoDom.addEventListener('durationchange', () => this.__syncVideo(renderData, true), false);
+        this.videoDom.addEventListener('canplaythrough', () => this.__syncVideo(renderData, true), false);
+
       }
     }
     if (renderData.videoHeight !== this.currentVideoHeight) {
@@ -463,6 +471,24 @@ class cPanelCanvas {
         this.videoWrapper.style.left = '0px';
       }
     }
+  }
+  __syncVideo(renderData, firstCall = true) {
+    if (this.synced && firstCall)
+      return;
+    let duration = this.videoDom.duration;
+    let start = renderData.videoStart;
+    let curSeconds = Date.now() / 1000.0;
+
+    if (!start)
+      start = 0;
+    let t = gAPPP.serverOffsetTime + Date.now();
+    if (duration)
+      start = ((t - start) / 1000.0) % duration;
+    this.videoDom.currentTime = start;
+
+    if (!this.synced)
+      setTimeout(() => this.__syncVideo(renderData, false), 500);
+    this.synced = true;
   }
   __updateCameraFromSettings() {
     let camera = this.parent.context.camera;

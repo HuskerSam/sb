@@ -54,6 +54,41 @@ class wContext {
     this.gridShown = false;
     this.clearGhostBlocks();
     this._scene = newScene;
+
+    this._scene.onPointerDown = (evt, pickResult) => this.scenePick(evt, pickResult);
+  }
+  scenePick(evt, pickResult) {
+    if (pickResult.hit) {
+      let mesh = pickResult.pickedMesh;
+      let parent = pickResult.pickedMesh;
+      while (parent) {
+        parent = mesh.parent;
+        if (mesh.isContainerBlock) {
+          let blockData = gAPPP.a.modelSets['blockchild'].getCache(mesh._blockKey);
+          if (blockData)
+            if (blockData.frameCommand) {
+              this.sceneCommand(blockData.frameCommand, blockData.frameCommandField,
+                blockData.frameCommandValue, mesh.blockWrapper.rootBlock.blockKey);
+            }
+        }
+        mesh = parent;
+      }
+    }
+  }
+  sceneCommand(cmd, cmdField, cmdValue, key) {
+    if (cmd === 'Set') {
+      if (cmdField === 'videoURL') {
+        if (!cmdValue)
+          cmdValue = '';
+        gAPPP.a.modelSets['block'].commitUpdateList([{
+          field: 'videoURL',
+          newValue: cmdValue
+        }, {
+          field: 'videoStart',
+          newValue: firebase.database.ServerValue.TIMESTAMP
+        }], key);
+      }
+    }
   }
   get scene() {
     return this._scene;
@@ -88,6 +123,7 @@ class wContext {
     this._renderDefaultCamera();
 
     this.camera.attachControl(this.canvas, true);
+
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => {
         this.preRenderFrame();
