@@ -346,6 +346,7 @@ __localStaticStorageForBindingFields['texture'] = [{
   title: 'Font Family',
   fireSetField: 'textFontFamily',
   dataListId: 'fontfamilydatalist',
+  type: 'font',
   group: 'textdetails',
   inlineWidth: '10em'
 }, {
@@ -374,6 +375,7 @@ __localStaticStorageForBindingFields['publishFontFamilyProfile'] = [{
   fireSetField: 'fontFamily',
   group: 'main',
   dataListId: 'fontfamilydatalist',
+  type: 'font',
   floatLeft: true
 }, {
   title: 'Size',
@@ -403,6 +405,7 @@ __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
   fireSetField: 'fontFamily',
   group: 'main',
   dataListId: 'fontfamilydatalist',
+  type: 'font',
   floatLeft: true
 }, {
   title: 'Size',
@@ -672,7 +675,8 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayGroup: 'text',
   displayKey: 'shapeType',
   group: 'font',
-  dataListId: 'fontfamilydatalist'
+  dataListId: 'fontfamilydatalist',
+  type: 'font'
 }, {
   title: 'Font Weight',
   fireSetField: 'textFontWeight',

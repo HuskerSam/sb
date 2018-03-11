@@ -49,6 +49,7 @@ class cPanelData {
 
     if (f.type === 'boolean')
       t.addEventListener('click', e => this.scrape(e), false);
+
     t.addEventListener('input', e => this.scrape(e), false);
     t.addEventListener('blur', e => this._blurField(t, f, e), false);
     f.domContainer = c;
@@ -369,7 +370,7 @@ class cPanelData {
           }
 
         if (f.dom.checked !== v)
-          f.dom.style.border = 'solid 2px red';
+          f.dom.style.border = 'solid .25em red';
         else
           f.dom.style.border = '';
       }
@@ -389,7 +390,7 @@ class cPanelData {
           }
 
         if (f.dom.value !== v)
-          f.dom.style.border = 'solid 2px red';
+          f.dom.style.border = 'solid .25em red';
         else
           f.dom.style.border = '';
       }
@@ -422,6 +423,9 @@ class cPanelData {
             contextReloadRequired = true;
           }
         }
+      }
+      if (f.type === 'font') {
+        f.dom.style.fontFamily = f.dom.value;
       }
     }
 

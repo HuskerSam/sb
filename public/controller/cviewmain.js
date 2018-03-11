@@ -113,6 +113,10 @@ class cViewMain extends bView {
     this.createShapesSelect = this.createPanel.querySelector('.shape-type-select');
     this.createShapesSelect.addEventListener('input', e => this.__handleShapesSelectChange());
     this.shapeMaterialSelectPicker = this.createPanel.querySelector('.shape-material-picker-select');
+    this.shapeAddFontFamily = this.createPanel.querySelector('.font-family-shape-add');
+    this.shapeAddFontFamily.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily));
+    this.shapeAddFontFamily2D = this.createPanel.querySelector('.font-family-2d-add');
+    this.shapeAddFontFamily2D.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily2D));
     this.__handleShapesSelectChange();
 
     this.addMeshOptionsPanel = this.createPanel.querySelector('.mesh-add-options');
@@ -144,6 +148,9 @@ class cViewMain extends bView {
     this.emptyBlockPanel = this.createPanel.querySelector('.scene-empty-block-add-options');
     this.connectorLinePanel = this.createPanel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.createPanel.querySelector('.animated-line-block-add-options');
+
+    this.blockAddFontFamily = this.blockShapePanel.querySelector('.font-family-block-add');
+    this.blockAddFontFamily.addEventListener('input', e => this.updateFontField(this.blockAddFontFamily));
 
     this.skyBoxImages = this.createPanel.querySelector('.skybox-preview-images');
     this.skyBoxInput = this.createPanel.querySelector('.block-skybox-picker-select');
@@ -772,6 +779,9 @@ class cViewMain extends bView {
         this.createMesage.style.display = 'none';
       }, 300);
     });
+  }
+  updateFontField(textDom) {
+    textDom.style.fontFamily = textDom.value;
   }
   __generateLightForScene(blockKey, blockTitle, mixin) {
     this.context.createObject('blockchild', '', null, {
