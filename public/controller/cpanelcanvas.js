@@ -440,6 +440,7 @@ class cPanelCanvas {
           src.setAttribute('type', renderData.videoType);
         this.videoDom = document.createElement('video');
         this.videoDom.setAttribute('loop', '');
+        this.videoDom.setAttribute('controls', '');
         this.videoDom.setAttribute('autoplay', '');
         this.videoDom.appendChild(src);
         this.videoWrapper.innerHTML = '';

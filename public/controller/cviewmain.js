@@ -166,6 +166,9 @@ class cViewMain extends bView {
     this.expandedContainer = document.getElementById('sb-floating-toolbar-expanded');
     this.canvasActions.insertBefore(this.expandedContainer, this.canvasActions.childNodes[0]);
 
+    this.collapsedContainer = document.getElementById('sb-floating-toolbar');
+    this.canvasActions.insertBefore(this.collapsedContainer, this.expandedContainer);
+
     document.querySelector('#help-button-on-user-panel').addEventListener('click', e => this.showHelpPanel());
   }
   updatePublishLink() {

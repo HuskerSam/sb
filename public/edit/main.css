@@ -486,20 +486,20 @@
 #sb-floating-toolbar-create-btn {
   position: absolute;
   bottom: .25em;
-  right: 2.25em;
+  right: .25em;
   z-index: 100;
 }
 
 #sb-floating-toolbar-import-btn {
   position: absolute;
   bottom: .25em;
-  right: 4.25em;
+  right: 2.25em;
   z-index: 100;
 }
 
 #workspace-settings-button {
   position: absolute;
-  bottom: .25em;
+  top: .25em;
   right: .25em;
   z-index: 100;
 }
@@ -738,8 +738,8 @@
 
 #publish-link-url {
   position: absolute;
-  top: .5em;
-  right: 3.5em;
+  top: .75em;
+  right: 6.5em;
   padding: .25em;
   border-radius: .25em;
   background: rgba(255,255,255, .7);
@@ -749,6 +749,6 @@
 #help-button-on-user-panel {
   position: absolute;
   top: .25em;
-  right: .25em;
+  right: 2.25em;
   z-index: 1000
 }

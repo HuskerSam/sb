@@ -121,7 +121,7 @@ html, body {
 }
 
 .canvas-actions input[type="range"] {
-  width: 22vw;
+  width: 18vw;
   display: inline-block;
   position: relative;
   top: .2em;
@@ -129,6 +129,9 @@ html, body {
   margin-right: .5em;
 }
 
+.canvas-actions input.animate-range {
+  width: 23vw;
+}
 
 .form-group.shortVector input[type="range"] {
   width: 100%;
