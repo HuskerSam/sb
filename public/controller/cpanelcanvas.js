@@ -260,7 +260,7 @@ class cPanelCanvas {
         this.activateSliderUpdates();
       }, 50);
   }
-  _updateSliderPosition(startTimer = true) {
+  _updateSliderPosition(valueUpdate = true) {
     let elapsed = 0;
     let total = 100;
     if (this.activeAnimation) {
@@ -268,7 +268,8 @@ class cPanelCanvas {
       total = this.activeAnimation.toFrame;
     }
 
-    this.animateSlider.value = elapsed / total * 100.0;
+    if (valueUpdate)
+      this.animateSlider.value = elapsed / total * 100.0;
 
     if (this.activeAnimation) {
       let timeE = elapsed / this.rootBlock.framesHelper.fps;
@@ -299,17 +300,41 @@ class cPanelCanvas {
       }, {
         field: 'playStateAnimTime' + this.rootBlock.blockKey,
         newValue: this.animateSlider.value
+      }, {
+        field: 'playStateOffset' + this.rootBlock.blockKey,
+        newValue: firebase.database.ServerValue.TIMESTAMP
       }]);
     this.__updatePlayState();
+  }
+  __updateAnimOffset() {
+    let fullLen = this.activeAnimation.toFrame / this.rootBlock.framesHelper.fps * 1000.0;
+    let t = gAPPP.serverOffsetTime + Date.now();
+    let msOffset = (t - this.lastOffset) % fullLen;
+    console.log(t, this.lastOffset, t - this.lastOffset, fullLen);
+    let sVal = this.lastSliderValue * fullLen / 100.0;
+    sVal += msOffset;
+    if (sVal >= fullLen)
+      sVal -= fullLen;
+
+    sVal = sVal * 100.0 / fullLen;
+
+    console.log(msOffset);
+    this.rootBlock.setAnimationPosition(sVal);
+    this.animateSlider.value = sVal;
   }
   __updatePlayState() {
     if (!this.rootBlock)
       return;
+    if (!this.activeAnimation)
+      return;
     if (gAPPP.a.profile.cameraUpdates) {
+
+      let offset = gAPPP.a.profile['playStateOffset' + this.rootBlock.blockKey];
       let sliderValue = gAPPP.a.profile['playStateAnimTime' + this.rootBlock.blockKey];
-      if (this.lastSliderValue !== sliderValue) {
+      if (this.lastOffset !== offset) {
+        this.lastOffset = offset;
         this.lastSliderValue = sliderValue;
-        this.animateSlider.value = sliderValue;
+        this.__updateAnimOffset();
       }
     }
     if (this.playState === 0) {
@@ -459,7 +484,6 @@ class cPanelCanvas {
       }
     }
 
-
     if (renderData.videoAlignRight !== this.currentVideoAlignRight) {
       this.currentVideoAlignRight = renderData.videoAlignRight;
 
@@ -479,7 +503,6 @@ class cPanelCanvas {
       return;
     let duration = this.videoDom.duration;
     let start = renderData.videoStart;
-    let curSeconds = Date.now() / 1000.0;
 
     if (!start)
       start = 0;
