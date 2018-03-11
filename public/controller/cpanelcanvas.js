@@ -399,7 +399,7 @@ class cPanelCanvas {
       this.rootBlock.updateVideoCallback = renderData => this.__updateVideo(renderData);
   }
   __updateVideo(renderData) {
-    if (renderData.videoURL !== this.currentVideoURL || gAPPP.a.profile.noVideo !== this.currentNoVideo) {
+    if (renderData.videoURL !== this.currentVideoURL) {
       this.currentVideoURL = renderData.videoURL;
       let videoURL = renderData.videoURL;
       if (!videoURL)
@@ -420,15 +420,16 @@ class cPanelCanvas {
         this.videoWrapper.innerHTML = '';
         this.videoWrapper.appendChild(this.videoDom);
         this.videoWrapper.style.display = 'block';
-
-        let start = renderData.videoStart;
-        this.videoDom.currentTime = start;
-
         this.synced = false;
-        //        this.videoDom.addEventListener('durationchange', () => this.__syncVideo(renderData, true), false);
-        this.videoDom.addEventListener('canplaythrough', () => this.__syncVideo(renderData, true), false);
-
+        this.videoDom.addEventListener('canplaythrough', () => this.__syncVideo(renderData), false);
+        setTimeout(() => this.synced = false, 1000);
+        setTimeout(() => this.synced = false, 3000);
       }
+    }
+    if (this.currentVideoStart !== renderData.videoStart) {
+      this.currentVideoStart = renderData.videoStart;
+      this.synced = false;
+      this.__syncVideo(renderData);
     }
     if (renderData.videoHeight !== this.currentVideoHeight) {
       this.currentVideoHeight = renderData.videoHeight;
@@ -458,6 +459,7 @@ class cPanelCanvas {
       }
     }
 
+
     if (renderData.videoAlignRight !== this.currentVideoAlignRight) {
       this.currentVideoAlignRight = renderData.videoAlignRight;
 
@@ -472,8 +474,8 @@ class cPanelCanvas {
       }
     }
   }
-  __syncVideo(renderData, firstCall = true) {
-    if (this.synced && firstCall)
+  __syncVideo(renderData) {
+    if (this.synced)
       return;
     let duration = this.videoDom.duration;
     let start = renderData.videoStart;
@@ -486,8 +488,6 @@ class cPanelCanvas {
       start = ((t - start) / 1000.0) % duration;
     this.videoDom.currentTime = start;
 
-    if (!this.synced)
-      setTimeout(() => this.__syncVideo(renderData, false), 500);
     this.synced = true;
   }
   __updateCameraFromSettings() {
