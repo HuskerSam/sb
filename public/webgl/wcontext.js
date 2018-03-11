@@ -601,7 +601,7 @@ class wContext {
   _renderDefaultCamera() {
     if (this.camera)
       this.camera.dispose();
-    let cameraVector = GLOBALUTIL.getVector(this.cameraVector, 3, 15, -15);
+    let cameraVector = GLOBALUTIL.getVector(this.cameraVector, 15, 15, -3);
     let radius = 10;
     let newRadius = Number(gAPPP.a.profile.arcCameraRadius);
     if (newRadius > 1 && newRadius < 500)

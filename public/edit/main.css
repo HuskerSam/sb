@@ -468,7 +468,7 @@
 #user-profile-panel {
   position: absolute;
   right: 0;
-  bottom: 3em;
+  top: 3em;
   background: rgba(255, 255, 255, .75);
   color: black;
   padding: .5em;

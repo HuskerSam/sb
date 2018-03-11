@@ -516,7 +516,7 @@ class cPanelCanvas {
   }
   __updateCameraFromSettings() {
     let camera = this.parent.context.camera;
-    let cameraPosition = GLOBALUTIL.getVector(gAPPP.a.profile['cameraPositionSave' + this.rootBlock.blockKey], 3, 15, -15);
+    let cameraPosition = GLOBALUTIL.getVector(gAPPP.a.profile['cameraPositionSave' + this.rootBlock.blockKey], -3, 15, 15);
     let cameraTarget = GLOBALUTIL.getVector(gAPPP.a.profile['cameraTargetSave' + this.rootBlock.blockKey], 0, 0, 0);
     let fov = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['cameraFOVSave' + this.rootBlock.blockKey], .8);
     if (!camera.setPosition)
