@@ -419,6 +419,9 @@ class wContext {
     if (this.ghostBlocks['offsetPreview'])
       fade = true;
 
+    if (!fade)
+      return;
+
     let fadeLevel = this.activeBlock.blockRenderData.visibility;
     if (fade)
       fadeLevel = .5;
@@ -427,8 +430,9 @@ class wContext {
   }
   __fadeObject(obj, fadeLevel) {
     if (fadeLevel === '' || fadeLevel === undefined)
-      fadeLevel = 1;
-    obj.visibility = fadeLevel;
+      fadeLevel = 1.0;
+    if (! obj.isContainerBlock)
+      obj.visibility = fadeLevel;
     for (let i in this.scene.meshes)
       if (this.scene.meshes[i].parent === obj)
         this.scene.meshes[i].visibility = fadeLevel;

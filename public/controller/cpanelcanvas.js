@@ -310,7 +310,6 @@ class cPanelCanvas {
     let fullLen = this.activeAnimation.toFrame / this.rootBlock.framesHelper.fps * 1000.0;
     let t = gAPPP.serverOffsetTime + Date.now();
     let msOffset = (t - this.lastOffset) % fullLen;
-    console.log(t, this.lastOffset, t - this.lastOffset, fullLen);
     let sVal = this.lastSliderValue * fullLen / 100.0;
     sVal += msOffset;
     if (sVal >= fullLen)
@@ -318,7 +317,6 @@ class cPanelCanvas {
 
     sVal = sVal * 100.0 / fullLen;
 
-    console.log(msOffset);
     this.rootBlock.setAnimationPosition(sVal);
     this.animateSlider.value = sVal;
   }
