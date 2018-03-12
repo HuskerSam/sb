@@ -1456,7 +1456,7 @@ __defaultData['block'] = {
 __defaultData['blockchild'] = {
   childType: 'block',
   childName: '',
-  inheritMaterial: true,
+  inheritMaterial: false,
   inheritGround: true,
   lightSource: '',
   lightOrigin: '',
