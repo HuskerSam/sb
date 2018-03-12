@@ -71,8 +71,6 @@ class bView {
     if (this.canvasHelper) {
       this.canvasHelper.show();
     }
-    if (this.rootBlock)
-      this.rootBlock.setData();
   }
   __updateSceneBlockBand(profileKey) {}
   _updateSelectedBlock(profileKey) {

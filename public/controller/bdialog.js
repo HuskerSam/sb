@@ -101,6 +101,8 @@ class bDialog {
       this.canvasHelper.sceneTools.toggle();
     }
     gAPPP.mV.show();
+    if (gAPPP.mV.rootBlock)
+      gAPPP.mV.rootBlock.setData();
   }
   save() {
     this.close();
