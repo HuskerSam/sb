@@ -532,17 +532,10 @@ class wBlock {
 
     this.currentMaterialName = this.blockRenderData.materialName;
 
-    if (this.parent) {
-      if (this.sceneObject) {
+    if (this.parent && this.sceneObject)
         this.sceneObject.parent = this.parent.sceneObject;
-        this.framesHelper.setParentKey(this.blockKey, this);
-      }
-    } else {
-      if (this.blockRawData.useChildBlockFrames)
-        this.framesHelper.setParentKey(this.blockTargetKey, this);
-      else
-        this.framesHelper.setParentKey(this.blockKey, this);
-    }
+
+    this.framesHelper.setParentKey(this.blockKey, this);
 
     this.__applyFirstFrameValues();
 

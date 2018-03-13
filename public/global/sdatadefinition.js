@@ -944,13 +944,6 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   displayGroup: ['mesh', 'shape', 'block'],
   displayKey: 'childType'
 }, {
-  title: 'Use root frames from block',
-  fireSetField: 'useChildBlockFrames',
-  group: 'options',
-  type: 'boolean',
-  displayGroup: ['block'],
-  displayKey: 'childType'
-}, {
   title: 'Name',
   fireSetField: 'cameraName',
   displayGroup: 'camera',
