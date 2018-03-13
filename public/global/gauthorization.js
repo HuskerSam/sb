@@ -99,7 +99,7 @@ class gAuthorization {
     }
     let code = document.getElementById('sign-in-special-code').value;
 
-    if (code !== '1234')
+    if (code !== 'nebraska')
       return;
 
     this.provider = new firebase.auth.GoogleAuthProvider();

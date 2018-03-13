@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Android TV Applications</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/logo.png">
+</head>
+
+<body style="width:800px;margin:auto;">
+  <br>
+  <a href="newuser.html">New User Intro</a>
+  <a href="help.html">Editor Help</a>
+  <br>
+  <br>
+  <img style="max-width:100%;" src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/scenepipeline.png" />
+  <h1>Your quality content on Android TV</h1>
+  If you need a platform to get the most out of multiple screen options to deliver lots of video that is driven by user choice you've found the place!
+  <br>
+  Using a mix of platforms at the same time with synchronized content allows people in different rooms and different places to share the same experience.
+  Using a realtime data source (with push capability) like <a href="https://firebase.google.com/">Firebase</a> allows us to efficently push indexed content changes
+  to TV applications in addition to rapidly synchronizing screens and choices amongst users.
+  <br>
+  <br>
+  We're here to deliver Android TV applications that expose <a href="https://developer.android.com/training/tv/discovery/searchable.html">searchable</a> content.  We use
+  a wrapper application written in JAVA using Android Studio to host our web application.  This allows us to interact
+  directly with the TV and it's special application modes for showing <a href="https://developer.android.com/training/tv/discovery/recommendations-row.html">recommendations</a>.
+  While the native application is in JAVA the logic remains in javascript.  <a href="https://crosswalk-project.org/">Crosswalk</a> is used
+  for a browser that supports WebGL and Firebase on Android TV's 5.0 and up.
+  <br>
+  <br>
+  Our scheme delivers a non exclusive (we resue code between clients) solution for markets such as public broadcasting, music videos,
+  local tv, radio and news organizations.  We want to provide a solution where a company has development resources to sustain
+  an all platform solution (especially if it's in one language html/javascript), but not the expertise and funds to develop a competitive
+  and foward leaning solution in house.  Anyone that has a lot of video content, especially high resolution, will want
+  quality interfaces with Android TV and Roku.  Roku also runs as an application on Android TV, but Roku doesn't support javascript
+  for it's applications.
+<br><br>
+  Video sources are commonly described using <a href="http://ogp.me/">Open Graph</a> meta tags.  Our goal is to use the tags
+  to describe videos (thumbnails, title, source and description).  We use additional tags for videos of lower and
+  higher bit rates.  Previewing content for TV has already been solved on the web - if you share links and content
+  with other sites now, it will only take small (if any) adjustments to improve your existing video tags.  The advantage
+  to additional tags is delivering bandwidth specific content - your phone on a weak connection doesn't require or perform
+  well with 4k quality video - but your TV looks like crap without it.  Most video sites let a user select the video quality
+  as an option that is saved on a per machine (not account) basis to match up with different platforms.  We take the local
+  setting and match it up with the video source in the tags to find the right url.
+  <br><br><br>
+</body>
+</html>
