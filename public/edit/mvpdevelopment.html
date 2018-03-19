@@ -3,34 +3,44 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Quick start for creating a MVP in Javascript</title>
+  <title>MVP Development Notes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo.png">
 </head>
 
 <body style="width:800px;margin:auto;">
-  Date: March of 2018 (Tips need to have a time reference!)
+  <h1>MVP Development Notes</h1>
+  Date: March of 2018 (Notes need to have a time reference!)
   <br>
   Author: SWH
   <br>
   <br>
-  This recipe is intended for people that want to produce an MVP (Minimum Viable Product)
+  <b>These are GENERIC recommendations that WILL NOT wholly apply to your project.</b>
+  <br>
+  <br>
+  <b>Purpose</b> - These notes are intended for people that want to produce an MVP (Minimum Viable Product)
   in a short time, that is built well and at a reasonable cost.  The resources employed
   will be out sourced (remote or otherwise).  This is a guide on selecting which
   technologies (libraries, hosting, external webservices), features (realtime data, mobile, OG support),
   and how/where to find developers.  Also how to balance scope, time to delivery and cost.
   <br>
   <br>
-  <b>These are GENERIC recommendations that will NOT wholey apply to any project!</b>
-  <br>
-  A tip I hate to give out - if Wordpress will get the job done for you, you probably should just use Wordpress.  This is for
-  applications that have larger and/or more specific needs then Wordpress can meet.  Wordpress delivers a number of features
-  out of the box that will take a lot of time and thinking to replicate, i.e. easy opengraph and SEO support, authentication system
-  for users and a ton, I mean a ton, of poeple that know how to work on a WordPress site.  This isn't what we do,
-  but we're not here to sell you something you don't need, that takes longer to create, costs more now, and costs more later
-  and may just be all around more trouble for you.
+  <b>Consider Wordpress</b> - A tip I hate to give out - if Wordpress will get the job done for you,
+  you probably should just use Wordpress.  These MVP tips are for
+  web applications that have larger and/or more specific needs then Wordpress can meet.
+  Wordpress is widely used and supported - making it quick, stable and fairly cheap to
+  meet many needs, such as payment processing, SEO and Open Graph, and the most themes.
   <br>
   <br>
+  <b>More code costs more now and later</b> - this is the justification for using existing libraries to meet
+  your technology needs.  This drives many of my philosophies.  I'm not against automated testing, especially function
+  testing, but unit testing creates lots of code that also must be maintained - use it sparingly and only if you
+  are changing complicated and difficult to test logic.<br>
+  If you have limited means for developers (seriously not eveyone does) - then this is the rule you should consider
+  first - "How much line count do we get?"  "Who can we hire later to work on this?"  "How long will it take new programmers
+  successfully make changes?" - while at times more code is a better answer, think of it this way - would you rather
+  make a small change in a 10 page document, or a 100 page document.  To balance this - don't reuse code that doesn't
+  save that much time or line count - no need to have changes in one place break something else for a minimum game.
   <h1>How to get started</h1>
   <h2>Source Control</h2>
   A lot of people use <a href="github.com">GitHub</a> to host source
