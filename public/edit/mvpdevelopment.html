@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Quick start for creating a MVP in Javascript</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/logo.png">
+</head>
+
+<body style="width:800px;margin:auto;">
+  Date: March of 2018 (Tips need to have a time reference!)
+  <br>
+  Author: SWH
+  <br>
+  <br>
+  This recipe is intended for people that want to produce an MVP (Minimum Viable Product)
+  in a short time, that is built well and at a reasonable cost.  The resources employed
+  will be out sourced (remote or otherwise).  This is a guide on selecting which
+  technologies (libraries, hosting, external webservices), features (realtime data, mobile, OG support),
+  and how/where to find developers.  Also how to balance scope, time to delivery and cost.
+  <br>
+  <br>
+  These notes come from 25+ years of MVP development projects.  Just like information from any other source,
+  cross and compare with other thoughts and resources you have - every situation is unique.  Just like any other
+  developer, I only know what I've seen, there are always more effective tools emerging.
+  <br>
+  <br>
+  A tip I hate to give out - if Wordpress will get the job done for you, you probably should just use Wordpress.  This is for
+  applications that have larger and/or more specific needs then Wordpress can meet.  Wordpress delivers a number of features
+  out of the box that will take a lot of time and thinking to replicate, i.e. easy opengraph and SEO support, authentication system
+  for users and a ton, I mean a ton, of poeple that know how to work on a WordPress site.  This isn't what we do,
+  but we're not here to sell you something you don't need, that takes longer to create, costs more now, and costs more later
+  and may just be all around more trouble for you.
+  <br>
+  <br>
+  <h1>How to get started</h1>
+  <h2>Source Control</h2>
+  A lot of people use <a href="github.com">GitHub</a> to host source
+  code.  If you don't know any better, then get the cheapest paid subscription to github to host source.  This will allow
+  you to add and remove developers from your repository (code) and audit their work, etc.  Is your code secure?  No, it's
+  mostly secure like your email.  If that's not enough, you'll need to host a git server yourself.  Get this done yourself,
+  granted your developer will do most of the activity versus source control, but ultimately this is the source and you own it.
+  Store it in a space you own.
+  <br>
+  Why is source control important?
+  <br>As you move forward, it's a history of changes and comments. A developer can refer to the history of a single
+  file and what happened when and why - this is what source control can provide - any tool can be used poorly.  That was the positive side,
+  if bad changes are introduced on accident or for nefarious purposes, this is the place to audit and adjust.
+  <h2>Front End - Layout Library</h2>
+  There are a few strong choices for a layout library, and I think one very strong choice at this point.
+  <a href="https://material.io/">Material Design</a> from Google shows lots of promise, especially for Android applications that
+  want to look uniform.  The downside is compared to <a href="https://getbootstrap.com/">Boostrap</a>, the experience of developers available and the
+  cost of development, you should have a very strong reason to using it.  There is also the <a href="https://zurb.com/responsive">ZURB Foundation</a> library.
+  In the end, if you pick Bootstrap - you'll have access to largest market of professionals - if you don't know better, use Bootstrap - it's
+  likely to cause the fewest hang ups on it's own and cost the least to make an MVP.  The other emerging layout libraries are probably superior
+  in quality and final product, but you need someone to use them and get you a better result over a bootstrap user.
+  <h2>Front End - MVC library</h2>
+  <a href="">Angular</a>, <a href="">React</a> and <a href="">Vue</a> are the libraries I've had experience with.  When selecting the MVC library,
+  choosing which flavor of javascript to use is also important here.  I recommend ES6 over Typescript.  For one simple reason - Typescript requires a
+  compiler.  This ultimately slows down development cycles, requires more setup and development operations.  You'll find most Angular examples cater to
+  Typescript - as typescript allows importing of lots of small files.  If you choose to use Angular 2.0+ - you'll find it best to use
+  Typescript as well.  React is much more thin then Angular, and a bit more popular.  React isn't as good at creating reusable components
+  (that can be included in other applications) - so it's better using ES6 (version 6 of raw javscript).
+  <br>
+  At their core, these are data binding / template libraries - they allow you to make HTML with special tags that indicate what data should be bound
+  to the html layout.  Unless you have a ton of fields to bind, I would recommend not using any of these.  But the preference here
+  should be left to the developer you hire, his techniques will be focused (on the front end) around the library he prefers.   I recommend defining your fields
+  in data, which marginalizes the importance of creating lots of data binding code (more on this later).  Angular is heavy - by this I mean they get you
+  away from raw javascript and encourage you to operate inside of their API - for example event handling, UI components.  The upside of Angular is it is the best at
+  allowing you to break you code up into independent (testable and reusable) components.  React and Backbone are more MVC focused and less heavy, but do a lot less
+  at the same time.  This is a challenging choice, if you have a large project with lots of databound parts, you'll need to use one of these to succeed.  The key thing to measure, as with
+  any library is how much time and money does it save you (also ability to make changes later and find people that know how to edit it) - versus just using natvie javascript and html
+  that has no dependiencies.  You don't want to create any code that is of significant line count (that you pay to write now and pay to maintain later) that can be done by a library.
+  That being said, these libraries don't do nearly as much as they are hyped [insert protesting screams from the developers that live and die by these].  This also applies to LESS and
+  other items that are required to be compiled ... HTML 5, ES6 and CSS 3 are extremely powerful and effective tools, picked your layers on top of these with thought -
+  what have you gained by moving away from an ocean of knowledge off into a small cove.
+  <br>
+  While I prefer to use none, on a project with multiple developers, using Angular or React provides common methods of design
+  and techniques - allowing people to work on a project seperately and combine their work with a large amount of consistency.  If you can use one MVC framework,
+  you can pick up another quickly.
+  <br>
+  My preference is when using a library to isolate (contain) it's usage and do things with native code as where the library doesn't make a significant gain.
+  An example of this is jQuery - if you have specific UI components that depend on jQuery, then you need it.  To use jQuery now days to do dom queries is stilly,
+  vanilla javascript does these operations just fine at this point, just go native.
+  <br>
+  The best option for picking an MVC framework is to figure out your critical UI components (lists, calendars, etc) - and find a
+  developer with experience the specific component that is most critical to your user experience (for example a scheduling calender/view).
+  <h2>Back End - Database</h2>
+    Let me start with - I love SQL and spent many years mastering the language and using it.  Not been able to use it in a few years, since I started doing applications with realtime data.  While it's not required to use a NoSQL database (MongoDB or Firebase RTDB),
+    it's the only way I've seen it done.  A NoSQL database doesn't mean it's a realtime datasource, but a realtime datasource is almost always a NoSQL database.
+    <br>
+    If you don't need realtime data, mysql is probably fine for you data hosting (if you need a superior and more expensive solution then mysql - you probably what and why).
+    <br>
+    In this situation I recommend Firebase RTDB- at least for the immediate data that drives the interface.
+    <br>
+    A heed of warning - NoSQL data design not the same as SQL schema design, and a developer that tells you there isn't
+    much difference isn't experienced.  This isn't something to reject a developer on, as if you can do SQL design,
+    you'll be able to figure out the NoSQL design at somepoint, but NoSQL tends to carry a hierarchal tree of data related to item,
+    for example a spreadsheet with all of it's sheets and cells stored under one place, another spreadsheet has all of it's data
+    in another seperate place (document driven) - where SQL likes to break things up into their parts and join them back together,
+    so all cells are stored in once place, all sheets are stored (without cells) in another place, and put together just when you need them.
+    The document driven is far superior for supporting realtime/pushed data.
+    <br>
+  <h2>Back End - Server<h2>
+
+</body>
+
+</html>
