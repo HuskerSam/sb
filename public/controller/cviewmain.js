@@ -272,7 +272,7 @@ class cViewMain extends bView {
     this.importRefreshElementName.setAttribute('list', eleType + 'datatitlelookuplist');
   }
   showHelpPanel() {
-    window.open('help.html', '_blank');
+    window.open('/doc/help.html', '_blank');
   }
   closeHeaderBands() {
     this.fontTools.expanded = true;
