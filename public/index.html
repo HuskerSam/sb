@@ -30,7 +30,11 @@
   <script>
     function openView(e) {
       e.preventDefault();
-      window.location.href = '/view/?z=' + document.getElementById('main-z-code').value + '&y=' + document.getElementById('main-y-code').value;
+      let z = document.getElementById('main-z-code').value.trim();
+      let y = document.getElementById('main-y-code').value.trim();
+      if (z === '' || y === '')
+        return;
+      window.location.href = '/view/?z=' + z + '&y=' + y;
     }
   </script>
   <style>

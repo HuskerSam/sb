@@ -9,6 +9,11 @@
 </head>
 
 <body style="width:800px;margin:auto;">
+  <br>
+  <a href="/doc">Root</a>
+  <br>
+
+  <br>
   <h1>How to get ready to start coding!</h1>
   <br> Author: SWH 3/1/2018
   <br>
@@ -76,32 +81,25 @@
   <b>No - unless... </b> you use UI components that require it (i.e. Boostrap). ES6 handles DOM manipulation just fine. While there are a ton of popular components that require jQuery, there isn't any reason for new components being developed to depend
   on it.
   <br><br>
-  <h3>Data Hosting</h3>
-  I prefer Firebase RTDB - especially for the immediate data that drives the interface.  Also for storing any data that will be used for pushing notifications to mobile and other devices.
+  <h3>Data Hosting</h3> I prefer Firebase RTDB - especially for the immediate data that drives the interface. Also for storing any data that will be used for pushing notifications to mobile and other devices.
   <br>
   <br> A heed of warning - NoSQL data design not the same as SQL schema design, and a developer that tells you there isn't much difference isn't experienced. This isn't something to reject a developer on, as if you can do SQL design, you'll be able to
   figure out the NoSQL design at somepoint, but NoSQL tends to carry a hierarchal tree of data related to item, for example a spreadsheet with all of it's sheets and cells stored under one place, another spreadsheet has all of it's data in another seperate
   place (document driven) - where SQL likes to break things up into their parts and join them back together, so all cells are stored in once place, all sheets are stored (without cells) in another place, and put together just when you need them. The document
   driven is far superior for supporting realtime/pushed data.
   <br>
-  <h3>Authentication and Server Hosting</h3>
-    While there are a range of solutions, Firebase handles the authentication and application hosting with minimal setup and a great set of dev ops tools that install and are well known.  AWS, S3 and Beanstalk are superior solutions for productions in many cases,
-    for MVP development Firebase is hard to beat for how much time it takes setup and deploy applications.  Heavy data processing needs should be isolated on EC2 or RDS and the user interface layer stored in Firebase RTDB.
-    <h3>Ask for Examples, Expect Fast Results, Be Willing To Pay For Time Spent</h3>
-    Most applications are not available for former developers to login and play with - at the same time demand to see some recent examples somewhere.
-    <br><br>
-    Don't let projects drag on - keep a short time from start to finish on a project.
-    <br><br>
-    Predicting how long a project will take requires knowing how it will be designed.
-    <br><br>
-    Expert people are unlikely to design and estimate the cost to implement your technology project for free.
+  <h3>Authentication and Server Hosting</h3> While there are a range of solutions, Firebase handles the authentication and application hosting with minimal setup and a great set of dev ops tools that install and are well known. AWS, S3 and Beanstalk are superior solutions for productions in many
+  cases, for MVP development Firebase is hard to beat for how much time it takes setup and deploy applications. Heavy data processing needs should be isolated on EC2 or RDS and the user interface layer stored in Firebase RTDB.
+  <h3>Ask for Examples, Expect Fast Results, Be Willing To Pay For Time Spent</h3> Most applications are not available for former developers to login and play with - at the same time demand to see some recent examples somewhere.
+  <br><br> Don't let projects drag on - keep a short time from start to finish on a project.
+  <br><br> Predicting how long a project will take requires knowing how it will be designed.
+  <br><br> Expert people are unlikely to design and estimate the cost to implement your technology project for free.
 
 
-    <h3>Hire a developer with an existing build process and code base.</h3>
-    You want to spend your time and energy creating the features specific to your product - not figuring out the newest libraries and technologies.
-    <br>
-    <br>
-    <br>
+  <h3>Hire a developer with an existing build process and code base.</h3> You want to spend your time and energy creating the features specific to your product - not figuring out the newest libraries and technologies.
+  <br>
+  <br>
+  <br>
 </body>
 
 </html>
