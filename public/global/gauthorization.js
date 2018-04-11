@@ -107,8 +107,7 @@ class gAuthorization {
   }
   signInAnon() {
     this.anonymous = true;
-    this.onAuthStateChanged({ uid: 'anon'});
-//    firebase.auth().signInAnonymously();
+    firebase.auth().signInAnonymously();
   }
   signOut() {
     firebase.auth().signOut();
