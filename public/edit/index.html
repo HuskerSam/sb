@@ -17,7 +17,11 @@
     <h3>Rapid Scenes</h3>
     <div>
       <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
-      <label>Auth Code: <input id="sign-in-special-code" ></label>
+      <br>
+      <br>
+
+      <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email"></label>
+      <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
     </div>
   </div>
   <div id="firebase-app-main-page" style="display:none;">
@@ -591,7 +595,7 @@
   <script src="https://cdn.babylonjs.com/babylon.js"></script>
   <script src="https://unpkg.com/split.js/split.min.js"></script>
 
-  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
   <script src="/__/firebase/init.js"></script>
 
   <link rel="stylesheet" href="/global/common.css">

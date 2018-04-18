@@ -18,6 +18,23 @@ class gAuthorization {
 
     this.workspaceLoadedCallback = null;
   }
+  signInWithURL() {
+    if (firebase.auth().isSignInWithEmailLink(window.location.href) !== true)
+      return;
+
+    let email = window.localStorage.getItem('emailForSignIn');
+    if (!email)
+      email = window.prompt('Please provide your email for confirmation');
+
+    firebase.auth().signInWithEmailLink(email, window.location.href)
+      .then((result) => this.__finishSignInURL(result.user))
+      .catch(e => console.log(e));
+  }
+  __finishSignInURL(user) {
+    window.localStorage.removeItem('emailForSignIn');
+    this.onAuthStateChanged(user);
+    window.history.replaceState({}, document.title, "/edit/");
+  }
   onProjectTitlesChange(values, type, fireData) {
     if (type === 'value') {
       gAPPP.workspaceListLoaded = true;
@@ -31,6 +48,7 @@ class gAuthorization {
   }
   onAuthStateChanged(user) {
     //ignore unwanted events
+    console.log('onAuth', user);
     if (user && this.uid === user.uid) {
       return;
     }
@@ -97,13 +115,22 @@ class gAuthorization {
       this.signInAnon();
       return;
     }
-    let code = document.getElementById('sign-in-special-code').value;
-
-    if (code !== 'nebraska')
-      return;
 
     this.provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(this.provider);
+  }
+  signInByEmail(email) {
+    var actionCodeSettings = {
+      url: window.location.href,
+      handleCodeInApp: true
+    };
+    firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
+      .then(() => {
+        window.localStorage.setItem('emailForSignIn', email);
+        alert('Email Sent');
+        window.location = '/doc/help.html';
+      })
+      .catch(e => console.log(e));
   }
   signInAnon() {
     this.anonymous = true;
