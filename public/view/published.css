@@ -53,3 +53,10 @@
   background: rgba(255, 255, 255, .3);
   border-radius: .25em;
 }
+
+#user-profile-dialog-reset-button {
+  position: absolute;
+  top: .25em;
+  left: .25em;
+  z-index: 100;
+}

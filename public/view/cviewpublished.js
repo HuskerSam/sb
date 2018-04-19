@@ -21,7 +21,10 @@ class cViewPublished extends bView {
     this.bandButtons.push(this.fontTools);
     this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
 
-    this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
+    this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e =>{
+      gAPPP.a.resetProfile();
+      setTimeout(() => location.reload(), 100);
+    });
 
     this.elementTypeChange();
   }
