@@ -148,6 +148,7 @@ class cViewMain extends bView {
     this.emptyBlockPanel = this.createPanel.querySelector('.scene-empty-block-add-options');
     this.connectorLinePanel = this.createPanel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.createPanel.querySelector('.animated-line-block-add-options');
+    this.storeItemPanel = this.createPanel.querySelector('.store-item-block-add-options');
 
     this.blockAddFontFamily = this.blockShapePanel.querySelector('.font-family-block-add');
     this.blockAddFontFamily.addEventListener('input', e => this.updateFontField(this.blockAddFontFamily));
@@ -281,6 +282,7 @@ class cViewMain extends bView {
     this.addPanelTools.toggle(false);
     this.importPanelTools.expanded = true;
     this.importPanelTools.toggle(false);
+    this.canvasHelper.collapseAll();
   }
   __updateSceneBlockBand(profileKey) {
     let bandElement = document.querySelector('.block' + this.toolbarItems['block'].myKey + '-' + profileKey);
@@ -510,6 +512,7 @@ class cViewMain extends bView {
     this.emptyBlockPanel.style.display = 'none';
     this.animatedDashPanel.style.display = 'none';
     this.connectorLinePanel.style.display = 'none';
+    this.storeItemPanel.style.display = 'none';
 
     let sel = this.blockOptionsPicker.value;
     if (sel === 'Text and Shape')
@@ -520,6 +523,8 @@ class cViewMain extends bView {
       this.connectorLinePanel.style.display = '';
     else if (sel === 'Animated Line')
       this.animatedDashPanel.style.display = '';
+    else if (sel === 'Store Item')
+      this.storeItemPanel.style.display = '';
     else
       this.emptyBlockPanel.style.display = '';
   }
