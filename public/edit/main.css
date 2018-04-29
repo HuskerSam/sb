@@ -99,16 +99,16 @@
   color: black;
   background: rgb(240, 240, 240);
   width: 6em;
-}
-
-.sb-floating-toolbar-item .button-wrapper-invert .button-title {
-  background: rgb(50, 50, 50);
-  color: white;
   transform: rotate(-90deg);
   position: relative;
   top: 1.75em;
   margin: 0;
   left: -1.8em;
+}
+
+.sb-floating-toolbar-item .button-wrapper-invert .button-title {
+  background: rgb(50, 50, 50);
+  color: white;
 }
 
 .button-wrapper {

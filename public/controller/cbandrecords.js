@@ -21,8 +21,8 @@ class cBandRecords extends bBand {
     this.buttonWrapper = this.wrapper.querySelector('.button-wrapper');
 
     let forceExpand = gAPPP.a.profile['mainRecordsExpanded' + this.tag];
-    if (forceExpand)
-      this.toggleChildBandDisplay(true);
+ //if (forceExpand)
+    this.toggleChildBandDisplay(forceExpand);
   }
   childMoved(fireData) {
     let keyOrder = this.modelSet.childOrderByKey;
@@ -73,7 +73,7 @@ class cBandRecords extends bBand {
     gAPPP.mV._updateSelectedBlock(key);
   }
   _showEditPopup(e, key) {
-    if (gAPPP.dialogs[this.tag + '-edit']){
+    if (gAPPP.dialogs[this.tag + '-edit']) {
       gAPPP.mV.canvasHelper.hide();
       setTimeout(() => gAPPP.dialogs[this.tag + '-edit'].show(key), 10);
     }
@@ -84,36 +84,26 @@ class cBandRecords extends bBand {
 
     let tI = this.dialog.toolbarItems;
     this.expandValue = expandValue;
+    this.bar.parentNode.style.display = 'flex';
+    this.buttonWrapper.classList.add('button-wrapper-invert');
+
+    let nextSibling = this.containerExpanded.childNodes[0];
+    for (let i in tI) {
+      if (tI[i] === this)
+        break;
+
+      if (tI[i].expandValue)
+        nextSibling = tI[i].bar.parentNode.nextSibling;
+    }
+    this.containerExpanded.insertBefore(this.bar.parentNode, nextSibling);
+    this.wrapper.style.display = 'left';
+
     if (expandValue) {
       this.bar.style.display = 'inline-block';
-      this.bar.parentNode.style.display = 'flex';
       this.buttonWrapper.classList.add('button-wrapper-invert');
-
-      let nextSibling = this.containerExpanded.childNodes[0];
-      for (let i in tI) {
-        if (tI[i] === this)
-          break;
-
-        if (tI[i].expandValue)
-          nextSibling = tI[i].bar.parentNode.nextSibling;
-      }
-      this.containerExpanded.insertBefore(this.bar.parentNode, nextSibling);
-      this.wrapper.style.display = 'left';
     } else {
       this.bar.style.display = 'none';
-      this.bar.parentNode.style.display = 'inline-block';
       this.buttonWrapper.classList.remove('button-wrapper-invert');
-      this.wrapper.style.float = '';
-
-      let nextSibling = this.containerCollapsed.childNodes[0];
-      for (let i in tI) {
-        if (tI[i] === this)
-          break;
-
-        if (!tI[i].expandValue)
-          nextSibling = tI[i].bar.parentNode.nextSibling;
-      }
-      this.containerCollapsed.insertBefore(this.bar.parentNode, nextSibling);
     }
 
     if (saveValue)
