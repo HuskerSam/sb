@@ -97,6 +97,18 @@
   color: white;
 }
 
+.sb-floating-toolbar-item .button-wrapper .button-add-item
+{
+  position: absolute;
+  left: 2em;
+  top: 1.5em;
+  display: none;
+}
+
+.sb-floating-toolbar-item .button-wrapper-invert .button-add-item {
+  display: block;
+}
+
 .button-wrapper {
   pointer-events: none!important;
 }
@@ -112,7 +124,7 @@
 
 #sb-floating-toolbar-expanded .button-wrapper {
   height: 6.2em;
-  width: 2.5em;
+  width: 6.5em;
 }
 
 .popup-canvas-body {

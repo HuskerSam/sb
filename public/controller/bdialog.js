@@ -78,9 +78,10 @@ class bDialog {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
       return;
 
-    gAPPP.a.modelSets[this.tag].removeByKey(this.key);
+    let deleteKey = this.key;
+    this.key = null;
+    gAPPP.a.modelSets[this.tag].removeByKey(deleteKey);
     this.renderPreview = false;
-
     this.close();
   }
   close() {

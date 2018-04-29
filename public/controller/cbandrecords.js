@@ -19,7 +19,17 @@ class cBandRecords extends bBand {
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.buttonWrapper = this.wrapper.querySelector('.button-wrapper');
 
+    this.addButton = this.wrapper.querySelector('.button-add-item');
+    this.addButton.addEventListener('click', e => this.addRecord());
+
     this.toggleChildBandDisplay(gAPPP.a.profile['mainRecordsExpanded' + this.tag]);
+  }
+  addRecord() {
+    this.dialog.context.createObject(this.tag, 'new ' + this.tag).then(results => {
+      setTimeout(() => {
+        gAPPP.dialogs[this.tag + '-edit'].show(results.key);
+      }, 300);
+    });
   }
   childMoved(fireData) {
     let keyOrder = this.modelSet.childOrderByKey;

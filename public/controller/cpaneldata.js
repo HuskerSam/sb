@@ -254,6 +254,8 @@ class cPanelData {
   _handleDataChange(values, type, fireData) {
     if (!this.active)
       return;
+    if (this.parent.key === null)
+      return;
     if (type === "moved")
       return;
 

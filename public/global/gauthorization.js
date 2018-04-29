@@ -48,7 +48,6 @@ class gAuthorization {
   }
   onAuthStateChanged(user) {
     //ignore unwanted events
-    console.log('onAuth', user);
     if (user && this.uid === user.uid) {
       return;
     }

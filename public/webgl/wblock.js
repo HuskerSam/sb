@@ -131,7 +131,7 @@ class wBlock {
     else if (tag === 'texture') {
       return this._handleTextureUpdate(values);
     } else if (tag === 'material') {
-      if (!values.title)
+      if (!values || !values.title)
         return;
       let materialName = values.title;
       if (materialName === this.blockRenderData.materialName)
