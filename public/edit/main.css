@@ -43,16 +43,6 @@
   float: left;
 }
 
-#sb-floating-toolbar {
-  clear: both;
-  pointer-events: none;
-  text-align: left;
-  position: relative;
-  margin-bottom: -.25em;
-  float: left;
-  padding-left: .25em;
-}
-
 #sb-floating-toolbar .sb-floating-toolbar-item {
   pointer-events: none;
   display: inline-block;
@@ -60,10 +50,6 @@
 
 .sb-floating-toolbar-content div {
   pointer-events: auto;
-}
-
-#sb-floating-toolbar .button-wrapper {
-  margin: .5em .1em;
 }
 
 .sb-floating-toolbar-content {

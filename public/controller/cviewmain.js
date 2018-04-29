@@ -17,11 +17,11 @@ class cViewMain extends bView {
     this.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
 
     this.toolbarItems = {};
-    this.toolbarItems['block'] = new cBandRecords('block', 'Block', this);
+    this.toolbarItems['texture'] = new cBandRecords('texture', 'Texture', this);
+    this.toolbarItems['material'] = new cBandRecords('material', "Material", this);
     this.toolbarItems['mesh'] = new cBandRecords('mesh', 'Mesh', this);
     this.toolbarItems['shape'] = new cBandRecords('shape', 'Shape', this);
-    this.toolbarItems['material'] = new cBandRecords('material', "Material", this);
-    this.toolbarItems['texture'] = new cBandRecords('texture', 'Texture', this);
+    this.toolbarItems['block'] = new cBandRecords('block', 'Block', this);
 
     this.bandButtons = [];
     this.userProfileName = this.dialog.querySelector('.user-info');
@@ -173,9 +173,6 @@ class cViewMain extends bView {
 
     this.expandedContainer = document.getElementById('sb-floating-toolbar-expanded');
     this.canvasActions.insertBefore(this.expandedContainer, this.canvasActions.childNodes[0]);
-
-    this.collapsedContainer = document.getElementById('sb-floating-toolbar');
-    this.canvasActions.insertBefore(this.collapsedContainer, this.expandedContainer);
 
     document.querySelector('#help-button-on-user-panel').addEventListener('click', e => this.showHelpPanel());
   }

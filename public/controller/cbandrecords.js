@@ -4,14 +4,13 @@ class cBandRecords extends bBand {
 
     this.dialog = dialog;
     this.title = title;
-    this.containerCollapsed = document.querySelector('#sb-floating-toolbar');
     this.containerExpanded = document.querySelector('#sb-floating-toolbar-expanded');
     let d = document.querySelector('#sb-floating-toolbar-item-template').cloneNode(true);
     this.wrapper = d.querySelector('.sb-floating-toolbar-item');
 
     this.wrapper.id = 'sb-' + this.tag + '-floating-toolbar-item';
     this.childrenContainer = this.wrapper.querySelector('.sb-floating-toolbar-content');
-    this.containerCollapsed.appendChild(this.wrapper);
+    this.containerExpanded.appendChild(this.wrapper);
     this.titleDom = this.wrapper.querySelector('.button-title');
     this.titleDom.innerHTML = this.title;
 
@@ -20,9 +19,7 @@ class cBandRecords extends bBand {
     this.titleDom.addEventListener('click', e => this.toggleChildBandDisplay(undefined, true));
     this.buttonWrapper = this.wrapper.querySelector('.button-wrapper');
 
-    let forceExpand = gAPPP.a.profile['mainRecordsExpanded' + this.tag];
- //if (forceExpand)
-    this.toggleChildBandDisplay(forceExpand);
+    this.toggleChildBandDisplay(gAPPP.a.profile['mainRecordsExpanded' + this.tag]);
   }
   childMoved(fireData) {
     let keyOrder = this.modelSet.childOrderByKey;
@@ -86,16 +83,6 @@ class cBandRecords extends bBand {
     this.expandValue = expandValue;
     this.bar.parentNode.style.display = 'flex';
     this.buttonWrapper.classList.add('button-wrapper-invert');
-
-    let nextSibling = this.containerExpanded.childNodes[0];
-    for (let i in tI) {
-      if (tI[i] === this)
-        break;
-
-      if (tI[i].expandValue)
-        nextSibling = tI[i].bar.parentNode.nextSibling;
-    }
-    this.containerExpanded.insertBefore(this.bar.parentNode, nextSibling);
     this.wrapper.style.display = 'left';
 
     if (expandValue) {
