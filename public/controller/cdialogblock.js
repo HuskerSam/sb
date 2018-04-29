@@ -72,12 +72,11 @@ class cDialogBlock extends bDialog {
 
     this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
     this.exportFramesButton = this.dialog.querySelector('.ie-frames-details');
-    this.exportFramesButton.style.display = 'inline-block';
     this.exportFramesButton.addEventListener('click', e => this.toggleFramesIEDisplay());
     this.iePanelShown = false;
 
     this.refreshExportButton = this.dialog.querySelector('.refresh-export-frames-button');
-    this.refreshExportButton.addEventListener('click', e => this.refreshExportText())
+    this.refreshExportButton.addEventListener('click', e => this.refreshExportText());
     this.importButton = this.dialog.querySelector('.import-frames-button');
     this.importButton.addEventListener('click', e => this.importFramesFromText());
     this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';

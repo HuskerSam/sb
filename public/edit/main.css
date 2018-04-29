@@ -331,6 +331,7 @@
 .cblock-details-panel, .cblock-child-details-panel {
   white-space: nowrap;
   overflow: auto;
+  padding-left: 3.5em;
 }
 
 .cblock-details-panel .form-group-container-group {
@@ -620,6 +621,7 @@
 
 .main-band-wrapper {
   padding-top: .1em;
+  position: relative;
 }
 
 .skybox-preview-images img {
@@ -732,6 +734,11 @@
   top: .75em;
   left: .15em;
   position: relative;
+}
+.ie-frames-details {
+  position: absolute;
+  left: .15em;
+  top: 3.5em;
 }
 
 #publish-link-url {
