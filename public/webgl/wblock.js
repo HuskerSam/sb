@@ -533,7 +533,7 @@ class wBlock {
     this.currentMaterialName = this.blockRenderData.materialName;
 
     if (this.parent && this.sceneObject)
-        this.sceneObject.parent = this.parent.sceneObject;
+      this.sceneObject.parent = this.parent.sceneObject;
 
     this.framesHelper.setParentKey(this.blockKey, this);
 
@@ -758,11 +758,17 @@ class wBlock {
         hole.reverse();
         polyBuilder.addHole(hole);
       }
-      var polygon = polyBuilder.build(false, thick);
-      polygon.receiveShadows = true;
 
-      polies.push(polygon);
+      try {
+        var polygon = polyBuilder.build(false, thick);
+        //polygon.receiveShadows = true;
+
+        polies.push(polygon);
+      } catch (e) {
+        console.log('text 3d render polygon error', e);
+      }
     }
+
     if (lenY < .001 && lenX < .001)
       this.context.logError('Zero Length result for text shape ' + this.__getParentRoute());
     if (lenY === 0)

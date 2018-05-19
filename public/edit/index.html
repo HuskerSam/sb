@@ -145,42 +145,40 @@
           <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
         </div>
         <div class="store-item-block-add-options" style="text-align:right;">
+          <b>Highlight Details</b>
+          <br>
+          <label><span>Description</span><textarea style="width:15em;" rows="2" cols="1"  class="store-item-block-description"></textarea></label>
+          <br>
+          <label><span>Image</span><input style="width:15em;"  class="store-item-block-description-image" /></label>
+          <br>
+          <label><span>Video</span><input style="width:15em;"  class="store-item-block-description-video" /></label>
+          <br>
+          <b>Item Details</b>
+          <br>
+          <label><span>Price</span><input type="text" style="width:7em;"  class="store-item-block-price" value="$1.00" /></label>
+          &nbsp;
+          <label><span>Name</span><input type="text" style="width:10em;"  class="store-item-block-name" value="" /></label>
+          <br>
           <label>
-            <span>Store Item Type</span>
+            <span></span>
             <select class="store-item-block-type-options">
+              <option selected>Block</option>
               <option>Mesh</option>
-              <option selected>2D Picture</option>
-              <option>Video</option>
-              <option>Box</option>
+              <option>Shape</option>
             </select>
           </label>
+          <label><span></span><input type="text" style="width:15em;"  class="store-item-block-block" list="blockdatatitlelookuplist" /></label>
+
+          <!--label><span></span><input type="text" style="width:15em;"  class="store-item-block-mesh" list="sbmesheslist" /></label>
           <br>
-          <label><span>Item Name</span><input type="text" style="width:15em;"  class="store-item-block-name" value="" /></label>
+          <label><span></span><input type="text" style="width:15em;"  class="store-item-block-shape" list="shapedatatitlelookuplist" /></label>
+          <br-->
           <br>
-          <label><span>Description</span><input type="text" style="width:15em;" class="store-item-block-description" value="" /></label>
+          <label><span>Location</span><input type="text" style="width:6em;" class="store-item-block-location" value="0,0,0" /></label>
+          &nbsp;
+          <label><span>Rotation</span><input type="text" style="width:8em;" class="store-item-block-rotation" value="" /></label>
           <br>
-          <label><span>Price</span><input type="text" style="width:15em;"  class="store-item-block-price" value="$0.00" /></label>
-          <br>
-          <label><span>Quantity</span><input type="text" style="width:15em;"  class="store-item-block-quanity" value="1" /></label>
-          <br>
-          <label><span>Location X</span><input type="text" class="store-item-block-x" value="10" /></label>
-          <label><span>Y</span><input type="text"  class="store-item-block-y" value="0" /></label>
-          <label><span>Z</span><input type="text"  class="store-item-block-z" value="1"/></label>
-          <br>
-          <label><span>Size X</span><input type="text" class="store-item-block-size-x" value="2" /></label>
-          <label><span>Y</span><input type="text"  class="store-item-block-size-y" value="2" /></label>
-          <label><span>Z</span><input type="text"  class="store-item-block-size-z" value="1" /></label>
-          <br>
-          <label><span>Material</span><input type="text" style="width:15em;"  class="store-item-block-background" list="materialdatatitlelookuplist" /></label>
-          <br>
-          <label><span>Text Material</span><input type="text" style="width:15em;"  class="store-item-block-foreground" list="materialdatatitlelookuplist" /></label>
-          <br>
-          <label><span>Mesh</span><input type="text" style="width:15em;"  class="store-item-block-mesh" list="sbmesheslist" /></label>
-          <br>
-          <label><span>2D Image</span><input type="text" style="width:15em;"  class="store-item-block-image" list="sbimageslist" /></label>
-          <br>
-          <label><span>Video</span><input type="text" style="width:15em;"  class="store-item-block-video"  /></label>
-          <br>
+          <label><span>Parent Block</span><input type="text" style="width:15em;"  class="store-item-parent-block" list="blockdatatitlelookuplist"  /></label>
         </div>
         <div class="animated-line-block-add-options">
           <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
@@ -244,10 +242,10 @@
         <select class="block-type-select">
          <option>Empty</option>
          <option>Scene</option>
-         <option selected>Text and Shape</option>
+         <option>Text and Shape</option>
          <option>Animated Line</option>
          <option>Connector Line</option>
-         <option>Store Item</option>
+         <option selected>Store Item</option>
         </select>
       </div>
       <div class="mesh-add-options" style="display:none">
@@ -323,7 +321,7 @@
     <div class="sb-floating-toolbar-item">
       <div class="button-wrapper">
         <button class="button-title"></button>
-        <button class="button-add-item btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
+        <button class="button-add-item btn-sb-icon" style="background:rgb(240,240,240)"><i class="material-icons">add_circle</i></button>
       </div>
       <div class="sb-floating-toolbar-content">
       </div>
@@ -631,7 +629,8 @@
   <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/3.2.0/babylon.js"></script>
   <script src="https://unpkg.com/split.js/split.min.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>

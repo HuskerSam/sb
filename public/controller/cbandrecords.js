@@ -26,9 +26,7 @@ class cBandRecords extends bBand {
   }
   addRecord() {
     this.dialog.context.createObject(this.tag, 'new ' + this.tag).then(results => {
-      setTimeout(() => {
-        gAPPP.dialogs[this.tag + '-edit'].show(results.key);
-      }, 300);
+      gAPPP.dialogs[this.tag + '-edit'].show(results.key);
     });
   }
   childMoved(fireData) {

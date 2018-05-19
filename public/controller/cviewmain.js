@@ -166,6 +166,8 @@ class cViewMain extends bView {
     this.shapeDetailsPanel = this.createPanel.querySelector('.block-shape-add-label');
     this.stretchDetailsPanel = this.createPanel.querySelector('.block-stretch-along-width-label');
 
+    this._initAddStoreItem();
+
     this.__handleBlockTypeSelectChange();
     this.__handleShapeChange();
     this.__handleSkyboxChange();
@@ -175,6 +177,10 @@ class cViewMain extends bView {
     this.canvasActions.insertBefore(this.expandedContainer, this.canvasActions.childNodes[0]);
 
     document.querySelector('#help-button-on-user-panel').addEventListener('click', e => this.showHelpPanel());
+  }
+  _initAddStoreItem() {
+    this.storeItemParentDom = this.storeItemPanel.querySelector('.store-item-parent-block');
+
   }
   updatePublishLink() {
     if (this.rootBlock)
@@ -828,5 +834,10 @@ class cViewMain extends bView {
   _updateContextWithDataChange(tag, values, type, fireData) {
     super._updateContextWithDataChange(tag, values, type, fireData);
     this.updatePublishLink();
+  }
+  __loadBlock(profileKey, blockData) {
+    super.__loadBlock(profileKey, blockData);
+
+    this.storeItemParentDom.value = blockData.title;
   }
 }
