@@ -625,6 +625,12 @@ class wBlock {
     if (this.parent)
       return;
 
+    if (!renderData) {
+      if (gAPPP.a.profile.canvasColor)
+        this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+      return;      
+    }
+
     this._addSkyBox();
     let fogMode = renderData.fogType;
 

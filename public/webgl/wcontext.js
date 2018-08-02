@@ -453,7 +453,11 @@ class wContext {
     this.setGhostBlock('rotatePreview', null);
   }
   _sceneAddDefaultObjects() {
-    this.scene.clearColor = GLOBALUTIL.color('.35,.2,.6');
+    if (gAPPP.a.profile.canvasColor)
+      this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+    else
+      this.scene.clearColor = GLOBALUTIL.color('.35,.2,.6');
+
     this._sceneDisposeDefaultObjects();
     this._updateCamera();
   }
