@@ -20,5 +20,21 @@ class gApplication extends gAppSuper {
       setTimeout(() => this.emailBtn.innerHTML = 'Send Link', 5000);
     }, false);
     document.querySelector('#sign-out-button').addEventListener('click', e => this.a.signOut(), false);
+
+    this.loadDataLists('sbimageslist').then(() => {});
+    this.loadDataLists('sbmesheslist').then(() => {});
+    this.loadDataLists('skyboxlist').then(() => {});
+    this.loadDataLists('fontfamilydatalist').then(() => {});
+  }
+  loadDataLists(name) {
+    return fetch(`/global/${name}.json`)
+      .then(rrr => rrr.json())
+      .then(json => {
+        let list = document.getElementById(name);
+        let outHtml = '';
+        for (let c = 0, l = json.length; c < l; c++)
+          outHtml += `<option>${json[c]}</option>`
+        list.innerHTML = outHtml;
+      });
   }
 }
