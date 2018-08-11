@@ -192,7 +192,18 @@ class cViewMain extends bView {
       Papa.parse(this.importFileDom.files[0], {
         header: true,
       	complete: results => {
-      		console.log("Finished:", results.data);
+          if (results.data) {
+      //      for (let c = 0, l = results.data.length; c < l; c++) {
+            for (let c = 0, l = 1; c < l; c++) {
+                let row = results.data[c];
+                if (row.asset === 'meshtexture') {
+                //    asset	meshname	materialname	meshpath	texturepath	bmppath	color	diffuse	ambient	emissive
+
+
+
+                }
+            }
+          }
       	}
       });
     }
