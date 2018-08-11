@@ -62,6 +62,9 @@ class cViewMain extends bView {
     this.importImportBtn = this.importPanel.querySelector('.import-button');
     this.importImportBtn.addEventListener('click', e => this.importPanelImport());
 
+    this.importImportMeshesBtn = this.importPanel.querySelector('.import-meshes-button');
+    this.importImportMeshesBtn.addEventListener('click', e => this.importPanelImportMeshList());
+
     this.addPanelTypeRadios = this.createPanel.querySelector('.block-type-radio-wrapper').querySelectorAll('input[type="radio"]');
     for (let i = 0; i < this.addPanelTypeRadios.length; i++) {
       let value = this.addPanelTypeRadios[i].value;
@@ -181,6 +184,8 @@ class cViewMain extends bView {
   _initAddStoreItem() {
     this.storeItemParentDom = this.storeItemPanel.querySelector('.store-item-parent-block');
 
+  }
+  importPanelImportMeshList() {
   }
   updatePublishLink() {
     if (this.rootBlock)
