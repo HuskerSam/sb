@@ -144,8 +144,8 @@ __localStaticStorageForBindingFields['material'] = [{
   floatLeft: true
 }, {
   title: 'Backface Culling',
-  fireSetField: 'backfaceCulling',
-  contextObjectField: 'backfaceCulling',
+  fireSetField: 'backFaceCulling',
+  contextObjectField: 'backFaceCulling',
   type: 'boolean',
   floatLeft: true,
   clearLeft: true,
