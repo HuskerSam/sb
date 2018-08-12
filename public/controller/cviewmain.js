@@ -193,17 +193,13 @@ class cViewMain extends bView {
         header: true,
         complete: results => {
           if (results.data) {
-            //      for (let c = 0, l = results.data.length; c < l; c++) {
-            for (let c = 0, l = 1; c < l; c++) {
+            for (let c = 0, l = results.data.length; c < l; c++) {
               let row = results.data[c];
               if (row.asset === 'meshtexture') {
-                //    asset	meshname	materialname	meshpath	texturepath	bmppath	color
-                // diffuse	ambient	emissive
                 gAPPP.a.modelSets['mesh'].createWithBlobString({
                   title: row.meshname,
                   materialName: row.materialname,
                   url: row.meshpath,
-                  /*
                   positionX: row.x,
                   positionY: row.y,
                   positionZ: row.z,
@@ -213,18 +209,17 @@ class cViewMain extends bView {
                   scalingX: row.sx,
                   scalingY: row.sy,
                   scalingZ: row.sz,
-                  */
                   type: 'url'
                 }).then(results => {});
 
                 gAPPP.a.modelSets['material'].createWithBlobString({
                   title: row.materialname,
-                  ambientColor : row.color,
-                  ambientTextureName : row.texturepath,
-                  backFaceCulling : true,
-                  diffuseColor : row.color,
-                  diffuseTextureName : row.texturepath,
-                  emissiveColor : row.color,
+                  ambientColor: row.color,
+                  ambientTextureName: row.texturepath,
+                  backFaceCulling: true,
+                  diffuseColor: row.color,
+                  diffuseTextureName: row.texturepath,
+                  emissiveColor: row.color,
                   emissiveTextureName: row.texturepath,
                   bumpTextureName: row.bmppath
                 }).then(results => {});
