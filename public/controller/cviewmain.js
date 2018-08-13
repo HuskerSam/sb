@@ -224,6 +224,33 @@ class cViewMain extends bView {
                   bumpTextureName: row.bmppath
                 }).then(results => {});
               }
+
+              if (row.asset === 'block') {
+                gAPPP.a.modelSets['block'].createWithBlobString({
+                  title: row.name,
+                  materialName: row.materialname,
+                  height: row.height,
+                  width: row.width,
+                  depth: row.depth
+                }).then(results => {});
+
+              if (row.asset === 'blockchild') {
+                let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
+                let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+
+                if (!ele) {
+                  console.log(row.parent, ' - block not found');
+                  return;
+                }
+
+                gAPPP.a.modelSets['blockchild'].createWithBlobString({
+                  title: row.name,
+                  materialName: row.materialname,
+                  parentKey: key,
+                  
+                }).then(results => {});
+
+              }
             }
           }
         }
