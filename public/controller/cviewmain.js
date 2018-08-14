@@ -225,14 +225,29 @@ class cViewMain extends bView {
                 }).then(results => {});
               }
 
-              if (row.asset === 'block') {
+              if (row.asset === 'block')
                 gAPPP.a.modelSets['block'].createWithBlobString({
                   title: row.name,
                   materialName: row.materialname,
                   height: row.height,
                   width: row.width,
                   depth: row.depth
-                }).then(results => {});
+                }).then(blockResult => {
+                  gAPPP.a.modelSets['frame'].createWithBlobString({
+                    parentKey: blockResult.key,
+                    positionX: row.x,
+                    positionY: row.y,
+                    positionZ: row.z,
+                    rotationX: row.rx,
+                    rotationY: row.ry,
+                    rotationZ: row.rz,
+                    scalingX: row.sx,
+                    scalingY: row.sy,
+                    scalingZ: row.sz,
+                    frameOrder: 10,
+                    frameTime: 0
+                  }).then(fResults => {});
+                });
 
               if (row.asset === 'blockchild') {
                 let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
@@ -244,12 +259,75 @@ class cViewMain extends bView {
                 }
 
                 gAPPP.a.modelSets['blockchild'].createWithBlobString({
-                  title: row.name,
                   materialName: row.materialname,
                   parentKey: key,
-                  
+                  childType: row.childtype,
+                  childName: row.name
+                }).then(childResults => {
+                  gAPPP.a.modelSets['frame'].createWithBlobString({
+                    parentKey: childResults.key,
+                    positionX: row.x,
+                    positionY: row.y,
+                    positionZ: row.z,
+                    rotationX: row.rx,
+                    rotationY: row.ry,
+                    rotationZ: row.rz,
+                    scalingX: row.sx,
+                    scalingY: row.sy,
+                    scalingZ: row.sz,
+                    visibility: row.visibility,
+                    frameOrder: 10,
+                    frameTime: 0
+                  }).then(fResults => {});
+                });
+              }
+
+              if (row.asset === 'shape') {
+                let texturename = row.texturepath;
+                let bumptexturename = row.bmppath;
+
+                if (row.scalev) {
+                  if (row.texturepath) {
+                    texturename = row.materialname;
+                    gAPPP.a.modelSets['texture'].createWithBlobString({
+                      title: texturename,
+                      url: row.texturepath,
+                      uScale: row.scaleu,
+                      vScale: row.scalev
+                    }).then(results => {});
+                  }
+
+                  if (row.bmppath) {
+                    bumptexturename = row.materialname + 'bmp';
+                    gAPPP.a.modelSets['texture'].createWithBlobString({
+                      title: bumptexturename,
+                      url: row.bmppath,
+                      uScale: row.scaleu,
+                      vScale: row.scalev
+                    }).then(results => {});
+                  }
+                }
+
+                gAPPP.a.modelSets['material'].createWithBlobString({
+                  title: row.materialname,
+                  ambientColor: row.color,
+                  ambientTextureName: texturename,
+                  backFaceCulling: true,
+                  diffuseColor: row.color,
+                  diffuseTextureName: texturename,
+                  emissiveColor: row.color,
+                  emissiveTextureName: texturename,
+                  bumpTextureName: bumptexturename
                 }).then(results => {});
 
+                gAPPP.a.modelSets['shape'].createWithBlobString({
+                  title: row.name,
+                  materialName: row.materialname,
+                  boxHeight: row.height,
+                  boxWidth: row.width,
+                  boxDepth: row.depth,
+                  shapeType: row.shapetype
+                }).then(results => {});
               }
             }
           }
