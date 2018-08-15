@@ -257,12 +257,15 @@ class cViewMain extends bView {
                   console.log(row.parent, ' - block not found');
                   return;
                 }
-
+                let inheritMaterial = false;
+                if (row.materialname === 'inherit')
+                  inheritMaterial = true;
                 gAPPP.a.modelSets['blockchild'].createWithBlobString({
                   materialName: row.materialname,
                   parentKey: key,
                   childType: row.childtype,
-                  childName: row.name
+                  childName: row.name,
+                  inheritMaterial
                 }).then(childResults => {
                   gAPPP.a.modelSets['frame'].createWithBlobString({
                     parentKey: childResults.key,
@@ -308,17 +311,18 @@ class cViewMain extends bView {
                   }
                 }
 
-                gAPPP.a.modelSets['material'].createWithBlobString({
-                  title: row.materialname,
-                  ambientColor: row.color,
-                  ambientTextureName: texturename,
-                  backFaceCulling: true,
-                  diffuseColor: row.color,
-                  diffuseTextureName: texturename,
-                  emissiveColor: row.color,
-                  emissiveTextureName: texturename,
-                  bumpTextureName: bumptexturename
-                }).then(results => {});
+                if (row.materialname)
+                  gAPPP.a.modelSets['material'].createWithBlobString({
+                    title: row.materialname,
+                    ambientColor: row.color,
+                    ambientTextureName: texturename,
+                    backFaceCulling: true,
+                    diffuseColor: row.color,
+                    diffuseTextureName: texturename,
+                    emissiveColor: row.color,
+                    emissiveTextureName: texturename,
+                    bumpTextureName: bumptexturename
+                  }).then(results => {});
 
                 gAPPP.a.modelSets['shape'].createWithBlobString({
                   title: row.name,
