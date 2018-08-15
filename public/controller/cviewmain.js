@@ -212,15 +212,34 @@ class cViewMain extends bView {
                   type: 'url'
                 }).then(results => {});
 
+                let diffuseColor = '';
+                let diffuseTextureName = '';
+                if (row.diffuse === 'x') {
+                  diffuseColor = row.color;
+                  diffuseTextureName = row.texturepath;
+                }
+                let ambientColor = '';
+                let ambientTextureName = '';
+                if (row.ambient === 'x') {
+                  ambientColor = row.color;
+                  ambientTextureName = row.texturepath;
+                }
+                let emissiveColor = '';
+                let emissiveTextureName = '';
+                if (row.emissive === 'x') {
+                  emissiveColor = row.color;
+                  emissiveTextureName = row.texturepath;
+                }
+
                 gAPPP.a.modelSets['material'].createWithBlobString({
                   title: row.materialname,
-                  ambientColor: row.color,
-                  ambientTextureName: row.texturepath,
+                  ambientColor,
+                  ambientTextureName,
                   backFaceCulling: true,
-                  diffuseColor: row.color,
-                  diffuseTextureName: row.texturepath,
-                  emissiveColor: row.color,
-                  emissiveTextureName: row.texturepath,
+                  diffuseColor,
+                  diffuseTextureName,
+                  emissiveColor,
+                  emissiveTextureName,
                   bumpTextureName: row.bmppath
                 }).then(results => {});
               }
