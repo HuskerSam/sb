@@ -197,7 +197,7 @@ class cViewMain extends bView {
               let row = results.data[c];
               if (row.asset === 'meshtexture') {
                 gAPPP.a.modelSets['mesh'].createWithBlobString({
-                  title: row.meshname,
+                  title: row.name,
                   materialName: row.materialname,
                   url: row.meshpath,
                   positionX: row.x,
