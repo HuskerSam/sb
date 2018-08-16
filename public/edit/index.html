@@ -146,7 +146,7 @@
           <br>
           <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
         </div>
-        <div class="store-item-block-add-options" style="text-align:right;">
+        <div class="store-item-block-add-options" style="text-align:right;display:none;">
           <b>Highlight Details</b>
           <br>
           <label><span>Description</span><textarea style="width:15em;" rows="2" cols="1"  class="store-item-block-description"></textarea></label>
@@ -244,10 +244,10 @@
         <select class="block-type-select">
          <option>Empty</option>
          <option>Scene</option>
-         <option>Text and Shape</option>
+         <option selected>Text and Shape</option>
          <option>Animated Line</option>
          <option>Connector Line</option>
-         <option selected>Store Item</option>
+         <option>Store Item</option>
         </select>
       </div>
       <div class="mesh-add-options" style="display:none">
@@ -493,6 +493,7 @@
   <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+  <script src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/3.2.0/babylon.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>

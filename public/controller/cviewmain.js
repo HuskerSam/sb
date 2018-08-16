@@ -352,6 +352,80 @@ class cViewMain extends bView {
                   shapeType: row.shapetype
                 }).then(results => {});
               }
+
+              if (row.asset === 'blockhighlight') {
+                let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
+                let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+
+                if (!ele) {
+                  console.log(row.parent, ' - block not found');
+                  return;
+                }
+
+                gAPPP.a.modelSets['shape'].createWithBlobString({
+                  title: row.name + 'price',
+                  materialName: 'decolor: .5,.1,.1',
+                  shapeType: 'text',
+                  textFontFamily: 'Arial',
+                  textText: row.price,
+                  textDepth: '.1',
+                  textSize: '100'
+                }).then(results => {});
+                gAPPP.a.modelSets['shape'].createWithBlobString({
+                  title: row.name + 'title',
+                  materialName: 'decolor: .1,.5,.5',
+                  shapeType: 'text',
+                  textFontFamily: 'Times',
+                  textText: row.blocktitle,
+                  textDepth: '.3',
+                  textSize: 100
+                }).then(results => {});
+
+                gAPPP.a.modelSets['blockchild'].createWithBlobString({
+                  parentKey: key,
+                  childType: 'shape',
+                  childName: row.name + 'price',
+                  inheritMaterial: false
+                }).then(childResults => {
+                  gAPPP.a.modelSets['frame'].createWithBlobString({
+                    parentKey: childResults.key,
+                    positionX: '',
+                    positionY: '2',
+                    positionZ: '',
+                    rotationX: '',
+                    rotationY: '180deg',
+                    rotationZ: '-90deg',
+                    scalingX: '',
+                    scalingY: '',
+                    scalingZ: '',
+                    visibility: '',
+                    frameOrder: 10,
+                    frameTime: 0
+                  }).then(fResults => {});
+                });
+                gAPPP.a.modelSets['blockchild'].createWithBlobString({
+                  parentKey: key,
+                  childType: 'shape',
+                  childName: row.name + 'title',
+                  inheritMaterial: false
+                }).then(childResults => {
+                  gAPPP.a.modelSets['frame'].createWithBlobString({
+                    parentKey: childResults.key,
+                    positionX: '',
+                    positionY: '3',
+                    positionZ: '',
+                    rotationX: '',
+                    rotationY: '180deg',
+                    rotationZ: '-90deg',
+                    scalingX: '',
+                    scalingY: '',
+                    scalingZ: '',
+                    visibility: '',
+                    frameOrder: 10,
+                    frameTime: 0
+                  }).then(fResults => {});
+                });
+              }
             }
           }
         }
