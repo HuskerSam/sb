@@ -1,0 +1,62 @@
+#value-set-panel {
+  display: inline-block;
+  padding: .5em;
+  background: rgba(255, 255, 255, .5);
+}
+
+#value-set-panel label span {
+  padding-right: 1.5em;
+}
+
+#publish-profile-panel {
+  right: .25em;
+  bottom: 3.25em;
+  position: absolute;
+}
+
+#publish-settings-button {
+  position: absolute;
+  right: .25em;
+  bottom: .25em;
+}
+
+.font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  transform: none;
+  width: 18em;
+  left: -12.75em;
+  top: .25em;
+  margin-bottom: .75em;
+}
+
+#publish-profile-panel {
+  pointer-events: none;
+}
+
+#publish-profile-panel * {
+  pointer-events: auto;
+}
+
+#publish-profile-panel .fields-container {
+  pointer-events: none;
+}
+
+#publish-profile-panel .fields-container * {
+  pointer-events: auto;
+}
+
+#change-view-anchor {
+  position: absolute;
+  z-index: 1000;
+  top: .25em;
+  right: .25em;
+  padding: .5em;
+  background: rgba(255, 255, 255, .3);
+  border-radius: .25em;
+}
+
+#user-profile-dialog-reset-button {
+  position: absolute;
+  top: .25em;
+  left: .25em;
+  z-index: 100;
+}
