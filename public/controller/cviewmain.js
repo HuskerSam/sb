@@ -252,6 +252,9 @@ class cViewMain extends bView {
                   width: row.width,
                   depth: row.depth
                 }).then(blockResult => {
+                  let frameTime = '0';
+                  if (row.frametime)
+                    frameTime = row.frametime;
                   gAPPP.a.modelSets['frame'].createWithBlobString({
                     parentKey: blockResult.key,
                     positionX: row.x,
@@ -264,7 +267,7 @@ class cViewMain extends bView {
                     scalingY: row.sy,
                     scalingZ: row.sz,
                     frameOrder: 10,
-                    frameTime: 0
+                    frameTime
                   }).then(fResults => {});
                 });
 
@@ -279,14 +282,23 @@ class cViewMain extends bView {
                 let inheritMaterial = false;
                 if (row.materialname === 'inherit')
                   inheritMaterial = true;
-                gAPPP.a.modelSets['blockchild'].createWithBlobString({
+
+                let blockChildData = {
                   materialName: row.materialname,
                   parentKey: key,
                   childType: row.childtype,
                   childName: row.name,
                   inheritMaterial
-                }).then(childResults => {
-                  gAPPP.a.modelSets['frame'].createWithBlobString({
+                };
+
+                if (row.cameraname)
+                  blockChildData.cameraName = row.cameraname;
+                if (row.cameratargetblock)
+                  blockChildData.cameraTargetBlock = row.cameratargetblock;
+
+                gAPPP.a.modelSets['blockchild'].createWithBlobString(blockChildData).then(childResults => {
+
+                  let frameData = {
                     parentKey: childResults.key,
                     positionX: row.x,
                     positionY: row.y,
@@ -298,9 +310,25 @@ class cViewMain extends bView {
                     scalingY: row.sy,
                     scalingZ: row.sz,
                     visibility: row.visibility,
-                    frameOrder: 10,
-                    frameTime: 0
-                  }).then(fResults => {});
+                    frameOrder: '10',
+                    frameTime: '0'
+                  };
+
+                  if (row.cameraradius)
+                    frameData.cameraRadius = row.cameraradius;
+                  if (row.cameraheightoffset)
+                    frameData.cameraHeightOffset = row.cameraheightoffset;
+                  if (row.cameraacceleration)
+                    frameData.cameraAcceleration = row.cameraacceleration;
+                  if (row.maxcameraspeed)
+                    frameData.maxCameraSpeed = row.maxcameraspeed;
+                  if (row.camerafov)
+                    frameData.cameraFOV = row.camerafov;
+                  if (row.camerarotationoffset)
+                    frameData.cameraRotationOffset = row.camerarotationoffset;
+                  console.log(frameData);
+
+                  gAPPP.a.modelSets['frame'].createWithBlobString(frameData).then(fResults => {});
                 });
               }
 
@@ -425,6 +453,41 @@ class cViewMain extends bView {
                     frameTime: 0
                   }).then(fResults => {});
                 });
+              }
+
+              if (row.asset === 'blockchildframe') {
+                let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
+                let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+
+                if (!ele) {
+                  console.log(row.parent, ' - block not found');
+                  return;
+                }
+
+                let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', key);
+                for (let c in children) {
+                  let d = children[c];
+                  if (d.childType === row.childtype && d.childName === row.name) {
+
+                    let frameData = {
+                      parentKey: c,
+                      positionX: row.x,
+                      positionY: row.y,
+                      positionZ: row.z,
+                      rotationX: row.rx,
+                      rotationY: row.ry,
+                      rotationZ: row.rz,
+                      scalingX: row.sx,
+                      scalingY: row.sy,
+                      scalingZ: row.sz,
+                      visibility: row.visibility,
+                      frameOrder: row.frameorder,
+                      frameTime: row.frametime
+                    };
+                    gAPPP.a.modelSets['frame'].createWithBlobString(frameData).then(fResults => {});
+                    break;
+                  }
+                }
               }
             }
           }

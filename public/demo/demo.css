@@ -60,3 +60,7 @@
   left: .25em;
   z-index: 100;
 }
+
+.canvas-actions {
+  display: none;
+}

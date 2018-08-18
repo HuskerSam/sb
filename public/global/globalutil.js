@@ -81,7 +81,7 @@ class GLOBALUTIL {
   static getVector(str, x, y, z) {
     if (str !== undefined)
       if (str !== '') {
-        let parts = str.trim().split(',');
+        let parts = str.toString().trim().split(',');
         x = GLOBALUTIL.getNumberOrDefault(parts[0], x);
         y = GLOBALUTIL.getNumberOrDefault(parts[1], y);
         z = GLOBALUTIL.getNumberOrDefault(parts[2], z);
