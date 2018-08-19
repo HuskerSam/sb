@@ -15,8 +15,10 @@ class gDemoApp extends gAppSuper {
     let workspaceCode = urlParams.get('z');
     let blockCode = urlParams.get('y');
 
-    blockCode = 'Week 1';
-    workspaceCode = 'demo';
+    blockCode = 'demo';
+
+    if (!workspaceCode)
+      workspaceCode = 'Week 1';
     if (workspaceCode) {
       let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('code', workspaceCode);
       if (data)
@@ -47,13 +49,34 @@ class gDemoApp extends gAppSuper {
     document.getElementById('show-onion').addEventListener('click', () => this.showBasketGood('spring onions'));
 
     document.getElementById('show-controls').addEventListener('click', () => this.toggleShowControls());
+
+    document.getElementById('week-picker-select').addEventListener('input', () => this.changeSelectedWeek());
+    document.getElementById('week-picker-select').value = workspaceCode;
+  }
+  changeSelectedWeek() {
+    let projCode = document.getElementById('week-picker-select').value;
+/*
+    let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('code', projCode);
+    if (data) {
+      let workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
+
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'selectedWorkspace',
+        newValue: workspace
+      }]);
+      setTimeout(() => location.reload(), 100);
+    }
+    */
+    console.log(location);
+    let path = location.origin + location.pathname + '?z=' + projCode;
+    window.location = path;
+//    setTimeout(() => location.reload(), 100);
   }
   toggleShowControls() {
-    if (! this.controlsShown) {
+    if (!this.controlsShown) {
       this.controlsShown = true;
       document.querySelector('.canvas-actions').style.display = 'block';
-    }
-    else {
+    } else {
       this.controlsShown = false;
       document.querySelector('.canvas-actions').style.display = 'none';
     }
@@ -73,11 +96,11 @@ class gDemoApp extends gAppSuper {
     for (let i in frames)
       frameIds.push(i);
 
-      if (frameIds.length > 0)
-        gAPPP.a.modelSets['frame'].commitUpdateList([{
-          field: 'positionY',
-          newValue: "-5"
-        }], frameIds[0]);
+    if (frameIds.length > 0)
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "-5"
+      }], frameIds[0]);
   }
 
   showBasketGood(name) {
@@ -89,10 +112,10 @@ class gDemoApp extends gAppSuper {
     for (let i in frames)
       frameIds.push(i);
 
-      if (frameIds.length > 0)
-        gAPPP.a.modelSets['frame'].commitUpdateList([{
-          field: 'positionY',
-          newValue: "1.5"
-        }], frameIds[0]);
+    if (frameIds.length > 0)
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "1.5"
+      }], frameIds[0]);
   }
 }
