@@ -15,7 +15,7 @@ class gDemoApp extends gAppSuper {
     let workspaceCode = urlParams.get('z');
     let blockCode = urlParams.get('y');
 
-    blockCode = 'demo';
+    blockCode = 'Week 1';
     workspaceCode = 'demo';
     if (workspaceCode) {
       let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('code', workspaceCode);
