@@ -385,6 +385,9 @@ class cPanelCanvas {
       this._updateFOVRangeSlider();
 
       this.cameraShown = true;
+
+      if (this.cameraShownCallback)
+        this.cameraShownCallback();
     }
     if (this.rootBlock) {
       if (this.cameraSelect.value === 'default')

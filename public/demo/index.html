@@ -18,91 +18,107 @@
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
-  <!-- CANVAS 3D PLAYER TEMPLATE -->
-  <div id="canvas-d3-player-template" style="display:none;">
-    <canvas class="popup-canvas"></canvas>
-    <div class="video-overlay">
-      <video></video>
+    <div id="demo-profile-panel">
+      <button id="show-pear">Pears</button>
+      <button id="show-apple">Apples</button>
+      <button id="show-onion">Spring Onions</button>
+      <button id="show-plum">Plums</button>
+      <button id="clear-basket">Clear</button>
+      <br>
+      <select style="float:right;">
+        <option>Week 1</option>
+        <option>Week 2</option>
+        <option>Week 3</option>
+        <option>Week 4</option>
+        <option>Week 5</option>
+      </select>
     </div>
-    <div class="canvas-actions">
-      <div class="canvas-play-bar">
-        <div class="scene-options-panel" style="display:none;">
-          <div class="scene-fields-container">
-          </div>
-          <div class="render-log-wrapper" style="display:none;">
-            <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
-            <textarea class="render-log-panel" spellcheck="false"></textarea>
-            <div class="fields-container" style="display:none;"></div>
+
+    <!-- CANVAS 3D PLAYER TEMPLATE -->
+    <div id="canvas-d3-player-template" style="display:none;">
+      <canvas class="popup-canvas"></canvas>
+      <div class="video-overlay">
+        <video></video>
+      </div>
+      <div class="canvas-actions">
+        <div class="canvas-play-bar">
+          <div class="scene-options-panel" style="display:none;">
+            <div class="scene-fields-container">
+            </div>
+            <div class="render-log-wrapper" style="display:none;">
+              <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+              <textarea class="render-log-panel" spellcheck="false"></textarea>
+              <div class="fields-container" style="display:none;"></div>
+            </div>
+            <br>
+            <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+            <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+            <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+            <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
           </div>
           <br>
-          <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
-          <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
-          <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
-          <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
-        </div>
-        <br>
-        <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
-        <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
-        <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
-        <div class="run-length-label"></div>
-        <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-        <div class="camera-options-panel" style="display:inline-block;">
-          <select class="camera-select" style=""></select>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">Radius</div>
-            <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+          <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
+          <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
+          <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
+          <div class="run-length-label"></div>
+          <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+          <div class="camera-options-panel" style="display:inline-block;">
+            <select class="camera-select" style=""></select>
+            <div style="display:inline-block;">
+              <div class="camera-slider-label">Radius</div>
+              <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+            </div>
+            <div style="display:inline-block;">
+              <div class="camera-slider-label">FOV</div>
+              <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+            </div>
+            <div style="display:inline-block;">
+              <div class="camera-slider-label">Height</div>
+              <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+            </div>
+            <div class="fields-container" style="float:left"></div>
           </div>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">FOV</div>
-            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
-          </div>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">Height</div>
-            <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
-          </div>
-          <div class="fields-container" style="float:left"></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="/global/globalutil.js"></script>
-  <script src="/global/sdatadefinition.js"></script>
-  <script src="/global/text3d.js"></script>
-  <script src="/global/gappsuper.js"></script>
-  <script src="/global/gauthorization.js"></script>
+    <script src="/global/globalutil.js"></script>
+    <script src="/global/sdatadefinition.js"></script>
+    <script src="/global/text3d.js"></script>
+    <script src="/global/gappsuper.js"></script>
+    <script src="/global/gauthorization.js"></script>
 
-  <script src="/webgl/wframes.js"></script>
-  <script src="/webgl/wblock.js"></script>
-  <script src="/webgl/wcontext.js"></script>
-  <script src="/webgl/wgenerate.js"></script>
+    <script src="/webgl/wframes.js"></script>
+    <script src="/webgl/wblock.js"></script>
+    <script src="/webgl/wcontext.js"></script>
+    <script src="/webgl/wgenerate.js"></script>
 
-  <script src="/model/bfirebase.js"></script>
-  <script src="/model/mfirebaselist.js"></script>
-  <script src="/model/mfirebaseprofile.js"></script>
-  <script src="/model/mfirebaseproject.js"></script>
+    <script src="/model/bfirebase.js"></script>
+    <script src="/model/mfirebaselist.js"></script>
+    <script src="/model/mfirebaseprofile.js"></script>
+    <script src="/model/mfirebaseproject.js"></script>
 
-  <script src="/controller/bview.js"></script>
-  <script src="/controller/cpanelcanvas.js"></script>
-  <script src="/controller/cbandprofileoptions.js"></script>
-  <script src="/controller/cpaneldata.js"></script>
-  <script src="/controller/cpanelhelpers.js"></script>
+    <script src="/controller/bview.js"></script>
+    <script src="/controller/cpanelcanvas.js"></script>
+    <script src="/controller/cbandprofileoptions.js"></script>
+    <script src="/controller/cpaneldata.js"></script>
+    <script src="/controller/cpanelhelpers.js"></script>
 
-  <script src="/demo/cviewdemo.js"></script>
-  <script src="/demo/gdemoapp.js"></script>
+    <script src="/demo/cviewdemo.js"></script>
+    <script src="/demo/gdemoapp.js"></script>
 
-  <script src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/3.2.0/babylon.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
-  <script src="/__/firebase/init.js"></script>
+    <script src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/3.2.0/babylon.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <script src="/__/firebase/init.js"></script>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
-  <link rel="stylesheet" href="/global/common.css">
-  <link rel="stylesheet" href="/demo/demo.css">
-  <datalist id="sbimageslist"></datalist>
-  <datalist id="elementidlist"></datalist>
-  <datalist id="fieldnamelist"></datalist>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
+    <link rel="stylesheet" href="/global/common.css">
+    <link rel="stylesheet" href="/demo/demo.css">
+    <datalist id="sbimageslist"></datalist>
+    <datalist id="elementidlist"></datalist>
+    <datalist id="fieldnamelist"></datalist>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 'use strict';
-class gDemoApp extends gAppSuper  {
+class gDemoApp extends gAppSuper {
   constructor() {
     super();
     this.a = new gAuthorization();
@@ -39,5 +39,48 @@ class gDemoApp extends gAppSuper  {
       this.mV = new cViewDemo();
       this._updateApplicationStyle();
     };
+
+    document.getElementById('clear-basket').addEventListener('click', () => this.hideBasketGoods());
+    document.getElementById('show-apple').addEventListener('click', () => this.showBasketGood('apples'));
+    document.getElementById('show-pear').addEventListener('click', () => this.showBasketGood('pears'));
+    document.getElementById('show-plum').addEventListener('click', () => this.showBasketGood('plums'));
+    document.getElementById('show-onion').addEventListener('click', () => this.showBasketGood('spring onions'));
+  }
+  hideBasketGoods() {
+    this._hideBasketGood('apples');
+    this._hideBasketGood('pears');
+    this._hideBasketGood('plums');
+    this._hideBasketGood('spring onions');
+  }
+  _hideBasketGood(name) {
+    let frames =
+      this.mV.rootBlock._findBestTargetObject('block:basketcart').
+    _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
+
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
+
+      if (frameIds.length > 0)
+        gAPPP.a.modelSets['frame'].commitUpdateList([{
+          field: 'positionY',
+          newValue: "-5"
+        }], frameIds[0]);
+  }
+
+  showBasketGood(name) {
+    let frames =
+      this.mV.rootBlock._findBestTargetObject('block:basketcart').
+    _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
+
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
+
+      if (frameIds.length > 0)
+        gAPPP.a.modelSets['frame'].commitUpdateList([{
+          field: 'positionY',
+          newValue: "1.5"
+        }], frameIds[0]);
   }
 }

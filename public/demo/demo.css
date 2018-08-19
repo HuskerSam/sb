@@ -8,9 +8,9 @@
   padding-right: 1.5em;
 }
 
-#publish-profile-panel {
+#demo-profile-panel {
   right: .25em;
-  bottom: 3.25em;
+  top: .25em;
   position: absolute;
 }
 
