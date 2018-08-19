@@ -45,6 +45,18 @@ class gDemoApp extends gAppSuper {
     document.getElementById('show-pear').addEventListener('click', () => this.showBasketGood('pears'));
     document.getElementById('show-plum').addEventListener('click', () => this.showBasketGood('plums'));
     document.getElementById('show-onion').addEventListener('click', () => this.showBasketGood('spring onions'));
+
+    document.getElementById('show-controls').addEventListener('click', () => this.toggleShowControls());
+  }
+  toggleShowControls() {
+    if (! this.controlsShown) {
+      this.controlsShown = true;
+      document.querySelector('.canvas-actions').style.display = 'block';
+    }
+    else {
+      this.controlsShown = false;
+      document.querySelector('.canvas-actions').style.display = 'none';
+    }
   }
   hideBasketGoods() {
     this._hideBasketGood('apples');
