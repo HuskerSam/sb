@@ -13,27 +13,69 @@
 </head>
 
 <body>
+  <style>
+    .user-options-panel {
+      bottom: .25em;
+      position: absolute;
+      z-index: 1000;
+      text-align: center;
+      width: 100%;
+    }
+
+    .user-options-panel button {
+      width: 20%;
+      max-width: 200px;
+      border: solid .1em silver;
+      font-size: 10pt;
+      padding: .1em;
+      font-weight: bold;
+    }
+
+    .choice-button-one {
+      background: rgb(255, 255, 0);
+    }
+
+    .choice-button-two {
+      background: rgb(0, 255, 0);
+    }
+
+    .choice-button-three {
+      background: rgb(0, 0, 255);
+      color: white;
+    }
+
+    .choice-button-four {
+      background: rgb(255, 0, 0);
+    }
+
+    button.choice-button-clear, button.show-more-controls {
+      background: rgb(255,0,255);
+      color: white;
+      font-weight: bold;
+      padding: .1em;
+      font-size: 10pt;
+    }
+  </style>
   <div id="firebase-app-login-page">Loading...</div>
   <div id="firebase-app-main-page" style="display:none;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
-    <div id="demo-profile-panel">
-      <a href="/demo/about.html" target="_blank" style="float:right;padding:4px;background:white;">About</a>
-      <br>
-      <button id="show-pear">Pears</button>
-      <button id="show-apple">Apples</button>
-      <button id="show-onion">Spring Onions</button>
-      <button id="show-plum">Plums</button>
-      <button id="clear-basket">Clear</button>
-      <br>
-      <button id="show-controls" style="display:none;">Show Controls</button>
-      <br>
-      <select id="week-picker-select" style="float:right;">
+    <div class="user-options-panel">
+      <button class="choice-button-one">Pears<br>$ 1.99 / lb</button>
+      <button class="choice-button-two">Apples<br>$ .99 / lb</button>
+      <button class="choice-button-three">Plums<br>2 for $1</button>
+      <button class="choice-button-four">Onions<br>3 for $1</button>
+    </div>
+    <div id="demo-profile-panel" style="text-align:center; width: 100%;">
+      <select id="week-picker-select" style="float:left;">
         <option>Week 1</option>
         <option>Week 2</option>
         <option>Week 3</option>
       </select>
+      <button class="choice-button-clear">Clear Basket</button>
+      <button class="show-more-controls" style="display:none;">Controls</button>
+      <a href="/demo/about.html" target="_blank" style="float:right;padding:4px;background:white;">About</a>
     </div>
 
     <!-- CANVAS 3D PLAYER TEMPLATE -->

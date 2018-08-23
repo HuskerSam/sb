@@ -9,7 +9,6 @@
 }
 
 #demo-profile-panel {
-  right: .25em;
   top: .25em;
   position: absolute;
 }
@@ -63,4 +62,5 @@
 
 .canvas-actions {
   display: none;
+  bottom: 3em;
 }

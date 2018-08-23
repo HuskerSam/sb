@@ -42,13 +42,13 @@ class gDemoApp extends gAppSuper {
       this._updateApplicationStyle();
     };
 
-    document.getElementById('clear-basket').addEventListener('click', () => this.hideBasketGoods());
-    document.getElementById('show-apple').addEventListener('click', () => this.showBasketGood('apples'));
-    document.getElementById('show-pear').addEventListener('click', () => this.showBasketGood('pears'));
-    document.getElementById('show-plum').addEventListener('click', () => this.showBasketGood('plums'));
-    document.getElementById('show-onion').addEventListener('click', () => this.showBasketGood('spring onions'));
+    document.querySelector('.choice-button-clear').addEventListener('click', () => this.hideBasketGoods());
+    document.querySelector('.choice-button-one').addEventListener('click', () => this.showBasketGood('apples'));
+    document.querySelector('.choice-button-two').addEventListener('click', () => this.showBasketGood('pears'));
+    document.querySelector('.choice-button-three').addEventListener('click', () => this.showBasketGood('plums'));
+    document.querySelector('.choice-button-four').addEventListener('click', () => this.showBasketGood('spring onions'));
 
-    document.getElementById('show-controls').addEventListener('click', () => this.toggleShowControls());
+    document.querySelector('.show-more-controls').addEventListener('click', () => this.toggleShowControls());
 
     document.getElementById('week-picker-select').addEventListener('input', () => this.changeSelectedWeek());
     document.getElementById('week-picker-select').value = workspaceCode;
