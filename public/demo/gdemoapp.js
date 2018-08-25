@@ -67,6 +67,17 @@ class gDemoApp extends gAppSuper {
       setTimeout(() => location.reload(), 100);
     }
     */
+
+    if (projCode === 'About') {
+      let anchor = document.createElement('a');
+      anchor.setAttribute('href', '/demo/about.html');
+      anchor.setAttribute('target', '_blank');
+      document.body.appendChild(anchor)
+      anchor.click();
+      document.body.removeChild(anchor);
+      return;
+    }
+
     console.log(location);
     let path = location.origin + location.pathname + '?z=' + projCode;
     window.location = path;
@@ -117,5 +128,13 @@ class gDemoApp extends gAppSuper {
         field: 'positionY',
         newValue: "1.5"
       }], frameIds[0]);
+  }
+  updateProfile() {
+/*
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'cameraPositionSave' + this.rootBlock.blockKey,
+      newValue: cp
+    }]);
+    */
   }
 }

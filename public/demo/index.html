@@ -14,29 +14,50 @@
 
 <body>
   <style>
+    .canvas-actions {
+      display: none;
+      bottom: 3em !important;
+    }
+
+    #demo-profile-panel {
+      top: .25em;
+      position: absolute;
+    }
+
+    #week-picker-select {
+      font-size: 12pt;
+      margin: .25em;
+      padding: .5em;
+      background: rgb(240, 240, 240);
+      border: none;
+    }
+
     .user-options-panel {
-      bottom: .25em;
+      bottom: 0;
+      padding: .25em;
       position: absolute;
       z-index: 1000;
-      text-align: center;
-      width: 100%;
+      width: 50%;
     }
 
     .user-options-panel button {
-      width: 20%;
-      max-width: 200px;
-      border: solid .1em silver;
-      font-size: 10pt;
-      padding: .1em;
-      font-weight: bold;
+      border: none;
+      padding: .15em;
+      float: left;
+      clear: left;
+      font-size: 9pt;
+      margin: .35em 0;
+      width: 100%;
+      border-radius: .25em;
+      line-height: 3em;
     }
 
     .choice-button-one {
-      background: rgb(255, 0, 0);
+      background: rgb(255, 90, 90);
     }
 
     .choice-button-two {
-      background: rgb(0, 255, 0);
+      background: rgb(0, 200, 0);
     }
 
     .choice-button-three {
@@ -48,13 +69,83 @@
       background: rgb(255, 255, 0);
     }
 
-    button.choice-button-clear, button.show-more-controls {
-      background: rgb(255,0,255);
-      color: white;
-      font-weight: bold;
-      padding: .5em;
-      font-size: 10pt;
+    .cart-contents,
+    .cart-total {
+      position: absolute;
+      z-index: 1000;
+      right: .25em;
+      bottom: 4em;
+      padding: .25em;
+      width: calc(50% - .75em);
+      text-align: right;
+      height: 30em;
+      overflow: auto;
+      border: solid .25em white;
+      border-radius: .75em;
+      max-width: 35em;
+      max-height: 45%;
     }
+
+    .cart-total {
+      bottom: .25em;
+      height: 3.5em;
+      overflow: visible;
+      border: none;
+    }
+
+    .cart-item {
+      clear: both;
+      display: inline-block;
+      overflow: visible;
+    }
+
+    .cart-item .cart-item-description {
+      background: rgb(255, 255, 255);
+      padding: .25em;
+      padding-left: 1em;
+      padding-right: 1.5em;
+    }
+
+    .cart-item .cart-item-detail {
+      background: rgb(255, 255, 255);
+      padding: .25em;
+      padding-left: 1em;
+      padding-right: 1.5em;
+    }
+
+    .cart-item .cart-item-total {
+      background: rgb(255, 255, 255);
+      padding: .15em .75em;
+      font-size: 16pt;
+      line-height: 1.5em;
+      font-weight: bold;
+      color: rgb(0,255,0);
+      background: black;
+    }
+
+    .cart-item .cart-item-remove {
+      background: none;
+      border: none;
+      color: red;
+      font-weight: bold;
+      font-size: 3em;
+      float: right;
+    }
+
+    .cart-item .cart-submit {
+      float: right;
+      margin-left: .15em;
+      font-size: 14pt;
+      font-family: Georgia;
+      border: none;
+      background: rgb(240,240,240);
+      line-height: 2em;
+    }
+
+    .cart-left-side {
+      float: left;
+    }
+
   </style>
   <div id="firebase-app-login-page">Loading...</div>
   <div id="firebase-app-main-page" style="display:none;">
@@ -62,20 +153,90 @@
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
     <div class="user-options-panel">
-      <button class="choice-button-one">Pears<br>2 for $1</button>
-      <button class="choice-button-two">Watermelon<br>$5 each</button>
-      <button class="choice-button-three">Apples<br>$ 1.99 / lb</button>
-      <button class="choice-button-four">Onions<br>$ .89 / lb</button>
+      <button class="choice-button-one">Pears &nbsp; 2 for $1</button>
+      <br>
+      <button class="choice-button-two">Watermelon &nbsp; $5 each</button>
+      <br>
+      <button class="choice-button-three">Apples &nbsp; $ 1.99 / lb</button>
+      <br>
+      <button class="choice-button-four">Onions &nbsp; $ .89 / lb</button>
     </div>
-    <div id="demo-profile-panel" style="text-align:center; width: 100%;">
-      <select id="week-picker-select" style="float:left;">
+    <div class="cart-contents">
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-left-side">
+          <div class="cart-item-description">Apples $3.98</div>
+          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+        </div>
+      </div>
+      <br>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-left-side">
+          <div class="cart-item-description">Apples $3.98</div>
+          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+        </div>
+      </div>
+      <br>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-left-side">
+          <div class="cart-item-description">Apples $3.98</div>
+          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+        </div>
+      </div>
+      <br>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-left-side">
+          <div class="cart-item-description">Apples $3.98</div>
+          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+        </div>
+      </div>
+      <br>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-left-side">
+          <div class="cart-item-description">Apples $3.98</div>
+          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+        </div>
+      </div>
+      <br>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-left-side">
+          <div class="cart-item-description">Apples $3.98</div>
+          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+        </div>
+      </div>
+      <br>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-left-side">
+          <div class="cart-item-description">Apples $3.98</div>
+          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+        </div>
+      </div>
+    </div>
+    <div class="cart-total">
+      <div class="cart-item">
+        <button class="choice-button-clear cart-submit">Checkout</button>
+        <div class="cart-left-side">
+          <div class="cart-item-total">$ 7.96</div>
+        </div>
+      </div>
+      <br>
+      <br>
+    </div>
+
+    <div id="demo-profile-panel">
+      <select id="week-picker-select">
         <option>Week 1</option>
         <option>Week 2</option>
         <option>Week 3</option>
+        <option>About</option>
       </select>
-      <button class="choice-button-clear"> Clear Basket </button>
       <button class="show-more-controls" style="display:none;">Controls</button>
-      <a href="/demo/about.html" target="_blank" style="float:right;padding:4px;background:white;">About</a>
     </div>
 
     <!-- CANVAS 3D PLAYER TEMPLATE -->
