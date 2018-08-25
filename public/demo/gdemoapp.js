@@ -113,7 +113,9 @@ class gDemoApp extends gAppSuper {
         newValue: "-5"
       }], frameIds[0]);
   }
+  addCartItem(itemId) {
 
+  }
   showBasketGood(name) {
     let frames =
       this.mV.rootBlock._findBestTargetObject('block:basketcart').
@@ -128,6 +130,27 @@ class gDemoApp extends gAppSuper {
         field: 'positionY',
         newValue: "1.5"
       }], frameIds[0]);
+  }
+  _addCartItemDOM() {
+    let description = 'Apples $3.98';
+    let detail = '2 @ $ 1.99 / lb';
+    let template =
+    `<div class="cart-item">
+      <button class="cart-item-remove">X</button>
+      <div class="cart-item-description">${description}</div>
+      <br>
+      <div class="cart-item-detail">${detail}</div>
+    </div>`;
+
+    let cartItem = document.createElement('div');
+    cartItem.innerHTML = template;
+    let cartItemObj = {};
+
+    cartItemObj.dom = cartItem;
+    cartItemObj.removeDom = cartItem.querySelector('.cart-item-remove');
+    cartItemObj.descriptionDom = cartItem.querySelector('.cart-item-description');
+    cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
+
   }
   updateProfile() {
 /*

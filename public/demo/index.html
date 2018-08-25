@@ -13,140 +13,6 @@
 </head>
 
 <body>
-  <style>
-    .canvas-actions {
-      display: none;
-      bottom: 3em !important;
-    }
-
-    #demo-profile-panel {
-      top: .25em;
-      position: absolute;
-    }
-
-    #week-picker-select {
-      font-size: 12pt;
-      margin: .25em;
-      padding: .5em;
-      background: rgb(240, 240, 240);
-      border: none;
-    }
-
-    .user-options-panel {
-      bottom: 0;
-      padding: .25em;
-      position: absolute;
-      z-index: 1000;
-      width: 50%;
-    }
-
-    .user-options-panel button {
-      border: none;
-      padding: .15em;
-      float: left;
-      clear: left;
-      font-size: 9pt;
-      margin: .35em 0;
-      width: 100%;
-      border-radius: .25em;
-      line-height: 3em;
-    }
-
-    .choice-button-one {
-      background: rgb(255, 90, 90);
-    }
-
-    .choice-button-two {
-      background: rgb(0, 200, 0);
-    }
-
-    .choice-button-three {
-      background: rgb(0, 0, 255);
-      color: white;
-    }
-
-    .choice-button-four {
-      background: rgb(255, 255, 0);
-    }
-
-    .cart-contents,
-    .cart-total {
-      position: absolute;
-      z-index: 1000;
-      right: .25em;
-      bottom: 4em;
-      padding: .25em;
-      width: calc(50% - .75em);
-      text-align: right;
-      height: 30em;
-      overflow: auto;
-      border: solid .25em white;
-      border-radius: .75em;
-      max-width: 35em;
-      max-height: 45%;
-    }
-
-    .cart-total {
-      bottom: .25em;
-      height: 3.5em;
-      overflow: visible;
-      border: none;
-    }
-
-    .cart-item {
-      clear: both;
-      display: inline-block;
-      overflow: visible;
-    }
-
-    .cart-item .cart-item-description {
-      background: rgb(255, 255, 255);
-      padding: .25em;
-      padding-left: 1em;
-      padding-right: 1.5em;
-    }
-
-    .cart-item .cart-item-detail {
-      background: rgb(255, 255, 255);
-      padding: .25em;
-      padding-left: 1em;
-      padding-right: 1.5em;
-    }
-
-    .cart-item .cart-item-total {
-      background: rgb(255, 255, 255);
-      padding: .15em .75em;
-      font-size: 16pt;
-      line-height: 1.5em;
-      font-weight: bold;
-      color: rgb(0,255,0);
-      background: black;
-    }
-
-    .cart-item .cart-item-remove {
-      background: none;
-      border: none;
-      color: red;
-      font-weight: bold;
-      font-size: 3em;
-      float: right;
-    }
-
-    .cart-item .cart-submit {
-      float: right;
-      margin-left: .15em;
-      font-size: 14pt;
-      font-family: Georgia;
-      border: none;
-      background: rgb(240,240,240);
-      line-height: 2em;
-    }
-
-    .cart-left-side {
-      float: left;
-    }
-
-  </style>
   <div id="firebase-app-login-page">Loading...</div>
   <div id="firebase-app-main-page" style="display:none;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
@@ -164,69 +30,94 @@
     <div class="cart-contents">
       <div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <div class="cart-left-side">
-          <div class="cart-item-description">Apples $3.98</div>
-          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
-        </div>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
       </div>
-      <br>
       <div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <div class="cart-left-side">
-          <div class="cart-item-description">Apples $3.98</div>
-          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
-        </div>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
       </div>
-      <br>
       <div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <div class="cart-left-side">
-          <div class="cart-item-description">Apples $3.98</div>
-          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
-        </div>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
       </div>
-      <br>
       <div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <div class="cart-left-side">
-          <div class="cart-item-description">Apples $3.98</div>
-          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
-        </div>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
       </div>
-      <br>
       <div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <div class="cart-left-side">
-          <div class="cart-item-description">Apples $3.98</div>
-          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
-        </div>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
       </div>
-      <br>
       <div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <div class="cart-left-side">
-          <div class="cart-item-description">Apples $3.98</div>
-          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
-        </div>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
       </div>
-      <br>
       <div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <div class="cart-left-side">
-          <div class="cart-item-description">Apples $3.98</div>
-          <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
-        </div>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+      </div>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+      </div>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+      </div>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+      </div>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+      </div>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+      </div>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
+      </div>
+      <div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">Apples $3.98</div>
+        <br>
+        <div class="cart-item-detail">2 @ $ 1.99 / lb</div>
       </div>
     </div>
     <div class="cart-total">
       <div class="cart-item">
+        <div class="cart-item-total">$907.96</div>
         <button class="choice-button-clear cart-submit">Checkout</button>
-        <div class="cart-left-side">
-          <div class="cart-item-total">$ 7.96</div>
-        </div>
       </div>
-      <br>
-      <br>
     </div>
 
     <div id="demo-profile-panel">

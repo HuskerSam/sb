@@ -1,0 +1,137 @@
+.canvas-actions {
+  display: none;
+  bottom: 3em !important;
+}
+
+#demo-profile-panel {
+  top: .25em;
+  position: absolute;
+}
+
+#week-picker-select {
+  font-size: 12pt;
+  margin: .25em;
+  padding: .5em;
+  background: rgb(240, 240, 240);
+  border: none;
+}
+
+.user-options-panel {
+  bottom: 0;
+  padding: .25em;
+  position: absolute;
+  z-index: 1000;
+  width: 50%;
+}
+
+.user-options-panel button {
+  border: none;
+  padding: .15em;
+  float: left;
+  clear: left;
+  font-size: 9pt;
+  margin: .35em 0;
+  width: 100%;
+  border-radius: .25em;
+  line-height: 3em;
+  max-width: 35em;
+}
+
+.choice-button-one {
+  background: rgba(255, 90, 90, .8);
+}
+
+.choice-button-two {
+  background: rgba(0, 200, 0, .67);
+}
+
+.choice-button-three {
+  background: rgba(0, 0, 255, .5);
+  color: white;
+}
+
+.choice-button-four {
+  background: rgba(255, 255, 0, .67);
+}
+
+.cart-contents,
+.cart-total {
+  position: absolute;
+  z-index: 1000;
+  right: .25em;
+  bottom: 4em;
+  padding: .25em;
+  width: calc(50% - .75em);
+  text-align: right;
+  height: 30em;
+  overflow: auto;
+  border: solid .25em white;
+  border-radius: .75em;
+  max-width: 35em;
+  max-height: 45%;
+  font-size: 10pt;
+}
+
+.cart-total {
+  bottom: .25em;
+  height: 3.5em;
+  overflow: visible;
+  border: none;
+}
+
+.cart-item {
+  overflow: visible;
+  white-space: nowrap;
+  margin-bottom: .5em;
+}
+
+.cart-item .cart-item-description {
+  background: rgba(255, 255, 255, .67);
+  padding: .25em;
+  padding-left: 1em;
+  display: inline-block;
+}
+
+.cart-item .cart-item-detail {
+  background: rgba(255, 255, 255, .33);
+  padding: .25em;
+  color: blue;
+  padding-left: 1em;
+  padding-right: 1em;
+  display: inline-block;
+  margin-right: .25em;
+}
+
+.cart-item .cart-item-total {
+  background: rgb(255, 255, 255);
+  padding: .15em .25em;
+  font-size: 14pt;
+  line-height: 1.5em;
+  font-weight: bold;
+  color: rgb(0, 255, 0);
+  background: black;
+  display: inline-block;
+}
+
+.cart-item .cart-item-remove {
+  background: none;
+  border: solid .1em red;
+  color: red;
+  font-weight: bold;
+  float: right;
+  line-height: 2.8em;
+  border-radius: .75em;
+}
+
+.cart-item .cart-submit {
+  margin-left: .15em;
+  font-size: 12pt;
+  font-family: Georgia;
+  border: none;
+  background: rgb(240, 240, 240);
+  line-height: 2em;
+}
+
+.cart-left-side {
+  float: left;
+}
