@@ -259,6 +259,7 @@ class cViewMain extends bView {
                   blockData.itemDesc = row.itemdesc;
                   blockData.itemPrice = row.itemprice;
                   blockData.itemCount = row.itemcount;
+                  blockData.itemIndex = row.itemindex;
                 }
 
                 gAPPP.a.modelSets['block'].createWithBlobString(blockData).then(blockResult => {

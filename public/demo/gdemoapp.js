@@ -40,6 +40,8 @@ class gDemoApp extends gAppSuper {
       gAPPP.a.profile['selectedBlockKey' + workspace] = block;
       this.mV = new cViewDemo();
       this._updateApplicationStyle();
+
+      this.updateProducts();
     };
 
     document.querySelector('.choice-button-clear').addEventListener('click', () => this.hideBasketGoods());
@@ -53,22 +55,49 @@ class gDemoApp extends gAppSuper {
     document.getElementById('week-picker-select').addEventListener('input', () => this.changeSelectedWeek());
     document.getElementById('week-picker-select').value = workspaceCode;
 
-    console.log(gAPPP.a.modelSets['block']);
+  }
+  updateProducts() {
+    let bD = gAPPP.a.modelSets['block'].fireDataValuesByKey;
+    this.products = [];
+    for (let i in bD) {
+      let b = bD[i];
+      if (b.itemId) {
+        this.products.push({
+          cacheRef: b,
+          blockId: i,
+          itemId: b.itemId,
+          itemIndex: b.itemIndex,
+          title: b.itemTitle,
+          itemCount: b.itemCount,
+          desc: b.itemDesc,
+          price: b.itemPrice
+        });
+      }
+    }
+
+    this.products.sort((a, b) => {
+      if (a.itemIndex > b.itemIndex)
+        return 1;
+      if (a.itemIndex < b.itemIndex)
+        return -1;
+      return 0;
+    });
+
   }
   changeSelectedWeek() {
     let projCode = document.getElementById('week-picker-select').value;
-/*
-    let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('code', projCode);
-    if (data) {
-      let workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
+    /*
+        let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('code', projCode);
+        if (data) {
+          let workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
 
-      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-        field: 'selectedWorkspace',
-        newValue: workspace
-      }]);
-      setTimeout(() => location.reload(), 100);
-    }
-    */
+          gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+            field: 'selectedWorkspace',
+            newValue: workspace
+          }]);
+          setTimeout(() => location.reload(), 100);
+        }
+        */
 
     if (projCode === 'About') {
       let anchor = document.createElement('a');
@@ -83,7 +112,7 @@ class gDemoApp extends gAppSuper {
     console.log(location);
     let path = location.origin + location.pathname + '?z=' + projCode;
     window.location = path;
-//    setTimeout(() => location.reload(), 100);
+    //    setTimeout(() => location.reload(), 100);
   }
   toggleShowControls() {
     if (!this.controlsShown) {
@@ -117,70 +146,87 @@ class gDemoApp extends gAppSuper {
   }
   addCartItem(itemId) {
     /*
-                    gAPPP.a.modelSets['shape'].createWithBlobString({
-                      title: row.name + 'price',
-                      materialName: 'decolor: .5,.1,.1',
-                      shapeType: 'text',
-                      textFontFamily: 'Arial',
-                      textText: row.price,
-                      textDepth: '.1',
-                      textSize: '100'
-                    }).then(results => {});
-                    gAPPP.a.modelSets['shape'].createWithBlobString({
-                      title: row.name + 'title',
-                      materialName: 'decolor: .1,.5,.5',
-                      shapeType: 'text',
-                      textFontFamily: 'Times',
-                      textText: row.blocktitle,
-                      textDepth: '.3',
-                      textSize: 100
-                    }).then(results => {});
-
-                    gAPPP.a.modelSets['blockchild'].createWithBlobString({
-                      parentKey: key,
-                      childType: 'shape',
-                      childName: row.name + 'price',
-                      inheritMaterial: false
-                    }).then(childResults => {
-                      gAPPP.a.modelSets['frame'].createWithBlobString({
-                        parentKey: childResults.key,
-                        positionX: '',
-                        positionY: '2',
-                        positionZ: '',
-                        rotationX: '',
-                        rotationY: '180deg',
-                        rotationZ: '-90deg',
-                        scalingX: '',
-                        scalingY: '',
-                        scalingZ: '',
-                        visibility: '',
-                        frameOrder: 10,
-                        frameTime: 0
-                      }).then(fResults => {});
-                    });
-                    gAPPP.a.modelSets['blockchild'].createWithBlobString({
-                      parentKey: key,
-                      childType: 'shape',
-                      childName: row.name + 'title',
-                      inheritMaterial: false
-                    }).then(childResults => {
-                      gAPPP.a.modelSets['frame'].createWithBlobString({
-                        parentKey: childResults.key,
-                        positionX: '',
-                        positionY: '3',
-                        positionZ: '',
-                        rotationX: '',
-                        rotationY: '180deg',
-                        rotationZ: '-90deg',
-                        scalingX: '',
-                        scalingY: '',
-                        scalingZ: '',
-                        visibility: '',
-                        frameOrder: 10,
-                        frameTime: 0
-                      }).then(fResults => {});
-                    });
     */
+
+  }
+  productShowPriceAndImage(index) {
+    let product = this.products[index];
+
+    if (product.priceShown)
+      return;
+
+    product.priceShown = true;
+
+    if (! product.priceShape) {
+
+      product.priceShape = 'priceshape' + product.itemId;
+      gAPPP.a.modelSets['shape'].createWithBlobString({
+        title: product.priceShape,
+        materialName: 'decolor: .5,.1,.1',
+        shapeType: 'text',
+        textFontFamily: 'Arial',
+        textText: product.itemPrice,
+        textDepth: '.1',
+        textSize: '100'
+      }).then(results => {});
+
+      gAPPP.a.modelSets['shape'].createWithBlobString({
+        title: row.name + 'title',
+        materialName: 'decolor: .1,.5,.5',
+        shapeType: 'text',
+        textFontFamily: 'Times',
+        textText: row.blocktitle,
+        textDepth: '.3',
+        textSize: 100
+      }).then(results => {});
+
+    }
+
+
+    gAPPP.a.modelSets['blockchild'].createWithBlobString({
+      parentKey: key,
+      childType: 'shape',
+      childName: row.name + 'price',
+      inheritMaterial: false
+    }).then(childResults => {
+      gAPPP.a.modelSets['frame'].createWithBlobString({
+        parentKey: childResults.key,
+        positionX: '',
+        positionY: '2',
+        positionZ: '',
+        rotationX: '',
+        rotationY: '180deg',
+        rotationZ: '-90deg',
+        scalingX: '',
+        scalingY: '',
+        scalingZ: '',
+        visibility: '',
+        frameOrder: 10,
+        frameTime: 0
+      }).then(fResults => {});
+    });
+    gAPPP.a.modelSets['blockchild'].createWithBlobString({
+      parentKey: key,
+      childType: 'shape',
+      childName: row.name + 'title',
+      inheritMaterial: false
+    }).then(childResults => {
+      gAPPP.a.modelSets['frame'].createWithBlobString({
+        parentKey: childResults.key,
+        positionX: '',
+        positionY: '3',
+        positionZ: '',
+        rotationX: '',
+        rotationY: '180deg',
+        rotationZ: '-90deg',
+        scalingX: '',
+        scalingY: '',
+        scalingZ: '',
+        visibility: '',
+        frameOrder: 10,
+        frameTime: 0
+      }).then(fResults => {});
+    });
 
   }
   showBasketGood(name) {
@@ -202,7 +248,7 @@ class gDemoApp extends gAppSuper {
     let description = 'Apples $3.98';
     let detail = '2 @ $ 1.99 / lb';
     let template =
-    `<div class="cart-item">
+      `<div class="cart-item">
       <button class="cart-item-remove">X</button>
       <div class="cart-item-description">${description}</div>
       <br>
@@ -220,11 +266,11 @@ class gDemoApp extends gAppSuper {
 
   }
   updateProfile() {
-/*
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'cameraPositionSave' + this.rootBlock.blockKey,
-      newValue: cp
-    }]);
-    */
+    /*
+        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+          field: 'cameraPositionSave' + this.rootBlock.blockKey,
+          newValue: cp
+        }]);
+        */
   }
 }
