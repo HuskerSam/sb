@@ -57,6 +57,10 @@ class gDemoApp extends gAppSuper {
 
   }
   updateProducts() {
+    if (this.productsUpdated)
+      return;
+
+    this.productsUpdated = true;
     let bD = gAPPP.a.modelSets['block'].fireDataValuesByKey;
     this.products = [];
     for (let i in bD) {
@@ -83,6 +87,8 @@ class gDemoApp extends gAppSuper {
       return 0;
     });
 
+    for (let c = 0, l = this.products.length; c < l; c++)
+      this.productShowPriceAndImage(c);
   }
   changeSelectedWeek() {
     let projCode = document.getElementById('week-picker-select').value;
@@ -146,7 +152,7 @@ class gDemoApp extends gAppSuper {
   }
   addCartItem(itemId) {
     /*
-    */
+     */
 
   }
   productShowPriceAndImage(index) {
@@ -156,41 +162,41 @@ class gDemoApp extends gAppSuper {
       return;
 
     product.priceShown = true;
-
-    if (! product.priceShape) {
-
+    if (!product.priceShape) {
       product.priceShape = 'priceshape' + product.itemId;
-      gAPPP.a.modelSets['shape'].createWithBlobString({
+      product.titleShape = 'titleshape' + product.itemId;
+
+      let priceShapeData = {
         title: product.priceShape,
         materialName: 'decolor: .5,.1,.1',
         shapeType: 'text',
         textFontFamily: 'Arial',
-        textText: product.itemPrice,
+        textText: product.price,
         textDepth: '.1',
         textSize: '100'
-      }).then(results => {});
+      };
 
+      gAPPP.a.modelSets['shape'].createWithBlobString(priceShapeData).then(results => {});
       gAPPP.a.modelSets['shape'].createWithBlobString({
-        title: row.name + 'title',
+        title: product.titleShape,
         materialName: 'decolor: .1,.5,.5',
         shapeType: 'text',
         textFontFamily: 'Times',
-        textText: row.blocktitle,
+        textText: product.title,
         textDepth: '.3',
         textSize: 100
       }).then(results => {});
-
     }
 
-
     gAPPP.a.modelSets['blockchild'].createWithBlobString({
-      parentKey: key,
+      parentKey: product.blockId,
       childType: 'shape',
-      childName: row.name + 'price',
+      childName: product.priceShape,
       inheritMaterial: false
     }).then(childResults => {
+      product.priceBlockChildKey = childResults.key;
       gAPPP.a.modelSets['frame'].createWithBlobString({
-        parentKey: childResults.key,
+        parentKey: product.priceBlockChildKey,
         positionX: '',
         positionY: '2',
         positionZ: '',
@@ -206,13 +212,14 @@ class gDemoApp extends gAppSuper {
       }).then(fResults => {});
     });
     gAPPP.a.modelSets['blockchild'].createWithBlobString({
-      parentKey: key,
+      parentKey: product.blockId,
       childType: 'shape',
-      childName: row.name + 'title',
+      childName: product.titleShape,
       inheritMaterial: false
     }).then(childResults => {
+      product.titleBlockChildKey = childResults.key;
       gAPPP.a.modelSets['frame'].createWithBlobString({
-        parentKey: childResults.key,
+        parentKey: product.titleBlockChildKey,
         positionX: '',
         positionY: '3',
         positionZ: '',
@@ -227,7 +234,6 @@ class gDemoApp extends gAppSuper {
         frameTime: 0
       }).then(fResults => {});
     });
-
   }
   showBasketGood(name) {
     let frames =
