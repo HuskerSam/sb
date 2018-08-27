@@ -143,6 +143,10 @@ class wBlock {
     } else if (type === 'add' && tag === 'blockchild') {
       if (values.parentKey === this._blockKey)
         return this.setData();
+
+      if (this.parent)
+        if (values.parentKey === this.blockRawData.parentKey)
+          return this.parent.setData();
     } else if (tag === 'frame') {
       if (values)
         if (values.parentKey === this._blockKey) {
