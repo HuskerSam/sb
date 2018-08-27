@@ -30,7 +30,12 @@ class gDemoApp extends gAppSuper {
     this.a._activateModels();
     this.initialUILoad = false;
 
+    this.workspaceProcessed = false;
     gAPPP.a.workspaceLoadedCallback = () => {
+      if (this.workspaceProcessed)
+        return;
+      this.workspaceProcessed = true;
+
       if (blockCode) {
         let data = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockCode', blockCode);
         if (data)
@@ -38,6 +43,7 @@ class gDemoApp extends gAppSuper {
       }
 
       gAPPP.a.profile['selectedBlockKey' + workspace] = block;
+
       this.mV = new cViewDemo();
       this._updateApplicationStyle();
 
