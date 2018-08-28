@@ -40,7 +40,9 @@ class cViewDemo extends bView {
           title: b.itemTitle,
           itemCount: b.itemCount,
           desc: b.itemDesc,
-          price: b.itemPrice
+          price: b.itemPrice,
+          priceShape: 'priceshape' + b.itemId,
+          titleShape: 'titleshape' + b.itemId
         });
       }
     }
@@ -52,22 +54,16 @@ class cViewDemo extends bView {
         return -1;
       return 0;
     });
-
-    for (let c = 0, l = this.products.length; c < l; c++)
-      this.productShowPriceAndImage(c);
   }
   productShowPriceAndImage(index) {
     let product = this.products[index];
 
     if (product.priceShown)
       return;
-
     product.priceShown = true;
-    if (!product.priceShape) {
-      product.priceShape = 'priceshape' + product.itemId;
-      product.titleShape = 'titleshape' + product.itemId;
 
-      let priceShapeData = {
+    if (!product.priceShape) {
+      gAPPP.a.modelSets['shape'].createWithBlobString({
         title: product.priceShape,
         materialName: 'decolor: .5,.1,.1',
         shapeType: 'text',
@@ -75,9 +71,8 @@ class cViewDemo extends bView {
         textText: product.desc,
         textDepth: '.1',
         textSize: '100'
-      };
+      }).then(results => {});
 
-      gAPPP.a.modelSets['shape'].createWithBlobString(priceShapeData).then(results => {});
       gAPPP.a.modelSets['shape'].createWithBlobString({
         title: product.titleShape,
         materialName: 'decolor: .1,.5,.5',
@@ -135,5 +130,17 @@ class cViewDemo extends bView {
         frameTime: 0
       }).then(fResults => {});
     });
+  }
+  productHideRemove(index) {
+    let product = this.products[index];
+    let priceShapeChildren = gAPPP.a.modelSets['shape'].queryCache('title', product.priceShape);
+    let titleShapeChildren = gAPPP.a.modelSets['shape'].queryCache('title', product.titleShape);
+
+
+  }
+  removeAllGeneratedItems() {
+    for (let c = 0, l = this.products.length; c < l; c++)
+      this.productHideRemove(c);
+
   }
 }
