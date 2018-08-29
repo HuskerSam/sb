@@ -7,16 +7,20 @@ class cViewDemo extends bView {
         this.canvasHelper.cameraChangeHandler();
         this.canvasHelper.playAnimation();
         this.updateProducts();
+        this.removeAllGeneratedItems()
+          .then(r => {
+            console.log(r);
+          })
       }, 200);
     };
-/*
-    setInterval(() => {
-    }, 1000);
+    /*
         setInterval(() => {
-          this.canvasHelper.cameraSelect.selectedIndex = 0;
-          this.canvasHelper.cameraSelect.click();
-        }, 1500);
-        */
+        }, 1000);
+            setInterval(() => {
+              this.canvasHelper.cameraSelect.selectedIndex = 0;
+              this.canvasHelper.cameraSelect.click();
+            }, 1500);
+            */
   }
   closeHeaderBands() {
 
@@ -133,15 +137,32 @@ class cViewDemo extends bView {
   }
   productHideRemove(index) {
     let product = this.products[index];
-    let priceShapeChildren = gAPPP.a.modelSets['shape'].queryCache('title', product.priceShape);
-    let titleShapeChildren = gAPPP.a.modelSets['shape'].queryCache('title', product.titleShape);
-    let blockId = product.blockId;
-    let priceShapeChildBlocks = gApp.a.modelSets['block'].queryCache('id', product.blockId);
+    let childblocks = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', product.blockId);
+    let promises = [];
 
+    for (let i in childblocks) {
+      let bData = childblocks[i];
+      if (bData.childName === product.priceShape && bData.childType === 'shape')
+        promises.push(gAPPP.a.modelSets['blockchild'].removeByKey(i));
+      if (bData.childName === product.titleShape && bData.childType === 'shape')
+        promises.push(gAPPP.a.modelSets['blockchild'].removeByKey(i));
+    }
+
+    let priceShapeChildren = gAPPP.a.modelSets['shape'].queryCache('title', product.priceShape);
+    for (let i in priceShapeChildren)
+      promises.push(gAPPP.a.modelSets['shape'].removeByKey(i));
+
+    let titleShapeChildren = gAPPP.a.modelSets['shape'].queryCache('title', product.titleShape);
+    for (let i in titleShapeChildren)
+      promises.push(gAPPP.a.modelSets['shape'].removeByKey(i));
+
+    return Promise.all(promises);
   }
   removeAllGeneratedItems() {
+    let promises = [];
     for (let c = 0, l = this.products.length; c < l; c++)
-      this.productHideRemove(c);
+      promises.push(this.productHideRemove(c));
 
+    return Promise.all(promises);
   }
 }
