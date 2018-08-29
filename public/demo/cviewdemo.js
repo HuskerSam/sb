@@ -135,7 +135,8 @@ class cViewDemo extends bView {
     let product = this.products[index];
     let priceShapeChildren = gAPPP.a.modelSets['shape'].queryCache('title', product.priceShape);
     let titleShapeChildren = gAPPP.a.modelSets['shape'].queryCache('title', product.titleShape);
-
+    let blockId = product.blockId;
+    let priceShapeChildBlocks = gApp.a.modelSets['block'].queryCache('id', product.blockId);
 
   }
   removeAllGeneratedItems() {
