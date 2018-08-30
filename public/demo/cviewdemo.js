@@ -1,26 +1,20 @@
 class cViewDemo extends bView {
   constructor() {
     super();
+    this.updateProducts();
     this.canvasHelper.cameraShownCallback = () => {
+      if (this.cameraShown)
+        return;
+      this.cameraShown = true;
       setTimeout(() => {
         this.canvasHelper.cameraSelect.selectedIndex = 2;
         this.canvasHelper.cameraChangeHandler();
         this.canvasHelper.playAnimation();
-        this.updateProducts();
         this.removeAllGeneratedItems()
-          .then(r => {
-            console.log(r);
-          })
+          .then(r => this.addAllGeneratedItems())
+          .then(rr => {});
       }, 200);
     };
-    /*
-        setInterval(() => {
-        }, 1000);
-            setInterval(() => {
-              this.canvasHelper.cameraSelect.selectedIndex = 0;
-              this.canvasHelper.cameraSelect.click();
-            }, 1500);
-            */
   }
   closeHeaderBands() {
 
@@ -66,36 +60,36 @@ class cViewDemo extends bView {
       return;
     product.priceShown = true;
 
-    if (!product.priceShape) {
-      gAPPP.a.modelSets['shape'].createWithBlobString({
-        title: product.priceShape,
-        materialName: 'decolor: .5,.1,.1',
-        shapeType: 'text',
-        textFontFamily: 'Arial',
-        textText: product.desc,
-        textDepth: '.1',
-        textSize: '100'
-      }).then(results => {});
+    let promises = [];
 
-      gAPPP.a.modelSets['shape'].createWithBlobString({
-        title: product.titleShape,
-        materialName: 'decolor: .1,.5,.5',
-        shapeType: 'text',
-        textFontFamily: 'Times',
-        textText: product.title,
-        textDepth: '.3',
-        textSize: 100
-      }).then(results => {});
-    }
+    promises.push(gAPPP.a.modelSets['shape'].createWithBlobString({
+      title: product.priceShape,
+      materialName: 'decolor: .5,.1,.1',
+      shapeType: 'text',
+      textFontFamily: 'Arial',
+      textText: product.desc,
+      textDepth: '.1',
+      textSize: '100'
+    }));
+    promises.push(gAPPP.a.modelSets['shape'].createWithBlobString({
+      title: product.titleShape,
+      materialName: 'decolor: .1,.5,.5',
+      shapeType: 'text',
+      textFontFamily: 'Times',
+      textText: product.title,
+      textDepth: '.3',
+      textSize: 100
+    }));
 
-    gAPPP.a.modelSets['blockchild'].createWithBlobString({
+    promises.push(gAPPP.a.modelSets['blockchild'].createWithBlobString({
       parentKey: product.blockId,
       childType: 'shape',
       childName: product.priceShape,
       inheritMaterial: false
     }).then(childResults => {
       product.priceBlockChildKey = childResults.key;
-      gAPPP.a.modelSets['frame'].createWithBlobString({
+
+      return gAPPP.a.modelSets['frame'].createWithBlobString({
         parentKey: product.priceBlockChildKey,
         positionX: '',
         positionY: '2',
@@ -109,16 +103,17 @@ class cViewDemo extends bView {
         visibility: '',
         frameOrder: 10,
         frameTime: 0
-      }).then(fResults => {});
-    });
-    gAPPP.a.modelSets['blockchild'].createWithBlobString({
+      });
+    }));
+
+    promises.push(gAPPP.a.modelSets['blockchild'].createWithBlobString({
       parentKey: product.blockId,
       childType: 'shape',
       childName: product.titleShape,
       inheritMaterial: false
     }).then(childResults => {
       product.titleBlockChildKey = childResults.key;
-      gAPPP.a.modelSets['frame'].createWithBlobString({
+      return gAPPP.a.modelSets['frame'].createWithBlobString({
         parentKey: product.titleBlockChildKey,
         positionX: '',
         positionY: '3',
@@ -132,8 +127,10 @@ class cViewDemo extends bView {
         visibility: '',
         frameOrder: 10,
         frameTime: 0
-      }).then(fResults => {});
-    });
+      })
+    }));
+
+    return Promise.all(promises);
   }
   productHideRemove(index) {
     let product = this.products[index];
@@ -162,6 +159,13 @@ class cViewDemo extends bView {
     let promises = [];
     for (let c = 0, l = this.products.length; c < l; c++)
       promises.push(this.productHideRemove(c));
+
+    return Promise.all(promises);
+  }
+  addAllGeneratedItems() {
+    let promises = [];
+    for (let c = 0, l = this.products.length; c < l; c++)
+      promises.push(this.productShowPriceAndImage(c));
 
     return Promise.all(promises);
   }
