@@ -272,9 +272,9 @@ class cPanelCanvas {
       this.animateSlider.value = elapsed / total * 100.0;
 
     if (this.activeAnimation) {
-      let timeE = elapsed / this.rootBlock.framesHelper.fps;
-      let timeLength = total / this.rootBlock.framesHelper.fps;
-      this.animateSliderLabel.innerHTML = 'Time: ' + timeE.toFixed(1) + '/' + timeLength.toFixed(1) + 's';
+      this.timeE = elapsed / this.rootBlock.framesHelper.fps;
+      this.timeLength = total / this.rootBlock.framesHelper.fps;
+      this.animateSliderLabel.innerHTML = 'Time: ' + this.timeE.toFixed(1) + '/' + this.timeLength.toFixed(1) + 's';
     } else
       this.animateSliderLabel.innerHTML = '';
   }

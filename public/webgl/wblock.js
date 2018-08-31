@@ -140,6 +140,16 @@ class wBlock {
         this.lastGroundMaterial = undefined;
         this._renderGround();
       }
+    } else if (type === 'remove' && tag === 'blockchild') {
+      values = fireData.val();
+      if (values.parentKey === this._blockKey)
+        return this.setData();
+
+      if (this.parent)
+        if (values.parentKey === this.blockRawData.parentKey){
+          this.parent.containerCache = {};
+          return this.parent.setData();
+        }
     } else if (type === 'add' && tag === 'blockchild') {
       if (values.parentKey === this._blockKey)
         return this.setData();
@@ -177,11 +187,13 @@ class wBlock {
     for (let i in this.childBlocks) {
       if (type === 'remove') {
         if (i === fireData.key) {
+          if (tag === 'blockchild')
+            return this.setData();
+
           this.childBlocks[i].dispose();
           delete this.childBlocks[i];
           break;
         }
-        continue;
       }
 
       this.childBlocks[i].handleDataUpdate(tag, values, type, fireData);
@@ -632,7 +644,7 @@ class wBlock {
     if (!renderData) {
       if (gAPPP.a.profile.canvasColor)
         this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
-      return;      
+      return;
     }
 
     this._addSkyBox();

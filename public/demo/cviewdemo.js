@@ -11,13 +11,50 @@ class cViewDemo extends bView {
         this.canvasHelper.cameraChangeHandler();
         this.canvasHelper.playAnimation();
         this.removeAllGeneratedItems()
-          .then(r => this.addAllGeneratedItems())
-          .then(rr => {});
+          .then(rr => {
+              setInterval(() => this.updateProductsDisplay(), 1500);
+
+          });
       }, 200);
     };
   }
   closeHeaderBands() {
 
+
+  }
+  updateProductsDisplay() {
+    let animLen = this.canvasHelper.timeLength;
+    let productCount = this.products.length;
+    let currentElapsed = this.canvasHelper.timeE;
+    let productsShownAtOnce = 3;
+    let numberOfButtons = 4;
+
+    let incLength = animLen / productCount;
+    let productShown = [];
+    for (let c = 0; c < productCount; c++) {
+      let started = false;
+      let startTime = c * incLength;
+      let endTime = (3 * incLength + startTime);
+      let modEndTime = endTime % animLen;
+
+      if (startTime >= currentElapsed)
+        started = true;
+      if (endTime - modEndTime <= currentElapsed)
+        started = true;
+
+      let ended = true;
+      if (modEndTime <= currentElapsed)
+        ended = false;
+
+      productShown.push(started && !ended);
+
+      if (productShown[c]) {
+        this.productShowPriceAndImage(c);
+      }
+      else {
+        this.productHideRemove(c);
+      }
+    }
 
   }
   updateProducts() {
@@ -52,6 +89,9 @@ class cViewDemo extends bView {
         return -1;
       return 0;
     });
+
+
+
   }
   productShowPriceAndImage(index) {
     let product = this.products[index];
