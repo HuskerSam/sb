@@ -292,7 +292,8 @@ class cPanelCanvas {
   }
   set playState(newState) {
     this._playState = newState;
-
+    if (!this.rootBlock)
+      return;
     if (this.saveAnimState && gAPPP.a.profile.cameraSaves)
       gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'playState' + this.rootBlock.blockKey,

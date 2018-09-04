@@ -146,7 +146,7 @@ class wBlock {
         return this.setData();
 
       if (this.parent)
-        if (values.parentKey === this.blockRawData.parentKey){
+        if (values.parentKey === this.blockRawData.parentKey) {
           this.parent.containerCache = {};
           return this.parent.setData();
         }
@@ -200,7 +200,7 @@ class wBlock {
     }
   }
   _handleTextureUpdate(values) {
-    if (!values.title)
+    if (!values || !values.title)
       return;
     let textureName = values.title;
     let matDetails = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', this.blockRenderData.materialName);
@@ -1078,10 +1078,10 @@ class wBlock {
   updateCamera() {
     let cameras = this.traverseCameraList();
     let camerasS = JSON.stringify(cameras);
+    let sel = this.context.canvasHelper.cameraSelect;
+    let startValue = sel.value;
     if (camerasS !== this.cameraS) {
-      let sel = this.context.canvasHelper.cameraSelect;
       this.camerasCache = cameras;
-      let startValue = sel.value;
       this.context.canvasHelper.cameraDetails = cameras;
       this.context.canvasHelper.camerasS = camerasS;
       let html = '';
@@ -1094,7 +1094,7 @@ class wBlock {
         sel.selectedIndex = 0;
     }
 
-    if (this.context.canvasHelper.cameraSelect.selectedIndex !== 0)
+    if (this.context.canvasHelper.cameraSelect.value !== startValue)
       this.context._updateCamera(this.context.canvasHelper.cameraSelect.value);
   }
   traverseCameraList(cameras = null) {

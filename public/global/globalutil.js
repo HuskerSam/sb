@@ -1,34 +1,32 @@
 if (!String.prototype.padStart) {
-    String.prototype.padStart = function padStart(targetLength,padString) {
-        targetLength = targetLength>>0; //truncate if number or convert non-number to 0;
-        padString = String((typeof padString !== 'undefined' ? padString : ' '));
-        if (this.length > targetLength) {
-            return String(this);
-        }
-        else {
-            targetLength = targetLength-this.length;
-            if (targetLength > padString.length) {
-                padString += padString.repeat(targetLength/padString.length); //append to original to ensure we are longer than needed
-            }
-            return padString.slice(0,targetLength) + String(this);
-        }
-    };
+  String.prototype.padStart = function padStart(targetLength, padString) {
+    targetLength = targetLength >> 0; //truncate if number or convert non-number to 0;
+    padString = String((typeof padString !== 'undefined' ? padString : ' '));
+    if (this.length > targetLength) {
+      return String(this);
+    } else {
+      targetLength = targetLength - this.length;
+      if (targetLength > padString.length) {
+        padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
+      }
+      return padString.slice(0, targetLength) + String(this);
+    }
+  };
 }
 if (!String.prototype.padEnd) {
-    String.prototype.padEnd = function padEnd(targetLength,padString) {
-        targetLength = targetLength>>0; //floor if number or convert non-number to 0;
-        padString = String((typeof padString !== 'undefined' ? padString : ' '));
-        if (this.length > targetLength) {
-            return String(this);
-        }
-        else {
-            targetLength = targetLength-this.length;
-            if (targetLength > padString.length) {
-                padString += padString.repeat(targetLength/padString.length); //append to original to ensure we are longer than needed
-            }
-            return String(this) + padString.slice(0,targetLength);
-        }
-    };
+  String.prototype.padEnd = function padEnd(targetLength, padString) {
+    targetLength = targetLength >> 0; //floor if number or convert non-number to 0;
+    padString = String((typeof padString !== 'undefined' ? padString : ' '));
+    if (this.length > targetLength) {
+      return String(this);
+    } else {
+      targetLength = targetLength - this.length;
+      if (targetLength > padString.length) {
+        padString += padString.repeat(targetLength / padString.length); //append to original to ensure we are longer than needed
+      }
+      return String(this) + padString.slice(0, targetLength);
+    }
+  };
 }
 class GLOBALUTIL {
   static color(str) {
@@ -161,5 +159,376 @@ class GLOBALUTIL {
     seconds = (seconds < 10) ? "0" + seconds : seconds;
 
     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+  }
+}
+class GUTILImportCSV {
+  static addCSVMeshRow(row) {
+    let promises = [];
+
+    let meshData = {
+      title: row.name,
+      materialName: row.materialname,
+      url: row.meshpath,
+      positionX: row.x,
+      positionY: row.y,
+      positionZ: row.z,
+      rotationX: row.rx,
+      rotationY: row.ry,
+      rotationZ: row.rz,
+      scalingX: row.sx,
+      scalingY: row.sy,
+      scalingZ: row.sz,
+      type: 'url'
+    };
+    promises.push(gAPPP.a.modelSets['mesh'].createWithBlobString(meshData));
+
+    let diffuseColor = '';
+    let diffuseTextureName = '';
+    if (row.diffuse === 'x') {
+      diffuseColor = row.color;
+      diffuseTextureName = row.texturepath;
+    }
+    let ambientColor = '';
+    let ambientTextureName = '';
+    if (row.ambient === 'x') {
+      ambientColor = row.color;
+      ambientTextureName = row.texturepath;
+    }
+    let emissiveColor = '';
+    let emissiveTextureName = '';
+    if (row.emissive === 'x') {
+      emissiveColor = row.color;
+      emissiveTextureName = row.texturepath;
+    }
+
+    let materialData = {
+      title: row.materialname,
+      ambientColor,
+      ambientTextureName,
+      backFaceCulling: true,
+      diffuseColor,
+      diffuseTextureName,
+      emissiveColor,
+      emissiveTextureName,
+      bumpTextureName: row.bmppath
+    };
+    promises.push(gAPPP.a.modelSets['material'].createWithBlobString(materialData));
+
+    return Promise.all(promises);
+  }
+  static addCSVBlockRow(row) {
+    let blockData = {
+      title: row.name,
+      materialName: row.materialname,
+      height: row.height,
+      width: row.width,
+      depth: row.depth
+    };
+
+    if (row.blockcode)
+      blockData.blockCode = row.blockcode;
+
+    if (row.itemid) {
+      blockData.itemId = row.itemid;
+      blockData.itemTitle = row.itemtitle;
+      blockData.itemDesc = row.itemdesc;
+      blockData.itemPrice = row.itemprice;
+      blockData.itemCount = row.itemcount;
+      blockData.itemIndex = row.itemindex;
+    }
+
+    return gAPPP.a.modelSets['block'].createWithBlobString(blockData).then(blockResult => {
+      let frameTime = '0';
+      if (row.frametime)
+        frameTime = row.frametime;
+
+      if (row.itemid) {
+          this.__CSVSignPostRows(row).then(() => {});
+      }
+
+      return gAPPP.a.modelSets['frame'].createWithBlobString({
+        parentKey: blockResult.key,
+        positionX: row.x,
+        positionY: row.y,
+        positionZ: row.z,
+        rotationX: row.rx,
+        rotationY: row.ry,
+        rotationZ: row.rz,
+        scalingX: row.sx,
+        scalingY: row.sy,
+        scalingZ: row.sz,
+        frameOrder: 10,
+        frameTime
+      });
+    });
+  }
+  static addCSVBlockChildRow(row) {
+    let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
+    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+
+    if (!ele) {
+      console.log(row.parent, ' - block not found');
+      return Promise.resolve();
+    }
+    let inheritMaterial = false;
+    if (row.materialname === 'inherit')
+      inheritMaterial = true;
+
+    let blockChildData = {
+      materialName: row.materialname,
+      parentKey: key,
+      childType: row.childtype,
+      childName: row.name,
+      inheritMaterial
+    };
+
+    if (row.cameraname)
+      blockChildData.cameraName = row.cameraname;
+    if (row.cameratargetblock)
+      blockChildData.cameraTargetBlock = row.cameratargetblock;
+
+    return gAPPP.a.modelSets['blockchild'].createWithBlobString(blockChildData).then(childResults => {
+
+      let frameData = {
+        parentKey: childResults.key,
+        positionX: row.x,
+        positionY: row.y,
+        positionZ: row.z,
+        rotationX: row.rx,
+        rotationY: row.ry,
+        rotationZ: row.rz,
+        scalingX: row.sx,
+        scalingY: row.sy,
+        scalingZ: row.sz,
+        visibility: row.visibility,
+        frameOrder: '10',
+        frameTime: '0'
+      };
+
+      if (row.cameraradius)
+        frameData.cameraRadius = row.cameraradius;
+      if (row.cameraheightoffset)
+        frameData.cameraHeightOffset = row.cameraheightoffset;
+      if (row.cameraacceleration)
+        frameData.cameraAcceleration = row.cameraacceleration;
+      if (row.maxcameraspeed)
+        frameData.maxCameraSpeed = row.maxcameraspeed;
+      if (row.camerafov)
+        frameData.cameraFOV = row.camerafov;
+      if (row.camerarotationoffset)
+        frameData.cameraRotationOffset = row.camerarotationoffset;
+
+      return gAPPP.a.modelSets['frame'].createWithBlobString(frameData);
+    });
+  }
+  static addCSVShapeRow(row) {
+    let texturename = row.texturepath;
+    let bumptexturename = row.bmppath;
+
+    if (row.scalev) {
+      if (row.texturepath) {
+        texturename = row.materialname;
+        gAPPP.a.modelSets['texture'].createWithBlobString({
+          title: texturename,
+          url: row.texturepath,
+          uScale: row.scaleu,
+          vScale: row.scalev
+        }).then(results => {});
+      }
+
+      if (row.bmppath) {
+        bumptexturename = row.materialname + 'bmp';
+        gAPPP.a.modelSets['texture'].createWithBlobString({
+          title: bumptexturename,
+          url: row.bmppath,
+          uScale: row.scaleu,
+          vScale: row.scalev
+        }).then(results => {});
+      }
+    }
+
+    if (row.materialname)
+      gAPPP.a.modelSets['material'].createWithBlobString({
+        title: row.materialname,
+        ambientColor: row.color,
+        ambientTextureName: texturename,
+        backFaceCulling: true,
+        diffuseColor: row.color,
+        diffuseTextureName: texturename,
+        emissiveColor: row.color,
+        emissiveTextureName: texturename,
+        bumpTextureName: bumptexturename
+      }).then(results => {});
+
+    return gAPPP.a.modelSets['shape'].createWithBlobString({
+      title: row.name,
+      materialName: row.materialname,
+      boxHeight: row.height,
+      boxWidth: row.width,
+      boxDepth: row.depth,
+      shapeType: row.shapetype
+    });
+  }
+  static addCSVBlockChildFrameRow(row) {
+    let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
+    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+
+    if (!ele) {
+      console.log(row.parent, ' - block not found');
+      return Promise.resolve();
+    }
+
+    let promises = [];
+    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', key);
+    for (let c in children) {
+      let d = children[c];
+      if (d.childType === row.childtype && d.childName === row.name) {
+
+        let frameData = {
+          parentKey: c,
+          positionX: row.x,
+          positionY: row.y,
+          positionZ: row.z,
+          rotationX: row.rx,
+          rotationY: row.ry,
+          rotationZ: row.rz,
+          scalingX: row.sx,
+          scalingY: row.sy,
+          scalingZ: row.sz,
+          visibility: row.visibility,
+          frameOrder: row.frameorder,
+          frameTime: row.frametime
+        };
+        promises.push(gAPPP.a.modelSets['frame'].createWithBlobString(frameData));
+      }
+    }
+
+    return Promise.all(promises);
+  }
+  static addCSVRowList(rowList) {
+    let promises = [];
+    for (let c = 0, l = rowList.length; c < l; c++)
+      promises.push(this.addCSVRow(rowList[c]));
+
+    return Promise.all(promises);
+  }
+  static addCSVRow(row) {
+    switch (row.asset) {
+      case 'meshtexture':
+        return this.addCSVMeshRow(row);
+      case 'block':
+        return this.addCSVBlockRow(row);
+      case 'blockchild':
+        return this.addCSVBlockChildRow(row);
+      case 'shape':
+        return this.addCSVShapeRow(row);
+      case 'blockchildframe':
+        return this.addCSVBlockChildFrameRow(row);
+    }
+  }
+  static __CSVSignPostRows(row) {
+    let newObjects = [];
+    let blockRow = this.defaultCSVRow();
+    blockRow.asset = 'block';
+    blockRow.height = '1';
+    blockRow.width = '2';
+    blockRow.depth = '2';
+    blockRow.materialname = 'decolor: 0,.7,0';
+    blockRow.name = row.name + '_signpost';
+    newObjects.push(blockRow);
+
+    let blockImageShape = this.defaultCSVRow();
+    blockImageShape.asset = 'shape';
+    blockImageShape.materialName = row.name + '_signpostimage'
+    blockImageShape.name = row.name + '_signpostimage'
+    blockImageShape.scaleu = '1';
+    blockImageShape.scalev = '1';
+    blockImageShape.shapetype = 'plane';
+    blockImageShape.texturepath = "https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/project%2F-L8dCwFmV1U6IDTLm7bB%2Ftexture%2F-LKbiJmNyuhvXhqNu-r1%2FProduce_BlckDmndWhlSdlsRdWtrmln_BR.jpg?alt=media&token=bf995004-dc8d-42c7-9ce3-bbd7c47993ae";
+    blockImageShape.width = '3';
+    blockImageShape.height = '3';
+    newObjects.push(blockImageShape);
+
+    let signChildren = [];
+    let blockImageBC = this.defaultCSVRow();
+    blockImageBC.asset = 'blockchild';
+    blockImageBC.childtype = 'shape';
+    blockImageBC.parent = blockRow.name;
+    blockImageBC.name = blockImageShape.name;
+    blockImageBC.x = '.06';
+    blockImageBC.y = '5';
+    blockImageBC.ry = '-90deg';
+    signChildren.push(blockImageBC);
+
+    let blockSPBC = this.defaultCSVRow();
+    blockSPBC.asset = 'blockchild';
+    blockSPBC.childtype = 'shape';
+    blockSPBC.parent = blockRow.name;
+    blockSPBC.name = 'signboard';
+    blockSPBC.materialname = 'inherit';
+    blockSPBC.y = '5';
+    signChildren.push(blockSPBC);
+
+    let blockSP2BC = this.defaultCSVRow();
+    blockSP2BC.asset = 'blockchild';
+    blockSP2BC.childtype = 'shape';
+    blockSP2BC.parent = blockRow.name;
+    blockSP2BC.name = 'signpost';
+    blockSP2BC.materialname = 'inherit';
+    blockSP2BC.x = '-0.05';
+    blockSP2BC.y = '2';
+    signChildren.push(blockSP2BC);
+
+    let blockRowBC = this.defaultCSVRow();
+    blockRowBC.asset = 'blockchild';
+    blockRowBC.childtype = 'block';
+    blockRowBC.parent = row.name;
+    blockRowBC.name = blockRow.name;
+    blockRowBC.x = '.1';
+    blockRowBC.rz = '10deg';
+    blockRowBC.ry = '180deg';
+
+    return this.addCSVRowList(newObjects)
+      .then(() => this.addCSVRowList(signChildren))
+      .then(() => this.addCSVRow(blockRowBC));
+  }
+  static defaultCSVRow() {
+    return {
+      ambient: "",
+      asset: "",
+      bmppath: "",
+      childtype: "",
+      color: "",
+      depth: "",
+      diffuse: "",
+      emissive: "",
+      frametime: "",
+      height: "",
+      itemcount: "",
+      itemdesc: "",
+      itemid: "",
+      itemindex: "",
+      itemprice: "",
+      itemtitle: "",
+      materialname: "",
+      meshpath: "",
+      name: "",
+      parent: "",
+      rx: "",
+      ry: "",
+      rz: "",
+      scaleu: "",
+      scalev: "",
+      shapetype: "",
+      sx: "",
+      sy: "",
+      sz: "",
+      texturepath: "",
+      visibility: "",
+      width: "",
+      x: "",
+      y: "",
+      z: ""
+    };
   }
 }
