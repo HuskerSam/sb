@@ -20,8 +20,27 @@ class cViewDemo extends bView {
           });
       }, 200);
     };
+
+    this.displayButtonPanel = document.querySelector('.user-options-panel');
+    this.receiptDisplayPanel = document.querySelector('.cart-contents');
+    this.collapseButton = document.querySelector('.collapse-expand');
+    this.collapseButton.addEventListener('click', () => this.toggleViewMode());
   }
-  generateStaticProductItems() {
+  toggleViewMode() {
+    if (this.viewCollapsed) {
+      this.receiptDisplayPanel.style.display = 'block';
+      this.collapseButton.innerHTML = 'C';
+      this.displayButtonPanel.style.width = '';
+      this.viewCollapsed = false;
+    } else {
+      this.viewCollapsed = true;
+      this.collapseButton.innerHTML = 'E';
+      this.displayButtonPanel.style.width = '6em';
+      this.receiptDisplayPanel.style.display = 'none';
+
+
+
+    }
 
   }
   closeHeaderBands() {
@@ -56,7 +75,7 @@ class cViewDemo extends bView {
 
     }
     this.productsShown = productShown;
-    console.log(currentElapsed, productShown);
+  //  console.log(currentElapsed, productShown);
 
     return this._updateProducts3D();
   }

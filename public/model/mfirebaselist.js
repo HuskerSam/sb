@@ -291,6 +291,6 @@ class mFirebaseList extends bFirebase {
       console.log('commitUpdateList no key error', fieldUpdates, key);
       return;
     }
-    super.commitUpdateList(fieldUpdates, key);
+    return super.commitUpdateList(fieldUpdates, key);
   }
 }

@@ -62,18 +62,6 @@ class gDemoApp extends gAppSuper {
   }
   changeSelectedWeek() {
     let projCode = document.getElementById('week-picker-select').value;
-    /*
-        let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('code', projCode);
-        if (data) {
-          let workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
-
-          gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-            field: 'selectedWorkspace',
-            newValue: workspace
-          }]);
-          setTimeout(() => location.reload(), 100);
-        }
-        */
 
     if (projCode === 'About') {
       let anchor = document.createElement('a');
@@ -85,10 +73,8 @@ class gDemoApp extends gAppSuper {
       return;
     }
 
-    console.log(location);
     let path = location.origin + location.pathname + '?z=' + projCode;
     window.location = path;
-    //    setTimeout(() => location.reload(), 100);
   }
   toggleShowControls() {
     if (!this.controlsShown) {

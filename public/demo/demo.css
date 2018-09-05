@@ -35,6 +35,8 @@
   border-radius: .25em;
   line-height: 3em;
   max-width: 35em;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .choice-button-one {
@@ -134,4 +136,8 @@
 
 .cart-left-side {
   float: left;
+}
+
+button.collapse-expand {
+  width: 3em;
 }
