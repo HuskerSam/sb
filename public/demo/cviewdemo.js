@@ -14,14 +14,9 @@ class cViewDemo extends bView {
         this.removeAllGeneratedItems()
           .then(rr => {
             setInterval(() => {
-        //      this.updateProductsDisplay()
-            //    .then(() => {});
+              this.updateProductsDisplay()
+                .then(() => {});
             }, 1000);
-//    this.productShowPriceAndImage(0).then(() => {});
-//    this.productShowPriceAndImage(1).then(() => {});
-//    this.productShowPriceAndImage(2).then(() => {});
-        //    this.productHideRemove(0).then(() => {});
-      //  this.removeAllGeneratedItems();
           });
       }, 200);
     };
@@ -50,7 +45,7 @@ class cViewDemo extends bView {
 
       if (startTime <= currentElapsed)
         started = true;
-    //  if (endTime - modEndTime <= currentElapsed)
+      //  if (endTime - modEndTime <= currentElapsed)
       //  started = true;
 
       let ended = true;
@@ -71,7 +66,7 @@ class cViewDemo extends bView {
       if (this.productsShown[c]) {
         promises.push(this.productShowPriceAndImage(c));
       } else {
-//        promises.push(this.productHideRemove(c));
+        promises.push(this.productHideSign(c));
       }
     }
     return Promise.all(promises);
@@ -94,11 +89,7 @@ class cViewDemo extends bView {
           title: b.itemTitle,
           itemCount: b.itemCount,
           desc: b.itemDesc,
-          price: b.itemPrice,
-          signBoardBlockName: 'signBoardBlockName' + b.itemId,
-          signTextImageName: 'signTextImageName' + b.itemId,
-          signTextPriceName: 'signTextPriceName' + b.itemId,
-          signTextTitleName: 'signTextTitleName' + b.itemId
+          price: b.itemPrice
         });
       }
     }
@@ -114,177 +105,20 @@ class cViewDemo extends bView {
   }
   productShowPriceAndImage(index) {
     let product = this.products[index];
-    let blockExists = gAPPP.a.modelSets['block'].queryCache('title', product.signBoardBlockName);
-    let keys = Object.keys(blockExists);
+    let frames = this.rootBlock._findBestTargetObject(`block:${product.cacheRef.title}`).
+    _findBestTargetObject(`block:${product.cacheRef.title}_signpost`).framesHelper.framesStash;
 
-    if (keys.length > 0)
-      return;
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
 
-    if (product.texturepath === undefined)
-      product.texturepath = '';
-    let promises = [];
-    let bcList = [];
-    let bcFrameList = [];
+    if (frameIds.length > 0)
+      return gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "2"
+      }], frameIds[0]);
 
-    let signImagePlane = {
-      title: product.signTextImageName,
-      materialName: product.signTextImageName,
-      shapeType: 'plane',
-      boxDepth: '',
-      boxHeight: '3',
-      boxWidth: '3'
-    };
-    let signImageMaterial = {
-      title: product.signTextImageName,
-      "ambientColor": "",
-      "ambientTextureName": product.signTextImageName,
-      "backFaceCulling": true,
-      "bumpTextureName": "",
-      "diffuseColor": "",
-      "diffuseTextureName": product.signTextImageName,
-      "emissiveColor": "",
-      "emissiveTextureName": product.signTextImageName
-    };
-    let signImageTexture = {
-      "title": product.signTextImageName,
-      "uScale": "1",
-      "url": product.texturepath,
-      "vScale": "1"
-    };
-
-    promises.push(gAPPP.a.modelSets['shape'].createWithBlobString(signImagePlane));
-    promises.push(gAPPP.a.modelSets['material'].createWithBlobString(signImageMaterial));
-    promises.push(gAPPP.a.modelSets['texture'].createWithBlobString(signImageTexture));
-
-    let signImageBC = {
-      parentKey: product.blockId,
-      childType: 'shape',
-      childName: product.signTextImageName,
-      inheritMaterial: false
-    };
-    let signImageBCFrame = {
-      parentKey: undefined,
-      positionX: '0.06',
-      positionY: '5',
-      positionZ: '',
-      rotationX: '',
-      rotationY: '-90deg',
-      rotationZ: '',
-      scalingX: '',
-      scalingY: '',
-      scalingZ: '',
-      frameOrder: 10,
-      frameTime: '0'
-    };
-    bcList.push(signImageBC);
-    bcFrameList.push(signImageBCFrame);
-
-    let signPostBC = {
-      parentKey: product.blockId,
-      childType: 'shape',
-      childName: 'signpost',
-      inheritMaterial: true
-    };
-    let signPostBCFrame = {
-      parentKey: undefined,
-      positionX: '-0.05',
-      positionY: '2',
-      positionZ: '',
-      rotationX: '',
-      rotationY: '',
-      rotationZ: '',
-      scalingX: '',
-      scalingY: '',
-      scalingZ: '',
-      frameOrder: 10,
-      frameTime: '0'
-    };
-    bcList.push(signPostBC);
-    bcFrameList.push(signPostBCFrame);
-
-    let signBoardBC = {
-      parentKey: product.blockId,
-      childType: 'shape',
-      childName: 'signboard',
-      inheritMaterial: true
-    };
-    let signBoardBCFrame = {
-      parentKey: undefined,
-      positionX: '',
-      positionY: '5',
-      positionZ: '',
-      rotationX: '',
-      rotationY: '',
-      rotationZ: '',
-      scalingX: '',
-      scalingY: '',
-      scalingZ: '',
-      frameOrder: 10,
-      frameTime: '0'
-    };
-    bcList.push(signBoardBC);
-    bcFrameList.push(signBoardBCFrame);
-
-    let signBlockData = {
-      title: product.signBoardBlockName,
-      materialName: 'decolor: 0,.7,0',
-      height: 1,
-      width: 2,
-      depth: 2
-    };
-    promises.push(
-      gAPPP.a.modelSets['block'].createWithBlobString(signBlockData)
-      .then(blockResult => {
-        let parentKey = blockResult.key;
-        let childPromises = [];
-
-        let addChild = (index) => {
-          childPromises.push(
-            gAPPP.a.modelSets['blockchild'].createWithBlobString(bcList[index]).then(childResults => {
-              bcFrameList[index].parentKey = childResults.key;
-
-              return gAPPP.a.modelSets['frame'].createWithBlobString(bcFrameList[index]);
-            })
-          );
-        };
-
-        for (let c = 0, l = bcList.length; c < l; c++) {
-          bcList[c].parentKey = parentKey;
-          addChild(c);
-        }
-
-        return Promise.all(childPromises);
-      })
-    );
-
-    let signBlockBC = {
-      parentKey: product.blockId,
-      childType: 'block',
-      childName: product.signBoardBlockName,
-      inheritMaterial: false
-    };
-    let signBlockBCBCFrame = {
-      parentKey: undefined,
-      positionX: '.1',
-      positionY: '',
-      positionZ: '',
-      rotationX: '',
-      rotationY: '180deg',
-      rotationZ: '10deg',
-      scalingX: '',
-      scalingY: '',
-      scalingZ: '',
-      frameOrder: 10,
-      frameTime: '0'
-    };
-    promises.push(
-      gAPPP.a.modelSets['blockchild'].createWithBlobString(signBlockBC).then(childResults => {
-        signBlockBCBCFrame.parentKey = childResults.key;
-        return gAPPP.a.modelSets['frame'].createWithBlobString(signBlockBCBCFrame);
-      })
-    );
-
-    return Promise.all(promises);
+    return Promise.resolve();
   }
   removeByTitle(collection, title) {
     let promises = [];
@@ -294,28 +128,27 @@ class cViewDemo extends bView {
 
     return promises;
   }
-  productHideRemove(index) {
+  productHideSign(index) {
     let product = this.products[index];
-    let childblocks = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', product.blockId);
-    let promises = [];
+    let frames = this.rootBlock._findBestTargetObject(`block:${product.cacheRef.title}`).
+    _findBestTargetObject(`block:${product.cacheRef.title}_signpost`).framesHelper.framesStash;
 
-    for (let i in childblocks) {
-      let bData = childblocks[i];
-      if (bData.childName === product.signBoardBlockName && bData.childType === 'block')
-        promises.push(gAPPP.a.modelSets['blockchild'].removeByKey(i));
-    }
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
 
-    promises.concat(this.removeByTitle('block', product.signBoardBlockName));
-    promises.concat(this.removeByTitle('shape', product.signTextImageName));
-    promises.concat(this.removeByTitle('material', product.signTextImageName));
-    promises.concat(this.removeByTitle('texture', product.signTextImageName));
+    if (frameIds.length > 0)
+      return gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "-50"
+      }], frameIds[0]);
 
-    return Promise.all(promises);
+    return Promise.resolve();
   }
   removeAllGeneratedItems() {
     let promises = [];
     for (let c = 0, l = this.products.length; c < l; c++)
-      promises.push(this.productHideRemove(c));
+      promises.push(this.productHideSign(c));
 
     return Promise.all(promises);
   }

@@ -118,7 +118,7 @@ class gDemoApp extends gAppSuper {
       gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionY',
         newValue: "-5"
-      }], frameIds[0]);
+      }], frameIds[0]).then(() => {});
   }
   addCartItem(itemId) {
     /*
@@ -138,7 +138,7 @@ class gDemoApp extends gAppSuper {
       gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionY',
         newValue: "1.5"
-      }], frameIds[0]);
+      }], frameIds[0]).then(() => {});
   }
   _addCartItemDOM() {
     let description = 'Apples $3.98';

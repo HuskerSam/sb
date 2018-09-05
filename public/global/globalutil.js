@@ -439,7 +439,7 @@ class GUTILImportCSV {
 
     let blockImageShape = this.defaultCSVRow();
     blockImageShape.asset = 'shape';
-    blockImageShape.materialName = row.name + '_signpostimage'
+    blockImageShape.materialname = row.name + '_signpostimage'
     blockImageShape.name = row.name + '_signpostimage'
     blockImageShape.scaleu = '1';
     blockImageShape.scalev = '1';
