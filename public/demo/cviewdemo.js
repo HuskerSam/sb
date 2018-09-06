@@ -1,17 +1,19 @@
 class cViewDemo extends bView {
   constructor() {
     super();
-    this.updateProducts();
     this.canvasHelper.cameraShownCallback = () => {
       if (this.cameraShown)
         return;
       this.cameraShown = true;
       setTimeout(() => {
+
+        this.updateProducts();
         this.canvasHelper.cameraSelect.selectedIndex = 2;
         this.canvasHelper.noTestError = true;
         this.canvasHelper.cameraChangeHandler();
         this.canvasHelper.playAnimation();
-        this.removeAllGeneratedItems()
+
+        this.hideAllProducts()
           .then(rr => {
             setInterval(() => {
               this.updateProductsDisplay()
@@ -19,6 +21,7 @@ class cViewDemo extends bView {
             }, 1000);
           });
       }, 200);
+
     };
 
     this.displayButtonPanel = document.querySelector('.user-options-panel');
@@ -37,15 +40,9 @@ class cViewDemo extends bView {
       this.collapseButton.innerHTML = 'E';
       this.displayButtonPanel.style.width = '6em';
       this.receiptDisplayPanel.style.display = 'none';
-
-
-
     }
-
   }
   closeHeaderBands() {
-
-
   }
   updateProductsDisplay() {
     let animLen = this.canvasHelper.timeLength;
@@ -95,37 +92,46 @@ class cViewDemo extends bView {
       return;
 
     this.productsUpdated = true;
-    let bD = gAPPP.a.modelSets['block'].fireDataValuesByKey;
-    this.products = [];
-    for (let i in bD) {
-      let b = bD[i];
-      if (b.itemId) {
-        this.products.push({
-          cacheRef: b,
-          blockId: i,
-          itemId: b.itemId,
-          itemIndex: b.itemIndex,
-          title: b.itemTitle,
-          itemCount: b.itemCount,
-          desc: b.itemDesc,
-          price: b.itemPrice
-        });
-      }
-    }
+    let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
 
+    this.productBC = [];
+    for (let i in children)
+      if (children[i].productIndex)
+        this.productBC.push(children[i]);
+
+    this.products = [];
+    for (let c = 0, l = this.productBC.length; c < l; c++) {
+      let pBC = this.productBC[c];
+      let obj = this.rootBlock._findBestTargetObject(`${pBC.childType}:${pBC.childName}`);
+
+      let blockData = obj.blockRenderData;
+      let bcData = obj.blockRawData;
+
+      let p = {
+        blockRef: obj,
+        itemId: blockData.itemId,
+        title: blockData.itemTitle,
+        itemCount: blockData.itemCount,
+        desc: blockData.itemDesc,
+        price: blockData.itemPrice,
+        productIndex: bcData.productIndex,
+        childName: bcData.childName,
+        childType: bcData.childType
+      };
+      this.products.push(p);
+    }
     this.products.sort((a, b) => {
-      if (a.itemIndex > b.itemIndex)
+      if (a.productIndex > b.productIndex)
         return 1;
-      if (a.itemIndex < b.itemIndex)
+      if (a.productIndex < b.productIndex)
         return -1;
       return 0;
     });
-
   }
   productShowPriceAndImage(index) {
     let product = this.products[index];
-    let frames = this.rootBlock._findBestTargetObject(`block:${product.cacheRef.title}`).
-    _findBestTargetObject(`block:${product.cacheRef.title}_signpost`).framesHelper.framesStash;
+    let frames = this.rootBlock._findBestTargetObject(`block:${product.childName}`).
+    _findBestTargetObject(`block:${product.childName}_signpost`).framesHelper.framesStash;
 
     let frameIds = [];
     for (let i in frames)
@@ -149,8 +155,8 @@ class cViewDemo extends bView {
   }
   productHideSign(index) {
     let product = this.products[index];
-    let frames = this.rootBlock._findBestTargetObject(`block:${product.cacheRef.title}`).
-    _findBestTargetObject(`block:${product.cacheRef.title}_signpost`).framesHelper.framesStash;
+    let frames = this.rootBlock._findBestTargetObject(`block:${product.childName}`).
+    _findBestTargetObject(`block:${product.childName}_signpost`).framesHelper.framesStash;
 
     let frameIds = [];
     for (let i in frames)
@@ -164,17 +170,10 @@ class cViewDemo extends bView {
 
     return Promise.resolve();
   }
-  removeAllGeneratedItems() {
+  hideAllProducts() {
     let promises = [];
     for (let c = 0, l = this.products.length; c < l; c++)
       promises.push(this.productHideSign(c));
-
-    return Promise.all(promises);
-  }
-  addAllGeneratedItems() {
-    let promises = [];
-    for (let c = 0, l = this.products.length; c < l; c++)
-      promises.push(this.productShowPriceAndImage(c));
 
     return Promise.all(promises);
   }

@@ -234,7 +234,6 @@ class GUTILImportCSV {
       blockData.itemDesc = row.itemdesc;
       blockData.itemPrice = row.itemprice;
       blockData.itemCount = row.itemcount;
-      blockData.itemIndex = row.itemindex;
     }
 
     return gAPPP.a.modelSets['block'].createWithBlobString(blockData).then(blockResult => {
@@ -282,6 +281,10 @@ class GUTILImportCSV {
       inheritMaterial
     };
 
+    if (row.productindex) {
+      blockChildData.productIndex = row.productindex;
+      blockChildData.origRow = row;
+    }
     if (row.cameraname)
       blockChildData.cameraName = row.cameraname;
     if (row.cameratargetblock)
@@ -535,64 +538,35 @@ class GUTILImportCSV {
     childCSVRows.push(cam);
 
     let frameRows = [];
-    let cameraBlockFrame = this.defaultCSVRow();
-    cameraBlockFrame.asset = 'blockchildframe';
-    cameraBlockFrame.name = cameraBlock.name;
-    cameraBlockFrame.childtype = 'block';
-    cameraBlockFrame.parent = row.parent;
-    cameraBlockFrame.frameorder = '20';
-    cameraBlockFrame.frametime = '21s';
-    cameraBlockFrame.x = '32';
-    cameraBlockFrame.ry = "-90deg";
-    frameRows.push(cameraBlockFrame);
+    let products = this.getProductList();
+    let frameOrder = 20;
+    let frameTime = 10;
+    let timeInc = 20.0 / products.length;
 
-    let cameraBlockFrame2 = this.defaultCSVRow();
-    cameraBlockFrame2.asset = 'blockchildframe';
-    cameraBlockFrame2.name = cameraBlock.name;
-    cameraBlockFrame2.childtype = 'block';
-    cameraBlockFrame2.parent = row.parent;
-    cameraBlockFrame2.frameorder = '40';
-    cameraBlockFrame2.frametime = '28s';
-    cameraBlockFrame2.x = '-45';
-    cameraBlockFrame2.z = '-10';
-    cameraBlockFrame2.ry = "90deg";
-    frameRows.push(cameraBlockFrame2);
+    for (let c = 0, l = products.length; c < l; c++) {
+      let p = products[c].origRow;
+      let cameraBlockFrame = this.defaultCSVRow();
+      cameraBlockFrame.asset = 'blockchildframe';
+      cameraBlockFrame.name = cameraBlock.name;
+      cameraBlockFrame.childtype = 'block';
+      cameraBlockFrame.parent = row.parent;
+      cameraBlockFrame.frameorder = frameOrder.toString();
+      cameraBlockFrame.frametime = frameTime.toFixed(2) + 's';
+      cameraBlockFrame.x = p.x;
+      cameraBlockFrame.y = p.y;
+      cameraBlockFrame.z = p.z;
+      cameraBlockFrame.rx = p.rx;
+      cameraBlockFrame.ry = p.ry;
+      cameraBlockFrame.rz = p.rz;
+      cameraBlockFrame.sx = p.sx;
+      cameraBlockFrame.sy = p.sy;
+      cameraBlockFrame.sz = p.sz;
 
-    let cameraBlockFrame3 = this.defaultCSVRow();
-    cameraBlockFrame3.asset = 'blockchildframe';
-    cameraBlockFrame3.name = cameraBlock.name;
-    cameraBlockFrame3.childtype = 'block';
-    cameraBlockFrame3.parent = row.parent;
-    cameraBlockFrame3.frameorder = '41';
-    cameraBlockFrame3.frametime = '28.5s';
-    cameraBlockFrame3.x = '-45';
-    cameraBlockFrame3.z = '-10';
-    cameraBlockFrame3.ry = "180deg";
-    frameRows.push(cameraBlockFrame3);
+      frameOrder += 10;
+      frameTime += timeInc;
 
-    let cameraBlockFrame43 = this.defaultCSVRow();
-    cameraBlockFrame43.asset = 'blockchildframe';
-    cameraBlockFrame43.name = cameraBlock.name;
-    cameraBlockFrame43.childtype = 'block';
-    cameraBlockFrame43.parent = row.parent;
-    cameraBlockFrame43.frameorder = '50';
-    cameraBlockFrame43.frametime = '29.5s';
-    cameraBlockFrame43.x = '-45';
-    cameraBlockFrame43.z = '9.5';
-    cameraBlockFrame43.ry = "180deg";
-    frameRows.push(cameraBlockFrame43);
-
-    let cameraBlockFrame5 = this.defaultCSVRow();
-    cameraBlockFrame5.asset = 'blockchildframe';
-    cameraBlockFrame5.name = cameraBlock.name;
-    cameraBlockFrame5.childtype = 'block';
-    cameraBlockFrame5.parent = row.parent;
-    cameraBlockFrame5.frameorder = '70';
-    cameraBlockFrame5.frametime = '30s';
-    cameraBlockFrame5.x = '-40';
-    cameraBlockFrame5.z = '9.5';
-    cameraBlockFrame5.ry = "270deg";
-    frameRows.push(cameraBlockFrame5);
+      frameRows.push(cameraBlockFrame);
+    }
 
     return this.addCSVRowList(childCSVRows)
       .then(() => this.addCSVRowList(frameRows));
@@ -612,7 +586,7 @@ class GUTILImportCSV {
       itemcount: "",
       itemdesc: "",
       itemid: "",
-      itemindex: "",
+      productindex: "",
       itemprice: "",
       itemtitle: "",
       materialname: "",
@@ -635,5 +609,22 @@ class GUTILImportCSV {
       y: "",
       z: ""
     };
+  }
+  static getProductList(row) {
+    let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
+    let productBC = [];
+    for (let i in children)
+      if (children[i].productIndex)
+        productBC.push(children[i]);
+
+    productBC.sort((a, b) => {
+      if (a.productIndex > b.productIndex)
+        return 1;
+      if (a.productIndex < b.productIndex)
+        return -1;
+      return 0;
+    });
+
+    return productBC;
   }
 }
