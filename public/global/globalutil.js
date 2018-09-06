@@ -243,7 +243,7 @@ class GUTILImportCSV {
         frameTime = row.frametime;
 
       if (row.itemid) {
-          this.__CSVSignPostRows(row).then(() => {});
+        this.__CSVSignPostRows(row).then(() => {});
       }
 
       return gAPPP.a.modelSets['frame'].createWithBlobString({
@@ -413,7 +413,10 @@ class GUTILImportCSV {
     return Promise.all(promises);
   }
   static addCSVRow(row) {
+    console.log(row);
     switch (row.asset) {
+      case 'productfollowcamera':
+        return this.addCSVCamera(row);
       case 'meshtexture':
         return this.addCSVMeshRow(row);
       case 'block':
@@ -491,6 +494,108 @@ class GUTILImportCSV {
     return this.addCSVRowList(newObjects)
       .then(() => this.addCSVRowList(signChildren))
       .then(() => this.addCSVRow(blockRowBC));
+  }
+  static addCSVCamera(row) {
+    let childCSVRows = [];
+    let cameraBlock = this.defaultCSVRow();
+    cameraBlock.asset = 'block';
+    cameraBlock.name = row.name + '_followblock';
+    cameraBlock.width = '1';
+    cameraBlock.depth = '1';
+    cameraBlock.height = '1';
+    childCSVRows.push(cameraBlock);
+
+    let cameraBlockBC = this.defaultCSVRow();
+    cameraBlockBC.asset = 'blockchild';
+    cameraBlockBC.name = cameraBlock.name;
+    cameraBlockBC.childtype = 'block';
+    cameraBlockBC.parent = row.parent;
+    cameraBlockBC.ry = '-90deg';
+    cameraBlockBC.x = '-40';
+    cameraBlockBC.y = '6';
+    cameraBlockBC.z = '9.5';
+    childCSVRows.push(cameraBlockBC);
+
+    let cam = this.defaultCSVRow();
+    cam.asset = 'blockchild';
+    cam.cameraacceleration = '0.005';
+    cam.camerafov = "0.8";
+    cam.cameraname = "demo";
+    cam.cameraradius = "25";
+    cam.cameraheightoffset = "25";
+    cam.camerarotationoffset = "0";
+    cam.maxcameraspeed = "10";
+    cam.cameratargetblock = "block:" + cameraBlock.name;
+    cam.childtype = 'camera';
+    cam.name = "FollowCamera";
+    cam.parent = row.parent;
+    cam.x = "-45";
+    cam.y = "20";
+    cam.z = "10";
+    childCSVRows.push(cam);
+
+    let frameRows = [];
+    let cameraBlockFrame = this.defaultCSVRow();
+    cameraBlockFrame.asset = 'blockchildframe';
+    cameraBlockFrame.name = cameraBlock.name;
+    cameraBlockFrame.childtype = 'block';
+    cameraBlockFrame.parent = row.parent;
+    cameraBlockFrame.frameorder = '20';
+    cameraBlockFrame.frametime = '21s';
+    cameraBlockFrame.x = '32';
+    cameraBlockFrame.ry = "-90deg";
+    frameRows.push(cameraBlockFrame);
+
+    let cameraBlockFrame2 = this.defaultCSVRow();
+    cameraBlockFrame2.asset = 'blockchildframe';
+    cameraBlockFrame2.name = cameraBlock.name;
+    cameraBlockFrame2.childtype = 'block';
+    cameraBlockFrame2.parent = row.parent;
+    cameraBlockFrame2.frameorder = '40';
+    cameraBlockFrame2.frametime = '28s';
+    cameraBlockFrame2.x = '-45';
+    cameraBlockFrame2.z = '-10';
+    cameraBlockFrame2.ry = "90deg";
+    frameRows.push(cameraBlockFrame2);
+
+    let cameraBlockFrame3 = this.defaultCSVRow();
+    cameraBlockFrame3.asset = 'blockchildframe';
+    cameraBlockFrame3.name = cameraBlock.name;
+    cameraBlockFrame3.childtype = 'block';
+    cameraBlockFrame3.parent = row.parent;
+    cameraBlockFrame3.frameorder = '41';
+    cameraBlockFrame3.frametime = '28.5s';
+    cameraBlockFrame3.x = '-45';
+    cameraBlockFrame3.z = '-10';
+    cameraBlockFrame3.ry = "180deg";
+    frameRows.push(cameraBlockFrame3);
+
+    let cameraBlockFrame43 = this.defaultCSVRow();
+    cameraBlockFrame43.asset = 'blockchildframe';
+    cameraBlockFrame43.name = cameraBlock.name;
+    cameraBlockFrame43.childtype = 'block';
+    cameraBlockFrame43.parent = row.parent;
+    cameraBlockFrame43.frameorder = '50';
+    cameraBlockFrame43.frametime = '29.5s';
+    cameraBlockFrame43.x = '-45';
+    cameraBlockFrame43.z = '9.5';
+    cameraBlockFrame43.ry = "180deg";
+    frameRows.push(cameraBlockFrame43);
+
+    let cameraBlockFrame5 = this.defaultCSVRow();
+    cameraBlockFrame5.asset = 'blockchildframe';
+    cameraBlockFrame5.name = cameraBlock.name;
+    cameraBlockFrame5.childtype = 'block';
+    cameraBlockFrame5.parent = row.parent;
+    cameraBlockFrame5.frameorder = '70';
+    cameraBlockFrame5.frametime = '30s';
+    cameraBlockFrame5.x = '-40';
+    cameraBlockFrame5.z = '9.5';
+    cameraBlockFrame5.ry = "270deg";
+    frameRows.push(cameraBlockFrame5);
+
+    return this.addCSVRowList(childCSVRows)
+      .then(() => this.addCSVRowList(frameRows));
   }
   static defaultCSVRow() {
     return {
