@@ -72,7 +72,7 @@ class cViewDemo extends bView {
 
     }
     this.productsShown = productShown;
-  //  console.log(currentElapsed, productShown);
+    console.log(currentElapsed, productShown);
 
     return this._updateProducts3D();
   }

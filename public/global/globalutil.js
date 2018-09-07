@@ -540,8 +540,8 @@ class GUTILImportCSV {
     let frameRows = [];
     let products = this.getProductList();
     let frameOrder = 20;
-    let frameTime = 10;
-    let timeInc = 20.0 / products.length;
+    let frameTime = 0;
+    let timeInc = 60.0 / products.length;
 
     for (let c = 0, l = products.length; c < l; c++) {
       let p = products[c].origRow;
@@ -551,7 +551,7 @@ class GUTILImportCSV {
       cameraBlockFrame.childtype = 'block';
       cameraBlockFrame.parent = row.parent;
       cameraBlockFrame.frameorder = frameOrder.toString();
-      cameraBlockFrame.frametime = frameTime.toFixed(2) + 's';
+      cameraBlockFrame.frametime = frameTime.toFixed(2) + 'scp500';
       cameraBlockFrame.x = p.x;
       cameraBlockFrame.y = p.y;
       cameraBlockFrame.z = p.z;
