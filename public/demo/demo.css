@@ -27,8 +27,6 @@
 .user-options-panel button {
   border: none;
   padding: .15em;
-  float: left;
-  clear: left;
   font-size: 9pt;
   margin: .35em 0;
   width: 100%;
@@ -56,8 +54,7 @@
   background: rgba(255, 255, 0, .67);
 }
 
-.cart-contents,
-.cart-total {
+.cart-contents {
   position: absolute;
   z-index: 1000;
   right: .25em;
@@ -79,6 +76,9 @@
   height: 3.5em;
   overflow: visible;
   border: none;
+  padding: .25em;
+  border-radius: .75em;
+  font-size: 10pt;
 }
 
 .cart-item {
@@ -104,7 +104,7 @@
   margin-right: .25em;
 }
 
-.cart-item .cart-item-total {
+.cart-item-total {
   background: rgb(255, 255, 255);
   padding: .15em .25em;
   font-size: 14pt;
@@ -125,13 +125,16 @@
   border-radius: .75em;
 }
 
-.cart-item .cart-submit {
+button.cart-submit {
   margin-left: .15em;
   font-size: 12pt;
   font-family: Georgia;
   border: none;
   background: rgb(240, 240, 240);
   line-height: 2em;
+  width: auto;
+  padding-left: .5em;
+  padding-right: .5em;
 }
 
 .cart-left-side {
