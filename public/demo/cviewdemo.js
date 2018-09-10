@@ -24,6 +24,17 @@ class cViewDemo extends bView {
 
     };
 
+    this.buttonOne = document.querySelector('.choice-button-one');
+    this.buttonTwo = document.querySelector('.choice-button-two');
+    this.buttonThree = document.querySelector('.choice-button-three');
+    this.buttonFour = document.querySelector('.choice-button-four');
+
+    this.buttonOneText = 'Pears &nbsp; 2 for $1';
+    this.buttonTwoText = 'Watermelon &nbsp; $5 each';
+    this.buttonThreeText = 'Apples &nbsp; $1.99 / lb';
+    this.buttonFourText = 'Onions &nbsp; $.89 / lb';
+    this._setButtonLabels();
+
     this.displayButtonPanel = document.querySelector('.user-options-panel');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
     this.collapseButton = document.querySelector('.collapse-expand');
@@ -31,16 +42,30 @@ class cViewDemo extends bView {
   }
   toggleViewMode() {
     if (this.viewCollapsed) {
-      this.receiptDisplayPanel.style.display = 'block';
-      this.collapseButton.innerHTML = 'C';
+      this.receiptDisplayPanel.style.right = '';
+      this.collapseButton.innerHTML = '<i class="material-icons">unfold_less</i>';
       this.displayButtonPanel.style.width = '';
       this.viewCollapsed = false;
+      this._setButtonLabels();
     } else {
       this.viewCollapsed = true;
-      this.collapseButton.innerHTML = 'E';
+      this.collapseButton.innerHTML = '<i class="material-icons">unfold_more</i>';
       this.displayButtonPanel.style.width = '6em';
-      this.receiptDisplayPanel.style.display = 'none';
+      this.receiptDisplayPanel.style.right = '-50%';
+      this._clearButtonLabels();
     }
+  }
+  _clearButtonLabels() {
+    this.buttonOne.innerHTML = '&nbsp;';
+    this.buttonTwo.innerHTML = '&nbsp;';
+    this.buttonThree.innerHTML = '&nbsp;';
+    this.buttonFour.innerHTML = '&nbsp;';
+  }
+  _setButtonLabels() {
+    this.buttonOne.innerHTML = this.buttonOneText;
+    this.buttonTwo.innerHTML = this.buttonTwoText;
+    this.buttonThree.innerHTML = this.buttonThreeText;
+    this.buttonFour.innerHTML = this.buttonFourText;
   }
   closeHeaderBands() {
   }

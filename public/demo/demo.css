@@ -4,7 +4,7 @@
 }
 
 #demo-profile-panel {
-  top: .25em;
+  top: 0em;
   position: absolute;
 }
 
@@ -22,6 +22,7 @@
   position: absolute;
   z-index: 1000;
   width: 50%;
+  transition: width .6s;
 }
 
 .user-options-panel button {
@@ -58,7 +59,7 @@
   position: absolute;
   z-index: 1000;
   right: .25em;
-  bottom: 4em;
+  bottom: .25em;
   padding: .25em;
   width: calc(50% - .75em);
   text-align: right;
@@ -69,6 +70,7 @@
   max-width: 35em;
   max-height: 45%;
   font-size: 10pt;
+  transition: right .35s;
 }
 
 .cart-total {
@@ -79,6 +81,7 @@
   padding: .25em;
   border-radius: .75em;
   font-size: 10pt;
+  white-space: nowrap;
 }
 
 .cart-item {
@@ -143,4 +146,10 @@ button.cart-submit {
 
 button.collapse-expand {
   width: 3em;
+  transform: rotate(90deg);
+}
+
+button.collapse-expand i {
+  font-size: 2em;
+  top: .25em;
 }
