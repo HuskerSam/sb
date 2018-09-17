@@ -537,11 +537,15 @@ class GUTILImportCSV {
     cam.z = "10";
     childCSVRows.push(cam);
 
+    let introTime = GLOBALUTIL.getNumberOrDefault(row.introtime, 0.0);
+    let finishTime = GLOBALUTIL.getNumberOrDefault(row.finishDelay, 0.0);
+    let runTime = GLOBALUTIL.getNumberOrDefault(row.runlength, 60.0);
+
     let frameRows = [];
     let products = this.getProductList();
     let frameOrder = 20;
-    let frameTime = 0;
-    let timeInc = 60.0 / products.length;
+    let frameTime = introTime;
+    let timeInc = (runTime - finishTime - introTime) / products.length;
 
     for (let c = 0, l = products.length; c < l; c++) {
       let p = products[c].origRow;

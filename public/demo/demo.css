@@ -146,10 +146,10 @@ button.cart-submit {
 
 button.collapse-expand {
   width: 3em;
-  transform: rotate(90deg);
 }
 
 button.collapse-expand i {
   font-size: 2em;
   top: .25em;
+  transform: rotate(90deg);
 }
