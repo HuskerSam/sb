@@ -236,6 +236,12 @@ class GUTILImportCSV {
       blockData.itemCount = row.itemcount;
     }
 
+    if (row.introtime) {
+      blockData.introtime = row.introtime;
+      blockData.finishdelay = row.finishdelay;
+      blockData.runlength = row.runlength;
+    }
+
     return gAPPP.a.modelSets['block'].createWithBlobString(blockData).then(blockResult => {
       let frameTime = '0';
       if (row.frametime)
@@ -506,6 +512,9 @@ class GUTILImportCSV {
     cameraBlock.width = '1';
     cameraBlock.depth = '1';
     cameraBlock.height = '1';
+    cameraBlock.introtime = row.introtime;
+    cameraBlock.finishdelay = row.finishdelay;
+    cameraBlock.runlength = row.runlength;
     childCSVRows.push(cameraBlock);
 
     let cameraBlockBC = this.defaultCSVRow();
@@ -513,32 +522,37 @@ class GUTILImportCSV {
     cameraBlockBC.name = cameraBlock.name;
     cameraBlockBC.childtype = 'block';
     cameraBlockBC.parent = row.parent;
-    cameraBlockBC.ry = '-90deg';
-    cameraBlockBC.x = '-40';
-    cameraBlockBC.y = '6';
-    cameraBlockBC.z = '9.5';
+    cameraBlockBC.rx = row.startrx;
+    cameraBlockBC.ry = row.startry;
+    cameraBlockBC.rz = row.startrz;
+    cameraBlockBC.x = row.startx;
+    cameraBlockBC.y = row.starty;
+    cameraBlockBC.z = row.startz;
     childCSVRows.push(cameraBlockBC);
 
     let cam = this.defaultCSVRow();
     cam.asset = 'blockchild';
-    cam.cameraacceleration = '0.005';
-    cam.camerafov = "0.8";
+    cam.cameraacceleration = row.cameraacceleration;
+    cam.camerafov = row.camerafov;
     cam.cameraname = "demo";
-    cam.cameraradius = "25";
-    cam.cameraheightoffset = "25";
-    cam.camerarotationoffset = "0";
-    cam.maxcameraspeed = "10";
+    cam.cameraradius = row.cameraradius;
+    cam.cameraheightoffset = row.cameraheightoffset;
+    cam.camerarotationoffset = row.camerarotationoffset;
+    cam.maxcameraspeed = row.maxcameraspeed;
     cam.cameratargetblock = "block:" + cameraBlock.name;
     cam.childtype = 'camera';
-    cam.name = "FollowCamera";
+    cam.name = row.name;
     cam.parent = row.parent;
-    cam.x = "-45";
-    cam.y = "20";
-    cam.z = "10";
+    cam.rx = row.rx;
+    cam.ry = row.ry;
+    cam.rz = row.rz;
+    cam.x = row.x;
+    cam.y = row.y;
+    cam.z = row.z;
     childCSVRows.push(cam);
 
     let introTime = GLOBALUTIL.getNumberOrDefault(row.introtime, 0.0);
-    let finishTime = GLOBALUTIL.getNumberOrDefault(row.finishDelay, 0.0);
+    let finishTime = GLOBALUTIL.getNumberOrDefault(row.finishdelay, 0.0);
     let runTime = GLOBALUTIL.getNumberOrDefault(row.runlength, 60.0);
 
     let frameRows = [];

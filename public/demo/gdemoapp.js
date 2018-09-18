@@ -145,14 +145,13 @@ class gDemoApp extends gAppSuper {
     cartItemObj.removeDom = cartItem.querySelector('.cart-item-remove');
     cartItemObj.descriptionDom = cartItem.querySelector('.cart-item-description');
     cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
-
   }
   updateProfile() {
-    /*
-        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-          field: 'cameraPositionSave' + this.rootBlock.blockKey,
-          newValue: cp
-        }]);
-        */
+/*
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'cameraPositionSave' + this.rootBlock.blockKey,
+      newValue: cp
+    }]);
+*/
   }
 }
