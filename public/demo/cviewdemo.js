@@ -70,34 +70,36 @@ class cViewDemo extends bView {
   closeHeaderBands() {
   }
   updateProductsDisplay() {
-    let animLen = this.canvasHelper.timeLength;
     let productCount = this.products.length;
     let currentElapsed = this.canvasHelper.timeE;
     let productsShownAtOnce = 3;
     let numberOfButtons = 4;
 
-    let incLength = animLen / productCount;
+    let runTime = this.runLength - this.introTime - this.finishDelay;
+    let incLength = runTime / productCount;
     let productShown = [];
     for (let c = 0; c < productCount; c++) {
-      let started = false;
-      let startTime = c * incLength;
-      let endTime = (3 * incLength + startTime);
-      let modEndTime = endTime % animLen;
+      let startTime = c * incLength + this.introTime;
+      let endTime = (c + 3) * incLength + startTime;
 
-      if (startTime <= currentElapsed)
+      let started = false;
+      if (startTime >= currentElapsed)
         started = true;
-      //  if (endTime - modEndTime <= currentElapsed)
-      //  started = true;
 
       let ended = true;
-      if (modEndTime >= currentElapsed)
+      if (endTime <= currentElapsed)
         ended = false;
+
+      console.log(startTime, endTime);
+      //      let modEndTime = endTime % (runTime + this.introTime);
+      //  if (endTime - modEndTime <= currentElapsed)
+      //  started = true;
 
       productShown.push(started && !ended);
 
     }
     this.productsShown = productShown;
-//    console.log(currentElapsed, productShown);
+    console.log(currentElapsed, productShown);
 
     return this._updateProducts3D();
   }
@@ -118,11 +120,24 @@ class cViewDemo extends bView {
 
     this.productsUpdated = true;
     let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
+    let cameraFollowBlockName = 'FollowCamera_followblock';
 
     this.productBC = [];
-    for (let i in children)
+    for (let i in children) {
       if (children[i].productIndex)
         this.productBC.push(children[i]);
+    }
+
+    let cameraFollowBlocks = gAPPP.a.modelSets['block'].queryCache('title', cameraFollowBlockName);
+    let cameraData = null;
+    for (let i in cameraFollowBlocks)
+      cameraData = cameraFollowBlocks[i];
+
+    if (cameraData) {
+      this.finishDelay = GLOBALUTIL.getNumberOrDefault(cameraData.finishdelay, 0);
+      this.introTime = GLOBALUTIL.getNumberOrDefault(cameraData.introtime, 0);
+      this.runLength = GLOBALUTIL.getNumberOrDefault(cameraData.runlength, 60);
+    }
 
     this.products = [];
     for (let c = 0, l = this.productBC.length; c < l; c++) {
