@@ -39,6 +39,13 @@ class cViewDemo extends bView {
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
     this.collapseButton = document.querySelector('.collapse-expand');
     this.collapseButton.addEventListener('click', () => this.toggleViewMode());
+
+    this.colors = [
+      '1,0,0',
+      '0,1,0',
+      '0,0,1',
+      '1,1,0'
+    ];
   }
   toggleViewMode() {
     if (this.viewCollapsed) {
@@ -71,28 +78,21 @@ class cViewDemo extends bView {
   }
   updateProductsDisplay() {
     let productShown = [];
-
     let currentElapsed = this.canvasHelper.timeE;
 
     for (let c = 0; c < this.products.length; c++) {
       let product = this.products[c];
       let started = false;
-      if (product.startTime >= currentElapsed)
+      if (product.startTime <= currentElapsed)
         started = true;
 
       let ended = true;
       if (currentElapsed <= product.endTime)
         ended = false;
-//        console.log(c, currentElapsed, product.endTime, ended);
 
-//      console.log(started, ended);
-      //      let modEndTime = endTime % (runTime + this.introTime);
-      //  if (endTime - modEndTime <= currentElapsed)
-      //  started = true;
       productShown.push(started && !ended);
     }
     this.productsShown = productShown;
-    console.log(currentElapsed, productShown);
 
     return this._updateProducts3D();
   }
@@ -166,9 +166,11 @@ class cViewDemo extends bView {
     let numberOfButtons = 4;
     let runTime = this.runLength - this.introTime - this.finishDelay;
     let incLength = runTime / productCount;
+
     for (let c = 0; c < productCount; c++) {
       this.products[c].startTime = c * incLength + this.introTime;
       this.products[c].endTime = (c + 3) * incLength + this.products[c].startTime;
+      this.products[c].colorIndex = c % 4;
     }
   }
   productShowPriceAndImage(index) {
@@ -180,12 +182,13 @@ class cViewDemo extends bView {
     for (let i in frames)
       frameIds.push(i);
 
-    if (frameIds.length > 0)
-      return gAPPP.a.modelSets['frame'].commitUpdateList([{
+    if (frameIds.length > 0){
+      return Promise.all([gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionY',
         newValue: "2"
-      }], frameIds[0]);
-
+      }], frameIds[0]),
+    ]);
+    }
     return Promise.resolve();
   }
   removeByTitle(collection, title) {
