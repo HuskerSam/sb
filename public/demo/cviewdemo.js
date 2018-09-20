@@ -41,10 +41,10 @@ class cViewDemo extends bView {
     this.collapseButton.addEventListener('click', () => this.toggleViewMode());
 
     this.colors = [
-      '1,0,0',
-      '0,1,0',
-      '0,0,1',
-      '1,1,0'
+      'decolor: 1,0,0',
+      'decolor: 0,1,0',
+      'decolor: 0,0,1',
+      'decolor: 1,1,0'
     ];
   }
   toggleViewMode() {
@@ -74,8 +74,7 @@ class cViewDemo extends bView {
     this.buttonThree.innerHTML = this.buttonThreeText;
     this.buttonFour.innerHTML = this.buttonFourText;
   }
-  closeHeaderBands() {
-  }
+  closeHeaderBands() {}
   updateProductsDisplay() {
     let productShown = [];
     let currentElapsed = this.canvasHelper.timeE;
@@ -175,19 +174,25 @@ class cViewDemo extends bView {
   }
   productShowPriceAndImage(index) {
     let product = this.products[index];
-    let frames = this.rootBlock._findBestTargetObject(`block:${product.childName}`).
-    _findBestTargetObject(`block:${product.childName}_signpost`).framesHelper.framesStash;
+    let bc = this.rootBlock._findBestTargetObject(`block:${product.childName}`)
+      ._findBestTargetObject(`block:${product.childName}_signpost`);
+    let frames = bc.framesHelper.framesStash;
 
     let frameIds = [];
     for (let i in frames)
       frameIds.push(i);
 
-    if (frameIds.length > 0){
-      return Promise.all([gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionY',
-        newValue: "2"
-      }], frameIds[0]),
-    ]);
+    if (frameIds.length > 0) {
+      return Promise.all([
+        gAPPP.a.modelSets['frame'].commitUpdateList([{
+          field: 'positionY',
+          newValue: "2"
+        }], frameIds[0]),
+        gAPPP.a.modelSets['block'].commitUpdateList([{
+          field: 'materialName',
+          newValue: this.colors[product.colorIndex]
+        }], bc.blockTargetKey)
+      ]);
     }
     return Promise.resolve();
   }
