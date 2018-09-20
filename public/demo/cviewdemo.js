@@ -70,33 +70,26 @@ class cViewDemo extends bView {
   closeHeaderBands() {
   }
   updateProductsDisplay() {
-    let productCount = this.products.length;
-    let currentElapsed = this.canvasHelper.timeE;
-    let productsShownAtOnce = 3;
-    let numberOfButtons = 4;
-
-    let runTime = this.runLength - this.introTime - this.finishDelay;
-    let incLength = runTime / productCount;
     let productShown = [];
-    for (let c = 0; c < productCount; c++) {
-      let startTime = c * incLength + this.introTime;
-      let endTime = (c + 3) * incLength + startTime;
 
+    let currentElapsed = this.canvasHelper.timeE;
+
+    for (let c = 0; c < this.products.length; c++) {
+      let product = this.products[c];
       let started = false;
-      if (startTime >= currentElapsed)
+      if (product.startTime >= currentElapsed)
         started = true;
 
       let ended = true;
-      if (endTime <= currentElapsed)
+      if (currentElapsed <= product.endTime)
         ended = false;
+//        console.log(c, currentElapsed, product.endTime, ended);
 
-      console.log(startTime, endTime);
+//      console.log(started, ended);
       //      let modEndTime = endTime % (runTime + this.introTime);
       //  if (endTime - modEndTime <= currentElapsed)
       //  started = true;
-
       productShown.push(started && !ended);
-
     }
     this.productsShown = productShown;
     console.log(currentElapsed, productShown);
@@ -117,7 +110,6 @@ class cViewDemo extends bView {
   updateProducts() {
     if (this.productsUpdated)
       return;
-
     this.productsUpdated = true;
     let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
     let cameraFollowBlockName = 'FollowCamera_followblock';
@@ -160,6 +152,7 @@ class cViewDemo extends bView {
       };
       this.products.push(p);
     }
+
     this.products.sort((a, b) => {
       if (a.productIndex > b.productIndex)
         return 1;
@@ -167,6 +160,16 @@ class cViewDemo extends bView {
         return -1;
       return 0;
     });
+
+    let productCount = this.products.length;
+    let productsShownAtOnce = 3;
+    let numberOfButtons = 4;
+    let runTime = this.runLength - this.introTime - this.finishDelay;
+    let incLength = runTime / productCount;
+    for (let c = 0; c < productCount; c++) {
+      this.products[c].startTime = c * incLength + this.introTime;
+      this.products[c].endTime = (c + 3) * incLength + this.products[c].startTime;
+    }
   }
   productShowPriceAndImage(index) {
     let product = this.products[index];
