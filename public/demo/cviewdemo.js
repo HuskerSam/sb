@@ -24,16 +24,13 @@ class cViewDemo extends bView {
 
     };
 
-    this.buttonOne = document.querySelector('.choice-button-one');
-    this.buttonTwo = document.querySelector('.choice-button-two');
-    this.buttonThree = document.querySelector('.choice-button-three');
-    this.buttonFour = document.querySelector('.choice-button-four');
+    this.itemButtons = [];
+    this.itemButtons.push(document.querySelector('.choice-button-one'));
+    this.itemButtons.push(document.querySelector('.choice-button-two'));
+    this.itemButtons.push(document.querySelector('.choice-button-three'));
+    this.itemButtons.push(document.querySelector('.choice-button-four'));
 
-    this.buttonOneText = 'Pears &nbsp; 2 for $1';
-    this.buttonTwoText = 'Watermelon &nbsp; $5 each';
-    this.buttonThreeText = 'Apples &nbsp; $1.99 / lb';
-    this.buttonFourText = 'Onions &nbsp; $.89 / lb';
-    this._setButtonLabels();
+    this._clearButtonLabels();
 
     this.displayButtonPanel = document.querySelector('.user-options-panel');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
@@ -67,12 +64,6 @@ class cViewDemo extends bView {
     this.buttonTwo.innerHTML = '&nbsp;';
     this.buttonThree.innerHTML = '&nbsp;';
     this.buttonFour.innerHTML = '&nbsp;';
-  }
-  _setButtonLabels() {
-    this.buttonOne.innerHTML = this.buttonOneText;
-    this.buttonTwo.innerHTML = this.buttonTwoText;
-    this.buttonThree.innerHTML = this.buttonThreeText;
-    this.buttonFour.innerHTML = this.buttonFourText;
   }
   closeHeaderBands() {}
   updateProductsDisplay() {
@@ -194,7 +185,12 @@ class cViewDemo extends bView {
         }], bc.blockTargetKey)
       ]);
     }
+
+    this.updateDisplayButtons();
     return Promise.resolve();
+  }
+  updateDisplayButtons(index) {
+
   }
   removeByTitle(collection, title) {
     let promises = [];
