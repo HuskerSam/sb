@@ -23,6 +23,7 @@
   z-index: 1000;
   width: 50%;
   transition: width .6s;
+  height: 25em;
 }
 
 .user-options-panel button {
@@ -36,23 +37,28 @@
   max-width: 35em;
   overflow: hidden;
   white-space: nowrap;
+  position: absolute;
 }
 
 .choice-button-one {
   background: rgba(255, 90, 90, .8);
+  top: 4em;
 }
 
 .choice-button-two {
   background: rgba(0, 200, 0, .67);
+  top: 8em;
 }
 
 .choice-button-three {
   background: rgba(0, 0, 255, .5);
+  top: 12em;
   color: white;
 }
 
 .choice-button-four {
   background: rgba(255, 255, 0, .67);
+  top: 16em;
 }
 
 .cart-contents {
@@ -74,14 +80,10 @@
 }
 
 .cart-total {
-  bottom: .25em;
-  height: 3.5em;
   overflow: visible;
-  border: none;
-  padding: .25em;
-  border-radius: .75em;
-  font-size: 10pt;
   white-space: nowrap;
+  position: absolute;
+  top: 20em;
 }
 
 .cart-item {
@@ -111,11 +113,12 @@
   background: rgb(255, 255, 255);
   padding: .15em .25em;
   font-size: 14pt;
-  line-height: 1.5em;
+  line-height: 1.8em;
   font-weight: bold;
   color: rgb(0, 255, 0);
   background: black;
   display: inline-block;
+  margin-top: .25em;
 }
 
 .cart-item .cart-item-remove {
@@ -129,7 +132,7 @@
 }
 
 button.cart-submit {
-  margin-left: .15em;
+  margin-left: .35em;
   font-size: 12pt;
   font-family: Georgia;
   border: none;

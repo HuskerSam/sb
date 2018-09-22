@@ -50,7 +50,7 @@ class cViewDemo extends bView {
       this.collapseButton.innerHTML = '<i class="material-icons">unfold_less</i>';
       this.displayButtonPanel.style.width = '';
       this.viewCollapsed = false;
-      this._setButtonLabels();
+      //this._setButtonLabels();
     } else {
       this.viewCollapsed = true;
       this.collapseButton.innerHTML = '<i class="material-icons">unfold_more</i>';
@@ -60,10 +60,10 @@ class cViewDemo extends bView {
     }
   }
   _clearButtonLabels() {
-    this.buttonOne.innerHTML = '&nbsp;';
-    this.buttonTwo.innerHTML = '&nbsp;';
-    this.buttonThree.innerHTML = '&nbsp;';
-    this.buttonFour.innerHTML = '&nbsp;';
+    for (let c = 0, l = this.itemButtons.length; c < l; c++){
+      this.itemButtons[c].innerHTML = '&nbsp;';
+  //    this.itemButtons[c].style.display = 'none';
+    }
   }
   closeHeaderBands() {}
   updateProductsDisplay() {
