@@ -43,6 +43,43 @@ class cViewDemo extends bView {
       'decolor: 0,0,1',
       'decolor: 1,1,0'
     ];
+
+    this.sceneIndex = 0;
+    this.weekPickerSelect = document.getElementById('week-picker-select');
+    this.canvasActionsDom = document.querySelector('.canvas-actions');
+    this.weekPickerSelect.addEventListener('input', () => this.changeSelectedWeek());
+    this.weekPickerSelect.value = gAPPP.workspaceCode;
+  }
+  changeSelectedWeek() {
+    let projCode = this.weekPickerSelect.value;
+
+    if (projCode === 'About') {
+      let anchor = document.createElement('a');
+      anchor.setAttribute('href', '/demo/about.html');
+      anchor.setAttribute('target', '_blank');
+      document.body.appendChild(anchor)
+      anchor.click();
+      document.body.removeChild(anchor);
+      this.weekPickerSelect.selectedIndex = this.sceneIndex;
+      return;
+    }
+
+    if (projCode === 'Options') {
+      this.weekPickerSelect.selectedIndex = this.sceneIndex;
+      if (this.optionsShown) {
+        this.optionsShown = false;
+        this.canvasActionsDom.classList.remove('canvas-actions-shown');
+      } else {
+        this.optionsShown = true;
+        this.canvasActionsDom.classList.add('canvas-actions-shown');
+      }
+
+      return;
+    }
+
+    this.sceneIndex = this.weekPickerSelect.selectedIndex;
+    let path = location.origin + location.pathname + '?z=' + projCode;
+    window.location = path;
   }
   toggleViewMode() {
     if (this.viewCollapsed) {

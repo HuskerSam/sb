@@ -12,15 +12,15 @@ class gDemoApp extends gAppSuper {
     let urlParams = new URLSearchParams(window.location.search);
     let workspace = urlParams.get('w');
     let block = urlParams.get('b');
-    let workspaceCode = urlParams.get('z');
+    this.workspaceCode = urlParams.get('z');
     let blockCode = urlParams.get('y');
 
     blockCode = 'demo';
 
-    if (!workspaceCode)
-      workspaceCode = 'Week 1';
-    if (workspaceCode) {
-      let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('code', workspaceCode);
+    if (!this.workspaceCode)
+      this.workspaceCode = 'Week 1';
+    if (this.workspaceCode) {
+      let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('code', this.workspaceCode);
       if (data)
         workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
     }
@@ -55,26 +55,6 @@ class gDemoApp extends gAppSuper {
     document.querySelector('.choice-button-four').addEventListener('click', () => this.showBasketGood('spring onions'));
 
     document.querySelector('.show-more-controls').addEventListener('click', () => this.toggleShowControls());
-
-    document.getElementById('week-picker-select').addEventListener('input', () => this.changeSelectedWeek());
-    document.getElementById('week-picker-select').value = workspaceCode;
-
-  }
-  changeSelectedWeek() {
-    let projCode = document.getElementById('week-picker-select').value;
-
-    if (projCode === 'About') {
-      let anchor = document.createElement('a');
-      anchor.setAttribute('href', '/demo/about.html');
-      anchor.setAttribute('target', '_blank');
-      document.body.appendChild(anchor)
-      anchor.click();
-      document.body.removeChild(anchor);
-      return;
-    }
-
-    let path = location.origin + location.pathname + '?z=' + projCode;
-    window.location = path;
   }
   toggleShowControls() {
     if (!this.controlsShown) {

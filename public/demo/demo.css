@@ -156,3 +156,9 @@ button.collapse-expand i {
   top: .25em;
   transform: rotate(90deg);
 }
+
+.canvas-actions-shown {
+  bottom: initial;
+  display: block;
+  top: 2em;
+}
