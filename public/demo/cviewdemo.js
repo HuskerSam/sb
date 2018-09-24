@@ -121,7 +121,19 @@ class cViewDemo extends bView {
     }
     this.productsShown = productShown;
 
-    return this._updateProducts3D();
+    return Promise.all([
+      this._updateProducts3D(),
+      this._updateButtons();
+    ]);
+  }
+  _updateButtons() {
+    for (let c = 0, l = this.productsShown.length; c < l; c++) {
+      if (this.productsShown[c]) {
+        promises.push(this.productShowPriceAndImage(c));
+      } else {
+        promises.push(this.productHideSign(c));
+      }
+    }    
   }
   _updateProducts3D() {
     let promises = [];
