@@ -114,8 +114,9 @@ class bView {
 
     let pS = gAPPP.a.profile['playState' + this.rootBlock.blockKey];
     let pT = gAPPP.a.profile['playStateAnimTime' + this.rootBlock.blockKey];
+    let pO = gAPPP.a.profile['playStateOffset' + this.rootBlock.blockKey];
 
-    if (pS !== this.canvasHelper.playState || pT !== this.canvasHelper.lastSliderValue) {
+    if (pS !== this.canvasHelper.playState || pT !== this.canvasHelper.lastSliderValue || pO !== this.canvasHelper.lastOffset) {
       this.canvasHelper._playState = pS;
       this.canvasHelper.__updatePlayState();
     }
