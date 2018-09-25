@@ -43,6 +43,18 @@ class cViewDemo extends bView {
       'decolor: 0,0,1',
       'decolor: 1,1,0'
     ];
+    this.buttonColors = [
+      'rgb(255,0,0)',
+      'rgb(0,255,0)',
+      'rgb(0,0,255)',
+      'rgb(255,255,0)'
+    ];
+    this.buttonForeColors = [
+      'rgb(0,0,0)',
+      'rgb(0,0,0)',
+      'rgb(255,255,255)',
+      'rgb(0,0,0)'
+    ];
 
     this.sceneIndex = 0;
     this.weekPickerSelect = document.getElementById('week-picker-select');
@@ -107,6 +119,10 @@ class cViewDemo extends bView {
     let productShown = [];
     let currentElapsed = this.canvasHelper.timeE;
 
+    if (this.updateDisplay)
+      return;
+
+    this.updateDisplay = true;
     for (let c = 0; c < this.products.length; c++) {
       let product = this.products[c];
       let started = false;
@@ -123,17 +139,25 @@ class cViewDemo extends bView {
 
     return Promise.all([
       this._updateProducts3D(),
-      this._updateButtons();
-    ]);
+      this._updateButtons()
+    ]).then(result => {
+      this.updateDisplay = false;
+      return Promise.resolve();
+    })
   }
   _updateButtons() {
+
     for (let c = 0, l = this.productsShown.length; c < l; c++) {
       if (this.productsShown[c]) {
-        promises.push(this.productShowPriceAndImage(c));
-      } else {
-        promises.push(this.productHideSign(c));
+        let product = this.products[c];
+        let btn = this.itemButtons[c];
+        btn.style.backgroundColor = this.buttonColors[c];
+        btn.style.color = this.buttonForeColors[c];
+        btn.innerHTML = product.price.toString();
       }
-    }    
+    }
+
+    return Promise.resolve();
   }
   _updateProducts3D() {
     let promises = [];
