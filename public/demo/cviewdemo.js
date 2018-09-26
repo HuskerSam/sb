@@ -137,12 +137,12 @@ class cViewDemo extends bView {
       this._updateButtons()
     ]).then(result => {
       this.updateDisplay = false;
+      clearTimeout(this.updateProductsTimeout);
+      this.updateProductsTimeout = setTimeout(() => {
+        this.updateProductsDisplay();
+      }, 1000);
     });
 
-    clearTimeout(this.updateProductsTimeout);
-    this.updateProductsTimeout = setTimeout(() => {
-      this.updateProductsDisplay();
-    }, 1000);
   }
   _updateButtons() {
     this.itemButtons[0].style.display = 'none';
@@ -150,7 +150,7 @@ class cViewDemo extends bView {
     this.itemButtons[2].style.display = 'none';
     this.itemButtons[3].style.display = 'none';
 
-    console.log(this.productsShown);
+    console.log(Date.now(), this.productsShown);
     for (let c = 0, l = this.productsShown.length; c < l; c++) {
       if (this.productsShown[c]) {
         let product = this.products[c];
@@ -235,7 +235,7 @@ class cViewDemo extends bView {
 
     for (let c = 0; c < productCount; c++) {
       this.products[c].startTime = c * incLength + this.introTime;
-      this.products[c].endTime = (c + 3) * incLength + this.products[c].startTime;
+      this.products[c].endTime = productsShownAtOnce * incLength + this.products[c].startTime;
       this.products[c].colorIndex = c % 4;
     }
   }

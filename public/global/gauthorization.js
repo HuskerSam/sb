@@ -110,15 +110,18 @@ class gAuthorization {
   }
   signIn() {
     let urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('server') === 'true') {
-      this.signInAnon();
+//    if (urlParams.get('server') === 'true') {
+//      this.signInAnon();
+//      return;
+//    }
+    if (urlParams.get('signin') !== 'true')
       return;
-    }
-
+      
     this.provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(this.provider);
   }
   signInByEmail(email) {
+/*
     var actionCodeSettings = {
       url: window.location.href,
       handleCodeInApp: true
@@ -130,6 +133,7 @@ class gAuthorization {
         window.location = '/doc/help.html';
       })
       .catch(e => console.log(e));
+      */
   }
   signInAnon() {
     this.anonymous = true;

@@ -260,6 +260,14 @@ class cPanelCanvas {
         this.activateSliderUpdates();
       }, 50);
   }
+  get timeE() {
+    if (this.activeAnimation) {
+      let elapsed = this.activeAnimation._runtimeAnimations[0].currentFrame;
+      return elapsed / this.rootBlock.framesHelper.fps;
+    }
+
+    return 0;
+  }
   _updateSliderPosition(valueUpdate = true) {
     let elapsed = 0;
     let total = 100;
@@ -272,7 +280,6 @@ class cPanelCanvas {
       this.animateSlider.value = elapsed / total * 100.0;
 
     if (this.activeAnimation) {
-      this.timeE = elapsed / this.rootBlock.framesHelper.fps;
       this.timeLength = total / this.rootBlock.framesHelper.fps;
       this.animateSliderLabel.innerHTML = 'Time: ' + this.timeE.toFixed(1) + '/' + this.timeLength.toFixed(1) + 's';
     } else
