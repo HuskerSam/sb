@@ -14,12 +14,7 @@ class cViewDemo extends bView {
         this.canvasHelper.playAnimation();
 
         this.hideAllProducts()
-          .then(rr => {
-            setInterval(() => {
-              this.updateProductsDisplay()
-                .then(() => {});
-            }, 1000);
-          });
+          .then(rr => this.updateProductsDisplay());
       }, 200);
 
     };
@@ -137,23 +132,31 @@ class cViewDemo extends bView {
     }
     this.productsShown = productShown;
 
-    return Promise.all([
+    Promise.all([
       this._updateProducts3D(),
       this._updateButtons()
     ]).then(result => {
       this.updateDisplay = false;
-      return Promise.resolve();
-    })
+    });
+
+    clearTimeout(this.updateProductsTimeout);
+    this.updateProductsTimeout = setTimeout(() => {
+      this.updateProductsDisplay();
+    }, 1000);
   }
   _updateButtons() {
+    this.itemButtons[0].style.display = 'none';
+    this.itemButtons[1].style.display = 'none';
+    this.itemButtons[2].style.display = 'none';
+    this.itemButtons[3].style.display = 'none';
 
+    console.log(this.productsShown);
     for (let c = 0, l = this.productsShown.length; c < l; c++) {
       if (this.productsShown[c]) {
         let product = this.products[c];
-        let btn = this.itemButtons[c];
-        btn.style.backgroundColor = this.buttonColors[c];
-        btn.style.color = this.buttonForeColors[c];
+        let btn = this.itemButtons[product.colorIndex];
         btn.innerHTML = product.price.toString();
+        btn.style.display = 'inline-block';
       }
     }
 
