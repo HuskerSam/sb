@@ -432,11 +432,51 @@ class GUTILImportCSV {
         return this.addCSVBlockRow(row);
       case 'blockchild':
         return this.addCSVBlockChildRow(row);
+      case 'texturematerial':
+        return this.addCSVTextureMaterial(row);
       case 'shape':
         return this.addCSVShapeRow(row);
       case 'blockchildframe':
         return this.addCSVBlockChildFrameRow(row);
     }
+  }
+  static this.addCSVTextureMaterial(row) {
+    let promises = [];
+
+    let shapeData = {
+      title: row.name,
+      materialName: row.materialname,
+      boxHeight: row.height,
+      boxWidth: row.width,
+      boxDepth: row.depth,
+      shapeType: row.shapetype
+    };
+    promises.push(gAPPP.a.modelSets['shape'].createWithBlobString(shapeData));
+
+
+    promises.push(gAPPP.a.modelSets['texture'].createWithBlobString(textureData));
+
+    diffuseColor = '';
+    diffuseTextureName = row.texturepath;
+    ambientColor = '';
+    ambientTextureName = row.name;
+    emissiveColor = '';
+    emissiveTextureName = row.name;
+
+    let materialData = {
+      title: row.name,
+      ambientColor,
+      ambientTextureName,
+      backFaceCulling: true,
+      diffuseColor,
+      diffuseTextureName,
+      emissiveColor,
+      emissiveTextureName,
+      bumpTextureName: row.bmppath
+    };
+    promises.push(gAPPP.a.modelSets['material'].createWithBlobString(materialData));
+
+    return Promise.all(promises);
   }
   static __CSVSignPostRows(row) {
     let newObjects = [];
@@ -450,6 +490,7 @@ class GUTILImportCSV {
     newObjects.push(blockRow);
 
     let blockDescTexture = this.defaultCSVRow();
+    blockDescTexture.asset = 'texture';
     blockDescTexture.hasAlpha = true;
     blockDescTexture.isText = true;
     blockDescTexture.textFontColor = '0,0,0';
@@ -479,19 +520,19 @@ class GUTILImportCSV {
     newObjects.push(blockDescShape);
 
     let signChildren = [];
-    let blockImageBC = this.defaultCSVRow();
-    blockImageBC.asset = 'blockchild';
-    blockImageBC.childtype = 'shape';
-    blockImageBC.parent = blockRow.name;
-    blockImageBC.name = blockDescShape.name;
-    blockImageBC.x = '.06';
-    blockImageBC.y = '1.5';
-    blockImageBC.z = '.5';
-    blockImageBC.sx = '.5';
-    blockImageBC.sy = '.5';
-    blockImageBC.sz = '.5';
-    blockImageBC.ry = '-90deg';
-    signChildren.push(blockImageBC);
+    let blockDescShapeBC = this.defaultCSVRow();
+    blockDescShapeBC.asset = 'blockchild';
+    blockDescShapeBC.childtype = 'shape';
+    blockDescShapeBC.parent = blockRow.name;
+    blockDescShapeBC.name = blockDescShape.name;
+    blockDescShapeBC.x = '.06';
+    blockDescShapeBC.y = '1.5';
+    blockDescShapeBC.z = '.5';
+    blockDescShapeBC.sx = '.5';
+    blockDescShapeBC.sy = '.5';
+    blockDescShapeBC.sz = '.5';
+    blockDescShapeBC.ry = '-90deg';
+    signChildren.push(blockDescShapeBC);
 
     let blockImageShape = this.defaultCSVRow();
     blockImageShape.asset = 'shape';
@@ -505,7 +546,6 @@ class GUTILImportCSV {
     blockImageShape.height = '3';
     newObjects.push(blockImageShape);
 
-    let signChildren = [];
     let blockImageBC = this.defaultCSVRow();
     blockImageBC.asset = 'blockchild';
     blockImageBC.childtype = 'shape';
