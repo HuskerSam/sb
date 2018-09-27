@@ -449,6 +449,50 @@ class GUTILImportCSV {
     blockRow.name = row.name + '_signpost';
     newObjects.push(blockRow);
 
+    let blockDescTexture = this.defaultCSVRow();
+    blockDescTexture.hasAlpha = true;
+    blockDescTexture.isText = true;
+    blockDescTexture.textFontColor = '0,0,0';
+    blockDescTexture.textureText = "Price (7.99)";
+    blockDescTexture.textureText2 = 'Description';
+    blockDescTexture.name = row.name + '_pricedesc';
+    newObjects.push(blockDescTexture);
+
+    let blockDescMaterial = this.defaultCSVRow();
+    blockDescMaterial.ambientColor = '';
+    blockDescMaterial.ambientTextureName = row.name + '_pricedesc';
+    blockDescMaterial.diffuseColor = '';
+    blockDescMaterial.diffuseTextureName = row.name + '_pricedesc';
+    blockDescMaterial.emissiveColor = '';
+    blockDescMaterial.emissiveTextureName = row.name + '_pricedesc';
+    blockDescMaterial.name = row.name + '_pricedesc';
+    newObjects.push(blockDescMaterial);
+
+    let blockDescShape = this.defaultCSVRow();
+    blockDescShape.boxDepth = '10';
+    blockDescShape.boxHeight = '10';
+    blockDescShape.boxWidth = '10';
+    blockDescShape.shapeType = 'plane';
+    blockDescShape.textDepth = '.5'; //dfault?
+    blockDescShape.textFontFamily = 'Geneva';
+    blockDescShape.name = row.name + '_pricedesc';
+    newObjects.push(blockDescShape);
+
+    let signChildren = [];
+    let blockImageBC = this.defaultCSVRow();
+    blockImageBC.asset = 'blockchild';
+    blockImageBC.childtype = 'shape';
+    blockImageBC.parent = blockRow.name;
+    blockImageBC.name = blockDescShape.name;
+    blockImageBC.x = '.06';
+    blockImageBC.y = '1.5';
+    blockImageBC.z = '.5';
+    blockImageBC.sx = '.5';
+    blockImageBC.sy = '.5';
+    blockImageBC.sz = '.5';
+    blockImageBC.ry = '-90deg';
+    signChildren.push(blockImageBC);
+
     let blockImageShape = this.defaultCSVRow();
     blockImageShape.asset = 'shape';
     blockImageShape.materialname = row.name + '_signpostimage'
@@ -468,7 +512,7 @@ class GUTILImportCSV {
     blockImageBC.parent = blockRow.name;
     blockImageBC.name = blockImageShape.name;
     blockImageBC.x = '.06';
-    blockImageBC.y = '5';
+    blockImageBC.y = '6';
     blockImageBC.ry = '-90deg';
     signChildren.push(blockImageBC);
 
