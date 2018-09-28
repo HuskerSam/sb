@@ -432,47 +432,49 @@ class GUTILImportCSV {
         return this.addCSVBlockRow(row);
       case 'blockchild':
         return this.addCSVBlockChildRow(row);
-      case 'texturematerial':
-        return this.addCSVTextureMaterial(row);
+      case 'textplane':
+        return this.addCSVTextPlane(row);
       case 'shape':
         return this.addCSVShapeRow(row);
       case 'blockchildframe':
         return this.addCSVBlockChildFrameRow(row);
     }
   }
-  static this.addCSVTextureMaterial(row) {
+  static addCSVTextPlane(row) {
     let promises = [];
 
     let shapeData = {
       title: row.name,
-      materialName: row.materialname,
+      materialName: row.name,
       boxHeight: row.height,
       boxWidth: row.width,
       boxDepth: row.depth,
-      shapeType: row.shapetype
+      shapeType: 'plane'
     };
     promises.push(gAPPP.a.modelSets['shape'].createWithBlobString(shapeData));
 
-
+    let textureData = {
+      textDepth: row.textdepth,
+      textFontFamily: row.textfontfamily,
+      hasAlpha: true,
+      isText: true,
+      textFontColor: row.textfontcolor,
+      textureText: row.texturetext,
+      textureText2: row.texturetext2,
+      url: '',
+      title: row.name
+    };
     promises.push(gAPPP.a.modelSets['texture'].createWithBlobString(textureData));
-
-    diffuseColor = '';
-    diffuseTextureName = row.texturepath;
-    ambientColor = '';
-    ambientTextureName = row.name;
-    emissiveColor = '';
-    emissiveTextureName = row.name;
 
     let materialData = {
       title: row.name,
-      ambientColor,
-      ambientTextureName,
+      ambientColor: '',
+      ambientTextureName: '',
       backFaceCulling: true,
-      diffuseColor,
-      diffuseTextureName,
-      emissiveColor,
-      emissiveTextureName,
-      bumpTextureName: row.bmppath
+      diffuseColor: '',
+      diffuseTextureName: row.name,
+      emissiveColor: '',
+      emissiveTextureName: ''
     };
     promises.push(gAPPP.a.modelSets['material'].createWithBlobString(materialData));
 
@@ -489,42 +491,27 @@ class GUTILImportCSV {
     blockRow.name = row.name + '_signpost';
     newObjects.push(blockRow);
 
-    let blockDescTexture = this.defaultCSVRow();
-    blockDescTexture.asset = 'texture';
-    blockDescTexture.hasAlpha = true;
-    blockDescTexture.isText = true;
-    blockDescTexture.textFontColor = '0,0,0';
-    blockDescTexture.textureText = "Price (7.99)";
-    blockDescTexture.textureText2 = 'Description';
-    blockDescTexture.name = row.name + '_pricedesc';
-    newObjects.push(blockDescTexture);
-
-    let blockDescMaterial = this.defaultCSVRow();
-    blockDescMaterial.ambientColor = '';
-    blockDescMaterial.ambientTextureName = row.name + '_pricedesc';
-    blockDescMaterial.diffuseColor = '';
-    blockDescMaterial.diffuseTextureName = row.name + '_pricedesc';
-    blockDescMaterial.emissiveColor = '';
-    blockDescMaterial.emissiveTextureName = row.name + '_pricedesc';
-    blockDescMaterial.name = row.name + '_pricedesc';
-    newObjects.push(blockDescMaterial);
-
-    let blockDescShape = this.defaultCSVRow();
-    blockDescShape.boxDepth = '10';
-    blockDescShape.boxHeight = '10';
-    blockDescShape.boxWidth = '10';
-    blockDescShape.shapeType = 'plane';
-    blockDescShape.textDepth = '.5'; //dfault?
-    blockDescShape.textFontFamily = 'Geneva';
-    blockDescShape.name = row.name + '_pricedesc';
-    newObjects.push(blockDescShape);
+    let textPlane = this.defaultCSVRow();
+    textPlane.asset = 'textplane';
+    textPlane.hasalpha = true;
+    textPlane.istext = true;
+    textPlane.textfontcolor = '0,0,0';
+    textPlane.texturetext = "Price (7.99)";
+    textPlane.texturetext2 = 'Description';
+    textPlane.width = '10';
+    textPlane.height = '10';
+    textPlane.depth = '10';
+    textPlane.textdepth = '.5'; //dfault?
+    textPlane.textfontfamily = 'Geneva';
+    textPlane.name = row.name + '_pricedesc';
+    newObjects.push(textPlane);
 
     let signChildren = [];
     let blockDescShapeBC = this.defaultCSVRow();
     blockDescShapeBC.asset = 'blockchild';
     blockDescShapeBC.childtype = 'shape';
     blockDescShapeBC.parent = blockRow.name;
-    blockDescShapeBC.name = blockDescShape.name;
+    blockDescShapeBC.name = textPlane.name;
     blockDescShapeBC.x = '.06';
     blockDescShapeBC.y = '1.5';
     blockDescShapeBC.z = '.5';
