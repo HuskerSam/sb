@@ -496,12 +496,12 @@ class GUTILImportCSV {
     textPlane.hasalpha = true;
     textPlane.istext = true;
     textPlane.textfontcolor = '0,0,0';
-    textPlane.texturetext = "Price (7.99)";
-    textPlane.texturetext2 = 'Description';
+    textPlane.texturetext = row.itemtitle;
+    textPlane.texturetext2 = row.itemdesc;
     textPlane.width = '10';
     textPlane.height = '10';
     textPlane.depth = '10';
-    textPlane.textdepth = '.5'; //dfault?
+    textPlane.textdepth = '.5';
     textPlane.textfontfamily = 'Geneva';
     textPlane.name = row.name + '_pricedesc';
     newObjects.push(textPlane);
@@ -528,7 +528,7 @@ class GUTILImportCSV {
     blockImageShape.scaleu = '1';
     blockImageShape.scalev = '1';
     blockImageShape.shapetype = 'plane';
-    blockImageShape.texturepath = "https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/project%2F-L8dCwFmV1U6IDTLm7bB%2Ftexture%2F-LKbiJmNyuhvXhqNu-r1%2FProduce_BlckDmndWhlSdlsRdWtrmln_BR.jpg?alt=media&token=bf995004-dc8d-42c7-9ce3-bbd7c47993ae";
+    blockImageShape.texturepath = row.texturepath;
     blockImageShape.width = '3';
     blockImageShape.height = '3';
     newObjects.push(blockImageShape);
