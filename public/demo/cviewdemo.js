@@ -27,6 +27,12 @@ class cViewDemo extends bView {
 
     this._clearButtonLabels();
 
+    document.querySelector('.choice-button-clear').addEventListener('click', () => this.hideBasketGoods());
+    document.querySelector('.choice-button-one').addEventListener('click', () => this.showBasketGood('apples'));
+    document.querySelector('.choice-button-two').addEventListener('click', () => this.showBasketGood('pears'));
+    document.querySelector('.choice-button-three').addEventListener('click', () => this.showBasketGood('plums'));
+    document.querySelector('.choice-button-four').addEventListener('click', () => this.showBasketGood('spring onions'));
+
     this.displayButtonPanel = document.querySelector('.user-options-panel');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
     this.collapseButton = document.querySelector('.collapse-expand');
@@ -56,6 +62,8 @@ class cViewDemo extends bView {
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.weekPickerSelect.addEventListener('input', () => this.changeSelectedWeek());
     this.weekPickerSelect.value = gAPPP.workspaceCode;
+
+    this.basketSKUs = {};
   }
   changeSelectedWeek() {
     let projCode = this.weekPickerSelect.value;
@@ -106,7 +114,6 @@ class cViewDemo extends bView {
   _clearButtonLabels() {
     for (let c = 0, l = this.itemButtons.length; c < l; c++){
       this.itemButtons[c].innerHTML = '&nbsp;';
-  //    this.itemButtons[c].style.display = 'none';
     }
   }
   closeHeaderBands() {}
@@ -268,6 +275,36 @@ class cViewDemo extends bView {
   updateDisplayButtons(index) {
 
   }
+  toggleShowControls() {
+    if (!this.controlsShown) {
+      this.controlsShown = true;
+      document.querySelector('.canvas-actions').style.display = 'block';
+    } else {
+      this.controlsShown = false;
+      document.querySelector('.canvas-actions').style.display = 'none';
+    }
+  }
+  _hideBasketGood(name) {
+    let frames =
+      this.rootBlock._findBestTargetObject('block:basketcart').
+    _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
+
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
+
+    if (frameIds.length > 0)
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "-5"
+      }], frameIds[0]).then(() => {});
+  }
+  hideBasketGoods() {
+    this._hideBasketGood('apples');
+    this._hideBasketGood('pears');
+    this._hideBasketGood('plums');
+    this._hideBasketGood('spring onions');
+  }
   removeByTitle(collection, title) {
     let promises = [];
     let priceShapeChildren = gAPPP.a.modelSets[collection].queryCache('title', title);
@@ -299,5 +336,40 @@ class cViewDemo extends bView {
       promises.push(this.productHideSign(c));
 
     return Promise.all(promises);
+  }
+  showBasketGood(name) {
+    let frames =
+      this.rootBlock._findBestTargetObject('block:basketcart').
+    _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
+
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
+
+    if (frameIds.length > 0)
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "1.5"
+      }], frameIds[0]).then(() => {});
+  }
+  _addCartItemDOM() {
+    let description = 'Apples $3.98';
+    let detail = '2 @ $ 1.99 / lb';
+    let template =
+      `<div class="cart-item">
+      <button class="cart-item-remove">X</button>
+      <div class="cart-item-description">${description}</div>
+      <br>
+      <div class="cart-item-detail">${detail}</div>
+    </div>`;
+
+    let cartItem = document.createElement('div');
+    cartItem.innerHTML = template;
+    let cartItemObj = {};
+
+    cartItemObj.dom = cartItem;
+    cartItemObj.removeDom = cartItem.querySelector('.cart-item-remove');
+    cartItemObj.descriptionDom = cartItem.querySelector('.cart-item-description');
+    cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
   }
 }
