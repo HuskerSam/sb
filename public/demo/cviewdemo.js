@@ -28,10 +28,10 @@ class cViewDemo extends bView {
     this._clearButtonLabels();
 
     document.querySelector('.choice-button-clear').addEventListener('click', () => this.hideBasketGoods());
-    document.querySelector('.choice-button-one').addEventListener('click', () => this.showBasketGood('apples'));
-    document.querySelector('.choice-button-two').addEventListener('click', () => this.showBasketGood('pears'));
-    document.querySelector('.choice-button-three').addEventListener('click', () => this.showBasketGood('plums'));
-    document.querySelector('.choice-button-four').addEventListener('click', () => this.showBasketGood('spring onions'));
+    document.querySelector('.choice-button-one').addEventListener('click', e => this.addItem(e));
+    document.querySelector('.choice-button-two').addEventListener('click', e => this.addItem(e));
+    document.querySelector('.choice-button-three').addEventListener('click', e => this.addItem(e));
+    document.querySelector('.choice-button-four').addEventListener('click', e => this.addItem(e));
 
     this.displayButtonPanel = document.querySelector('.user-options-panel');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
@@ -153,16 +153,20 @@ class cViewDemo extends bView {
   }
   _updateButtons() {
     this.itemButtons[0].style.display = 'none';
+    this.itemButtons[0].sku = '';
     this.itemButtons[1].style.display = 'none';
+    this.itemButtons[1].sku = '';
     this.itemButtons[2].style.display = 'none';
+    this.itemButtons[2].sku = '';
     this.itemButtons[3].style.display = 'none';
+    this.itemButtons[3].sku = '';
 
-    console.log(Date.now(), this.productsShown);
     for (let c = 0, l = this.productsShown.length; c < l; c++) {
       if (this.productsShown[c]) {
         let product = this.products[c];
         let btn = this.itemButtons[product.colorIndex];
         btn.innerHTML = product.price.toString();
+        btn.sku = product.itemId;
         btn.style.display = 'inline-block';
       }
     }
@@ -269,11 +273,7 @@ class cViewDemo extends bView {
       ]);
     }
 
-    this.updateDisplayButtons();
     return Promise.resolve();
-  }
-  updateDisplayButtons(index) {
-
   }
   toggleShowControls() {
     if (!this.controlsShown) {
@@ -337,7 +337,22 @@ class cViewDemo extends bView {
 
     return Promise.all(promises);
   }
-  showBasketGood(name) {
+  addItem(event) {
+    let btn = event.target;
+    let sku = btn.sku;
+
+    if (!sku)
+      return;
+
+    if (! this.basketSKUs[sku])
+      this.basketSKUs[sku] = 1.0;
+    else
+      this.basketSKUs[sku] += 1.0;
+  }
+  updateBasketTotal() {
+
+  }
+  showBasketGoodDEPRECATE(name) {
     let frames =
       this.rootBlock._findBestTargetObject('block:basketcart').
     _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
