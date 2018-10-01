@@ -63,6 +63,8 @@ class cViewDemo extends bView {
     this.weekPickerSelect.addEventListener('input', () => this.changeSelectedWeek());
     this.weekPickerSelect.value = gAPPP.workspaceCode;
 
+    this.productBySKU = {};
+    this.skuOrder = [];
     this.basketSKUs = {};
   }
   changeSelectedWeek() {
@@ -228,6 +230,7 @@ class cViewDemo extends bView {
         childType: bcData.childType
       };
       this.products.push(p);
+      this.productBySKU[p.itemId] = p;
     }
 
     this.products.sort((a, b) => {
@@ -344,13 +347,48 @@ class cViewDemo extends bView {
     if (!sku)
       return;
 
+    if (this.skuOrder.indexOf(sku) === -1)
+      this.skuOrder.push(sku);
+
     if (! this.basketSKUs[sku])
       this.basketSKUs[sku] = 1.0;
     else
       this.basketSKUs[sku] += 1.0;
+
+    this.updateBasketTotal();
   }
   updateBasketTotal() {
+    this.receiptDisplayPanel.innerHTML = '';
+    for (let c = 0, l = this.skuOrder.length; c < l; c++) {
+      let sku = this.skuOrder[c];
+      let count = this.basketSKUs[sku];
+      let product = this.productBySKU[sku];
 
+      if (count === 0)
+        continue;
+
+      let total = count * product.price;
+      let l1 = product.title + ' ' + product.desc;
+      let l2 = count.toString() + ' @ ' + product.price.toString();
+
+      let template =
+        `<div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">${l1}</div>
+        <br>
+        <div class="cart-item-detail">${l2}</div>
+      </div>`;
+
+      let cartItem = document.createElement('div');
+      cartItem.innerHTML = template;
+      //let cartItemObj = {};
+
+      //cartItemObj.dom = cartItem;
+      //cartItemObj.removeDom = cartItem.querySelector('.cart-item-remove');
+      //cartItemObj.descriptionDom = cartItem.querySelector('.cart-item-description');
+      //cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
+      this.receiptDisplayPanel.appendChild(cartItem);
+    }
   }
   showBasketGoodDEPRECATE(name) {
     let frames =
