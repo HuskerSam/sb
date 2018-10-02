@@ -60,6 +60,7 @@ class cViewDemo extends bView {
     this.sceneIndex = 0;
     this.weekPickerSelect = document.getElementById('week-picker-select');
     this.canvasActionsDom = document.querySelector('.canvas-actions');
+    this.cartItemTotal = document.querySelector('.cart-item-total');
     this.weekPickerSelect.addEventListener('input', () => this.changeSelectedWeek());
     this.weekPickerSelect.value = gAPPP.workspaceCode;
 
@@ -359,6 +360,7 @@ class cViewDemo extends bView {
   }
   updateBasketTotal() {
     this.receiptDisplayPanel.innerHTML = '';
+    let gTotal = 0.0;
     for (let c = 0, l = this.skuOrder.length; c < l; c++) {
       let sku = this.skuOrder[c];
       let count = this.basketSKUs[sku];
@@ -368,9 +370,9 @@ class cViewDemo extends bView {
         continue;
 
       let total = count * product.price;
-      let l1 = product.title + ' ' + product.desc;
-      let l2 = count.toString() + ' @ ' + product.price.toString();
-
+      let l1 = product.title + ' $' + total.toFixed(2);
+      let l2 = count.toString() + ' @ ' + product.desc;
+      gTotal += total;
       let template =
         `<div class="cart-item">
         <button class="cart-item-remove">X</button>
@@ -389,6 +391,8 @@ class cViewDemo extends bView {
       //cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
       this.receiptDisplayPanel.appendChild(cartItem);
     }
+    
+    this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
   }
   showBasketGoodDEPRECATE(name) {
     let frames =
