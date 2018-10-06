@@ -356,7 +356,12 @@ class cViewDemo extends bView {
     else
       this.basketSKUs[sku] += 1.0;
 
-    this.updateBasketTotal();
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'basketSKUs',
+      newValue: this.basketSKUs
+    }]);
+
+    //this.updateBasketTotal();
   }
   updateBasketTotal() {
     this.receiptDisplayPanel.innerHTML = '';
@@ -391,7 +396,7 @@ class cViewDemo extends bView {
       //cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
       this.receiptDisplayPanel.appendChild(cartItem);
     }
-    
+
     this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
   }
   showBasketGoodDEPRECATE(name) {
@@ -428,5 +433,12 @@ class cViewDemo extends bView {
     cartItemObj.removeDom = cartItem.querySelector('.cart-item-remove');
     cartItemObj.descriptionDom = cartItem.querySelector('.cart-item-description');
     cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
+  }
+  _userProfileChange() {
+    super._userProfileChange();
+
+//    console.log(this.)
+//    console.log(gAPPP.a.profile.basketSKUs);
+
   }
 }
