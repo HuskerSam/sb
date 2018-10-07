@@ -115,7 +115,7 @@ class cViewDemo extends bView {
     }
   }
   _clearButtonLabels() {
-    for (let c = 0, l = this.itemButtons.length; c < l; c++){
+    for (let c = 0, l = this.itemButtons.length; c < l; c++) {
       this.itemButtons[c].innerHTML = '&nbsp;';
     }
   }
@@ -351,7 +351,7 @@ class cViewDemo extends bView {
     if (this.skuOrder.indexOf(sku) === -1)
       this.skuOrder.push(sku);
 
-    if (! this.basketSKUs[sku])
+    if (!this.basketSKUs[sku])
       this.basketSKUs[sku] = 1.0;
     else
       this.basketSKUs[sku] += 1.0;
@@ -361,7 +361,6 @@ class cViewDemo extends bView {
       newValue: this.basketSKUs
     }]);
 
-    //this.updateBasketTotal();
   }
   updateBasketTotal() {
     this.receiptDisplayPanel.innerHTML = '';
@@ -378,8 +377,7 @@ class cViewDemo extends bView {
       let l1 = product.title + ' $' + total.toFixed(2);
       let l2 = count.toString() + ' @ ' + product.desc;
       gTotal += total;
-      let template =
-        `<div class="cart-item">
+      let template = `<div class="cart-item">
         <button class="cart-item-remove">X</button>
         <div class="cart-item-description">${l1}</div>
         <br>
@@ -437,8 +435,7 @@ class cViewDemo extends bView {
   _userProfileChange() {
     super._userProfileChange();
 
-//    console.log(this.)
-//    console.log(gAPPP.a.profile.basketSKUs);
-
+    this.basketSKUs = gAPPP.a.profile.basketSKUs;
+    this.updateBasketTotal();
   }
 }
