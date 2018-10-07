@@ -27,7 +27,7 @@ class cViewDemo extends bView {
 
     this._clearButtonLabels();
 
-    document.querySelector('.choice-button-clear').addEventListener('click', () => this.hideBasketGoods());
+    document.querySelector('.choice-button-clear').addEventListener('click', () => this.clearBasketItems());
     document.querySelector('.choice-button-one').addEventListener('click', e => this.addItem(e));
     document.querySelector('.choice-button-two').addEventListener('click', e => this.addItem(e));
     document.querySelector('.choice-button-three').addEventListener('click', e => this.addItem(e));
@@ -288,27 +288,6 @@ class cViewDemo extends bView {
       document.querySelector('.canvas-actions').style.display = 'none';
     }
   }
-  _hideBasketGood(name) {
-    let frames =
-      this.rootBlock._findBestTargetObject('block:basketcart').
-    _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
-
-    let frameIds = [];
-    for (let i in frames)
-      frameIds.push(i);
-
-    if (frameIds.length > 0)
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionY',
-        newValue: "-5"
-      }], frameIds[0]).then(() => {});
-  }
-  hideBasketGoods() {
-    this._hideBasketGood('apples');
-    this._hideBasketGood('pears');
-    this._hideBasketGood('plums');
-    this._hideBasketGood('spring onions');
-  }
   removeByTitle(collection, title) {
     let promises = [];
     let priceShapeChildren = gAPPP.a.modelSets[collection].queryCache('title', title);
@@ -356,11 +335,21 @@ class cViewDemo extends bView {
     else
       this.basketSKUs[sku] += 1.0;
 
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'basketSKUs',
-      newValue: this.basketSKUs
-    }]);
+    let basketData = {
+      basketSKUs: this.basketSKUs,
+      skuOrder: this.skuOrder
+    }
 
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'basketData',
+      newValue: basketData
+    }]);
+  }
+  clearBasketItems() {
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'basketData',
+      newValue: null
+    }]);
   }
   updateBasketTotal() {
     this.receiptDisplayPanel.innerHTML = '';
@@ -396,6 +385,21 @@ class cViewDemo extends bView {
     }
 
     this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
+  }
+  hideBasketGoodDEPRECATE(name) {
+    let frames =
+      this.rootBlock._findBestTargetObject('block:basketcart').
+    _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
+
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
+
+    if (frameIds.length > 0)
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "-5"
+      }], frameIds[0]).then(() => {});
   }
   showBasketGoodDEPRECATE(name) {
     let frames =
@@ -435,7 +439,15 @@ class cViewDemo extends bView {
   _userProfileChange() {
     super._userProfileChange();
 
-    this.basketSKUs = gAPPP.a.profile.basketSKUs;
+    let basketData = gAPPP.a.profile.basketData;
+
+    if (basketData) {
+      this.basketSKUs = basketData.basketSKUs;
+      this.skuOrder = basketData.skuOrder;
+    } else {
+      this.basketSKUs = {};
+      this.skuOrder = [];
+    }
     this.updateBasketTotal();
   }
 }
