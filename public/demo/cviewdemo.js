@@ -59,8 +59,8 @@ class cViewDemo extends bView {
 
     this.sceneIndex = 0;
     this.weekPickerSelect = document.getElementById('week-picker-select');
-    this.cartItemTotal = document.querySelector('.cart-item-total');
     this.canvasActionsDom = document.querySelector('.canvas-actions');
+    this.cartItemTotal = document.querySelector('.cart-item-total');
     this.weekPickerSelect.addEventListener('input', () => this.changeSelectedWeek());
     this.weekPickerSelect.value = gAPPP.workspaceCode;
 
@@ -168,7 +168,7 @@ class cViewDemo extends bView {
       if (this.productsShown[c]) {
         let product = this.products[c];
         let btn = this.itemButtons[product.colorIndex];
-        btn.innerHTML = product.price.toFixed(2);
+        btn.innerHTML = product.price.toString();
         btn.sku = product.itemId;
         btn.style.display = 'inline-block';
       }
@@ -225,7 +225,7 @@ class cViewDemo extends bView {
         title: blockData.itemTitle,
         itemCount: blockData.itemCount,
         desc: blockData.itemDesc,
-        price: GLOBALUTIL.getNumberOrDefault(blockData.itemPrice, 0),
+        price: blockData.itemPrice,
         productIndex: bcData.productIndex,
         childName: bcData.childName,
         childType: bcData.childType
@@ -356,11 +356,16 @@ class cViewDemo extends bView {
     else
       this.basketSKUs[sku] += 1.0;
 
-    this.updateBasketTotal();
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'basketSKUs',
+      newValue: this.basketSKUs
+    }]);
+
+    //this.updateBasketTotal();
   }
   updateBasketTotal() {
     this.receiptDisplayPanel.innerHTML = '';
-    let gTotal = 0;
+    let gTotal = 0.0;
     for (let c = 0, l = this.skuOrder.length; c < l; c++) {
       let sku = this.skuOrder[c];
       let count = this.basketSKUs[sku];
@@ -370,10 +375,9 @@ class cViewDemo extends bView {
         continue;
 
       let total = count * product.price;
+      let l1 = product.title + ' $' + total.toFixed(2);
+      let l2 = count.toString() + ' @ ' + product.desc;
       gTotal += total;
-      let l1 = product.title + ' ' + product.desc;
-      let l2 = count.toString() + ' @ ' + product.price.toFixed(2);
-
       let template =
         `<div class="cart-item">
         <button class="cart-item-remove">X</button>
@@ -393,7 +397,7 @@ class cViewDemo extends bView {
       this.receiptDisplayPanel.appendChild(cartItem);
     }
 
-    this.cartItemTotal.innerHTML = `$ ${gTotal.toFixed(2)}`;
+    this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
   }
   showBasketGoodDEPRECATE(name) {
     let frames =
@@ -429,5 +433,12 @@ class cViewDemo extends bView {
     cartItemObj.removeDom = cartItem.querySelector('.cart-item-remove');
     cartItemObj.descriptionDom = cartItem.querySelector('.cart-item-description');
     cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
+  }
+  _userProfileChange() {
+    super._userProfileChange();
+
+//    console.log(this.)
+//    console.log(gAPPP.a.profile.basketSKUs);
+
   }
 }
