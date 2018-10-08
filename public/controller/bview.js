@@ -128,4 +128,5 @@ class bView {
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
     this.canvasHelper.testError();
   }
+  closeHeaderBands() {}
 }

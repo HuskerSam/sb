@@ -7,14 +7,14 @@ class cViewDemo extends bView {
       this.cameraShown = true;
       setTimeout(() => {
 
-        this.updateProducts();
+        this.productsInit();
         this.canvasHelper.cameraSelect.selectedIndex = 2;
         this.canvasHelper.noTestError = true;
         this.canvasHelper.cameraChangeHandler();
         this.canvasHelper.playAnimation();
 
-        this.hideAllProducts()
-          .then(rr => this.updateProductsDisplay());
+        this._productsHideAll()
+          .then(rr => this.productsDisplayUpdate());
       }, 200);
 
     };
@@ -25,18 +25,18 @@ class cViewDemo extends bView {
     this.itemButtons.push(document.querySelector('.choice-button-three'));
     this.itemButtons.push(document.querySelector('.choice-button-four'));
 
-    this._clearButtonLabels();
+    this.basketClearButtons();
 
-    document.querySelector('.choice-button-clear').addEventListener('click', () => this.clearBasketItems());
-    document.querySelector('.choice-button-one').addEventListener('click', e => this.addItem(e));
-    document.querySelector('.choice-button-two').addEventListener('click', e => this.addItem(e));
-    document.querySelector('.choice-button-three').addEventListener('click', e => this.addItem(e));
-    document.querySelector('.choice-button-four').addEventListener('click', e => this.addItem(e));
+    document.querySelector('.choice-button-clear').addEventListener('click', () => this.basketCheckout());
+    document.querySelector('.choice-button-one').addEventListener('click', e => this.basketAddItem(e));
+    document.querySelector('.choice-button-two').addEventListener('click', e => this.basketAddItem(e));
+    document.querySelector('.choice-button-three').addEventListener('click', e => this.basketAddItem(e));
+    document.querySelector('.choice-button-four').addEventListener('click', e => this.basketAddItem(e));
 
     this.displayButtonPanel = document.querySelector('.user-options-panel');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
     this.collapseButton = document.querySelector('.collapse-expand');
-    this.collapseButton.addEventListener('click', () => this.toggleViewMode());
+    this.collapseButton.addEventListener('click', () => this.sceneToggleView());
 
     this.colors = [
       'decolor: 1,0,0',
@@ -61,14 +61,120 @@ class cViewDemo extends bView {
     this.weekPickerSelect = document.getElementById('week-picker-select');
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.cartItemTotal = document.querySelector('.cart-item-total');
-    this.weekPickerSelect.addEventListener('input', () => this.changeSelectedWeek());
+    this.weekPickerSelect.addEventListener('input', () => this.sceneSelect());
     this.weekPickerSelect.value = gAPPP.workspaceCode;
 
     this.productBySKU = {};
     this.skuOrder = [];
     this.basketSKUs = {};
   }
-  changeSelectedWeek() {
+  _userProfileChange() {
+    super._userProfileChange();
+
+    let basketData = gAPPP.a.profile.basketData;
+
+    if (basketData) {
+      this.basketSKUs = basketData.basketSKUs;
+      this.skuOrder = basketData.skuOrder;
+    } else {
+      this.basketSKUs = {};
+      this.skuOrder = [];
+    }
+    this.basketUpdateTotal();
+  }
+
+  basketAddItem(event) {
+    let btn = event.target;
+    let sku = btn.sku;
+
+    if (!sku)
+      return;
+
+    if (this.skuOrder.indexOf(sku) === -1)
+      this.skuOrder.push(sku);
+
+    if (!this.basketSKUs[sku])
+      this.basketSKUs[sku] = 1.0;
+    else
+      this.basketSKUs[sku] += 1.0;
+
+    let basketData = {
+      basketSKUs: this.basketSKUs,
+      skuOrder: this.skuOrder
+    }
+
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'basketData',
+      newValue: basketData
+    }]);
+  }
+  basketRemoveItem(event) {
+    let btn = event.target;
+    let sku = btn.sku;
+    let skuIndex = this.skuOrder.indexOf(sku);
+
+    if (skuIndex === -1)
+      return;
+
+    this.skuOrder.splice(skuIndex, 1);
+
+    delete  this.basketSKUs[sku];
+
+    let basketData = {
+      basketSKUs: this.basketSKUs,
+      skuOrder: this.skuOrder
+    }
+
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'basketData',
+      newValue: basketData
+    }]);
+  }
+  basketCheckout() {
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'basketData',
+      newValue: null
+    }]);
+  }
+  basketUpdateTotal() {
+    this.receiptDisplayPanel.innerHTML = '';
+    let gTotal = 0.0;
+    for (let c = 0, l = this.skuOrder.length; c < l; c++) {
+      let sku = this.skuOrder[c];
+      let count = this.basketSKUs[sku];
+      let product = this.productBySKU[sku];
+
+      if (count === 0)
+        continue;
+
+      let total = count * product.price;
+      let l1 = product.title + ' $' + total.toFixed(2);
+      let l2 = count.toString() + ' @ ' + product.desc;
+      gTotal += total;
+      let template = `<div class="cart-item">
+        <button class="cart-item-remove">X</button>
+        <div class="cart-item-description">${l1}</div>
+        <br>
+        <div class="cart-item-detail">${l2}</div>
+      </div>`;
+
+      let cartItem = document.createElement('div');
+      cartItem.innerHTML = template;
+      this.receiptDisplayPanel.appendChild(cartItem);
+      let removeDom = cartItem.querySelector('.cart-item-remove');
+      removeDom.sku = sku;
+      removeDom.addEventListener('click', e => this.basketRemoveItem(e));
+    }
+
+    this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
+  }
+  basketClearButtons() {
+    for (let c = 0, l = this.itemButtons.length; c < l; c++) {
+      this.itemButtons[c].innerHTML = '&nbsp;';
+    }
+  }
+
+  sceneSelect() {
     let projCode = this.weekPickerSelect.value;
 
     if (projCode === 'About') {
@@ -99,7 +205,7 @@ class cViewDemo extends bView {
     let path = location.origin + location.pathname + '?z=' + projCode;
     window.location = path;
   }
-  toggleViewMode() {
+  sceneToggleView() {
     if (this.viewCollapsed) {
       this.receiptDisplayPanel.style.right = '';
       this.collapseButton.innerHTML = '<i class="material-icons">unfold_less</i>';
@@ -111,83 +217,20 @@ class cViewDemo extends bView {
       this.collapseButton.innerHTML = '<i class="material-icons">unfold_more</i>';
       this.displayButtonPanel.style.width = '6em';
       this.receiptDisplayPanel.style.right = '-50%';
-      this._clearButtonLabels();
+      this.basketClearButtons();
     }
   }
-  _clearButtonLabels() {
-    for (let c = 0, l = this.itemButtons.length; c < l; c++) {
-      this.itemButtons[c].innerHTML = '&nbsp;';
+  sceneToggleControls() {
+    if (!this.controlsShown) {
+      this.controlsShown = true;
+      document.querySelector('.canvas-actions').style.display = 'block';
+    } else {
+      this.controlsShown = false;
+      document.querySelector('.canvas-actions').style.display = 'none';
     }
   }
-  closeHeaderBands() {}
-  updateProductsDisplay() {
-    let productShown = [];
-    let currentElapsed = this.canvasHelper.timeE;
 
-    if (this.updateDisplay)
-      return;
-
-    this.updateDisplay = true;
-    for (let c = 0; c < this.products.length; c++) {
-      let product = this.products[c];
-      let started = false;
-      if (product.startTime <= currentElapsed)
-        started = true;
-
-      let ended = true;
-      if (currentElapsed <= product.endTime)
-        ended = false;
-
-      productShown.push(started && !ended);
-    }
-    this.productsShown = productShown;
-
-    Promise.all([
-      this._updateProducts3D(),
-      this._updateButtons()
-    ]).then(result => {
-      this.updateDisplay = false;
-      clearTimeout(this.updateProductsTimeout);
-      this.updateProductsTimeout = setTimeout(() => {
-        this.updateProductsDisplay();
-      }, 1000);
-    });
-
-  }
-  _updateButtons() {
-    this.itemButtons[0].style.display = 'none';
-    this.itemButtons[0].sku = '';
-    this.itemButtons[1].style.display = 'none';
-    this.itemButtons[1].sku = '';
-    this.itemButtons[2].style.display = 'none';
-    this.itemButtons[2].sku = '';
-    this.itemButtons[3].style.display = 'none';
-    this.itemButtons[3].sku = '';
-
-    for (let c = 0, l = this.productsShown.length; c < l; c++) {
-      if (this.productsShown[c]) {
-        let product = this.products[c];
-        let btn = this.itemButtons[product.colorIndex];
-        btn.innerHTML = product.price.toString();
-        btn.sku = product.itemId;
-        btn.style.display = 'inline-block';
-      }
-    }
-
-    return Promise.resolve();
-  }
-  _updateProducts3D() {
-    let promises = [];
-    for (let c = 0, l = this.productsShown.length; c < l; c++) {
-      if (this.productsShown[c]) {
-        promises.push(this.productShowPriceAndImage(c));
-      } else {
-        promises.push(this.productHideSign(c));
-      }
-    }
-    return Promise.all(promises);
-  }
-  updateProducts() {
+  productsInit() {
     if (this.productsUpdated)
       return;
     this.productsUpdated = true;
@@ -254,7 +297,98 @@ class cViewDemo extends bView {
       this.products[c].colorIndex = c % 4;
     }
   }
-  productShowPriceAndImage(index) {
+  productsDisplayUpdate() {
+    let productShown = [];
+    let currentElapsed = this.canvasHelper.timeE;
+
+    if (this.updateDisplay)
+      return;
+
+    this.updateDisplay = true;
+    for (let c = 0; c < this.products.length; c++) {
+      let product = this.products[c];
+      let started = false;
+      if (product.startTime <= currentElapsed)
+        started = true;
+
+      let ended = true;
+      if (currentElapsed <= product.endTime)
+        ended = false;
+
+      productShown.push(started && !ended);
+    }
+    this.productsShown = productShown;
+
+    Promise.all([
+      this._productsUpdateScene(),
+      this._productsUpdateButtons()
+    ]).then(result => {
+      this.updateDisplay = false;
+      clearTimeout(this.updateProductsTimeout);
+      this.updateProductsTimeout = setTimeout(() => {
+        this.productsDisplayUpdate();
+      }, 1000);
+    });
+
+  }
+  _productsUpdateButtons() {
+    this.itemButtons[0].style.display = 'none';
+    this.itemButtons[0].sku = '';
+    this.itemButtons[1].style.display = 'none';
+    this.itemButtons[1].sku = '';
+    this.itemButtons[2].style.display = 'none';
+    this.itemButtons[2].sku = '';
+    this.itemButtons[3].style.display = 'none';
+    this.itemButtons[3].sku = '';
+
+    for (let c = 0, l = this.productsShown.length; c < l; c++) {
+      if (this.productsShown[c]) {
+        let product = this.products[c];
+        let btn = this.itemButtons[product.colorIndex];
+        btn.innerHTML = product.price.toString();
+        btn.sku = product.itemId;
+        btn.style.display = 'inline-block';
+      }
+    }
+
+    return Promise.resolve();
+  }
+  _productsUpdateScene() {
+    let promises = [];
+    for (let c = 0, l = this.productsShown.length; c < l; c++) {
+      if (this.productsShown[c]) {
+        promises.push(this._productsShowDetails(c));
+      } else {
+        promises.push(this._productsHideSign(c));
+      }
+    }
+    return Promise.all(promises);
+  }
+  _productsHideAll() {
+    let promises = [];
+    for (let c = 0, l = this.products.length; c < l; c++)
+      promises.push(this._productsHideSign(c));
+
+    return Promise.all(promises);
+  }
+  _productsHideSign(index) {
+    let product = this.products[index];
+    let frames = this.rootBlock._findBestTargetObject(`block:${product.childName}`).
+    _findBestTargetObject(`block:${product.childName}_signpost`).framesHelper.framesStash;
+
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
+
+    if (frameIds.length > 0)
+      return gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "-50"
+      }], frameIds[0]);
+
+    return Promise.resolve();
+  }
+  _productsShowDetails(index) {
     let product = this.products[index];
     let bc = this.rootBlock._findBestTargetObject(`block:${product.childName}`)
       ._findBestTargetObject(`block:${product.childName}_signpost`);
@@ -279,113 +413,7 @@ class cViewDemo extends bView {
 
     return Promise.resolve();
   }
-  toggleShowControls() {
-    if (!this.controlsShown) {
-      this.controlsShown = true;
-      document.querySelector('.canvas-actions').style.display = 'block';
-    } else {
-      this.controlsShown = false;
-      document.querySelector('.canvas-actions').style.display = 'none';
-    }
-  }
-  removeByTitle(collection, title) {
-    let promises = [];
-    let priceShapeChildren = gAPPP.a.modelSets[collection].queryCache('title', title);
-    for (let i in priceShapeChildren)
-      promises.push(gAPPP.a.modelSets[collection].removeByKey(i));
 
-    return promises;
-  }
-  productHideSign(index) {
-    let product = this.products[index];
-    let frames = this.rootBlock._findBestTargetObject(`block:${product.childName}`).
-    _findBestTargetObject(`block:${product.childName}_signpost`).framesHelper.framesStash;
-
-    let frameIds = [];
-    for (let i in frames)
-      frameIds.push(i);
-
-    if (frameIds.length > 0)
-      return gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionY',
-        newValue: "-50"
-      }], frameIds[0]);
-
-    return Promise.resolve();
-  }
-  hideAllProducts() {
-    let promises = [];
-    for (let c = 0, l = this.products.length; c < l; c++)
-      promises.push(this.productHideSign(c));
-
-    return Promise.all(promises);
-  }
-  addItem(event) {
-    let btn = event.target;
-    let sku = btn.sku;
-
-    if (!sku)
-      return;
-
-    if (this.skuOrder.indexOf(sku) === -1)
-      this.skuOrder.push(sku);
-
-    if (!this.basketSKUs[sku])
-      this.basketSKUs[sku] = 1.0;
-    else
-      this.basketSKUs[sku] += 1.0;
-
-    let basketData = {
-      basketSKUs: this.basketSKUs,
-      skuOrder: this.skuOrder
-    }
-
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'basketData',
-      newValue: basketData
-    }]);
-  }
-  clearBasketItems() {
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'basketData',
-      newValue: null
-    }]);
-  }
-  updateBasketTotal() {
-    this.receiptDisplayPanel.innerHTML = '';
-    let gTotal = 0.0;
-    for (let c = 0, l = this.skuOrder.length; c < l; c++) {
-      let sku = this.skuOrder[c];
-      let count = this.basketSKUs[sku];
-      let product = this.productBySKU[sku];
-
-      if (count === 0)
-        continue;
-
-      let total = count * product.price;
-      let l1 = product.title + ' $' + total.toFixed(2);
-      let l2 = count.toString() + ' @ ' + product.desc;
-      gTotal += total;
-      let template = `<div class="cart-item">
-        <button class="cart-item-remove">X</button>
-        <div class="cart-item-description">${l1}</div>
-        <br>
-        <div class="cart-item-detail">${l2}</div>
-      </div>`;
-
-      let cartItem = document.createElement('div');
-      cartItem.innerHTML = template;
-      //let cartItemObj = {};
-
-      //cartItemObj.dom = cartItem;
-      //cartItemObj.removeDom = cartItem.querySelector('.cart-item-remove');
-      //cartItemObj.descriptionDom = cartItem.querySelector('.cart-item-description');
-      //cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
-      this.receiptDisplayPanel.appendChild(cartItem);
-    }
-
-    this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
-  }
   hideBasketGoodDEPRECATE(name) {
     let frames =
       this.rootBlock._findBestTargetObject('block:basketcart').
@@ -415,39 +443,5 @@ class cViewDemo extends bView {
         field: 'positionY',
         newValue: "1.5"
       }], frameIds[0]).then(() => {});
-  }
-  _addCartItemDOM() {
-    let description = 'Apples $3.98';
-    let detail = '2 @ $ 1.99 / lb';
-    let template =
-      `<div class="cart-item">
-      <button class="cart-item-remove">X</button>
-      <div class="cart-item-description">${description}</div>
-      <br>
-      <div class="cart-item-detail">${detail}</div>
-    </div>`;
-
-    let cartItem = document.createElement('div');
-    cartItem.innerHTML = template;
-    let cartItemObj = {};
-
-    cartItemObj.dom = cartItem;
-    cartItemObj.removeDom = cartItem.querySelector('.cart-item-remove');
-    cartItemObj.descriptionDom = cartItem.querySelector('.cart-item-description');
-    cartItemObj.detailDom = cartItem.querySelector('.cart-item-detail');
-  }
-  _userProfileChange() {
-    super._userProfileChange();
-
-    let basketData = gAPPP.a.profile.basketData;
-
-    if (basketData) {
-      this.basketSKUs = basketData.basketSKUs;
-      this.skuOrder = basketData.skuOrder;
-    } else {
-      this.basketSKUs = {};
-      this.skuOrder = [];
-    }
-    this.updateBasketTotal();
   }
 }
