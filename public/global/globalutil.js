@@ -234,6 +234,7 @@ class GUTILImportCSV {
       blockData.itemDesc = row.itemdesc;
       blockData.itemPrice = row.itemprice;
       blockData.itemCount = row.itemcount;
+      blockData.basketBlock = row.basketblock;
     }
 
     if (row.introtime) {

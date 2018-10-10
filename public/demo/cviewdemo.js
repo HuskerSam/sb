@@ -164,6 +164,8 @@ class cViewDemo extends bView {
       let removeDom = cartItem.querySelector('.cart-item-remove');
       removeDom.sku = sku;
       removeDom.addEventListener('click', e => this.basketRemoveItem(e));
+
+      this.basketAddItemBlock(sku);
     }
 
     this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
@@ -172,6 +174,14 @@ class cViewDemo extends bView {
     for (let c = 0, l = this.itemButtons.length; c < l; c++) {
       this.itemButtons[c].innerHTML = '&nbsp;';
     }
+  }
+  basketAddItemBlock(sku) {
+    let product = this.productBySKU[sku];
+    let basketBlock = product.blockRef.blockRenderData.basketBlock;
+  //  let basketCart = this.rootBlock._findBestTargetObject(`block:basketCart`);
+
+  //  let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
+  //  console.log(existingItemBlock);
   }
 
   sceneSelect() {
@@ -423,11 +433,6 @@ class cViewDemo extends bView {
     for (let i in frames)
       frameIds.push(i);
 
-    if (frameIds.length > 0)
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionY',
-        newValue: "-5"
-      }], frameIds[0]).then(() => {});
   }
   showBasketGoodDEPRECATE(name) {
     let frames =
