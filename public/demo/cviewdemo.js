@@ -165,7 +165,7 @@ class cViewDemo extends bView {
       removeDom.sku = sku;
       removeDom.addEventListener('click', e => this.basketRemoveItem(e));
 
-      this.basketAddItemBlock(sku);
+      this.basketAddItemBlock(sku, c);
     }
 
     this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
@@ -175,13 +175,17 @@ class cViewDemo extends bView {
       this.itemButtons[c].innerHTML = '&nbsp;';
     }
   }
-  basketAddItemBlock(sku) {
+  basketAddItemBlock(sku, index) {
     let product = this.productBySKU[sku];
     let basketBlock = product.blockRef.blockRenderData.basketBlock;
-  //  let basketCart = this.rootBlock._findBestTargetObject(`block:basketCart`);
 
-  //  let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
-  //  console.log(existingItemBlock);
+    let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
+    let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
+
+    if (existingItemBlock === null) {
+      console.log(basketBlock, 'adding');
+
+    }
   }
 
   sceneSelect() {
@@ -422,31 +426,5 @@ class cViewDemo extends bView {
     }
 
     return Promise.resolve();
-  }
-
-  hideBasketGoodDEPRECATE(name) {
-    let frames =
-      this.rootBlock._findBestTargetObject('block:basketcart').
-    _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
-
-    let frameIds = [];
-    for (let i in frames)
-      frameIds.push(i);
-
-  }
-  showBasketGoodDEPRECATE(name) {
-    let frames =
-      this.rootBlock._findBestTargetObject('block:basketcart').
-    _findBestTargetObject('block:display ' + name).framesHelper.framesStash;
-
-    let frameIds = [];
-    for (let i in frames)
-      frameIds.push(i);
-
-    if (frameIds.length > 0)
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionY',
-        newValue: "1.5"
-      }], frameIds[0]).then(() => {});
   }
 }
