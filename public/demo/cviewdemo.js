@@ -184,7 +184,28 @@ class cViewDemo extends bView {
 
     if (existingItemBlock === null) {
       console.log(basketBlock, 'adding');
+      //add blockchild and frame
+      // GLOBALUTIL.addCSVBlockChildRow
+      let row = {
+          materialName: '',
+          parent: 'basketcart',
+          childType: 'block',
+          childName: basketBlock,
+          inheritMaterial: false,
+          x: index.toString(),
+          y: '',
+          z: '',
+          rx: '',
+          ry: '',
+          rz: '',
+          sx: '',
+          sy: '',
+          sz: '',
+          visibility: ''
+      };
 
+    } else {
+      //test frame - if fail remove and add new
     }
   }
 
