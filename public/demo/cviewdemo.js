@@ -8,6 +8,8 @@ class cViewDemo extends bView {
       setTimeout(() => {
 
         this.productsInit();
+        this.basketRemoveAllItems();
+
         this.canvasHelper.cameraSelect.selectedIndex = 2;
         this.canvasHelper.noTestError = true;
         this.canvasHelper.cameraChangeHandler();
@@ -178,8 +180,6 @@ class cViewDemo extends bView {
     }
   }
   basketAddItemBlock(sku, index) {
-    this.basketRemoveAllItems();
-    
     let product = this.productBySKU[sku];
     let basketBlock = product.blockRef.blockRenderData.basketBlock;
 
@@ -187,9 +187,9 @@ class cViewDemo extends bView {
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
 
     if (existingItemBlock === null) {
-      //return;
-      console.log(basketBlock, 'adding');
       //add blockchild and frame
+      let yIndex = index % 2;
+      let xIndex = Math.floor(index / 2);
       let row = {
         asset: 'blockchild',
         materialname: '',
@@ -225,7 +225,11 @@ class cViewDemo extends bView {
   }
   basketRemoveAllItems() {
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
-    console.log(basketCart);
+
+    for (let i in basketCart.childBlocks) {
+      if (basketCart.childBlocks[i].blockRawData.blockFlag !== 'static')
+        gAPPP.a.modelSets['blockchild'].removeByKey(basketCart.childBlocks[i].blockKey);
+    }
   }
 
   sceneSelect() {

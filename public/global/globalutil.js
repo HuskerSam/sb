@@ -296,6 +296,9 @@ class GUTILImportCSV {
       blockChildData.cameraName = row.cameraname;
     if (row.cameratargetblock)
       blockChildData.cameraTargetBlock = row.cameratargetblock;
+    if (row.blockflag) {
+      blockChildData.blockFlag = row.blockflag;
+    }
 
     return gAPPP.a.modelSets['blockchild'].createWithBlobString(blockChildData).then(childResults => {
 
