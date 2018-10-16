@@ -129,6 +129,8 @@ class cViewDemo extends bView {
       field: 'basketData',
       newValue: basketData
     }]);
+
+    this.basketRemoveItemBlock(sku);
   }
   basketCheckout() {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -176,6 +178,8 @@ class cViewDemo extends bView {
     }
   }
   basketAddItemBlock(sku, index) {
+    this.basketRemoveAllItems();
+    
     let product = this.productBySKU[sku];
     let basketBlock = product.blockRef.blockRenderData.basketBlock;
 
@@ -183,7 +187,7 @@ class cViewDemo extends bView {
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
 
     if (existingItemBlock === null) {
-      return;
+      //return;
       console.log(basketBlock, 'adding');
       //add blockchild and frame
       let row = {
@@ -191,7 +195,7 @@ class cViewDemo extends bView {
         materialname: '',
         parent: 'basketcart',
         childtype: 'block',
-        childname: basketBlock,
+        name: basketBlock,
         inheritmaterial: false,
         x: index.toString(),
         y: '',
@@ -199,9 +203,9 @@ class cViewDemo extends bView {
         rx: '',
         ry: '',
         rz: '',
-        sx: '',
-        sy: '',
-        sz: '',
+        sx: '.5',
+        sy: '.5',
+        sz: '.5',
         visibility: ''
       };
 
@@ -209,6 +213,19 @@ class cViewDemo extends bView {
     } else {
       //test frame - if fail remove and add new
     }
+  }
+  basketRemoveItemBlock(sku) {
+    let product = this.productBySKU[sku];
+    let basketBlock = product.blockRef.blockRenderData.basketBlock;
+
+    let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
+    let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
+    if (existingItemBlock !== null)
+      gAPPP.a.modelSets['blockchild'].removeByKey(existingItemBlock.blockKey);
+  }
+  basketRemoveAllItems() {
+    let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
+    console.log(basketCart);
   }
 
   sceneSelect() {
