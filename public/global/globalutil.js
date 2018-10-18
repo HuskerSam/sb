@@ -781,8 +781,12 @@ class GUTILImportCSV {
 
     for (let i in children) {
       if (children[i].childType === childType && children[i].childName === childName) {
-
-          return children[i];
+        console.log('ccc', children[i]);
+          let blockData = gAPPP.a.modelSets['block'].getValuesByFieldLookup('parentKey', children[i]);
+          return {
+            blockData,
+            BC: children[i]
+          }
       }
 
       let childResult = this.findMatchBlock(childType, childName, i);
