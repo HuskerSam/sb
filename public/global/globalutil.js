@@ -442,6 +442,8 @@ class GUTILImportCSV {
         return this.addCSVShapeRow(row);
       case 'blockchildframe':
         return this.addCSVBlockChildFrameRow(row);
+      case 'productbasket':
+        return this.addCSVBasketProducts(row);
     }
   }
   static addCSVTextPlane(row) {
@@ -719,5 +721,69 @@ class GUTILImportCSV {
     });
 
     return productBC;
+  }
+  static addCSVBasketProducts(row) {
+    let productInfo = this.initProducts();
+    console.log(productInfo);
+  }
+  static initProducts() {
+    let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
+
+    let productBC = [];
+    for (let i in children) {
+      if (children[i].productIndex)
+        productBC.push(children[i]);
+    }
+
+    let products = [];
+    let productBySKU = {};
+    for (let c = 0, l = productBC.length; c < l; c++) {
+      let pBC = productBC[c];
+      let obj = this.findMatchBlock(pBC.childType, pBC.childName, );
+
+      let blockData = obj.blockRenderData;
+      let bcData = obj.blockRawData;
+
+      let p = {
+        blockRef: obj,
+        itemId: blockData.itemId,
+        title: blockData.itemTitle,
+        itemCount: blockData.itemCount,
+        desc: blockData.itemDesc,
+        price: blockData.itemPrice,
+        productIndex: bcData.productIndex,
+        childName: bcData.childName,
+        childType: bcData.childType
+      };
+      products.push(p);
+      productBySKU[p.itemId] = p;
+    }
+
+    products.sort((a, b) => {
+      if (a.productIndex > b.productIndex)
+        return 1;
+      if (a.productIndex < b.productIndex)
+        return -1;
+      return 0;
+    });
+
+    return {
+      products,
+      productsBySKU,
+      productsBC
+    }
+  }
+  static findMatchBlock(childType, childName, parentId) {
+    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', parentId);
+
+    for (let i in children) {
+      if (children[i].childType === childType && children[i].childName === childName)
+        return children[i];
+
+      let childResult = this.findMatchBlock(childType, childName, i);
+      if (childResult)
+        return childResult;
+    }
+    return null;
   }
 }
