@@ -242,6 +242,7 @@ class GUTILImportCSV {
       blockData.finishdelay = row.finishdelay;
       blockData.runlength = row.runlength;
     }
+    if (row.blockflag) blockData.blockFlag = row.blockflag;
 
     return gAPPP.a.modelSets['block'].createWithBlobString(blockData).then(blockResult => {
       let frameTime = '0';
@@ -296,9 +297,7 @@ class GUTILImportCSV {
       blockChildData.cameraName = row.cameraname;
     if (row.cameratargetblock)
       blockChildData.cameraTargetBlock = row.cameratargetblock;
-    if (row.blockflag) {
-      blockChildData.blockFlag = row.blockflag;
-    }
+    if (row.blockflag) blockChildData.blockFlag = row.blockflag;
 
     return gAPPP.a.modelSets['blockchild'].createWithBlobString(blockChildData).then(childResults => {
 
@@ -725,6 +724,7 @@ class GUTILImportCSV {
   static addCSVBasketProducts(row) {
     let productInfo = this.initProducts();
     console.log(productInfo);
+    return Promise.resolve();
   }
   static initProducts() {
     let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
@@ -735,14 +735,17 @@ class GUTILImportCSV {
         productBC.push(children[i]);
     }
 
+    gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockflag', 'basket');
+    let basketId = gAPPP.a.modelSets['block'].lastKeyLookup;
+
     let products = [];
     let productBySKU = {};
     for (let c = 0, l = productBC.length; c < l; c++) {
       let pBC = productBC[c];
-      let obj = this.findMatchBlock(pBC.childType, pBC.childName, );
-
-      let blockData = obj.blockRenderData;
-      let bcData = obj.blockRawData;
+      let obj = this.findMatchBlock(pBC.childType, pBC.childName, basketId);
+      console.log('obj', obj);
+    //  let blockData = obj.blockRenderData;
+    //  let bcData = obj.blockRawData;
 
       let p = {
         blockRef: obj,
@@ -777,8 +780,10 @@ class GUTILImportCSV {
     let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', parentId);
 
     for (let i in children) {
-      if (children[i].childType === childType && children[i].childName === childName)
-        return children[i];
+      if (children[i].childType === childType && children[i].childName === childName) {
+
+          return children[i];
+      }
 
       let childResult = this.findMatchBlock(childType, childName, i);
       if (childResult)
