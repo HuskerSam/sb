@@ -723,29 +723,55 @@ class GUTILImportCSV {
   }
   static addCSVBasketProducts(row) {
     let productInfo = this.initProducts();
-    console.log(productInfo);
+/*
+    let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
+
+    let yIndex = index % 2;
+    let xIndex = Math.floor(index / 2);
+    let row = {
+      asset: 'blockchild',
+      materialname: '',
+      parent: 'basketcart',
+      childtype: 'block',
+      name: basketBlock,
+      inheritmaterial: false,
+      x: index.toString(),
+      y: '',
+      z: '',
+      rx: '',
+      ry: '',
+      rz: '',
+      sx: '.5',
+      sy: '.5',
+      sz: '.5',
+      visibility: ''
+    };
+
+    GUTILImportCSV.addCSVRow(row).then(() => {});
+*/
     return Promise.resolve();
   }
   static initProducts() {
     let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
 
-    let productBC = [];
+    let productsBC = [];
     for (let i in children) {
       if (children[i].productIndex)
-        productBC.push(children[i]);
+        productsBC.push(children[i]);
     }
 
-    gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockflag', 'basket');
-    let basketId = gAPPP.a.modelSets['block'].lastKeyLookup;
+    let resultScene = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
+    let sceneId = null;
+
+    if (resultScene)
+      sceneId = gAPPP.a.modelSets['block'].lastKeyLookup;
 
     let products = [];
-    let productBySKU = {};
-    for (let c = 0, l = productBC.length; c < l; c++) {
-      let pBC = productBC[c];
-      let obj = this.findMatchBlock(pBC.childType, pBC.childName, basketId);
-      console.log('obj', obj);
-    //  let blockData = obj.blockRenderData;
-    //  let bcData = obj.blockRawData;
+    let productsBySKU = {};
+    for (let c = 0, l = productsBC.length; c < l; c++) {
+      let pBC = productsBC[c];
+      let obj = this.findMatchBlock(pBC.childType, pBC.childName, sceneId);
+      let blockData = obj.blockData;
 
       let p = {
         blockRef: obj,
@@ -754,12 +780,12 @@ class GUTILImportCSV {
         itemCount: blockData.itemCount,
         desc: blockData.itemDesc,
         price: blockData.itemPrice,
-        productIndex: bcData.productIndex,
-        childName: bcData.childName,
-        childType: bcData.childType
+        productIndex: blockData.productIndex,
+        childName: pBC.childName,
+        childType: pBC.childType
       };
       products.push(p);
-      productBySKU[p.itemId] = p;
+      productsBySKU[p.itemId] = p;
     }
 
     products.sort((a, b) => {
@@ -773,7 +799,8 @@ class GUTILImportCSV {
     return {
       products,
       productsBySKU,
-      productsBC
+      productsBC,
+      sceneId
     }
   }
   static findMatchBlock(childType, childName, parentId) {
@@ -781,8 +808,8 @@ class GUTILImportCSV {
 
     for (let i in children) {
       if (children[i].childType === childType && children[i].childName === childName) {
-        console.log('ccc', children[i]);
-          let blockData = gAPPP.a.modelSets['block'].getValuesByFieldLookup('parentKey', children[i]);
+        //console.log('ccc', children[i]);
+          let blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
           return {
             blockData,
             BC: children[i]
