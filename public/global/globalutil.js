@@ -731,12 +731,13 @@ class GUTILImportCSV {
     for (let c = 0, l = products.length; c < l; c++) {
       let yIndex = c % 2;
       let xIndex = Math.floor(c / 2);
+      console.log('prod', products[c]);
       let row = {
         asset: 'blockchild',
         materialname: '',
         parent: basketName,
         childtype: 'block',
-        childname: products[c].childName,
+        name: products[c].blockRef.blockData.basketBlock,
         inheritmaterial: false,
         x: xIndex.toString(),
         y: yIndex.toString(),

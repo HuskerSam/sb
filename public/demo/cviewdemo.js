@@ -181,7 +181,7 @@ class cViewDemo extends bView {
   }
   basketAddItemBlock(sku, index) {
     return;
-    
+
     let product = this.productBySKU[sku];
     let basketBlock = product.blockRef.blockRenderData.basketBlock;
 
@@ -226,6 +226,8 @@ class cViewDemo extends bView {
       gAPPP.a.modelSets['blockchild'].removeByKey(existingItemBlock.blockKey);
   }
   basketRemoveAllItems() {
+    return;
+    
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
 
     for (let i in basketCart.childBlocks) {
