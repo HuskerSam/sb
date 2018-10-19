@@ -264,11 +264,19 @@ class mFirebaseList extends bFirebase {
     });
   }
   getValuesByFieldLookup(field, value) {
+    this.lastKeyLookup = null;
     for (let i in this.fireDataValuesByKey)
       if (this.fireDataValuesByKey[i][field] === value) {
         this.lastKeyLookup = i;
         return this.fireDataValuesByKey[i];
       }
+    return null;
+  }
+  getIdByFieldLookup(field, value) {
+    let obj = this.getValuesByFieldLookup(field, value);
+    if (obj)
+      return this.lastKeyLookup;
+
     return null;
   }
   _updateDomLookupList() {

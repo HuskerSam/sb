@@ -180,6 +180,8 @@ class cViewDemo extends bView {
     }
   }
   basketAddItemBlock(sku, index) {
+    return;
+    
     let product = this.productBySKU[sku];
     let basketBlock = product.blockRef.blockRenderData.basketBlock;
 

@@ -723,33 +723,37 @@ class GUTILImportCSV {
   }
   static addCSVBasketProducts(row) {
     let productInfo = this.initProducts();
-/*
-    let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
+    let basketInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'basket');
+    let basketName = basketInfo.title;
+    let promises = [];
+    let products = productInfo.products;
 
-    let yIndex = index % 2;
-    let xIndex = Math.floor(index / 2);
-    let row = {
-      asset: 'blockchild',
-      materialname: '',
-      parent: 'basketcart',
-      childtype: 'block',
-      name: basketBlock,
-      inheritmaterial: false,
-      x: index.toString(),
-      y: '',
-      z: '',
-      rx: '',
-      ry: '',
-      rz: '',
-      sx: '.5',
-      sy: '.5',
-      sz: '.5',
-      visibility: ''
-    };
+    for (let c = 0, l = products.length; c < l; c++) {
+      let yIndex = c % 2;
+      let xIndex = Math.floor(c / 2);
+      let row = {
+        asset: 'blockchild',
+        materialname: '',
+        parent: basketName,
+        childtype: 'block',
+        childname: products[c].childName,
+        inheritmaterial: false,
+        x: xIndex.toString(),
+        y: yIndex.toString(),
+        z: '',
+        rx: '',
+        ry: '',
+        rz: '',
+        sx: '.5',
+        sy: '.5',
+        sz: '.5',
+        visibility: ''
+      };
+      console.log('row', row);
+      promises.push(GUTILImportCSV.addCSVRow(row));
+    }
 
-    GUTILImportCSV.addCSVRow(row).then(() => {});
-*/
-    return Promise.resolve();
+    return Promise.all(promises);
   }
   static initProducts() {
     let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
@@ -760,12 +764,7 @@ class GUTILImportCSV {
         productsBC.push(children[i]);
     }
 
-    let resultScene = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
-    let sceneId = null;
-
-    if (resultScene)
-      sceneId = gAPPP.a.modelSets['block'].lastKeyLookup;
-
+    let sceneId = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockFlag', 'scene');
     let products = [];
     let productsBySKU = {};
     for (let c = 0, l = productsBC.length; c < l; c++) {
