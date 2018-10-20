@@ -180,40 +180,29 @@ class cViewDemo extends bView {
     }
   }
   basketAddItemBlock(sku, index) {
-    return;
-
+    let pos = GUTILImportCSV.basketPosition(index);
     let product = this.productBySKU[sku];
     let basketBlock = product.blockRef.blockRenderData.basketBlock;
 
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
 
-    if (existingItemBlock === null) {
-      //add blockchild and frame
-      let yIndex = index % 2;
-      let xIndex = Math.floor(index / 2);
-      let row = {
-        asset: 'blockchild',
-        materialname: '',
-        parent: 'basketcart',
-        childtype: 'block',
-        name: basketBlock,
-        inheritmaterial: false,
-        x: index.toString(),
-        y: '',
-        z: '',
-        rx: '',
-        ry: '',
-        rz: '',
-        sx: '.5',
-        sy: '.5',
-        sz: '.5',
-        visibility: ''
-      };
+    if (existingItemBlock !== null) {
+      let frames = existingItemBlock.framesHelper.framesStash;
+      let frameIds = [];
+      for (let i in frames)
+        frameIds.push(i);
 
-      GUTILImportCSV.addCSVRow(row).then(() => {});
-    } else {
-      //test frame - if fail remove and add new
+      return gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionX',
+        newValue: pos.x.toString()
+      },{
+        field: 'positionY',
+        newValue: pos.y.toString()
+      },{
+        field: 'positionZ',
+        newValue: pos.z.toString()
+      }], frameIds[0]);
     }
   }
   basketRemoveItemBlock(sku) {
@@ -222,18 +211,21 @@ class cViewDemo extends bView {
 
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
-    if (existingItemBlock !== null)
-      gAPPP.a.modelSets['blockchild'].removeByKey(existingItemBlock.blockKey);
+    if (existingItemBlock !== null) {
+      let frames = existingItemBlock.framesHelper.framesStash;
+      let frameIds = [];
+      for (let i in frames)
+        frameIds.push(i);
+
+      return gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionY',
+        newValue: "-50"
+      }], frameIds[0]);
+    }
   }
   basketRemoveAllItems() {
-    return;
-    
-    let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
-
-    for (let i in basketCart.childBlocks) {
-      if (basketCart.childBlocks[i].blockRawData.blockFlag !== 'static')
-        gAPPP.a.modelSets['blockchild'].removeByKey(basketCart.childBlocks[i].blockKey);
-    }
+    for (let c = 0, l = this.products.length; c < l; c++)
+      this.basketRemoveItemBlock(this.products[c].blockRef.blockRenderData.itemId);
   }
 
   sceneSelect() {

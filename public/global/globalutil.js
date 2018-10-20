@@ -721,6 +721,13 @@ class GUTILImportCSV {
 
     return productBC;
   }
+  static basketPosition(index) {
+    let z = index % 2 * 3 - 1.5;
+    let x = Math.floor(index % 4 / 2) * 3 - 1.5;
+    let y = Math.floor(index / 4) * 2 + 1;
+
+    return { x, y, z };
+  }
   static addCSVBasketProducts(row) {
     let productInfo = this.initProducts();
     let basketInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'basket');
@@ -729,9 +736,7 @@ class GUTILImportCSV {
     let products = productInfo.products;
 
     for (let c = 0, l = products.length; c < l; c++) {
-      let yIndex = c % 2;
-      let xIndex = Math.floor(c / 2);
-      console.log('prod', products[c]);
+      let pos = this.basketPosition(c);
       let row = {
         asset: 'blockchild',
         materialname: '',
@@ -739,18 +744,18 @@ class GUTILImportCSV {
         childtype: 'block',
         name: products[c].blockRef.blockData.basketBlock,
         inheritmaterial: false,
-        x: xIndex.toString(),
-        y: yIndex.toString(),
-        z: '',
+        x: pos.x.toString(),
+        y: pos.y.toString(),
+        z: pos.z.toString(),
         rx: '',
         ry: '',
         rz: '',
-        sx: '.5',
-        sy: '.5',
-        sz: '.5',
+        sx: '.45',
+        sy: '.45',
+        sz: '.45',
         visibility: ''
       };
-      console.log('row', row);
+
       promises.push(GUTILImportCSV.addCSVRow(row));
     }
 
