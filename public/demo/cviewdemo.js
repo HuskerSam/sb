@@ -82,7 +82,7 @@ class cViewDemo extends bView {
       this.basketSKUs = {};
       this.skuOrder = [];
     }
-    this.basketUpdateTotal();
+    this.basketUpdateTotal().then(() => {});
   }
 
   basketAddItem(event) {
@@ -143,6 +143,7 @@ class cViewDemo extends bView {
   basketUpdateTotal() {
     this.receiptDisplayPanel.innerHTML = '';
     let gTotal = 0.0;
+    let promises = [];
     for (let c = 0, l = this.skuOrder.length; c < l; c++) {
       let sku = this.skuOrder[c];
       let count = this.basketSKUs[sku];
@@ -168,11 +169,15 @@ class cViewDemo extends bView {
       let removeDom = cartItem.querySelector('.cart-item-remove');
       removeDom.sku = sku;
       removeDom.addEventListener('click', e => this.basketRemoveItem(e));
-
-      this.basketAddItemBlock(sku, c);
     }
 
     this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
+
+
+    for (let d = 0, l = this.skuOrder.length; d < l; d++)
+      promises.push(this.basketAddItemBlock(this.skuOrder[d], d));
+
+    return Promise.all(promises);
   }
   basketClearButtons() {
     for (let c = 0, l = this.itemButtons.length; c < l; c++) {
@@ -182,6 +187,9 @@ class cViewDemo extends bView {
   basketAddItemBlock(sku, index) {
     let pos = GUTILImportCSV.basketPosition(index);
     let product = this.productBySKU[sku];
+    if (!product)
+      return;
+
     let basketBlock = product.blockRef.blockRenderData.basketBlock;
 
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
