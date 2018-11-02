@@ -143,7 +143,7 @@ class wBlock {
     } else if (type === 'remove' && tag === 'blockchild') {
       values = fireData.val();
       if (values.parentKey === this._blockKey)
-        return this.setData();
+        return this.setData(this.blockRawData, true);
 
       if (this.parent)
         if (values.parentKey === this.blockRawData.parentKey) {
@@ -439,7 +439,7 @@ class wBlock {
       textSize: 30
     };
   }
-  setData(values = null) {
+  setData(values = null, forceRedraw = false) {
     if (this.context !== gAPPP.activeContext)
       return;
 
@@ -479,7 +479,7 @@ class wBlock {
       this.blockRenderData.childType = this.staticType;
       this.framesHelper._validateFieldList(this.blockRenderData.childType);
       this.framesHelper.blockWrapper = this;
-      this._renderBlock();
+      this._renderBlock(forceRedraw);
     } else
       this._loadBlock();
 
@@ -536,13 +536,13 @@ class wBlock {
       return '';
     return thisPart;
   }
-  _renderBlock() {
+  _renderBlock(forceRedraw = false) {
     if (this.blockRawData.childType === 'mesh')
       this.__renderMeshBlock();
     if (this.blockRawData.childType === 'shape')
       this.__renderShapeBlock();
     if (this.blockRawData.childType === 'block')
-      this.__renderContainerBlock();
+      this.__renderContainerBlock(forceRedraw);
     if (this.blockRawData.childType === 'light')
       this.__renderLightBlock();
 
@@ -584,7 +584,7 @@ class wBlock {
         this.__updateObjectValue(field, value, this.sceneObject);
     }
   }
-  __renderContainerBlock() {
+  __renderContainerBlock(forceRedraw = false) {
     if (!this._blockKey)
       return;
 
@@ -601,7 +601,7 @@ class wBlock {
         this.containerCache[f] = this.blockRenderData[f];
       }
     }
-    if (fieldDirty) {
+    if (fieldDirty || forceRedraw) {
       oldContainerMesh = this.sceneObject;
       this.sceneObject = BABYLON.MeshBuilder.CreateBox(this._blockKey, {
         width,
