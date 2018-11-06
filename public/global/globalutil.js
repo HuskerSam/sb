@@ -329,6 +329,12 @@ class GUTILImportCSV {
         frameData.cameraFOV = row.camerafov;
       if (row.camerarotationoffset)
         frameData.cameraRotationOffset = row.camerarotationoffset;
+      if (row.startx)
+        frameData.cameraOriginX = row.startx;
+      if (row.starty)
+        frameData.cameraOriginY = row.starty;
+      if (row.startz)
+        frameData.cameraOriginZ = row.startz;
 
       return gAPPP.a.modelSets['frame'].createWithBlobString(frameData);
     });
@@ -625,6 +631,9 @@ class GUTILImportCSV {
     cam.x = row.x;
     cam.y = row.y;
     cam.z = row.z;
+    cam.startx = row.startx;
+    cam.starty = row.starty;
+    cam.startz = row.startz;
     childCSVRows.push(cam);
 
     let introTime = GLOBALUTIL.getNumberOrDefault(row.introtime, 0.0);
