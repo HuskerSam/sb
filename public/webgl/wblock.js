@@ -315,7 +315,19 @@ class wBlock {
     axisX.color = new BABYLON.Color3(1, 0, 0);
     wrapper = axisX;
 
-    let xChar = this.__make2DTextMesh("X", "red", size / 10);
+    function __make2DTextMesh(text, color, size) {
+      let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, this.context.scene, true);
+      dynamicTexture.hasAlpha = true;
+      dynamicTexture.drawText(text, 5, 40, "bold 36px Arial", color, "transparent", true);
+      let plane = new BABYLON.Mesh.CreatePlane("TextPlane", size, this.context.scene, true);
+      plane.material = new BABYLON.StandardMaterial("TextPlaneMaterial", this.context.scene);
+      plane.material.backFaceCulling = false;
+      plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
+      plane.material.diffuseTexture = dynamicTexture;
+      return plane;
+    }
+
+    let xChar = __make2DTextMesh("X", "red", size / 10);
     xChar.position = new BABYLON.Vector3(0.9 * size, -0.05 * size, 0);
     xChar.setParent(wrapper);
 
@@ -329,7 +341,7 @@ class wBlock {
     axisY.color = new BABYLON.Color3(0, 1, 0);
     axisY.setParent(wrapper);
 
-    let yChar = this.__make2DTextMesh("Y", "green", size / 10);
+    let yChar = __make2DTextMesh("Y", "green", size / 10);
     yChar.position = new BABYLON.Vector3(0, 0.9 * size, -0.05 * size);
     yChar.setParent(wrapper);
 
@@ -343,7 +355,7 @@ class wBlock {
     axisZ.color = new BABYLON.Color3(0, 0, 1);
     axisZ.setParent(wrapper);
 
-    let zChar = this.__make2DTextMesh("Z", "blue", size / 10);
+    let zChar = __make2DTextMesh("Z", "blue", size / 10);
     zChar.position = new BABYLON.Vector3(0, 0.05 * size, 0.9 * size);
     zChar.setParent(wrapper);
 
@@ -817,17 +829,6 @@ class wBlock {
 
     this.sceneObject = textWrapperMesh;
   }
-  __make2DTextMesh(text, color, size) {
-    let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, this.context.scene, true);
-    dynamicTexture.hasAlpha = true;
-    dynamicTexture.drawText(text, 5, 40, "bold 36px Arial", color, "transparent", true);
-    let plane = new BABYLON.Mesh.CreatePlane("TextPlane", size, this.context.scene, true);
-    plane.material = new BABYLON.StandardMaterial("TextPlaneMaterial", this.context.scene);
-    plane.material.backFaceCulling = false;
-    plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
-    plane.material.diffuseTexture = dynamicTexture;
-    return plane;
-  }
   __material(values) {
     let material = new BABYLON.StandardMaterial('material' + Math.random().toFixed(4), this.context.scene);
     let fields = sDataDefinition.bindingFields('material');
@@ -958,7 +959,8 @@ class wBlock {
       url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
 
     if (values.isText) {
-      texture = new BABYLON.DynamicTexture("dynamic texture", 512, this.context.scene, true);
+      let renderSize = GLOBALUTIL.getNumberOrDefault(values.textureTextRenderSize, 512);
+      texture = new BABYLON.DynamicTexture("dynamic texture", renderSize, this.context.scene, true);
 
       let fontWeight = 'normal';
       if (values.textFontWeight)
@@ -966,9 +968,7 @@ class wBlock {
       let textFontFamily = 'Geneva';
       if (values.textFontFamily)
         textFontFamily = values.textFontFamily;
-      let textFontSize = '75';
-      if (values.textFontSize)
-        textFontSize = values.textFontSize;
+      let textFontSize = GLOBALUTIL.getNumberOrDefault(values.textFontSize, 75);
       let font = fontWeight + ' ' + textFontSize + 'px ' + textFontFamily;
       let invertY = true;
       let clearColor = "transparent";

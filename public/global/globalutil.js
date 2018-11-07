@@ -464,8 +464,12 @@ class GUTILImportCSV {
     };
     promises.push(gAPPP.a.modelSets['shape'].createWithBlobString(shapeData));
 
+    if (!row.texturetext)
+      row.texturetext = '';
+    if (!row.texturetext2)
+      row.texturetext2 = '';
+
     let textureData = {
-      textDepth: row.textdepth,
       textFontFamily: row.textfontfamily,
       hasAlpha: true,
       isText: true,
@@ -475,17 +479,21 @@ class GUTILImportCSV {
       url: '',
       title: row.name
     };
+    textureData.textFontSize = GLOBALUTIL.getNumberOrDefault(row.textfontsize, 100).toString();
+    textureData.textureTextRenderSize = GLOBALUTIL.getNumberOrDefault(row.texturetextrendersize, 512).toString();
+    textureData.textFontWeight = row.textfontweight ? row.textfontweight : '';
+
     promises.push(gAPPP.a.modelSets['texture'].createWithBlobString(textureData));
 
     let materialData = {
       title: row.name,
       ambientColor: '',
-      ambientTextureName: '',
+      ambientTextureName: row.name,
       backFaceCulling: true,
       diffuseColor: '',
       diffuseTextureName: row.name,
       emissiveColor: '',
-      emissiveTextureName: ''
+      emissiveTextureName: row.name
     };
     promises.push(gAPPP.a.modelSets['material'].createWithBlobString(materialData));
 
@@ -512,7 +520,6 @@ class GUTILImportCSV {
     textPlane.width = '10';
     textPlane.height = '10';
     textPlane.depth = '10';
-    textPlane.textdepth = '.5';
     textPlane.textfontfamily = 'Geneva';
     textPlane.name = row.name + '_pricedesc';
     newObjects.push(textPlane);
@@ -570,7 +577,7 @@ class GUTILImportCSV {
     blockSP2BC.name = 'signpost';
     blockSP2BC.materialname = 'inherit';
     blockSP2BC.x = '-0.05';
-    blockSP2BC.y = '2';
+    blockSP2BC.y = '1.5';
     signChildren.push(blockSP2BC);
 
     let blockRowBC = this.defaultCSVRow();
@@ -656,7 +663,7 @@ class GUTILImportCSV {
       cameraBlockFrame.frameorder = frameOrder.toString();
       cameraBlockFrame.frametime = frameTime.toFixed(2) + 'scp500';
       cameraBlockFrame.x = p.x;
-      cameraBlockFrame.y = p.y;
+      cameraBlockFrame.y = (GLOBALUTIL.getNumberOrDefault(p.y, 0) + 2).toString();
       cameraBlockFrame.z = p.z;
       cameraBlockFrame.rx = p.rx;
       cameraBlockFrame.ry = p.ry;

@@ -343,6 +343,10 @@ __localStaticStorageForBindingFields['texture'] = [{
   inlineWidth: '20em',
   noTrim: true
 }, {
+  title: '2D Render size',
+  fireSetField: 'textureTextRenderSize',
+  group: 'font'
+}, {
   title: 'Font Family',
   fireSetField: 'textFontFamily',
   dataListId: 'fontfamilydatalist',
@@ -350,7 +354,7 @@ __localStaticStorageForBindingFields['texture'] = [{
   group: 'textdetails',
   inlineWidth: '10em'
 }, {
-  title: 'Font Size',
+  title: 'Size (number)',
   fireSetField: 'textFontSize',
   group: 'textdetails'
 }, {
