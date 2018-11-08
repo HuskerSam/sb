@@ -276,6 +276,11 @@ __localStaticStorageForBindingFields['texture'] = [{
   type: 'boolean',
   group: 'options'
 }, {
+  title: 'shrink Text',
+  fireSetField: 'isFittedText',
+  type: 'boolean',
+  group: 'options'
+}, {
   title: 'is Video',
   fireSetField: 'isVideo',
   contextObjectField: 'isVideo',

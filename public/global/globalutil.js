@@ -482,7 +482,8 @@ class GUTILImportCSV {
     textureData.textFontSize = GLOBALUTIL.getNumberOrDefault(row.textfontsize, 100).toString();
     textureData.textureTextRenderSize = GLOBALUTIL.getNumberOrDefault(row.texturetextrendersize, 512).toString();
     textureData.textFontWeight = row.textfontweight ? row.textfontweight : '';
-
+    textureData.isFittedText = true;
+    
     promises.push(gAPPP.a.modelSets['texture'].createWithBlobString(textureData));
 
     let materialData = {

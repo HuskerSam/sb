@@ -958,7 +958,48 @@ class wBlock {
     if (url.substring(0, 3) === 'sb:')
       url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
 
-    if (values.isText) {
+    if (values.isFittedText) {
+      let renderSize = GLOBALUTIL.getNumberOrDefault(values.textureTextRenderSize, 512);
+      texture = new BABYLON.DynamicTexture("dynamic texture", renderSize, this.context.scene, true);
+
+      let fontWeight = 'normal';
+      if (values.textFontWeight)
+        fontWeight = values.textFontWeight;
+      let textFontFamily = 'Geneva';
+      if (values.textFontFamily)
+        textFontFamily = values.textFontFamily;
+      let textFontSize = GLOBALUTIL.getNumberOrDefault(values.textFontSize, 75);
+
+      if (!values.textureText)
+        values.textureText = '';
+      let numChar = values.textureText.length;
+      let minFontSize = Math.ceil(renderSize * 1.5 / numChar);
+      textFontSize = Math.min(textFontSize, minFontSize);
+
+      let font = fontWeight + ' ' + textFontSize + 'px ' + textFontFamily;
+      let invertY = true;
+      let clearColor = "transparent";
+      let color = "white"
+
+      if (values.textFontColor)
+        color = GLOBALUTIL.colorRGB255(values.textFontColor);
+      if (values.textFontClearColor)
+        clearColor = GLOBALUTIL.colorRGB255(values.textFontClearColor);
+      let x = 10;
+      let y = GLOBALUTIL.getNumberOrDefault(textFontSize, 50);
+
+      texture.drawText(values.textureText, x, y, font, color, clearColor);
+
+      if (values.textureText2) {
+        y += textFontSize;
+        numChar = values.textureText2.length;
+        minFontSize = Math.ceil(renderSize * 1.5 / numChar);
+        textFontSize = Math.min(textFontSize, minFontSize);
+
+        font = fontWeight + ' ' + textFontSize + 'px ' + textFontFamily;
+        texture.drawText(values.textureText2, x, y, font, color, clearColor);
+      }
+    } else if (values.isText) {
       let renderSize = GLOBALUTIL.getNumberOrDefault(values.textureTextRenderSize, 512);
       texture = new BABYLON.DynamicTexture("dynamic texture", renderSize, this.context.scene, true);
 
