@@ -524,7 +524,7 @@ class GUTILImportCSV {
 
     return Promise.all(promises);
   }
-  static __addSignPost(product) {
+  static __addSignPost(product, productData) {
     let newObjects = [];
     let blockRow = this.defaultCSVRow();
     blockRow.asset = 'block';
@@ -613,10 +613,45 @@ class GUTILImportCSV {
     blockRowBC.x = '.1';
     blockRowBC.rz = '10deg';
     blockRowBC.ry = '180deg';
+    blockRowBC.y = '-50';
 
     return this.addCSVRowList(newObjects)
       .then(() => this.addCSVRowList(signChildren))
-      .then(() => this.addCSVRow(blockRowBC));
+      .then(() => this.addCSVRow(blockRowBC))
+      .then(result => {
+          let showFrame = this.defaultCSVRow();
+          showFrame.asset = 'blockchildframe';
+          showFrame.name = blockRow.name;
+          showFrame.childtype = 'block';
+          showFrame.parent = product.childName;
+          showFrame.frameorder = '20';
+          showFrame.frametime = (product.startTime * 1000).toFixed(0) + 'cp700';
+          showFrame.y = '2';
+
+          let hideFrame = this.defaultCSVRow();
+          hideFrame.asset = 'blockchildframe';
+          hideFrame.name = blockRow.name;
+          hideFrame.childtype = 'block';
+          hideFrame.parent = product.childName;
+          hideFrame.frameorder = '30';
+          hideFrame.frametime = (product.endTime * 1000).toFixed(0) + 'cp700';
+          hideFrame.y = '-50';
+
+          let endFrame = this.defaultCSVRow();
+          endFrame.asset = 'blockchildframe';
+          endFrame.name = blockRow.name;
+          endFrame.childtype = 'block';
+          endFrame.parent = product.childName;
+          endFrame.frameorder = '40';
+          endFrame.frametime = (productData.runLength * 1000).toFixed(0);
+          endFrame.y = '-50';
+
+          return Promise.all([
+            this.addCSVRow(showFrame),
+            this.addCSVRow(hideFrame),
+            this.addCSVRow(endFrame)
+          ]);
+      })
   }
   static addCSVCamera(row) {
     let childCSVRows = [];
@@ -668,18 +703,14 @@ class GUTILImportCSV {
     cam.startz = row.startz;
     childCSVRows.push(cam);
 
-    let introTime = GLOBALUTIL.getNumberOrDefault(row.introtime, 0.0);
-    let finishTime = GLOBALUTIL.getNumberOrDefault(row.finishdelay, 0.0);
-    let runTime = GLOBALUTIL.getNumberOrDefault(row.runlength, 60.0);
-
+    let productData = this.initProducts();
     let frameRows = [];
-    let products = this.getProductList();
-    let frameOrder = 20;
-    let frameTime = introTime;
-    let timeInc = (runTime - finishTime - introTime) / products.length;
 
-    for (let c = 0, l = products.length; c < l; c++) {
-      let p = products[c].origRow;
+    let frameOrder = 20;
+    let frameTime = productData.introTime;
+
+    for (let c = 0, l = productData.products.length; c < l; c++) {
+      let p = productData.productsBC[c].origRow;
       let cameraBlockFrame = this.defaultCSVRow();
       cameraBlockFrame.asset = 'blockchildframe';
       cameraBlockFrame.name = cameraBlock.name;
@@ -698,7 +729,7 @@ class GUTILImportCSV {
       cameraBlockFrame.sz = p.sz;
 
       frameOrder += 10;
-      frameTime += timeInc;
+      frameTime += productData.incLength;
 
       frameRows.push(cameraBlockFrame);
     }
@@ -745,23 +776,6 @@ class GUTILImportCSV {
       z: ""
     };
   }
-  static getProductList(row) {
-    let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
-    let productBC = [];
-    for (let i in children)
-      if (children[i].productIndex)
-        productBC.push(children[i]);
-
-    productBC.sort((a, b) => {
-      if (a.productIndex > b.productIndex)
-        return 1;
-      if (a.productIndex < b.productIndex)
-        return -1;
-      return 0;
-    });
-
-    return productBC;
-  }
   static basketPosition(index) {
     let z = index % 2 * 3 - 1.5;
     let x = Math.floor(index % 4 / 2) * 3 - 1.5;
@@ -807,7 +821,7 @@ class GUTILImportCSV {
 
     let promises = [];
     for (let c = 0, l = pInfo.products.length; c < l; c++)
-      promises.push(this.__addSignPost(pInfo.products[c]));
+      promises.push(this.__addSignPost(pInfo.products[c], pInfo));
 
     return Promise.all(promises);
   }
@@ -869,8 +883,8 @@ class GUTILImportCSV {
     let productCount = products.length;
     let productsShownAtOnce = 3;
     let numberOfButtons = 4;
-    let runTime = runLength - introTime - finishDelay;
-    let incLength = runTime / productCount;
+    let productRunTime = runLength - introTime - finishDelay;
+    let incLength = productRunTime / productCount;
     for (let postC = 0, postL = products.length; postC < postL; postC++) {
       products[postC].colorIndex = postC % 4;
       products[postC].startTime = postC * incLength + introTime;
@@ -881,7 +895,14 @@ class GUTILImportCSV {
       products,
       productsBySKU,
       productsBC,
-      sceneId
+      sceneId,
+      productsShownAtOnce,
+      numberOfButtons,
+      runLength,
+      incLength,
+      productRunTime,
+      introTime,
+      finishDelay
     }
   }
   static findMatchBlock(childType, childName, parentId) {
