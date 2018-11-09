@@ -162,6 +162,31 @@ class GLOBALUTIL {
   }
 }
 class GUTILImportCSV {
+  static getProductColors() {
+    let colors = [
+      'decolor: 1,0,0',
+      'decolor: 0,1,0',
+      'decolor: 0,0,1',
+      'decolor: 1,1,0'
+    ];
+    let buttonColors = [
+      'rgb(255,0,0)',
+      'rgb(0,255,0)',
+      'rgb(0,0,255)',
+      'rgb(255,255,0)'
+    ];
+    let buttonForeColors = [
+      'rgb(0,0,0)',
+      'rgb(0,0,0)',
+      'rgb(255,255,255)',
+      'rgb(0,0,0)'
+    ];
+    return {
+      colors,
+      buttonColors,
+      buttonForeColors
+    }
+  }
   static addCSVMeshRow(row) {
     let promises = [];
 
@@ -233,6 +258,7 @@ class GUTILImportCSV {
       blockData.itemTitle = row.itemtitle;
       blockData.itemDesc = row.itemdesc;
       blockData.itemPrice = row.itemprice;
+      blockData.itemImage = row.texturepath;
       blockData.itemCount = row.itemcount;
       blockData.basketBlock = row.basketblock;
     }
@@ -248,10 +274,6 @@ class GUTILImportCSV {
       let frameTime = '0';
       if (row.frametime)
         frameTime = row.frametime;
-
-      if (row.itemid) {
-        this.__CSVSignPostRows(row).then(() => {});
-      }
 
       return gAPPP.a.modelSets['frame'].createWithBlobString({
         parentKey: blockResult.key,
@@ -449,6 +471,8 @@ class GUTILImportCSV {
         return this.addCSVBlockChildFrameRow(row);
       case 'productbasket':
         return this.addCSVBasketProducts(row);
+      case 'productsigns':
+        return this.addCSVProductSigns(row);
     }
   }
   static addCSVTextPlane(row) {
@@ -483,7 +507,7 @@ class GUTILImportCSV {
     textureData.textureTextRenderSize = GLOBALUTIL.getNumberOrDefault(row.texturetextrendersize, 512).toString();
     textureData.textFontWeight = row.textfontweight ? row.textfontweight : '';
     textureData.isFittedText = true;
-    
+
     promises.push(gAPPP.a.modelSets['texture'].createWithBlobString(textureData));
 
     let materialData = {
@@ -500,15 +524,15 @@ class GUTILImportCSV {
 
     return Promise.all(promises);
   }
-  static __CSVSignPostRows(row) {
+  static __addSignPost(product) {
     let newObjects = [];
     let blockRow = this.defaultCSVRow();
     blockRow.asset = 'block';
     blockRow.height = '1';
     blockRow.width = '2';
     blockRow.depth = '2';
-    blockRow.materialname = 'decolor: 0,.7,0';
-    blockRow.name = row.name + '_signpost';
+    blockRow.materialname = this.getProductColors().colors[product.colorIndex];
+    blockRow.name = product.childName + '_signpost';
     newObjects.push(blockRow);
 
     let textPlane = this.defaultCSVRow();
@@ -516,13 +540,13 @@ class GUTILImportCSV {
     textPlane.hasalpha = true;
     textPlane.istext = true;
     textPlane.textfontcolor = '0,0,0';
-    textPlane.texturetext = row.itemtitle;
-    textPlane.texturetext2 = row.itemdesc;
+    textPlane.texturetext = product.title;
+    textPlane.texturetext2 = product.desc;
     textPlane.width = '10';
     textPlane.height = '10';
     textPlane.depth = '10';
     textPlane.textfontfamily = 'Geneva';
-    textPlane.name = row.name + '_pricedesc';
+    textPlane.name = product.childName + '_pricedesc';
     newObjects.push(textPlane);
 
     let signChildren = [];
@@ -542,12 +566,12 @@ class GUTILImportCSV {
 
     let blockImageShape = this.defaultCSVRow();
     blockImageShape.asset = 'shape';
-    blockImageShape.materialname = row.name + '_signpostimage'
-    blockImageShape.name = row.name + '_signpostimage'
+    blockImageShape.materialname = product.childName + '_signpostimage'
+    blockImageShape.name = product.childName + '_signpostimage'
     blockImageShape.scaleu = '1';
     blockImageShape.scalev = '1';
     blockImageShape.shapetype = 'plane';
-    blockImageShape.texturepath = row.texturepath;
+    blockImageShape.texturepath = product.itemImage;
     blockImageShape.width = '3';
     blockImageShape.height = '3';
     newObjects.push(blockImageShape);
@@ -584,7 +608,7 @@ class GUTILImportCSV {
     let blockRowBC = this.defaultCSVRow();
     blockRowBC.asset = 'blockchild';
     blockRowBC.childtype = 'block';
-    blockRowBC.parent = row.name;
+    blockRowBC.parent = product.childName;
     blockRowBC.name = blockRow.name;
     blockRowBC.x = '.1';
     blockRowBC.rz = '10deg';
@@ -778,6 +802,15 @@ class GUTILImportCSV {
 
     return Promise.all(promises);
   }
+  static addCSVProductSigns(row) {
+    let pInfo = this.initProducts();
+
+    let promises = [];
+    for (let c = 0, l = pInfo.products.length; c < l; c++)
+      promises.push(this.__addSignPost(pInfo.products[c]));
+
+    return Promise.all(promises);
+  }
   static initProducts() {
     let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
 
@@ -800,9 +833,11 @@ class GUTILImportCSV {
         itemId: blockData.itemId,
         title: blockData.itemTitle,
         itemCount: blockData.itemCount,
+        itemImage: blockData.itemImage,
         desc: blockData.itemDesc,
         price: blockData.itemPrice,
-        productIndex: blockData.productIndex,
+        image: blockData.texturePath,
+        productIndex: pBC.productIndex,
         childName: pBC.childName,
         childType: pBC.childType
       };
@@ -817,6 +852,30 @@ class GUTILImportCSV {
         return -1;
       return 0;
     });
+
+    let cameraFollowBlockName = 'FollowCamera_followblock';
+    let cameraFollowBlocks = gAPPP.a.modelSets['block'].queryCache('title', cameraFollowBlockName);
+    let cameraData = null;
+    for (let i in cameraFollowBlocks)
+      cameraData = cameraFollowBlocks[i];
+
+    let finishDelay = 0, introTime = 0, runLength = 60;
+    if (cameraData) {
+      finishDelay = GLOBALUTIL.getNumberOrDefault(cameraData.finishdelay, 0);
+      introTime = GLOBALUTIL.getNumberOrDefault(cameraData.introtime, 0);
+      runLength = GLOBALUTIL.getNumberOrDefault(cameraData.runlength, 60);
+    }
+
+    let productCount = products.length;
+    let productsShownAtOnce = 3;
+    let numberOfButtons = 4;
+    let runTime = runLength - introTime - finishDelay;
+    let incLength = runTime / productCount;
+    for (let postC = 0, postL = products.length; postC < postL; postC++) {
+      products[postC].colorIndex = postC % 4;
+      products[postC].startTime = postC * incLength + introTime;
+      products[postC].endTime = productsShownAtOnce * incLength + products[postC].startTime;
+    }
 
     return {
       products,
