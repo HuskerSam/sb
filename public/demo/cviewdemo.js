@@ -114,7 +114,7 @@ class cViewDemo extends bView {
 
     this.skuOrder.splice(skuIndex, 1);
 
-    delete  this.basketSKUs[sku];
+    delete this.basketSKUs[sku];
 
     let basketData = {
       basketSKUs: this.basketSKUs,
@@ -167,9 +167,16 @@ class cViewDemo extends bView {
 
     this.cartItemTotal.innerHTML = '$' + gTotal.toFixed(2);
 
+    for (let prodCtr = 0; prodCtr < this.products.length; prodCtr++) {
+      let p = this.products[prodCtr];
+      let itemShownIndex = this.skuOrder.indexOf(p.blockRef.blockData.itemId);
 
-    for (let d = 0, l = this.skuOrder.length; d < l; d++)
-      promises.push(this.basketAddItemBlock(this.skuOrder[d], d));
+      if (itemShownIndex > -1) {
+        promises.push(this.basketAddItemBlock(this.skuOrder[itemShownIndex], itemShownIndex));
+      } else {
+        promises.push(this.basketRemoveItemBlock(p.blockRef.blockData.itemId));
+      }
+    }
 
     return Promise.all(promises);
   }
@@ -195,17 +202,28 @@ class cViewDemo extends bView {
       for (let i in frames)
         frameIds.push(i);
 
+      let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
+
+      if (existingValues) {
+        if (existingValues.positionX === pos.x.toString() &&
+          existingValues.positionY === pos.y.toString() &&
+          existingValues.positionZ === pos.z.toString())
+          return Promise.resolve();
+      }
+      
       return gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionX',
         newValue: pos.x.toString()
-      },{
+      }, {
         field: 'positionY',
         newValue: pos.y.toString()
-      },{
+      }, {
         field: 'positionZ',
         newValue: pos.z.toString()
       }], frameIds[0]);
     }
+
+    return Promise.resolve();
   }
   basketRemoveItemBlock(sku) {
     let product = this.productBySKU[sku];
@@ -219,11 +237,19 @@ class cViewDemo extends bView {
       for (let i in frames)
         frameIds.push(i);
 
+      let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
+      if (existingValues) {
+        if (existingValues.positionY === '-50')
+          return Promise.resolve();
+      }
+
       return gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionY',
         newValue: "-50"
       }], frameIds[0]);
     }
+
+    return Promise.resolve();
   }
   basketRemoveAllItems() {
     for (let c = 0, l = this.products.length; c < l; c++)
