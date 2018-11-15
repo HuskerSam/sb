@@ -7,7 +7,7 @@ class cViewDemo extends bView {
       this.cameraShown = true;
       setTimeout(() => {
 
-        this.productData = GUTILImportCSV.initProducts();
+        this.productData = GUTILImportCSV.initCSVProducts();
         this.products = this.productData.products;
         this.productBySKU = this.productData.productsBySKU;
 
@@ -17,7 +17,7 @@ class cViewDemo extends bView {
         this.canvasHelper.playAnimation();
 
         this.productsDisplayUpdate();
-      }, 200);
+      }, 100);
 
     };
 
@@ -296,11 +296,11 @@ class cViewDemo extends bView {
     for (let c = 0; c < this.products.length; c++) {
       let product = this.products[c];
       let started = false;
-      if (product.startTime <= currentElapsed)
+      if (product.startShowTime <= currentElapsed)
         started = true;
 
       let ended = true;
-      if (currentElapsed <= product.endTime)
+      if (currentElapsed <= product.endShowTime)
         ended = false;
 
       productShown.push(started && !ended);
@@ -313,7 +313,7 @@ class cViewDemo extends bView {
     clearTimeout(this.updateProductsTimeout);
     this.updateProductsTimeout = setTimeout(() => {
       this.productsDisplayUpdate();
-    }, 1000);
+    }, 100);
   }
   _productsUpdateButtons() {
     this.itemButtons[0].style.display = 'none';
@@ -329,7 +329,7 @@ class cViewDemo extends bView {
       if (this.productsShown[c]) {
         let product = this.products[c];
         let btn = this.itemButtons[product.colorIndex];
-        btn.innerHTML = product.price.toString();
+        btn.innerHTML = product.desc + ' ' + product.price.toString();
         btn.sku = product.itemId;
         btn.style.display = 'inline-block';
       }

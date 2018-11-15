@@ -261,6 +261,8 @@ class GUTILImportCSV {
       blockData.itemImage = row.texturepath;
       blockData.itemCount = row.itemcount;
       blockData.basketBlock = row.basketblock;
+      if (row.productIndex)
+        blockData.productIndex = row.productindex;
     }
 
     if (row.introtime) {
@@ -453,7 +455,6 @@ class GUTILImportCSV {
     return Promise.all(promises);
   }
   static addCSVRow(row) {
-    console.log(row);
     switch (row.asset) {
       case 'productfollowcamera':
         return this.addCSVCamera(row);
@@ -625,7 +626,7 @@ class GUTILImportCSV {
           showFrame.childtype = 'block';
           showFrame.parent = product.childName;
           showFrame.frameorder = '20';
-          showFrame.frametime = (product.startTime * 1000).toFixed(0) + 'cp700';
+          showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
           showFrame.y = '2';
 
           let hideFrame = this.defaultCSVRow();
@@ -634,7 +635,7 @@ class GUTILImportCSV {
           hideFrame.childtype = 'block';
           hideFrame.parent = product.childName;
           hideFrame.frameorder = '30';
-          hideFrame.frametime = (product.endTime * 1000).toFixed(0) + 'cp700';
+          hideFrame.frametime = (product.endShowTime * 1000).toFixed(0) + 'cp700';
           hideFrame.y = '-50';
 
           let endFrame = this.defaultCSVRow();
@@ -703,36 +704,54 @@ class GUTILImportCSV {
     cam.startz = row.startz;
     childCSVRows.push(cam);
 
-    let productData = this.initProducts();
+    let productData = this.initCSVProducts(row);
     let frameRows = [];
 
     let frameOrder = 20;
     let frameTime = productData.introTime;
 
-    for (let c = 0, l = productData.products.length; c < l; c++) {
-      let p = productData.productsBC[c].origRow;
+    for (let c = 0, l = productData.products.length; c <= l; c++) {
+
       let cameraBlockFrame = this.defaultCSVRow();
+
       cameraBlockFrame.asset = 'blockchildframe';
       cameraBlockFrame.name = cameraBlock.name;
       cameraBlockFrame.childtype = 'block';
       cameraBlockFrame.parent = row.parent;
       cameraBlockFrame.frameorder = frameOrder.toString();
-      cameraBlockFrame.frametime = frameTime.toFixed(2) + 'scp500';
-      cameraBlockFrame.x = p.x;
-      cameraBlockFrame.y = (GLOBALUTIL.getNumberOrDefault(p.y, 0) + 2).toString();
-      cameraBlockFrame.z = p.z;
-      cameraBlockFrame.rx = p.rx;
-      cameraBlockFrame.ry = p.ry;
-      cameraBlockFrame.rz = p.rz;
-      cameraBlockFrame.sx = p.sx;
-      cameraBlockFrame.sy = p.sy;
-      cameraBlockFrame.sz = p.sz;
+
+      if (c !== l) {
+        let p = productData.productsBC[c].origRow;
+        cameraBlockFrame.x = p.x;
+        cameraBlockFrame.y = (GLOBALUTIL.getNumberOrDefault(p.y, 0) + 2).toString();
+        cameraBlockFrame.z = p.z;
+        cameraBlockFrame.rx = p.rx;
+        cameraBlockFrame.ry = p.ry;
+        cameraBlockFrame.rz = p.rz;
+        cameraBlockFrame.sx = p.sx;
+        cameraBlockFrame.sy = p.sy;
+        cameraBlockFrame.sz = p.sz;
+        cameraBlockFrame.frametime = (frameTime * 1000).toFixed(0) + 'cp400';
+      } else {
+        cameraBlockFrame.x = row.x;
+        cameraBlockFrame.y = row.y;
+        cameraBlockFrame.z = row.z;
+        cameraBlockFrame.rx = row.rx;
+        cameraBlockFrame.ry = row.ry;
+        cameraBlockFrame.rz = row.rz;
+        cameraBlockFrame.sx = row.sx;
+        cameraBlockFrame.sy = row.sy;
+        cameraBlockFrame.sz = row.sz;
+        cameraBlockFrame.frametime = (productData.runLength * 1000).toFixed(0);
+      }
 
       frameOrder += 10;
       frameTime += productData.incLength;
 
       frameRows.push(cameraBlockFrame);
     }
+
+
 
     return this.addCSVRowList(childCSVRows)
       .then(() => this.addCSVRowList(frameRows));
@@ -784,7 +803,7 @@ class GUTILImportCSV {
     return { x, y, z };
   }
   static addCSVBasketProducts(row) {
-    let productInfo = this.initProducts();
+    let productInfo = this.initCSVProducts();
     let basketInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'basket');
     let basketName = basketInfo.title;
     let promises = [];
@@ -817,7 +836,7 @@ class GUTILImportCSV {
     return Promise.all(promises);
   }
   static addCSVProductSigns(row) {
-    let pInfo = this.initProducts();
+    let pInfo = this.initCSVProducts();
 
     let promises = [];
     for (let c = 0, l = pInfo.products.length; c < l; c++)
@@ -825,7 +844,7 @@ class GUTILImportCSV {
 
     return Promise.all(promises);
   }
-  static initProducts() {
+  static initCSVProducts(cameraData = null) {
     let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
 
     let productsBC = [];
@@ -851,7 +870,7 @@ class GUTILImportCSV {
         desc: blockData.itemDesc,
         price: blockData.itemPrice,
         image: blockData.texturePath,
-        productIndex: pBC.productIndex,
+        productIndex: blockData.productIndex,
         childName: pBC.childName,
         childType: pBC.childType
       };
@@ -867,11 +886,12 @@ class GUTILImportCSV {
       return 0;
     });
 
-    let cameraFollowBlockName = 'FollowCamera_followblock';
-    let cameraFollowBlocks = gAPPP.a.modelSets['block'].queryCache('title', cameraFollowBlockName);
-    let cameraData = null;
-    for (let i in cameraFollowBlocks)
-      cameraData = cameraFollowBlocks[i];
+    if (!cameraData) {
+      let cameraFollowBlockName = 'FollowCamera_followblock';
+      let cameraFollowBlocks = gAPPP.a.modelSets['block'].queryCache('title', cameraFollowBlockName);
+      for (let i in cameraFollowBlocks)
+        cameraData = cameraFollowBlocks[i];
+    }
 
     let finishDelay = 0, introTime = 0, runLength = 60;
     if (cameraData) {
@@ -887,8 +907,10 @@ class GUTILImportCSV {
     let incLength = productRunTime / productCount;
     for (let postC = 0, postL = products.length; postC < postL; postC++) {
       products[postC].colorIndex = postC % 4;
-      products[postC].startTime = postC * incLength + introTime;
-      products[postC].endTime = productsShownAtOnce * incLength + products[postC].startTime;
+      products[postC].startShowTime = postC * incLength + introTime;
+      products[postC].startEnlargeTime = products[postC].startShowTime;
+      products[postC].endShowTime = productsShownAtOnce * incLength + products[postC].startShowTime;
+      products[postC].endEnlargeTime = incLength + products[postC].startShowTime;
     }
 
     return {
@@ -910,7 +932,6 @@ class GUTILImportCSV {
 
     for (let i in children) {
       if (children[i].childType === childType && children[i].childName === childName) {
-        //console.log('ccc', children[i]);
           let blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
           return {
             blockData,

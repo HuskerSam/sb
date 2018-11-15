@@ -315,12 +315,13 @@ class wBlock {
     axisX.color = new BABYLON.Color3(1, 0, 0);
     wrapper = axisX;
 
+    let localScene = this.context.scene;
     function __make2DTextMesh(text, color, size) {
-      let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, this.context.scene, true);
+      let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, localScene, true);
       dynamicTexture.hasAlpha = true;
       dynamicTexture.drawText(text, 5, 40, "bold 36px Arial", color, "transparent", true);
-      let plane = new BABYLON.Mesh.CreatePlane("TextPlane", size, this.context.scene, true);
-      plane.material = new BABYLON.StandardMaterial("TextPlaneMaterial", this.context.scene);
+      let plane = new BABYLON.Mesh.CreatePlane("TextPlane", size, localScene, true);
+      plane.material = new BABYLON.StandardMaterial("TextPlaneMaterial", localScene);
       plane.material.backFaceCulling = false;
       plane.material.specularColor = new BABYLON.Color3(0, 0, 0);
       plane.material.diffuseTexture = dynamicTexture;
