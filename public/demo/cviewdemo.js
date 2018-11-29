@@ -169,6 +169,10 @@ class cViewDemo extends bView {
 
     for (let prodCtr = 0; prodCtr < this.products.length; prodCtr++) {
       let p = this.products[prodCtr];
+
+      if (! p.itemId)
+        continue;
+
       let itemShownIndex = this.skuOrder.indexOf(p.blockRef.blockData.itemId);
 
       if (itemShownIndex > -1) {
@@ -210,7 +214,7 @@ class cViewDemo extends bView {
           existingValues.positionZ === pos.z.toString())
           return Promise.resolve();
       }
-      
+
       return gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionX',
         newValue: pos.x.toString()
@@ -253,7 +257,8 @@ class cViewDemo extends bView {
   }
   basketRemoveAllItems() {
     for (let c = 0, l = this.products.length; c < l; c++)
-      this.basketRemoveItemBlock(this.products[c].blockRef.blockData.itemId);
+      if (this.products[c].itemId)
+        this.basketRemoveItemBlock(this.products[c].blockRef.blockData.itemId);
   }
 
   sceneSelect() {
@@ -354,6 +359,8 @@ class cViewDemo extends bView {
     for (let c = 0, l = this.productsShown.length; c < l; c++) {
       if (this.productsShown[c]) {
         let product = this.products[c];
+        if (! this.products[c].itemId)
+          continue;
         let btn = this.itemButtons[product.colorIndex];
         btn.innerHTML = product.desc + ' ' + product.price.toString();
         btn.sku = product.itemId;
