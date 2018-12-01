@@ -312,7 +312,7 @@ class GUTILImportCSV {
     };
 
     if (row.displayindex) {
-      blockChildData.displayIndex = row.displayindex;
+      blockChildData.displayIndex = GLOBALUTIL.getNumberOrDefault(row.displayindex, 0)
       blockChildData.origRow = row;
     }
     if (row.cameraname)
@@ -505,7 +505,7 @@ class GUTILImportCSV {
     let cameraBlockBC = this.defaultCSVRow();
     cameraBlockBC.asset = 'blockchild';
     cameraBlockBC.name = row.name;
-    cameraBlockBC.childtype = 'shape';
+    cameraBlockBC.childtype = 'block';
     cameraBlockBC.parent = row.parent;
     cameraBlockBC.rx = row.rx;
     cameraBlockBC.ry = row.ry;
@@ -522,10 +522,30 @@ class GUTILImportCSV {
   }
   static addCSVTextPlane(row) {
     let promises = [];
+    let textPlaneName = row.name + '_textplane';
+
+    let blockWrapper = {
+      title: row.name,
+      materialName: '',
+      height: row.height,
+      width: row.width,
+      depth: row.depth
+    };
+    promises.push(gAPPP.a.modelSets['block'].createWithBlobString(blockWrapper)
+      .then(r => {
+        let textChildBC = this.defaultCSVRow();
+        textChildBC.asset = 'blockchild';
+        textChildBC.name = textPlaneName;
+        textChildBC.childtype = 'shape';
+        textChildBC.parent = row.name;
+        textChildBC.ry = '90deg';
+
+        return this.addCSVRow(textChildBC);
+      }));
 
     let shapeData = {
-      title: row.name,
-      materialName: row.name,
+      title: textPlaneName,
+      materialName: textPlaneName,
       boxHeight: row.height,
       boxWidth: row.width,
       boxDepth: row.depth,
@@ -546,7 +566,7 @@ class GUTILImportCSV {
       textureText: row.texturetext,
       textureText2: row.texturetext2,
       url: '',
-      title: row.name
+      title: textPlaneName
     };
     textureData.textFontSize = GLOBALUTIL.getNumberOrDefault(row.textfontsize, 100).toString();
     textureData.textureTextRenderSize = GLOBALUTIL.getNumberOrDefault(row.texturetextrendersize, 512).toString();
@@ -556,14 +576,14 @@ class GUTILImportCSV {
     promises.push(gAPPP.a.modelSets['texture'].createWithBlobString(textureData));
 
     let materialData = {
-      title: row.name,
+      title: textPlaneName,
       ambientColor: '',
-      ambientTextureName: row.name,
+      ambientTextureName: textPlaneName,
       backFaceCulling: true,
       diffuseColor: '',
-      diffuseTextureName: row.name,
+      diffuseTextureName: textPlaneName,
       emissiveColor: '',
-      emissiveTextureName: row.name
+      emissiveTextureName: textPlaneName
     };
     promises.push(gAPPP.a.modelSets['material'].createWithBlobString(materialData));
 
@@ -597,7 +617,7 @@ class GUTILImportCSV {
     let signChildren = [];
     let blockDescShapeBC = this.defaultCSVRow();
     blockDescShapeBC.asset = 'blockchild';
-    blockDescShapeBC.childtype = 'shape';
+    blockDescShapeBC.childtype = 'block';
     blockDescShapeBC.parent = blockRow.name;
     blockDescShapeBC.name = textPlane.name;
     blockDescShapeBC.x = '.06';
@@ -606,7 +626,7 @@ class GUTILImportCSV {
     blockDescShapeBC.sx = '.5';
     blockDescShapeBC.sy = '.5';
     blockDescShapeBC.sz = '.5';
-    blockDescShapeBC.ry = '-90deg';
+    blockDescShapeBC.ry = '180deg';
     signChildren.push(blockDescShapeBC);
 
     let blockImageShape = this.defaultCSVRow();
@@ -750,7 +770,7 @@ class GUTILImportCSV {
 
     let productData = this.initCSVProducts(row);
     let frameRows = [];
-
+console.log('c', productData);
     let frameOrder = 20;
     let frameTime = productData.introTime;
 
@@ -775,7 +795,7 @@ class GUTILImportCSV {
         cameraBlockFrame.sx = p.sx;
         cameraBlockFrame.sy = p.sy;
         cameraBlockFrame.sz = p.sz;
-        cameraBlockFrame.frametime = (frameTime * 1000).toFixed(0) + 'cp400';
+        cameraBlockFrame.frametime = (frameTime * 1000).toFixed(0) + 'cp200';
       } else {
         cameraBlockFrame.x = row.x;
         cameraBlockFrame.y = row.y;
@@ -907,6 +927,14 @@ class GUTILImportCSV {
     let sceneId = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockFlag', 'scene');
     let products = [];
     let productsBySKU = {};
+    productsBC.sort((a, b) => {
+      if (a.displayIndex > b.displayIndex)
+        return 1;
+      if (a.displayIndex < b.displayIndex)
+        return -1;
+      return 0;
+    });
+
     for (let c = 0, l = productsBC.length; c < l; c++) {
       let pBC = productsBC[c];
       let obj = this.findMatchBlock(pBC.childType, pBC.childName, sceneId);
@@ -921,7 +949,7 @@ class GUTILImportCSV {
         desc: blockData.itemDesc,
         price: blockData.itemPrice,
         image: blockData.texturePath,
-        displayIndex: blockData.displayIndex,
+        displayIndex: pBC.displayIndex,
         childName: pBC.childName,
         childType: pBC.childType
       };
@@ -929,13 +957,6 @@ class GUTILImportCSV {
       productsBySKU[p.itemId] = p;
     }
 
-    products.sort((a, b) => {
-      if (a.displayIndex > b.displayIndex)
-        return 1;
-      if (a.displayIndex < b.displayIndex)
-        return -1;
-      return 0;
-    });
     console.log(products);
     if (!cameraData) {
       let cameraFollowBlockName = 'FollowCamera_followblock';
