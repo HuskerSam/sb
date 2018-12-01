@@ -511,7 +511,8 @@ class GUTILImportCSV {
     cameraBlockBC.ry = row.ry;
     cameraBlockBC.rz = row.rz;
     cameraBlockBC.x = row.x;
-    cameraBlockBC.y = row.y;
+    cameraBlockBC.y = '-50';
+    cameraBlockBC.oy = row.y;
     cameraBlockBC.z = row.z;
     cameraBlockBC.displayindex = row.displayindex;
 
@@ -718,6 +719,42 @@ class GUTILImportCSV {
           ]);
       })
   }
+  static __addTextShowHide(product, productData, origRow) {
+    let childName = product.childName;
+
+    let showFrame = this.defaultCSVRow();
+    showFrame.asset = 'blockchildframe';
+    showFrame.name = childName;
+    showFrame.childtype = 'block';
+    showFrame.parent = origRow.parent;
+    showFrame.frameorder = '20';
+    showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
+    showFrame.y = origRow.oy;
+
+    let hideFrame = this.defaultCSVRow();
+    hideFrame.asset = 'blockchildframe';
+    hideFrame.name = childName;
+    hideFrame.childtype = 'block';
+    hideFrame.parent = origRow.parent;
+    hideFrame.frameorder = '30';
+    hideFrame.frametime = (product.endEnlargeTime * 1000).toFixed(0) + 'cp700';
+    hideFrame.y = '-50';
+
+    let endFrame = this.defaultCSVRow();
+    endFrame.asset = 'blockchildframe';
+    endFrame.name = product.childName;
+    endFrame.childtype = 'block';
+    endFrame.parent = origRow.parent;
+    endFrame.frameorder = '40';
+    endFrame.frametime = (productData.runLength * 1000).toFixed(0);
+    endFrame.y = '-50';
+
+    return Promise.all([
+      this.addCSVRow(showFrame),
+      this.addCSVRow(hideFrame),
+      this.addCSVRow(endFrame)
+    ]);
+  }
   static addCSVCamera(row) {
     let childCSVRows = [];
     let cameraBlock = this.defaultCSVRow();
@@ -770,9 +807,9 @@ class GUTILImportCSV {
 
     let productData = this.initCSVProducts(row);
     let frameRows = [];
-console.log('c', productData);
     let frameOrder = 20;
     let frameTime = productData.introTime;
+    let cpTime = row.cameramovetime ? 'cp' + row.cameramovetime : '';
 
     for (let c = 0, l = productData.products.length; c <= l; c++) {
 
@@ -786,8 +823,13 @@ console.log('c', productData);
 
       if (c !== l) {
         let p = productData.productsBC[c].origRow;
+        let product = productData.products[c];
         cameraBlockFrame.x = p.x;
-        cameraBlockFrame.y = (GLOBALUTIL.getNumberOrDefault(p.y, 0) + 2).toString();
+        if (product.itemId)
+          cameraBlockFrame.y = (GLOBALUTIL.getNumberOrDefault(p.y, 0) + 2).toString();
+        else
+          cameraBlockFrame.y = p.oy;
+
         cameraBlockFrame.z = p.z;
         cameraBlockFrame.rx = p.rx;
         cameraBlockFrame.ry = p.ry;
@@ -795,7 +837,7 @@ console.log('c', productData);
         cameraBlockFrame.sx = p.sx;
         cameraBlockFrame.sy = p.sy;
         cameraBlockFrame.sz = p.sz;
-        cameraBlockFrame.frametime = (frameTime * 1000).toFixed(0) + 'cp200';
+        cameraBlockFrame.frametime = (frameTime * 1000).toFixed(0) + cpTime;
       } else {
         cameraBlockFrame.x = row.x;
         cameraBlockFrame.y = row.y;
@@ -806,7 +848,7 @@ console.log('c', productData);
         cameraBlockFrame.sx = row.sx;
         cameraBlockFrame.sy = row.sy;
         cameraBlockFrame.sz = row.sz;
-        cameraBlockFrame.frametime = (productData.runLength * 1000).toFixed(0);
+        cameraBlockFrame.frametime = (productData.runLength * 1000).toFixed(0) + cpTime;
       }
 
       frameOrder += 10;
@@ -814,8 +856,6 @@ console.log('c', productData);
 
       frameRows.push(cameraBlockFrame);
     }
-
-
 
     return this.addCSVRowList(childCSVRows)
       .then(() => this.addCSVRowList(frameRows));
@@ -912,6 +952,10 @@ console.log('c', productData);
     for (let c = 0, l = pInfo.products.length; c < l; c++)
       if (pInfo.products[c].itemId)
         promises.push(this.__addSignPost(pInfo.products[c], pInfo));
+      else {
+        let origRow = pInfo.productsBC[c].origRow;
+        promises.push(this.__addTextShowHide(pInfo.products[c], pInfo, origRow));
+      }
 
     return Promise.all(promises);
   }
