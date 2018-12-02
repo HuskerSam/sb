@@ -261,6 +261,7 @@ class GUTILImportCSV {
       blockData.itemImage = row.texturepath;
       blockData.itemCount = row.itemcount;
       blockData.basketBlock = row.basketblock;
+      blockData.origRow = row;
     }
 
     if (row.introtime) {
@@ -519,6 +520,7 @@ class GUTILImportCSV {
     cameraBlockBC.y = '-50';
     cameraBlockBC.oy = row.y;
     cameraBlockBC.z = row.z;
+    cameraBlockBC.realOrigRow = row;
     cameraBlockBC.displayindex = row.displayindex;
 
     return Promise.all([
@@ -990,6 +992,13 @@ class GUTILImportCSV {
       let obj = this.findMatchBlock(pBC.childType, pBC.childName, sceneId);
       let blockData = obj.blockData;
 
+      let origRow = pBC.origRow;
+      if (origRow.realOrigRow)
+        origRow = origRow.realOrigRow;
+      let blockOrigRow = null;
+      if (blockData.itemId)
+        blockOrigRow = blockData.origRow;
+
       let p = {
         blockRef: obj,
         itemId: blockData.itemId,
@@ -1002,7 +1011,8 @@ class GUTILImportCSV {
         displayIndex: pBC.displayIndex,
         childName: pBC.childName,
         childType: pBC.childType,
-        origRow: pBC.origRow
+        origRow,
+        blockOrigRow
       };
       products.push(p);
       productsBySKU[p.itemId] = p;

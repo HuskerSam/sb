@@ -27,11 +27,25 @@ class cViewLayout extends bView {
     this.basketSKUs = {};
   }
   downloadProductCSV() {
-    //console.log(this.productData);
-
     let productRows = [];
     let masterColumnList = {};
     for (let c = 0, l = this.productData.products.length; c < l; c++) {
+      let blockOrigRow = this.productData.products[c].blockOrigRow;
+
+      //if product, push product info rows first
+      if (blockOrigRow) {
+        for (let i in blockOrigRow)
+          masterColumnList[i] = '';
+
+        productRows.push(blockOrigRow);
+        productRows.push({
+          asset: 'blockchild',
+          name: blockOrigRow.basketblock,
+          childtype: 'block',
+          parent: blockOrigRow.name
+        });
+      }
+
       let row = this.productData.products[c].origRow;
       for (let i in row)
         masterColumnList[i] = '';
@@ -39,10 +53,13 @@ class cViewLayout extends bView {
       productRows.push(row);
     }
 
+    //push camera and product signs generation
     productRows.push(this.productData.cameraOrigRow);
+    productRows.push({ asset: 'productsigns'});
+
+    //get a complete row list for row[0] (header list for export)
     for (let i in this.productData.cameraOrigRow)
       masterColumnList[i] = '';
-
     let firstRow = productRows[0];
     for (let col in masterColumnList)
       if (firstRow[col] === undefined)
