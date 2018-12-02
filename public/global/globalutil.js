@@ -315,8 +315,13 @@ class GUTILImportCSV {
       blockChildData.displayIndex = GLOBALUTIL.getNumberOrDefault(row.displayindex, 0)
       blockChildData.origRow = row;
     }
-    if (row.cameraname)
+    if (row.origCameraRow)
+      blockChildData.origRow = row;
+
+    if (row.cameraname) {
       blockChildData.cameraName = row.cameraname;
+    }
+
     if (row.cameratargetblock)
       blockChildData.cameraTargetBlock = row.cameratargetblock;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
@@ -803,6 +808,7 @@ class GUTILImportCSV {
     cam.startx = row.startx;
     cam.starty = row.starty;
     cam.startz = row.startz;
+    cam.origCameraRow = row;
     childCSVRows.push(cam);
 
     let productData = this.initCSVProducts(row);
@@ -995,19 +1001,24 @@ class GUTILImportCSV {
         image: blockData.texturePath,
         displayIndex: pBC.displayIndex,
         childName: pBC.childName,
-        childType: pBC.childType
+        childType: pBC.childType,
+        origRow: pBC.origRow
       };
       products.push(p);
       productsBySKU[p.itemId] = p;
     }
 
-    console.log(products);
     if (!cameraData) {
       let cameraFollowBlockName = 'FollowCamera_followblock';
       let cameraFollowBlocks = gAPPP.a.modelSets['block'].queryCache('title', cameraFollowBlockName);
       for (let i in cameraFollowBlocks)
         cameraData = cameraFollowBlocks[i];
     }
+
+    let cameraBC = this.findMatchBlock('camera', 'FollowCamera', sceneId);
+    let cameraOrigRow = null;
+    if (cameraBC)
+      cameraOrigRow = cameraBC.BC.origRow.origCameraRow;
 
     let finishDelay = 0, introTime = 0, runLength = 60;
     if (cameraData) {
@@ -1040,7 +1051,8 @@ class GUTILImportCSV {
       incLength,
       productRunTime,
       introTime,
-      finishDelay
+      finishDelay,
+      cameraOrigRow
     }
   }
   static findMatchBlock(childType, childName, parentId) {
@@ -1048,7 +1060,9 @@ class GUTILImportCSV {
 
     for (let i in children) {
       if (children[i].childType === childType && children[i].childName === childName) {
-          let blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
+          let blockData = null;
+          if (gAPPP.a.modelSets[childType])
+            blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
           return {
             blockData,
             BC: children[i]

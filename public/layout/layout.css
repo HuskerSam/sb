@@ -1,0 +1,40 @@
+.canvas-actions {
+  display: none;
+  bottom: 3em !important;
+}
+
+#demo-layout-panel {
+  top: 0em;
+  position: absolute;
+  width: 100%;
+  background: rgba(255, 255, 255, .6);
+}
+
+button.collapse-expand {
+  width: 3em;
+}
+
+button.collapse-expand i {
+  font-size: 2em;
+  top: .25em;
+  transform: rotate(90deg);
+}
+
+.canvas-actions-shown {
+  bottom: initial;
+  display: block;
+  top: 2em;
+}
+
+.option-buttons-panel {
+  text-align: center;
+  padding: 10px;
+}
+
+.url-text-box {
+  width: 40%;
+}
+
+.product-editor-wrapper {
+  display: flex;
+}

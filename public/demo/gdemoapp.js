@@ -47,7 +47,5 @@ class gDemoApp extends gAppSuper {
       this.mV = new cViewDemo();
       this._updateApplicationStyle();
     };
-
-    document.querySelector('.show-more-controls').addEventListener('click', () => this.toggleShowControls());
   }
 }
