@@ -476,16 +476,44 @@ class GUTILImportCSV {
         return this.addCSVBlockChildFrameRow(row);
       case 'productbasket':
         return this.addCSVBasketProducts(row);
-      case 'productsigns':
-        return this.addCSVProductSigns(row);
-      case 'cameratextposition':
-        return this.addCSVCameraTextPosition(row);
+      case 'displayfinalize':
+        return this.addCSVDisplayFinalize(row);
+      case 'displaymessage':
+        return this.addCSVDisplayMessage(row);
+      case 'displayproduct':
+        return this.addCSVDisplayProduct(row);
     }
 
     console.log('type not found', row);
     return Promise.resolve();
   }
-  static addCSVCameraTextPosition(row) {
+  static addCSVDisplayProduct(row) {
+    let promises = [];
+    let blockRow = Object.assign({}, row);
+    blockRow.asset = 'block';
+    promises.push(this.addCSVRow(blockRow));
+
+    let displayBC = this.defaultCSVRow();
+    displayBC.asset = 'blockchild';
+    displayBC.childtype = 'block';
+    displayBC.name = blockRow.basketblock;
+    displayBC.parent = blockRow.name;
+    promises.push(this.addCSVRow(displayBC));
+
+    let sceneBC = this.defaultCSVRow();
+    sceneBC.asset = 'blockchild';
+    sceneBC.childtype = 'block';
+    sceneBC.name = blockRow.name;
+    sceneBC.parent = blockRow.parent;
+    sceneBC.x = blockRow.x;
+    sceneBC.y = blockRow.y;
+    sceneBC.z = blockRow.z;
+    sceneBC.displayindex = blockRow.displayindex;
+    promises.push(this.addCSVRow(sceneBC));
+
+    return Promise.all(promises);
+  }
+  static addCSVDisplayMessage(row) {
     let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
     let key = gAPPP.a.modelSets['block'].lastKeyLookup;
 
@@ -883,7 +911,7 @@ class GUTILImportCSV {
       itemcount: "",
       itemdesc: "",
       itemid: "",
-      displayIndex: "",
+      displayindex: "",
       itemprice: "",
       itemtitle: "",
       materialname: "",
@@ -953,7 +981,7 @@ class GUTILImportCSV {
 
     return Promise.all(promises);
   }
-  static addCSVProductSigns(row) {
+  static addCSVDisplayFinalize(row) {
     let pInfo = this.initCSVProducts();
 
     let promises = [];

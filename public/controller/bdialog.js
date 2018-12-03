@@ -247,9 +247,6 @@ class bDialog {
 
     gAPPP.resize();
   }
-  _splitDragEnd() {
-    gAPPP.resize();
-  }
   _splitView() {
     if (!this._splitViewAlive)
       return;
@@ -272,8 +269,8 @@ class bDialog {
       sizes: [50, 50],
       gutterSize: 16,
       direction: this.rotateState,
-      onDragEnd: () => this._splitDragEnd(),
-      onDrag: () => this._splitDragEnd()
+      onDragEnd: () => gAPPP.resize(),
+      onDrag: () => gAPPP.resize()
     });
     gAPPP.resize();
   }

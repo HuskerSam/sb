@@ -3,13 +3,6 @@
   bottom: 3em !important;
 }
 
-#demo-layout-panel {
-  top: 0em;
-  position: absolute;
-  width: 100%;
-  background: rgba(255, 255, 255, .6);
-}
-
 button.collapse-expand {
   width: 3em;
 }
@@ -32,9 +25,25 @@ button.collapse-expand i {
 }
 
 .url-text-box {
-  width: 40%;
 }
 
-.product-editor-wrapper {
-  display: flex;
+body {
+  background: silver;
+}
+
+#demo-layout-panel {
+  background: rgb(245, 245, 245);
+}
+
+.gutter.gutter-horizontal {
+  cursor: ew-resize;
+  margin-top: 0px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.gutter.gutter-vertical {
+  cursor: ns-resize;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
 }
