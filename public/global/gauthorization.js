@@ -135,6 +135,23 @@ class gAuthorization {
       .catch(e => console.log(e));
       */
   }
+  clearProjectData(key) {
+    if (!key)
+      return;
+
+    let basePath = `/project/${key}/`;
+    let fireUpdates = {
+      [basePath + 'block']: null,
+      [basePath + 'blockchild']: null,
+      [basePath + 'frame']: null,
+      [basePath + 'material']: null,
+      [basePath + 'mesh']: null,
+      [basePath + 'shape']: null,
+      [basePath + 'texture']: null
+    };
+
+    return firebase.database().ref().update(fireUpdates);
+  }
   signInAnon() {
     this.anonymous = true;
     firebase.auth().signInAnonymously();

@@ -8,12 +8,8 @@ class gLayoutApp extends gAppSuper {
   }
   profileReadyAndLoaded() {
     this.loadStarted = true;
-    let blockCode = 'demo';
-    let workspace = gAPPP.a.modelSets['projectTitles'].getIdByFieldLookup('code', 'Week 1');
-
-    this.a.profile.selectedWorkspace = workspace;
+    let workspace = this.a.profile.selectedWorkspace;
     this.a.initProjectModels(workspace);
-
     this.a._activateModels();
     this.initialUILoad = false;
 
@@ -25,6 +21,7 @@ class gLayoutApp extends gAppSuper {
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
       this.mV = new cViewLayout();
+      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
       this._updateApplicationStyle();
     };
   }

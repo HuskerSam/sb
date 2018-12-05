@@ -20,20 +20,31 @@
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
       <div id="demo-layout-panel" style="text-align:center;">
-        <button>Clear Scene</button> <button>Import CSV</button>
-        <button id="download_product_csv">Export Products</button>
-
-        <hr>
-        <h1>Products</h1>
-        <div class="product-list-panel">
-
+        <div style="padding:5px;">
+          <div style="float:left;padding-bottom:5px;">
+            <label><span>Scene </span><select id="workspaces-select"></select></label>
+            <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button>
+            &nbsp;
+            <label><span>New </span><input id="new-workspace-name" /></label>
+            <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
+            </label>
+          </div>
+          <div style="float:right">
+            <button id="clear_scene_btn">Clear Scene</button>
+            &nbsp;
+            <input type="file" class="csv-import-file" style="display:none;" />
+            <button id="import_csv_btn">Import CSV</button>
+            &nbsp;
+            <button id="download_product_csv">Export Products</button>
+          </div>
+          <hr style="clear:both;margin:5px;">
         </div>
-        <hr>
-        <div id="record_field_list"></div>
-        <br>
-        <button id="update_product_fields_post">Create/Update</button>
-
-        <button class="show-more-controls" style="display:none;">Controls</button>
+        <div class="product-list-panel" style="flex:1;overflow-y:scroll;"></div>
+        <div>
+          <hr style="margin:5px;">
+          <button id="update_product_fields_post">Upsert Product</button>
+        </div>
+        <div id="record_field_list" style="flex:1;overflow-y:scroll;"></div>
       </div>
 
     </div>

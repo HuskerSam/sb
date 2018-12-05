@@ -1023,9 +1023,8 @@ class GUTILImportCSV {
       let origRow = pBC.origRow;
       if (origRow.realOrigRow)
         origRow = origRow.realOrigRow;
-      let blockOrigRow = null;
       if (blockData.itemId)
-        blockOrigRow = blockData.origRow;
+        origRow = blockData.origRow;
 
       let p = {
         blockRef: obj,
@@ -1039,8 +1038,7 @@ class GUTILImportCSV {
         displayIndex: pBC.displayIndex,
         childName: pBC.childName,
         childType: pBC.childType,
-        origRow,
-        blockOrigRow
+        origRow
       };
       products.push(p);
       productsBySKU[p.itemId] = p;

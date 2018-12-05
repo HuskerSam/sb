@@ -33,6 +33,11 @@ body {
 
 #demo-layout-panel {
   background: rgb(245, 245, 245);
+
+	height: 100%;
+  min-height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 .gutter.gutter-horizontal {
@@ -46,4 +51,14 @@ body {
   cursor: ns-resize;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
+}
+
+#record_field_list div {
+  display: inline-block;
+  white-space: nowrap;
+}
+#record_field_list {
+  text-align: left;
+  padding: 10px;
+  line-height: 2em;
 }

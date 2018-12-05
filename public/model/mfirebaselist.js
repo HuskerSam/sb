@@ -222,7 +222,7 @@ class mFirebaseList extends bFirebase {
   removeByKey(key) {
     if (!key) {
       alert('invalid removebykey (empty key)');
-      return;
+      return Promise.resolve();
     }
     let values = this.getCache(key);
     return new Promise((resolve, reject) => {

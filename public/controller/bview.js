@@ -129,4 +129,66 @@ class bView {
     this.canvasHelper.testError();
   }
   closeHeaderBands() {}
+  updateProjectList(records, selectedWorkspace = null) {
+    if (!this.workplacesSelect)
+      return;
+
+    let html = '';
+
+    for (let i in records) {
+      let code = '';
+      if (records[i].code)
+        code = records[i].code;
+      let o = `<option value=${i}>${records[i].title}</option>`;
+
+      if (i === 'default')
+        html += o;
+      else
+        html = o + html;
+    }
+    let val = selectedWorkspace;
+    if (val === null)
+      val = this.workplacesSelect.value;
+    this.workplacesSelect.innerHTML = html;
+    this.workplacesSelect.value = val;
+
+    if (!records[val])
+      return;
+
+    if (this.workplacesSelectEditName) {
+      this.workplacesSelectEditName.value = records[val].title;
+      let code = '';
+      if (records[val].code)
+        code = records[val].code;
+      this.workplacesSelectEditCode.value = code;
+      gAPPP.workspaceCode = code;
+    }
+
+    if (this.workplacesSelect.selectedIndex === -1) {
+      this.workplacesSelect.selectedIndex = 0;
+      this.selectProject();
+    }
+  }
+  selectProject() {
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'selectedWorkspace',
+      newValue: gAPPP.mV.workplacesSelect.value
+    }]);
+    setTimeout(() => location.reload(), 100);
+  }
+  _addProject(newTitle, newCode) {
+    let key = gAPPP.a.modelSets['projectTitles'].getKey();
+    firebase.database().ref('projectTitles/' + key).set({
+      title: newTitle,
+      code: newCode
+    });
+    firebase.database().ref('project/' + key).set({
+      title: newTitle
+    });
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'selectedWorkspace',
+      newValue: key
+    }]);
+    setTimeout(() => location.reload(), 100);
+  }
 }
