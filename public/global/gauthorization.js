@@ -147,10 +147,30 @@ class gAuthorization {
       [basePath + 'material']: null,
       [basePath + 'mesh']: null,
       [basePath + 'shape']: null,
-      [basePath + 'texture']: null
+      [basePath + 'texture']: null,
+      [basePath + 'rawData']: null
     };
 
     return firebase.database().ref().update(fireUpdates);
+  }
+  writeProjectRawData(key, rawName, data) {
+    if (!key || !rawName)
+      return Promise.resolve();
+
+    let basePath = `/project/${key}/rawData`;
+    let fireUpdates = {
+      [basePath + rawName]: data
+    };
+
+    return firebase.database().ref().update(fireUpdates);
+  }
+  readProjectRawData(key, rawName) {
+    if (!key || !rawName)
+      return Promise.resolve();
+
+    let basePath = `/project/${key}/rawData`;
+    return firebase.database().ref(basePath + rawName).once('value')
+      .then(r => r.val());
   }
   signInAnon() {
     this.anonymous = true;

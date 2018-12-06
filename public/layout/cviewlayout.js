@@ -2,23 +2,7 @@ class cViewLayout extends bView {
   constructor() {
     super();
     this.canvasHelper.cameraShownCallback = () => {
-      if (this.cameraShown)
-        return;
-      this.cameraShown = true;
-      setTimeout(() => {
-
-        this.productData = GUTILImportCSV.initCSVProducts();
-        this.products = this.productData.products;
-        this.productBySKU = this.productData.productsBySKU;
-
-        this.canvasHelper.cameraSelect.selectedIndex = 2;
-        this.canvasHelper.noTestError = true;
-        this.canvasHelper.cameraChangeHandler();
-        this.canvasHelper.playAnimation();
-
-        this.updateProductList();
-      }, 100);
-
+      this._animReady();
     };
 
     this.workplacesSelect = document.querySelector('#workspaces-select');
@@ -39,11 +23,16 @@ class cViewLayout extends bView {
       onDrag: () => gAPPP.resize()
     });
 
-    this.dlProductCSVBtn = document.getElementById('download_product_csv');
-    this.dlProductCSVBtn.addEventListener('click', e => this.downloadProductCSV());
+    this.download_asset_csv = document.getElementById('download_asset_csv');
+    this.download_asset_csv.addEventListener('click', e => this.downloadCSV('asset'));
+    this.download_product_csv = document.getElementById('download_product_csv');
+    this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
 
     this.clearSceneBtn = document.getElementById('clear_scene_btn');
     this.clearSceneBtn.addEventListener('click', e => this.clearScene());
+
+    this.upsertBtn = document.getElementById('update_product_fields_post');
+    this.upsertBtn.addEventListener('click', e => this.upsertProduct());
 
     this.productListDiv = document.querySelector('.product-list-panel');
     this.fieldList = [
@@ -60,21 +49,74 @@ class cViewLayout extends bView {
 
     this.importFileDom = document.querySelector('.csv-import-file');
     this.importFileDom.addEventListener('change', e => this.importCSV());
-    this.importCSVBtn = document.getElementById('import_csv_btn');
-    this.importCSVBtn.addEventListener('click', e => this.importFileDom.click());
+    this.importAssetsCSVBtn = document.getElementById('import_assets_csv_btn');
+    this.importProductsCSVBtn = document.getElementById('import_products_csv_btn');
+    this.importAssetsCSVBtn.addEventListener('click', e => {
+      this.saveCSVType = 'asset';
+      this.importFileDom.click();
+    });
+    this.importProductsCSVBtn.addEventListener('click', e => {
+      this.saveCSVType = 'product';
+      this.importFileDom.click();
+    });
+  }
+  _animReady() {
+    if (this.cameraShown)
+      return;
+    this.cameraShown = true;
+    setTimeout(() => {
+      this.productData = GUTILImportCSV.initCSVProducts();
+      this.products = this.productData.products;
+      this.productBySKU = this.productData.productsBySKU;
+
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+      this.updateProductList();
+      try {
+        this.canvasHelper.playAnimation();
+      } catch (e) {
+        console.log('play anim error', e);
+      }
+    }, 100);
+  }
+  reloadScene() {
+    if (!gAPPP.a.profile.selectedWorkspace)
+      return;
+
+    gAPPP.a.clearProjectData(gAPPP.a.profile.selectedWorkspace)
+      .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows'))
+      .then(assets => this.__importRows(assets))
+      .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows'))
+      .then(products => this.__importRows(products))
+      .then(() => setTimeout(() => location.reload(), 1));
+  }
+  __importRows(rows) {
+    if (!rows)
+      return Promise.resolve();
+
+    let promises = [];
+    for (let c = 0, l = rows.length; c < l; c++) {
+      promises.push(GUTILImportCSV.addCSVRow(rows[c]));
+    }
+
+    return Promise.all(promises);
   }
   importCSV() {
     if (this.importFileDom.files.length > 0) {
+
       Papa.parse(this.importFileDom.files[0], {
         header: true,
         complete: results => {
           if (results.data) {
-            let promises = [];
-            for (let c = 0, l = results.data.length; c < l; c++) {
-              promises.push(GUTILImportCSV.addCSVRow(results.data[c]));
+            if (this.saveCSVType === 'asset') {
+              gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows', results.data)
+                .then(r => this.reloadScene());
             }
-
-            return Promise.all(promises).then(r => setTimeout(() => location.reload(), 100));
+            if (this.saveCSVType === 'product') {
+              gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', results.data)
+                .then(r => this.reloadScene());
+            }
           }
         }
       });
@@ -93,10 +135,12 @@ class cViewLayout extends bView {
   }
   clearScene() {
     if (confirm('Clear the scene?')) {
-      if (! gAPPP.a.profile.selectedWorkspace)
+      if (!gAPPP.a.profile.selectedWorkspace)
         return;
-      gAPPP.a.clearProjectData(gAPPP.a.profile.selectedWorkspace)
-        .then(r => setTimeout(() => location.reload(), 100));
+
+      gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows', [])
+      gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', [])
+        .then(() => this.reloadScene())
     }
   }
   initFieldEdit() {
@@ -110,8 +154,10 @@ class cViewLayout extends bView {
     fDom.innerHTML = domHTML;
   }
   updateProductList() {
-    if ( this.productData.products.length === 0)
+    if (this.productData.products.length === 0) {
+      this.productListDiv.innerHTML = 'No products';
       return;
+    }
     let productListHTML = '';
     for (let c = 0, l = this.productData.products.length; c <= l; c++) {
       let row = (c === l) ? this.productData.cameraOrigRow : this.productData.products[c].origRow;
@@ -159,7 +205,14 @@ class cViewLayout extends bView {
       });
   }
   removeProductByName(name) {
+    for (let c = 0, l = this.productData.products.length; c < l; c++)
+      if (this.productData.products[c].origRow.name === name) {
 
+
+
+      }
+
+    return Promise.resolve();
   }
   __productByName(name) {
     for (let c = 0, l = this.productData.products.length; c < l; c++)
@@ -190,7 +243,33 @@ class cViewLayout extends bView {
       f.value = (v !== undefined) ? v : '';
     }
   }
-  downloadProductCSV() {
+  upsertProduct() {
+    let fDom = document.getElementById('record_field_list');
+    let fields = fDom.querySelectorAll('input');
+
+    let name = this.fields[0].value;
+    if (!name) {
+      alert('name required');
+      return;
+    }
+
+    this.removeProductByName(name);
+  }
+  downloadCSV(name) {
+    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, name + 'Rows')
+    .then(rows => {
+      let csvResult = Papa.unparse(rows);
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvResult));
+      element.setAttribute('download', name + '.csv');
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    });
+  }
+  downloadProductCSVOld() {
     let productRows = [];
     let masterColumnList = {};
     for (let c = 0, l = this.productData.products.length; c < l; c++) {

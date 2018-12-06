@@ -45,7 +45,7 @@ class bView {
     let startTime = Date.now();
 
     let b = new wBlock(this.context);
-    document.title = blockData.title;
+    //document.title = blockData.title;
     b.staticType = 'block';
     b.staticLoad = true;
     b.blockKey = profileKey;

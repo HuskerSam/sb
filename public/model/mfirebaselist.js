@@ -206,7 +206,7 @@ class mFirebaseList extends bFirebase {
     return results;
   }
   fetchByKeyNOTUSED(key) {
-    return new new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (!key)
         return resolve(null);
 

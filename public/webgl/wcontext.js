@@ -126,8 +126,12 @@ class wContext {
 
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => {
-        this.preRenderFrame();
-        this.scene.render();
+        try {        
+          this.preRenderFrame();
+          this.scene.render();
+        } catch (e) {
+          console.log('Render Error', e);
+        }
       });
     });
     this.engine.resize();
