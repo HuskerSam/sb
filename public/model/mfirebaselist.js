@@ -90,7 +90,6 @@ class mFirebaseList extends bFirebase {
   setString(id, dataString, filename) {
     return new Promise((resolve, reject) => {
       let storageRef = firebase.storage().ref();
-      let auth = firebase.auth();
       let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename);
 
       ref.putString(dataString).then(
@@ -101,7 +100,6 @@ class mFirebaseList extends bFirebase {
   setBlob(id, blob, filename) {
     return new Promise((resolve, reject) => {
       let storageRef = firebase.storage().ref();
-      let auth = firebase.auth();
       let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename)
       ref.put(blob).then(
         snapshot => resolve(snapshot)).catch(

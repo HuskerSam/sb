@@ -1058,7 +1058,6 @@ class GUTILImportCSV {
       productsBySKU[p.itemId] = p;
     }
 
-
     let cameraBC = this.findMatchBlock('camera', 'FollowCamera', sceneId);
     let cameraOrigRow = null;
     if (cameraBC)
@@ -1073,6 +1072,11 @@ class GUTILImportCSV {
       introTime = GLOBALUTIL.getNumberOrDefault(cameraData.introtime, 0);
       runLength = GLOBALUTIL.getNumberOrDefault(cameraData.runlength, 60);
     }
+
+    let displayBs = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayblock');
+    let displayBlocks = [];
+    for (let blockKey in displayBs)
+      displayBlocks.push(displayBs[blockKey].title);
 
     let productCount = products.length;
     let productsShownAtOnce = 3;
@@ -1099,7 +1103,8 @@ class GUTILImportCSV {
       productRunTime,
       introTime,
       finishDelay,
-      cameraOrigRow
+      cameraOrigRow,
+      displayBlocks
     }
   }
   static findMatchBlock(childType, childName, parentId) {

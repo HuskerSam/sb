@@ -82,6 +82,12 @@ class cViewLayout extends bView {
       } catch (e) {
         console.log('play anim error', e);
       }
+
+      let basketListHTML = '';
+      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
+        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
+      document.getElementById('basketblocklist').innerHTML = basketListHTML;
+
     }, 100);
   }
   reloadScene(clear) {
@@ -157,10 +163,38 @@ class cViewLayout extends bView {
 
     let domHTML = '';
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
-      domHTML += `<div><label>${this.fieldList[c]}: <input /></label></div>&nbsp;`;
+      let title = this.fieldList[c];
+      let extraText = '';
+      if (title === 'texturepath')
+        extraText += `<button class="texturepathupload">Upload</button><input type="file" class="texturepathuploadfile" style="display:none;" />&nbsp;`
+
+      domHTML += `<div><label>${this.fieldList[c]}: <input class="fieldinput ${title}edit" list="${this.fieldList[c]}list" />${extraText}</label></div>&nbsp;`;
     }
 
     fDom.innerHTML = domHTML;
+
+    this.uploadImageButton = fDom.querySelector('.texturepathupload');
+    this.uploadImageEditField = fDom.querySelector('.texturepathedit');
+    this.uploadImageFile = fDom.querySelector('.texturepathuploadfile');
+    this.uploadImageFile.addEventListener('change', e => this.__uploadImageFile());
+    this.uploadImageButton.addEventListener('click', e => this.uploadImageFile.click());
+  }
+  __uploadImageFile() {
+    let fileBlob = this.uploadImageFile.files[0];
+
+    if (!fileBlob)
+      return;
+
+    this.uploadImageEditField.value = 'uploading...';
+
+    let fireSet = gAPPP.a.modelSets['block'];
+    let key = this.productData.sceneId + '/productfiles';
+    fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
+      this.uploadImageEditField.value = uploadResult.downloadURL
+    });
+
+
+    //    console.log(field, file);
   }
   updateProductList() {
     if (this.productData.products.length === 0) {
@@ -239,7 +273,7 @@ class cViewLayout extends bView {
   }
   fetchProductByName(name) {
     let fDom = document.getElementById('record_field_list');
-    let fields = fDom.querySelectorAll('input');
+    let fields = fDom.querySelectorAll('.fieldinput');
     let p = this.__productByName(name);
     let row = {};
     if (p)
@@ -256,7 +290,7 @@ class cViewLayout extends bView {
   }
   upsertProduct() {
     let fDom = document.getElementById('record_field_list');
-    let fields = fDom.querySelectorAll('input');
+    let fields = fDom.querySelectorAll('.fieldinput');
 
     let name = fields[0].value;
     if (!name) {
@@ -304,45 +338,6 @@ class cViewLayout extends bView {
         element.click();
         document.body.removeChild(element);
       });
-  }
-  downloadProductCSVOld() {
-    let productRows = [];
-    let masterColumnList = {};
-    for (let c = 0, l = this.productData.products.length; c < l; c++) {
-      let row = this.productData.products[c].origRow;
-      if (row.asset === 'block') {
-        row.asset = 'displayproduct';
-      }
-
-      for (let i in row)
-        masterColumnList[i] = '';
-
-      productRows.push(row);
-    }
-
-    //push camera and product signs generation
-    productRows.push(this.productData.cameraOrigRow);
-    productRows.push({
-      asset: 'displayfinalize'
-    });
-
-    //get a complete row list for row[0] (header list for export)
-    for (let i in this.productData.cameraOrigRow)
-      masterColumnList[i] = '';
-    let firstRow = productRows[0];
-    for (let col in masterColumnList)
-      if (firstRow[col] === undefined)
-        firstRow[col] = '';
-
-    let csvResult = Papa.unparse(productRows);
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvResult));
-    element.setAttribute('download', 'products.csv');
-
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
   }
   _userProfileChange() {
     super._userProfileChange();
