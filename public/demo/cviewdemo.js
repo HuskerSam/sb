@@ -54,11 +54,12 @@ class cViewDemo extends bView {
     ];
 
     this.sceneIndex = 0;
-    this.weekPickerSelect = document.getElementById('week-picker-select');
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.cartItemTotal = document.querySelector('.cart-item-total');
-    this.weekPickerSelect.addEventListener('input', () => this.sceneSelect());
-    this.weekPickerSelect.value = gAPPP.workspaceCode;
+    this.workplacesSelect = document.querySelector('#workspaces-select');
+    this.workplacesSelect.addEventListener('input', e => this.selectProject());
+//    this.weekPickerSelect.addEventListener('input', () => this.sceneSelect());
+  //  this.weekPickerSelect.value = gAPPP.workspaceCode;
 
     this.productBySKU = {};
     this.skuOrder = [];
