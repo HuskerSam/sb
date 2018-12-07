@@ -2,23 +2,7 @@ class cViewDemo extends bView {
   constructor() {
     super();
     this.canvasHelper.cameraShownCallback = () => {
-      if (this.cameraShown)
-        return;
-      this.cameraShown = true;
-      setTimeout(() => {
-
-        this.productData = GUTILImportCSV.initCSVProducts();
-        this.products = this.productData.products;
-        this.productBySKU = this.productData.productsBySKU;
-
-        this.canvasHelper.cameraSelect.selectedIndex = 2;
-        this.canvasHelper.noTestError = true;
-        this.canvasHelper.cameraChangeHandler();
-        this.canvasHelper.playAnimation();
-
-        this.productsDisplayUpdate();
-      }, 100);
-
+      this._cameraShown();
     };
 
     this.itemButtons = [];
@@ -53,17 +37,44 @@ class cViewDemo extends bView {
       'rgb(0,0,0)'
     ];
 
-    this.sceneIndex = 0;
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.cartItemTotal = document.querySelector('.cart-item-total');
     this.workplacesSelect = document.querySelector('#workspaces-select');
-    this.workplacesSelect.addEventListener('input', e => this.selectProject());
-//    this.weekPickerSelect.addEventListener('input', () => this.sceneSelect());
-  //  this.weekPickerSelect.value = gAPPP.workspaceCode;
-
+    this.workplacesSelect.addEventListener('input', e => this.sceneSelect());
     this.productBySKU = {};
     this.skuOrder = [];
     this.basketSKUs = {};
+    this.sceneIndex = 0;
+
+  }
+  _cameraShown() {
+    if (this.cameraShown)
+      return;
+    this.cameraShown = true;
+    setTimeout(() => {
+
+      this.productData = GUTILImportCSV.initCSVProducts();
+      this.products = this.productData.products;
+      this.productBySKU = this.productData.productsBySKU;
+
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+      this.canvasHelper.playAnimation();
+
+      let option = document.createElement("option");
+      option.text = 'Options';
+      option.value = 'Options';
+      this.workplacesSelect.add(option);
+
+      option = document.createElement("option");
+      option.text = 'About';
+      option.value = 'About';
+      this.workplacesSelect.add(option);
+
+      this.sceneIndex = this.workplacesSelect.selectedIndex;
+      this.productsDisplayUpdate();
+    }, 100);
   }
   _userProfileChange() {
     super._userProfileChange();
@@ -171,7 +182,7 @@ class cViewDemo extends bView {
     for (let prodCtr = 0; prodCtr < this.products.length; prodCtr++) {
       let p = this.products[prodCtr];
 
-      if (! p.itemId)
+      if (!p.itemId)
         continue;
 
       let itemShownIndex = this.skuOrder.indexOf(p.blockRef.blockData.itemId);
@@ -263,7 +274,7 @@ class cViewDemo extends bView {
   }
 
   sceneSelect() {
-    let projCode = this.weekPickerSelect.value;
+    let projCode = this.workplacesSelect.value;
 
     if (projCode === 'About') {
       let anchor = document.createElement('a');
@@ -272,12 +283,12 @@ class cViewDemo extends bView {
       document.body.appendChild(anchor)
       anchor.click();
       document.body.removeChild(anchor);
-      this.weekPickerSelect.selectedIndex = this.sceneIndex;
+      this.workplacesSelect.selectedIndex = this.sceneIndex;
       return;
     }
 
     if (projCode === 'Options') {
-      this.weekPickerSelect.selectedIndex = this.sceneIndex;
+      this.workplacesSelect.selectedIndex = this.sceneIndex;
       if (this.optionsShown) {
         this.optionsShown = false;
         this.canvasActionsDom.classList.remove('canvas-actions-shown');
@@ -289,9 +300,8 @@ class cViewDemo extends bView {
       return;
     }
 
-    this.sceneIndex = this.weekPickerSelect.selectedIndex;
-    let path = location.origin + location.pathname + '?z=' + projCode;
-    window.location = path;
+    this.sceneIndex = this.workplacesSelect.selectedIndex;
+    this.selectProject();
   }
   sceneToggleView() {
     if (this.viewCollapsed) {
@@ -360,7 +370,7 @@ class cViewDemo extends bView {
     for (let c = 0, l = this.productsShown.length; c < l; c++) {
       if (this.productsShown[c]) {
         let product = this.products[c];
-        if (! this.products[c].itemId)
+        if (!this.products[c].itemId)
           continue;
         let btn = this.itemButtons[product.colorIndex];
         btn.innerHTML = product.desc + ' ' + product.price.toString();

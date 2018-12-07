@@ -316,6 +316,8 @@ class GUTILImportCSV {
       blockChildData.displayIndex = GLOBALUTIL.getNumberOrDefault(row.displayindex, 0)
       blockChildData.origRow = row;
     }
+    if (row.cameraname)
+      blockChildData.cameraName = row.cameraname;
     if (row.origCameraRow)
       blockChildData.origRow = row;
 
@@ -999,6 +1001,12 @@ class GUTILImportCSV {
         promises.push(this.__addTextShowHide(pInfo.products[c], pInfo, origRow));
       }
 
+    let frameId = gAPPP.a.modelSets['frame'].getIdByFieldLookup('parentKey', pInfo.sceneId);
+    promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
+      field: 'frameTime',
+      newValue: (pInfo.runLength * 1000).toString()
+    }], frameId));
+
     return Promise.all(promises);
   }
   static initCSVProducts(cameraData = null) {
@@ -1050,17 +1058,14 @@ class GUTILImportCSV {
       productsBySKU[p.itemId] = p;
     }
 
-    if (!cameraData) {
-      let cameraFollowBlockName = 'FollowCamera_followblock';
-      let cameraFollowBlocks = gAPPP.a.modelSets['block'].queryCache('title', cameraFollowBlockName);
-      for (let i in cameraFollowBlocks)
-        cameraData = cameraFollowBlocks[i];
-    }
 
     let cameraBC = this.findMatchBlock('camera', 'FollowCamera', sceneId);
     let cameraOrigRow = null;
     if (cameraBC)
       cameraOrigRow = cameraBC.BC.origRow.origCameraRow;
+
+    if (!cameraData)
+      cameraData = cameraOrigRow;
 
     let finishDelay = 0, introTime = 0, runLength = 60;
     if (cameraData) {

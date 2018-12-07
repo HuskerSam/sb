@@ -60,6 +60,9 @@ class cViewLayout extends bView {
       this.saveCSVType = 'product';
       this.importFileDom.click();
     });
+
+    this.canvasActionsDom = document.querySelector('.canvas-actions');
+    this.canvasActionsDom.classList.add('canvas-actions-shown');
   }
   _animReady() {
     if (this.cameraShown)
