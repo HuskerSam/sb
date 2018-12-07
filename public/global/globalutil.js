@@ -319,10 +319,6 @@ class GUTILImportCSV {
     if (row.origCameraRow)
       blockChildData.origRow = row;
 
-    if (row.cameraname) {
-      blockChildData.cameraName = row.cameraname;
-    }
-
     if (row.cameratargetblock)
       blockChildData.cameraTargetBlock = row.cameratargetblock;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
@@ -459,6 +455,8 @@ class GUTILImportCSV {
     return Promise.all(promises);
   }
   static addCSVRow(row) {
+    let defaultRow = this.defaultCSVRow();
+    row = Object.assign(defaultRow, row);
     switch (row.asset) {
       case 'productfollowcamera':
         return this.addCSVCamera(row);
@@ -932,7 +930,15 @@ class GUTILImportCSV {
       width: "",
       x: "",
       y: "",
-      z: ""
+      z: "",
+      textfontfamily: '',
+      textfontcolor: '',
+      startx: '',
+      starty: '',
+      startz: '',
+      startrx: '',
+      startry: '',
+      startrz: ''
     };
   }
   static basketPosition(index) {

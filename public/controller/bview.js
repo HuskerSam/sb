@@ -152,7 +152,7 @@ class bView {
     this.workplacesSelect.innerHTML = html;
     this.workplacesSelect.value = val;
 
-    if (!records[val])
+    if (!records || !records[val])
       return;
 
     if (this.workplacesSelectEditName) {

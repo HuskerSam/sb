@@ -147,8 +147,7 @@ class gAuthorization {
       [basePath + 'material']: null,
       [basePath + 'mesh']: null,
       [basePath + 'shape']: null,
-      [basePath + 'texture']: null,
-      [basePath + 'rawData']: null
+      [basePath + 'texture']: null
     };
 
     return firebase.database().ref().update(fireUpdates);
@@ -157,9 +156,8 @@ class gAuthorization {
     if (!key || !rawName)
       return Promise.resolve();
 
-    let basePath = `/project/${key}/rawData`;
     let fireUpdates = {
-      [basePath + rawName]: data
+      [`/project/${key}/rawData${rawName}`]: data
     };
 
     return firebase.database().ref().update(fireUpdates);
@@ -168,8 +166,7 @@ class gAuthorization {
     if (!key || !rawName)
       return Promise.resolve();
 
-    let basePath = `/project/${key}/rawData`;
-    return firebase.database().ref(basePath + rawName).once('value')
+    return firebase.database().ref(`/project/${key}/rawData${rawName}`).once('value')
       .then(r => r.val());
   }
   signInAnon() {

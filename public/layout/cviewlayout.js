@@ -40,7 +40,8 @@ class cViewLayout extends bView {
       'height', 'width', 'depth',
       'x', 'y', 'z', 'parent', 'itemtitle', 'itemprice', 'itemid', 'itemdesc', 'itemcount',
       'cameraacceleration', 'camerafov', 'cameraheightoffset', 'cameramovetime', 'cameraradius', 'maxcameraspeed',
-      'camerarotationoffset', 'runlength', 'introtime', 'finishdelay', 'rx', 'ry', 'rz', 'startx', 'starty', 'startz'
+      'camerarotationoffset', 'runlength', 'introtime', 'finishdelay', 'rx', 'ry', 'rz', 'startx', 'starty', 'startz',
+      'startrx', 'startry', 'startrz', 'cameraname', 'childtype'
     ];
     this.initFieldEdit();
     this.productBySKU = {};
@@ -80,9 +81,14 @@ class cViewLayout extends bView {
       }
     }, 100);
   }
-  reloadScene() {
+  reloadScene(clear) {
     if (!gAPPP.a.profile.selectedWorkspace)
       return;
+
+    if (clear) {
+      gAPPP.a.clearProjectData(gAPPP.a.profile.selectedWorkspace)
+        .then(() => setTimeout(() => location.reload(), 1));
+    }
 
     gAPPP.a.clearProjectData(gAPPP.a.profile.selectedWorkspace)
       .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows'))
@@ -138,9 +144,9 @@ class cViewLayout extends bView {
       if (!gAPPP.a.profile.selectedWorkspace)
         return;
 
-      gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows', [])
-      gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', [])
-        .then(() => this.reloadScene())
+      gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows', null)
+        .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', null))
+        .then(() => this.reloadScene(true))
     }
   }
   initFieldEdit() {
@@ -205,14 +211,16 @@ class cViewLayout extends bView {
       });
   }
   removeProductByName(name) {
-    for (let c = 0, l = this.productData.products.length; c < l; c++)
-      if (this.productData.products[c].origRow.name === name) {
+    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
+      .then(products => {
+        let outProducts = []
+        for (let c = 0, l = products.length; c < l; c++)
+          if (products[c].name !== name)
+            outProducts.push(products[c]);
 
-
-
-      }
-
-    return Promise.resolve();
+        gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', outProducts)
+          .then(() => this.reloadScene())
+      });
   }
   __productByName(name) {
     for (let c = 0, l = this.productData.products.length; c < l; c++)
@@ -247,27 +255,52 @@ class cViewLayout extends bView {
     let fDom = document.getElementById('record_field_list');
     let fields = fDom.querySelectorAll('input');
 
-    let name = this.fields[0].value;
+    let name = fields[0].value;
     if (!name) {
       alert('name required');
       return;
     }
 
-    this.removeProductByName(name);
+    let newRow = {};
+    for (let c = 0, l = fields.length; c < l; c++)
+      newRow[this.fieldList[c]] = fields[c].value;
+
+    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
+      .then(products => {
+        let outProducts = [];
+        for (let c = 0, l = products.length; c < l; c++)
+          if (products[c].name !== name && products[c].asset !== 'displayfinalize')
+            outProducts.push(products[c]);
+
+        if (newRow.asset === 'productfollowcamera') {
+          outProducts.push(newRow);
+          outProducts.push({
+            asset: 'displayfinalize'
+          });
+        } else {
+          outProducts.unshift(newRow);
+          outProducts.push({
+            asset: 'displayfinalize'
+          });
+        }
+
+        gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', outProducts)
+          .then(() => this.reloadScene())
+      });
   }
   downloadCSV(name) {
     gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, name + 'Rows')
-    .then(rows => {
-      let csvResult = Papa.unparse(rows);
-      var element = document.createElement('a');
-      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvResult));
-      element.setAttribute('download', name + '.csv');
+      .then(rows => {
+        let csvResult = Papa.unparse(rows);
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvResult));
+        element.setAttribute('download', name + '.csv');
 
-      element.style.display = 'none';
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-    });
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      });
   }
   downloadProductCSVOld() {
     let productRows = [];
