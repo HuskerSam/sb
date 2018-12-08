@@ -77,6 +77,7 @@ class cViewLayout extends bView {
       this.canvasHelper.noTestError = true;
       this.canvasHelper.cameraChangeHandler();
       this.updateProductList();
+      this.updatePositionList();
       try {
         this.canvasHelper.playAnimation();
       } catch (e) {
@@ -160,6 +161,7 @@ class cViewLayout extends bView {
   }
   initFieldEdit() {
     let fDom = document.getElementById('record_field_list');
+    this.fieldsDom = fDom;
 
     let domHTML = '';
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
@@ -195,6 +197,29 @@ class cViewLayout extends bView {
 
 
     //    console.log(field, file);
+  }
+  updatePositionList() {
+    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
+    let sel = document.getElementById('select_position_preset');
+    if (positionInfo) {
+      let arr = positionInfo.genericBlockData.split('|');
+      let positionHTML = '<option>preset positions</option>';
+
+      for (let c = 0, l = arr.length; c < l - 2; c += 3)
+        positionHTML += '<option>' + arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2] + '</option>';
+
+      sel.innerHTML = positionHTML;
+      sel.addEventListener('input', e => {
+        let vals = sel.value.split(',');
+
+        if (vals.length === 3) {
+          this.fieldsDom.querySelector('.xedit').value = vals[0];
+          this.fieldsDom.querySelector('.yedit').value = vals[1];
+          this.fieldsDom.querySelector('.zedit').value = vals[2];
+
+        }
+      })
+    }
   }
   updateProductList() {
     if (this.productData.products.length === 0) {

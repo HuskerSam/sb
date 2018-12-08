@@ -264,6 +264,9 @@ class GUTILImportCSV {
       blockData.origRow = row;
     }
 
+    if (row.genericblockdata)
+      blockData.genericBlockData = row.genericblockdata;
+
     if (row.introtime) {
       blockData.introtime = row.introtime;
       blockData.finishdelay = row.finishdelay;
