@@ -511,6 +511,12 @@ class GUTILImportCSV {
     sceneBC.x = blockRow.x;
     sceneBC.y = blockRow.y;
     sceneBC.z = blockRow.z;
+    sceneBC.rx = blockRow.rx;
+    sceneBC.ry = blockRow.ry;
+    sceneBC.rz = blockRow.rz;
+    sceneBC.sx = blockRow.sx;
+    sceneBC.sy = blockRow.sy;
+    sceneBC.sz = blockRow.sz;
     sceneBC.displayindex = blockRow.displayindex;
     promises.push(this.addCSVRow(sceneBC));
 
@@ -850,7 +856,7 @@ class GUTILImportCSV {
     let frameTime = productData.introTime;
     let cpTime = row.cameramovetime ? 'cp' + row.cameramovetime : '';
 
-    for (let c = 0, l = productData.products.length; c <= l; c++) {
+    for (let c = 0, l = productData.products.length; c <= l + 1; c++) {
 
       let cameraBlockFrame = this.defaultCSVRow();
 
@@ -860,7 +866,7 @@ class GUTILImportCSV {
       cameraBlockFrame.parent = row.parent;
       cameraBlockFrame.frameorder = frameOrder.toString();
 
-      if (c !== l) {
+      if (c < l) {
         let p = productData.productsBC[c].origRow;
         let product = productData.products[c];
         cameraBlockFrame.x = p.x;
@@ -887,7 +893,10 @@ class GUTILImportCSV {
         cameraBlockFrame.sx = row.sx;
         cameraBlockFrame.sy = row.sy;
         cameraBlockFrame.sz = row.sz;
-        cameraBlockFrame.frametime = (productData.runLength * 1000).toFixed(0) + cpTime;
+        if (c === l)
+          cameraBlockFrame.frametime = (frameTime * 1000).toFixed(0) + cpTime;
+        else
+          cameraBlockFrame.frametime = (productData.runLength * 1000).toFixed(0);
       }
 
       frameOrder += 10;
@@ -1091,10 +1100,12 @@ class GUTILImportCSV {
       products[postC].startShowTime = postC * incLength + introTime;
       products[postC].startEnlargeTime = products[postC].startShowTime;
       products[postC].endShowTime = productsShownAtOnce * incLength + products[postC].startShowTime;
+      if (products[postC].endShowTime > runLength)
+        products[postC].endShowTime = runLength;
       products[postC].endEnlargeTime = incLength + products[postC].startShowTime;
     }
 
-    return {
+    let pInfo = {
       products,
       productsBySKU,
       productsBC,
@@ -1109,6 +1120,8 @@ class GUTILImportCSV {
       cameraOrigRow,
       displayBlocks
     }
+    console.log(pInfo);
+    return pInfo;
   }
   static findMatchBlock(childType, childName, parentId) {
     let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', parentId);

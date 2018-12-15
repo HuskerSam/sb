@@ -135,13 +135,25 @@ class bView {
 
     let html = '';
 
+    let orderedRecords = [];
     for (let i in records) {
-      let code = '';
-      if (records[i].code)
-        code = records[i].code;
-      let o = `<option value=${i}>${records[i].title}</option>`;
+      records[i].id = i;
+      orderedRecords.push(records[i]);
+    }
+    orderedRecords.sort((a, b) => {
+      if (a.title > b.title) return -1;
+      if (a.title < b.title) return 1;
 
-      if (i === 'default')
+      return 0;
+    });
+
+    for (let c = 0, l = orderedRecords.length; c < l; c++) {
+      let code = '';
+      if (orderedRecords[c].code)
+        code = orderedRecords[c].code;
+      let o = `<option value=${orderedRecords[c].id}>${orderedRecords[c].title}</option>`;
+
+      if (orderedRecords[c].id === 'default')
         html += o;
       else
         html = o + html;
