@@ -21,8 +21,6 @@ class cViewDemo extends bView {
 
     this.displayButtonPanel = document.querySelector('.user-options-panel');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
-    this.collapseButton = document.querySelector('.collapse-expand');
-    this.collapseButton.addEventListener('click', () => this.sceneToggleView());
 
     this.buttonColors = [
       'rgb(255,0,0)',
@@ -164,6 +162,7 @@ class cViewDemo extends bView {
       gTotal += total;
       let template = `<div class="cart-item">
         <button class="cart-item-remove">X</button>
+        <img src="${product.itemImage}" class="button-list-image">
         <div class="cart-item-description">${l1}</div>
         <br>
         <div class="cart-item-detail">${l2}</div>
@@ -303,21 +302,6 @@ class cViewDemo extends bView {
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.selectProject();
   }
-  sceneToggleView() {
-    if (this.viewCollapsed) {
-      this.receiptDisplayPanel.style.right = '';
-      this.collapseButton.innerHTML = '<i class="material-icons">unfold_less</i>';
-      this.displayButtonPanel.style.width = '';
-      this.viewCollapsed = false;
-      //this._setButtonLabels();
-    } else {
-      this.viewCollapsed = true;
-      this.collapseButton.innerHTML = '<i class="material-icons">unfold_more</i>';
-      this.displayButtonPanel.style.width = '6em';
-      this.receiptDisplayPanel.style.right = '-50%';
-      this.basketClearButtons();
-    }
-  }
   sceneToggleControls() {
     if (!this.controlsShown) {
       this.controlsShown = true;
@@ -358,14 +342,9 @@ class cViewDemo extends bView {
     }, 100);
   }
   _productsUpdateButtons() {
-    this.itemButtons[0].style.display = 'none';
-    this.itemButtons[0].sku = '';
-    this.itemButtons[1].style.display = 'none';
-    this.itemButtons[1].sku = '';
-    this.itemButtons[2].style.display = 'none';
-    this.itemButtons[2].sku = '';
-    this.itemButtons[3].style.display = 'none';
-    this.itemButtons[3].sku = '';
+    let btnsShown = [
+      false, false, false, false
+    ];
 
     for (let c = 0, l = this.productsShown.length; c < l; c++) {
       if (this.productsShown[c]) {
@@ -373,10 +352,23 @@ class cViewDemo extends bView {
         if (!this.products[c].itemId)
           continue;
         let btn = this.itemButtons[product.colorIndex];
-        btn.innerHTML = product.desc + ' ' + product.price.toString();
+        let btnHtml =  `<img src="${product.itemImage}" class="button-list-image">` +
+                    '<span class="expanded">' + product.title + '<br></span>' +  product.desc.toString() + '</span>';
+
+        if (btn.innerHTMLStash !== btnHtml) {
+          btn.innerHTMLStash = btnHtml;
+          btn.innerHTML = btnHtml;
+        }
         btn.sku = product.itemId;
         btn.style.display = 'inline-block';
+        btnsShown[product.colorIndex] = true;
       }
     }
+
+    for (let d = 0, dl = btnsShown.length; d < dl; d++)
+      if (!btnsShown[d]) {
+        this.itemButtons[d].style.display = 'none';
+        this.itemButtons[d].sku = '';
+      }
   }
 }

@@ -3,16 +3,6 @@
   bottom: 3em !important;
 }
 
-button.collapse-expand {
-  width: 3em;
-}
-
-button.collapse-expand i {
-  font-size: 2em;
-  top: .25em;
-  transform: rotate(90deg);
-}
-
 .canvas-actions-shown {
   bottom: initial;
   display: block;

@@ -21,9 +21,9 @@
   padding: .25em;
   position: absolute;
   z-index: 1000;
-  width: 50%;
+  width: 35%;
   transition: width .6s;
-  height: 25em;
+  height: 21em;
 }
 
 .user-options-panel button {
@@ -33,11 +33,13 @@
   margin: .35em 0;
   width: 100%;
   border-radius: .25em;
-  line-height: 3em;
+  line-height: 1.15em;
   max-width: 35em;
   overflow: hidden;
   white-space: nowrap;
   position: absolute;
+  height: 3.75em;
+  text-align: left;
 }
 
 .choice-button-one {
@@ -62,19 +64,13 @@
 }
 
 .cart-contents {
-  position: absolute;
-  z-index: 1000;
-  right: .25em;
-  bottom: .25em;
   padding: .25em;
-  max-width: calc(50% - .75em);
   text-align: right;
-  max-height: 25em;
+  max-height: 16em;
   overflow: auto;
   border: solid .25em white;
   border-radius: .75em;
-  max-width: 35em;
-  font-size: 10pt;
+  font-size: 8pt;
   transition: right .35s;
 }
 
@@ -82,24 +78,26 @@
   overflow: visible;
   white-space: nowrap;
   position: absolute;
-  top: 20em;
+  top: .5em;
+  right: .5em;
+  text-align: right;
 }
 
 .cart-item {
   overflow: visible;
   white-space: nowrap;
   margin-bottom: .5em;
+  background: rgba(255,255,255, .6);
+  border-radius: 5px;
 }
 
 .cart-item .cart-item-description {
-  background: rgba(255, 255, 255, .67);
   padding: .25em;
   padding-left: 1em;
   display: inline-block;
 }
 
 .cart-item .cart-item-detail {
-  background: rgba(255, 255, 255, .33);
   padding: .25em;
   color: blue;
   padding-left: 1em;
@@ -112,12 +110,12 @@
   background: rgb(255, 255, 255);
   padding: .15em .25em;
   font-size: 14pt;
-  line-height: 1.8em;
+  line-height: 2.25em;
   font-weight: bold;
   color: rgb(0, 255, 0);
   background: black;
+  text-align: right;
   display: inline-block;
-  margin-top: .25em;
 }
 
 .cart-item .cart-item-remove {
@@ -131,33 +129,24 @@
 }
 
 button.cart-submit {
-  margin-left: .35em;
   font-size: 12pt;
-  font-family: Georgia;
-  border: none;
   background: rgb(240, 240, 240);
   line-height: 2em;
-  width: auto;
-  padding-left: .5em;
-  padding-right: .5em;
 }
 
 .cart-left-side {
   float: left;
 }
 
-button.collapse-expand {
-  width: 3em;
-}
-
-button.collapse-expand i {
-  font-size: 2em;
-  top: .25em;
-  transform: rotate(90deg);
-}
-
 .canvas-actions-shown {
   bottom: initial;
   display: block;
   top: 2em;
+}
+
+.button-list-image {
+  float: left;
+  width: 3em;
+  height: 3em;
+  margin-right: .5em;
 }
