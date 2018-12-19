@@ -185,8 +185,13 @@ class bView {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'selectedWorkspace',
       newValue: gAPPP.mV.workplacesSelect.value
-    }]);
-    setTimeout(() => location.reload(), 100);
+    }])
+    .then(() => {
+      setTimeout(() => location.reload(), 1);
+    })
+    .catch(e => {
+      console.log(e);
+    });    
   }
   _addProject(newTitle, newCode) {
     let key = gAPPP.a.modelSets['projectTitles'].getKey();

@@ -8,12 +8,15 @@
   position: absolute;
 }
 
-#workplaces-select {
+#workspaces-select {
   font-size: 12pt;
   margin: .25em;
   padding: .5em;
   background: rgb(240, 240, 240);
   border: none;
+  float: none;
+  position: static;
+  display: none;
 }
 
 .user-options-panel {
@@ -21,9 +24,10 @@
   padding: .25em;
   position: absolute;
   z-index: 1000;
-  width: 35%;
   transition: width .6s;
   height: 21em;
+  width: 50%;
+  max-width: 20em;
 }
 
 .user-options-panel button {
@@ -66,7 +70,7 @@
 .cart-contents {
   padding: .25em;
   text-align: right;
-  max-height: 16em;
+  max-height: 6em;
   overflow: auto;
   border: solid .25em white;
   border-radius: .75em;
@@ -116,6 +120,7 @@
   background: black;
   text-align: right;
   display: inline-block;
+  width: 5em;
 }
 
 .cart-item .cart-item-remove {

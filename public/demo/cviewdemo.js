@@ -44,6 +44,21 @@ class cViewDemo extends bView {
     this.basketSKUs = {};
     this.sceneIndex = 0;
 
+    this.moreContentsListBtn = document.getElementById('cart-contents-more-button');
+    this.moreContentsListBtn.addEventListener('click', () => this.toggleContentsListHeight());
+  }
+  toggleContentsListHeight() {
+    if (this.moreContentsLarged) {
+      this.moreContentsListBtn.innerHTML = 'More';
+      this.moreContentsLarged = false;
+      this.receiptDisplayPanel.style.maxHeight = '6em';
+      this.workplacesSelect.style.display = 'none';
+    } else {
+      this.moreContentsListBtn.innerHTML = 'Less';
+      this.moreContentsLarged = true;
+      this.receiptDisplayPanel.style.maxHeight = '20em';
+      this.workplacesSelect.style.display = 'block';
+    }
   }
   _cameraShown() {
     if (this.cameraShown)
@@ -152,12 +167,15 @@ class cViewDemo extends bView {
     this.receiptDisplayPanel.innerHTML = '';
     let gTotal = 0.0;
     let promises = [];
-    for (let c = 0, l = this.skuOrder.length; c < l; c++) {
+    for (let c = this.skuOrder.length - 1; c >= 0; c--) {
       let sku = this.skuOrder[c];
       let count = this.basketSKUs[sku];
       let product = this.productsBySKU[sku];
 
       if (count === 0)
+        continue;
+
+      if (!product)
         continue;
 
       let total = count * product.price;
@@ -184,17 +202,16 @@ class cViewDemo extends bView {
 
     for (let prodCtr = 0; prodCtr < this.products.length; prodCtr++) {
       let p = this.products[prodCtr];
-
       if (!p.itemId)
         continue;
-
       let itemShownIndex = this.skuOrder.indexOf(p.blockRef.blockData.itemId);
-
-      if (itemShownIndex > -1) {
-        promises.push(this.basketAddItemBlock(this.skuOrder[itemShownIndex], itemShownIndex));
-      } else {
+      if (itemShownIndex === -1) {
         promises.push(this.basketRemoveItemBlock(p.blockRef.blockData.itemId));
       }
+    }
+
+    for (let skuCtr = 0; skuCtr < this.skuOrder.length; skuCtr++){
+      promises.push(this.basketAddItemBlock(this.skuOrder[skuCtr], skuCtr));
     }
 
     return Promise.all(promises);
@@ -208,7 +225,7 @@ class cViewDemo extends bView {
     let pos = GUTILImportCSV.basketPosition(index);
     let product = this.productsBySKU[sku];
     if (!product)
-      return;
+      return Promise.resolve();
 
     let basketBlock = product.blockRef.blockData.basketBlock;
 
