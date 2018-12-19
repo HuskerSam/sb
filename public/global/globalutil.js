@@ -319,6 +319,8 @@ class GUTILImportCSV {
       blockChildData.displayIndex = GLOBALUTIL.getNumberOrDefault(row.displayindex, 0)
       blockChildData.origRow = row;
     }
+    if (row.sku)
+      blockChildData.sku = row.sku;
     if (row.cameraname)
       blockChildData.cameraName = row.cameraname;
     if (row.origCameraRow)
@@ -477,8 +479,6 @@ class GUTILImportCSV {
         return this.addCSVShapeRow(row);
       case 'blockchildframe':
         return this.addCSVBlockChildFrameRow(row);
-      case 'productbasket':
-        return this.addCSVBasketProducts(row);
       case 'displayfinalize':
         return this.addCSVDisplayFinalize(row);
       case 'displaymessage':
@@ -729,38 +729,38 @@ class GUTILImportCSV {
       .then(() => this.addCSVRowList(signChildren))
       .then(() => this.addCSVRow(blockRowBC))
       .then(result => {
-          let showFrame = this.defaultCSVRow();
-          showFrame.asset = 'blockchildframe';
-          showFrame.name = blockRow.name;
-          showFrame.childtype = 'block';
-          showFrame.parent = product.childName;
-          showFrame.frameorder = '20';
-          showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
-          showFrame.y = '2';
+        let showFrame = this.defaultCSVRow();
+        showFrame.asset = 'blockchildframe';
+        showFrame.name = blockRow.name;
+        showFrame.childtype = 'block';
+        showFrame.parent = product.childName;
+        showFrame.frameorder = '20';
+        showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
+        showFrame.y = '2';
 
-          let hideFrame = this.defaultCSVRow();
-          hideFrame.asset = 'blockchildframe';
-          hideFrame.name = blockRow.name;
-          hideFrame.childtype = 'block';
-          hideFrame.parent = product.childName;
-          hideFrame.frameorder = '30';
-          hideFrame.frametime = (product.endShowTime * 1000).toFixed(0) + 'cp700';
-          hideFrame.y = '-50';
+        let hideFrame = this.defaultCSVRow();
+        hideFrame.asset = 'blockchildframe';
+        hideFrame.name = blockRow.name;
+        hideFrame.childtype = 'block';
+        hideFrame.parent = product.childName;
+        hideFrame.frameorder = '30';
+        hideFrame.frametime = (product.endShowTime * 1000).toFixed(0) + 'cp700';
+        hideFrame.y = '-50';
 
-          let endFrame = this.defaultCSVRow();
-          endFrame.asset = 'blockchildframe';
-          endFrame.name = blockRow.name;
-          endFrame.childtype = 'block';
-          endFrame.parent = product.childName;
-          endFrame.frameorder = '40';
-          endFrame.frametime = (productData.runLength * 1000).toFixed(0);
-          endFrame.y = '-50';
+        let endFrame = this.defaultCSVRow();
+        endFrame.asset = 'blockchildframe';
+        endFrame.name = blockRow.name;
+        endFrame.childtype = 'block';
+        endFrame.parent = product.childName;
+        endFrame.frameorder = '40';
+        endFrame.frametime = (productData.runLength * 1000).toFixed(0);
+        endFrame.y = '-50';
 
-          return Promise.all([
-            this.addCSVRow(showFrame),
-            this.addCSVRow(hideFrame),
-            this.addCSVRow(endFrame)
-          ]);
+        return Promise.all([
+          this.addCSVRow(showFrame),
+          this.addCSVRow(hideFrame),
+          this.addCSVRow(endFrame)
+        ]);
       })
   }
   static __addTextShowHide(product, productData, origRow) {
@@ -960,19 +960,23 @@ class GUTILImportCSV {
     let x = Math.floor(index % 4 / 2) * 3 - 1.5;
     let y = Math.floor(index / 4) * 2 + 1;
 
-    return { x, y, z };
+    return {
+      x,
+      y,
+      z
+    };
   }
   static addCSVBasketProducts(row) {
     let productInfo = this.initCSVProducts();
     let basketInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'basket');
     let basketName = basketInfo.title;
     let promises = [];
-    let products = productInfo.products;
+    let productsBySKU = productInfo.productsBySKU;
 
     let positionIndex = 0;
-    for (let c = 0, l = products.length; c < l; c++) {
+    for (let i in productsBySKU) {
 
-      if (! products[c].itemId)
+      if (!productsBySKU[i].itemId)
         continue;
 
       let pos = this.basketPosition(positionIndex);
@@ -982,7 +986,8 @@ class GUTILImportCSV {
         materialname: '',
         parent: basketName,
         childtype: 'block',
-        name: products[c].blockRef.blockData.basketBlock,
+        sku: productsBySKU[i].itemId,
+        name: productsBySKU[i].blockRef.blockData.basketBlock,
         inheritmaterial: false,
         x: pos.x.toString(),
         y: pos.y.toString(),
@@ -1018,6 +1023,8 @@ class GUTILImportCSV {
       field: 'frameTime',
       newValue: (pInfo.runLength * 1000).toString()
     }], frameId));
+
+    promises.push(this.addCSVBasketProducts(row));
 
     return Promise.all(promises);
   }
@@ -1078,7 +1085,9 @@ class GUTILImportCSV {
     if (!cameraData)
       cameraData = cameraOrigRow;
 
-    let finishDelay = 0, introTime = 0, runLength = 60;
+    let finishDelay = 0,
+      introTime = 0,
+      runLength = 60;
     if (cameraData) {
       finishDelay = GLOBALUTIL.getNumberOrDefault(cameraData.finishdelay, 0);
       introTime = GLOBALUTIL.getNumberOrDefault(cameraData.introtime, 0);
@@ -1128,13 +1137,18 @@ class GUTILImportCSV {
 
     for (let i in children) {
       if (children[i].childType === childType && children[i].childName === childName) {
-          let blockData = null;
-          if (gAPPP.a.modelSets[childType])
-            blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
-          return {
-            blockData,
-            BC: children[i]
-          }
+        let blockData = null;
+        let blockKey = null;
+        if (gAPPP.a.modelSets[childType]) {
+          blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
+          blockKey = gAPPP.a.modelSets[childType].lastKeyLookup;
+        }
+        return {
+          blockData,
+          BC: children[i],
+          blockKey,
+          BCKey: i
+        }
       }
 
       let childResult = this.findMatchBlock(childType, childName, i);
@@ -1142,5 +1156,33 @@ class GUTILImportCSV {
         return childResult;
     }
     return null;
+  }
+  static findMatchBlocks(childType, childName, parentId, filterKey, filterValue) {
+    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', parentId);
+    let blocks = [];
+    for (let i in children) {
+      if (children[i].childType === childType && children[i].childName === childName) {
+        if (filterKey)
+          if (children[i][filterKey] !== filterValue)
+            continue;
+      
+        let blockData = null;
+        let blockKey = null;
+        if (gAPPP.a.modelSets[childType]) {
+          blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
+          blockKey = gAPPP.a.modelSets[childType].lastKeyLookup;
+        }
+        blocks.push({
+          blockData,
+          BC: children[i],
+          blockKey,
+          BCKey: i
+        });
+      }
+
+      let childResults = this.findMatchBlocks(childType, childName, i);
+      blocks.concat(childResults);
+    }
+    return blocks;
   }
 }

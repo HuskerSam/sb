@@ -39,7 +39,7 @@ class cViewDemo extends bView {
     this.cartItemTotal = document.querySelector('.cart-item-total');
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelect.addEventListener('input', e => this.sceneSelect());
-    this.productBySKU = {};
+    this.productsBySKU = {};
     this.skuOrder = [];
     this.basketSKUs = {};
     this.sceneIndex = 0;
@@ -53,7 +53,7 @@ class cViewDemo extends bView {
 
       this.productData = GUTILImportCSV.initCSVProducts();
       this.products = this.productData.products;
-      this.productBySKU = this.productData.productsBySKU;
+      this.productsBySKU = this.productData.productsBySKU;
 
       this.canvasHelper.cameraSelect.selectedIndex = 2;
       this.canvasHelper.noTestError = true;
@@ -76,8 +76,9 @@ class cViewDemo extends bView {
   }
   _userProfileChange() {
     super._userProfileChange();
+    let wsId = gAPPP.a.profile.selectedWorkspace;
 
-    let basketData = gAPPP.a.profile.basketData;
+    let basketData = gAPPP.a.profile['basketData' + wsId];
 
     if (basketData) {
       this.basketSKUs = basketData.basketSKUs;
@@ -107,10 +108,11 @@ class cViewDemo extends bView {
     let basketData = {
       basketSKUs: this.basketSKUs,
       skuOrder: this.skuOrder
-    }
+    };
 
+    let wsId = gAPPP.a.profile.selectedWorkspace;
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'basketData',
+      field: 'basketData' + wsId,
       newValue: basketData
     }]);
   }
@@ -129,18 +131,20 @@ class cViewDemo extends bView {
     let basketData = {
       basketSKUs: this.basketSKUs,
       skuOrder: this.skuOrder
-    }
+    };
 
+    let wsId = gAPPP.a.profile.selectedWorkspace;
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'basketData',
+      field: 'basketData' + wsId,
       newValue: basketData
     }]);
 
     this.basketRemoveItemBlock(sku);
   }
   basketCheckout() {
+    let wsId = gAPPP.a.profile.selectedWorkspace;
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'basketData',
+      field: 'basketData' + wsId,
       newValue: null
     }]);
   }
@@ -151,7 +155,7 @@ class cViewDemo extends bView {
     for (let c = 0, l = this.skuOrder.length; c < l; c++) {
       let sku = this.skuOrder[c];
       let count = this.basketSKUs[sku];
-      let product = this.productBySKU[sku];
+      let product = this.productsBySKU[sku];
 
       if (count === 0)
         continue;
@@ -202,7 +206,7 @@ class cViewDemo extends bView {
   }
   basketAddItemBlock(sku, index) {
     let pos = GUTILImportCSV.basketPosition(index);
-    let product = this.productBySKU[sku];
+    let product = this.productsBySKU[sku];
     if (!product)
       return;
 
@@ -241,13 +245,18 @@ class cViewDemo extends bView {
     return Promise.resolve();
   }
   basketRemoveItemBlock(sku) {
-    let product = this.productBySKU[sku];
+    let product = this.productsBySKU[sku];
+    let itemId = product.blockRef.blockData.itemId;
     let basketBlock = product.blockRef.blockData.basketBlock;
+    let rootKey = this.rootBlock.blockKey;
 
-    let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
-    let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
-    if (existingItemBlock !== null) {
-      let frames = existingItemBlock.framesHelper.framesStash;
+    let basketCart = GUTILImportCSV.findMatchBlock('block', 'basketcart', rootKey);
+    let basketItems = GUTILImportCSV.findMatchBlocks('block', basketBlock, basketCart.blockKey, 'sku', itemId);
+
+    let promises = [];
+    for (let c = 0, l = basketItems.length; c < l; c++) {
+      let existingItemBlock = basketItems[c];
+      let frames = gAPPP.a.modelSets['frame'].queryCache('parentKey', existingItemBlock.BCKey);
       let frameIds = [];
       for (let i in frames)
         frameIds.push(i);
@@ -255,16 +264,16 @@ class cViewDemo extends bView {
       let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
       if (existingValues) {
         if (existingValues.positionY === '-50')
-          return Promise.resolve();
+          continue;
       }
 
-      return gAPPP.a.modelSets['frame'].commitUpdateList([{
+      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionY',
         newValue: "-50"
-      }], frameIds[0]);
+      }], frameIds[0]));
     }
 
-    return Promise.resolve();
+    return Promise.all(promises);
   }
   basketRemoveAllItems() {
     for (let c = 0, l = this.products.length; c < l; c++)
