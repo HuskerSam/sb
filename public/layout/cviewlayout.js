@@ -27,6 +27,8 @@ class cViewLayout extends bView {
     this.download_asset_csv.addEventListener('click', e => this.downloadCSV('asset'));
     this.download_product_csv = document.getElementById('download_product_csv');
     this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
+    this.download_scene_csv = document.getElementById('download_product_csv');
+    this.download_scene_csv.addEventListener('click', e => this.downloadCSV('scene'));
 
     this.clearSceneBtn = document.getElementById('clear_scene_btn');
     this.clearSceneBtn.addEventListener('click', e => this.clearScene());
@@ -51,9 +53,14 @@ class cViewLayout extends bView {
     this.importFileDom = document.querySelector('.csv-import-file');
     this.importFileDom.addEventListener('change', e => this.importCSV());
     this.importAssetsCSVBtn = document.getElementById('import_assets_csv_btn');
+    this.importSceneCSVBtn = document.getElementById('import_scene_csv_btn');
     this.importProductsCSVBtn = document.getElementById('import_products_csv_btn');
     this.importAssetsCSVBtn.addEventListener('click', e => {
       this.saveCSVType = 'asset';
+      this.importFileDom.click();
+    });
+    this.importSceneCSVBtn.addEventListener('click', e => {
+      this.saveCSVType = 'scene';
       this.importFileDom.click();
     });
     this.importProductsCSVBtn.addEventListener('click', e => {
@@ -103,6 +110,8 @@ class cViewLayout extends bView {
     gAPPP.a.clearProjectData(gAPPP.a.profile.selectedWorkspace)
       .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows'))
       .then(assets => this.__importRows(assets))
+      .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows'))
+      .then(scene => this.__importRows(scene))
       .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows'))
       .then(products => this.__importRows(products))
       .then(() => setTimeout(() => location.reload(), 1));
@@ -133,6 +142,10 @@ class cViewLayout extends bView {
               gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', results.data)
                 .then(r => this.reloadScene());
             }
+            if (this.saveCSVType === 'scene') {
+              gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows', results.data)
+                .then(r => this.reloadScene());
+            }
           }
         }
       });
@@ -156,6 +169,7 @@ class cViewLayout extends bView {
 
       gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows', null)
         .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', null))
+        .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows', null))
         .then(() => this.reloadScene(true))
     }
   }
@@ -168,7 +182,7 @@ class cViewLayout extends bView {
       let title = this.fieldList[c];
       let extraText = '';
       if (title === 'texturepath')
-        extraText += `<button class="texturepathupload">Upload</button><input type="file" class="texturepathuploadfile" style="display:none;" />&nbsp;`
+        extraText += `<button class="texturepathupload">Upload</button><input type="file" class="texturepathuploadfile" style="display:none;" />&nbsp;`;
 
       domHTML += `<div><label>${this.fieldList[c]}: <input class="fieldinput ${title}edit" list="${this.fieldList[c]}list" />${extraText}</label></div>&nbsp;`;
     }
