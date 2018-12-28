@@ -183,7 +183,7 @@ class gAuthorization {
 
     if (this.loggedIn) {
       loginPage.style.display = 'none';
-      mainPage.style.display = 'block';
+      mainPage.style.display = 'flex';
     } else {
       loginPage.style.display = 'block';
       mainPage.style.display = 'none';

@@ -18,7 +18,7 @@
 }
 
 body {
-  background: silver;
+  background: white;
 }
 
 #demo-layout-panel {
@@ -30,11 +30,28 @@ body {
 	flex-direction: column;
 }
 
+.gutter {
+  background:  repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    #ccc 2px,
+    #ccc 3px
+  );
+}
+
 .gutter.gutter-horizontal {
   cursor: ew-resize;
   margin-top: 0px;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
+  background:  repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    #ccc 2px,
+    #ccc 4px
+  );
 }
 
 .gutter.gutter-vertical {

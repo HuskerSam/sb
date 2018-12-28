@@ -17,10 +17,18 @@ class cViewLayout extends bView {
     let b = document.querySelector('.main-canvas-wrapper');
     this.splitInstance = window.Split([b, t], {
       sizes: [40, 60],
-      gutterSize: 12,
+      gutterSize: 8,
       direction: 'horizontal',
       onDragEnd: () => gAPPP.resize(),
       onDrag: () => gAPPP.resize()
+    });
+
+    this.fieldsDom = document.getElementById('record_field_list');
+    this.productListDiv = document.querySelector('.product-list-panel');
+    this.splitInstanceInner = window.Split([this.productListDiv, this.fieldsDom], {
+      sizes: [50, 50],
+      gutterSize: 9,
+      direction: 'vertical'
     });
 
     this.download_asset_csv = document.getElementById('download_asset_csv');
@@ -36,7 +44,6 @@ class cViewLayout extends bView {
     this.upsertBtn = document.getElementById('update_product_fields_post');
     this.upsertBtn.addEventListener('click', e => this.upsertProduct());
 
-    this.productListDiv = document.querySelector('.product-list-panel');
     this.fieldList = [
       'name', 'asset', 'displayindex', 'texturepath', 'texturetext', 'basketblock',
       'height', 'width', 'depth',
@@ -174,8 +181,7 @@ class cViewLayout extends bView {
     }
   }
   initFieldEdit() {
-    let fDom = document.getElementById('record_field_list');
-    this.fieldsDom = fDom;
+  let fDom = this.fieldsDom;
 
     let domHTML = '';
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
@@ -184,7 +190,8 @@ class cViewLayout extends bView {
       if (title === 'texturepath')
         extraText += `<button class="texturepathupload">Upload</button><input type="file" class="texturepathuploadfile" style="display:none;" />&nbsp;`;
 
-      domHTML += `<div><label>${this.fieldList[c]}: <input class="fieldinput ${title}edit" list="${this.fieldList[c]}list" />${extraText}</label></div>&nbsp;`;
+      let id = 'fieldid' + c.toString();
+      domHTML += `<div class="form-group"><label for="${id}">${this.fieldList[c]}: <input id="${id}" class="form-control fieldinput ${title}edit" list="${this.fieldList[c]}list" />${extraText}</label></div>&nbsp;`;
     }
 
     fDom.innerHTML = domHTML;
