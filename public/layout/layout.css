@@ -6,7 +6,15 @@
 .canvas-actions-shown {
   bottom: initial;
   display: block;
-  top: 2em;
+  top: -10px;
+}
+
+.canvas-actions .btn-sb-icon.scene-options {
+  display: none;
+}
+
+.canvas-actions .camera-select {
+  display: none;
 }
 
 .option-buttons-panel {
@@ -62,7 +70,9 @@ body {
 #record_field_list {
   text-align: left;
   padding: 10px;
-  overflow-y: scroll;
+  width: 100%;
+  overflow: auto;
+  flex: 1;
 }
 
 .product-list-panel {

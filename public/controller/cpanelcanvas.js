@@ -607,7 +607,7 @@ class cPanelCanvas {
     if (this.cameraSelect.selectedIndex === -1) {
       this.cameraSelect.style.display = 'none';
     } else {
-      this.cameraSelect.style.display = 'inline-block';
+      this.cameraSelect.style.display = '';
     }
 
     if (this.cameraSelect.selectedIndex < 1) {
