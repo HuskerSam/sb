@@ -39,9 +39,6 @@ class cViewLayout extends bView {
     this.download_scene_csv = document.getElementById('download_scene_csv');
     this.download_scene_csv.addEventListener('click', e => this.downloadCSV('scene'));
 
-    this.clearSceneBtn = document.getElementById('clear_scene_btn');
-    this.clearSceneBtn.addEventListener('click', e => this.clearScene());
-
     this.fieldList = [
       'name', 'asset', 'displayindex', 'childtype', 'parent',
       'camerafov', 'cameraheightoffset', 'cameraradius',
@@ -201,22 +198,45 @@ class cViewLayout extends bView {
     let fDom = this.fieldsDom;
 
     this.fieldDivByName = {};
-    fDom.innerHTML = '';
+    fDom.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
+    let btn = document.createElement('button');
+    btn.setAttribute('id', 'update_product_fields_post');
+    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary');
+    btn.style.float = 'right';
+    btn.innerHTML = '<i class="material-icons">publish</i> Upsert';
+    componentHandler.upgradeElement(btn);
+    fDom.appendChild(btn);
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
       let title = this.fieldList[c];
-      let extraText = '';
-      if (title === 'texturepath')
-        extraText += `<button class="texturepathupload">Upload</button><input type="file" class="texturepathuploadfile" style="display:none;" />&nbsp;`;
-      if (title === 'name')
-        extraText += `<button id="update_product_fields_post" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"><i class="material-icons">publish</i> Upsert</button>`;
-      if (title === 'x')
-        extraText += `<select id="select_position_preset" style="float:right;"></select>`;
-
       let id = 'fieldid' + c.toString();
       this.fieldDivByName[title] = document.createElement('div');
       this.fieldDivByName[title].setAttribute('class', 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label');
       this.fieldDivByName[title].innerHTML = `<input id="${id}" type="text" class="mdl-textfield__input fieldinput ${title}edit" list="${this.fieldList[c]}list" />` +
-        `<label class="mdl-textfield__label" for="${id}">${this.fieldList[c]}</label>` + `${extraText}&nbsp;`;
+        `<label class="mdl-textfield__label" for="${id}">${this.fieldList[c]}</label>`;
+
+      if (title === 'x') {
+        let select = document.createElement('select');
+        select.style.position = 'absolute';
+        select.style.top = '0';
+        select.style.right = '5px';
+        select.style.width = 'auto';
+        select.setAttribute('id', 'select_position_preset');
+        select.setAttribute('class', 'mdl-textfield__input');
+        componentHandler.upgradeElement(select);
+        this.fieldDivByName[title].appendChild(select);
+        this.fieldDivByName[title].style.position = 'relative;'
+      }
+      if (title === 'texturepath') {
+        let btn = document.createElement('button');
+        btn.style.position = 'absolute';
+        btn.style.top = '0';
+        btn.style.right = '0';
+        btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
+        btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored texturepathupload');
+        componentHandler.upgradeElement(btn);
+        this.fieldDivByName[title].appendChild(btn);
+        this.fieldDivByName[title].style.position = 'relative;'
+      }
 
       componentHandler.upgradeElement(this.fieldDivByName[title]);
       fDom.appendChild(this.fieldDivByName[title]);
@@ -247,7 +267,7 @@ class cViewLayout extends bView {
     fDom.insertBefore(this.itempriceBR, this.fieldDivByName['itemprice']);
 
     this.afterParentHR = document.createElement('hr');
-    fDom.insertBefore(this.afterParentHR, this.fieldDivByName['parent'].nextElementSibling);
+    fDom.insertBefore(this.afterParentHR, this.fieldDivByName['camerafov']);
   }
   updateVisibleEditFields() {
     let rowsToHide = [];
@@ -334,9 +354,9 @@ class cViewLayout extends bView {
       rowH += `<td>${displayIndex}</td>`;
       rowH += `<td class="mdl-data-table__cell--non-numeric">${desc}</td>`;
       rowH += `<td>${xyz}</td>`;
-      rowH += `<td class="mdl-data-table__cell--non-numeric"><button class="fetch mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-id="${row.name}"><i class="material-icons">edit</i></button>`;
+      rowH += `<td class="mdl-data-table__cell--non-numeric"><button class="fetch mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">edit</i></button>`;
       if (itemType !== 'camera')
-        rowH += ` <button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
+        rowH += ` <button class="remove mdl-button mdl-js-button mdl-button--icon" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
       rowH += `</td>`;
 
       productListHTML += `<tr>${rowH}</tr>`;

@@ -21,44 +21,40 @@
 
       <div class="inner-split-view">
         <div class="inner-split-view-top" style="display:flex;flex-direction:column">
-          <div style="flex:0;padding:5px;background:white;border-bottom:solid 1px silver;">
-            <div style="display:inline-block;white-space:nowrap;">
-              <select id="workspaces-select" style="margin-bottom:.5em;"></select>
-              <button id="remove-workspace-button"><i class="material-icons">delete</i></button>
+          <div class="header-bar">
+            <div>
+              <div class="mdl-textfield mdl-js-textfield">
+                <select id="workspaces-select" class="mdl-textfield__input"></select>
+              </div>
+              <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">delete</i></button>
             </div>
-            &nbsp;
-            <div style="white-space:nowrap;display:inline-block;">
-              <input id="new-workspace-name" />
-              <button id="add-workspace-button"><i class="material-icons">add</i></button>
+            <div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="new-workspace-name">
+                <label class="mdl-textfield__label" for="new-workspace-name">New Scene Name</label>
+              </div>
+              <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
             </div>
-            <br>
-            <button id="clear_scene_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">clear_all</i></button>
-            &nbsp;
-
-
 
             <input type="file" class="csv-import-file" style="display:none;" />
-            <div style="white-space:nowrap;display:inline-block;">
+            <div class="button-header-group">
               <label>Assets</label>
-              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
-              &nbsp;
+              <br>
+              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"><i class="material-icons">cloud_upload</i></button>
               <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
             </div>
-            &nbsp;
-            <div style="white-space:nowrap;display:inline-block;">
+            <div class="button-header-group">
               <label>Scene</label>
-              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
-              &nbsp;
+              <br>
+              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"><i class="material-icons">cloud_upload</i></button>
               <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
             </div>
-            &nbsp;
-            <div style="white-space:nowrap;display:inline-block;">
+            <div class='button-header-group'>
               <label>Products</label>
-              <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
-              &nbsp;
+              <br>
+              <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"><i class="material-icons">cloud_upload</i></button>
               <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
             </div>
-
           </div>
           <div class="product-list-panel" style="flex:1;white-space:nowrap;"></div>
         </div>
@@ -157,6 +153,11 @@
     <datalist id="elementidlist"></datalist>
     <datalist id="fieldnamelist"></datalist>
     <datalist id="basketblocklist"></datalist>
+    <datalist id="assetlist">
+      <option>displayproduct</option>
+      <option>displaymessage</option>
+      <option>productfollowcamera</option>
+    </datalist>
 </body>
 
 </html>

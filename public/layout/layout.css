@@ -51,9 +51,12 @@ body {
   border-top-left-radius: 0;
 }
 
-#record_field_list div {
-  display: inline-block;
-  white-space: nowrap;
+.mdl-textfield {
+  width: auto;
+}
+
+#record_field_list .mdl-textfield  {
+  margin-right: 10px;
 }
 
 #record_field_list {
@@ -74,4 +77,22 @@ body {
 
 .mdl-data-table td {
   padding: 0px 8px;
+}
+
+.header-bar {
+  flex:0;
+  padding:5px;
+  border-bottom:solid 1px silver;
+}
+
+.header-bar > div {
+  display: inline-block;
+  margin: 2px 5px;
+  text-align:center;
+}
+
+.button-header-group {
+  border-radius: 25%;
+  border: solid 1px silver;
+  padding: 10px 5px;
 }
