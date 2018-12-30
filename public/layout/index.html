@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Grocery Demo Config</title>
+  <title>Grocery Config</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo.png">
   <script>
@@ -14,49 +14,55 @@
 
 <body>
   <div id="firebase-app-login-page">Loading...</div>
-  <div id="firebase-app-main-page" style="display:none;flex-direction:row;">
+  <div id="firebase-app-main-page" style="display:none;flex-direction:column;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
-    <div style="flex:0">
-      titleBar
-    </div>
-    <div style="width:100%;flex:1;display:flex;">
+    <div style="flex:1;display:flex;flex-direction:row;">
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
-      <div id="demo-layout-panel" style="text-align:center;display:flex">
-        <div style="padding:5px;flex:1">
-          <div style="float:left;padding-bottom:5px;">
-            <label><span>Scene </span><select id="workspaces-select"></select></label>
-            <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i></button>
-            <br>
-            <label><span>New </span><input id="new-workspace-name" /></label>
-            <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
-          </div>
-          <div style="float:right">
-            <button id="clear_scene_btn">Clear Scene</button>
+      <div class="inner-split-view">
+        <div class="inner-split-view-top" style="display:flex;flex-direction:column">
+          <div style="flex:0;padding:5px;background:white;border-bottom:solid 1px silver;">
+            <div style="display:inline-block;white-space:nowrap;">
+              <select id="workspaces-select" style="margin-bottom:.5em;"></select>
+              <button id="remove-workspace-button"><i class="material-icons">delete</i></button>
+            </div>
             &nbsp;
+            <div style="white-space:nowrap;display:inline-block;">
+              <input id="new-workspace-name" />
+              <button id="add-workspace-button"><i class="material-icons">add</i></button>
+            </div>
+            <br>
+            <button id="clear_scene_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">clear_all</i></button>
+            &nbsp;
+
+
+
             <input type="file" class="csv-import-file" style="display:none;" />
-            <button id="import_assets_csv_btn">Import Assets</button>
+            <div style="white-space:nowrap;display:inline-block;">
+              <label>Assets</label>
+              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
+              &nbsp;
+              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
+            </div>
             &nbsp;
-            <button id="import_scene_csv_btn">Import Scene</button>
+            <div style="white-space:nowrap;display:inline-block;">
+              <label>Scene</label>
+              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
+              &nbsp;
+              <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
+            </div>
             &nbsp;
-            <button id="import_products_csv_btn">Import Products</button>
-            <br>
-            <br>
-            <button id="download_asset_csv">Download Assets</button>
-            &nbsp;
-            <button id="download_scene_csv">Download Scene</button>
-            &nbsp;
-            <button id="download_product_csv">Download Products</button>
+            <div style="white-space:nowrap;display:inline-block;">
+              <label>Products</label>
+              <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
+              &nbsp;
+              <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
+            </div>
+
           </div>
-          <hr style="clear:both;margin:5px;">
-          <div>
-            <button id="update_product_fields_post">Upsert Product</button>
-            <select id="select_position_preset" style="float:right;"></select>
-          </div>
+          <div class="product-list-panel" style="flex:1;white-space:nowrap;"></div>
         </div>
-        <div class="inner-split-view" style="flex:1;">
-          <div class="product-list-panel" style="flex:1;overflow-y:scroll;"></div>
-          <div id="record_field_list" style="flex:1;overflow-y:scroll;"></div>
+        <div id="record_field_list" class="mdl-layout__content" style="flex:1">
         </div>
       </div>
     </div>
@@ -141,12 +147,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
     <link rel="stylesheet" href="/global/common.css">
     <link rel="stylesheet" href="/layout/layout.css">

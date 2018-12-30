@@ -106,7 +106,7 @@ class cViewDemo extends bView {
   }
 
   basketAddItem(event) {
-    let btn = event.target;
+    let btn = event.currentTarget;
     let sku = btn.sku;
 
     if (!sku)
@@ -132,7 +132,7 @@ class cViewDemo extends bView {
     }]);
   }
   basketRemoveItem(event) {
-    let btn = event.target;
+    let btn = event.currentTarget;
     let sku = btn.sku;
     let skuIndex = this.skuOrder.indexOf(sku);
 

@@ -13,7 +13,7 @@ class cViewLayout extends bView {
     this.addProjectButton.addEventListener('click', e => this.addProject());
     this.addProjectName = document.querySelector('#new-workspace-name');
 
-    let t = document.querySelector('#demo-layout-panel');
+    let t = document.querySelector('.inner-split-view');
     let b = document.querySelector('.main-canvas-wrapper');
     this.splitInstance = window.Split([b, t], {
       sizes: [40, 60],
@@ -25,7 +25,8 @@ class cViewLayout extends bView {
 
     this.fieldsDom = document.getElementById('record_field_list');
     this.productListDiv = document.querySelector('.product-list-panel');
-    this.splitInstanceInner = window.Split([this.productListDiv, this.fieldsDom], {
+    this.innerSplitTop = document.querySelector('.inner-split-view-top');
+    this.splitInstanceInner = window.Split([this.innerSplitTop, this.fieldsDom], {
       sizes: [50, 50],
       gutterSize: 9,
       direction: 'vertical'
@@ -35,24 +36,40 @@ class cViewLayout extends bView {
     this.download_asset_csv.addEventListener('click', e => this.downloadCSV('asset'));
     this.download_product_csv = document.getElementById('download_product_csv');
     this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
-    this.download_scene_csv = document.getElementById('download_product_csv');
+    this.download_scene_csv = document.getElementById('download_scene_csv');
     this.download_scene_csv.addEventListener('click', e => this.downloadCSV('scene'));
 
     this.clearSceneBtn = document.getElementById('clear_scene_btn');
     this.clearSceneBtn.addEventListener('click', e => this.clearScene());
 
-    this.upsertBtn = document.getElementById('update_product_fields_post');
-    this.upsertBtn.addEventListener('click', e => this.upsertProduct());
-
     this.fieldList = [
-      'name', 'asset', 'displayindex', 'texturepath', 'texturetext', 'basketblock',
+      'name', 'asset', 'displayindex', 'childtype', 'parent',
+      'camerafov', 'cameraheightoffset', 'cameraradius',
+      'cameraacceleration', 'maxcameraspeed', 'camerarotationoffset',
+
+      'texturetext', 'texturepath', 'basketblock',
+      'itemtitle', 'itemprice', 'itemid', 'itemdesc', 'itemcount',
+
       'height', 'width', 'depth',
-      'x', 'y', 'z', 'parent', 'itemtitle', 'itemprice', 'itemid', 'itemdesc', 'itemcount',
-      'cameraacceleration', 'camerafov', 'cameraheightoffset', 'cameramovetime', 'cameraradius', 'maxcameraspeed',
-      'camerarotationoffset', 'runlength', 'introtime', 'finishdelay', 'rx', 'ry', 'rz', 'startx', 'starty', 'startz',
-      'startrx', 'startry', 'startrz', 'cameraname', 'childtype'
+      'x', 'y', 'z', 'rx', 'ry', 'rz', 'startx', 'starty', 'startz',
+      'startrx', 'startry', 'startrz'
     ];
     this.initFieldEdit();
+
+    this.textEditFieldsHide = ['basketblock', 'texturepath', 'itemtitle', 'itemprice', 'itemid', 'itemdesc', 'itemcount',
+      'cameraacceleration', 'camerafov', 'cameraheightoffset', 'cameramovetime', 'cameraradius', 'maxcameraspeed',
+      'camerarotationoffset', 'runlength', 'introtime', 'finishdelay', 'startx', 'starty', 'startz', 'startrx', 'startry',
+      'startrz', 'childtype'
+    ];
+    this.productEditFieldsHide = ['texturetext',
+      'cameraacceleration', 'camerafov', 'cameraheightoffset', 'cameramovetime', 'cameraradius', 'maxcameraspeed',
+      'camerarotationoffset', 'runlength', 'introtime', 'finishdelay', 'startx', 'starty', 'startz', 'startrx', 'startry',
+      'startrz', 'childtype'
+    ];
+    this.cameraEditFieldsHide = ['displayindex', 'texturepath', 'texturetext', 'basketblock', 'height', 'width', 'depth',
+      'itemid', 'itemdesc', 'itemcount', 'itemtitle', 'itemprice'
+    ];
+
     this.productBySKU = {};
     this.skuOrder = [];
     this.basketSKUs = {};
@@ -181,26 +198,75 @@ class cViewLayout extends bView {
     }
   }
   initFieldEdit() {
-  let fDom = this.fieldsDom;
+    let fDom = this.fieldsDom;
 
-    let domHTML = '';
+    this.fieldDivByName = {};
+    fDom.innerHTML = '';
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
       let title = this.fieldList[c];
       let extraText = '';
       if (title === 'texturepath')
         extraText += `<button class="texturepathupload">Upload</button><input type="file" class="texturepathuploadfile" style="display:none;" />&nbsp;`;
+      if (title === 'name')
+        extraText += `<button id="update_product_fields_post" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"><i class="material-icons">publish</i> Upsert</button>`;
+      if (title === 'x')
+        extraText += `<select id="select_position_preset" style="float:right;"></select>`;
 
       let id = 'fieldid' + c.toString();
-      domHTML += `<div class="form-group"><label for="${id}">${this.fieldList[c]}: <input id="${id}" class="form-control fieldinput ${title}edit" list="${this.fieldList[c]}list" />${extraText}</label></div>&nbsp;`;
-    }
+      this.fieldDivByName[title] = document.createElement('div');
+      this.fieldDivByName[title].setAttribute('class', 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label');
+      this.fieldDivByName[title].innerHTML = `<input id="${id}" type="text" class="mdl-textfield__input fieldinput ${title}edit" list="${this.fieldList[c]}list" />` +
+        `<label class="mdl-textfield__label" for="${id}">${this.fieldList[c]}</label>` + `${extraText}&nbsp;`;
 
-    fDom.innerHTML = domHTML;
+      componentHandler.upgradeElement(this.fieldDivByName[title]);
+      fDom.appendChild(this.fieldDivByName[title]);
+    }
 
     this.uploadImageButton = fDom.querySelector('.texturepathupload');
     this.uploadImageEditField = fDom.querySelector('.texturepathedit');
     this.uploadImageFile = fDom.querySelector('.texturepathuploadfile');
     this.uploadImageFile.addEventListener('change', e => this.__uploadImageFile());
     this.uploadImageButton.addEventListener('click', e => this.uploadImageFile.click());
+    this.upsertBtn = document.getElementById('update_product_fields_post');
+    this.upsertBtn.addEventListener('click', e => this.upsertProduct());
+
+    this.assetEditField = fDom.querySelector('.assetedit');
+    this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
+
+    this.heightHR = document.createElement('hr');
+    fDom.insertBefore(this.heightHR, this.fieldDivByName['height']);
+    this.xBR = document.createElement('br');
+    fDom.insertBefore(this.xBR, this.fieldDivByName['x']);
+    this.rxBR = document.createElement('br');
+    fDom.insertBefore(this.rxBR, this.fieldDivByName['rx']);
+    this.startxBR = document.createElement('br');
+    fDom.insertBefore(this.startxBR, this.fieldDivByName['startx']);
+    this.startrxBR = document.createElement('br');
+    fDom.insertBefore(this.startrxBR, this.fieldDivByName['startrx']);
+    this.itempriceBR = document.createElement('br');
+    fDom.insertBefore(this.itempriceBR, this.fieldDivByName['itemprice']);
+
+    this.afterParentHR = document.createElement('hr');
+    fDom.insertBefore(this.afterParentHR, this.fieldDivByName['parent'].nextElementSibling);
+  }
+  updateVisibleEditFields() {
+    let rowsToHide = [];
+    this.xBR.style.display = '';
+    if (this.assetEditField.value === 'displayproduct')
+      rowsToHide = this.productEditFieldsHide;
+    if (this.assetEditField.value === 'displaymessage')
+      rowsToHide = this.textEditFieldsHide;
+    if (this.assetEditField.value === 'productfollowcamera') {
+      this.xBR.style.display = 'none';
+      rowsToHide = this.cameraEditFieldsHide;
+    }
+
+    for (let i in this.fieldDivByName)
+      if (rowsToHide.indexOf(i) !== -1)
+        this.fieldDivByName[i].style.display = 'none';
+      else
+        this.fieldDivByName[i].style.display = '';
+
   }
   __uploadImageFile() {
     let fileBlob = this.uploadImageFile.files[0];
@@ -263,34 +329,34 @@ class cViewLayout extends bView {
         desc = row.itemtitle;
       }
 
-      let rowH = `<td>${row.name}</td>`;
-      rowH += `<td>${itemType}</td>`;
+      let rowH = `<td class="mdl-data-table__cell--non-numeric">${row.name}</td>`;
+      rowH += `<td class="mdl-data-table__cell--non-numeric">${itemType}</td>`;
       rowH += `<td>${displayIndex}</td>`;
-      rowH += `<td>${desc}</td>`;
-      rowH += `<td>${row.basketblock}</td>`;
+      rowH += `<td class="mdl-data-table__cell--non-numeric">${desc}</td>`;
       rowH += `<td>${xyz}</td>`;
-      rowH += `<td><button class="fetch" data-id="${row.name}">Fetch</button>`;
+      rowH += `<td class="mdl-data-table__cell--non-numeric"><button class="fetch mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-id="${row.name}"><i class="material-icons">edit</i></button>`;
       if (itemType !== 'camera')
-        rowH += ` <button class="remove" data-id="${row.name}">Remove</button>`;
+        rowH += ` <button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
       rowH += `</td>`;
 
       productListHTML += `<tr>${rowH}</tr>`;
     }
 
-    this.productListDiv.innerHTML = `<table style="width:100%">` +
-      `<tr><th>Name</th><th>Type</th><th>Index</th><th>Desc</th><th>basketblock</th><th>x,y,z</th><th></th></tr>` +
+    this.productListDiv.innerHTML = `<table class="mdl-data-table mdl-js-data-table products-table" style="width:100%">` +
+      `<tr><th class="mdl-data-table__cell--non-numeric">Name</th><th class="mdl-data-table__cell--non-numeric">Type</th><th>Index</th>` +
+      `<th class="mdl-data-table__cell--non-numeric">Desc</th><th>x,y,z</th><th class="mdl-data-table__cell--non-numeric"></th></tr>` +
       `${productListHTML}</table>`;
 
     let fetchBtns = this.productListDiv.querySelectorAll('.fetch');
     for (let c = 0, l = fetchBtns.length; c < l; c++)
       fetchBtns[c].addEventListener('click', e => {
-        return this.fetchProductByName(e.target.dataset.id);
+        return this.fetchProductByName(e.currentTarget.dataset.id);
       });
 
     let removeBtns = this.productListDiv.querySelectorAll('.remove');
     for (let c2 = 0, l2 = removeBtns.length; c2 < l2; c2++)
       removeBtns[c2].addEventListener('click', e => {
-        return this.removeProductByName(e.target.dataset.id);
+        return this.removeProductByName(e.currentTarget.dataset.id);
       });
   }
   removeProductByName(name) {
@@ -331,8 +397,11 @@ class cViewLayout extends bView {
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
       let f = fields[c];
       let v = row[this.fieldList[c]];
-      f.value = (v !== undefined) ? v : '';
+      v = (v !== undefined) ? v : '';
+      f.parentElement.MaterialTextfield.change(v);
     }
+
+    this.updateVisibleEditFields();
   }
   upsertProduct() {
     let fDom = document.getElementById('record_field_list');
@@ -388,30 +457,6 @@ class cViewLayout extends bView {
   _userProfileChange() {
     super._userProfileChange();
 
-  }
-  sceneToggleView() {
-    if (this.viewCollapsed) {
-      this.receiptDisplayPanel.style.right = '';
-      this.collapseButton.innerHTML = '<i class="material-icons">unfold_less</i>';
-      this.displayButtonPanel.style.width = '';
-      this.viewCollapsed = false;
-      //this._setButtonLabels();
-    } else {
-      this.viewCollapsed = true;
-      this.collapseButton.innerHTML = '<i class="material-icons">unfold_more</i>';
-      this.displayButtonPanel.style.width = '6em';
-      this.receiptDisplayPanel.style.right = '-50%';
-      this.basketClearButtons();
-    }
-  }
-  sceneToggleControls() {
-    if (!this.controlsShown) {
-      this.controlsShown = true;
-      document.querySelector('.canvas-actions').style.display = 'block';
-    } else {
-      this.controlsShown = false;
-      document.querySelector('.canvas-actions').style.display = 'none';
-    }
   }
   addProject() {
     let newTitle = this.addProjectName.value.trim();

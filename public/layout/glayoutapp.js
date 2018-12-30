@@ -25,4 +25,7 @@ class gLayoutApp extends gAppSuper {
       this._updateApplicationStyle();
     };
   }
+  _updateApplicationStyle() {
+    
+  }
 }

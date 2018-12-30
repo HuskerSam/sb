@@ -21,15 +21,6 @@ body {
   background: white;
 }
 
-#demo-layout-panel {
-  background: rgb(245, 245, 245);
-
-	height: 100%;
-  min-height: 100%;
-	display: flex;
-	flex-direction: column;
-}
-
 .gutter {
   background:  repeating-linear-gradient(
     0deg,
@@ -64,8 +55,23 @@ body {
   display: inline-block;
   white-space: nowrap;
 }
+
 #record_field_list {
   text-align: left;
   padding: 10px;
-  line-height: 2em;
+  overflow-y: scroll;
+}
+
+.product-list-panel {
+  text-align: left;
+  overflow: auto;
+}
+
+* {
+  font-size: 15px;
+  font-family: Helvetica, Arial;
+}
+
+.mdl-data-table td {
+  padding: 0px 8px;
 }
