@@ -1,21 +1,3 @@
-.canvas-actions {
-  display: none;
-  bottom: 3em !important;
-}
-
-.canvas-actions-shown {
-  bottom: initial;
-  display: block;
-  top: -10px;
-}
-
-.canvas-actions .btn-sb-icon.scene-options {
-  display: none;
-}
-
-.canvas-actions .camera-select {
-  display: none;
-}
 
 .option-buttons-panel {
   text-align: center;
@@ -105,4 +87,94 @@ body {
   border-radius: 25%;
   border: solid 1px silver;
   padding: 10px 5px;
+}
+
+
+input[type=range] {
+  -webkit-appearance: none;
+  background: transparent;
+  margin: 0;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  cursor: pointer;
+  background: rgb(0,150,136);
+  height: 1.75em;
+  border: outset .1em silver;
+  border-radius: .25em;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 1.55em;
+  width: 2em;
+  background: rgb(255, 255, 255);
+  -webkit-appearance: none;
+  border-radius: .15em;
+  border: outset .1em silver;
+}
+
+.lightbar-fields-container .light-intensity-user-panel {
+  padding-bottom: 7.4em;
+}
+
+.play-button, .pause-button {
+  position: relative;
+  top: -.25em;
+}
+
+.canvas-actions input.animate-range {}
+
+.selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
+    transform: rotate(-90deg);
+    width: 10em;
+    top: 3.75em;
+    left: -2.35em;
+}
+
+.canvas-actions {
+  display: none;
+  bottom: 3em !important;
+}
+
+.canvas-actions-shown {
+  bottom: initial;
+  display: block;
+  top: -10px;
+}
+.canvas-actions .btn-sb-icon.scene-options {
+  display: none;
+}
+
+.canvas-actions .camera-options-panel {
+    position: absolute;
+    bottom: -1em;
+    left: 1em;
+    line-height: 2em;
+}
+
+.canvas-actions .camera-select {
+  display: none;
+}
+
+.lightbar-fields-container .form-control {
+  display: none;
+}
+
+.lightbar-fields-container {
+  position: absolute;
+  right: 0;
+  bottom: -3em;
+}
+
+.lightbar-fields-container .form-group-container-group {
+  background: none;
+  pointer-events: none;
+  border: none;
+}
+
+.lightbar-fields-container label span {
+  background: silver;
+  padding: .5em;
+  border-radius: .25em;
 }

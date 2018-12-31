@@ -91,6 +91,44 @@ class cViewLayout extends bView {
 
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.canvasActionsDom.classList.add('canvas-actions-shown');
+
+    this.lightBarFields = [ {
+      title: 'Light',
+      fireSetField: 'lightIntensity',
+      helperType: 'singleSlider',
+      rangeMin: '0',
+      rangeMax: '2',
+      rangeStep: '.01',
+      displayType: 'number',
+      group: 'group2',
+      groupClass: 'light-intensity-user-panel'
+    }];
+    this.cameraFieldsContainer = this.canvasActionsDom.querySelector('.lightbar-fields-container');
+
+    this.cameraToolsBtn = document.createElement('button');
+    this.cameraToolsBtn.style.display = 'none';
+    this.cameraTools = new cBandProfileOptions(this.cameraToolsBtn, this.lightBarFields, this.cameraFieldsContainer, this.canvasActionsDom);
+    this.cameraTools.fireFields.values = gAPPP.a.profile;
+    this.cameraTools.activate();
+
+    this.cameraExtrasArea = document.getElementById('extra-options-camera-area');
+    this.cameraExtrasArea.innerHTML =
+    `<label class="mdl-switch mdl-js-switch" for="auto-move-camera" id="auto-move-camera-component">
+      <input type="checkbox" id="auto-move-camera" class="mdl-switch__input" checked>
+      <span class="mdl-switch__label">Auto move camera</span>
+    </label>`;
+    componentHandler.upgradeElement(document.getElementById('auto-move-camera-component'));
+    this.autoMoveCameraInput = document.getElementById('auto-move-camera');
+    this.autoMoveCameraInput.addEventListener('input', () => this.toggleAutoMoveCamera());
+  }
+  toggleAutoMoveCamera() {
+    if (this.autoMoveCameraInput.checked) {
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.cameraChangeHandler();
+    } else {
+      this.canvasHelper.cameraSelect.selectedIndex = 0;
+      this.canvasHelper.cameraChangeHandler();
+    }
   }
   _animReady() {
     if (this.cameraShown)
@@ -203,7 +241,7 @@ class cViewLayout extends bView {
     btn.setAttribute('id', 'update_product_fields_post');
     btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary');
     btn.style.float = 'right';
-    btn.innerHTML = '<i class="material-icons">publish</i> Upsert';
+    btn.innerHTML = '<i class="material-icons">publish</i> Upsert(name)';
     componentHandler.upgradeElement(btn);
     fDom.appendChild(btn);
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
