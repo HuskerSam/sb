@@ -42,7 +42,7 @@ body {
 }
 
 #record_field_list .mdl-textfield {
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
 #record_field_list {
@@ -71,7 +71,6 @@ body {
   flex: 0;
   padding: 5px;
   border-bottom: solid 1px silver;
-  margin-bottom: -2em;
 }
 
 .header-bar>div {
@@ -87,6 +86,8 @@ body {
   border-radius: 25%;
   border: solid 1px silver;
   padding: 5px 3px;
+  position: relative;
+  top: 1em;
 }
 
 .button-header-group label {
@@ -268,4 +269,44 @@ input[type=range]::-webkit-slider-thumb {
   left: 10px;
   width: 35px;
   text-align: center;
+}
+
+.products-table th {
+  height: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  background: rgb(0, 150, 136);
+  padding: .25em;
+  color: white;
+}
+.products-table td {
+  font-size: 16px;
+}
+
+.products-table tbody tr {
+  height: auto;
+}
+
+.mdl-data-table td:first-of-type, .mdl-data-table th:first-of-type {
+  padding-left: .25em;
+  width: 10px;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.mdl-data-table td {
+  width: 1px;
+}
+
+.mdl-data-table th {
+  text-align: center;
+}
+
+.mdl-data-table td:nth-child(2) {
+    text-align: center;
+}
+
+.mdl-data-table td:nth-child(3), .mdl-data-table th:nth-child(3) {
+    width: 90%;
+    text-align: left;
 }

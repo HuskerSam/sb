@@ -91,7 +91,7 @@ class cViewLayout extends bView {
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.canvasActionsDom.classList.add('canvas-actions-shown');
 
-    this.lightBarFields = [ {
+    this.lightBarFields = [{
       title: '<i class="material-icons">wb_sunny</i><span id="light_intensity_value">1</span>',
       fireSetField: 'lightIntensity',
       helperType: 'singleSlider',
@@ -112,7 +112,7 @@ class cViewLayout extends bView {
 
     this.cameraExtrasArea = document.getElementById('extra-options-camera-area');
     this.cameraExtrasArea.innerHTML =
-    `<label class="mdl-switch mdl-js-switch" for="auto-move-camera" id="auto-move-camera-component">
+      `<label class="mdl-switch mdl-js-switch" for="auto-move-camera" id="auto-move-camera-component">
       <input type="checkbox" id="auto-move-camera" class="mdl-switch__input" checked>
       <span class="mdl-switch__label"><i class="material-icons">camera_enchance<i></span>
     </label>`;
@@ -238,9 +238,8 @@ class cViewLayout extends bView {
     fDom.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
     let btn = document.createElement('button');
     btn.setAttribute('id', 'update_product_fields_post');
-    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent');
-    btn.style.float = 'right';
-    btn.innerHTML = '<i class="material-icons">publish</i> Upsert(name)';
+    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent');
+    btn.innerHTML = '<i class="material-icons">publish</i>';
     componentHandler.upgradeElement(btn);
     fDom.appendChild(btn);
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
@@ -254,7 +253,7 @@ class cViewLayout extends bView {
       if (title === 'x') {
         let select = document.createElement('select');
         select.style.position = 'absolute';
-        select.style.top = '0';
+        select.style.top = '-.75em';
         select.style.right = '5px';
         select.style.width = 'auto';
         select.setAttribute('id', 'select-position-preset');
@@ -266,8 +265,8 @@ class cViewLayout extends bView {
       if (title === 'texturepath') {
         let btn = document.createElement('button');
         btn.style.position = 'absolute';
-        btn.style.top = '0';
-        btn.style.right = '0';
+        btn.style.top = '-1.5em';
+        btn.style.left = '75%';
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
         btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary texturepathupload');
         componentHandler.upgradeElement(btn);
@@ -305,9 +304,11 @@ class cViewLayout extends bView {
 
     this.afterParentHR = document.createElement('br');
     fDom.insertBefore(this.afterParentHR, this.fieldDivByName['cameraheightoffset']);
+
+    this.updateVisibleEditFields();
   }
   updateVisibleEditFields() {
-    let rowsToHide = [];
+    let rowsToHide = null;
     this.xBR.style.display = '';
     if (this.assetEditField.value === 'displayproduct')
       rowsToHide = this.productEditFieldsHide;
@@ -318,11 +319,19 @@ class cViewLayout extends bView {
       rowsToHide = this.cameraEditFieldsHide;
     }
 
-    for (let i in this.fieldDivByName)
-      if (rowsToHide.indexOf(i) !== -1)
-        this.fieldDivByName[i].style.display = 'none';
-      else
-        this.fieldDivByName[i].style.display = '';
+    for (let i in this.fieldDivByName) {
+      if (rowsToHide) {
+        if (rowsToHide.indexOf(i) !== -1)
+          this.fieldDivByName[i].style.display = 'none';
+        else
+          this.fieldDivByName[i].style.display = '';
+      } else {
+        if (i !== 'asset' && i !== 'name')
+          this.fieldDivByName[i].style.display = 'none';
+        else
+          this.fieldDivByName[i].style.display = '';
+      }
+    }
 
   }
   __uploadImageFile() {
@@ -347,10 +356,12 @@ class cViewLayout extends bView {
     let sel = document.getElementById('select-position-preset');
     if (positionInfo) {
       let arr = positionInfo.genericBlockData.split('|');
-      let positionHTML = '<option>preset positions</option>';
+      let positionHTML = '<option>presets</option>';
 
-      for (let c = 0, l = arr.length; c < l - 2; c += 3)
-        positionHTML += '<option>' + arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2] + '</option>';
+      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
+        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2];
+        positionHTML += `<option value="${frag}">${(c / 3) + 1} ${frag}</option>`;
+      }
 
       sel.innerHTML = positionHTML;
       sel.addEventListener('input', e => {
@@ -365,6 +376,21 @@ class cViewLayout extends bView {
       })
     }
   }
+  __checkForPosition(x, y, z) {
+    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
+    let sel = document.getElementById('select-position-preset');
+    if (positionInfo) {
+      let arr = positionInfo.genericBlockData.split('|');
+      let positionHTML = '<option>positions</option>';
+
+      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
+        if (arr[c] == x && arr[c + 1] == y && arr[c + 2] == z)
+          return c / 3 + 1;
+      }
+    }
+
+    return -1;
+  }
   updateProductList() {
     if (this.productData.products.length === 0) {
       this.productListDiv.innerHTML = 'No products';
@@ -377,7 +403,6 @@ class cViewLayout extends bView {
       let displayIndex = row.displayindex;
       let itemType = 'text';
       let desc = row.texturetext;
-      let xyz = `${row.x},${row.y},${row.z}`;
 
       if (c === l)
         itemType = 'camera';
@@ -386,37 +411,42 @@ class cViewLayout extends bView {
         desc = row.itemtitle;
       }
 
-      let rowH = `<td class="mdl-data-table__cell--non-numeric">${row.name}</td>`;
-      rowH += `<td class="mdl-data-table__cell--non-numeric">${itemType}</td>`;
-      rowH += `<td>${displayIndex}</td>`;
-      rowH += `<td class="mdl-data-table__cell--non-numeric">${desc}</td>`;
-      rowH += `<td>${xyz}</td>`;
-      rowH += `<td class="mdl-data-table__cell--non-numeric"><button class="fetch mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">edit</i></button>`;
+      let rowH = `<td>`;
       if (itemType !== 'camera')
-        rowH += ` <button class="remove mdl-button mdl-js-button mdl-button--icon" style="color:rgb(66,66,66)" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
+        rowH += ` &nbsp;<button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
       rowH += `</td>`;
+      rowH += `<td>${displayIndex}</td>`;
+      rowH += `<td>${row.name}</td>`;
+      let x = GLOBALUTIL.getNumberOrDefault(row.x, 0).toFixed(1);
+      let y = GLOBALUTIL.getNumberOrDefault(row.y, 0).toFixed(1);
+      let z = GLOBALUTIL.getNumberOrDefault(row.z, 0).toFixed(1);
+      rowH += `<td>${x}</td>`;
+      rowH += `<td>${y}</td>`;
+      rowH += `<td>${z}</td>`;
+      let pos = this.__checkForPosition(row.x, row.y, row.z);
+      rowH += `<td>${ pos > 0 ? '(' + pos + ')' : ''}</td>`;
 
-      productListHTML += `<tr>${rowH}</tr>`;
+      productListHTML += `<tr class="table-row-product-list" data-id="${row.name}">${rowH}</tr>`;
     }
 
     this.productListDiv.innerHTML = `<table class="mdl-data-table mdl-js-data-table products-table" style="width:100%">` +
-      `<tr><th class="mdl-data-table__cell--non-numeric">Name</th><th class="mdl-data-table__cell--non-numeric">Type</th><th>Index</th>` +
-      `<th class="mdl-data-table__cell--non-numeric">Desc</th><th>x,y,z</th><th class="mdl-data-table__cell--non-numeric"></th></tr>` +
+      `<tr><th></th><th>displayindex</th><th>name</th>` +
+      `<th>x</th><th>y</th><th>z</th><th></th></tr>` +
       `${productListHTML}</table>`;
 
-    let fetchBtns = this.productListDiv.querySelectorAll('.fetch');
-    for (let c = 0, l = fetchBtns.length; c < l; c++)
-      fetchBtns[c].addEventListener('click', e => {
+    let tRows = this.productListDiv.querySelectorAll('.table-row-product-list');
+    for (let c = 0, l = tRows.length; c < l; c++)
+      tRows[c].addEventListener('click', e => {
         return this.fetchProductByName(e.currentTarget.dataset.id);
       });
 
     let removeBtns = this.productListDiv.querySelectorAll('.remove');
     for (let c2 = 0, l2 = removeBtns.length; c2 < l2; c2++)
       removeBtns[c2].addEventListener('click', e => {
-        return this.removeProductByName(e.currentTarget.dataset.id);
+        return this.removeProductByName(e.currentTarget.dataset.id, e);
       });
   }
-  removeProductByName(name) {
+  removeProductByName(name, e) {
     gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
       .then(products => {
         let outProducts = []
@@ -427,6 +457,10 @@ class cViewLayout extends bView {
         gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', outProducts)
           .then(() => this.reloadScene())
       });
+
+    if (e) {
+      e.preventDefault();
+    }
   }
   __productByName(name) {
     for (let c = 0, l = this.productData.products.length; c < l; c++)
