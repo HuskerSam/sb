@@ -20,18 +20,18 @@
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
       <div class="inner-split-view">
-        <div class="inner-split-view-top" style="display:flex;flex-direction:column">
+        <div class="inner-split-view-top" style="display:flex;flex-direction:column;color:rgb(66,66,66)">
           <div class="header-bar">
             <div>
-              <div class="mdl-textfield mdl-js-textfield">
+              <div class="mdl-textfield mdl-js-textfield" id="workspaces-select-wrapper">
+                <label style="color:rgb(0,150,136);font-size: 12px;position:absolute;top:.4em;left:0;">Workspace</label>
                 <select id="workspaces-select" class="mdl-textfield__input"></select>
               </div>
               <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">delete</i></button>
-            </div>
-            <div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <br>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
                 <input class="mdl-textfield__input" type="text" id="new-workspace-name">
-                <label class="mdl-textfield__label" for="new-workspace-name">New Scene Name</label>
+                <label class="mdl-textfield__label" for="new-workspace-name">Workspace Name</label>
               </div>
               <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
             </div>
@@ -40,13 +40,13 @@
             <div class="button-header-group">
               <label>Assets</label>
               <br>
-              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"><i class="material-icons">cloud_upload</i></button>
+              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
               <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
             </div>
             <div class="button-header-group">
               <label>Scene</label>
               <br>
-              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"><i class="material-icons">cloud_upload</i></button>
+              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
               <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
             </div>
             <div class='button-header-group'>
@@ -94,22 +94,21 @@
           <div class="lightbar-fields-container"></div>
           <div class="camera-options-panel" style="display:inline-block;">
             <select class="camera-select" style=""></select>
-            <div style="display:inline-block;">
-              <div class="camera-slider-label">Radius</div>
-              <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
-            </div>
-            <br>
-            <div style="display:inline-block;">
+            <div id="fov-camera-bar">
               <div class="camera-slider-label">FOV</div>
               <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
             </div>
-            <br>
             <div style="display:inline-block;">
-              <div class="camera-slider-label">Height</div>
+              <div class="camera-slider-label"><i class="material-icons" style="transform:rotate(90deg)">straighten</i></div>
               <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
             </div>
+            <br>
+            <div style="display:inline-block;">
+              <div class="camera-slider-label"><i class="material-icons">straighten</i></div>
+              <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+            </div>
             <div class="fields-container" style="float:left"></div>
-            <div id="extra-options-camera-area" style="float:left;clear:both;background:silver;border-radius:10px;margin-left:1em;padding:.25em;padding-right:2.5em;"></div>
+            <div id="extra-options-camera-area"></div>
           </div>
         </div>
       </div>

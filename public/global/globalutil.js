@@ -491,6 +491,14 @@ class GUTILImportCSV {
     return Promise.resolve();
   }
   static addCSVDisplayProduct(row) {
+    let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
+    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+
+    if (!parentEle) {
+      console.log('scene (blockFlag) - block not found');
+      return Promise.resolve();
+    }
+
     let promises = [];
     let blockRow = Object.assign({}, row);
     blockRow.asset = 'block';
@@ -507,7 +515,7 @@ class GUTILImportCSV {
     sceneBC.asset = 'blockchild';
     sceneBC.childtype = 'block';
     sceneBC.name = blockRow.name;
-    sceneBC.parent = blockRow.parent;
+    sceneBC.parent = parentEle.title;
     sceneBC.x = blockRow.x;
     sceneBC.y = blockRow.y;
     sceneBC.z = blockRow.z;
@@ -523,11 +531,11 @@ class GUTILImportCSV {
     return Promise.all(promises);
   }
   static addCSVDisplayMessage(row) {
-    let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
+    let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
     let key = gAPPP.a.modelSets['block'].lastKeyLookup;
 
-    if (!ele) {
-      console.log(row.parent, ' - block not found');
+    if (!parentEle) {
+      console.log('scene (blockFlag) - block not found');
       return Promise.resolve();
     }
 
@@ -549,7 +557,7 @@ class GUTILImportCSV {
     cameraBlockBC.asset = 'blockchild';
     cameraBlockBC.name = row.name;
     cameraBlockBC.childtype = 'block';
-    cameraBlockBC.parent = row.parent;
+    cameraBlockBC.parent = parentEle.title;
     cameraBlockBC.rx = row.rx;
     cameraBlockBC.ry = row.ry;
     cameraBlockBC.rz = row.rz;
@@ -800,6 +808,14 @@ class GUTILImportCSV {
     ]);
   }
   static addCSVCamera(row) {
+    let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
+    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+
+    if (!parentEle) {
+      console.log('scene (blockFlag) - block not found');
+      return Promise.resolve();
+    }
+
     let childCSVRows = [];
     let cameraBlock = this.defaultCSVRow();
     cameraBlock.asset = 'block';
@@ -816,7 +832,7 @@ class GUTILImportCSV {
     cameraBlockBC.asset = 'blockchild';
     cameraBlockBC.name = cameraBlock.name;
     cameraBlockBC.childtype = 'block';
-    cameraBlockBC.parent = row.parent;
+    cameraBlockBC.parent = parentEle.title;
     cameraBlockBC.rx = row.startrx;
     cameraBlockBC.ry = row.startry;
     cameraBlockBC.rz = row.startrz;
@@ -827,17 +843,17 @@ class GUTILImportCSV {
 
     let cam = this.defaultCSVRow();
     cam.asset = 'blockchild';
-    cam.cameraacceleration = row.cameraacceleration;
-    cam.camerafov = row.camerafov;
+    cam.cameraacceleration = '.005';
+    cam.camerafov = '0.8';
     cam.cameraname = "demo";
     cam.cameraradius = row.cameraradius;
     cam.cameraheightoffset = row.cameraheightoffset;
-    cam.camerarotationoffset = row.camerarotationoffset;
-    cam.maxcameraspeed = row.maxcameraspeed;
+    cam.camerarotationoffset = '0';
+    cam.maxcameraspeed = '10';
     cam.cameratargetblock = "block:" + cameraBlock.name;
     cam.childtype = 'camera';
     cam.name = row.name;
-    cam.parent = row.parent;
+    cam.parent = parentEle.title;
     cam.rx = row.rx;
     cam.ry = row.ry;
     cam.rz = row.rz;
@@ -863,7 +879,7 @@ class GUTILImportCSV {
       cameraBlockFrame.asset = 'blockchildframe';
       cameraBlockFrame.name = cameraBlock.name;
       cameraBlockFrame.childtype = 'block';
-      cameraBlockFrame.parent = row.parent;
+      cameraBlockFrame.parent = parentEle.title;
       cameraBlockFrame.frameorder = frameOrder.toString();
 
       if (c < l) {
@@ -1165,7 +1181,7 @@ class GUTILImportCSV {
         if (filterKey)
           if (children[i][filterKey] !== filterValue)
             continue;
-      
+
         let blockData = null;
         let blockKey = null;
         if (gAPPP.a.modelSets[childType]) {

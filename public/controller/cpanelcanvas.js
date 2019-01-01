@@ -122,7 +122,8 @@ class cPanelCanvas {
   _updateCameraRangeSlider() {
     let val = this.cameraSliderValue(this.arcRangeSlider.value);
     this.parent.context.camera.radius = val;
-    this.arcRangeSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'Radius: ' + val;
+    val = Number(val).toFixed(2);
+    this.arcRangeSlider.parentElement.querySelector('.camera-slider-label').innerHTML = '<i class="material-icons">straighten</i> ' + val;
   }
   arcRangeSliderChange() {
     let val = this.cameraSliderValue(this.arcRangeSlider.value);
@@ -137,7 +138,8 @@ class cPanelCanvas {
   }
   _updateCameraHeightSlider() {
     this.parent.context.camera.heightOffset = Number(this.heightSlider.value);
-    this.heightSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'Height: ' + this.heightSlider.value;
+    let val = Number(this.heightSlider.value).toFixed(2);
+    this.heightSlider.parentElement.querySelector('.camera-slider-label').innerHTML = '<i class="material-icons" style="transform:rotate(90deg)">straighten</i> ' + val;
   }
   cameraHeightChange() {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -281,7 +283,7 @@ class cPanelCanvas {
 
     if (this.activeAnimation) {
       this.timeLength = total / this.rootBlock.framesHelper.fps;
-      this.animateSliderLabel.innerHTML = 'Time: ' + this.timeE.toFixed(1) + '/' + this.timeLength.toFixed(1) + 's';
+      this.animateSliderLabel.innerHTML = '<i class="material-icons">timer</i> ' + this.timeE.toFixed(1) + '/' + this.timeLength.toFixed(1) + 's';
     } else
       this.animateSliderLabel.innerHTML = '';
   }

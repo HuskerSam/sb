@@ -1,24 +1,21 @@
-
 .option-buttons-panel {
   text-align: center;
   padding: 10px;
 }
 
-.url-text-box {
-}
+.url-text-box {}
 
 body {
   background: white;
 }
 
 .gutter {
-  background:  repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    #ccc 2px,
-    #ccc 3px
-  );
+  background: linear-gradient(0deg,
+    silver,
+    rgb(0, 150, 136),
+    rgb(105, 240, 174),
+    rgb(0, 150, 136),
+    silver);
 }
 
 .gutter.gutter-horizontal {
@@ -26,13 +23,12 @@ body {
   margin-top: 0px;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
-  background:  repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 2px,
-    #ccc 2px,
-    #ccc 4px
-  );
+  background: linear-gradient(90deg,
+    silver,
+    rgb(0, 150, 136),
+    rgb(105, 240, 174),
+    rgb(0, 150, 136),
+    silver);
 }
 
 .gutter.gutter-vertical {
@@ -45,7 +41,7 @@ body {
   width: auto;
 }
 
-#record_field_list .mdl-textfield  {
+#record_field_list .mdl-textfield {
   margin-right: 10px;
 }
 
@@ -72,23 +68,31 @@ body {
 }
 
 .header-bar {
-  flex:0;
-  padding:5px;
-  border-bottom:solid 1px silver;
+  flex: 0;
+  padding: 5px;
+  border-bottom: solid 1px silver;
+  margin-bottom: -2em;
 }
 
-.header-bar > div {
+.header-bar>div {
   display: inline-block;
-  margin: 2px 5px;
-  text-align:center;
+  float: left;
+  margin: 0px 3px;
+  text-align: center;
 }
+
+.header-bar .mdl-textfield {}
 
 .button-header-group {
   border-radius: 25%;
   border: solid 1px silver;
-  padding: 10px 5px;
+  padding: 5px 3px;
 }
 
+.button-header-group label {
+  color: rgb(0, 150, 136);
+  font-size: 12px;
+}
 
 input[type=range] {
   -webkit-appearance: none;
@@ -99,18 +103,18 @@ input[type=range] {
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   cursor: pointer;
-  background: rgb(0,150,136);
-  height: 1.75em;
+  background: rgb(0, 150, 136);
+  height: 2.5em;
   border: outset .1em silver;
-  border-radius: .25em;
+  border-radius: .75em;
 }
 
 input[type=range]::-webkit-slider-thumb {
-  height: 1.55em;
+  height: 2.3em;
   width: 2em;
   background: rgb(255, 255, 255);
   -webkit-appearance: none;
-  border-radius: .15em;
+  border-radius: .75em;
   border: outset .1em silver;
 }
 
@@ -120,16 +124,17 @@ input[type=range]::-webkit-slider-thumb {
 
 .play-button, .pause-button {
   position: relative;
-  top: -.25em;
+  top: -.5em;
+  color: rgb(66, 66, 66) !important;
 }
 
 .canvas-actions input.animate-range {}
 
 .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
-    transform: rotate(-90deg);
-    width: 10em;
-    top: 3.75em;
-    left: -2.35em;
+  transform: rotate(-90deg);
+  width: 10em;
+  top: 3.75em;
+  left: -2.35em;
 }
 
 .canvas-actions {
@@ -142,15 +147,17 @@ input[type=range]::-webkit-slider-thumb {
   display: block;
   top: -10px;
 }
+
 .canvas-actions .btn-sb-icon.scene-options {
   display: none;
 }
 
 .canvas-actions .camera-options-panel {
-    position: absolute;
-    bottom: -1em;
-    left: 1em;
-    line-height: 2em;
+  position: absolute;
+  bottom: -2.5em;
+  left: -.25em;
+  line-height: 3em;
+  pointer-events: none;
 }
 
 .canvas-actions .camera-select {
@@ -163,8 +170,8 @@ input[type=range]::-webkit-slider-thumb {
 
 .lightbar-fields-container {
   position: absolute;
-  right: 0;
-  bottom: -3em;
+  right: -1.25em;
+  top: .5em;
 }
 
 .lightbar-fields-container .form-group-container-group {
@@ -174,7 +181,91 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .lightbar-fields-container label span {
-  background: silver;
-  padding: .5em;
+  background: none;
+  position: absolute;
+  top: .25em;
   border-radius: .25em;
+  color: white;
+  font-size: 30px;
+  z-index: 100;
+  left: -.9em;
+}
+
+#fov-camera-bar {
+  display: none !important;
+}
+
+#extra-options-camera-area {
+  float: left;
+  clear: both;
+  background: rgb(0, 150, 136);
+  color: white;
+  border-radius: 10px;
+  margin-left: .6em;
+  padding: .25em;
+  line-height: 1em;
+  width: 85px;
+}
+
+#workspaces-select-wrapper {
+  position: relative;
+  top: 0em;
+}
+
+#new-workspace-name-wrapper {
+  position: relative;
+  top: -1em
+}
+
+#add-workspace-button {
+  position: relative;
+  top: -.75em;
+}
+
+#remove-workspace-button {
+  position: relative;
+  top: -.15em;
+  left: .15em;
+}
+
+#select-position-preset {
+  background: rgb(0, 150, 136);
+  color: white;
+}
+
+.run-length-label, .camera-slider-label {
+  font-size: 20px;
+  left: .75em;
+}
+
+.mdl-switch__thumb {
+  background: rgb(105, 240, 174);
+}
+
+.mdl-switch.is-checked .mdl-switch__thumb {
+  background: white;
+}
+
+.mdl-switch.is-checked .mdl-switch__track {
+  background: rgba(105, 240, 174, .5);
+}
+
+#auto-move-camera-component .mdl-switch__label {
+  font-size: 20px;
+  top: 3px;
+  width: 1em;
+  overflow: hidden;
+}
+
+#auto-move-camera-component .mdl-switch__label i {
+  width: 1em;
+  overflow: hidden;
+}
+
+#light_intensity_value {
+  font-size: 10px;
+  top: 30px;
+  left: 10px;
+  width: 35px;
+  text-align: center;
 }

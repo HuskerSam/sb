@@ -17,7 +17,7 @@ class cViewLayout extends bView {
     let b = document.querySelector('.main-canvas-wrapper');
     this.splitInstance = window.Split([b, t], {
       sizes: [40, 60],
-      gutterSize: 8,
+      gutterSize: 12,
       direction: 'horizontal',
       onDragEnd: () => gAPPP.resize(),
       onDrag: () => gAPPP.resize()
@@ -28,7 +28,7 @@ class cViewLayout extends bView {
     this.innerSplitTop = document.querySelector('.inner-split-view-top');
     this.splitInstanceInner = window.Split([this.innerSplitTop, this.fieldsDom], {
       sizes: [50, 50],
-      gutterSize: 9,
+      gutterSize: 11,
       direction: 'vertical'
     });
 
@@ -40,12 +40,11 @@ class cViewLayout extends bView {
     this.download_scene_csv.addEventListener('click', e => this.downloadCSV('scene'));
 
     this.fieldList = [
-      'name', 'asset', 'displayindex', 'childtype', 'parent',
-      'camerafov', 'cameraheightoffset', 'cameraradius',
-      'cameraacceleration', 'maxcameraspeed', 'camerarotationoffset',
+      'name', 'asset', 'displayindex',
+      'cameraheightoffset', 'cameraradius', 'cameramovetime',
 
       'texturetext', 'texturepath', 'basketblock',
-      'itemtitle', 'itemprice', 'itemid', 'itemdesc', 'itemcount',
+      'itemtitle', 'itemprice', 'itemid', 'itemdesc',
 
       'height', 'width', 'depth',
       'x', 'y', 'z', 'rx', 'ry', 'rz', 'startx', 'starty', 'startz',
@@ -53,18 +52,18 @@ class cViewLayout extends bView {
     ];
     this.initFieldEdit();
 
-    this.textEditFieldsHide = ['basketblock', 'texturepath', 'itemtitle', 'itemprice', 'itemid', 'itemdesc', 'itemcount',
-      'cameraacceleration', 'camerafov', 'cameraheightoffset', 'cameramovetime', 'cameraradius', 'maxcameraspeed',
-      'camerarotationoffset', 'runlength', 'introtime', 'finishdelay', 'startx', 'starty', 'startz', 'startrx', 'startry',
-      'startrz', 'childtype'
+    this.textEditFieldsHide = ['basketblock', 'texturepath', 'itemtitle', 'itemprice', 'itemid', 'itemdesc',
+      'cameraheightoffset', 'cameramovetime', 'cameraradius',
+      'runlength', 'introtime', 'finishdelay', 'startx', 'starty', 'startz', 'startrx', 'startry',
+      'startrz'
     ];
     this.productEditFieldsHide = ['texturetext',
-      'cameraacceleration', 'camerafov', 'cameraheightoffset', 'cameramovetime', 'cameraradius', 'maxcameraspeed',
-      'camerarotationoffset', 'runlength', 'introtime', 'finishdelay', 'startx', 'starty', 'startz', 'startrx', 'startry',
-      'startrz', 'childtype'
+      'cameraheightoffset', 'cameramovetime', 'cameraradius',
+      'runlength', 'introtime', 'finishdelay', 'startx', 'starty', 'startz', 'startrx', 'startry',
+      'startrz'
     ];
     this.cameraEditFieldsHide = ['displayindex', 'texturepath', 'texturetext', 'basketblock', 'height', 'width', 'depth',
-      'itemid', 'itemdesc', 'itemcount', 'itemtitle', 'itemprice'
+      'itemid', 'itemdesc', 'itemtitle', 'itemprice'
     ];
 
     this.productBySKU = {};
@@ -93,7 +92,7 @@ class cViewLayout extends bView {
     this.canvasActionsDom.classList.add('canvas-actions-shown');
 
     this.lightBarFields = [ {
-      title: 'Light',
+      title: '<i class="material-icons">wb_sunny</i><span id="light_intensity_value">1</span>',
       fireSetField: 'lightIntensity',
       helperType: 'singleSlider',
       rangeMin: '0',
@@ -115,7 +114,7 @@ class cViewLayout extends bView {
     this.cameraExtrasArea.innerHTML =
     `<label class="mdl-switch mdl-js-switch" for="auto-move-camera" id="auto-move-camera-component">
       <input type="checkbox" id="auto-move-camera" class="mdl-switch__input" checked>
-      <span class="mdl-switch__label">Auto move camera</span>
+      <span class="mdl-switch__label"><i class="material-icons">camera_enchance<i></span>
     </label>`;
     componentHandler.upgradeElement(document.getElementById('auto-move-camera-component'));
     this.autoMoveCameraInput = document.getElementById('auto-move-camera');
@@ -239,7 +238,7 @@ class cViewLayout extends bView {
     fDom.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
     let btn = document.createElement('button');
     btn.setAttribute('id', 'update_product_fields_post');
-    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--primary');
+    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent');
     btn.style.float = 'right';
     btn.innerHTML = '<i class="material-icons">publish</i> Upsert(name)';
     componentHandler.upgradeElement(btn);
@@ -258,7 +257,7 @@ class cViewLayout extends bView {
         select.style.top = '0';
         select.style.right = '5px';
         select.style.width = 'auto';
-        select.setAttribute('id', 'select_position_preset');
+        select.setAttribute('id', 'select-position-preset');
         select.setAttribute('class', 'mdl-textfield__input');
         componentHandler.upgradeElement(select);
         this.fieldDivByName[title].appendChild(select);
@@ -270,7 +269,7 @@ class cViewLayout extends bView {
         btn.style.top = '0';
         btn.style.right = '0';
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
-        btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored texturepathupload');
+        btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary texturepathupload');
         componentHandler.upgradeElement(btn);
         this.fieldDivByName[title].appendChild(btn);
         this.fieldDivByName[title].style.position = 'relative;'
@@ -291,7 +290,7 @@ class cViewLayout extends bView {
     this.assetEditField = fDom.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
 
-    this.heightHR = document.createElement('hr');
+    this.heightHR = document.createElement('br');
     fDom.insertBefore(this.heightHR, this.fieldDivByName['height']);
     this.xBR = document.createElement('br');
     fDom.insertBefore(this.xBR, this.fieldDivByName['x']);
@@ -304,8 +303,8 @@ class cViewLayout extends bView {
     this.itempriceBR = document.createElement('br');
     fDom.insertBefore(this.itempriceBR, this.fieldDivByName['itemprice']);
 
-    this.afterParentHR = document.createElement('hr');
-    fDom.insertBefore(this.afterParentHR, this.fieldDivByName['camerafov']);
+    this.afterParentHR = document.createElement('br');
+    fDom.insertBefore(this.afterParentHR, this.fieldDivByName['cameraheightoffset']);
   }
   updateVisibleEditFields() {
     let rowsToHide = [];
@@ -345,7 +344,7 @@ class cViewLayout extends bView {
   }
   updatePositionList() {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
-    let sel = document.getElementById('select_position_preset');
+    let sel = document.getElementById('select-position-preset');
     if (positionInfo) {
       let arr = positionInfo.genericBlockData.split('|');
       let positionHTML = '<option>preset positions</option>';
@@ -394,7 +393,7 @@ class cViewLayout extends bView {
       rowH += `<td>${xyz}</td>`;
       rowH += `<td class="mdl-data-table__cell--non-numeric"><button class="fetch mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">edit</i></button>`;
       if (itemType !== 'camera')
-        rowH += ` <button class="remove mdl-button mdl-js-button mdl-button--icon" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
+        rowH += ` <button class="remove mdl-button mdl-js-button mdl-button--icon" style="color:rgb(66,66,66)" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
       rowH += `</td>`;
 
       productListHTML += `<tr>${rowH}</tr>`;
@@ -515,6 +514,7 @@ class cViewLayout extends bView {
   _userProfileChange() {
     super._userProfileChange();
 
+    document.getElementById('light_intensity_value').innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
   }
   addProject() {
     let newTitle = this.addProjectName.value.trim();
