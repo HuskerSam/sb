@@ -15,7 +15,7 @@
 <body>
   <div id="firebase-app-login-page">Loading...</div>
   <div id="firebase-app-main-page" style="display:none;flex-direction:column;">
-    <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
+    <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
     <div style="flex:1;display:flex;flex-direction:row;">
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
@@ -27,7 +27,7 @@
                 <label style="color:rgb(0,150,136);font-size: 12px;position:absolute;top:.4em;left:0;">Workspace</label>
                 <select id="workspaces-select" class="mdl-textfield__input"></select>
               </div>
-              <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">delete</i></button>
+              <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">delete</i></button>
               <br>
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
                 <input class="mdl-textfield__input" type="text" id="new-workspace-name">
@@ -40,20 +40,20 @@
             <div class="button-header-group">
               <label>Assets</label>
               <br>
-              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
-              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
+              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
+              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
             </div>
             <div class="button-header-group">
               <label>Scene</label>
               <br>
-              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
-              <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
+              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
+              <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
             </div>
             <div class='button-header-group'>
               <label>Products</label>
               <br>
-              <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"><i class="material-icons">cloud_upload</i></button>
-              <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
+              <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+              <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
             </div>
           </div>
           <div class="product-list-panel" style="flex:1;white-space:nowrap;"></div>
@@ -86,7 +86,7 @@
           </div>
           <br>
           <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored play-button"><i class="material-icons">play_arrow</i></button>
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary play-button"><i class="material-icons">play_arrow</i></button>
           <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored pause-button"><i class="material-icons">pause</i></button>
           <div class="run-length-label"></div>
           <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />

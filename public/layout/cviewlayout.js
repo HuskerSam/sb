@@ -238,7 +238,7 @@ class cViewLayout extends bView {
     fDom.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
     let btn = document.createElement('button');
     btn.setAttribute('id', 'update_product_fields_post');
-    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--accent');
+    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary');
     btn.innerHTML = '<i class="material-icons">publish</i>';
     componentHandler.upgradeElement(btn);
     fDom.appendChild(btn);
@@ -255,7 +255,7 @@ class cViewLayout extends bView {
         select.style.position = 'absolute';
         select.style.top = '-.75em';
         select.style.right = '5px';
-        select.style.width = 'auto';
+        select.style.width = '1.5em';
         select.setAttribute('id', 'select-position-preset');
         select.setAttribute('class', 'mdl-textfield__input');
         componentHandler.upgradeElement(select);
@@ -265,10 +265,10 @@ class cViewLayout extends bView {
       if (title === 'texturepath') {
         let btn = document.createElement('button');
         btn.style.position = 'absolute';
-        btn.style.top = '-1.5em';
+        btn.style.top = '-2.5em';
         btn.style.left = '75%';
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
-        btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary texturepathupload');
+        btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab texturepathupload');
         componentHandler.upgradeElement(btn);
         this.fieldDivByName[title].appendChild(btn);
         this.fieldDivByName[title].style.position = 'relative;'
@@ -340,23 +340,20 @@ class cViewLayout extends bView {
     if (!fileBlob)
       return;
 
-    this.uploadImageEditField.value = 'uploading...';
+    this.uploadImageEditField.parentElement.MaterialTextfield.change('Uploading...');
 
     let fireSet = gAPPP.a.modelSets['block'];
     let key = this.productData.sceneId + '/productfiles';
     fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
-      this.uploadImageEditField.value = uploadResult.downloadURL
+      this.uploadImageEditField.parentElement.MaterialTextfield.change(uploadResult.downloadURL);
     });
-
-
-    //    console.log(field, file);
   }
   updatePositionList() {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
     let sel = document.getElementById('select-position-preset');
     if (positionInfo) {
       let arr = positionInfo.genericBlockData.split('|');
-      let positionHTML = '<option>presets</option>';
+      let positionHTML = '<option></option>';
 
       for (let c = 0, l = arr.length; c < l - 2; c += 3) {
         let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2];
@@ -368,12 +365,17 @@ class cViewLayout extends bView {
         let vals = sel.value.split(',');
 
         if (vals.length === 3) {
-          this.fieldsDom.querySelector('.xedit').value = vals[0];
-          this.fieldsDom.querySelector('.yedit').value = vals[1];
-          this.fieldsDom.querySelector('.zedit').value = vals[2];
+          let xd = this.fieldsDom.querySelector('.xedit');
+          let yd = this.fieldsDom.querySelector('.yedit');
+          let zd = this.fieldsDom.querySelector('.zedit');
 
+          xd.parentElement.MaterialTextfield.change(vals[0]);
+          yd.parentElement.MaterialTextfield.change(vals[1]);
+          zd.parentElement.MaterialTextfield.change(vals[2]);
         }
-      })
+
+        sel.selectedIndex = 0;
+      });
     }
   }
   __checkForPosition(x, y, z) {
@@ -495,6 +497,7 @@ class cViewLayout extends bView {
     this.updateVisibleEditFields();
   }
   upsertProduct() {
+    this.canvasHelper.hide();
     let fDom = document.getElementById('record_field_list');
     let fields = fDom.querySelectorAll('.fieldinput');
 
@@ -557,5 +560,8 @@ class cViewLayout extends bView {
       return;
     }
     this._addProject(newTitle, newTitle);
+  }
+  highLightTableRow() {
+    
   }
 }

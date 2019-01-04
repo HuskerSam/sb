@@ -10,25 +10,30 @@ body {
 }
 
 .gutter {
-  background: linear-gradient(0deg,
+  background-image: linear-gradient(0deg,
     silver,
     rgb(0, 150, 136),
-    rgb(105, 240, 174),
+    rgb(255,255,255),
     rgb(0, 150, 136),
     silver);
+    background-size: 10% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgb(240,240,240);
 }
 
 .gutter.gutter-horizontal {
+  background-image: linear-gradient(90deg,
+    silver,
+    rgb(0, 150, 136),
+    rgb(255,255,255),
+    rgb(0, 150, 136),
+    silver);
   cursor: ew-resize;
   margin-top: 0px;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
-  background: linear-gradient(90deg,
-    silver,
-    rgb(0, 150, 136),
-    rgb(105, 240, 174),
-    rgb(0, 150, 136),
-    silver);
+  background-size: 100% 10%;
 }
 
 .gutter.gutter-vertical {
@@ -43,6 +48,7 @@ body {
 
 #record_field_list .mdl-textfield {
   margin-left: 10px;
+  padding: 30px 0px;
 }
 
 #record_field_list {
@@ -69,14 +75,13 @@ body {
 
 .header-bar {
   flex: 0;
-  padding: 5px;
-  border-bottom: solid 1px silver;
+  padding: .25em;
 }
 
 .header-bar>div {
   display: inline-block;
   float: left;
-  margin: 0px 3px;
+  margin: .25em .5em;
   text-align: center;
 }
 
@@ -126,7 +131,6 @@ input[type=range]::-webkit-slider-thumb {
 .play-button, .pause-button {
   position: relative;
   top: -.5em;
-  color: rgb(66, 66, 66) !important;
 }
 
 .canvas-actions input.animate-range {}
@@ -188,7 +192,7 @@ input[type=range]::-webkit-slider-thumb {
   border-radius: .25em;
   color: white;
   font-size: 30px;
-  z-index: 100;
+  z-index: 1;
   left: -.9em;
 }
 
@@ -275,9 +279,8 @@ input[type=range]::-webkit-slider-thumb {
   height: 15px;
   font-size: 16px;
   font-weight: bold;
-  background: rgb(0, 150, 136);
   padding: .25em;
-  color: white;
+  color: rgb(0, 150, 136);
 }
 .products-table td {
   font-size: 16px;
@@ -309,4 +312,8 @@ input[type=range]::-webkit-slider-thumb {
 .mdl-data-table td:nth-child(3), .mdl-data-table th:nth-child(3) {
     width: 90%;
     text-align: left;
+}
+
+.mdl-data-table {
+  border: none;
 }
