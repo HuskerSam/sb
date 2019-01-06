@@ -25,8 +25,8 @@ class cViewLayout extends bView {
 
     this.fieldsDom = document.getElementById('record_field_list');
     this.productListDiv = document.querySelector('.product-list-panel');
-    this.innerSplitTop = document.querySelector('.inner-split-view-top');
-    this.splitInstanceInner = window.Split([this.innerSplitTop, this.fieldsDom], {
+    this.innerSplitTop = document.querySelector('#product-list-field-splitwrapper');
+    this.splitInstanceInner = window.Split([this.productListDiv, this.fieldsDom], {
       sizes: [50, 50],
       gutterSize: 11,
       direction: 'vertical'
@@ -34,10 +34,13 @@ class cViewLayout extends bView {
 
     this.download_asset_csv = document.getElementById('download_asset_csv');
     this.download_asset_csv.addEventListener('click', e => this.downloadCSV('asset'));
-    this.download_product_csv = document.getElementById('download_product_csv');
-    this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
+    //    this.download_product_csv = document.getElementById('download_product_csv');
+    //    this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
     this.download_scene_csv = document.getElementById('download_scene_csv');
     this.download_scene_csv.addEventListener('click', e => this.downloadCSV('scene'));
+
+    this.import_products_csv_expand_btn = document.getElementById('import_products_csv_expand_btn');
+    this.import_products_csv_expand_btn.addEventListener('click', e => this.toggleImportOptions());
 
     this.fieldList = [
       'name', 'asset', 'displayindex',
@@ -119,6 +122,70 @@ class cViewLayout extends bView {
     componentHandler.upgradeElement(document.getElementById('auto-move-camera-component'));
     this.autoMoveCameraInput = document.getElementById('auto-move-camera');
     this.autoMoveCameraInput.addEventListener('input', () => this.toggleAutoMoveCamera());
+    this.infoButton = document.getElementById('help_on_this_demo_btn');
+
+    this.loadAssetsTable();
+  }
+  toggleImportOptions() {
+    if (this.toggledImportOptions) {
+      this.toggledImportOptions = false;
+      document.getElementById('import_product_options').style.display = 'none';
+      document.getElementById('import_asset_options').style.display = 'none';
+      this.import_products_csv_expand_btn.style.color = '';
+      this.import_products_csv_expand_btn.style.backgroundColor = '';
+    } else {
+      this.toggledImportOptions = true;
+      document.getElementById('import_product_options').style.display = '';
+      document.getElementById('import_asset_options').style.display = '';
+
+      this.import_products_csv_expand_btn.style.color = 'black';
+      this.import_products_csv_expand_btn.style.backgroundColor = 'rgb(105, 240, 174)';
+    }
+  }
+  loadAssetsTable() {
+    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows')
+      .then(results => {
+        let data = [];
+        if (results) data = results;
+
+        let columns = [];
+        columns.push({
+          rowHandle: true,
+          formatter: "handle",
+          headerSort: false,
+          frozen: true,
+          width: 30,
+          minWidth: 30
+        });
+
+        for (let c = 0, l = this.fieldList.length; c < l; c++)
+          columns.push({
+            title: this.fieldList[c],
+            field: this.fieldList[c],
+            editor: true,
+            headerSort: false,
+            layoutColumnsOnNewData: true,
+            columnResizing: 'headerOnly'
+          });
+
+        columns[1].frozen = true;
+
+        this.assetTableCTL = new Tabulator("#assets_tab_table", {
+          data,
+          virtualDom: true,
+          height: '100%',
+          width: '100%',
+          movableRows: true,
+          movableColumns: true,
+          selectable: false,
+          layout: "fitData",
+          columns
+        });
+      });
+
+    document.getElementById('ui-assets-tab').addEventListener('click', e => {
+      this.assetTableCTL.redraw(true);
+    })
   }
   toggleAutoMoveCamera() {
     if (this.autoMoveCameraInput.checked) {
@@ -260,7 +327,7 @@ class cViewLayout extends bView {
         select.setAttribute('class', 'mdl-textfield__input');
         componentHandler.upgradeElement(select);
         this.fieldDivByName[title].appendChild(select);
-        this.fieldDivByName[title].style.position = 'relative;'
+        this.fieldDivByName[title].style.position = 'relative';
       }
       if (title === 'texturepath') {
         let btn = document.createElement('button');
@@ -268,7 +335,7 @@ class cViewLayout extends bView {
         btn.style.top = '-2.5em';
         btn.style.left = '75%';
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
-        btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab texturepathupload');
+        btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary texturepathupload');
         componentHandler.upgradeElement(btn);
         this.fieldDivByName[title].appendChild(btn);
         this.fieldDivByName[title].style.position = 'relative;'
@@ -288,6 +355,8 @@ class cViewLayout extends bView {
 
     this.assetEditField = fDom.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
+    this.nameEditField = fDom.querySelector('.nameedit');
+    this.nameEditField.addEventListener('input', e => this.highLightTableRow());
 
     this.heightHR = document.createElement('br');
     fDom.insertBefore(this.heightHR, this.fieldDivByName['height']);
@@ -432,7 +501,7 @@ class cViewLayout extends bView {
     }
 
     this.productListDiv.innerHTML = `<table class="mdl-data-table mdl-js-data-table products-table" style="width:100%">` +
-      `<tr><th></th><th>displayindex</th><th>name</th>` +
+      `<tr><th></th><th></th><th>name</th>` +
       `<th>x</th><th>y</th><th>z</th><th></th></tr>` +
       `${productListHTML}</table>`;
 
@@ -495,9 +564,9 @@ class cViewLayout extends bView {
     }
 
     this.updateVisibleEditFields();
+    this.highLightTableRow();
   }
   upsertProduct() {
-    this.canvasHelper.hide();
     let fDom = document.getElementById('record_field_list');
     let fields = fDom.querySelectorAll('.fieldinput');
 
@@ -506,7 +575,18 @@ class cViewLayout extends bView {
       alert('name required');
       return;
     }
+    let assetType = fields[1].value;
+    if (!assetType) {
+      alert('asset type required');
+      return;
+    }
 
+    if (this.highlightedRow) {
+      if (!confirm('Overwrite ' + name + '?'))
+        return;
+    }
+
+    this.canvasHelper.hide();
     let newRow = {};
     for (let c = 0, l = fields.length; c < l; c++)
       newRow[this.fieldList[c]] = fields[c].value;
@@ -562,6 +642,16 @@ class cViewLayout extends bView {
     this._addProject(newTitle, newTitle);
   }
   highLightTableRow() {
-    
+    let name = this.nameEditField.value;
+    let rows = this.productListDiv.querySelectorAll('tr.table-row-product-list');
+
+    this.highlightedRow = false;
+    for (let c = 0, l = rows.length; c < l; c++) {
+      if (rows[c].dataset.id === name) {
+        rows[c].style.background = 'rgb(200, 250, 250)';
+        this.highlightedRow = true;
+      } else
+        rows[c].style.background = '';
+    }
   }
 }

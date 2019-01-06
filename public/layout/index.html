@@ -19,149 +19,165 @@
     <div style="flex:1;display:flex;flex-direction:row;">
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
-      <div class="inner-split-view">
-        <div class="inner-split-view-top" style="display:flex;flex-direction:column;color:rgb(66,66,66)">
-          <div class="header-bar">
-            <div style="margin-bottom: -2em;">
-              <div class="mdl-textfield mdl-js-textfield" id="workspaces-select-wrapper">
-                <label style="color:rgb(0,150,136);font-size: 12px;position:absolute;top:.4em;left:0;">Workspace</label>
-                <select id="workspaces-select" class="mdl-textfield__input"></select>
-              </div>
-              <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">delete</i></button>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
-                <input class="mdl-textfield__input" type="text" id="new-workspace-name">
-                <label class="mdl-textfield__label" for="new-workspace-name">Workspace Name</label>
-              </div>
-              <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
-            </div>
+      <div class="inner-split-view" style="display:flex;flex-direction:column">
+        <div style="padding:10px;text-align:center;margin-bottom:-30px;overflow:hidden;">
+          <div style="float:left;">
+            <select id="workspaces-select"></select>
+            <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">delete</i></button>
+          </div>
 
-            <input type="file" class="csv-import-file" style="display:none;" />
-            <div class="button-header-group">
-              <label>Assets</label>
-              <br>
-              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
-              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
+          <div style="float:right;">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
+              <input class="mdl-textfield__input" type="text" id="new-workspace-name">
+              <label class="mdl-textfield__label" for="new-workspace-name">Workspace Name</label>
             </div>
-            <div class="button-header-group">
-              <label>Scene</label>
-              <br>
-              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">cloud_upload</i></button>
-              <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
+            <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
+          </div>
+          <button id="import_products_csv_expand_btn" style="margin-top:-3px;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">import_export</i></button>
+        </div>
+        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+          <div class="mdl-tabs__tab-bar">
+            <a href="#ui-products-panel" class="mdl-tabs__tab is-active">Products</a>
+            <a href="#ui-scene-panel" class="mdl-tabs__tab">Scene</a>
+            <a href="#ui-assets-panel" id="ui-assets-tab" class="mdl-tabs__tab">Assets</a>
+            <a href="#ui-options-panel" class="mdl-tabs__tab">Options</a>
+          </div>
+          <div id="ui-options-panel" class="mdl-tabs__panel">
+
+          </div>
+          <input type="file" class="csv-import-file" style="display:none;" />
+          <div id="ui-assets-panel" class="mdl-tabs__panel" style="width:100%;">
+            <div style="flex:0;display:none;" id="import_asset_options">
+              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
             </div>
-            <div class='button-header-group'>
-              <label>Products</label>
-              <br>
-              <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
-              <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab"><i class="material-icons">save_alt</i></button>
+            <div style="flex:1;width:100%;" id="assets_tab_table">
             </div>
           </div>
-          <div class="product-list-panel" style="flex:1;white-space:nowrap;"></div>
-        </div>
-        <div id="record_field_list" class="mdl-layout__content">
+          <div id="ui-scene-panel" class="mdl-tabs__panel">
+            <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+            <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
+          </div>
+          <div id='ui-products-panel' class="mdl-tabs__panel is-active">
+            <div style="flex:0;">
+              <div id="import_product_options" style="display:none;padding:5px">
+                Upload <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+                <a id="download_product_csv" href="adfas" style="float:right;">product.csv</a>
+              </div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;" id="product-list-field-splitwrapper">
+              <div class="product-list-panel"></div>
+              <div id="record_field_list" class="mdl-layout__content"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- CANVAS 3D PLAYER TEMPLATE -->
-    <div id="canvas-d3-player-template" style="display:none;">
-      <canvas class="popup-canvas"></canvas>
-      <div class="video-overlay">
-        <video></video>
-      </div>
-      <div class="canvas-actions">
-        <div class="canvas-play-bar">
-          <div class="scene-options-panel" style="display:none;">
-            <div class="scene-fields-container">
-            </div>
-            <div class="render-log-wrapper" style="display:none;">
-              <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
-              <textarea class="render-log-panel" spellcheck="false"></textarea>
-              <div class="fields-container" style="display:none;"></div>
-            </div>
-            <br>
-            <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
-            <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
-            <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
-            <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+  </div>
+
+
+  <!-- CANVAS 3D PLAYER TEMPLATE -->
+  <div id="canvas-d3-player-template" style="display:none;">
+    <canvas class="popup-canvas"></canvas>
+    <div class="video-overlay">
+      <video></video>
+    </div>
+    <div class="canvas-actions">
+      <div class="canvas-play-bar">
+        <div class="scene-options-panel" style="display:none;">
+          <div class="scene-fields-container">
+          </div>
+          <div class="render-log-wrapper" style="display:none;">
+            <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+            <textarea class="render-log-panel" spellcheck="false"></textarea>
+            <div class="fields-container" style="display:none;"></div>
           </div>
           <br>
-          <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary play-button"><i class="material-icons">play_arrow</i></button>
-          <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored pause-button"><i class="material-icons">pause</i></button>
-          <div class="run-length-label"></div>
-          <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+          <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+          <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+          <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+          <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+        </div>
+        <br>
+        <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary play-button"><i class="material-icons">play_arrow</i></button>
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored pause-button"><i class="material-icons">pause</i></button>
+        <div class="run-length-label"></div>
+        <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
 
-          <div class="lightbar-fields-container"></div>
-          <div class="camera-options-panel" style="display:inline-block;">
-            <select class="camera-select" style=""></select>
-            <div id="fov-camera-bar">
-              <div class="camera-slider-label">FOV</div>
-              <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
-            </div>
-            <div style="display:inline-block;">
-              <div class="camera-slider-label"><i class="material-icons" style="transform:rotate(90deg)">straighten</i></div>
-              <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
-            </div>
-            <br>
-            <div style="display:inline-block;">
-              <div class="camera-slider-label"><i class="material-icons">straighten</i></div>
-              <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
-            </div>
-            <div class="fields-container" style="float:left"></div>
-            <div id="extra-options-camera-area"></div>
+        <div class="lightbar-fields-container"></div>
+        <div class="camera-options-panel" style="display:inline-block;">
+          <select class="camera-select" style=""></select>
+          <div id="fov-camera-bar">
+            <div class="camera-slider-label">FOV</div>
+            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
           </div>
+          <div style="display:inline-block;">
+            <div class="camera-slider-label"><i class="material-icons" style="transform:rotate(90deg)">straighten</i></div>
+            <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+          </div>
+          <br>
+          <div style="display:inline-block;">
+            <div class="camera-slider-label"><i class="material-icons">straighten</i></div>
+            <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+          </div>
+          <div class="fields-container" style="float:left"></div>
+          <div id="extra-options-camera-area"></div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="/global/globalutil.js"></script>
-    <script src="/global/sdatadefinition.js"></script>
-    <script src="/global/text3d.js"></script>
-    <script src="/global/gappsuper.js"></script>
-    <script src="/global/gauthorization.js"></script>
+  <script src="/global/globalutil.js"></script>
+  <script src="/global/sdatadefinition.js"></script>
+  <script src="/global/text3d.js"></script>
+  <script src="/global/gappsuper.js"></script>
+  <script src="/global/gauthorization.js"></script>
 
-    <script src="/webgl/wframes.js"></script>
-    <script src="/webgl/wblock.js"></script>
-    <script src="/webgl/wcontext.js"></script>
-    <script src="/webgl/wgenerate.js"></script>
+  <script src="/webgl/wframes.js"></script>
+  <script src="/webgl/wblock.js"></script>
+  <script src="/webgl/wcontext.js"></script>
+  <script src="/webgl/wgenerate.js"></script>
 
-    <script src="/model/bfirebase.js"></script>
-    <script src="/model/mfirebaselist.js"></script>
-    <script src="/model/mfirebaseprofile.js"></script>
-    <script src="/model/mfirebaseproject.js"></script>
+  <script src="/model/bfirebase.js"></script>
+  <script src="/model/mfirebaselist.js"></script>
+  <script src="/model/mfirebaseprofile.js"></script>
+  <script src="/model/mfirebaseproject.js"></script>
 
-    <script src="/controller/bview.js"></script>
-    <script src="/controller/cpanelcanvas.js"></script>
-    <script src="/controller/cbandprofileoptions.js"></script>
-    <script src="/controller/cpaneldata.js"></script>
-    <script src="/controller/cpanelhelpers.js"></script>
+  <script src="/controller/bview.js"></script>
+  <script src="/controller/cpanelcanvas.js"></script>
+  <script src="/controller/cbandprofileoptions.js"></script>
+  <script src="/controller/cpaneldata.js"></script>
+  <script src="/controller/cpanelhelpers.js"></script>
 
-    <script src="/layout/cviewlayout.js"></script>
-    <script src="/layout/glayoutapp.js"></script>
+  <script src="/layout/cviewlayout.js"></script>
+  <script src="/layout/glayoutapp.js"></script>
 
-    <script src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/3.2.0/babylon.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
-    <script src="/__/firebase/init.js"></script>
+  <script src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/3.2.0/babylon.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+  <script src="/__/firebase/init.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.3.5/split.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
-    <link rel="stylesheet" href="/global/common.css">
-    <link rel="stylesheet" href="/layout/layout.css">
-    <datalist id="sbimageslist"></datalist>
-    <datalist id="elementidlist"></datalist>
-    <datalist id="fieldnamelist"></datalist>
-    <datalist id="basketblocklist"></datalist>
-    <datalist id="assetlist">
-      <option>displayproduct</option>
-      <option>displaymessage</option>
-      <option>productfollowcamera</option>
-    </datalist>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.1.4/dist/js/tabulator.min.js"></script>
+  <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
+  <link rel="stylesheet" href="/global/common.css">
+  <link rel="stylesheet" href="/layout/layout.css">
+  <datalist id="sbimageslist"></datalist>
+  <datalist id="elementidlist"></datalist>
+  <datalist id="fieldnamelist"></datalist>
+  <datalist id="basketblocklist"></datalist>
+  <datalist id="assetlist">
+    <option>displayproduct</option>
+    <option>displaymessage</option>
+    <option>productfollowcamera</option>
+  </datalist>
 </body>
 
 </html>
