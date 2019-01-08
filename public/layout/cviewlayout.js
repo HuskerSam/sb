@@ -32,12 +32,8 @@ class cViewLayout extends bView {
       direction: 'vertical'
     });
 
-    this.download_asset_csv = document.getElementById('download_asset_csv');
-    this.download_asset_csv.addEventListener('click', e => this.downloadCSV('asset'));
     //    this.download_product_csv = document.getElementById('download_product_csv');
     //    this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
-    this.download_scene_csv = document.getElementById('download_scene_csv');
-    this.download_scene_csv.addEventListener('click', e => this.downloadCSV('scene'));
 
     this.import_products_csv_expand_btn = document.getElementById('import_products_csv_expand_btn');
     this.import_products_csv_expand_btn.addEventListener('click', e => this.toggleImportOptions());
@@ -52,6 +48,13 @@ class cViewLayout extends bView {
       'height', 'width', 'depth',
       'x', 'y', 'z', 'rx', 'ry', 'rz', 'startx', 'starty', 'startz',
       'startrx', 'startry', 'startrz'
+    ];
+    this.allColumnList = [
+      'name', 'asset', 'parent', 'childtype', 'shapetype', 'frametime', 'frameorder', 'height', 'width', 'depth', 'itemtitle', 'itemid', 'itemdesc',
+      'itemprice', 'materialname', 'texturepath', 'bmppath', 'color', 'meshpath', 'diffuse', 'ambient', 'emissive', 'scalev', 'scaleu', 'visibility',
+      'x', 'y', 'z', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz', 'basketblock', 'cameratargetblock', 'cameraradius', 'cameraheightoffset', 'cameramovetime',
+      'blockcode', 'displayindex', 'introtime', 'finishdelay', 'runlength', 'startx', 'starty', 'startz', 'startrx', 'startry', 'startrz', 'blockflag',
+      'texturetext', 'texturetextrendersize', 'texture2dfontweight', 'textfontsize', 'textfontfamily', 'textfontcolor', 'genericblockdata'
     ];
     this.initFieldEdit();
 
@@ -72,20 +75,12 @@ class cViewLayout extends bView {
     this.productBySKU = {};
     this.skuOrder = [];
     this.basketSKUs = {};
+    this.editTables = {};
 
     this.importFileDom = document.querySelector('.csv-import-file');
     this.importFileDom.addEventListener('change', e => this.importCSV());
-    this.importAssetsCSVBtn = document.getElementById('import_assets_csv_btn');
     this.importSceneCSVBtn = document.getElementById('import_scene_csv_btn');
     this.importProductsCSVBtn = document.getElementById('import_products_csv_btn');
-    this.importAssetsCSVBtn.addEventListener('click', e => {
-      this.saveCSVType = 'asset';
-      this.importFileDom.click();
-    });
-    this.importSceneCSVBtn.addEventListener('click', e => {
-      this.saveCSVType = 'scene';
-      this.importFileDom.click();
-    });
     this.importProductsCSVBtn.addEventListener('click', e => {
       this.saveCSVType = 'product';
       this.importFileDom.click();
@@ -124,26 +119,29 @@ class cViewLayout extends bView {
     this.autoMoveCameraInput.addEventListener('input', () => this.toggleAutoMoveCamera());
     this.infoButton = document.getElementById('help_on_this_demo_btn');
 
-    this.loadAssetsTable();
+    this.loadDataTable('asset');
+    this.loadDataTable('scene');
   }
   toggleImportOptions() {
     if (this.toggledImportOptions) {
       this.toggledImportOptions = false;
       document.getElementById('import_product_options').style.display = 'none';
       document.getElementById('import_asset_options').style.display = 'none';
+      document.getElementById('import_scene_options').style.display = 'none';
       this.import_products_csv_expand_btn.style.color = '';
       this.import_products_csv_expand_btn.style.backgroundColor = '';
     } else {
       this.toggledImportOptions = true;
       document.getElementById('import_product_options').style.display = '';
+      document.getElementById('import_scene_options').style.display = '';
       document.getElementById('import_asset_options').style.display = '';
 
       this.import_products_csv_expand_btn.style.color = 'black';
       this.import_products_csv_expand_btn.style.backgroundColor = 'rgb(105, 240, 174)';
     }
   }
-  loadAssetsTable() {
-    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows')
+  loadDataTable(tableName) {
+    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows')
       .then(results => {
         let data = [];
         if (results) data = results;
@@ -157,20 +155,66 @@ class cViewLayout extends bView {
           width: 30,
           minWidth: 30
         });
+        columns.push({
+          rowHandle: true,
+          formatter: "rownum",
+          headerSort: false,
+          align: 'center',
+          frozen: true,
+          width: 30
+        });
+        columns.push({
+          formatter: (cell, formatterParams) => {
+            return "<i class='material-icons'>delete</i>";
+          },
+          headerSort: false,
+          frozen: true,
+          align: 'center',
+          tag: 'delete',
+          cellClick: (e, cell) => {
+            cell.getRow().delete();
+            this.__reformatTable(tableName);
+          },
+          width: 30
+        });
+        columns.push({
+          formatter: (cell, formatterParams) => {
+            return "<i class='material-icons'>add</i>";
+          },
+          headerSort: false,
+          frozen: true,
+          align: 'center',
+          tag: 'addBelow',
+          cellClick: (e, cell) => {
+            cell.getTable().addData([{
+                name: ''
+              }], false, cell.getRow())
+              .then(rows => {
+                this.__reformatTable(tableName);
+                rows[0].getCells()[2].edit();
+              })
+          },
+          width: 30
+        });
 
-        for (let c = 0, l = this.fieldList.length; c < l; c++)
+        for (let c = 0, l = this.allColumnList.length; c < l; c++)
           columns.push({
-            title: this.fieldList[c],
-            field: this.fieldList[c],
+            title: this.allColumnList[c],
+            field: this.allColumnList[c],
             editor: true,
             headerSort: false,
             layoutColumnsOnNewData: true,
-            columnResizing: 'headerOnly'
+            columnResizing: 'headerOnly',
+            headerVertical: this.allColumnList[c].length > 4
           });
 
-        columns[1].frozen = true;
+        columns[4].frozen = true;
+        let tCol = columns[4];
+        columns[4] = columns[3];
+        columns[3] = columns[2];
+        columns[2] = tCol;
 
-        this.assetTableCTL = new Tabulator("#assets_tab_table", {
+        this.editTables[tableName] = new Tabulator(`#${tableName}_tab_table`, {
           data,
           virtualDom: true,
           height: '100%',
@@ -179,13 +223,75 @@ class cViewLayout extends bView {
           movableColumns: true,
           selectable: false,
           layout: "fitData",
-          columns
+          columns,
+          dataEdited: data => this.__updateFooterRow(tableName, true),
+          footerElement: '<div class="footer-wrapper">' +
+            `<button id="${tableName}_changes_commit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save</i></button><div id="${tableName}_table_footer"></div>` +
+            `<button id="import_${tableName}_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>` +
+            `&nbsp;<button id="download_${tableName}_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>` +
+            '</div>',
+          rowMoved: (row) => this.__reformatTable(tableName)
         });
+
+        document.getElementById(`import_${tableName}_csv_btn`).addEventListener('click', e => {
+          this.saveCSVType = tableName;
+          this.importFileDom.click();
+        });
+        document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
+        document.getElementById(tableName + '_changes_commit').addEventListener('click', e => this.saveEditTable(tableName, e));
+        document.getElementById(tableName + '_changes_commit_header').addEventListener('click', e => this.saveEditTable(tableName, e));
+
+        this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
+        this.__updateFooterRow(tableName);
       });
 
-    document.getElementById('ui-assets-tab').addEventListener('click', e => {
-      this.assetTableCTL.redraw(true);
-    })
+    document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
+      this.__reformatTable(tableName);
+      this.editTables[tableName].redraw(true);
+    });
+  }
+  saveEditTable(tableName, e) {
+    this.canvasHelper.hide();
+
+    let tbl = this.editTables[tableName];
+    let data = tbl.getData();
+
+    for (let c = 0, l = data.length; c < l; c++)
+      delete data[c][undefined];
+
+
+    gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data)
+      .then(r => this.reloadScene());
+
+    if (e)
+      e.preventDefault();
+  }
+  __reformatTable(tableName) {
+    let tbl = this.editTables[tableName];
+    let rows = tbl.getRows();
+    for (let c = 0, l = rows.length; c < l; c++)
+      rows[c].reformat();
+
+    this.__updateFooterRow(tableName);
+  }
+  __updateFooterRow(tableName) {
+    let tbl = this.editTables[tableName];
+    document.getElementById(tableName + '_table_footer').innerHTML = tbl.getDataCount() + ' rows';
+
+    let setDirty = false;
+    let newCache = JSON.stringify(this.editTables[tableName].getData());
+    if (this.editTables[tableName].cacheData !== newCache)
+      setDirty = true;
+
+
+    if (setDirty){
+      document.getElementById(tableName + '_changes_commit').classList.add('isDirty');
+      document.getElementById(tableName + '_changes_commit_header').style.display = 'inline-block';
+    }
+    else{
+      document.getElementById(tableName + '_changes_commit').classList.remove('isDirty');
+      document.getElementById(tableName + '_changes_commit_header').style.display = 'none';
+    }
   }
   toggleAutoMoveCamera() {
     if (this.autoMoveCameraInput.checked) {
@@ -227,6 +333,8 @@ class cViewLayout extends bView {
     if (!gAPPP.a.profile.selectedWorkspace)
       return;
 
+    this.canvasHelper.hide();
+
     if (clear) {
       gAPPP.a.clearProjectData(gAPPP.a.profile.selectedWorkspace)
         .then(() => setTimeout(() => location.reload(), 1));
@@ -254,23 +362,14 @@ class cViewLayout extends bView {
   }
   importCSV() {
     if (this.importFileDom.files.length > 0) {
+      this.canvasHelper.hide();
 
       Papa.parse(this.importFileDom.files[0], {
         header: true,
         complete: results => {
           if (results.data) {
-            if (this.saveCSVType === 'asset') {
-              gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows', results.data)
+              gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, this.saveCSVType + 'Rows', results.data)
                 .then(r => this.reloadScene());
-            }
-            if (this.saveCSVType === 'product') {
-              gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', results.data)
-                .then(r => this.reloadScene());
-            }
-            if (this.saveCSVType === 'scene') {
-              gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows', results.data)
-                .then(r => this.reloadScene());
-            }
           }
         }
       });

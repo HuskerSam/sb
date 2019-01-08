@@ -38,8 +38,12 @@
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
           <div class="mdl-tabs__tab-bar">
             <a href="#ui-products-panel" class="mdl-tabs__tab is-active">Products</a>
-            <a href="#ui-scene-panel" class="mdl-tabs__tab">Scene</a>
-            <a href="#ui-assets-panel" id="ui-assets-tab" class="mdl-tabs__tab">Assets</a>
+            <a href="#ui-scene-panel" id="ui-scene-tab" class="mdl-tabs__tab">
+              <button id="scene_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
+              Scene</a>
+            <a href="#ui-assets-panel" id="ui-asset-tab" class="mdl-tabs__tab">
+              <button id="asset_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
+              Assets</a>
             <a href="#ui-options-panel" class="mdl-tabs__tab">Options</a>
           </div>
           <div id="ui-options-panel" class="mdl-tabs__panel">
@@ -48,15 +52,19 @@
           <input type="file" class="csv-import-file" style="display:none;" />
           <div id="ui-assets-panel" class="mdl-tabs__panel" style="width:100%;">
             <div style="flex:0;display:none;" id="import_asset_options">
-              <button id="import_assets_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
-              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
+              asset templates
+              <br><br>
             </div>
-            <div style="flex:1;width:100%;" id="assets_tab_table">
+            <div style="flex:1;width:100%;" id="asset_tab_table">
             </div>
           </div>
           <div id="ui-scene-panel" class="mdl-tabs__panel">
-            <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
-            <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
+            <div style="flex:0;display:none;" id="import_scene_options">
+              scene templates
+              <br><br>
+            </div>
+            <div style="flex:1;width:100%;" id="scene_tab_table">
+            </div>
           </div>
           <div id='ui-products-panel' class="mdl-tabs__panel is-active">
             <div style="flex:0;">
@@ -164,8 +172,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css">
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  <link href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css" rel="stylesheet">
-  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.1.4/dist/js/tabulator.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.1.5/css/tabulator.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.1.5/js/tabulator.min.js"></script>
   <canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>
   <link rel="stylesheet" href="/global/common.css">
   <link rel="stylesheet" href="/layout/layout.css">

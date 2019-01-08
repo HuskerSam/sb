@@ -322,3 +322,34 @@ button i.material-icons {
 .mdl-tabs__tab-bar {
   justify-content: left;
 }
+
+#asset_changes_commit, #scene_changes_commit {
+  float: left;
+  color: white;
+  background: rgb(0, 150, 136);
+}
+
+#asset_table_footer, #scene_table_footer, #asset_changes_commit_header, #scene_changes_commit_header {
+  float: right;
+}
+
+#asset_changes_commit_header, #scene_changes_commit_header  {
+  margin-top: 5px;
+  margin-left: 10px;
+  z-index:2;
+}
+
+.footer-wrapper {
+  text-align: center;
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
+  background: rgb(0, 150, 136);
+  color: white;
+}
+
+
+#asset_changes_commit.isDirty, #scene_changes_commit.isDirty, #asset_changes_commit_header, #scene_changes_commit_header {
+  color: black;
+  background: rgb(105, 240, 174);
+}
