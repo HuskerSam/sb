@@ -2,7 +2,7 @@ class cViewLayout extends bView {
   constructor() {
     super();
     this.canvasHelper.cameraShownCallback = () => {
-      this._animReady();
+      this._workspaceLoadedAndInited();
     };
 
     this.workplacesSelect = document.querySelector('#workspaces-select');
@@ -17,7 +17,7 @@ class cViewLayout extends bView {
     let b = document.querySelector('.main-canvas-wrapper');
     this.splitInstance = window.Split([b, t], {
       sizes: [40, 60],
-      gutterSize: 12,
+      gutterSize: 20,
       direction: 'horizontal',
       onDragEnd: () => gAPPP.resize(),
       onDrag: () => gAPPP.resize()
@@ -28,15 +28,19 @@ class cViewLayout extends bView {
     this.innerSplitTop = document.querySelector('#product-list-field-splitwrapper');
     this.splitInstanceInner = window.Split([this.productListDiv, this.fieldsDom], {
       sizes: [50, 50],
-      gutterSize: 11,
+      gutterSize: 19,
       direction: 'vertical'
     });
 
-    //    this.download_product_csv = document.getElementById('download_product_csv');
-    //    this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
+    this.download_product_csv = document.getElementById('download_product_csv');
+    this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
 
     this.import_products_csv_expand_btn = document.getElementById('import_products_csv_expand_btn');
     this.import_products_csv_expand_btn.addEventListener('click', e => this.toggleImportOptions());
+    let closeBtns = document.querySelectorAll('.import-export-inpanel-button');
+    for (let c = 0, l = closeBtns.length; c < l; c++)
+      closeBtns[c].addEventListener('click', e => this.toggleImportOptions());
+
 
     this.fieldList = [
       'name', 'asset', 'displayindex',
@@ -117,10 +121,53 @@ class cViewLayout extends bView {
     componentHandler.upgradeElement(document.getElementById('auto-move-camera-component'));
     this.autoMoveCameraInput = document.getElementById('auto-move-camera');
     this.autoMoveCameraInput.addEventListener('input', () => this.toggleAutoMoveCamera());
-    this.infoButton = document.getElementById('help_on_this_demo_btn');
+
+    this.import_asset_workspaces_select = document.getElementById('import_asset_workspaces_select');
+    this.import_scene_workspaces_select = document.getElementById('import_scene_workspaces_select');
 
     this.loadDataTable('asset');
     this.loadDataTable('scene');
+
+    this.toggledImportOptions = true;
+    this.toggleImportOptions();
+  }
+  _workspaceLoadedAndInited() {
+    if (this.cameraShown)
+      return;
+    this.cameraShown = true;
+    setTimeout(() => {
+      this.productData = GUTILImportCSV.initCSVProducts();
+      this.products = this.productData.products;
+      this.productBySKU = this.productData.productsBySKU;
+
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+      this.updateProductList();
+      this.updatePositionList();
+      this.import_scene_workspaces_select.innerHTML = '<option>Workspaces</option>' + this.workplacesSelect.innerHTML;
+      if (this.workplacesSelect.selectedIndex !== -1) {
+        this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+        this.import_scene_workspaces_select.selectedIndex = 0;
+      }
+      this.import_asset_workspaces_select.innerHTML = '<option>Workspaces</option>' + this.workplacesSelect.innerHTML;
+      if (this.workplacesSelect.selectedIndex !== -1) {
+        this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+        this.import_asset_workspaces_select.selectedIndex = 0;
+      }
+
+      try {
+        this.canvasHelper.playAnimation();
+      } catch (e) {
+        console.log('play anim error', e);
+      }
+
+      let basketListHTML = '';
+      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
+        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
+      document.getElementById('basketblocklist').innerHTML = basketListHTML;
+
+    }, 100);
   }
   toggleImportOptions() {
     if (this.toggledImportOptions) {
@@ -132,9 +179,9 @@ class cViewLayout extends bView {
       this.import_products_csv_expand_btn.style.backgroundColor = '';
     } else {
       this.toggledImportOptions = true;
-      document.getElementById('import_product_options').style.display = '';
-      document.getElementById('import_scene_options').style.display = '';
-      document.getElementById('import_asset_options').style.display = '';
+      document.getElementById('import_product_options').style.display = 'block';
+      document.getElementById('import_scene_options').style.display = 'block';
+      document.getElementById('import_asset_options').style.display = 'block';
 
       this.import_products_csv_expand_btn.style.color = 'black';
       this.import_products_csv_expand_btn.style.backgroundColor = 'rgb(105, 240, 174)';
@@ -151,6 +198,7 @@ class cViewLayout extends bView {
           rowHandle: true,
           formatter: "handle",
           headerSort: false,
+          cssClass: 'row-handle-table-cell',
           frozen: true,
           width: 30,
           minWidth: 30
@@ -170,6 +218,7 @@ class cViewLayout extends bView {
           headerSort: false,
           frozen: true,
           align: 'center',
+          cssClass: 'delete-table-cell',
           tag: 'delete',
           cellClick: (e, cell) => {
             cell.getRow().delete();
@@ -185,6 +234,7 @@ class cViewLayout extends bView {
           frozen: true,
           align: 'center',
           tag: 'addBelow',
+          cssClass: 'add-table-cell',
           cellClick: (e, cell) => {
             cell.getTable().addData([{
                 name: ''
@@ -205,7 +255,8 @@ class cViewLayout extends bView {
             headerSort: false,
             layoutColumnsOnNewData: true,
             columnResizing: 'headerOnly',
-            headerVertical: this.allColumnList[c].length > 4
+            cssClass: this.allColumnList[c].length > 10 ? 'tab-header-cell-large' : '',
+            headerVertical: this.allColumnList[c].length > 5 ? true : false
           });
 
         columns[4].frozen = true;
@@ -227,8 +278,6 @@ class cViewLayout extends bView {
           dataEdited: data => this.__updateFooterRow(tableName, true),
           footerElement: '<div class="footer-wrapper">' +
             `<button id="${tableName}_changes_commit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save</i></button><div id="${tableName}_table_footer"></div>` +
-            `<button id="import_${tableName}_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>` +
-            `&nbsp;<button id="download_${tableName}_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>` +
             '</div>',
           rowMoved: (row) => this.__reformatTable(tableName)
         });
@@ -245,7 +294,11 @@ class cViewLayout extends bView {
         this.__updateFooterRow(tableName);
       });
 
+    this.tabFirstVisits = {};
     document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
+      if (this.tabFirstVisits[tableName])
+        return this.editTables[tableName].redraw();
+      this.tabFirstVisits[tableName] = true;
       this.__reformatTable(tableName);
       this.editTables[tableName].redraw(true);
     });
@@ -284,11 +337,10 @@ class cViewLayout extends bView {
       setDirty = true;
 
 
-    if (setDirty){
+    if (setDirty) {
       document.getElementById(tableName + '_changes_commit').classList.add('isDirty');
       document.getElementById(tableName + '_changes_commit_header').style.display = 'inline-block';
-    }
-    else{
+    } else {
       document.getElementById(tableName + '_changes_commit').classList.remove('isDirty');
       document.getElementById(tableName + '_changes_commit_header').style.display = 'none';
     }
@@ -301,33 +353,6 @@ class cViewLayout extends bView {
       this.canvasHelper.cameraSelect.selectedIndex = 0;
       this.canvasHelper.cameraChangeHandler();
     }
-  }
-  _animReady() {
-    if (this.cameraShown)
-      return;
-    this.cameraShown = true;
-    setTimeout(() => {
-      this.productData = GUTILImportCSV.initCSVProducts();
-      this.products = this.productData.products;
-      this.productBySKU = this.productData.productsBySKU;
-
-      this.canvasHelper.cameraSelect.selectedIndex = 2;
-      this.canvasHelper.noTestError = true;
-      this.canvasHelper.cameraChangeHandler();
-      this.updateProductList();
-      this.updatePositionList();
-      try {
-        this.canvasHelper.playAnimation();
-      } catch (e) {
-        console.log('play anim error', e);
-      }
-
-      let basketListHTML = '';
-      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
-        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-      document.getElementById('basketblocklist').innerHTML = basketListHTML;
-
-    }, 100);
   }
   reloadScene(clear) {
     if (!gAPPP.a.profile.selectedWorkspace)
@@ -368,8 +393,8 @@ class cViewLayout extends bView {
         header: true,
         complete: results => {
           if (results.data) {
-              gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, this.saveCSVType + 'Rows', results.data)
-                .then(r => this.reloadScene());
+            gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, this.saveCSVType + 'Rows', results.data)
+              .then(r => this.reloadScene());
           }
         }
       });

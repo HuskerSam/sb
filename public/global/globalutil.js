@@ -1144,8 +1144,7 @@ class GUTILImportCSV {
       finishDelay,
       cameraOrigRow,
       displayBlocks
-    }
-    console.log(pInfo);
+    };
     return pInfo;
   }
   static findMatchBlock(childType, childName, parentId) {

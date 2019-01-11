@@ -16,27 +16,15 @@
   <div id="firebase-app-login-page">Loading...</div>
   <div id="firebase-app-main-page" style="display:none;flex-direction:column;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
-    <div style="flex:1;display:flex;flex-direction:row;">
+    <div id="main-view-wrapper">
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
       <div class="inner-split-view" style="display:flex;flex-direction:column">
-        <div style="padding:10px;text-align:center;margin-bottom:-30px;overflow:hidden;">
-          <div style="float:left;">
-            <select id="workspaces-select"></select>
-            <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">delete</i></button>
-          </div>
-
-          <div style="float:right;">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
-              <input class="mdl-textfield__input" type="text" id="new-workspace-name">
-              <label class="mdl-textfield__label" for="new-workspace-name">Workspace Name</label>
-            </div>
-            <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
-          </div>
-          <button id="import_products_csv_expand_btn" style="margin-top:-3px;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">import_export</i></button>
-        </div>
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
           <div class="mdl-tabs__tab-bar">
+            <div class="tab-item-wrapper">
+              <select id="workspaces-select"></select>
+            </div>
             <a href="#ui-products-panel" class="mdl-tabs__tab is-active">Products</a>
             <a href="#ui-scene-panel" id="ui-scene-tab" class="mdl-tabs__tab">
               <button id="scene_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
@@ -45,33 +33,72 @@
               <button id="asset_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
               Assets</a>
             <a href="#ui-options-panel" class="mdl-tabs__tab">Options</a>
+            <div class="tab-item-wrapper">
+              <button id="import_products_csv_expand_btn" style="margin-top:-3px;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">import_export</i></button>
+            </div>
           </div>
           <div id="ui-options-panel" class="mdl-tabs__panel">
+            <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">delete</i></button>
+            <div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
+                <input class="mdl-textfield__input" type="text" id="new-workspace-name">
+                <label class="mdl-textfield__label" for="new-workspace-name">Workspace Name</label>
+              </div>
+              <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
+            </div>
 
           </div>
           <input type="file" class="csv-import-file" style="display:none;" />
           <div id="ui-assets-panel" class="mdl-tabs__panel" style="width:100%;">
-            <div style="flex:0;display:none;" id="import_asset_options">
-              asset templates
-              <br><br>
+            <div id="import_asset_options" class="import-export-panel">
+              <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
+
+              <select id="import_asset_templates_select">
+                <option>Templates</option>
+                <option>Produce Assets</option>
+                <option>Bakery Assets</option>
+                <option>Frozen Assets</option>
+                <option>All Assets (big)</option>
+              </select>
+              &nbsp;
+              <select id="import_asset_workspaces_select"></select>
+              &nbsp;
+              <button id="import_asset_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+              &nbsp;
+              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
+
             </div>
             <div style="flex:1;width:100%;" id="asset_tab_table">
             </div>
           </div>
           <div id="ui-scene-panel" class="mdl-tabs__panel">
-            <div style="flex:0;display:none;" id="import_scene_options">
-              scene templates
-              <br><br>
+            <div id="import_scene_options" class="import-export-panel">
+              <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
+              <select id="import_scene_templates_select">
+                <option>Templates</option>
+                <option>Produce Isle</option>
+                <option>Bakery and Deli</option>
+                <option>Frozen Isle</option>
+                <option>Checkout Lane</option>
+                <option>Store Isles with Checkout</option>
+              </select>
+              &nbsp;
+              <select id="import_scene_workspaces_select"></select>
+              &nbsp;
+              <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+              &nbsp;
+              <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
+
             </div>
             <div style="flex:1;width:100%;" id="scene_tab_table">
             </div>
           </div>
           <div id='ui-products-panel' class="mdl-tabs__panel is-active">
-            <div style="flex:0;">
-              <div id="import_product_options" style="display:none;padding:5px">
-                Upload <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
-                <a id="download_product_csv" href="adfas" style="float:right;">product.csv</a>
-              </div>
+            <div id="import_product_options" class="import-export-panel">
+              <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
+
+              <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+              <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
             </div>
             <div style="flex:1;display:flex;flex-direction:column;" id="product-list-field-splitwrapper">
               <div class="product-list-panel"></div>
