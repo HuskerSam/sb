@@ -276,9 +276,6 @@ class cViewLayout extends bView {
           layout: "fitData",
           columns,
           dataEdited: data => this.__updateFooterRow(tableName, true),
-          footerElement: '<div class="footer-wrapper">' +
-            `<button id="${tableName}_changes_commit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save</i></button><div id="${tableName}_table_footer"></div>` +
-            '</div>',
           rowMoved: (row) => this.__reformatTable(tableName)
         });
 
@@ -287,8 +284,9 @@ class cViewLayout extends bView {
           this.importFileDom.click();
         });
         document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
-        document.getElementById(tableName + '_changes_commit').addEventListener('click', e => this.saveEditTable(tableName, e));
+  //      document.getElementById(tableName + '_changes_commit').addEventListener('click', e => this.saveEditTable(tableName, e));
         document.getElementById(tableName + '_changes_commit_header').addEventListener('click', e => this.saveEditTable(tableName, e));
+  //      `<button id="${tableName}_changes_commit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save</i></button><div id="${tableName}_table_footer"></div>` +
 
         this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
         this.__updateFooterRow(tableName);
@@ -329,7 +327,7 @@ class cViewLayout extends bView {
   }
   __updateFooterRow(tableName) {
     let tbl = this.editTables[tableName];
-    document.getElementById(tableName + '_table_footer').innerHTML = tbl.getDataCount() + ' rows';
+//    document.getElementById(tableName + '_table_footer').innerHTML = tbl.getDataCount() + ' rows';
 
     let setDirty = false;
     let newCache = JSON.stringify(this.editTables[tableName].getData());
@@ -338,10 +336,10 @@ class cViewLayout extends bView {
 
 
     if (setDirty) {
-      document.getElementById(tableName + '_changes_commit').classList.add('isDirty');
+  //    document.getElementById(tableName + '_changes_commit').classList.add('isDirty');
       document.getElementById(tableName + '_changes_commit_header').style.display = 'inline-block';
     } else {
-      document.getElementById(tableName + '_changes_commit').classList.remove('isDirty');
+  //    document.getElementById(tableName + '_changes_commit').classList.remove('isDirty');
       document.getElementById(tableName + '_changes_commit_header').style.display = 'none';
     }
   }
