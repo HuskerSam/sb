@@ -21,26 +21,53 @@
 
       <div class="inner-split-view" style="display:none;">
         <div id="workspace-add-panel" style="display:none;">
-          <button id="workspace-add-panel-close-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
-          <div>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
-              <input class="mdl-textfield__input" type="text" id="new-workspace-name">
-              <label class="mdl-textfield__label" for="new-workspace-name">Animation Name</label>
+          <div id="add-panel-wrapper">
+            <button id="workspace-add-panel-close-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
+            <div class="add-panel-item">
+              <span>ASSETS</span>
+              <select id="add_animation_asset_choice">
+                <option>Current</option>
+                <option>Animation</option>
+                <option>Template</option>
+                <option>None</option>
+              </select>
+              <select id="add_animation_asset_animation" style="display:none;"></select>
+              <select id="add_animation_asset_template" style="display:none;"><option>select template</option></select>
             </div>
-            <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
-            <br>
-            <select>
-
-            </select>
+            <div class="add-panel-item">
+              <span>SCENE</span>
+              <select id="add_animation_scene_choice">
+                <option>Current</option>
+                <option>Animation</option>
+                <option>Template</option>
+                <option>None</option>
+              </select>
+              <select id="add_animation_scene_animation" style="display:none;"></select>
+              <select id="add_animation_scene_template" style="display:none;"><option>select template</option></select>
+            </div>
+            <div class="add-panel-item">
+              <span>PRODUCTS</span>
+              <select id="add_animation_product_choice">
+                <option>None</option>
+                <option>Current</option>
+                <option>Animation</option>
+                <option>Template</option>
+              </select>
+              <select id="add_animation_product_animation" style="display:none;"></select>
+              <select id="add_animation_product_template" style="display:none;"><option>select template</option></select>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:15em;">
+              <input class="mdl-textfield__input" type="text" id="new-workspace-name">
+              <label class="mdl-textfield__label" for="new-workspace-name">New Animation Name</label>
+            </div>
+            <button id="add-workspace-button-template" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
           </div>
         </div>
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="flex:1;">
           <div class="mdl-tabs__tab-bar">
             <div class="tab-item-wrapper">
               <select id="workspaces-select"></select>
-              <button id="add-workspace-button-expand" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
-              <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">delete</i></button>
-              &nbsp;
+              <button id="add-workspace-button-expand" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">more</i></button>
             </div>
             <a href="#ui-products-panel" class="mdl-tabs__tab is-active">Products</a>
             <a href="#ui-scene-panel" id="ui-scene-tab" class="mdl-tabs__tab">

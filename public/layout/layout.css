@@ -36,8 +36,7 @@ input[type=range] {
 input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   cursor: pointer;
-  background: radial-gradient(
-    rgba(0, 150, 136, .5) 40%,
+  background: radial-gradient(rgba(0, 150, 136, .5) 40%,
     rgba(200, 255, 240, .5));
   height: 2.5em;
   border: solid .1em rgb(200, 255, 240);
@@ -208,20 +207,9 @@ input[type=range]::-webkit-slider-thumb {
   border: solid .1em rgb(200, 255, 240)
 }
 
-#new-workspace-name-wrapper {
-  position: relative;
-  top: -1em
-}
-
 #add-workspace-button {
   position: relative;
   top: -.75em;
-}
-
-#remove-workspace-button {
-  position: relative;
-  top: -.15em;
-  left: .15em;
 }
 
 #-position-preset {
@@ -374,7 +362,7 @@ button i.material-icons {
   border-bottom: none;
   color: white;
   padding: 0 10px;
-  background-image: radial-gradient(rgb(0,150,136) 50%, rgb(200, 255, 240));
+  background-image: radial-gradient(rgb(0, 150, 136) 50%, rgb(200, 255, 240));
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
@@ -385,9 +373,9 @@ button i.material-icons {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background-image: radial-gradient(rgb(200, 255, 240) 25%, white);
-  border-top: solid 2px rgb(0,150,136);
-  border-left: solid 1px rgb(0,150,136);
-  border-right: solid 1px rgb(0,150,136);
+  border-top: solid 2px rgb(0, 150, 136);
+  border-left: solid 1px rgb(0, 150, 136);
+  border-right: solid 1px rgb(0, 150, 136);
   font-weight: bold;
   color: rgb(0, 150, 136);
 }
@@ -473,8 +461,7 @@ button i.material-icons {
   padding-top: 7.5px;
   padding-left: 5px;
   border-right: solid 0px rgb(200, 255, 240);
-  background-image: radial-gradient(
-    white 30%,
+  background-image: radial-gradient(white 30%,
     rgb(200, 255, 240));
   text-align: center;
 }
@@ -521,8 +508,8 @@ button i.material-icons {
 
 .inner-split-view {
   color: rgb(66, 66, 66);
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 }
 
 .mdl-button--primary.mdl-button--primary.mdl-button--fab {
@@ -583,11 +570,30 @@ select {
 
 #workspace-add-panel {
   padding: 10px;
-  border-radius: 1ex;
-  background: white;
-  border: solid 2px rgb(105, 240, 174);
+  background: linear-gradient(90deg, rgb(255, 255, 255), rgb(105, 240, 174));
 }
 
 #workspace-add-panel-close-button {
   float: right;
+}
+
+#add-panel-wrapper {
+  display: block;
+  text-align: left;
+}
+
+.add-panel-item {
+  color: rgb(0, 150, 136);
+  font-weight: bold;
+}
+
+.add-panel-item span {
+  width: 6.5em;
+  display: inline-block;
+  border-radius: 2ex;
+}
+
+#add-workspace-button-template {
+  color: black;
+  background: rgb(105, 240, 174);
 }

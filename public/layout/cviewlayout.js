@@ -6,11 +6,8 @@ class cViewLayout extends bView {
     };
 
     this.workplacesSelect = document.querySelector('#workspaces-select');
-    this.workplacesRemoveButton = document.querySelector('#remove-workspace-button');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
-    this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
-    this.addProjectButton = document.querySelector('#add-workspace-button');
-  //  this.addProjectButton.addEventListener('click', e => this.addProject());
+
     this.addProjectName = document.querySelector('#new-workspace-name');
 
     let t = document.querySelector('.inner-split-view');
@@ -137,19 +134,55 @@ class cViewLayout extends bView {
 
     this.addViewShown = true;
     this.toggleAddView();
+
+    this.add_animation_asset_animation = document.getElementById('add_animation_asset_animation');
+    this.add_animation_asset_template = document.getElementById('add_animation_asset_template');
+    this.add_animation_asset_choice = document.getElementById('add_animation_asset_choice');
+    this.add_animation_scene_animation = document.getElementById('add_animation_scene_animation');
+    this.add_animation_scene_template = document.getElementById('add_animation_scene_template');
+    this.add_animation_scene_choice = document.getElementById('add_animation_scene_choice');
+    this.add_animation_product_animation = document.getElementById('add_animation_product_animation');
+    this.add_animation_product_template = document.getElementById('add_animation_product_template');
+    this.add_animation_product_choice = document.getElementById('add_animation_product_choice');
+
+    this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
+    this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
+    this.add_animation_product_choice.addEventListener('input', e => this.__updateAddTemplate('product'));
+
+
+
+
+  }
+  __initAddAnimations(type) {
+    this.import_asset_workspaces_select.innerHTML = '<option>Workspaces</option>' + this.workplacesSelect.innerHTML;
+    if (this.workplacesSelect.selectedIndex !== -1) {
+      this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+      this.import_asset_workspaces_select.selectedIndex = 0;
+    }
+  }
+  __updateAddTemplate(type) {
+    let value = this['add_animation_' + type + '_choice'].value;
+
+    this['add_animation_' + type + '_template'].style.display = 'none';
+    this['add_animation_' + type + '_animation'].style.display = 'none';
+
+    if (value === 'Template') {
+      this['add_animation_' + type + '_template'].style.display = 'inline-block';
+    }
+    if (value === 'Animation') {
+      this['add_animation_' + type + '_animation'].style.display = 'inline-block';
+    }
   }
   toggleAddView() {
     if (this.addViewShown) {
       this.addViewShown = false;
       this.addViewToggleButton.classList.remove('button-expanded');
       document.getElementById('workspace-add-panel').style.display = 'none';
-      this.workplacesRemoveButton.style.display = 'none';
     }
     else {
       this.addViewShown = true;
       this.addViewToggleButton.classList.add('button-expanded');
       document.getElementById('workspace-add-panel').style.display = '';
-      this.workplacesRemoveButton.style.display = '';
     }
   }
   _workspaceLoadedAndInited() {
