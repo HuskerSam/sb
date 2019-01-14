@@ -19,11 +19,28 @@
     <div id="main-view-wrapper">
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
-      <div class="inner-split-view" style="display:flex;flex-direction:column">
-        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+      <div class="inner-split-view" style="display:none;">
+        <div id="workspace-add-panel" style="display:none;">
+          <button id="workspace-add-panel-close-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
+          <div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
+              <input class="mdl-textfield__input" type="text" id="new-workspace-name">
+              <label class="mdl-textfield__label" for="new-workspace-name">Animation Name</label>
+            </div>
+            <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
+            <br>
+            <select>
+
+            </select>
+          </div>
+        </div>
+        <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="flex:1;">
           <div class="mdl-tabs__tab-bar">
             <div class="tab-item-wrapper">
               <select id="workspaces-select"></select>
+              <button id="add-workspace-button-expand" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
+              <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">delete</i></button>
+              &nbsp;
             </div>
             <a href="#ui-products-panel" class="mdl-tabs__tab is-active">Products</a>
             <a href="#ui-scene-panel" id="ui-scene-tab" class="mdl-tabs__tab">
@@ -32,18 +49,6 @@
             <a href="#ui-assets-panel" id="ui-asset-tab" class="mdl-tabs__tab">
               <button id="asset_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
               Assets</a>
-            <a href="#ui-options-panel" class="mdl-tabs__tab">Calendar</a>
-          </div>
-          <div id="ui-options-panel" class="mdl-tabs__panel">
-            <button id="remove-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">delete</i></button>
-            <div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="new-workspace-name-wrapper">
-                <input class="mdl-textfield__input" type="text" id="new-workspace-name">
-                <label class="mdl-textfield__label" for="new-workspace-name">Workspace Name</label>
-              </div>
-              <button id="add-workspace-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
-            </div>
-
           </div>
           <button id="import_products_csv_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">import_export</i></button>
           <input type="file" class="csv-import-file" style="display:none;" />

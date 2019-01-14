@@ -10,7 +10,7 @@ class cViewLayout extends bView {
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
     this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
     this.addProjectButton = document.querySelector('#add-workspace-button');
-    this.addProjectButton.addEventListener('click', e => this.addProject());
+  //  this.addProjectButton.addEventListener('click', e => this.addProject());
     this.addProjectName = document.querySelector('#new-workspace-name');
 
     let t = document.querySelector('.inner-split-view');
@@ -130,12 +130,34 @@ class cViewLayout extends bView {
 
     this.toggledImportOptions = true;
     this.toggleImportOptions();
+
+    this.addViewToggleButton = document.getElementById('add-workspace-button-expand');
+    this.addViewToggleButton.addEventListener('click', e => this.toggleAddView());
+    document.querySelector('#workspace-add-panel-close-button').addEventListener('click', e => this.toggleAddView());
+
+    this.addViewShown = true;
+    this.toggleAddView();
+  }
+  toggleAddView() {
+    if (this.addViewShown) {
+      this.addViewShown = false;
+      this.addViewToggleButton.classList.remove('button-expanded');
+      document.getElementById('workspace-add-panel').style.display = 'none';
+      this.workplacesRemoveButton.style.display = 'none';
+    }
+    else {
+      this.addViewShown = true;
+      this.addViewToggleButton.classList.add('button-expanded');
+      document.getElementById('workspace-add-panel').style.display = '';
+      this.workplacesRemoveButton.style.display = '';
+    }
   }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
       return;
     this.cameraShown = true;
     setTimeout(() => {
+      document.querySelector('.inner-split-view').style.display = '';
       this.productData = GUTILImportCSV.initCSVProducts();
       this.products = this.productData.products;
       this.productBySKU = this.productData.productsBySKU;
