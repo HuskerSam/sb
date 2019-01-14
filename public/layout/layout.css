@@ -569,8 +569,9 @@ select {
 }
 
 #workspace-add-panel {
-  padding: 10px;
-  background: linear-gradient(90deg, rgb(255, 255, 255), rgb(105, 240, 174));
+  background: radial-gradient(rgb(255, 255, 255) 45%, rgb(200, 255, 240) 75%);
+  transition: height 300ms;
+  overflow: hidden;
 }
 
 #workspace-add-panel-close-button {
@@ -579,7 +580,8 @@ select {
 
 #add-panel-wrapper {
   display: block;
-  text-align: left;
+  text-align: center;
+  margin: 10px;
 }
 
 .add-panel-item {
@@ -587,8 +589,8 @@ select {
   font-weight: bold;
 }
 
-.add-panel-item span {
-  width: 6.5em;
+.add-panel-item > div {
+  width: 10em;
   display: inline-block;
   border-radius: 2ex;
 }

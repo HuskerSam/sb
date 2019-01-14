@@ -132,7 +132,8 @@ class cViewLayout extends bView {
     this.addViewToggleButton.addEventListener('click', e => this.toggleAddView());
     document.querySelector('#workspace-add-panel-close-button').addEventListener('click', e => this.toggleAddView());
 
-    this.addViewShown = true;
+    this.addViewShown = false;
+    this.toggleAddView();
     this.toggleAddView();
 
     this.add_animation_asset_animation = document.getElementById('add_animation_asset_animation');
@@ -148,16 +149,54 @@ class cViewLayout extends bView {
     this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
     this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
     this.add_animation_product_choice.addEventListener('input', e => this.__updateAddTemplate('product'));
+  }
+  _workspaceLoadedAndInited() {
+    if (this.cameraShown)
+      return;
+    this.cameraShown = true;
+    setTimeout(() => {
+      document.querySelector('.inner-split-view').style.display = '';
+      this.productData = GUTILImportCSV.initCSVProducts();
+      this.products = this.productData.products;
+      this.productBySKU = this.productData.productsBySKU;
 
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+      this.__initAddAnimations('asset');
+      this.__initAddAnimations('scene');
+      this.__initAddAnimations('product');
 
+      this.updateProductList();
+      this.updatePositionList();
+      this.import_scene_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+      if (this.workplacesSelect.selectedIndex !== -1) {
+        this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+        this.import_scene_workspaces_select.selectedIndex = 0;
+      }
+      this.import_asset_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+      if (this.workplacesSelect.selectedIndex !== -1) {
+        this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+        this.import_asset_workspaces_select.selectedIndex = 0;
+      }
 
+      try {
+        this.canvasHelper.playAnimation();
+      } catch (e) {
+        console.log('play anim error', e);
+      }
 
+      let basketListHTML = '';
+      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
+        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
+      document.getElementById('basketblocklist').innerHTML = basketListHTML;
+
+    }, 100);
   }
   __initAddAnimations(type) {
-    this.import_asset_workspaces_select.innerHTML = '<option>Workspaces</option>' + this.workplacesSelect.innerHTML;
+    this[`add_animation_${type}_animation`].innerHTML = this.workplacesSelect.innerHTML;
     if (this.workplacesSelect.selectedIndex !== -1) {
-      this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-      this.import_asset_workspaces_select.selectedIndex = 0;
+      this[`add_animation_${type}_animation`].selectedIndex = 0;
     }
   }
   __updateAddTemplate(type) {
@@ -177,52 +216,15 @@ class cViewLayout extends bView {
     if (this.addViewShown) {
       this.addViewShown = false;
       this.addViewToggleButton.classList.remove('button-expanded');
-      document.getElementById('workspace-add-panel').style.display = 'none';
+      document.getElementById('workspace-add-panel').style.height = '0%';
     }
     else {
       this.addViewShown = true;
       this.addViewToggleButton.classList.add('button-expanded');
-      document.getElementById('workspace-add-panel').style.display = '';
+      document.getElementById('workspace-add-panel').style.height = '25%';
+      document.getElementById('workspace-add-panel').style.display = 'block';
+
     }
-  }
-  _workspaceLoadedAndInited() {
-    if (this.cameraShown)
-      return;
-    this.cameraShown = true;
-    setTimeout(() => {
-      document.querySelector('.inner-split-view').style.display = '';
-      this.productData = GUTILImportCSV.initCSVProducts();
-      this.products = this.productData.products;
-      this.productBySKU = this.productData.productsBySKU;
-
-      this.canvasHelper.cameraSelect.selectedIndex = 2;
-      this.canvasHelper.noTestError = true;
-      this.canvasHelper.cameraChangeHandler();
-      this.updateProductList();
-      this.updatePositionList();
-      this.import_scene_workspaces_select.innerHTML = '<option>Workspaces</option>' + this.workplacesSelect.innerHTML;
-      if (this.workplacesSelect.selectedIndex !== -1) {
-        this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-        this.import_scene_workspaces_select.selectedIndex = 0;
-      }
-      this.import_asset_workspaces_select.innerHTML = '<option>Workspaces</option>' + this.workplacesSelect.innerHTML;
-      if (this.workplacesSelect.selectedIndex !== -1) {
-        this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-        this.import_asset_workspaces_select.selectedIndex = 0;
-      }
-
-      try {
-        this.canvasHelper.playAnimation();
-      } catch (e) {
-        console.log('play anim error', e);
-      }
-
-      let basketListHTML = '';
-      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
-        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-      document.getElementById('basketblocklist').innerHTML = basketListHTML;
-
-    }, 100);
   }
   toggleImportOptions() {
     if (this.toggledImportOptions) {
