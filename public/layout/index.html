@@ -29,7 +29,7 @@
                 <option>Current</option>
                 <option>Animation</option>
                 <option>Template</option>
-                <option>None</option>
+                <option>Empty</option>
               </select>
               <select id="add_animation_asset_animation" style="display:none;"></select>
               <select id="add_animation_asset_template" style="display:none;"><option>select template</option></select>
@@ -40,7 +40,7 @@
                 <option>Current</option>
                 <option>Animation</option>
                 <option>Template</option>
-                <option>None</option>
+                <option>Empty</option>
               </select>
               <select id="add_animation_scene_animation" style="display:none;"></select>
               <select id="add_animation_scene_template" style="display:none;"><option>select template</option></select>
@@ -48,7 +48,7 @@
             <div class="add-panel-item">
               <div>PRODUCTS</div>
               <select id="add_animation_product_choice">
-                <option>None</option>
+                <option>Empty</option>
                 <option>Current</option>
                 <option>Animation</option>
                 <option>Template</option>
@@ -61,6 +61,11 @@
               <label class="mdl-textfield__label" for="new-workspace-name">New Animation Name</label>
             </div>
             <button id="add-workspace-button-template" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
+            &nbsp;
+            &nbsp;
+            <select id="remove_workspace_select_template" style="width:10em;">
+              <option>Delete Animation</option>
+            </select>
           </div>
         </div>
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="flex:1;">
@@ -83,13 +88,7 @@
             <div id="import_asset_options" class="import-export-panel">
               <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
 
-              <select id="import_asset_templates_select">
-                <option>Templates</option>
-                <option>Produce Assets</option>
-                <option>Bakery Assets</option>
-                <option>Frozen Assets</option>
-                <option>All Assets (big)</option>
-              </select>
+              <select id="import_asset_templates_select"></select>
               &nbsp;
               <select id="import_asset_workspaces_select"></select>
               &nbsp;
@@ -104,14 +103,7 @@
           <div id="ui-scene-panel" class="mdl-tabs__panel">
             <div id="import_scene_options" class="import-export-panel">
               <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
-              <select id="import_scene_templates_select">
-                <option>Templates</option>
-                <option>Produce Isle</option>
-                <option>Bakery and Deli</option>
-                <option>Frozen Isle</option>
-                <option>Checkout Lane</option>
-                <option>Store Isles with Checkout</option>
-              </select>
+              <select id="import_scene_templates_select"></select>
               &nbsp;
               <select id="import_scene_workspaces_select"></select>
               &nbsp;

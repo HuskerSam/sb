@@ -73,6 +73,26 @@ class cViewLayout extends bView {
       'itemid', 'itemdesc', 'itemtitle', 'itemprice'
     ];
 
+    this.assetTemplates = [
+      'All Assets',
+      'Produce',
+      'Bakery and Deli',
+      'Frozen'
+    ];
+    this.sceneTemplates = [
+      'Produce',
+      'Bakery and Deli',
+      'Frozen'
+    ];
+    this.productTemplates = [
+      'Bakery and Deli Sales 1',
+      'Bakery and Deli Sales 2',
+      'Frozen Sales 1',
+      'Frozen Sales 2',
+      'Produce Week Sales 1',
+      'Produce Week Sales 2'
+    ];
+
     this.productBySKU = {};
     this.skuOrder = [];
     this.basketSKUs = {};
@@ -138,13 +158,22 @@ class cViewLayout extends bView {
 
     this.add_animation_asset_animation = document.getElementById('add_animation_asset_animation');
     this.add_animation_asset_template = document.getElementById('add_animation_asset_template');
+    this.__initAddTemplates(this.add_animation_asset_template, this.assetTemplates);
     this.add_animation_asset_choice = document.getElementById('add_animation_asset_choice');
     this.add_animation_scene_animation = document.getElementById('add_animation_scene_animation');
     this.add_animation_scene_template = document.getElementById('add_animation_scene_template');
+    this.__initAddTemplates(this.add_animation_scene_template, this.sceneTemplates);
     this.add_animation_scene_choice = document.getElementById('add_animation_scene_choice');
     this.add_animation_product_animation = document.getElementById('add_animation_product_animation');
     this.add_animation_product_template = document.getElementById('add_animation_product_template');
+    this.__initAddTemplates(this.add_animation_product_template, this.productTemplates);
     this.add_animation_product_choice = document.getElementById('add_animation_product_choice');
+
+    this.import_asset_templates_select = document.getElementById('import_asset_templates_select');
+    this.__initAddTemplates(this.import_asset_templates_select, this.assetTemplates, '<option>Template</option>');
+
+    this.import_scene_templates_select = document.getElementById('import_scene_templates_select');
+    this.__initAddTemplates(this.import_scene_templates_select, this.sceneTemplates, '<option>Template</option>');
 
     this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
     this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
@@ -163,9 +192,11 @@ class cViewLayout extends bView {
       this.canvasHelper.cameraSelect.selectedIndex = 2;
       this.canvasHelper.noTestError = true;
       this.canvasHelper.cameraChangeHandler();
-      this.__initAddAnimations('asset');
-      this.__initAddAnimations('scene');
-      this.__initAddAnimations('product');
+      this.__initAddAnimations(`add_animation_asset_animation`);
+      this.__initAddAnimations('add_animation_scene_animation');
+      this.__initAddAnimations('add_animation_product_animation');
+      this.remove_workspace_select_template = document.querySelector('#remove_workspace_select_template');
+      this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
 
       this.updateProductList();
       this.updatePositionList();
@@ -193,11 +224,17 @@ class cViewLayout extends bView {
 
     }, 100);
   }
-  __initAddAnimations(type) {
-    this[`add_animation_${type}_animation`].innerHTML = this.workplacesSelect.innerHTML;
+  __initAddAnimations(thisid, prefixOptionHTML = '') {
+    this[thisid].innerHTML = prefixOptionHTML + this.workplacesSelect.innerHTML;
     if (this.workplacesSelect.selectedIndex !== -1) {
-      this[`add_animation_${type}_animation`].selectedIndex = 0;
+      this[thisid].selectedIndex = 0;
     }
+  }
+  __initAddTemplates(sel, list, htmlPrefix = '') {
+    let html = '';
+    for (let c = 0; c < list.length; c++)
+      html += `<option>${list[c]}</option>`;
+    sel.innerHTML = htmlPrefix + html;
   }
   __updateAddTemplate(type) {
     let value = this['add_animation_' + type + '_choice'].value;
@@ -221,7 +258,7 @@ class cViewLayout extends bView {
     else {
       this.addViewShown = true;
       this.addViewToggleButton.classList.add('button-expanded');
-      document.getElementById('workspace-add-panel').style.height = '25%';
+      document.getElementById('workspace-add-panel').style.height = '190px';
       document.getElementById('workspace-add-panel').style.display = 'block';
 
     }

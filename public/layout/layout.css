@@ -328,6 +328,7 @@ button i.material-icons {
   overflow: hidden;
   position: relative;
   flex-direction: column;
+  background: radial-gradient(at left 40%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
 }
 
 .mdl-tabs__tab-bar {
@@ -362,7 +363,7 @@ button i.material-icons {
   border-bottom: none;
   color: white;
   padding: 0 10px;
-  background-image: radial-gradient(rgb(0, 150, 136) 50%, rgb(200, 255, 240));
+  background-image: radial-gradient(rgb(0, 150, 136) 20%, rgb(200, 255, 240));
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
@@ -538,7 +539,6 @@ select {
 }
 
 .tab-item-wrapper {
-  style: flex:0;
   padding: 0px 5px;
   position: relative;
   top: 5px;
@@ -569,7 +569,7 @@ select {
 }
 
 #workspace-add-panel {
-  background: radial-gradient(rgb(255, 255, 255) 45%, rgb(200, 255, 240) 75%);
+  background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
   transition: height 300ms;
   overflow: hidden;
 }
@@ -580,7 +580,7 @@ select {
 
 #add-panel-wrapper {
   display: block;
-  text-align: center;
+  padding-left: 10px;
   margin: 10px;
 }
 
@@ -592,7 +592,7 @@ select {
 .add-panel-item > div {
   width: 10em;
   display: inline-block;
-  border-radius: 2ex;
+  text-align: left;
 }
 
 #add-workspace-button-template {
