@@ -21,7 +21,7 @@ class cViewLayout extends bView {
     });
 
     this.fieldsDom = document.getElementById('record_field_list');
-    this.productListDiv = document.querySelector('.product-list-panel');
+    this.productListDiv = document.querySelector('#product_tab_table');
     this.innerSplitTop = document.querySelector('#product-list-field-splitwrapper');
     this.splitInstanceInner = window.Split([this.productListDiv, this.fieldsDom], {
       sizes: [50, 50],
@@ -100,12 +100,6 @@ class cViewLayout extends bView {
 
     this.importFileDom = document.querySelector('.csv-import-file');
     this.importFileDom.addEventListener('change', e => this.importCSV());
-    this.importSceneCSVBtn = document.getElementById('import_scene_csv_btn');
-    this.importProductsCSVBtn = document.getElementById('import_products_csv_btn');
-    this.importProductsCSVBtn.addEventListener('click', e => {
-      this.saveCSVType = 'product';
-      this.importFileDom.click();
-    });
 
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.canvasActionsDom.classList.add('canvas-actions-shown');
@@ -144,6 +138,7 @@ class cViewLayout extends bView {
 
     this.loadDataTable('asset');
     this.loadDataTable('scene');
+    this.loadDataTable('product');
 
     this.toggledImportOptions = true;
     this.toggleImportOptions();
@@ -378,9 +373,7 @@ class cViewLayout extends bView {
           this.importFileDom.click();
         });
         document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
-  //      document.getElementById(tableName + '_changes_commit').addEventListener('click', e => this.saveEditTable(tableName, e));
         document.getElementById(tableName + '_changes_commit_header').addEventListener('click', e => this.saveEditTable(tableName, e));
-  //      `<button id="${tableName}_changes_commit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save</i></button><div id="${tableName}_table_footer"></div>` +
 
         this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
         this.__updateFooterRow(tableName);
@@ -421,8 +414,6 @@ class cViewLayout extends bView {
   }
   __updateFooterRow(tableName) {
     let tbl = this.editTables[tableName];
-//    document.getElementById(tableName + '_table_footer').innerHTML = tbl.getDataCount() + ' rows';
-
     let setDirty = false;
     let newCache = JSON.stringify(this.editTables[tableName].getData());
     if (this.editTables[tableName].cacheData !== newCache)
@@ -430,10 +421,8 @@ class cViewLayout extends bView {
 
 
     if (setDirty) {
-  //    document.getElementById(tableName + '_changes_commit').classList.add('isDirty');
       document.getElementById(tableName + '_changes_commit_header').style.display = 'inline-block';
     } else {
-  //    document.getElementById(tableName + '_changes_commit').classList.remove('isDirty');
       document.getElementById(tableName + '_changes_commit_header').style.display = 'none';
     }
   }
@@ -571,8 +560,6 @@ class cViewLayout extends bView {
 
     this.assetEditField = fDom.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
-    this.nameEditField = fDom.querySelector('.nameedit');
-    this.nameEditField.addEventListener('input', e => this.highLightTableRow());
 
     this.heightHR = document.createElement('br');
     fDom.insertBefore(this.heightHR, this.fieldDivByName['height']);
@@ -679,52 +666,22 @@ class cViewLayout extends bView {
     return -1;
   }
   updateProductList() {
-    if (this.productData.products.length === 0) {
-      this.productListDiv.innerHTML = 'No products';
-      return;
-    }
-    let productListHTML = '';
-    for (let c = 0, l = this.productData.products.length; c <= l; c++) {
-      let row = (c === l) ? this.productData.cameraOrigRow : this.productData.products[c].origRow;
 
-      let displayIndex = row.displayindex;
-      let itemType = 'text';
-      let desc = row.texturetext;
 
-      if (c === l)
-        itemType = 'camera';
-      else if (row.asset === 'block') {
-        itemType = 'product';
-        desc = row.itemtitle;
-      }
-
-      let rowH = `<td>`;
-      if (itemType !== 'camera')
-        rowH += ` &nbsp;<button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
-      rowH += `</td>`;
-      rowH += `<td>${displayIndex}</td>`;
-      rowH += `<td>${row.name}</td>`;
+/*
+      rowH += ` &nbsp;<button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
       let x = GLOBALUTIL.getNumberOrDefault(row.x, 0).toFixed(1);
       let y = GLOBALUTIL.getNumberOrDefault(row.y, 0).toFixed(1);
       let z = GLOBALUTIL.getNumberOrDefault(row.z, 0).toFixed(1);
-      rowH += `<td>${x}</td>`;
-      rowH += `<td>${y}</td>`;
-      rowH += `<td>${z}</td>`;
       let pos = this.__checkForPosition(row.x, row.y, row.z);
-      rowH += `<td>${ pos > 0 ? '(' + pos + ')' : ''}</td>`;
+      */
 
-      productListHTML += `<tr class="table-row-product-list" data-id="${row.name}">${rowH}</tr>`;
-    }
 
-    this.productListDiv.innerHTML = `<table class="mdl-data-table mdl-js-data-table products-table" style="width:100%">` +
-      `<tr><th></th><th></th><th>name</th>` +
-      `<th>x</th><th>y</th><th>z</th><th></th></tr>` +
-      `${productListHTML}</table>`;
-
+/*
     let tRows = this.productListDiv.querySelectorAll('.table-row-product-list');
     for (let c = 0, l = tRows.length; c < l; c++)
       tRows[c].addEventListener('click', e => {
-        return this.fetchProductByName(e.currentTarget.dataset.id);
+        return this.showSelectedProduct(e.currentTarget.dataset.id);
       });
 
     let removeBtns = this.productListDiv.querySelectorAll('.remove');
@@ -732,6 +689,7 @@ class cViewLayout extends bView {
       removeBtns[c2].addEventListener('click', e => {
         return this.removeProductByName(e.currentTarget.dataset.id, e);
       });
+      */
   }
   removeProductByName(name, e) {
     gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
@@ -761,7 +719,7 @@ class cViewLayout extends bView {
 
     return null;
   }
-  fetchProductByName(name) {
+  showSelectedProduct(name) {
     let fDom = document.getElementById('record_field_list');
     let fields = fDom.querySelectorAll('.fieldinput');
     let p = this.__productByName(name);
@@ -780,7 +738,6 @@ class cViewLayout extends bView {
     }
 
     this.updateVisibleEditFields();
-    this.highLightTableRow();
   }
   upsertProduct() {
     let fDom = document.getElementById('record_field_list');
@@ -811,19 +768,13 @@ class cViewLayout extends bView {
       .then(products => {
         let outProducts = [];
         for (let c = 0, l = products.length; c < l; c++)
-          if (products[c].name !== name && products[c].asset !== 'displayfinalize')
+          if (products[c].name !== name)
             outProducts.push(products[c]);
 
         if (newRow.asset === 'productfollowcamera') {
           outProducts.push(newRow);
-          outProducts.push({
-            asset: 'displayfinalize'
-          });
         } else {
           outProducts.unshift(newRow);
-          outProducts.push({
-            asset: 'displayfinalize'
-          });
         }
 
         gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', outProducts)
@@ -856,18 +807,5 @@ class cViewLayout extends bView {
       return;
     }
     this._addProject(newTitle, newTitle);
-  }
-  highLightTableRow() {
-    let name = this.nameEditField.value;
-    let rows = this.productListDiv.querySelectorAll('tr.table-row-product-list');
-
-    this.highlightedRow = false;
-    for (let c = 0, l = rows.length; c < l; c++) {
-      if (rows[c].dataset.id === name) {
-        rows[c].style.background = 'rgb(200, 250, 250)';
-        this.highlightedRow = true;
-      } else
-        rows[c].style.background = '';
-    }
   }
 }

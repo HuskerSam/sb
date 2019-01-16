@@ -74,7 +74,9 @@
               <select id="workspaces-select"></select>
               <button id="add-workspace-button-expand" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">more</i></button>
             </div>
-            <a href="#ui-products-panel" class="mdl-tabs__tab is-active">Products</a>
+            <a href="#ui-products-panel" id="ui-product-tab" class="mdl-tabs__tab is-active">
+              <button id="product_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
+              Products</a>
             <a href="#ui-scene-panel" id="ui-scene-tab" class="mdl-tabs__tab">
               <button id="scene_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
               Scene</a>
@@ -87,7 +89,6 @@
           <div id="ui-assets-panel" class="mdl-tabs__panel" style="width:100%;">
             <div id="import_asset_options" class="import-export-panel">
               <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
-
               <select id="import_asset_templates_select"></select>
               &nbsp;
               <select id="import_asset_workspaces_select"></select>
@@ -95,7 +96,6 @@
               <button id="import_asset_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
               &nbsp;
               <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
-
             </div>
             <div style="flex:1;width:100%;" id="asset_tab_table">
             </div>
@@ -118,13 +118,17 @@
           <div id='ui-products-panel' class="mdl-tabs__panel is-active">
             <div id="import_product_options" class="import-export-panel">
               <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
-
-              <button id="import_products_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+              <select id="import_product_templates_select"></select>
+              &nbsp;
+              <select id="import_product_workspaces_select"></select>
+              &nbsp;
+              <button id="import_product_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
+              &nbsp;
               <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
             </div>
             <div style="flex:1;display:flex;flex-direction:column;" id="product-list-field-splitwrapper">
-              <div class="product-list-panel"></div>
-              <div id="record_field_list" class="mdl-layout__content"></div>
+              <div id="product_tab_table"></div>
+              <div id="record_field_list"></div>
             </div>
           </div>
         </div>

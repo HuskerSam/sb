@@ -104,11 +104,6 @@ input[type=range]::-webkit-slider-thumb {
   flex: 1;
 }
 
-.product-list-panel {
-  text-align: left;
-  overflow: auto;
-}
-
 * {
   font-size: 15px;
   font-family: Helvetica, Arial;
@@ -342,17 +337,15 @@ button i.material-icons {
   background: rgb(0, 150, 136);
 }
 
-#asset_table_footer, #scene_table_footer, #asset_changes_commit_header, #scene_changes_commit_header {
+#asset_changes_commit_header, #scene_changes_commit_header, #product_changes_commit_header {
   float: right;
   padding-top: 10px;
   font-weight: normal;
-  color: rgb(0, 150, 136);
-}
-
-#asset_changes_commit_header, #scene_changes_commit_header {
   margin-top: 5px;
   margin-left: 10px;
   z-index: 2;
+  color: black;
+  background: rgb(105, 240, 174);
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab {
@@ -379,11 +372,6 @@ button i.material-icons {
   border-right: solid 1px rgb(0, 150, 136);
   font-weight: bold;
   color: rgb(0, 150, 136);
-}
-
-#asset_changes_commit.isDirty, #scene_changes_commit.isDirty, #asset_changes_commit_header, #scene_changes_commit_header {
-  color: black;
-  background: rgb(105, 240, 174);
 }
 
 .tabulator .tabulator-header .tabulator-frozen.tabulator {
@@ -502,6 +490,10 @@ button i.material-icons {
   background: white;
 }
 
+#product_tab_table {
+  display: block;
+}
+
 .tabulator-row .tabulator-cell.tabulator-editing {
   border-color: rgb(0, 150, 136);
   background: white;
@@ -555,7 +547,7 @@ select {
   position: absolute;
   top: 2.5em;
   left: .5em;
-  z-index: 10;
+  z-index: 2;
 }
 
 #add-workspace-button-expand {
