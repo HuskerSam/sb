@@ -57,6 +57,10 @@ class cViewLayout extends bView {
       'blockcode', 'displayindex', 'introtime', 'finishdelay', 'runlength', 'startx', 'starty', 'startz', 'startrx', 'startry', 'startrz', 'blockflag',
       'texturetext', 'texturetextrendersize', 'texture2dfontweight', 'textfontsize', 'textfontfamily', 'textfontcolor', 'genericblockdata'
     ];
+    this.productColumnList = this.fieldList;
+    this.assetColumnList = this.allColumnList;
+    this.sceneColumnList = this.allColumnList;
+
     this.initFieldEdit();
 
     this.textEditFieldsHide = ['basketblock', 'texturepath', 'itemtitle', 'itemprice', 'itemid', 'itemdesc',
@@ -336,16 +340,17 @@ class cViewLayout extends bView {
           width: 30
         });
 
-        for (let c = 0, l = this.allColumnList.length; c < l; c++)
+        let colList = this[tableName + 'ColumnList'];
+        for (let c = 0, l = colList.length; c < l; c++)
           columns.push({
-            title: this.allColumnList[c],
-            field: this.allColumnList[c],
+            title: colList[c],
+            field: colList[c],
             editor: true,
             headerSort: false,
             layoutColumnsOnNewData: true,
             columnResizing: 'headerOnly',
-            cssClass: this.allColumnList[c].length > 10 ? 'tab-header-cell-large' : '',
-            headerVertical: this.allColumnList[c].length > 5 ? true : false
+            cssClass: colList[c].length > 10 ? 'tab-header-cell-large' : '',
+            headerVertical: colList[c].length > 5 ? true : false
           });
 
         columns[4].frozen = true;

@@ -479,7 +479,7 @@ class GUTILImportCSV {
         return this.addCSVShapeRow(row);
       case 'blockchildframe':
         return this.addCSVBlockChildFrameRow(row);
-      case 'displayfinalize':
+      case 'animationfinalize':
         return this.addCSVDisplayFinalize(row);
       case 'displaymessage':
         return this.addCSVDisplayMessage(row);
