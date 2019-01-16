@@ -396,8 +396,13 @@ class cViewLayout extends bView {
     let tbl = this.editTables[tableName];
     let data = tbl.getData();
 
-    for (let c = 0, l = data.length; c < l; c++)
+    for (let c = 0, l = data.length; c < l; c++) {
       delete data[c][undefined];
+
+      for (let i in data[c])
+        if (data[c][i] === undefined)
+          data[c][i] = '';
+    }
 
 
     gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data)
@@ -455,6 +460,7 @@ class cViewLayout extends bView {
       .then(scene => this.__importRows(scene))
       .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows'))
       .then(products => this.__importRows(products))
+      .then(() => GUTILImportCSV.addCSVDisplayFinalize())
       .then(() => setTimeout(() => location.reload(), 1));
   }
   __importRows(rows) {

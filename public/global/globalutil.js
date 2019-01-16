@@ -466,7 +466,7 @@ class GUTILImportCSV {
     row = Object.assign(defaultRow, row);
     switch (row.asset) {
       case 'displaycamera':
-        return this.addCSVCamera(row);
+        return this.addCSVDisplayCamera(row);
       case 'meshtexture':
         return this.addCSVMeshRow(row);
       case 'block':
@@ -807,7 +807,7 @@ class GUTILImportCSV {
       this.addCSVRow(endFrame)
     ]);
   }
-  static addCSVCamera(row) {
+  static addCSVDisplayCamera(row) {
     let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
     let key = gAPPP.a.modelSets['block'].lastKeyLookup;
 
@@ -866,18 +866,28 @@ class GUTILImportCSV {
     cam.origCameraRow = row;
     childCSVRows.push(cam);
 
-    let productData = this.initCSVProducts(row);
+    return this.addCSVRowList(childCSVRows);
+  }
+  static __addCSVFollowBlock(productData) {
+    let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
+    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
+
+    if (!parentEle) {
+      console.log('scene (blockFlag) - block not found');
+      return Promise.resolve();
+    }
+
+    let cameraRow = productData.cameraOrigRow;
     let frameRows = [];
     let frameOrder = 20;
     let frameTime = productData.introTime;
-    let cpTime = row.cameramovetime ? 'cp' + row.cameramovetime : '';
+    let cpTime = cameraRow.cameramovetime ? 'cp' + cameraRow.cameramovetime : '';
 
     for (let c = 0, l = productData.products.length; c <= l + 1; c++) {
-
       let cameraBlockFrame = this.defaultCSVRow();
 
       cameraBlockFrame.asset = 'blockchildframe';
-      cameraBlockFrame.name = cameraBlock.name;
+      cameraBlockFrame.name = cameraRow.name + '_followblock';
       cameraBlockFrame.childtype = 'block';
       cameraBlockFrame.parent = parentEle.title;
       cameraBlockFrame.frameorder = frameOrder.toString();
@@ -900,15 +910,15 @@ class GUTILImportCSV {
         cameraBlockFrame.sz = p.sz;
         cameraBlockFrame.frametime = (frameTime * 1000).toFixed(0) + cpTime;
       } else {
-        cameraBlockFrame.x = row.x;
-        cameraBlockFrame.y = row.y;
-        cameraBlockFrame.z = row.z;
-        cameraBlockFrame.rx = row.rx;
-        cameraBlockFrame.ry = row.ry;
-        cameraBlockFrame.rz = row.rz;
-        cameraBlockFrame.sx = row.sx;
-        cameraBlockFrame.sy = row.sy;
-        cameraBlockFrame.sz = row.sz;
+        cameraBlockFrame.x = cameraRow.x;
+        cameraBlockFrame.y = cameraRow.y;
+        cameraBlockFrame.z = cameraRow.z;
+        cameraBlockFrame.rx = cameraRow.rx;
+        cameraBlockFrame.ry = cameraRow.ry;
+        cameraBlockFrame.rz = cameraRow.rz;
+        cameraBlockFrame.sx = cameraRow.sx;
+        cameraBlockFrame.sy = cameraRow.sy;
+        cameraBlockFrame.sz = cameraRow.sz;
         if (c === l)
           cameraBlockFrame.frametime = (frameTime * 1000).toFixed(0) + cpTime;
         else
@@ -921,8 +931,7 @@ class GUTILImportCSV {
       frameRows.push(cameraBlockFrame);
     }
 
-    return this.addCSVRowList(childCSVRows)
-      .then(() => this.addCSVRowList(frameRows));
+    return this.addCSVRowList(frameRows);
   }
   static defaultCSVRow() {
     return {
@@ -982,7 +991,7 @@ class GUTILImportCSV {
       z
     };
   }
-  static addCSVBasketProducts(row) {
+  static addCSVBasketProducts() {
     let productInfo = this.initCSVProducts();
     let basketInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'basket');
     let basketName = basketInfo.title;
@@ -1022,8 +1031,9 @@ class GUTILImportCSV {
 
     return Promise.all(promises);
   }
-  static addCSVDisplayFinalize(row) {
+  static addCSVDisplayFinalize() {
     let pInfo = this.initCSVProducts();
+    this.__addCSVFollowBlock(pInfo);
 
     let promises = [];
     for (let c = 0, l = pInfo.products.length; c < l; c++)
@@ -1040,7 +1050,7 @@ class GUTILImportCSV {
       newValue: (pInfo.runLength * 1000).toString()
     }], frameId));
 
-    promises.push(this.addCSVBasketProducts(row));
+    promises.push(this.addCSVBasketProducts());
 
     return Promise.all(promises);
   }
