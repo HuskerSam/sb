@@ -465,7 +465,7 @@ class GUTILImportCSV {
     let defaultRow = this.defaultCSVRow();
     row = Object.assign(defaultRow, row);
     switch (row.asset) {
-      case 'productfollowcamera':
+      case 'displaycamera':
         return this.addCSVCamera(row);
       case 'meshtexture':
         return this.addCSVMeshRow(row);

@@ -29,9 +29,6 @@ class cViewLayout extends bView {
       direction: 'vertical'
     });
 
-    this.download_product_csv = document.getElementById('download_product_csv');
-    this.download_product_csv.addEventListener('click', e => this.downloadCSV('product'));
-
     this.import_products_csv_expand_btn = document.getElementById('import_products_csv_expand_btn');
     this.import_products_csv_expand_btn.addEventListener('click', e => this.toggleImportOptions());
     let closeBtns = document.querySelectorAll('.import-export-inpanel-button');
@@ -591,7 +588,7 @@ class cViewLayout extends bView {
       rowsToHide = this.productEditFieldsHide;
     if (this.assetEditField.value === 'displaymessage')
       rowsToHide = this.textEditFieldsHide;
-    if (this.assetEditField.value === 'productfollowcamera') {
+    if (this.assetEditField.value === 'displaycamera') {
       this.xBR.style.display = 'none';
       rowsToHide = this.cameraEditFieldsHide;
     }
@@ -776,7 +773,7 @@ class cViewLayout extends bView {
           if (products[c].name !== name)
             outProducts.push(products[c]);
 
-        if (newRow.asset === 'productfollowcamera') {
+        if (newRow.asset === 'displaycamera') {
           outProducts.push(newRow);
         } else {
           outProducts.unshift(newRow);
