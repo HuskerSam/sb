@@ -37,15 +37,11 @@ class cViewLayout extends bView {
 
 
     this.fieldList = [
-      'name', 'asset', 'displayindex',
-      'cameraheightoffset', 'cameraradius', 'cameramovetime',
-
-      'texturetext', 'texturepath', 'basketblock',
+      'name', 'asset',
+      'texturetext', 'texturetext2', 'texturepath', 'basketblock',
       'itemtitle', 'itemprice', 'itemid', 'itemdesc',
-
       'height', 'width', 'depth',
-      'x', 'y', 'z', 'rx', 'ry', 'rz', 'startx', 'starty', 'startz',
-      'startrx', 'startry', 'startrz'
+      'x', 'y', 'z', 'rx', 'ry', 'rz'
     ];
     this.allColumnList = [
       'name', 'asset', 'parent', 'childtype', 'shapetype', 'frametime', 'frameorder', 'height', 'width', 'depth', 'itemtitle', 'itemid', 'itemdesc',
@@ -59,20 +55,6 @@ class cViewLayout extends bView {
     this.sceneColumnList = this.allColumnList;
 
     this.initFieldEdit();
-
-    this.textEditFieldsHide = ['basketblock', 'texturepath', 'itemtitle', 'itemprice', 'itemid', 'itemdesc',
-      'cameraheightoffset', 'cameramovetime', 'cameraradius',
-      'runlength', 'introtime', 'finishdelay', 'startx', 'starty', 'startz', 'startrx', 'startry',
-      'startrz'
-    ];
-    this.productEditFieldsHide = ['texturetext',
-      'cameraheightoffset', 'cameramovetime', 'cameraradius',
-      'runlength', 'introtime', 'finishdelay', 'startx', 'starty', 'startz', 'startrx', 'startry',
-      'startrz'
-    ];
-    this.cameraEditFieldsHide = ['displayindex', 'texturepath', 'texturetext', 'basketblock', 'height', 'width', 'depth',
-      'itemid', 'itemdesc', 'itemtitle', 'itemprice'
-    ];
 
     this.assetTemplates = [
       'All Assets',
@@ -193,6 +175,20 @@ class cViewLayout extends bView {
       this.__initAddAnimations('add_animation_product_animation');
       this.remove_workspace_select_template = document.querySelector('#remove_workspace_select_template');
       this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
+      this.remove_workspace_select_template.addEventListener('input', e => {
+        let sel = this.remove_workspace_select_template;
+        if (sel.selectedIndex === 0)
+          return;
+        if (confirm(`Delete animation ${sel.options[sel.selectedIndex].text}?`)) {
+          Promise.all([
+            gAPPP.a.modelSets['projectTitles'].removeByKey(sel.value),
+            gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+              field: 'selectedWorkspace',
+              newValue: 'none'
+            }])
+          ]).then(r => setTimeout(() => location.reload(), 100))
+        }
+      });
 
       this.updateProductList();
       this.updatePositionList();
@@ -487,17 +483,6 @@ class cViewLayout extends bView {
           }
         }
       });
-    }
-  }
-  deleteProject() {
-    if (confirm('Delete scene?')) {
-      Promise.all([
-        gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelect.value),
-        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-          field: 'selectedWorkspace',
-          newValue: 'none'
-        }])
-      ]).then(r => setTimeout(() => location.reload(), 100))
     }
   }
   clearScene() {
