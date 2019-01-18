@@ -23,11 +23,7 @@ class cViewLayout extends bView {
     this.fieldsDom = document.getElementById('record_field_list');
     this.productListDiv = document.querySelector('#product_tab_table');
     this.innerSplitTop = document.querySelector('#product-list-field-splitwrapper');
-    this.splitInstanceInner = window.Split([this.productListDiv, this.fieldsDom], {
-      sizes: [50, 50],
-      gutterSize: 19,
-      direction: 'vertical'
-    });
+
 
     this.import_products_csv_expand_btn = document.getElementById('import_products_csv_expand_btn');
     this.import_products_csv_expand_btn.addEventListener('click', e => this.toggleImportOptions());
@@ -37,7 +33,7 @@ class cViewLayout extends bView {
 
 
     this.fieldList = [
-      'name', 'asset',
+      'name', 'asset', 'displayindex',
       'texturetext', 'texturetext2', 'texturepath', 'basketblock',
       'itemtitle', 'itemprice', 'itemid', 'itemdesc',
       'height', 'width', 'depth',
@@ -554,33 +550,15 @@ class cViewLayout extends bView {
     this.assetEditField = fDom.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
 
-    this.heightHR = document.createElement('br');
-    fDom.insertBefore(this.heightHR, this.fieldDivByName['height']);
-    this.xBR = document.createElement('br');
-    fDom.insertBefore(this.xBR, this.fieldDivByName['x']);
-    this.rxBR = document.createElement('br');
-    fDom.insertBefore(this.rxBR, this.fieldDivByName['rx']);
-    this.startxBR = document.createElement('br');
-    fDom.insertBefore(this.startxBR, this.fieldDivByName['startx']);
-    this.startrxBR = document.createElement('br');
-    fDom.insertBefore(this.startrxBR, this.fieldDivByName['startrx']);
-    this.itempriceBR = document.createElement('br');
-    fDom.insertBefore(this.itempriceBR, this.fieldDivByName['itemprice']);
-
-    this.afterParentHR = document.createElement('br');
-    fDom.insertBefore(this.afterParentHR, this.fieldDivByName['cameraheightoffset']);
-
     this.updateVisibleEditFields();
   }
   updateVisibleEditFields() {
     let rowsToHide = null;
-    this.xBR.style.display = '';
     if (this.assetEditField.value === 'displayproduct')
       rowsToHide = this.productEditFieldsHide;
     if (this.assetEditField.value === 'displaymessage')
       rowsToHide = this.textEditFieldsHide;
     if (this.assetEditField.value === 'displaycamera') {
-      this.xBR.style.display = 'none';
       rowsToHide = this.cameraEditFieldsHide;
     }
 
