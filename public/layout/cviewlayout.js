@@ -22,7 +22,6 @@ class cViewLayout extends bView {
 
     this.fieldsDom = document.getElementById('record_field_list');
     this.productListDiv = document.querySelector('#product_tab_table');
-    this.innerSplitTop = document.querySelector('#product-list-field-splitwrapper');
 
 
     this.import_products_csv_expand_btn = document.getElementById('import_products_csv_expand_btn');
@@ -114,6 +113,7 @@ class cViewLayout extends bView {
 
     this.import_asset_workspaces_select = document.getElementById('import_asset_workspaces_select');
     this.import_scene_workspaces_select = document.getElementById('import_scene_workspaces_select');
+    this.import_product_workspaces_select = document.getElementById('import_product_workspaces_select');
 
     this.loadDataTable('asset');
     this.loadDataTable('scene');
@@ -134,20 +134,22 @@ class cViewLayout extends bView {
     this.add_animation_asset_template = document.getElementById('add_animation_asset_template');
     this.__initAddTemplates(this.add_animation_asset_template, this.assetTemplates);
     this.add_animation_asset_choice = document.getElementById('add_animation_asset_choice');
+    this.import_asset_templates_select = document.getElementById('import_asset_templates_select');
+    this.__initAddTemplates(this.import_asset_templates_select, this.assetTemplates, '<option>Template</option>');
+
     this.add_animation_scene_animation = document.getElementById('add_animation_scene_animation');
     this.add_animation_scene_template = document.getElementById('add_animation_scene_template');
     this.__initAddTemplates(this.add_animation_scene_template, this.sceneTemplates);
     this.add_animation_scene_choice = document.getElementById('add_animation_scene_choice');
+    this.import_scene_templates_select = document.getElementById('import_scene_templates_select');
+    this.__initAddTemplates(this.import_scene_templates_select, this.sceneTemplates, '<option>Template</option>');
+
     this.add_animation_product_animation = document.getElementById('add_animation_product_animation');
     this.add_animation_product_template = document.getElementById('add_animation_product_template');
     this.__initAddTemplates(this.add_animation_product_template, this.productTemplates);
     this.add_animation_product_choice = document.getElementById('add_animation_product_choice');
-
-    this.import_asset_templates_select = document.getElementById('import_asset_templates_select');
-    this.__initAddTemplates(this.import_asset_templates_select, this.assetTemplates, '<option>Template</option>');
-
-    this.import_scene_templates_select = document.getElementById('import_scene_templates_select');
-    this.__initAddTemplates(this.import_scene_templates_select, this.sceneTemplates, '<option>Template</option>');
+    this.import_product_templates_select = document.getElementById('import_product_templates_select');
+    this.__initAddTemplates(this.import_product_templates_select, this.productTemplates, '<option>Template</option>');
 
     this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
     this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
@@ -197,6 +199,11 @@ class cViewLayout extends bView {
       if (this.workplacesSelect.selectedIndex !== -1) {
         this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
         this.import_asset_workspaces_select.selectedIndex = 0;
+      }
+      this.import_product_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+      if (this.workplacesSelect.selectedIndex !== -1) {
+        this.import_product_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+        this.import_product_workspaces_select.selectedIndex = 0;
       }
 
       try {

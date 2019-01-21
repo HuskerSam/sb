@@ -103,10 +103,6 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #record_field_list {
-  text-align: left;
-  padding: 10px;
-  width: 100%;
-  flex: 0;
 }
 
 .mdl-data-table td {
@@ -469,16 +465,23 @@ button i.material-icons {
 }
 
 .import-export-panel {
-  padding: 10px;
-  background: linear-gradient(0deg, white, rgb(200, 255, 240) 20%, rgb(200, 255, 240) 70%, white);
-  background: white;
+  padding: .25em;
+  background: radial-gradient(rgb(200, 255, 240) 20%, white 70%);
   border: none;
   flex: 0;
   padding-left: 4em;
+  position: relative;
+}
+
+.import-export-panel button {
+  margin: .5em 0em;
 }
 
 .mdl-button--primary.mdl-button--primary.mdl-button--raised, .mdl-button--primary.mdl-button--primary.mdl-button--fab.import-export-inpanel-button {
-  float: right;
+  position: absolute;
+  right: .25em;
+  top: .25em;
+  z-index: 1;
 }
 
 .new-csv-import-wrapper {
@@ -544,6 +547,13 @@ select {
 }
 
 #import_products_csv_expand_btn {
+  position: absolute;
+  top: 2.5em;
+  left: 2.5em;
+  z-index: 2;
+}
+
+#import_products_add_expand_btn {
   position: absolute;
   top: 2.5em;
   left: .5em;

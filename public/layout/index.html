@@ -116,6 +116,7 @@
             </div>
           </div>
           <div id='ui-products-panel' class="mdl-tabs__panel is-active">
+            <button id="import_products_add_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add_to_queue</i></button>
             <div id="import_product_options" class="import-export-panel">
               <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
               <select id="import_product_templates_select"></select>
@@ -126,9 +127,9 @@
               &nbsp;
               <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
             </div>
-            <div style="flex:1;display:flex;flex-direction:column;" id="product-list-field-splitwrapper">
+            <div style="display:flex;flex-direction:row;flex:1;">
+              <div id="record_field_list" style="display:none;"></div>
               <div id="product_tab_table"></div>
-              <div id="record_field_list"></div>
             </div>
           </div>
         </div>
