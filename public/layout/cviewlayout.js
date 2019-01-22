@@ -21,6 +21,7 @@ class cViewLayout extends bView {
     });
 
     this.fieldsDom = document.getElementById('record_field_list');
+    this.record_field_list = this.fieldsDom;
     this.productListDiv = document.querySelector('#product_tab_table');
 
 
@@ -35,9 +36,16 @@ class cViewLayout extends bView {
       'name', 'asset', 'displayindex',
       'texturetext', 'texturetext2', 'texturepath', 'basketblock',
       'itemtitle', 'itemprice', 'itemid', 'itemdesc',
-      'height', 'width', 'depth',
+      'height', 'width',
       'x', 'y', 'z', 'rx', 'ry', 'rz'
     ];
+    this.messageOnlyFields = [
+      'texturetext', 'texturetext2', 'height', 'width'
+    ];
+    this.productOnlyFields = [
+      'texturepath', 'basketblock', 'itemtitle', 'itemtitle', 'itemid', 'itemdesc', 'itemprice'
+    ];
+
     this.allColumnList = [
       'name', 'asset', 'parent', 'childtype', 'shapetype', 'frametime', 'frameorder', 'height', 'width', 'depth', 'itemtitle', 'itemid', 'itemdesc',
       'itemprice', 'materialname', 'texturepath', 'bmppath', 'color', 'meshpath', 'diffuse', 'ambient', 'emissive', 'scalev', 'scaleu', 'visibility',
@@ -154,6 +162,9 @@ class cViewLayout extends bView {
     this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
     this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
     this.add_animation_product_choice.addEventListener('input', e => this.__updateAddTemplate('product'));
+
+    this.import_products_add_expand_btn = document.getElementById('import_products_add_expand_btn');
+    this.import_products_add_expand_btn.addEventListener('click', e => this.toggleProductAddView());
   }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
@@ -219,11 +230,25 @@ class cViewLayout extends bView {
 
     }, 100);
   }
+  toggleProductAddView() {
+    if (this.productViewAddShown) {
+      this.record_field_list.style.display = 'none';
+      this.productViewAddShown = false;
+
+      this.import_products_add_expand_btn.style.color = '';
+      this.import_products_add_expand_btn.style.backgroundColor = '';
+    } else {
+      this.record_field_list.style.display = 'block';
+      this.productViewAddShown = true;
+
+      this.import_products_add_expand_btn.style.color = 'black';
+      this.import_products_add_expand_btn.style.backgroundColor = 'rgb(105, 240, 174)';
+    }
+  }
   __initAddAnimations(thisid, prefixOptionHTML = '') {
     this[thisid].innerHTML = prefixOptionHTML + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1) {
+    if (this.workplacesSelect.selectedIndex !== -1)
       this[thisid].selectedIndex = 0;
-    }
   }
   __initAddTemplates(sel, list, htmlPrefix = '') {
     let html = '';
@@ -249,8 +274,7 @@ class cViewLayout extends bView {
       this.addViewShown = false;
       this.addViewToggleButton.classList.remove('button-expanded');
       document.getElementById('workspace-add-panel').style.height = '0%';
-    }
-    else {
+    } else {
       this.addViewShown = true;
       this.addViewToggleButton.classList.add('button-expanded');
       document.getElementById('workspace-add-panel').style.height = '190px';
@@ -560,14 +584,13 @@ class cViewLayout extends bView {
     this.updateVisibleEditFields();
   }
   updateVisibleEditFields() {
-    let rowsToHide = null;
+    let rowsToHide;
     if (this.assetEditField.value === 'displayproduct')
-      rowsToHide = this.productEditFieldsHide;
-    if (this.assetEditField.value === 'displaymessage')
-      rowsToHide = this.textEditFieldsHide;
-    if (this.assetEditField.value === 'displaycamera') {
-      rowsToHide = this.cameraEditFieldsHide;
-    }
+      rowsToHide = this.messageOnlyFields;
+    else if (this.assetEditField.value === 'displaymessage')
+      rowsToHide = this.productOnlyFields;
+    else
+      rowsToHide = this.productOnlyFields.concat(this.messageOnlyFields);
 
     for (let i in this.fieldDivByName) {
       if (rowsToHide) {
@@ -582,7 +605,6 @@ class cViewLayout extends bView {
           this.fieldDivByName[i].style.display = '';
       }
     }
-
   }
   __uploadImageFile() {
     let fileBlob = this.uploadImageFile.files[0];
@@ -646,28 +668,28 @@ class cViewLayout extends bView {
   updateProductList() {
 
 
-/*
-      rowH += ` &nbsp;<button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
-      let x = GLOBALUTIL.getNumberOrDefault(row.x, 0).toFixed(1);
-      let y = GLOBALUTIL.getNumberOrDefault(row.y, 0).toFixed(1);
-      let z = GLOBALUTIL.getNumberOrDefault(row.z, 0).toFixed(1);
-      let pos = this.__checkForPosition(row.x, row.y, row.z);
-      */
+    /*
+          rowH += ` &nbsp;<button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
+          let x = GLOBALUTIL.getNumberOrDefault(row.x, 0).toFixed(1);
+          let y = GLOBALUTIL.getNumberOrDefault(row.y, 0).toFixed(1);
+          let z = GLOBALUTIL.getNumberOrDefault(row.z, 0).toFixed(1);
+          let pos = this.__checkForPosition(row.x, row.y, row.z);
+          */
 
 
-/*
-    let tRows = this.productListDiv.querySelectorAll('.table-row-product-list');
-    for (let c = 0, l = tRows.length; c < l; c++)
-      tRows[c].addEventListener('click', e => {
-        return this.showSelectedProduct(e.currentTarget.dataset.id);
-      });
+    /*
+        let tRows = this.productListDiv.querySelectorAll('.table-row-product-list');
+        for (let c = 0, l = tRows.length; c < l; c++)
+          tRows[c].addEventListener('click', e => {
+            return this.showSelectedProduct(e.currentTarget.dataset.id);
+          });
 
-    let removeBtns = this.productListDiv.querySelectorAll('.remove');
-    for (let c2 = 0, l2 = removeBtns.length; c2 < l2; c2++)
-      removeBtns[c2].addEventListener('click', e => {
-        return this.removeProductByName(e.currentTarget.dataset.id, e);
-      });
-      */
+        let removeBtns = this.productListDiv.querySelectorAll('.remove');
+        for (let c2 = 0, l2 = removeBtns.length; c2 < l2; c2++)
+          removeBtns[c2].addEventListener('click', e => {
+            return this.removeProductByName(e.currentTarget.dataset.id, e);
+          });
+          */
   }
   removeProductByName(name, e) {
     gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')

@@ -103,6 +103,14 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #record_field_list {
+  display: block;
+  min-width: 15em;
+  flex: 0 1 0%;
+  border-right: 4px solid rgb(200, 255, 240);
+  padding: 10px;
+  padding-top: 4em;
+  overflow-y: auto;
+  overflow-x: visible;
 }
 
 .mdl-data-table td {
@@ -546,21 +554,14 @@ select {
   background: rgb(200, 255, 240);
 }
 
-#import_products_csv_expand_btn {
-  position: absolute;
-  top: 2.5em;
-  left: 2.5em;
-  z-index: 2;
-}
-
 #import_products_add_expand_btn {
   position: absolute;
   top: 2.5em;
-  left: .5em;
+  right: 0em;
   z-index: 2;
 }
 
-#add-workspace-button-expand {
+#add-workspace-button-expand, #import_products_csv_expand_btn {
   position: relative;
   top: -4px;
 }
@@ -591,7 +592,7 @@ select {
   font-weight: bold;
 }
 
-.add-panel-item > div {
+.add-panel-item>div {
   width: 10em;
   display: inline-block;
   text-align: left;
