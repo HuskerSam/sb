@@ -32,7 +32,9 @@
                 <option>Empty</option>
               </select>
               <select id="add_animation_asset_animation" style="display:none;"></select>
-              <select id="add_animation_asset_template" style="display:none;"><option>select template</option></select>
+              <select id="add_animation_asset_template" style="display:none;">
+                <option>select template</option>
+              </select>
             </div>
             <div class="add-panel-item">
               <div>SCENE</div>
@@ -43,7 +45,9 @@
                 <option>Empty</option>
               </select>
               <select id="add_animation_scene_animation" style="display:none;"></select>
-              <select id="add_animation_scene_template" style="display:none;"><option>select template</option></select>
+              <select id="add_animation_scene_template" style="display:none;">
+                <option>select template</option>
+              </select>
             </div>
             <div class="add-panel-item">
               <div>PRODUCTS</div>
@@ -54,7 +58,9 @@
                 <option>Template</option>
               </select>
               <select id="add_animation_product_animation" style="display:none;"></select>
-              <select id="add_animation_product_template" style="display:none;"><option>select template</option></select>
+              <select id="add_animation_product_template" style="display:none;">
+                <option>select template</option>
+              </select>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:15em;">
               <input class="mdl-textfield__input" type="text" id="new-workspace-name">
@@ -116,7 +122,6 @@
             </div>
           </div>
           <div id='ui-products-panel' class="mdl-tabs__panel is-active">
-            <button id="import_products_add_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add_to_queue</i></button>
             <div id="import_product_options" class="import-export-panel">
               <button class="import-export-inpanel-button mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
               <select id="import_product_templates_select"></select>
@@ -128,7 +133,8 @@
               <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">save_alt</i></button>
             </div>
             <div style="display:flex;flex-direction:row;flex:1;">
-              <div id="record_field_list" style="display:none;"></div>
+              <button id="import_products_add_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add_to_queue</i></button>
+              <div id="record_field_list" style="display:none;"><form autocomplete="off"></form></div>
               <div id="product_tab_table"></div>
             </div>
           </div>
@@ -236,9 +242,9 @@
   <datalist id="fieldnamelist"></datalist>
   <datalist id="basketblocklist"></datalist>
   <datalist id="assetlist">
-    <option>displayproduct</option>
-    <option>displaymessage</option>
-    <option>displaycamera</option>
+    <option>product</option>
+    <option>message</option>
+    <option>image</option>
   </datalist>
 </body>
 

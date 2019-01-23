@@ -20,10 +20,9 @@ class cViewLayout extends bView {
       onDrag: () => gAPPP.resize()
     });
 
-    this.fieldsDom = document.getElementById('record_field_list');
-    this.record_field_list = this.fieldsDom;
+    this.record_field_list = document.getElementById('record_field_list');
     this.productListDiv = document.querySelector('#product_tab_table');
-
+    this.record_field_list_form = document.querySelector('#record_field_list form');
 
     this.import_products_csv_expand_btn = document.getElementById('import_products_csv_expand_btn');
     this.import_products_csv_expand_btn.addEventListener('click', e => this.toggleImportOptions());
@@ -31,31 +30,35 @@ class cViewLayout extends bView {
     for (let c = 0, l = closeBtns.length; c < l; c++)
       closeBtns[c].addEventListener('click', e => this.toggleImportOptions());
 
-
     this.fieldList = [
-      'name', 'asset', 'displayindex',
-      'texturetext', 'texturetext2', 'texturepath', 'basketblock',
-      'itemtitle', 'itemprice', 'itemid', 'itemdesc',
+      'index', 'name', 'asset',
+      'text1', 'text2', 'image', 'block',
+      'sku', 'price', 'count', 'pricetext',
       'height', 'width',
-      'x', 'y', 'z', 'rx', 'ry', 'rz'
+      'x', 'y', 'z',
+      'rx', 'ry', 'rz'
     ];
-    this.messageOnlyFields = [
-      'texturetext', 'texturetext2', 'height', 'width'
-    ];
-    this.productOnlyFields = [
-      'texturepath', 'basketblock', 'itemtitle', 'itemtitle', 'itemid', 'itemdesc', 'itemprice'
-    ];
+    this.productAddList = [
+      'index', 'name', 'asset',
+      'text1', 'text2', 'image', 'block',
+      'sku', 'price', 'count', 'pricetext',
+      'height', 'width',
+      'xyz', 'rotatexyz'
+    ]
 
     this.allColumnList = [
-      'name', 'asset', 'parent', 'childtype', 'shapetype', 'frametime', 'frameorder', 'height', 'width', 'depth', 'itemtitle', 'itemid', 'itemdesc',
-      'itemprice', 'materialname', 'texturepath', 'bmppath', 'color', 'meshpath', 'diffuse', 'ambient', 'emissive', 'scalev', 'scaleu', 'visibility',
-      'x', 'y', 'z', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz', 'basketblock', 'cameratargetblock', 'cameraradius', 'cameraheightoffset', 'cameramovetime',
-      'blockcode', 'displayindex', 'introtime', 'finishdelay', 'runlength', 'startx', 'starty', 'startz', 'startrx', 'startry', 'startrz', 'blockflag',
+      'name', 'asset', 'parent', 'childtype', 'shapetype', 'frametime', 'frameorder', 'height', 'width', 'depth',
+      'materialname', 'texturepath', 'bmppath', 'color', 'meshpath', 'diffuse', 'ambient', 'emissive', 'scalev', 'scaleu', 'visibility',
+      'x', 'y', 'z', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz', 'cameratargetblock', 'cameraradius', 'cameraheightoffset', 'cameramovetime',
+      'blockcode', 'introtime', 'finishdelay', 'runlength', 'startx', 'starty', 'startz', 'startrx', 'startry', 'startrz', 'blockflag',
       'texturetext', 'texturetextrendersize', 'texture2dfontweight', 'textfontsize', 'textfontfamily', 'textfontcolor', 'genericblockdata'
     ];
     this.productColumnList = this.fieldList;
     this.assetColumnList = this.allColumnList;
     this.sceneColumnList = this.allColumnList;
+    this.rightAlignColumns = [
+      'price', 'count', 'height', 'width', 'x', 'y', 'z', 'rx', 'ry', 'rz'
+    ];
 
     this.initFieldEdit();
 
@@ -306,6 +309,10 @@ class cViewLayout extends bView {
         let data = [];
         if (results) data = results;
 
+        if (tableName === 'product')
+          data = this.__sortProductRows(data);
+
+
         let columns = [];
         columns.push({
           rowHandle: true,
@@ -316,14 +323,15 @@ class cViewLayout extends bView {
           width: 30,
           minWidth: 30
         });
-        columns.push({
-          rowHandle: true,
-          formatter: "rownum",
-          headerSort: false,
-          align: 'center',
-          frozen: true,
-          width: 30
-        });
+        if (tableName !== 'product')
+          columns.push({
+            rowHandle: true,
+            formatter: "rownum",
+            headerSort: false,
+            align: 'center',
+            frozen: true,
+            width: 30
+          });
         columns.push({
           formatter: (cell, formatterParams) => {
             return "<i class='material-icons'>delete</i>";
@@ -361,23 +369,47 @@ class cViewLayout extends bView {
         });
 
         let colList = this[tableName + 'ColumnList'];
-        for (let c = 0, l = colList.length; c < l; c++)
+        for (let c = 0, l = colList.length; c < l; c++) {
+          let field = colList[c];
+          let rightColumn = this.rightAlignColumns.indexOf(field) !== -1;
+          let align = rightColumn ? 'right' : 'left';
+          let longLabel = colList[c].length > 9;
+          let cssClass = rightColumn ? 'right-column-data' : '';
+          if (!rightColumn && longLabel)
+            cssClass += 'tab-header-cell-large';
+
           columns.push({
-            title: colList[c],
-            field: colList[c],
+            title: field,
+            field,
             editor: true,
             headerSort: false,
+            align,
+            formatter: rightColumn ? 'money' : undefined,
             layoutColumnsOnNewData: true,
             columnResizing: 'headerOnly',
-            cssClass: colList[c].length > 10 ? 'tab-header-cell-large' : '',
-            headerVertical: colList[c].length > 5 ? true : false
+            cssClass,
+            headerVertical: longLabel
           });
+        }
 
-        columns[4].frozen = true;
-        let tCol = columns[4];
-        columns[4] = columns[3];
-        columns[3] = columns[2];
-        columns[2] = tCol;
+        if (tableName === 'product') {
+          columns[4].frozen = true;
+          columns[3].frozen = true;
+          let tCol = columns[4];
+          let tCol2 = columns[3];
+          columns[4] = columns[2];
+          columns[3] = columns[1];
+          columns[2] = tCol;
+          columns[1] = tCol2;
+        } else {
+          columns[4].frozen = true;
+          let tCol = columns[4];
+          columns[4] = columns[3];
+          columns[3] = columns[2];
+          columns[2] = tCol;
+        }
+        columns[1].align = 'right';
+        columns[1].cssClass = 'right-column-data';
 
         this.editTables[tableName] = new Tabulator(`#${tableName}_tab_table`, {
           data,
@@ -404,13 +436,10 @@ class cViewLayout extends bView {
         this.__updateFooterRow(tableName);
       });
 
-    this.tabFirstVisits = {};
     document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
-      if (this.tabFirstVisits[tableName])
-        return this.editTables[tableName].redraw();
-      this.tabFirstVisits[tableName] = true;
       this.__reformatTable(tableName);
-      this.editTables[tableName].redraw(true);
+  //    this.editTables[tableName].redraw(true);
+      this.editTables[tableName].setColumnLayout();
     });
   }
   saveEditTable(tableName, e) {
@@ -524,16 +553,9 @@ class cViewLayout extends bView {
     }
   }
   initFieldEdit() {
-    let fDom = this.fieldsDom;
-
     this.fieldDivByName = {};
-    fDom.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
-    let btn = document.createElement('button');
-    btn.setAttribute('id', 'update_product_fields_post');
-    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary');
-    btn.innerHTML = '<i class="material-icons">publish</i>';
-    componentHandler.upgradeElement(btn);
-    fDom.appendChild(btn);
+    this.record_field_list_form.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
+
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
       let title = this.fieldList[c];
       let id = 'fieldid' + c.toString();
@@ -554,7 +576,7 @@ class cViewLayout extends bView {
         this.fieldDivByName[title].appendChild(select);
         this.fieldDivByName[title].style.position = 'relative';
       }
-      if (title === 'texturepath') {
+      if (title === 'image') {
         let btn = document.createElement('button');
         btn.style.position = 'absolute';
         btn.style.top = '-2.5em';
@@ -567,18 +589,25 @@ class cViewLayout extends bView {
       }
 
       componentHandler.upgradeElement(this.fieldDivByName[title]);
-      fDom.appendChild(this.fieldDivByName[title]);
+      this.record_field_list_form.appendChild(this.fieldDivByName[title]);
     }
 
-    this.uploadImageButton = fDom.querySelector('.texturepathupload');
-    this.uploadImageEditField = fDom.querySelector('.texturepathedit');
-    this.uploadImageFile = fDom.querySelector('.texturepathuploadfile');
+    this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
+    this.uploadImageEditField = this.record_field_list_form.querySelector('.imageedit');
+    this.uploadImageFile = this.record_field_list_form.querySelector('.texturepathuploadfile');
     this.uploadImageFile.addEventListener('change', e => this.__uploadImageFile());
     this.uploadImageButton.addEventListener('click', e => this.uploadImageFile.click());
-    this.upsertBtn = document.getElementById('update_product_fields_post');
-    this.upsertBtn.addEventListener('click', e => this.upsertProduct());
 
-    this.assetEditField = fDom.querySelector('.assetedit');
+    let btn = document.createElement('button');
+    btn.setAttribute('id', 'update_product_fields_post');
+    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--colored');
+    btn.innerHTML = '<i class="material-icons">add</i>';
+    componentHandler.upgradeElement(btn);
+    this.record_field_list_form.appendChild(btn);
+    this.addNewBtn = document.getElementById('update_product_fields_post');
+    this.addNewBtn.addEventListener('click', e => this.addNewProduct());
+
+    this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
 
     this.updateVisibleEditFields();
@@ -637,9 +666,9 @@ class cViewLayout extends bView {
         let vals = sel.value.split(',');
 
         if (vals.length === 3) {
-          let xd = this.fieldsDom.querySelector('.xedit');
-          let yd = this.fieldsDom.querySelector('.yedit');
-          let zd = this.fieldsDom.querySelector('.zedit');
+          let xd = this.record_field_list.querySelector('.xedit');
+          let yd = this.record_field_list.querySelector('.yedit');
+          let zd = this.record_field_list.querySelector('.zedit');
 
           xd.parentElement.MaterialTextfield.change(vals[0]);
           yd.parentElement.MaterialTextfield.change(vals[1]);
@@ -720,8 +749,7 @@ class cViewLayout extends bView {
     return null;
   }
   showSelectedProduct(name) {
-    let fDom = document.getElementById('record_field_list');
-    let fields = fDom.querySelectorAll('.fieldinput');
+    let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
     let p = this.__productByName(name);
     let row = {};
     if (p)
@@ -739,9 +767,8 @@ class cViewLayout extends bView {
 
     this.updateVisibleEditFields();
   }
-  upsertProduct() {
-    let fDom = document.getElementById('record_field_list');
-    let fields = fDom.querySelectorAll('.fieldinput');
+  addNewProduct() {
+    let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
 
     let name = fields[0].value;
     if (!name) {
@@ -766,20 +793,23 @@ class cViewLayout extends bView {
 
     gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
       .then(products => {
-        let outProducts = [];
-        for (let c = 0, l = products.length; c < l; c++)
-          if (products[c].name !== name)
-            outProducts.push(products[c]);
+        products.push(newRow);
 
-        if (newRow.asset === 'displaycamera') {
-          outProducts.push(newRow);
-        } else {
-          outProducts.unshift(newRow);
-        }
-
-        gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', outProducts)
+        p = this.__sortProductRows(p);
+        gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', products)
           .then(() => this.reloadScene())
       });
+  }
+  __sortProductRows(p) {
+    return p.sort((a, b) => {
+      let aIndex = GLOBALUTIL.getNumberOrDefault(a.index, 0);
+      let bIndex = GLOBALUTIL.getNumberOrDefault(b.index, 0);
+      if (aIndex > bIndex)
+        return 1;
+      if (aIndex < bIndex)
+        return -1;
+      return 0;
+    });
   }
   downloadCSV(name) {
     gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, name + 'Rows')

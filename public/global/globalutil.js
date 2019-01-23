@@ -253,14 +253,15 @@ class GUTILImportCSV {
     if (row.blockcode)
       blockData.blockCode = row.blockcode;
 
-    if (row.itemid) {
-      blockData.itemId = row.itemid;
-      blockData.itemTitle = row.itemtitle;
-      blockData.itemDesc = row.itemdesc;
-      blockData.itemPrice = row.itemprice;
-      blockData.itemImage = row.texturepath;
-      blockData.itemCount = row.itemcount;
-      blockData.basketBlock = row.basketblock;
+    if (row.sku) {
+      blockData.itemId = row.sku;
+      blockData.itemTitle = row.text1;
+      blockData.itemDesc = row.text2;
+      blockData.itemPrice = row.price;
+      blockData.itemImage = row.image;
+      blockData.itemCount = row.count;
+      blockData.itemPriceText = row.pricetext;
+      blockData.basketBlock = row.block;
       blockData.origRow = row;
     }
 
@@ -315,8 +316,8 @@ class GUTILImportCSV {
       inheritMaterial
     };
 
-    if (row.displayindex) {
-      blockChildData.displayIndex = GLOBALUTIL.getNumberOrDefault(row.displayindex, 0)
+    if (row.index) {
+      blockChildData.animationIndex = GLOBALUTIL.getNumberOrDefault(row.index, 0)
       blockChildData.origRow = row;
     }
     if (row.sku)
@@ -481,10 +482,12 @@ class GUTILImportCSV {
         return this.addCSVBlockChildFrameRow(row);
       case 'animationfinalize':
         return this.addCSVDisplayFinalize(row);
-      case 'displaymessage':
+      case 'message':
         return this.addCSVDisplayMessage(row);
-      case 'displayproduct':
+      case 'product':
         return this.addCSVDisplayProduct(row);
+      case 'image':
+        return this.addCSVDisplayImage(row);
     }
 
     console.log('type not found', row);
@@ -507,7 +510,7 @@ class GUTILImportCSV {
     let displayBC = this.defaultCSVRow();
     displayBC.asset = 'blockchild';
     displayBC.childtype = 'block';
-    displayBC.name = blockRow.basketblock;
+    displayBC.name = blockRow.block;
     displayBC.parent = blockRow.name;
     promises.push(this.addCSVRow(displayBC));
 
@@ -525,7 +528,7 @@ class GUTILImportCSV {
     sceneBC.sx = blockRow.sx;
     sceneBC.sy = blockRow.sy;
     sceneBC.sz = blockRow.sz;
-    sceneBC.displayindex = blockRow.displayindex;
+    sceneBC.index = blockRow.index;
     promises.push(this.addCSVRow(sceneBC));
 
     return Promise.all(promises);
@@ -547,8 +550,8 @@ class GUTILImportCSV {
     cameraBlock.height = row.height;
     cameraBlock.textfontfamily = row.textfontfamily;
     cameraBlock.textfontcolor = row.textfontcolor;
-    cameraBlock.texturetext = row.texturetext;
-    cameraBlock.texturetext2 = row.texturetext2;
+    cameraBlock.texturetext = row.text1;
+    cameraBlock.texturetext2 = row.text2;
     cameraBlock.textfontsize = row.textfontsize;
     cameraBlock.texturetextrendersize = row.texturetextrendersize;
     cameraBlock.textfontweight = row.textfontweight;
@@ -566,7 +569,7 @@ class GUTILImportCSV {
     cameraBlockBC.oy = row.y;
     cameraBlockBC.z = row.z;
     cameraBlockBC.realOrigRow = row;
-    cameraBlockBC.displayindex = row.displayindex;
+    cameraBlockBC.index = row.index;
 
     return Promise.all([
       this.addCSVRow(cameraBlock),
@@ -945,12 +948,12 @@ class GUTILImportCSV {
       emissive: "",
       frametime: "",
       height: "",
-      itemcount: "",
-      itemdesc: "",
-      itemid: "",
-      displayindex: "",
-      itemprice: "",
-      itemtitle: "",
+      count: "",
+      text1: "",
+      sku: "",
+      index: "",
+      price: "",
+      text2: "",
       materialname: "",
       meshpath: "",
       name: "",
@@ -965,6 +968,7 @@ class GUTILImportCSV {
       sy: "",
       sz: "",
       texturepath: "",
+      image: '',
       visibility: "",
       width: "",
       x: "",
@@ -1059,17 +1063,19 @@ class GUTILImportCSV {
 
     let productsBC = [];
     for (let i in children) {
-      if (children[i].displayIndex)
+      if (children[i].animationIndex)
         productsBC.push(children[i]);
     }
 
     let sceneId = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockFlag', 'scene');
     let products = [];
     let productsBySKU = {};
-    productsBC.sort((a, b) => {
-      if (a.displayIndex > b.displayIndex)
+    productsBC = productsBC.sort((a, b) => {
+      let aIndex = GLOBALUTIL.getNumberOrDefault(a.animationIndex, 0);
+      let bIndex = GLOBALUTIL.getNumberOrDefault(b.animationIndex, 0);
+      if (aIndex > bIndex)
         return 1;
-      if (a.displayIndex < b.displayIndex)
+      if (aIndex < bIndex)
         return -1;
       return 0;
     });
@@ -1094,7 +1100,7 @@ class GUTILImportCSV {
         desc: blockData.itemDesc,
         price: blockData.itemPrice,
         image: blockData.texturePath,
-        displayIndex: pBC.displayIndex,
+        animationIndex: pBC.animationIndex,
         childName: pBC.childName,
         childType: pBC.childType,
         origRow
