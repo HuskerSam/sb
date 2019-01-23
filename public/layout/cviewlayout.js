@@ -44,7 +44,17 @@ class cViewLayout extends bView {
       'sku', 'price', 'count', 'pricetext',
       'height', 'width',
       'xyz', 'rotatexyz'
-    ]
+    ];
+    this.messageOnlyFields = [
+      'index', 'name', 'asset', 'text1', 'text2',
+      'height', 'width', 'xyz', 'rotatexyz'
+    ];
+    this.productOnlyFields = [
+      'index', 'name', 'asset',
+      'text1', 'image', 'block',
+      'sku', 'price', 'count', 'pricetext',
+      'xyz', 'rotatexyz'
+    ];
 
     this.allColumnList = [
       'name', 'asset', 'parent', 'childtype', 'shapetype', 'frametime', 'frameorder', 'height', 'width', 'depth',
@@ -613,22 +623,20 @@ class cViewLayout extends bView {
     this.updateVisibleEditFields();
   }
   updateVisibleEditFields() {
-    let rowsToHide;
-    if (this.assetEditField.value === 'displayproduct')
-      rowsToHide = this.messageOnlyFields;
-    else if (this.assetEditField.value === 'displaymessage')
-      rowsToHide = this.productOnlyFields;
-    else
-      rowsToHide = this.productOnlyFields.concat(this.messageOnlyFields);
+    let fieldsToShow = null;
+    if (this.assetEditField.value === 'product')
+      fieldsToShow = this.messageOnlyFields;
+    else if (this.assetEditField.value === 'message')
+      fieldsToShow = this.productOnlyFields;
 
     for (let i in this.fieldDivByName) {
-      if (rowsToHide) {
-        if (rowsToHide.indexOf(i) !== -1)
+      if (fieldsToShow) {
+        if (fieldsToShow.indexOf(i) === -1)
           this.fieldDivByName[i].style.display = 'none';
         else
           this.fieldDivByName[i].style.display = '';
       } else {
-        if (i !== 'asset' && i !== 'name')
+        if (i !== 'asset' && i !== 'name' && i !== 'index')
           this.fieldDivByName[i].style.display = 'none';
         else
           this.fieldDivByName[i].style.display = '';
