@@ -103,12 +103,22 @@ input[type=range]::-webkit-slider-thumb {
 
 #record_field_list {
   display: block;
-  min-width: 15em;
-  flex: 0 1 0%;
-  border-right: 4px solid rgb(200, 255, 240);
-  padding: 10px;
+  transition: min-width 800ms, border-width 800ms, padding 800ms, opacity 800ms;
+  min-width: 0px;
+  flex: 0;
+  padding: 0px;
   overflow-y: auto;
   overflow-x: visible;
+  border-width: 0px;
+  padding: 10px 0px;
+  opacity: 0;
+}
+
+#record_field_list.record_field_list_expanded {
+  min-width: 200px;
+  border-right: 4px solid rgb(200, 255, 240);
+  padding: 10px 10px;
+  opacity: 1;
 }
 
 .mdl-data-table td {
@@ -475,22 +485,32 @@ button i.material-icons {
 }
 
 .import-export-panel {
-  padding: .25em;
+  padding: 0;
   background: radial-gradient(rgb(200, 255, 240) 20%, white 70%);
   border: none;
   flex: 0;
+  height: 0em;
   position: relative;
+  transition: height 800ms, opacity 800ms;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.import-export-panel.expanded {
+  height: 4em;
+  pointer-events: auto;
+  opacity: 1;
 }
 
 .import-export-panel button {
   margin: .5em 0em;
 }
 
+.mdl-button--primary.mdl-button--primary {
+  transition: color 800ms, background 800ms;
+}
 .mdl-button--primary.mdl-button--primary.mdl-button--raised, .mdl-button--primary.mdl-button--primary.mdl-button--fab.import-export-inpanel-button {
-  position: absolute;
-  right: .25em;
-  top: .25em;
-  z-index: 1;
+  float: right;
 }
 
 .new-csv-import-wrapper {
@@ -546,7 +566,6 @@ select {
   padding: 0px 5px;
   position: relative;
   top: 5px;
-  padding-left: 4em;
 }
 
 #main-view-wrapper {
@@ -556,37 +575,55 @@ select {
   background: rgb(200, 255, 240);
 }
 
-#import_products_add_expand_btn {
-  position: absolute;
-  top: 4px;
-  left: 10px;
-  z-index: 2;
+.tabulator .tabulator-header .tabulator-col.row-handle-table-cell .tabulator-col-content .tabulator-col-title {
+  text-align: center;
+  overflow: visible;
 }
 
-#add-workspace-button-expand, #import_products_csv_expand_btn {
+.row-handle-table-cell i {
+  font-size: 24px;
+  top: 0px;
+  position: relative;
+  background: rgb(0, 150, 136);
+  color: white;
+  border-radius: 50%;
+  margin: 0px;
+  padding: 6px;
+  border: solid 2px white;
+  transition: color 800ms, background 800ms;
+}
+.tabulator .tabulator-header .tabulator-col.button-expanded i {
+  color: rgb(0, 150, 136);
+  border-color: rgb(105, 240, 174);
+  background: rgb(200, 255, 240);
+}
+
+#add-workspace-button-expand, #import_products_csv_expand_btn, #scene_data_expand_btn {
   position: relative;
   top: -4px;
 }
 
 .mdl-button--primary.mdl-button--primary.mdl-button--fab.button-expanded {
-  color: black;
-  background: rgb(105, 240, 174);
+  color: rgb(0, 150, 136);
+  border-color: rgb(105, 240, 174);
+  background: rgb(200, 255, 240);
 }
 
 #workspace-add-panel {
   background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
-  transition: height 300ms;
+  transition: height 800ms, opacity 800ms;
   overflow: hidden;
+  height: 0px;
+  opacity: 0;
+}
+
+#workspace-add-panel.expanded {
+  height: 190px;
+  opacity: 1;
 }
 
 #workspace-add-panel-close-button {
   float: right;
-}
-
-#add-panel-wrapper {
-  display: block;
-  padding-left: 10px;
-  margin: 10px;
 }
 
 .add-panel-item {
@@ -607,4 +644,16 @@ select {
 
 #update_product_fields_post {
   float: right;
+}
+
+#scene_options_panel {
+  flex: 0;
+  height: 0em;
+  opacity: 0;
+  transition: opacity 800ms, height 800ms;
+}
+
+#scene_options_panel.expanded {
+  height: 20em;
+  opacity: 1;
 }

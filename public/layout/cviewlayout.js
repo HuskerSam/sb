@@ -176,8 +176,8 @@ class cViewLayout extends bView {
     this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
     this.add_animation_product_choice.addEventListener('input', e => this.__updateAddTemplate('product'));
 
-    this.import_products_add_expand_btn = document.getElementById('import_products_add_expand_btn');
-    this.import_products_add_expand_btn.addEventListener('click', e => this.toggleProductAddView());
+    this.scene_data_expand_btn = document.getElementById('scene_data_expand_btn');
+    this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
   }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
@@ -243,19 +243,17 @@ class cViewLayout extends bView {
 
     }, 100);
   }
-  toggleProductAddView() {
+  toggleProductAddView(col) {
     if (this.productViewAddShown) {
-      this.record_field_list.style.display = 'none';
+      this.record_field_list.classList.remove('record_field_list_expanded');
       this.productViewAddShown = false;
 
-      this.import_products_add_expand_btn.style.color = '';
-      this.import_products_add_expand_btn.style.backgroundColor = '';
+      col._column.element.classList.remove('button-expanded');
     } else {
-      this.record_field_list.style.display = 'block';
+      this.record_field_list.classList.add('record_field_list_expanded');
       this.productViewAddShown = true;
 
-      this.import_products_add_expand_btn.style.color = 'black';
-      this.import_products_add_expand_btn.style.backgroundColor = 'rgb(105, 240, 174)';
+      col._column.element.classList.add('button-expanded');
     }
   }
   __initAddAnimations(thisid, prefixOptionHTML = '') {
@@ -282,35 +280,41 @@ class cViewLayout extends bView {
       this['add_animation_' + type + '_animation'].style.display = 'inline-block';
     }
   }
+  toggleSceneDataView() {
+    if (this.sceneDataShown) {
+      this.sceneDataShown = false;
+      this.scene_data_expand_btn.classList.remove('button-expanded');
+      document.getElementById('scene_options_panel').classList.remove('expanded');
+    } else {
+      this.sceneDataShown = true;
+      this.scene_data_expand_btn.classList.add('button-expanded');
+      document.getElementById('scene_options_panel').classList.add('expanded');
+    }
+  }
   toggleAddView() {
     if (this.addViewShown) {
       this.addViewShown = false;
       this.addViewToggleButton.classList.remove('button-expanded');
-      document.getElementById('workspace-add-panel').style.height = '0%';
+      document.getElementById('workspace-add-panel').classList.remove('expanded');
     } else {
       this.addViewShown = true;
       this.addViewToggleButton.classList.add('button-expanded');
-      document.getElementById('workspace-add-panel').style.height = '190px';
-      document.getElementById('workspace-add-panel').style.display = 'block';
-
+      document.getElementById('workspace-add-panel').classList.add('expanded');
     }
   }
   toggleImportOptions() {
     if (this.toggledImportOptions) {
       this.toggledImportOptions = false;
-      document.getElementById('import_product_options').style.display = 'none';
-      document.getElementById('import_asset_options').style.display = 'none';
-      document.getElementById('import_scene_options').style.display = 'none';
-      this.import_products_csv_expand_btn.style.color = '';
-      this.import_products_csv_expand_btn.style.backgroundColor = '';
+      document.getElementById('import_product_options').classList.remove('expanded');
+      document.getElementById('import_asset_options').classList.remove('expanded');
+      document.getElementById('import_scene_options').classList.remove('expanded');
+      this.import_products_csv_expand_btn.classList.remove('button-expanded');
     } else {
       this.toggledImportOptions = true;
-      document.getElementById('import_product_options').style.display = 'block';
-      document.getElementById('import_scene_options').style.display = 'block';
-      document.getElementById('import_asset_options').style.display = 'block';
-
-      this.import_products_csv_expand_btn.style.color = 'black';
-      this.import_products_csv_expand_btn.style.backgroundColor = 'rgb(105, 240, 174)';
+      document.getElementById('import_product_options').classList.add('expanded');
+      document.getElementById('import_scene_options').classList.add('expanded');
+      document.getElementById('import_asset_options').classList.add('expanded');
+      this.import_products_csv_expand_btn.classList.add('button-expanded');
     }
   }
   loadDataTable(tableName) {
@@ -330,8 +334,9 @@ class cViewLayout extends bView {
           headerSort: false,
           cssClass: 'row-handle-table-cell',
           frozen: true,
-          width: 30,
-          minWidth: 30
+          width: 45,
+          minWidth: 45,
+          title: '<i class="material-icons">add_to_queue</i>'
         });
         if (tableName !== 'product')
           columns.push({
@@ -385,6 +390,7 @@ class cViewLayout extends bView {
           let align = rightColumn ? 'right' : 'left';
           let longLabel = colList[c].length > 9;
           let cssClass = rightColumn ? 'right-column-data' : '';
+          let minWidth = rightColumn ? 75 : 150;
           if (!rightColumn && longLabel)
             cssClass += 'tab-header-cell-large';
 
@@ -398,7 +404,8 @@ class cViewLayout extends bView {
             layoutColumnsOnNewData: true,
             columnResizing: 'headerOnly',
             cssClass,
-            headerVertical: longLabel
+            headerVertical: longLabel,
+            minWidth
           });
         }
 
@@ -411,6 +418,8 @@ class cViewLayout extends bView {
           columns[3] = columns[1];
           columns[2] = tCol;
           columns[1] = tCol2;
+          tCol2.title = '';
+          columns[0].headerClick = (e, col) => this.toggleProductAddView(col);
         } else {
           columns[4].frozen = true;
           let tCol = columns[4];
@@ -420,6 +429,8 @@ class cViewLayout extends bView {
         }
         columns[1].align = 'right';
         columns[1].cssClass = 'right-column-data';
+        columns[1].minWidth = 45;
+        columns[2].minWidth = 200;
 
         this.editTables[tableName] = new Tabulator(`#${tableName}_tab_table`, {
           data,
@@ -427,7 +438,7 @@ class cViewLayout extends bView {
           height: '100%',
           width: '100%',
           movableRows: true,
-          movableColumns: true,
+          movableColumns: false,
           selectable: false,
           layout: "fitData",
           columns,
@@ -444,11 +455,12 @@ class cViewLayout extends bView {
 
         this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
         this.__updateFooterRow(tableName);
+
       });
 
     document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
       this.__reformatTable(tableName);
-  //    this.editTables[tableName].redraw(true);
+      //    this.editTables[tableName].redraw(true);
       this.editTables[tableName].setColumnLayout();
     });
   }
