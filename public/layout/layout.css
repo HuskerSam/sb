@@ -97,9 +97,7 @@ input[type=range]::-webkit-slider-thumb {
   width: auto;
 }
 
-#record_field_list .mdl-textfield {
-
-}
+#record_field_list .mdl-textfield {}
 
 #record_field_list {
   display: block;
@@ -469,6 +467,7 @@ button i.material-icons {
   background-image: radial-gradient(white 30%,
     rgb(200, 255, 240));
   max-width: 20em;
+  white-space: pre;
 }
 
 .tabulator .tabulator-footer {
@@ -509,6 +508,7 @@ button i.material-icons {
 .mdl-button--primary.mdl-button--primary {
   transition: color 800ms, background 800ms;
 }
+
 .mdl-button--primary.mdl-button--primary.mdl-button--raised, .mdl-button--primary.mdl-button--primary.mdl-button--fab.import-export-inpanel-button {
   float: right;
 }
@@ -592,6 +592,7 @@ select {
   border: solid 2px white;
   transition: color 800ms, background 800ms;
 }
+
 .tabulator .tabulator-header .tabulator-col.button-expanded i {
   color: rgb(0, 150, 136);
   border-color: rgb(105, 240, 174);
@@ -611,7 +612,8 @@ select {
 
 #workspace-add-panel {
   background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
-  transition: height 800ms, opacity 800ms;
+  transition: height 800ms, opacity 800ms, padding 800ms;
+  padding: 0;
   overflow: hidden;
   height: 0px;
   opacity: 0;
@@ -620,6 +622,7 @@ select {
 #workspace-add-panel.expanded {
   height: 190px;
   opacity: 1;
+  padding: 10px;
 }
 
 #workspace-add-panel-close-button {
@@ -637,7 +640,7 @@ select {
   text-align: left;
 }
 
-#add-workspace-button-template {
+#add_workspace_button_template {
   color: black;
   background: rgb(105, 240, 174);
 }
@@ -656,4 +659,10 @@ select {
 #scene_options_panel.expanded {
   height: 20em;
   opacity: 1;
+}
+
+#remove_workspace_select_template {
+  width: 10em;
+  float: right;
+  margin-right: 1em;
 }

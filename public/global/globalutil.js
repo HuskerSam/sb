@@ -998,6 +998,8 @@ class GUTILImportCSV {
   static addCSVBasketProducts() {
     let productInfo = this.initCSVProducts();
     let basketInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'basket');
+    if (!basketInfo)
+      return;
     let basketName = basketInfo.title;
     let promises = [];
     let productsBySKU = productInfo.productsBySKU;

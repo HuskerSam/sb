@@ -22,6 +22,15 @@
       <div class="inner-split-view" style="display:none;">
         <div id="workspace-add-panel">
           <button id="workspace-add-panel-close-button" class="button-expanded mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:15em;">
+            <input class="mdl-textfield__input" type="text" id="new-workspace-name">
+            <label class="mdl-textfield__label" for="new-workspace-name">New Animation Name</label>
+          </div>
+          <button id="add_workspace_button_template" class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary"><i class="material-icons">add</i></button>
+          <select id="remove_workspace_select_template">
+            <option>Delete Animation</option>
+          </select>
+          <br>
           <div class="add-panel-item">
             <div>ASSETS</div>
             <select id="add_animation_asset_choice">
@@ -36,7 +45,7 @@
             </select>
           </div>
           <div class="add-panel-item">
-            <div>SCENE</div>
+            <div>LAYOUT</div>
             <select id="add_animation_scene_choice">
               <option>Current</option>
               <option>Animation</option>
@@ -61,23 +70,13 @@
               <option>select template</option>
             </select>
           </div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:15em;">
-            <input class="mdl-textfield__input" type="text" id="new-workspace-name">
-            <label class="mdl-textfield__label" for="new-workspace-name">New Animation Name</label>
-          </div>
-          <button id="add-workspace-button-template" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">add</i></button>
-          &nbsp;
-          &nbsp;
-          <select id="remove_workspace_select_template" style="width:10em;">
-            <option>Delete Animation</option>
-          </select>
         </div>
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="flex:1;">
           <div class="mdl-tabs__tab-bar">
             <div class="tab-item-wrapper">
               <button id="add-workspace-button-expand" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">camera_roll</i></button>
               <select id="workspaces-select"></select>
-              <button id="import_products_csv_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">transform</i></button>
+              <button id="import_products_csv_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">extension</i></button>
               <button id="scene_data_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">movie_filter</i></button>
             </div>
             <a href="#ui-products-panel" id="ui-product-tab" class="mdl-tabs__tab is-active">
@@ -85,7 +84,7 @@
               Products</a>
             <a href="#ui-scene-panel" id="ui-scene-tab" class="mdl-tabs__tab">
               <button id="scene_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
-              Scene</a>
+              Layout</a>
             <a href="#ui-assets-panel" id="ui-asset-tab" class="mdl-tabs__tab">
               <button id="asset_changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
               Assets</a>
@@ -100,7 +99,7 @@
               &nbsp;
               <button id="import_asset_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
               &nbsp;
-              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">attachment</i></button>
+              <button id="download_asset_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">get_app</i></button>
             </div>
             <div style="flex:1;width:100%;" id="asset_tab_table">
             </div>
@@ -114,7 +113,7 @@
               &nbsp;
               <button id="import_scene_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
               &nbsp;
-              <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">attachment</i></button>
+              <button id="download_scene_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">get_app</i></button>
             </div>
             <div style="flex:1;width:100%;" id="scene_tab_table">
             </div>
@@ -128,7 +127,7 @@
               &nbsp;
               <button id="import_product_csv_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cloud_upload</i></button>
               &nbsp;
-              <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">attachment</i></button>
+              <button id="download_product_csv" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">get_app</i></button>
             </div>
             <div style="display:flex;flex-direction:row;flex:1;">
               <div id="record_field_list">
@@ -217,7 +216,7 @@
   <script src="/model/mfirebaselist.js"></script>
   <script src="/model/mfirebaseprofile.js"></script>
   <script src="/model/mfirebaseproject.js"></script>
-
+  <script src="/model/bfirebasequery.js"></script>
   <script src="/controller/bview.js"></script>
   <script src="/controller/cpanelcanvas.js"></script>
   <script src="/controller/cbandprofileoptions.js"></script>

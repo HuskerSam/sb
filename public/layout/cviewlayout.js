@@ -7,7 +7,6 @@ class cViewLayout extends bView {
 
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
-
     this.addProjectName = document.querySelector('#new-workspace-name');
 
     let t = document.querySelector('.inner-split-view');
@@ -196,6 +195,7 @@ class cViewLayout extends bView {
       this.__initAddAnimations('add_animation_scene_animation');
       this.__initAddAnimations('add_animation_product_animation');
       this.remove_workspace_select_template = document.querySelector('#remove_workspace_select_template');
+
       this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
       this.remove_workspace_select_template.addEventListener('input', e => {
         let sel = this.remove_workspace_select_template;
@@ -242,6 +242,59 @@ class cViewLayout extends bView {
       document.getElementById('basketblocklist').innerHTML = basketListHTML;
 
     }, 100);
+
+    this.add_workspace_button_template = document.getElementById('add_workspace_button_template');
+    this.add_workspace_button_template.addEventListener('click', e => this._addAnimation());
+  }
+  _addAnimation() {
+    let newTitle = this.addProjectName.value.trim();
+    if (newTitle.length === 0) {
+      alert('need a name for animation');
+      return;
+    }
+    this.canvasHelper.hide();
+
+    let newAnimationKey = gAPPP.a.modelSets['projectTitles'].getKey();
+    let promises = [];
+    let assetChoice = document.getElementById('add_animation_asset_choice').value;
+    if (assetChoice === 'Current') {
+      promises.push(gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows')
+        .then(assets => {
+          if (!assets)
+            return Promise.resolve();
+          console.log(assets);
+          return gAPPP.a.writeProjectRawData(newAnimationKey, 'assetRows', assets);
+        }));
+    }
+
+    let sceneChoice = document.getElementById('add_animation_scene_choice').value;
+    if (sceneChoice === 'Current') {
+      promises.push(gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows')
+        .then(scene => {
+          if (!scene)
+            return Promise.resolve();
+          console.log(scene);
+          return gAPPP.a.writeProjectRawData(newAnimationKey, 'sceneRows', scene);
+        }));
+    }
+
+    let productChoice = document.getElementById('add_animation_product_choice').value;
+    if (productChoice === 'Current') {
+      promises.push(gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
+        .then(products => {
+          if (!products)
+            return Promise.resolve();
+
+          return gAPPP.a.writeProjectRawData(newAnimationKey, 'productRows', products);
+        }));
+    }
+
+    return Promise.all(promises)
+      .then(results => {
+        this._addProject(newTitle, newTitle, newAnimationKey, false);
+
+        this.reloadScene(false, newAnimationKey);
+      });
   }
   toggleProductAddView(col) {
     if (this.productViewAddShown) {
@@ -328,6 +381,7 @@ class cViewLayout extends bView {
 
 
         let columns = [];
+        let topLeftTitle = (tableName === 'product') ? '<i class="material-icons">add_to_queue</i>' : '';
         columns.push({
           rowHandle: true,
           formatter: "handle",
@@ -336,7 +390,7 @@ class cViewLayout extends bView {
           frozen: true,
           width: 45,
           minWidth: 45,
-          title: '<i class="material-icons">add_to_queue</i>'
+          title: topLeftTitle
         });
         if (tableName !== 'product')
           columns.push({
@@ -516,23 +570,25 @@ class cViewLayout extends bView {
       this.canvasHelper.cameraChangeHandler();
     }
   }
-  reloadScene(clear) {
-    if (!gAPPP.a.profile.selectedWorkspace)
+  reloadScene(clear, animationKey = false) {
+    if (!animationKey)
+      animationKey = gAPPP.a.profile.selectedWorkspace;
+    if (!animationKey)
       return;
 
     this.canvasHelper.hide();
 
     if (clear) {
-      gAPPP.a.clearProjectData(gAPPP.a.profile.selectedWorkspace)
+      gAPPP.a.clearProjectData(animationKey)
         .then(() => setTimeout(() => location.reload(), 1));
     }
 
-    gAPPP.a.clearProjectData(gAPPP.a.profile.selectedWorkspace)
-      .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows'))
+    gAPPP.a.clearProjectData(animationKey)
+      .then(() => gAPPP.a.readProjectRawData(animationKey, 'assetRows'))
       .then(assets => this.__importRows(assets))
-      .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows'))
+      .then(() => gAPPP.a.readProjectRawData(animationKey, 'sceneRows'))
       .then(scene => this.__importRows(scene))
-      .then(() => gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows'))
+      .then(() => gAPPP.a.readProjectRawData(animationKey, 'productRows'))
       .then(products => this.__importRows(products))
       .then(() => GUTILImportCSV.addCSVDisplayFinalize())
       .then(() => setTimeout(() => location.reload(), 1));
@@ -849,13 +905,5 @@ class cViewLayout extends bView {
     super._userProfileChange();
 
     document.getElementById('light_intensity_value').innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
-  }
-  addProject() {
-    let newTitle = this.addProjectName.value.trim();
-    if (newTitle.length === 0) {
-      alert('need a name for scene');
-      return;
-    }
-    this._addProject(newTitle, newTitle);
   }
 }

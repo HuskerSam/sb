@@ -191,10 +191,11 @@ class bView {
     })
     .catch(e => {
       console.log(e);
-    });    
+    });
   }
-  _addProject(newTitle, newCode) {
-    let key = gAPPP.a.modelSets['projectTitles'].getKey();
+  _addProject(newTitle, newCode, key, reload = true) {
+    if (!key)
+      key = gAPPP.a.modelSets['projectTitles'].getKey();
     firebase.database().ref('projectTitles/' + key).set({
       title: newTitle,
       code: newCode
@@ -206,6 +207,8 @@ class bView {
       field: 'selectedWorkspace',
       newValue: key
     }]);
-    setTimeout(() => location.reload(), 100);
+
+    if (reload)
+      setTimeout(() => location.reload(), 100);
   }
 }
