@@ -242,13 +242,14 @@ class cViewLayout extends bView {
     }
 
     let basketListHTML = '';
-    for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
-      basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
+    if (this.productData.displayBlocks)
+      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
+        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
     document.getElementById('basketblocklist').innerHTML = basketListHTML;
 
     return Promise.resolve();
   }
-  _addAnimation() {
+  async _addAnimation() {
     let newTitle = this.addProjectName.value.trim();
     if (newTitle.length === 0) {
       alert('need a name for animation');
@@ -257,46 +258,35 @@ class cViewLayout extends bView {
     this.canvasHelper.hide();
 
     let newAnimationKey = gAPPP.a.modelSets['projectTitles'].getKey();
-    let promises = [];
+
+    let result = await this._addProject(newTitle, newTitle, newAnimationKey, false);
+
     let assetChoice = document.getElementById('add_animation_asset_choice').value;
     if (assetChoice === 'Current') {
-      promises.push(gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows')
-        .then(assets => {
-          if (!assets)
-            return Promise.resolve();
-          console.log(assets);
-          return gAPPP.a.writeProjectRawData(newAnimationKey, 'assetRows', assets);
-        }));
+      let assets = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows');
+      if (assets) {
+        let result = await gAPPP.a.writeProjectRawData(newAnimationKey, 'assetRows', assets);
+      }
     }
 
     let sceneChoice = document.getElementById('add_animation_scene_choice').value;
     if (sceneChoice === 'Current') {
-      promises.push(gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows')
-        .then(scene => {
-          if (!scene)
-            return Promise.resolve();
-          console.log(scene);
-          return gAPPP.a.writeProjectRawData(newAnimationKey, 'sceneRows', scene);
-        }));
+      let scene = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows');
+      if (scene) {
+        let result = await gAPPP.a.writeProjectRawData(newAnimationKey, 'sceneRows', scene);
+      }
     }
 
     let productChoice = document.getElementById('add_animation_product_choice').value;
     if (productChoice === 'Current') {
-      promises.push(gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
-        .then(products => {
-          if (!products)
-            return Promise.resolve();
-
-          return gAPPP.a.writeProjectRawData(newAnimationKey, 'productRows', products);
-        }));
+      let products = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows');
+      if (products) {
+        let result = await gAPPP.a.writeProjectRawData(newAnimationKey, 'productRows', products);
+      }
     }
 
-    return Promise.all(promises)
-      .then(results => {
-        this._addProject(newTitle, newTitle, newAnimationKey, false);
 
-        this.reloadScene(false, newAnimationKey);
-      });
+    return this.reloadScene(false, newAnimationKey);
   }
   toggleProductAddView(col) {
     if (this.productViewAddShown) {

@@ -193,22 +193,23 @@ class bView {
       console.log(e);
     });
   }
-  _addProject(newTitle, newCode, key, reload = true) {
+  async _addProject(newTitle, newCode, key, reload = true) {
     if (!key)
       key = gAPPP.a.modelSets['projectTitles'].getKey();
-    firebase.database().ref('projectTitles/' + key).set({
+    await firebase.database().ref('projectTitles/' + key).set({
       title: newTitle,
       code: newCode
     });
-    firebase.database().ref('project/' + key).set({
+    await firebase.database().ref('project/' + key).set({
       title: newTitle
     });
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'selectedWorkspace',
-      newValue: key
-    }]);
 
-    if (reload)
+    if (reload){
+      await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'selectedWorkspace',
+        newValue: key
+      }]);
       setTimeout(() => location.reload(), 100);
+    }
   }
 }
