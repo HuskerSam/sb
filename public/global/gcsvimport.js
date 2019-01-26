@@ -1,38 +1,91 @@
-class GCSVImport {
+class gCSVImport {
   constructor(projectId = 'default') {
-    this.path = '/project/' + projectId + '/';
+    this.projectId = projectId;
   }
-  get path(eleType) {
-    return this.path + eleType;
+  path(eleType) {
+    return '/project/' + this.projectId + '/' + eleType;
   }
-  dbFetchByFieldLookup(field, value, eleType = 'block') {
-    return firebase.database().ref(this.path(eleType))
+  async dbFetchByLookup(type, field, value) {
+    return firebase.database().ref(this.path(type))
+      .orderByChild(field)
+      .equalTo(value)
+      .once('value')
+      .then(result => {
+        let recordsById = result.val();
+        let recordIds = [];
+        let records = [];
+        for (let key in recordsById) {
+          recordIds.push(key);
+          records.push(recordsById[key]);
+        }
+
+        return {
+          recordsById,
+          recordIds,
+          records
+        }
+      });
+  }
+  async dbRemove(type, key) {
+    let updates = {};
+    if (!type) {
+      console.log('no type on db remove');
+      return Promise.resolve();
+    }
+    if (type === 'project') {
+      updates['/project/' + key] = null;
+      updates['/projectTitles/' + key] = null;
+    } else {
+      updates['/' + this.path(type) + '/' + key] = null;
+    }
+    return firebase.database().ref().update(updates);
+  }
+  async dbSetRecord(type, data, id) {
+    if (!id)
+      id = firebase.database().ref().child(this.path(type)).push().key;
+    let updates = {};
+    updates['/' + this.path(type) + '/' + id] = data;
+    await firebase.database().ref().update(updates);
+
+    return Promise.resolve({
+      key: id
+    });
+  }
+  async dbSetRecordFields(type, data, id) {
+    if (!id)
+      id = firebase.database().ref().child(this.path(type)).push().key;
+    let updates = {};
+    for (let i in data)
+      updates['/' + this.path(type) + '/' + id + '/' + i] = data[i];
+    await firebase.database().ref().update(updates);
+
+    return Promise.resolve({
+      key: id
+    });
+  }
+  async dbFetchListByLookup(type, field, value) {
+    return firebase.database().ref(this.path(type))
       .orderByChild(field)
       .equalTo(value)
       .once('value')
       .then(result => {
         console.log(result);
-        console.log(result.val());
-      })
+        console.log(result.val(), result.id);
+
+        return result.val();
+      });
   }
-  dbSetRecord(type, data, id) {
-    if (!id)
-      id = this.getKey();
-    let updates = {};
-    updates['/' + this.path(type) + '/' + id] = data;
-    return firebase.database().ref().update(updates);
-  }
-  setBlobFromString(id, dataString, filename) {
+  async setBlobFromString(id, dataString, filename) {
     let storageRef = firebase.storage().ref();
     let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename);
     return ref.putString(dataString)
   }
-  setBlob(id, blob, filename) {
+  async setBlob(id, blob, filename) {
     let storageRef = firebase.storage().ref();
     let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename)
     return ref.put(blob);
   }
-  static getProductColors() {
+  getProductColors() {
     let colors = [
       'decolor: 1,0,0',
       'decolor: 0,1,0',
@@ -57,7 +110,7 @@ class GCSVImport {
       buttonForeColors
     }
   }
-  addCSVMeshRow(row) {
+  async addCSVMeshRow(row) {
     let promises = [];
 
     let meshData = {
@@ -112,7 +165,7 @@ class GCSVImport {
 
     return Promise.all(promises);
   }
-  static addCSVBlockRow(row) {
+  async addCSVBlockRow(row) {
     let blockData = {
       title: row.name,
       materialName: row.materialname,
@@ -146,35 +199,34 @@ class GCSVImport {
     }
     if (row.blockflag) blockData.blockFlag = row.blockflag;
 
-    return this.dbSetRecord('block', blockData).then(blockResult => {
-      let frameTime = '0';
-      if (row.frametime)
-        frameTime = row.frametime;
+    let blockResult = await this.dbSetRecord('block', blockData);
+    let frameTime = '0';
+    if (row.frametime)
+      frameTime = row.frametime;
 
-      return this.dbSetRecord('frame', {
-        parentKey: blockResult.key,
-        positionX: row.x,
-        positionY: row.y,
-        positionZ: row.z,
-        rotationX: row.rx,
-        rotationY: row.ry,
-        rotationZ: row.rz,
-        scalingX: row.sx,
-        scalingY: row.sy,
-        scalingZ: row.sz,
-        frameOrder: 10,
-        frameTime
-      });
+    return this.dbSetRecord('frame', {
+      parentKey: blockResult.key,
+      positionX: row.x,
+      positionY: row.y,
+      positionZ: row.z,
+      rotationX: row.rx,
+      rotationY: row.ry,
+      rotationZ: row.rz,
+      scalingX: row.sx,
+      scalingY: row.sy,
+      scalingZ: row.sz,
+      frameOrder: 10,
+      frameTime
     });
   }
-  static addCSVBlockChildRow(row) {
-    let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
-    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
-
-    if (!ele) {
+  async addCSVBlockChildRow(row) {
+    let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
+    if (parentRecords.records.length < 1) {
       console.log(row.parent, ' - block not found');
       return Promise.resolve();
     }
+    let key = parentRecords.recordIds[0];
+
     let inheritMaterial = false;
     if (row.materialname === 'inherit')
       inheritMaterial = true;
@@ -188,7 +240,7 @@ class GCSVImport {
     };
 
     if (row.index) {
-      blockChildData.animationIndex = GLOBALUTIL.getNumberOrDefault(row.index, 0)
+      blockChildData.animationIndex = GLOBALUTIL.getNumberOrDefault(row.index, 0);
       blockChildData.origRow = row;
     }
     if (row.sku)
@@ -197,52 +249,54 @@ class GCSVImport {
       blockChildData.cameraName = row.cameraname;
     if (row.origCameraRow)
       blockChildData.origRow = row;
+    if (row.realOrigRow)
+      blockChildData.origRow = row.realOrigRow;
 
     if (row.cameratargetblock)
       blockChildData.cameraTargetBlock = row.cameratargetblock;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
 
-    return this.dbSetRecord('blockchild', blockChildData).then(childResults => {
+    console.log(row);
+    let childResults = await this.dbSetRecord('blockchild', blockChildData);
 
-      let frameData = {
-        parentKey: childResults.key,
-        positionX: row.x,
-        positionY: row.y,
-        positionZ: row.z,
-        rotationX: row.rx,
-        rotationY: row.ry,
-        rotationZ: row.rz,
-        scalingX: row.sx,
-        scalingY: row.sy,
-        scalingZ: row.sz,
-        visibility: row.visibility,
-        frameOrder: '10',
-        frameTime: '0'
-      };
+    let frameData = {
+      parentKey: childResults.key,
+      positionX: row.x,
+      positionY: row.y,
+      positionZ: row.z,
+      rotationX: row.rx,
+      rotationY: row.ry,
+      rotationZ: row.rz,
+      scalingX: row.sx,
+      scalingY: row.sy,
+      scalingZ: row.sz,
+      visibility: row.visibility,
+      frameOrder: '10',
+      frameTime: '0'
+    };
 
-      if (row.cameraradius)
-        frameData.cameraRadius = row.cameraradius;
-      if (row.cameraheightoffset)
-        frameData.cameraHeightOffset = row.cameraheightoffset;
-      if (row.cameraacceleration)
-        frameData.cameraAcceleration = row.cameraacceleration;
-      if (row.maxcameraspeed)
-        frameData.maxCameraSpeed = row.maxcameraspeed;
-      if (row.camerafov)
-        frameData.cameraFOV = row.camerafov;
-      if (row.camerarotationoffset)
-        frameData.cameraRotationOffset = row.camerarotationoffset;
-      if (row.startx)
-        frameData.cameraOriginX = row.startx;
-      if (row.starty)
-        frameData.cameraOriginY = row.starty;
-      if (row.startz)
-        frameData.cameraOriginZ = row.startz;
+    if (row.cameraradius)
+      frameData.cameraRadius = row.cameraradius;
+    if (row.cameraheightoffset)
+      frameData.cameraHeightOffset = row.cameraheightoffset;
+    if (row.cameraacceleration)
+      frameData.cameraAcceleration = row.cameraacceleration;
+    if (row.maxcameraspeed)
+      frameData.maxCameraSpeed = row.maxcameraspeed;
+    if (row.camerafov)
+      frameData.cameraFOV = row.camerafov;
+    if (row.camerarotationoffset)
+      frameData.cameraRotationOffset = row.camerarotationoffset;
+    if (row.startx)
+      frameData.cameraOriginX = row.startx;
+    if (row.starty)
+      frameData.cameraOriginY = row.starty;
+    if (row.startz)
+      frameData.cameraOriginZ = row.startz;
 
-      return this.dbSetRecord('frame', frameData);
-    });
+    return this.dbSetRecord('frame', frameData);
   }
-  static addCSVShapeRow(row) {
+  async addCSVShapeRow(row) {
     let texturename = row.texturepath;
     let bumptexturename = row.bmppath;
 
@@ -290,21 +344,22 @@ class GCSVImport {
       shapeType: row.shapetype
     });
   }
-  static addCSVBlockChildFrameRow(row) {
-    let ele = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', row.parent);
-    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
-
-    if (!ele) {
+  async addCSVBlockChildFrameRow(row) {
+    let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
+    if (parentRecords.records.length < 1) {
       console.log(row.parent, ' - block not found');
       return Promise.resolve();
     }
+    let key = parentRecords.recordIds[0];
 
     let promises = [];
-    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', key);
+    let bcChildData = await this.dbFetchByLookup('blockchild', 'parentKey', key);
+    let children = bcChildData.recordsById;
     for (let c in children) {
       let d = children[c];
       if (d.childType === row.childtype && d.childName === row.name) {
-
+        if (row.y === undefined)
+          console.log(row);
         let frameData = {
           parentKey: c,
           positionX: row.x,
@@ -326,14 +381,14 @@ class GCSVImport {
 
     return Promise.all(promises);
   }
-  static addCSVRowList(rowList) {
+  async addCSVRowList(rowList) {
     let promises = [];
     for (let c = 0, l = rowList.length; c < l; c++)
       promises.push(this.addCSVRow(rowList[c]));
 
     return Promise.all(promises);
   }
-  static addCSVRow(row) {
+  async addCSVRow(row) {
     let defaultRow = this.defaultCSVRow();
     row = Object.assign(defaultRow, row);
     switch (row.asset) {
@@ -364,14 +419,14 @@ class GCSVImport {
     console.log('type not found', row);
     return Promise.resolve();
   }
-  static addCSVDisplayProduct(row) {
-    let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
-    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
-
-    if (!parentEle) {
+  async addCSVDisplayProduct(row) {
+    let sceneRecords = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
+    if (sceneRecords.records.length < 1) {
       console.log('scene (blockFlag) - block not found');
       return Promise.resolve();
     }
+    let key = sceneRecords.recordIds[0];
+    let sceneData = sceneRecords.records[0];
 
     let promises = [];
     let blockRow = Object.assign({}, row);
@@ -389,7 +444,7 @@ class GCSVImport {
     sceneBC.asset = 'blockchild';
     sceneBC.childtype = 'block';
     sceneBC.name = blockRow.name;
-    sceneBC.parent = parentEle.title;
+    sceneBC.parent = sceneData.title;
     sceneBC.x = blockRow.x;
     sceneBC.y = blockRow.y;
     sceneBC.z = blockRow.z;
@@ -400,18 +455,19 @@ class GCSVImport {
     sceneBC.sy = blockRow.sy;
     sceneBC.sz = blockRow.sz;
     sceneBC.index = blockRow.index;
+    sceneBC.realOrigRow = row;
     promises.push(this.addCSVRow(sceneBC));
 
     return Promise.all(promises);
   }
-  static addCSVDisplayMessage(row) {
-    let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
-    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
-
-    if (!parentEle) {
+  async addCSVDisplayMessage(row) {
+    let sceneRecords = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
+    if (sceneRecords.records.length < 1) {
       console.log('scene (blockFlag) - block not found');
       return Promise.resolve();
     }
+    let key = sceneRecords.recordIds[0];
+    let sceneData = sceneRecords.records[0];
 
     let cameraBlock = this.defaultCSVRow();
     cameraBlock.asset = 'textplane';
@@ -431,13 +487,12 @@ class GCSVImport {
     cameraBlockBC.asset = 'blockchild';
     cameraBlockBC.name = row.name;
     cameraBlockBC.childtype = 'block';
-    cameraBlockBC.parent = parentEle.title;
+    cameraBlockBC.parent = sceneData.title;
     cameraBlockBC.rx = row.rx;
     cameraBlockBC.ry = row.ry;
     cameraBlockBC.rz = row.rz;
     cameraBlockBC.x = row.x;
     cameraBlockBC.y = '-50';
-    cameraBlockBC.oy = row.y;
     cameraBlockBC.z = row.z;
     cameraBlockBC.realOrigRow = row;
     cameraBlockBC.index = row.index;
@@ -447,7 +502,7 @@ class GCSVImport {
       this.addCSVRow(cameraBlockBC)
     ]);
   }
-  static addCSVTextPlane(row) {
+  async addCSVTextPlane(row) {
     let promises = [];
     let textPlaneName = row.name + '_textplane';
 
@@ -516,7 +571,7 @@ class GCSVImport {
 
     return Promise.all(promises);
   }
-  static __addSignPost(product, productData) {
+  async __addSignPost(product, productData) {
     let newObjects = [];
     let blockRow = this.defaultCSVRow();
     blockRow.asset = 'block';
@@ -645,23 +700,23 @@ class GCSVImport {
         ]);
       })
   }
-  static __addTextShowHide(product, productData, origRow) {
+  async __addTextShowHide(product, productData, origRow) {
     let childName = product.childName;
 
     let showFrame = this.defaultCSVRow();
     showFrame.asset = 'blockchildframe';
     showFrame.name = childName;
     showFrame.childtype = 'block';
-    showFrame.parent = origRow.parent;
+    showFrame.parent = productData.sceneBlock.title;
     showFrame.frameorder = '20';
     showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
-    showFrame.y = origRow.oy;
+    showFrame.y = origRow.y;
 
     let hideFrame = this.defaultCSVRow();
     hideFrame.asset = 'blockchildframe';
     hideFrame.name = childName;
     hideFrame.childtype = 'block';
-    hideFrame.parent = origRow.parent;
+    hideFrame.parent = productData.sceneBlock.title;
     hideFrame.frameorder = '30';
     hideFrame.frametime = (product.endEnlargeTime * 1000).toFixed(0) + 'cp700';
     hideFrame.y = '-50';
@@ -670,7 +725,7 @@ class GCSVImport {
     endFrame.asset = 'blockchildframe';
     endFrame.name = product.childName;
     endFrame.childtype = 'block';
-    endFrame.parent = origRow.parent;
+    endFrame.parent = productData.sceneBlock.title;
     endFrame.frameorder = '40';
     endFrame.frametime = (productData.runLength * 1000).toFixed(0);
     endFrame.y = '-50';
@@ -681,14 +736,14 @@ class GCSVImport {
       this.addCSVRow(endFrame)
     ]);
   }
-  static addCSVDisplayCamera(row) {
-    let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
-    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
-
-    if (!parentEle) {
+  async addCSVDisplayCamera(row) {
+    let sceneRecords = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
+    if (sceneRecords.records.length < 1) {
       console.log('scene (blockFlag) - block not found');
       return Promise.resolve();
     }
+    let sceneData = sceneRecords.records[0];
+    let key = sceneRecords.recordIds[0];
 
     let childCSVRows = [];
     let cameraBlock = this.defaultCSVRow();
@@ -706,7 +761,7 @@ class GCSVImport {
     cameraBlockBC.asset = 'blockchild';
     cameraBlockBC.name = cameraBlock.name;
     cameraBlockBC.childtype = 'block';
-    cameraBlockBC.parent = parentEle.title;
+    cameraBlockBC.parent = sceneData.title;
     cameraBlockBC.rx = row.startrx;
     cameraBlockBC.ry = row.startry;
     cameraBlockBC.rz = row.startrz;
@@ -727,7 +782,7 @@ class GCSVImport {
     cam.cameratargetblock = "block:" + cameraBlock.name;
     cam.childtype = 'camera';
     cam.name = row.name;
-    cam.parent = parentEle.title;
+    cam.parent = sceneData.title;
     cam.rx = row.rx;
     cam.ry = row.ry;
     cam.rz = row.rz;
@@ -742,14 +797,14 @@ class GCSVImport {
 
     return this.addCSVRowList(childCSVRows);
   }
-  static __addCSVFollowBlock(productData) {
-    let parentEle = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'scene');
-    let key = gAPPP.a.modelSets['block'].lastKeyLookup;
-
-    if (!parentEle) {
+  async __addCSVFollowBlock(productData) {
+    let sceneRecords = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
+    if (sceneRecords.records.length < 1) {
       console.log('scene (blockFlag) - block not found');
       return Promise.resolve();
     }
+    let key = sceneRecords.recordIds[0];
+    let sceneData = sceneRecords.records[0];
 
     let cameraRow = productData.cameraOrigRow;
     let frameRows = [];
@@ -763,17 +818,17 @@ class GCSVImport {
       cameraBlockFrame.asset = 'blockchildframe';
       cameraBlockFrame.name = cameraRow.name + '_followblock';
       cameraBlockFrame.childtype = 'block';
-      cameraBlockFrame.parent = parentEle.title;
+      cameraBlockFrame.parent = sceneData.title;
       cameraBlockFrame.frameorder = frameOrder.toString();
 
       if (c < l) {
-        let p = productData.productsBC[c].origRow;
+        let p = productData.productsRecords[c].origRow;
         let product = productData.products[c];
         cameraBlockFrame.x = p.x;
         if (product.itemId)
           cameraBlockFrame.y = (GLOBALUTIL.getNumberOrDefault(p.y, 0) + 2).toString();
         else
-          cameraBlockFrame.y = p.oy;
+          cameraBlockFrame.y = p.y;
 
         cameraBlockFrame.z = p.z;
         cameraBlockFrame.rx = p.rx;
@@ -807,7 +862,7 @@ class GCSVImport {
 
     return this.addCSVRowList(frameRows);
   }
-  static defaultCSVRow() {
+  defaultCSVRow() {
     return {
       ambient: "",
       asset: "",
@@ -855,7 +910,7 @@ class GCSVImport {
       startrz: ''
     };
   }
-  static basketPosition(index) {
+  basketPosition(index) {
     let z = index % 2 * 3 - 1.5;
     let x = Math.floor(index % 4 / 2) * 3 - 1.5;
     let y = Math.floor(index / 4) * 2 + 1;
@@ -866,11 +921,15 @@ class GCSVImport {
       z
     };
   }
-  static addCSVBasketProducts() {
-    let productInfo = this.initCSVProducts();
-    let basketInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'basket');
-    if (!basketInfo)
-      return;
+  async addCSVBasketProducts() {
+    let baskets = await this.dbFetchByLookup('block', 'blockFlag', 'basket');
+    if (baskets.records.length < 1) {
+      console.log(row.parent, 'basket - block not found');
+      return Promise.resolve();
+    }
+    let basketInfo = baskets.records[0];
+    let productInfo = await this.initProducts();
+
     let basketName = basketInfo.title;
     let promises = [];
     let productsBySKU = productInfo.productsBySKU;
@@ -889,7 +948,7 @@ class GCSVImport {
         parent: basketName,
         childtype: 'block',
         sku: productsBySKU[i].itemId,
-        name: productsBySKU[i].blockRef.blockData.basketBlock,
+        name: productsBySKU[i].block,
         inheritmaterial: false,
         x: pos.x.toString(),
         y: pos.y.toString(),
@@ -903,47 +962,59 @@ class GCSVImport {
         visibility: ''
       };
 
-      promises.push(GUTILImportCSV.addCSVRow(row));
+      promises.push(this.addCSVRow(row));
     }
 
     return Promise.all(promises);
   }
-  static addCSVDisplayFinalize() {
-    let pInfo = this.initCSVProducts();
-    this.__addCSVFollowBlock(pInfo);
+  async addCSVDisplayFinalize() {
+    let pInfo = await this.initProducts();
+    await this.__addCSVFollowBlock(pInfo);
 
     let promises = [];
     for (let c = 0, l = pInfo.products.length; c < l; c++)
       if (pInfo.products[c].itemId)
         promises.push(this.__addSignPost(pInfo.products[c], pInfo));
       else {
-        let origRow = pInfo.productsBC[c].origRow;
+        let origRow = pInfo.productsRecords[c].origRow;
         promises.push(this.__addTextShowHide(pInfo.products[c], pInfo, origRow));
       }
 
-    let frameId = gAPPP.a.modelSets['frame'].getIdByFieldLookup('parentKey', pInfo.sceneId);
-    promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
-      field: 'frameTime',
-      newValue: (pInfo.runLength * 1000).toString()
-    }], frameId));
+    let frameRecords = await this.dbFetchByLookup('frame', 'parentKey', pInfo.sceneId);
+    let frameId = frameRecords[0];
+    promises.push(
+      this.dbSetRecordFields('frame', {
+        frameTime: (pInfo.runLength * 1000).toString()
+      }, frameId));
 
     promises.push(this.addCSVBasketProducts());
 
     return Promise.all(promises);
   }
-  static initCSVProducts(cameraData = null) {
-    let children = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey;
-
-    let productsBC = [];
-    for (let i in children) {
-      if (children[i].animationIndex)
-        productsBC.push(children[i]);
+  async initProducts(cameraData = null) {
+    let result = await firebase.database().ref(this.path('blockchild'))
+      .orderByChild('animationIndex')
+      .startAt(-100000)
+      .once('value');
+    let recordsById = result.val();
+    let recordIds = [];
+    let records = [];
+    for (let key in recordsById) {
+      recordIds.push(key);
+      records.push(recordsById[key]);
     }
 
-    let sceneId = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockFlag', 'scene');
+    let productsRecords = records;
+    let sceneRecords = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
+    if (sceneRecords.records.length < 1) {
+      console.log('scene (blockFlag) - block not found');
+      return Promise.resolve({});
+    }
+    let sceneId = sceneRecords.recordIds[0];
+    let sceneBlock = sceneRecords.records[0];
     let products = [];
     let productsBySKU = {};
-    productsBC = productsBC.sort((a, b) => {
+    productsRecords = productsRecords.sort((a, b) => {
       let aIndex = GLOBALUTIL.getNumberOrDefault(a.animationIndex, 0);
       let bIndex = GLOBALUTIL.getNumberOrDefault(b.animationIndex, 0);
       if (aIndex > bIndex)
@@ -953,19 +1024,20 @@ class GCSVImport {
       return 0;
     });
 
-    for (let c = 0, l = productsBC.length; c < l; c++) {
-      let pBC = productsBC[c];
-      let obj = this.findMatchBlock(pBC.childType, pBC.childName, sceneId);
-      let blockData = obj.blockData;
+    for (let c = 0, l = productsRecords.length; c < l; c++) {
+      let pBC = productsRecords[c];
+      let obj = await this.findMatchBlocks(pBC.childType, pBC.childName, sceneId);
+      if (!obj[0]) {
+        console.log(pBC.childType, pBC.childName, sceneId, 'not found');
+        continue;
+      }
+      let blockData = obj[0].blockData;
 
       let origRow = pBC.origRow;
       if (origRow.realOrigRow)
         origRow = origRow.realOrigRow;
-      if (blockData.itemId)
-        origRow = blockData.origRow;
 
       let p = {
-        blockRef: obj,
         itemId: blockData.itemId,
         title: blockData.itemTitle,
         itemCount: blockData.itemCount,
@@ -974,18 +1046,20 @@ class GCSVImport {
         price: blockData.itemPrice,
         image: blockData.texturePath,
         animationIndex: pBC.animationIndex,
+        block: origRow.block,
         childName: pBC.childName,
         childType: pBC.childType,
         origRow
       };
       products.push(p);
-      productsBySKU[p.itemId] = p;
+      if (p.itemId)
+        productsBySKU[p.itemId] = p;
     }
 
-    let cameraBC = this.findMatchBlock('camera', 'FollowCamera', sceneId);
+    let cameraBC = await this.findMatchBlocks('camera', 'FollowCamera', sceneId);
     let cameraOrigRow = null;
-    if (cameraBC)
-      cameraOrigRow = cameraBC.BC.origRow.origCameraRow;
+    if (cameraBC[0])
+      cameraOrigRow = cameraBC[0].BC.origRow.origCameraRow;
 
     if (!cameraData)
       cameraData = cameraOrigRow;
@@ -999,7 +1073,8 @@ class GCSVImport {
       runLength = GLOBALUTIL.getNumberOrDefault(cameraData.runlength, 60);
     }
 
-    let displayBs = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayblock');
+    let blocksData = await this.dbFetchByLookup('block', 'blockFlag', 'displayblock');
+    let displayBs = blocksData.recordsById;
     let displayBlocks = [];
     for (let blockKey in displayBs)
       displayBlocks.push(displayBs[blockKey].title);
@@ -1022,7 +1097,7 @@ class GCSVImport {
     let pInfo = {
       products,
       productsBySKU,
-      productsBC,
+      productsRecords,
       sceneId,
       productsShownAtOnce,
       numberOfButtons,
@@ -1032,37 +1107,14 @@ class GCSVImport {
       introTime,
       finishDelay,
       cameraOrigRow,
-      displayBlocks
+      displayBlocks,
+      sceneBlock
     };
     return pInfo;
   }
-  static findMatchBlock(childType, childName, parentId) {
-    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', parentId);
-
-    for (let i in children) {
-      if (children[i].childType === childType && children[i].childName === childName) {
-        let blockData = null;
-        let blockKey = null;
-        if (gAPPP.a.modelSets[childType]) {
-          blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
-          blockKey = gAPPP.a.modelSets[childType].lastKeyLookup;
-        }
-        return {
-          blockData,
-          BC: children[i],
-          blockKey,
-          BCKey: i
-        }
-      }
-
-      let childResult = this.findMatchBlock(childType, childName, i);
-      if (childResult)
-        return childResult;
-    }
-    return null;
-  }
-  static findMatchBlocks(childType, childName, parentId, filterKey, filterValue) {
-    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', parentId);
+  async findMatchBlocks(childType, childName, parentId, filterKey, filterValue) {
+    let bcData = await this.dbFetchByLookup('blockchild', 'parentKey', parentId);
+    let children = bcData.recordsById;
     let blocks = [];
     for (let i in children) {
       if (children[i].childType === childType && children[i].childName === childName) {
@@ -1072,9 +1124,10 @@ class GCSVImport {
 
         let blockData = null;
         let blockKey = null;
-        if (gAPPP.a.modelSets[childType]) {
-          blockData = gAPPP.a.modelSets[childType].getValuesByFieldLookup('title', childName);
-          blockKey = gAPPP.a.modelSets[childType].lastKeyLookup;
+        if (childType) {
+          let childData = await this.dbFetchByLookup(childType, 'title', childName);
+          blockData = childData.records[0];
+          blockKey = childData.recordIds[0];
         }
         blocks.push({
           blockData,
@@ -1084,7 +1137,7 @@ class GCSVImport {
         });
       }
 
-      let childResults = this.findMatchBlocks(childType, childName, i);
+      let childResults = await this.findMatchBlocks(childType, childName, i);
       blocks.concat(childResults);
     }
     return blocks;

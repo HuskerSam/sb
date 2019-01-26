@@ -60,13 +60,13 @@ class cViewDemo extends bView {
       this.workplacesSelect.style.display = 'block';
     }
   }
-  _cameraShown() {
+  async _cameraShown() {
     if (this.cameraShown)
-      return;
+      return Promise.resolve();
     this.cameraShown = true;
     setTimeout(() => {
 
-      this.productData = GUTILImportCSV.initCSVProducts();
+      this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
       this.products = this.productData.products;
       this.productsBySKU = this.productData.productsBySKU;
 
@@ -88,6 +88,8 @@ class cViewDemo extends bView {
       this.sceneIndex = this.workplacesSelect.selectedIndex;
       this.productsDisplayUpdate();
     }, 100);
+
+    return Promise.resolve();
   }
   _userProfileChange() {
     super._userProfileChange();
@@ -221,8 +223,8 @@ class cViewDemo extends bView {
       this.itemButtons[c].innerHTML = '&nbsp;';
     }
   }
-  basketAddItemBlock(sku, index) {
-    let pos = GUTILImportCSV.basketPosition(index);
+  async basketAddItemBlock(sku, index) {
+    let pos = new gCSVImport(gAPPP.a.profile.selectedWorkspace).basketPosition(index);
     let product = this.productsBySKU[sku];
     if (!product)
       return Promise.resolve();
@@ -267,8 +269,8 @@ class cViewDemo extends bView {
     let basketBlock = product.blockRef.blockData.basketBlock;
     let rootKey = this.rootBlock.blockKey;
 
-    let basketCart = GUTILImportCSV.findMatchBlock('block', 'basketcart', rootKey);
-    let basketItems = GUTILImportCSV.findMatchBlocks('block', basketBlock, basketCart.blockKey, 'sku', itemId);
+    let basketCart = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).findMatchBlock('block', 'basketcart', rootKey);
+    let basketItems = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).findMatchBlocks('block', basketBlock, basketCart.blockKey, 'sku', itemId);
 
     let promises = [];
     for (let c = 0, l = basketItems.length; c < l; c++) {

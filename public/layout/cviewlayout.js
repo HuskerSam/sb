@@ -182,69 +182,71 @@ class cViewLayout extends bView {
     if (this.cameraShown)
       return;
     this.cameraShown = true;
-    setTimeout(() => {
-      document.querySelector('.inner-split-view').style.display = '';
-      this.productData = GUTILImportCSV.initCSVProducts();
-      this.products = this.productData.products;
-      this.productBySKU = this.productData.productsBySKU;
-
-      this.canvasHelper.cameraSelect.selectedIndex = 2;
-      this.canvasHelper.noTestError = true;
-      this.canvasHelper.cameraChangeHandler();
-      this.__initAddAnimations(`add_animation_asset_animation`);
-      this.__initAddAnimations('add_animation_scene_animation');
-      this.__initAddAnimations('add_animation_product_animation');
-      this.remove_workspace_select_template = document.querySelector('#remove_workspace_select_template');
-
-      this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
-      this.remove_workspace_select_template.addEventListener('input', e => {
-        let sel = this.remove_workspace_select_template;
-        if (sel.selectedIndex === 0)
-          return;
-        if (confirm(`Delete animation ${sel.options[sel.selectedIndex].text}?`)) {
-          Promise.all([
-            gAPPP.a.modelSets['projectTitles'].removeByKey(sel.value),
-            gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-              field: 'selectedWorkspace',
-              newValue: 'none'
-            }])
-          ]).then(r => setTimeout(() => location.reload(), 100))
-        }
-      });
-
-      this.updateProductList();
-      this.updatePositionList();
-      this.import_scene_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-      if (this.workplacesSelect.selectedIndex !== -1) {
-        this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-        this.import_scene_workspaces_select.selectedIndex = 0;
-      }
-      this.import_asset_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-      if (this.workplacesSelect.selectedIndex !== -1) {
-        this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-        this.import_asset_workspaces_select.selectedIndex = 0;
-      }
-      this.import_product_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-      if (this.workplacesSelect.selectedIndex !== -1) {
-        this.import_product_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-        this.import_product_workspaces_select.selectedIndex = 0;
-      }
-
-      try {
-        this.canvasHelper.playAnimation();
-      } catch (e) {
-        console.log('play anim error', e);
-      }
-
-      let basketListHTML = '';
-      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
-        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-      document.getElementById('basketblocklist').innerHTML = basketListHTML;
-
-    }, 100);
+    this.__workspaceInitedPostTimeout();
 
     this.add_workspace_button_template = document.getElementById('add_workspace_button_template');
     this.add_workspace_button_template.addEventListener('click', e => this._addAnimation());
+  }
+  async __workspaceInitedPostTimeout() {
+    document.querySelector('.inner-split-view').style.display = '';
+    this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
+    this.products = this.productData.products;
+    this.productBySKU = this.productData.productsBySKU;
+
+    this.canvasHelper.cameraSelect.selectedIndex = 2;
+    this.canvasHelper.noTestError = true;
+    this.canvasHelper.cameraChangeHandler();
+    this.__initAddAnimations(`add_animation_asset_animation`);
+    this.__initAddAnimations('add_animation_scene_animation');
+    this.__initAddAnimations('add_animation_product_animation');
+    this.remove_workspace_select_template = document.querySelector('#remove_workspace_select_template');
+
+    this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
+    this.remove_workspace_select_template.addEventListener('input', e => {
+      let sel = this.remove_workspace_select_template;
+      if (sel.selectedIndex === 0)
+        return;
+      if (confirm(`Delete animation ${sel.options[sel.selectedIndex].text}?`)) {
+        Promise.all([
+          new gCSVImport().dbRemove('project', sel.value),
+          gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+            field: 'selectedWorkspace',
+            newValue: 'none'
+          }])
+        ]).then(r => setTimeout(() => location.reload(), 100))
+      }
+    });
+
+    this.updateProductList();
+    this.updatePositionList();
+    this.import_scene_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+    if (this.workplacesSelect.selectedIndex !== -1) {
+      this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+      this.import_scene_workspaces_select.selectedIndex = 0;
+    }
+    this.import_asset_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+    if (this.workplacesSelect.selectedIndex !== -1) {
+      this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+      this.import_asset_workspaces_select.selectedIndex = 0;
+    }
+    this.import_product_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+    if (this.workplacesSelect.selectedIndex !== -1) {
+      this.import_product_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+      this.import_product_workspaces_select.selectedIndex = 0;
+    }
+
+    try {
+      this.canvasHelper.playAnimation();
+    } catch (e) {
+      console.log('play anim error', e);
+    }
+
+    let basketListHTML = '';
+    for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
+      basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
+    document.getElementById('basketblocklist').innerHTML = basketListHTML;
+
+    return Promise.resolve();
   }
   _addAnimation() {
     let newTitle = this.addProjectName.value.trim();
@@ -590,7 +592,7 @@ class cViewLayout extends bView {
       .then(scene => this.__importRows(scene))
       .then(() => gAPPP.a.readProjectRawData(animationKey, 'productRows'))
       .then(products => this.__importRows(products))
-      .then(() => GUTILImportCSV.addCSVDisplayFinalize())
+      .then(() => new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVDisplayFinalize())
       .then(() => setTimeout(() => location.reload(), 1));
   }
   __importRows(rows) {
@@ -599,7 +601,7 @@ class cViewLayout extends bView {
 
     let promises = [];
     for (let c = 0, l = rows.length; c < l; c++) {
-      promises.push(GUTILImportCSV.addCSVRow(rows[c]));
+      promises.push(new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVRow(rows[c]));
     }
 
     return Promise.all(promises);

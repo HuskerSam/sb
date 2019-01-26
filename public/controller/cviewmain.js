@@ -194,7 +194,7 @@ class cViewMain extends bView {
         complete: results => {
           if (results.data) {
             for (let c = 0, l = results.data.length; c < l; c++) {
-              GUTILImportCSV.addCSVRow(results.data[c]).then(() => {});
+              new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVRow(results.data[c]).then(() => {});
             }
           }
         }
