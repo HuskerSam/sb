@@ -1142,4 +1142,15 @@ class gCSVImport {
     }
     return blocks;
   }
+  async importRows(rows) {
+    if (!rows)
+      return Promise.resolve();
+
+    let promises = [];
+    for (let c = 0, l = rows.length; c < l; c++) {
+      promises.push(this.addCSVRow(rows[c]));
+    }
+
+    return Promise.all(promises);
+  }
 }

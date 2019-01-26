@@ -203,18 +203,7 @@ class cViewLayout extends bView {
 
     this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
     this.remove_workspace_select_template.addEventListener('input', e => {
-      let sel = this.remove_workspace_select_template;
-      if (sel.selectedIndex === 0)
-        return;
-      if (confirm(`Delete animation ${sel.options[sel.selectedIndex].text}?`)) {
-        Promise.all([
-          new gCSVImport().dbRemove('project', sel.value),
-          gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-            field: 'selectedWorkspace',
-            newValue: 'none'
-          }])
-        ]).then(r => setTimeout(() => location.reload(), 100))
-      }
+      this.removeWorkspace().then(() => {});
     });
 
     this.updateProductList();
@@ -284,7 +273,6 @@ class cViewLayout extends bView {
         let result = await gAPPP.a.writeProjectRawData(newAnimationKey, 'productRows', products);
       }
     }
-
 
     return this.reloadScene(false, newAnimationKey);
   }
@@ -526,7 +514,8 @@ class cViewLayout extends bView {
 
 
     gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data)
-      .then(r => this.reloadScene());
+      .then(r => this.reloadScene())
+      .then(() => {});
 
     if (e)
       e.preventDefault();
@@ -562,7 +551,7 @@ class cViewLayout extends bView {
       this.canvasHelper.cameraChangeHandler();
     }
   }
-  reloadScene(clear, animationKey = false) {
+  async reloadScene(clear, animationKey = false) {
     if (!animationKey)
       animationKey = gAPPP.a.profile.selectedWorkspace;
     if (!animationKey)
@@ -575,26 +564,22 @@ class cViewLayout extends bView {
         .then(() => setTimeout(() => location.reload(), 1));
     }
 
-    gAPPP.a.clearProjectData(animationKey)
-      .then(() => gAPPP.a.readProjectRawData(animationKey, 'assetRows'))
-      .then(assets => this.__importRows(assets))
-      .then(() => gAPPP.a.readProjectRawData(animationKey, 'sceneRows'))
-      .then(scene => this.__importRows(scene))
-      .then(() => gAPPP.a.readProjectRawData(animationKey, 'productRows'))
-      .then(products => this.__importRows(products))
-      .then(() => new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVDisplayFinalize())
-      .then(() => setTimeout(() => location.reload(), 1));
-  }
-  __importRows(rows) {
-    if (!rows)
-      return Promise.resolve();
+    let csvImport = new gCSVImport(animationKey);
+    await gAPPP.a.clearProjectData(animationKey);
+    let assets = await gAPPP.a.readProjectRawData(animationKey, 'assetRows');
+    await csvImport.importRows(assets);
+    let scene = await gAPPP.a.readProjectRawData(animationKey, 'sceneRows');
+    await csvImport.importRows(scene);
+    let products = await gAPPP.a.readProjectRawData(animationKey, 'productRows');
+    await csvImport.importRows(products);
+    await csvImport.addCSVDisplayFinalize();
 
-    let promises = [];
-    for (let c = 0, l = rows.length; c < l; c++) {
-      promises.push(new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVRow(rows[c]));
-    }
+    await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'selectedWorkspace',
+      newValue: animationKey
+    }]);
 
-    return Promise.all(promises);
+    setTimeout(() => location.reload(), 1);
   }
   importCSV() {
     if (this.importFileDom.files.length > 0) {
@@ -605,7 +590,8 @@ class cViewLayout extends bView {
         complete: results => {
           if (results.data) {
             gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, this.saveCSVType + 'Rows', results.data)
-              .then(r => this.reloadScene());
+              .then(r => this.reloadScene())
+              .then(() => {});
           }
         }
       });
@@ -620,6 +606,7 @@ class cViewLayout extends bView {
         .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', null))
         .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows', null))
         .then(() => this.reloadScene(true))
+        .then(() => {});
     }
   }
   initFieldEdit() {
@@ -798,6 +785,7 @@ class cViewLayout extends bView {
 
         gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', outProducts)
           .then(() => this.reloadScene())
+          .then(() => {});
       });
 
     if (e) {
@@ -866,6 +854,7 @@ class cViewLayout extends bView {
         p = this.__sortProductRows(p);
         gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', products)
           .then(() => this.reloadScene())
+          .then(() => {});
       });
   }
   __sortProductRows(p) {
@@ -897,5 +886,33 @@ class cViewLayout extends bView {
     super._userProfileChange();
 
     document.getElementById('light_intensity_value').innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
+  }
+  async removeWorkspace() {
+    let sel = this.remove_workspace_select_template;
+    if (sel.selectedIndex === 0)
+      return;
+    if (confirm(`Delete animation ${sel.options[sel.selectedIndex].text}?`)) {
+      let changeWorkspace = (sel.value === gAPPP.a.profile.selectedWorkspace);
+
+      let removeResult = await new gCSVImport().dbRemove('project', sel.value);
+
+      if (changeWorkspace) {
+        let newIndex = 1;
+        let newId = 'none';
+        if (sel.options.length > 2) {
+          if (sel.selectedIndex === 1)
+            newIndex = 2;
+          newId = sel.options[newIndex].value;
+        }
+
+        await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+          field: 'selectedWorkspace',
+          newValue: newId
+        }]);
+
+        setTimeout(() => location.reload(), 1);
+      }
+    }
+    return Promise.resolve();
   }
 }

@@ -183,15 +183,15 @@ class bView {
   }
   selectProject() {
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'selectedWorkspace',
-      newValue: gAPPP.mV.workplacesSelect.value
-    }])
-    .then(() => {
-      setTimeout(() => location.reload(), 1);
-    })
-    .catch(e => {
-      console.log(e);
-    });
+        field: 'selectedWorkspace',
+        newValue: gAPPP.mV.workplacesSelect.value
+      }])
+      .then(() => {
+        setTimeout(() => location.reload(), 1);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
   async _addProject(newTitle, newCode, key, reload = true) {
     if (!key)
@@ -204,7 +204,7 @@ class bView {
       title: newTitle
     });
 
-    if (reload){
+    if (reload) {
       await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'selectedWorkspace',
         newValue: key
