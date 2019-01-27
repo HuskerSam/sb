@@ -1124,7 +1124,7 @@ class gCSVImport {
 
         let blockData = null;
         let blockKey = null;
-        if (childType) {
+        if (['mesh', 'block', 'blockchild', 'texture', 'shape', 'material', 'frame'].indexOf(childType) !== -1) {
           let childData = await this.dbFetchByLookup(childType, 'title', childName);
           blockData = childData.records[0];
           blockKey = childData.recordIds[0];

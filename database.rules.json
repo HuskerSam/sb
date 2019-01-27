@@ -1,0 +1,19 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "project": {
+      "$projectId": {
+        "block": {
+            ".indexOn": ["title", "blockFlag"]
+        },
+        "blockchild": {
+            ".indexOn": ["parentKey", "animationIndex", "childType", "childName"]
+        },
+        "frame": {
+            ".indexOn": ["parentKey"]
+        }
+      }
+    }
+  }
+}
