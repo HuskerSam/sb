@@ -251,10 +251,22 @@ class cViewLayout extends bView {
     let result = await this._addProject(newTitle, newTitle, newAnimationKey, false);
 
     let assetChoice = document.getElementById('add_animation_asset_choice').value;
+    let assetRead = null;
     if (assetChoice === 'Current') {
-      let assets = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows');
+      assetRead = gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows');
+    }
+    if (assetChoice === 'Animation') {
+      let id = document.getElementById('add_animation_asset_animation');
+      assetRead = gAPPP.a.readProjectRawData(id, 'assetRows');
+    }
+    if (assetChoice === 'Template') {
+      
+    }
+
+    if (assetRead) {
+      let assets = await assetRead;
       if (assets) {
-        let result = await gAPPP.a.writeProjectRawData(newAnimationKey, 'assetRows', assets);
+        await gAPPP.a.writeProjectRawData(newAnimationKey, 'assetRows', assets);
       }
     }
 
