@@ -238,6 +238,28 @@ class cViewLayout extends bView {
 
     return Promise.resolve();
   }
+  async __addAnimationTemplate(type, targetProjectId, sourceProjectId) {
+    if (!sourceProjectId)
+      sourceProjectId = gAPPP.a.profile.selectedWorkspace;
+    let choice = document.getElementById(`add_animation_${type}_choice`).value;
+    let data = null;
+    if (choice === 'Current') {
+      data = await gAPPP.a.readProjectRawData(sourceProjectId, type + 'Rows');
+    }
+    if (choice === 'Animation') {
+      let id = document.getElementById(`add_animation_${type}_animation`);
+      data = await gAPPP.a.readProjectRawData(id, type + 'Rows');
+    }
+    if (choice === 'Template') {
+
+    }
+
+    if (data) {
+      await gAPPP.a.writeProjectRawData(targetProjectId, type + 'Rows', data);
+    }
+
+    return Promise.resolve();
+  }
   async _addAnimation() {
     let newTitle = this.addProjectName.value.trim();
     if (newTitle.length === 0) {
@@ -248,43 +270,14 @@ class cViewLayout extends bView {
 
     let newAnimationKey = gAPPP.a.modelSets['projectTitles'].getKey();
 
-    let result = await this._addProject(newTitle, newTitle, newAnimationKey, false);
+    await this._addProject(newTitle, newTitle, newAnimationKey, false);
 
-    let assetChoice = document.getElementById('add_animation_asset_choice').value;
-    let assetRead = null;
-    if (assetChoice === 'Current') {
-      assetRead = gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows');
-    }
-    if (assetChoice === 'Animation') {
-      let id = document.getElementById('add_animation_asset_animation');
-      assetRead = gAPPP.a.readProjectRawData(id, 'assetRows');
-    }
-    if (assetChoice === 'Template') {
-      
-    }
+    await Promise.all([
+      this.__addAnimationTemplate('asset', newAnimationKey),
+      this.__addAnimationTemplate('scene', newAnimationKey)
+    ]);
 
-    if (assetRead) {
-      let assets = await assetRead;
-      if (assets) {
-        await gAPPP.a.writeProjectRawData(newAnimationKey, 'assetRows', assets);
-      }
-    }
-
-    let sceneChoice = document.getElementById('add_animation_scene_choice').value;
-    if (sceneChoice === 'Current') {
-      let scene = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows');
-      if (scene) {
-        let result = await gAPPP.a.writeProjectRawData(newAnimationKey, 'sceneRows', scene);
-      }
-    }
-
-    let productChoice = document.getElementById('add_animation_product_choice').value;
-    if (productChoice === 'Current') {
-      let products = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows');
-      if (products) {
-        let result = await gAPPP.a.writeProjectRawData(newAnimationKey, 'productRows', products);
-      }
-    }
+    await this.__addAnimationTemplate('product', newAnimationKey);
 
     return this.reloadScene(false, newAnimationKey);
   }
@@ -292,12 +285,10 @@ class cViewLayout extends bView {
     if (this.productViewAddShown) {
       this.record_field_list.classList.remove('record_field_list_expanded');
       this.productViewAddShown = false;
-
       col._column.element.classList.remove('button-expanded');
     } else {
       this.record_field_list.classList.add('record_field_list_expanded');
       this.productViewAddShown = true;
-
       col._column.element.classList.add('button-expanded');
     }
   }
