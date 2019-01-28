@@ -5,6 +5,7 @@ class cViewLayout extends bView {
       this._workspaceLoadedAndInited();
     };
 
+    this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
     this.addProjectName = document.querySelector('#new-workspace-name');
