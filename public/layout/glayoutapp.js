@@ -21,11 +21,10 @@ class gLayoutApp extends gAppSuper {
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
       this.mV = new cViewLayout();
-      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
       this._updateApplicationStyle();
     };
   }
   _updateApplicationStyle() {
-    
+
   }
 }

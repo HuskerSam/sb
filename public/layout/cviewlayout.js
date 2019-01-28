@@ -73,22 +73,32 @@ class cViewLayout extends bView {
     this.initFieldEdit();
 
     this.assetTemplates = [
-      'All Assets'
+      'All Assets',
+      'Produce Assets'
     ];
     this.assetTemplateFiles = {
-      'All Assets': 'tsb:'
+      'All Assets': 'tsb:allassets.csv',
+      'Produce Assets': 'tsb:produceassets.csv',
+      'Baskery and Deli Assets': 'tsb:bakeryanddeliassets.csv'
     }
     this.sceneTemplates = [
-      'Produce'
+      'Produce',
+      'Bakery and Deli'
     ];
+    this.sceneTemplateFiles = {
+      'Produce': 'tsb:producescene.csv',
+      'Bakery and Deli': 'tsb:bakeryanddeliscene.csv'
+    };
     this.productTemplates = [
       'Bakery and Deli Sales 1',
-      'Bakery and Deli Sales 2',
-      'Frozen Sales 1',
-      'Frozen Sales 2',
       'Produce Week Sales 1',
       'Produce Week Sales 2'
     ];
+    this.productTemplateFiles = {
+      'Bakery and Deli Sales Week 1': 'bakeryanddelisales1.csv',
+      'Produce Sales Week 1': 'producesalesweek1.csv',
+      'Produce Sales Week 2': 'producesalesweek2.csv'
+    }
 
     this.productBySKU = {};
     this.skuOrder = [];
@@ -151,24 +161,18 @@ class cViewLayout extends bView {
 
     this.add_animation_asset_animation = document.getElementById('add_animation_asset_animation');
     this.add_animation_asset_template = document.getElementById('add_animation_asset_template');
-    this.__initAddTemplates(this.add_animation_asset_template, this.assetTemplates);
     this.add_animation_asset_choice = document.getElementById('add_animation_asset_choice');
     this.import_asset_templates_select = document.getElementById('import_asset_templates_select');
-    this.__initAddTemplates(this.import_asset_templates_select, this.assetTemplates, '<option>Template</option>');
 
     this.add_animation_scene_animation = document.getElementById('add_animation_scene_animation');
     this.add_animation_scene_template = document.getElementById('add_animation_scene_template');
-    this.__initAddTemplates(this.add_animation_scene_template, this.sceneTemplates);
     this.add_animation_scene_choice = document.getElementById('add_animation_scene_choice');
     this.import_scene_templates_select = document.getElementById('import_scene_templates_select');
-    this.__initAddTemplates(this.import_scene_templates_select, this.sceneTemplates, '<option>Template</option>');
 
     this.add_animation_product_animation = document.getElementById('add_animation_product_animation');
     this.add_animation_product_template = document.getElementById('add_animation_product_template');
-    this.__initAddTemplates(this.add_animation_product_template, this.productTemplates);
     this.add_animation_product_choice = document.getElementById('add_animation_product_choice');
     this.import_product_templates_select = document.getElementById('import_product_templates_select');
-    this.__initAddTemplates(this.import_product_templates_select, this.productTemplates, '<option>Template</option>');
 
     this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
     this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
@@ -195,18 +199,40 @@ class cViewLayout extends bView {
     this.canvasHelper.cameraSelect.selectedIndex = 2;
     this.canvasHelper.noTestError = true;
     this.canvasHelper.cameraChangeHandler();
-    this.__initAddAnimations(`add_animation_asset_animation`);
-    this.__initAddAnimations('add_animation_scene_animation');
-    this.__initAddAnimations('add_animation_product_animation');
     this.remove_workspace_select_template = document.querySelector('#remove_workspace_select_template');
-
-    this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
     this.remove_workspace_select_template.addEventListener('input', e => {
       this.removeWorkspace().then(() => {});
     });
 
     this.updateProductList();
     this.updatePositionList();
+    this.loadTemplateLists();
+
+    try {
+      this.canvasHelper.playAnimation();
+    } catch (e) {
+      console.log('play anim error', e);
+    }
+
+    let basketListHTML = '';
+    if (this.productData.displayBlocks)
+      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
+        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
+    document.getElementById('basketblocklist').innerHTML = basketListHTML;
+
+    return Promise.resolve();
+  }
+  async loadTemplateLists() {
+    let projectListData = await firebase.database().ref('projectTitles').once('value');
+    let projectList = projectListData.val();
+
+    this.updateProjectList(projectList, gAPPP.a.profile.selectedWorkspace);
+    this.__initAddTemplates(this.add_animation_asset_template, this.assetTemplates);
+    this.__initAddTemplates(this.import_asset_templates_select, this.assetTemplates, '<option>Template</option>');
+    this.__initAddTemplates(this.add_animation_scene_template, this.sceneTemplates);
+    this.__initAddTemplates(this.import_scene_templates_select, this.sceneTemplates, '<option>Template</option>');
+    this.__initAddTemplates(this.add_animation_product_template, this.productTemplates);
+    this.__initAddTemplates(this.import_product_templates_select, this.productTemplates, '<option>Template</option>');
     this.import_scene_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
     if (this.workplacesSelect.selectedIndex !== -1) {
       this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
@@ -222,20 +248,10 @@ class cViewLayout extends bView {
       this.import_product_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
       this.import_product_workspaces_select.selectedIndex = 0;
     }
-
-    try {
-      this.canvasHelper.playAnimation();
-    } catch (e) {
-      console.log('play anim error', e);
-    }
-
-    let basketListHTML = '';
-    if (this.productData.displayBlocks)
-      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
-        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-    document.getElementById('basketblocklist').innerHTML = basketListHTML;
-
-    return Promise.resolve();
+    this.__initAddAnimations(`add_animation_asset_animation`);
+    this.__initAddAnimations('add_animation_scene_animation');
+    this.__initAddAnimations('add_animation_product_animation');
+    this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
   }
   async __addAnimationTemplate(type, targetProjectId, sourceProjectId) {
     if (!sourceProjectId)
@@ -897,7 +913,8 @@ class cViewLayout extends bView {
       let changeWorkspace = (sel.value === gAPPP.a.profile.selectedWorkspace);
 
       let removeResult = await new gCSVImport().dbRemove('project', sel.value);
-
+      if (!changeWorkspace) this.loadTemplateLists();
+      
       if (changeWorkspace) {
         let newIndex = 1;
         let newId = 'none';
