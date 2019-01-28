@@ -1116,6 +1116,7 @@ class gCSVImport {
     let bcData = await this.dbFetchByLookup('blockchild', 'parentKey', parentId);
     let children = bcData.recordsById;
     let blocks = [];
+    let blockChildQueries = [];
     for (let i in children) {
       if (children[i].childType === childType && children[i].childName === childName) {
         if (filterKey)
@@ -1137,9 +1138,14 @@ class gCSVImport {
         });
       }
 
-      let childResults = await this.findMatchBlocks(childType, childName, i);
-      blocks.concat(childResults);
+      blockChildQueries.push(this.findMatchBlocks(childType, childName, i));
     }
+
+    let childResults = await Promise.all(blockChildQueries);
+    for (let c = 0, l = blockChildQueries.length; c < l; c++) {
+      blocks.concat(childResults[c]);  
+    }
+
     return blocks;
   }
   async importRows(rows) {

@@ -72,15 +72,13 @@ class cViewLayout extends bView {
     this.initFieldEdit();
 
     this.assetTemplates = [
-      'All Assets',
-      'Produce',
-      'Bakery and Deli',
-      'Frozen'
+      'All Assets'
     ];
+    this.assetTemplateFiles = {
+      'All Assets': 'tsb:'
+    }
     this.sceneTemplates = [
-      'Produce',
-      'Bakery and Deli',
-      'Frozen'
+      'Produce'
     ];
     this.productTemplates = [
       'Bakery and Deli Sales 1',
