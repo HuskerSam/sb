@@ -77,22 +77,22 @@ class cViewLayout extends bView {
       'Produce Assets'
     ];
     this.assetTemplateFiles = {
-      'All Assets': 'tsb:allassets.csv',
-      'Produce Assets': 'tsb:produceassets.csv',
-      'Baskery and Deli Assets': 'tsb:bakeryanddeliassets.csv'
+      'All Assets': 'allassets.csv',
+      'Produce Assets': 'produceassets.csv',
+      'Baskery and Deli Assets': 'bakeryanddeliassets.csv'
     }
     this.sceneTemplates = [
       'Produce',
       'Bakery and Deli'
     ];
     this.sceneTemplateFiles = {
-      'Produce': 'tsb:producescene.csv',
-      'Bakery and Deli': 'tsb:bakeryanddeliscene.csv'
+      'Produce': 'producescene.csv',
+      'Bakery and Deli': 'bakeryanddeliscene.csv'
     };
     this.productTemplates = [
-      'Bakery and Deli Sales 1',
-      'Produce Week Sales 1',
-      'Produce Week Sales 2'
+      'Produce Sales Week 1',
+      'Produce Sales Week 2',
+      'Bakery and Deli Sales Week 1'
     ];
     this.productTemplateFiles = {
       'Bakery and Deli Sales Week 1': 'bakeryanddelisales1.csv',
@@ -266,7 +266,12 @@ class cViewLayout extends bView {
       data = await gAPPP.a.readProjectRawData(id, type + 'Rows');
     }
     if (choice === 'Template') {
-
+      let title = this[`add_animation_${type}_template`].value;
+      let filename = this[`${type}TemplateFiles`][title];
+      let response = await fetch(this.templateBasePath + filename);
+      let csv = await response.text();
+      let csvJSON = await this.papaParse(csv);
+      if (csvJSON.data) data = csvJSON.data;
     }
 
     if (data) {
@@ -494,7 +499,7 @@ class cViewLayout extends bView {
           selectable: false,
           layout: "fitData",
           columns,
-          dataEdited: data => this.__updateFooterRow(tableName, true),
+          dataEdited: data => this.__tableChangedHandler(tableName, true),
           rowMoved: (row) => this.__reformatTable(tableName)
         });
 
@@ -506,7 +511,7 @@ class cViewLayout extends bView {
         document.getElementById(tableName + '_changes_commit_header').addEventListener('click', e => this.saveEditTable(tableName, e));
 
         this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
-        this.__updateFooterRow(tableName);
+        this.__tableChangedHandler(tableName);
 
       });
 
@@ -544,9 +549,9 @@ class cViewLayout extends bView {
     for (let c = 0, l = rows.length; c < l; c++)
       rows[c].reformat();
 
-    this.__updateFooterRow(tableName);
+    this.__tableChangedHandler(tableName);
   }
-  __updateFooterRow(tableName) {
+  __tableChangedHandler(tableName) {
     let tbl = this.editTables[tableName];
     let setDirty = false;
     let newCache = JSON.stringify(this.editTables[tableName].getData());
@@ -914,7 +919,7 @@ class cViewLayout extends bView {
 
       let removeResult = await new gCSVImport().dbRemove('project', sel.value);
       if (!changeWorkspace) this.loadTemplateLists();
-      
+
       if (changeWorkspace) {
         let newIndex = 1;
         let newId = 'none';
@@ -933,5 +938,13 @@ class cViewLayout extends bView {
       }
     }
     return Promise.resolve();
+  }
+  async papaParse(csvData) {
+    return new Promise((resolve) => {
+      Papa.parse(csvData, {
+        header: true,
+        complete: results => resolve(results)
+      });
+    });
   }
 }
