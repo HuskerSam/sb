@@ -657,7 +657,7 @@ select {
 }
 
 #scene_options_panel.expanded {
-  height: 20em;
+  height: 30em;
   opacity: 1;
 }
 
@@ -665,4 +665,10 @@ select {
   width: 10em;
   float: right;
   margin-right: 1em;
+}
+
+#scene_options_edit_fields {
+}
+
+#scene_options_list {
 }

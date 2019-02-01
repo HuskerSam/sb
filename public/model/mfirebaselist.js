@@ -203,20 +203,6 @@ class mFirebaseList extends bFirebase {
 
     return results;
   }
-  fetchByKeyNOTUSED(key) {
-    return new Promise((resolve, reject) => {
-      if (!key)
-        return resolve(null);
-
-      let cache = this.getCache(key);
-
-      if (cache)
-        return resolve(cache);
-
-      let once = firebase.database().ref(this.referencePath + '/' + key);
-      once.once('value', snapshot => resolve(snapshot.val()));
-    });
-  }
   removeByKey(key) {
     if (!key) {
       alert('invalid removebykey (empty key)');

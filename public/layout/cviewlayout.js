@@ -180,6 +180,8 @@ class cViewLayout extends bView {
 
     this.scene_data_expand_btn = document.getElementById('scene_data_expand_btn');
     this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
+
+    this.initSceneEditFields();
   }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
@@ -500,7 +502,7 @@ class cViewLayout extends bView {
           layout: "fitData",
           columns,
           dataEdited: data => this.__tableChangedHandler(tableName, true),
-          rowMoved: (row) => this.__reformatTable(tableName)
+          rowMoved: (row) => this._rowMoved(tableName, row)
         });
 
         document.getElementById(`import_${tableName}_csv_btn`).addEventListener('click', e => {
@@ -512,7 +514,6 @@ class cViewLayout extends bView {
 
         this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
         this.__tableChangedHandler(tableName);
-
       });
 
     document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
@@ -520,6 +521,29 @@ class cViewLayout extends bView {
       //    this.editTables[tableName].redraw(true);
       this.editTables[tableName].setColumnLayout();
     });
+  }
+  _rowMoved(tableName, row) {
+    let tbl = this.editTables[tableName];
+    let data = tbl.getData();
+
+    let indexes = [];
+    for (let c = 0, l = data.length; c < l; c++)
+      indexes.push(data[c].index);
+
+    indexes.sort((a, b) => {
+      let aIndex = GLOBALUTIL.getNumberOrDefault(a, 0);
+      let bIndex = GLOBALUTIL.getNumberOrDefault(b, 0);
+      if (aIndex > bIndex)
+        return 1;
+      if (aIndex < bIndex)
+        return -1;
+      return 0;
+    });
+
+    for (let c = 0, l = data.length; c < l; c++)
+      data[c].index = indexes[c];
+    tbl.setData(data).then(() => {});
+    this.__tableChangedHandler(tableName, true);
   }
   saveEditTable(tableName, e) {
     this.canvasHelper.hide();
@@ -946,5 +970,72 @@ class cViewLayout extends bView {
         complete: results => resolve(results)
       });
     });
+  }
+  initSceneEditFields() {
+    let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
+
+    let listHTML = '';
+    this.sceneFieldEditBlocks = [];
+
+    for (let id in editInfoBlocks) {
+      let data = editInfoBlocks[id].genericBlockData;
+      let parts = data.split('||');
+      let mainLabel = parts[0];
+      let name = parts[1];
+      let asset = parts[2];
+      let fieldList = [];
+      for (let c = 3, l = parts.length; c < l; c++) {
+        let subParts = parts[c].split(':');
+        let field = subParts[0];
+        let type = subParts[1];
+
+        fieldList.push({
+          field,
+          type
+        });
+      }
+
+      this.sceneFieldEditBlocks.push({
+        name,
+        asset,
+        fieldList
+      });
+
+      listHTML += `<div><label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="${name}_${asset}">` +
+        `<input type="radio" id="${name}_${asset}" class="mdl-radio__button" name="scene_options_list" value="${mainLabel}" />` +
+        `<span class="mdl-radio__label">${mainLabel}</span>` +
+        `</label></div>`;
+    }
+
+    this.scene_options_list = document.getElementById('scene_options_list');
+    this.scene_options_list.innerHTML = listHTML;
+    componentHandler.upgradeDom();
+    let lis = this.scene_options_list.querySelectorAll('.mdl-radio');
+  //  lis.forEach((item) => item.addEventListener('input', e => this.sceneOptionsBlockListChange(e)));
+  //  lis.forEach((item) => componentHandler.upgradeElement(item));
+    /*
+                if (type === 'num') {
+                  html += '<div class="scene_num_field_wrapper mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'
+                    + `<input data-field="${field}" class="mdl-textfield__input" type="text" `
+                    + `data-type="${type}" data=name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />`
+                    + `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${name} - ${field}</label>`
+                    + '</div>';
+                }
+
+
+
+
+    */
+
+    //  this.scenePanel = document.getElementById('scene_options_panel')
+    //  this.scenePanel.innerHTML = html;
+    //  let divs = this.scenePanel.querySelectorAll('.mdl-textfield');
+
+    //  divs.forEach((item) => componentHandler.upgradeElement(item));
+  }
+  sceneOptionsBlockListChange(e) {
+//    e.target.click();
+//    e.preventDefault();
+//    return false;
   }
 }
