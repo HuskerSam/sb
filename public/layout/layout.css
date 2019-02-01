@@ -650,14 +650,16 @@ select {
 }
 
 #scene_options_panel {
-  flex: 0;
   height: 0em;
   opacity: 0;
   transition: opacity 800ms, height 800ms;
+  display: flex;
+  flex-display: row;
+  background:  radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
 }
 
 #scene_options_panel.expanded {
-  height: 30em;
+  height: 10em;
   opacity: 1;
 }
 
@@ -668,7 +670,17 @@ select {
 }
 
 #scene_options_edit_fields {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: visible;
+  padding: 10px;
 }
 
 #scene_options_list {
+  background: transparent;
+  color: rgb(50, 50, 50);
+}
+
+#scene_options_list option {
+  font-size: 20px;
 }

@@ -180,6 +180,7 @@ class cViewLayout extends bView {
 
     this.scene_data_expand_btn = document.getElementById('scene_data_expand_btn');
     this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
+    this.scene_data_expand_btn.click();
 
     this.initSceneEditFields();
   }
@@ -977,6 +978,7 @@ class cViewLayout extends bView {
     let listHTML = '';
     this.sceneFieldEditBlocks = [];
 
+    let checked = " selected";
     for (let id in editInfoBlocks) {
       let data = editInfoBlocks[id].genericBlockData;
       let parts = data.split('||');
@@ -1001,41 +1003,40 @@ class cViewLayout extends bView {
         fieldList
       });
 
-      listHTML += `<div><label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="${name}_${asset}">` +
-        `<input type="radio" id="${name}_${asset}" class="mdl-radio__button" name="scene_options_list" value="${mainLabel}" />` +
-        `<span class="mdl-radio__label">${mainLabel}</span>` +
-        `</label></div>`;
+      listHTML += `<option${checked} value="${this.sceneFieldEditBlocks.length - 1}">${mainLabel}</option>`;
+      checked = '';
     }
 
+    this.scene_options_edit_fields = document.getElementById('scene_options_edit_fields');
     this.scene_options_list = document.getElementById('scene_options_list');
     this.scene_options_list.innerHTML = listHTML;
-    componentHandler.upgradeDom();
-    let lis = this.scene_options_list.querySelectorAll('.mdl-radio');
-  //  lis.forEach((item) => item.addEventListener('input', e => this.sceneOptionsBlockListChange(e)));
-  //  lis.forEach((item) => componentHandler.upgradeElement(item));
-    /*
-                if (type === 'num') {
-                  html += '<div class="scene_num_field_wrapper mdl-textfield mdl-js-textfield mdl-textfield--floating-label">'
-                    + `<input data-field="${field}" class="mdl-textfield__input" type="text" `
-                    + `data-type="${type}" data=name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />`
-                    + `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${name} - ${field}</label>`
-                    + '</div>';
-                }
-
-
-
-
-    */
-
-    //  this.scenePanel = document.getElementById('scene_options_panel')
-    //  this.scenePanel.innerHTML = html;
-    //  let divs = this.scenePanel.querySelectorAll('.mdl-textfield');
-
-    //  divs.forEach((item) => componentHandler.upgradeElement(item));
+    this.scene_options_list.addEventListener('input', e => this.sceneOptionsBlockListChange(e));
+    this.sceneOptionsBlockListChange();
   }
   sceneOptionsBlockListChange(e) {
-//    e.target.click();
-//    e.preventDefault();
-//    return false;
+    let index = this.scene_options_list.selectedIndex;
+    let fieldData = this.sceneFieldEditBlocks[index];
+
+    let fieldHtml = '';
+    let name = fieldData.name;
+    let asset = fieldData.asset;
+
+    for (let c = 0, l = fieldData.fieldList.length; c < l; c++) {
+      let type = fieldData.fieldList[c].type;
+      let field = fieldData.fieldList[c].field;
+
+      if (type === 'num') {
+        fieldHtml += '<div class="scene_num_field_wrapper mdl-textfield mdl-js-textfield mdl-textfield--floating-label">' +
+          `<input data-field="${field}" class="mdl-textfield__input" type="text" ` +
+          `data-type="${type}" data=name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />` +
+          `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${name} - ${field}</label>` +
+          '</div>';
+      }
+
+
+    }
+
+    this.scene_options_edit_fields.innerHTML = fieldHtml;
+    componentHandler.upgradeDom();
   }
 }
