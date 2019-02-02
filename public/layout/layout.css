@@ -684,3 +684,8 @@ select {
 #scene_options_list option {
   font-size: 20px;
 }
+
+.scene_num_field_wrapper {
+  width: 7em;
+  margin: 0px 10px;
+}

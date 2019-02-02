@@ -144,10 +144,6 @@ class cViewLayout extends bView {
     this.import_scene_workspaces_select = document.getElementById('import_scene_workspaces_select');
     this.import_product_workspaces_select = document.getElementById('import_product_workspaces_select');
 
-    this.loadDataTable('asset');
-    this.loadDataTable('scene');
-    this.loadDataTable('product');
-
     this.toggledImportOptions = true;
     this.toggleImportOptions();
 
@@ -181,8 +177,6 @@ class cViewLayout extends bView {
     this.scene_data_expand_btn = document.getElementById('scene_data_expand_btn');
     this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
     this.scene_data_expand_btn.click();
-
-    this.initSceneEditFields();
   }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
@@ -211,6 +205,8 @@ class cViewLayout extends bView {
     this.updatePositionList();
     this.loadTemplateLists();
 
+    this._loadDataTables().then(() => {});
+
     try {
       this.canvasHelper.playAnimation();
     } catch (e) {
@@ -224,6 +220,17 @@ class cViewLayout extends bView {
     document.getElementById('basketblocklist').innerHTML = basketListHTML;
 
     return Promise.resolve();
+  }
+  async _loadDataTables() {
+    await Promise.all([
+      this.loadDataTable('asset'),
+      this.loadDataTable('scene'),
+      this.loadDataTable('product'),
+    ]);
+
+    this.__tableChangedHandler();
+    this.initSceneEditFields();
+    this.sceneOptionsBlockListChange();
   }
   async loadTemplateLists() {
     let projectListData = await firebase.database().ref('projectTitles').once('value');
@@ -376,146 +383,141 @@ class cViewLayout extends bView {
       this.import_products_csv_expand_btn.classList.add('button-expanded');
     }
   }
-  loadDataTable(tableName) {
-    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows')
-      .then(results => {
-        let data = [];
-        if (results) data = results;
+  async loadDataTable(tableName) {
+    let results = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows')
+    let data = [];
+    if (results) data = results;
 
-        if (tableName === 'product')
-          data = this.__sortProductRows(data);
+    if (tableName === 'product')
+      data = this.__sortProductRows(data);
 
-
-        let columns = [];
-        let topLeftTitle = (tableName === 'product') ? '<i class="material-icons">add_to_queue</i>' : '';
-        columns.push({
-          rowHandle: true,
-          formatter: "handle",
-          headerSort: false,
-          cssClass: 'row-handle-table-cell',
-          frozen: true,
-          width: 45,
-          minWidth: 45,
-          title: topLeftTitle
-        });
-        if (tableName !== 'product')
-          columns.push({
-            rowHandle: true,
-            formatter: "rownum",
-            headerSort: false,
-            align: 'center',
-            frozen: true,
-            width: 30
-          });
-        columns.push({
-          formatter: (cell, formatterParams) => {
-            return "<i class='material-icons'>delete</i>";
-          },
-          headerSort: false,
-          frozen: true,
-          align: 'center',
-          cssClass: 'delete-table-cell',
-          tag: 'delete',
-          cellClick: (e, cell) => {
-            cell.getRow().delete();
-            this.__reformatTable(tableName);
-          },
-          width: 30
-        });
-        columns.push({
-          formatter: (cell, formatterParams) => {
-            return "<i class='material-icons'>add</i>";
-          },
-          headerSort: false,
-          frozen: true,
-          align: 'center',
-          tag: 'addBelow',
-          cssClass: 'add-table-cell',
-          cellClick: (e, cell) => {
-            cell.getTable().addData([{
-                name: ''
-              }], false, cell.getRow())
-              .then(rows => {
-                this.__reformatTable(tableName);
-                rows[0].getCells()[2].edit();
-              })
-          },
-          width: 30
-        });
-
-        let colList = this[tableName + 'ColumnList'];
-        for (let c = 0, l = colList.length; c < l; c++) {
-          let field = colList[c];
-          let rightColumn = this.rightAlignColumns.indexOf(field) !== -1;
-          let align = rightColumn ? 'right' : 'left';
-          let longLabel = colList[c].length > 9;
-          let cssClass = rightColumn ? 'right-column-data' : '';
-          let minWidth = rightColumn ? 75 : 150;
-          if (!rightColumn && longLabel)
-            cssClass += 'tab-header-cell-large';
-
-          columns.push({
-            title: field,
-            field,
-            editor: true,
-            headerSort: false,
-            align,
-            formatter: rightColumn ? 'money' : undefined,
-            layoutColumnsOnNewData: true,
-            columnResizing: 'headerOnly',
-            cssClass,
-            headerVertical: longLabel,
-            minWidth
-          });
-        }
-
-        if (tableName === 'product') {
-          columns[4].frozen = true;
-          columns[3].frozen = true;
-          let tCol = columns[4];
-          let tCol2 = columns[3];
-          columns[4] = columns[2];
-          columns[3] = columns[1];
-          columns[2] = tCol;
-          columns[1] = tCol2;
-          tCol2.title = '';
-          columns[0].headerClick = (e, col) => this.toggleProductAddView(col);
-        } else {
-          columns[4].frozen = true;
-          let tCol = columns[4];
-          columns[4] = columns[3];
-          columns[3] = columns[2];
-          columns[2] = tCol;
-        }
-        columns[1].align = 'right';
-        columns[1].cssClass = 'right-column-data';
-        columns[1].minWidth = 45;
-        columns[2].minWidth = 200;
-
-        this.editTables[tableName] = new Tabulator(`#${tableName}_tab_table`, {
-          data,
-          virtualDom: true,
-          height: '100%',
-          width: '100%',
-          movableRows: true,
-          movableColumns: false,
-          selectable: false,
-          layout: "fitData",
-          columns,
-          dataEdited: data => this.__tableChangedHandler(tableName, true),
-          rowMoved: (row) => this._rowMoved(tableName, row)
-        });
-
-        document.getElementById(`import_${tableName}_csv_btn`).addEventListener('click', e => {
-          this.saveCSVType = tableName;
-          this.importFileDom.click();
-        });
-        document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
-        document.getElementById(tableName + '_changes_commit_header').addEventListener('click', e => this.saveEditTable(tableName, e));
-
-        this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
-        this.__tableChangedHandler(tableName);
+    let columns = [];
+    let topLeftTitle = (tableName === 'product') ? '<i class="material-icons">add_to_queue</i>' : '';
+    columns.push({
+      rowHandle: true,
+      formatter: "handle",
+      headerSort: false,
+      cssClass: 'row-handle-table-cell',
+      frozen: true,
+      width: 45,
+      minWidth: 45,
+      title: topLeftTitle
+    });
+    if (tableName !== 'product')
+      columns.push({
+        rowHandle: true,
+        formatter: "rownum",
+        headerSort: false,
+        align: 'center',
+        frozen: true,
+        width: 30
       });
+    columns.push({
+      formatter: (cell, formatterParams) => {
+        return "<i class='material-icons'>delete</i>";
+      },
+      headerSort: false,
+      frozen: true,
+      align: 'center',
+      cssClass: 'delete-table-cell',
+      tag: 'delete',
+      cellClick: (e, cell) => {
+        cell.getRow().delete();
+        this.__reformatTable(tableName);
+      },
+      width: 30
+    });
+    columns.push({
+      formatter: (cell, formatterParams) => {
+        return "<i class='material-icons'>add</i>";
+      },
+      headerSort: false,
+      frozen: true,
+      align: 'center',
+      tag: 'addBelow',
+      cssClass: 'add-table-cell',
+      cellClick: (e, cell) => {
+        cell.getTable().addData([{
+            name: ''
+          }], false, cell.getRow())
+          .then(rows => {
+            this.__reformatTable(tableName);
+            rows[0].getCells()[2].edit();
+          })
+      },
+      width: 30
+    });
+
+    let colList = this[tableName + 'ColumnList'];
+    for (let c = 0, l = colList.length; c < l; c++) {
+      let field = colList[c];
+      let rightColumn = this.rightAlignColumns.indexOf(field) !== -1;
+      let align = rightColumn ? 'right' : 'left';
+      let longLabel = colList[c].length > 9;
+      let cssClass = rightColumn ? 'right-column-data' : '';
+      let minWidth = rightColumn ? 75 : 150;
+      if (!rightColumn && longLabel)
+        cssClass += 'tab-header-cell-large';
+
+      columns.push({
+        title: field,
+        field,
+        editor: true,
+        headerSort: false,
+        align,
+        formatter: rightColumn ? 'money' : undefined,
+        layoutColumnsOnNewData: true,
+        columnResizing: 'headerOnly',
+        cssClass,
+        headerVertical: longLabel,
+        minWidth
+      });
+    }
+
+    if (tableName === 'product') {
+      columns[4].frozen = true;
+      columns[3].frozen = true;
+      let tCol = columns[4];
+      let tCol2 = columns[3];
+      columns[4] = columns[2];
+      columns[3] = columns[1];
+      columns[2] = tCol;
+      columns[1] = tCol2;
+      tCol2.title = '';
+      columns[0].headerClick = (e, col) => this.toggleProductAddView(col);
+    } else {
+      columns[4].frozen = true;
+      let tCol = columns[4];
+      columns[4] = columns[3];
+      columns[3] = columns[2];
+      columns[2] = tCol;
+    }
+    columns[1].align = 'right';
+    columns[1].cssClass = 'right-column-data';
+    columns[1].minWidth = 45;
+    columns[2].minWidth = 200;
+
+    this.editTables[tableName] = new Tabulator(`#${tableName}_tab_table`, {
+      data,
+      virtualDom: true,
+      height: '100%',
+      width: '100%',
+      movableRows: true,
+      movableColumns: false,
+      selectable: false,
+      layout: "fitData",
+      columns,
+      dataEdited: data => this.__tableChangedHandler(),
+      rowMoved: (row) => this._rowMoved(tableName, row)
+    });
+
+    document.getElementById(`import_${tableName}_csv_btn`).addEventListener('click', e => {
+      this.saveCSVType = tableName;
+      this.importFileDom.click();
+    });
+    document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
+
+    this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
 
     document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
       this.__reformatTable(tableName);
@@ -544,7 +546,7 @@ class cViewLayout extends bView {
     for (let c = 0, l = data.length; c < l; c++)
       data[c].index = indexes[c];
     tbl.setData(data).then(() => {});
-    this.__tableChangedHandler(tableName, true);
+    this.__tableChangedHandler();
   }
   saveEditTable(tableName, e) {
     this.canvasHelper.hide();
@@ -574,20 +576,28 @@ class cViewLayout extends bView {
     for (let c = 0, l = rows.length; c < l; c++)
       rows[c].reformat();
 
-    this.__tableChangedHandler(tableName);
+    this.__tableChangedHandler();
   }
-  __tableChangedHandler(tableName) {
+  ___testTableDirty(tableName) {
     let tbl = this.editTables[tableName];
     let setDirty = false;
     let newCache = JSON.stringify(this.editTables[tableName].getData());
     if (this.editTables[tableName].cacheData !== newCache)
       setDirty = true;
 
+    return setDirty;
+  }
+  __tableChangedHandler() {
+    let dirty = this.___testTableDirty('asset');
+    if (!dirty)
+      dirty = this.___testTableDirty('scene');
+    if (!dirty)
+      dirty = this.___testTableDirty('product');
 
-    if (setDirty) {
-      document.getElementById(tableName + '_changes_commit_header').style.display = 'inline-block';
+    if (dirty) {
+      document.getElementById('changes_commit_header').style.display = 'inline-block';
     } else {
-      document.getElementById(tableName + '_changes_commit_header').style.display = 'none';
+      document.getElementById('changes_commit_header').style.display = 'none';
     }
   }
   toggleAutoMoveCamera() {
@@ -983,10 +993,11 @@ class cViewLayout extends bView {
       let data = editInfoBlocks[id].genericBlockData;
       let parts = data.split('||');
       let mainLabel = parts[0];
-      let name = parts[1];
-      let asset = parts[2];
+      let tab = parts[1];
+      let name = parts[2];
+      let asset = parts[3];
       let fieldList = [];
-      for (let c = 3, l = parts.length; c < l; c++) {
+      for (let c = 4, l = parts.length; c < l; c++) {
         let subParts = parts[c].split(':');
         let field = subParts[0];
         let type = subParts[1];
@@ -998,6 +1009,8 @@ class cViewLayout extends bView {
       }
 
       this.sceneFieldEditBlocks.push({
+        mainLabel,
+        tab,
         name,
         asset,
         fieldList
@@ -1010,10 +1023,9 @@ class cViewLayout extends bView {
     this.scene_options_edit_fields = document.getElementById('scene_options_edit_fields');
     this.scene_options_list = document.getElementById('scene_options_list');
     this.scene_options_list.innerHTML = listHTML;
-    this.scene_options_list.addEventListener('input', e => this.sceneOptionsBlockListChange(e));
-    this.sceneOptionsBlockListChange();
+    this.scene_options_list.addEventListener('input', e => this.sceneOptionsBlockListChange());
   }
-  sceneOptionsBlockListChange(e) {
+  sceneOptionsBlockListChange() {
     let index = this.scene_options_list.selectedIndex;
     let fieldData = this.sceneFieldEditBlocks[index];
 
@@ -1026,17 +1038,28 @@ class cViewLayout extends bView {
       let field = fieldData.fieldList[c].field;
 
       if (type === 'num') {
+        let v = this.__getSceneOptionsValue(fieldData.tab, name, asset, field);
         fieldHtml += '<div class="scene_num_field_wrapper mdl-textfield mdl-js-textfield mdl-textfield--floating-label">' +
-          `<input data-field="${field}" class="mdl-textfield__input" type="text" ` +
+          `<input data-field="${field}" class="mdl-textfield__input" type="text" value="${v}"` +
           `data-type="${type}" data=name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />` +
-          `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${name} - ${field}</label>` +
+          `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${field}</label>` +
           '</div>';
       }
-
-
     }
 
     this.scene_options_edit_fields.innerHTML = fieldHtml;
     componentHandler.upgradeDom();
+  }
+  __getSceneOptionsValue(tab, name, asset, field) {
+    if (tab === 'layout')
+      tab = 'scene';
+    if (!this.editTables[tab])
+      return '';
+    let rows = this.editTables[tab].getData();
+    for (let c = 0, l = rows.length; c < l; c++)
+      if (rows[c]['name'] === name && rows[c]['asset'] === asset)
+        return rows[c][field];
+
+    return '';
   }
 }
