@@ -219,7 +219,12 @@ class cViewLayout extends bView {
         basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
     document.getElementById('basketblocklist').innerHTML = basketListHTML;
 
+    this.changes_commit_header = document.getElementById('changes_commit_header');
+    this.changes_commit_header.addEventListener('click', e => this.saveChanges());
     return Promise.resolve();
+  }
+  saveChanges() {
+    alert('hi');
   }
   async _loadDataTables() {
     await Promise.all([
@@ -548,7 +553,7 @@ class cViewLayout extends bView {
     tbl.setData(data).then(() => {});
     this.__tableChangedHandler();
   }
-  saveEditTable(tableName, e) {
+  async __saveChanges() {
     this.canvasHelper.hide();
 
     let tbl = this.editTables[tableName];
@@ -562,13 +567,10 @@ class cViewLayout extends bView {
           data[c][i] = '';
     }
 
+    await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data);
+    await this.reloadScene();
 
-    gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data)
-      .then(r => this.reloadScene())
-      .then(() => {});
-
-    if (e)
-      e.preventDefault();
+    return Promise.resolve();
   }
   __reformatTable(tableName) {
     let tbl = this.editTables[tableName];

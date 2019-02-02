@@ -347,15 +347,17 @@ button i.material-icons {
   background: rgb(0, 150, 136);
 }
 
-#asset_changes_commit_header, #scene_changes_commit_header, #product_changes_commit_header {
-  float: right;
+#changes_commit_header {
   padding-top: 10px;
   font-weight: normal;
   margin-top: 5px;
   margin-left: 10px;
-  z-index: 2;
   color: black;
-  background: rgb(105, 240, 174);
+  background: rgb(255, 100, 100);
+  position: absolute;
+  z-index: 2;
+  top: 0px;
+  right: 2px;
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab {
