@@ -224,7 +224,7 @@ class cViewLayout extends bView {
     return Promise.resolve();
   }
   saveChanges() {
-    alert('hi');
+    this.__saveChanges().then(() => {});
   }
   async _loadDataTables() {
     await Promise.all([
@@ -512,7 +512,7 @@ class cViewLayout extends bView {
       selectable: false,
       layout: "fitData",
       columns,
-      dataEdited: data => this.__tableChangedHandler(),
+      dataEdited: data => this.__tableChangedHandler(true),
       rowMoved: (row) => this._rowMoved(tableName, row)
     });
 
@@ -556,21 +556,13 @@ class cViewLayout extends bView {
   async __saveChanges() {
     this.canvasHelper.hide();
 
-    let tbl = this.editTables[tableName];
-    let data = tbl.getData();
+    await Promise.all([
+      this.__saveTable('asset'),
+      this.__saveTable('product'),
+      this.__saveTable('scene')
+    ]);
 
-    for (let c = 0, l = data.length; c < l; c++) {
-      delete data[c][undefined];
-
-      for (let i in data[c])
-        if (data[c][i] === undefined)
-          data[c][i] = '';
-    }
-
-    await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data);
-    await this.reloadScene();
-
-    return Promise.resolve();
+    return this.reloadScene();
   }
   __reformatTable(tableName) {
     let tbl = this.editTables[tableName];
@@ -589,7 +581,26 @@ class cViewLayout extends bView {
 
     return setDirty;
   }
-  __tableChangedHandler() {
+  async __saveTable(tableName) {
+    if (!this.___testTableDirty(tableName))
+      return Promise.resolve();
+
+    let tbl = this.editTables[tableName];
+    let data = tbl.getData();
+
+    for (let c = 0, l = data.length; c < l; c++) {
+      delete data[c][undefined];
+
+      for (let i in data[c])
+        if (data[c][i] === undefined)
+          data[c][i] = '';
+    }
+
+    await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data);
+
+    return Promise.resolve();
+  }
+  __tableChangedHandler(reloadSceneOptions) {
     let dirty = this.___testTableDirty('asset');
     if (!dirty)
       dirty = this.___testTableDirty('scene');
@@ -600,6 +611,10 @@ class cViewLayout extends bView {
       document.getElementById('changes_commit_header').style.display = 'inline-block';
     } else {
       document.getElementById('changes_commit_header').style.display = 'none';
+    }
+
+    if (reloadSceneOptions) {
+      this.sceneOptionsBlockListChange();
     }
   }
   toggleAutoMoveCamera() {
@@ -640,6 +655,8 @@ class cViewLayout extends bView {
     }]);
 
     setTimeout(() => location.reload(), 1);
+
+    return Promise.resolve();
   }
   importCSV() {
     if (this.importFileDom.files.length > 0) {
@@ -1042,15 +1059,46 @@ class cViewLayout extends bView {
       if (type === 'num') {
         let v = this.__getSceneOptionsValue(fieldData.tab, name, asset, field);
         fieldHtml += '<div class="scene_num_field_wrapper mdl-textfield mdl-js-textfield mdl-textfield--floating-label">' +
-          `<input data-field="${field}" class="mdl-textfield__input" type="text" value="${v}"` +
-          `data-type="${type}" data=name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />` +
+          `<input data-field="${field}" class="mdl-textfield__input" type="text" value="${v}" data-tab="${fieldData.tab}"` +
+          `data-type="${type}" data-name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />` +
           `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${field}</label>` +
           '</div>';
       }
     }
 
     this.scene_options_edit_fields.innerHTML = fieldHtml;
+    let inputs = this.scene_options_edit_fields.querySelectorAll('input');
+    inputs.forEach(i => i.addEventListener('input', e => this.__sceneOptionsValueChange(i, e)));
     componentHandler.upgradeDom();
+  }
+  __sceneOptionsValueChange(ctl, e) {
+    let data = ctl.dataset;
+
+    this.__setSceneOptionsValue(data.tab, data.name, data.asset, data.field, ctl.value)
+      .then(() => {});
+  }
+  async __setSceneOptionsValue(tab, name, asset, field, value) {
+    if (tab === 'layout')
+      tab = 'scene';
+    if (!this.editTables[tab])
+      return Promise.resolve();
+
+    let dataChanged = false;
+    let rows = this.editTables[tab].getData();
+    for (let c = 0, l = rows.length; c < l; c++)
+      if (rows[c]['name'] === name && rows[c]['asset'] === asset) {
+        if (rows[c][field] !== value) {
+          dataChanged = true;
+          rows[c][field] = value;
+        }
+      }
+
+    if (dataChanged) {
+      this.editTables[tab].setData(rows);
+      this.__tableChangedHandler();
+    }
+
+    return Promise.resolve();
   }
   __getSceneOptionsValue(tab, name, asset, field) {
     if (tab === 'layout')
