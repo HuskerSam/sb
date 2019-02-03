@@ -38,22 +38,15 @@ class cViewLayout extends bView {
       'x', 'y', 'z',
       'rx', 'ry', 'rz'
     ];
-    this.productAddList = [
-      'index', 'name', 'asset',
-      'text1', 'text2', 'image', 'block',
-      'sku', 'price', 'count', 'pricetext',
-      'height', 'width',
-      'xyz', 'rotatexyz'
-    ];
     this.messageOnlyFields = [
       'index', 'name', 'asset', 'text1', 'text2',
-      'height', 'width', 'xyz', 'rotatexyz'
+      'height', 'width', 'x', 'y', 'z'
     ];
     this.productOnlyFields = [
       'index', 'name', 'asset',
       'text1', 'image', 'block',
       'sku', 'price', 'count', 'pricetext',
-      'xyz', 'rotatexyz'
+      'x', 'y', 'z'
     ];
 
     this.allColumnList = [
