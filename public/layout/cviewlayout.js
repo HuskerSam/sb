@@ -217,7 +217,7 @@ class cViewLayout extends bView {
     if (this.productData.displayBlocks)
       for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
         basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-    document.getElementById('basketblocklist').innerHTML = basketListHTML;
+    document.getElementById('blocklist').innerHTML = basketListHTML;
 
     this.changes_commit_header = document.getElementById('changes_commit_header');
     this.changes_commit_header.addEventListener('click', e => this.saveChanges());
@@ -739,7 +739,7 @@ class cViewLayout extends bView {
     componentHandler.upgradeElement(btn);
     this.record_field_list_form.appendChild(btn);
     this.addNewBtn = document.getElementById('update_product_fields_post');
-    this.addNewBtn.addEventListener('click', e => this.addNewProduct());
+    this.addNewBtn.addEventListener('click', e => this.addNewProduct(e));
 
     this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
@@ -748,9 +748,9 @@ class cViewLayout extends bView {
   }
   updateVisibleEditFields() {
     let fieldsToShow = null;
-    if (this.assetEditField.value === 'product')
+    if (this.assetEditField.value === 'message')
       fieldsToShow = this.messageOnlyFields;
-    else if (this.assetEditField.value === 'message')
+    else if (this.assetEditField.value === 'product')
       fieldsToShow = this.productOnlyFields;
 
     for (let i in this.fieldDivByName) {
@@ -900,7 +900,7 @@ class cViewLayout extends bView {
 
     this.updateVisibleEditFields();
   }
-  addNewProduct() {
+  addNewProduct(e) {
     let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
 
     let name = fields[0].value;
@@ -914,25 +914,17 @@ class cViewLayout extends bView {
       return;
     }
 
-    if (this.highlightedRow) {
-      if (!confirm('Overwrite ' + name + '?'))
-        return;
-    }
-
-    this.canvasHelper.hide();
     let newRow = {};
     for (let c = 0, l = fields.length; c < l; c++)
       newRow[this.fieldList[c]] = fields[c].value;
 
-    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
-      .then(products => {
-        products.push(newRow);
+    let rows = this.editTables['product'].getData();
+    rows.push(newRow);
+    this.editTables['product'].setData(rows);
+    this.__tableChangedHandler();
 
-        p = this.__sortProductRows(p);
-        gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', products)
-          .then(() => this.reloadScene())
-          .then(() => {});
-      });
+    e.preventDefault();
+    return true;
   }
   __sortProductRows(p) {
     return p.sort((a, b) => {

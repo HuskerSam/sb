@@ -126,7 +126,7 @@
             </div>
             <div style="display:flex;flex-direction:row;flex:1;">
               <div id="record_field_list">
-                <form autocomplete="off"></form>
+                <form autocomplete="off" onsubmit="return false;"></form>
               </div>
               <div id="product_tab_table"></div>
             </div>
@@ -238,11 +238,10 @@
   <datalist id="sbimageslist"></datalist>
   <datalist id="elementidlist"></datalist>
   <datalist id="fieldnamelist"></datalist>
-  <datalist id="basketblocklist"></datalist>
+  <datalist id="blocklist"></datalist>
   <datalist id="assetlist">
     <option>product</option>
     <option>message</option>
-    <option>image</option>
   </datalist>
 </body>
 
