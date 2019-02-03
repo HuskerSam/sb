@@ -1033,7 +1033,7 @@ class cViewLayout extends bView {
     let index = this.scene_options_list.selectedIndex;
     let fieldData = this.sceneFieldEditBlocks[index];
 
-    let fieldHtml = '';
+    let fieldHtml = '<input type="file" class="sotexturepathuploadfile" style="display:none;" />';
     let name = fieldData.name;
     let asset = fieldData.asset;
 
@@ -1049,16 +1049,51 @@ class cViewLayout extends bView {
           `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${field}</label>` +
           '</div>';
       }
+
+      if (type === 'image') {
+        let v = this.__getSceneOptionsValue(fieldData.tab, name, asset, field);
+        fieldHtml += '<div><div class="scene_image_field_wrapper mdl-textfield mdl-js-textfield mdl-textfield--floating-label">' +
+          `<input data-field="${field}" class="mdl-textfield__input" type="text" value="${v}" data-tab="${fieldData.tab}"` +
+          `data-type="${type}" data-name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />` +
+          `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${field}</label>` +
+          '</div>' +
+          `<button data-fieldid="scene_edit_field_${c}_${field}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary sceneoptionsupload">` +
+          `<i class="material-icons">cloud_upload</i></button></div>`;
+      }
     }
 
     this.scene_options_edit_fields.innerHTML = fieldHtml;
+    this.soUploadImageFile = this.scene_options_edit_fields.querySelector('.sotexturepathuploadfile');
+    this.soUploadImageFile.addEventListener('change', e => {
+      this.__sceneUploadImageFile(e).then(() => {});
+    });
     let inputs = this.scene_options_edit_fields.querySelectorAll('input');
     inputs.forEach(i => i.addEventListener('input', e => this.__sceneOptionsValueChange(i, e)));
+    let uploadButtons = this.scene_options_edit_fields.querySelectorAll('button.sceneoptionsupload');
+    uploadButtons.forEach(i => i.addEventListener('click', e => {
+      this.soUploadImageFile.btnCTL = i;
+      this.soUploadImageFile.editCTL = this.scene_options_edit_fields.querySelector('#' + i.dataset.fieldid);
+      this.soUploadImageFile.click();
+    }));
     componentHandler.upgradeDom();
+  }
+  async __sceneUploadImageFile() {
+    let fileBlob = this.soUploadImageFile.files[0];
+
+    if (!fileBlob)
+      return Promise.resolve();
+
+    this.soUploadImageFile.editCTL.parentElement.MaterialTextfield.change('Uploading...');
+
+    let fireSet = gAPPP.a.modelSets['block'];
+    let key = this.productData.sceneId + '/scenedatafiles';
+    let uploadResult = await fireSet.setBlob(key, fileBlob, fileBlob.name);
+    this.soUploadImageFile.editCTL.parentElement.MaterialTextfield.change(uploadResult.downloadURL);
+    this.__sceneOptionsValueChange(this.soUploadImageFile.editCTL);
+    return Promise.resolve();
   }
   __sceneOptionsValueChange(ctl, e) {
     let data = ctl.dataset;
-
     this.__setSceneOptionsValue(data.tab, data.name, data.asset, data.field, ctl.value)
       .then(() => {});
   }
