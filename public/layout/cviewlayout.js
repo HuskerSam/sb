@@ -66,31 +66,22 @@ class cViewLayout extends bView {
     this.initFieldEdit();
 
     this.assetTemplates = [
-      'All Assets',
-      'Produce Assets'
+      'All Assets'
     ];
     this.assetTemplateFiles = {
-      'All Assets': 'allassets.csv',
-      'Produce Assets': 'produceassets.csv',
-      'Baskery and Deli Assets': 'bakeryanddeliassets.csv'
+      'All Assets': 'asset.csv',
     }
     this.sceneTemplates = [
-      'Produce',
-      'Bakery and Deli'
+      'Produce'
     ];
     this.sceneTemplateFiles = {
-      'Produce': 'producescene.csv',
-      'Bakery and Deli': 'bakeryanddeliscene.csv'
+      'Produce': 'layout.csv'
     };
     this.productTemplates = [
-      'Produce Sales Week 1',
-      'Produce Sales Week 2',
-      'Bakery and Deli Sales Week 1'
+      'Produce Sales Week 1'
     ];
     this.productTemplateFiles = {
-      'Bakery and Deli Sales Week 1': 'bakeryanddelisales1.csv',
-      'Produce Sales Week 1': 'producesalesweek1.csv',
-      'Produce Sales Week 2': 'producesalesweek2.csv'
+      'Produce Sales Week 1': 'product.csv',
     }
 
     this.productBySKU = {};
@@ -1031,6 +1022,8 @@ class cViewLayout extends bView {
   }
   sceneOptionsBlockListChange() {
     let index = this.scene_options_list.selectedIndex;
+    if (index < 0)
+      return;
     let fieldData = this.sceneFieldEditBlocks[index];
 
     let fieldHtml = '<input type="file" class="sotexturepathuploadfile" style="display:none;" />';

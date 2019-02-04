@@ -812,6 +812,8 @@ class gCSVImport {
     let frameTime = productData.introTime;
     let cpTime = cameraRow.cameramovetime ? 'cp' + cameraRow.cameramovetime : '';
 
+    if (!productData.products)
+      productData.products = [];
     for (let c = 0, l = productData.products.length; c <= l + 1; c++) {
       let cameraBlockFrame = this.defaultCSVRow();
 
@@ -972,6 +974,8 @@ class gCSVImport {
     await this.__addCSVFollowBlock(pInfo);
 
     let promises = [];
+    if (!pInfo.products)
+      pInfo.products = [];
     for (let c = 0, l = pInfo.products.length; c < l; c++)
       if (pInfo.products[c].itemId)
         promises.push(this.__addSignPost(pInfo.products[c], pInfo));
@@ -980,8 +984,15 @@ class gCSVImport {
         promises.push(this.__addTextShowHide(pInfo.products[c], pInfo, origRow));
       }
 
+    if (!pInfo.sceneId)
+      return Promise.resolve();
+
     let frameRecords = await this.dbFetchByLookup('frame', 'parentKey', pInfo.sceneId);
-    let frameId = frameRecords[0];
+
+    if (frameRecords.records.length <= 0)
+      return Promise.resolve();
+
+    let frameId = frameRecords.recordIds[0];
     promises.push(
       this.dbSetRecordFields('frame', {
         frameTime: (pInfo.runLength * 1000).toString()
@@ -1143,7 +1154,7 @@ class gCSVImport {
 
     let childResults = await Promise.all(blockChildQueries);
     for (let c = 0, l = blockChildQueries.length; c < l; c++) {
-      blocks.concat(childResults[c]);  
+      blocks.concat(childResults[c]);
     }
 
     return blocks;
