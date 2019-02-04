@@ -219,6 +219,25 @@ class gCSVImport {
       frameTime
     });
   }
+  async csvFetchSceneBlock() {
+    let results = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
+    if (results.records.length < 1) {
+      console.log('scene (blockFlag) - block not found');
+      return Promise.resolve({
+        results,
+        key: null,
+        data: {},
+        parent: ''
+      });
+    }
+
+    return Promise.resolve({
+      results,
+      key: results.recordIds[0],
+      data: results.records[0],
+      parent: results.records[0].title
+    });
+  }
   async addCSVBlockChildRow(row) {
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
     if (parentRecords.records.length < 1) {
@@ -335,6 +354,8 @@ class gCSVImport {
         bumpTextureName: bumptexturename
       }).then(results => {});
 
+    await this.addParentBlockChild(row);
+
     return this.dbSetRecord('shape', {
       title: row.name,
       materialName: row.materialname,
@@ -343,6 +364,34 @@ class gCSVImport {
       boxDepth: row.depth,
       shapeType: row.shapetype
     });
+  }
+  async addParentBlockChild(row) {
+    if (!row.parent)
+      return Promise.resolve();
+
+    if (row.parent.substr(0, 9) === '::scene::') {
+      let sb = await this.csvFetchSceneBlock();
+      row.parent = sb.parent;
+    }
+
+    let sceneBC = this.defaultCSVRow();
+    sceneBC.asset = 'blockchild';
+    sceneBC.childtype = row.asset;
+    sceneBC.name = row.name;
+    sceneBC.parent = row.parent;
+    sceneBC.x = row.x;
+    sceneBC.y = row.y;
+    sceneBC.z = row.z;
+    sceneBC.rx = row.rx;
+    sceneBC.ry = row.ry;
+    sceneBC.rz = row.rz;
+    sceneBC.sx = row.sx;
+    sceneBC.sy = row.sy;
+    sceneBC.sz = row.sz;
+
+    await this.addCSVRow(sceneBC);
+
+    return Promise.resolve();
   }
   async addCSVBlockChildFrameRow(row) {
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
@@ -391,6 +440,7 @@ class gCSVImport {
   async addCSVRow(row) {
     let defaultRow = this.defaultCSVRow();
     row = Object.assign(defaultRow, row);
+
     switch (row.asset) {
       case 'displaycamera':
         return this.addCSVDisplayCamera(row);
