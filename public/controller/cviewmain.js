@@ -807,7 +807,6 @@ class cViewMain extends bView {
   }
   __loadBlock(profileKey, blockData) {
     super.__loadBlock(profileKey, blockData);
-
     this.storeItemParentDom.value = blockData.title;
   }
 }
