@@ -2,6 +2,7 @@
   "projects": {
     "default": "husker-ac595",
     "grocery": "groceryblocks",
-    "grocery2": "groceryblocks2"
+    "grocery2": "groceryblocks2",
+    "splicer": "braingrafter"
   }
 }
