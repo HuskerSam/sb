@@ -123,6 +123,7 @@ class wBlock {
     }
   }
   handleDataUpdate(tag, values, type, fireData) {
+    console.log(tag, values, type, fireData);
     if (!this.parent)
       this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type, true);
 

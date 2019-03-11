@@ -691,3 +691,11 @@ select {
   width: 7em;
   margin: 0px 10px;
 }
+
+.scene_image_field_wrapper {
+  width: 15em;
+  margin: 0px 10px;
+}
+
+.sceneoptionsupload {
+}

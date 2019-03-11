@@ -219,6 +219,25 @@ class gCSVImport {
       frameTime
     });
   }
+  async csvFetchSceneBlock() {
+    let results = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
+    if (results.records.length < 1) {
+      console.log('scene (blockFlag) - block not found');
+      return Promise.resolve({
+        results,
+        key: null,
+        data: {},
+        parent: ''
+      });
+    }
+
+    return Promise.resolve({
+      results,
+      key: results.recordIds[0],
+      data: results.records[0],
+      parent: results.records[0].title
+    });
+  }
   async addCSVBlockChildRow(row) {
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
     if (parentRecords.records.length < 1) {
@@ -300,26 +319,23 @@ class gCSVImport {
     let texturename = row.texturepath;
     let bumptexturename = row.bmppath;
 
-    if (row.scalev) {
-      if (row.texturepath) {
-        texturename = row.materialname;
-        this.dbSetRecord('texture', {
-          title: texturename,
-          url: row.texturepath,
-          uScale: row.scaleu,
-          vScale: row.scalev
-        }).then(results => {});
-      }
-
-      if (row.bmppath) {
-        bumptexturename = row.materialname + 'bmp';
-        this.dbSetRecord('texture', {
-          title: bumptexturename,
-          url: row.bmppath,
-          uScale: row.scaleu,
-          vScale: row.scalev
-        }).then(results => {});
-      }
+    if (row.texturepath) {
+      texturename = row.materialname;
+      this.dbSetRecord('texture', {
+        title: texturename,
+        url: row.texturepath,
+        uScale: row.scaleu,
+        vScale: row.scalev
+      }).then(results => {});
+    }
+    if (row.bmppath) {
+      bumptexturename = row.materialname + 'bmp';
+      this.dbSetRecord('texture', {
+        title: bumptexturename,
+        url: row.bmppath,
+        uScale: row.scaleu,
+        vScale: row.scalev
+      }).then(results => {});
     }
 
     if (row.materialname)
@@ -335,14 +351,48 @@ class gCSVImport {
         bumpTextureName: bumptexturename
       }).then(results => {});
 
+    await this.addParentBlockChild(row);
+
     return this.dbSetRecord('shape', {
       title: row.name,
       materialName: row.materialname,
       boxHeight: row.height,
       boxWidth: row.width,
       boxDepth: row.depth,
-      shapeType: row.shapetype
+      shapeType: row.shapetype,
+      textFontFamily: row.textfontfamily,
+      textText: row.texttext,
+      textDepth: row.textdepth,
+      textSize: row.textsize
     });
+  }
+  async addParentBlockChild(row) {
+    if (!row.parent)
+      return Promise.resolve();
+
+    if (row.parent.substr(0, 9) === '::scene::') {
+      let sb = await this.csvFetchSceneBlock();
+      row.parent = sb.parent;
+    }
+
+    let sceneBC = this.defaultCSVRow();
+    sceneBC.asset = 'blockchild';
+    sceneBC.childtype = row.asset;
+    sceneBC.name = row.name;
+    sceneBC.parent = row.parent;
+    sceneBC.x = row.x;
+    sceneBC.y = row.y;
+    sceneBC.z = row.z;
+    sceneBC.rx = row.rx;
+    sceneBC.ry = row.ry;
+    sceneBC.rz = row.rz;
+    sceneBC.sx = row.sx;
+    sceneBC.sy = row.sy;
+    sceneBC.sz = row.sz;
+
+    await this.addCSVRow(sceneBC);
+
+    return Promise.resolve();
   }
   async addCSVBlockChildFrameRow(row) {
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
@@ -391,6 +441,7 @@ class gCSVImport {
   async addCSVRow(row) {
     let defaultRow = this.defaultCSVRow();
     row = Object.assign(defaultRow, row);
+
     switch (row.asset) {
       case 'displaycamera':
         return this.addCSVDisplayCamera(row);
@@ -580,7 +631,7 @@ class gCSVImport {
     blockRow.depth = '2';
     blockRow.materialname = this.getProductColors().colors[product.colorIndex];
     blockRow.name = product.childName + '_signpost';
-    newObjects.push(blockRow);
+    await this.addCSVRow(blockRow);
 
     let textPlane = this.defaultCSVRow();
     textPlane.asset = 'textplane';
@@ -596,7 +647,6 @@ class gCSVImport {
     textPlane.name = product.childName + '_pricedesc';
     newObjects.push(textPlane);
 
-    let signChildren = [];
     let blockDescShapeBC = this.defaultCSVRow();
     blockDescShapeBC.asset = 'blockchild';
     blockDescShapeBC.childtype = 'block';
@@ -609,7 +659,7 @@ class gCSVImport {
     blockDescShapeBC.sy = '.5';
     blockDescShapeBC.sz = '.5';
     blockDescShapeBC.ry = '180deg';
-    signChildren.push(blockDescShapeBC);
+    newObjects.push(blockDescShapeBC);
 
     let blockImageShape = this.defaultCSVRow();
     blockImageShape.asset = 'shape';
@@ -631,7 +681,7 @@ class gCSVImport {
     blockImageBC.x = '.06';
     blockImageBC.y = '6';
     blockImageBC.ry = '-90deg';
-    signChildren.push(blockImageBC);
+    newObjects.push(blockImageBC);
 
     let blockSPBC = this.defaultCSVRow();
     blockSPBC.asset = 'blockchild';
@@ -640,7 +690,7 @@ class gCSVImport {
     blockSPBC.name = 'signboard';
     blockSPBC.materialname = 'inherit';
     blockSPBC.y = '5';
-    signChildren.push(blockSPBC);
+    newObjects.push(blockSPBC);
 
     let blockSP2BC = this.defaultCSVRow();
     blockSP2BC.asset = 'blockchild';
@@ -650,7 +700,7 @@ class gCSVImport {
     blockSP2BC.materialname = 'inherit';
     blockSP2BC.x = '-0.05';
     blockSP2BC.y = '1.5';
-    signChildren.push(blockSP2BC);
+    newObjects.push(blockSP2BC);
 
     let blockRowBC = this.defaultCSVRow();
     blockRowBC.asset = 'blockchild';
@@ -661,45 +711,145 @@ class gCSVImport {
     blockRowBC.rz = '10deg';
     blockRowBC.ry = '180deg';
     blockRowBC.y = '-50';
+    newObjects.push(blockRowBC);
 
-    return this.addCSVRowList(newObjects)
-      .then(() => this.addCSVRowList(signChildren))
-      .then(() => this.addCSVRow(blockRowBC))
-      .then(result => {
-        let showFrame = this.defaultCSVRow();
-        showFrame.asset = 'blockchildframe';
-        showFrame.name = blockRow.name;
-        showFrame.childtype = 'block';
-        showFrame.parent = product.childName;
-        showFrame.frameorder = '20';
-        showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
-        showFrame.y = '2';
+    await this.addCSVRowList(newObjects);
+  //  await this._addSignPost3D(product, productData);
 
-        let hideFrame = this.defaultCSVRow();
-        hideFrame.asset = 'blockchildframe';
-        hideFrame.name = blockRow.name;
-        hideFrame.childtype = 'block';
-        hideFrame.parent = product.childName;
-        hideFrame.frameorder = '30';
-        hideFrame.frametime = (product.endShowTime * 1000).toFixed(0) + 'cp700';
-        hideFrame.y = '-50';
+    let showFrame = this.defaultCSVRow();
+    showFrame.asset = 'blockchildframe';
+    showFrame.name = blockRow.name;
+    showFrame.childtype = 'block';
+    showFrame.parent = product.childName;
+    showFrame.frameorder = '20';
+    showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
+    showFrame.y = '2';
 
-        let endFrame = this.defaultCSVRow();
-        endFrame.asset = 'blockchildframe';
-        endFrame.name = blockRow.name;
-        endFrame.childtype = 'block';
-        endFrame.parent = product.childName;
-        endFrame.frameorder = '40';
-        endFrame.frametime = (productData.runLength * 1000).toFixed(0);
-        endFrame.y = '-50';
+    let hideFrame = this.defaultCSVRow();
+    hideFrame.asset = 'blockchildframe';
+    hideFrame.name = blockRow.name;
+    hideFrame.childtype = 'block';
+    hideFrame.parent = product.childName;
+    hideFrame.frameorder = '30';
+    hideFrame.frametime = (product.endShowTime * 1000).toFixed(0) + 'cp700';
+    hideFrame.y = '-50';
 
-        return Promise.all([
-          this.addCSVRow(showFrame),
-          this.addCSVRow(hideFrame),
-          this.addCSVRow(endFrame)
-        ]);
-      })
+    let endFrame = this.defaultCSVRow();
+    endFrame.asset = 'blockchildframe';
+    endFrame.name = blockRow.name;
+    endFrame.childtype = 'block';
+    endFrame.parent = product.childName;
+    endFrame.frameorder = '40';
+    endFrame.frametime = (productData.runLength * 1000).toFixed(0);
+    endFrame.y = '-50';
+
+    return Promise.all([
+      this.addCSVRow(showFrame),
+      this.addCSVRow(hideFrame),
+      this.addCSVRow(endFrame)
+    ]);
   }
+  async _addSignPost3D(product, productData) {
+    let parent = product.childName + '_signpost';
+    let priceText = this.defaultCSVRow();
+    priceText.asset = 'shape';
+    priceText.name = parent + '_3ddesc';
+    priceText.materialname = 'decolor: .5,.1,.1';
+    priceText.shapetype = 'text';
+    priceText.textfontfamily = 'Arial';
+    priceText.texttext = product.desc;
+    priceText.textdepth = '.1';
+    priceText.textsize = '100';
+    priceText.parent = parent;
+    priceText.y = '2';
+    priceText.x = '.5';
+    priceText.ry = '0deg';
+    priceText.rz = '-90deg';
+
+    let descText = this.defaultCSVRow();
+    descText.asset = 'shape';
+    descText.name = parent + '_3ddesc';
+    descText.materialname = 'decolor: .5,.1,.1';
+    descText.shapetype = 'text';
+    descText.textfontfamily = 'Times';
+    descText.texttext = product.desc;
+    descText.textdepth = '.1';
+    descText.textsize = '100';
+    descText.parent = parent;
+    descText.y = '2';
+    descText.x = '.5';
+    descText.ry = '0deg';
+    descText.rz = '-90deg';
+    await this.addCSVRow(descText);
+
+    return Promise.all([
+      this.addCSVRow(priceText),
+    ]);
+    /*
+    promises.push(gAPPP.a.modelSets['shape'].createWithBlobString({
+      title: product.titleShape,
+      materialName: 'decolor: .1,.5,.5',
+      shapeType: 'text',
+      textFontFamily: 'Times',
+      textText: product.title,
+      textDepth: '.3',
+      textSize: 100
+    }));
+
+    promises.push(gAPPP.a.modelSets['blockchild'].createWithBlobString({
+      parentKey: product.blockId,
+      childType: 'shape',
+      childName: product.priceShape,
+      inheritMaterial: false
+    }).then(childResults => {
+      product.priceBlockChildKey = childResults.key;
+
+      return gAPPP.a.modelSets['frame'].createWithBlobString({
+        parentKey: product.priceBlockChildKey,
+        positionX: '',
+        positionY: '2',
+        positionZ: '',
+        rotationX: '',
+        rotationY: '180deg',
+        rotationZ: '-90deg',
+        scalingX: '',
+        scalingY: '',
+        scalingZ: '',
+        visibility: '',
+        frameOrder: 10,
+        frameTime: 0
+      });
+    }));
+
+    promises.push(gAPPP.a.modelSets['blockchild'].createWithBlobString({
+      parentKey: product.blockId,
+      childType: 'shape',
+      childName: product.titleShape,
+      inheritMaterial: false
+    }).then(childResults => {
+      product.titleBlockChildKey = childResults.key;
+      return gAPPP.a.modelSets['frame'].createWithBlobString({
+        parentKey: product.titleBlockChildKey,
+        positionX: '',
+        positionY: '3',
+        positionZ: '',
+        rotationX: '',
+        rotationY: '180deg',
+        rotationZ: '-90deg',
+        scalingX: '',
+        scalingY: '',
+        scalingZ: '',
+        visibility: '',
+        frameOrder: 10,
+        frameTime: 0
+      })
+    }));
+*/
+
+  }
+
+
+
   async __addTextShowHide(product, productData, origRow) {
     let childName = product.childName;
 
@@ -812,6 +962,8 @@ class gCSVImport {
     let frameTime = productData.introTime;
     let cpTime = cameraRow.cameramovetime ? 'cp' + cameraRow.cameramovetime : '';
 
+    if (!productData.products)
+      productData.products = [];
     for (let c = 0, l = productData.products.length; c <= l + 1; c++) {
       let cameraBlockFrame = this.defaultCSVRow();
 
@@ -907,7 +1059,11 @@ class gCSVImport {
       startz: '',
       startrx: '',
       startry: '',
-      startrz: ''
+      startrz: '',
+      textfontfamily: '',
+      texttext: '',
+      textdepth: '',
+      textsize: ''
     };
   }
   basketPosition(index) {
@@ -972,6 +1128,8 @@ class gCSVImport {
     await this.__addCSVFollowBlock(pInfo);
 
     let promises = [];
+    if (!pInfo.products)
+      pInfo.products = [];
     for (let c = 0, l = pInfo.products.length; c < l; c++)
       if (pInfo.products[c].itemId)
         promises.push(this.__addSignPost(pInfo.products[c], pInfo));
@@ -980,8 +1138,15 @@ class gCSVImport {
         promises.push(this.__addTextShowHide(pInfo.products[c], pInfo, origRow));
       }
 
+    if (!pInfo.sceneId)
+      return Promise.resolve();
+
     let frameRecords = await this.dbFetchByLookup('frame', 'parentKey', pInfo.sceneId);
-    let frameId = frameRecords[0];
+
+    if (frameRecords.records.length <= 0)
+      return Promise.resolve();
+
+    let frameId = frameRecords.recordIds[0];
     promises.push(
       this.dbSetRecordFields('frame', {
         frameTime: (pInfo.runLength * 1000).toString()
@@ -1143,7 +1308,7 @@ class gCSVImport {
 
     let childResults = await Promise.all(blockChildQueries);
     for (let c = 0, l = blockChildQueries.length; c < l; c++) {
-      blocks.concat(childResults[c]);  
+      blocks.concat(childResults[c]);
     }
 
     return blocks;

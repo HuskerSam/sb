@@ -58,7 +58,8 @@ class bView {
     this.rootBlock.setData(blockData);
     setTimeout(() => {
       this.canvasHelper.show();
-      this._updateContextWithDataChange();
+      this._updateContextWithDataChange();    
+      gAPPP.activeContext.activeBlock.setData();
       this._userProfileChange();
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }, 50);

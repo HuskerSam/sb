@@ -232,5 +232,7 @@ class cDialogBlock extends bDialog {
     this.sceneFireFields.values = this.fireSet.fireDataByKey[key].val();
     super.show(key);
     this._updateFollowTargetListOptions();
+
+    setTimeout(() => gAPPP.activeContext.activeBlock.setData(), 0);
   }
 }

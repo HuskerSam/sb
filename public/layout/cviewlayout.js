@@ -38,22 +38,15 @@ class cViewLayout extends bView {
       'x', 'y', 'z',
       'rx', 'ry', 'rz'
     ];
-    this.productAddList = [
-      'index', 'name', 'asset',
-      'text1', 'text2', 'image', 'block',
-      'sku', 'price', 'count', 'pricetext',
-      'height', 'width',
-      'xyz', 'rotatexyz'
-    ];
     this.messageOnlyFields = [
       'index', 'name', 'asset', 'text1', 'text2',
-      'height', 'width', 'xyz', 'rotatexyz'
+      'height', 'width', 'x', 'y', 'z'
     ];
     this.productOnlyFields = [
       'index', 'name', 'asset',
       'text1', 'image', 'block',
       'sku', 'price', 'count', 'pricetext',
-      'xyz', 'rotatexyz'
+      'x', 'y', 'z'
     ];
 
     this.allColumnList = [
@@ -73,31 +66,22 @@ class cViewLayout extends bView {
     this.initFieldEdit();
 
     this.assetTemplates = [
-      'All Assets',
-      'Produce Assets'
+      'All Assets'
     ];
     this.assetTemplateFiles = {
-      'All Assets': 'allassets.csv',
-      'Produce Assets': 'produceassets.csv',
-      'Baskery and Deli Assets': 'bakeryanddeliassets.csv'
+      'All Assets': 'asset.csv',
     }
     this.sceneTemplates = [
-      'Produce',
-      'Bakery and Deli'
+      'Produce'
     ];
     this.sceneTemplateFiles = {
-      'Produce': 'producescene.csv',
-      'Bakery and Deli': 'bakeryanddeliscene.csv'
+      'Produce': 'layout.csv'
     };
     this.productTemplates = [
-      'Produce Sales Week 1',
-      'Produce Sales Week 2',
-      'Bakery and Deli Sales Week 1'
+      'Produce Sales Week 1'
     ];
     this.productTemplateFiles = {
-      'Bakery and Deli Sales Week 1': 'bakeryanddelisales1.csv',
-      'Produce Sales Week 1': 'producesalesweek1.csv',
-      'Produce Sales Week 2': 'producesalesweek2.csv'
+      'Produce Sales Week 1': 'product.csv',
     }
 
     this.productBySKU = {};
@@ -217,14 +201,14 @@ class cViewLayout extends bView {
     if (this.productData.displayBlocks)
       for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
         basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-    document.getElementById('basketblocklist').innerHTML = basketListHTML;
+    document.getElementById('blocklist').innerHTML = basketListHTML;
 
     this.changes_commit_header = document.getElementById('changes_commit_header');
     this.changes_commit_header.addEventListener('click', e => this.saveChanges());
     return Promise.resolve();
   }
   saveChanges() {
-    alert('hi');
+    this.__saveChanges().then(() => {});
   }
   async _loadDataTables() {
     await Promise.all([
@@ -512,7 +496,7 @@ class cViewLayout extends bView {
       selectable: false,
       layout: "fitData",
       columns,
-      dataEdited: data => this.__tableChangedHandler(),
+      dataEdited: data => this.__tableChangedHandler(true),
       rowMoved: (row) => this._rowMoved(tableName, row)
     });
 
@@ -556,21 +540,13 @@ class cViewLayout extends bView {
   async __saveChanges() {
     this.canvasHelper.hide();
 
-    let tbl = this.editTables[tableName];
-    let data = tbl.getData();
+    await Promise.all([
+      this.__saveTable('asset'),
+      this.__saveTable('product'),
+      this.__saveTable('scene')
+    ]);
 
-    for (let c = 0, l = data.length; c < l; c++) {
-      delete data[c][undefined];
-
-      for (let i in data[c])
-        if (data[c][i] === undefined)
-          data[c][i] = '';
-    }
-
-    await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data);
-    await this.reloadScene();
-
-    return Promise.resolve();
+    return this.reloadScene();
   }
   __reformatTable(tableName) {
     let tbl = this.editTables[tableName];
@@ -589,7 +565,26 @@ class cViewLayout extends bView {
 
     return setDirty;
   }
-  __tableChangedHandler() {
+  async __saveTable(tableName) {
+    if (!this.___testTableDirty(tableName))
+      return Promise.resolve();
+
+    let tbl = this.editTables[tableName];
+    let data = tbl.getData();
+
+    for (let c = 0, l = data.length; c < l; c++) {
+      delete data[c][undefined];
+
+      for (let i in data[c])
+        if (data[c][i] === undefined)
+          data[c][i] = '';
+    }
+
+    await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data);
+
+    return Promise.resolve();
+  }
+  __tableChangedHandler(reloadSceneOptions) {
     let dirty = this.___testTableDirty('asset');
     if (!dirty)
       dirty = this.___testTableDirty('scene');
@@ -600,6 +595,10 @@ class cViewLayout extends bView {
       document.getElementById('changes_commit_header').style.display = 'inline-block';
     } else {
       document.getElementById('changes_commit_header').style.display = 'none';
+    }
+
+    if (reloadSceneOptions) {
+      this.sceneOptionsBlockListChange();
     }
   }
   toggleAutoMoveCamera() {
@@ -640,6 +639,8 @@ class cViewLayout extends bView {
     }]);
 
     setTimeout(() => location.reload(), 1);
+
+    return Promise.resolve();
   }
   importCSV() {
     if (this.importFileDom.files.length > 0) {
@@ -722,7 +723,7 @@ class cViewLayout extends bView {
     componentHandler.upgradeElement(btn);
     this.record_field_list_form.appendChild(btn);
     this.addNewBtn = document.getElementById('update_product_fields_post');
-    this.addNewBtn.addEventListener('click', e => this.addNewProduct());
+    this.addNewBtn.addEventListener('click', e => this.addNewProduct(e));
 
     this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
@@ -731,9 +732,9 @@ class cViewLayout extends bView {
   }
   updateVisibleEditFields() {
     let fieldsToShow = null;
-    if (this.assetEditField.value === 'product')
+    if (this.assetEditField.value === 'message')
       fieldsToShow = this.messageOnlyFields;
-    else if (this.assetEditField.value === 'message')
+    else if (this.assetEditField.value === 'product')
       fieldsToShow = this.productOnlyFields;
 
     for (let i in this.fieldDivByName) {
@@ -883,7 +884,7 @@ class cViewLayout extends bView {
 
     this.updateVisibleEditFields();
   }
-  addNewProduct() {
+  addNewProduct(e) {
     let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
 
     let name = fields[0].value;
@@ -897,25 +898,17 @@ class cViewLayout extends bView {
       return;
     }
 
-    if (this.highlightedRow) {
-      if (!confirm('Overwrite ' + name + '?'))
-        return;
-    }
-
-    this.canvasHelper.hide();
     let newRow = {};
     for (let c = 0, l = fields.length; c < l; c++)
       newRow[this.fieldList[c]] = fields[c].value;
 
-    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
-      .then(products => {
-        products.push(newRow);
+    let rows = this.editTables['product'].getData();
+    rows.push(newRow);
+    this.editTables['product'].setData(rows);
+    this.__tableChangedHandler();
 
-        p = this.__sortProductRows(p);
-        gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', products)
-          .then(() => this.reloadScene())
-          .then(() => {});
-      });
+    e.preventDefault();
+    return true;
   }
   __sortProductRows(p) {
     return p.sort((a, b) => {
@@ -1033,7 +1026,7 @@ class cViewLayout extends bView {
       return;
     let fieldData = this.sceneFieldEditBlocks[index];
 
-    let fieldHtml = '';
+    let fieldHtml = '<input type="file" class="sotexturepathuploadfile" style="display:none;" />';
     let name = fieldData.name;
     let asset = fieldData.asset;
 
@@ -1044,15 +1037,81 @@ class cViewLayout extends bView {
       if (type === 'num') {
         let v = this.__getSceneOptionsValue(fieldData.tab, name, asset, field);
         fieldHtml += '<div class="scene_num_field_wrapper mdl-textfield mdl-js-textfield mdl-textfield--floating-label">' +
-          `<input data-field="${field}" class="mdl-textfield__input" type="text" value="${v}"` +
-          `data-type="${type}" data=name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />` +
+          `<input data-field="${field}" class="mdl-textfield__input" type="text" value="${v}" data-tab="${fieldData.tab}"` +
+          `data-type="${type}" data-name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />` +
           `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${field}</label>` +
           '</div>';
+      }
+
+      if (type === 'image') {
+        let v = this.__getSceneOptionsValue(fieldData.tab, name, asset, field);
+        fieldHtml += '<div><div class="scene_image_field_wrapper mdl-textfield mdl-js-textfield mdl-textfield--floating-label">' +
+          `<input data-field="${field}" class="mdl-textfield__input" type="text" value="${v}" data-tab="${fieldData.tab}"` +
+          `data-type="${type}" data-name="${name}" data-asset="${asset}" id="scene_edit_field_${c}_${field}" />` +
+          `<label class="mdl-textfield__label" for="scene_edit_field_${c}_${field}">${field}</label>` +
+          '</div>' +
+          `<button data-fieldid="scene_edit_field_${c}_${field}" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary sceneoptionsupload">` +
+          `<i class="material-icons">cloud_upload</i></button></div>`;
       }
     }
 
     this.scene_options_edit_fields.innerHTML = fieldHtml;
+    this.soUploadImageFile = this.scene_options_edit_fields.querySelector('.sotexturepathuploadfile');
+    this.soUploadImageFile.addEventListener('change', e => {
+      this.__sceneUploadImageFile(e).then(() => {});
+    });
+    let inputs = this.scene_options_edit_fields.querySelectorAll('input');
+    inputs.forEach(i => i.addEventListener('input', e => this.__sceneOptionsValueChange(i, e)));
+    let uploadButtons = this.scene_options_edit_fields.querySelectorAll('button.sceneoptionsupload');
+    uploadButtons.forEach(i => i.addEventListener('click', e => {
+      this.soUploadImageFile.btnCTL = i;
+      this.soUploadImageFile.editCTL = this.scene_options_edit_fields.querySelector('#' + i.dataset.fieldid);
+      this.soUploadImageFile.click();
+    }));
     componentHandler.upgradeDom();
+  }
+  async __sceneUploadImageFile() {
+    let fileBlob = this.soUploadImageFile.files[0];
+
+    if (!fileBlob)
+      return Promise.resolve();
+
+    this.soUploadImageFile.editCTL.parentElement.MaterialTextfield.change('Uploading...');
+
+    let fireSet = gAPPP.a.modelSets['block'];
+    let key = this.productData.sceneId + '/scenedatafiles';
+    let uploadResult = await fireSet.setBlob(key, fileBlob, fileBlob.name);
+    this.soUploadImageFile.editCTL.parentElement.MaterialTextfield.change(uploadResult.downloadURL);
+    this.__sceneOptionsValueChange(this.soUploadImageFile.editCTL);
+    return Promise.resolve();
+  }
+  __sceneOptionsValueChange(ctl, e) {
+    let data = ctl.dataset;
+    this.__setSceneOptionsValue(data.tab, data.name, data.asset, data.field, ctl.value)
+      .then(() => {});
+  }
+  async __setSceneOptionsValue(tab, name, asset, field, value) {
+    if (tab === 'layout')
+      tab = 'scene';
+    if (!this.editTables[tab])
+      return Promise.resolve();
+
+    let dataChanged = false;
+    let rows = this.editTables[tab].getData();
+    for (let c = 0, l = rows.length; c < l; c++)
+      if (rows[c]['name'] === name && rows[c]['asset'] === asset) {
+        if (rows[c][field] !== value) {
+          dataChanged = true;
+          rows[c][field] = value;
+        }
+      }
+
+    if (dataChanged) {
+      this.editTables[tab].setData(rows);
+      this.__tableChangedHandler();
+    }
+
+    return Promise.resolve();
   }
   __getSceneOptionsValue(tab, name, asset, field) {
     if (tab === 'layout')

@@ -64,30 +64,27 @@ class cViewDemo extends bView {
     if (this.cameraShown)
       return Promise.resolve();
     this.cameraShown = true;
-    setTimeout(() => {
+    this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
+    this.products = this.productData.products;
+    this.productsBySKU = this.productData.productsBySKU;
 
-      this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
-      this.products = this.productData.products;
-      this.productsBySKU = this.productData.productsBySKU;
+    this.canvasHelper.cameraSelect.selectedIndex = 2;
+    this.canvasHelper.noTestError = true;
+    this.canvasHelper.cameraChangeHandler();
+    this.canvasHelper.playAnimation();
 
-      this.canvasHelper.cameraSelect.selectedIndex = 2;
-      this.canvasHelper.noTestError = true;
-      this.canvasHelper.cameraChangeHandler();
-      this.canvasHelper.playAnimation();
+    let option = document.createElement("option");
+    option.text = 'Options';
+    option.value = 'Options';
+    this.workplacesSelect.add(option);
 
-      let option = document.createElement("option");
-      option.text = 'Options';
-      option.value = 'Options';
-      this.workplacesSelect.add(option);
+    option = document.createElement("option");
+    option.text = 'About';
+    option.value = 'About';
+    this.workplacesSelect.add(option);
 
-      option = document.createElement("option");
-      option.text = 'About';
-      option.value = 'About';
-      this.workplacesSelect.add(option);
-
-      this.sceneIndex = this.workplacesSelect.selectedIndex;
-      this.productsDisplayUpdate();
-    }, 100);
+    this.sceneIndex = this.workplacesSelect.selectedIndex;
+    this.productsDisplayUpdate();
 
     return Promise.resolve();
   }
@@ -206,13 +203,13 @@ class cViewDemo extends bView {
       let p = this.products[prodCtr];
       if (!p.itemId)
         continue;
-      let itemShownIndex = this.skuOrder.indexOf(p.blockRef.blockData.itemId);
+      let itemShownIndex = this.skuOrder.indexOf(p.itemId);
       if (itemShownIndex === -1) {
-        promises.push(this.basketRemoveItemBlock(p.blockRef.blockData.itemId));
+        promises.push(this.basketRemoveItemBlock(p.itemId));
       }
     }
 
-    for (let skuCtr = 0; skuCtr < this.skuOrder.length; skuCtr++){
+    for (let skuCtr = 0; skuCtr < this.skuOrder.length; skuCtr++) {
       promises.push(this.basketAddItemBlock(this.skuOrder[skuCtr], skuCtr));
     }
 
@@ -229,7 +226,7 @@ class cViewDemo extends bView {
     if (!product)
       return Promise.resolve();
 
-    let basketBlock = product.blockRef.blockData.basketBlock;
+    let basketBlock = product.block;
 
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
@@ -263,14 +260,14 @@ class cViewDemo extends bView {
 
     return Promise.resolve();
   }
-  basketRemoveItemBlock(sku) {
+  async basketRemoveItemBlock(sku) {
     let product = this.productsBySKU[sku];
-    let itemId = product.blockRef.blockData.itemId;
-    let basketBlock = product.blockRef.blockData.basketBlock;
+    let itemId = product.itemId;
+    let basketBlock = product.block;
     let rootKey = this.rootBlock.blockKey;
 
-    let basketCart = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).findMatchBlock('block', 'basketcart', rootKey);
-    let basketItems = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).findMatchBlocks('block', basketBlock, basketCart.blockKey, 'sku', itemId);
+    let basketCart = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).findMatchBlocks('block', 'basketcart', rootKey);
+    let basketItems = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).findMatchBlocks('block', basketBlock, basketCart[0].blockKey, 'sku', itemId);
 
     let promises = [];
     for (let c = 0, l = basketItems.length; c < l; c++) {
@@ -297,7 +294,7 @@ class cViewDemo extends bView {
   basketRemoveAllItems() {
     for (let c = 0, l = this.products.length; c < l; c++)
       if (this.products[c].itemId)
-        this.basketRemoveItemBlock(this.products[c].blockRef.blockData.itemId);
+        this.basketRemoveItemBlock(this.products[c].itemId).then(() => {});
   }
 
   sceneSelect() {
@@ -380,8 +377,8 @@ class cViewDemo extends bView {
         if (!this.products[c].itemId)
           continue;
         let btn = this.itemButtons[product.colorIndex];
-        let btnHtml =  `<img src="${product.itemImage}" class="button-list-image">` +
-                    '<span class="expanded">' + product.title + '<br></span>' +  product.desc.toString() + '</span>';
+        let btnHtml = `<img src="${product.itemImage}" class="button-list-image">` +
+          '<span class="expanded">' + product.title + '<br></span>' + product.desc.toString() + '</span>';
 
         if (btn.innerHTMLStash !== btnHtml) {
           btn.innerHTMLStash = btnHtml;
