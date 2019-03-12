@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Rapid Scenes</title>
+  <title>XR Grafter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo.png">
   <script>
@@ -14,7 +14,7 @@
 
 <body>
   <div id="firebase-app-login-page" style="display:none;">
-    <h3>Rapid Scenes</h3>
+    <h3>Extended Reality Grafter</h3>
     <div>
       <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
       <br>
@@ -50,17 +50,20 @@
           <a href="#ui-review-panel" id="ui-review-tab" class="mdl-tabs__tab">Employers</a>
           <a href="#ui-training-panel" id="ui-training-tab" class="mdl-tabs__tab">Training</a>
           <a href="#ui-assets-panel" id="ui-asset-tab" class="mdl-tabs__tab">Account</a>
-          <div class="tab-item-wrapper" style="float:right;">
-            <span>
-            Weekly: <b>$ 450/600</b>
-            Available: <b>$ 900</b>
-            Total: <b>$ 3450</b>
-            <br>
-            Pending: <b>$ 250</b>
-            Queued: <b>$ 800</b>
-            Reserved: <b>$ 500</b>
+          <div class="tab-item-wrapper" style="flex:1">
+            <span style="float:right;margin:.25em;">
+              Weekly: <b>$ 450</b>
+              Available: <b>$ 2320</b>
+              Total: <b>$ 3430</b>
+              <br>
+              Pending <b>$ -250</b>
+              Queued <b>$ -800</b>
+              Incomplete <b>$ 500</b>
             </span>
-            <button id="add-workspace-button-expand" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">keyboard_voice</i></button>
+            <span style="float:right;">
+              <input style="width:8em;" placeholder="Search..." />
+              <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">keyboard_voice</i></button>
+            </span>
           </div>
         </div>
         <button id="changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
@@ -71,13 +74,13 @@
         <div id="ui-review-panel" class="mdl-tabs__panel"></div>
         <div id="ui-training-panel" class="mdl-tabs__panel" style="flex:1">
           <textarea style="width:100%;height:100%;">
-            Weekly: <b>$ 450</b>
-            Available: <b>$ 900</b>
-            Total: <b>$ 3450</b>
+            Weekly Funds: <b>$ 450 / 600</b>
+            Available Funds: <b>$ 900</b>
+            Total Funds: <b>$ 3450</b>
             <br>
-            Pending: <b>$ 250</b>
-            Queued: <b>$ 800</b>
-            Reserved: <b>$ 500</b>
+            Outsourced (in progress) <b>$ -250</b>
+            In Queue (auto approval) <b>$ -800</b>
+            In Progress (pending completion) <b>$ 500</b>
           </textarea>
         </div>
       </div>

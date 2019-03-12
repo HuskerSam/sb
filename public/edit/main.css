@@ -484,14 +484,13 @@
   top: 3em;
   background: rgba(255, 255, 255, .75);
   color: black;
-  padding: .5em;
-  padding-right: 0;
+  padding: .25em;
   border-radius: .5em;
   border: inset .15em silver;
   text-align: center;
   z-index: 10000;
   width: 100%;
-  height: 50%;
+  height: 75%;
 }
 
 #user-profile-settings-button {

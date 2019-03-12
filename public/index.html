@@ -7,12 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo.png">
   <script>
-    window.location = '/demo';
+    if (window.location.hostname === 'xrgrafter.com')
+      window.location = '/edit';
+    else if (window.location.hostname === 'localhost')
+      window.location = '/edit';
+    else
+      window.location = '/demo';
   </script>
 </head>
 
 <body style="margin:auto;text-align:center;">
-  <a href="/demo">Demo</a>
 </body>
 
 </html>
