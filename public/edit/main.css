@@ -490,6 +490,8 @@
   border: inset .15em silver;
   text-align: center;
   z-index: 10000;
+  width: 100%;
+  height: 50%;
 }
 
 #user-profile-settings-button {
@@ -761,7 +763,6 @@
   right: 9.5em;
   padding: .25em;
   border-radius: .25em;
-  background: rgba(255,255,255, .7);
   z-index: 1000;
 }
 
@@ -777,4 +778,22 @@
   top: .25em;
   right: 4.25em;
   z-index: 1000
+}
+
+
+.mdl-tabs {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+  background: rgba(200, 255, 240, .25);
+}
+
+.mdl-tabs__tab-bar {
+  justify-content: left;
+  border-bottom: solid 2px rgb(200, 255, 240);
+  background: rgb(200, 255, 240);
+  margin-top: 2px;
 }
