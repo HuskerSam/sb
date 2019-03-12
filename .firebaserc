@@ -1,6 +1,8 @@
 {
   "projects": {
-    "cheass": "husker-ac595",
-    "grocery": "groceryblocks2"
+    "default": "husker-ac595",
+    "grocery": "groceryblocks",
+    "grocery2": "groceryblocks2",
+    "splicer": "braingrafter"
   }
 }
