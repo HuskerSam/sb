@@ -35,6 +35,15 @@ class cViewMain extends bView {
     this.bandButtons.push(this.fontTools);
     this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
 
+    this.gigViewButton = this.dialog.querySelector('#workspace-gig-view-button');
+    this.gigViewContainer = this.dialog.querySelector('#gig-options-panel');
+    this.gigFieldsContainer = this.gigViewContainer.querySelector('.fields-container');
+    this.gigViewPanel = new cBandProfileOptions(this.gigViewButton, [], this.gigFieldsContainer, this.gigViewContainer);
+    this.gigViewPanel.fireFields.values = gAPPP.a.profile;
+    this.gigViewPanel.activate();
+    this.bandButtons.push(this.gigViewPanel);
+    this.gigViewPanel.closeOthersCallback = () => this.closeHeaderBands();
+
     this.addPanelButton = this.dialog.querySelector('#sb-floating-toolbar-create-btn');
     this.createPanel = document.querySelector('.add-item-panel');
     this.addFieldsContainer = this.createPanel.querySelector('.fields-container');
@@ -172,6 +181,7 @@ class cViewMain extends bView {
     this.stretchDetailsPanel = this.createPanel.querySelector('.block-stretch-along-width-label');
 
     this._initAddStoreItem();
+    this._initGigPanel();
 
     this.__handleBlockTypeSelectChange();
     this.__handleShapeChange();
@@ -186,6 +196,9 @@ class cViewMain extends bView {
   _initAddStoreItem() {
     this.storeItemParentDom = this.storeItemPanel.querySelector('.store-item-parent-block');
 
+  }
+  _initGigPanel() {
+    
   }
   _importMeshListCSV() {
     if (this.importFileDom.files.length > 0) {
@@ -302,6 +315,8 @@ class cViewMain extends bView {
     this.fontTools.toggle(false);
     this.addPanelTools.expanded = true;
     this.addPanelTools.toggle(false);
+    this.gigViewPanel.expanded = true;
+    this.gigViewPanel.toggle(false);
     this.importPanelTools.expanded = true;
     this.importPanelTools.toggle(false);
     this.canvasHelper.collapseAll();
