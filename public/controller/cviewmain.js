@@ -198,7 +198,30 @@ class cViewMain extends bView {
 
   }
   _initGigPanel() {
-    
+    let columns = [                 //define the table columns
+    		{title:"Name", field:"name", editor:"input"},
+    		{title:"Task Progress", field:"progress", align:"left", formatter:"progress", editor:true},
+    		{title:"Gender", field:"gender", width:95, editor:"select", editorParams:{"Male":"male", "Female":"female"}},
+    		{title:"Rating", field:"rating", formatter:"star", align:"center", width:100, editor:true},
+    		{title:"Color", field:"col", width:130, editor:"input"},
+    		{title:"Date Of Birth", field:"dob", width:130, sorter:"date", align:"center"},
+    		{title:"Driver", field:"car", width:90,  align:"center", formatter:"tickCross", sorter:"boolean", editor:true},
+    	];
+        this.projectTabTable = new Tabulator(`#project_tab_table`, {
+        data: [ {name: 'Darla'}, {name: 'Suzie'}, {name: 'Paul'}],
+        virtualDom: true,
+        height: '100%',
+        width: '100%',
+        movableRows: true,
+        movableColumns: false,
+        selectable: false,
+        layout: "fitData",
+        columns
+    //    dataEdited: data => this.__tableChangedHandler(true),
+    //    rowMoved: (row) => this._rowMoved(tableName, row)
+      });
+
+  //    this.projectTabTable.setColumnLayout();
   }
   _importMeshListCSV() {
     if (this.importFileDom.files.length > 0) {
