@@ -1080,7 +1080,7 @@ class gCSVImport {
   async addCSVBasketProducts() {
     let baskets = await this.dbFetchByLookup('block', 'blockFlag', 'basket');
     if (baskets.records.length < 1) {
-      console.log(row.parent, 'basket - block not found');
+      console.log('basket - block not found');
       return Promise.resolve();
     }
     let basketInfo = baskets.records[0];

@@ -1,7 +1,6 @@
 {
   "projects": {
-    "default": "husker-ac595",
-    "grocery": "groceryblocks",
-    "grocery2": "groceryblocks2"
+    "cheass": "husker-ac595",
+    "grocery": "groceryblocks2"
   }
 }
