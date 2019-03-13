@@ -205,6 +205,7 @@ class cViewMain extends bView {
 
     let columns = [
     		{title:"Name", field:"name", editor:"input"},
+      	{title:"Type", field:"class", editor:"input"},
     		{title:"Female Required", field:"gender", width:95, editor:"select", editorParams:{"Male":"male", "Female":"female"}},
         {title:"Contractor", field:"rating", formatter:"star", align:"center", width:100, editor:true},
         {title:"Location", field:"rating", formatter:"star", align:"center", width:100, editor:true},
