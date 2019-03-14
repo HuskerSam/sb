@@ -192,6 +192,19 @@ class cViewMain extends bView {
     this.canvasActions.insertBefore(this.expandedContainer, this.canvasActions.childNodes[0]);
 
     document.querySelector('#help-button-on-user-panel').addEventListener('click', e => this.showHelpPanel());
+
+    document.getElementById(`ui-project-tab`).addEventListener('click', e => {
+      this.__reformatTable(this.projectTabTable);
+      //    this.editTables[tableName].redraw(true);
+      this.projectTabTable.setColumnLayout();
+    });
+  }
+  __reformatTable(tbl) {
+    let rows = tbl.getRows();
+    for (let c = 0, l = rows.length; c < l; c++)
+      rows[c].reformat();
+
+  //  this.__tableChangedHandler();
   }
   _initAddStoreItem() {
     this.storeItemParentDom = this.storeItemPanel.querySelector('.store-item-parent-block');
@@ -203,16 +216,52 @@ class cViewMain extends bView {
       .then(r => r.val());
     if (results) data = results;
 
-    let columns = [
-    		{title:"Name", field:"name", editor:"input"},
-      	{title:"Type", field:"class", editor:"input"},
-    		{title:"Female Required", field:"gender", width:95, editor:"select", editorParams:{"Male":"male", "Female":"female"}},
-        {title:"Contractor", field:"rating", formatter:"star", align:"center", width:100, editor:true},
-        {title:"Location", field:"rating", formatter:"star", align:"center", width:100, editor:true},
-    		{title:"Due Date", field:"dob", width:130, sorter:"date", align:"center"}
-      ];
+    let columns = [{
+        title: "Name",
+        field: "name",
+        editor: "input"
+      },
+      {
+        title: "Type",
+        field: "class",
+        editor: "input"
+      },
+      {
+        title: "Female Required",
+        field: "gender",
+        width: 95,
+        editor: "select",
+        editorParams: {
+          "Male": "male",
+          "Female": "female"
+        }
+      },
+      {
+        title: "Contractor",
+        field: "rating",
+        formatter: "star",
+        align: "center",
+        width: 100,
+        editor: true
+      },
+      {
+        title: "Location",
+        field: "rating",
+        formatter: "star",
+        align: "center",
+        width: 100,
+        editor: true
+      },
+      {
+        title: "Due Date",
+        field: "dob",
+        width: 130,
+        sorter: "date",
+        align: "center"
+      }
+    ];
 
-      this.projectTabTable = new Tabulator(`#project_tab_table`, {
+    this.projectTabTable = new Tabulator(`#project_tab_table`, {
       data,
       virtualDom: true,
       height: '100%',
@@ -222,27 +271,72 @@ class cViewMain extends bView {
       selectable: false,
       layout: "fitData",
       columns
-  //    dataEdited: data => this.__tableChangedHandler(true),
-  //    rowMoved: (row) => this._rowMoved(tableName, row)
+      //    dataEdited: data => this.__tableChangedHandler(true),
+      //    rowMoved: (row) => this._rowMoved(tableName, row)
     });
 
-//    this.projectTabTable.setColumnLayout();
+    //    this.projectTabTable.setColumnLayout();
 
 
     return Promise.resolve();
   }
   _initGigPanel() {
-    let columns = [                 //define the table columns
-    		{title:"Name", field:"name", editor:"input"},
-    		{title:"Task Progress", field:"progress", align:"left", formatter:"progress", editor:true},
-    		{title:"Gender", field:"gender", width:95, editor:"select", editorParams:{"Male":"male", "Female":"female"}},
-    		{title:"Rating", field:"rating", formatter:"star", align:"center", width:100, editor:true},
-    		{title:"Color", field:"col", width:130, editor:"input"},
-    		{title:"Date Of Birth", field:"dob", width:130, sorter:"date", align:"center"},
-    		{title:"Driver", field:"car", width:90,  align:"center", formatter:"tickCross", sorter:"boolean", editor:true},
-    	];
+    let columns = [ //define the table columns
+      {
+        title: "Name",
+        field: "name",
+        editor: "input"
+      },
+      {
+        title: "Task Progress",
+        field: "progress",
+        align: "left",
+        formatter: "progress",
+        editor: true
+      },
+      {
+        title: "Gender",
+        field: "gender",
+        width: 95,
+        editor: "select",
+        editorParams: {
+          "Male": "male",
+          "Female": "female"
+        }
+      },
+      {
+        title: "Rating",
+        field: "rating",
+        formatter: "star",
+        align: "center",
+        width: 100,
+        editor: true
+      },
+      {
+        title: "Color",
+        field: "col",
+        width: 130,
+        editor: "input"
+      },
+      {
+        title: "Date Of Birth",
+        field: "dob",
+        width: 130,
+        sorter: "date",
+        align: "center"
+      },
+      {
+        title: "Driver",
+        field: "car",
+        width: 90,
+        align: "center",
+        formatter: "tickCross",
+        sorter: "boolean",
+        editor: true
+      },
+    ];
 
-      this._loadProjectTable().then(() => {});
+    this._loadProjectTable().then(() => {});
   }
   _importMeshListCSV() {
     if (this.importFileDom.files.length > 0) {
