@@ -3,8 +3,12 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Delicious - v 0.1</title>
+  <title>Delicious - v 0.11</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/logo.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-green.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <style>
     span {
       padding: 0px 10px;
@@ -15,25 +19,56 @@
     .text-tab-panel {
       background: rgb(254, 254, 254);
       padding: 10px;
+      flex: 1;
+      overflow: auto;
+      display:block;
+      overflow-y: scroll;
     }
 
     .rant-header {
       font-weight: bold;
-      display: block;
+      float:left;
       font-size: 12pt;
+      cursor: pointer;
+      color: rgb(100, 100, 100);
+      transition: all 800ms;
     }
-
     .rant-text {
       padding: 0px 10px;
       font-size: 11pt;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+      height: 0;
+      overflow: hidden;
+      clear: both;
+      opacity: 0;
+      transition: all 1200ms;
+    }
+
+    .intro-text {
+      font-size: larger;
+      font-family: Arial;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .mdl-tabs__tab {
+      float: none;
+      display: inline-block;
+    }
+
+    .preheadlineicon {
+      clear:both;
+      float:left;
+      transition: all 800ms;
+      transform: rotate(-90deg);
+      margin-top: -2px;
     }
   </style>
 </head>
 
 <body>
-  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-    <div class="mdl-tabs__tab-bar">
+  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="display:flex;height:100vh;width:100%;flex-direction:column;">
+    <div class="mdl-tabs__tab-bar" style="flex:0;display:block;text-align:center;width: 100%;">
       <span style="position:absolute;z-index:10;left: 0">Delicious Culture&trade;</span>
       <a href="#ui-culture-panel" id="ui-culture-tab" class="mdl-tabs__tab is-active">Intro</a>
       <a href="#ui-market-panel" id="ui-market-tab" class="mdl-tabs__tab">Market</a>
@@ -45,28 +80,17 @@
       <span style="right:0;position:absolute;z-index:10;">All Rights Reserved. 2019 &copy;</span>
     </div>
     <div id="ui-culture-panel" class="mdl-tabs__panel text-tab-panel is-active text-tab-panel">
+      <div class="intro-text">
+        An alternative to classic bricks and mortar for local teams!
+        <br><br>Fair isn’t equal - in families if females require more time in the bathroom per day, they get it - that’s fair.
+        <br><br>That’s the theme of this product, equal pay amongst genders based on what's fair.
+      </div>
       <div class="rant-header">HIRE LOCAL PEOPLE</div>
       <div class="rant-text">
         We all want to hire contract/gig work locally as much as possible. This is a system to do it.
-        <br>
-        <br>
-        “I specify Delicious Culture™” - Lead Developer of your team.
-        <br>
-        “Nebraska isn’t for everyone, we don’t do it the same here.” - team at Delicious Culture.
-        <br>
-        <br>
+        <br><br>
         This product was created to attract and retain talented workers today and tomorrow for small (family raising) markets graduating nationally from respected colleges.
         This product addresses imbalances (opinion) in the workplace and culture with cash flows.
-        <br>
-        <br>
-        I’ve heard modern work is about “technology (product), culture and workplace”. I believe it’s technology and team - and the culture and workplace will follow. Problem is you have to get the team, so this is some rules to convince players we
-        run a good game!
-        <br>
-        <br>
-        This product was created by a developer for developers. Fair isn’t equal - in families if females require more time in the bathroom per day, they get it - that’s fair. That’s the theme of this document, fair but not equal. Developers have
-        for decades carved out tools and schemes for others to work, now is the time when we’ll need more directly to manipulate our local market as it’s converting to gigs - this tool is meant to cut out the noise in this environment - the gig
-        market
-        ineffective enough as it is - get the loads and delays and penalties out as much as possible - this is what developers do and I'm here to help so you can get back to working on features.
         <br>
         <br>
         Promotes companies that are setup to succeed - companies built with profits paid out to the wrong parties end up with talent leaving and no longer on a strong iteration - whether they are still profitable or not - this isn’t the experience
@@ -76,16 +100,10 @@
         Office environment corresponding to today’s needs will greatly encourage people to use the office to improve collaboration and team morale - yet not require a heavy load of hours in office to permit the freedom of the full time employees to
         manage their working hours and contributions to the product
 
-        <br>
-        <br>A market can be in two distant places, for example Lincoln and Ames can decide to be “sister” markets - sharing gigs, terms, etc - where local status in one is local in another. This allows markets with different skillset specialties to
-        mix.
-        <br>
-        <br>
-        The market is like a TV Network of shows
       </div>
-      <div class="rant-header">FEMALES AND RETENTION</div>
+      <div class="rant-header">RETENTION</div>
       <div class="rant-text">
-        <br>Eite brains carry teams. Wonder why they leave? Look at the team content. If you get a bunch dead weight - brains will just go
+        Elite brains carry teams. Wonder why they leave? Look at the team content. If you get a bunch dead weight - brains will just go
         <br>Mix in some women and spirit and families - the developer doesn’t mind some carry here or there is it’s for more then a lazy old white guy at a desk.
         <br>Also let the developer select the teams - althought co-ed manipulation is superior to picking the best of the best
         <br>This product should encourage these teams to seek the highest talent females (delicious) - not just the cute ones - to make the teams most effective
@@ -109,7 +127,7 @@
       </div>
       <div class="rant-header">ENTRY LEVEL FULLTIME PROFESSIONALS</div>
       <div class="rant-text">
-        <br>They have energy and new skills - but no broad experience
+        They have energy and new skills - but no broad experience
         <br>They may also want to start a family and balance those interests
         <br>Entry level person has weak contacts and needs to transition from college to professional
         <br>take longer to payback results - more learning and training is required to become productive
@@ -120,7 +138,7 @@
       </div>
       <div class="rant-header">LOCAL EXPERIENCED PART TIME (GIG) WORKERS</div>
       <div class="rant-text">
-        <br>Gigs cater to older people with existing skills and little incentive to retrain
+        Gigs cater to older people with existing skills and little incentive to retrain
         <br>Gig based professionals are limited in how many emerging technologies they can learn and also maintain stable income - if their current skill pays well their incentive to learn something else is low
       </div>
 
@@ -140,10 +158,17 @@
         <br>If companies do not have integrated daycare or nearby daycare for all employees (contractor and otherwise), the Delicious companies will interact at a minimum - this extends to handicap accessible and other obvious culture crashers we
         don’t want. In other words an internal, but obvious and not so private black ball list.
       </div>
-
-
     </div>
     <div id="ui-market-panel" class="mdl-tabs__panel text-tab-panel">
+      <div class="intro-text">
+        The market is a set of closely located spaces to provide shared (pooled) worksite facilities and policies.  These facilitate local collaboration, whether
+        in person or virtual.  Family friendly areas, supervised daycare and handicap friendly spaces are included in the market to maximize the utility
+        of the spaces for workers.  Verified local cards are issued to company employees, contractors and visitors.  These cards are scanned when visiting a location
+        to monitor usage.  At least one person capable of security guard work is on duty at all times, available to escort people in and out of the market at night.
+        In local markets where panhandling and other roughneck types are present, these things are considered in order to provide family friendly areas and safe passage
+        to transportation when visiting the market.  Software is provided to highlight location and queue for resources and assets.
+        </thead>
+      </div>
       <div class="rant-header">SECURITY AND CAMERAS SPECIALIZED AREAS</div>
       <div class="rant-text">
         <br>Inegration with local law enfrorcement
@@ -350,6 +375,21 @@
       </div>
     </div>
     <div id="ui-payments-panel" class="mdl-tabs__panel text-tab-panel">
+      <div class="intro-text">
+            Billing system and market collaboration software would piggy back off existing quality software to reduce cost, the main feature is tagging payments and salaries for gender and some other categories to a lessor extent
+          <br>Billing system makes it easy to track, pay and account gig work paid out (hours and fixed)
+          <br>Billing system in general caters to the ad hoc and instant paced gig economy
+          <br>Integrate Upwork / either in software or process (software preferred)
+          <br>specialize (with confidence they can get selected over a national resource), and "compete" at a market level
+          <br>upwork already provides highlighted and first rank in job search results for local jobs
+          <br>technologies like Firebase, 3D modeling and Javascript should be focused, as these are in international demand now and for sometime to come
+          <br>One key to the gig based economy is instant payment. Gig based employees screw around do whatever they want until they really need some money (like rent, or beer or drugs, literally … something small will motivate them to work for a day or
+          a
+          few to pay rent). The ability to deliver instant payments to gig employees is huge - they have past due rent, all kinds of needs that quick pay works. The developers on the team need a way to pay instantly as a more competitive advantage
+          in
+          selecting gig based employees over quantity! With intimate knowledge of the gig economy this product can incorporate a billing system that in addition to providing monitoring the flows by category, it can also respond to the unique
+          challenges by iterating and evolving as a technical feature of the product. While not a requirement to use the billing system, the idea is it’s a key feature of this overall package.
+      </div>
       <div class="rant-header">EMPLOYER FEATURES</div>
       <div class="rant-text">
         <br>Employer can specify contractors as pre approved for taking a project
@@ -578,28 +618,7 @@
         <br>While loads and fees will exist on the financial models, the costs will be blended into the premium paid by the product development firms. The will be caps to prevent abuse, but this market should not be that high of volume either in
         transaction count or amount.
       </div>
-      <div class="rant-header">PAYMENT SYSTEM</div>
-      <div class="rant-text">
-        Billing system and market collaboration software would piggy back off existing quality software to reduce cost, the main feature is tagging payments and salaries for gender and some other categories to a lessor extent
-        <br>Billing system makes it easy to track, pay and account gig work paid out (hours and fixed)
-        <br>Billing system in general caters to the ad hoc and instant paced gig economy
-        <br>Integrate Upwork / either in software or process (software preferred)
-      </div>
-      <div class="rant-header">MARKET SPECIALIZATION</div>
-      <div class="rant-text">
-        specialize (with confidence they can get selected over a national resource), and "compete" at a market level
-        <br>upwork already provides highlighted and first rank in job search results for local jobs
-        <br>technologies like Firebase, 3D modeling and Javascript should be focused, as these are in international demand now and for sometime to come
-      </div>
-      <div class="rant-header">PAYMENT AND BILLING SERVICES</div>
-      <div class="rant-text">
-        One key to the gig based economy is instant payment. Gig based employees screw around do whatever they want until they really need some money (like rent, or beer or drugs, literally … something small will motivate them to work for a day or
-        a
-        few to pay rent). The ability to deliver instant payments to gig employees is huge - they have past due rent, all kinds of needs that quick pay works. The developers on the team need a way to pay instantly as a more competitive advantage
-        in
-        selecting gig based employees over quantity! With intimate knowledge of the gig economy this product can incorporate a billing system that in addition to providing monitoring the flows by category, it can also respond to the unique
-        challenges by iterating and evolving as a technical feature of the product. While not a requirement to use the billing system, the idea is it’s a key feature of this overall package.
-      </div>
+
       <div class="rant-header">BANKING MARKET</div>
       <div class="rant-text">
         Companies in local market can sponsor the bank to make loans specific to certain technologies, but remain anonymous as the source of the support - and the bank will select which contractors get supported education loans or grants to
@@ -622,6 +641,13 @@
       </div>
     </div>
     <div id="ui-benefits-panel" class="mdl-tabs__panel text-tab-panel">
+      <div class="intro-text">
+        Employee benefits are targeted at supporting startup companies and entry level professionals leaving college.
+        <br>Salary backed gig based resources are provided for family and other events to support the productivity of the team,
+        in addition to supporting the employee staying relevant to the product and team.
+        <br>Contractor benefits are also offered via third party plans - not dependent on the employee benefit pool.
+        <br>Daycare is provided by pooled resources, and family interaction is encouraged in some working areas.
+      </div>
       <div class="rant-header">EMPLOYEE</div>
       <div class="rant-text">
         Salary insurance (severance) and benefit packages share a common base pool (for certain amounts - the rest is reinsured) (shared pool)
@@ -662,6 +688,25 @@
       </div>
     </div>
     <div id="ui-teams-panel" class="mdl-tabs__panel text-tab-panel">
+      <div class="intro-text">
+        MVP teams need to feature talent focused on leading/bleeding edge technique and tools
+        <br>Product Life Cycle teams need to focus on features to compete in a specific market
+        <br>MVP teams require high experience - these require the top talent with experience of many years with an elite lead - to select and implement the best existing technology and identiy changes in technology offerings and upgrade regularly to
+        stay at the very edge
+        <br>Product Life Cycle teams are best served with long term retained employees that gain high knowledge of the customers, market, product and new opportunities.
+        MVP Team: Resources will be used mostly on a temporary basis - so knowledge over loyalty(retention) at this point
+        <br>MVP Team: if someone knows how to do something and will do it for a short term fixed price, do it.
+        <br>MVP Team: quality professional chioces should be made here - MVP creation should happen fast
+        <br>Product Team: Local and/or closely connected team members preferred.
+        <br>Product Team: rewards will be profit / production driven, working/competitive product
+        <br>Product Team: acquiring and retaining knowledge on a specific industry and software package
+        <br>Both: combining expert skills and retention is probably to expensive to be competitive unless it's a principal player
+        <br>MVP Team: Don't commit principal interest to MVP technical developer - they're unlikely to stay anyways
+        <br>Both: One of the MVP developers should be a principal or small software companies don't make sense
+        <br>MVP Team: Bricks and mortar matter none in this phase, use resources wherever they are
+        <br>Product Team: People wanting the system to work well for each other matters here over skill
+        <br>Product Team: A fixed location (bricks and mortar) makes sense at this phase
+      </div>
       <div class="rant-header">PRODUCT TEAM FORMATION</div>
       <div class="rant-text">
         originate with a quality “core base” (engine/code/product/app/branding/marketing).
@@ -685,29 +730,6 @@
         <br>Encourages female participation at an early age in an exciting and challenging business
         <br>Co-ed teams retain better
         <br>Recruitment of talent - no entry level workers envision working on an all male team
-      </div>
-      <div class="rant-header">MVP TEAM vs PRODUCT LIFE CYCLE TEAM</div>
-      <div class="rant-text">
-        MVP teams need to feature talent focused on leading/bleeding edge technique and tools
-        <br>Product Life Cycle teams need to focus on features to compete in a specific market
-        <br>MVP teams require high experience - these require the top talent with experience of many years with an elite lead - to select and implement the best existing technology and identiy changes in technology offerings and upgrade regularly to
-        stay at the very edge
-        <br>Product Life Cycle teams are best served with long term retained employees that gain high knowledge of the customers, market, product and new opportunities.
-      </div>
-      <div class="rant-header">MVP TEAM VS PRODUCT TEAM</div>
-      <div class="rant-text">
-        MVP Team: Resources will be used mostly on a temporary basis - so knowledge over loyalty(retention) at this point
-        <br>MVP Team: if someone knows how to do something and will do it for a short term fixed price, do it.
-        <br>MVP Team: quality professional chioces should be made here - MVP creation should happen fast
-        <br>Product Team: Local and/or closely connected team members preferred.
-        <br>Product Team: rewards will be profit / production driven, working/competitive product
-        <br>Product Team: acquiring and retaining knowledge on a specific industry and software package
-        <br>Both: combining expert skills and retention is probably to expensive to be competitive unless it's a principal player
-        <br>MVP Team: Don't commit principal interest to MVP technical developer - they're unlikely to stay anyways
-        <br>Both: One of the MVP developers should be a principal or small software companies don't make sense
-        <br>MVP Team: Bricks and mortar matter none in this phase, use resources wherever they are
-        <br>Product Team: People wanting the system to work well for each other matters here over skill
-        <br>Product Team: A fixed location (bricks and mortar) makes sense at this phase
       </div>
       <div class="rant-header">DEVELOP MOBILE PROFESSIONALS</div>
       <div class="rant-text">
@@ -762,8 +784,7 @@
       </div>
     </div>
     <div id="ui-standards-panel" class="mdl-tabs__panel text-tab-panel">
-      <div class="rant-header">COMMITMENT BETWEEN PRODUCT TEAM AND INVESTORS</div>
-      <div class="rant-text">
+      <div class="intro-text">
         A five year commitment between investor and developers shows life commitment in addition to profit. Both investors and teams want to maintain quality relationships with all parties no matter the outcome of the product vehicles success.
         <br>Developers and product people needs to stay relevant in their industry, as well as live a lifestyle that affords their familty the lifestyle they expect. An investor wants to promote team retention and lifestyle of employees, but needs
         to
@@ -928,8 +949,7 @@
       </div>
     </div>
     <div id="ui-about-panel" class="mdl-tabs__panel text-tab-panel">
-      <div class="rant-header">BACKGROUND</div>
-      <div class="rant-text">
+      <div class="intro-text">
         A bit of background - I lived and worked on a farm during the summers as a kid. I believe blending work and family is the ancient and healthy way of life. Splitting families for work purposes is needed in war, but no other times in history.
         <br>Lets stop the war. I don’t believe a work environment should discourage family presence, quite the opposite, the work place needs to be adjust to compliment the current state of workers lives. This product delivers tools to assist teams
         in
@@ -946,9 +966,7 @@
         From when I was young - the richest and most successful people didn’t look at how much they made per hour, they were always thinking about how to keep every dollar or grain they could in their eco-system. By getting the load of the local
         eco-system payments, it maintains a local feel that equates to handing someone cash directly. On the other hand, it also removes the trouble a developer would take to run out and deliver the cash - but due to the “nature” of not losing
         nutrients in the eco-system people resist payment systems, but then resist local transactions because of the trouble of a personal contact.
-
       </div>
-
       <div class="rant-header">WHY MANIPULATE MARKET</div>
       <div class="rant-text">
         Technology is advancing in such a way that it makes product, software and branding work easier to reuse across cultures and markets - the misbalances in cost require adjustments in higher income markets to effectively compete
@@ -959,10 +977,38 @@
 
     </div>
   </div>
+  <script>
+    let rTextAll = document.querySelectorAll('.rant-header');
+    rTextAll.forEach(h => {
+      let localH = h;
+      h.addEventListener('click', e => {
+        if (h.nextElementSibling.style.height !== 'auto'){
+          h.nextElementSibling.style.height = 'auto';
+          h.style.color = 'blue';
+          h.nextElementSibling.style.opacity = 1.0;
+          h.previousElementSibling.style.transform = 'rotate(0deg)';
+          h.previousElementSibling.style.color = 'blue';
+        }
+        else {
+          h.style.color = '';
+          h.nextElementSibling.style.height = '';
+          h.nextElementSibling.style.opacity = 0;
+          h.previousElementSibling.style.transform = '';
+          h.previousElementSibling.style.color = '';
+      }
+      });
+      let expandIcon = document.createElement('i');
+      expandIcon.setAttribute('class', 'preheadlineicon material-icons');
+      expandIcon.innerHTML = 'expand_more';
+      h.parentNode.insertBefore(expandIcon, h);
+    });
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css">
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    let tabs = document.querySelectorAll('.text-tab-panel');
+    tabs.forEach(tab => {
+      let firstH = tab.querySelector('.rant-header');
+      firstH.click();
+    });
+  </script>
 </body>
 
 </html>
