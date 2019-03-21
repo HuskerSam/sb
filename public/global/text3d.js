@@ -15202,8 +15202,9 @@ function processPixels(pixels, options, size) {
 
 function vectorizeText(str, canvas, context, options) {
     var size = options.size || 64
-
-    context.font = options.fontStyle + " " + options.fontVariant + " " + options.fontWeight + " " + size + "px" + " " + options.fontFamily
+    let fontFam = options.fontFamily ? `'${options.fontFamily}'` : '';
+    context.font = options.fontStyle + " " + options.fontVariant + " " + options.fontWeight + " " + size + "px" + " " + fontFam;
+    context.font = context.font.replace(/\"/g, "'");
     context.textBaseline = "top"
 
     var pixels = getPixels(canvas, context, str, size, options)

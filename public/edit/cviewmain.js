@@ -198,6 +198,26 @@ class cViewMain extends bView {
       //    this.editTables[tableName].redraw(true);
       this.projectTabTable.setColumnLayout();
     });
+
+    this.fontsAdded = {};
+    this.canvasHelper.cameraShownCallback = () => {
+      this._updateGoogleFonts();
+    };
+  }
+  _updateGoogleFonts() {
+    let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont');
+    for (let id in editInfoBlocks) {
+      let fontName = editInfoBlocks[id].genericBlockData;
+      let newLink = document.createElement('link');
+      fontName = fontName.replace(/ /g, '+');
+
+      if (! this.fontsAdded[fontName]) {
+        this.fontsAdded[fontName] = true;
+        newLink.setAttribute('href', `https://fonts.googleapis.com/css?family=${fontName}`);
+        newLink.setAttribute('rel', 'stylesheet');
+        document.head.append(newLink);
+      }
+    }
   }
   __reformatTable(tbl) {
     let rows = tbl.getRows();

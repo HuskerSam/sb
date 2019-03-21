@@ -916,6 +916,16 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   group: 'video',
   type: 'boolean',
   floatLeft: true
+}, {
+  title: 'blockFlag',
+  fireSetField: 'blockFlag',
+  group: 'blockData',
+  floatLeft: true
+}, {
+  title: 'genericBlockData',
+  fireSetField: 'genericBlockData',
+  group: 'blockData',
+  floatLeft: true
 }];
 __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',
