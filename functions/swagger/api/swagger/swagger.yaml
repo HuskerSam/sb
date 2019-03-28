@@ -1,0 +1,38 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Grafter
+host: localhost:5001
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+  - application/octet-stream
+  - application/vnd.contentful.management.v1+json
+  - application/x-www-form-urlencoded
+  - multipart/form-data
+  - text/plain; charset=utf-8
+  - image/jpeg
+produces:
+  - application/json
+paths:
+  /grafter/dummy:
+    x-swagger-router-controller: grafter
+    post:
+      description: tester
+      operationId: dummyFunction
+      tags:
+        - Grafter Payments
+      parameters:
+        - name: filename
+          in: query
+          description: fileName of article
+          required: true
+          type: string
+      responses:
+        "200":
+          description: job completion status
+          schema:
+            type: string
