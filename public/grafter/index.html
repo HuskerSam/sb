@@ -13,7 +13,19 @@
 </head>
 
 <body>
-  <div id="firebase-app-login-page">Loading...</div>
+
+  <div id="firebase-app-login-page">  <div id="firebase-app-login-page">
+      <h3>Delicious Grafter</h3>
+      <div>
+        <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
+        <br>
+        <br>
+
+        <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
+        <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
+      </div>
+    </div>
+  </div>
   <div id="firebase-app-main-page" style="display:none;flex-direction:column;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
     <div id="main-view-wrapper">
@@ -30,6 +42,7 @@
           <select id="remove_workspace_select_template">
             <option>Delete Animation</option>
           </select>
+          <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
           <br>
           <div class="add-panel-item">
             <div>ASSETS</div>

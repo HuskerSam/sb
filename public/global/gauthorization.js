@@ -19,6 +19,8 @@ class gAuthorization {
     this.workspaceLoadedCallback = null;
   }
   signInWithURL() {
+    if (!firebase.auth().isSignInWithEmailLink)
+      return;
     if (firebase.auth().isSignInWithEmailLink(window.location.href) !== true)
       return;
 
