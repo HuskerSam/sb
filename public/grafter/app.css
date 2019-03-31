@@ -622,23 +622,11 @@ select {
   background: rgb(200, 255, 240);
 }
 
-#workspace-add-panel {
+#workspace-header-panel {
   background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
   transition: height 800ms, opacity 800ms, padding 800ms;
-  padding: 0;
+  padding: 4px;
   overflow: hidden;
-  height: 0px;
-  opacity: 0;
-}
-
-#workspace-add-panel.expanded {
-  height: 190px;
-  opacity: 1;
-  padding: 10px;
-}
-
-#workspace-add-panel-close-button {
-  float: right;
 }
 
 .add-panel-item {

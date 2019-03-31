@@ -14,16 +14,15 @@
 
 <body>
 
-  <div id="firebase-app-login-page">  <div id="firebase-app-login-page">
-      <h3>Delicious Grafter</h3>
-      <div>
-        <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
-        <br>
-        <br>
+  <div id="firebase-app-login-page" style="display:none;">
+    <h3>Delicious Grafter</h3>
+    <div>
+      <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
+      <br>
+      <br>
 
-        <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
-        <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
-      </div>
+      <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
+      <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
     </div>
   </div>
   <div id="firebase-app-main-page" style="display:none;flex-direction:column;">
@@ -32,64 +31,14 @@
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
       <div class="inner-split-view" style="display:none;">
-        <div id="workspace-add-panel">
-          <button id="workspace-add-panel-close-button" class="button-expanded mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">cancel</i></button>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width:15em;">
-            <input class="mdl-textfield__input" type="text" id="new-workspace-name">
-            <label class="mdl-textfield__label" for="new-workspace-name">New Animation Name</label>
-          </div>
-          <button id="add_workspace_button_template" class="mdl-button mdl-js-button mdl-button--fab mdl-button--primary"><i class="material-icons">add</i></button>
-          <select id="remove_workspace_select_template">
-            <option>Delete Animation</option>
-          </select>
+        <div id="workspace-header-panel" style="text-align:right;">
+          <span class="user-name"></span>
+          &nbsp;
           <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
-          <br>
-          <div class="add-panel-item">
-            <div>ASSETS</div>
-            <select id="add_animation_asset_choice">
-              <option>Current</option>
-              <option>Animation</option>
-              <option>Template</option>
-              <option>Empty</option>
-            </select>
-            <select id="add_animation_asset_animation" style="display:none;"></select>
-            <select id="add_animation_asset_template" style="display:none;">
-              <option>select template</option>
-            </select>
-          </div>
-          <div class="add-panel-item">
-            <div>LAYOUT</div>
-            <select id="add_animation_scene_choice">
-              <option>Current</option>
-              <option>Animation</option>
-              <option>Template</option>
-              <option>Empty</option>
-            </select>
-            <select id="add_animation_scene_animation" style="display:none;"></select>
-            <select id="add_animation_scene_template" style="display:none;">
-              <option>select template</option>
-            </select>
-          </div>
-          <div class="add-panel-item">
-            <div>PRODUCTS</div>
-            <select id="add_animation_product_choice">
-              <option>Empty</option>
-              <option>Current</option>
-              <option>Animation</option>
-              <option>Template</option>
-            </select>
-            <select id="add_animation_product_animation" style="display:none;"></select>
-            <select id="add_animation_product_template" style="display:none;">
-              <option>select template</option>
-            </select>
-          </div>
         </div>
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="flex:1;">
           <div class="mdl-tabs__tab-bar">
             <div class="tab-item-wrapper">
-              <button id="add-workspace-button-expand" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">camera_roll</i></button>
-              <select id="workspaces-select"></select>
-              <button id="import_products_csv_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">extension</i></button>
               <button id="scene_data_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">movie_filter</i></button>
             </div>
             <a href="#ui-products-panel" id="ui-product-tab" class="mdl-tabs__tab is-active">Products</a>

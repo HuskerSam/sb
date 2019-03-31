@@ -6,8 +6,6 @@ class cView extends bView {
     };
 
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
-    this.workplacesSelect = document.querySelector('#workspaces-select');
-    this.workplacesSelect.addEventListener('input', e => this.selectProject());
     this.addProjectName = document.querySelector('#new-workspace-name');
 
     let t = document.querySelector('.inner-split-view');
@@ -23,12 +21,6 @@ class cView extends bView {
     this.record_field_list = document.getElementById('record_field_list');
     this.productListDiv = document.querySelector('#product_tab_table');
     this.record_field_list_form = document.querySelector('#record_field_list form');
-
-    this.import_products_csv_expand_btn = document.getElementById('import_products_csv_expand_btn');
-    this.import_products_csv_expand_btn.addEventListener('click', e => this.toggleImportOptions());
-    let closeBtns = document.querySelectorAll('.import-export-inpanel-button');
-    for (let c = 0, l = closeBtns.length; c < l; c++)
-      closeBtns[c].addEventListener('click', e => this.toggleImportOptions());
 
     this.fieldList = [
       'index', 'name', 'asset',
@@ -128,35 +120,7 @@ class cView extends bView {
     this.import_scene_workspaces_select = document.getElementById('import_scene_workspaces_select');
     this.import_product_workspaces_select = document.getElementById('import_product_workspaces_select');
 
-    this.toggledImportOptions = true;
-    this.toggleImportOptions();
-
-    this.addViewToggleButton = document.getElementById('add-workspace-button-expand');
-    this.addViewToggleButton.addEventListener('click', e => this.toggleAddView());
-    document.querySelector('#workspace-add-panel-close-button').addEventListener('click', e => this.toggleAddView());
-
-    this.addViewShown = false;
-    this.toggleAddView();
-    this.toggleAddView();
-
-    this.add_animation_asset_animation = document.getElementById('add_animation_asset_animation');
-    this.add_animation_asset_template = document.getElementById('add_animation_asset_template');
-    this.add_animation_asset_choice = document.getElementById('add_animation_asset_choice');
-    this.import_asset_templates_select = document.getElementById('import_asset_templates_select');
-
-    this.add_animation_scene_animation = document.getElementById('add_animation_scene_animation');
-    this.add_animation_scene_template = document.getElementById('add_animation_scene_template');
-    this.add_animation_scene_choice = document.getElementById('add_animation_scene_choice');
-    this.import_scene_templates_select = document.getElementById('import_scene_templates_select');
-
-    this.add_animation_product_animation = document.getElementById('add_animation_product_animation');
-    this.add_animation_product_template = document.getElementById('add_animation_product_template');
-    this.add_animation_product_choice = document.getElementById('add_animation_product_choice');
-    this.import_product_templates_select = document.getElementById('import_product_templates_select');
-
-    this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
-    this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
-    this.add_animation_product_choice.addEventListener('input', e => this.__updateAddTemplate('product'));
+    document.querySelector('.user-name').innerHTML = gAPPP.a.currentUser.email;
 
     this.scene_data_expand_btn = document.getElementById('scene_data_expand_btn');
     this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
@@ -167,9 +131,6 @@ class cView extends bView {
       return;
     this.cameraShown = true;
     this.__workspaceInitedPostTimeout();
-
-    this.add_workspace_button_template = document.getElementById('add_workspace_button_template');
-    this.add_workspace_button_template.addEventListener('click', e => this._addAnimation());
   }
   async __workspaceInitedPostTimeout() {
     document.querySelector('.inner-split-view').style.display = '';
@@ -180,10 +141,6 @@ class cView extends bView {
     this.canvasHelper.cameraSelect.selectedIndex = 2;
     this.canvasHelper.noTestError = true;
     this.canvasHelper.cameraChangeHandler();
-    this.remove_workspace_select_template = document.querySelector('#remove_workspace_select_template');
-    this.remove_workspace_select_template.addEventListener('input', e => {
-      this.removeWorkspace().then(() => {});
-    });
 
     this.updateProductList();
     this.updatePositionList();
@@ -226,31 +183,6 @@ class cView extends bView {
     let projectList = projectListData.val();
 
     this.updateProjectList(projectList, gAPPP.a.profile.selectedWorkspace);
-    this.__initAddTemplates(this.add_animation_asset_template, this.assetTemplates);
-    this.__initAddTemplates(this.import_asset_templates_select, this.assetTemplates, '<option>Template</option>');
-    this.__initAddTemplates(this.add_animation_scene_template, this.sceneTemplates);
-    this.__initAddTemplates(this.import_scene_templates_select, this.sceneTemplates, '<option>Template</option>');
-    this.__initAddTemplates(this.add_animation_product_template, this.productTemplates);
-    this.__initAddTemplates(this.import_product_templates_select, this.productTemplates, '<option>Template</option>');
-    this.import_scene_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1) {
-      this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-      this.import_scene_workspaces_select.selectedIndex = 0;
-    }
-    this.import_asset_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1) {
-      this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-      this.import_asset_workspaces_select.selectedIndex = 0;
-    }
-    this.import_product_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1) {
-      this.import_product_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-      this.import_product_workspaces_select.selectedIndex = 0;
-    }
-    this.__initAddAnimations(`add_animation_asset_animation`);
-    this.__initAddAnimations('add_animation_scene_animation');
-    this.__initAddAnimations('add_animation_product_animation');
-    this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
   }
   async __addAnimationTemplate(type, targetProjectId, sourceProjectId) {
     if (!sourceProjectId)
@@ -344,32 +276,6 @@ class cView extends bView {
       this.sceneDataShown = true;
       this.scene_data_expand_btn.classList.add('button-expanded');
       document.getElementById('scene_options_panel').classList.add('expanded');
-    }
-  }
-  toggleAddView() {
-    if (this.addViewShown) {
-      this.addViewShown = false;
-      this.addViewToggleButton.classList.remove('button-expanded');
-      document.getElementById('workspace-add-panel').classList.remove('expanded');
-    } else {
-      this.addViewShown = true;
-      this.addViewToggleButton.classList.add('button-expanded');
-      document.getElementById('workspace-add-panel').classList.add('expanded');
-    }
-  }
-  toggleImportOptions() {
-    if (this.toggledImportOptions) {
-      this.toggledImportOptions = false;
-      document.getElementById('import_product_options').classList.remove('expanded');
-      document.getElementById('import_asset_options').classList.remove('expanded');
-      document.getElementById('import_scene_options').classList.remove('expanded');
-      this.import_products_csv_expand_btn.classList.remove('button-expanded');
-    } else {
-      this.toggledImportOptions = true;
-      document.getElementById('import_product_options').classList.add('expanded');
-      document.getElementById('import_scene_options').classList.add('expanded');
-      document.getElementById('import_asset_options').classList.add('expanded');
-      this.import_products_csv_expand_btn.classList.add('button-expanded');
     }
   }
   async loadDataTable(tableName) {
