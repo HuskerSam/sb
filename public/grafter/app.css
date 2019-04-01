@@ -697,3 +697,19 @@ select {
 
 .sceneoptionsupload {
 }
+
+#workspace-header-panel {
+  background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
+  transition: height 800ms, opacity 800ms, padding 800ms;
+  padding: 0;
+  overflow: hidden;
+  height: 0px;
+  opacity: 0;
+  text-align: right;
+}
+
+#workspace-header-panel.expanded {
+  height: 50px;
+  opacity: 1;
+  padding: 10px;
+}

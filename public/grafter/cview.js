@@ -124,7 +124,9 @@ class cView extends bView {
 
     this.scene_data_expand_btn = document.getElementById('scene_data_expand_btn');
     this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
-    this.scene_data_expand_btn.click();
+
+    this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
+    this.profile_description_panel_btn.addEventListener('click', e => this.toggleProfilePanel());
   }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
@@ -276,6 +278,17 @@ class cView extends bView {
       this.sceneDataShown = true;
       this.scene_data_expand_btn.classList.add('button-expanded');
       document.getElementById('scene_options_panel').classList.add('expanded');
+    }
+  }
+  toggleProfilePanel() {
+    if (this.profilePanelShown) {
+      this.profilePanelShown = false;
+      this.profile_description_panel_btn.classList.remove('button-expanded');
+      document.getElementById('workspace-header-panel').classList.remove('expanded');
+    } else {
+      this.profilePanelShown = true;
+      this.profile_description_panel_btn.classList.add('button-expanded');
+      document.getElementById('workspace-header-panel').classList.add('expanded');
     }
   }
   async loadDataTable(tableName) {

@@ -31,7 +31,7 @@
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
 
       <div class="inner-split-view" style="display:none;">
-        <div id="workspace-header-panel" style="text-align:right;">
+        <div id="workspace-header-panel">
           <span class="user-name"></span>
           &nbsp;
           <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
@@ -39,11 +39,21 @@
         <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="flex:1;">
           <div class="mdl-tabs__tab-bar">
             <div class="tab-item-wrapper">
-              <button id="scene_data_expand_btn" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">movie_filter</i></button>
+              <select id="profile_current_role">
+                <option>Employee</option>
+                <option>Contractor</option>
+                <option>Manager</option>
+                <option>Owner</option>
+                <option>Administrator</option>
+              </select>
+              <button id="scene_data_expand_btn" style="display:none;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">movie_filter</i></button>
             </div>
-            <a href="#ui-products-panel" id="ui-product-tab" class="mdl-tabs__tab is-active">Products</a>
-            <a href="#ui-scene-panel" id="ui-scene-tab" class="mdl-tabs__tab">Layout</a>
-            <a href="#ui-assets-panel" id="ui-asset-tab" class="mdl-tabs__tab">Assets</a>
+            <a href="#ui-products-panel" id="ui-product-tab" class="mdl-tabs__tab is-active">Tasks</a>
+            <a href="#ui-scene-panel" id="ui-scene-tab" class="mdl-tabs__tab">Companies</a>
+            <a href="#ui-assets-panel" id="ui-asset-tab" class="mdl-tabs__tab">Contractors</a>
+            <div class="tab-item-wrapper" style="flex:1">
+              <button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
+            </div>
           </div>
           <button id="changes_commit_header" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary" style="display:none;"><i class="material-icons">save</i></button>
           <input type="file" class="csv-import-file" style="display:none;" />
