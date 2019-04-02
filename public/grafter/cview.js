@@ -124,16 +124,8 @@ class cView extends bView {
     this.__workspaceInitedPostTimeout();
   }
   async __workspaceInitedPostTimeout() {
-    document.querySelector('.inner-split-view').style.display = '';
-    this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
-    this.products = this.productData.products;
-    this.productBySKU = this.productData.productsBySKU;
-
-    this.canvasHelper.cameraSelect.selectedIndex = 2;
     this.canvasHelper.noTestError = true;
     this.canvasHelper.cameraChangeHandler();
-
-
 
     try {
       this.canvasHelper.playAnimation();
@@ -141,14 +133,6 @@ class cView extends bView {
       console.log('play anim error', e);
     }
 
-    let basketListHTML = '';
-    if (this.productData.displayBlocks)
-      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
-        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-    document.getElementById('blocklist').innerHTML = basketListHTML;
-
-    this.changes_commit_header = document.getElementById('changes_commit_header');
-    this.changes_commit_header.addEventListener('click', e => this.saveChanges());
     return Promise.resolve();
   }
   toggleProductAddView(col) {
@@ -177,11 +161,11 @@ class cView extends bView {
     if (this.profilePanelShown) {
       this.profilePanelShown = false;
       this.profile_description_panel_btn.classList.remove('button-expanded');
-      document.getElementById('workspace-header-panel').classList.remove('expanded');
+      document.getElementById('profile-header-panel').classList.remove('expanded');
     } else {
       this.profilePanelShown = true;
       this.profile_description_panel_btn.classList.add('button-expanded');
-      document.getElementById('workspace-header-panel').classList.add('expanded');
+      document.getElementById('profile-header-panel').classList.add('expanded');
     }
   }
   toggleAutoMoveCamera() {
@@ -407,49 +391,6 @@ class cView extends bView {
     }
     return Promise.resolve();
   }
-  initSceneEditFields() {
-    let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
-
-    let listHTML = '';
-    this.sceneFieldEditBlocks = [];
-
-    let checked = " selected";
-    for (let id in editInfoBlocks) {
-      let data = editInfoBlocks[id].genericBlockData;
-      let parts = data.split('||');
-      let mainLabel = parts[0];
-      let tab = parts[1];
-      let name = parts[2];
-      let asset = parts[3];
-      let fieldList = [];
-      for (let c = 4, l = parts.length; c < l; c++) {
-        let subParts = parts[c].split(':');
-        let field = subParts[0];
-        let type = subParts[1];
-
-        fieldList.push({
-          field,
-          type
-        });
-      }
-
-      this.sceneFieldEditBlocks.push({
-        mainLabel,
-        tab,
-        name,
-        asset,
-        fieldList
-      });
-
-      listHTML += `<option${checked} value="${this.sceneFieldEditBlocks.length - 1}">${mainLabel}</option>`;
-      checked = '';
-    }
-
-    this.scene_options_edit_fields = document.getElementById('scene_options_edit_fields');
-    this.scene_options_list = document.getElementById('scene_options_list');
-    this.scene_options_list.innerHTML = listHTML;
-    this.scene_options_list.addEventListener('input', e => this.sceneOptionsBlockListChange());
-  }
   sceneOptionsBlockListChange() {
     let index = this.scene_options_list.selectedIndex;
     if (index < 0)
@@ -514,45 +455,5 @@ class cView extends bView {
     this.soUploadImageFile.editCTL.parentElement.MaterialTextfield.change(uploadResult.downloadURL);
     this.__sceneOptionsValueChange(this.soUploadImageFile.editCTL);
     return Promise.resolve();
-  }
-  __sceneOptionsValueChange(ctl, e) {
-    let data = ctl.dataset;
-    this.__setSceneOptionsValue(data.tab, data.name, data.asset, data.field, ctl.value)
-      .then(() => {});
-  }
-  async __setSceneOptionsValue(tab, name, asset, field, value) {
-    if (tab === 'layout')
-      tab = 'scene';
-    if (!this.editTables[tab])
-      return Promise.resolve();
-
-    let dataChanged = false;
-    let rows = this.editTables[tab].getData();
-    for (let c = 0, l = rows.length; c < l; c++)
-      if (rows[c]['name'] === name && rows[c]['asset'] === asset) {
-        if (rows[c][field] !== value) {
-          dataChanged = true;
-          rows[c][field] = value;
-        }
-      }
-
-    if (dataChanged) {
-      this.editTables[tab].setData(rows);
-      this.__tableChangedHandler();
-    }
-
-    return Promise.resolve();
-  }
-  __getSceneOptionsValue(tab, name, asset, field) {
-    if (tab === 'layout')
-      tab = 'scene';
-    if (!this.editTables[tab])
-      return '';
-    let rows = this.editTables[tab].getData();
-    for (let c = 0, l = rows.length; c < l; c++)
-      if (rows[c]['name'] === name && rows[c]['asset'] === asset)
-        return rows[c][field];
-
-    return '';
   }
 }
