@@ -275,37 +275,6 @@ input[type=range]::-webkit-slider-thumb {
   text-align: center;
 }
 
-.products-table th {
-  height: 40px;
-  font-size: 16px;
-  font-weight: bold;
-  padding: .25em;
-  color: rgb(0, 150, 136);
-}
-
-.products-table td {
-  font-size: 16px;
-}
-
-.products-table tbody tr {
-  height: auto;
-}
-
-.mdl-data-table td:first-of-type, .mdl-data-table th:first-of-type {
-  padding-left: .25em;
-  width: 10px;
-  white-space: nowrap;
-  text-align: left;
-}
-
-.mdl-data-table td {
-  width: 1px;
-}
-
-.mdl-data-table th {
-  text-align: center;
-}
-
 .mdl-data-table td:nth-child(2) {
   text-align: center;
 }
@@ -321,10 +290,6 @@ input[type=range]::-webkit-slider-thumb {
 
 button i.material-icons {
   font-size: inherit;
-}
-
-#workspaces-select {
-  width: 10em;
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__panel.is-active {
@@ -350,24 +315,6 @@ button i.material-icons {
   justify-content: left;
   border-bottom: solid 2px rgb(200, 255, 240);
   margin-top: 2px;
-}
-
-#asset_changes_commit, #scene_changes_commit {
-  color: white;
-  background: rgb(0, 150, 136);
-}
-
-#changes_commit_header {
-  padding-top: 10px;
-  font-weight: normal;
-  margin-top: 5px;
-  margin-left: 10px;
-  color: black;
-  background: rgb(255, 100, 100);
-  position: absolute;
-  z-index: 2;
-  top: 0px;
-  right: 2px;
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab {
@@ -396,157 +343,12 @@ button i.material-icons {
   color: rgb(0, 150, 136);
 }
 
-.tabulator .tabulator-header .tabulator-frozen.tabulator {
-  background: white;
-}
-
-.tabulator .tabulator-header {
-  background: white;
-  color: rgb(0, 150, 136);
-  border-bottom: solid 2px rgb(200, 255, 240);
-}
-
-.tabulator .tabulator-header .tabulator-col {
-  background: white;
-}
-
-.tabulator .tabulator-col-resize-handle {}
-
-.tabulator-row.tabulator-row-even {}
-
-.tabulator-tableHolder {
-  background: white;
-}
-
-.tabulator .tabulator-header .tabulator-frozen.tabulator-frozen-left {
-  border-right-color: transparent;
-}
-
-.tabulator .tabulator-header .tabulator-col .tabulator-col-content {
-  height: 100%;
-  transform: rotate(180deg);
-}
-
-.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {
-  transform: rotate(180deg);
-  font-size: 14px;
-  text-align: left;
-}
-
-.tabulator .tabulator-header .tabulator-col.right-column-data .tabulator-col-content .tabulator-col-title {
-  text-align: center;
-}
-
-.tabulator .tabulator-header .tabulator-col.tab-header-cell-large .tabulator-col-content .tabulator-col-title {
-  font-size: 9px;
-}
-
-.tabulator .tabulator-header .tabulator-col-vertical .tabulator-col-title {
-  transform: rotate(0);
-}
-
-.tabulator .tabulator-header .tabulator-col {
-  border: none;
-  background-image: linear-gradient(0deg, rgb(200, 255, 240), white)
-}
-
-.tabulator .tabulator-row .add-table-cell,
-.tabulator .tabulator-row .row-handle-table-cell,
-.tabulator .tabulator-row .delete-table-cell {
-  cursor: pointer;
-  background: white;
-  border: none;
-}
-
-.tabulator .tabulator-row .delete-table-cell,
-.tabulator .tabulator-row .add-table-cell {
-  font-size: 22px;
-  color: rgb(0, 150, 136);
-  overflow: hidden;
-}
-
-.tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box .tabulator-row-handle-bar {
-  background: rgb(0, 150, 136);
-  height: 4px;
-  position: relative;
-  top: -2px;
-}
-
-.tabulator-row .tabulator-cell {
-  padding-top: 7.5px;
-  padding-left: 5px;
-  border-right: solid 0px rgb(200, 255, 240);
-  background-image: radial-gradient(white 30%,
-    rgb(200, 255, 240));
-  max-width: 20em;
-  white-space: pre;
-}
-
-.tabulator .tabulator-footer {
-  background: white;
-  padding: 8px;
-  border-top: none;
-  text-align: center;
-  background-image: linear-gradient(180deg, rgb(200, 255, 240), white);
-}
-
-.tabulator-row .tabulator-cell.tabulator-frozen {
-  background: white;
-  text-align: left;
-}
-
-.import-export-panel {
-  padding: 0;
-  background: radial-gradient(rgb(200, 255, 240) 20%, white 70%);
-  border: none;
-  flex: 0;
-  height: 0em;
-  position: relative;
-  transition: height 800ms, opacity 800ms;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.import-export-panel.expanded {
-  height: 4em;
-  pointer-events: auto;
-  opacity: 1;
-}
-
-.import-export-panel button {
-  margin: .5em 0em;
-}
-
 .mdl-button--primary.mdl-button--primary {
   transition: color 800ms, background 800ms;
 }
 
 .mdl-button--primary.mdl-button--primary.mdl-button--raised, .mdl-button--primary.mdl-button--primary.mdl-button--fab.import-export-inpanel-button {
   float: right;
-}
-
-.new-csv-import-wrapper {
-  width: 30em;
-}
-
-#scene_tab_table, #asset_tab_table, #product_tab_table {
-  border: none;
-  background: white;
-}
-
-#product_tab_table {
-  display: block;
-}
-
-.tabulator-row .tabulator-cell.tabulator-editing {
-  border-color: rgb(0, 150, 136);
-  background: white;
-}
-
-.inner-split-view {
-  color: rgb(66, 66, 66);
-  display: flex;
-  flex-direction: column;
 }
 
 .mdl-button--primary.mdl-button--primary.mdl-button--fab {
@@ -582,51 +384,13 @@ select {
 
 #main-view-wrapper {
   flex: 1;
-  display: flex;
-  flex-direction: row;
   background: rgb(200, 255, 240);
-}
-
-.tabulator .tabulator-header .tabulator-col.row-handle-table-cell .tabulator-col-content .tabulator-col-title {
-  text-align: center;
-  overflow: visible;
-}
-
-.row-handle-table-cell i {
-  font-size: 24px;
-  top: 0px;
-  position: relative;
-  background: rgb(0, 150, 136);
-  color: white;
-  border-radius: 50%;
-  margin: 0px;
-  padding: 6px;
-  border: solid 2px white;
-  transition: color 800ms, background 800ms;
-}
-
-.tabulator .tabulator-header .tabulator-col.button-expanded i {
-  color: rgb(0, 150, 136);
-  border-color: rgb(105, 240, 174);
-  background: rgb(200, 255, 240);
-}
-
-#add-workspace-button-expand, #import_products_csv_expand_btn, #scene_data_expand_btn {
-  position: relative;
-  top: -4px;
 }
 
 .mdl-button--primary.mdl-button--primary.mdl-button--fab.button-expanded {
   color: rgb(0, 150, 136);
   border-color: rgb(105, 240, 174);
   background: rgb(200, 255, 240);
-}
-
-#workspace-header-panel {
-  background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
-  transition: height 800ms, opacity 800ms, padding 800ms;
-  padding: 4px;
-  overflow: hidden;
 }
 
 .add-panel-item {
@@ -640,60 +404,18 @@ select {
   text-align: left;
 }
 
-#add_workspace_button_template {
-  color: black;
-  background: rgb(105, 240, 174);
-}
-
-#update_product_fields_post {
-  float: right;
-}
-
-#scene_options_panel {
-  height: 0em;
+#profile-header-panel {
+  transition: height 800ms, opacity 800ms, padding 800ms;
+  padding: 0;
+  overflow: hidden;
+  height: 0px;
   opacity: 0;
-  transition: opacity 800ms, height 800ms;
-  display: flex;
-  flex-display: row;
-  background:  radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
+  text-align: right;
+  background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
 }
 
-#scene_options_panel.expanded {
-  height: 10em;
+#profile-header-panel.expanded {
+  height: 150px;
   opacity: 1;
-}
-
-#remove_workspace_select_template {
-  width: 10em;
-  float: right;
-  margin-right: 1em;
-}
-
-#scene_options_edit_fields {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: visible;
   padding: 10px;
-}
-
-#scene_options_list {
-  background: transparent;
-  color: rgb(50, 50, 50);
-}
-
-#scene_options_list option {
-  font-size: 20px;
-}
-
-.scene_num_field_wrapper {
-  width: 7em;
-  margin: 0px 10px;
-}
-
-.scene_image_field_wrapper {
-  width: 15em;
-  margin: 0px 10px;
-}
-
-.sceneoptionsupload {
 }

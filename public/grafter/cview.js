@@ -6,17 +6,6 @@ class cView extends bView {
     };
 
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
-    this.addProjectName = document.querySelector('#new-workspace-name');
-
-    let t = document.querySelector('.inner-split-view');
-    let b = document.querySelector('.main-canvas-wrapper');
-    this.splitInstance = window.Split([b, t], {
-      sizes: [40, 60],
-      gutterSize: 20,
-      direction: 'horizontal',
-      onDragEnd: () => gAPPP.resize(),
-      onDrag: () => gAPPP.resize()
-    });
 
     this.record_field_list = document.getElementById('record_field_list');
     this.productListDiv = document.querySelector('#product_tab_table');
@@ -124,7 +113,9 @@ class cView extends bView {
 
     this.scene_data_expand_btn = document.getElementById('scene_data_expand_btn');
     this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
-    this.scene_data_expand_btn.click();
+
+    this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
+    this.profile_description_panel_btn.addEventListener('click', e => this.toggleProfilePanel());
   }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
@@ -133,20 +124,8 @@ class cView extends bView {
     this.__workspaceInitedPostTimeout();
   }
   async __workspaceInitedPostTimeout() {
-    document.querySelector('.inner-split-view').style.display = '';
-    this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
-    this.products = this.productData.products;
-    this.productBySKU = this.productData.productsBySKU;
-
-    this.canvasHelper.cameraSelect.selectedIndex = 2;
     this.canvasHelper.noTestError = true;
     this.canvasHelper.cameraChangeHandler();
-
-    this.updateProductList();
-    this.updatePositionList();
-    this.loadTemplateLists();
-
-    this._loadDataTables().then(() => {});
 
     try {
       this.canvasHelper.playAnimation();
@@ -154,83 +133,7 @@ class cView extends bView {
       console.log('play anim error', e);
     }
 
-    let basketListHTML = '';
-    if (this.productData.displayBlocks)
-      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
-        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-    document.getElementById('blocklist').innerHTML = basketListHTML;
-
-    this.changes_commit_header = document.getElementById('changes_commit_header');
-    this.changes_commit_header.addEventListener('click', e => this.saveChanges());
     return Promise.resolve();
-  }
-  saveChanges() {
-    this.__saveChanges().then(() => {});
-  }
-  async _loadDataTables() {
-    await Promise.all([
-      this.loadDataTable('asset'),
-      this.loadDataTable('scene'),
-      this.loadDataTable('product'),
-    ]);
-
-    this.__tableChangedHandler();
-    this.initSceneEditFields();
-    this.sceneOptionsBlockListChange();
-  }
-  async loadTemplateLists() {
-    let projectListData = await firebase.database().ref('projectTitles').once('value');
-    let projectList = projectListData.val();
-
-    this.updateProjectList(projectList, gAPPP.a.profile.selectedWorkspace);
-  }
-  async __addAnimationTemplate(type, targetProjectId, sourceProjectId) {
-    if (!sourceProjectId)
-      sourceProjectId = gAPPP.a.profile.selectedWorkspace;
-    let choice = document.getElementById(`add_animation_${type}_choice`).value;
-    let data = null;
-    if (choice === 'Current') {
-      data = await gAPPP.a.readProjectRawData(sourceProjectId, type + 'Rows');
-    }
-    if (choice === 'Animation') {
-      let id = document.getElementById(`add_animation_${type}_animation`);
-      data = await gAPPP.a.readProjectRawData(id, type + 'Rows');
-    }
-    if (choice === 'Template') {
-      let title = this[`add_animation_${type}_template`].value;
-      let filename = this[`${type}TemplateFiles`][title];
-      let response = await fetch(this.templateBasePath + filename);
-      let csv = await response.text();
-      let csvJSON = await this.papaParse(csv);
-      if (csvJSON.data) data = csvJSON.data;
-    }
-
-    if (data) {
-      await gAPPP.a.writeProjectRawData(targetProjectId, type + 'Rows', data);
-    }
-
-    return Promise.resolve();
-  }
-  async _addAnimation() {
-    let newTitle = this.addProjectName.value.trim();
-    if (newTitle.length === 0) {
-      alert('need a name for animation');
-      return;
-    }
-    this.canvasHelper.hide();
-
-    let newAnimationKey = gAPPP.a.modelSets['projectTitles'].getKey();
-
-    await this._addProject(newTitle, newTitle, newAnimationKey, false);
-
-    await Promise.all([
-      this.__addAnimationTemplate('asset', newAnimationKey),
-      this.__addAnimationTemplate('scene', newAnimationKey)
-    ]);
-
-    await this.__addAnimationTemplate('product', newAnimationKey);
-
-    return this.reloadScene(false, newAnimationKey);
   }
   toggleProductAddView(col) {
     if (this.productViewAddShown) {
@@ -241,30 +144,6 @@ class cView extends bView {
       this.record_field_list.classList.add('record_field_list_expanded');
       this.productViewAddShown = true;
       col._column.element.classList.add('button-expanded');
-    }
-  }
-  __initAddAnimations(thisid, prefixOptionHTML = '') {
-    this[thisid].innerHTML = prefixOptionHTML + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1)
-      this[thisid].selectedIndex = 0;
-  }
-  __initAddTemplates(sel, list, htmlPrefix = '') {
-    let html = '';
-    for (let c = 0; c < list.length; c++)
-      html += `<option>${list[c]}</option>`;
-    sel.innerHTML = htmlPrefix + html;
-  }
-  __updateAddTemplate(type) {
-    let value = this['add_animation_' + type + '_choice'].value;
-
-    this['add_animation_' + type + '_template'].style.display = 'none';
-    this['add_animation_' + type + '_animation'].style.display = 'none';
-
-    if (value === 'Template') {
-      this['add_animation_' + type + '_template'].style.display = 'inline-block';
-    }
-    if (value === 'Animation') {
-      this['add_animation_' + type + '_animation'].style.display = 'inline-block';
     }
   }
   toggleSceneDataView() {
@@ -278,233 +157,15 @@ class cView extends bView {
       document.getElementById('scene_options_panel').classList.add('expanded');
     }
   }
-  async loadDataTable(tableName) {
-    let results = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows')
-    let data = [];
-    if (results) data = results;
-
-    if (tableName === 'product')
-      data = this.__sortProductRows(data);
-
-    let columns = [];
-    let topLeftTitle = (tableName === 'product') ? '<i class="material-icons">add_to_queue</i>' : '';
-    columns.push({
-      rowHandle: true,
-      formatter: "handle",
-      headerSort: false,
-      cssClass: 'row-handle-table-cell',
-      frozen: true,
-      width: 45,
-      minWidth: 45,
-      title: topLeftTitle
-    });
-    if (tableName !== 'product')
-      columns.push({
-        rowHandle: true,
-        formatter: "rownum",
-        headerSort: false,
-        align: 'center',
-        frozen: true,
-        width: 30
-      });
-    columns.push({
-      formatter: (cell, formatterParams) => {
-        return "<i class='material-icons'>delete</i>";
-      },
-      headerSort: false,
-      frozen: true,
-      align: 'center',
-      cssClass: 'delete-table-cell',
-      tag: 'delete',
-      cellClick: (e, cell) => {
-        cell.getRow().delete();
-        this.__reformatTable(tableName);
-      },
-      width: 30
-    });
-    columns.push({
-      formatter: (cell, formatterParams) => {
-        return "<i class='material-icons'>add</i>";
-      },
-      headerSort: false,
-      frozen: true,
-      align: 'center',
-      tag: 'addBelow',
-      cssClass: 'add-table-cell',
-      cellClick: (e, cell) => {
-        cell.getTable().addData([{
-            name: ''
-          }], false, cell.getRow())
-          .then(rows => {
-            this.__reformatTable(tableName);
-            rows[0].getCells()[2].edit();
-          })
-      },
-      width: 30
-    });
-
-    let colList = this[tableName + 'ColumnList'];
-    for (let c = 0, l = colList.length; c < l; c++) {
-      let field = colList[c];
-      let rightColumn = this.rightAlignColumns.indexOf(field) !== -1;
-      let align = rightColumn ? 'right' : 'left';
-      let longLabel = colList[c].length > 9;
-      let cssClass = rightColumn ? 'right-column-data' : '';
-      let minWidth = rightColumn ? 75 : 150;
-      if (!rightColumn && longLabel)
-        cssClass += 'tab-header-cell-large';
-
-      columns.push({
-        title: field,
-        field,
-        editor: true,
-        headerSort: false,
-        align,
-        formatter: rightColumn ? 'money' : undefined,
-        layoutColumnsOnNewData: true,
-        columnResizing: 'headerOnly',
-        cssClass,
-        headerVertical: longLabel,
-        minWidth
-      });
-    }
-
-    if (tableName === 'product') {
-      columns[4].frozen = true;
-      columns[3].frozen = true;
-      let tCol = columns[4];
-      let tCol2 = columns[3];
-      columns[4] = columns[2];
-      columns[3] = columns[1];
-      columns[2] = tCol;
-      columns[1] = tCol2;
-      tCol2.title = '';
-      columns[0].headerClick = (e, col) => this.toggleProductAddView(col);
+  toggleProfilePanel() {
+    if (this.profilePanelShown) {
+      this.profilePanelShown = false;
+      this.profile_description_panel_btn.classList.remove('button-expanded');
+      document.getElementById('profile-header-panel').classList.remove('expanded');
     } else {
-      columns[4].frozen = true;
-      let tCol = columns[4];
-      columns[4] = columns[3];
-      columns[3] = columns[2];
-      columns[2] = tCol;
-    }
-    columns[1].align = 'right';
-    columns[1].cssClass = 'right-column-data';
-    columns[1].minWidth = 45;
-    columns[2].minWidth = 200;
-
-    this.editTables[tableName] = new Tabulator(`#${tableName}_tab_table`, {
-      data,
-      virtualDom: true,
-      height: '100%',
-      width: '100%',
-      movableRows: true,
-      movableColumns: false,
-      selectable: false,
-      layout: "fitData",
-      columns,
-      dataEdited: data => this.__tableChangedHandler(true),
-      rowMoved: (row) => this._rowMoved(tableName, row)
-    });
-
-    document.getElementById(`import_${tableName}_csv_btn`).addEventListener('click', e => {
-      this.saveCSVType = tableName;
-      this.importFileDom.click();
-    });
-    document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
-
-    this.editTables[tableName].cacheData = JSON.stringify(this.editTables[tableName].getData());
-
-    document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
-      this.__reformatTable(tableName);
-      //    this.editTables[tableName].redraw(true);
-      this.editTables[tableName].setColumnLayout();
-    });
-  }
-  _rowMoved(tableName, row) {
-    let tbl = this.editTables[tableName];
-    let data = tbl.getData();
-
-    let indexes = [];
-    for (let c = 0, l = data.length; c < l; c++)
-      indexes.push(data[c].index);
-
-    indexes.sort((a, b) => {
-      let aIndex = GLOBALUTIL.getNumberOrDefault(a, 0);
-      let bIndex = GLOBALUTIL.getNumberOrDefault(b, 0);
-      if (aIndex > bIndex)
-        return 1;
-      if (aIndex < bIndex)
-        return -1;
-      return 0;
-    });
-
-    for (let c = 0, l = data.length; c < l; c++)
-      data[c].index = indexes[c];
-    tbl.setData(data).then(() => {});
-    this.__tableChangedHandler();
-  }
-  async __saveChanges() {
-    this.canvasHelper.hide();
-
-    await Promise.all([
-      this.__saveTable('asset'),
-      this.__saveTable('product'),
-      this.__saveTable('scene')
-    ]);
-
-    return this.reloadScene();
-  }
-  __reformatTable(tableName) {
-    let tbl = this.editTables[tableName];
-    let rows = tbl.getRows();
-    for (let c = 0, l = rows.length; c < l; c++)
-      rows[c].reformat();
-
-    this.__tableChangedHandler();
-  }
-  ___testTableDirty(tableName) {
-    let tbl = this.editTables[tableName];
-    let setDirty = false;
-    let newCache = JSON.stringify(this.editTables[tableName].getData());
-    if (this.editTables[tableName].cacheData !== newCache)
-      setDirty = true;
-
-    return setDirty;
-  }
-  async __saveTable(tableName) {
-    if (!this.___testTableDirty(tableName))
-      return Promise.resolve();
-
-    let tbl = this.editTables[tableName];
-    let data = tbl.getData();
-
-    for (let c = 0, l = data.length; c < l; c++) {
-      delete data[c][undefined];
-
-      for (let i in data[c])
-        if (data[c][i] === undefined)
-          data[c][i] = '';
-    }
-
-    await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data);
-
-    return Promise.resolve();
-  }
-  __tableChangedHandler(reloadSceneOptions) {
-    let dirty = this.___testTableDirty('asset');
-    if (!dirty)
-      dirty = this.___testTableDirty('scene');
-    if (!dirty)
-      dirty = this.___testTableDirty('product');
-
-    if (dirty) {
-      document.getElementById('changes_commit_header').style.display = 'inline-block';
-    } else {
-      document.getElementById('changes_commit_header').style.display = 'none';
-    }
-
-    if (reloadSceneOptions) {
-      this.sceneOptionsBlockListChange();
+      this.profilePanelShown = true;
+      this.profile_description_panel_btn.classList.add('button-expanded');
+      document.getElementById('profile-header-panel').classList.add('expanded');
     }
   }
   toggleAutoMoveCamera() {
@@ -547,22 +208,6 @@ class cView extends bView {
     setTimeout(() => location.reload(), 1);
 
     return Promise.resolve();
-  }
-  importCSV() {
-    if (this.importFileDom.files.length > 0) {
-      this.canvasHelper.hide();
-
-      Papa.parse(this.importFileDom.files[0], {
-        header: true,
-        complete: results => {
-          if (results.data) {
-            gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, this.saveCSVType + 'Rows', results.data)
-              .then(r => this.reloadScene())
-              .then(() => {});
-          }
-        }
-      });
-    }
   }
   clearScene() {
     if (confirm('Clear the scene?')) {
@@ -657,120 +302,6 @@ class cView extends bView {
       }
     }
   }
-  __uploadImageFile() {
-    let fileBlob = this.uploadImageFile.files[0];
-
-    if (!fileBlob)
-      return;
-
-    this.uploadImageEditField.parentElement.MaterialTextfield.change('Uploading...');
-
-    let fireSet = gAPPP.a.modelSets['block'];
-    let key = this.productData.sceneId + '/productfiles';
-    fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
-      this.uploadImageEditField.parentElement.MaterialTextfield.change(uploadResult.downloadURL);
-    });
-  }
-  updatePositionList() {
-    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
-    let sel = document.getElementById('select-position-preset');
-    if (positionInfo) {
-      let arr = positionInfo.genericBlockData.split('|');
-      let positionHTML = '<option></option>';
-
-      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
-        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2];
-        positionHTML += `<option value="${frag}">${(c / 3) + 1} ${frag}</option>`;
-      }
-
-      sel.innerHTML = positionHTML;
-      sel.addEventListener('input', e => {
-        let vals = sel.value.split(',');
-
-        if (vals.length === 3) {
-          let xd = this.record_field_list.querySelector('.xedit');
-          let yd = this.record_field_list.querySelector('.yedit');
-          let zd = this.record_field_list.querySelector('.zedit');
-
-          xd.parentElement.MaterialTextfield.change(vals[0]);
-          yd.parentElement.MaterialTextfield.change(vals[1]);
-          zd.parentElement.MaterialTextfield.change(vals[2]);
-        }
-
-        sel.selectedIndex = 0;
-      });
-    }
-  }
-  __checkForPosition(x, y, z) {
-    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
-    let sel = document.getElementById('select-position-preset');
-    if (positionInfo) {
-      let arr = positionInfo.genericBlockData.split('|');
-      let positionHTML = '<option>positions</option>';
-
-      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
-        if (arr[c] == x && arr[c + 1] == y && arr[c + 2] == z)
-          return c / 3 + 1;
-      }
-    }
-
-    return -1;
-  }
-  updateProductList() {
-
-
-    /*
-          rowH += ` &nbsp;<button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
-          let x = GLOBALUTIL.getNumberOrDefault(row.x, 0).toFixed(1);
-          let y = GLOBALUTIL.getNumberOrDefault(row.y, 0).toFixed(1);
-          let z = GLOBALUTIL.getNumberOrDefault(row.z, 0).toFixed(1);
-          let pos = this.__checkForPosition(row.x, row.y, row.z);
-          */
-
-
-    /*
-        let tRows = this.productListDiv.querySelectorAll('.table-row-product-list');
-        for (let c = 0, l = tRows.length; c < l; c++)
-          tRows[c].addEventListener('click', e => {
-            return this.showSelectedProduct(e.currentTarget.dataset.id);
-          });
-
-        let removeBtns = this.productListDiv.querySelectorAll('.remove');
-        for (let c2 = 0, l2 = removeBtns.length; c2 < l2; c2++)
-          removeBtns[c2].addEventListener('click', e => {
-            return this.removeProductByName(e.currentTarget.dataset.id, e);
-          });
-          */
-  }
-  removeProductByName(name, e) {
-    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
-      .then(products => {
-        let outProducts = []
-        for (let c = 0, l = products.length; c < l; c++)
-          if (products[c].name !== name)
-            outProducts.push(products[c]);
-
-        gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', outProducts)
-          .then(() => this.reloadScene())
-          .then(() => {});
-      });
-
-    if (e) {
-      e.preventDefault();
-    }
-  }
-  __productByName(name) {
-    for (let c = 0, l = this.productData.products.length; c < l; c++)
-      if (this.productData.products[c].origRow.name === name)
-        return this.productData.products[c];
-
-    if (name === 'FollowCamera')
-      return {
-        origRow: this.productData.cameraOrigRow
-      };
-
-    return null;
-  }
   showSelectedProduct(name) {
     let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
     let p = this.__productByName(name);
@@ -827,20 +358,6 @@ class cView extends bView {
       return 0;
     });
   }
-  downloadCSV(name) {
-    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, name + 'Rows')
-      .then(rows => {
-        let csvResult = Papa.unparse(rows);
-        var element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvResult));
-        element.setAttribute('download', name + '.csv');
-
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-      });
-  }
   _userProfileChange() {
     super._userProfileChange();
 
@@ -854,7 +371,6 @@ class cView extends bView {
       let changeWorkspace = (sel.value === gAPPP.a.profile.selectedWorkspace);
 
       let removeResult = await new gCSVImport().dbRemove('project', sel.value);
-      if (!changeWorkspace) this.loadTemplateLists();
 
       if (changeWorkspace) {
         let newIndex = 1;
@@ -874,57 +390,6 @@ class cView extends bView {
       }
     }
     return Promise.resolve();
-  }
-  async papaParse(csvData) {
-    return new Promise((resolve) => {
-      Papa.parse(csvData, {
-        header: true,
-        complete: results => resolve(results)
-      });
-    });
-  }
-  initSceneEditFields() {
-    let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
-
-    let listHTML = '';
-    this.sceneFieldEditBlocks = [];
-
-    let checked = " selected";
-    for (let id in editInfoBlocks) {
-      let data = editInfoBlocks[id].genericBlockData;
-      let parts = data.split('||');
-      let mainLabel = parts[0];
-      let tab = parts[1];
-      let name = parts[2];
-      let asset = parts[3];
-      let fieldList = [];
-      for (let c = 4, l = parts.length; c < l; c++) {
-        let subParts = parts[c].split(':');
-        let field = subParts[0];
-        let type = subParts[1];
-
-        fieldList.push({
-          field,
-          type
-        });
-      }
-
-      this.sceneFieldEditBlocks.push({
-        mainLabel,
-        tab,
-        name,
-        asset,
-        fieldList
-      });
-
-      listHTML += `<option${checked} value="${this.sceneFieldEditBlocks.length - 1}">${mainLabel}</option>`;
-      checked = '';
-    }
-
-    this.scene_options_edit_fields = document.getElementById('scene_options_edit_fields');
-    this.scene_options_list = document.getElementById('scene_options_list');
-    this.scene_options_list.innerHTML = listHTML;
-    this.scene_options_list.addEventListener('input', e => this.sceneOptionsBlockListChange());
   }
   sceneOptionsBlockListChange() {
     let index = this.scene_options_list.selectedIndex;
@@ -990,45 +455,5 @@ class cView extends bView {
     this.soUploadImageFile.editCTL.parentElement.MaterialTextfield.change(uploadResult.downloadURL);
     this.__sceneOptionsValueChange(this.soUploadImageFile.editCTL);
     return Promise.resolve();
-  }
-  __sceneOptionsValueChange(ctl, e) {
-    let data = ctl.dataset;
-    this.__setSceneOptionsValue(data.tab, data.name, data.asset, data.field, ctl.value)
-      .then(() => {});
-  }
-  async __setSceneOptionsValue(tab, name, asset, field, value) {
-    if (tab === 'layout')
-      tab = 'scene';
-    if (!this.editTables[tab])
-      return Promise.resolve();
-
-    let dataChanged = false;
-    let rows = this.editTables[tab].getData();
-    for (let c = 0, l = rows.length; c < l; c++)
-      if (rows[c]['name'] === name && rows[c]['asset'] === asset) {
-        if (rows[c][field] !== value) {
-          dataChanged = true;
-          rows[c][field] = value;
-        }
-      }
-
-    if (dataChanged) {
-      this.editTables[tab].setData(rows);
-      this.__tableChangedHandler();
-    }
-
-    return Promise.resolve();
-  }
-  __getSceneOptionsValue(tab, name, asset, field) {
-    if (tab === 'layout')
-      tab = 'scene';
-    if (!this.editTables[tab])
-      return '';
-    let rows = this.editTables[tab].getData();
-    for (let c = 0, l = rows.length; c < l; c++)
-      if (rows[c]['name'] === name && rows[c]['asset'] === asset)
-        return rows[c][field];
-
-    return '';
   }
 }
