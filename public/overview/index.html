@@ -3,15 +3,20 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Delicious - v 0.24</title>
+  <title>Delicious - v 0.25</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-green.min.css">
-  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <style>
     body {
       background: rgb(245, 245, 245);
+    }
+
+    html,
+    body,
+    * {
+      padding: 0;
+      margin: 0;
     }
 
     .text-tab-panel {
@@ -26,14 +31,12 @@
 
     .rant-header {
       font-weight: bold;
-      font-size: 12pt;
       cursor: pointer;
       color: rgb(100, 100, 100);
       transition: all 800ms;
-      background: rgb(230, 250, 255);
+      background: rgb(200, 240, 254);
       padding: 5px 0px;
-      border-radius: 10px;
-      margin-top: 0px;
+      margin: 0px;
       clear: both;
       text-align: center;
       width: 100%;
@@ -41,7 +44,6 @@
 
     .rant-text {
       padding: 0px 10px;
-      font-size: 11pt;
       height: 0;
       overflow: hidden;
       clear: both;
@@ -56,11 +58,6 @@
       text-align: center;
       color: rgb(0, 0, 200);
       padding: 5px;
-    }
-
-    .mdl-tabs__tab {
-      float: none;
-      display: inline-block;
     }
 
     .preheadlineicon,
@@ -110,33 +107,29 @@
       margin-top: 0px;
     }
 
-    #main-tab-view {
-      display: flex;
-      height: 100vh;
-      width: 100%;
-      flex-direction: column;
-    }
 
-    .mdl-tabs__tab-bar {
-      flex: 0;
-      height: auto;
-      display: block;
-      text-align: center;
-      width: 100%;
-      background: rgb(230, 240, 230);
-    }
-
-    .footer {
+    .footer,
+    .header {
       text-align: center;
       padding: 4px;
+      width: 100%;
       background: rgb(230, 240, 230);
+      position: fixed;
+      z-index: 1;
+      bottom: 0;
+    }
+
+    .header {
+      top: 0;
+      bottom: auto;
+      font-size: 20pt;
+      padding: 10px;
     }
 
     .collapse-expand-all {
       position: absolute;
-      z-index: 10;
-      left: -5px;
-      top: 0px;
+      left: 0;
+      top: 0;
       transform: rotate(-90deg);
       transition: all 800ms;
       cursor: pointer;
@@ -146,498 +139,471 @@
     .collapse-expand-all i {
       font-weight: bold;
     }
+
+    body {
+      font-size: 14pt;
+      font-family: Geneva;
+      line-height: 1.5em;
+    }
   </style>
 </head>
 
 <body>
-  <div id="main-tab-view" class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-    <div class="mdl-tabs__tab-bar">
+  <div class="intro-text">
+
+    <div class="header">
       <div class="collapse-expand-all"><i class="material-icons">expand_more</i></div>
-      <a href="#ui-market-panel" id="ui-market-tab" class="mdl-tabs__tab is-active">Market</a>
-      <a href="#ui-payments-panel" id="ui-payments-tab" class="mdl-tabs__tab">Software</a>
-      <a href="#ui-standards-panel" id="ui-standards-tab" class="mdl-tabs__tab">Product</a>
+      Delicious Culture Overview
     </div>
-    <div id="ui-market-panel" class="mdl-tabs__panel text-tab-panel is-active">
-      <div class="intro-text">
-        <div style="display:inline-block;">
-          FAMILY FIRST CULTURE
-          <br>Socializing and intermix is a key attraction for technology workers
-          <br>Areas focused on catering to special needs such as elderly, children and handicapped
-          <br>Software that encourages best practices for business today - especially for gig based work
-          <br>Scheme for selecting local resources over remote, paying contractors quickly and without load
-          <br>Split total and rank individual employee (and contractor) pay based on gender
-          <br>Skills training and tasks so entry level contractors can climb
-          <br>Local contract work market interacts and compliments remote contractors
-        </div>
-        <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vR5HRoO4GHg5fdc9ASHu-Lo6Be-2_TVyUG7zjWKMi5tcNeh7XByN41xEt3HWEkuHXJQocLKF6Z_k37_/pub?w=1008&amp;h=297"></td>
-        <div style="display:inline-block;">
-          Physical collaboration spaces for virtual, social and professional mixing
-          <br>Female, family, elderly and handicap friendly; active security at all hours.
-          <br>Service desk performing gender and location verification for identity card issue.
-          <br>Software to highlight locations, queue for resources, find work and transfer money without loads.
-        </div>
-      </div>
-      <div class="rant-header">EMPLOY LOCAL FIRST</div>
-      <div class="rant-text">
-        Flexible and benefitial working opportunities benefit people focused on raising families locally.
-        <br>Attracting rising female talent to smaller markets and companies requires balancing income, lifestyle and stability.
-        <br>Motivation for more than direct pay comes from people building opportunities for others in their
-        local market.
-        <br>Optional attendance in the physical workplace demands utility and comfort for maximum participation
-      </div>
-      <div class="rant-header">ATTRACT AND RETAIN TALENT</div>
-      <div class="rant-text">
-        Team content is critical - only in jail are single gender teams standard
-        <br>Family and local people learning, creating and advancing are rewards other then direct pay
-        <br>Pay and stability are important, not just for the solo employee, but for the larger team and community
-        <br>Flexibility in lifestyle and schedule to consume unforeseen opportunities and interests
-      </div>
-      <div class="rant-header">PROFESSIONAL ADVANCEMENT</div>
-      <div class="rant-text">
-        Skills training needs to match the local opportunities
-        <br>Environment to find and develop contacts
-        <br>Personal guidance and influence missing from remote work
-        <br>Experience mixing with youth renews the market techniques and processes
-        <br>Opportunities, training, and personal collaboration
-      </div>
-      <div class="rant-header">FEATURES</div>
-      <div class="rant-text">
-        Mechanism to balance pay based on gender (split and rank)
-        <br>Fast execution billing system tracks flows based gender and location
-        <br>Certification allows display of the Delicious Culture&reg; standards logo
-        <br>Career stability backed with benefits and guaranteed salary pool
-        <br>Productivity insured during life events with additional gig resources
-        <br>Daycare, WiFi, pet friendly and family spaces in market
-        <br>Office for paying out wages and verifying local status of workers
-      </div>
-      <div class="rant-header">CONTRACTOR MARKET</div>
-      <div class="rant-text">
-        For skilled and reliable contractors - train and regularly compensate
-        <br>Climb by combining training to go with new tasks
-        <br>Tide over a lazy or free floating brain with a loan or scholarship
-        <br>Technology companies don't compete on a local basis (in most cases)
-        <br>Skilling up contract workers in your community doesn't help your competition
-      </div>
-      <div class="rant-header">CAMERAS AND ACTIVE MONITORING</div>
-      <div class="rant-text">
-        Integration with law enforcement and other local services
-        <br>High observability with human eyes and cameras
-        <br>Employees, contractors and visitors are issued cards to monitor pariticpation
-        <br>Security capable employee on duty available to escort people in and out of market
-        <br>Software features allow remote request of security and to quickly report issues
-        <br>Off duty officers hired (as available) late hours as staff
-      </div>
-      <div class="rant-header">ACCESSABLE AREAS AND MORE</div>
-      <div class="rant-text">
-        <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vR3xAhrtXn95BlEY6UNqGWaDsx8qNxlgk6hBoibi8Hutp2dyMsXlTf0iN26ZIz9GRYnqBVEKw0rR5gl/pub?w=1394&amp;h=785">
-        <div style="display:inline-block">
-          Technology center featuring handicap friendly tech
-          <br>Kid collaboration areas that lend to safe and entertaining interactions for kids
-          <br>Adult only areas and Business only areas
-          <br>Staff has golf cart to provide fast local assistance
-          <br>A human net gun on the golf cart for vagrant control
-          <br>Smoking area that is clean, dry and convenient
-          <br>Alcohol and drugs are banned in sponsored locations (with limited exceptions)
-          <br>Allow parents to determine how much their kids mix with which adults
-          <br>Spaces for family members (or others) that need isolation for physical or mental issues
-          <br>Acessable area is a designated part of market with locations concentrating on accesability
-          <br>Highly accessable restroom and if possible a contract worker that can assist with special events
-          <br>Create a privacy ability for accessable area so people that don't get out much can visit
-          <br>Collaborate with local mission for homeless, especially during cold months
-        </div>
-      </div>
-      <div class="rant-header">SPONSORED SPACES AND SERVICES</div>
-      <div class="rant-text">
-        Retail displays (clothes, etc) - display only (aka catalog store)
-        <br>Locations have several tables for working at in the location (even without food and drinks)
-        <br>Local retail selection is a valuable service and part of local culture
-        <br>Locations use a webcam to scan cards/codes to track space usage (for funding - more visits more bucks)
-        <br>Locations should be kid friendly in almost all cases
-        <br>Designated spiritual area with prayer and other related facilities (churches can participate)
-        <br>Purchase isn't required (scanning the card shows you've supported the space)
-        <br>Locations can sell services or products - but can't require you to purchase to use the space
-        <br>Market wide Wifi is free with many available spaces to use easy and quick
-        <br>Locations cater to short stops (15min) without spending money
-        <br>Software for local mission to provide gigs where possible to residents (mission gets a %)
-        <br>Where possible enhanced training (personal and self driven) for low skill workers
-        <br>Locations get a base fee for participating and bonus money for visits (ranked)
-        <br>Optionally locations can be pet friendly. This is obviously difficult, but desired by many.
-        <br>Flexible spaces are preferred to compress people and activity into a smaller area
-        <br>Highly observed area so market participants can safely move location to location
-        <br>Where possible the market pays one or more retains for quality legal and accounting services
-        <br>Minimum two staff at all times, one occupies verification desk, one for escorts
-        <br>Free flow, fast pace, and short or long stays in shops is preferred
-        <br>Market supports keeping spaces flexible and funded for many purposes
-        <br>Virtual appliance support via market software to enhance visitor experiences
-        <br>Market encourages shop visits and participation over direct sales
-        <br>Market wide ordering system with POS system provided for shops at their option
-      </div>
-      <div class="rant-header">SPECIALIZE IN TECHNOLOGIES</div>
-      <div class="rant-text">
-        Technology demonstration zones - geeks have toys and love to share and show and hand down
-        <br>In order to renew resources - loads and fees are avoided - especially for workers no longer participating in iterations
-      </div>
-      <div class="rant-header">ENCHANCE LOCAL CASH FLOWS</div>
-      <div class="rant-text">
-        Optimized payments certified employer to worker
-        <br>The payment system is funded by the market, not loads and fees
-        <br>Loads and fees will only be applied due external costs to the billing system
-        <br>Quality billing, accounting, payroll services provided free and subsidized
-        <br>All money paid out to contractors originates from developers
-      </div>
-      <div class="rant-header">MARKET GUIDELINES</div>
-      <div class="rant-text">
-        Contractors inform employers of criminal and financial history to prevent conflicts
-        <br>Skilled contractors keep companies relevant (and iterating) when employees are absent
-        <br>Guidelines for contractors covering confidentiality, creditionals, invoicing on fixed price and hourly work
-        <br>Market wide guidelines for conducting meetings and other regular business
-        <br>Daycare expenses are covered for employees and contractors attending meetings
-        <br>Contractors are informed of tax status of earnings and sign an agreement of understanding
-        <br>Companies and contractors can include additional policy in the project agreements
-        <br>Exceptions to regular policy are flagged and highlighted to ensure all parties are aware
-        <br>Wether working in the market or remote, the spirit is personal level collaboration
-        <br>Extensive onboarding for both contractors, employers and agencies
-        <br>Library of market techniques with provided training and contractor history of usage
-        <br>Techniques and documents hosted by the market include dates for creation and updates - techniques age and tools improve
-        <br>Reserved white papers and training for contractors passing incoming levels
-        <br>Male heavy companies entering market provide scholarships to female contractors offset the gender imbalance
-        <br>Scholarships can be used promote meetups and other events for attendance
-        <br>Market wide product search from sponsered locations and participating companies
-        <br>Participating companies are required to use the included billing software to gender balance contractor payouts
-      </div>
-    </div>
-    <div id="ui-payments-panel" class="mdl-tabs__panel text-tab-panel">
-      <div class="intro-text">
-        <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vSJkQJkc_ddorKA35zwX4ABv_pH3frUW6Tje8UaS1FrlMTzrlq20_dK51fVjZZm2eWQJdh2AXYCqfD_/pub?w=1100&amp;h=870">
-        <div style="display:inline-block;">
-          Tag payments and salaries for gender, location and performance
-          <br>
-          Deliver instant payments to local contractors with no load and minimum fees
-          <br>
-          Contractor matching enables balancing of gender based outflows
-          <br>
-          Automates invoicing, payment posting and regular business tasks
-          <br>
-          Technique education including scholarships, loans and progress tracking
-          <br>
-          Payments only originate from Delicious companies, containing nefarious risk
-          <br>
-          Companies can alert market to future budgets, techniques and training
-          <br>
-          Features focusing respect, privacy and status between clients and contractors
-        </div>
-      </div>
-      <div class="rant-header">EMPLOYER FEATURES</div>
-      <div class="rant-text">
-        Pre approve contractors for a task, task type or performance history (earnings, stars)
-        <br>Submit tasks to the work queue for auto hire (optional)
-        <br>Employers have option to hide most transaction details (pay rate, details)
-        <br>Develop and share local skilled assets (contractors)
-      </div>
-      <div class="rant-header">WIDGETS AND API</div>
-      <div class="rant-text">
-        Widget provides an in editor plugin UI for creating, selecting and submitting complete work
-        <br>Unity, atom, android studio, Visual Studio, Office 360, Google Docs, JIRA, Trello
-        <br>Integrate easy to use timeclock feature (wiget and api)
-        <br>Invoicing for hourly and fixed projects (key for sizing future work)
-        <br>Show online, available and/or present in market status
-        <br>API allows payments, task submission and billing integration
-      </div>
-      <div class="rant-header">WORK QUEUE AND HISTORY</div>
-      <div class="rant-text">
-        Contractors can only have a couple tasks open at a time (spread out work)
-        <br>Contractors can self serve tasks (where approved)
-        <br>Product owner and team can all audit the per task and per contractor results
-        <br>Quality is rated separate from compensation (time based - including fixed price)
-        <br>Contractors are given the advantage in compensation for time spent over results
-        <br>Employers are expected to pay for time, but also iterate to the results they need
-        <br>Employer and contractor can agree to keep as many details private as possible
-        <br>Loan/scholarship status on skills / debt age listed on contractors lfw
-        <br>Graded local rating - 1 day, 3 days, 1 week, 1 month, 1 year, never
-      </div>
-      <div class="rant-header">COLLABORATION FEATURES</div>
-      <div class="rant-text">
-        Agencies are supported for contractors that prefer a team - but not a company
-        <br>Creditionals storage for companies (allows self serve access for contractors)
-        <br>Tightly integrate existing project management systems (JIRA/trello/github, etc)
-        <br>Option by employer or contractor to exclude from searches (all or a filter)
-        <br>Employer contacting contractor can remain anonymous until otherwise
-        <br>Employers and contractors specify how much personal/social interaction in their profiles
-        <br>Tasks will be highly visible - the market isn't intended for devious tasks
-        <br>Employers and contractors before and after a project can specify how much personal connection they prefer
-        <br>Team members are able to transfer gig account balances amongst team members
-        <br>Multiple news feeds for different purposes - social, event, work, employee only, contractor only
-      </div>
-      <div class="rant-header">CONTRACTOR FEATURES</div>
-      <div class="rant-text">
-        Partial payments for work done - arbitration favors contractor paid for time spent
-        <br>Contractors can sub out projects with no load to other contractors
-        <br>Completed work is paid for quickly; immediate and accurate work is expected
-        <br>Audit/tracing of results and hours worked for all parties
-        <br>Learn from other experienced contractors (local)
-        <br>Contractor can request (or employer) paid training to facilitate a task
-        <br>Fixed price contracts are broken down into hours for gender pay rank tracking
-        <br>Training is focused on current b/leading edge techniques used in the market
-        <br>Training and complimentary tasks work for people with existing jobs to gain skills
-        <br>Support to climb after a break from the industry, in skills, connections and routine
-        <br>Failure forgiveness - mistakes happen - more chances keep people in the market
-        <br>Training and task success noted on profile - failures age out
-        <Br>Training and tasks sized for various skill levels so contractors can climb
-        <br>Bill payout with minimum fee (mailed checks) from earnings (LES, ALLO, etc)
-        <br>If contractor donates % of earnings to charity attribution noted (optional)
-      </div>
-      <div class="rant-header">PAYOUTS AND PAYINS</div>
-      <div class="rant-text">
-        No load local rent payments for contractors to qualified rentors
-        <br>No load payments for child support, fines and select organizations (churches, etc)
-        <br>Undocumented workers are able to verify local and receive pay (rent or cash)
-        <br>Payments for completed work are ungated for verified local workers
-        <br>Prepaid debit cards are available to people with no banking services
-        <br>Gift Cards for local vendors with a 5% bonus value (as available)
-        <br>Loads and fees are covered as possible from company premiums paid to market
-      </div>
-      <div class="rant-header">VOICE, XR AND AV FEATURES</div>
-      <div class="rant-text">
-        <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vRKPfJ5w1mSUVH6-GYhF3Ytd7M0vE7c6Dl2YIPBdffPy9gNJiFHTDY3FaCYdpOfOiCjdgnffZRMvkZw/pub?w=1844&amp;h=1237">
-        <div style="display:inline-block;">
-
-          Video, audio and VR content viewable and annotable
-          <br>Comments and iteration friendly per task
-          <br>3D / extended reality calendar to view gig gant chart etc
-          <br>Digital (esp 3d / model / texture / scene) transfer
-          <br>Link documents, works and contracts (3d/AV focus)
-          <br>Avatar markup system for enabling specific changes
-          <br>Integration with existing document and project mgmt systems
-          <br>Anonymous contracts allow diverse people to collaborate
-          <br>Shared virtual conference tools to visit work products
-        </div>
-      </div>
-      <div class="rant-header">CONTRACTOR MARKET</div>
-      <div class="rant-text">
-        Market based payment clearing house (payouts to people with identity trouble)
-        <br>Technologies to be studyied could also be funded by outside sources, i.e.
-        <br>Professional services are preferred but personal services are not excluded (i.e. daycare, car wash, etc)
-        <br>Verified Local, Verified Female - actual physical location in market where somone can get certified (without id)
-        <br>Matching system highlights gender and location to assist in gender balance of payouts
-        <br>Credible non Delicious Companies can participate as in the market place under similar payout conditions
-        <br>Local arbitrator and market managers to administer market policy
-        <br>Remote contractors can be flagged as market friendly by companies
-        <br>Unused weekly gig money dumps into scholarships and loan guarantee pool
-        <br>Expiration of data (deletion) available for companies and contractors
-        <br>Employees can take saboticals (1 month or more) to contract with other market companies
-        <br>Market level comments, company level comments and contractor/employee level comments
-        <br>Employers can mark specific skills for a contractor as weak or strong
-      </div>
-
-      <div class="rant-header">SCHEDULING AND AVAILABILITY</div>
-      <div class="rant-text">
-        Employers can list future projects and related skills with a commitment level
-        <br>Contractors can list current and future availability
-        <br>Contractors status can be busy remote, available local, available, busy local
-        <br>Contractors can indicate in status fulltime, parttime and/or permanent position preferred
-        <br>Employers can tag jobs as 2 workers or more to facilitate gender balancing
-      </div>
-      <div class="rant-header">LOANS AND SCHOLARSHIPS</div>
-      <div class="rant-text">
-        Sponsors of loans and scholarships can remain anonymous (removing expectation of hiring)
-        <br>Scholarships can apply to certain technologies and training
-        <br>Contractors can request scholarships (no work or new skill) or employees recommend and/or fund
-        <br>Trusted lenders are able to view personal, work and payment history on contractors
-        <br>Employers can provide loans, scholarships and grants covering techniques for upcoming projects
-        <br>Loans can be backed from the lender, employers or the market
-        <br>Loans queue allows all lenders to request information, accept or pass (not reject) anonymously
-        <br>Loan and grant performance history - were jobs taken for the skill after grants and loans, jobs at all?
-        <br>Lenders and contractors can build borrowing history for personal loans (car, house or business opportunity)
-        <br>Employers can flag (attribution optional) contractors for auto approve on loan and/or scholarship requests
-        <br>Employers can mark contractors as favored (like) for advantage in loans and scholarships
-        <br>Outside companies like Firebase, WebGL (GC companies), LUIS (MS) can sponsor
-        <br>High demand and rare skills specializations are identified by market and provided scholarships
-      </div>
-      <div class="rant-header">MVP VERSUS PRODUCT TEAM</div>
-      <div class="rant-text">
-        <table class="team-table">
-          <tr>
-            <th style="width:20%;"></th>
-            <th style="width:40%;">MVP Team</th>
-            <th style="width:40%;">Product Team</th>
-          </tr>
-          <tr>
-            <td>Technology Expertise</td>
-            <td>Experience to select and implement the most effective technologies</td>
-            <td>Techniques to iterate product features. One developer should have be a principal stakeholder.</td>
-          </tr>
-          <tr>
-            <td>Product Knowledge</td>
-            <td>Should contain a principal and expert</td>
-            <td>Key focus to compete</td>
-          </tr>
-          <tr>
-            <td>Locality and Retention</td>
-            <td>Not important, probably too expensive to keep MVP developers</td>
-            <td>Long term employees gain high knowled of customers, market, product and new opportunies</td>
-          </tr>
-          <tr>
-            <td>Implementation</td>
-            <td>Fast pace, high quality and high cost</td>
-            <td>Features specific to market share over new techniques and pace with managed cost</td>
-          </tr>
-          <tr>
-            <td>Compensation</td>
-            <td>Most of team unlikely to stay, don't commit principal</td>
-            <td>rewards will be product success driven, retention and principal interest make sense here</td>
-          </tr>
-        </table>
-      </div>
-      <div class="rant-header">PRODUCT TEAM</div>
-      <div class="rant-text">
-        originate with a quality “core base” (engine/code/product/app/branding/marketing).
-        <br>avoid out of date workers that have little incentive to reskill and weight down the salary pool
-        <br>provide ability to retire assets early (contract basis to start if possible)
-        <br>get 2 "brains" on the team that cover knowledge across the product
-        <br>Hiring of wives and husbands is ok - this is a solid option for existing companies to either meet or get a lot closer to the requirements for top management. Many well paid people of either sex have a supporting spouse.
-      </div>
-      <div class="rant-header">PROCESS SCHEMING</div>
-      <div class="rant-text">
-        core of process/technique is to remove “the requirement” of expert level talent at every point in the process
-        <br>any piece of the regular process (adding features/content - building, releaseing, branding, etc etc) - should be regular tasks
-        <br>high talent and skill should focus on features - not infastructure
-        <br>Emerging talent should get "just the skills they need" and work on features and competing in a market place
-        <br>new workers will receive the best pay by learning the newest/most in demand skills (not old programming languages/systems)
-      </div>
-      <div class="rant-header">GENDER BALANCED TEAMS</div>
-      <div class="rant-text">
-        Companies compete for talented women
-        <br>ranked salaries will generate this demand
-        <br>Encourages female participation at an early age in an exciting and challenging business
-        <br>Co-ed teams retain better
-        <br>Recruitment of talent - no entry level workers envision working on an all male team
-        <br>Experience gained at an early age is very valuable to professionals of all genders
-        <br>Brain time and perspective is more important than direct line count (especially with contracting)
-      </div>
-      <div class="rant-header">DEVELOP PROFESSIONALS</div>
-      <div class="rant-text">
-        Both: teach and collaborate on the newest and coolest techniques
-        <br>Product Team: avoid paying people who leave before they are productive
-        <br>Both: do work on a per project basis (even if salaried employee)
-        <br>we only finish projects - if longer then a few months then a decent phase
-        <br>barter in training and payback with each project
-        <br>committed to helping talent acquire skills, at the same time, we’re committed to production
-        <br>We pay what we can - but when something else pays a lot more, or has something cooler to do, lets make it smooth
-        <br>We keep the projects and phases reasonable in length and you finish them
-        <br>MVP creation phase should run 3-6 months (with 4-6 weeks of actual billable work).
-        <br>production and support lifespan should run 5-10 years (competitive for features per iteration without a rewrite).
-      </div>
-    </div>
-    <div id="ui-standards-panel" class="mdl-tabs__panel text-tab-panel">
-      <div class="intro-text">
-        <img class="intro-image" src="graylinbarriers.png">
-        <div style="display:inline-block">
-          Three to five year commitment between investor and product teams
-          <br>Quality relationships valued over outcome product success
-          <br>Entry level professionals need stability to raise families
-          <br>Emerging technologies attact fresh talent
-        </div>
-      </div>
-      <div class="rant-header">APPLYING PRODUCT TO NEW TEAMS</div>
-      <div class="rant-text">
-        Deck pitching agent, investor and product owner sekect Delicious
-        <br>Applied as a load on entire investment in lieu of traditional office and benefits
-        <br>Salaries flexible gender bucket on top of base pay used to level out pay per gender
-        <br>Benefits and workplace is focused first on employees in addition to collaborating with contractors
-      </div>
-      <div class="rant-header">MARKET STABILITY</div>
-      <div class="rant-text">
-        Goodwill mechanism built into pools to leave some value in the market
-        <br>Successful companies can pay a bonus amount based on original premium to become a listed sponsor
-        <br>The mechanisms to balance gender pay are adjusted as needed to match conditions
-        <br>The insurancer’s risk and costs are contained using pools and an arbitrator
-        <br>Risk exists in the premium reudctions for the life and health products
-        <br>Families with children (single or married) are much less likely to migrate
-        <br>The conditions moving forward will have one thing in common with the past
-        <br>Underwritten on a per company basis - product defintion adjusted per market
-        <br>Female ratios: min count: 40%, min total salaries: 40, rank per class salary: 90% class to class
-        <br>Female heavy companies do not pay the males a premium from the gender bucket as is vice versa
-        <br>Startup companies receiving investment have little to gain hiding salary levels
-        <br>Companies in a specific market enter into a guaranty for salary insurance
-      </div>
-      <div class="rant-header">DESRIED PRODUCT VEHICLE</div>
-      <div class="rant-text">
-        Formed with entry level engineers and product people from the MVP
-        <br>MVP implemented with leading edge techniques and scaled architecture
-        <br>Product is in growing/emerging market competing for customers with features
-        <br>4-8 in size with contract resources making significant contributions
-        <br>Firebase, Javascript and Virtual Reality technologies are preferred
-        <br>The vehicle owner can be one or more corporations that use the product.
-        <br>Where the core team is inexperienced contract resources can be used
-        <br>Family and friends are welcome on teams, definitely promotes retention
-        <br>A product where the team can produce industry noticable features for glory
-        <br>The Delicious team resides in each market hosting and sponsoring key assets
-        <br>Use of standardized architecture, platforms and techniques where possible
-      </div>
-      <div class="rant-header">INVESTOR CONSIDERATIONS</div>
-      <div class="rant-text">
-        Contractors and employees of other companies are strong backups when critical departures occur
-        <br>Soft shutdown with a team so they can keep the collaboration when the product isn't viable
-        <br>Product/team receives investment for multiple years
-        <br>MVP lead and key developers leaving as product iteration team is refilling
-        <br>Entry level developers learning new techniques will be used to manage cost
-        <br>Investors want to do "good" things - this is a "treat" the team well product
-        <br>Gives the investor the ability/option to “seed” some corporate culture
-        <br>The high cost represents the value of all parties to the endeaver
-        <br>Worksite agent pitches and closes sale eaching commission based on premium sold
-        <br>Keep vested interest in the product team; not in the agent or temporary mvp team
-        <br>Options to sell the team if product is no longer viable
-        <br>Laid off employees are the first option for similar positions in the market
-        <br>Salary guaranty in effect until they find a similar job
-        <br>Laid off employees are encouraged to contract in the market
-        <br>All other pool benefits would remain for the 5 year period as possible
-        <br>A functioning team is unlikley to be broken up in current market conditions
-        <br>"Soft” tools for you, employees and contractors to collaborate
-        <br>People aren’t going to work as much and for reasons other money alone
-        <br>Employee package intended to balance risks of a startup versus a corporate position
-        <br>Promotes hiring and advancing entry level talent verus hiring it away
-        <br>No load payments keep workers from thinking about how to do transactions
-        <br>Voice recognition, XR and Firebase experts on Delicious staff are able to sabotical and contract to other market participants
-      </div>
-      <div class="rant-header">BENEFIT POOLS</div>
-      <div class="rant-text">
-        <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vSAZ5ZVc3360sxSl8X_MA6bLy48vja6yehw0THhzlfg_hdL2iBpsh_I_j-_Os-Wom8odDVA3IfGBBmw/pub?w=1299&amp;h=703">
-        <div style="display:inline-block;">
-          Benefits support employees freshly leaving college ready to start families
-          <br>Family and other event driven payouts to suppliment productivity with contractors
-          <br>Contractor benefits offered from third party providers
-          <br>Daycare is provided by pooled resources
-          <br>Loads and fees for contractor work are covered by the premium
-          <br>Collaborate with class and talent over a cheaper remote team
-        </div>
-      </div>
-      <div class="rant-header">EMPLOYEE BENEFITS</div>
-      <div class="rant-text">
-        Shared benefit pool to reduce costs
-        <br>Living benefits (critical illness, long term care, disability income)
-        <br>Money purchase level costs per employee (per gender)
-        <br>Benefits cover lost team contributions in addition to personal expenses
-        <br>Focus is on a coverage period of 5 years of benefits
-        <br>Left over pool funds are paid out to employees after coverage period
-        <br>20% or more of their weekly salary in buckets for gig spending
-      </div>
-      <div class="rant-header">CONTRACTOR BENEFITS</div>
-      <div class="rant-text">
-        Three months with 3k earnings qualify products with easy enrollment
-        <br>Auto pay from pay account
-        <br>Loans (contractor option) can kick in to keep benefits in force
-        <br>Insurance products offered from 3rd party insurers
-      </div>
-      <div class="rant-header">DAYCARE BENEFITS</div>
-      <div class="rant-text">
-        Spot daycare is provided and available spaces reserved in software
-        <br>Onsite or near by supplimented (if not totally free) daycare most hours
-        <br>Family friendly areas during all hours
-        <br>Market pools resources and facilities to reduce cost
-      </div>
-    </div>
-    <div class="footer">All Rights Reserved. 2019 &copy;</div>
+    <br>
+    <br>
+    <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vR5HRoO4GHg5fdc9ASHu-Lo6Be-2_TVyUG7zjWKMi5tcNeh7XByN41xEt3HWEkuHXJQocLKF6Z_k37_/pub?w=1008&amp;h=297"></td>
   </div>
+  <div class="rant-header">EMPLOY LOCAL FIRST</div>
+  <div class="rant-text">
+    Opportunities for people focused on raising families
+    <br>Market encourages local resources over remote
+    <br>Quick payments with automated invoicing and no load
+    <br>Payout pool gender balanced using split and ranking mechanisms
+    <br>Training and tasks so contractors can climb in skill and pay
+    <br>Spaces for social and professional collaborating
+    <br>Service desk performing gender and location verification
+  </div>
+  <div class="rant-header">FUNCTIONALITY</div>
+  <div class="rant-text">
+    Mechanism to balance pay based on gender (split and rank)
+    <br>Fast execution billing system tracks flows based gender and location
+    <br>Certification allows display of the Delicious Culture&reg; standards logo
+    <br>Career stability backed with benefits and guaranteed salary pool
+    <br>Productivity insured during life events with additional gig resources
+    <br>Daycare, WiFi, pet friendly and family spaces in market
+    <br>Office for paying out wages and verifying local status of workers
+    <br>High observability with human eyes and cameras
+    <br>Employees, contractors and visitors are issued cards to monitor pariticpation
+    <br>Security capable employee on duty available to escort people in and out of market
+    <br>Software features allow remote request of security and to quickly report issues
+    <br>Off duty officers hired (as available) late hours as staff
+    <br>Motivation for more than direct pay comes from people building opportunities for others
+    <br>Physical workplace participation requires utility and comfort
+    <br>Team content is critical - only in jail are single gender teams standard
+    <br>Family and local people learning, creating and advancing are rewards other then direct pay
+    <br>Pay and stability are important, not just for the solo employee, but for the larger team and community
+    <br>Flexibility in lifestyle and schedule to consume unforeseen opportunities and interests
+    <br>Skills training needs to match the local opportunities
+    <br>Environment to find and develop contacts
+    <br>Personal guidance and influence missing from remote work
+    <br>Experience mixing with youth renews the market techniques and processes
+    <br>Opportunities, training, and personal collaboration
+    <br>For skilled and reliable contractors - train and regularly compensate
+    <br>Climb by combining training to go with new tasks
+    <br>Tide over a lazy or free floating brain with a loan or scholarship
+    <br>Technology companies don't compete on a local basis (in most cases)
+    <br>Skilling up contract workers in your community doesn't help your competition  </div>
+  <div class="rant-header">ACCESSABLE AREAS AND MORE</div>
+  <div class="rant-text">
+    <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vR3xAhrtXn95BlEY6UNqGWaDsx8qNxlgk6hBoibi8Hutp2dyMsXlTf0iN26ZIz9GRYnqBVEKw0rR5gl/pub?w=1394&amp;h=785">
+    <div style="display:inline-block">
+      Technology center featuring handicap friendly tech
+      <br>Kid collaboration areas that lend to safe and entertaining interactions for kids
+      <br>Adult only areas and Business only areas
+      <br>Staff has golf cart to provide fast local assistance
+      <br>A human net gun on the golf cart for vagrant control
+      <br>Smoking area that is clean, dry and convenient
+      <br>Alcohol and drugs are banned in sponsored locations (with limited exceptions)
+      <br>Allow parents to determine how much their kids mix with which adults
+      <br>Spaces for family members (or others) that need isolation for physical or mental issues
+      <br>Acessable area is a designated part of market with locations concentrating on accesability
+      <br>Highly accessable restroom and if possible a contract worker that can assist with special events
+      <br>Create a privacy ability for accessable area so people that don't get out much can visit
+      <br>Collaborate with local mission for homeless, especially during cold months
+    </div>
+  </div>
+  <div class="rant-header">SPONSORED SPACES AND SERVICES</div>
+  <div class="rant-text">
+    Retail displays (clothes, etc) - display only (aka catalog store)
+    <br>Locations have several tables for working at in the location (even without food and drinks)
+    <br>Local retail selection is a valuable service and part of local culture
+    <br>Locations use a webcam to scan cards/codes to track space usage (for funding - more visits more bucks)
+    <br>Locations should be kid friendly in almost all cases
+    <br>Designated spiritual area with prayer and other related facilities (churches can participate)
+    <br>Purchase isn't required (scanning the card shows you've supported the space)
+    <br>Locations can sell services or products - but can't require you to purchase to use the space
+    <br>Market wide Wifi is free with many available spaces to use easy and quick
+    <br>Locations cater to short stops (15min) without spending money
+    <br>Software for local mission to provide gigs where possible to residents (mission gets a %)
+    <br>Where possible enhanced training (personal and self driven) for low skill workers
+    <br>Locations get a base fee for participating and bonus money for visits (ranked)
+    <br>Optionally locations can be pet friendly. This is obviously difficult, but desired by many.
+    <br>Flexible spaces are preferred to compress people and activity into a smaller area
+    <br>Highly observed area so market participants can safely move location to location
+    <br>Where possible the market pays one or more retains for quality legal and accounting services
+    <br>Minimum two staff at all times, one occupies verification desk, one for escorts
+    <br>Free flow, fast pace, and short or long stays in shops is preferred
+    <br>Market supports keeping spaces flexible and funded for many purposes
+    <br>Virtual appliance support via market software to enhance visitor experiences
+    <br>Market encourages shop visits and participation over direct sales
+    <br>Market wide ordering system with POS system provided for shops at their option
+  </div>
+  <div class="rant-header">SPECIALIZE IN TECHNOLOGIES</div>
+  <div class="rant-text">
+    Technology demonstration zones - geeks have toys and love to share and show and hand down
+    <br>In order to renew resources - loads and fees are avoided - especially for workers no longer participating in iterations
+  </div>
+  <div class="rant-header">ENCHANCE LOCAL CASH FLOWS</div>
+  <div class="rant-text">
+    Optimized payments certified employer to worker
+    <br>The payment system is funded by the market, not loads and fees
+    <br>Loads and fees will only be applied due external costs to the billing system
+    <br>Quality billing, accounting, payroll services provided free and subsidized
+    <br>All money paid out to contractors originates from developers
+  </div>
+  <div class="rant-header">MARKET GUIDELINES</div>
+  <div class="rant-text">
+    Contractors inform employers of criminal and financial history to prevent conflicts
+    <br>Skilled contractors keep companies relevant (and iterating) when employees are absent
+    <br>Guidelines for contractors covering confidentiality, creditionals, invoicing on fixed price and hourly work
+    <br>Market wide guidelines for conducting meetings and other regular business
+    <br>Daycare expenses are covered for employees and contractors attending meetings
+    <br>Contractors are informed of tax status of earnings and sign an agreement of understanding
+    <br>Companies and contractors can include additional policy in the project agreements
+    <br>Exceptions to regular policy are flagged and highlighted to ensure all parties are aware
+    <br>Wether working in the market or remote, the spirit is personal level collaboration
+    <br>Extensive onboarding for both contractors, employers and agencies
+    <br>Library of market techniques with provided training and contractor history of usage
+    <br>Techniques and documents hosted by the market include dates for creation and updates - techniques age and tools improve
+    <br>Reserved white papers and training for contractors passing incoming levels
+    <br>Male heavy companies entering market provide scholarships to female contractors offset the gender imbalance
+    <br>Scholarships can be used promote meetups and other events for attendance
+    <br>Market wide product search from sponsered locations and participating companies
+    <br>Participating companies are required to use the included billing software to gender balance contractor payouts
+  </div>
+  <div class="rant-header">EMPLOYER FEATURES</div>
+  <div class="rant-text">
+    <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vSJkQJkc_ddorKA35zwX4ABv_pH3frUW6Tje8UaS1FrlMTzrlq20_dK51fVjZZm2eWQJdh2AXYCqfD_/pub?w=1100&amp;h=870">
+    <div style="display:inline-block;">
+      Tag payments and salaries for gender, location and performance
+      <br>
+      Deliver instant payments to local contractors with no load and minimum fees
+      <br>
+      Contractor matching enables balancing of gender based outflows
+      <br>
+      Automates invoicing, payment posting and regular business tasks
+      <br>
+      Technique education including scholarships, loans and progress tracking
+      <br>
+      Payments only originate from Delicious companies, containing nefarious risk
+      <br>
+      Companies can alert market to future budgets, techniques and training
+      <br>
+      Features focusing respect, privacy and status between clients and contractors
+      <br>Pre approve contractors for a task, task type or performance history (earnings, stars)
+      <br>Submit tasks to the work queue for auto hire (optional)
+      <br>Employers have option to hide most transaction details (pay rate, details)
+      <br>Develop and share local skilled assets (contractors)
+    </div>
+  </div>
+  <div class="rant-header">WIDGETS AND API</div>
+  <div class="rant-text">
+    Widget provides an in editor plugin UI for creating, selecting and submitting complete work
+    <br>Unity, atom, android studio, Visual Studio, Office 360, Google Docs, JIRA, Trello
+    <br>Integrate easy to use timeclock feature (wiget and api)
+    <br>Invoicing for hourly and fixed projects (key for sizing future work)
+    <br>Show online, available and/or present in market status
+    <br>API allows payments, task submission and billing integration
+  </div>
+  <div class="rant-header">WORK QUEUE AND HISTORY</div>
+  <div class="rant-text">
+    Contractors can only have a couple tasks open at a time (spread out work)
+    <br>Contractors can self serve tasks (where approved)
+    <br>Product owner and team can all audit the per task and per contractor results
+    <br>Quality is rated separate from compensation (time based - including fixed price)
+    <br>Contractors are given the advantage in compensation for time spent over results
+    <br>Employers are expected to pay for time, but also iterate to the results they need
+    <br>Employer and contractor can agree to keep as many details private as possible
+    <br>Loan/scholarship status on skills / debt age listed on contractors lfw
+    <br>Graded local rating - 1 day, 3 days, 1 week, 1 month, 1 year, never
+  </div>
+  <div class="rant-header">COLLABORATION FEATURES</div>
+  <div class="rant-text">
+    Agencies are supported for contractors that prefer a team - but not a company
+    <br>Creditionals storage for companies (allows self serve access for contractors)
+    <br>Tightly integrate existing project management systems (JIRA/trello/github, etc)
+    <br>Option by employer or contractor to exclude from searches (all or a filter)
+    <br>Employer contacting contractor can remain anonymous until otherwise
+    <br>Employers and contractors specify how much personal/social interaction in their profiles
+    <br>Tasks will be highly visible - the market isn't intended for devious tasks
+    <br>Employers and contractors before and after a project can specify how much personal connection they prefer
+    <br>Team members are able to transfer gig account balances amongst team members
+    <br>Multiple news feeds for different purposes - social, event, work, employee only, contractor only
+  </div>
+  <div class="rant-header">CONTRACTOR FEATURES</div>
+  <div class="rant-text">
+    Partial payments for work done - arbitration favors contractor paid for time spent
+    <br>Contractors can sub out projects with no load to other contractors
+    <br>Completed work is paid for quickly; immediate and accurate work is expected
+    <br>Audit/tracing of results and hours worked for all parties
+    <br>Learn from other experienced contractors (local)
+    <br>Contractor can request (or employer) paid training to facilitate a task
+    <br>Fixed price contracts are broken down into hours for gender pay rank tracking
+    <br>Training is focused on current b/leading edge techniques used in the market
+    <br>Training and complimentary tasks work for people with existing jobs to gain skills
+    <br>Support to climb after a break from the industry, in skills, connections and routine
+    <br>Failure forgiveness - mistakes happen - more chances keep people in the market
+    <br>Training and task success noted on profile - failures age out
+    <Br>Training and tasks sized for various skill levels so contractors can climb
+    <br>Bill payout with minimum fee (mailed checks) from earnings (LES, ALLO, etc)
+    <br>If contractor donates % of earnings to charity attribution noted (optional)
+  </div>
+  <div class="rant-header">PAYOUTS AND PAYINS</div>
+  <div class="rant-text">
+    No load local rent payments for contractors to qualified rentors
+    <br>No load payments for child support, fines and select organizations (churches, etc)
+    <br>Undocumented workers are able to verify local and receive pay (rent or cash)
+    <br>Payments for completed work are ungated for verified local workers
+    <br>Prepaid debit cards are available to people with no banking services
+    <br>Gift Cards for local vendors with a 5% bonus value (as available)
+    <br>Loads and fees are covered as possible from company premiums paid to market
+  </div>
+  <div class="rant-header">VOICE, XR AND AV FEATURES</div>
+  <div class="rant-text">
+    <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vRKPfJ5w1mSUVH6-GYhF3Ytd7M0vE7c6Dl2YIPBdffPy9gNJiFHTDY3FaCYdpOfOiCjdgnffZRMvkZw/pub?w=1844&amp;h=1237">
+    <div style="display:inline-block;">
+
+      Video, audio and VR content viewable and annotable
+      <br>Comments and iteration friendly per task
+      <br>3D / extended reality calendar to view gig gant chart etc
+      <br>Digital (esp 3d / model / texture / scene) transfer
+      <br>Link documents, works and contracts (3d/AV focus)
+      <br>Avatar markup system for enabling specific changes
+      <br>Integration with existing document and project mgmt systems
+      <br>Anonymous contracts allow diverse people to collaborate
+      <br>Shared virtual conference tools to visit work products
+    </div>
+  </div>
+  <div class="rant-header">CONTRACTOR MARKET</div>
+  <div class="rant-text">
+    Market based payment clearing house (payouts to people with identity trouble)
+    <br>Technologies to be studyied could also be funded by outside sources, i.e.
+    <br>Professional services are preferred but personal services are not excluded (i.e. daycare, car wash, etc)
+    <br>Verified Local, Verified Female - actual physical location in market where somone can get certified (without id)
+    <br>Matching system highlights gender and location to assist in gender balance of payouts
+    <br>Credible non Delicious Companies can participate as in the market place under similar payout conditions
+    <br>Local arbitrator and market managers to administer market policy
+    <br>Remote contractors can be flagged as market friendly by companies
+    <br>Unused weekly gig money dumps into scholarships and loan guarantee pool
+    <br>Expiration of data (deletion) available for companies and contractors
+    <br>Employees can take saboticals (1 month or more) to contract with other market companies
+    <br>Market level comments, company level comments and contractor/employee level comments
+    <br>Employers can mark specific skills for a contractor as weak or strong
+  </div>
+
+  <div class="rant-header">SCHEDULING AND AVAILABILITY</div>
+  <div class="rant-text">
+    Employers can list future projects and related skills with a commitment level
+    <br>Contractors can list current and future availability
+    <br>Contractors status can be busy remote, available local, available, busy local
+    <br>Contractors can indicate in status fulltime, parttime and/or permanent position preferred
+    <br>Employers can tag jobs as 2 workers or more to facilitate gender balancing
+  </div>
+  <div class="rant-header">LOANS AND SCHOLARSHIPS</div>
+  <div class="rant-text">
+    Sponsors of loans and scholarships can remain anonymous (removing expectation of hiring)
+    <br>Scholarships can apply to certain technologies and training
+    <br>Contractors can request scholarships (no work or new skill) or employees recommend and/or fund
+    <br>Trusted lenders are able to view personal, work and payment history on contractors
+    <br>Employers can provide loans, scholarships and grants covering techniques for upcoming projects
+    <br>Loans can be backed from the lender, employers or the market
+    <br>Loans queue allows all lenders to request information, accept or pass (not reject) anonymously
+    <br>Loan and grant performance history - were jobs taken for the skill after grants and loans, jobs at all?
+    <br>Lenders and contractors can build borrowing history for personal loans (car, house or business opportunity)
+    <br>Employers can flag (attribution optional) contractors for auto approve on loan and/or scholarship requests
+    <br>Employers can mark contractors as favored (like) for advantage in loans and scholarships
+    <br>Outside companies like Firebase, WebGL (GC companies), LUIS (MS) can sponsor
+    <br>High demand and rare skills specializations are identified by market and provided scholarships
+  </div>
+  <div class="rant-header">MVP VERSUS PRODUCT TEAM</div>
+  <div class="rant-text">
+    <table class="team-table">
+      <tr>
+        <th style="width:20%;"></th>
+        <th style="width:40%;">MVP Team</th>
+        <th style="width:40%;">Product Team</th>
+      </tr>
+      <tr>
+        <td>Technology Expertise</td>
+        <td>Experience to select and implement the most effective technologies</td>
+        <td>Techniques to iterate product features. One developer should have be a principal stakeholder.</td>
+      </tr>
+      <tr>
+        <td>Product Knowledge</td>
+        <td>Should contain a principal and expert</td>
+        <td>Key focus to compete</td>
+      </tr>
+      <tr>
+        <td>Locality and Retention</td>
+        <td>Not important, probably too expensive to keep MVP developers</td>
+        <td>Long term employees gain high knowled of customers, market, product and new opportunies</td>
+      </tr>
+      <tr>
+        <td>Implementation</td>
+        <td>Fast pace, high quality and high cost</td>
+        <td>Features specific to market share over new techniques and pace with managed cost</td>
+      </tr>
+      <tr>
+        <td>Compensation</td>
+        <td>Most of team unlikely to stay, don't commit principal</td>
+        <td>rewards will be product success driven, retention and principal interest make sense here</td>
+      </tr>
+    </table>
+  </div>
+  <div class="rant-header">PRODUCT TEAM</div>
+  <div class="rant-text">
+    originate with a quality “core base” (engine/code/product/app/branding/marketing).
+    <br>avoid out of date workers that have little incentive to reskill and weight down the salary pool
+    <br>provide ability to retire assets early (contract basis to start if possible)
+    <br>get 2 "brains" on the team that cover knowledge across the product
+    <br>Hiring of wives and husbands is ok - this is a solid option for existing companies to either meet or get a lot closer to the requirements for top management. Many well paid people of either sex have a supporting spouse.
+  </div>
+  <div class="rant-header">PROCESS SCHEMING</div>
+  <div class="rant-text">
+    core of process/technique is to remove “the requirement” of expert level talent at every point in the process
+    <br>any piece of the regular process (adding features/content - building, releaseing, branding, etc etc) - should be regular tasks
+    <br>high talent and skill should focus on features - not infastructure
+    <br>Emerging talent should get "just the skills they need" and work on features and competing in a market place
+    <br>new workers will receive the best pay by learning the newest/most in demand skills (not old programming languages/systems)
+  </div>
+  <div class="rant-header">GENDER BALANCED TEAMS</div>
+  <div class="rant-text">
+    Companies compete for talented women
+    <br>ranked salaries will generate this demand
+    <br>Encourages female participation at an early age in an exciting and challenging business
+    <br>Co-ed teams retain better
+    <br>Recruitment of talent - no entry level workers envision working on an all male team
+    <br>Experience gained at an early age is very valuable to professionals of all genders
+    <br>Brain time and perspective is more important than direct line count (especially with contracting)
+  </div>
+  <div class="rant-header">DEVELOP PROFESSIONALS</div>
+  <div class="rant-text">
+    Both: teach and collaborate on the newest and coolest techniques
+    <br>Product Team: avoid paying people who leave before they are productive
+    <br>Both: do work on a per project basis (even if salaried employee)
+    <br>we only finish projects - if longer then a few months then a decent phase
+    <br>barter in training and payback with each project
+    <br>committed to helping talent acquire skills, at the same time, we’re committed to production
+    <br>We pay what we can - but when something else pays a lot more, or has something cooler to do, lets make it smooth
+    <br>We keep the projects and phases reasonable in length and you finish them
+    <br>MVP creation phase should run 3-6 months (with 4-6 weeks of actual billable work).
+    <br>production and support lifespan should run 5-10 years (competitive for features per iteration without a rewrite).
+  </div>
+  </div>
+  <div class="rant-header">APPLYING PRODUCT TO NEW TEAMS</div>
+  <div class="rant-text">
+    <img class="intro-image" src="graylinbarriers.png">
+    <div style="display:inline-block">
+      Three to five year commitment between investor and product teams
+      <br>Quality relationships valued over outcome product success
+      <br>Entry level professionals need stability to raise families
+      <br>Emerging technologies attact fresh talent
+      <br>Deck pitching agent, investor and product owner select Delicious
+      <br>Applied as a load on entire investment in lieu of traditional office and benefits
+      <br>Salaries flexible gender bucket on top of base pay used to level out pay per gender
+      <br>Benefits and workplace is focused first on employees in addition to collaborating with contractors
+
+    </div>
+  </div>
+  <div class="rant-header">MARKET STABILITY</div>
+  <div class="rant-text">
+    Goodwill mechanism built into pools to leave some value in the market
+    <br>Successful companies can pay a bonus amount based on original premium to become a listed sponsor
+    <br>The mechanisms to balance gender pay are adjusted as needed to match conditions
+    <br>The insurancer’s risk and costs are contained using pools and an arbitrator
+    <br>Risk exists in the premium reudctions for the life and health products
+    <br>Families with children (single or married) are much less likely to migrate
+    <br>The conditions moving forward will have one thing in common with the past
+    <br>Underwritten on a per company basis - product defintion adjusted per market
+    <br>Female ratios: min count: 40%, min total salaries: 40, rank per class salary: 90% class to class
+    <br>Female heavy companies do not pay the males a premium from the gender bucket as is vice versa
+    <br>Startup companies receiving investment have little to gain hiding salary levels
+    <br>Companies in a specific market enter into a guaranty for salary insurance
+  </div>
+  <div class="rant-header">DESRIED PRODUCT VEHICLE</div>
+  <div class="rant-text">
+    Formed with entry level engineers and product people from the MVP
+    <br>MVP implemented with leading edge techniques and scaled architecture
+    <br>Product is in growing/emerging market competing for customers with features
+    <br>4-8 in size with contract resources making significant contributions
+    <br>Firebase, Javascript and Virtual Reality technologies are preferred
+    <br>The vehicle owner can be one or more corporations that use the product.
+    <br>Where the core team is inexperienced contract resources can be used
+    <br>Family and friends are welcome on teams, definitely promotes retention
+    <br>A product where the team can produce industry noticable features for glory
+    <br>The Delicious team resides in each market hosting and sponsoring key assets
+    <br>Use of standardized architecture, platforms and techniques where possible
+  </div>
+  <div class="rant-header">INVESTOR CONSIDERATIONS</div>
+  <div class="rant-text">
+    Contractors and employees of other companies are strong backups when critical departures occur
+    <br>Soft shutdown with a team so they can keep the collaboration when the product isn't viable
+    <br>Product/team receives investment for multiple years
+    <br>MVP lead and key developers leaving as product iteration team is refilling
+    <br>Entry level developers learning new techniques will be used to manage cost
+    <br>Investors want to do "good" things - this is a "treat" the team well product
+    <br>Gives the investor the ability/option to “seed” some corporate culture
+    <br>The high cost represents the value of all parties to the endeaver
+    <br>Worksite agent pitches and closes sale eaching commission based on premium sold
+    <br>Keep vested interest in the product team; not in the agent or temporary mvp team
+    <br>Options to sell the team if product is no longer viable
+    <br>Laid off employees are the first option for similar positions in the market
+    <br>Salary guaranty in effect until they find a similar job
+    <br>Laid off employees are encouraged to contract in the market
+    <br>All other pool benefits would remain for the 5 year period as possible
+    <br>A functioning team is unlikley to be broken up in current market conditions
+    <br>"Soft” tools for you, employees and contractors to collaborate
+    <br>People aren’t going to work as much and for reasons other money alone
+    <br>Employee package intended to balance risks of a startup versus a corporate position
+    <br>Promotes hiring and advancing entry level talent verus hiring it away
+    <br>No load payments keep workers from thinking about how to do transactions
+    <br>Voice recognition, XR and Firebase experts on Delicious staff are able to sabotical and contract to other market participants
+  </div>
+  <div class="rant-header">BENEFIT POOLS</div>
+  <div class="rant-text">
+    <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vSAZ5ZVc3360sxSl8X_MA6bLy48vja6yehw0THhzlfg_hdL2iBpsh_I_j-_Os-Wom8odDVA3IfGBBmw/pub?w=1299&amp;h=703">
+    <div style="display:inline-block;">
+      Benefits support employees freshly leaving college ready to start families
+      <br>Family and other event driven payouts to suppliment productivity with contractors
+      <br>Contractor benefits offered from third party providers
+      <br>Daycare is provided by pooled resources
+      <br>Loads and fees for contractor work are covered by the premium
+      <br>Collaborate with class and talent over a cheaper remote team
+    </div>
+  </div>
+  <div class="rant-header">EMPLOYEE BENEFITS</div>
+  <div class="rant-text">
+    Shared benefit pool to reduce costs
+    <br>Living benefits (critical illness, long term care, disability income)
+    <br>Money purchase level costs per employee (per gender)
+    <br>Benefits cover lost team contributions in addition to personal expenses
+    <br>Focus is on a coverage period of 5 years of benefits
+    <br>Left over pool funds are paid out to employees after coverage period
+    <br>20% or more of their weekly salary in buckets for gig spending
+  </div>
+  <div class="rant-header">CONTRACTOR BENEFITS</div>
+  <div class="rant-text">
+    Three months with 3k earnings qualify products with easy enrollment
+    <br>Auto pay from pay account
+    <br>Loans (contractor option) can kick in to keep benefits in force
+    <br>Insurance products offered from 3rd party insurers
+  </div>
+  <div class="rant-header">DAYCARE BENEFITS</div>
+  <div class="rant-text">
+    Spot daycare is provided and available spaces reserved in software
+    <br>Onsite or near by supplimented (if not totally free) daycare most hours
+    <br>Family friendly areas during all hours
+    <br>Market pools resources and facilities to reduce cost
+  </div>
+  <br>
+  <br>
+  <div class="footer">All Rights Reserved. 2019 &copy;</div>
   <script>
     let rTextAll = document.querySelectorAll('.rant-header');
     rTextAll.forEach(h => {
@@ -667,11 +633,8 @@
       h.appendChild(expandIcon);
     });
 
-    let tabs = document.querySelectorAll('.text-tab-panel');
-    tabs.forEach(tab => {
-      let firstH = tab.querySelector('.rant-header');
-      firstH.click();
-    });
+    let firstH = document.querySelector('.rant-header');
+    firstH.click();
 
     let expandAllBtn = document.querySelector('.collapse-expand-all');
     expandAllBtn.addEventListener('click', e => {
