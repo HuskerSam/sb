@@ -8,10 +8,6 @@
   <link rel="shortcut icon" href="/images/logo.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
-    body {
-      background: rgb(245, 245, 245);
-    }
-
     html,
     body,
     * {
@@ -35,11 +31,12 @@
       color: rgb(100, 100, 100);
       transition: all 800ms;
       background: rgb(200, 240, 254);
-      padding: 5px 0px;
+      padding: 10px 0px;
       margin: 0px;
       clear: both;
       text-align: center;
       width: 100%;
+      font-size: 12pt;
     }
 
     .rant-text {
@@ -107,23 +104,9 @@
       margin-top: 0px;
     }
 
-
-    .footer,
-    .header {
+    .footer {
       text-align: center;
-      padding: 4px;
-      width: 100%;
-      background: rgb(230, 240, 230);
-      position: fixed;
-      z-index: 1;
-      bottom: 0;
-    }
-
-    .header {
-      top: 0;
-      bottom: auto;
-      font-size: 20pt;
-      padding: 10px;
+      padding-top: 4px;
     }
 
     .collapse-expand-all {
@@ -133,7 +116,10 @@
       transform: rotate(-90deg);
       transition: all 800ms;
       cursor: pointer;
-      padding: 10px 5px;
+      margin: 0;
+      padding: 10px 10px;
+      background: none;
+      border: none;
     }
 
     .collapse-expand-all i {
@@ -149,25 +135,19 @@
 </head>
 
 <body>
-  <div class="intro-text">
-
-    <div class="header">
-      <div class="collapse-expand-all"><i class="material-icons">expand_more</i></div>
-      Delicious Culture Overview
-    </div>
-    <br>
-    <br>
-    <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vR5HRoO4GHg5fdc9ASHu-Lo6Be-2_TVyUG7zjWKMi5tcNeh7XByN41xEt3HWEkuHXJQocLKF6Z_k37_/pub?w=1008&amp;h=297"></td>
-  </div>
+  <button class="collapse-expand-all"><i class="material-icons">expand_more</i></button>
   <div class="rant-header">EMPLOY LOCAL FIRST</div>
   <div class="rant-text">
-    Opportunities for people focused on raising families
-    <br>Market encourages local resources over remote
-    <br>Quick payments with automated invoicing and no load
-    <br>Payout pool gender balanced using split and ranking mechanisms
-    <br>Training and tasks so contractors can climb in skill and pay
-    <br>Spaces for social and professional collaborating
-    <br>Service desk performing gender and location verification
+    <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vR5HRoO4GHg5fdc9ASHu-Lo6Be-2_TVyUG7zjWKMi5tcNeh7XByN41xEt3HWEkuHXJQocLKF6Z_k37_/pub?w=1008&amp;h=297"></td>
+    <div style="display:inline-block">
+      Opportunities for people focused on raising families
+      <br>Market encourages local resources over remote
+      <br>Quick payments with automated invoicing and no load
+      <br>Payout pool gender balanced using split and ranking mechanisms
+      <br>Training and tasks so contractors can climb in skill and pay
+      <br>Spaces for social and professional collaborating
+      <br>Service desk performing gender and location verification
+    </div>
   </div>
   <div class="rant-header">FUNCTIONALITY</div>
   <div class="rant-text">
@@ -198,7 +178,7 @@
     <br>Climb by combining training to go with new tasks
     <br>Tide over a lazy or free floating brain with a loan or scholarship
     <br>Technology companies don't compete on a local basis (in most cases)
-    <br>Skilling up contract workers in your community doesn't help your competition  </div>
+    <br>Skilling up contract workers in your community doesn't help your competition </div>
   <div class="rant-header">ACCESSABLE AREAS AND MORE</div>
   <div class="rant-text">
     <img class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vR3xAhrtXn95BlEY6UNqGWaDsx8qNxlgk6hBoibi8Hutp2dyMsXlTf0iN26ZIz9GRYnqBVEKw0rR5gl/pub?w=1394&amp;h=785">
@@ -601,9 +581,7 @@
     <br>Family friendly areas during all hours
     <br>Market pools resources and facilities to reduce cost
   </div>
-  <br>
-  <br>
-  <div class="footer">All Rights Reserved. 2019 &copy;</div>
+  <div class="footer">  All Rights Reserved. 2019 &copy;</div>
   <script>
     let rTextAll = document.querySelectorAll('.rant-header');
     rTextAll.forEach(h => {
