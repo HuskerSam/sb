@@ -395,13 +395,28 @@ class wBlock {
       if (url.substring(0, 3) === 'sb:') {
         path = gAPPP.cdnPrefix + 'meshes/';
         filename = url.substring(3);
-      } else
+      } else if (url.indexOf(gAPPP.storagePrefix) === -1) {
+        let parts = url.split('/');
+        filename = parts[parts.length - 1];
+        path = url.replace(filename, '');
+      } else {
         filename = this.context._url(url);
+      }
 
       if (filename === '') {
         this.dispose();
         return resolve();
       }
+
+      let ext = url.substr(-4);
+      if (ext === '.glb' || ext === 'gltf') {
+        //path = 'https://models.babylonjs.com/';
+        BABYLON.SceneLoader.Append(path, filename, this.context.scene, (scene) => {
+          return resolve();
+        });
+        return;
+      }
+
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
         (newMeshes, particleSystems, skeletons) => {
           this.dispose();

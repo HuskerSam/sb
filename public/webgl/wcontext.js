@@ -126,7 +126,7 @@ class wContext {
 
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => {
-        try {        
+        try {
           this.preRenderFrame();
           this.scene.render();
         } catch (e) {
@@ -136,7 +136,7 @@ class wContext {
     });
     this.engine.resize();
   }
-  createObject(objectType, title, file, mixinData = {}) {
+  async createObject(objectType, title, file, mixinData = {}) {
     let objectData = sDataDefinition.getDefaultDataCloned(objectType);
     let fireSet = gAPPP.a.modelSets[objectType];
     objectData.title = title;
@@ -157,35 +157,40 @@ class wContext {
     if (objectType === 'texture')
       return fireSet.createWithBlob(objectData, file, filename);
 
-    return new Promise((resolve, reject) => {
-      if (objectType === 'mesh') {
-        this._loadMeshFromDomFile(file).then(
-          meshes => {
-            let newMesh = meshes[0];
-            this.engine.stopRenderLoop();
-            this._sceneDisposeDefaultObjects();
-
-            let sceneJSON = this._serializeScene();
-            this._sceneAddDefaultObjects();
-            this.activate();
-
-            objectData.scalingX = newMesh.scaling.x;
-            objectData.scalingY = newMesh.scaling.y;
-            objectData.scalingZ = newMesh.scaling.z;
-
-            objectData.positionX = newMesh.position.x;
-            objectData.positionY = newMesh.position.y;
-            objectData.positionZ = newMesh.position.z;
-
-            objectData.rotationX = newMesh.rotation.x;
-            objectData.rotationY = newMesh.rotation.y;
-            objectData.rotationZ = newMesh.rotation.z;
-
-            fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
-              r => resolve(r));
-          });
+    if (objectType === 'mesh') {
+      let ext = file.name.substr(-4);
+      if (ext === '.glb' || ext === 'gltf') {
+        return fireSet.createWithBlob(objectData, file, filename);
       }
-    });
+
+      return this._loadMeshFromDomFile(file).then(
+        meshes => {
+          let newMesh = meshes[0];
+          this.engine.stopRenderLoop();
+          this._sceneDisposeDefaultObjects();
+
+          let sceneJSON = this._serializeScene();
+          this._sceneAddDefaultObjects();
+          this.activate();
+
+          objectData.scalingX = newMesh.scaling.x;
+          objectData.scalingY = newMesh.scaling.y;
+          objectData.scalingZ = newMesh.scaling.z;
+
+          objectData.positionX = newMesh.position.x;
+          objectData.positionY = newMesh.position.y;
+          objectData.positionZ = newMesh.position.z;
+
+          objectData.rotationX = newMesh.rotation.x;
+          objectData.rotationY = newMesh.rotation.y;
+          objectData.rotationZ = newMesh.rotation.z;
+
+          fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
+            r => resolve(r));
+        });
+    }
+
+    return Promise.resolve();
   }
   deactivate() {
     if (gAPPP.activeContext)
@@ -266,6 +271,26 @@ class wContext {
     return new Promise((resolve, reject) => {
       if (objectType === 'mesh') {
         this.activate(null);
+
+        let ext = file.name.substr(-4);
+        if (ext === '.glb' || ext === 'gltf') {
+          let fireSet = gAPPP.a.modelSets[objectType];
+          this.engine.stopRenderLoop();
+          this._sceneDisposeDefaultObjects();
+          this._sceneAddDefaultObjects();
+          return fireSet.updateBlob(key, file, file.name)
+            .then(r => {
+              let parts = r.url.split('/');
+              let filename = parts[parts.length - 1];
+              let path = r.url.replace(filename, '');
+              BABYLON.SceneLoader.Append(path, filename, this.scene, (scene) => {
+
+                this.activate();
+                return resolve();
+              });
+            });
+        }
+
         this._loadMeshFromDomFile(file).then(
           meshes => {
             let newMesh = meshes[0];
@@ -435,7 +460,7 @@ class wContext {
   __fadeObject(obj, fadeLevel) {
     if (fadeLevel === '' || fadeLevel === undefined)
       fadeLevel = 1.0;
-    if (! obj.isContainerBlock)
+    if (!obj.isContainerBlock)
       obj.visibility = fadeLevel;
     for (let i in this.scene.meshes)
       if (this.scene.meshes[i].parent === obj)
