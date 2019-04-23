@@ -43,12 +43,20 @@
         </div>
         <div style="flex:1;">
           <button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
+          <select id="view_layout_select" style="float:right;">
+            <option>Full</option>
+            <option>Top</option>
+            <option>Left</option>
+            <option>Bottom</option>
+            <option>Right</option>
+            <option>None</option>
+          </select>
           <div id="record_field_list">
             <form autocomplete="off" onsubmit="return false;"></form>
           </div>
         </div>
         <div id="scene_options_panel">
-          <div class="popup-canvas-wrapper main-canvas-wrapper" style="display:none;"></div>
+          <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
         </div>
     </div>
   </div>
