@@ -79,6 +79,18 @@ class cPanelCanvas {
 
     this._playState = 0;
     this.errorCount = 0;
+
+    this.lightBarFields = [{
+      title: '<i class="material-icons">wb_sunny</i><span id="light_intensity_value">1</span>',
+      fireSetField: 'lightIntensity',
+      helperType: 'singleSlider',
+      rangeMin: '0',
+      rangeMax: '2',
+      rangeStep: '.01',
+      displayType: 'number',
+      group: 'group2',
+      groupClass: 'light-intensity-user-panel'
+    }];
   }
   animSliderChange() {
     this.rootBlock.setAnimationPosition(this.animateSlider.value);
@@ -709,5 +721,53 @@ class cPanelCanvas {
     this.logMessage('Version: ' + info.version);
     this.logMessage('Vendor: ' + info.vendor);
     this.logMessage('Hardware Scale: ' + this.parent.context.engine.getHardwareScalingLevel());
+  }
+  initExtraOptions() {
+    this.canvasActionsDom = document.querySelector('.canvas-actions');
+    this.canvasActionsDom.classList.add('canvas-actions-shown');
+
+    this.cameraFieldsContainer = this.canvasActionsDom.querySelector('.lightbar-fields-container');
+    this.cameraToolsBtn = document.createElement('button');
+    this.cameraToolsBtn.style.display = 'none';
+    this.cameraTools = new cBandProfileOptions(this.cameraToolsBtn, this.lightBarFields, this.cameraFieldsContainer,
+      this.canvasActionsDom);
+    this.cameraTools.fireFields.values = gAPPP.a.profile;
+    this.cameraTools.activate();
+
+    this.cameraExtrasArea = document.getElementById('extra-options-camera-area');
+    this.cameraExtrasArea.innerHTML =
+      `<label class="mdl-switch mdl-js-switch" for="auto-move-camera" id="auto-move-camera-component">
+      <input type="checkbox" id="auto-move-camera" class="mdl-switch__input" checked>
+      <span class="mdl-switch__label"><i class="material-icons">camera_enchance<i></span>
+    </label>`;
+    componentHandler.upgradeElement(document.getElementById('auto-move-camera-component'));
+    this.autoMoveCameraInput = document.getElementById('auto-move-camera');
+    this.autoMoveCameraInput.addEventListener('input', () => this.toggleAutoMoveCamera());
+  }
+  toggleAutoMoveCamera() {
+    if (this.autoMoveCameraInput.checked) {
+      this.cameraSelect.selectedIndex = 2;
+      this.cameraChangeHandler();
+    } else {
+      this.cameraSelect.selectedIndex = 0;
+      this.cameraChangeHandler();
+    }
+  }
+  userProfileChange() {
+    if (!gAPPP.a.profile.cameraUpdates)
+      return;
+
+    let pS = gAPPP.a.profile['playState' + this.rootBlock.blockKey];
+    let pT = gAPPP.a.profile['playStateAnimTime' + this.rootBlock.blockKey];
+    let pO = gAPPP.a.profile['playStateOffset' + this.rootBlock.blockKey];
+
+    if (pS !== this.playState || pT !== this.lastSliderValue || pO !== this.lastOffset) {
+      this._playState = pS;
+      this.__updatePlayState();
+    }
+
+    this.lightIntensityDom = this.dialog.querySelector('#light_intensity_value');
+    if (this.lightIntensityDom)
+      this.lightIntensityDom.innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
   }
 }

@@ -937,8 +937,6 @@ class cViewLayout extends bView {
   }
   _userProfileChange() {
     super._userProfileChange();
-
-    document.getElementById('light_intensity_value').innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
   }
   async removeWorkspace() {
     let sel = this.remove_workspace_select_template;

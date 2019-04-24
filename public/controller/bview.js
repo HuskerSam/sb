@@ -58,7 +58,7 @@ class bView {
     this.rootBlock.setData(blockData);
     setTimeout(() => {
       this.canvasHelper.show();
-      this._updateContextWithDataChange();    
+      this._updateContextWithDataChange();
       gAPPP.activeContext.activeBlock.setData();
       this._userProfileChange();
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
@@ -110,17 +110,9 @@ class bView {
       this.lastNoBump = gAPPP.a.profile.noBumpMaps;
       this.rootBlock.setData();
     }
-    if (!gAPPP.a.profile.cameraUpdates)
-      return;
 
-    let pS = gAPPP.a.profile['playState' + this.rootBlock.blockKey];
-    let pT = gAPPP.a.profile['playStateAnimTime' + this.rootBlock.blockKey];
-    let pO = gAPPP.a.profile['playStateOffset' + this.rootBlock.blockKey];
-
-    if (pS !== this.canvasHelper.playState || pT !== this.canvasHelper.lastSliderValue || pO !== this.canvasHelper.lastOffset) {
-      this.canvasHelper._playState = pS;
-      this.canvasHelper.__updatePlayState();
-    }
+    if (this.canvasHelper)
+      this.canvasHelper.userProfileChange();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (!tag)

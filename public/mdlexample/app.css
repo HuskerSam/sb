@@ -125,20 +125,12 @@ input[type=range]::-webkit-slider-thumb {
   top: -10px;
 }
 
-.canvas-actions .btn-sb-icon.scene-options {
-  display: none;
-}
-
 .canvas-actions .camera-options-panel {
   position: absolute;
   bottom: -2.5em;
   left: -.25em;
   line-height: 3em;
   pointer-events: none;
-}
-
-.canvas-actions .camera-select {
-  display: none;
 }
 
 .lightbar-fields-container .form-control {
@@ -166,6 +158,7 @@ input[type=range]::-webkit-slider-thumb {
   font-size: 30px;
   z-index: 1;
   left: -.9em;
+  pointer-events: none;
 }
 
 #fov-camera-bar {
