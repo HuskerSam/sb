@@ -16,16 +16,20 @@ class mFirebaseList extends bFirebase {
       document.body.appendChild(this.domTitleList);
     }
 
-    this.startingOptionList = '';
-    if (this.tag === 'material')
-      this.startingOptionList = '<option>color: 1,1,1</option><option>color: 0,0,0</option><option>color: 1,0,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option>';
-
-    if (this.tag === 'texture'){
-      this.startingOptionList = document.getElementById('sbimageslist').innerHTML;
-    }
-
     this.childOrderByKey = [];
     this._updateDomLookupList();
+  }
+  startingOptionList() {
+    if (this.tag === 'material')
+      return '<option>color: 1,1,1</option><option>color: 0,0,0</option><option>color: 1,0,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option>';
+
+    if (this.tag === 'texture') {
+      let dl = document.getElementById('sbimageslist');
+      if (dl)
+        return dl.innerHTML;
+    }
+
+    return '';
   }
   notifyChildren(fireData, type) {
     super.notifyChildren(fireData, type);
@@ -267,7 +271,7 @@ class mFirebaseList extends bFirebase {
     this.updateChildOrder();
     if (!this.domTitleList)
       return;
-    let innerHTML = this.startingOptionList;
+    let innerHTML = this.startingOptionList();
     let list = this.childOrderByKey;
     for (let i = list.length - 1; i >= 0; i--) {
       if (this.fireDataValuesByKey[list[i]]) {

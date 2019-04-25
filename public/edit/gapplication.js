@@ -31,6 +31,11 @@ class gApplication extends gAppSuper {
       .then(rrr => rrr.json())
       .then(json => {
         let list = document.getElementById(name);
+        if (!list) {
+          list = document.createElement('datalist');
+          list.setAttribute('id', name);
+          document.body.appendChild(list);
+        }
         let outHtml = '';
         for (let c = 0, l = json.length; c < l; c++)
           outHtml += `<option>${json[c]}</option>`

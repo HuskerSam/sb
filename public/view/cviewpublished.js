@@ -52,12 +52,19 @@ class cViewPublished extends bView {
   elementTypeChange() {
     let t = this.elementSelect.value.toLowerCase();
 
+    let eleList = document.createElement('datalist');
+    let fldList = document.createElement('datalist');
+    eleList.setAttribute('id', 'elementidlist');
+    fldList.setAttribute('id', 'fieldnamelist');
+    document.body.appendChild(eleList);
+    document.body.appendChild(fldList);
+
     let options = '';
     let fS = gAPPP.a.modelSets[t].fireDataValuesByKey;
     for (let i in fS)
       options += '<option>' + i + ' ' + fS[i].title + '</option>';
 
-    document.getElementById('elementidlist').innerHTML = options;
+    eleList.innerHTML = options;
 
     if (t === 'frame')
       t = 'shapeFrame';
@@ -67,6 +74,6 @@ class cViewPublished extends bView {
     for (let c = 0, l = fields.length; c< l; c++)
       fieldOptions += '<option>' + fields[c].fireSetField + '</option>';
 
-    document.getElementById('fieldnamelist').innerHTML = fieldOptions;
+    fldList.innerHTML = fieldOptions;
   }
 }

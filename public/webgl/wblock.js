@@ -760,7 +760,14 @@ class wBlock {
   }
   __createTextMesh(name, options) {
     this.dispose();
+
     let canvas = document.getElementById("highresolutionhiddencanvas");
+    if (!canvas) {
+      let cWrapper = document.createElement('div');
+      cWrapper.innerHTML = `<canvas id="highresolutionhiddencanvas" width="4500" height="1500" style="display:none"></canvas>`;
+      canvas = cWrapper.firstChild;
+      document.body.appendChild(canvas);
+    }
     let context2D = canvas.getContext("2d");
     let size = 100;
     let vectorOptions = {

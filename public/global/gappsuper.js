@@ -105,4 +105,25 @@ class gAppSuper {
     document.body.appendChild(this.styleProfileDom);
     this.resize();
   }
+  _loginPageTemplate(title = `Dynamic Reality App`) {
+    return `<div id="firebase-app-login-page" style="display:none;">
+  <h3>${title}</h3>
+  <div>
+    <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
+    <br>
+    <br>
+
+    <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
+    <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
+  </div>
+</div>`;
+  }
+  _fullScreenPageLayout() {
+    return `<div id="firebase-app-main-page" style="display:none;">
+  <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
+  <div id="main-view-wrapper">
+    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+  </div>
+</div>`;
+  }
 }
