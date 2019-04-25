@@ -13,10 +13,11 @@ class gAuthorization {
     this.modelSets['projectTitles'].childListeners.push((values, type, fireData) => this.onProjectTitlesChange(values, type, fireData));
     this.fireSets.push(this.modelSets['projectTitles']);
 
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+//    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
 
     this.workspaceLoadedCallback = null;
+    this.updateAuthUICallback = null;
   }
   signInWithURL() {
     if (!firebase.auth().isSignInWithEmailLink)
@@ -180,16 +181,8 @@ class gAuthorization {
     location.reload(); // just dump the dom and restart
   }
   updateAuthUI() {
-    let loginPage = document.getElementById('firebase-app-login-page');
-    let mainPage = document.getElementById('firebase-app-main-page');
-
-    if (this.loggedIn) {
-      loginPage.style.display = 'none';
-      mainPage.style.display = 'flex';
-    } else {
-      loginPage.style.display = 'block';
-      mainPage.style.display = 'none';
-    }
+    if (this.updateAuthUICallback)
+      this.updateAuthUICallback();
   }
   resetProfile() {
     let profileData = {
