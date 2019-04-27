@@ -9,9 +9,6 @@ class cView extends bView {
 
     this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
     this.profile_description_panel_btn.addEventListener('click', e => this.toggleProfilePanel());
-
-    gAPPP.a.updateAuthUICallback = () => this.updateAuthUI();
-//    this.updateAuthUI();
   }
   _initLayout() {
     if (this.mainDiv)
@@ -20,25 +17,12 @@ class cView extends bView {
     this.mainDiv = document.createElement('div');
     this.mainDiv.innerHTML = this._headerTemplate();
     this.__initFormHandlers();
-    this.updateAuthUI();
   }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
       return;
     this.cameraShown = true;
     this.__workspaceInitedPostTimeout();
-  }
-  updateAuthUI() {
-    let loginPage = document.getElementById('firebase-app-login-page');
-    let mainPage = document.getElementById('firebase-app-main-page');
-
-    if (this.loggedIn) {
-      loginPage.style.display = 'none';
-      mainPage.style.display = 'flex';
-    } else {
-      loginPage.style.display = 'block';
-      mainPage.style.display = 'none';
-    }
   }
   __initFormHandlers() {
     document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);

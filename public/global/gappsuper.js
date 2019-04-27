@@ -16,6 +16,19 @@ class gAppSuper {
     firebase.database().ref('/.info/serverTimeOffset').once('value').then((data) => this.serverOffsetTime = data.val());
 
     this.initialUILoad = true;
+    gAPPP.a.updateAuthUICallback = () => this.updateAuthUI();
+  }
+  updateAuthUI() {
+    let loginPage = document.getElementById('firebase-app-login-page');
+    let mainPage = document.getElementById('firebase-app-main-page');
+
+    if (this.loggedIn) {
+      loginPage.style.display = 'none';
+      mainPage.style.display = 'flex';
+    } else {
+      loginPage.style.display = 'block';
+      mainPage.style.display = 'none';
+    }
   }
   get dialogs() {
     return this.mV.dialogs;
