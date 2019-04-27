@@ -1,6 +1,5 @@
 class cView extends bView {
   constructor() {
-    this._initLayout();
     super();
     this.canvasHelper.cameraShownCallback = () => this._workspaceLoadedAndInited();
     this.canvasHelper.initExtraOptions();
@@ -10,30 +9,11 @@ class cView extends bView {
     this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
     this.profile_description_panel_btn.addEventListener('click', e => this.toggleProfilePanel());
   }
-  _initLayout() {
-    if (this.mainDiv)
-      document.body.removeChild(this.mainDiv);
-
-    this.mainDiv = document.createElement('div');
-    this.mainDiv.innerHTML = this._headerTemplate();
-    this.__initFormHandlers();
-  }
   _workspaceLoadedAndInited() {
     if (this.cameraShown)
       return;
     this.cameraShown = true;
     this.__workspaceInitedPostTimeout();
-  }
-  __initFormHandlers() {
-    document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);
-    this.emailBtn = document.querySelector('#sign-in-email-button');
-    this.emailBtn.addEventListener('click', e => {
-      let email = document.querySelector('#sign-in-by-email-link').value;
-      gAPPP.a.signInByEmail(email);
-      this.emailBtn.innerHTML = 'Email Sent';
-      setTimeout(() => this.emailBtn.innerHTML = 'Send Link', 5000);
-    }, false);
-    document.querySelector('#sign-out-button').addEventListener('click', e => gAPPP.a.signOut(), false);
   }
   async __workspaceInitedPostTimeout() {
     this.canvasHelper.noTestError = true;
@@ -57,6 +37,56 @@ class cView extends bView {
       this.profile_description_panel_btn.classList.add('button-expanded');
       document.getElementById('profile-header-panel').classList.add('expanded');
     }
+  }
+  _canvasPanelTemplate() {
+    return `<canvas class="popup-canvas"></canvas>
+  <div class="video-overlay">
+    <video></video>
+  </div>
+  <div class="canvas-actions">
+    <div class="canvas-play-bar">
+      <div class="scene-options-panel" style="display:none;">
+        <div class="scene-fields-container">
+        </div>
+        <div class="render-log-wrapper" style="display:none;">
+          <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+          <textarea class="render-log-panel" spellcheck="false"></textarea>
+          <div class="fields-container" style="display:none;"></div>
+        </div>
+        <br>
+        <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+        <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+        <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+        <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+      </div>
+      <br>
+      <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary play-button"><i class="material-icons">play_arrow</i></button>
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored pause-button"><i class="material-icons">pause</i></button>
+      <div class="run-length-label"></div>
+      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+
+      <div class="lightbar-fields-container"></div>
+      <div class="camera-options-panel" style="display:inline-block;">
+        <select class="camera-select" style=""></select>
+        <div id="fov-camera-bar">
+          <div class="camera-slider-label">FOV</div>
+          <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+        </div>
+        <div style="display:inline-block;">
+          <div class="camera-slider-label"><i class="material-icons" style="transform:rotate(90deg)">straighten</i></div>
+          <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+        </div>
+        <br>
+        <div style="display:inline-block;">
+          <div class="camera-slider-label"><i class="material-icons">straighten</i></div>
+          <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+        </div>
+        <div class="fields-container" style="float:left"></div>
+        <div id="extra-options-camera-area"></div>
+      </div>
+    </div>
+  </div>`;
   }
   _headerTemplate() {
     return `<div id="profile-header-panel">
@@ -85,5 +115,14 @@ class cView extends bView {
   <form autocomplete="off" onsubmit="return false;"></form>
 </div>
 `;
+  }
+  _initHeader() {
+    let div = document.createElement('div');
+    div.classList.add('header-wrapper');
+    div.innerHTML = this._headerTemplate();
+
+    //this.mainView = this.dialog.querySelector('#main-view-wrapper');
+
+    this.canvasWrapper.insertBefore(div, this.canvasWrapper.firstChild);
   }
 }

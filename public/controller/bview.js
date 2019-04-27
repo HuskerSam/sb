@@ -3,21 +3,16 @@ class bView {
     this.dialog = document.querySelector('#firebase-app-main-page');
     this.dialogs = {};
 
-    let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
-    this.dialog.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
+    this._initCanvas();
+    this._initModelSets();
+    this._initHeader();
 
-    this.canvas = this.dialog.querySelector('.popup-canvas');
-    this.context = new wContext(this.canvas, true);
     this.dialog.context = this.context;
-    this.show(null);
-
-    this.canvasActions = this.dialog.querySelector('.canvas-actions');
-    this.canvasActions.style.display = '';
-
     this.key = null;
-    this.loadedSceneURL = '';
-    this.lastNoBump = gAPPP.a.profile.noBumpMaps;
-
+    this.show(null);
+  }
+  _initHeader() {}
+  _initModelSets() {
     gAPPP.a.modelSets['blockchild'].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
     gAPPP.a.modelSets['block'].childListeners.push(
@@ -34,11 +29,26 @@ class bView {
       (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
     gAPPP.a.modelSets['userProfile'].childListeners.push(
       (values, type, fireData) => this._userProfileChange(values, type, fireData));
+  }
+  _initCanvas() {
+    let canvasTemplate = this._canvasPanelTemplate();
+    this.canvasWrapper = this.dialog.querySelector('.popup-canvas-wrapper');
+    this.canvasWrapper.innerHTML = canvasTemplate;
+
+    this.canvas = this.dialog.querySelector('.popup-canvas');
+    this.context = new wContext(this.canvas, true);
+    this.canvasActions = this.dialog.querySelector('.canvas-actions');
+    this.canvasActions.style.display = '';
+    this.loadedSceneURL = '';
+    this.lastNoBump = gAPPP.a.profile.noBumpMaps;
 
     this.canvasHelper = new cPanelCanvas(this);
     this.context.canvasHelper = this.canvasHelper;
     this.canvasHelper.hide();
     this.canvasHelper.saveAnimState = true;
+  }
+  _canvasPanelTemplate() {
+    return document.getElementById('canvas-d3-player-template').innerHTML;
   }
   __loadBlock(profileKey, blockData) {
     this.canvasHelper.logClear();
@@ -205,4 +215,5 @@ class bView {
       setTimeout(() => location.reload(), 100);
     }
   }
+  _headerTemplate() {}
 }

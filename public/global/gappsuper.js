@@ -1,6 +1,6 @@
 'use strict';
 class gAppSuper {
-  constructor() {
+  constructor(a) {
     window.gAPPP = this;
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
     this.styleProfileDom = null;
@@ -16,13 +16,18 @@ class gAppSuper {
     firebase.database().ref('/.info/serverTimeOffset').once('value').then((data) => this.serverOffsetTime = data.val());
 
     this.initialUILoad = true;
-    gAPPP.a.updateAuthUICallback = () => this.updateAuthUI();
+
+    this.a = new gAuthorization();
+    this.a.signInWithURL();
+    this.a.updateAuthUICallback = () => this.updateAuthUI();
   }
   updateAuthUI() {
+    this._initAuthUI();
+
     let loginPage = document.getElementById('firebase-app-login-page');
     let mainPage = document.getElementById('firebase-app-main-page');
 
-    if (this.loggedIn) {
+    if (this.a.loggedIn) {
       loginPage.style.display = 'none';
       mainPage.style.display = 'flex';
     } else {
@@ -30,6 +35,7 @@ class gAppSuper {
       mainPage.style.display = 'none';
     }
   }
+  _initAuthUI() {}
   get dialogs() {
     return this.mV.dialogs;
   }
@@ -117,6 +123,16 @@ class gAppSuper {
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
     this.resize();
+  }
+  updateAppLayout() {
+    let div = document.createElement('div');
+    div.innerHTML = this._fullScreenPageLayout();
+    div = div.firstChild;
+    document.body.insertBefore(div, document.body.firstChild);
+
+    this.signOutBtn = document.querySelector('#sign-out-button');
+    if (this.signOutBtn)
+      this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
   }
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">
