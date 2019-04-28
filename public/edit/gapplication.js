@@ -382,6 +382,63 @@ class gApplication extends gAppSuper {
       <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
       <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>
     </div>
+    <datalist id="framecommandoptionslist">
+      <option>Set</option>
+      <option>GSet</option>
+      <option>Animation</option>
+      <option>Video</option>
+      <option>Audio</option>
+      <option>Function</option>
+      <option>Camera</option>
+    </datalist>
+    <datalist id="framecommandfieldslist">
+      <option>videoURL</option>
+      <option>videoHeight</option>
+      <option>videoWidth</option>
+      <option>fogType</option>
+      <option>fogDensity</option>
+      <option>skybox</option>
+      <option>groundMaterial</option>
+      <option>material</option>
+      <option>play</option>
+      <option>pause</option>
+      <option>stop</option>
+      <option>position</option>
+      <option>target</option>
+    </datalist>
+    <datalist id="blockchildtypelist">
+      <option>block</option>
+      <option>mesh</option>
+      <option>shape</option>
+      <option>light</option>
+      <option>camera</option>
+    </datalist>
+    <datalist id="htmlvideosourcelist">
+      <option>video/webm</option>
+      <option>video/mp4</option>
+      <option>video/ogg</option>
+    </datalist>
+    <datalist id="fogtypelist">
+      <option>none</option>
+      <option>EXP</option>
+      <option>EXP2</option>
+      <option>LINEAR</option>
+    </datalist>
+    <datalist id="lightsourceslist">
+      <option>Point</option>
+      <option>Directional</option>
+      <option>Spot</option>
+      <option>Hemispheric</option>
+    </datalist>
+    <datalist id="camerasourceslist">
+      <option>UniversalCamera</option>
+      <option>ArcRotate</option>
+      <option>FollowCamera</option>
+    </datalist>
+    <datalist id="fontfamilydatalist"></datalist>
+    <datalist id="skyboxlist"></datalist>
+    <datalist id="sbmesheslist"></datalist>
+    <datalist id="followblocktargetoptionslist"></datalist>
   </div>`;
   }
 }
