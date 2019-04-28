@@ -1,5 +1,4 @@
-'use strict';
-class gApplication extends gAppSuper {
+class gApplication extends gInstanceSuper {
   constructor() {
     super();
     document.addEventListener("keyup", e => {
@@ -34,10 +33,6 @@ class gApplication extends gAppSuper {
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
-    this.updateAppLayout();
-    this.__initFormHandlers();
-  }
-  __initFormHandlers() {
     document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);
     this.emailBtn = document.querySelector('#sign-in-email-button');
     this.emailBtn.addEventListener('click', e => {
@@ -47,7 +42,7 @@ class gApplication extends gAppSuper {
       setTimeout(() => this.emailBtn.innerHTML = 'Send Link', 5000);
     }, false);
   }
-  _fullScreenPageLayout() {
+  _layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div class="popup-canvas-wrapper main-canvas-wrapper"></div>

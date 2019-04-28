@@ -1,5 +1,4 @@
-'use strict';
-class gDemoApp extends gAppSuper {
+class gDemoApp extends gInstanceSuper {
   constructor() {
     super();
     this.a.signInAnon();
@@ -27,7 +26,7 @@ class gDemoApp extends gAppSuper {
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">Loading...</div>`;
   }
-  _fullScreenPageLayout() {
+  _layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
       <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
       <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
@@ -55,8 +54,5 @@ class gDemoApp extends gAppSuper {
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
-    this.updateAppLayout();
-    this.__initFormHandlers();
   }
-  __initFormHandlers() {}
 }

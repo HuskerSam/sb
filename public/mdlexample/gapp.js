@@ -1,5 +1,4 @@
-'use strict';
-class gApp extends gAppSuper {
+class gApp extends gInstanceSuper {
   constructor() {
     super();
   }
@@ -31,9 +30,6 @@ class gApp extends gAppSuper {
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
     this.updateAppLayout();
-    this.__initFormHandlers();
-  }
-  __initFormHandlers() {
     document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);
     this.emailBtn = document.querySelector('#sign-in-email-button');
     this.emailBtn.addEventListener('click', e => {
@@ -42,5 +38,22 @@ class gApp extends gAppSuper {
       this.emailBtn.innerHTML = 'Email Sent';
       setTimeout(() => this.emailBtn.innerHTML = 'Send Link', 5000);
     }, false);
+  }
+  _layoutTemplate() {
+    return `<div id="firebase-app-main-page" style="display:none;">
+  <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
+  <div id="main-view-wrapper">
+    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+  </div>
+</div>`;
+  }
+  _fullLayout() {
+    return ``;
+  }
+  _horizontalLayout() {
+    return ``;
+  }
+  _verticalLayout() {
+    return ``;
   }
 }
