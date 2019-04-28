@@ -2,11 +2,11 @@ class cViewMain extends bView {
   constructor() {
     super();
 
-    this.dialogs['mesh-edit'] = new bDialog('mesh', 'Mesh Options');
-    this.dialogs['shape-edit'] = new bDialog('shape', 'Shape Editor');
-    this.dialogs['block-edit'] = new cDialogBlock();
-    this.dialogs['material-edit'] = new bDialog('material', 'Material Editor');
-    this.dialogs['texture-edit'] = new bDialog('texture', 'Texture Options');
+    this.dialogs['mesh-edit'] = new bDialog('mesh', 'Mesh Options', this);
+    this.dialogs['shape-edit'] = new bDialog('shape', 'Shape Editor', this);
+    this.dialogs['block-edit'] = new cDialogBlock(this);
+    this.dialogs['material-edit'] = new bDialog('material', 'Material Editor', this);
+    this.dialogs['texture-edit'] = new bDialog('texture', 'Texture Options', this);
 
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');
@@ -211,7 +211,7 @@ class cViewMain extends bView {
       let newLink = document.createElement('link');
       fontName = fontName.replace(/ /g, '+');
 
-      if (! this.fontsAdded[fontName]) {
+      if (!this.fontsAdded[fontName]) {
         this.fontsAdded[fontName] = true;
         newLink.setAttribute('href', `https://fonts.googleapis.com/css?family=${fontName}`);
         newLink.setAttribute('rel', 'stylesheet');
@@ -224,7 +224,7 @@ class cViewMain extends bView {
     for (let c = 0, l = rows.length; c < l; c++)
       rows[c].reformat();
 
-  //  this.__tableChangedHandler();
+    //  this.__tableChangedHandler();
   }
   _initAddStoreItem() {
     this.storeItemParentDom = this.storeItemPanel.querySelector('.store-item-parent-block');
@@ -981,5 +981,51 @@ class cViewMain extends bView {
   __loadBlock(profileKey, blockData) {
     super.__loadBlock(profileKey, blockData);
     this.storeItemParentDom.value = blockData.title;
+  }
+  _canvasPanelTemplate() {
+    return `<canvas class="popup-canvas"></canvas>
+<div class="video-overlay">
+  <video controls autoplay loop></video>
+</div>
+<div class="canvas-actions">
+  <div class="canvas-play-bar">
+    <div class="scene-options-panel" style="display:none;">
+      <div class="scene-fields-container">
+      </div>
+      <div class="render-log-wrapper" style="display:none;">
+        <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+        <textarea class="render-log-panel" spellcheck="false"></textarea>
+        <div class="fields-container" style="display:none;"></div>
+      </div>
+      <br>
+      <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+      <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+      <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+      <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+    </div>
+    <br>
+    <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
+    <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
+    <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
+    <div class="run-length-label"></div>
+    <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+    <div class="camera-options-panel" style="display:inline-block;">
+      <select class="camera-select" style=""></select>
+      <div style="display:inline-block;">
+        <div class="camera-slider-label">Radius</div>
+        <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+      </div>
+      <div style="display:inline-block;">
+        <div class="camera-slider-label">FOV</div>
+        <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+      </div>
+      <div style="display:inline-block;">
+        <div class="camera-slider-label">Height</div>
+        <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+      </div>
+      <div class="fields-container" style="float:left"></div>
+    </div>
+  </div>
+</div>`;
   }
 }

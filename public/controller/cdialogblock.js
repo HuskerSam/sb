@@ -1,28 +1,79 @@
 class cDialogBlock extends bDialog {
-  constructor() {
+  constructor(parentView) {
+    super(null, null, parentView);
+    this._constructor();
+  }
+  _initDialog(tag, title, parentView) {
     let d = document.createElement('dialog');
-    d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;
+    d.innerHTML = this._dialogTemplate();
     d.setAttribute('class', 'modal-dialog');
     d.querySelector('.popup-title').innerHTML = 'Block Editor';
     document.body.appendChild(d);
-    let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
-    d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
+    d.querySelector('.popup-canvas-wrapper').innerHTML = parentView._canvasPanelTemplate();
     d.classList.add('block-dialog-popup');
 
-    let editPanelTemplate = document.getElementById('cblock-editor-panel-template');
     let editPanel = document.createElement('div');
     editPanel.setAttribute('class', 'cblock-editor-wrapper');
-    editPanel.innerHTML = editPanelTemplate.innerHTML;
+    editPanel.innerHTML = this._cBlockEditorTemplate();
     let fieldsPanel = editPanel.querySelector('.cblock-details-panel');
     let old = d.querySelector('.edit-popup-fields');
     let b = d.querySelector('.popup-main-body');
     b.insertBefore(editPanel, old);
     b.removeChild(old);
 
-    super(null);
+    super._initDialog(tag, title, parentView);
+
     this.editMainPanel = editPanel;
     this._init(d, 'block', editPanel, fieldsPanel);
-    this._constructor();
+  }
+  _dialogTemplate() {
+    return `<div class="popup-progress-bar">
+  Loading...
+</div>
+<div class="popup-buttons">
+  <button style="color:white;background: rgb(0,100,0)" type="button" class="btn-sb-icon close-details"><i class="material-icons">close</i><span style="font-size:.75em;top:-.25em;position:relative;">[Esc]</span></button> &nbsp;
+  <button class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
+  <button class="btn-sb-icon delete-item"><i class="material-icons">delete</i></button>&nbsp;
+  <div class="popup-title"></div>
+</div>
+<div class="popup-main-body">
+  <div class="popup-canvas-wrapper">
+  </div>
+  <div class="edit-popup-fields fields-container">
+  </div>
+</div>`;
+  }
+  _cBlockEditorTemplate() {
+    return `<div class="main-band-wrapper">
+  <div class="main-band-first-row">
+    <button class="main-band-details-element"></button>
+    <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+    <div class="main-band-flex-children"></div>
+  </div>
+  <div class="cblock-details-panel">
+    <button class="block-scene-details-button btn-sb-icon"><i class="material-icons">dashboard</i></button>
+    <a class="block-id-display-span" target="_blank">Publish Link</a>
+  </div>
+  <div class="cblock-child-details-panel"></div>
+  <button class="btn-sb-icon ie-frames-details"><i class="material-icons">import_export</i></button>
+  <div style="clear:both;"></div>
+</div>
+<div>
+  <div class="export-frames-details-panel" style="display:none;">
+    <div style="float:left;">
+      <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
+      &nbsp;
+      <button class="btn-sb-icon import-frames-button">Import</button>
+      &nbsp;
+    </div>
+    <textarea class="frames-textarea-export" rows="1" cols="6" style="float:left;flex:1;overflow:scroll;white-space:pre"></textarea>
+    <div style="clear:both"></div>
+  </div>
+</div>
+<div class="frames-panel">
+  <div class="frames-header-fields-panel" style="display:none;">
+  </div>
+</div>`;
   }
   _constructor() {
     this._splitViewAlive = true;

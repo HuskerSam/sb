@@ -2,7 +2,6 @@
 class gApp extends gAppSuper {
   constructor() {
     super();
-    this.loadingView = document.getElementById('loadingview');
   }
   profileReadyAndLoaded() {
     this.loadStarted = true;
@@ -26,13 +25,13 @@ class gApp extends gAppSuper {
 
   }
   _initAuthUI() {
+    this.authUIInited = true;
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('MDL Example');
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
     this.updateAppLayout();
     this.__initFormHandlers();
-    this.loadingView.style.display = 'none';
   }
   __initFormHandlers() {
     document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);

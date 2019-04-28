@@ -17,13 +17,13 @@ class gAppSuper {
 
     this.initialUILoad = true;
 
+    this._initAuthUI();
+
     this.a = new gAuthorization();
     this.a.signInWithURL();
     this.a.updateAuthUICallback = () => this.updateAuthUI();
   }
   updateAuthUI() {
-    this._initAuthUI();
-
     let loginPage = document.getElementById('firebase-app-login-page');
     let mainPage = document.getElementById('firebase-app-main-page');
 

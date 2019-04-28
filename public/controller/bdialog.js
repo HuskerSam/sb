@@ -1,18 +1,36 @@
 class bDialog {
-  constructor(tag, title) {
+  constructor(tag, title, parentView) {
+    this._initDialog(tag, title, parentView);
+  }
+  _initDialog(tag, title, parentView) {
     if (tag !== null) {
       let d = document.createElement('dialog');
-      d.innerHTML = document.getElementById('scene-builder-edit-dialog-template').innerHTML;
+      d.innerHTML = this._dialogTemplate();
       d.classList.add('modal-dialog');
       d.querySelector('.popup-title').innerHTML = title;
       document.body.appendChild(d);
-
-      let canvasTemplate = document.getElementById('canvas-d3-player-template').innerHTML;
-      d.querySelector('.popup-canvas-wrapper').innerHTML = canvasTemplate;
+      d.querySelector('.popup-canvas-wrapper').innerHTML = parentView._canvasPanelTemplate();
 
       let fieldsContainer = d.querySelector('.edit-popup-fields');
       this._init(d, tag, fieldsContainer, fieldsContainer);
     }
+  }
+  _dialogTemplate() {
+    return `<div class="popup-progress-bar">
+  Loading...
+</div>
+<div class="popup-buttons">
+  <button style="color:white;background: rgb(0,100,0)" type="button" class="btn-sb-icon close-details"><i class="material-icons">close</i><span style="font-size:.75em;top:-.25em;position:relative;">[Esc]</span></button> &nbsp;
+  <button class="btn-sb-icon rotate-details"><i class="material-icons">rotate_90_degrees_ccw</i></button> &nbsp;
+  <button class="btn-sb-icon delete-item"><i class="material-icons">delete</i></button>&nbsp;
+  <div class="popup-title"></div>
+</div>
+<div class="popup-main-body">
+  <div class="popup-canvas-wrapper">
+  </div>
+  <div class="edit-popup-fields fields-container">
+  </div>
+</div>`;
   }
   _init(dialog, tag, dataViewContainer = null, fieldsContainer = null) {
     this.tag = tag;

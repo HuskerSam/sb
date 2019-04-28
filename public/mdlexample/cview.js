@@ -113,8 +113,7 @@ class cView extends bView {
 </select>
 <div id="record_field_list">
   <form autocomplete="off" onsubmit="return false;"></form>
-</div>
-`;
+</div>`;
   }
   _initHeader() {
     let div = document.createElement('div');

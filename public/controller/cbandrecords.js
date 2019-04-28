@@ -5,9 +5,15 @@ class cBandRecords extends bBand {
     this.dialog = dialog;
     this.title = title;
     this.containerExpanded = document.querySelector('#sb-floating-toolbar-expanded');
-    let d = document.querySelector('#sb-floating-toolbar-item-template').cloneNode(true);
-    this.wrapper = d.querySelector('.sb-floating-toolbar-item');
 
+    this.wrapper = document.createElement('div');
+    this.wrapper.classList.add('sb-floating-toolbar-item');
+    this.wrapper.innerHTML = `<div class="button-wrapper">
+  <button class="button-title"></button>
+  <button class="button-add-item btn-sb-icon" style="background:rgb(240,240,240)"><i class="material-icons">add_circle</i></button>
+</div>
+<div class="sb-floating-toolbar-content">
+</div>`;
     this.wrapper.id = 'sb-' + this.tag + '-floating-toolbar-item';
     this.childrenContainer = this.wrapper.querySelector('.sb-floating-toolbar-content');
     this.containerExpanded.appendChild(this.wrapper);
