@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Published</title>
+  <title>dYnamic Reality View</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo.png">
   <script>
@@ -13,121 +13,44 @@
 </head>
 
 <body>
-  <div id="firebase-app-login-page">Loading...</div>
-  <div id="firebase-app-main-page" style="display:none;">
-    <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
-    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
-    <button id="user-profile-dialog-reset-button">Reset Options</button>
-    <button id="publish-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
-    <a href="/" id="change-view-anchor">Change View</a>
-    <div id="publish-profile-panel" style="display:none;">
-      <div id="value-set-panel">
-        <label><span>Element</span>
-        <select id="element-type-to-edit">
-          <option>Block</option>
-          <option>BlockChild</option>
-          <option>Shape</option>
-          <option>Mesh</option>
-          <option>Texture</option>
-          <option>Material</option>
-          <option>Frame</option>
-        </select>
-        </label>
-        <br>
-        <label><span>ID</span><input id="element-id-to-edit" type="text" list="elementidlist" /></label>
-        <br>
-        <label><span>Field</span><input id="field-name-to-edit" type="text" list="fieldnamelist" /></label>
-        <br>
-        <label><span>Value</span><input id="value-to-edit" type="text" /></label>
-        <br>
-        <button id="button-to-edit">Set</button>
-      </div>
-
-      <div class="fields-container"></div>
-    </div>
-  </div>
-
-
-  <!-- CANVAS 3D PLAYER TEMPLATE -->
-  <div id="canvas-d3-player-template" style="display:none;">
-    <canvas class="popup-canvas"></canvas>
-    <div class="video-overlay">
-      <video></video>
-    </div>
-    <div class="canvas-actions">
-      <div class="canvas-play-bar">
-        <div class="scene-options-panel" style="display:none;">
-          <div class="scene-fields-container">
-          </div>
-          <div class="render-log-wrapper" style="display:none;">
-            <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
-            <textarea class="render-log-panel" spellcheck="false"></textarea>
-            <div class="fields-container" style="display:none;"></div>
-          </div>
-          <br>
-          <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
-          <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
-          <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
-          <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
-        </div>
-        <br>
-        <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
-        <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
-        <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
-        <div class="run-length-label"></div>
-        <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-        <div class="camera-options-panel" style="display:inline-block;">
-          <select class="camera-select" style=""></select>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">Radius</div>
-            <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
-          </div>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">FOV</div>
-            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
-          </div>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">Height</div>
-            <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
-          </div>
-          <div class="fields-container" style="float:left"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!-- dYnamic Reality Libraries -->
   <script src="/global/globalutil.js"></script>
   <script src="/global/sdatadefinition.js"></script>
   <script src="/global/text3d.js"></script>
   <script src="/global/gappsuper.js"></script>
   <script src="/global/gauthorization.js"></script>
-
+  <script src="/global/gcsvimport.js"></script>
   <script src="/webgl/wframes.js"></script>
   <script src="/webgl/wblock.js"></script>
   <script src="/webgl/wcontext.js"></script>
   <script src="/webgl/wgenerate.js"></script>
-
   <script src="/model/bfirebase.js"></script>
   <script src="/model/mfirebaselist.js"></script>
   <script src="/model/mfirebaseprofile.js"></script>
   <script src="/model/mfirebaseproject.js"></script>
+  <link rel="stylesheet" href="/global/common.css">
 
+  <!-- optional YR Libraries -->
   <script src="/controller/bview.js"></script>
   <script src="/controller/cpanelcanvas.js"></script>
   <script src="/controller/cbandprofileoptions.js"></script>
   <script src="/controller/cpaneldata.js"></script>
   <script src="/controller/cpanelhelpers.js"></script>
 
-  <script src="/view/cviewpublished.js"></script>
-  <script src="/view/gpublishapp.js"></script>
-
-  <script src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/3.2.0/babylon.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+  <!-- Firebase links -->
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
   <script src="/__/firebase/init.js"></script>
 
+  <!-- BabylonJS related libraries -->
+  <script src="https://unpkg.com/earcut@2.1.1/dist/earcut.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/4.0.0-beta.7/babylon.js"></script>
+  <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="/global/common.css">
+
+  <!-- Application Objects -->
+  <script src="/view/cviewpublished.js"></script>
+  <script src="/view/gpublishapp.js"></script>
   <link rel="stylesheet" href="/view/published.css">
 </body>
 
