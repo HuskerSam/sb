@@ -123,5 +123,8 @@ class cView extends bView {
     //this.mainView = this.dialog.querySelector('#main-view-wrapper');
 
     this.canvasWrapper.insertBefore(div, this.canvasWrapper.firstChild);
+    this.signOutBtn = document.querySelector('#sign-out-button');
+    if (this.signOutBtn)
+      this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
   }
 }
