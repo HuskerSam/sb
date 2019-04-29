@@ -17,7 +17,7 @@ class gDemoApp extends gInstanceSuper {
       this.workspaceProcessed = true;
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
-      this.mV = new cViewDemo();
+      this.mV = new cViewDemo(null, null, null, true);
       this._updateApplicationStyle();
       this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
       this._updateApplicationStyle();

@@ -1,6 +1,9 @@
 class bView {
-  constructor(layoutMode) {
+  constructor(layoutMode, tag, key, play = false) {
     this.dialogs = {};
+    this.playAnimation = play;
+    this.tag = tag;
+    this.key = key;
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
     this.initDom();
 
@@ -28,15 +31,18 @@ class bView {
 
     this.initCanvas();
     this.initHeader();
-    this.initLayout();
+    this.splitLayout();
+    this.initFields();
+    this.registerFirebaseModels();
     this.dialog.style.display = '';
   }
+  initFields() {}
   initHeader() {}
   registerFirebaseModels() {
     this.canvasFBRecordTypes.forEach(recType => gAPPP.a.modelSets[recType].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange(recType, values, type, fireData)));
     gAPPP.a.modelSets['userProfile'].childListeners.push(
-      (values, type, fireData) => this._userProfileChange(values, type, fireData));
+      (values, type, fireData) => this.profileUpdate(values, type, fireData));
   }
   initCanvas() {
     let canvasTemplate = this._canvasPanelTemplate();
@@ -54,6 +60,30 @@ class bView {
     this.context.canvasHelper = this.canvasHelper;
     this.canvasHelper.hide();
     this.canvasHelper.saveAnimState = true;
+    this.canvasHelper.cameraShownCallback = () => this.canvasReady();
+  }
+  async canvasReady() {
+    if (this.cameraShown)
+      return;
+    this.cameraShown = true;
+
+    if (!this.playAnimation)
+      return Promise.resolve();
+    await this.canvasReadyPostTimeout();
+
+    return Promise.resolve();
+  }
+  async canvasReadyPostTimeout() {
+    this.canvasHelper.noTestError = true;
+    this.canvasHelper.cameraChangeHandler();
+
+    try {
+      this.canvasHelper.playAnimation();
+    } catch (e) {
+      console.log('play anim error', e);
+    }
+
+    return Promise.resolve();
   }
   _canvasPanelTemplate() {
     return document.getElementById('canvas-d3-player-template').innerHTML;
@@ -78,7 +108,7 @@ class bView {
       this.canvasHelper.show();
       this._updateContextWithDataChange();
       gAPPP.activeContext.activeBlock.setData();
-      this._userProfileChange();
+      this.profileUpdate();
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }, 50);
 
@@ -121,7 +151,7 @@ class bView {
       }
     }
   }
-  _userProfileChange(values, type, fireData) {
+  profileUpdate(values, type, fireData) {
     if (!this.rootBlock)
       return;
     if (this.lastNoBump !== gAPPP.a.profile.noBumpMaps) {
@@ -223,7 +253,7 @@ class bView {
       setTimeout(() => location.reload(), 100);
     }
   }
-  initLayout() {
+  splitLayout() {
     if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1) {
       this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
       this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
@@ -254,7 +284,7 @@ class bView {
   layoutTemplate() {
     this.layoutMode = gAPPP.a.profile.formLayoutMode;
     if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1)
-      return this.splitLayout();
+      return this.splitLayoutTemplate();
 
     return `<div id="firebase-app-main-page" style="display:none;">
   <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
@@ -263,13 +293,13 @@ class bView {
   </div>
 </div>`;
   }
-  splitLayout() {
+  splitLayoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
     <div id="main-view-wrapper">
       <div class="form_canvas_wrapper"></div>
       <div class="form_panel_view_dom">
-        Panel For Form View
+        <div class="fields-container"></div>
       </div>
     </div>
   </div>`;

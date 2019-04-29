@@ -17,7 +17,7 @@ class gLayoutApp extends gInstanceSuper {
       this.workspaceProcessed = true;
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
-      this.mV = new cViewLayout();
+      this.mV = new cViewLayout(null, null, null, true);
       this._updateApplicationStyle();
     };
   }

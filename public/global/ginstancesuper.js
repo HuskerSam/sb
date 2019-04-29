@@ -46,13 +46,15 @@ class gInstanceSuper {
   }
   profileReadyAndLoaded() {
     this.loadStarted = true;
-    this.a.initProjectModels(this.workspace);
-    this.mV = new cViewMain();
+    let wId = this.a.profile.selectedWorkspace;
+    this.a.initProjectModels(wId);
     this.a._activateModels();
     this.initialUILoad = false;
-    this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
-    this._updateApplicationStyle();
+
+    this.workspaceProcessed = false;
+    gAPPP.a.workspaceLoadedCallback = () => this.workspaceLoaded(wId);
   }
+  workspaceLoaded() {}
   profileReady() {
     if (!this.initialUILoad)
       return;

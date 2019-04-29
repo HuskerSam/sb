@@ -1,31 +1,12 @@
 class cView extends bView {
-  constructor() {
-    super();
-    this.canvasHelper.cameraShownCallback = () => this._workspaceLoadedAndInited();
+  constructor(layoutMode, tag, key) {
+    super(layoutMode, tag, key);
     this.canvasHelper.initExtraOptions();
 
     document.querySelector('.user-name').innerHTML = gAPPP.a.currentUser.email;
 
     this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
     this.profile_description_panel_btn.addEventListener('click', e => this.toggleProfilePanel());
-  }
-  _workspaceLoadedAndInited() {
-    if (this.cameraShown)
-      return;
-    this.cameraShown = true;
-    this.__workspaceInitedPostTimeout();
-  }
-  async __workspaceInitedPostTimeout() {
-    this.canvasHelper.noTestError = true;
-    this.canvasHelper.cameraChangeHandler();
-
-    try {
-      this.canvasHelper.playAnimation();
-    } catch (e) {
-      console.log('play anim error', e);
-    }
-
-    return Promise.resolve();
   }
   toggleProfilePanel() {
     if (this.profilePanelShown) {
@@ -115,10 +96,6 @@ class cView extends bView {
   <form autocomplete="off" onsubmit="return false;"></form>
 </div>`;
   }
-  _bodyTemplate() {
-    let html = 'bodyPanel';
-    return html;
-  }
   initHeader() {
     let div = document.createElement('div');
     div.classList.add('header-wrapper');
@@ -141,5 +118,42 @@ class cView extends bView {
     });
     this.layoutMode = gAPPP.a.profile.formLayoutMode;
     this.view_layout_select.value = this.layoutMode;
+  }
+  initFields() {
+    if (!this.tag)
+      return;
+
+    this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
+    this.fireSet = gAPPP.a.modelSets[this.tag];
+    this.fireFields = null;
+    this.uiJSON = 'N/A';
+    this.fieldsContainer = this.dialog.querySelector('.fields-container');
+    this.dataViewContainer = this.fieldsContainer;
+
+    if (this.fields) {
+      this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
+      this.fireFields.updateContextObject = true;
+      this.fireSet.childListeners.push((values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData));
+    }
+/*
+    this.okBtn = this.dialog.querySelector('.save-details');
+    this.cancelBtn = this.dialog.querySelector('.close-details');
+    this.progressBar = this.dialog.querySelector('.popup-progress-bar');
+    this.okBtn = this.dialog.querySelector('.save-details');
+    this.rotateBtn = this.dialog.querySelector('.rotate-details');
+    this.deleteBtn = this.dialog.querySelector('.delete-item');
+    this.popupButtons = this.dialog.querySelector('.popup-buttons');
+
+    if (this.cancelBtn)
+      this.cancelBtn.addEventListener('click', () => this.close(), false);
+    if (this.okBtn)
+      this.okBtn.addEventListener('click', () => this.save(), false);
+    if (this.rotateBtn)
+      this.rotateBtn.addEventListener('click', () => this._rotateView(), false);
+    if (this.deleteBtn)
+      this.deleteBtn.addEventListener('click', () => this._delete(), false);
+
+    this.dialog.addEventListener('close', e => this.close());
+*/
   }
 }

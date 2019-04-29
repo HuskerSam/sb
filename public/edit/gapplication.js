@@ -12,6 +12,15 @@ class gApplication extends gInstanceSuper {
     this.loadDataLists('skyboxlist').then(() => {});
     this.loadDataLists('fontfamilydatalist').then(() => {});
   }
+  profileReadyAndLoaded() {
+    this.loadStarted = true;
+    this.a.initProjectModels(this.workspace);
+    this.mV = new cViewMain();
+    this.a._activateModels();
+    this.initialUILoad = false;
+    this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
+    this._updateApplicationStyle();
+  }
   loadDataLists(name) {
     return fetch(`/global/${name}.json`)
       .then(rrr => rrr.json())

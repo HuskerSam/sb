@@ -2,10 +2,8 @@ class cViewLayout extends bView {
   constructor() {
     gAPPP.a.profile.formLayoutMode = 'Left';
     super();
+  //  this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
     this.form_panel_view_dom.innerHTML = this.formDetailsTemplate();
-    this.canvasHelper.cameraShownCallback = () => {
-      this._workspaceLoadedAndInited();
-    };
 
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
     this.workplacesSelect = document.querySelector('#workspaces-select');
@@ -154,16 +152,7 @@ class cViewLayout extends bView {
     this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
     this.scene_data_expand_btn.click();
   }
-  _workspaceLoadedAndInited() {
-    if (this.cameraShown)
-      return;
-    this.cameraShown = true;
-    this.__workspaceInitedPostTimeout();
-
-    this.add_workspace_button_template = document.getElementById('add_workspace_button_template');
-    this.add_workspace_button_template.addEventListener('click', e => this._addAnimation());
-  }
-  async __workspaceInitedPostTimeout() {
+  async canvasReadyPostTimeout() {
     document.querySelector('.form_panel_view_dom').style.display = '';
     this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
     this.products = this.productData.products;
@@ -197,6 +186,10 @@ class cViewLayout extends bView {
 
     this.changes_commit_header = document.getElementById('changes_commit_header');
     this.changes_commit_header.addEventListener('click', e => this.saveChanges());
+
+    this.add_workspace_button_template = document.getElementById('add_workspace_button_template');
+    this.add_workspace_button_template.addEventListener('click', e => this._addAnimation());
+
     return Promise.resolve();
   }
   saveChanges() {
@@ -927,8 +920,8 @@ class cViewLayout extends bView {
         document.body.removeChild(element);
       });
   }
-  _userProfileChange() {
-    super._userProfileChange();
+  profileUpdate() {
+    super.profileUpdate();
   }
   async removeWorkspace() {
     let sel = this.remove_workspace_select_template;

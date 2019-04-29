@@ -200,11 +200,9 @@ class cViewMain extends bView {
     });
 
     this.fontsAdded = {};
-    this.canvasHelper.cameraShownCallback = () => {
-      this._updateGoogleFonts();
-    };
+    this.canvasHelper.cameraShownCallback = () => this._updateGoogleFonts();
   }
-  _updateGoogleFonts() {
+  async _updateGoogleFonts() {
     let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont');
     for (let id in editInfoBlocks) {
       let fontName = editInfoBlocks[id].genericBlockData;
@@ -218,6 +216,8 @@ class cViewMain extends bView {
         document.head.append(newLink);
       }
     }
+
+    return Promise.resolve();
   }
   __reformatTable(tbl) {
     let rows = tbl.getRows();

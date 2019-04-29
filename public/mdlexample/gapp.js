@@ -2,28 +2,16 @@ class gApp extends gInstanceSuper {
   constructor() {
     super();
   }
-  profileReadyAndLoaded() {
-    this.loadStarted = true;
-    let workspace = this.a.profile.selectedWorkspace;
-    this.a.initProjectModels(workspace);
-    this.a._activateModels();
-    this.initialUILoad = false;
+  workspaceLoaded(wId) {
+    if (this.workspaceProcessed) return;
 
-    this.workspaceProcessed = false;
-    gAPPP.a.workspaceLoadedCallback = () => {
-      if (this.workspaceProcessed) return;
+    this.workspaceProcessed = true;
+    gAPPP.a.profile['selectedBlockKey' + wId] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
-      this.workspaceProcessed = true;
-      gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
-
-      this.layoutMode = gAPPP.a.profile.mdlAppLayoutMode;
-      this.mV = new cView();
-      this._updateApplicationStyle();
-    };
+    this.mV = new cView(gAPPP.a.profile.mdlAppLayoutMode, 'shape', null, true);
+    this._updateApplicationStyle();
   }
-  _updateApplicationStyle() {
-
-  }
+  _updateApplicationStyle() {}
   initializeAuthUI() {
     this.authUIInited = true;
     let div = document.createElement('div');

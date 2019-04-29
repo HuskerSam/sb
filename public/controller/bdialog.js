@@ -26,10 +26,8 @@ class bDialog {
   <div class="popup-title"></div>
 </div>
 <div class="popup-main-body">
-  <div class="form_canvas_wrapper">
-  </div>
-  <div class="edit-popup-fields fields-container">
-  </div>
+  <div class="form_canvas_wrapper"></div>
+  <div class="edit-popup-fields fields-container"></div>
 </div>`;
   }
   _init(dialog, tag, dataViewContainer = null, fieldsContainer = null) {

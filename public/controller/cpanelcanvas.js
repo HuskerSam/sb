@@ -409,7 +409,7 @@ class cPanelCanvas {
       this.cameraShown = true;
 
       if (this.cameraShownCallback)
-        this.cameraShownCallback();
+        this.cameraShownCallback().then(() => {});
     }
     if (this.rootBlock) {
       if (this.cameraSelect.value === 'default')

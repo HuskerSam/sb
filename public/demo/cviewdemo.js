@@ -2,9 +2,7 @@ class cViewDemo extends bView {
   constructor() {
     super();
 
-    this.canvasHelper.cameraShownCallback = () => {
-      this._cameraShown();
-    };
+    this.canvasHelper.cameraShownCallback = () => this._cameraShown();
 
     this.itemButtons = [];
     this.itemButtons.push(document.querySelector('.choice-button-one'));
@@ -62,9 +60,6 @@ class cViewDemo extends bView {
     }
   }
   async _cameraShown() {
-    if (this.cameraShown)
-      return Promise.resolve();
-    this.cameraShown = true;
     this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
     this.products = this.productData.products;
     this.productsBySKU = this.productData.productsBySKU;
@@ -87,12 +82,12 @@ class cViewDemo extends bView {
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.productsDisplayUpdate();
 
-  //  this.basketUpdateTotal().then(() => {});
+    this.basketUpdateTotal().then(() => {});
 
     return Promise.resolve();
   }
-  _userProfileChange() {
-    super._userProfileChange();
+  profileUpdate() {
+    super.profileUpdate();
     let wsId = gAPPP.a.profile.selectedWorkspace;
 
     let basketData = gAPPP.a.profile['basketData' + wsId];
