@@ -16,8 +16,10 @@ class gInstanceSuper {
 
     this.initialUILoad = true;
 
-    this._initAuthUI();
-    this.updateAppLayout();
+    this.initializeAuthUI();
+    let div = document.createElement('div');
+    div.id = 'firebase-app-main-page';
+    document.body.insertBefore(div, document.body.firstChild);
 
     this.a = new gAuthorization();
     this.a.signInWithURL();
@@ -35,7 +37,7 @@ class gInstanceSuper {
       mainPage.style.display = 'none';
     }
   }
-  _initAuthUI() {}
+  initializeAuthUI() {}
   get dialogs() {
     return this.mV.dialogs;
   }
@@ -123,18 +125,6 @@ class gInstanceSuper {
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
     this.resize();
-  }
-  updateAppLayout() {
-    let div = document.createElement('div');
-    div.innerHTML = this._layoutTemplate();
-    div = div.firstChild;
-    document.body.insertBefore(div, document.body.firstChild);
-    this._layoutRegisterHandlers();
-  }
-  _layoutRegisterHandlers() {
-    this.signOutBtn = document.querySelector('#sign-out-button');
-    if (this.signOutBtn)
-      this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
   }
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">

@@ -72,7 +72,7 @@ class gPublishApp extends gInstanceSuper  {
   </div>
 </div>`;
   }
-  _initAuthUI() {
+  initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Viewer');
     div = div.firstChild;

@@ -160,7 +160,7 @@ class gLayoutApp extends gInstanceSuper {
   </datalist>
 </div>`;
   }
-  _initAuthUI() {
+  initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');
     div = div.firstChild;

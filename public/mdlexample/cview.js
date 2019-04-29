@@ -119,7 +119,7 @@ class cView extends bView {
     let html = 'bodyPanel';
     return html;
   }
-  _initHeader() {
+  initHeader() {
     let div = document.createElement('div');
     div.classList.add('header-wrapper');
     div.innerHTML = this._headerTemplate();
@@ -131,10 +131,33 @@ class cView extends bView {
 
     this.view_layout_select = document.getElementById('view_layout_select');
     this.view_layout_select.addEventListener('change', e => {
-      gAPPP.layoutMode = this.view_layout_select.value;
-      //this.layoutMode = gAPPP.a.profile.mdlAppLayoutMode;
-
-      gAPPP.updateAppLayout();
+      this.layoutMode = this.view_layout_select.value;
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'formLayoutMode',
+        newValue: this.layoutMode
+      }]).then(() => {
+        setTimeout(() => location.reload(), 1);
+      })
     });
+  }
+  initDom() {
+    super.initDom();
+    this.view_layout_select.value = this.layoutMode;
+  }
+  _layoutTemplate() {
+    this.layoutMode = gAPPP.a.profile.formLayoutMode;
+
+    return `<div id="firebase-app-main-page" style="display:none;">
+      <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
+      <div id="main-view-wrapper">
+        <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+      </div>
+    </div>`;
+  }
+  _horizontalLayout() {
+    return ``;
+  }
+  _verticalLayout() {
+    return ``;
   }
 }

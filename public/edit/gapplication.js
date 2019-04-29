@@ -28,7 +28,7 @@ class gApplication extends gInstanceSuper {
         list.innerHTML = outHtml;
       });
   }
-  _initAuthUI() {
+  initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');
     div = div.firstChild;

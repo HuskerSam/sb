@@ -1,36 +1,43 @@
 class bView {
   constructor() {
-    this.dialog = document.querySelector('#firebase-app-main-page');
     this.dialogs = {};
-
-    this._initCanvas();
-    this._initModelSets();
-    this._initHeader();
+    this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
+    this.initDom();
 
     this.dialog.context = this.context;
     this.key = null;
     this.show(null);
   }
-  _initHeader() {}
-  _initModelSets() {
-    gAPPP.a.modelSets['blockchild'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('blockchild', values, type, fireData));
-    gAPPP.a.modelSets['block'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('block', values, type, fireData));
-    gAPPP.a.modelSets['mesh'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('mesh', values, type, fireData));
-    gAPPP.a.modelSets['shape'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('shape', values, type, fireData));
-    gAPPP.a.modelSets['material'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('material', values, type, fireData));
-    gAPPP.a.modelSets['texture'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('texture', values, type, fireData));
-    gAPPP.a.modelSets['frame'].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange('frame', values, type, fireData));
+  initDom() {
+    if (this.context)
+      this.context.deactivate();
+
+    this.dialog = document.querySelector('#firebase-app-main-page');
+    document.body.removeChild(this.dialog);
+    this.dialog = null;
+
+    let div = document.createElement('div');
+    div.innerHTML = this._layoutTemplate();
+    div = div.firstChild;
+    document.body.insertBefore(div, document.body.firstChild);
+    this.dialog = document.querySelector('#firebase-app-main-page');
+
+    this.signOutBtn = document.querySelector('#sign-out-button');
+    if (this.signOutBtn)
+      this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
+
+    this.initCanvas();
+    this.initHeader();
+    this.dialog.style.display = '';
+  }
+  initHeader() {}
+  registerFirebaseModels() {
+    this.canvasFBRecordTypes.forEach(recType => gAPPP.a.modelSets[recType].childListeners.push(
+      (values, type, fireData) => this._updateContextWithDataChange(recType, values, type, fireData)));
     gAPPP.a.modelSets['userProfile'].childListeners.push(
       (values, type, fireData) => this._userProfileChange(values, type, fireData));
   }
-  _initCanvas() {
+  initCanvas() {
     let canvasTemplate = this._canvasPanelTemplate();
     this.canvasWrapper = this.dialog.querySelector('.popup-canvas-wrapper');
     this.canvasWrapper.innerHTML = canvasTemplate;
