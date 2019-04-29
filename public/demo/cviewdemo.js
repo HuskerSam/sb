@@ -451,7 +451,7 @@ class cViewDemo extends bView {
   layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
       <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
-      <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+      <div class="form_canvas_wrapper"></div>
 
       <div class="user-options-panel">
         <button class="choice-button-one" style="display:none;">&nbsp;</button>

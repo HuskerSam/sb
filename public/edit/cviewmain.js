@@ -1031,7 +1031,7 @@ class cViewMain extends bView {
   layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
-    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+    <div class="form_canvas_wrapper"></div>
     <div style="display:none;position:absolute;top:0;right:.25em;z-index:1000;">
       <button id="toggle-all-toolbands-down" class="btn-sb-icon"><i class="material-icons doubled-up-first">expand_more</i><i class="material-icons doubled-up-second">expand_more</i></button>
       <button id="toggle-all-toolbands" class="btn-sb-icon"><i class="material-icons doubled-up-first">expand_less</i><i class="material-icons doubled-up-second">expand_less</i></button>

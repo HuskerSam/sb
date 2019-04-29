@@ -533,12 +533,6 @@ button i.material-icons {
   background: white;
 }
 
-.inner-split-view {
-  color: rgb(66, 66, 66);
-  display: flex;
-  flex-direction: column;
-}
-
 .mdl-button--primary.mdl-button--primary.mdl-button--fab {
   border: solid 2px rgb(200, 255, 240);
 }

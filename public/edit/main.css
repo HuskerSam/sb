@@ -144,7 +144,7 @@
   font-size: .8em;
 }
 
-.main-canvas-wrapper {
+.form_canvas_wrapper {
   touch-action: none;
   position: absolute;
   z-index: 0;

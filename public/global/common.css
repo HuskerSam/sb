@@ -62,7 +62,13 @@ html, body {
   height: 100%;
 }
 
-.popup-canvas-wrapper {
+.form_panel_view_dom {
+  color: rgb(66, 66, 66);
+  display: flex;
+  flex-direction: column;
+}
+
+.form_canvas_wrapper {
   width: 100%;
   height: 100%;
   overflow: hidden;

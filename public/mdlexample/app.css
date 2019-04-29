@@ -259,6 +259,7 @@ select {
 #main-view-wrapper {
   flex: 1;
   background: rgb(200, 255, 240);
+  display: flex;
 }
 
 

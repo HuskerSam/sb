@@ -125,7 +125,7 @@ class cViewPublished extends bView {
   layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
   <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
-  <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+  <div class="form_canvas_wrapper"></div>
   <button id="user-profile-dialog-reset-button">Reset Options</button>
   <button id="publish-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
   <a href="/" id="change-view-anchor">Change View</a>

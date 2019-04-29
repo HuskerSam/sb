@@ -1,5 +1,5 @@
 class bView {
-  constructor() {
+  constructor(layoutMode) {
     this.dialogs = {};
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
     this.initDom();
@@ -28,6 +28,7 @@ class bView {
 
     this.initCanvas();
     this.initHeader();
+    this.initLayout();
     this.dialog.style.display = '';
   }
   initHeader() {}
@@ -39,7 +40,7 @@ class bView {
   }
   initCanvas() {
     let canvasTemplate = this._canvasPanelTemplate();
-    this.canvasWrapper = this.dialog.querySelector('.popup-canvas-wrapper');
+    this.canvasWrapper = this.dialog.querySelector('.form_canvas_wrapper');
     this.canvasWrapper.innerHTML = canvasTemplate;
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
@@ -222,13 +223,56 @@ class bView {
       setTimeout(() => location.reload(), 100);
     }
   }
+  initLayout() {
+    if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1) {
+      this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
+      this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
+
+      let l = this.form_canvas_wrapper;
+      let r = this.form_panel_view_dom;
+      this.layoutMode = gAPPP.a.profile.formLayoutMode;
+      if (this.layoutMode === 'Right' || this.layoutMode === 'Bottom') {
+        l = this.form_panel_view_dom;
+        r = this.form_canvas_wrapper;
+        l.parentNode.insertBefore(l, r);
+      }
+
+      let splitOrientation = 'horizontal';
+      if (this.layoutMode === 'Top' || this.layoutMode === 'Bottom') {
+        splitOrientation = 'vertical';
+        this.form_canvas_wrapper.parentNode.style.display = 'block';
+      }
+      this.splitInstance = window.Split([l, r], {
+        sizes: [40, 60],
+        gutterSize: 20,
+        direction: splitOrientation,
+        onDragEnd: () => gAPPP.resize(),
+        onDrag: () => gAPPP.resize()
+      });
+    }
+  }
   layoutTemplate() {
+    this.layoutMode = gAPPP.a.profile.formLayoutMode;
+    if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1)
+      return this.splitLayout();
+
     return `<div id="firebase-app-main-page" style="display:none;">
   <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
   <div id="main-view-wrapper">
-    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+    <div class="form_canvas_wrapper"></div>
   </div>
 </div>`;
+  }
+  splitLayout() {
+    return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
+    <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
+    <div id="main-view-wrapper">
+      <div class="form_canvas_wrapper"></div>
+      <div class="form_panel_view_dom">
+        Panel For Form View
+      </div>
+    </div>
+  </div>`;
   }
   _headerTemplate() {}
 }

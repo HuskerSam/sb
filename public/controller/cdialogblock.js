@@ -9,7 +9,7 @@ class cDialogBlock extends bDialog {
     d.setAttribute('class', 'modal-dialog');
     d.querySelector('.popup-title').innerHTML = 'Block Editor';
     document.body.appendChild(d);
-    d.querySelector('.popup-canvas-wrapper').innerHTML = parentView._canvasPanelTemplate();
+    d.querySelector('.form_canvas_wrapper').innerHTML = parentView._canvasPanelTemplate();
     d.classList.add('block-dialog-popup');
 
     let editPanel = document.createElement('div');
@@ -37,7 +37,7 @@ class cDialogBlock extends bDialog {
   <div class="popup-title"></div>
 </div>
 <div class="popup-main-body">
-  <div class="popup-canvas-wrapper">
+  <div class="form_canvas_wrapper">
   </div>
   <div class="edit-popup-fields fields-container">
   </div>

@@ -9,7 +9,7 @@ class bDialog {
       d.classList.add('modal-dialog');
       d.querySelector('.popup-title').innerHTML = title;
       document.body.appendChild(d);
-      d.querySelector('.popup-canvas-wrapper').innerHTML = parentView._canvasPanelTemplate();
+      d.querySelector('.form_canvas_wrapper').innerHTML = parentView._canvasPanelTemplate();
 
       let fieldsContainer = d.querySelector('.edit-popup-fields');
       this._init(d, tag, fieldsContainer, fieldsContainer);
@@ -26,7 +26,7 @@ class bDialog {
   <div class="popup-title"></div>
 </div>
 <div class="popup-main-body">
-  <div class="popup-canvas-wrapper">
+  <div class="form_canvas_wrapper">
   </div>
   <div class="edit-popup-fields fields-container">
   </div>
@@ -271,7 +271,7 @@ class bDialog {
     if (this.splitInstance)
       this.splitInstance.destroy();
 
-    let t = this.dialog.querySelector('.popup-canvas-wrapper');
+    let t = this.dialog.querySelector('.form_canvas_wrapper');
     let b = this.dataViewContainer;
     let mb = this.dialog.querySelector('.popup-main-body');
 
