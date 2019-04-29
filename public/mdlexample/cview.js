@@ -115,16 +115,26 @@ class cView extends bView {
   <form autocomplete="off" onsubmit="return false;"></form>
 </div>`;
   }
+  _bodyTemplate() {
+    let html = 'bodyPanel';
+    return html;
+  }
   _initHeader() {
     let div = document.createElement('div');
     div.classList.add('header-wrapper');
     div.innerHTML = this._headerTemplate();
 
-    //this.mainView = this.dialog.querySelector('#main-view-wrapper');
-
     this.canvasWrapper.insertBefore(div, this.canvasWrapper.firstChild);
     this.signOutBtn = document.querySelector('#sign-out-button');
     if (this.signOutBtn)
       this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
+
+    this.view_layout_select = document.getElementById('view_layout_select');
+    this.view_layout_select.addEventListener('change', e => {
+      gAPPP.layoutMode = this.view_layout_select.value;
+      //this.layoutMode = gAPPP.a.profile.mdlAppLayoutMode;
+
+      gAPPP.updateAppLayout();
+    });
   }
 }

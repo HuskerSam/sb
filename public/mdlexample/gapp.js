@@ -16,6 +16,7 @@ class gApp extends gInstanceSuper {
       this.workspaceProcessed = true;
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
+      this.layoutMode = gAPPP.a.profile.mdlAppLayoutMode;
       this.mV = new cView();
       this._updateApplicationStyle();
     };
@@ -29,7 +30,6 @@ class gApp extends gInstanceSuper {
     div.innerHTML = this._loginPageTemplate('MDL Example');
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
-    this.updateAppLayout();
     document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);
     this.emailBtn = document.querySelector('#sign-in-email-button');
     this.emailBtn.addEventListener('click', e => {
@@ -39,16 +39,26 @@ class gApp extends gInstanceSuper {
       setTimeout(() => this.emailBtn.innerHTML = 'Send Link', 5000);
     }, false);
   }
-  _layoutTemplate() {
-    return `<div id="firebase-app-main-page" style="display:none;">
-  <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
-  <div id="main-view-wrapper">
-    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
-  </div>
-</div>`;
+  updateAppLayout() {
+    let div = document.createElement('div');
+    div.innerHTML = this._fullLayout();
+    div = div.firstChild;
+    document.body.insertBefore(div, document.body.firstChild);
+
+
+    console.log('1', this.layoutMode);
+////    if (this.layoutMode === 'horizontal')
+  //    return this._horizontalLayout();
+
+//    return this._fullLayout();
   }
   _fullLayout() {
-    return ``;
+    return `<div id="firebase-app-main-page" style="display:none;">
+      <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
+      <div id="main-view-wrapper">
+        <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+      </div>
+    </div>`;
   }
   _horizontalLayout() {
     return ``;

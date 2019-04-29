@@ -124,14 +124,14 @@ class gInstanceSuper {
     document.body.appendChild(this.styleProfileDom);
     this.resize();
   }
-  updateAppLayout(layoutMode) {
+  updateAppLayout() {
     let div = document.createElement('div');
-    div.innerHTML = this._layoutTemplate(layoutMode);
+    div.innerHTML = this._layoutTemplate();
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
-    this._layoutRegisterHandlers(layoutMode);
+    this._layoutRegisterHandlers();
   }
-  _layoutRegisterHandlers(layoutMode) {
+  _layoutRegisterHandlers() {
     this.signOutBtn = document.querySelector('#sign-out-button');
     if (this.signOutBtn)
       this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
