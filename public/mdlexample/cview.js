@@ -144,7 +144,7 @@ class cView extends bView {
     super.initDom();
     this.view_layout_select.value = this.layoutMode;
   }
-  _layoutTemplate() {
+  layoutTemplate() {
     this.layoutMode = gAPPP.a.profile.formLayoutMode;
 
     return `<div id="firebase-app-main-page" style="display:none;">

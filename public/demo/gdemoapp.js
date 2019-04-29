@@ -26,29 +26,6 @@ class gDemoApp extends gInstanceSuper {
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">Loading...</div>`;
   }
-  _layoutTemplate() {
-    return `<div id="firebase-app-main-page" style="display:none;">
-      <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
-      <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
-
-      <div class="user-options-panel">
-        <button class="choice-button-one" style="display:none;">&nbsp;</button>
-        <button class="choice-button-two" style="display:none;">&nbsp;</button>
-        <button class="choice-button-three" style="display:none;">&nbsp;</button>
-        <button class="choice-button-four" style="display:none;">&nbsp;</button>
-      </div>
-      <div class="cart-total">
-        <select id="workspaces-select"></select>
-        <button class="choice-button-clear cart-submit">Checkout</button>
-        <div class="cart-item-total">$ 0.00</div>
-        <div class="cart-contents">
-        </div>
-        <div style="text-align:center;">
-          <button id="cart-contents-more-button">More</button>
-        </div>
-      </div>
-    </div>`;
-  }
   initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');

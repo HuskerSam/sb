@@ -17,7 +17,7 @@ class bView {
     this.dialog = null;
 
     let div = document.createElement('div');
-    div.innerHTML = this._layoutTemplate();
+    div.innerHTML = this.layoutTemplate();
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
     this.dialog = document.querySelector('#firebase-app-main-page');
@@ -221,6 +221,14 @@ class bView {
       }]);
       setTimeout(() => location.reload(), 100);
     }
+  }
+  layoutTemplate() {
+    return `<div id="firebase-app-main-page" style="display:none;">
+  <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
+  <div id="main-view-wrapper">
+    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
+  </div>
+</div>`;
   }
   _headerTemplate() {}
 }

@@ -139,12 +139,4 @@ class gInstanceSuper {
   </div>
 </div>`;
   }
-  _layoutTemplate() {
-    return `<div id="firebase-app-main-page" style="display:none;">
-  <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
-  <div id="main-view-wrapper">
-    <div class="popup-canvas-wrapper main-canvas-wrapper"></div>
-  </div>
-</div>`;
-  }
 }
