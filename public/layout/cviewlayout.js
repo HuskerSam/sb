@@ -1,8 +1,8 @@
 class cViewLayout extends bView {
   constructor() {
     gAPPP.a.profile.formLayoutMode = 'Left';
-    super();
-  //  this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
+    super(null, null, null, true);
+    //  this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
     this.form_panel_view_dom.innerHTML = this.formDetailsTemplate();
 
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
@@ -151,6 +151,9 @@ class cViewLayout extends bView {
     this.scene_data_expand_btn = document.getElementById('scene_data_expand_btn');
     this.scene_data_expand_btn.addEventListener('click', e => this.toggleSceneDataView());
     this.scene_data_expand_btn.click();
+
+    let key = 'selectedBlockKey' + gAPPP.workspace;
+    this._updateSelectedBlock(gAPPP.a.profile[key]);
   }
   async canvasReadyPostTimeout() {
     document.querySelector('.form_panel_view_dom').style.display = '';

@@ -1,6 +1,6 @@
 class cViewDemo extends bView {
   constructor() {
-    super();
+    super(null, null, null, true);
 
     this.canvasHelper.cameraShownCallback = () => this._cameraShown();
 
@@ -45,6 +45,9 @@ class cViewDemo extends bView {
 
     this.moreContentsListBtn = document.getElementById('cart-contents-more-button');
     this.moreContentsListBtn.addEventListener('click', () => this.toggleContentsListHeight());
+
+    let key = 'selectedBlockKey' + gAPPP.workspace;
+    this._updateSelectedBlock(gAPPP.a.profile[key]);
   }
   toggleContentsListHeight() {
     if (this.moreContentsLarged) {

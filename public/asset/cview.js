@@ -23,33 +23,6 @@ class cView extends bView {
       document.getElementById('profile-header-panel').classList.add('expanded');
     }
   }
-  _headerTemplate() {
-    return `<div id="profile-header-panel">
-  <select id="profile_current_role">
-    <option>Employee</option>
-    <option>Contractor</option>
-    <option>Manager</option>
-    <option>Owner</option>
-    <option>Administrator</option>
-  </select>
-  &nbsp;
-  <span class="user-name"></span>
-  &nbsp;
-  <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
-</div>
-<button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
-<select id="view_layout_select" style="float:right;">
-  <option>Full</option>
-  <option>Top</option>
-  <option>Left</option>
-  <option>Bottom</option>
-  <option>Right</option>
-  <option>None</option>
-</select>
-<div id="record_field_list">
-  <form autocomplete="off" onsubmit="return false;"></form>
-</div>`;
-  }
   initHeader() {
     let div = document.createElement('div');
     div.classList.add('header-wrapper');
@@ -378,5 +351,33 @@ class cView extends bView {
       </div>
     </div>
   </div>`;
+  }
+
+  _headerTemplate() {
+    return `<div id="profile-header-panel">
+  <select id="profile_current_role">
+    <option>Employee</option>
+    <option>Contractor</option>
+    <option>Manager</option>
+    <option>Owner</option>
+    <option>Administrator</option>
+  </select>
+  &nbsp;
+  <span class="user-name"></span>
+  &nbsp;
+  <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+</div>
+<button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
+<select id="view_layout_select" style="float:right;">
+  <option>Full</option>
+  <option>Top</option>
+  <option>Left</option>
+  <option>Bottom</option>
+  <option>Right</option>
+  <option>None</option>
+</select>
+<div id="record_field_list">
+  <form autocomplete="off" onsubmit="return false;"></form>
+</div>`;
   }
 }
