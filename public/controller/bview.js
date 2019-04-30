@@ -50,7 +50,7 @@ class bView {
     this.canvasWrapper.innerHTML = canvasTemplate;
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
-    this.context = new wContext(this.canvas, true);
+    this.context = new wContext(this.canvas);
     this.canvasActions = this.dialog.querySelector('.canvas-actions');
     this.canvasActions.style.display = '';
     this.loadedSceneURL = '';

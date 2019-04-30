@@ -96,8 +96,6 @@ class gAuthorization {
       if (this.workspaceLoadedCallback)
         this.workspaceLoadedCallback();
 
-      let key = 'selectedBlockKey' + gAPPP.workspace;
-      gAPPP.mV._updateSelectedBlock(gAPPP.a.profile[key]);
       this.initialBlockLoad = true;
     }
   }

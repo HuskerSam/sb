@@ -1,5 +1,5 @@
 class wContext {
-  constructor(canvas, initEngine, canvasHelper = null) {
+  constructor(canvas) {
     this.ghostBlocks = {};
     this.light = null;
     this.camera = null;
@@ -12,18 +12,10 @@ class wContext {
     this.importedMeshes = [];
     this.importedMeshClones = [];
     this.cachedProfile = {};
-    this.canvasHelper = canvasHelper;
     this.previousCameraRadius = '';
     this.previousCameraOrigin = '';
     this.previousCameraHieghtOffset = '';
     this.preRenderFrame = () => {};
-
-    if (initEngine) {
-      this.engine = new BABYLON.Engine(this.canvas, false, {
-        preserveDrawingBuffer: true
-      });
-      this.engine.enableOfflineSupport = false;
-    }
   }
   setGhostBlock(name, block) {
     if (this.ghostBlocks[name] === block)
