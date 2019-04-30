@@ -27,6 +27,9 @@ class cViewPublished extends bView {
     });
 
     this.elementTypeChange();
+
+    let key = 'selectedBlockKey' + gAPPP.workspace;
+    this._updateSelectedBlock(gAPPP.a.profile[key]);
   }
   closeHeaderBands() {
 

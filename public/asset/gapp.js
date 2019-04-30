@@ -1,11 +1,25 @@
 class gApp extends gInstanceSuper {
   constructor() {
     super();
+    window.addEventListener('popstate', () => {
+      let urlParams = new URLSearchParams(window.location.search);
+      if (this.mV) {
+        if (this.mV.tag !== urlParams.get('tag')) {
+          this.mV.key = urlParams.get('key');
+          this.mV.dataview_record_tag.value = urlParams.get('tag');
+          this.mV.updateRecordList();
+        } else if (this.mV.key !== urlParams.get('key')) {
+          this.mV.dataview_record_key.value = urlParams.get('key');
+          this.mV.updateSelectedRecord().then(() => {});
+        }
+      }
+    });
   }
   workspaceLoaded(wId) {
     if (this.workspaceProcessed) return;
     this.workspaceProcessed = true;
-    this.mV = new cView(gAPPP.a.profile.mdlAppLayoutMode, 'shape', null, true);
+    let urlParams = new URLSearchParams(window.location.search);
+    this.mV = new cView(gAPPP.a.profile.mdlAppLayoutMode, urlParams.get('tag'), urlParams.get('key'));
     this._updateApplicationStyle();
   }
   _updateApplicationStyle() {}

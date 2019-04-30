@@ -117,62 +117,32 @@ class cView extends bView {
     this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
     this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
   }
-  _cBlockEditorTemplate() {
-    return `<div class="main-band-wrapper">
-    <div class="main-band-first-row">
-      <button class="main-band-details-element"></button>
-      <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
-      <div class="main-band-flex-children"></div>
-    </div>
-    <div class="cblock-details-panel">
-      <button class="block-scene-details-button btn-sb-icon"><i class="material-icons">dashboard</i></button>
-      <a class="block-id-display-span" target="_blank">Publish Link</a>
-    </div>
-    <div class="cblock-child-details-panel"></div>
-    <button class="btn-sb-icon ie-frames-details"><i class="material-icons">import_export</i></button>
-    <div style="clear:both;"></div>
-  </div>
-  <div>
-    <div class="export-frames-details-panel" style="display:none;">
-      <div style="float:left;">
-        <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
-        &nbsp;
-        <button class="btn-sb-icon import-frames-button">Import</button>
-        &nbsp;
-      </div>
-      <textarea class="frames-textarea-export" rows="1" cols="6" style="float:left;flex:1;overflow:scroll;white-space:pre"></textarea>
-      <div style="clear:both"></div>
-    </div>
-  </div>
-  <div class="frames-panel">
-    <div class="frames-header-fields-panel" style="display:none;">
-    </div>
-  </div>`;
-  }
   initDataUI() {
-    this.dataview_record_type = this.dialog.querySelector('#dataview_record_type');
-    this.dataview_record_list = this.dialog.querySelector('#dataview_record_list');
+    this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
+    this.dataview_record_key = this.dialog.querySelector('#dataview_record_key');
+    this.dataview_record_tag.value = this.tag;
 
-    this.dataview_record_type.addEventListener('change', e => this.updateRecordList());
-    this.dataview_record_list.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
+    this.dataview_record_tag.addEventListener('change', e => this.updateRecordList());
+    this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
   }
   updateRecordList() {
-    this.tag = this.dataview_record_type.value;
+    this.tag = this.dataview_record_tag.value;
     let options = '';
     let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
     for (let i in fS)
       options += `<option value="${i}">${fS[i].title} (${i})</option>`;
 
-    this.dataview_record_list.innerHTML = options;
+    this.dataview_record_key.innerHTML = options;
+    this.dataview_record_key.value = this.key;
 
     this.initDataFields();
     this.updateSelectedRecord().then(() => {});
   }
   async updateSelectedRecord() {
-    if (this.dataview_record_list.selectedIndex === -1) {
+    if (this.dataview_record_key.selectedIndex === -1) {
       this.key = '';
     } else {
-      this.key = this.dataview_record_list.value;
+      this.key = this.dataview_record_key.value;
       this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     }
     this._updateQueryString();
@@ -230,7 +200,12 @@ class cView extends bView {
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
   _updateQueryString() {
-    console.log(this.tag, this.key);
+    let urlParams = new URLSearchParams(window.location.search);
+    if (this.tag === urlParams.get('tag') && this.key === urlParams.get('key'))
+      return;
+    
+    let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + `?tag=${this.tag}&key=${this.key}`;
+    window.history.pushState({path:newURL},'', newURL);
   }
   splitLayoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
@@ -239,14 +214,14 @@ class cView extends bView {
         <div class="form_canvas_wrapper"></div>
         <div class="form_panel_view_dom">
         <select id="workspaces-select"></select>
-        <select id="dataview_record_type">
+        <select id="dataview_record_tag">
           <option value="shape">Shape</option>
           <option value="mesh">Mesh</option>
           <option value="material">Material</option>
           <option value="texture">Texture</option>
           <option value="block">Block</option>
         </select>
-        <select id="dataview_record_list"></select>
+        <select id="dataview_record_key"></select>
         <div class="fields-container"></div>
       </div>
     </div>
@@ -352,7 +327,6 @@ class cView extends bView {
     </div>
   </div>`;
   }
-
   _headerTemplate() {
     return `<div id="profile-header-panel">
   <select id="profile_current_role">
@@ -379,5 +353,37 @@ class cView extends bView {
 <div id="record_field_list">
   <form autocomplete="off" onsubmit="return false;"></form>
 </div>`;
+  }
+  _cBlockEditorTemplate() {
+    return `<div class="main-band-wrapper">
+    <div class="main-band-first-row">
+      <button class="main-band-details-element"></button>
+      <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+      <div class="main-band-flex-children"></div>
+    </div>
+    <div class="cblock-details-panel">
+      <button class="block-scene-details-button btn-sb-icon"><i class="material-icons">dashboard</i></button>
+      <a class="block-id-display-span" target="_blank">Publish Link</a>
+    </div>
+    <div class="cblock-child-details-panel"></div>
+    <button class="btn-sb-icon ie-frames-details"><i class="material-icons">import_export</i></button>
+    <div style="clear:both;"></div>
+  </div>
+  <div>
+    <div class="export-frames-details-panel" style="display:none;">
+      <div style="float:left;">
+        <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
+        &nbsp;
+        <button class="btn-sb-icon import-frames-button">Import</button>
+        &nbsp;
+      </div>
+      <textarea class="frames-textarea-export" rows="1" cols="6" style="float:left;flex:1;overflow:scroll;white-space:pre"></textarea>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+  <div class="frames-panel">
+    <div class="frames-header-fields-panel" style="display:none;">
+    </div>
+  </div>`;
   }
 }
