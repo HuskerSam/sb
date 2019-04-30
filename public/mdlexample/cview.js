@@ -124,29 +124,114 @@ class cView extends bView {
     this.view_layout_select.value = this.layoutMode;
   }
   initDataFields() {
+    if (this.fireSetCallback)
+      this.fireSet.removeListener(this.fireSetCallback);
+    this.fieldsContainer = this.dialog.querySelector('.fields-container');
+    this.dataViewContainer = this.fieldsContainer;
+    this.fieldsContainer.innerHTML = '';
+
     if (!this.tag)
       return;
 
     this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.fireSet = gAPPP.a.modelSets[this.tag];
-    this.uiJSON = 'N/A';
-    this.fieldsContainer = this.dialog.querySelector('.fields-container');
-    this.dataViewContainer = this.fieldsContainer;
 
-    this.fireSet.removeListener(this.fireSetCallback);
-    this.fieldsContainer.innerHTML = '';
     this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
     this.fireFields.updateContextObject = true;
 
     this.fireSetCallback = (values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData);
     this.fireSet.childListeners.push(this.fireSetCallback);
+
+    if (this.tag === 'block'){
+      this.initBlockDataFields();
+    } else {
+    }
+  }
+  initBlockDataFields() {
+    let editPanel = document.createElement('div');
+    editPanel.setAttribute('class', 'cblock-editor-wrapper');
+    editPanel.innerHTML = this._cBlockEditorTemplate();
+    this.fieldsContainer.parentNode.appendChild(editPanel);
+    let fieldsPanel = editPanel.querySelector('.cblock-details-panel');
+    editPanel.parentNode.insertBefore(editPanel, this.fieldsContainer);
+    this.dataViewContainer = editPanel;
+
+    this.editMainPanel = editPanel;
+    this.childKey = null;
+
+    this.rootElementDom = this.dataViewContainer.querySelector('.main-band-details-element');
+    this.rootElementDom.addEventListener('click', e => this.childBand.setKey(null));
+    this.childBandDom = this.dataViewContainer.querySelector('.main-band-flex-children');
+    this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
+    this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
+
+    this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
+    this.framesPanelHeader = this.dataViewContainer.querySelector('.frames-header-fields-panel');
+    this.framesBand = new cBandFrames(this.framesPanel, this, this.framesPanelHeader);
+    this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneFields');
+    this.sceneFireFields = new cPanelData(this.sceneFields, this.framesPanelHeader, this);
+    this.fireSet.childListeners.push((values, type, fireData) => this.sceneFireFields._handleDataChange(values, type, fireData));
+    this.sceneFireFields.updateContextObject = false;
+    this.fireFields.updateContextObject = false;
+    let clearDiv = document.createElement('div');
+    clearDiv.style.clear = 'both';
+    this.framesPanelHeader.appendChild(clearDiv);
+    this.blockShowHideBtn = this.editMainPanel.querySelector('.block-scene-details-button');
+    this.blockShowHideBtn.addEventListener('click', () => this.showHideSceneDetails());
+
+    this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
+    this.addChildButton.addEventListener('click', e => this.addChild());
+
+    this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
+    this.exportFramesButton = this.dialog.querySelector('.ie-frames-details');
+    this.exportFramesButton.addEventListener('click', e => this.toggleFramesIEDisplay());
+    this.iePanelShown = false;
+
+    this.refreshExportButton = this.dialog.querySelector('.refresh-export-frames-button');
+    this.refreshExportButton.addEventListener('click', e => this.refreshExportText());
+    this.importButton = this.dialog.querySelector('.import-frames-button');
+    this.importButton.addEventListener('click', e => this.importFramesFromText());
+    this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
+    this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
+  }
+  _cBlockEditorTemplate() {
+    return `<div class="main-band-wrapper">
+    <div class="main-band-first-row">
+      <button class="main-band-details-element"></button>
+      <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+      <div class="main-band-flex-children"></div>
+    </div>
+    <div class="cblock-details-panel">
+      <button class="block-scene-details-button btn-sb-icon"><i class="material-icons">dashboard</i></button>
+      <a class="block-id-display-span" target="_blank">Publish Link</a>
+    </div>
+    <div class="cblock-child-details-panel"></div>
+    <button class="btn-sb-icon ie-frames-details"><i class="material-icons">import_export</i></button>
+    <div style="clear:both;"></div>
+  </div>
+  <div>
+    <div class="export-frames-details-panel" style="display:none;">
+      <div style="float:left;">
+        <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
+        &nbsp;
+        <button class="btn-sb-icon import-frames-button">Import</button>
+        &nbsp;
+      </div>
+      <textarea class="frames-textarea-export" rows="1" cols="6" style="float:left;flex:1;overflow:scroll;white-space:pre"></textarea>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+  <div class="frames-panel">
+    <div class="frames-header-fields-panel" style="display:none;">
+    </div>
+  </div>`;
   }
   initDataUI() {
     this.dataview_record_type = this.dialog.querySelector('#dataview_record_type');
     this.dataview_record_list = this.dialog.querySelector('#dataview_record_list');
 
     this.dataview_record_type.addEventListener('change', e => this.updateRecordList());
-    this.dataview_record_list.addEventListener('change', e => this.updateSelectedRecord());
+    this.dataview_record_list.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
   }
   updateRecordList() {
     this.tag = this.dataview_record_type.value;
@@ -158,31 +243,47 @@ class cView extends bView {
     this.dataview_record_list.innerHTML = options;
 
     this.initDataFields();
-    this.updateSelectedRecord();
+    this.updateSelectedRecord().then(() => {});
   }
-  updateSelectedRecord() {
+  async updateSelectedRecord() {
     if (this.dataview_record_list.selectedIndex === -1) {
       this.key = '';
     } else {
       this.key = this.dataview_record_list.value;
       this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     }
+
+    //load saved scene if exists
+    if (this.tag === 'block') {
+      if (this.fireFields.values.url)
+        await this.context.loadSceneURL(this.fireFields.values.url);
+    }
     let b = new wBlock(this.context);
     b.staticType = this.tag;
     b.staticLoad = true;
 
-    /*   //for block specific view
-            if (key) {
-              b.blockKey = key;
-              b.isContainer = true;
-            }
-            */
+    if (this.tag === 'block' && this.key) {
+      b.blockKey = this.key;
+      b.isContainer = true;
+    }
+
     this.context.activate(null);
     this.context.setActiveBlock(b);
     this.rootBlock = b;
     this.canvasHelper.__updateVideoCallback();
     b.setData(this.fireFields.values);
 
+    let result = null;
+    if (this.tag === 'mesh')
+      result = await this.rootBlock.loadMesh();
+
+    if (this.tag === 'block') {
+      this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+      this.dialog.querySelector('.block-id-display-span').setAttribute('href', this.rootBlock.publishURL);
+
+      this.childBand.refreshUIFromCache();
+      this.childBand.setKey(null);
+    }
 
     this.rootBlock = this.context.activeBlock;
     if (this.canvasHelper)
@@ -191,15 +292,16 @@ class cView extends bView {
     this.fireFields.loadedURL = this.fireFields.values['url'];
     let sceneReloadRequired = this.fireFields.paint();
     this.fireFields.helpers.resetUI();
-/*
-    if (this.sceneFireFields) {
-      this.sceneFireFields.paint();
-      this.sceneFireFields.helpers.resetUI();
-    }
-*/
-  //  this._endLoad();
-  //  this._showFocus();
-  //  this.expandAll();
+    this.fireFields.helpers.expandAll();
+    /*
+        if (this.sceneFireFields) {
+          this.sceneFireFields.paint();
+          this.sceneFireFields.helpers.resetUI();
+        }
+    */
+    //  this._endLoad();
+    //  this._showFocus();
+    //  this.expandAll();
 
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
@@ -228,7 +330,49 @@ class cView extends bView {
     this.canvasHelper.show();
   }
   async canvasReady() {
-    this.updateRecordList();
-    return Promise.resolve();
+    return this.updateRecordList();
+  }
+  _updateContextWithDataChange(tag, values, type, fireData) {
+    if (this.tag === 'block') {
+      if (this.rootBlock) {
+        this.rootBlock.handleDataUpdate(tag, values, type, fireData);
+        this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+        if (tag === 'blockchild')
+          this._updateFollowTargetListOptions();
+        if (tag === 'blockchild')
+          this.rootBlock.updateCamera();
+      }
+    } else {
+      super._updateContextWithDataChange(tag, values, type, fireData);
+    }
+  }
+  setChildKey(key) {
+    this.childKey = key;
+    this.childEditPanel.style.display = 'none';
+    this.fieldsContainer.style.display = 'none';
+
+    if (this.childKey === null) {
+      this.editMainPanel.classList.add('root-block-display');
+      this.editMainPanel.classList.remove('child-block-display');
+      this.rootElementDom.classList.add('selected');
+
+      if (this.detailsShown)
+        this.fieldsContainer.style.display = 'block';
+      this.context.setActiveBlock(this.rootBlock);
+    } else {
+      this.editMainPanel.classList.remove('root-block-display');
+      this.editMainPanel.classList.add('child-block-display');
+      this.rootElementDom.classList.remove('selected');
+      if (this.detailsShown)
+        this.childEditPanel.style.display = 'block';
+
+      let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+      if (block)
+        this.context.setActiveBlock(block);
+      else
+        this.context.setActiveBlock(this.rootBlock);
+    }
+
+    this.framesBand.refreshUIFromCache();
   }
 }

@@ -11,7 +11,7 @@ class bDialog {
       document.body.appendChild(d);
       d.querySelector('.form_canvas_wrapper').innerHTML = parentView._canvasPanelTemplate();
 
-      let fieldsContainer = d.querySelector('.edit-popup-fields');
+      let fieldsContainer = d.querySelector('.fields-container');
       this._init(d, tag, fieldsContainer, fieldsContainer);
     }
   }
@@ -27,7 +27,7 @@ class bDialog {
 </div>
 <div class="popup-main-body">
   <div class="form_canvas_wrapper"></div>
-  <div class="edit-popup-fields fields-container"></div>
+  <div class="fields-container"></div>
 </div>`;
   }
   _init(dialog, tag, dataViewContainer = null, fieldsContainer = null) {

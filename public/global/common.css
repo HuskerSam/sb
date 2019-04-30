@@ -265,8 +265,8 @@ input[type=range]::-webkit-slider-thumb {
   margin: .25em;
   border: outset .15em silver;
   padding: .25em;
-  padding-right: .5em;
   padding-top: 0;
+  max-width: 99%;
 }
 
 .form-group-container-group .checkboxgroup {
@@ -389,6 +389,7 @@ button i.material-icons {
 
 .url-type-input-group {
   width: 45vw;
+  max-width: 100%;
 }
 
 

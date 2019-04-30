@@ -437,12 +437,12 @@ class wBlock {
           objectData.rotationY = newMesh.rotation.y;
           objectData.rotationZ = newMesh.rotation.z;
 
-          resolve();
+          resolve({ error: false });
         },
         progress => {},
         (scene, msg, err) => {
           this.context.logError('wBlock.loadMesh');
-          reject({
+          resolve({
             error: true,
             message: msg,
             errorObject: err,
