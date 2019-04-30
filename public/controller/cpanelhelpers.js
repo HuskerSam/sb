@@ -187,7 +187,8 @@ class cPanelHelpers {
     html += ` z ${GLOBALUTIL.formatNumber(r.z * 57.2958).trim()}&deg;`;
     if (this.tag === 'mesh') {
       let meshData = this.context.activeBlock.sceneObjectMeshData;
-      html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.rotationX)} y${GLOBALUTIL.formatNumber(meshData.rotationY)} z${GLOBALUTIL.formatNumber(meshData.rotationZ)}`;
+      if (meshData)
+        html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.rotationX)} y${GLOBALUTIL.formatNumber(meshData.rotationY)} z${GLOBALUTIL.formatNumber(meshData.rotationZ)}`;
     }
 
     hp.infoDom.innerHTML = html;
@@ -295,7 +296,8 @@ class cPanelHelpers {
     html += `\n  Actual w${GLOBALUTIL.formatNumber(this._wDim.size.x)} h${GLOBALUTIL.formatNumber(this._wDim.size.y)} d${GLOBALUTIL.formatNumber(this._wDim.size.z)}`;
     if (this.tag === 'mesh') {
       let meshData = this.context.activeBlock.sceneObjectMeshData;
-      html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.scalingX)} y${GLOBALUTIL.formatNumber(meshData.scalingY)} z${GLOBALUTIL.formatNumber(meshData.scalingZ)}`;
+      if (meshData)
+        html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.scalingX)} y${GLOBALUTIL.formatNumber(meshData.scalingY)} z${GLOBALUTIL.formatNumber(meshData.scalingZ)}`;
     }
     hp.infoDom.innerHTML = html;
 

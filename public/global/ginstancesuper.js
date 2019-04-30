@@ -54,7 +54,7 @@ class gInstanceSuper {
     this.workspaceProcessed = false;
     gAPPP.a.workspaceLoadedCallback = () => this.workspaceLoaded(wId);
   }
-  workspaceLoaded() {}
+  workspaceLoaded(workspaceId) {}
   profileReady() {
     if (!this.initialUILoad)
       return;

@@ -80,6 +80,11 @@ class bFirebase {
     for (let i in this.childListeners)
       this.childListeners[i](fireData !== null ? this.getCache(fireData.key) : null, type, fireData);
   }
+  removeListener(callback) {
+    let indexToRemove = this.childListeners.indexOf(callback);
+    if (indexToRemove !== 1)
+      this.childListeners.splice(indexToRemove, 1);
+  }
   getCache(key) {
     return this.values;
   }

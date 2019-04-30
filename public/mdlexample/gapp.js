@@ -4,10 +4,7 @@ class gApp extends gInstanceSuper {
   }
   workspaceLoaded(wId) {
     if (this.workspaceProcessed) return;
-
     this.workspaceProcessed = true;
-    gAPPP.a.profile['selectedBlockKey' + wId] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
-
     this.mV = new cView(gAPPP.a.profile.mdlAppLayoutMode, 'shape', null, true);
     this._updateApplicationStyle();
   }

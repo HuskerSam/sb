@@ -123,41 +123,112 @@ class cView extends bView {
     this.layoutMode = gAPPP.a.profile.formLayoutMode;
     this.view_layout_select.value = this.layoutMode;
   }
-  initFields() {
+  initDataFields() {
     if (!this.tag)
       return;
 
     this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.fireSet = gAPPP.a.modelSets[this.tag];
-    this.fireFields = null;
     this.uiJSON = 'N/A';
     this.fieldsContainer = this.dialog.querySelector('.fields-container');
     this.dataViewContainer = this.fieldsContainer;
 
-    if (this.fields) {
-      this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
-      this.fireFields.updateContextObject = true;
-      this.fireSet.childListeners.push((values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData));
+    this.fireSet.removeListener(this.fireSetCallback);
+    this.fieldsContainer.innerHTML = '';
+    this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
+    this.fireFields.updateContextObject = true;
+
+    this.fireSetCallback = (values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData);
+    this.fireSet.childListeners.push(this.fireSetCallback);
+  }
+  initDataUI() {
+    this.dataview_record_type = this.dialog.querySelector('#dataview_record_type');
+    this.dataview_record_list = this.dialog.querySelector('#dataview_record_list');
+
+    this.dataview_record_type.addEventListener('change', e => this.updateRecordList());
+    this.dataview_record_list.addEventListener('change', e => this.updateSelectedRecord());
+  }
+  updateRecordList() {
+    this.tag = this.dataview_record_type.value;
+    let options = '';
+    let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
+    for (let i in fS)
+      options += `<option value="${i}">${fS[i].title} (${i})</option>`;
+
+    this.dataview_record_list.innerHTML = options;
+
+    this.initDataFields();
+    this.updateSelectedRecord();
+  }
+  updateSelectedRecord() {
+    if (this.dataview_record_list.selectedIndex === -1) {
+      this.key = '';
+    } else {
+      this.key = this.dataview_record_list.value;
+      this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     }
+    let b = new wBlock(this.context);
+    b.staticType = this.tag;
+    b.staticLoad = true;
+
+    /*   //for block specific view
+            if (key) {
+              b.blockKey = key;
+              b.isContainer = true;
+            }
+            */
+    this.context.activate(null);
+    this.context.setActiveBlock(b);
+    this.rootBlock = b;
+    this.canvasHelper.__updateVideoCallback();
+    b.setData(this.fireFields.values);
+
+
+    this.rootBlock = this.context.activeBlock;
+    if (this.canvasHelper)
+      this.canvasHelper.logClear();
+
+    this.fireFields.loadedURL = this.fireFields.values['url'];
+    let sceneReloadRequired = this.fireFields.paint();
+    this.fireFields.helpers.resetUI();
 /*
-    this.okBtn = this.dialog.querySelector('.save-details');
-    this.cancelBtn = this.dialog.querySelector('.close-details');
-    this.progressBar = this.dialog.querySelector('.popup-progress-bar');
-    this.okBtn = this.dialog.querySelector('.save-details');
-    this.rotateBtn = this.dialog.querySelector('.rotate-details');
-    this.deleteBtn = this.dialog.querySelector('.delete-item');
-    this.popupButtons = this.dialog.querySelector('.popup-buttons');
-
-    if (this.cancelBtn)
-      this.cancelBtn.addEventListener('click', () => this.close(), false);
-    if (this.okBtn)
-      this.okBtn.addEventListener('click', () => this.save(), false);
-    if (this.rotateBtn)
-      this.rotateBtn.addEventListener('click', () => this._rotateView(), false);
-    if (this.deleteBtn)
-      this.deleteBtn.addEventListener('click', () => this._delete(), false);
-
-    this.dialog.addEventListener('close', e => this.close());
+    if (this.sceneFireFields) {
+      this.sceneFireFields.paint();
+      this.sceneFireFields.helpers.resetUI();
+    }
 */
+  //  this._endLoad();
+  //  this._showFocus();
+  //  this.expandAll();
+
+    this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+  }
+  splitLayoutTemplate() {
+    return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
+      <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
+      <div id="main-view-wrapper">
+        <div class="form_canvas_wrapper"></div>
+        <div class="form_panel_view_dom">
+        <select id="workspaces-select"></select>
+        <select id="dataview_record_type">
+          <option value="shape">Shape</option>
+          <option value="mesh">Mesh</option>
+          <option value="material">Material</option>
+          <option value="texture">Texture</option>
+          <option value="block">Block</option>
+        </select>
+        <select id="dataview_record_list"></select>
+        <div class="fields-container"></div>
+      </div>
+    </div>
+  </div>`;
+  }
+  show(scene) {
+    this.context.activate(scene);
+    this.canvasHelper.show();
+  }
+  async canvasReady() {
+    this.updateRecordList();
+    return Promise.resolve();
   }
 }

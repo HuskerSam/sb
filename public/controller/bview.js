@@ -32,11 +32,11 @@ class bView {
     this.initCanvas();
     this.initHeader();
     this.splitLayout();
-    this.initFields();
+    this.initDataUI();
     this.registerFirebaseModels();
     this.dialog.style.display = '';
   }
-  initFields() {}
+  initDataUI() {}
   initHeader() {}
   registerFirebaseModels() {
     this.canvasFBRecordTypes.forEach(recType => gAPPP.a.modelSets[recType].childListeners.push(
@@ -306,19 +306,10 @@ class bView {
     <div id="main-view-wrapper">
       <div class="form_canvas_wrapper"></div>
       <div class="form_panel_view_dom">
-      <select id="workspaces-select"></select>
-        <select class="record-type">
-          <option value="shape">Shape</option>
-          <option value="mesh">Mesh</option>
-          <option value="material">Material</option>
-          <option value="texture">Texture</option>
-          <option value="block">Block</option>
-        </select>
-        <select class="record-title-list"></select>
-        <div class="fields-container"></div>
-      </div>
+      <div class="fields-container"></div>
     </div>
-  </div>`;
+  </div>
+</div>`;
   }
   _headerTemplate() {}
 }
