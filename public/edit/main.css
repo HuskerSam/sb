@@ -152,6 +152,10 @@
   margin: 0;
 }
 
+.modal-dialog .form_canvas_wrapper {
+  position: relative;
+}
+
 .modal-dialog {
   margin: 0vh auto;
   width: 100vw;

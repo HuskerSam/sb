@@ -170,6 +170,13 @@ class bView {
     this.canvasHelper.testError();
   }
   closeHeaderBands() {}
+  async refreshProjectList() {
+    let projectListData = await firebase.database().ref('projectTitles').once('value');
+    let projectList = projectListData.val();
+
+    this.updateProjectList(projectList, gAPPP.a.profile.selectedWorkspace);
+    return Promise.resolve();
+  }
   updateProjectList(records, selectedWorkspace = null) {
     if (!this.workplacesSelect)
       return;
@@ -299,6 +306,15 @@ class bView {
     <div id="main-view-wrapper">
       <div class="form_canvas_wrapper"></div>
       <div class="form_panel_view_dom">
+      <select id="workspaces-select"></select>
+        <select class="record-type">
+          <option value="shape">Shape</option>
+          <option value="mesh">Mesh</option>
+          <option value="material">Material</option>
+          <option value="texture">Texture</option>
+          <option value="block">Block</option>
+        </select>
+        <select class="record-title-list"></select>
         <div class="fields-container"></div>
       </div>
     </div>

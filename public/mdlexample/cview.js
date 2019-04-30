@@ -5,6 +5,10 @@ class cView extends bView {
 
     document.querySelector('.user-name').innerHTML = gAPPP.a.currentUser.email;
 
+    this.refreshProjectList().then(() => {});
+    this.workplacesSelect = document.querySelector('#workspaces-select');
+    this.workplacesSelect.addEventListener('input', e => this.selectProject());
+
     this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
     this.profile_description_panel_btn.addEventListener('click', e => this.toggleProfilePanel());
   }

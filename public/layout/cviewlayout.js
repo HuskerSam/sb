@@ -207,10 +207,7 @@ class cViewLayout extends bView {
     this.sceneOptionsBlockListChange();
   }
   async loadTemplateLists() {
-    let projectListData = await firebase.database().ref('projectTitles').once('value');
-    let projectList = projectListData.val();
-
-    this.updateProjectList(projectList, gAPPP.a.profile.selectedWorkspace);
+    this.refreshProjectList().then(() => {});
     this.__initAddTemplates(this.add_animation_asset_template, this.assetTemplates);
     this.__initAddTemplates(this.import_asset_templates_select, this.assetTemplates, '<option>Template</option>');
     this.__initAddTemplates(this.add_animation_scene_template, this.sceneTemplates);
@@ -236,6 +233,8 @@ class cViewLayout extends bView {
     this.__initAddAnimations('add_animation_scene_animation');
     this.__initAddAnimations('add_animation_product_animation');
     this.__initAddAnimations('remove_workspace_select_template', '<option>Delete Animation</option>');
+
+    return Promise.resolve();
   }
   async __addAnimationTemplate(type, targetProjectId, sourceProjectId) {
     if (!sourceProjectId)
