@@ -2,6 +2,7 @@ class bView {
   constructor(layoutMode, tag, key = null, play = false) {
     this.dialogs = {};
     this.playAnimation = play;
+    this.expandedAll = true;
     this.tag = tag;
     this.key = key;
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
@@ -13,6 +14,10 @@ class bView {
   initDom() {
     if (this.context)
       this.context.deactivate();
+
+    this.layoutMode = gAPPP.a.profile.formLayoutMode;
+    if (!this.layoutMode)
+      this.layoutMode = 'Left';
 
     this.dialog = document.querySelector('#firebase-app-main-page');
     document.body.removeChild(this.dialog);
@@ -289,7 +294,6 @@ class bView {
     }
   }
   layoutTemplate() {
-    this.layoutMode = gAPPP.a.profile.formLayoutMode;
     if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1)
       return this.splitLayoutTemplate();
 
@@ -312,4 +316,20 @@ class bView {
 </div>`;
   }
   _headerTemplate() {}
+  expandAll() {
+    this.fireFields.helpers.expandAll();
+    this.detailsShown = true;
+  }
+  collapseAll() {
+    this.fireFields.helpers.collapseAll();
+    this.detailsShown = false;
+  }
+  toggleDetails() {
+    this.detailsShown = !this.detailsShown;
+
+    if (this.detailsShown)
+      return this.expandAll();
+
+    return this.collapseAll();
+  }
 }

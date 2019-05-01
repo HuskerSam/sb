@@ -262,7 +262,6 @@ select {
   display: flex;
 }
 
-
 #profile-header-panel {
   transition: height 800ms, opacity 800ms, padding 800ms;
   padding: 0;
@@ -279,35 +278,16 @@ select {
   padding: 10px;
 }
 
-
-
 /* BLOCK EDITOR CSS FOLLOW */
-
-.cblock-editor-wrapper {
-  overflow: hidden;
-  display: flex ! important;
-  flex-direction: column;
-  padding-bottom: 3px;
-}
-
-.main-band-first-row {
-  display: flex;
-}
-
 .main-band-flex-children {
   flex: 1;
   white-space: nowrap;
   overflow-x: auto;
 }
 
-.cblock-details-panel, .cblock-child-details-panel {
+.cblock-child-details-panel {
   white-space: nowrap;
   overflow: auto;
-  padding-left: 3.5em;
-}
-
-.cblock-details-panel .form-group-container-group {
-  float: none;
 }
 
 .cblock-child-details-panel .form-group-container-group {
@@ -328,8 +308,10 @@ select {
   display: none;
 }
 
-.frames-panel>div:nth-child(2) label span {
+.frames-panel>div:nth-child(1) label span {
   display: inline-block;
+  padding: .25em;
+  font-size: 1em;
 }
 
 .frames-panel input {
@@ -358,10 +340,13 @@ select {
 
 .frames-panel .form-group-container-group {
   float: none;
-  margin: 0 .15em;
+  margin: 0 0em;
   background: rgba(255, 255, 255, .5);
-  margin-top: -.25em;
-  padding-top: .25em;
+  padding-top: .35em;
+  border: none;
+  border-radius: 0;
+  border-top: solid .1em silver;
+  border-bottom: solid 1px black;
 }
 
 .frames-panel .frames-header-fields-panel {
@@ -381,10 +366,6 @@ select {
 
 .frames-panel .frames-header-fields-panel .form-group-container-group input {
   padding: .25em .5em;
-}
-
-.cblock-details-panel .form-group-container-group, .cblock-child-details-panel .form-group-container-group {
-  background: rgba(255, 255, 255, .5);
 }
 
 .frames-panel {
@@ -464,14 +445,13 @@ select {
   margin-right: 0;
 }
 
-.main-band-wrapper {
-  padding-top: .1em;
-  position: relative;
-}
-
 .skybox-preview-images img {
   max-height: 5em;
   max-width: 5em;
+}
+
+.main-band-first-row {
+  display: flex;
 }
 
 .block-editor-child, .main-band-details-element {
@@ -565,37 +545,6 @@ select {
   display: none;
 }
 
-.block-id-display-span {
-  padding: .25em;
-  border-radius: .25em;
-  background: rgb(240, 240, 240);
-  position: relative;
-  top: 1em;
-  margin-left: .25em;
-  float: left;
-}
-
-.block-scene-details-button {
-  top: .75em;
-  left: .15em;
-  position: relative;
-}
-.ie-frames-details {
-  position: absolute;
-  left: .15em;
-  top: 3.5em;
-}
-
-#publish-link-url {
-  position: absolute;
-  top: .75em;
-  right: 9.5em;
-  padding: .25em;
-  border-radius: .25em;
-  z-index: 1000;
-}
-
-
 .selected-mesh-bounds-helper-box {
   color: black;
   padding-left: .2em;
@@ -629,4 +578,73 @@ select {
   left: -12.75em;
   top: .25em;
   margin-bottom: .75em;
+}
+
+.collapse-expand-all {
+  transform: rotate(-90deg);
+  transition: all 800ms;
+  cursor: pointer;
+  margin: 0;
+  padding: 10px 10px;
+  background: none;
+  border: none;
+  float: right;
+}
+
+.collapse-expand-all i {
+  font-weight: bold;
+}
+
+
+
+
+.mdl-tabs.is-upgraded .mdl-tabs__panel.is-active {
+  display: flex;
+  flex: 1;
+}
+
+.mdl-tabs__panel {
+  flex-direction: column;
+}
+
+.mdl-tabs {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  flex-direction: column;
+  background: radial-gradient(at left 40%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
+}
+
+.mdl-tabs__tab-bar {
+  justify-content: left;
+  border-bottom: solid 2px rgb(200, 255, 240);
+  margin-top: 2px;
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab {
+  border: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border: solid 1px white;
+  border-bottom: none;
+  color: white;
+  padding: 0 10px;
+  background-image: radial-gradient(rgb(0, 150, 136) 20%, rgb(200, 255, 240));
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
+  display: none;
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-image: radial-gradient(rgb(200, 255, 240) 25%, white);
+  border-top: solid 2px rgb(0, 150, 136);
+  border-left: solid 1px rgb(0, 150, 136);
+  border-right: solid 1px rgb(0, 150, 136);
+  font-weight: bold;
+  color: rgb(0, 150, 136);
 }

@@ -372,10 +372,6 @@ class cViewMain extends bView {
       });
     }
   }
-  updatePublishLink() {
-    if (this.rootBlock)
-      document.querySelector('#publish-link-url').setAttribute('href', this.rootBlock.publishURL);
-  }
   importPanelImport() {
     let eleType = this.importRefreshElementSelect.value.toLowerCase();
     let json = '';
@@ -973,10 +969,6 @@ class cViewMain extends bView {
   _titleKeyPress(e) {
     if (e.code === 'Enter')
       this.createItem();
-  }
-  _updateContextWithDataChange(tag, values, type, fireData) {
-    super._updateContextWithDataChange(tag, values, type, fireData);
-    this.updatePublishLink();
   }
   __loadBlock(profileKey, blockData) {
     super.__loadBlock(profileKey, blockData);

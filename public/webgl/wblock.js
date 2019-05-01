@@ -39,19 +39,6 @@ class wBlock {
     for (let i in this.childBlocks)
       this.childBlocks[i].updateNoBump();
   }
-  get publishURL() {
-    let link = gAPPP.publishURL + '?';
-    if (gAPPP.workspaceCode)
-      link += 'z=' + gAPPP.workspaceCode;
-    else
-      link += 'w=' + gAPPP.workspace;
-
-    if (this.blockRawData.blockCode)
-      link += '&y=' + this.blockRawData.blockCode;
-    else
-      link += '&b=' + this.blockKey;
-    return link;
-  }
   set blockKey(key) {
     this._blockKey = key;
     this.framesHelper.setParentKey(key, this);

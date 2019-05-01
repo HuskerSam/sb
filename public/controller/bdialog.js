@@ -197,7 +197,6 @@ class bDialog {
     this.__createRootBlock('block', this.key);
 
     this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
-    this.dialog.querySelector('.block-id-display-span').setAttribute('href', this.rootBlock.publishURL);
 
     this.childBand.refreshUIFromCache();
     this.childBand.setKey(null);

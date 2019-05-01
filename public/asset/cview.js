@@ -38,21 +38,17 @@ class cView extends bView {
         setTimeout(() => location.reload(), 1);
       })
     });
-    this.layoutMode = gAPPP.a.profile.formLayoutMode;
+
     this.view_layout_select.value = this.layoutMode;
   }
   initDataFields() {
     if (this.fireSetCallback)
       this.fireSet.removeListener(this.fireSetCallback);
-    this.fieldsContainer = this.dialog.querySelector('.form_panel_view_dom .fields-container');
-    this.dataViewContainer = this.fieldsContainer;
-    this.fieldsContainer.innerHTML = '';
+    this.dataViewContainer = this.form_panel_view_dom.querySelector('.data-view-container');
+    this.fieldsContainer = document.createElement('div');
+    this.dataViewContainer.innerHTML = '';
+    this.dataViewContainer.appendChild(this.fieldsContainer);
     this.dataFieldsInited = false;
-
-    if (!this.tag)
-      return;
-    if (!this.key)
-      return;
 
     this.dataFieldsInited = true;
     this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
@@ -64,19 +60,24 @@ class cView extends bView {
     this.fireSetCallback = (values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData);
     this.fireSet.childListeners.push(this.fireSetCallback);
 
+    if (!this.tag)
+      return;
+    if (!this.key)
+      return;
+
     if (this.tag === 'block'){
       this.initBlockDataFields();
     } else {
+
     }
+
   }
   initBlockDataFields() {
     let editPanel = document.createElement('div');
     editPanel.setAttribute('class', 'cblock-editor-wrapper');
     editPanel.innerHTML = this._cBlockEditorTemplate();
-    this.fieldsContainer.parentNode.appendChild(editPanel);
-    let fieldsPanel = editPanel.querySelector('.cblock-details-panel');
-    editPanel.parentNode.insertBefore(editPanel, this.fieldsContainer);
-    this.dataViewContainer = editPanel;
+    this.dataViewContainer.appendChild(editPanel);
+    window.componentHandler.upgradeAllRegistered();
 
     this.editMainPanel = editPanel;
     this.childKey = null;
@@ -88,26 +89,19 @@ class cView extends bView {
     this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
 
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
-    this.framesPanelHeader = this.dataViewContainer.querySelector('.frames-header-fields-panel');
-    this.framesBand = new cBandFrames(this.framesPanel, this, this.framesPanelHeader);
+    this.framesBand = new cBandFrames(this.framesPanel, this);
     this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneFields');
-    this.sceneFireFields = new cPanelData(this.sceneFields, this.framesPanelHeader, this);
+    this.sceneFieldsPanel = this.dataViewContainer.querySelector('.scene-fields-panel');
+    this.sceneFireFields = new cPanelData(this.sceneFields, this.sceneFieldsPanel, this);
     this.fireSet.childListeners.push((values, type, fireData) => this.sceneFireFields._handleDataChange(values, type, fireData));
     this.sceneFireFields.updateContextObject = false;
     this.fireFields.updateContextObject = false;
-    let clearDiv = document.createElement('div');
-    clearDiv.style.clear = 'both';
-    this.framesPanelHeader.appendChild(clearDiv);
-    this.blockShowHideBtn = this.editMainPanel.querySelector('.block-scene-details-button');
-    this.blockShowHideBtn.addEventListener('click', () => this.showHideSceneDetails());
+    this.sceneFieldsPanel.parentNode.insertBefore(this.fieldsContainer, this.sceneFieldsPanel.parentNode.firstChild);
 
     this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
 
     this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
-    this.exportFramesButton = this.dialog.querySelector('.ie-frames-details');
-    this.exportFramesButton.addEventListener('click', e => this.toggleFramesIEDisplay());
-    this.iePanelShown = false;
 
     this.refreshExportButton = this.dialog.querySelector('.refresh-export-frames-button');
     this.refreshExportButton.addEventListener('click', e => this.refreshExportText());
@@ -149,18 +143,21 @@ class cView extends bView {
       this.initDataFields();
       this._updateQueryString();
       return;
-    } else {
-      this.key = this.dataview_record_key.value;
-      if (!this.dataFieldsInited)
-        this.initDataFields();
-      this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     }
+
+    this.key = this.dataview_record_key.value;
+    if (!this.dataFieldsInited)
+      this.initDataFields();
+    this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     this._updateQueryString();
 
     //load saved scene if exists
     if (this.tag === 'block') {
       if (this.fireFields.values.url)
         await this.context.loadSceneURL(this.fireFields.values.url);
+
+      this.sceneFireFields.values = this.fireSet.fireDataByKey[this.key].val();
+      this._updateFollowTargetListOptions();
     }
     let b = new wBlock(this.context);
     b.staticType = this.tag;
@@ -183,7 +180,6 @@ class cView extends bView {
 
     if (this.tag === 'block') {
       this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
-      this.dialog.querySelector('.block-id-display-span').setAttribute('href', this.rootBlock.publishURL);
 
       this.childBand.refreshUIFromCache();
       this.childBand.setKey(null);
@@ -196,7 +192,7 @@ class cView extends bView {
     this.fireFields.loadedURL = this.fireFields.values['url'];
     let sceneReloadRequired = this.fireFields.paint();
     this.fireFields.helpers.resetUI();
-    this.fireFields.helpers.expandAll();
+    this.expandAll();
 
     if (this.sceneFireFields) {
       this.sceneFireFields.paint();
@@ -234,7 +230,7 @@ class cView extends bView {
       <div id="main-view-wrapper">
         <div class="form_canvas_wrapper"></div>
         <div class="form_panel_view_dom">
-          <div class="header_wrapper">
+          <div class="header_wrapper" style="line-height: 3em;">
             <div id="profile-header-panel">
               <select id="profile_current_role">
                 <option>Employee</option>
@@ -247,7 +243,13 @@ class cView extends bView {
               <span class="user-name"></span>
               &nbsp;
               <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+              <br>
+              <div id="record_field_list">
+                <form autocomplete="off" onsubmit="return false;"></form>
+              </div>
             </div>
+            <b>&nbsp;Workspace</b>
+            <select id="workspaces-select"></select>
             <button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
             <select id="view_layout_select" style="float:right;">
               <option>Full</option>
@@ -257,21 +259,24 @@ class cView extends bView {
               <option>Right</option>
               <option>None</option>
             </select>
-            <div id="record_field_list">
-              <form autocomplete="off" onsubmit="return false;"></form>
-            </div>
-            <select id="workspaces-select"></select>
-            <select id="dataview_record_tag">
-              <option value=""></option>
-              <option value="shape">Shape</option>
-              <option value="mesh">Mesh</option>
-              <option value="material">Material</option>
-              <option value="texture">Texture</option>
-              <option value="block">Block</option>
-            </select>
-            <select id="dataview_record_key"></select>
+            <br>
+            <table style="width:100%;">
+              <tr>
+                <td>
+                  <select id="dataview_record_tag">
+                    <option value=""></option>
+                    <option value="shape">Shape</option>
+                    <option value="mesh">Mesh</option>
+                    <option value="material">Material</option>
+                    <option value="texture">Texture</option>
+                    <option value="block">Block</option>
+                  </select>
+                </td>
+                <td style="width:99%;"><select id="dataview_record_key" style="max-width:100%;"></select></td>
+              </tr>
+            </table>
           </div>
-          <div class="fields-container"></div>
+          <div class="data-view-container"></div>
         </div>
       </div>
     </div>`;
@@ -293,38 +298,9 @@ class cView extends bView {
         if (tag === 'blockchild')
           this.rootBlock.updateCamera();
       }
-    } else {
-      super._updateContextWithDataChange(tag, values, type, fireData);
-    }
-  }
-  setChildKey(key) {
-    this.childKey = key;
-    this.childEditPanel.style.display = 'none';
-    this.fieldsContainer.style.display = 'none';
-
-    if (this.childKey === null) {
-      this.editMainPanel.classList.add('root-block-display');
-      this.editMainPanel.classList.remove('child-block-display');
-      this.rootElementDom.classList.add('selected');
-
-      if (this.detailsShown)
-        this.fieldsContainer.style.display = 'block';
-      this.context.setActiveBlock(this.rootBlock);
-    } else {
-      this.editMainPanel.classList.remove('root-block-display');
-      this.editMainPanel.classList.add('child-block-display');
-      this.rootElementDom.classList.remove('selected');
-      if (this.detailsShown)
-        this.childEditPanel.style.display = 'block';
-
-      let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
-      if (block)
-        this.context.setActiveBlock(block);
-      else
-        this.context.setActiveBlock(this.rootBlock);
     }
 
-    this.framesBand.refreshUIFromCache();
+    super._updateContextWithDataChange(tag, values, type, fireData);
   }
   _canvasPanelTemplate() {
     return `<canvas class="popup-canvas"></canvas>
@@ -377,35 +353,127 @@ class cView extends bView {
   </div>`;
   }
   _cBlockEditorTemplate() {
-    return `<div class="main-band-wrapper">
-    <div class="main-band-first-row">
-      <button class="main-band-details-element"></button>
-      <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
-      <div class="main-band-flex-children"></div>
-    </div>
-    <div class="cblock-details-panel">
-      <button class="block-scene-details-button btn-sb-icon"><i class="material-icons">dashboard</i></button>
-      <a class="block-id-display-span" target="_blank">Publish Link</a>
-    </div>
-    <div class="cblock-child-details-panel"></div>
-    <button class="btn-sb-icon ie-frames-details"><i class="material-icons">import_export</i></button>
-    <div style="clear:both;"></div>
-  </div>
-  <div>
-    <div class="export-frames-details-panel" style="display:none;">
-      <div style="float:left;">
-        <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
-        &nbsp;
-        <button class="btn-sb-icon import-frames-button">Import</button>
-        &nbsp;
+    return `<div class="main-band-first-row">
+        <button class="main-band-details-element"></button>
+        <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+        <div class="main-band-flex-children"></div>
       </div>
-      <textarea class="frames-textarea-export" rows="1" cols="6" style="float:left;flex:1;overflow:scroll;white-space:pre"></textarea>
-      <div style="clear:both"></div>
-    </div>
-  </div>
-  <div class="frames-panel">
-    <div class="frames-header-fields-panel" style="display:none;">
-    </div>
-  </div>`;
+      <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="flex:1;">
+        <div class="mdl-tabs__tab-bar">
+          <a href="#ui-block-frames-panel" id="ui-block-frames-tab" class="mdl-tabs__tab is-active">Frames</a>
+          <a href="#ui-block-details-panel" id="ui-block-details-tab" class="mdl-tabs__tab">Node</a>
+          <a href="#ui-block-json-panel" id="ui-block-json-tab" class="mdl-tabs__tab">JSON</a>
+        </div>
+        <div class="frames-panel mdl-tabs__panel is-active" id="ui-block-frames-panel"></div>
+        <div class="mdl-tabs__panel" id="ui-block-details-panel">
+          <div class="cblock-child-details-panel"></div>
+          <div class="scene-fields-panel">
+            <hr>
+          </div>
+        </div>
+        <div class="export-frames-details-panel mdl-tabs__panel" id="ui-block-json-panel">
+          <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
+          &nbsp;
+          <button class="btn-sb-icon import-frames-button">Import</button>
+          <br>
+          <textarea class="frames-textarea-export" rows="1" cols="6" style="width: 100%; height: 5em"></textarea>
+        </div>
+      </div>`;
+  }
+  refreshExportText() {
+    let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+    if (!block)
+      block = this.rootBlock;
+    let outFrames = [];
+    for (let i in block.framesHelper.rawFrames)
+      outFrames.push(block.framesHelper.rawFrames[i]);
+
+    this.ieTextArea.value = JSON.stringify(outFrames).replace(/},/g, '},\n');
+  }
+  importFramesFromText() {
+    let obj;
+    let rawJSON = this.ieTextArea.value;
+    try {
+      obj = JSON.parse(rawJSON);
+    } catch (e) {
+      console.log('frames import error (JSON.parse)', e);
+      alert('Error parsing JSON, refer to console for more details: ' + e.toString());
+      return;
+    }
+
+    if (!Array.isArray(obj)) {
+      alert('Frames need to be in an array');
+    }
+
+    let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+    if (!block)
+      block = this.rootBlock;
+
+    block.framesHelper.importFrames(obj);
+  }
+  get activeAnimation() {
+    return this.rootBlock.framesHelper.activeAnimation;
+  }
+  addChild() {
+    let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
+    objectData.parentKey = this.key;
+    gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData).then(r => {
+      this.childBand.setKey(r.key);
+      setTimeout(() => {
+        this.childBand.setKey(r.key);
+      }, 100);
+    });
+  }
+  setChildKey(key) {
+    this.childKey = key;
+    this.childEditPanel.style.display = 'none';
+
+    if (this.childKey === null) {
+      this.editMainPanel.classList.add('root-block-display');
+      this.editMainPanel.classList.remove('child-block-display');
+      this.rootElementDom.classList.add('selected');
+      this.context.setActiveBlock(this.rootBlock);
+    } else {
+      this.editMainPanel.classList.remove('root-block-display');
+      this.editMainPanel.classList.add('child-block-display');
+      this.rootElementDom.classList.remove('selected');
+      this.childEditPanel.style.display = 'block';
+
+      let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+      if (block)
+        this.context.setActiveBlock(block);
+      else
+        this.context.setActiveBlock(this.rootBlock);
+    }
+
+    this.framesBand.refreshUIFromCache();
+  }
+  _handleActiveObjectUpdate(e) {}
+  expandAll() {
+    super.expandAll();
+    this.detailsShown = true;
+  }
+  collapseAll() {
+    super.collapseAll();
+    this.detailsShown = false;
+    if (this.tag === 'block') {
+      this.setChildKey(this.childKey);
+      this.framesBand._updateFrameHelpersUI();
+    }
+  }
+  _updateFollowTargetListOptions() {
+    let optionText = '';
+    let options = [];
+    if (this.rootBlock)
+      options = this.rootBlock.generateTargetFollowList();
+    for (let i = 0; i < options.length; i++)
+      optionText += '<option>' + options[i] + '</option>';
+
+    if (!this.followblocktargetoptionslist) {
+      this.followblocktargetoptionslist = document.createElement('datalist');
+      this.followblocktargetoptionslist.id = 'followblocktargetoptionslist';
+      document.body.appendChild(this.followblocktargetoptionslist);
+    }
+    this.followblocktargetoptionslist.innerHTML = optionText;
   }
 }

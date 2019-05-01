@@ -6,7 +6,6 @@ class gInstanceSuper {
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
     this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
-    this.publishURL = '/view/'
     this.shapeTypes = [
       'box', 'cylinder', 'sphere', 'text', 'plane', 'torus', 'torusknot'
     ];
