@@ -5,15 +5,31 @@ class gApp extends gInstanceSuper {
       let urlParams = new URLSearchParams(window.location.search);
       if (this.mV) {
         if (this.mV.tag !== urlParams.get('tag')) {
-          this.mV.key = urlParams.get('key');
           this.mV.dataview_record_tag.value = urlParams.get('tag');
-          this.mV.updateRecordList();
+          this.mV.updateRecordList(urlParams.get('key'));
         } else if (this.mV.key !== urlParams.get('key')) {
           this.mV.dataview_record_key.value = urlParams.get('key');
           this.mV.updateSelectedRecord().then(() => {});
         }
       }
     });
+  }
+  profileReadyAndLoaded() {
+    let urlParams = new URLSearchParams(window.location.search);
+    let newWid = urlParams.get('wid');
+    if (newWid) {
+      if (newWid !== this.a.profile.selectedWorkspace) {
+        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+          field: 'selectedWorkspace',
+          newValue: newWid
+        }]).then(() => {
+          setTimeout(() => location.reload(), 100);
+        });
+        return;
+      }
+    }
+
+    super.profileReadyAndLoaded();
   }
   workspaceLoaded(wId) {
     if (this.workspaceProcessed) return;

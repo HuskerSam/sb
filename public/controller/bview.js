@@ -1,5 +1,5 @@
 class bView {
-  constructor(layoutMode, tag, key, play = false) {
+  constructor(layoutMode, tag, key = null, play = false) {
     this.dialogs = {};
     this.playAnimation = play;
     this.tag = tag;
@@ -8,7 +8,6 @@ class bView {
     this.initDom();
 
     this.dialog.context = this.context;
-    this.key = null;
     this.show(null);
   }
   initDom() {
@@ -30,14 +29,12 @@ class bView {
       this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
 
     this.initCanvas();
-    this.initHeader();
     this.splitLayout();
     this.initDataUI();
     this.registerFirebaseModels();
     this.dialog.style.display = '';
   }
   initDataUI() {}
-  initHeader() {}
   registerFirebaseModels() {
     this.canvasFBRecordTypes.forEach(recType => gAPPP.a.modelSets[recType].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange(recType, values, type, fireData)));
@@ -229,7 +226,9 @@ class bView {
       this.selectProject();
     }
   }
+  _updateQueryString(wId) {}
   selectProject() {
+    this._updateQueryString(gAPPP.mV.workplacesSelect.value);
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'selectedWorkspace',
         newValue: gAPPP.mV.workplacesSelect.value
@@ -253,6 +252,7 @@ class bView {
     });
 
     if (reload) {
+      this._updateQueryString(gAPPP.mV.workplacesSelect.value);
       await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'selectedWorkspace',
         newValue: key

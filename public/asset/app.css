@@ -279,13 +279,6 @@ select {
   padding: 10px;
 }
 
-.header-wrapper {
-  position: absolute;
-  z-index: 1;
-  bottom: 0;
-  right: 0;
-}
-
 
 
 /* BLOCK EDITOR CSS FOLLOW */
@@ -435,13 +428,6 @@ select {
 .camera-select-range-slider {}
 
 .camera-select-height-slider {}
-
-#workspaces-select {
-  margin-left: .2em;
-  pointer-events: auto;
-  position: relative;
-  top: -.1em;
-}
 
 #user-profile-panel {
   position: absolute;
@@ -607,4 +593,40 @@ select {
   padding: .25em;
   border-radius: .25em;
   z-index: 1000;
+}
+
+
+.selected-mesh-bounds-helper-box {
+  color: black;
+  padding-left: .2em;
+  white-space: pre;
+  text-align: center;
+  border-radius: .25em;
+  font-size: inherit;
+  padding-top: .35em;
+}
+
+.selected-mesh-bounds-helper-box input[type="text"] {
+  border-radius: .25em;
+  border: default;
+}
+
+.block-dialog-popup .selected-mesh-bounds-helper-box {
+  background: rgb(50, 50, 50);
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 0;
+}
+
+.selected-mesh-bounds-helper-box .form-control {
+  width: auto;
+  display: inline-block;
+}
+
+.font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  transform: none;
+  width: 18em;
+  left: -12.75em;
+  top: .25em;
+  margin-bottom: .75em;
 }

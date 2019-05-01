@@ -23,12 +23,7 @@ class cView extends bView {
       document.getElementById('profile-header-panel').classList.add('expanded');
     }
   }
-  initHeader() {
-    let div = document.createElement('div');
-    div.classList.add('header-wrapper');
-    div.innerHTML = this._headerTemplate();
-
-    this.canvasWrapper.insertBefore(div, this.canvasWrapper.firstChild);
+  __initHeader() {
     this.signOutBtn = document.querySelector('#sign-out-button');
     if (this.signOutBtn)
       this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
@@ -49,13 +44,17 @@ class cView extends bView {
   initDataFields() {
     if (this.fireSetCallback)
       this.fireSet.removeListener(this.fireSetCallback);
-    this.fieldsContainer = this.dialog.querySelector('.fields-container');
+    this.fieldsContainer = this.dialog.querySelector('.form_panel_view_dom .fields-container');
     this.dataViewContainer = this.fieldsContainer;
     this.fieldsContainer.innerHTML = '';
+    this.dataFieldsInited = false;
 
     if (!this.tag)
       return;
+    if (!this.key)
+      return;
 
+    this.dataFieldsInited = true;
     this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.fireSet = gAPPP.a.modelSets[this.tag];
 
@@ -118,6 +117,7 @@ class cView extends bView {
     this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
   }
   initDataUI() {
+    this.__initHeader();
     this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
     this.dataview_record_key = this.dialog.querySelector('#dataview_record_key');
     this.dataview_record_tag.value = this.tag;
@@ -125,12 +125,16 @@ class cView extends bView {
     this.dataview_record_tag.addEventListener('change', e => this.updateRecordList());
     this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
   }
-  updateRecordList() {
+  updateRecordList(newKey = null) {
     this.tag = this.dataview_record_tag.value;
-    let options = '';
-    let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
-    for (let i in fS)
-      options += `<option value="${i}">${fS[i].title} (${i})</option>`;
+    this.key = newKey;
+    let options = '<option value=""></option>';
+
+    if (this.tag) {
+      let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
+      for (let i in fS)
+        options += `<option value="${i}">${fS[i].title} (${i})</option>`;
+    }
 
     this.dataview_record_key.innerHTML = options;
     this.dataview_record_key.value = this.key;
@@ -139,10 +143,16 @@ class cView extends bView {
     this.updateSelectedRecord().then(() => {});
   }
   async updateSelectedRecord() {
-    if (this.dataview_record_key.selectedIndex === -1) {
+    if (this.dataview_record_key.selectedIndex <= 0) {
+      this.context.activate(null);
       this.key = '';
+      this.initDataFields();
+      this._updateQueryString();
+      return;
     } else {
       this.key = this.dataview_record_key.value;
+      if (!this.dataFieldsInited)
+        this.initDataFields();
       this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     }
     this._updateQueryString();
@@ -199,12 +209,23 @@ class cView extends bView {
 
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
-  _updateQueryString() {
+  _updateQueryString(newWid) {
     let urlParams = new URLSearchParams(window.location.search);
-    if (this.tag === urlParams.get('tag') && this.key === urlParams.get('key'))
-      return;
-    
-    let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + `?tag=${this.tag}&key=${this.key}`;
+    let queryString = `?wid=${gAPPP.a.profile.selectedWorkspace}`;
+    if (newWid){
+      queryString = `?wid=${newWid}`;
+    } else {
+      if (this.tag === urlParams.get('tag') && this.key === urlParams.get('key'))
+        return;
+
+      if (this.tag) {
+        queryString += `&tag=${this.tag}`;
+        if (this.key)
+          queryString += `&key=${this.key}`;
+      }
+    }
+
+    let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
     window.history.pushState({path:newURL},'', newURL);
   }
   splitLayoutTemplate() {
@@ -213,26 +234,54 @@ class cView extends bView {
       <div id="main-view-wrapper">
         <div class="form_canvas_wrapper"></div>
         <div class="form_panel_view_dom">
-        <select id="workspaces-select"></select>
-        <select id="dataview_record_tag">
-          <option value="shape">Shape</option>
-          <option value="mesh">Mesh</option>
-          <option value="material">Material</option>
-          <option value="texture">Texture</option>
-          <option value="block">Block</option>
-        </select>
-        <select id="dataview_record_key"></select>
-        <div class="fields-container"></div>
+          <div class="header_wrapper">
+            <div id="profile-header-panel">
+              <select id="profile_current_role">
+                <option>Employee</option>
+                <option>Contractor</option>
+                <option>Manager</option>
+                <option>Owner</option>
+                <option>Administrator</option>
+              </select>
+              &nbsp;
+              <span class="user-name"></span>
+              &nbsp;
+              <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+            </div>
+            <button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
+            <select id="view_layout_select" style="float:right;">
+              <option>Full</option>
+              <option>Top</option>
+              <option>Left</option>
+              <option>Bottom</option>
+              <option>Right</option>
+              <option>None</option>
+            </select>
+            <div id="record_field_list">
+              <form autocomplete="off" onsubmit="return false;"></form>
+            </div>
+            <select id="workspaces-select"></select>
+            <select id="dataview_record_tag">
+              <option value=""></option>
+              <option value="shape">Shape</option>
+              <option value="mesh">Mesh</option>
+              <option value="material">Material</option>
+              <option value="texture">Texture</option>
+              <option value="block">Block</option>
+            </select>
+            <select id="dataview_record_key"></select>
+          </div>
+          <div class="fields-container"></div>
+        </div>
       </div>
-    </div>
-  </div>`;
+    </div>`;
   }
   show(scene) {
     this.context.activate(scene);
     this.canvasHelper.show();
   }
   async canvasReady() {
-    return this.updateRecordList();
+    return this.updateRecordList(this.key);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.tag === 'block') {
@@ -326,33 +375,6 @@ class cView extends bView {
       </div>
     </div>
   </div>`;
-  }
-  _headerTemplate() {
-    return `<div id="profile-header-panel">
-  <select id="profile_current_role">
-    <option>Employee</option>
-    <option>Contractor</option>
-    <option>Manager</option>
-    <option>Owner</option>
-    <option>Administrator</option>
-  </select>
-  &nbsp;
-  <span class="user-name"></span>
-  &nbsp;
-  <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
-</div>
-<button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
-<select id="view_layout_select" style="float:right;">
-  <option>Full</option>
-  <option>Top</option>
-  <option>Left</option>
-  <option>Bottom</option>
-  <option>Right</option>
-  <option>None</option>
-</select>
-<div id="record_field_list">
-  <form autocomplete="off" onsubmit="return false;"></form>
-</div>`;
   }
   _cBlockEditorTemplate() {
     return `<div class="main-band-wrapper">
