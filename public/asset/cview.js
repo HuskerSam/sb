@@ -82,11 +82,10 @@ class cView extends bView {
     this.editMainPanel = editPanel;
     this.childKey = null;
 
-    this.rootElementDom = this.dataViewContainer.querySelector('.main-band-details-element');
-    this.rootElementDom.addEventListener('click', e => this.childBand.setKey(null));
-    this.childBandDom = this.dataViewContainer.querySelector('.main-band-flex-children');
+    this.blockChildrenSelect = this.dataViewContainer.querySelector('.main-band-children-select');
+
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
-    this.childBand = new cBandChildren(this.childBandDom, this, this.childEditPanel);
+    this.childBand = new cBandChildren(this.blockChildrenSelect, this, this.childEditPanel);
 
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
@@ -179,7 +178,7 @@ class cView extends bView {
       result = await this.rootBlock.loadMesh();
 
     if (this.tag === 'block') {
-      this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+      //this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
 
       this.childBand.refreshUIFromCache();
       this.childBand.setKey(null);
@@ -292,7 +291,7 @@ class cView extends bView {
     if (this.tag === 'block') {
       if (this.rootBlock) {
         this.rootBlock.handleDataUpdate(tag, values, type, fireData);
-        this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+        //this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
         if (tag === 'blockchild')
           this._updateFollowTargetListOptions();
         if (tag === 'blockchild')
@@ -353,31 +352,28 @@ class cView extends bView {
   </div>`;
   }
   _cBlockEditorTemplate() {
-    return `<div class="main-band-first-row">
-        <button class="main-band-details-element"></button>
-        <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
-        <div class="main-band-flex-children"></div>
+    return `<select class="main-band-children-select"></select>
+      <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i> child</button>
+      &nbsp;
+      <select class="main-band-sub-view-select">
+        <option>Frames</option>
+        <option>Node Details</option>
+        <option>Import/Export</option>
+      </select>
+      <br>
+      <div class="frames-panel"></div>
+      <div class="node-details-panel">
+        <div class="cblock-child-details-panel"></div>
+        <div class="scene-fields-panel">
+          <hr>
+        </div>
       </div>
-      <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect" style="flex:1;">
-        <div class="mdl-tabs__tab-bar">
-          <a href="#ui-block-frames-panel" id="ui-block-frames-tab" class="mdl-tabs__tab is-active">Frames</a>
-          <a href="#ui-block-details-panel" id="ui-block-details-tab" class="mdl-tabs__tab">Node</a>
-          <a href="#ui-block-json-panel" id="ui-block-json-tab" class="mdl-tabs__tab">JSON</a>
-        </div>
-        <div class="frames-panel mdl-tabs__panel is-active" id="ui-block-frames-panel"></div>
-        <div class="mdl-tabs__panel" id="ui-block-details-panel">
-          <div class="cblock-child-details-panel"></div>
-          <div class="scene-fields-panel">
-            <hr>
-          </div>
-        </div>
-        <div class="export-frames-details-panel mdl-tabs__panel" id="ui-block-json-panel">
-          <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
-          &nbsp;
-          <button class="btn-sb-icon import-frames-button">Import</button>
-          <br>
-          <textarea class="frames-textarea-export" rows="1" cols="6" style="width: 100%; height: 5em"></textarea>
-        </div>
+      <div class="export-frames-details-panel">
+        <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
+        &nbsp;
+        <button class="btn-sb-icon import-frames-button">Import</button>
+        <br>
+        <textarea class="frames-textarea-export" rows="1" cols="6" style="width: 100%; height: 5em"></textarea>
       </div>`;
   }
   refreshExportText() {
@@ -431,12 +427,10 @@ class cView extends bView {
     if (this.childKey === null) {
       this.editMainPanel.classList.add('root-block-display');
       this.editMainPanel.classList.remove('child-block-display');
-      this.rootElementDom.classList.add('selected');
       this.context.setActiveBlock(this.rootBlock);
     } else {
       this.editMainPanel.classList.remove('root-block-display');
       this.editMainPanel.classList.add('child-block-display');
-      this.rootElementDom.classList.remove('selected');
       this.childEditPanel.style.display = 'block';
 
       let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);

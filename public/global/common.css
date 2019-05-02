@@ -66,6 +66,7 @@ html, body {
   color: rgb(66, 66, 66);
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .form_canvas_wrapper {

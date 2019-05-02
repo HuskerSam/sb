@@ -4,7 +4,6 @@ class cViewMain extends bView {
 
     this.dialogs['mesh-edit'] = new bDialog('mesh', 'Mesh Options', this);
     this.dialogs['shape-edit'] = new bDialog('shape', 'Shape Editor', this);
-    this.dialogs['block-edit'] = new cDialogBlock(this);
     this.dialogs['material-edit'] = new bDialog('material', 'Material Editor', this);
     this.dialogs['texture-edit'] = new bDialog('texture', 'Texture Options', this);
 

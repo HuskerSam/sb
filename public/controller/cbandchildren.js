@@ -1,8 +1,8 @@
 class cBandChildren extends bBand {
-  constructor(domContainer, parent, editPanel) {
+  constructor(childSelect, parent, editPanel) {
 
     super(gAPPP.a.modelSets['blockchild'], 'blockchild');
-    this.childrenContainer = domContainer;
+    this.childSelect = childSelect;
     this.parent = parent;
     this.childEditPanel = editPanel;
     this.fireSet = gAPPP.a.modelSets['blockchild'];
@@ -58,8 +58,9 @@ class cBandChildren extends bBand {
     this.clearChildren();
     let children = this.fireSet.queryCache('parentKey', this.parent.key);
 
-    for (let i in children)
-      this._getDomForChild(i, children[i]);
+//    for (let i in children)
+//      this._getDomForChild(i, children[i]);
+
   }
   handleDataChange(fireData, type) {
     if (type === 'clear')
@@ -74,26 +75,6 @@ class cBandChildren extends bBand {
       return this.childChanged(fireData);
     if (type === 'remove')
       return this.childRemoved(fireData);
-  }
-  _getDomForChild(key, values) {
-    let d = document.createElement('div');
-    d.setAttribute('class', 'block-editor-child');
-    this.childrenContainer.insertBefore(d, this.childrenContainer.childNodes[0]);
-    d.addEventListener('click', e => this.setKey(key));
-
-    let html = '<span class="band-title"></span>';
-    d.innerHTML = html;
-    d.setAttribute('class', `${this.tag}${this.myKey}-${key} block-editor-child`);
-
-    this._nodeApplyValues(values, d);
-
-    let db = document.createElement('button');
-    db.innerHTML = '<i class="material-icons">delete</i>';
-    db.classList.add('btn-sb-icon');
-    db.classList.add('delete-button');
-
-    db.addEventListener('click', e => this.deleteChildBlock(key, e));
-    d.appendChild(db);
   }
   childChanged(fireData) {
     let div = document.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);

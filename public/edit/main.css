@@ -322,16 +322,6 @@
   padding-bottom: 3px;
 }
 
-.main-band-first-row {
-  display: flex;
-}
-
-.main-band-flex-children {
-  flex: 1;
-  white-space: nowrap;
-  overflow-x: auto;
-}
-
 .cblock-details-panel, .cblock-child-details-panel {
   white-space: nowrap;
   overflow: auto;
@@ -646,41 +636,6 @@
 .skybox-preview-images img {
   max-height: 5em;
   max-width: 5em;
-}
-
-.block-editor-child, .main-band-details-element {
-  background: rgb(240, 240, 240);
-  color: black;
-  border-radius: .5em;
-  border: outset .15em silver;
-  margin: .1em;
-  display: inline-block;
-  cursor: pointer;
-  padding-left: .5em;
-  min-height: 2.75em;
-}
-
-.block-editor-child {
-  background: rgb(240, 240, 240);
-  position: relative;
-  text-align: center;
-}
-
-.block-editor-child.selected, .main-band-details-element.selected {
-  color: white;
-  background: rgb(50, 50, 50);
-  border-style: inset;
-  text-align: left;
-}
-
-.block-editor-child .delete-button {
-  display: none;
-  font-size: 1.1em;
-  color: black;
-  float: right;
-  top: .25em;
-  right: .1em;
-  position: absolute;
 }
 
 .block-editor-child.selected .delete-button {
