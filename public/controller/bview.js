@@ -37,7 +37,6 @@ class bView {
     this.splitLayout();
     this.initDataUI();
     this.registerFirebaseModels();
-    this.dialog.style.display = '';
   }
   initDataUI() {}
   registerFirebaseModels() {
@@ -282,7 +281,10 @@ class bView {
       let splitOrientation = 'horizontal';
       if (this.layoutMode === 'Top' || this.layoutMode === 'Bottom') {
         splitOrientation = 'vertical';
-        this.form_canvas_wrapper.parentNode.style.display = 'block';
+        this.dialog.style.display = 'block';
+      } else {
+        this.form_panel_view_dom.parentNode.style.display = 'flex';
+        this.dialog.style.display = 'flex';
       }
       this.splitInstance = window.Split([l, r], {
         sizes: [40, 60],

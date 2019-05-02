@@ -46,26 +46,32 @@ class cView extends bView {
       this.fireSet.removeListener(this.fireSetCallback);
     this.dataViewContainer = this.form_panel_view_dom.querySelector('.data-view-container');
     this.fieldsContainer = document.createElement('div');
+    this.fieldsContainer.classList.add('asset-field-container');
     this.dataViewContainer.innerHTML = '';
     this.dataViewContainer.appendChild(this.fieldsContainer);
     this.dataFieldsInited = false;
-
-    this.dataFieldsInited = true;
-    this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
-    this.fireSet = gAPPP.a.modelSets[this.tag];
-
-    this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
-    this.fireFields.updateContextObject = true;
-
-    this.fireSetCallback = (values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData);
-    this.fireSet.childListeners.push(this.fireSetCallback);
 
     if (!this.tag)
       return;
     if (!this.key)
       return;
 
-    if (this.tag === 'block'){
+    this.dataFieldsInited = true;
+
+    this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
+    this.fireSet = gAPPP.a.modelSets[this.tag];
+
+    this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
+    this.fireFields.updateContextObject = true;
+
+    let clearDiv = document.createElement('div');
+    clearDiv.style.clear = 'both';
+    this.fieldsContainer.appendChild(clearDiv);
+
+    this.fireSetCallback = (values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData);
+    this.fireSet.childListeners.push(this.fireSetCallback);
+
+    if (this.tag === 'block') {
       this.initBlockDataFields();
     } else {
 
@@ -207,7 +213,7 @@ class cView extends bView {
   _updateQueryString(newWid) {
     let urlParams = new URLSearchParams(window.location.search);
     let queryString = `?wid=${gAPPP.a.profile.selectedWorkspace}`;
-    if (newWid){
+    if (newWid) {
       queryString = `?wid=${newWid}`;
     } else {
       if (this.tag === urlParams.get('tag') && this.key === urlParams.get('key'))
@@ -221,7 +227,9 @@ class cView extends bView {
     }
 
     let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
-    window.history.pushState({path:newURL},'', newURL);
+    window.history.pushState({
+      path: newURL
+    }, '', newURL);
   }
   splitLayoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
@@ -259,21 +267,15 @@ class cView extends bView {
               <option>None</option>
             </select>
             <br>
-            <table style="width:100%;">
-              <tr>
-                <td>
-                  <select id="dataview_record_tag">
-                    <option value=""></option>
-                    <option value="shape">Shape</option>
-                    <option value="mesh">Mesh</option>
-                    <option value="material">Material</option>
-                    <option value="texture">Texture</option>
-                    <option value="block">Block</option>
-                  </select>
-                </td>
-                <td style="width:99%;"><select id="dataview_record_key" style="max-width:100%;"></select></td>
-              </tr>
-            </table>
+            <select id="dataview_record_tag">
+              <option value=""></option>
+              <option value="shape">Shape</option>
+              <option value="mesh">Mesh</option>
+              <option value="material">Material</option>
+              <option value="texture">Texture</option>
+              <option value="block">Block</option>
+            </select>
+            <select id="dataview_record_key" style="max-width:98%;"></select>
           </div>
           <div class="data-view-container"></div>
         </div>
