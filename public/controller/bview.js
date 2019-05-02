@@ -309,13 +309,13 @@ class bView {
   splitLayoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
     <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
-    <div id="main-view-wrapper">
-      <div class="form_canvas_wrapper"></div>
-      <div class="form_panel_view_dom">
-      <div class="fields-container"></div>
-    </div>
-  </div>
-</div>`;
+      <div id="main-view-wrapper">
+        <div class="form_canvas_wrapper"></div>
+        <div class="form_panel_view_dom">
+          <div class="fields-container"></div>
+        </div>
+      </div>
+    </div>`;
   }
   _headerTemplate() {}
   expandAll() {

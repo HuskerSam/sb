@@ -38,7 +38,7 @@ class sDataDefinition {
 
     if (tag === 'blockchild') {
       let localCopy = __localStaticStorageForBindingFields['childBlock'].slice(0);
-      localCopy = localCopy.concat(this.bindingFields('frameCommand'));
+      //localCopy = localCopy.concat(this.bindingFields('frameCommand'));
       return localCopy.concat(this.bindingFields('frameCamera'));
     }
     return __localStaticStorageForBindingFields[tag].slice(0);

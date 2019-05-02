@@ -45,11 +45,13 @@ class cView extends bView {
     if (this.fireSetCallback)
       this.fireSet.removeListener(this.fireSetCallback);
     this.dataViewContainer = this.form_panel_view_dom.querySelector('.data-view-container');
-    this.fieldsContainer = document.createElement('div');
-    this.fieldsContainer.classList.add('asset-field-container');
-    this.dataViewContainer.innerHTML = '';
-    this.dataViewContainer.appendChild(this.fieldsContainer);
+    this.dataViewContainer.innerHTML = this.__dataviewTemplate();
+    this.fieldsContainer = this.form_panel_view_dom.querySelector('.asset-fields-container');
     this.dataFieldsInited = false;
+
+    this.blockChildrenSelect.style.display = 'none';
+    this.addChildButton.style.display = 'none';
+    this.mainbandsubviewselect.style.display = 'none';
 
     if (!this.tag)
       return;
@@ -73,25 +75,19 @@ class cView extends bView {
 
     if (this.tag === 'block') {
       this.initBlockDataFields();
+      this.blockChildrenSelect.style.display = '';
+      this.addChildButton.style.display = '';
+      this.mainbandsubviewselect.style.display = '';
     } else {
-
     }
-
   }
   initBlockDataFields() {
-    let editPanel = document.createElement('div');
-    editPanel.setAttribute('class', 'cblock-editor-wrapper');
-    editPanel.innerHTML = this._cBlockEditorTemplate();
-    this.dataViewContainer.appendChild(editPanel);
-    window.componentHandler.upgradeAllRegistered();
-
-    this.editMainPanel = editPanel;
     this.childKey = null;
 
-    this.blockChildrenSelect = this.dataViewContainer.querySelector('.main-band-children-select');
 
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
-    this.childBand = new cBandChildren(this.blockChildrenSelect, this, this.childEditPanel);
+    this.childBand = new cBandSelect(this.blockChildrenSelect, this, this.childEditPanel);
+    this.childEditPanel.parentNode.insertBefore(this.fieldsContainer, this.childEditPanel.parentNode.firstChild);
 
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
@@ -101,12 +97,8 @@ class cView extends bView {
     this.fireSet.childListeners.push((values, type, fireData) => this.sceneFireFields._handleDataChange(values, type, fireData));
     this.sceneFireFields.updateContextObject = false;
     this.fireFields.updateContextObject = false;
-    this.sceneFieldsPanel.parentNode.insertBefore(this.fieldsContainer, this.sceneFieldsPanel.parentNode.firstChild);
 
-    this.addChildButton = this.dataViewContainer.querySelector('.main-band-add-child');
-    this.addChildButton.addEventListener('click', e => this.addChild());
 
-    this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
 
     this.refreshExportButton = this.dialog.querySelector('.refresh-export-frames-button');
     this.refreshExportButton.addEventListener('click', e => this.refreshExportText());
@@ -114,6 +106,18 @@ class cView extends bView {
     this.importButton.addEventListener('click', e => this.importFramesFromText());
     this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
     this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
+
+    this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
+    this.nodedetailspanel = this.dialog.querySelector('.node-details-panel');
+    this.mainbandsubviewselect.addEventListener('change', e => this.updateSubViewDisplay());
+    this.updateSubViewDisplay();
+  }
+  updateSubViewDisplay() {
+    let view = this.mainbandsubviewselect.value;
+    this.framesPanel.style.display = (view === 'frame') ? 'block' : 'none';
+    this.nodedetailspanel.style.display = (view === 'node') ? 'block' : 'none';
+  //  this.sceneFieldsPanel.style.display = (view === 'scene') ? 'block' : 'none';
+    this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'block' : 'none';
   }
   initDataUI() {
     this.__initHeader();
@@ -123,6 +127,10 @@ class cView extends bView {
 
     this.dataview_record_tag.addEventListener('change', e => this.updateRecordList());
     this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
+    this.blockChildrenSelect = this.dialog.querySelector('.main-band-children-select');
+    this.addChildButton = this.dialog.querySelector('.main-band-add-child');
+    this.addChildButton.addEventListener('click', e => this.addChild());
+    this.mainbandsubviewselect = this.dialog.querySelector('.main-band-sub-view-select');
   }
   updateRecordList(newKey = null) {
     this.tag = this.dataview_record_tag.value;
@@ -186,7 +194,7 @@ class cView extends bView {
     if (this.tag === 'block') {
       //this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
 
-      this.childBand.refreshUIFromCache();
+      this.childBand.updateSelectDom();
       this.childBand.setKey(null);
     }
 
@@ -276,11 +284,38 @@ class cView extends bView {
               <option value="block">Block</option>
             </select>
             <select id="dataview_record_key" style="max-width:98%;"></select>
+            <div style="display:inline-block;white-space:nowrap;">
+              <select class="main-band-children-select" style="display:none;"></select>
+                <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+              <select class="main-band-sub-view-select" style="display:none;">
+                <option value="frame">Frames</option>
+                <option value="node">Node Details</option>
+                <option value="import">Import/Export</option>
+              </select>
+            </div>
           </div>
-          <div class="data-view-container"></div>
+          <div class="data-view-container">
+          </div>
         </div>
       </div>
     </div>`;
+  }
+  __dataviewTemplate() {
+    return `<div class="asset-fields-container"></div>
+      <div class="frames-panel" style='display:none;'></div>
+      <div class="node-details-panel" style="display:none">
+        <div class="cblock-child-details-panel"></div>
+        <div class="scene-fields-panel">
+          <hr>
+        </div>
+      </div>
+      <div class="export-frames-details-panel" style='display:none'>
+        <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
+        &nbsp;
+        <button class="btn-sb-icon import-frames-button">Import</button>
+        <br>
+        <textarea class="frames-textarea-export" rows="1" cols="6" style="width: 100%; height: 5em"></textarea>
+      </div>`;
   }
   show(scene) {
     this.context.activate(scene);
@@ -353,31 +388,6 @@ class cView extends bView {
     </div>
   </div>`;
   }
-  _cBlockEditorTemplate() {
-    return `<select class="main-band-children-select"></select>
-      <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i> child</button>
-      &nbsp;
-      <select class="main-band-sub-view-select">
-        <option>Frames</option>
-        <option>Node Details</option>
-        <option>Import/Export</option>
-      </select>
-      <br>
-      <div class="frames-panel"></div>
-      <div class="node-details-panel">
-        <div class="cblock-child-details-panel"></div>
-        <div class="scene-fields-panel">
-          <hr>
-        </div>
-      </div>
-      <div class="export-frames-details-panel">
-        <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
-        &nbsp;
-        <button class="btn-sb-icon import-frames-button">Import</button>
-        <br>
-        <textarea class="frames-textarea-export" rows="1" cols="6" style="width: 100%; height: 5em"></textarea>
-      </div>`;
-  }
   refreshExportText() {
     let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
     if (!block)
@@ -427,12 +437,12 @@ class cView extends bView {
     this.childEditPanel.style.display = 'none';
 
     if (this.childKey === null) {
-      this.editMainPanel.classList.add('root-block-display');
-      this.editMainPanel.classList.remove('child-block-display');
+      this.form_panel_view_dom.classList.add('root-block-display');
+      this.form_panel_view_dom.classList.remove('child-block-display');
       this.context.setActiveBlock(this.rootBlock);
     } else {
-      this.editMainPanel.classList.remove('root-block-display');
-      this.editMainPanel.classList.add('child-block-display');
+      this.form_panel_view_dom.classList.remove('root-block-display');
+      this.form_panel_view_dom.classList.add('child-block-display');
       this.childEditPanel.style.display = 'block';
 
       let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);

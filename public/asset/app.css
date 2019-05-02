@@ -280,21 +280,6 @@ select {
 }
 
 /* BLOCK EDITOR CSS FOLLOW */
-.main-band-flex-children {
-  flex: 1;
-  white-space: nowrap;
-  overflow-x: auto;
-}
-
-.cblock-child-details-panel {
-  white-space: nowrap;
-  overflow: auto;
-}
-
-.cblock-child-details-panel .form-group-container-group {
-  float: none;
-}
-
 .frames-panel {
   overflow: auto;
 }
@@ -332,11 +317,6 @@ select {
   font-size: 1.2em;
   top: -.4em;
   position: relative;
-}
-
-.add-item-panel>label {
-  position: relative;
-  top: -.25em;
 }
 
 .frames-panel .form-group-container-group {
@@ -516,4 +496,17 @@ select {
   left: -12.75em;
   top: .25em;
   margin-bottom: .75em;
+}
+
+.child-block-display .scene-fields-panel {
+  display: none;
+}
+
+.child-block-display .asset-field-container {
+  display: none;
+}
+
+.asset-fields-container {
+  flex: 1;
+  overflow: auto;
 }
