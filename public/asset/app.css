@@ -279,9 +279,11 @@ select {
   padding: 10px;
 }
 
-/* BLOCK EDITOR CSS FOLLOW */
 .frames-panel {
   overflow: auto;
+  white-space: nowrap;
+  position: relative;
+  min-height: 100%;
 }
 
 .frame-fields-container {
@@ -347,11 +349,6 @@ select {
 
 .frames-panel .frames-header-fields-panel .form-group-container-group input {
   padding: .25em .5em;
-}
-
-.frames-panel {
-  white-space: nowrap;
-  position: relative;
 }
 
 .frames-panel button.expand-all-helpers {
@@ -506,7 +503,7 @@ select {
   display: none;
 }
 
-.asset-fields-container {
+.asset-fields-container, .node-details-panel, .export-frames-details-panel {
   flex: 1;
   overflow: auto;
 }

@@ -72,9 +72,9 @@ class cBandSelect extends bBand {
     let children = this.fireSet.queryCache('parentKey', this.parent.key);
 
     let title = 'main';
-    let html = `<option value="">Block Root - ${title}</option>`;
+    let html = `<option value="">Block: ${title}</option>`;
     for (let i in children)
-      html += `<option value="${i}">${children[i].childType}:${children[i].childName}</option>`
+      html += `<option value="${i}">Linked ${children[i].childType}:${children[i].childName}</option>`
 
     this.childSelect.innerHTML = html;
     if (this.parent.childKey)

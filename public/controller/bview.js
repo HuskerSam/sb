@@ -1,10 +1,11 @@
 class bView {
-  constructor(layoutMode, tag, key = null, play = false) {
+  constructor(layoutMode, tag, key = null, play = false, childKey) {
     this.dialogs = {};
     this.playAnimation = play;
     this.expandedAll = true;
     this.tag = tag;
     this.key = key;
+    this.childKey = childKey;
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
     this.initDom();
 

@@ -1,6 +1,6 @@
 class cView extends bView {
-  constructor(layoutMode, tag, key) {
-    super(layoutMode, tag, key);
+  constructor(layoutMode, tag, key, childKey) {
+    super(layoutMode, tag, key, false, childKey);
     this.canvasHelper.initExtraOptions();
 
     document.querySelector('.user-name').innerHTML = gAPPP.a.currentUser.email;
@@ -82,12 +82,10 @@ class cView extends bView {
     }
   }
   initBlockDataFields() {
-    this.childKey = null;
-
-
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandSelect(this.blockChildrenSelect, this, this.childEditPanel);
     this.childEditPanel.parentNode.insertBefore(this.fieldsContainer, this.childEditPanel.parentNode.firstChild);
+    this.blockChildrenSelect.value = this.childKey;
 
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
@@ -97,8 +95,6 @@ class cView extends bView {
     this.fireSet.childListeners.push((values, type, fireData) => this.sceneFireFields._handleDataChange(values, type, fireData));
     this.sceneFireFields.updateContextObject = false;
     this.fireFields.updateContextObject = false;
-
-
 
     this.refreshExportButton = this.dialog.querySelector('.refresh-export-frames-button');
     this.refreshExportButton.addEventListener('click', e => this.refreshExportText());
@@ -116,7 +112,6 @@ class cView extends bView {
     let view = this.mainbandsubviewselect.value;
     this.framesPanel.style.display = (view === 'frame') ? 'block' : 'none';
     this.nodedetailspanel.style.display = (view === 'node') ? 'block' : 'none';
-  //  this.sceneFieldsPanel.style.display = (view === 'scene') ? 'block' : 'none';
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'block' : 'none';
   }
   initDataUI() {
@@ -195,7 +190,6 @@ class cView extends bView {
       //this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
 
       this.childBand.updateSelectDom();
-      this.childBand.setKey(null);
     }
 
     this.rootBlock = this.context.activeBlock;
@@ -224,13 +218,15 @@ class cView extends bView {
     if (newWid) {
       queryString = `?wid=${newWid}`;
     } else {
-      if (this.tag === urlParams.get('tag') && this.key === urlParams.get('key'))
+      if (this.tag === urlParams.get('tag') && this.key === urlParams.get('key') && this.childKey === urlParams.get('childkey'))
         return;
 
       if (this.tag) {
         queryString += `&tag=${this.tag}`;
         if (this.key)
           queryString += `&key=${this.key}`;
+        if (this.childKey)
+          queryString += `&childkey=${this.childKey}`;
       }
     }
 
@@ -286,7 +282,7 @@ class cView extends bView {
             <select id="dataview_record_key" style="max-width:98%;"></select>
             <div style="display:inline-block;white-space:nowrap;">
               <select class="main-band-children-select" style="display:none;"></select>
-                <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+                <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i>Link</button>
               <select class="main-band-sub-view-select" style="display:none;">
                 <option value="frame">Frames</option>
                 <option value="node">Node Details</option>
@@ -435,8 +431,9 @@ class cView extends bView {
   setChildKey(key) {
     this.childKey = key;
     this.childEditPanel.style.display = 'none';
+    this._updateQueryString();
 
-    if (this.childKey === null) {
+    if (!this.childKey) {
       this.form_panel_view_dom.classList.add('root-block-display');
       this.form_panel_view_dom.classList.remove('child-block-display');
       this.context.setActiveBlock(this.rootBlock);

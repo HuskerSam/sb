@@ -67,7 +67,7 @@ html, body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-bottom: .5em;
+  min-height: 100%;
 }
 
 .form_canvas_wrapper {

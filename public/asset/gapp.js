@@ -10,6 +10,9 @@ class gApp extends gInstanceSuper {
         } else if (this.mV.key !== urlParams.get('key')) {
           this.mV.dataview_record_key.value = urlParams.get('key');
           this.mV.updateSelectedRecord().then(() => {});
+        } else if (this.mV.childKey !== urlParams.get('childkey')) {
+          this.mV.dataview_record_key.value = urlParams.get('childkey');
+          this.mV.updateSelectedRecord().then(() => {});
         }
       }
     });
@@ -35,7 +38,7 @@ class gApp extends gInstanceSuper {
     if (this.workspaceProcessed) return;
     this.workspaceProcessed = true;
     let urlParams = new URLSearchParams(window.location.search);
-    this.mV = new cView(gAPPP.a.profile.mdlAppLayoutMode, urlParams.get('tag'), urlParams.get('key'));
+    this.mV = new cView(gAPPP.a.profile.mdlAppLayoutMode, urlParams.get('tag'), urlParams.get('key'), urlParams.get('childkey'));
     this._updateApplicationStyle();
   }
   _updateApplicationStyle() {}
