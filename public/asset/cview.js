@@ -511,21 +511,6 @@ class cView extends bView {
     }
     this.followblocktargetoptionslist.innerHTML = optionText;
   }
-  updateWorkspaceNameCode() {
-    let name = this.workplacesSelectEditName.value.trim();
-    let code = this.workplacesSelectEditCode.value.trim();
-
-    if (name.length < 1)
-      return;
-
-    gAPPP.a.modelSets['projectTitles'].commitUpdateList([{
-      field: 'title',
-      newValue: name
-    }, {
-      field: 'code',
-      newValue: code
-    }], this.workplacesSelect.value);
-  }
   showDefaultDataView() {
     this.helpViewer = this.dialog.querySelector('.help-overlay');
     if (!this.tag) {

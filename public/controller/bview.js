@@ -456,7 +456,7 @@ class bView {
     this.signOutBtn = document.querySelector('#sign-out-button');
     if (this.signOutBtn)
       this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
-      
+
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');
     this.workplacesSelectEditCode = document.querySelector('#edit-workspace-code');
@@ -469,6 +469,7 @@ class bView {
     this.addProjectName = document.querySelector('#new-workspace-name');
     this.addProjectCode = document.querySelector('#new-workspace-code');
     this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
+    this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
 
     this.userProfileName = this.dialog.querySelector('.user-info');
     this.fontToolsContainer = this.dialog.querySelector('#profile-header-panel');
@@ -491,5 +492,20 @@ class bView {
       this.profile_description_panel_btn.classList.add('button-expanded');
       document.getElementById('profile-header-panel').classList.add('expanded');
     }
+  }
+  updateWorkspaceNameCode() {
+    let name = this.workplacesSelectEditName.value.trim();
+    let code = this.workplacesSelectEditCode.value.trim();
+
+    if (name.length < 1)
+      return;
+
+    gAPPP.a.modelSets['projectTitles'].commitUpdateList([{
+      field: 'title',
+      newValue: name
+    }, {
+      field: 'code',
+      newValue: code
+    }], this.workplacesSelect.value);
   }
 }
