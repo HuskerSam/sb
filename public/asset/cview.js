@@ -13,6 +13,11 @@ class cView extends bView {
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
     this.workplacesSelectEditName.addEventListener('input', e => this.updateWorkspaceNameCode());
     this.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
+    this.addProjectButton = document.querySelector('#add-workspace-button');
+    this.addProjectButton.addEventListener('click', e => this.addProject());
+    this.addProjectName = document.querySelector('#new-workspace-name');
+    this.addProjectCode = document.querySelector('#new-workspace-code');
+    this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
 
     this.userProfileName = this.dialog.querySelector('.user-info');
     this.fontToolsContainer = this.dialog.querySelector('#profile-header-panel');
@@ -177,10 +182,12 @@ class cView extends bView {
     let options = '<option value=""></option>';
 
     if (this.tag) {
+      options = `<option values="" selected>Select or Add ${this.dataview_record_tag.selectedOptions[0].label}</option>`;
       let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
       for (let i in fS)
         options += `<option value="${i}">${fS[i].title} (${i})</option>`;
       this.addAssetButton.style.display = 'inline-block';
+
     } else {
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
@@ -196,6 +203,7 @@ class cView extends bView {
     if (this.dataview_record_key.selectedIndex <= 0) {
       this.context.activate(null);
       this.key = '';
+      this.dataview_record_key.selectedIndex = 0;
       this.initDataFields();
       this._updateQueryString();
       if (this.addFrameButton)
@@ -204,8 +212,10 @@ class cView extends bView {
         this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
+      this.form_canvas_wrapper.classList.add('show-help');
       return this.showDefaultDataView();
     }
+    this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'inline-block';
     this.snapshotAssetButton.style.display = 'inline-block';
 
@@ -460,14 +470,12 @@ class cView extends bView {
   }
   _canvasPanelTemplate() {
     return `<canvas class="popup-canvas"></canvas>
-  <div class="video-overlay">
-    <video></video>
-  </div>
+  <div class="video-overlay"><video></video></div>
+  <div class="help-overlay"></div>
   <div class="canvas-actions">
     <div class="canvas-play-bar">
       <div class="scene-options-panel" style="display:none;">
-        <div class="scene-fields-container">
-        </div>
+        <div class="scene-fields-container"></div>
         <div class="render-log-wrapper" style="display:none;">
           <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
           <textarea class="render-log-panel" spellcheck="false"></textarea>
@@ -660,16 +668,26 @@ class cView extends bView {
       }
   }
   showDefaultDataView() {
+    this.helpViewer = this.dialog.querySelector('.help-overlay');
+    this.helpViewer.style.background = 'rgb(250, 255, 250)';
     if (!this.tag) {
       this.fieldsContainer.style.background = 'rgb(250, 255, 250)';
       fetch('/doc/assethelp.html')
         .then(res => res.text())
         .then(html => this.fieldsContainer.innerHTML = html);
 
+      fetch(`/doc/workspacehelp.html`)
+        .then(res => res.text())
+        .then(html => this.helpViewer.innerHTML = html);
+
       return;
     }
-
     this.recordViewer = new cBandIcons(this.tag, this);
+
+    fetch(`/doc/${this.tag}help.html`)
+      .then(res => res.text())
+      .then(html => this.helpViewer.innerHTML = html);
+
   }
   renderPreview() {
     if (this.context)

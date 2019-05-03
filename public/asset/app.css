@@ -178,11 +178,6 @@ input[type=range]::-webkit-slider-thumb {
   border: solid .1em rgb(200, 255, 240)
 }
 
-#add-workspace-button {
-  position: relative;
-  top: -.75em;
-}
-
 #-position-preset {
   background: rgb(0, 150, 136);
   color: white;
@@ -571,4 +566,28 @@ select {
 .menu-clipper-wrapper {
   display: inline-block;
   margin: .25em;
+}
+
+.form_canvas_wrapper.show-help {
+  overflow: auto;
+}
+
+.form_canvas_wrapper.show-help .canvas-actions {
+  display: none;
+}
+
+.form_canvas_wrapper.show-help .popup-canvas {
+  display: none;
+}
+
+.form_canvas_wrapper.show-help .video-overlay {
+  display: none;
+}
+
+.form_canvas_wrapper .help-overlay {
+  display: none;
+}
+
+.form_canvas_wrapper.show-help .help-overlay {
+  display: inline-block;
 }
