@@ -1,18 +1,11 @@
 class cBandFrames extends bBand {
-  constructor(childrenContainer, parent, framesHeaderPanel = null) {
+  constructor(childrenContainer, parent) {
     super(gAPPP.a.modelSets['frame'], 'frame');
-    this.framesHeaderPanel = framesHeaderPanel;
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.childrenContainer = childrenContainer;
     this.frameDataViewInstances = {};
     this.parent = parent;
     this.framesHelper = new wFrames(this.parent.context);
-
-    this.addFrameButton = document.createElement('button');
-    this.addFrameButton.innerHTML = '<i class="material-icons">playlist_add</i>';
-    this.addFrameButton.setAttribute('class', 'add-button btn-sb-icon');
-    this.addFrameButton.addEventListener('click', e => this.addFrame(this.__getKey()));
-    this.childrenContainer.appendChild(this.addFrameButton);
   }
   childRemoved(fireData) {
     let inst = this.frameDataViewInstances[fireData.key];
@@ -201,8 +194,13 @@ class cBandFrames extends bBand {
     this.clearChildren();
 
     let childType = 'block';
-    if (this.parent.childKey !== null)
-      childType = this.parent.childBand.fireSet.getCache(this.parent.childKey).childType;
+    let cache = {};
+    if (this.parent.childKey)
+      cache = this.parent.childBand.fireSet.getCache(this.parent.childKey);
+    if (!cache)
+      return;
+      
+    childType = cache.childType;
 
     this.framesHelper._validateFieldList(childType);
     let children = this.fireSet.queryCache('parentKey', this.__getKey());
@@ -269,13 +267,7 @@ class cBandFrames extends bBand {
       this.framesHelper = new wFrames(this.parent.context);
 
     this.framesHelper.compileFrames();
-    this.childrenContainer.removeChild(this.addFrameButton);
-    if (this.framesHeaderPanel)
-      this.childrenContainer.removeChild(this.framesHeaderPanel);
     this.__applyFrameOrderToDom();
-    this.childrenContainer.appendChild(this.addFrameButton);
-    if (this.framesHeaderPanel)
-      this.childrenContainer.insertBefore(this.framesHeaderPanel, this.childrenContainer.childNodes[0]);
     this._updateFrameHelpersUI();
   }
   __applyFrameOrderToDom() {

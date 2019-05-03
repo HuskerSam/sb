@@ -2,11 +2,6 @@ class cViewMain extends bView {
   constructor() {
     super();
 
-    this.dialogs['mesh-edit'] = new bDialog('mesh', 'Mesh Options', this);
-    this.dialogs['shape-edit'] = new bDialog('shape', 'Shape Editor', this);
-    this.dialogs['material-edit'] = new bDialog('material', 'Material Editor', this);
-    this.dialogs['texture-edit'] = new bDialog('texture', 'Texture Options', this);
-
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');
     this.workplacesSelectEditCode = document.querySelector('#edit-workspace-code');

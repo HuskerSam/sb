@@ -529,10 +529,22 @@ class wFrames {
   }
   _validateFieldList(childType = null) {
     let frameType = 'blockFrame';
-    if (!childType)
-      childType = this.parentBlock.blockRawData.childType;
-    if (!childType)
-      childType = this.parentBlock.blockRenderData.childType;
+    if (this.parentBlock) {
+      if (!childType) {
+        if (this.parentBlock.blockRawData)
+          childType = this.parentBlock.blockRawData.childType;
+      }
+
+      if (!childType) {
+        if (this.parentBlock.blockRenderData)
+          childType = this.parentBlock.blockRenderData.childType;
+      }
+    }
+
+    if (!childType) {
+      this.frameAttributeFields = [];
+      return;
+    }
 
     if (childType === 'mesh')
       frameType = 'meshFrame';
@@ -657,7 +669,7 @@ class wFrames {
         }
       }
 
-      if (!keySetCreated){
+      if (!keySetCreated) {
         this.maxLength = 0;
         this.lastFrame = 0;
       }

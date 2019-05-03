@@ -52,6 +52,7 @@ class cView extends bView {
     this.blockChildrenSelect.style.display = 'none';
     this.addChildButton.style.display = 'none';
     this.mainbandsubviewselect.style.display = 'none';
+    this.removeChildButton.style.display = 'none';
 
     if (!this.tag)
       return;
@@ -78,15 +79,9 @@ class cView extends bView {
       this.blockChildrenSelect.style.display = '';
       this.addChildButton.style.display = '';
       this.mainbandsubviewselect.style.display = '';
-    } else {
-    }
+    } else {}
   }
   initBlockDataFields() {
-    this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
-    this.childBand = new cBandSelect(this.blockChildrenSelect, this, this.childEditPanel);
-    this.childEditPanel.parentNode.insertBefore(this.fieldsContainer, this.childEditPanel.parentNode.firstChild);
-    this.blockChildrenSelect.value = this.childKey;
-
     this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
     this.framesBand = new cBandFrames(this.framesPanel, this);
     this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneFields');
@@ -107,12 +102,18 @@ class cView extends bView {
     this.nodedetailspanel = this.dialog.querySelector('.node-details-panel');
     this.mainbandsubviewselect.addEventListener('change', e => this.updateSubViewDisplay());
     this.updateSubViewDisplay();
+
+    this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
+    this.childBand = new cBandSelect(this.blockChildrenSelect, this, this.childEditPanel);
+    this.childEditPanel.parentNode.insertBefore(this.fieldsContainer, this.childEditPanel.parentNode.firstChild);
   }
   updateSubViewDisplay() {
     let view = this.mainbandsubviewselect.value;
+    this.addFrameButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
     this.framesPanel.style.display = (view === 'frame') ? 'block' : 'none';
     this.nodedetailspanel.style.display = (view === 'node') ? 'block' : 'none';
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'block' : 'none';
+    this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
   }
   initDataUI() {
     this.__initHeader();
@@ -125,7 +126,16 @@ class cView extends bView {
     this.blockChildrenSelect = this.dialog.querySelector('.main-band-children-select');
     this.addChildButton = this.dialog.querySelector('.main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
+    this.removeChildButton = this.dialog.querySelector('.main-band-delete-child');
+    this.removeChildButton.addEventListener('click', e => this.removeChild(e));
     this.mainbandsubviewselect = this.dialog.querySelector('.main-band-sub-view-select');
+    this.addFrameButton = this.dialog.querySelector('.add_frame_button');
+    this.addFrameButton.addEventListener('click', e => this.__addFrameHandler());
+  }
+  __addFrameHandler() {
+    this.mainbandsubviewselect.value = 'frame';
+    this.updateSubViewDisplay();
+    this.framesBand.addFrame(this.framesBand.__getKey());
   }
   updateRecordList(newKey = null) {
     this.tag = this.dataview_record_tag.value;
@@ -140,7 +150,6 @@ class cView extends bView {
 
     this.dataview_record_key.innerHTML = options;
     this.dataview_record_key.value = this.key;
-
     this.initDataFields();
     this.updateSelectedRecord().then(() => {});
   }
@@ -150,6 +159,10 @@ class cView extends bView {
       this.key = '';
       this.initDataFields();
       this._updateQueryString();
+      if (this.addFrameButton)
+        this.addFrameButton.style.display = 'none';
+      if (this.removeChildButton)
+        this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
       return;
     }
 
@@ -187,9 +200,14 @@ class cView extends bView {
       result = await this.rootBlock.loadMesh();
 
     if (this.tag === 'block') {
-      //this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
-
+      this.setChildKey(this.childKey);
       this.childBand.updateSelectDom();
+      if (this.blockChildrenSelect.selectedIndex === -1){
+        this.childKey = '';
+        this.blockChildrenSelect.value = '';
+      }
+
+      this.updateSubViewDisplay();
     }
 
     this.rootBlock = this.context.activeBlock;
@@ -205,11 +223,6 @@ class cView extends bView {
       this.sceneFireFields.paint();
       this.sceneFireFields.helpers.resetUI();
     }
-
-    //  this._endLoad();
-    //  this._showFocus();
-    //  this.expandAll();
-
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
   _updateQueryString(newWid) {
@@ -280,14 +293,16 @@ class cView extends bView {
               <option value="block">Block</option>
             </select>
             <select id="dataview_record_key" style="max-width:98%;"></select>
-            <div style="display:inline-block;white-space:nowrap;">
+            <div style="display:inline-block;">
               <select class="main-band-children-select" style="display:none;"></select>
-                <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i>Link</button>
+              <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove</i></button>
+              <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
               <select class="main-band-sub-view-select" style="display:none;">
-                <option value="frame">Frames</option>
+                <option value="frame" selected>Frames</option>
                 <option value="node">Node Details</option>
                 <option value="import">Import/Export</option>
               </select>
+              <button class="add_frame_button btn-sb-icon" style="display:none;"><i class="material-icons">playlist_add</i></button>
             </div>
           </div>
           <div class="data-view-container">
@@ -324,7 +339,7 @@ class cView extends bView {
     if (this.tag === 'block') {
       if (this.rootBlock) {
         this.rootBlock.handleDataUpdate(tag, values, type, fireData);
-        //this.rootElementDom.innerHTML = this.rootBlock.getBlockDimDesc();
+        this.childBand.updateSelectDom();
         if (tag === 'blockchild')
           this._updateFollowTargetListOptions();
         if (tag === 'blockchild')
@@ -427,11 +442,20 @@ class cView extends bView {
         this.childBand.setKey(r.key);
       }, 100);
     });
+    this.mainbandsubviewselect.value = 'node';
+    this.updateSubViewDisplay();
+  }
+  removeChild(e) {
+    this.childBand.deleteChildBlock(this.childKey, e);
   }
   setChildKey(key) {
     this.childKey = key;
+    if (!this.childEditPanel)
+      return;
     this.childEditPanel.style.display = 'none';
     this._updateQueryString();
+
+    this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
 
     if (!this.childKey) {
       this.form_panel_view_dom.classList.add('root-block-display');
@@ -442,19 +466,26 @@ class cView extends bView {
       this.form_panel_view_dom.classList.add('child-block-display');
       this.childEditPanel.style.display = 'block';
 
-      let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
-      if (block)
-        this.context.setActiveBlock(block);
-      else
-        this.context.setActiveBlock(this.rootBlock);
+      if (this.rootBlock) {
+        let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+        if (block)
+          this.context.setActiveBlock(block);
+        else
+          this.context.setActiveBlock(this.rootBlock);
+      }
     }
 
-    this.framesBand.refreshUIFromCache();
+    if (this.framesBand)
+      this.framesBand.refreshUIFromCache();
   }
   _handleActiveObjectUpdate(e) {}
   expandAll() {
     super.expandAll();
     this.detailsShown = true;
+    if (this.tag === 'block') {
+      this.setChildKey(this.childKey);
+      this.framesBand._updateFrameHelpersUI();
+    }
   }
   collapseAll() {
     super.collapseAll();

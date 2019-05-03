@@ -1,5 +1,7 @@
 class sDataDefinition {
   static bindingFields(tag) {
+    if (!tag)
+      return [];
     if (tag === 'frame') {
       alert('errror here');
     }
