@@ -169,9 +169,6 @@ class cPanelCanvas {
   get canvas() {
     return this.parent.canvas;
   }
-  get activeAnimation() {
-    return this.parent.activeAnimation;
-  }
   get defaultCameras() {
     return {
       default: {

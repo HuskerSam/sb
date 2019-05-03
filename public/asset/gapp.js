@@ -50,7 +50,7 @@ class gApp extends gInstanceSuper {
   initializeAuthUI() {
     this.authUIInited = true;
     let div = document.createElement('div');
-    div.innerHTML = this._loginPageTemplate('MDL Example');
+    div.innerHTML = this._loginPageTemplate('Scene Builder Asset Editor');
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
     document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);

@@ -258,21 +258,6 @@ select {
   width: 100vw;
 }
 
-#profile-header-panel {
-  transition: height 800ms, opacity 800ms, padding 800ms;
-  overflow: auto;
-  height: 0px;
-  opacity: 0;
-  background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
-}
-
-#profile-header-panel.expanded {
-  max-height: 40%;
-  height: auto;
-  opacity: 1;
-  padding: 10px;
-}
-
 .frames-panel {
   overflow: auto;
   white-space: nowrap;
@@ -455,24 +440,9 @@ select {
   border: default;
 }
 
-.block-dialog-popup .selected-mesh-bounds-helper-box {
-  background: rgb(50, 50, 50);
-  color: rgb(255, 255, 255);
-  text-align: center;
-  padding: 0;
-}
-
 .selected-mesh-bounds-helper-box .form-control {
   width: auto;
   display: inline-block;
-}
-
-.font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
-  transform: none;
-  width: 18em;
-  left: -12.75em;
-  top: .25em;
-  margin-bottom: .75em;
 }
 
 .child-block-display .scene-fields-panel {
@@ -590,4 +560,8 @@ select {
 
 .form_canvas_wrapper.show-help .help-overlay {
   display: inline-block;
+}
+
+#profile-header-panel.expanded {
+  background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
 }

@@ -104,7 +104,55 @@ class bView {
 
     return Promise.resolve();
   }
-  _canvasPanelTemplate() {}
+  _canvasPanelTemplate() {
+    return `<canvas class="popup-canvas"></canvas>
+  <div class="video-overlay"><video></video></div>
+  <div class="help-overlay"></div>
+  <div class="canvas-actions">
+    <div class="canvas-play-bar">
+      <div class="scene-options-panel" style="display:none;">
+        <div class="scene-fields-container"></div>
+        <div class="render-log-wrapper" style="display:none;">
+          <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+          <textarea class="render-log-panel" spellcheck="false"></textarea>
+          <div class="fields-container" style="display:none;"></div>
+        </div>
+        <br>
+        <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+        <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+        <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+        <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+      </div>
+      <br>
+      <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary play-button"><i class="material-icons">play_arrow</i></button>
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored pause-button"><i class="material-icons">pause</i></button>
+      <div class="run-length-label"></div>
+      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+
+      <div class="lightbar-fields-container"></div>
+      <div class="camera-options-panel" style="display:inline-block;">
+        <select class="camera-select" style=""></select>
+        <div id="fov-camera-bar">
+          <div class="camera-slider-label">FOV</div>
+          <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+        </div>
+        <div style="display:inline-block;">
+          <div class="camera-slider-label"><i class="material-icons" style="transform:rotate(90deg)">straighten</i></div>
+          <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+        </div>
+        <br>
+        <div style="display:inline-block;">
+          <div class="camera-slider-label"><i class="material-icons">straighten</i></div>
+          <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+        </div>
+        <div class="fields-container" style="float:left"></div>
+        <div id="extra-options-camera-area"></div>
+      </div>
+    </div>
+  </div>
+  <button class="none-layout-mode-flip btn-sb-icon" style="display:none;"><i class="material-icons">code</i></button>`;
+  }
   __loadBlock(profileKey, blockData) {
     this.canvasHelper.logClear();
     let startTime = Date.now();
@@ -366,5 +414,46 @@ class bView {
   collapseAll() {
     this.fireFields.helpers.collapseAll();
     this.detailsShown = false;
+  }
+  addProject() {
+    let newTitle = this.addProjectName.value.trim();
+    if (newTitle.length === 0) {
+      alert('need a name for workspace');
+      return;
+    }
+    let newCode = this.addProjectCode.value.trim();
+
+    this._addProject(newTitle, newCode);
+  }
+  deleteProject() {
+    if (this.workplacesSelect.value === 'default') {
+      alert('Please select a workspace to delete other then default');
+      return;
+    }
+    if (confirm(`Are you sure you want to delete the project: ${this.workplacesSelect.selectedOptions[0].innerText}?`))
+      if (confirm('Really?  Really sure?  this won\'t come back...')) {
+        gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelect.value);
+        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+          field: 'selectedWorkspace',
+          newValue: 'default'
+        }]);
+      }
+  }
+  profilePanelTemplate() {
+    return `<div id="record_field_list">
+      <form autocomplete="off" onsubmit="return false;"></form>
+    </div>
+    <label><span>Name </span><input id="edit-workspace-name" /></label>
+    <label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" />
+    <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
+    </label>
+    <br>
+    <label><span>New Workspace </span><input id="new-workspace-name" /></label><label><span> Z Code </span><input id="new-workspace-code" style="width:5em;" /></label>
+    <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
+    </label>
+    <div class="user-info"></div>
+    <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
+    <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+    <div class="fields-container" style="clear:both;"></div>`;
   }
 }
