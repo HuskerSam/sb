@@ -6,40 +6,7 @@ class cView extends bView {
     this.refreshProjectList().then(() => {});
     this._updateGoogleFonts().then(() => {});
 
-    this.workplacesSelect = document.querySelector('#workspaces-select');
-    this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');
-    this.workplacesSelectEditCode = document.querySelector('#edit-workspace-code');
-    this.workplacesRemoveButton = document.querySelector('#remove-workspace-button');
-    this.workplacesSelect.addEventListener('input', e => this.selectProject());
-    this.workplacesSelectEditName.addEventListener('input', e => this.updateWorkspaceNameCode());
-    this.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
-    this.addProjectButton = document.querySelector('#add-workspace-button');
-    this.addProjectButton.addEventListener('click', e => this.addProject());
-    this.addProjectName = document.querySelector('#new-workspace-name');
-    this.addProjectCode = document.querySelector('#new-workspace-code');
-    this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
-
-    this.userProfileName = this.dialog.querySelector('.user-info');
-    this.fontToolsContainer = this.dialog.querySelector('#profile-header-panel');
-    this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
-    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
-    this.fontTools = new cBandProfileOptions(null, this.fontFields, this.fontFieldsContainer, this.fontFieldsContainer);
-    this.fontTools.fireFields.values = gAPPP.a.profile;
-    this.fontTools.activate();
-
-    this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
-    this.profile_description_panel_btn.addEventListener('click', e => this.toggleProfilePanel());
-  }
-  toggleProfilePanel() {
-    if (this.profilePanelShown) {
-      this.profilePanelShown = false;
-      this.profile_description_panel_btn.classList.remove('button-expanded');
-      document.getElementById('profile-header-panel').classList.remove('expanded');
-    } else {
-      this.profilePanelShown = true;
-      this.profile_description_panel_btn.classList.add('button-expanded');
-      document.getElementById('profile-header-panel').classList.add('expanded');
-    }
+    this.profilePanelRegister();
   }
   initDataUI() {
     this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
@@ -62,10 +29,6 @@ class cView extends bView {
     this.snapshotAssetButton.addEventListener('click', e => this.renderPreview());
     this.addAssetButton = this.dialog.querySelector('.add-asset-button');
     this.addAssetButton.addEventListener('click', e => this.addAsset());
-
-    this.signOutBtn = document.querySelector('#sign-out-button');
-    if (this.signOutBtn)
-      this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
 
     this.view_layout_select = document.getElementById('view_layout_select');
     this.view_layout_select.addEventListener('change', e => {

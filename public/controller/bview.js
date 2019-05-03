@@ -47,10 +47,6 @@ class bView {
     document.body.insertBefore(div, document.body.firstChild);
     this.dialog = document.querySelector('#firebase-app-main-page');
 
-    this.signOutBtn = document.querySelector('#sign-out-button');
-    if (this.signOutBtn)
-      this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
-
     this.initCanvas();
     this.splitLayout();
     this.initDataUI();
@@ -455,5 +451,45 @@ class bView {
     <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
     <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
     <div class="fields-container" style="clear:both;"></div>`;
+  }
+  profilePanelRegister() {
+    this.signOutBtn = document.querySelector('#sign-out-button');
+    if (this.signOutBtn)
+      this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
+      
+    this.workplacesSelect = document.querySelector('#workspaces-select');
+    this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');
+    this.workplacesSelectEditCode = document.querySelector('#edit-workspace-code');
+    this.workplacesRemoveButton = document.querySelector('#remove-workspace-button');
+    this.workplacesSelect.addEventListener('input', e => this.selectProject());
+    this.workplacesSelectEditName.addEventListener('input', e => this.updateWorkspaceNameCode());
+    this.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
+    this.addProjectButton = document.querySelector('#add-workspace-button');
+    this.addProjectButton.addEventListener('click', e => this.addProject());
+    this.addProjectName = document.querySelector('#new-workspace-name');
+    this.addProjectCode = document.querySelector('#new-workspace-code');
+    this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
+
+    this.userProfileName = this.dialog.querySelector('.user-info');
+    this.fontToolsContainer = this.dialog.querySelector('#profile-header-panel');
+    this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
+    this.fontTools = new cBandProfileOptions(null, this.fontFields, this.fontFieldsContainer, this.fontFieldsContainer);
+    this.fontTools.fireFields.values = gAPPP.a.profile;
+    this.fontTools.activate();
+
+    this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
+    this.profile_description_panel_btn.addEventListener('click', e => this.profilePanelToggle());
+  }
+  profilePanelToggle() {
+    if (this.profilePanelShown) {
+      this.profilePanelShown = false;
+      this.profile_description_panel_btn.classList.remove('button-expanded');
+      document.getElementById('profile-header-panel').classList.remove('expanded');
+    } else {
+      this.profilePanelShown = true;
+      this.profile_description_panel_btn.classList.add('button-expanded');
+      document.getElementById('profile-header-panel').classList.add('expanded');
+    }
   }
 }
