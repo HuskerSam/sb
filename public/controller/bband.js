@@ -4,13 +4,13 @@ class bBand {
     this.tag = tag;
 
     this.bindingsList = [{
-        dataName: 'title',
-        type: 'innerText'
-      }, {
-        dataName: 'renderImageURL',
-        type: 'background-image',
-        classKey: 'OUTER'
-      }];
+      dataName: 'title',
+      type: 'innerText'
+    }, {
+      dataName: 'renderImageURL',
+      type: 'background-image',
+      classKey: 'OUTER'
+    }];
 
     this.modelSet.childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
     this.myKey = Math.floor(Math.random() * 100).toString();
@@ -26,7 +26,7 @@ class bBand {
     this._nodeApplyValues(values, div.querySelector('.band-background-preview'));
   }
   childRemoved(fireData) {
-    let post = this.childrenContainer.querySelector('.'  + this.tag + this.myKey + '-' + fireData.key);
+    let post = this.childrenContainer.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
     if (post)
       this.childrenContainer.removeChild(post);
   }
@@ -46,6 +46,14 @@ class bBand {
   clearChildren() {
     this.childrenContainer.innerHTML = '';
   }
+  refreshUIFromCache() {
+    this.clearChildren();
+
+    let children = this.fireSet.fireDataValuesByKey;
+
+    for (let i in children)
+      this._getDomForChild(i, children[i]);
+  }
   _nodeApplyValues(values, outer) {
     for (let i in this.bindingsList) {
       let binding = this.bindingsList[i];
@@ -62,7 +70,7 @@ class bBand {
 
         if (binding.type === 'background-image') {
           let url = val;
-          if (! url)
+          if (!url)
             url = '/images/logo64.png';
           let imgHolder = element.querySelector('.img-holder');
           if (imgHolder)

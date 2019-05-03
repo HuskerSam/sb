@@ -178,6 +178,10 @@ class cView extends bView {
       let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
       for (let i in fS)
         options += `<option value="${i}">${fS[i].title} (${i})</option>`;
+      this.addAssetButton.style.display = 'inline-block';
+    } else {
+      this.addAssetButton.style.display = 'none';
+      this.deleteAssetButton.style.display = 'none';
     }
 
     this.dataview_record_key.innerHTML = options;
@@ -195,8 +199,10 @@ class cView extends bView {
         this.addFrameButton.style.display = 'none';
       if (this.removeChildButton)
         this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
-      return;
+      this.deleteAssetButton.style.display = 'none';
+      return this.showDefaultDataView();
     }
+    this.deleteAssetButton.style.display = 'inline-block';
 
     this.key = this.dataview_record_key.value;
     if (!this.dataFieldsInited)
@@ -234,7 +240,7 @@ class cView extends bView {
     if (this.tag === 'block') {
       this.setChildKey(this.childKey);
       this.childBand.updateSelectDom();
-      if (this.blockChildrenSelect.selectedIndex === -1){
+      if (this.blockChildrenSelect.selectedIndex === -1) {
         this.childKey = '';
         this.blockChildrenSelect.value = '';
       }
@@ -646,5 +652,22 @@ class cView extends bView {
           newValue: 'default'
         }]);
       }
+  }
+  showDefaultDataView() {
+    if (!this.tag) {
+      this.fieldsContainer.style.background = 'rgb(250, 255, 250)';
+      fetch('/doc/assethelp.html')
+        .then(res => res.text())
+        .then(html => this.fieldsContainer.innerHTML = html);
+
+      return;
+    }
+
+    this.recordViewer = new cBandIcons(this.tag, this);
+  }
+  renderPreview() {
+    if (this.context)
+      if (this.tag && this.key)
+        this.context.renderPreview(this.tag, this.key);
   }
 }
