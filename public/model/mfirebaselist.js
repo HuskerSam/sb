@@ -95,19 +95,30 @@ class mFirebaseList extends bFirebase {
     return new Promise((resolve, reject) => {
       let storageRef = firebase.storage().ref();
       let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename);
-
-      ref.putString(dataString).then(
-        snapshot => resolve(snapshot)).catch(
-        error => reject(error));
+      let snapshot;
+      ref.putString(dataString)
+        .then(r => {
+          snapshot = r;
+          return ref.getDownloadURL();
+        }).then(url => {
+          snapshot.downloadURL = url;
+          resolve(snapshot)
+        }).catch(error => reject(error));
     });
   }
   setBlob(id, blob, filename) {
     return new Promise((resolve, reject) => {
       let storageRef = firebase.storage().ref();
-      let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename)
-      ref.put(blob).then(
-        snapshot => resolve(snapshot)).catch(
-        error => reject(error));
+      let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename);
+      let snapshot;
+      ref.put(blob)
+        .then(r => {
+          snapshot = r;
+          return ref.getDownloadURL();
+        }).then(url => {
+          snapshot.downloadURL = url;
+          resolve(snapshot)
+        }).catch(error => reject(error));
     });
   }
   createWithBlobString(data, blobString, filename) {

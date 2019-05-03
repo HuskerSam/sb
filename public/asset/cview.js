@@ -36,6 +36,29 @@ class cView extends bView {
       document.getElementById('profile-header-panel').classList.add('expanded');
     }
   }
+  initDataUI() {
+    this.__initHeader();
+    this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
+    this.dataview_record_key = this.dialog.querySelector('#dataview_record_key');
+    this.dataview_record_tag.value = this.tag;
+
+    this.dataview_record_tag.addEventListener('change', e => this.updateRecordList());
+    this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
+    this.blockChildrenSelect = this.dialog.querySelector('.main-band-children-select');
+    this.addChildButton = this.dialog.querySelector('.main-band-add-child');
+    this.addChildButton.addEventListener('click', e => this.addChild());
+    this.removeChildButton = this.dialog.querySelector('.main-band-delete-child');
+    this.removeChildButton.addEventListener('click', e => this.removeChild(e));
+    this.mainbandsubviewselect = this.dialog.querySelector('.main-band-sub-view-select');
+    this.addFrameButton = this.dialog.querySelector('.add_frame_button');
+    this.addFrameButton.addEventListener('click', e => this.__addFrameHandler());
+    this.deleteAssetButton = this.dialog.querySelector('.delete-asset-button');
+    this.deleteAssetButton.addEventListener('click', e => this.deleteAsset());
+    this.snapshotAssetButton = this.dialog.querySelector('.snapshot-asset-button');
+    this.snapshotAssetButton.addEventListener('click', e => this.renderPreview());
+    this.addAssetButton = this.dialog.querySelector('.add-asset-button');
+    this.addAssetButton.addEventListener('click', e => this.addAsset());
+  }
   __initHeader() {
     this.signOutBtn = document.querySelector('#sign-out-button');
     if (this.signOutBtn)
@@ -128,27 +151,6 @@ class cView extends bView {
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'block' : 'none';
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
   }
-  initDataUI() {
-    this.__initHeader();
-    this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
-    this.dataview_record_key = this.dialog.querySelector('#dataview_record_key');
-    this.dataview_record_tag.value = this.tag;
-
-    this.dataview_record_tag.addEventListener('change', e => this.updateRecordList());
-    this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
-    this.blockChildrenSelect = this.dialog.querySelector('.main-band-children-select');
-    this.addChildButton = this.dialog.querySelector('.main-band-add-child');
-    this.addChildButton.addEventListener('click', e => this.addChild());
-    this.removeChildButton = this.dialog.querySelector('.main-band-delete-child');
-    this.removeChildButton.addEventListener('click', e => this.removeChild(e));
-    this.mainbandsubviewselect = this.dialog.querySelector('.main-band-sub-view-select');
-    this.addFrameButton = this.dialog.querySelector('.add_frame_button');
-    this.addFrameButton.addEventListener('click', e => this.__addFrameHandler());
-    this.deleteAssetButton = this.dialog.querySelector('.delete-asset-button');
-    this.deleteAssetButton.addEventListener('click', e => this.deleteAsset());
-    this.addAssetButton = this.dialog.querySelector('.add-asset-button');
-    this.addAssetButton.addEventListener('click', e => this.addAsset());
-  }
   deleteAsset() {
     if (!this.tag)
       return;
@@ -182,6 +184,7 @@ class cView extends bView {
     } else {
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
+      this.snapshotAssetButton.style.display = 'none';
     }
 
     this.dataview_record_key.innerHTML = options;
@@ -200,9 +203,11 @@ class cView extends bView {
       if (this.removeChildButton)
         this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
       this.deleteAssetButton.style.display = 'none';
+      this.snapshotAssetButton.style.display = 'none';
       return this.showDefaultDataView();
     }
     this.deleteAssetButton.style.display = 'inline-block';
+    this.snapshotAssetButton.style.display = 'inline-block';
 
     this.key = this.dataview_record_key.value;
     if (!this.dataFieldsInited)
@@ -337,6 +342,7 @@ class cView extends bView {
               <option value="block">Block</option>
             </select>
             <select id="dataview_record_key" style="max-width:calc(100% - 12.5em);"></select>
+            <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_a_photo</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">remove</i></button>
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <div style="display:inline-block;">
