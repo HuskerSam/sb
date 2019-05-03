@@ -65,6 +65,7 @@ class gInstanceSuper {
     this.a.initProjectModels(wId);
     this.a._activateModels();
     this.initialUILoad = false;
+    this._updateApplicationStyle();
 
     this.workspaceProcessed = false;
     gAPPP.a.workspaceLoadedCallback = () => this.workspaceLoaded(wId);

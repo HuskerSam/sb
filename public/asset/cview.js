@@ -494,7 +494,8 @@ class cView extends bView {
         <div id="extra-options-camera-area"></div>
       </div>
     </div>
-  </div>`;
+  </div>
+  <button class="none-layout-mode-flip btn-sb-icon" style="display:none;"><i class="material-icons">code</i></button>`;
   }
   refreshExportText() {
     let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);

@@ -481,3 +481,7 @@ button i.material-icons {
   flex: 1;
   flex-direction: column;
 }
+
+.bview-layoutmode-bottom .form_panel_view_dom, .bview-layoutmode-top .form_panel_view_dom {
+  min-height: auto;
+}

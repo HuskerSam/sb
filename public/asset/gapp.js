@@ -42,8 +42,10 @@ class gApp extends gInstanceSuper {
     if (this.workspaceProcessed) return;
     this.workspaceProcessed = true;
     let urlParams = new URLSearchParams(window.location.search);
-    this.mV = new cView(gAPPP.a.profile.mdlAppLayoutMode, urlParams.get('tag'), urlParams.get('key'), urlParams.get('childkey'));
-    this._updateApplicationStyle();
+    let layoutMode = urlParams.get('layoutmode');
+    if (!layoutMode)
+      layoutMode = gAPPP.a.profile.formLayoutMode;
+    this.mV = new cView(layoutMode, urlParams.get('tag'), urlParams.get('key'), urlParams.get('childkey'));
   }
   initializeAuthUI() {
     this.authUIInited = true;

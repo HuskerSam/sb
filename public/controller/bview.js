@@ -6,6 +6,7 @@ class bView {
     this.tag = tag;
     this.key = key;
     this.childKey = childKey;
+    this.layoutMode = layoutMode;
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
     this.initDom();
 
@@ -33,7 +34,6 @@ class bView {
     if (this.context)
       this.context.deactivate();
 
-    this.layoutMode = gAPPP.a.profile.formLayoutMode;
     if (!this.layoutMode)
       this.layoutMode = 'Left';
 
@@ -104,9 +104,7 @@ class bView {
 
     return Promise.resolve();
   }
-  _canvasPanelTemplate() {
-    return document.getElementById('canvas-d3-player-template').innerHTML;
-  }
+  _canvasPanelTemplate() {}
   __loadBlock(profileKey, blockData) {
     this.canvasHelper.logClear();
     let startTime = Date.now();
@@ -289,7 +287,6 @@ class bView {
 
       let l = this.form_canvas_wrapper;
       let r = this.form_panel_view_dom;
-      this.layoutMode = gAPPP.a.profile.formLayoutMode;
       if (this.layoutMode === 'Right' || this.layoutMode === 'Bottom') {
         l = this.form_panel_view_dom;
         r = this.form_canvas_wrapper;
@@ -312,9 +309,35 @@ class bView {
         onDrag: () => gAPPP.resize()
       });
     }
+    if (['None', 'Full'].indexOf(this.layoutMode) !== -1) {
+      this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
+      this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
+      this.dialog.style.display = 'block';
+      this.codeModeFromFull = this.dialog.querySelector('.none-layout-mode-flip');
+      this.codeModeFromFull.style.display = 'inline-block';
+      this.codeModeFromFull.addEventListener('click', e => {
+        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+          field: 'formLayoutMode',
+          newValue: 'Top'
+        }]).then(() => {
+          setTimeout(() => location.reload(), 1);
+        })
+      });
+      if (this.layoutMode === 'None') {
+        this.form_canvas_wrapper.style.display = 'none';
+        this.dialog.querySelector('#main-view-wrapper').style.display = 'flex';
+      }
+
+      if (this.layoutMode === 'Full') {
+        this.form_panel_view_dom.style.display = 'none';
+      }
+    }
+    if (!this.layoutMode)
+      this.layoutMode = '';
+    this.dialog.classList.add('bview-layoutmode-' + this.layoutMode.toLowerCase());
   }
   layoutTemplate() {
-    if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1)
+    if (['Left', 'Right', 'Top', 'Bottom', 'Full', 'None'].indexOf(this.layoutMode) !== -1)
       return this.splitLayoutTemplate();
 
     return `<div id="firebase-app-main-page" style="display:none;">
@@ -343,13 +366,5 @@ class bView {
   collapseAll() {
     this.fireFields.helpers.collapseAll();
     this.detailsShown = false;
-  }
-  toggleDetails() {
-    this.detailsShown = !this.detailsShown;
-
-    if (this.detailsShown)
-      return this.expandAll();
-
-    return this.collapseAll();
   }
 }
