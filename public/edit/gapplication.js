@@ -21,22 +21,6 @@ class gApplication extends gInstanceSuper {
     this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
     this._updateApplicationStyle();
   }
-  loadDataLists(name) {
-    return fetch(`/global/${name}.json`)
-      .then(rrr => rrr.json())
-      .then(json => {
-        let list = document.getElementById(name);
-        if (!list) {
-          list = document.createElement('datalist');
-          list.setAttribute('id', name);
-          document.body.appendChild(list);
-        }
-        let outHtml = '';
-        for (let c = 0, l = json.length; c < l; c++)
-          outHtml += `<option>${json[c]}</option>`
-        list.innerHTML = outHtml;
-      });
-  }
   initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');

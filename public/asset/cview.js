@@ -3,11 +3,24 @@ class cView extends bView {
     super(layoutMode, tag, key, false, childKey);
     this.canvasHelper.initExtraOptions();
 
-    document.querySelector('.user-name').innerHTML = gAPPP.a.currentUser.email;
-
     this.refreshProjectList().then(() => {});
+    this._updateGoogleFonts().then(() => {});
+
     this.workplacesSelect = document.querySelector('#workspaces-select');
+    this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');
+    this.workplacesSelectEditCode = document.querySelector('#edit-workspace-code');
+    this.workplacesRemoveButton = document.querySelector('#remove-workspace-button');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
+    this.workplacesSelectEditName.addEventListener('input', e => this.updateWorkspaceNameCode());
+    this.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
+
+    this.userProfileName = this.dialog.querySelector('.user-info');
+    this.fontToolsContainer = this.dialog.querySelector('#profile-header-panel');
+    this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
+    this.fontTools = new cBandProfileOptions(null, this.fontFields, this.fontFieldsContainer, this.fontFieldsContainer);
+    this.fontTools.fireFields.values = gAPPP.a.profile;
+    this.fontTools.activate();
 
     this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
     this.profile_description_panel_btn.addEventListener('click', e => this.toggleProfilePanel());
@@ -131,6 +144,25 @@ class cView extends bView {
     this.mainbandsubviewselect = this.dialog.querySelector('.main-band-sub-view-select');
     this.addFrameButton = this.dialog.querySelector('.add_frame_button');
     this.addFrameButton.addEventListener('click', e => this.__addFrameHandler());
+    this.deleteAssetButton = this.dialog.querySelector('.delete-asset-button');
+    this.deleteAssetButton.addEventListener('click', e => this.deleteAsset());
+    this.addAssetButton = this.dialog.querySelector('.add-asset-button');
+    this.addAssetButton.addEventListener('click', e => this.addAsset());
+  }
+  deleteAsset() {
+    if (!this.tag)
+      return;
+    if (!this.key)
+      return;
+    if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
+      return;
+    gAPPP.a.modelSets[this.tag].removeByKey(this.key);
+  }
+  addAsset() {
+    this.dialog.context.createObject(this.tag, 'new ' + this.tag).then(results => {
+      dataview_record_key.value = results.key;
+      return this.updateSelectedRecord();
+    });
   }
   __addFrameHandler() {
     this.mainbandsubviewselect.value = 'frame';
@@ -254,24 +286,30 @@ class cView extends bView {
       <div id="main-view-wrapper">
         <div class="form_canvas_wrapper"></div>
         <div class="form_panel_view_dom">
-          <div class="header_wrapper" style="line-height: 3em;">
-            <div id="profile-header-panel">
-              <select id="profile_current_role">
-                <option>Employee</option>
-                <option>Contractor</option>
-                <option>Manager</option>
-                <option>Owner</option>
-                <option>Administrator</option>
-              </select>
-              &nbsp;
-              <span class="user-name"></span>
-              &nbsp;
-              <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
-              <br>
-              <div id="record_field_list">
-                <form autocomplete="off" onsubmit="return false;"></form>
-              </div>
+          <div id="profile-header-panel">
+            <select id="profile_current_role">
+              <option>Employee</option>
+              <option>Contractor</option>
+              <option>Manager</option>
+              <option>Owner</option>
+              <option>Administrator</option>
+            </select>
+            <div id="record_field_list">
+              <form autocomplete="off" onsubmit="return false;"></form>
             </div>
+            <button id="remove-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">delete</i>Remove</button>
+            <br>
+            <label><span>Name </span><input id="edit-workspace-name" /></label><label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
+            <br>
+            <label><span>New Workspace </span><input id="new-workspace-name" /></label><label><span> Z Code </span><input id="new-workspace-code" style="width:5em;" /></label>
+            <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
+            </label>
+            <div class="user-info"></div>
+            <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
+            <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
+            <div class="fields-container" style="clear:both;"></div>
+          </div>
+          <div class="header_wrapper" style="line-height: 3em;">
             <b>&nbsp;Workspace</b>
             <select id="workspaces-select"></select>
             <button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
@@ -292,7 +330,9 @@ class cView extends bView {
               <option value="texture">Texture</option>
               <option value="block">Block</option>
             </select>
-            <select id="dataview_record_key" style="max-width:98%;"></select>
+            <select id="dataview_record_key" style="max-width:calc(100% - 12.5em);"></select>
+            <button class="delete-asset-button btn-sb-icon"><i class="material-icons">remove</i></button>
+            <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <div style="display:inline-block;">
               <select class="main-band-children-select" style="display:none;"></select>
               <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove</i></button>
@@ -309,7 +349,64 @@ class cView extends bView {
           </div>
         </div>
       </div>
-    </div>`;
+    </div>
+    <datalist id="framecommandoptionslist">
+      <option>Set</option>
+      <option>GSet</option>
+      <option>Animation</option>
+      <option>Video</option>
+      <option>Audio</option>
+      <option>Function</option>
+      <option>Camera</option>
+    </datalist>
+    <datalist id="framecommandfieldslist">
+      <option>videoURL</option>
+      <option>videoHeight</option>
+      <option>videoWidth</option>
+      <option>fogType</option>
+      <option>fogDensity</option>
+      <option>skybox</option>
+      <option>groundMaterial</option>
+      <option>material</option>
+      <option>play</option>
+      <option>pause</option>
+      <option>stop</option>
+      <option>position</option>
+      <option>target</option>
+    </datalist>
+    <datalist id="blockchildtypelist">
+      <option>block</option>
+      <option>mesh</option>
+      <option>shape</option>
+      <option>light</option>
+      <option>camera</option>
+    </datalist>
+    <datalist id="htmlvideosourcelist">
+      <option>video/webm</option>
+      <option>video/mp4</option>
+      <option>video/ogg</option>
+    </datalist>
+    <datalist id="fogtypelist">
+      <option>none</option>
+      <option>EXP</option>
+      <option>EXP2</option>
+      <option>LINEAR</option>
+    </datalist>
+    <datalist id="lightsourceslist">
+      <option>Point</option>
+      <option>Directional</option>
+      <option>Spot</option>
+      <option>Hemispheric</option>
+    </datalist>
+    <datalist id="camerasourceslist">
+      <option>UniversalCamera</option>
+      <option>ArcRotate</option>
+      <option>FollowCamera</option>
+    </datalist>
+    <datalist id="fontfamilydatalist"></datalist>
+    <datalist id="skyboxlist"></datalist>
+    <datalist id="sbmesheslist"></datalist>
+    <datalist id="followblocktargetoptionslist"></datalist>`;
   }
   __dataviewTemplate() {
     return `<div class="asset-fields-container"></div>
@@ -509,5 +606,44 @@ class cView extends bView {
       document.body.appendChild(this.followblocktargetoptionslist);
     }
     this.followblocktargetoptionslist.innerHTML = optionText;
+  }
+  updateWorkspaceNameCode() {
+    let name = this.workplacesSelectEditName.value.trim();
+    let code = this.workplacesSelectEditCode.value.trim();
+
+    if (name.length < 1)
+      return;
+
+    gAPPP.a.modelSets['projectTitles'].commitUpdateList([{
+      field: 'title',
+      newValue: name
+    }, {
+      field: 'code',
+      newValue: code
+    }], this.workplacesSelect.value);
+  }
+  addProject() {
+    let newTitle = this.addProjectName.value.trim();
+    if (newTitle.length === 0) {
+      alert('need a name for workspace');
+      return;
+    }
+    let newCode = this.addProjectCode.value.trim();
+
+    this._addProject(newTitle, newCode);
+  }
+  deleteProject() {
+    if (this.workplacesSelect.value === 'default') {
+      alert('Please select a workspace to delete other then default');
+      return;
+    }
+    if (confirm(`Are you sure you want to delete the project: ${this.workplacesSelect.selectedOptions[0].innerText}?`))
+      if (confirm('Really?  Really sure?  this won\'t come back...')) {
+        gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelect.value);
+        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+          field: 'selectedWorkspace',
+          newValue: 'default'
+        }]);
+      }
   }
 }

@@ -2,6 +2,8 @@ class cBandProfileOptions {
   constructor(btn, fields, fieldsContainer, panel) {
     this.expanded = false;
 
+    if (!btn)
+      btn = document.createElement('button');
     this.collapseButton = btn;
     this.collapseButton.addEventListener('click', e => this.toggle(), false);
 

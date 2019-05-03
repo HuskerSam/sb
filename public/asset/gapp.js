@@ -16,6 +16,10 @@ class gApp extends gInstanceSuper {
         }
       }
     });
+    this.loadDataLists('sbimageslist').then(() => {});
+    this.loadDataLists('sbmesheslist').then(() => {});
+    this.loadDataLists('skyboxlist').then(() => {});
+    this.loadDataLists('fontfamilydatalist').then(() => {});
   }
   profileReadyAndLoaded() {
     let urlParams = new URLSearchParams(window.location.search);
@@ -41,7 +45,6 @@ class gApp extends gInstanceSuper {
     this.mV = new cView(gAPPP.a.profile.mdlAppLayoutMode, urlParams.get('tag'), urlParams.get('key'), urlParams.get('childkey'));
     this._updateApplicationStyle();
   }
-  _updateApplicationStyle() {}
   initializeAuthUI() {
     this.authUIInited = true;
     let div = document.createElement('div');
