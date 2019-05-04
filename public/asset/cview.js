@@ -537,7 +537,7 @@ class cView extends bView {
       return;
     }
     this.recordViewer = new cBandIcons(this.tag, this);
-    this.generate = new wGenerate(this.addAssetPanel, this.tag);
+    this.generate = new gMacro(this.addAssetPanel, this.tag);
 
     fetch(`/doc/${this.tag}help.html`)
       .then(res => res.text())
