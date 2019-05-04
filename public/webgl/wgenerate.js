@@ -1,4 +1,4 @@
-class wGenerate {
+class bMacro {
   constructor(panel, tag) {
     this.panel = panel;
     this.tag = tag;
@@ -10,20 +10,57 @@ class wGenerate {
     this.panelCreateBtn = this.panel.querySelector('.add-button');
     this.panelCreateBtn.addEventListener('click', e => this.createItem());
     this.panelInput = this.panel.querySelector('.add-item-name');
-    this.panelInput.addEventListener('keypress', e => this.titleKeyPress(e), false);
     this.createMesage = this.panel.querySelector('.creating-message');
   }
   updateFontField(textDom) {
     textDom.style.fontFamily = textDom.value;
   }
-  titleKeyPress(e) {
-    if (e.code === 'Enter')
-      this.createItem();
-  }
   baseTemplate() {
     return `<label><b>Add ${this.tag} asset</b> <input style="width:20em;" class="add-item-name" /></label>
       <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
       <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div><br>`;
+  }
+  createItem() {
+    let newName = this.panelInput.value.trim();
+    if (newName === '') {
+      alert('Please enter a name');
+      return;
+    }
+    this.panelInput.value = '';
+    let file = null;
+    let scene = gAPPP.mV.scene;
+    let tag = this.addElementType.toLowerCase();
+    this.createMesage.style.display = 'block';
+
+    let mixin = {};
+    let generateTexture = false;
+    let callbackMixin = {};
+    let generateGround = false;
+    let generateLight = false;
+    let generateShapeText = false;
+    let blockCreateAnimatedLine = false;
+    let generateConnector = false;
+
+    this.context.createObject(tag, newName, file, mixin).then(results => {
+      if (blockCreateAnimatedLine)
+        this.blockCreateAnimatedLine(this.context, results.key, newName, mixin);
+
+      if (generateGround)
+        this.blockGenerateGround(results.key, newName, mixin, this.cloudImageInput.value.trim());
+      if (generateLight)
+        this.blockCreateLight(results.key, newName, mixin);
+      if (generateShapeText)
+        this.blockCreateShapeAndText(this.context, results.key, newName, mixin);
+      if (generateConnector)
+        this.blockCreateConnectorLine(this.context, results.key, newName, callbackMixin);
+      if (generateTexture)
+        this.blockCreate2DTexture(this.context, results.key, newName, callbackMixin);
+
+      setTimeout(() => {
+        gAPPP.dialogs[tag + '-edit'].show(results.key);
+        this.createMesage.style.display = 'none';
+      }, 300);
+    });
   }
 
   textureTemplate() {
@@ -172,7 +209,15 @@ class wGenerate {
   }
 
   shapeTemplate() {
-    return `<div class="create-sphere-options">
+    return `<select class="shape-type-select">
+         <option>2D Text Plane</option>
+         <option selected>3D Text</option>
+         <option>Box</option>
+         <option>Sphere</option>
+         <option>Cylinder</option>
+        </select>
+        <br>
+        <div class="create-sphere-options">
       <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
     </div>
     <div class="create-2d-text-plane">
@@ -206,15 +251,7 @@ class wGenerate {
       <label><span>Width</span><input type="text" class="box-width" /></label>
       <label><span>Height</span><input type="text" class="box-height" /></label>
       <label><span>Depth</span><input type="text" class="box-depth" /></label>
-    </div>
-    <br>
-    <select class="shape-type-select">
-     <option>2D Text Plane</option>
-     <option selected>3D Text</option>
-     <option>Box</option>
-     <option>Sphere</option>
-     <option>Cylinder</option>
-    </select>`;
+    </div>`;
   }
   shapeRegister() {
     this.add2dTextPanel = this.panel.querySelector('.create-2d-text-plane');
@@ -274,7 +311,7 @@ class wGenerate {
       callbackMixin.textFontFamily = this.panel.querySelector('.font-family-2d-add').value;
       callbackMixin.textFontColor = this.panel.querySelector('.font-2d-color').value;
       callbackMixin.textFontSize = this.panel.querySelector('.font-2d-text-size').value;
-      generate2DTexture = true;
+      generateTexture = true;
     }
   }
   shapeTypeChange() {
@@ -287,32 +324,24 @@ class wGenerate {
   }
 
   blockTemplate() {
-    return `<label><span>W</span><input type="text" class="block-box-width" value="" /></label>
-    <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
-    <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>`;
-  }
-  sceneTemplate() {
-    return `<label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
-      <hr>
-      <label><input type="checkbox" class="block-generate-ground" /><span>Create Ground Material</span></label>
-      <br>
-      <label><span>Image Path</span><input type="text" style="width:15em;" class="block-scene-cloudfile-picker-input" list="sbimageslist" /></label>
-      <br>
-      <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
-      <hr>
-      <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
-      <div class="skybox-preview-images"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"></div>
-      <br>
-      <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
-      <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
-      <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>`;
-  }
-  connectorLineTemplate() {
-    return `<label><span>Length</span><input type="text" class="line-length" value="10" /></label>
+    return `<select class="block-type-select">
+     <option>Empty</option>
+     <option>Scene</option>
+     <option selected>Text and Shape</option>
+     <option>Animated Line</option>
+     <option>Connector Line</option>
+    </select>
+    <div class="scene-empty-block-add-options">
+      <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
+      <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
+      <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
+    </div>
+    <div class="connector-line-block-add-options" style="display:none;">
+      <label><span>Length</span><input type="text" class="line-length" value="10" /></label>
       <label><span>Diameter</span><input type="text" class="line-diameter" value=".5" /></label>
       <label><span>Sides</span><input type="text" class="line-sides" value="" /></label>
       <br>
-      <label><span>Material</span><input type="text" style="width:15em;" class="line-material" list="materialdatatitlelookuplist" /></label>
+      <label><span>Material</span>&nbsp;<input type="text" style="width:15em;" class="line-material" list="materialdatatitlelookuplist" /></label>
       <br>
       <label>
         <span>Point</span>
@@ -344,10 +373,46 @@ class wGenerate {
       <label><span>Diameter</span><input type="text" class="tail-diameter" value="1" /></label>
       <label><span>Sides</span><input type="text" class="tail-sides" value="" /></label>
       <br>
-      <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>`;
-  }
-  animatedLineTemplate() {
-    return `<label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
+      <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
+    </div>
+    <div class="store-item-block-add-options" style="text-align:right;display:none;">
+      <b>Highlight Details</b>
+      <br>
+      <label><span>Description</span><textarea style="width:15em;" rows="2" cols="1"  class="store-item-block-description"></textarea></label>
+      <br>
+      <label><span>Image</span><input style="width:15em;"  class="store-item-block-description-image" /></label>
+      <br>
+      <label><span>Video</span><input style="width:15em;"  class="store-item-block-description-video" /></label>
+      <br>
+      <b>Item Details</b>
+      <br>
+      <label><span>Price</span><input type="text" style="width:7em;"  class="store-item-block-price" value="$1.00" /></label>
+      &nbsp;
+      <label><span>Name</span><input type="text" style="width:10em;"  class="store-item-block-name" value="" /></label>
+      <br>
+      <label>
+        <span></span>
+        <select class="store-item-block-type-options">
+          <option selected>Block</option>
+          <option>Mesh</option>
+          <option>Shape</option>
+        </select>
+      </label>
+      <label><span></span><input type="text" style="width:15em;"  class="store-item-block-block" list="blockdatatitlelookuplist" /></label>
+
+      <label><span></span><input type="text" style="width:15em;"  class="store-item-block-mesh" list="sbmesheslist" /></label>
+      <br>
+      <label><span></span><input type="text" style="width:15em;"  class="store-item-block-shape" list="shapedatatitlelookuplist" /></label>
+      <br>
+      <br>
+      <label><span>Location</span><input type="text" style="width:6em;" class="store-item-block-location" value="0,0,0" /></label>
+      &nbsp;
+      <label><span>Rotation</span><input type="text" style="width:8em;" class="store-item-block-rotation" value="" /></label>
+      <br>
+      <label><span>Parent Block</span><input type="text" style="width:15em;"  class="store-item-parent-block" list="blockdatatitlelookuplist"  /></label>
+    </div>
+    <div class="animated-line-block-add-options">
+      <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
       <label><span>Run Time</span><input type="text" class="animated-run-time" value="1500" /></label>
       <br>
       <label>
@@ -365,19 +430,16 @@ class wGenerate {
       <br>
       <label><span>W</span><input type="text" class="block-box-width" value="1" /></label>
       <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
-      <label><span>Len</span><input type="text" class="block-box-depth" value="10" /></label>`;
-  }
-  shapeAndTextTemplate() {
-    return `<label><span>Line 1</span><input type="text" style="width:15em;" class="block-box-text" value="Block Text" /></label>
-      <br>
+      <label><span>Len</span><input type="text" class="block-box-depth" value="10" /></label>
+    </div>
+    <div class="shape-and-text-block-options">
+      <label><span>Line 1</span><input type="text" style="width:15em;" class="block-box-text" value="Block Text" /></label>
       <label><span>Line 2</span><input type="text" style="width:15em;" class="block-box-text-line2" value="" /></label>
       <br>
       <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
       <label><span>Depth</span><input type="text" class="block-text-depth" value=".1" /></label>
+      <label><span>Material</span>&nbsp;<input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
       <br>
-      <label><span>Material</span><input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
-      <hr>
-
       <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option selected>Cone</option>
         <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
       <label class="block-shape-add-label"><span>Divs</span><input type="text" class="block-add-shape-sides" /></label>
@@ -387,13 +449,28 @@ class wGenerate {
       <br>
       <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
       <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
-      <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>`;
+      <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>
+    </div>
+    <div class="scene-block-add-options" style="text-align:center;">
+      <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
+      <label><input type="checkbox" class="block-generate-ground" /><span>Create Ground Material</span></label>
+      <label><span>Image Path</span><input type="text" style="width:15em;" class="block-scene-cloudfile-picker-input" list="sbimageslist" /></label>
+      <br>
+      <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
+      <br>
+      <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
+      <div class="skybox-preview-images"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"></div>
+      <br>
+      <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
+      <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
+      <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
+    </div>`;
   }
   blockRegister() {
 
     this.addBlockOptionsPanel = this.panel.querySelector('.block-add-options');
     this.blockOptionsPicker = this.panel.querySelector('.block-type-select');
-    this.blockOptionsPicker.addEventListener('input', e => this.__handleBlockTypeSelectChange());
+    this.blockOptionsPicker.addEventListener('input', e => this.blockHelperChange());
 
     this.blockShapePicker = this.panel.querySelector('.block-add-shape-type-options');
     this.blockShapePicker.addEventListener('input', e => this.blockShapeChange());
@@ -409,22 +486,20 @@ class wGenerate {
 
     this.skyBoxImages = this.panel.querySelector('.skybox-preview-images');
     this.skyBoxInput = this.panel.querySelector('.block-skybox-picker-select');
-    this.skyBoxInput.addEventListener('input', e => this.__handleSkyboxChange());
+    this.skyBoxInput.addEventListener('input', e => this.blockSkyboxChange());
 
     this.cloudImageInput = this.panel.querySelector('.block-scene-cloudfile-picker-input');
     this.groundImagePreview = this.panel.querySelector('.cloud-file-ground-preview');
     this.generateGroundMaterial = this.panel.querySelector('.block-generate-ground');
-    this.cloudImageInput.addEventListener('input', e => this.__handleGroundChange());
+    this.cloudImageInput.addEventListener('input', e => this.blockGroundChange());
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
     this.shapeDetailsPanel = this.panel.querySelector('.block-shape-add-label');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
 
-    this.__handleBlockTypeSelectChange();
+    this.blockHelperChange();
     this.blockShapeChange();
-    this.__handleSkyboxChange();
-    this.handleAddTypeSelect('Block');
-
+    this.blockSkyboxChange();
   }
   blockCreate() {
     let bType = this.blockOptionsPicker.value;
@@ -463,7 +538,7 @@ class wGenerate {
       mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
       mixin.cylinderHorizontal = this.blockShapePanel.querySelector('.shape-stretch-checkbox').checked;
       mixin.createShapeType = this.blockShapePicker.value;
-      generateShapeAndText = true;
+      blockCreateShapeAndText = true;
     }
 
     if (bType === 'Animated Line') {
@@ -479,7 +554,7 @@ class wGenerate {
       mixin.shapeDivs = this.animatedDashPanel.querySelector('.dash-shape-sides').value;
       mixin.materialName = this.animatedDashPanel.querySelector('.dash-shape-material-picker-select').value;
 
-      generateAnimatedLine = true;
+      blockCreateAnimatedLine = true;
     }
     if (bType === 'Connector Line') {
       callbackMixin.lineLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-length').value, 1);
@@ -519,7 +594,7 @@ class wGenerate {
       mixin.height = callbackMixin.height;
       mixin.depth = callbackMixin.depth;
 
-      generateConnectorLine = true;
+      generateConnector = true;
     }
   }
   blockShapeChange() {
@@ -533,7 +608,63 @@ class wGenerate {
     if (shape === 'Cone' || shape === 'Cylinder')
       this.stretchDetailsPanel.style.display = '';
   }
-  blockGenerateLight(blockKey, blockTitle, mixin) {
+  blockGroundChange() {
+    let cloudImage = this.cloudImageInput.value.trim();
+
+    this.groundImagePreview.style.display = '';
+    if (cloudImage !== '') {
+      let url = cloudImage;
+      if (url.substring(0, 3) === 'sb:') {
+        url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
+      }
+      this.groundImagePreview.setAttribute('src', url);
+    } else {
+      this.groundImagePreview.style.display = 'none';
+    }
+
+  }
+  blockSkyboxChange() {
+    let skybox = this.skyBoxInput.value.trim();
+
+    if (skybox === '')
+      this.skyBoxImages.style.display = 'none';
+    else {
+      this.skyBoxImages.style.display = '';
+      let imgs = this.skyBoxImages.querySelectorAll('img');
+
+      let skyboxPath = gAPPP.cdnPrefix + 'box/' + skybox + '/skybox';
+
+      imgs[0].setAttribute('src', skyboxPath + '_nx.jpg');
+      imgs[1].setAttribute('src', skyboxPath + '_px.jpg');
+      imgs[2].setAttribute('src', skyboxPath + '_ny.jpg');
+      imgs[3].setAttribute('src', skyboxPath + '_py.jpg');
+      imgs[4].setAttribute('src', skyboxPath + '_nz.jpg');
+      imgs[5].setAttribute('src', skyboxPath + '_pz.jpg');
+    }
+  }
+  blockHelperChange() {
+    this.blockShapePanel.style.display = 'none';
+    this.sceneBlockPanel.style.display = 'none';
+    this.emptyBlockPanel.style.display = 'none';
+    this.animatedDashPanel.style.display = 'none';
+    this.connectorLinePanel.style.display = 'none';
+    this.storeItemPanel.style.display = 'none';
+
+    let sel = this.blockOptionsPicker.value;
+    if (sel === 'Text and Shape')
+      this.blockShapePanel.style.display = '';
+    else if (sel === 'Scene')
+      this.sceneBlockPanel.style.display = '';
+    else if (sel === 'Connector Line')
+      this.connectorLinePanel.style.display = '';
+    else if (sel === 'Animated Line')
+      this.animatedDashPanel.style.display = '';
+    else if (sel === 'Store Item')
+      this.storeItemPanel.style.display = '';
+    else
+      this.emptyBlockPanel.style.display = '';
+  }
+  blockCreateLight(blockKey, blockTitle, mixin) {
     this.context.createObject('blockchild', '', null, {
       childType: 'light',
       childName: 'Hemispheric',
@@ -569,107 +700,7 @@ class wGenerate {
       diffuseTextureName: textureName
     }).then(results => {});
   }
-  __handleGroundChange() {
-    let cloudImage = this.cloudImageInput.value.trim();
-
-    this.groundImagePreview.style.display = '';
-    if (cloudImage !== '') {
-      let url = cloudImage;
-      if (url.substring(0, 3) === 'sb:') {
-        url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
-      }
-      this.groundImagePreview.setAttribute('src', url);
-    } else {
-      this.groundImagePreview.style.display = 'none';
-    }
-
-  }
-  __handleSkyboxChange() {
-    let skybox = this.skyBoxInput.value.trim();
-
-    if (skybox === '')
-      this.skyBoxImages.style.display = 'none';
-    else {
-      this.skyBoxImages.style.display = '';
-      let imgs = this.skyBoxImages.querySelectorAll('img');
-
-      let skyboxPath = gAPPP.cdnPrefix + 'box/' + skybox + '/skybox';
-
-      imgs[0].setAttribute('src', skyboxPath + '_nx.jpg');
-      imgs[1].setAttribute('src', skyboxPath + '_px.jpg');
-      imgs[2].setAttribute('src', skyboxPath + '_ny.jpg');
-      imgs[3].setAttribute('src', skyboxPath + '_py.jpg');
-      imgs[4].setAttribute('src', skyboxPath + '_nz.jpg');
-      imgs[5].setAttribute('src', skyboxPath + '_pz.jpg');
-    }
-  }
-  __handleBlockTypeSelectChange() {
-    this.blockShapePanel.style.display = 'none';
-    this.sceneBlockPanel.style.display = 'none';
-    this.emptyBlockPanel.style.display = 'none';
-    this.animatedDashPanel.style.display = 'none';
-    this.connectorLinePanel.style.display = 'none';
-    this.storeItemPanel.style.display = 'none';
-
-    let sel = this.blockOptionsPicker.value;
-    if (sel === 'Text and Shape')
-      this.blockShapePanel.style.display = '';
-    else if (sel === 'Scene')
-      this.sceneBlockPanel.style.display = '';
-    else if (sel === 'Connector Line')
-      this.connectorLinePanel.style.display = '';
-    else if (sel === 'Animated Line')
-      this.animatedDashPanel.style.display = '';
-    else if (sel === 'Store Item')
-      this.storeItemPanel.style.display = '';
-    else
-      this.emptyBlockPanel.style.display = '';
-  }
-
-  createItem() {
-    let newName = this.panelInput.value.trim();
-    if (newName === '') {
-      alert('Please enter a name');
-      return;
-    }
-    this.panelInput.value = '';
-    let file = null;
-    let scene = gAPPP.mV.scene;
-    let tag = this.addElementType.toLowerCase();
-    this.createMesage.style.display = 'block';
-
-    let mixin = {};
-    let generate2DTexture = false;
-    let callbackMixin = {};
-    let generateGround = false;
-    let generateLight = false;
-    let generateShapeAndText = false;
-    let generateAnimatedLine = false;
-    let generateConnectorLine = false;
-
-    this.context.createObject(tag, newName, file, mixin).then(results => {
-      if (generateAnimatedLine)
-        this.generateAnimatedLine(this.context, results.key, newName, mixin);
-
-      if (generateGround)
-        this.blockGenerateGround(results.key, newName, mixin, this.cloudImageInput.value.trim());
-      if (generateLight)
-        this.blockGenerateLight(results.key, newName, mixin);
-      if (generateShapeAndText)
-        this.generateShapeAndText(this.context, results.key, newName, mixin);
-      if (generateConnectorLine)
-        this.generateConnectorLine(this.context, results.key, newName, callbackMixin);
-      if (generate2DTexture)
-        this.generate2DTexture(this.context, results.key, newName, callbackMixin);
-
-      setTimeout(() => {
-        gAPPP.dialogs[tag + '-edit'].show(results.key);
-        this.createMesage.style.display = 'none';
-      }, 300);
-    });
-  }
-
-  static generateShapeAndText(context, blockId, blockTitle, options) {
+  blockCreateShapeAndText(context, blockId, blockTitle, options) {
     let shapeTextName = blockTitle + '_shapeText';
     let shapeTextNameLine2 = blockTitle + '_shapeTextLine2';
     let textLen = Math.max(options.textText.length, options.textTextLine2.length);
@@ -746,7 +777,7 @@ class wGenerate {
       rotationZ: ''
     }
 
-    this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions).then(resultsObj => {
+    this.blockCreateShapeChild(context, blockId, blockTitle + '_shapeShape', shapeOptions).then(resultsObj => {
       let newObj = {
         frameTime: '',
         frameOrder: '10',
@@ -759,7 +790,74 @@ class wGenerate {
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
   }
-  static createShapeBlockChild(context, blockId, shapeBlockName, shapeOptions, createShape = true) {
+  blockCreateConnectorLine(context, blockId, blockTitle, options) {
+    let lineShapeOptions = {
+      width: options.lineDiameter,
+      shapeDivs: options.lineSides,
+      height: options.lineLength,
+      depth: options.lineDiameter,
+      materialName: options.lineMaterial,
+      cylinderHorizontal: false,
+      createShapeType: 'Cylinder'
+    };
+    this.blockCreateShapeChild(context, blockId, blockTitle + '_connectorLineShape', lineShapeOptions).then(resultsObj => {
+      let frameOrder = 10;
+      let newObj = {
+        parentKey: resultsObj.blockChildResults.key
+      };
+      newObj.rotationZ = '90deg';
+      newObj.rotationX = '90deg';
+      newObj.frameOrder = frameOrder.toString();
+      newObj.frameTime = "0";
+      context.createObject('frame', '', null, newObj).then(resultB => {});
+    });
+    let pointShapeOptions = {
+      width: options.pointDiameter,
+      shapeDivs: options.pointSides,
+      height: options.pointDiameter,
+      depth: options.pointLength,
+      materialName: options.pointMaterial,
+      createShapeType: options.pointShape
+    };
+
+    if (options.pointShape !== 'None')
+      this.blockCreateShapeChild(context, blockId, blockTitle + '_connectorPointShape', pointShapeOptions).then(resultsObj => {
+        let frameOrder = 10;
+        let newObj = {
+          parentKey: resultsObj.blockChildResults.key
+        };
+        if (options.pointShape !== 'Cone' && options.pointShape !== 'Cylinder')
+          newObj.rotationY = '90deg';
+        newObj.rotationZ = '90deg';
+        newObj.positionX = -1.0 * (options.lineLength) / 2.0;
+        newObj.frameOrder = frameOrder.toString();
+        newObj.frameTime = "0";
+        context.createObject('frame', '', null, newObj).then(resultB => {});
+      });
+    let tailShapeOptions = {
+      width: options.tailDiameter,
+      shapeDivs: options.tailSides,
+      height: options.tailDiameter,
+      depth: options.tailLength,
+      materialName: options.tailMaterial,
+      createShapeType: options.tailShape
+    };
+    if (options.tailShape !== 'None')
+      this.blockCreateShapeChild(context, blockId, blockTitle + '_connectorTailShape', tailShapeOptions).then(resultsObj => {
+        let frameOrder = 10;
+        let newObj = {
+          parentKey: resultsObj.blockChildResults.key
+        };
+        if (options.tailShape !== 'Cone' && options.tailShape !== 'Cylinder')
+          newObj.rotationY = '90deg';
+        newObj.rotationZ = '90deg';
+        newObj.positionX = (options.lineLength) / 2.0;
+        newObj.frameOrder = frameOrder.toString();
+        newObj.frameTime = "0";
+        context.createObject('frame', '', null, newObj).then(resultB => {});
+      });
+  }
+  blockCreateShapeChild(context, blockId, shapeBlockName, shapeOptions, createShape = true) {
     let width = shapeOptions.width;
     let height = shapeOptions.height;
     let depth = shapeOptions.depth;
@@ -841,74 +939,7 @@ class wGenerate {
       });
     });
   }
-  static generateConnectorLine(context, blockId, blockTitle, options) {
-    let lineShapeOptions = {
-      width: options.lineDiameter,
-      shapeDivs: options.lineSides,
-      height: options.lineLength,
-      depth: options.lineDiameter,
-      materialName: options.lineMaterial,
-      cylinderHorizontal: false,
-      createShapeType: 'Cylinder'
-    };
-    this.createShapeBlockChild(context, blockId, blockTitle + '_connectorLineShape', lineShapeOptions).then(resultsObj => {
-      let frameOrder = 10;
-      let newObj = {
-        parentKey: resultsObj.blockChildResults.key
-      };
-      newObj.rotationZ = '90deg';
-      newObj.rotationX = '90deg';
-      newObj.frameOrder = frameOrder.toString();
-      newObj.frameTime = "0";
-      context.createObject('frame', '', null, newObj).then(resultB => {});
-    });
-    let pointShapeOptions = {
-      width: options.pointDiameter,
-      shapeDivs: options.pointSides,
-      height: options.pointDiameter,
-      depth: options.pointLength,
-      materialName: options.pointMaterial,
-      createShapeType: options.pointShape
-    };
-
-    if (options.pointShape !== 'None')
-      this.createShapeBlockChild(context, blockId, blockTitle + '_connectorPointShape', pointShapeOptions).then(resultsObj => {
-        let frameOrder = 10;
-        let newObj = {
-          parentKey: resultsObj.blockChildResults.key
-        };
-        if (options.pointShape !== 'Cone' && options.pointShape !== 'Cylinder')
-          newObj.rotationY = '90deg';
-        newObj.rotationZ = '90deg';
-        newObj.positionX = -1.0 * (options.lineLength) / 2.0;
-        newObj.frameOrder = frameOrder.toString();
-        newObj.frameTime = "0";
-        context.createObject('frame', '', null, newObj).then(resultB => {});
-      });
-    let tailShapeOptions = {
-      width: options.tailDiameter,
-      shapeDivs: options.tailSides,
-      height: options.tailDiameter,
-      depth: options.tailLength,
-      materialName: options.tailMaterial,
-      createShapeType: options.tailShape
-    };
-    if (options.tailShape !== 'None')
-      this.createShapeBlockChild(context, blockId, blockTitle + '_connectorTailShape', tailShapeOptions).then(resultsObj => {
-        let frameOrder = 10;
-        let newObj = {
-          parentKey: resultsObj.blockChildResults.key
-        };
-        if (options.tailShape !== 'Cone' && options.tailShape !== 'Cylinder')
-          newObj.rotationY = '90deg';
-        newObj.rotationZ = '90deg';
-        newObj.positionX = (options.lineLength) / 2.0;
-        newObj.frameOrder = frameOrder.toString();
-        newObj.frameTime = "0";
-        context.createObject('frame', '', null, newObj).then(resultB => {});
-      });
-  }
-  static generateAnimatedLine(context, blockId, blockTitle, options) {
+  blockCreateAnimatedLine(context, blockId, blockTitle, options) {
     let barLength = GLOBALUTIL.getNumberOrDefault(options.depth, 10);
     let shapeOptions = {
       width: GLOBALUTIL.getNumberOrDefault(options.width, 1),
@@ -954,7 +985,7 @@ class wGenerate {
     moreOptions.timePerDash = moreOptions.runTime / moreOptions.dashCount;
 
     for (let i = 0; i < moreOptions.dashCount; i++)
-      this.__createLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, i, (i === 0));
+      this.blockCreateLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, i, (i === 0));
 
     let blockFrame = {
       frameTime: moreOptions.endTime.toFixed(3),
@@ -963,8 +994,17 @@ class wGenerate {
     };
     context.createObject('frame', '', null, blockFrame).then(resultB => {});
   }
-  static __createLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, index, createShape = true) {
-    this.createShapeBlockChild(context, blockId, blockTitle + '_shapeShape', shapeOptions, createShape).then(resultsObj => {
+  blockCreate2DTexture(context, shapeId, shapeTitle, textOptions) {
+    context.createObject('material', shapeTitle + '_2d_material', null, {
+      diffuseTextureName: shapeTitle + '_2d_texture',
+      emissiveTextureName: shapeTitle + '_2d_texture'
+    }).then(() => {});
+    textOptions.isText = true;
+    textOptions.hasAlpha = true;
+    context.createObject('texture', shapeTitle + '_2d_texture', null, textOptions).then(() => {});
+  }
+  blockCreateLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, index, createShape = true) {
+    this.blockCreateShapeChild(context, blockId, blockTitle + '_shapeShape', shapeOptions, createShape).then(resultsObj => {
       let frameOrder = 10;
       let newObj = {
         parentKey: resultsObj.blockChildResults.key
@@ -1009,14 +1049,5 @@ class wGenerate {
       newObj.frameTime = '100%';
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
-  }
-  static generate2DTexture(context, shapeId, shapeTitle, textOptions) {
-    context.createObject('material', shapeTitle + '_2d_material', null, {
-      diffuseTextureName: shapeTitle + '_2d_texture',
-      emissiveTextureName: shapeTitle + '_2d_texture'
-    }).then(() => {});
-    textOptions.isText = true;
-    textOptions.hasAlpha = true;
-    context.createObject('texture', shapeTitle + '_2d_texture', null, textOptions).then(() => {});
   }
 }
