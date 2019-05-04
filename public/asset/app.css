@@ -429,7 +429,7 @@ select {
 
 .band-background-preview .img-holder {
   background-position: center;
-  background-size: fit;
+  background-size: cover;
   background-repeat: no-repeat;
   width: inherit;
   height: 10em;

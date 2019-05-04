@@ -125,6 +125,21 @@ class cView extends bView {
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'block' : 'none';
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
   }
+  selectItem(newKey, newWindow) {
+    if (!newWindow) {
+      this.dataview_record_key.value = newKey;
+      this.updateSelectedRecord();
+      return;
+    }
+
+    let url = this.genQueryString(null, null, newKey);
+    let a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('target', '_blank');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
   deleteAsset() {
     if (!this.tag)
       return;
@@ -148,6 +163,11 @@ class cView extends bView {
   updateRecordList(newKey = null) {
     this.tag = this.dataview_record_tag.value;
     this.key = newKey;
+    this._updateRecordSelect();
+    this.initDataFields();
+    this.updateSelectedRecord().then(() => {});
+  }
+  _updateRecordSelect() {
     let options = '<option value=""></option>';
 
     this.addAssetPanel.style.display = 'none';
@@ -167,8 +187,6 @@ class cView extends bView {
 
     this.dataview_record_key.innerHTML = options;
     this.dataview_record_key.value = this.key;
-    this.initDataFields();
-    this.updateSelectedRecord().then(() => {});
   }
   async updateSelectedRecord() {
     if (this.dataview_record_key.selectedIndex <= 0) {
@@ -421,7 +439,7 @@ class cView extends bView {
           this.rootBlock.updateCamera();
       }
     }
-
+    this._updateRecordSelect();
     super._updateContextWithDataChange(tag, values, type, fireData);
   }
   refreshExportText() {
@@ -546,7 +564,7 @@ class cView extends bView {
       return;
     }
     this.recordViewer = new cBandIcons(this.tag, this);
-    this.generate = new gMacro(this.addAssetPanel, this.tag);
+    this.generate = new gMacro(this.addAssetPanel, this.tag, this);
 
     fetch(`/doc/${this.tag}help.html`)
       .then(res => res.text())

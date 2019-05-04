@@ -71,7 +71,7 @@ class bBand {
         if (binding.type === 'background-image') {
           let url = val;
           if (!url)
-            url = '/images/logo64.png';
+            url = '/images/webgl.png';
           let imgHolder = element.querySelector('.img-holder');
           if (imgHolder)
             imgHolder.style.backgroundImage = 'url("' + url + '")';

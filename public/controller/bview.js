@@ -1,6 +1,5 @@
 class bView {
   constructor(layoutMode, tag, key = null, play = false, childKey) {
-    this.dialogs = {};
     this.playAnimation = play;
     this.expandedAll = true;
     this.tag = tag;

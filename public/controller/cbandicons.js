@@ -50,19 +50,7 @@ class cBandIcons extends bBand {
     gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
   selectItem(e, newKey, newWindow) {
-    if (!newWindow) {
-      this.dialog.dataview_record_key.value = newKey;
-      this.dialog.updateSelectedRecord();
-      return;
-    }
-
-    let url = this.dialog.genQueryString(null, null, newKey);
-    let a = document.createElement('a');
-    a.setAttribute('href', url);
-    a.setAttribute('target', '_blank');
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    this.dialog.selectItem(newKey, newWindow);
   }
   __addMenuItem(button, title, clickHandler, prependDivider) {
     let btn = document.createElement('button');

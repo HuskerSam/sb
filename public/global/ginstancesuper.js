@@ -53,9 +53,6 @@ class gInstanceSuper {
     }
   }
   initializeAuthUI() {}
-  get dialogs() {
-    return this.mV.dialogs;
-  }
   handleDataUpdate() {
     this._handleDataUpdate();
   }

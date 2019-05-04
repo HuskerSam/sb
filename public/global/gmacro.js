@@ -1,7 +1,8 @@
 class gMacro {
-  constructor(panel, tag) {
+  constructor(panel, tag, view) {
     this.panel = panel;
     this.tag = tag;
+    this.view = view;
     if (!tag)
       return this.panel.innerHTML = '';
 
@@ -9,6 +10,8 @@ class gMacro {
     this[tag + 'Register']();
     this.panelCreateBtn = this.panel.querySelector('.add-button');
     this.panelCreateBtn.addEventListener('click', e => this.createItem());
+    this.panelCreateBtn2 = this.panel.querySelector('.add-newwindow-button');
+    this.panelCreateBtn2.addEventListener('click', e => this.createItem(true));
     this.panelInput = this.panel.querySelector('.add-item-name');
     this.createMesage = this.panel.querySelector('.creating-message');
   }
@@ -16,59 +19,34 @@ class gMacro {
     textDom.style.fontFamily = textDom.value;
   }
   baseTemplate() {
-    return `<label><b>Add ${this.tag} asset</b> <input style="width:20em;" class="add-item-name" /></label>
-      <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
+    return `<label><b>Add ${this.tag} asset</b>
+     <input style="width:20em;" class="add-item-name" /></label>
+      <button class="add-button btn-sb-icon"><i class="material-icons">add_circle</i></button>
+      <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
       <br>
       <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>`;
   }
-  createItem() {
-    let newName = this.panelInput.value.trim();
-    if (newName === '') {
+  createItem(newWindow) {
+    this.newName = this.panelInput.value.trim();
+    if (this.newName === '') {
       alert('Please enter a name');
       return;
     }
     this.panelInput.value = '';
-    let file = null;
-    let scene = gAPPP.mV.scene;
-    let tag = this.addElementType.toLowerCase();
     this.createMesage.style.display = 'block';
 
-    let mixin = {};
-    let generateTexture = false;
-    let callbackMixin = {};
-    let generateGround = false;
-    let generateLight = false;
-    let generateShapeText = false;
-    let blockCreateAnimatedLine = false;
-    let generateConnector = false;
-
-    this.context.createObject(tag, newName, file, mixin).then(results => {
-      if (blockCreateAnimatedLine)
-        this.blockCreateAnimatedLine(this.context, results.key, newName, mixin);
-
-      if (generateGround)
-        this.blockGenerateGround(results.key, newName, mixin, this.cloudImageInput.value.trim());
-      if (generateLight)
-        this.blockCreateLight(results.key, newName, mixin);
-      if (generateShapeText)
-        this.blockCreateShapeAndText(this.context, results.key, newName, mixin);
-      if (generateConnector)
-        this.blockCreateConnectorLine(this.context, results.key, newName, callbackMixin);
-      if (generateTexture)
-        this.blockCreate2DTexture(this.context, results.key, newName, callbackMixin);
-
-      setTimeout(() => {
-        gAPPP.dialogs[tag + '-edit'].show(results.key);
+    this[this.tag + 'Create']()
+      .then(newKey => {
+        this.view.selectItem(newKey, newWindow);
         this.createMesage.style.display = 'none';
-      }, 300);
-    });
+      });
   }
 
   shapeTemplate() {
     return `<select class="shape-type-select">
-         <option>2D Text Plane</option>
-         <option selected>3D Text</option>
          <option>Box</option>
+         <option>2D Text Plane</option>
+         <option>3D Text</option>
          <option>Sphere</option>
          <option>Cylinder</option>
         </select>
@@ -127,38 +105,39 @@ class gMacro {
     else if (sT === '2D Text Plane')
       shapeType = 'plane';
 
-    mixin.shapeType = shapeType;
+    this.mixin.shapeType = shapeType;
     if (shapeType === 'text') {
-      mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
-      mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
+      this.mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
+      this.mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
     }
     if (shapeType === 'sphere') {
-      mixin.sphereDiameter = this.panel.querySelector('.sphere-diameter').value;
+      this.mixin.sphereDiameter = this.panel.querySelector('.sphere-diameter').value;
     }
     if (shapeType === 'box') {
-      mixin.boxWidth = this.panel.querySelector('.box-width').value;
-      mixin.boxHeight = this.panel.querySelector('.box-height').value;
-      mixin.boxDepth = this.panel.querySelector('.box-depth').value;
+      this.mixin.boxWidth = this.panel.querySelector('.box-width').value;
+      this.mixin.boxHeight = this.panel.querySelector('.box-height').value;
+      this.mixin.boxDepth = this.panel.querySelector('.box-depth').value;
     }
     if (shapeType === 'cylinder') {
-      mixin.cylinderDiameter = this.panel.querySelector('.cylinder-diameter').value;
-      mixin.cylinderHeight = this.panel.querySelector('.cylinder-height').value;
+      this.mixin.cylinderDiameter = this.panel.querySelector('.cylinder-diameter').value;
+      this.mixin.cylinderHeight = this.panel.querySelector('.cylinder-height').value;
     }
-    mixin.materialName = this.shapeMaterialSelectPicker.value;
+    this.mixin.materialName = this.shapeMaterialSelectPicker.value;
 
     if (shapeType === 'plane') {
-      mixin.width = this.panel.querySelector('.font-2d-plane-size').value;
-      mixin.height = mixin.width;
-      mixin.materialName = newName + '_2d_material';
+      this.mixin.width = this.panel.querySelector('.font-2d-plane-size').value;
+      this.mixin.height = this.mixin.width;
+      this.mixin.materialName = newName + '_2d_material';
 
       callbackMixin.textureText = this.panel.querySelector('.text-2d-line-1').value;
-      callbackMixin.textureText2 = this.panel.querySelector('.text-2d-line-2').value;
-      callbackMixin.textureText3 = this.panel.querySelector('.text-2d-line-3').value;
-      callbackMixin.textureText4 = this.panel.querySelector('.text-2d-line-4').value;
-      callbackMixin.textFontFamily = this.panel.querySelector('.font-family-2d-add').value;
-      callbackMixin.textFontColor = this.panel.querySelector('.font-2d-color').value;
-      callbackMixin.textFontSize = this.panel.querySelector('.font-2d-text-size').value;
-      generateTexture = true;
+      this.callbackMixin.textureText2 = this.panel.querySelector('.text-2d-line-2').value;
+      this.callbackMixin.textureText3 = this.panel.querySelector('.text-2d-line-3').value;
+      this.callbackMixin.textureText4 = this.panel.querySelector('.text-2d-line-4').value;
+      this.callbackMixin.textFontFamily = this.panel.querySelector('.font-family-2d-add').value;
+      this.callbackMixin.textFontColor = this.panel.querySelector('.font-2d-color').value;
+      this.callbackMixin.textFontSize = this.panel.querySelector('.font-2d-text-size').value;
+
+      //  this.blockCreate2DTexture(gAPPP.activeContext, results.key, this.newName, this.callbackMixin);
     }
   }
   shapeTypeChange() {
@@ -194,7 +173,7 @@ class gMacro {
         file = this.textureFile.files[0];
     }
     if (sel === 'Path') {
-      mixin.url = this.texturePathInput.value.trim();
+      this.mixin.url = this.texturePathInput.value.trim();
     }
   }
   textureTypeChange() {
@@ -236,20 +215,20 @@ class gMacro {
     let color = this.materialColorInput.value;
     let texture = this.texturePickerMaterial.value;
     if (this.diffuseCheckBox.checked) {
-      mixin.diffuseColor = color;
-      mixin.diffuseTextureName = texture;
+      this.mixin.diffuseColor = color;
+      this.mixin.diffuseTextureName = texture;
     }
     if (this.emissiveCheckBox.checked) {
-      mixin.emissiveColor = color;
-      mixin.emissiveTextureName = texture;
+      this.mixin.emissiveColor = color;
+      this.mixin.emissiveTextureName = texture;
     }
     if (this.ambientCheckBox.checked) {
-      mixin.ambientColor = color;
-      mixin.ambientTextureName = texture;
+      this.mixin.ambientColor = color;
+      this.mixin.ambientTextureName = texture;
     }
     if (this.specularCheckBox.checked) {
-      mixin.specularColor = color;
-      mixin.specularTextureName = texture;
+      this.mixin.specularColor = color;
+      this.mixin.specularTextureName = texture;
     }
   }
   materialColorTextChange() {
@@ -294,14 +273,14 @@ class gMacro {
     this.meshTypeChange();
   }
   meshCreate() {
-    mixin.materialName = this.meshMaterialSelectPicker.value;
+    this.mixin.materialName = this.meshMaterialSelectPicker.value;
     let sel = this.selectMeshType.value;
     if (sel === 'Upload') {
       if (this.meshFile.files.length > 0)
         file = this.meshFile.files[0];
     }
     if (sel === 'Path') {
-      mixin.url = this.meshPathInput.value.trim();
+      this.mixin.url = this.meshPathInput.value.trim();
     }
   }
   meshTypeChange() {
@@ -319,7 +298,7 @@ class gMacro {
     return `<select class="block-type-select">
      <option>Empty</option>
      <option>Scene</option>
-     <option selected>Text and Shape</option>
+     <option>Text and Shape</option>
      <option>Animated Line</option>
      <option>Connector Line</option>
     </select>
@@ -460,7 +439,6 @@ class gMacro {
   }
   blockRegister() {
 
-    this.addBlockOptionsPanel = this.panel.querySelector('.block-add-options');
     this.blockOptionsPicker = this.panel.querySelector('.block-type-select');
     this.blockOptionsPicker.addEventListener('input', e => this.blockHelperChange());
 
@@ -493,101 +471,114 @@ class gMacro {
     this.blockShapeChange();
     this.blockSkyboxChange();
   }
-  blockCreate() {
+  async blockCreate() {
     let bType = this.blockOptionsPicker.value;
+    this.mixin = {};
+    this.file = null;
+    this.mixin.materialName = '';
 
     if (bType === 'Empty') {
-      mixin.width = this.addBlockOptionsPanel.querySelector('.block-box-width').value;
-      mixin.height = this.addBlockOptionsPanel.querySelector('.block-box-height').value;
-      mixin.depth = this.addBlockOptionsPanel.querySelector('.block-box-depth').value;
+      this.mixin.width = this.emptyBlockPanel.querySelector('.block-box-width').value;
+      this.mixin.height = this.emptyBlockPanel.querySelector('.block-box-height').value;
+      this.mixin.depth = this.emptyBlockPanel.querySelector('.block-box-depth').value;
+      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+      return results.key;
     }
-
-    if (bType === 'Scene') {
-      mixin.width = this.sceneBlockPanel.querySelector('.block-box-width').value;
-      mixin.height = this.sceneBlockPanel.querySelector('.block-box-height').value;
-      mixin.depth = this.sceneBlockPanel.querySelector('.block-box-depth').value;
-      mixin.skybox = this.skyBoxInput.value.trim();
-
-      if (this.generateGroundMaterial.checked) {
-        generateGround = true;
-        mixin.groundMaterial = newName + '_groundmaterial';
-      }
-      if (this.addSceneLight.checked)
-        generateLight = true;
-    }
-
     if (bType === 'Text and Shape') {
-      mixin.width = this.blockShapePanel.querySelector('.block-box-width').value;
-      mixin.height = this.blockShapePanel.querySelector('.block-box-height').value;
-      mixin.depth = this.blockShapePanel.querySelector('.block-box-depth').value;
+      this.mixin.width = this.blockShapePanel.querySelector('.block-box-width').value;
+      this.mixin.height = this.blockShapePanel.querySelector('.block-box-height').value;
+      this.mixin.depth = this.blockShapePanel.querySelector('.block-box-depth').value;
 
-      mixin.textText = this.blockShapePanel.querySelector('.block-box-text').value;
-      mixin.textTextLine2 = this.blockShapePanel.querySelector('.block-box-text-line2').value;
-      mixin.textFontFamily = this.blockShapePanel.querySelector('.font-family-block-add').value;
-      mixin.textMaterial = this.blockShapePanel.querySelector('.block-material-picker-select').value;
-      mixin.textDepth = this.blockShapePanel.querySelector('.block-text-depth').value;
-      mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
-      mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
-      mixin.cylinderHorizontal = this.blockShapePanel.querySelector('.shape-stretch-checkbox').checked;
-      mixin.createShapeType = this.blockShapePicker.value;
-      blockCreateShapeAndText = true;
+      this.mixin.textText = this.blockShapePanel.querySelector('.block-box-text').value;
+      this.mixin.textTextLine2 = this.blockShapePanel.querySelector('.block-box-text-line2').value;
+      this.mixin.textFontFamily = this.blockShapePanel.querySelector('.font-family-block-add').value;
+      this.mixin.textMaterial = this.blockShapePanel.querySelector('.block-material-picker-select').value;
+      this.mixin.textDepth = this.blockShapePanel.querySelector('.block-text-depth').value;
+      this.mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
+      this.mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
+      this.mixin.cylinderHorizontal = this.blockShapePanel.querySelector('.shape-stretch-checkbox').checked;
+      this.mixin.createShapeType = this.blockShapePicker.value;
+      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+      this.blockCreateShapeAndText(gAPPP.activeContext, results.key, this.newName);
+      return results.key;
     }
+    if (bType === 'Scene') {
+      this.mixin.width = this.sceneBlockPanel.querySelector('.block-box-width').value;
+      this.mixin.height = this.sceneBlockPanel.querySelector('.block-box-height').value;
+      this.mixin.depth = this.sceneBlockPanel.querySelector('.block-box-depth').value;
+      this.mixin.skybox = this.skyBoxInput.value.trim();
+      if (this.generateGroundMaterial.checked)
+        this.mixin.groundMaterial = this.newName + '_groundmaterial';
+      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
 
+      if (this.generateGroundMaterial.checked)
+        this.blockGenerateGround(results.key, this.newName, this.cloudImageInput.value.trim());
+      if (this.addSceneLight.checked)
+        this.blockCreateLight(results.key, this.newName);
+
+      return results.key;
+    }
     if (bType === 'Animated Line') {
-      mixin.width = this.animatedDashPanel.querySelector('.block-box-width').value;
-      mixin.height = this.animatedDashPanel.querySelector('.block-box-height').value;
-      mixin.depth = this.animatedDashPanel.querySelector('.block-box-depth').value;
+      this.mixin.width = this.animatedDashPanel.querySelector('.block-box-width').value;
+      this.mixin.height = this.animatedDashPanel.querySelector('.block-box-height').value;
+      this.mixin.depth = this.animatedDashPanel.querySelector('.block-box-depth').value;
 
-      mixin.dashCount = this.animatedDashPanel.querySelector('.animated-line-dash-count').value;
-      mixin.runTime = this.animatedDashPanel.querySelector('.animated-run-time').value;
+      this.mixin.dashCount = this.animatedDashPanel.querySelector('.animated-line-dash-count').value;
+      this.mixin.runTime = this.animatedDashPanel.querySelector('.animated-run-time').value;
 
-      mixin.createShapeType = this.animatedDashPanel.querySelector('.block-add-dash-shape-type-options').value;
-      mixin.dashDepth = this.animatedDashPanel.querySelector('.dash-box-depth').value;
-      mixin.shapeDivs = this.animatedDashPanel.querySelector('.dash-shape-sides').value;
-      mixin.materialName = this.animatedDashPanel.querySelector('.dash-shape-material-picker-select').value;
+      this.mixin.createShapeType = this.animatedDashPanel.querySelector('.block-add-dash-shape-type-options').value;
+      this.mixin.dashDepth = this.animatedDashPanel.querySelector('.dash-box-depth').value;
+      this.mixin.shapeDivs = this.animatedDashPanel.querySelector('.dash-shape-sides').value;
+      this.mixin.materialName = this.animatedDashPanel.querySelector('.dash-shape-material-picker-select').value;
 
-      blockCreateAnimatedLine = true;
+      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+      this.blockCreateAnimatedLine(gAPPP.activeContext, results.key, this.newName);
+      return results.key;
     }
     if (bType === 'Connector Line') {
-      callbackMixin.lineLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-length').value, 1);
-      callbackMixin.lineDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-diameter').value, 1);
-      callbackMixin.lineMaterial = this.connectorLinePanel.querySelector('.line-material').value;
-      callbackMixin.lineSides = this.connectorLinePanel.querySelector('.line-sides').value;
+      this.callbackMixin = {};
+      this.callbackMixin.lineLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-length').value, 1);
+      this.callbackMixin.lineDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-diameter').value, 1);
+      this.callbackMixin.lineMaterial = this.connectorLinePanel.querySelector('.line-material').value;
+      this.callbackMixin.lineSides = this.connectorLinePanel.querySelector('.line-sides').value;
 
-      callbackMixin.pointLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-length').value, 1);
-      callbackMixin.pointDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-diameter').value, 1);
-      callbackMixin.pointMaterial = this.connectorLinePanel.querySelector('.point-material').value;
-      callbackMixin.pointSides = this.connectorLinePanel.querySelector('.point-sides').value;
-      callbackMixin.pointShape = this.connectorLinePanel.querySelector('.point-shape').value;
+      this.callbackMixin.pointLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-length').value, 1);
+      this.callbackMixin.pointDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-diameter').value, 1);
+      this.callbackMixin.pointMaterial = this.connectorLinePanel.querySelector('.point-material').value;
+      this.callbackMixin.pointSides = this.connectorLinePanel.querySelector('.point-sides').value;
+      this.callbackMixin.pointShape = this.connectorLinePanel.querySelector('.point-shape').value;
 
-      callbackMixin.tailLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-length').value, 1);
-      callbackMixin.tailDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-diameter').value, 1);
-      callbackMixin.tailMaterial = this.connectorLinePanel.querySelector('.tail-material').value;
-      callbackMixin.tailSides = this.connectorLinePanel.querySelector('.tail-sides').value;
-      callbackMixin.tailShape = this.connectorLinePanel.querySelector('.tail-shape').value;
+      this.callbackMixin.tailLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-length').value, 1);
+      this.callbackMixin.tailDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-diameter').value, 1);
+      this.callbackMixin.tailMaterial = this.connectorLinePanel.querySelector('.tail-material').value;
+      this.callbackMixin.tailSides = this.connectorLinePanel.querySelector('.tail-sides').value;
+      this.callbackMixin.tailShape = this.connectorLinePanel.querySelector('.tail-shape').value;
 
-      callbackMixin.adjPointLength = callbackMixin.pointLength;
-      callbackMixin.adjPointDiameter = callbackMixin.pointDiameter;
-      if (callbackMixin.pointShape === 'None') {
-        callbackMixin.adjPointLength = 0;
-        callbackMixin.adjPointDiameter = 0;
+      this.callbackMixin.adjPointLength = this.callbackMixin.pointLength;
+      this.callbackMixin.adjPointDiameter = this.callbackMixin.pointDiameter;
+      if (this.callbackMixin.pointShape === 'None') {
+        this.callbackMixin.adjPointLength = 0;
+        this.callbackMixin.adjPointDiameter = 0;
       }
-      callbackMixin.adjTailLength = callbackMixin.tailLength;
-      callbackMixin.adjTailDiameter = callbackMixin.tailDiameter;
-      if (callbackMixin.tailShape === 'None') {
-        callbackMixin.adjTailLength = 0;
-        callbackMixin.adjTailDiameter = 0;
+      this.callbackMixin.adjTailLength = this.callbackMixin.tailLength;
+      this.callbackMixin.adjTailDiameter = this.callbackMixin.tailDiameter;
+      if (this.callbackMixin.tailShape === 'None') {
+        this.callbackMixin.adjTailLength = 0;
+        this.callbackMixin.adjTailDiameter = 0;
       }
-      callbackMixin.depth = Math.max(callbackMixin.lineDiameter, Math.max(callbackMixin.adjTailDiameter, callbackMixin.adjPointDiameter));
-      callbackMixin.height = callbackMixin.depth;
-      callbackMixin.width = callbackMixin.lineLength + callbackMixin.adjPointLength / 2.0 + callbackMixin.adjTailLength / 2.0;
+      this.callbackMixin.depth = Math.max(this.callbackMixin.lineDiameter, Math.max(this.callbackMixin.adjTailDiameter, this.callbackMixin.adjPointDiameter));
+      this.callbackMixin.height = this.callbackMixin.depth;
+      this.callbackMixin.width = this.callbackMixin.lineLength + this.callbackMixin.adjPointLength / 2.0 + this.callbackMixin.adjTailLength / 2.0;
 
-      mixin.width = callbackMixin.width;
-      mixin.height = callbackMixin.height;
-      mixin.depth = callbackMixin.depth;
+      this.mixin.width = this.callbackMixin.width;
+      this.mixin.height = this.callbackMixin.height;
+      this.mixin.depth = this.callbackMixin.depth;
 
-      generateConnector = true;
+      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+      this.blockCreateConnectorLine(gAPPP.activeContext, results.key, this.newName);
+      return results.key;
     }
+
   }
   blockShapeChange() {
     this.shapeDetailsPanel.style.display = 'none';
@@ -656,13 +647,13 @@ class gMacro {
     else
       this.emptyBlockPanel.style.display = '';
   }
-  blockCreateLight(blockKey, blockTitle, mixin) {
-    this.context.createObject('blockchild', '', null, {
+  blockCreateLight(blockKey, blockTitle) {
+    gAPPP.activeContext.createObject('blockchild', '', null, {
       childType: 'light',
       childName: 'Hemispheric',
       parentKey: blockKey
     }).then(results => {
-      this.context.createObject('frame', '', null, {
+      gAPPP.activeContext.createObject('frame', '', null, {
         frameTime: '',
         frameOrder: '10',
         parentKey: results.key,
@@ -680,35 +671,35 @@ class gMacro {
     });
 
   }
-  blockGenerateGround(blockKey, blockTitle, mixin, imgPath) {
+  blockGenerateGround(blockKey, blockTitle, imgPath) {
     let textureName = blockTitle + '_groundtexture';
     let materialName = blockTitle + '_groundmaterial';
-    this.context.createObject('texture', textureName, null, {
+    gAPPP.activeContext.createObject('texture', textureName, null, {
       url: imgPath,
-      vScale: mixin.depth,
-      uScale: mixin.width
+      vScale: this.mixin.depth,
+      uScale: this.mixin.width
     }).then(results => {});
-    this.context.createObject('material', materialName, null, {
+    gAPPP.activeContext.createObject('material', materialName, null, {
       diffuseTextureName: textureName
     }).then(results => {});
   }
-  blockCreateShapeAndText(context, blockId, blockTitle, options) {
+  blockCreateShapeAndText(context, blockId, blockTitle) {
     let shapeTextName = blockTitle + '_shapeText';
     let shapeTextNameLine2 = blockTitle + '_shapeTextLine2';
-    let textLen = Math.max(options.textText.length, options.textTextLine2.length);
-    let scale = 2 * options.width / textLen;
-    let textDepth = GLOBALUTIL.getNumberOrDefault(options.textDepth, .25);
-    let height = GLOBALUTIL.getNumberOrDefault(options.height, 1);
+    let textLen = Math.max(this.mixin.textText.length, this.mixin.textTextLine2.length);
+    let scale = 2 * this.mixin.width / textLen;
+    let textDepth = GLOBALUTIL.getNumberOrDefault(this.mixin.textDepth, .25);
+    let height = GLOBALUTIL.getNumberOrDefault(this.mixin.height, 1);
     let depth = textDepth;
     if (!depth) depth = '.001';
     let positionY = scale * .5;
-    if (options.textTextLine2 === '')
+    if (this.mixin.textTextLine2 === '')
       positionY = 0;
     context.createObject('shape', shapeTextName, null, {
-      textText: options.textText,
+      textText: this.mixin.textText,
       shapeType: 'text',
-      textFontFamily: options.textFontFamily,
-      materialName: options.textMaterial,
+      textFontFamily: this.mixin.textFontFamily,
+      materialName: this.mixin.textMaterial,
       scalingX: scale,
       scalingZ: scale,
       positionY: positionY.toFixed(3),
@@ -730,12 +721,12 @@ class gMacro {
       });
     });
 
-    if (options.textTextLine2 !== '') {
+    if (this.mixin.textTextLine2 !== '') {
       context.createObject('shape', shapeTextNameLine2, null, {
-        textText: options.textTextLine2,
+        textText: this.mixin.textTextLine2,
         shapeType: 'text',
-        textFontFamily: options.textFontFamily,
-        materialName: options.textMaterial,
+        textFontFamily: this.mixin.textFontFamily,
+        materialName: this.mixin.textMaterial,
         scalingX: scale,
         scalingZ: scale,
         positionY: (-1 * positionY).toFixed(3),
@@ -759,13 +750,13 @@ class gMacro {
     }
 
     let shapeOptions = {
-      width: GLOBALUTIL.getNumberOrDefault(options.width, 1),
-      height: GLOBALUTIL.getNumberOrDefault(options.height, 1),
-      depth: GLOBALUTIL.getNumberOrDefault(options.depth, 1),
-      createShapeType: options.createShapeType,
-      materialName: options.shapeMaterial,
-      shapeDivs: options.shapeDivs,
-      cylinderHorizontal: options.cylinderHorizontal,
+      width: GLOBALUTIL.getNumberOrDefault(this.mixin.width, 1),
+      height: GLOBALUTIL.getNumberOrDefault(this.mixin.height, 1),
+      depth: GLOBALUTIL.getNumberOrDefault(this.mixin.depth, 1),
+      createShapeType: this.mixin.createShapeType,
+      materialName: this.mixin.shapeMaterial,
+      shapeDivs: this.mixin.shapeDivs,
+      cylinderHorizontal: this.mixin.cylinderHorizontal,
       rotationZ: ''
     }
 
@@ -782,13 +773,13 @@ class gMacro {
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
   }
-  blockCreateConnectorLine(context, blockId, blockTitle, options) {
+  blockCreateConnectorLine(context, blockId, blockTitle) {
     let lineShapeOptions = {
-      width: options.lineDiameter,
-      shapeDivs: options.lineSides,
-      height: options.lineLength,
-      depth: options.lineDiameter,
-      materialName: options.lineMaterial,
+      width: this.callbackMixin.lineDiameter,
+      shapeDivs: this.callbackMixin.lineSides,
+      height: this.callbackMixin.lineLength,
+      depth: this.callbackMixin.lineDiameter,
+      materialName: this.callbackMixin.lineMaterial,
       cylinderHorizontal: false,
       createShapeType: 'Cylinder'
     };
@@ -804,46 +795,46 @@ class gMacro {
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
     let pointShapeOptions = {
-      width: options.pointDiameter,
-      shapeDivs: options.pointSides,
-      height: options.pointDiameter,
-      depth: options.pointLength,
-      materialName: options.pointMaterial,
-      createShapeType: options.pointShape
+      width: this.callbackMixin.pointDiameter,
+      shapeDivs: this.callbackMixin.pointSides,
+      height: this.callbackMixin.pointDiameter,
+      depth: this.callbackMixin.pointLength,
+      materialName: this.callbackMixin.pointMaterial,
+      createShapeType: this.callbackMixin.pointShape
     };
 
-    if (options.pointShape !== 'None')
+    if (this.callbackMixin.pointShape !== 'None')
       this.blockCreateShapeChild(context, blockId, blockTitle + '_connectorPointShape', pointShapeOptions).then(resultsObj => {
         let frameOrder = 10;
         let newObj = {
           parentKey: resultsObj.blockChildResults.key
         };
-        if (options.pointShape !== 'Cone' && options.pointShape !== 'Cylinder')
+        if (this.callbackMixin.pointShape !== 'Cone' && this.callbackMixin.pointShape !== 'Cylinder')
           newObj.rotationY = '90deg';
         newObj.rotationZ = '90deg';
-        newObj.positionX = -1.0 * (options.lineLength) / 2.0;
+        newObj.positionX = -1.0 * (this.callbackMixin.lineLength) / 2.0;
         newObj.frameOrder = frameOrder.toString();
         newObj.frameTime = "0";
         context.createObject('frame', '', null, newObj).then(resultB => {});
       });
     let tailShapeOptions = {
-      width: options.tailDiameter,
-      shapeDivs: options.tailSides,
-      height: options.tailDiameter,
-      depth: options.tailLength,
-      materialName: options.tailMaterial,
-      createShapeType: options.tailShape
+      width: this.callbackMixin.tailDiameter,
+      shapeDivs: this.callbackMixin.tailSides,
+      height: this.callbackMixin.tailDiameter,
+      depth: this.callbackMixin.tailLength,
+      materialName: this.callbackMixin.tailMaterial,
+      createShapeType: this.callbackMixin.tailShape
     };
-    if (options.tailShape !== 'None')
+    if (this.callbackMixin.tailShape !== 'None')
       this.blockCreateShapeChild(context, blockId, blockTitle + '_connectorTailShape', tailShapeOptions).then(resultsObj => {
         let frameOrder = 10;
         let newObj = {
           parentKey: resultsObj.blockChildResults.key
         };
-        if (options.tailShape !== 'Cone' && options.tailShape !== 'Cylinder')
+        if (this.callbackMixin.tailShape !== 'Cone' && this.callbackMixin.tailShape !== 'Cylinder')
           newObj.rotationY = '90deg';
         newObj.rotationZ = '90deg';
-        newObj.positionX = (options.lineLength) / 2.0;
+        newObj.positionX = (this.callbackMixin.lineLength) / 2.0;
         newObj.frameOrder = frameOrder.toString();
         newObj.frameTime = "0";
         context.createObject('frame', '', null, newObj).then(resultB => {});
@@ -931,15 +922,15 @@ class gMacro {
       });
     });
   }
-  blockCreateAnimatedLine(context, blockId, blockTitle, options) {
-    let barLength = GLOBALUTIL.getNumberOrDefault(options.depth, 10);
+  blockCreateAnimatedLine(context, blockId, blockTitle) {
+    let barLength = GLOBALUTIL.getNumberOrDefault(this.callbackMixin.depth, 10);
     let shapeOptions = {
-      width: GLOBALUTIL.getNumberOrDefault(options.width, 1),
-      depth: GLOBALUTIL.getNumberOrDefault(options.dashDepth, 1),
-      height: GLOBALUTIL.getNumberOrDefault(options.height, 1),
-      createShapeType: options.createShapeType,
-      materialName: options.materialName,
-      shapeDivs: options.shapeDivs,
+      width: GLOBALUTIL.getNumberOrDefault(this.callbackMixin.width, 1),
+      depth: GLOBALUTIL.getNumberOrDefault(this.callbackMixin.dashDepth, 1),
+      height: GLOBALUTIL.getNumberOrDefault(this.callbackMixin.height, 1),
+      createShapeType: this.callbackMixin.createShapeType,
+      materialName: this.callbackMixin.materialName,
+      shapeDivs: this.callbackMixin.shapeDivs,
       cylinderHorizontal: false,
       rotationZ: ''
     }
@@ -971,8 +962,8 @@ class gMacro {
 
     moreOptions.positionZ = barLength / 2.0;
 
-    moreOptions.runTime = GLOBALUTIL.getNumberOrDefault(options.runTime, 2000);
-    moreOptions.dashCount = GLOBALUTIL.getNumberOrDefault(options.dashCount, 1);
+    moreOptions.runTime = GLOBALUTIL.getNumberOrDefault(this.callbackMixin.runTime, 2000);
+    moreOptions.dashCount = GLOBALUTIL.getNumberOrDefault(this.callbackMixin.dashCount, 1);
     moreOptions.endTime = moreOptions.runTime;
     moreOptions.timePerDash = moreOptions.runTime / moreOptions.dashCount;
 
