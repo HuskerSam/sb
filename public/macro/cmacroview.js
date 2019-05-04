@@ -44,7 +44,7 @@ class cMacroView extends bView {
 
 
   }
-  initDataUI() {}
+  initUI() {}
   initDataFields() {
     if (this.fireSetCallback)
       this.fireSet.removeListener(this.fireSetCallback);

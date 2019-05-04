@@ -49,10 +49,10 @@ class bView {
 
     this.initCanvas();
     this.splitLayout();
-    this.initDataUI();
+    this.initUI();
     this.registerFirebaseModels();
   }
-  initDataUI() {}
+  initUI() {}
   registerFirebaseModels() {
     this.canvasFBRecordTypes.forEach(recType => gAPPP.a.modelSets[recType].childListeners.push(
       (values, type, fireData) => this._updateContextWithDataChange(recType, values, type, fireData)));

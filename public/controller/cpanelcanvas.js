@@ -737,7 +737,8 @@ class cPanelCanvas {
       <input type="checkbox" id="auto-move-camera" class="mdl-switch__input" checked>
       <span class="mdl-switch__label"><i class="material-icons">camera_enchance<i></span>
     </label>`;
-    componentHandler.upgradeElement(document.getElementById('auto-move-camera-component'));
+    if (window.componentHandler)
+      window.componentHandler.upgradeElement(document.getElementById('auto-move-camera-component'));
     this.autoMoveCameraInput = document.getElementById('auto-move-camera');
     this.autoMoveCameraInput.addEventListener('input', () => this.toggleAutoMoveCamera());
   }

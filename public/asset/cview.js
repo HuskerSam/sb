@@ -8,7 +8,7 @@ class cView extends bView {
 
     this.profilePanelRegister();
   }
-  initDataUI() {
+  initUI() {
     this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
     this.dataview_record_key = this.dialog.querySelector('#dataview_record_key');
     this.dataview_record_tag.value = this.tag;
@@ -29,6 +29,14 @@ class cView extends bView {
     this.snapshotAssetButton.addEventListener('click', e => this.renderPreview());
     this.addAssetButton = this.dialog.querySelector('.add-asset-button');
     this.addAssetButton.addEventListener('click', e => this.addAsset());
+
+    this.helpViewerWrapper = this.dialog.querySelector('.help-overlay');
+    this.addAssetPanel = document.createElement('div');
+    this.addAssetPanel.classList.add('add-asset-template-panel');
+    this.helpViewer = document.createElement('div');
+    this.helpViewer.classList.add('help-viewer');
+    this.helpViewerWrapper.appendChild(this.addAssetPanel);
+    this.helpViewerWrapper.appendChild(this.helpViewer);
 
     this.view_layout_select = document.getElementById('view_layout_select');
     this.view_layout_select.addEventListener('change', e => {
@@ -142,13 +150,15 @@ class cView extends bView {
     this.key = newKey;
     let options = '<option value=""></option>';
 
+    this.addAssetPanel.style.display = 'none';
     if (this.tag) {
       options = `<option values="" selected>Select or Add ${this.dataview_record_tag.selectedOptions[0].label}</option>`;
       let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
       for (let i in fS)
         options += `<option value="${i}">${fS[i].title} (${i})</option>`;
       this.addAssetButton.style.display = 'inline-block';
-
+      if (!this.key)
+        this.addAssetPanel.style.display = 'block';
     } else {
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
@@ -173,12 +183,14 @@ class cView extends bView {
         this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
+      this.addAssetPanel.style.display = 'block';
       this.form_canvas_wrapper.classList.add('show-help');
       return this.showDefaultDataView();
     }
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'inline-block';
     this.snapshotAssetButton.style.display = 'inline-block';
+    this.addAssetPanel.style.display = 'none';
 
     this.key = this.dataview_record_key.value;
     if (!this.dataFieldsInited)
@@ -272,7 +284,7 @@ class cView extends bView {
           <div class="header_wrapper" style="line-height: 3em;">
             <b>&nbsp;Workspace</b>
             <select id="workspaces-select"></select>
-            <button id="profile_description_panel_btn" style="float:right;" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary"><i class="material-icons">person</i></button>
+            <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
             <select id="view_layout_select" style="float:right;">
               <option>Full</option>
               <option>Top</option>
@@ -290,10 +302,10 @@ class cView extends bView {
               <option value="texture">Texture</option>
               <option value="block">Block</option>
             </select>
+            <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <select id="dataview_record_key" style="max-width:calc(100% - 12.5em);"></select>
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_a_photo</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">remove</i></button>
-            <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <div style="display:inline-block;">
               <select class="main-band-children-select" style="display:none;"></select>
               <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove</i></button>
@@ -512,8 +524,8 @@ class cView extends bView {
     this.followblocktargetoptionslist.innerHTML = optionText;
   }
   showDefaultDataView() {
-    this.helpViewer = this.dialog.querySelector('.help-overlay');
     if (!this.tag) {
+      this.addAssetPanel.innerHTML = '';
       fetch('/doc/assethelp.html')
         .then(res => res.text())
         .then(html => this.fieldsContainer.innerHTML = html);
@@ -525,6 +537,7 @@ class cView extends bView {
       return;
     }
     this.recordViewer = new cBandIcons(this.tag, this);
+    this.generate = new wGenerate(this.addAssetPanel, this.tag);
 
     fetch(`/doc/${this.tag}help.html`)
       .then(res => res.text())

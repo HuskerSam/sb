@@ -3,11 +3,6 @@
   font-family: Helvetica, Arial;
 }
 
-.option-buttons-panel {
-  text-align: center;
-  padding: 10px;
-}
-
 .url-text-box {}
 
 body {
@@ -194,30 +189,6 @@ input[type=range]::-webkit-slider-thumb {
   position: relative;
 }
 
-.mdl-switch__thumb {
-  background: rgb(105, 240, 174);
-}
-
-.mdl-switch.is-checked .mdl-switch__thumb {
-  background: white;
-}
-
-.mdl-switch.is-checked .mdl-switch__track {
-  background: rgb(200, 255, 240);
-}
-
-#auto-move-camera-component .mdl-switch__label {
-  font-size: 20px;
-  top: 3px;
-  width: 1em;
-  overflow: hidden;
-}
-
-#auto-move-camera-component .mdl-switch__label i {
-  width: 1em;
-  overflow: hidden;
-}
-
 #light_intensity_value {
   font-size: 10px;
   top: 30px;
@@ -230,25 +201,8 @@ button i.material-icons {
   font-size: inherit;
 }
 
-.mdl-button--primary.mdl-button--primary {
-  transition: color 800ms, background 800ms;
-}
-
-.mdl-button--primary.mdl-button--primary.mdl-button--fab {
-  border: solid 2px rgb(200, 255, 240);
-}
-
-.mdl-button--fab.mdl-button--colored {
-  border: solid 2px rgb(200, 255, 240);
-}
-
 select {
-  padding: 5px;
-  background: rgb(0, 150, 136);
-  color: white;
   width: auto;
-  font-size: 18px;
-  border: solid 2px rgb(200, 255, 240);
 }
 
 #main-view-wrapper {
@@ -559,7 +513,12 @@ select {
 }
 
 .form_canvas_wrapper.show-help .help-overlay {
-  display: inline-block;
+  display: block;
+  width: inherit;
+}
+
+.add-asset-template-panel {
+  line-height: 3em;
 }
 
 #profile-header-panel.expanded {
