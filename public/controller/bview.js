@@ -260,7 +260,7 @@ class bView {
       let code = '';
       if (orderedRecords[c].code)
         code = orderedRecords[c].code;
-      let o = `<option value=${orderedRecords[c].id}>${orderedRecords[c].title}</option>`;
+      let o = `<option value="${orderedRecords[c].id}">${orderedRecords[c].title}</option>`;
 
       if (orderedRecords[c].id === 'default')
         html += o;

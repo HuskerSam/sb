@@ -155,7 +155,7 @@ class cView extends bView {
       options = `<option values="" selected>Select or Add ${this.dataview_record_tag.selectedOptions[0].label}</option>`;
       let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
       for (let i in fS)
-        options += `<option value="${i}">${fS[i].title} (${i})</option>`;
+        options += `<option value="${i}">${fS[i].title}</option>`;
       this.addAssetButton.style.display = 'inline-block';
       if (!this.key)
         this.addAssetPanel.style.display = 'block';
@@ -185,7 +185,7 @@ class cView extends bView {
       this.snapshotAssetButton.style.display = 'none';
       this.addAssetPanel.style.display = 'block';
       this.form_canvas_wrapper.classList.add('show-help');
-      return this.showDefaultDataView();
+      return this.showSelectOrAddView();
     }
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'inline-block';
@@ -251,28 +251,37 @@ class cView extends bView {
     }
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
+  genQueryString(wid = null, tag = null, key = null, childkey = null) {
+    if (wid === null) wid = gAPPP.a.profile.selectedWorkspace;
+    if (tag === null) tag = this.tag;
+    if (key === null) key = this.key;
+    if (childkey === null) childkey = this.childkey;
+    let queryString = `?wid=${wid}`;
+
+    if (tag) {
+      queryString += `&tag=${tag}`;
+      if (key)
+        queryString += `&key=${key}`;
+      if (childkey && this.tag === 'block')
+        queryString += `&childkey=${childkey}`;
+    }
+    let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
+    return newURL;
+  }
   _updateQueryString(newWid) {
     let urlParams = new URLSearchParams(window.location.search);
-    let queryString = `?wid=${gAPPP.a.profile.selectedWorkspace}`;
+    let url = '';
     if (newWid) {
-      queryString = `?wid=${newWid}`;
+      url = this.genQueryString(newWid);
     } else {
       if (this.tag === urlParams.get('tag') && this.key === urlParams.get('key') && this.childKey === urlParams.get('childkey'))
         return;
-
-      if (this.tag) {
-        queryString += `&tag=${this.tag}`;
-        if (this.key)
-          queryString += `&key=${this.key}`;
-        if (this.childKey)
-          queryString += `&childkey=${this.childKey}`;
-      }
+      url = this.genQueryString();
     }
 
-    let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
     window.history.pushState({
-      path: newURL
-    }, '', newURL);
+      path: url
+    }, '', url);
   }
   splitLayoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
@@ -523,7 +532,7 @@ class cView extends bView {
     }
     this.followblocktargetoptionslist.innerHTML = optionText;
   }
-  showDefaultDataView() {
+  showSelectOrAddView() {
     if (!this.tag) {
       this.addAssetPanel.innerHTML = '';
       fetch('/doc/assethelp.html')

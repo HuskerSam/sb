@@ -9,8 +9,14 @@ class cBandIcons extends bBand {
     this.dialog.fieldsContainer.appendChild(this.childrenContainer);
 
     this.refreshUIFromCache();
+    this.childMoved();
   }
-  childMoved(fireData) {
+  childChanged(fireData) {
+    super.childChanged(fireData);
+    this.childMoved();
+  }
+  childMoved() {
+    this.modelSet.updateChildOrder();
     let keyOrder = this.modelSet.childOrderByKey;
     for (let i in keyOrder) {
       let key = keyOrder[i];
@@ -30,10 +36,9 @@ class cBandIcons extends bBand {
     dd.setAttribute('class', `${this.tag}${this.myKey}-${key} menu-clipper-wrapper`);
     dd.appendChild(outer);
 
-    let b = this.__addMenuItem(outer, 'edit', e => this.selectItem(e, key));
-    b.classList.add('show-edit-panel-button');
+    let b = this.__addMenuItem(outer, 'open_with', e => this.selectItem(e, key));
+    b = this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
     b = this.__addMenuItem(outer, 'delete', e => this._removeElement(e, key), true);
-    b.classList.add('delete-edit-panel-button');
 
     this._nodeApplyValues(values, outer);
 
@@ -44,9 +49,20 @@ class cBandIcons extends bBand {
       return;
     gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
-  selectItem(e, newKey) {
-    this.dialog.dataview_record_key.value = newKey;
-    this.dialog.updateSelectedRecord();
+  selectItem(e, newKey, newWindow) {
+    if (!newWindow) {
+      this.dialog.dataview_record_key.value = newKey;
+      this.dialog.updateSelectedRecord();
+      return;
+    }
+
+    let url = this.dialog.genQueryString(null, null, newKey);
+    let a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('target', '_blank');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
   __addMenuItem(button, title, clickHandler, prependDivider) {
     let btn = document.createElement('button');
