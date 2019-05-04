@@ -524,3 +524,74 @@ select {
 #profile-header-panel.expanded {
   background: radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
 }
+
+
+
+/* NEW COPIED CSS FOLLOWS - PRUNE IT */
+
+.add-item-panel {
+  position: absolute;
+  right: 0;
+  bottom: 3em;
+  background: rgba(255, 255, 255, .75);
+  color: black;
+  padding: .5em;
+  border-radius: .5em;
+  border: inset .15em silver;
+  text-align: center;
+}
+
+.add-item-panel input {
+  margin: .25em;
+  border-radius: .5em;
+  padding: .25em;
+}
+
+.add-item-panel input[type="file"] {
+  background: silver;
+}
+
+.material-add-options .material-color-add {
+  border-radius: .25em;
+  width: 8em;
+  text-align: center;
+  margin-right: 0;
+}
+
+.material-add-options .material-color-add-colorinput {
+  border-radius: .25em;
+  width: 2.5em;
+  margin-left: 0;
+  padding: 0;
+}
+
+.add-item-panel label>span {
+  margin: .1em;
+}
+
+.add-item-panel input[type="text"] {
+  text-align: center;
+  width: 4em;
+}
+
+.add-item-panel select {
+  margin-top: .5em;
+}
+
+.shape-add-options .text-shape-add {
+  width: 20em;
+}
+
+.shape-add-options .font-family-shape-add {
+  width: 20em;
+}
+
+.main-band-wrapper {
+  padding-top: .1em;
+  position: relative;
+}
+
+.skybox-preview-images img {
+  max-height: 5em;
+  max-width: 5em;
+}

@@ -18,7 +18,8 @@ class gMacro {
   baseTemplate() {
     return `<label><b>Add ${this.tag} asset</b> <input style="width:20em;" class="add-item-name" /></label>
       <button class="add-button btn-sb-icon" style="background:rgb(0,127,0);color:white;"><i class="material-icons">add_circle</i></button>
-      <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div><br>`;
+      <br>
+      <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>`;
   }
   createItem() {
     let newName = this.panelInput.value.trim();
@@ -61,6 +62,112 @@ class gMacro {
         this.createMesage.style.display = 'none';
       }, 300);
     });
+  }
+
+  shapeTemplate() {
+    return `<select class="shape-type-select">
+         <option>2D Text Plane</option>
+         <option selected>3D Text</option>
+         <option>Box</option>
+         <option>Sphere</option>
+         <option>Cylinder</option>
+        </select>
+        <div class="create-sphere-options" style="display:inline-block">
+      <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
+    </div>
+    <div class="create-2d-text-plane">
+      <label><span>Text</span><input class="text-2d-line-1" value="Text Line" /></label>
+      <label><span>Line 2</span><input class="text-2d-line-2" value="" /></label>
+      <label><span>Line 3</span><input class="text-2d-line-3" value="" /></label>
+      <label><span>Line 4</span><input class="text-2d-line-4" value="" /></label>
+      <label><span>Font</span><input class="font-family-2d-add" list="fontfamilydatalist" /></label>
+      <label><span>Color</span><input class="font-2d-color" color="0,0,0" /></label>
+      <label><span>Text Size</span><input class="font-2d-text-size" value="100" /></label>
+      <label><span>Plane Size</span><input class="font-2d-plane-size" value="4" /></label>
+    </div>
+    <div class="create-cylinder-options">
+      <label><span>Diameter</span><input type="text" class="cylinder-diameter"></label>
+      <label><span>Height</span><input type="text" class="cylinder-height"></label>
+    </div>
+    <div class="create-text-options">
+      <label><span>Text</span><input class="text-shape-add" value="3D Text" /></label>
+      <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
+    </div>
+    <label><span>Material</span><input type="text" style="width:15em;" class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+    <div class="create-box-options" style="display:inline-block;">
+      <label><span>Width</span>&nbsp;<input type="text" class="box-width" /></label>
+      <label><span>Height</span>&nbsp;<input type="text" class="box-height" /></label>
+      <label><span>Depth</span>&nbsp;<input type="text" class="box-depth" /></label>
+    </div>`;
+  }
+  shapeRegister() {
+    this.add2dTextPanel = this.panel.querySelector('.create-2d-text-plane');
+    this.createBoxOptions = this.panel.querySelector('.create-box-options');
+    this.createSphereOptions = this.panel.querySelector('.create-sphere-options');
+    this.createTextOptions = this.panel.querySelector('.create-text-options');
+    this.createCylinderOptions = this.panel.querySelector('.create-cylinder-options');
+    this.createShapesSelect = this.panel.querySelector('.shape-type-select');
+    this.createShapesSelect.addEventListener('input', e => this.shapeTypeChange());
+    this.shapeMaterialSelectPicker = this.panel.querySelector('.shape-material-picker-select');
+    this.shapeAddFontFamily = this.panel.querySelector('.font-family-shape-add');
+    this.shapeAddFontFamily.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily));
+    this.shapeAddFontFamily2D = this.panel.querySelector('.font-family-2d-add');
+    this.shapeAddFontFamily2D.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily2D));
+    this.shapeTypeChange();
+  }
+  shapeCreate() {
+    let sT = this.createShapesSelect.value;
+    let shapeType = 'box';
+    if (sT === 'Sphere')
+      shapeType = 'sphere';
+    else if (sT === '3D Text')
+      shapeType = 'text';
+    else if (sT === 'Cylinder')
+      shapeType = 'cylinder';
+    else if (sT === '2D Text Plane')
+      shapeType = 'plane';
+
+    mixin.shapeType = shapeType;
+    if (shapeType === 'text') {
+      mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
+      mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
+    }
+    if (shapeType === 'sphere') {
+      mixin.sphereDiameter = this.panel.querySelector('.sphere-diameter').value;
+    }
+    if (shapeType === 'box') {
+      mixin.boxWidth = this.panel.querySelector('.box-width').value;
+      mixin.boxHeight = this.panel.querySelector('.box-height').value;
+      mixin.boxDepth = this.panel.querySelector('.box-depth').value;
+    }
+    if (shapeType === 'cylinder') {
+      mixin.cylinderDiameter = this.panel.querySelector('.cylinder-diameter').value;
+      mixin.cylinderHeight = this.panel.querySelector('.cylinder-height').value;
+    }
+    mixin.materialName = this.shapeMaterialSelectPicker.value;
+
+    if (shapeType === 'plane') {
+      mixin.width = this.panel.querySelector('.font-2d-plane-size').value;
+      mixin.height = mixin.width;
+      mixin.materialName = newName + '_2d_material';
+
+      callbackMixin.textureText = this.panel.querySelector('.text-2d-line-1').value;
+      callbackMixin.textureText2 = this.panel.querySelector('.text-2d-line-2').value;
+      callbackMixin.textureText3 = this.panel.querySelector('.text-2d-line-3').value;
+      callbackMixin.textureText4 = this.panel.querySelector('.text-2d-line-4').value;
+      callbackMixin.textFontFamily = this.panel.querySelector('.font-family-2d-add').value;
+      callbackMixin.textFontColor = this.panel.querySelector('.font-2d-color').value;
+      callbackMixin.textFontSize = this.panel.querySelector('.font-2d-text-size').value;
+      generateTexture = true;
+    }
+  }
+  shapeTypeChange() {
+    this.createBoxOptions.style.display = this.createShapesSelect.value === 'Box' ? '' : 'none';
+    this.createSphereOptions.style.display = this.createShapesSelect.value === 'Sphere' ? '' : 'none';
+    this.createTextOptions.style.display = this.createShapesSelect.value === '3D Text' ? '' : 'none';
+    this.createCylinderOptions.style.display = this.createShapesSelect.value === 'Cylinder' ? '' : 'none';
+    this.add2dTextPanel.style.display = this.createShapesSelect.value === '2D Text Plane' ? '' : 'none';
+    this.shapeMaterialSelectPicker.parentElement.style.display = this.createShapesSelect.value != '2D Text Plane' ? '' : 'none';
   }
 
   textureTemplate() {
@@ -206,121 +313,6 @@ class gMacro {
       this.meshFile.style.display = '';
     else if (sel === 'Path')
       this.meshPathInputLabel.style.display = '';
-  }
-
-  shapeTemplate() {
-    return `<select class="shape-type-select">
-         <option>2D Text Plane</option>
-         <option selected>3D Text</option>
-         <option>Box</option>
-         <option>Sphere</option>
-         <option>Cylinder</option>
-        </select>
-        <br>
-        <div class="create-sphere-options">
-      <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
-    </div>
-    <div class="create-2d-text-plane">
-      <label><span>Text</span><input class="text-2d-line-1" value="Text Line" /></label>
-      <br>
-      <label><span>Line 2</span><input class="text-2d-line-2" value="" /></label>
-      <br>
-      <label><span>Line 3</span><input class="text-2d-line-3" value="" /></label>
-      <br>
-      <label><span>Line 4</span><input class="text-2d-line-4" value="" /></label>
-      <br>
-      <label><span>Font</span><input class="font-family-2d-add" list="fontfamilydatalist" /></label>
-      <br>
-      <label><span>Color</span><input class="font-2d-color" color="0,0,0" /></label>
-      <br>
-      <label><span>Text Size</span><input class="font-2d-text-size" value="100" /></label>
-      <br>
-      <label><span>Plane Size</span><input class="font-2d-plane-size" value="4" /></label>
-    </div>
-    <div class="create-cylinder-options">
-      <label><span>Diameter</span><input type="text" class="cylinder-diameter"></label>
-      <label><span>Height</span><input type="text" class="cylinder-height"></label>
-    </div>
-    <div class="create-text-options">
-      <label><span>Text</span><input class="text-shape-add" value="3D Text" /></label>
-      <br>
-      <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
-    </div>
-    <label><span>Material</span><input type="text" style="width:15em;" class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
-    <div class="create-box-options">
-      <label><span>Width</span><input type="text" class="box-width" /></label>
-      <label><span>Height</span><input type="text" class="box-height" /></label>
-      <label><span>Depth</span><input type="text" class="box-depth" /></label>
-    </div>`;
-  }
-  shapeRegister() {
-    this.add2dTextPanel = this.panel.querySelector('.create-2d-text-plane');
-    this.createBoxOptions = this.panel.querySelector('.create-box-options');
-    this.createSphereOptions = this.panel.querySelector('.create-sphere-options');
-    this.createTextOptions = this.panel.querySelector('.create-text-options');
-    this.createCylinderOptions = this.panel.querySelector('.create-cylinder-options');
-    this.createShapesSelect = this.panel.querySelector('.shape-type-select');
-    this.createShapesSelect.addEventListener('input', e => this.shapeTypeChange());
-    this.shapeMaterialSelectPicker = this.panel.querySelector('.shape-material-picker-select');
-    this.shapeAddFontFamily = this.panel.querySelector('.font-family-shape-add');
-    this.shapeAddFontFamily.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily));
-    this.shapeAddFontFamily2D = this.panel.querySelector('.font-family-2d-add');
-    this.shapeAddFontFamily2D.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily2D));
-    this.shapeTypeChange();
-  }
-  shapeCreate() {
-    let sT = this.createShapesSelect.value;
-    let shapeType = 'box';
-    if (sT === 'Sphere')
-      shapeType = 'sphere';
-    else if (sT === '3D Text')
-      shapeType = 'text';
-    else if (sT === 'Cylinder')
-      shapeType = 'cylinder';
-    else if (sT === '2D Text Plane')
-      shapeType = 'plane';
-
-    mixin.shapeType = shapeType;
-    if (shapeType === 'text') {
-      mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
-      mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
-    }
-    if (shapeType === 'sphere') {
-      mixin.sphereDiameter = this.panel.querySelector('.sphere-diameter').value;
-    }
-    if (shapeType === 'box') {
-      mixin.boxWidth = this.panel.querySelector('.box-width').value;
-      mixin.boxHeight = this.panel.querySelector('.box-height').value;
-      mixin.boxDepth = this.panel.querySelector('.box-depth').value;
-    }
-    if (shapeType === 'cylinder') {
-      mixin.cylinderDiameter = this.panel.querySelector('.cylinder-diameter').value;
-      mixin.cylinderHeight = this.panel.querySelector('.cylinder-height').value;
-    }
-    mixin.materialName = this.shapeMaterialSelectPicker.value;
-
-    if (shapeType === 'plane') {
-      mixin.width = this.panel.querySelector('.font-2d-plane-size').value;
-      mixin.height = mixin.width;
-      mixin.materialName = newName + '_2d_material';
-
-      callbackMixin.textureText = this.panel.querySelector('.text-2d-line-1').value;
-      callbackMixin.textureText2 = this.panel.querySelector('.text-2d-line-2').value;
-      callbackMixin.textureText3 = this.panel.querySelector('.text-2d-line-3').value;
-      callbackMixin.textureText4 = this.panel.querySelector('.text-2d-line-4').value;
-      callbackMixin.textFontFamily = this.panel.querySelector('.font-family-2d-add').value;
-      callbackMixin.textFontColor = this.panel.querySelector('.font-2d-color').value;
-      callbackMixin.textFontSize = this.panel.querySelector('.font-2d-text-size').value;
-      generateTexture = true;
-    }
-  }
-  shapeTypeChange() {
-    this.createBoxOptions.style.display = this.createShapesSelect.value === 'Box' ? '' : 'none';
-    this.createSphereOptions.style.display = this.createShapesSelect.value === 'Sphere' ? '' : 'none';
-    this.createTextOptions.style.display = this.createShapesSelect.value === '3D Text' ? '' : 'none';
-    this.createCylinderOptions.style.display = this.createShapesSelect.value === 'Cylinder' ? '' : 'none';
-    this.add2dTextPanel.style.display = this.createShapesSelect.value === '2D Text Plane' ? '' : 'none';
-    this.shapeMaterialSelectPicker.parentElement.style.display = this.createShapesSelect.value != '2D Text Plane' ? '' : 'none';
   }
 
   blockTemplate() {
