@@ -171,15 +171,19 @@ class gMacro {
     this.texturePathInput = this.panel.querySelector('.text-path-texture');
     this.textureTypeChange();
   }
-  textureCreate() {
+  async textureCreate() {
+    this.file = null;
+    this.mixin = {};
     let sel = this.selectTextureType.value;
     if (sel === 'Upload') {
       if (this.textureFile.files.length > 0)
-        file = this.textureFile.files[0];
+        this.file = this.textureFile.files[0];
     }
     if (sel === 'Path') {
       this.mixin.url = this.texturePathInput.value.trim();
     }
+    let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+    return results.key;
   }
   textureTypeChange() {
     this.texturePathInputLabel.style.display = 'none';
@@ -216,7 +220,8 @@ class gMacro {
     this.materialColorInput.addEventListener('input', e => this.materialColorTextChange());
     this.materialColorTextChange();
   }
-  materialCreate() {
+  async materialCreate() {
+    this.mixin = {};
     let color = this.materialColorInput.value;
     let texture = this.texturePickerMaterial.value;
     if (this.diffuseCheckBox.checked) {
@@ -235,6 +240,8 @@ class gMacro {
       this.mixin.specularColor = color;
       this.mixin.specularTextureName = texture;
     }
+    let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+    return results.key;
   }
   materialColorTextChange() {
     let bColor = GLOBALUTIL.color(this.materialColorInput.value);
