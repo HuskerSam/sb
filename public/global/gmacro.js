@@ -6,14 +6,21 @@ class gMacro {
     if (!tag)
       return this.panel.innerHTML = '';
 
-    panel.innerHTML = this.baseTemplate() + this[tag + 'Template']() + `<hr>`;
+    let base = '';
+    if (tag !== 'workspace')
+      base = this.baseTemplate();
+
+    panel.innerHTML = base + this[tag + 'Template']() + `<hr>`;
     this[tag + 'Register']();
-    this.panelCreateBtn = this.panel.querySelector('.add-button');
-    this.panelCreateBtn.addEventListener('click', e => this.createItem());
-    this.panelCreateBtn2 = this.panel.querySelector('.add-newwindow-button');
-    this.panelCreateBtn2.addEventListener('click', e => this.createItem(true));
-    this.panelInput = this.panel.querySelector('.add-item-name');
-    this.createMesage = this.panel.querySelector('.creating-message');
+
+    if (tag !== 'workspace') {
+      this.panelCreateBtn = this.panel.querySelector('.add-button');
+      this.panelCreateBtn.addEventListener('click', e => this.createItem());
+      this.panelCreateBtn2 = this.panel.querySelector('.add-newwindow-button');
+      this.panelCreateBtn2.addEventListener('click', e => this.createItem(true));
+      this.panelInput = this.panel.querySelector('.add-item-name');
+      this.createMesage = this.panel.querySelector('.creating-message');
+    }
   }
   updateFontField(textDom) {
     textDom.style.fontFamily = textDom.value;
@@ -25,6 +32,42 @@ class gMacro {
       <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
       <br>
       <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>`;
+  }
+  static assetJSON(tag, key) {
+    if (!tag)
+      return '';
+    if (!key)
+      return '';
+
+    let asset = gAPPP.a.modelSets[tag].getCache(key);
+    if (!asset)
+      return '';
+    let ele = Object.assign({}, asset);
+
+    if (tag === 'block') {
+      let frames = gAPPP.a.modelSets['frame'].queryCache('parentKey', key);
+      let framesArray = [];
+      for (let i in frames)
+        framesArray.push(frames[i]);
+      ele.frames = framesArray;
+
+      let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', key);
+      let childArray = [];
+      for (let childKey in children) {
+        let childFrames = gAPPP.a.modelSets['frame'].queryCache('parentKey', childKey);
+        let childFramesArray = [];
+        for (let i in childFrames)
+          childFramesArray.push(childFrames[i]);
+        children[childKey].frames = childFramesArray;
+        childArray.push(children[childKey]);
+      }
+      ele.children = childArray;
+
+    }
+    delete ele.renderImageURL;
+    ele.assetExportTag = tag;
+    ele.assetExportKey = key;
+    return JSON.stringify(ele, null, 4);
   }
   createItem(newWindow) {
     this.newName = this.panelInput.value.trim();
@@ -1048,5 +1091,112 @@ class gMacro {
       newObj.frameTime = '100%';
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
+  }
+
+  workspaceTemplate() {
+    return `<input type="file" style="display:none;" class="import_csv_file">
+      <button class="import_csv_records">Import CSV Records</button>
+      &nbsp;
+      <input type="file" style="display:none;" class="import_asset_json_file">
+      <button class="import_asset_json_button">Import Asset JSON</button>`;
+  }
+  workspaceRegister() {
+    this.import_csv_file = this.panel.querySelector('.import_csv_file');
+    this.import_csv_file.addEventListener('change', e => this.importAssetCSV());
+    this.import_csv_records = this.panel.querySelector('.import_csv_records');
+    this.import_csv_records.addEventListener('click', e => this.import_csv_file.click());
+
+    this.import_asset_json_file = this.panel.querySelector('.import_asset_json_file');
+    this.import_asset_json_file.addEventListener('change', e => this.importAssetJSON());
+    this.import_asset_json_button = this.panel.querySelector('.import_asset_json_button');
+    this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
+  }
+  importAssetCSV() {
+    if (this.import_csv_file.files.length > 0) {
+      Papa.parse(this.import_csv_file.files[0], {
+        header: true,
+        complete: results => {
+          if (results.data) {
+            for (let c = 0, l = results.data.length; c < l; c++) {
+              new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVRow(results.data[c]).then(() => {});
+            }
+          }
+        }
+      });
+    }
+  }
+  openAsset(tag, key) {
+    let url = this.view.genQueryString(null, tag, key);
+    let a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('target', '_blank');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  importAssetJSON() {
+    if (this.import_asset_json_file.files.length > 0) {
+      let reader = new FileReader();
+      reader.onload = e => onJSONLoad(e);
+      reader.readAsText(this.import_asset_json_file.files[0]);
+      let onJSONLoad = (e) => {
+        let json = e.target.result;
+        try {
+          json = JSON.parse(json);
+        } catch (e) {
+          alert('error parsing json check console');
+          console.log('error parsing json for import', e);
+          return;
+        }
+
+        let eleType = json.assetExportTag;
+
+        if (!gAPPP.a.modelSets[eleType]) {
+          alert('no supported assetExportTag found');
+          return;
+        }
+
+        delete json.assetExportTag;
+        delete json.assetExportKey;
+        if (eleType !== 'block') {
+          json.sortKey = new Date().getTime();
+          gAPPP.a.modelSets[eleType].createWithBlobString(json).then(results => {
+              this.openAsset(eleType, results.key);
+          });
+        } else {
+          json.sortKey = new Date().getTime();
+          let blockFrames = json.frames;
+          let blockChildren = json.children;
+
+          let __importFrames = (frames, parentKey) => {
+            for (let c = 0, l = frames.length; c < l; c++) {
+              frames[c].parentKey = parentKey;
+              gAPPP.a.modelSets['frame'].createWithBlobString(frames[c]).then(frameResult => {});
+            }
+          };
+
+          json.children = undefined;
+          delete json.children;
+          json.frames = undefined;
+          delete json.frames;
+          gAPPP.a.modelSets['block'].createWithBlobString(json).then(blockResults => {
+            __importFrames(blockFrames, blockResults.key);
+
+            for (let c = 0, l = blockChildren.length; c < l; c++) {
+              let child = blockChildren[c];
+              let childFrames = child.frames;
+              child.frames = undefined;
+              delete child.frames;
+              child.parentKey = blockResults.key;
+
+              gAPPP.a.modelSets['blockchild'].createWithBlobString(child).then(
+                childResults => __importFrames(childFrames, childResults.key));
+            }
+
+            this.openAsset(eleType, blockResults.key);
+          });
+        }
+      };
+    }
   }
 }

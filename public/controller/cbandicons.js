@@ -38,6 +38,7 @@ class cBandIcons extends bBand {
 
     let b = this.__addMenuItem(outer, 'open_with', e => this.selectItem(e, key));
     b = this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
+    b = this.__addMenuItem(outer, 'file_download', e => this.downloadJSON(e, key), true);
     b = this.__addMenuItem(outer, 'delete', e => this._removeElement(e, key), true);
 
     this._nodeApplyValues(values, outer);
@@ -48,6 +49,17 @@ class cBandIcons extends bBand {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
       return;
     gAPPP.a.modelSets[this.tag].removeByKey(key);
+  }
+  downloadJSON(e, key) {
+    let json = gMacro.assetJSON(this.tag, key);
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(json));
+    element.setAttribute('download', this.tag + '-' + key + '-asset.json');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   }
   selectItem(e, newKey, newWindow) {
     this.dialog.selectItem(newKey, newWindow);

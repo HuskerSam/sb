@@ -332,7 +332,7 @@ class cView extends bView {
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <select id="dataview_record_key" style="max-width:calc(100% - 12.5em);"></select>
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_a_photo</i></button>
-            <button class="delete-asset-button btn-sb-icon"><i class="material-icons">remove</i></button>
+            <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
             <div style="display:inline-block;">
               <select class="main-band-children-select" style="display:none;"></select>
               <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove</i></button>
@@ -552,7 +552,7 @@ class cView extends bView {
   }
   showSelectOrAddView() {
     if (!this.tag) {
-      this.addAssetPanel.innerHTML = '';
+      this.generate = new gMacro(this.addAssetPanel, 'workspace', this);
       fetch('/doc/assethelp.html')
         .then(res => res.text())
         .then(html => this.fieldsContainer.innerHTML = html);
