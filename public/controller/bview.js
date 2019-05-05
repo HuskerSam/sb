@@ -274,6 +274,8 @@ class bView {
 
     if (!records || !records[val])
       return;
+    gAPPP.lastWorkspaceName = records[val].title;
+    gAPPP.lastWorkspaceCode = records[val].code;
 
     if (this.workplacesSelectEditName) {
       this.workplacesSelectEditName.value = records[val].title;
@@ -303,7 +305,7 @@ class bView {
         console.log(e);
       });
   }
-  async _addProject(newTitle, newCode, key, reload = true) {
+  async _addProject(newTitle, newCode = '', key = false, reload = true) {
     if (!key)
       key = gAPPP.a.modelSets['projectTitles'].getKey();
     await firebase.database().ref('projectTitles/' + key).set({
@@ -315,7 +317,7 @@ class bView {
     });
 
     if (reload) {
-      this._updateQueryString(gAPPP.mV.workplacesSelect.value);
+      this._updateQueryString(key);
       await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'selectedWorkspace',
         newValue: key
@@ -438,18 +440,9 @@ class bView {
     return `<div id="record_field_list">
       <form autocomplete="off" onsubmit="return false;"></form>
     </div>
-    <label><span>Name </span><input id="edit-workspace-name" /></label>
-    <label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" />
-    <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
-    </label>
-    <br>
-    <label><span>New Workspace </span><input id="new-workspace-name" /></label><label><span> Z Code </span><input id="new-workspace-code" style="width:5em;" /></label>
-    <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
-    </label>
-    <div class="user-info"></div>
-    <button id="user-profile-dialog-reset-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_circle</i> Reset Profile </button>
-    <button id="sign-out-button" style="font-size:1.1em;" class="btn-sb-icon"><i class="material-icons">account_box</i> Sign out </button>
-    <div class="fields-container" style="clear:both;"></div>`;
+    <button id="sign-out-button" style="float:right;"><i class="material-icons">account_box</i> Sign out </button>
+    <button id="user-profile-dialog-reset-button" style="float:right;"><i class="material-icons">account_circle</i> Reset Profile </button>
+    <div class="fields-container" style="clear:both;display:inline-flex;"></div>`;
   }
   profilePanelRegister() {
     this.signOutBtn = document.querySelector('#sign-out-button');
@@ -457,20 +450,10 @@ class bView {
       this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
 
     this.workplacesSelect = document.querySelector('#workspaces-select');
-    this.workplacesSelectEditName = document.querySelector('#edit-workspace-name');
-    this.workplacesSelectEditCode = document.querySelector('#edit-workspace-code');
-    this.workplacesRemoveButton = document.querySelector('#remove-workspace-button');
     this.workplacesSelect.addEventListener('input', e => this.selectProject());
-    this.workplacesSelectEditName.addEventListener('input', e => this.updateWorkspaceNameCode());
-    this.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
-    this.addProjectButton = document.querySelector('#add-workspace-button');
-    this.addProjectButton.addEventListener('click', e => this.addProject());
-    this.addProjectName = document.querySelector('#new-workspace-name');
-    this.addProjectCode = document.querySelector('#new-workspace-code');
-    this.workplacesRemoveButton.addEventListener('click', e => this.deleteProject());
+
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
 
-    this.userProfileName = this.dialog.querySelector('.user-info');
     this.fontToolsContainer = this.dialog.querySelector('#profile-header-panel');
     this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
     this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
@@ -491,20 +474,5 @@ class bView {
       this.profile_description_panel_btn.classList.add('button-expanded');
       document.getElementById('profile-header-panel').classList.add('expanded');
     }
-  }
-  updateWorkspaceNameCode() {
-    let name = this.workplacesSelectEditName.value.trim();
-    let code = this.workplacesSelectEditCode.value.trim();
-
-    if (name.length < 1)
-      return;
-
-    gAPPP.a.modelSets['projectTitles'].commitUpdateList([{
-      field: 'title',
-      newValue: name
-    }, {
-      field: 'code',
-      newValue: code
-    }], this.workplacesSelect.value);
   }
 }

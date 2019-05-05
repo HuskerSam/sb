@@ -1094,11 +1094,29 @@ class gMacro {
   }
 
   workspaceTemplate() {
-    return `<input type="file" style="display:none;" class="import_csv_file">
-      <button class="import_csv_records">Import CSV Records</button>
-      &nbsp;
-      <input type="file" style="display:none;" class="import_asset_json_file">
-      <button class="import_asset_json_button">Import Asset JSON</button>`;
+    return `
+      <b>Workspace</b>
+      <br>
+      <label><span>Name</span><input id="edit-workspace-name" /></label>
+      <br>
+      <label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
+      <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
+      <br>
+      <br>
+      <b>New Workspace</b>
+      <br>
+      <label><span>Name</span><input id="new-workspace-name" /></label>
+      <br>
+      <label><span> Z Code </span><input id="new-workspace-code" style="width:5em;" /></label>
+      <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
+      </label>
+      <br>
+      <hr>
+      <input type="file" style="display:none;" class="import_csv_file">
+        <button class="import_csv_records">Import CSV Records</button>
+        &nbsp;
+        <input type="file" style="display:none;" class="import_asset_json_file">
+        <button class="import_asset_json_button">Import Asset JSON</button>`;
   }
   workspaceRegister() {
     this.import_csv_file = this.panel.querySelector('.import_csv_file');
@@ -1110,6 +1128,43 @@ class gMacro {
     this.import_asset_json_file.addEventListener('change', e => this.importAssetJSON());
     this.import_asset_json_button = this.panel.querySelector('.import_asset_json_button');
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
+
+    this.addProjectButton = document.querySelector('#add-workspace-button');
+    this.addProjectButton.addEventListener('click', e => this.addProject());
+
+    this.view.workplacesSelectEditName = this.panel.querySelector('#edit-workspace-name');
+    if (gAPPP.lastWorkspaceName)
+      this.view.workplacesSelectEditName.value = gAPPP.lastWorkspaceName;
+    this.view.workplacesSelectEditCode = this.panel.querySelector('#edit-workspace-code');
+    if (gAPPP.lastWorkspaceCode)
+      this.view.workplacesSelectEditCode.value = gAPPP.lastWorkspaceCode;
+    this.workplacesRemoveButton = this.panel.querySelector('#remove-workspace-button');
+    this.view.workplacesSelectEditName.addEventListener('input', e => this.updateWorkspaceNameCode());
+    this.view.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
+    this.workplacesRemoveButton.addEventListener('click', e => this.view.deleteProject());
+  }
+  updateWorkspaceNameCode() {
+    let name = this.view.workplacesSelectEditName.value.trim();
+    let code = this.view.workplacesSelectEditCode.value.trim();
+
+    if (name.length < 1)
+      return;
+
+    gAPPP.a.modelSets['projectTitles'].commitUpdateList([{
+      field: 'title',
+      newValue: name
+    }, {
+      field: 'code',
+      newValue: code
+    }], this.view.workplacesSelect.value);
+  }
+  addProject() {
+    let name = this.panel.querySelector('#new-workspace-name').value.trim();
+    if (!name) {
+      alert('please enter a name for the new workspace');
+      return;
+    }
+    this.view._addProject(name).then(() => {});
   }
   importAssetCSV() {
     if (this.import_csv_file.files.length > 0) {
@@ -1161,7 +1216,7 @@ class gMacro {
         if (eleType !== 'block') {
           json.sortKey = new Date().getTime();
           gAPPP.a.modelSets[eleType].createWithBlobString(json).then(results => {
-              this.openAsset(eleType, results.key);
+            this.openAsset(eleType, results.key);
           });
         } else {
           json.sortKey = new Date().getTime();
