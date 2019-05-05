@@ -177,8 +177,7 @@ class wContext {
           objectData.rotationY = newMesh.rotation.y;
           objectData.rotationZ = newMesh.rotation.z;
 
-          fireSet.createWithBlobString(objectData, sceneJSON, filename).then(
-            r => resolve(r));
+          return fireSet.createWithBlobString(objectData, sceneJSON, filename);
         });
     }
 
@@ -379,7 +378,14 @@ class wContext {
   _loadMeshFromDomFile(file) {
     return new Promise((resolve, reject) => {
       let URI = URL.createObjectURL(file);
-      BABYLON.SceneLoader.ImportMesh('', '', URI, this.scene,
+      let filename = URI;
+      let path = '';
+      if (URI.indexOf(gAPPP.storagePrefix) === -1) {
+        let parts = URI.split('/');
+        filename = parts[parts.length - 1];
+        path = URI.replace(filename, '');
+      }
+      BABYLON.SceneLoader.ImportMesh('', path, filename, this.scene,
         (newMeshes, particleSystems, skeletons) => resolve(newMeshes),
         progress => {},
         err => resolve(null));

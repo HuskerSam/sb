@@ -93,7 +93,8 @@ class gMacro {
     this.shapeAddFontFamily2D.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily2D));
     this.shapeTypeChange();
   }
-  shapeCreate() {
+  async shapeCreate() {
+    this.mixin = {};
     let sT = this.createShapesSelect.value;
     let shapeType = 'box';
     if (sT === 'Sphere')
@@ -127,9 +128,10 @@ class gMacro {
     if (shapeType === 'plane') {
       this.mixin.width = this.panel.querySelector('.font-2d-plane-size').value;
       this.mixin.height = this.mixin.width;
-      this.mixin.materialName = newName + '_2d_material';
+      this.mixin.materialName = this.newName + '_2d_material';
 
-      callbackMixin.textureText = this.panel.querySelector('.text-2d-line-1').value;
+      this.callbackMixin = {};
+      this.callbackMixin.textureText = this.panel.querySelector('.text-2d-line-1').value;
       this.callbackMixin.textureText2 = this.panel.querySelector('.text-2d-line-2').value;
       this.callbackMixin.textureText3 = this.panel.querySelector('.text-2d-line-3').value;
       this.callbackMixin.textureText4 = this.panel.querySelector('.text-2d-line-4').value;
@@ -137,8 +139,11 @@ class gMacro {
       this.callbackMixin.textFontColor = this.panel.querySelector('.font-2d-color').value;
       this.callbackMixin.textFontSize = this.panel.querySelector('.font-2d-text-size').value;
 
-      //  this.blockCreate2DTexture(gAPPP.activeContext, results.key, this.newName, this.callbackMixin);
+      this.blockCreate2DTexture(gAPPP.activeContext, this.newName, this.callbackMixin);
     }
+
+    let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+    return results.key;
   }
   shapeTypeChange() {
     this.createBoxOptions.style.display = this.createShapesSelect.value === 'Box' ? '' : 'none';
@@ -272,16 +277,20 @@ class gMacro {
 
     this.meshTypeChange();
   }
-  meshCreate() {
+  async meshCreate() {
+    this.mixin = {};
+    this.file = null;
     this.mixin.materialName = this.meshMaterialSelectPicker.value;
     let sel = this.selectMeshType.value;
     if (sel === 'Upload') {
       if (this.meshFile.files.length > 0)
-        file = this.meshFile.files[0];
+        this.file = this.meshFile.files[0];
     }
     if (sel === 'Path') {
       this.mixin.url = this.meshPathInput.value.trim();
     }
+    let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+    return results.key;
   }
   meshTypeChange() {
     this.meshPathInputLabel.style.display = 'none';
@@ -977,7 +986,7 @@ class gMacro {
     };
     context.createObject('frame', '', null, blockFrame).then(resultB => {});
   }
-  blockCreate2DTexture(context, shapeId, shapeTitle, textOptions) {
+  blockCreate2DTexture(context, shapeTitle, textOptions) {
     context.createObject('material', shapeTitle + '_2d_material', null, {
       diffuseTextureName: shapeTitle + '_2d_texture',
       emissiveTextureName: shapeTitle + '_2d_texture'

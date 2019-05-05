@@ -399,7 +399,18 @@ class cPanelData {
       }
 
       if (f.type === 'url') {
-        f.urlAnchor.setAttribute('href', v);
+        let outV = v;
+        if (v.substring(0, 3) === 'sb:') {
+          let tag = this.parent.tag;
+          if (tag) {
+            if (tag === 'mesh')
+              tag += 'es';
+            else
+              tag += 's';
+            outV = gAPPP.cdnPrefix + tag + '/' + v.substring(3);
+          }
+        }
+        f.urlAnchor.setAttribute('href', outV);
       }
     }
 
