@@ -1157,6 +1157,7 @@ class gMacro {
       <button class="import_asset_json_button">Import Asset JSON</button>`;
   }
   workspaceRegister() {
+    this.retailrRegister(this.panel);
     this.import_csv_file = this.panel.querySelector('.import_csv_file');
     this.import_csv_file.addEventListener('change', e => this.importAssetCSV());
     this.import_csv_records = this.panel.querySelector('.import_csv_records');
@@ -1294,7 +1295,7 @@ class gMacro {
   }
 
 
-  async retailInit(csvPanel) {
+  async retailrRegister(csvPanel) {
     this.templates = {
       "assetTemplates": {
         "All Assets": "asset.csv"
@@ -1308,37 +1309,37 @@ class gMacro {
     };
 
     this.csvPanel = csvPanel;
-    this.add_animation_asset_animation = this.csvPanel.getElementById('add_animation_asset_animation');
-    this.add_animation_asset_template = this.csvPanel.getElementById('add_animation_asset_template');
-    this.add_animation_asset_choice = this.csvPanel.getElementById('add_animation_asset_choice');
-    this.import_asset_templates_select = this.csvPanel.getElementById('import_asset_templates_select');
+    this.add_animation_asset_animation = this.csvPanel.querySelector('#add_animation_asset_animation');
+    this.add_animation_asset_template = this.csvPanel.querySelector('#add_animation_asset_template');
+    this.add_animation_asset_choice = this.csvPanel.querySelector('#add_animation_asset_choice');
+    this.import_asset_templates_select = this.csvPanel.querySelector('#import_asset_templates_select');
 
-    this.add_animation_scene_animation = this.csvPanel.getElementById('add_animation_scene_animation');
-    this.add_animation_scene_template = this.csvPanel.getElementById('add_animation_scene_template');
-    this.add_animation_scene_choice = this.csvPanel.getElementById('add_animation_scene_choice');
-    this.import_scene_templates_select = this.csvPanel.getElementById('import_scene_templates_select');
+    this.add_animation_scene_animation = this.csvPanel.querySelector('#add_animation_scene_animation');
+    this.add_animation_scene_template = this.csvPanel.querySelector('#add_animation_scene_template');
+    this.add_animation_scene_choice = this.csvPanel.querySelector('#add_animation_scene_choice');
+    this.import_scene_templates_select = this.csvPanel.querySelector('#import_scene_templates_select');
 
-    this.add_animation_product_animation = this.csvPanel.getElementById('add_animation_product_animation');
-    this.add_animation_product_template = this.csvPanel.getElementById('add_animation_product_template');
-    this.add_animation_product_choice = this.csvPanel.getElementById('add_animation_product_choice');
-    this.import_product_templates_select = this.csvPanel.getElementById('import_product_templates_select');
+    this.add_animation_product_animation = this.csvPanel.querySelector('#add_animation_product_animation');
+    this.add_animation_product_template = this.csvPanel.querySelector('#add_animation_product_template');
+    this.add_animation_product_choice = this.csvPanel.querySelector('#add_animation_product_choice');
+    this.import_product_templates_select = this.csvPanel.querySelector('#import_product_templates_select');
 
     this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
     this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
     this.add_animation_product_choice.addEventListener('input', e => this.__updateAddTemplate('product'));
 
-    this.import_asset_workspaces_select = this.csvPanel.getElementById('import_asset_workspaces_select');
-    this.import_scene_workspaces_select = this.csvPanel.getElementById('import_scene_workspaces_select');
-    this.import_product_workspaces_select = this.csvPanel.getElementById('import_product_workspaces_select');
+    this.import_asset_workspaces_select = this.csvPanel.querySelector('#import_asset_workspaces_select');
+    this.import_scene_workspaces_select = this.csvPanel.querySelector('#import_scene_workspaces_select');
+    this.import_product_workspaces_select = this.csvPanel.querySelector('#import_product_workspaces_select');
 
     await this.retailInitLists();
 
     return Promise.resolve();
   }
   async retailInitLists() {
-    this.__loadList(this.add_animation_asset_template, Object.getKeys(this.templates.assetTemplates));
-    this.__loadList(this.add_animation_scene_template, Object.getKeys(this.templates.assetTemplates));
-    this.__loadList(this.add_animation_product_template, Object.getKeys(this.templates.assetTemplates));
+    this.__loadList(this.add_animation_asset_template, Object.keys(this.templates.assetTemplates));
+    this.__loadList(this.add_animation_scene_template, Object.keys(this.templates.sceneTemplates));
+    this.__loadList(this.add_animation_product_template, Object.keys(this.templates.productTemplates));
 /*
     this.import_scene_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
     if (this.workplacesSelect.selectedIndex !== -1) {
