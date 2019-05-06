@@ -175,6 +175,17 @@ class cDataTable {
       this.editTables[tableName].setColumnLayout();
     });
   }
+  __sortProductRows(p) {
+    return p.sort((a, b) => {
+      let aIndex = GLOBALUTIL.getNumberOrDefault(a.index, 0);
+      let bIndex = GLOBALUTIL.getNumberOrDefault(b.index, 0);
+      if (aIndex > bIndex)
+        return 1;
+      if (aIndex < bIndex)
+        return -1;
+      return 0;
+    });
+  }
   _rowMoved(tableName, row) {
     let tbl = this.editTables[tableName];
     let data = tbl.getData();

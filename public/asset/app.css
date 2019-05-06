@@ -327,7 +327,7 @@ select {
 
 .band-background-preview {
   display: inline-block;
-  border: solid .15em rgba(0,0,0,.5);
+  border: solid .15em rgba(0, 0, 0, .5);
   border-radius: 1em;
   margin: 0 .05em;
   overflow: hidden;
@@ -448,4 +448,25 @@ select {
 
 .asset-fields-container.help-shown-panel {
   padding: .5em;
+}
+
+#scene_options_panel {
+  display: flex;
+}
+
+#scene_options_edit_fields {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: visible;
+  padding: .5em;
+}
+
+#scene_options_list {
+  height: 12em;
+  overflow: auto;
+}
+
+.csv_scene_field_upload_wrapper, .csv_scene_field_text_wrapper {
+  white-space: nowrap;
+  display: inline-block;
 }

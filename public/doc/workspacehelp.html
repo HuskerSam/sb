@@ -21,7 +21,164 @@
   <h1>Quick Start</h1> Use the add panels different options for examples of shapes and blocks. The animated line uses % based times for the frames so once a line a generated, the flow rate of the dots can be changed by adjusting only the root blocks time. The text and shape
   does some simple positioning of 2 objects inside a block. Checkout textures and materials for the short cuts - a material can be made using just "ecolor: 0,0,1" (emissive purple) or "color: 1,.5,0" (diffuse orange).<br> There are built in image and
   mesh lists - you can replace a texture by using "sb: grass.jpg", and a similar deal with meshes. These collections will improve with time, but there should be enough there to get you started for rapid developing.
+  Shape: Code generated mesh for shapes and 3d text - download size minimal - use these over static meshes when possible<br>
+          Texture: Image, video or 2d text data<br>
+          Mesh: Imported static meshes, .babylon, .glb and .gltf supported<br>
+          Material: Combine textures and colors to light up meshes and shapes<br>
+          Block: Combine shapes, meshes and other blocks with frames to form animations.  Fog, skyboxes and other scene specific features available.<br>
+  <h2>Quick Tips</h2>
+  The default camera provided for scenes is the Arc Rotate camera.  You can zoom in and out with the mouse wheel, or on touch enabled devices you can use gestures.
+  Hold down the right mouse button to move the camera target, and the left mouse button allows you to rotate around the target.
+  <br>
+  To search for items, expand the element type (shape or mesh, etc) and use ctrl f (browser find) to filter through the names - opening and closing an item will move it to the far left in the list
+  <br>
+  The default light provided is a hemispheric light, from (0.2, 0.8, 0.2).  The intensity is adjustable - 1.0 is approximately sunlight.  If you add a light to a block (or any child block), the default light is disabled.
+  <br>
+  Blocks also function as scenes, and a skybox and ground can be added to a block.  The skybox doesn't show if the block is being used as a child block.
+  <br>
+  A few shortcuts have been added to accelerate prototyping.
+  <br>
+  For materials, to specify a material that is just an rgb (0-1 levels) color, use the format  "color:r,g,b" - i.e. "color:1,0,0" is red.  This sets the diffuse color of the material, the most reactive to light.
+  <br>
+  To set the emissive color, use "ecolor:1,0,0", or to set both the diffuse and emissive, use "decolor:1,0,0".
+  <br>
 
+  For textures, there is an image library available using the prefix "sb: 123.jpg".
+  <br>
+  For meshes, there is an babylon file library available using the prefix "sb: mesh.babylon".
+  <br>
+  The idea of these files is to provide a number of usable images and meshes for quick consumption in your scene.  You can always upload the pictures and meshes you
+  need as your project matures.
+  <br>
+  <h1 id="blockdiagrams">3D Block Diagrams</h1> There are 3 add helpers for quickly building diagrams.
+  <br>
+  <br>
+  <h2>Text and Shape</h2>
+  <div style="float:left;">
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/textandshapedialog.png" style="width:200px" />
+    <br>
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/textandshapeexample.png" style="width:200px" />
+  </div>
+  This block creation helper combines 1 or 2 lines of text to make a shape combined with text. This is intended to replace a 2D square or circle containing text. It's not a good idea to have too many characters in one animation - as the poly count can get
+  high fast. <br>
+  <br> For the materials, you can either use a <a href="#materials">material</a> you have created, or you can use "color: 1,1,1" notation to specify a color as the material.
+  <br>
+  <br> For the shape, pick one of the presets, size it and the text and shape will be generated and placed into a box. The shape will be positioned on the negative Z axis, centered on Y and X. The text will be placed on the positive Z axis.
+  <br>
+  <div style="clear:both"></div>
+  <br>
+  <br>
+  <h2>Connector Line</h2>
+  <div style="float:left;">
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/connectorlinedialog.jpg" style="width:200px" />
+    <br>
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/connectorlineexample.jpg" style="width:200px" />
+  </div>
+  This block creation helper combines 3 shapes into a block to form a connector line. A cylinder shape is used for the line - if you don't want it round, specify the number of div (min 3), i.e. 4 makes a box instead of a cylinder.
+
+  <div style="clear:both"></div>
+  <br>
+  <br>
+  <h2>Animated Line</h2>
+  <div style="float:left;">
+    <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/animatedlinedialog.jpg" style="width:200px" />
+    <br>
+    <video width="200" autoplay loop>
+      <source src="https://s3-us-west-2.amazonaws.com/hcwebflow/videos/animatedline.webm" type="video/webm">
+    </video>
+  </div>
+  This block creation helper combines shapes into a container block and adds frames. To make the dashes move faster, decrease the Run Time, or increase the D (Depth) of the line. Use these in place of dashed lines or to show flow.
+  <br>
+  <div style="clear:both"></div>
+  <br>
+  <br>
+  <h1 id="blocks">Blocks</h1> The concept of a block is to be a virtual lego block - with a specified size such as 2x4 or 1x8, etc. Then a scene and animation is built from a collection of blocks.
+  <br>
+  <br> Blocks are containers holding members in the form of meshes, shapes and other blocks. Blocks are rendered as a box mesh containing all of the child elements. The isVisible of the box is set to false, leaving the child elements visible, but not
+  the block wrapper. Scaling, position and rotation are fully animatable features of a block - not color, visibility though. While materials can be applied to an entire block, animating the materials is not possible.
+  The block root contains frames, when it's a child you can choose either to these frames, or override (default) them with new ones.
+  <br>
+  ... to add - inherit material, follow camera example, skybox and ground, block dimensions
+  <br>
+  <br>
+  <h1 id="meshes">Meshes and Shapes</h1>
+  Meshes can be difficult to export from blender and import.  If you see red lines in the console (from images missing) - these textures can be removed by
+  opening the .babylon file and removing them.  Just empty the path and leave "".  Try to keep the mesh in one piece, otherwise once imported you'll have to wrap it in a
+  block to size it, etc and lose some of the native abilities.  Try to delete as many other objects out of the blender scene as possible, so only the mesh is left.  The
+  import routine grabs the first mesh it finds coming in from the .babylon file (scene).
+  <br>
+  Once a mesh is loaded, use the [Fit] button to size it so you can see it, by default this will place the mesh in 1x1x1 box and you can size it from there.
+
+  <br>
+  <br>
+  <h1 id="frames">Frames</h1>
+  <h2>Animation Length</h2>
+  The outer most block controls the animation length, all internal blocks will repeat.  So for a 30s animation, the root block should have at least one frame with a time of 30s.
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/rootframe30s.jpg" style="width:100%" />
+  The application generates a first frame here, and the last frame is 30s as specified by the time.
+  <br>
+  <h2>Clone Previous Frame</h2>
+  The example below shows the use of the cp operator for time.  Also times by default are in ms, but 20s = 20000, m also works for minutes.
+  The cp (clone previous) operator clones the previous frame and sets the time (in this case 1 ms before).  This creates an instant
+  transition without coding the duplicate frame (it's just save you the time of entering 2 frames instead of one). As you can see from the data
+  below the data 2 rows results - the blue one is from the cp operator.
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/framecpexample.jpg" style="width:100%" />
+  <br>
+  <h2>Relative + and ++ operators</h2>
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/framesrelativeops.jpg" style="float:left;" />
+  The + prefix operator adds the value to the first frame value to determine the current frame value.
+  The ++ operator adds the value to the previous frame.
+  The example at the left shows 2000 starting time, the 2nd frame has an absolute time (3.5s).  The third
+  frame adds 2500 to the first frame time to get 4500 - and the last frame adds 500 to the previous frame for 5000.
+
+  <div style="clear:both"></div>
+  <h2>* operator (parent time offset)</h2>
+  The * operator will find the first user created frame from the parent block and add it's time to this frame.  This is used to move an entire
+  block in time, for example a bouncing ball as a block can be started at 5s or 10s, and all animations underneath can the be
+  timed with relative operators so the same block can be moved in both position/scale/rotation and time.
+  <h2>% operator (time only)</h2>
+  The length of the animation is determined by the frames on the root block.  Any frames related to child blocks can have
+  a time based as a % of animation length as a whole.
+  <br>
+  <h2>Easing functions</h2>
+  3 easing functions are provided, ease in (ei), ease out (eo) and ease in and out (eio).  You can use these by specifying on the first frame using a colon;
+  <br>
+  i.e. 0s:eio  1000:ei
+
+  <h2>Last Frame and First Frame generation</h2>
+  If you enter a time in the first raw frame, the system will automatically generate a frame at time 0.  This freezes the object in place until this time.
+
+  If you append lf to the last frame, a last frame will be generated with a time equal to the last frame of the root animation.  This way if you
+  move an object and want it to stay for the rest of the animation, add lf to it's time, i.e.  10slf  or 5500lf.
+  <div style="clear:both"></div>
+
+  <h1 id="materials">Materials and Textures</h1>
+  Babylonjs has an overview of materials and textures for reference: <a href="https://doc.babylonjs.com/babylon101/materials">here</a>.
+  <h2>Bump Textures</h2>
+  Bump textures (aka normal maps) allow the gpu to render more light effects from a rough surface, without adding to the poly count.
+  Babylon has a little more reference: <a href="https://doc.babylonjs.com/how_to/more_materials">here</a>.
+  <br>
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/bmptextures.jpg" style="float:left;width:200px;" /> A number of bump textures (normal maps) are supplied for ease of use.
+  Check out the images prefixed with "sb: bmp-".
+  <div style="clear:both;"></div>
+  <h1 id="cameras">Cameras and Lights</h1>
+  <h2>Cameras</h2>
+  Babylonjs has an overview of cameras for reference: <a href="https://doc.babylonjs.com/babylon101/cameras">here</a>.  The follow camera
+  is the one that is automated to track a position, the other cameras can be animated - but only their position and rotation, not their aim point.
+  If you're looking to follow a point, use a follow camera and point it at an empty block, then animate that block.
+  <h2>Follow Camera</h2>
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/followcamera.jpg" style="width:100%" />
+  The follow camera above is targeted at the shape named "followball".  A list of valid follow targets is supplied, the format is
+  blocktype:name (i.e. shape:followball).  Animate the shape's position to adjust where the camera is viewing.  The first frame
+  determines the camera's starting position and it's radius.  These can be animated as well, but the starting position won't do much
+  once the camera is already following.  The height and radius are key values in this case to animate on the camera.
+  <h2>Lights</h2>
+  Babylon only shades the first 4 lights, while this can be adjusted in code, the limit is there protect smaller devices from
+  having their shader memory overloaded.
+  <h1>and finally...</h1>
+    Don't let this system limit you - it's intended to compliment babylonjs, not constrain it.  For more interesting samples of what
+    babylon can do, refer to <a href="https://doc.babylonjs.com/samples">these</a>.
+    <br>
 </body>
 
 </html>

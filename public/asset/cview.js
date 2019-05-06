@@ -12,6 +12,8 @@ class cView extends bView {
     this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
     this.dataview_record_key = this.dialog.querySelector('#dataview_record_key');
     this.dataview_record_tag.value = this.tag;
+    if (this.dataview_record_tag.selectedIndex === -1)
+      this.dataview_record_tag.selectedIndex = 0;
 
     this.dataview_record_tag.addEventListener('change', e => this.updateRecordList());
     this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
@@ -322,7 +324,7 @@ class cView extends bView {
             </select>
             <br>
             <select id="dataview_record_tag">
-              <option value=""></option>
+              <option value="" selected>Workspace</option>
               <option value="shape">Shape</option>
               <option value="mesh">Mesh</option>
               <option value="material">Material</option>
@@ -553,13 +555,11 @@ class cView extends bView {
   showSelectOrAddView() {
     if (!this.tag) {
       this.generate = new gMacro(this.addAssetPanel, 'workspace', this);
-      fetch('/doc/assethelp.html')
+      fetch('/doc/workspacehelp.html')
         .then(res => res.text())
         .then(html => this.fieldsContainer.innerHTML = html);
       this.fieldsContainer.classList.add('help-shown-panel');
-      fetch(`/doc/workspacehelp.html`)
-        .then(res => res.text())
-        .then(html => this.helpViewer.innerHTML = html);
+      this.helpViewer.innerHTML = '';
 
       return;
     }
