@@ -45,9 +45,6 @@ class cViewLayout extends bView {
     this.changes_commit_header = document.getElementById('changes_commit_header');
     this.changes_commit_header.addEventListener('click', e => this.saveChanges());
 
-    this.add_workspace_button_template = document.getElementById('add_workspace_button_template');
-    this.add_workspace_button_template.addEventListener('click', e => this._addAnimation());
-
     return Promise.resolve();
   }
   saveChanges() {

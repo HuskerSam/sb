@@ -306,9 +306,11 @@ class bView {
         console.log(e);
       });
   }
-  async _addProject(newTitle, newCode = '', key = false, reload = true) {
+  async _addProject(newTitle, key = false, reload = true, newCode) {
     if (!key)
       key = gAPPP.a.modelSets['projectTitles'].getKey();
+    if (!newCode)
+      newCode = newTitle;
     await firebase.database().ref('projectTitles/' + key).set({
       title: newTitle,
       code: newCode
@@ -419,9 +421,7 @@ class bView {
       alert('need a name for workspace');
       return;
     }
-    let newCode = this.addProjectCode.value.trim();
-
-    this._addProject(newTitle, newCode);
+    this._addProject(newTitle);
   }
   deleteProject() {
     if (this.workplacesSelect.value === 'default') {

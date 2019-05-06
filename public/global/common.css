@@ -148,29 +148,6 @@ html, body {
   width: 100%;
 }
 
-input[type=range] {
-  -webkit-appearance: none;
-  background: transparent;
-  margin: 0;
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  cursor: pointer;
-  background: rgb(50, 50, 50);
-  height: 1.75em;
-  border: outset .1em silver;
-  border-radius: .25em;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  height: 1.55em;
-  width: 2em;
-  background: rgb(255, 255, 255);
-  -webkit-appearance: none;
-  border-radius: .15em;
-  border: outset .1em silver;
-}
 
 
 .form-group {

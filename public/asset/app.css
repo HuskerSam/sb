@@ -359,6 +359,7 @@ select {
 
 .form_canvas_wrapper.show-help {
   overflow: auto;
+  padding: .5em;
 }
 
 .form_canvas_wrapper.show-help .canvas-actions {
@@ -441,7 +442,10 @@ select {
 }
 
 .workspace-csv-panel-item>div {
-  width: 10em;
   display: inline-block;
   text-align: left;
+}
+
+.asset-fields-container.help-shown-panel {
+  padding: .5em;
 }

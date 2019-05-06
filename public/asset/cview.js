@@ -556,7 +556,7 @@ class cView extends bView {
       fetch('/doc/assethelp.html')
         .then(res => res.text())
         .then(html => this.fieldsContainer.innerHTML = html);
-
+      this.fieldsContainer.classList.add('help-shown-panel');
       fetch(`/doc/workspacehelp.html`)
         .then(res => res.text())
         .then(html => this.helpViewer.innerHTML = html);
@@ -565,6 +565,7 @@ class cView extends bView {
     }
     this.recordViewer = new cBandIcons(this.tag, this);
     this.generate = new gMacro(this.addAssetPanel, this.tag, this);
+    this.fieldsContainer.classList.remove('help-shown-panel');
 
     fetch(`/doc/${this.tag}help.html`)
       .then(res => res.text())

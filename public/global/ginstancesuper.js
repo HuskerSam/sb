@@ -124,10 +124,12 @@ class gInstanceSuper {
     let bkgColor = GLOBALUTIL.colorRGB255(canvasColor);
     let foreColor = 'rgb(50, 50, 50)';
     let ctlColor = 'rgb(250, 250, 250)';
-    if ((.8 * bkg.r) + (.7 * bkg.b) + (2.0 * bkg.g) < 1.4) {
+    let niteMode = false;
+    if ((bkg.r) + (bkg.b) + (2.5 * bkg.g) < 2) {
       let a = foreColor;
       foreColor = ctlColor;
       ctlColor = a;
+      niteMode = true;
     }
 
     let css = '* { ';
@@ -140,7 +142,9 @@ class gInstanceSuper {
     }
 
     select, input, button {
-      background-color: ${ctlColor}
+      background-color: ${ctlColor};
+      border-radius: .5em;
+      border-color: rgb(200, 200, 200);
     }
     `;
 
@@ -157,7 +161,7 @@ class gInstanceSuper {
       background: none;
       background-image: radial-gradient(${foreColor} 10%,
         ${bkgColor});
-      border: solid 2px ${bkgColor};
+      border: solid .05em ${bkgColor};
       border-radius: 5ex;
     }
 
@@ -220,6 +224,57 @@ class gInstanceSuper {
       background-size: 100% 100%;
       border-radius: 0;
     }`;
+
+    if (niteMode) {
+      css += `
+      button, select {
+        border-style: solid;
+        border-radius: 0;
+      }
+
+      input[type=range]::-webkit-slider-runnable-track {
+        background: rgb(50, 50, 50);
+        border: outset .1em silver;
+        border-radius: .1em;
+      }
+
+      input[type=range]::-webkit-slider-thumb {
+        background: rgb(250, 250, 250);
+        border-radius: .1em;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: none;
+        background-image: radial-gradient(${bkgColor} 10%,
+          ${foreColor});
+        border: solid .05em ${bkgColor};
+        border-radius: .1em;
+      }
+
+      .gutter {
+        background-image: linear-gradient(0deg,
+          ${foreColor},
+          ${bkgColor},
+          ${foreColor});
+        background-color: ${foreColor};
+        border: solid 0px ${bkgColor};
+        border-radius: .05em;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      .gutter.gutter-horizontal {
+        background-image: linear-gradient(90deg,
+          ${foreColor},
+          ${bkgColor},
+          ${foreColor});
+        cursor: ew-resize;
+        margin-top: 0px;
+        border-left: solid 0px ${bkgColor};
+        background-size: 100% 100%;
+        border-radius: 0;
+      }`;
+    }
 
     if (this.lastStyleProfileCSS === css)
       return;

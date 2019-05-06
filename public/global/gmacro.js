@@ -1094,27 +1094,26 @@ class gMacro {
   }
 
   workspaceTemplate() {
-    return `<label>
-      <b>New Workspace</b>
-      <input id="new-workspace-name" /></label>
-      <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
-    </label>
-    <hr>
-    <b>Workspace Details</b>
+    return `<b>Workspace Details</b>
     <br>
     <label><span>Name</span><input id="edit-workspace-name" /></label>
     <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
     <br>
-    <label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
+    <label style="display:none;"><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
     <input type="file" style="display:none;" class="import_csv_file">
     <button class="import_csv_records">Import CSV Records</button>
     &nbsp;
     <input type="file" style="display:none;" class="import_asset_json_file">
     <button class="import_asset_json_button">Import Asset JSON</button>
     <hr>
-    <b>Generate Workspace Animation</b>
-    <br>
-    <label><input type="checkbox" id="add_animation_clear_scene" checked /> Clear Scene</label>
+    <label>
+      <b>New Workspace</b>
+      <input id="new-workspace-name" />
+    </label>
+    &nbsp;
+    <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
+    <hr>
+    <b>Template Animations</b>
     <div class="workspace-csv-panel-item">
       <div>ASSETS</div>
       <select id="add_animation_asset_choice">
@@ -1153,7 +1152,11 @@ class gMacro {
       <select id="add_animation_product_template" style="display:none;">
         <option>select template</option>
       </select>
-    </div>`;
+    </div>
+    <label><input type="checkbox" id="add_animation_clear_scene" checked /> Clear Scene</label>
+    <label><input type="checkbox" id="add_animation_current_workspace" /> Use Current Workspace</label>
+    <br>
+    <button id="generate_animation_workspace_button">Generate Animation</button>`;
   }
   workspaceRegister() {
     this.retailRegister(this.panel);
@@ -1329,6 +1332,10 @@ class gMacro {
     this.import_scene_workspaces_select = this.csvPanel.querySelector('#import_scene_workspaces_select');
     this.import_product_workspaces_select = this.csvPanel.querySelector('#import_product_workspaces_select');
 
+    this.add_animation_clear_scene = this.csvPanel.querySelector('#add_animation_clear_scene');
+    this.add_animation_current_workspace = this.csvPanel.querySelector('#add_animation_current_workspace');
+    this.generate_animation_workspace_button = this.csvPanel.querySelector('#generate_animation_workspace_button');
+    this.generate_animation_workspace_button.addEventListener('click', e => this.generateAnimation());
     await this.retailInitLists();
 
     return Promise.resolve();
@@ -1340,6 +1347,31 @@ class gMacro {
 
     return Promise.resolve();
   }
+  generateAnimation() {
+    this._generateAnimation().then(() => {});
+  }
+  async _generateAnimation() {
+    let newTitle = this.panel.querySelector('#new-workspace-name').value.trim();
+    if (newTitle.length === 0) {
+      alert('need a name for animation');
+      return;
+    }
+    this.view.canvasHelper.hide();
+
+    let newAnimationKey = gAPPP.a.modelSets['projectTitles'].getKey();
+
+    await this.view._addProject(newTitle, newAnimationKey, false);
+
+    await Promise.all([
+      this.__addAnimationTemplate('asset', newAnimationKey),
+      this.__addAnimationTemplate('scene', newAnimationKey)
+    ]);
+
+    await this.__addAnimationTemplate('product', newAnimationKey);
+
+    return this.reloadScene(false, newAnimationKey);
+  }
+
   __loadList(sel, list, htmlPrefix = '') {
     let html = '';
     for (let c = 0; c < list.length; c++)
@@ -1389,27 +1421,6 @@ class gMacro {
         document.body.removeChild(element);
       });
   }
-  async _addAnimation() {
-    let newTitle = this.addProjectName.value.trim();
-    if (newTitle.length === 0) {
-      alert('need a name for animation');
-      return;
-    }
-    this.canvasHelper.hide();
-
-    let newAnimationKey = gAPPP.a.modelSets['projectTitles'].getKey();
-
-    await this._addProject(newTitle, newTitle, newAnimationKey, false);
-
-    await Promise.all([
-      this.__addAnimationTemplate('asset', newAnimationKey),
-      this.__addAnimationTemplate('scene', newAnimationKey)
-    ]);
-
-    await this.__addAnimationTemplate('product', newAnimationKey);
-
-    return this.reloadScene(false, newAnimationKey);
-  }
 
   __updateAddTemplate(type) {
     let value = this['add_animation_' + type + '_choice'].value;
@@ -1430,7 +1441,7 @@ class gMacro {
     if (!animationKey)
       return;
 
-    this.canvasHelper.hide();
+    this.view.canvasHelper.hide();
 
     if (clear) {
       gAPPP.a.clearProjectData(animationKey)
@@ -1471,8 +1482,8 @@ class gMacro {
     }
     if (choice === 'Template') {
       let title = this[`add_animation_${type}_template`].value;
-      let filename = this[`${type}TemplateFiles`][title];
-      let response = await fetch(this.templateBasePath + filename);
+      let filename = this.templates[`${type}Templates`][title];
+      let response = await fetch(this.view.templateBasePath + filename);
       let csv = await response.text();
       let csvJSON = await this.papaParse(csv);
       if (csvJSON.data) data = csvJSON.data;
