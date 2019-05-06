@@ -124,6 +124,85 @@ class gInstanceSuper {
       css += 'font-family:' + this.a.profile.fontFamily + ';';
     css += '}';
 
+    let bkgColor = 'rgb(255, 245, 220)';
+    let foreColor = 'rgb(50, 50, 50)';
+    css += `#main-view-wrapper { background: ${bkgColor}}`;
+
+    css += `
+    ::-webkit-scrollbar {
+      height: 24px;
+      width: 24px;
+      background: ${bkgColor};
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: none;
+      background-image: radial-gradient(${foreColor} 10%,
+        ${bkgColor});
+      border: solid 2px ${bkgColor};
+      border-radius: 5ex;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: ${bkgColor};
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+      margin: 0;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      cursor: pointer;
+      background: radial-gradient(${foreColor} 40%,
+        ${bkgColor});
+      height: 2.5em;
+      border: solid .1em ${bkgColor};
+      border-radius: .75em;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      height: 2.3em;
+      width: 2em;
+      -webkit-appearance: none;
+      border-radius: .75em;
+      border: none;
+      background-image: linear-gradient(90deg,
+        ${foreColor},
+        ${bkgColor},
+        ${foreColor});
+    }`;
+
+    css += `
+    .gutter {
+      background-image: linear-gradient(0deg,
+        ${bkgColor},
+        ${foreColor},
+        ${bkgColor});
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: ${foreColor};
+      border: solid 0px ${bkgColor};
+      border-radius: 5ex;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .gutter.gutter-horizontal {
+      background-image: linear-gradient(90deg,
+        ${bkgColor},
+        ${foreColor},
+        ${bkgColor});
+      cursor: ew-resize;
+      margin-top: 0px;
+      border-left: solid 0px ${bkgColor};
+      background-size: 100% 100%;
+      border-radius: 0;
+    }`;
+
     if (this.lastStyleProfileCSS === css)
       return;
     this.lastStyleProfileCSS = css;

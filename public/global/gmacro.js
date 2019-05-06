@@ -1094,70 +1094,69 @@ class gMacro {
   }
 
   workspaceTemplate() {
-    return `<b>Workspace</b>
-      <br>
-      <label><span>Name</span><input id="edit-workspace-name" /></label>
-      <br>
-      <label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
-      <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
-      <br>
-      <br>
+    return `<label>
       <b>New Workspace</b>
-      <br>
-      <label><span>Name</span><input id="new-workspace-name" /></label>
-      <br>
-      <label><span> Z Code </span><input id="new-workspace-code" style="width:5em;" /></label>
+      <input id="new-workspace-name" /></label>
       <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
-      </label>
-      <br>
-      <div class="workspace-csv-panel-item">
-        <div>ASSETS</div>
-        <select id="add_animation_asset_choice">
-          <option>Current</option>
-          <option>Animation</option>
-          <option>Template</option>
-          <option>Empty</option>
-        </select>
-        <select id="add_animation_asset_animation" style="display:none;"></select>
-        <select id="add_animation_asset_template" style="display:none;">
-          <option>select template</option>
-        </select>
-      </div>
-      <div class="workspace-csv-panel-item">
-        <div>LAYOUT</div>
-        <select id="add_animation_scene_choice">
-          <option>Current</option>
-          <option>Animation</option>
-          <option>Template</option>
-          <option>Empty</option>
-        </select>
-        <select id="add_animation_scene_animation" style="display:none;"></select>
-        <select id="add_animation_scene_template" style="display:none;">
-          <option>select template</option>
-        </select>
-      </div>
-      <div class="workspace-csv-panel-item">
-        <div>PRODUCTS</div>
-        <select id="add_animation_product_choice">
-          <option>Empty</option>
-          <option>Current</option>
-          <option>Animation</option>
-          <option>Template</option>
-        </select>
-        <select id="add_animation_product_animation" style="display:none;"></select>
-        <select id="add_animation_product_template" style="display:none;">
-          <option>select template</option>
-        </select>
-      </div>
-      <hr>
-      <input type="file" style="display:none;" class="import_csv_file">
-      <button class="import_csv_records">Import CSV Records</button>
-      &nbsp;
-      <input type="file" style="display:none;" class="import_asset_json_file">
-      <button class="import_asset_json_button">Import Asset JSON</button>`;
+    </label>
+    <hr>
+    <b>Workspace Details</b>
+    <br>
+    <label><span>Name</span><input id="edit-workspace-name" /></label>
+    <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
+    <br>
+    <label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
+    <input type="file" style="display:none;" class="import_csv_file">
+    <button class="import_csv_records">Import CSV Records</button>
+    &nbsp;
+    <input type="file" style="display:none;" class="import_asset_json_file">
+    <button class="import_asset_json_button">Import Asset JSON</button>
+    <hr>
+    <b>Generate Workspace Animation</b>
+    <br>
+    <label><input type="checkbox" id="add_animation_clear_scene" checked /> Clear Scene</label>
+    <div class="workspace-csv-panel-item">
+      <div>ASSETS</div>
+      <select id="add_animation_asset_choice">
+        <option>Current</option>
+        <option>Animation</option>
+        <option>Template</option>
+        <option>Empty</option>
+      </select>
+      <select id="add_animation_asset_animation" style="display:none;"></select>
+      <select id="add_animation_asset_template" style="display:none;">
+        <option>select template</option>
+      </select>
+    </div>
+    <div class="workspace-csv-panel-item">
+      <div>LAYOUT</div>
+      <select id="add_animation_scene_choice">
+        <option>Current</option>
+        <option>Animation</option>
+        <option>Template</option>
+        <option>Empty</option>
+      </select>
+      <select id="add_animation_scene_animation" style="display:none;"></select>
+      <select id="add_animation_scene_template" style="display:none;">
+        <option>select template</option>
+      </select>
+    </div>
+    <div class="workspace-csv-panel-item">
+      <div>PRODUCTS</div>
+      <select id="add_animation_product_choice">
+        <option>Empty</option>
+        <option>Current</option>
+        <option>Animation</option>
+        <option>Template</option>
+      </select>
+      <select id="add_animation_product_animation" style="display:none;"></select>
+      <select id="add_animation_product_template" style="display:none;">
+        <option>select template</option>
+      </select>
+    </div>`;
   }
   workspaceRegister() {
-    this.retailrRegister(this.panel);
+    this.retailRegister(this.panel);
     this.import_csv_file = this.panel.querySelector('.import_csv_file');
     this.import_csv_file.addEventListener('change', e => this.importAssetCSV());
     this.import_csv_records = this.panel.querySelector('.import_csv_records');
@@ -1293,9 +1292,7 @@ class gMacro {
       };
     }
   }
-
-
-  async retailrRegister(csvPanel) {
+  async retailRegister(csvPanel) {
     this.templates = {
       "assetTemplates": {
         "All Assets": "asset.csv"
@@ -1340,26 +1337,6 @@ class gMacro {
     this.__loadList(this.add_animation_asset_template, Object.keys(this.templates.assetTemplates));
     this.__loadList(this.add_animation_scene_template, Object.keys(this.templates.sceneTemplates));
     this.__loadList(this.add_animation_product_template, Object.keys(this.templates.productTemplates));
-/*
-    this.import_scene_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1) {
-      this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-      this.import_scene_workspaces_select.selectedIndex = 0;
-    }
-    this.import_asset_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1) {
-      this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-      this.import_asset_workspaces_select.selectedIndex = 0;
-    }
-    this.import_product_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1) {
-      this.import_product_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
-      this.import_product_workspaces_select.selectedIndex = 0;
-    }
-    */
-//    this.__initAddAnimations(`add_animation_asset_animation`);
-//    this.__initAddAnimations('add_animation_scene_animation');
-  //  this.__initAddAnimations('add_animation_product_animation');
 
     return Promise.resolve();
   }
@@ -1368,6 +1345,18 @@ class gMacro {
     for (let c = 0; c < list.length; c++)
       html += `<option>${list[c]}</option>`;
     sel.innerHTML = htmlPrefix + html;
+  }
+  _refreshProjectList(thisid, optionHTML, prefixOptionHTML = '') {
+    let curIndex = this[thisid].selectedIndex;
+    this[thisid].innerHTML = prefixOptionHTML + optionHTML;
+    this[thisid].selectedIndex = (curIndex > 0) ? curIndex : 0;
+  }
+  refreshProjectLists(optionHTML) {
+    if (this.tag !== 'workspace')
+      return;
+    this._refreshProjectList(`add_animation_asset_animation`, optionHTML);
+    this._refreshProjectList('add_animation_scene_animation', optionHTML);
+    this._refreshProjectList('add_animation_product_animation', optionHTML);
   }
 
   importCSV() {
@@ -1421,11 +1410,7 @@ class gMacro {
 
     return this.reloadScene(false, newAnimationKey);
   }
-  __initAddAnimations(thisid, prefixOptionHTML = '') {
-    this[thisid].innerHTML = prefixOptionHTML + this.workplacesSelect.innerHTML;
-    if (this.workplacesSelect.selectedIndex !== -1)
-      this[thisid].selectedIndex = 0;
-  }
+
   __updateAddTemplate(type) {
     let value = this['add_animation_' + type + '_choice'].value;
 

@@ -576,4 +576,11 @@ class cView extends bView {
       if (this.tag && this.key)
         this.context.renderPreview(this.tag, this.key);
   }
+  updateProjectList(records, selectedWorkspace = null) {
+    super.updateProjectList(records, selectedWorkspace);
+
+    if (this.generate) {
+      this.generate.refreshProjectLists(this.workplacesSelect.innerHTML);
+    }
+  }
 }
