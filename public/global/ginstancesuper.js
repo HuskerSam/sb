@@ -117,15 +117,33 @@ class gInstanceSuper {
     document.body.appendChild(this._domShapeList);
   }
   _updateApplicationStyle() {
+    let canvasColor = gAPPP.a.profile.canvasColor;
+    if (!canvasColor)
+      canvasColor = '';
+    let bkg = GLOBALUTIL.color(canvasColor);
+    let bkgColor = GLOBALUTIL.colorRGB255(canvasColor);
+    let foreColor = 'rgb(50, 50, 50)';
+    let ctlColor = 'rgb(250, 250, 250)';
+    if ((.8 * bkg.r) + (.7 * bkg.b) + (2.0 * bkg.g) < 1.4) {
+      let a = foreColor;
+      foreColor = ctlColor;
+      ctlColor = a;
+    }
+
     let css = '* { ';
     let fontSize = this._parseFontSize(this.a.profile.fontSize);
     css += 'font-size:' + fontSize.toString() + 'pt;';
     if (this.a.profile.fontFamily)
       css += 'font-family:' + this.a.profile.fontFamily + ';';
-    css += '}';
+    css += `color:${foreColor};
+      background: transparent;
+    }
 
-    let bkgColor = 'rgb(255, 245, 220)';
-    let foreColor = 'rgb(50, 50, 50)';
+    select, input, button {
+      background-color: ${ctlColor}
+    }
+    `;
+
     css += `#main-view-wrapper { background: ${bkgColor}}`;
 
     css += `

@@ -443,7 +443,7 @@ class bView {
     </div>
     <button id="sign-out-button" style="float:right;"><i class="material-icons">account_box</i> Sign out </button>
     <button id="user-profile-dialog-reset-button" style="float:right;"><i class="material-icons">account_circle</i> Reset Profile </button>
-    <div class="fields-container" style="clear:both;display:inline-flex;"></div>`;
+    <div class="fields-container" style="float:left;"></div>`;
   }
   profilePanelRegister() {
     this.signOutBtn = document.querySelector('#sign-out-button');
