@@ -1094,8 +1094,7 @@ class gMacro {
   }
 
   workspaceTemplate() {
-    return `
-      <b>Workspace</b>
+    return `<b>Workspace</b>
       <br>
       <label><span>Name</span><input id="edit-workspace-name" /></label>
       <br>
@@ -1111,12 +1110,51 @@ class gMacro {
       <button id="add-workspace-button" class="btn-sb-icon" style="font-size:1.2em;"><i class="material-icons">add</i></button>
       </label>
       <br>
+      <div class="workspace-csv-panel-item">
+        <div>ASSETS</div>
+        <select id="add_animation_asset_choice">
+          <option>Current</option>
+          <option>Animation</option>
+          <option>Template</option>
+          <option>Empty</option>
+        </select>
+        <select id="add_animation_asset_animation" style="display:none;"></select>
+        <select id="add_animation_asset_template" style="display:none;">
+          <option>select template</option>
+        </select>
+      </div>
+      <div class="workspace-csv-panel-item">
+        <div>LAYOUT</div>
+        <select id="add_animation_scene_choice">
+          <option>Current</option>
+          <option>Animation</option>
+          <option>Template</option>
+          <option>Empty</option>
+        </select>
+        <select id="add_animation_scene_animation" style="display:none;"></select>
+        <select id="add_animation_scene_template" style="display:none;">
+          <option>select template</option>
+        </select>
+      </div>
+      <div class="workspace-csv-panel-item">
+        <div>PRODUCTS</div>
+        <select id="add_animation_product_choice">
+          <option>Empty</option>
+          <option>Current</option>
+          <option>Animation</option>
+          <option>Template</option>
+        </select>
+        <select id="add_animation_product_animation" style="display:none;"></select>
+        <select id="add_animation_product_template" style="display:none;">
+          <option>select template</option>
+        </select>
+      </div>
       <hr>
       <input type="file" style="display:none;" class="import_csv_file">
-        <button class="import_csv_records">Import CSV Records</button>
-        &nbsp;
-        <input type="file" style="display:none;" class="import_asset_json_file">
-        <button class="import_asset_json_button">Import Asset JSON</button>`;
+      <button class="import_csv_records">Import CSV Records</button>
+      &nbsp;
+      <input type="file" style="display:none;" class="import_asset_json_file">
+      <button class="import_asset_json_button">Import Asset JSON</button>`;
   }
   workspaceRegister() {
     this.import_csv_file = this.panel.querySelector('.import_csv_file');
@@ -1254,4 +1292,234 @@ class gMacro {
       };
     }
   }
+
+
+  async retailInit(csvPanel) {
+    this.templates = {
+      "assetTemplates": {
+        "All Assets": "asset.csv"
+      },
+      "sceneTemplates": {
+        "Produce": "layout.csv"
+      },
+      "productTemplates": {
+        "Produce Sales Week 1": "product.csv"
+      }
+    };
+
+    this.csvPanel = csvPanel;
+    this.add_animation_asset_animation = this.csvPanel.getElementById('add_animation_asset_animation');
+    this.add_animation_asset_template = this.csvPanel.getElementById('add_animation_asset_template');
+    this.add_animation_asset_choice = this.csvPanel.getElementById('add_animation_asset_choice');
+    this.import_asset_templates_select = this.csvPanel.getElementById('import_asset_templates_select');
+
+    this.add_animation_scene_animation = this.csvPanel.getElementById('add_animation_scene_animation');
+    this.add_animation_scene_template = this.csvPanel.getElementById('add_animation_scene_template');
+    this.add_animation_scene_choice = this.csvPanel.getElementById('add_animation_scene_choice');
+    this.import_scene_templates_select = this.csvPanel.getElementById('import_scene_templates_select');
+
+    this.add_animation_product_animation = this.csvPanel.getElementById('add_animation_product_animation');
+    this.add_animation_product_template = this.csvPanel.getElementById('add_animation_product_template');
+    this.add_animation_product_choice = this.csvPanel.getElementById('add_animation_product_choice');
+    this.import_product_templates_select = this.csvPanel.getElementById('import_product_templates_select');
+
+    this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
+    this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
+    this.add_animation_product_choice.addEventListener('input', e => this.__updateAddTemplate('product'));
+
+    this.import_asset_workspaces_select = this.csvPanel.getElementById('import_asset_workspaces_select');
+    this.import_scene_workspaces_select = this.csvPanel.getElementById('import_scene_workspaces_select');
+    this.import_product_workspaces_select = this.csvPanel.getElementById('import_product_workspaces_select');
+
+    await this.retailInitLists();
+
+    return Promise.resolve();
+  }
+  async retailInitLists() {
+    this.__loadList(this.add_animation_asset_template, Object.getKeys(this.templates.assetTemplates));
+    this.__loadList(this.add_animation_scene_template, Object.getKeys(this.templates.assetTemplates));
+    this.__loadList(this.add_animation_product_template, Object.getKeys(this.templates.assetTemplates));
+/*
+    this.import_scene_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+    if (this.workplacesSelect.selectedIndex !== -1) {
+      this.import_scene_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+      this.import_scene_workspaces_select.selectedIndex = 0;
+    }
+    this.import_asset_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+    if (this.workplacesSelect.selectedIndex !== -1) {
+      this.import_asset_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+      this.import_asset_workspaces_select.selectedIndex = 0;
+    }
+    this.import_product_workspaces_select.innerHTML = '<option>Animations</option>' + this.workplacesSelect.innerHTML;
+    if (this.workplacesSelect.selectedIndex !== -1) {
+      this.import_product_workspaces_select.options[this.workplacesSelect.selectedIndex + 1].remove();
+      this.import_product_workspaces_select.selectedIndex = 0;
+    }
+    */
+//    this.__initAddAnimations(`add_animation_asset_animation`);
+//    this.__initAddAnimations('add_animation_scene_animation');
+  //  this.__initAddAnimations('add_animation_product_animation');
+
+    return Promise.resolve();
+  }
+  __loadList(sel, list, htmlPrefix = '') {
+    let html = '';
+    for (let c = 0; c < list.length; c++)
+      html += `<option>${list[c]}</option>`;
+    sel.innerHTML = htmlPrefix + html;
+  }
+
+  importCSV() {
+    if (this.importFileDom.files.length > 0) {
+      this.canvasHelper.hide();
+
+      Papa.parse(this.importFileDom.files[0], {
+        header: true,
+        complete: results => {
+          if (results.data) {
+            gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, this.saveCSVType + 'Rows', results.data)
+              .then(r => this.reloadScene())
+              .then(() => {});
+          }
+        }
+      });
+    }
+  }
+  downloadCSV(name) {
+    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, name + 'Rows')
+      .then(rows => {
+        let csvResult = Papa.unparse(rows);
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvResult));
+        element.setAttribute('download', name + '.csv');
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+      });
+  }
+  async _addAnimation() {
+    let newTitle = this.addProjectName.value.trim();
+    if (newTitle.length === 0) {
+      alert('need a name for animation');
+      return;
+    }
+    this.canvasHelper.hide();
+
+    let newAnimationKey = gAPPP.a.modelSets['projectTitles'].getKey();
+
+    await this._addProject(newTitle, newTitle, newAnimationKey, false);
+
+    await Promise.all([
+      this.__addAnimationTemplate('asset', newAnimationKey),
+      this.__addAnimationTemplate('scene', newAnimationKey)
+    ]);
+
+    await this.__addAnimationTemplate('product', newAnimationKey);
+
+    return this.reloadScene(false, newAnimationKey);
+  }
+  __initAddAnimations(thisid, prefixOptionHTML = '') {
+    this[thisid].innerHTML = prefixOptionHTML + this.workplacesSelect.innerHTML;
+    if (this.workplacesSelect.selectedIndex !== -1)
+      this[thisid].selectedIndex = 0;
+  }
+  __updateAddTemplate(type) {
+    let value = this['add_animation_' + type + '_choice'].value;
+
+    this['add_animation_' + type + '_template'].style.display = 'none';
+    this['add_animation_' + type + '_animation'].style.display = 'none';
+
+    if (value === 'Template') {
+      this['add_animation_' + type + '_template'].style.display = 'inline-block';
+    }
+    if (value === 'Animation') {
+      this['add_animation_' + type + '_animation'].style.display = 'inline-block';
+    }
+  }
+  async reloadScene(clear, animationKey = false) {
+    if (!animationKey)
+      animationKey = gAPPP.a.profile.selectedWorkspace;
+    if (!animationKey)
+      return;
+
+    this.canvasHelper.hide();
+
+    if (clear) {
+      gAPPP.a.clearProjectData(animationKey)
+        .then(() => setTimeout(() => location.reload(), 1));
+    }
+
+    let csvImport = new gCSVImport(animationKey);
+    await gAPPP.a.clearProjectData(animationKey);
+    let assets = await gAPPP.a.readProjectRawData(animationKey, 'assetRows');
+    await csvImport.importRows(assets);
+    let scene = await gAPPP.a.readProjectRawData(animationKey, 'sceneRows');
+    await csvImport.importRows(scene);
+    let products = await gAPPP.a.readProjectRawData(animationKey, 'productRows');
+    await csvImport.importRows(products);
+    await csvImport.addCSVDisplayFinalize();
+
+    await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'selectedWorkspace',
+      newValue: animationKey
+    }]);
+
+    setTimeout(() => location.reload(), 1);
+
+    return Promise.resolve();
+  }
+
+  async __addAnimationTemplate(type, targetProjectId, sourceProjectId) {
+    if (!sourceProjectId)
+      sourceProjectId = gAPPP.a.profile.selectedWorkspace;
+    let choice = document.getElementById(`add_animation_${type}_choice`).value;
+    let data = null;
+    if (choice === 'Current') {
+      data = await gAPPP.a.readProjectRawData(sourceProjectId, type + 'Rows');
+    }
+    if (choice === 'Animation') {
+      let id = document.getElementById(`add_animation_${type}_animation`);
+      data = await gAPPP.a.readProjectRawData(id, type + 'Rows');
+    }
+    if (choice === 'Template') {
+      let title = this[`add_animation_${type}_template`].value;
+      let filename = this[`${type}TemplateFiles`][title];
+      let response = await fetch(this.templateBasePath + filename);
+      let csv = await response.text();
+      let csvJSON = await this.papaParse(csv);
+      if (csvJSON.data) data = csvJSON.data;
+    }
+
+    if (data) {
+      await gAPPP.a.writeProjectRawData(targetProjectId, type + 'Rows', data);
+    }
+
+    return Promise.resolve();
+  }
+  async papaParse(csvData) {
+    return new Promise((resolve) => {
+      Papa.parse(csvData, {
+        header: true,
+        complete: results => resolve(results)
+      });
+    });
+  }
+  clearScene() {
+    if (confirm('Clear the scene?')) {
+      if (!gAPPP.a.profile.selectedWorkspace)
+        return;
+
+      gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows', null)
+        .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', null))
+        .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows', null))
+        .then(() => this.reloadScene(true))
+        .then(() => {});
+    }
+  }
+
+
+
+
 }

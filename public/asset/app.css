@@ -533,3 +533,14 @@ select {
   max-height: 5em;
   max-width: 5em;
 }
+
+.workspace-csv-panel-item {
+  color: rgb(0, 150, 136);
+  font-weight: bold;
+}
+
+.workspace-csv-panel-item>div {
+  width: 10em;
+  display: inline-block;
+  text-align: left;
+}
