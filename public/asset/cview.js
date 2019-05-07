@@ -180,7 +180,7 @@ class cView extends bView {
         options += `<option value="${i}">${fS[i].title}</option>`;
       this.addAssetButton.style.display = 'inline-block';
       if (!this.key)
-        this.addAssetPanel.style.display = 'block';
+        this.addAssetPanel.style.display = '';
     } else {
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
@@ -204,7 +204,7 @@ class cView extends bView {
         this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
-      this.addAssetPanel.style.display = 'block';
+      this.addAssetPanel.style.display = '';
       this.form_canvas_wrapper.classList.add('show-help');
       return this.showSelectOrAddView();
     }

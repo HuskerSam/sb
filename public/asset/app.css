@@ -358,8 +358,8 @@ select {
 }
 
 .form_canvas_wrapper.show-help {
+  display:flex;
   overflow: auto;
-  padding: .5em;
 }
 
 .form_canvas_wrapper.show-help .canvas-actions {
@@ -379,12 +379,19 @@ select {
 }
 
 .form_canvas_wrapper.show-help .help-overlay {
-  display: block;
-  width: auto;
+  display: flex;
+  overflow: auto;
 }
 
 .add-asset-template-panel {
-  line-height: 3em;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: auto;
+}
+
+.add-asset-template-panel .data_table_panel {
+  flex: 1;
 }
 
 .add-asset-template-panel input {
@@ -450,7 +457,7 @@ select {
   padding: .5em;
 }
 
-#scene_options_panel {
+#layout_data_panel {
   display: flex;
 }
 
@@ -469,4 +476,14 @@ select {
 .csv_scene_field_upload_wrapper, .csv_scene_field_text_wrapper {
   white-space: nowrap;
   display: inline-block;
+}
+
+.tabulator {
+  /*
+  position: relative;
+  overflow: auto;
+  border: none;
+  font-size: inherit;
+  */
+
 }
