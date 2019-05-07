@@ -51,7 +51,7 @@ class cBandIcons extends bBand {
     gAPPP.a.modelSets[this.tag].removeByKey(key);
   }
   downloadJSON(e, key) {
-    let json = gMacro.assetJSON(this.tag, key);
+    let json = cMacro.assetJSON(this.tag, key);
     let element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(json));
     element.setAttribute('download', this.tag + '-' + key + '-asset.json');

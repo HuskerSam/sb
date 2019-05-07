@@ -170,7 +170,7 @@ class cView extends bView {
     this.updateSelectedRecord().then(() => {});
   }
   _updateRecordSelect() {
-    let options = '<option value=""></option>';
+    let options = '<option>Details</option><option>Add / Generate</option><option>Layout</option><option>View</option>';
 
     this.addAssetPanel.style.display = 'none';
     if (this.tag) {
@@ -191,10 +191,11 @@ class cView extends bView {
     this.dataview_record_key.value = this.key;
   }
   async updateSelectedRecord() {
-    if (this.dataview_record_key.selectedIndex <= 0) {
+    if (this.dataview_record_tag.selectedIndex < 1 || this.dataview_record_key.selectedIndex < 1) {
       this.context.activate(null);
-      this.key = '';
-      this.dataview_record_key.selectedIndex = 0;
+      if (this.dataview_record_key.selectedIndex < 0)
+        this.dataview_record_key.selectedIndex = 0;
+      this.key = this.dataview_record_key.value;
       this.initDataFields();
       this._updateQueryString();
       if (this.addFrameButton)
@@ -554,7 +555,7 @@ class cView extends bView {
   }
   showSelectOrAddView() {
     if (!this.tag) {
-      this.generate = new gMacro(this.addAssetPanel, 'workspace', this);
+      this.workspaceCTL = new cWorkspace(this.addAssetPanel, this.key, this);
       fetch('/doc/workspacehelp.html')
         .then(res => res.text())
         .then(html => this.fieldsContainer.innerHTML = html);
@@ -564,7 +565,7 @@ class cView extends bView {
       return;
     }
     this.recordViewer = new cBandIcons(this.tag, this);
-    this.generate = new gMacro(this.addAssetPanel, this.tag, this);
+    this.generate = new cMacro(this.addAssetPanel, this.tag, this);
     this.fieldsContainer.classList.remove('help-shown-panel');
 
     fetch(`/doc/${this.tag}help.html`)
@@ -580,8 +581,8 @@ class cView extends bView {
   updateProjectList(records, selectedWorkspace = null) {
     super.updateProjectList(records, selectedWorkspace);
 
-    if (this.generate) {
-      this.generate.refreshProjectLists(this.workplacesSelect.innerHTML);
+    if (this.workspaceCTL) {
+      this.workspaceCTL.refreshProjectLists(this.workplacesSelect.innerHTML);
     }
   }
 }
