@@ -442,9 +442,10 @@ class cWorkspace {
     </select>
     </div>
     <div class="data_table_panel"></div>
+    <div class="scene_options_edit_fields" style="display:none;"></div>
+    <div class="layout_product_data_panel"></div>
     <div class="layout_data_panel" >
       <select id="scene_options_list" size="3"></select>
-      <div id="scene_options_edit_fields"></div>
     </div>`;
   }
   workspaceLayoutRegister() {
@@ -483,9 +484,10 @@ class cWorkspace {
     ];
 
     this.workspace_layout_view_select = this.domPanel.querySelector('.workspace_layout_view_select');
-    this.workspace_layout_view_select.addEventListener('change', e=> this.workspaceLayoutShowView());
+    this.workspace_layout_view_select.addEventListener('change', e => this.workspaceLayoutShowView());
     this.layout_data_panel = this.domPanel.querySelector('.layout_data_panel');
     this.data_table_panel = this.domPanel.querySelector('.data_table_panel');
+    this.scene_options_edit_fields = this.domPanel.querySelector('.scene_options_edit_fields');
 
     this.initSceneEditFields().then(() => {});
     this.workspaceLayoutShowView();
@@ -498,7 +500,7 @@ class cWorkspace {
       this.editTable.destroy();
       this.editTable = null;
     }
-    if (sel === 'Assets' || sel === 'Products' || sel === 'Layout'){
+    if (sel === 'Assets' || sel === 'Products' || sel === 'Layout') {
       this.data_table_panel.style.display = 'flex';
       this.data_table_panel.innerHTML = 'Loading...';
     } else {
@@ -566,7 +568,6 @@ class cWorkspace {
       checked = '';
     }
 
-    this.scene_options_edit_fields = this.domPanel.querySelector('#scene_options_edit_fields');
     this.scene_options_list = this.domPanel.querySelector('#scene_options_list');
     this.scene_options_list.innerHTML = listHTML;
     this.scene_options_list.addEventListener('input', e => this.sceneOptionsBlockListChange());
@@ -869,20 +870,20 @@ class cWorkspace {
       rowMoved: (row) => this._rowMoved(tableName, row)
     });
 
-  //  document.getElementById(`import_${tableName}_csv_btn`).addEventListener('click', e => {
-  //    this.saveCSVType = tableName;
-  //    this.importFileDom.click();
-  //  });
-  //  document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
+    //  document.getElementById(`import_${tableName}_csv_btn`).addEventListener('click', e => {
+    //    this.saveCSVType = tableName;
+    //    this.importFileDom.click();
+    //  });
+    //  document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
 
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
-/*
-    document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
-      this.__reformatTable(tableName);
-      //    this.editTable.redraw(true);
-      this.editTable.setColumnLayout();
-    });
-    */
+    /*
+        document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
+          this.__reformatTable(tableName);
+          //    this.editTable.redraw(true);
+          this.editTable.setColumnLayout();
+        });
+        */
   }
   __sortProductRows(p) {
     return p.sort((a, b) => {
@@ -983,13 +984,9 @@ class cWorkspace {
     }
   }
 
-
-
-
-
   initFieldEdit() {
     this.fieldDivByName = {};
-    this.record_field_list_form.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
+    this.scene_options_edit_fields.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
 
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
       let title = this.fieldList[c];
