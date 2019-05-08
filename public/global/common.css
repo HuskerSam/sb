@@ -67,6 +67,7 @@ html, body {
   flex-direction: column;
   width: 100%;
   min-height: 100%;
+  position: relative;
 }
 
 .form_canvas_wrapper {
@@ -456,6 +457,7 @@ button i.material-icons {
   display: flex;
   flex: 1;
   flex-direction: column;
+  position: relative;
 }
 
 .bview-layoutmode-bottom .form_panel_view_dom, .bview-layoutmode-top .form_panel_view_dom {

@@ -15,9 +15,6 @@ class cViewLayout extends bView {
   }
   async canvasReadyPostTimeout() {
     document.querySelector('.form_panel_view_dom').style.display = '';
-    this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
-    this.products = this.productData.products;
-    this.productBySKU = this.productData.productsBySKU;
 
     this.canvasHelper.cameraSelect.selectedIndex = 2;
     this.canvasHelper.noTestError = true;
@@ -36,11 +33,6 @@ class cViewLayout extends bView {
       console.log('play anim error', e);
     }
 
-    let basketListHTML = '';
-    if (this.productData.displayBlocks)
-      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
-        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
-    document.getElementById('blocklist').innerHTML = basketListHTML;
 
     this.changes_commit_header = document.getElementById('changes_commit_header');
     this.changes_commit_header.addEventListener('click', e => this.saveChanges());

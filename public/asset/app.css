@@ -316,6 +316,8 @@ select {
 .asset-fields-container, .node-details-panel, .export-frames-details-panel {
   flex: 1;
   overflow: auto;
+  position: relative;
+  overflow-y: scroll;
 }
 
 .none-layout-mode-flip {
@@ -392,6 +394,10 @@ select {
   flex-direction: column;
   flex: 1;
   overflow: auto;
+}
+
+.form_canvas_wrapper {
+  position: relative;
 }
 
 .form_canvas_wrapper.show-help.workspace .add-asset-template-panel {
@@ -479,6 +485,7 @@ select {
 #scene_options_list {
   height: 12em;
   overflow: auto;
+  flex: 1;
 }
 
 .csv_scene_field_upload_wrapper, .csv_scene_field_text_wrapper {
@@ -489,3 +496,13 @@ select {
 .tabulator {
   background: none;
 }
+
+.scene_options_edit_fields {
+  flex: 1;
+}
+
+.layout_product_data_panel > form > div {
+  display: inline-block;
+}
+
+.sb-floating-toolbar-content {}

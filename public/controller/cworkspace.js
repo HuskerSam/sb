@@ -442,14 +442,19 @@ class cWorkspace {
     </select>
     </div>
     <div class="data_table_panel"></div>
-    <div class="scene_options_edit_fields" style="display:none;"></div>
     <div class="layout_product_data_panel">
       <input type="file" class="texturepathuploadfile" style="display:none;" />
       <form autocomplete="off" onsubmit="return false;"></form>
     </div>
     <div class="scene_layout_data_panel" >
       <select id="scene_options_list" size="3"></select>
-    </div>`;
+      <div class="scene_options_edit_fields"></div>
+    </div>
+    <datalist id="blocklist"></datalist>
+    <datalist id="assetlist">
+      <option>product</option>
+      <option>message</option>
+    </datalist>`;
   }
   workspaceLayoutRegister() {
     this.editTable = null;
@@ -499,7 +504,7 @@ class cWorkspace {
     let sel = this.workspace_layout_view_select.value;
     this.scene_layout_data_panel.style.display = (sel === 'Layout Data') ? 'flex' : 'none';
     this.layout_product_data_panel.style.display = (sel === 'Products') ? 'block' : 'none';
-
+    this.scene_options_edit_fields.style.display = (sel === 'Layout Data') ? 'block' : 'none';
     if (this.editTable) {
       this.editTable.destroy();
       this.editTable = null;
@@ -520,7 +525,7 @@ class cWorkspace {
     }
     if (sel === 'Products') {
       this.loadDataTable('product');
-      this.initFieldEdit();
+      this.initFieldEdit().then(() => {});
     }
     if (sel === 'Layout Data') {
       this.initSceneEditFields().then(() => {});
@@ -991,7 +996,7 @@ class cWorkspace {
     }
   }
 
-  initFieldEdit() {
+  async initFieldEdit() {
     this.record_field_list_form = this.domPanel.querySelector('.layout_product_data_panel form');
     this.record_field_list_form.innerHTML = '';
     this.fieldDivByName = {};
@@ -1045,6 +1050,63 @@ class cWorkspace {
     this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
 
     this.updateVisibleEditFields();
+
+    this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
+    this.products = this.productData.products;
+    this.productBySKU = this.productData.productsBySKU;
+
+    let basketListHTML = '';
+    if (this.productData.displayBlocks)
+      for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
+        basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
+    document.getElementById('blocklist').innerHTML = basketListHTML;
+  //  this.updateProductList();
+    this.updatePositionList();
+  }
+  __checkForPosition(x, y, z) {
+    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
+    let sel = document.getElementById('select-position-preset');
+    if (positionInfo) {
+      let arr = positionInfo.genericBlockData.split('|');
+      let positionHTML = '<option>positions</option>';
+
+      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
+        if (arr[c] == x && arr[c + 1] == y && arr[c + 2] == z)
+          return c / 3 + 1;
+      }
+    }
+
+    return -1;
+  }
+  updatePositionList() {
+    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
+    let sel = document.getElementById('select-position-preset');
+    if (positionInfo) {
+      let arr = positionInfo.genericBlockData.split('|');
+      let positionHTML = '<option></option>';
+
+      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
+        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2];
+        positionHTML += `<option value="${frag}">${(c / 3) + 1} ${frag}</option>`;
+      }
+
+      sel.innerHTML = positionHTML;
+      sel.addEventListener('input', e => {
+        let vals = sel.value.split(',');
+
+        if (vals.length === 3) {
+          let xd = this.record_field_list_form.querySelector('.xedit');
+          let yd = this.record_field_list_form.querySelector('.yedit');
+          let zd = this.record_field_list_form.querySelector('.zedit');
+
+          xd.value = vals[0];
+          yd.value = vals[1];
+          zd.value = vals[2];
+        }
+
+        sel.selectedIndex = 0;
+      });
+    }
   }
   updateVisibleEditFields() {
     let fieldsToShow = null;
@@ -1068,7 +1130,7 @@ class cWorkspace {
     }
   }
   updateProductList() {
-
+//this updates the table
 
     /*
           rowH += ` &nbsp;<button class="remove" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
