@@ -443,8 +443,11 @@ class cWorkspace {
     </div>
     <div class="data_table_panel"></div>
     <div class="scene_options_edit_fields" style="display:none;"></div>
-    <div class="layout_product_data_panel"></div>
-    <div class="layout_data_panel" >
+    <div class="layout_product_data_panel">
+      <input type="file" class="texturepathuploadfile" style="display:none;" />
+      <form autocomplete="off" onsubmit="return false;"></form>
+    </div>
+    <div class="scene_layout_data_panel" >
       <select id="scene_options_list" size="3"></select>
     </div>`;
   }
@@ -485,16 +488,17 @@ class cWorkspace {
 
     this.workspace_layout_view_select = this.domPanel.querySelector('.workspace_layout_view_select');
     this.workspace_layout_view_select.addEventListener('change', e => this.workspaceLayoutShowView());
-    this.layout_data_panel = this.domPanel.querySelector('.layout_data_panel');
+    this.scene_layout_data_panel = this.domPanel.querySelector('.scene_layout_data_panel');
     this.data_table_panel = this.domPanel.querySelector('.data_table_panel');
     this.scene_options_edit_fields = this.domPanel.querySelector('.scene_options_edit_fields');
+    this.layout_product_data_panel = this.domPanel.querySelector('.layout_product_data_panel');
 
-    this.initSceneEditFields().then(() => {});
     this.workspaceLayoutShowView();
   }
   workspaceLayoutShowView() {
     let sel = this.workspace_layout_view_select.value;
-    this.layout_data_panel.style.display = (sel === 'Layout Data') ? 'flex' : 'none';
+    this.scene_layout_data_panel.style.display = (sel === 'Layout Data') ? 'flex' : 'none';
+    this.layout_product_data_panel.style.display = (sel === 'Products') ? 'block' : 'none';
 
     if (this.editTable) {
       this.editTable.destroy();
@@ -516,8 +520,11 @@ class cWorkspace {
     }
     if (sel === 'Products') {
       this.loadDataTable('product');
+      this.initFieldEdit();
     }
-
+    if (sel === 'Layout Data') {
+      this.initSceneEditFields().then(() => {});
+    }
   }
   async initSceneEditFields() {
     let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
@@ -605,7 +612,7 @@ class cWorkspace {
       if (type === 'num') {
         let v = await this.__getSceneOptionsValue(fieldData.tab, name, asset, field);
         fieldHtml += `<label class="csv_scene_field_text_wrapper">
-            ${field}<input data-field="${field}" class="mdl-textfield__input" type="text" value="${v}" data-tab="${fieldData.tab}"
+            ${field}<input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}"
             data-type="${type}" data-name="${name}" data-asset="${asset}" />
           </label>`;
       }
@@ -985,16 +992,16 @@ class cWorkspace {
   }
 
   initFieldEdit() {
+    this.record_field_list_form = this.domPanel.querySelector('.layout_product_data_panel form');
     this.fieldDivByName = {};
-    this.scene_options_edit_fields.innerHTML = '<input type="file" class="texturepathuploadfile" style="display:none;" />';
 
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
       let title = this.fieldList[c];
       let id = 'fieldid' + c.toString();
       this.fieldDivByName[title] = document.createElement('div');
-      this.fieldDivByName[title].setAttribute('class', 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label');
-      this.fieldDivByName[title].innerHTML = `<input id="${id}" type="text" class="mdl-textfield__input fieldinput ${title}edit" list="${this.fieldList[c]}list" />` +
-        `<label class="mdl-textfield__label" for="${id}">${this.fieldList[c]}</label>`;
+      this.fieldDivByName[title].innerHTML = `<label>${this.fieldList[c]}
+        <input type="text" class="fieldinput ${title}edit" list="${this.fieldList[c]}list" />
+      </label>`;
 
       if (title === 'x') {
         let select = document.createElement('select');
@@ -1003,8 +1010,6 @@ class cWorkspace {
         select.style.right = '5px';
         select.style.width = '1.5em';
         select.setAttribute('id', 'select-position-preset');
-        select.setAttribute('class', 'mdl-textfield__input');
-        componentHandler.upgradeElement(select);
         this.fieldDivByName[title].appendChild(select);
         this.fieldDivByName[title].style.position = 'relative';
       }
@@ -1014,27 +1019,23 @@ class cWorkspace {
         btn.style.top = '-2.5em';
         btn.style.left = '75%';
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
-        btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary texturepathupload');
-        componentHandler.upgradeElement(btn);
+        btn.setAttribute('class', 'texturepathupload');
         this.fieldDivByName[title].appendChild(btn);
         this.fieldDivByName[title].style.position = 'relative;'
       }
 
-      componentHandler.upgradeElement(this.fieldDivByName[title]);
       this.record_field_list_form.appendChild(this.fieldDivByName[title]);
     }
 
     this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
     this.uploadImageEditField = this.record_field_list_form.querySelector('.imageedit');
-    this.uploadImageFile = this.record_field_list_form.querySelector('.texturepathuploadfile');
+    this.uploadImageFile = this.layout_product_data_panel.querySelector('.texturepathuploadfile');
     this.uploadImageFile.addEventListener('change', e => this.__uploadImageFile());
     this.uploadImageButton.addEventListener('click', e => this.uploadImageFile.click());
 
     let btn = document.createElement('button');
     btn.setAttribute('id', 'update_product_fields_post');
-    btn.setAttribute('class', 'mdl-button mdl-js-button mdl-button--fab mdl-button--colored');
     btn.innerHTML = '<i class="material-icons">add</i>';
-    componentHandler.upgradeElement(btn);
     this.record_field_list_form.appendChild(btn);
     this.addNewBtn = document.getElementById('update_product_fields_post');
     this.addNewBtn.addEventListener('click', e => this.addNewProduct(e));
@@ -1069,7 +1070,7 @@ class cWorkspace {
 
 
     /*
-          rowH += ` &nbsp;<button class="remove mdl-button mdl-js-button mdl-button--icon mdl-button--primary" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
+          rowH += ` &nbsp;<button class="remove" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
           let x = GLOBALUTIL.getNumberOrDefault(row.x, 0).toFixed(1);
           let y = GLOBALUTIL.getNumberOrDefault(row.y, 0).toFixed(1);
           let z = GLOBALUTIL.getNumberOrDefault(row.z, 0).toFixed(1);

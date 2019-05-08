@@ -611,7 +611,7 @@ select {
   float: right;
 }
 
-.layout_data_panel {
+.scene_layout_data_panel {
   height: 0em;
   opacity: 0;
   transition: opacity 800ms, height 800ms;
@@ -620,7 +620,7 @@ select {
   background:  radial-gradient(at left 60%, rgb(255, 255, 255) 20%, rgb(200, 255, 240) 70%);
 }
 
-.layout_data_panel.expanded {
+.scene_layout_data_panel.expanded {
   height: 10em;
   opacity: 1;
 }

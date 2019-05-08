@@ -457,7 +457,7 @@ select {
   padding: .5em;
 }
 
-#layout_data_panel {
+#scene_layout_data_panel {
   display: flex;
 }
 
