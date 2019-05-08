@@ -317,7 +317,6 @@ select {
   flex: 1;
   overflow: auto;
   position: relative;
-  overflow-y: scroll;
 }
 
 .none-layout-mode-flip {
@@ -505,4 +504,5 @@ select {
   display: inline-block;
 }
 
-.sb-floating-toolbar-content {}
+.sb-floating-toolbar-content {
+}
