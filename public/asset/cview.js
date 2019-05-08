@@ -195,7 +195,12 @@ class cView extends bView {
       this.context.activate(null);
       if (this.dataview_record_key.selectedIndex < 0)
         this.dataview_record_key.selectedIndex = 0;
-      this.key = this.dataview_record_key.value;
+
+      if (this.tag === '')
+        this.key = this.dataview_record_key.value;
+      else
+        this.key = '';
+
       this.initDataFields();
       this._updateQueryString();
       if (this.addFrameButton)
@@ -205,9 +210,16 @@ class cView extends bView {
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.addAssetPanel.style.display = '';
+
       this.form_canvas_wrapper.classList.add('show-help');
+      if (!this.tag)
+        this.form_canvas_wrapper.classList.add('workspace');
+      else
+        this.form_canvas_wrapper.classList.remove('workspace');
+
       return this.showSelectOrAddView();
     }
+    this.form_canvas_wrapper.classList.remove('workspace');
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'inline-block';
     this.snapshotAssetButton.style.display = 'inline-block';

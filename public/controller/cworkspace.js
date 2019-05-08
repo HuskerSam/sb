@@ -37,7 +37,7 @@ class cWorkspace {
     this.domPanel.innerHTML = 'View';
   }
   workspaceDetailsTemplate() {
-    return `<label><span>Name</span><input id="edit-workspace-name" /></label>
+    return `<div style="flex:1"><label><span>Name</span><input id="edit-workspace-name" /></label>
       <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
       <br>
       <label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
@@ -46,7 +46,7 @@ class cWorkspace {
       <button class="import_csv_records">Import CSV Records</button>
       &nbsp;
       <input type="file" style="display:none;" class="import_asset_json_file">
-      <button class="import_asset_json_button">Import Asset JSON</button>`;
+      <button class="import_asset_json_button">Import Asset JSON</button><div>`;
   }
   workspaceDetailsRegister() {
     this.bView.workplacesSelectEditName = this.domPanel.querySelector('#edit-workspace-name');
@@ -993,6 +993,7 @@ class cWorkspace {
 
   initFieldEdit() {
     this.record_field_list_form = this.domPanel.querySelector('.layout_product_data_panel form');
+    this.record_field_list_form.innerHTML = '';
     this.fieldDivByName = {};
 
     for (let c = 0, l = this.fieldList.length; c < l; c++) {

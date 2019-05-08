@@ -379,15 +379,23 @@ select {
 }
 
 .form_canvas_wrapper.show-help .help-overlay {
-  display: flex;
+  display: block;
   overflow: auto;
 }
 
-.add-asset-template-panel {
+.form_canvas_wrapper.show-help.workspace .help-overlay {
   display: flex;
+}
+
+.add-asset-template-panel {
+  display: block;
   flex-direction: column;
   flex: 1;
   overflow: auto;
+}
+
+.form_canvas_wrapper.show-help.workspace .add-asset-template-panel {
+  display: flex;
 }
 
 .add-asset-template-panel .data_table_panel {
