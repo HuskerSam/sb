@@ -386,7 +386,7 @@ select {
   overflow: auto;
 }
 
-.form_canvas_wrapper.show-help.workspace .help-overlay {
+.form_panel_view_dom.workspace .help-overlay {
   display: flex;
   width: 100%;
 }
@@ -471,6 +471,11 @@ select {
 
 .asset-fields-container.help-shown-panel {
   padding: .5em;
+}
+
+.workspace .asset-fields-container {
+  display: flex;
+  flex-direction: column;
 }
 
 #scene_layout_data_panel {

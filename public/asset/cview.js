@@ -31,6 +31,7 @@ class cView extends bView {
     this.snapshotAssetButton.addEventListener('click', e => this.renderPreview());
     this.addAssetButton = this.dialog.querySelector('.add-asset-button');
     this.addAssetButton.addEventListener('click', e => this.addAsset());
+    this.block_child_details_block = this.dialog.querySelector('.block_child_details_block');
 
     this.helpViewerWrapper = this.dialog.querySelector('.help-overlay');
     this.addAssetPanel = document.createElement('div');
@@ -53,12 +54,12 @@ class cView extends bView {
 
     this.view_layout_select.value = this.layoutMode;
   }
-  initDataFields() {
+  initDataFields(tag, key) {
     if (this.fireSetCallback)
       this.fireSet.removeListener(this.fireSetCallback);
     this.dataViewContainer = this.form_panel_view_dom.querySelector('.data-view-container');
     this.dataViewContainer.innerHTML = this.__dataviewTemplate();
-    this.fieldsContainer = this.form_panel_view_dom.querySelector('.asset-fields-container');
+    this.mainDataView = this.form_panel_view_dom.querySelector('.asset-fields-container');
     this.dataFieldsInited = false;
 
     this.blockChildrenSelect.style.display = 'none';
@@ -66,27 +67,28 @@ class cView extends bView {
     this.mainbandsubviewselect.style.display = 'none';
     this.removeChildButton.style.display = 'none';
 
-    if (!this.tag)
-      return;
-    if (!this.key)
-      return;
+    if (!tag) tag = this.tag;
+    if (!tag) return;
+
+    if (!key) key = this.key;
+    if (!key) return;
 
     this.dataFieldsInited = true;
 
-    this.fields = sDataDefinition.bindingFieldsCloned(this.tag);
-    this.fireSet = gAPPP.a.modelSets[this.tag];
+    this.fields = sDataDefinition.bindingFieldsCloned(tag);
+    this.fireSet = gAPPP.a.modelSets[tag];
 
-    this.fireFields = new cPanelData(this.fields, this.fieldsContainer, this);
+    this.fireFields = new cPanelData(this.fields, this.mainDataView, this);
     this.fireFields.updateContextObject = true;
 
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';
-    this.fieldsContainer.appendChild(clearDiv);
+    this.mainDataView.appendChild(clearDiv);
 
     this.fireSetCallback = (values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData);
     this.fireSet.childListeners.push(this.fireSetCallback);
 
-    if (this.tag === 'block') {
+    if (tag === 'block') {
       this.initBlockDataFields();
       this.blockChildrenSelect.style.display = '';
       this.addChildButton.style.display = '';
@@ -117,7 +119,7 @@ class cView extends bView {
 
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandSelect(this.blockChildrenSelect, this, this.childEditPanel);
-    this.childEditPanel.parentNode.insertBefore(this.fieldsContainer, this.childEditPanel.parentNode.firstChild);
+    this.childEditPanel.parentNode.insertBefore(this.mainDataView, this.childEditPanel.parentNode.firstChild);
   }
   updateSubViewDisplay() {
     let view = this.mainbandsubviewselect.value;
@@ -190,36 +192,46 @@ class cView extends bView {
     this.dataview_record_key.innerHTML = options;
     this.dataview_record_key.value = this.key;
   }
-  async updateSelectedRecord() {
-    if (this.dataview_record_tag.selectedIndex < 1 || this.dataview_record_key.selectedIndex < 1) {
-      this.context.activate(null);
-      if (this.dataview_record_key.selectedIndex < 0)
-        this.dataview_record_key.selectedIndex = 0;
+  async updateDisplayForWorkspaceDetailView() {
+    this.form_panel_view_dom.classList.add('workspace');
+    this.form_canvas_wrapper.classList.remove('show-help');
+    this.deleteAssetButton.style.display = 'none';
+    this.snapshotAssetButton.style.display = 'none';
+    this.addAssetButton.style.display = 'none';
+    this.block_child_details_block.style.display = 'none';
+//    this.addAssetPanel.style.display = 'flex';
+    this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
-      if (this.tag === '')
-        this.key = this.dataview_record_key.value;
-      else
-        this.key = '';
+    let fireValues = gAPPP.a.modelSets['block'].fireDataByKey[this.key].val();
+    this._updateQueryString();
 
-      this.initDataFields();
-      this._updateQueryString();
-      if (this.addFrameButton)
-        this.addFrameButton.style.display = 'none';
-      if (this.removeChildButton)
-        this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
-      this.deleteAssetButton.style.display = 'none';
-      this.snapshotAssetButton.style.display = 'none';
-      this.addAssetPanel.style.display = '';
+    //load saved scene if exists
+    if (fireValues.url)
+      await this.context.loadSceneURL(fireValues.url);
 
-      this.form_canvas_wrapper.classList.add('show-help');
-      if (!this.tag)
-        this.form_canvas_wrapper.classList.add('workspace');
-      else
-        this.form_canvas_wrapper.classList.remove('workspace');
+    let b = new wBlock(this.context);
+    b.staticType = 'block';
+    b.staticLoad = true;
 
-      return this.showSelectOrAddView();
-    }
-    this.form_canvas_wrapper.classList.remove('workspace');
+    b.blockKey = this.key;
+    b.isContainer = true;
+
+    this.context.activate(null);
+    this.context.setActiveBlock(b);
+    this.rootBlock = b;
+    this.canvasHelper.__updateVideoCallback();
+    b.setData(fireValues);
+
+    let result = null;
+
+    this.rootBlock = this.context.activeBlock;
+    if (this.canvasHelper)
+      this.canvasHelper.logClear();
+
+    this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+    this.workspaceCTL = new cWorkspace(this.mainDataView, 'Layout', this);
+  }
+  async updateDisplayForDetailView() {
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'inline-block';
     this.snapshotAssetButton.style.display = 'inline-block';
@@ -231,13 +243,14 @@ class cView extends bView {
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     this._updateQueryString();
 
-    //load saved scene if exists
     if (this.tag === 'block') {
       if (this.fireFields.values.url)
         await this.context.loadSceneURL(this.fireFields.values.url);
 
       this.sceneFireFields.values = this.fireSet.fireDataByKey[this.key].val();
       this._updateFollowTargetListOptions();
+
+      this.block_child_details_block.style.display = '';
     }
     let b = new wBlock(this.context);
     b.staticType = this.tag;
@@ -284,6 +297,18 @@ class cView extends bView {
     }
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
+  async updateSelectedRecord() {
+    this.form_panel_view_dom.classList.remove('workspace');
+
+    if (this.dataview_record_key.selectedIndex < 1)
+      return this.updateDisplayForMainView();
+    if (this.dataview_record_tag.selectedIndex < 1 && this.dataview_record_key.selectedIndex < 2)
+      return this.updateDisplayForMainView();
+    if (this.dataview_record_tag.selectedIndex < 1)
+      return this.updateDisplayForWorkspaceDetailView();
+
+    return this.updateDisplayForDetailView();
+  }
   genQueryString(wid = null, tag = null, key = null, childkey = null) {
     if (wid === null) wid = gAPPP.a.profile.selectedWorkspace;
     if (tag === null) tag = this.tag;
@@ -296,7 +321,7 @@ class cView extends bView {
         queryString += `&key=${key}`;
 
     }
-    
+
     let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
     return newURL;
   }
@@ -348,7 +373,7 @@ class cView extends bView {
             <select id="dataview_record_key" style="max-width:calc(100% - 12.5em);"></select>
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_a_photo</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
-            <div style="display:inline-block;">
+            <div class="block_child_details_block" style="display:inline-block;">
               <select class="main-band-children-select" style="display:none;"></select>
               <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove</i></button>
               <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
@@ -565,20 +590,41 @@ class cView extends bView {
     }
     this.followblocktargetoptionslist.innerHTML = optionText;
   }
-  showSelectOrAddView() {
+  updateDisplayForMainView() {
+    this.context.activate(null);
+    if (this.dataview_record_key.selectedIndex < 0)
+      this.dataview_record_key.selectedIndex = 0;
+
+    if (this.tag === '')
+      this.key = this.dataview_record_key.value;
+    else
+      this.key = '';
+
+    this.initDataFields();
+    this._updateQueryString();
+    if (this.addFrameButton)
+      this.addFrameButton.style.display = 'none';
+    if (this.removeChildButton)
+      this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
+    this.deleteAssetButton.style.display = 'none';
+    this.snapshotAssetButton.style.display = 'none';
+    this.addAssetPanel.style.display = '';
+
+    this.form_canvas_wrapper.classList.add('show-help');
+
     if (!this.tag) {
-      this.workspaceCTL = new cWorkspace(this.addAssetPanel, this.key, this);
+      this.workspaceCTL = new cWorkspace(this.mainDataView, this.key, this);
       fetch('/doc/workspacehelp.html')
         .then(res => res.text())
-        .then(html => this.fieldsContainer.innerHTML = html);
-      this.fieldsContainer.classList.add('help-shown-panel');
+        .then(html => this.addAssetPanel.innerHTML = html);
+      this.addAssetPanel.classList.add('help-shown-panel');
       this.helpViewer.innerHTML = '';
 
       return;
     }
     this.generate = new cMacro(this.addAssetPanel, this.tag, this);
     this.recordViewer = new cBandIcons(this.tag, this);
-    this.fieldsContainer.classList.remove('help-shown-panel');
+    this.addAssetPanel.classList.remove('help-shown-panel');
 
     fetch(`/doc/${this.tag}help.html`)
       .then(res => res.text())
