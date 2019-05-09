@@ -10,9 +10,6 @@ class gApp extends gInstanceSuper {
         } else if (this.mV.key !== urlParams.get('key')) {
           this.mV.dataview_record_key.value = urlParams.get('key');
           this.mV.updateSelectedRecord().then(() => {});
-        } else if (this.mV.childKey !== urlParams.get('childkey')) {
-          this.mV.dataview_record_key.value = urlParams.get('childkey');
-          this.mV.updateSelectedRecord().then(() => {});
         }
       }
     });

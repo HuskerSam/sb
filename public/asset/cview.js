@@ -288,16 +288,15 @@ class cView extends bView {
     if (wid === null) wid = gAPPP.a.profile.selectedWorkspace;
     if (tag === null) tag = this.tag;
     if (key === null) key = this.key;
-    if (childkey === null) childkey = this.childkey;
     let queryString = `?wid=${wid}`;
 
     if (tag) {
       queryString += `&tag=${tag}`;
       if (key)
         queryString += `&key=${key}`;
-      if (childkey && this.tag === 'block')
-        queryString += `&childkey=${childkey}`;
+
     }
+    
     let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
     return newURL;
   }
@@ -307,14 +306,15 @@ class cView extends bView {
     if (newWid) {
       url = this.genQueryString(newWid);
     } else {
-      if (this.tag === urlParams.get('tag') && this.key === urlParams.get('key') && this.childKey === urlParams.get('childkey'))
-        return;
       url = this.genQueryString();
     }
 
-    window.history.pushState({
-      path: url
-    }, '', url);
+    if (url !== this.url) {
+      window.history.pushState({
+        path: url
+      }, '', url);
+      this.url = url;
+    }
   }
   splitLayoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
