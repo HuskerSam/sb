@@ -71,7 +71,7 @@ class cWorkspace {
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
   }
   workspaceNewTemplate() {
-    return `<label>New Workspace <input id="new-workspace-name" /></label>
+    return `<div><label>New Workspace <input id="new-workspace-name" /></label>
     &nbsp;
     <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
     <hr>
@@ -127,7 +127,8 @@ class cWorkspace {
     <label><input type="checkbox" id="add_animation_current_workspace" /> Use Current Workspace</label>
     <label><input type="checkbox" id="add_animation_clear_scene" checked /> Clear Scene</label>
     <br>
-    <button id="generate_animation_workspace_button">Generate Animation</button>`;
+    <button id="generate_animation_workspace_button">Generate Animation</button>
+    </div>`;
   }
   workspaceNewRegister() {
     this.retailRegister();

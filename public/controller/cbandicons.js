@@ -4,12 +4,12 @@ class cBandIcons extends bBand {
     this.fireSet = gAPPP.a.modelSets[tag];
     this.dialog = dialog;
 
-    this.childrenContainer = document.createElement('div');
-    this.childrenContainer.classList.add('sb-floating-toolbar-content');
-    this.dialog.fieldsContainer.appendChild(this.childrenContainer);
+    this.childrenContainer = this.dialog.fieldsContainer;
 
-    this.refreshUIFromCache();
-    this.childMoved();
+    setTimeout(() => {
+      this.refreshUIFromCache();
+      this.childMoved();
+    }, 1);
   }
   childChanged(fireData) {
     super.childChanged(fireData);

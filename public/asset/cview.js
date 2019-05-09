@@ -576,8 +576,8 @@ class cView extends bView {
 
       return;
     }
-    this.recordViewer = new cBandIcons(this.tag, this);
     this.generate = new cMacro(this.addAssetPanel, this.tag, this);
+    this.recordViewer = new cBandIcons(this.tag, this);
     this.fieldsContainer.classList.remove('help-shown-panel');
 
     fetch(`/doc/${this.tag}help.html`)

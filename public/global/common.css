@@ -68,6 +68,7 @@ html, body {
   width: 100%;
   min-height: 100%;
   position: relative;
+  flex: 1;
 }
 
 .form_canvas_wrapper {

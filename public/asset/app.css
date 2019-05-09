@@ -332,6 +332,7 @@ select {
   border-radius: 1em;
   margin: 0 .05em;
   overflow: hidden;
+  width: 100%;
 }
 
 .band-background-preview .img-holder {
@@ -356,6 +357,7 @@ select {
 .menu-clipper-wrapper {
   display: inline-block;
   margin: .25em;
+  width: 18em;
 }
 
 .form_canvas_wrapper.show-help {
@@ -386,6 +388,7 @@ select {
 
 .form_canvas_wrapper.show-help.workspace .help-overlay {
   display: flex;
+  width: 100%;
 }
 
 .add-asset-template-panel {
@@ -502,7 +505,4 @@ select {
 
 .layout_product_data_panel > form > div {
   display: inline-block;
-}
-
-.sb-floating-toolbar-content {
 }
