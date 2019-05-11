@@ -105,36 +105,40 @@ class gAuthorization {
       if (model.profile)
         return model.profile;
       else {
-        this.resetProfile();
-        return model.profile;
+        if (!this.anonymous) {
+          this.resetProfile();
+          return model.profile;
+        } else {
+          return {};
+        }
       }
   }
   signIn() {
     let urlParams = new URLSearchParams(window.location.search);
-//    if (urlParams.get('server') === 'true') {
-//      this.signInAnon();
-//      return;
-//    }
-//    if (urlParams.get('signin') !== 'true')
-//      return;
+    if (urlParams.get('server') === 'true') {
+      this.signInAnon();
+      return;
+    }
+    //    if (urlParams.get('signin') !== 'true')
+    //      return;
 
     this.provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(this.provider);
   }
   signInByEmail(email) {
-/*
-    var actionCodeSettings = {
-      url: window.location.href,
-      handleCodeInApp: true
-    };
-    firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
-      .then(() => {
-        window.localStorage.setItem('emailForSignIn', email);
-        alert('Email Sent');
-        window.location = '/doc/help.html';
-      })
-      .catch(e => console.log(e));
-      */
+    /*
+        var actionCodeSettings = {
+          url: window.location.href,
+          handleCodeInApp: true
+        };
+        firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
+          .then(() => {
+            window.localStorage.setItem('emailForSignIn', email);
+            alert('Email Sent');
+            window.location = '/doc/help.html';
+          })
+          .catch(e => console.log(e));
+          */
   }
   clearProjectData(key) {
     if (!key)

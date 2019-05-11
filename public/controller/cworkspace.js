@@ -74,7 +74,7 @@ class cWorkspace {
     return `<div style="flex:1"><label><span>Name</span><input id="edit-workspace-name" /></label>
       <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
       <br>
-      <label><span> Lookup Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
+      <label><span> Lookup Tags (active,indexNum)</span><input id="edit-workspace-code" /></label>
       <br>
       <input type="file" style="display:none;" class="import_csv_file">
       <button class="import_csv_records">Import CSV Records</button>
@@ -312,7 +312,7 @@ class cWorkspace {
       let title = this[`add_animation_${type}_template`].value;
       let filename = this.templates[`${type}Templates`][title];
       let response = await fetch(this.bView.templateBasePath + filename);
-      let csv = await response.text();
+      let csvData = await response.text();
       let csvJSON = await new Promise((resolve) => {
         Papa.parse(csvData, {
           header: true,

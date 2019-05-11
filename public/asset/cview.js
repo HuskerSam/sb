@@ -203,36 +203,37 @@ class cView extends bView {
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
     this.form_panel_view_dom.classList.add('workspacelayout');
 
-    let fireValues = gAPPP.a.modelSets['block'].fireDataByKey[this.key].val();
     this._updateQueryString();
+    if (this.key) {
+      let fireValues = gAPPP.a.modelSets['block'].fireDataByKey[this.key].val();
+      //load saved scene if exists
+      if (fireValues.url)
+        await this.context.loadSceneURL(fireValues.url);
 
-    //load saved scene if exists
-    if (fireValues.url)
-      await this.context.loadSceneURL(fireValues.url);
+      let b = new wBlock(this.context);
+      b.staticType = 'block';
+      b.staticLoad = true;
 
-    let b = new wBlock(this.context);
-    b.staticType = 'block';
-    b.staticLoad = true;
+      b.blockKey = this.key;
+      b.isContainer = true;
 
-    b.blockKey = this.key;
-    b.isContainer = true;
+      this.context.activate(null);
+      this.context.setActiveBlock(b);
+      this.rootBlock = b;
+      this.canvasHelper.__updateVideoCallback();
+      b.setData(fireValues);
 
-    this.context.activate(null);
-    this.context.setActiveBlock(b);
-    this.rootBlock = b;
-    this.canvasHelper.__updateVideoCallback();
-    b.setData(fireValues);
+      let result = null;
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+      this.canvasHelper.playAnimation();
+      this.rootBlock = this.context.activeBlock;
+      if (this.canvasHelper)
+        this.canvasHelper.logClear();
 
-    let result = null;
-    this.canvasHelper.cameraSelect.selectedIndex = 2;
-    this.canvasHelper.noTestError = true;
-    this.canvasHelper.cameraChangeHandler();
-    this.canvasHelper.playAnimation();
-    this.rootBlock = this.context.activeBlock;
-    if (this.canvasHelper)
-      this.canvasHelper.logClear();
-
-    this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+      this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+    }
     this.workspaceCTL = new cWorkspace(this.mainDataView, 'Layout', this);
   }
   async updateDisplayForDetailView() {
