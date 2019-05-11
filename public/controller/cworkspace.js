@@ -435,14 +435,7 @@ class cWorkspace {
   }
 
   workspaceLayoutTemplate() {
-    return `<div><select class="workspace_layout_view_select">
-      <option>Products</option>
-      <option>Layout</option>
-      <option>Assets</option>
-      <option>Layout Data</option>
-    </select>
-    </div>
-    <div class="data_table_panel"></div>
+    return `<div class="data_table_panel"></div>
     <div class="layout_product_data_panel">
       <input type="file" class="texturepathuploadfile" style="display:none;" />
       <form autocomplete="off" onsubmit="return false;"></form>
@@ -492,7 +485,7 @@ class cWorkspace {
       'price', 'count', 'height', 'width', 'x', 'y', 'z', 'rx', 'ry', 'rz'
     ];
 
-    this.workspace_layout_view_select = this.domPanel.querySelector('.workspace_layout_view_select');
+    this.workspace_layout_view_select = document.body.querySelector('.workspace_layout_view_select');
     this.workspace_layout_view_select.addEventListener('change', e => this.workspaceLayoutShowView());
     this.scene_layout_data_panel = this.domPanel.querySelector('.scene_layout_data_panel');
     this.data_table_panel = this.domPanel.querySelector('.data_table_panel');
@@ -761,7 +754,6 @@ class cWorkspace {
       data = this.__sortProductRows(data);
 
     let columns = [];
-    let topLeftTitle = (tableName === 'product') ? '<i class="material-icons">add_to_queue</i>' : '';
     columns.push({
       rowHandle: true,
       formatter: "handle",
@@ -769,8 +761,7 @@ class cWorkspace {
       cssClass: 'row-handle-table-cell',
       frozen: true,
       width: 45,
-      minWidth: 45,
-      title: topLeftTitle
+      minWidth: 45
     });
     if (tableName !== 'product')
       columns.push({
@@ -853,7 +844,6 @@ class cWorkspace {
       columns[2] = tCol;
       columns[1] = tCol2;
       tCol2.title = '';
-      columns[0].headerClick = (e, col) => this.toggleProductAddView(col);
     } else {
       columns[4].frozen = true;
       let tCol = columns[4];
@@ -882,21 +872,7 @@ class cWorkspace {
       dataEdited: data => this.__tableChangedHandler(true),
       rowMoved: (row) => this._rowMoved(tableName, row)
     });
-
-    //  document.getElementById(`import_${tableName}_csv_btn`).addEventListener('click', e => {
-    //    this.saveCSVType = tableName;
-    //    this.importFileDom.click();
-    //  });
-    //  document.getElementById('download_' + tableName + '_csv').addEventListener('click', e => this.downloadCSV(tableName));
-
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
-    /*
-        document.getElementById(`ui-${tableName}-tab`).addEventListener('click', e => {
-          this.__reformatTable(tableName);
-          //    this.editTable.redraw(true);
-          this.editTable.setColumnLayout();
-        });
-        */
   }
   __sortProductRows(p) {
     return p.sort((a, b) => {
@@ -959,6 +935,30 @@ class cWorkspace {
       setDirty = true;
 
     return setDirty;
+  }
+  async workspaceCanvasReadyPostTimeout() {
+    document.querySelector('.form_panel_view_dom').style.display = '';
+
+    this.canvasHelper.cameraSelect.selectedIndex = 2;
+    this.canvasHelper.noTestError = true;
+    this.canvasHelper.cameraChangeHandler();
+
+    this.updateProductList();
+    this.updatePositionList();
+    this.loadTemplateLists();
+
+    this._loadDataTables().then(() => {});
+
+    try {
+      this.canvasHelper.playAnimation();
+    } catch (e) {
+      console.log('play anim error', e);
+    }
+
+    this.changes_commit_header = document.getElementById('changes_commit_header');
+    this.changes_commit_header.addEventListener('click', e => this.saveChanges());
+
+    return Promise.resolve();
   }
   async __saveTable(tableName) {
     if (!this.___testTableDirty(tableName))

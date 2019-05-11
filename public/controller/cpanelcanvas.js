@@ -730,24 +730,6 @@ class cPanelCanvas {
       this.canvasActionsDom);
     this.cameraTools.fireFields.values = gAPPP.a.profile;
     this.cameraTools.activate();
-
-    this.cameraExtrasArea = document.getElementById('extra-options-camera-area');
-    this.cameraExtrasArea.innerHTML =
-      `<label class="mdl-switch mdl-js-switch" for="auto-move-camera" id="auto-move-camera-component">
-      <input type="checkbox" id="auto-move-camera" class="mdl-switch__input" checked>
-      <span class="mdl-switch__label"><i class="material-icons">camera_enchance<i></span>
-    </label>`;
-    this.autoMoveCameraInput = document.getElementById('auto-move-camera');
-    this.autoMoveCameraInput.addEventListener('input', () => this.toggleAutoMoveCamera());
-  }
-  toggleAutoMoveCamera() {
-    if (this.autoMoveCameraInput.checked) {
-      this.cameraSelect.selectedIndex = 2;
-      this.cameraChangeHandler();
-    } else {
-      this.cameraSelect.selectedIndex = 0;
-      this.cameraChangeHandler();
-    }
   }
   userProfileChange() {
     if (!gAPPP.a.profile.cameraUpdates)

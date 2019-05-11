@@ -194,19 +194,6 @@ input[type=range]::-webkit-slider-thumb {
   display: none !important;
 }
 
-#extra-options-camera-area {
-  float: left;
-  clear: both;
-  background: rgb(0, 150, 136);
-  color: white;
-  border-radius: 10px;
-  margin-left: .6em;
-  padding: .25em;
-  line-height: 1em;
-  width: 85px;
-  border: solid .1em rgb(200, 255, 240)
-}
-
 #add-workspace-button {
   position: relative;
   top: -.75em;

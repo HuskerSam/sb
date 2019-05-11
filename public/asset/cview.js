@@ -32,6 +32,7 @@ class cView extends bView {
     this.addAssetButton = this.dialog.querySelector('.add-asset-button');
     this.addAssetButton.addEventListener('click', e => this.addAsset());
     this.block_child_details_block = this.dialog.querySelector('.block_child_details_block');
+    this.workspace_layout_view_select = this.dialog.querySelector('.workspace_layout_view_select');
 
     this.helpViewerWrapper = this.dialog.querySelector('.help-overlay');
     this.addAssetPanel = document.createElement('div');
@@ -128,6 +129,7 @@ class cView extends bView {
     this.nodedetailspanel.style.display = (view === 'node') ? 'block' : 'none';
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'block' : 'none';
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
+
   }
   selectItem(newKey, newWindow) {
     if (!newWindow) {
@@ -199,8 +201,8 @@ class cView extends bView {
     this.snapshotAssetButton.style.display = 'none';
     this.addAssetButton.style.display = 'none';
     this.block_child_details_block.style.display = 'none';
-//    this.addAssetPanel.style.display = 'flex';
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
+    this.form_panel_view_dom.classList.add('workspacelayout');
 
     let fireValues = gAPPP.a.modelSets['block'].fireDataByKey[this.key].val();
     this._updateQueryString();
@@ -299,6 +301,7 @@ class cView extends bView {
   }
   async updateSelectedRecord() {
     this.form_panel_view_dom.classList.remove('workspace');
+    this.form_panel_view_dom.classList.remove('workspacelayout');
 
     if (this.dataview_record_key.selectedIndex < 1)
       return this.updateDisplayForMainView();
@@ -371,6 +374,13 @@ class cView extends bView {
             </select>
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <select id="dataview_record_key" style="max-width:calc(100% - 12.5em);"></select>
+            <select class="workspace_layout_view_select">
+              <option>Products</option>
+              <option>Layout</option>
+              <option>Assets</option>
+              <option>Layout Data</option>
+            </select>
+            <button class="workspace_commit_layout_changes"><i class="material-icons">save</i></button>
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_a_photo</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
             <div class="block_child_details_block" style="display:inline-block;">

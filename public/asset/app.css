@@ -87,18 +87,6 @@ body {
   display: none !important;
 }
 
-#extra-options-camera-area {
-  float: left;
-  clear: both;
-  background: rgb(0, 150, 136);
-  color: white;
-  border-radius: 10px;
-  margin-left: .6em;
-  padding: .25em;
-  line-height: 1em;
-  width: 85px;
-}
-
 #-position-preset {
   background: rgb(0, 150, 136);
   color: white;
@@ -509,5 +497,13 @@ select {
 }
 
 .layout_product_data_panel > form > div {
+  display: inline-block;
+}
+
+.workspace_layout_view_select, .workspace_commit_layout_changes {
+  display: none;
+}
+
+.workspacelayout .workspace_layout_view_select, .workspacelayout .workspace_commit_layout_changes {
   display: inline-block;
 }
