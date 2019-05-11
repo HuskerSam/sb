@@ -354,7 +354,7 @@ class bView {
         onDragEnd: () => gAPPP.resize(),
         onDrag: () => gAPPP.resize()
       });
-    } else { //if (['Edit', 'View'].indexOf(this.layoutMode) !== -1) {
+    } else if (['Edit', 'View'].indexOf(this.layoutMode) !== -1) {
       this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
       this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
       this.dialog.style.display = 'block';
@@ -376,6 +376,8 @@ class bView {
       if (this.layoutMode === 'View') {
         this.form_panel_view_dom.style.display = 'none';
       }
+    } else if (this.layoutMode === 'Demo') {
+      this.dialog.style.display = 'block';
     }
     if (!this.layoutMode)
       this.layoutMode = '';
