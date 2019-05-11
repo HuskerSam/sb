@@ -500,11 +500,11 @@ select {
   display: inline-block;
 }
 
-.workspace_layout_view_select, .workspace_commit_layout_changes, .workspace_regenerate_layout_changes {
+.workspace_layout_view_select, .workspace_regenerate_layout_changes {
   display: none;
 }
 
-.workspacelayout .workspace_layout_view_select, .workspacelayout .workspace_commit_layout_changes,
+.workspacelayout .workspace_layout_view_select,
 .workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
 }

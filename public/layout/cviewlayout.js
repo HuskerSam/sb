@@ -34,8 +34,6 @@ class cViewLayout extends bView {
     }
 
 
-    this.changes_commit_header = document.getElementById('changes_commit_header');
-    this.changes_commit_header.addEventListener('click', e => this.saveChanges());
 
     return Promise.resolve();
   }

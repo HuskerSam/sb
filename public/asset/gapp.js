@@ -4,11 +4,19 @@ class gApp extends gInstanceSuper {
     window.addEventListener('popstate', () => {
       let urlParams = new URLSearchParams(window.location.search);
       if (this.mV) {
-        if (this.mV.tag !== urlParams.get('tag')) {
-          this.mV.dataview_record_tag.value = urlParams.get('tag');
-          this.mV.updateRecordList(urlParams.get('key'));
-        } else if (this.mV.key !== urlParams.get('key')) {
-          this.mV.dataview_record_key.value = urlParams.get('key');
+        let subView = urlParams.get('subview');
+        let tag = urlParams.get('tag');
+        let key = urlParams.get('key');
+
+        if (!tag)
+          tag = '';
+        if (!key)
+          key = '';
+        if (this.mV.tag !== tag) {
+          this.mV.dataview_record_tag.value = tag;
+          this.mV.updateRecordList(key);
+        } else if (this.mV.key !== key) {
+          this.mV.dataview_record_key.value = key;
           this.mV.updateSelectedRecord().then(() => {});
         }
       }

@@ -80,10 +80,6 @@ class bView {
     this.canvasHelper.cameraShownCallback = () => this.canvasReady();
   }
   async canvasReady() {
-    if (this.cameraShown)
-      return;
-    this.cameraShown = true;
-
     if (!this.playAnimation)
       return Promise.resolve();
     await this.canvasReadyPostTimeout();

@@ -8,6 +8,9 @@ class cView extends bView {
 
     this.profilePanelRegister();
   }
+  async canvasReady() {
+    this.updateRecordList(this.key, this.subView);
+  }
   initUI() {
     this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
     this.dataview_record_key = this.dialog.querySelector('#dataview_record_key');
@@ -16,7 +19,7 @@ class cView extends bView {
       this.dataview_record_tag.selectedIndex = 0;
 
     this.dataview_record_tag.addEventListener('change', e => this.updateRecordList());
-    this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord().then(() => {}));
+    this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord());
     this.blockChildrenSelect = this.dialog.querySelector('.main-band-children-select');
     this.addChildButton = this.dialog.querySelector('.main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
@@ -166,7 +169,7 @@ class cView extends bView {
     this.subView = newView;
     this._updateRecordSelect();
     this.initDataFields();
-    this.updateSelectedRecord().then(() => {});
+    this.updateSelectedRecord();
   }
   _updateRecordSelect() {
     this.addAssetPanel.style.display = 'none';
@@ -221,7 +224,10 @@ class cView extends bView {
     b.setData(fireValues);
 
     let result = null;
-
+    this.canvasHelper.cameraSelect.selectedIndex = 2;
+    this.canvasHelper.noTestError = true;
+    this.canvasHelper.cameraChangeHandler();
+    this.canvasHelper.playAnimation();
     this.rootBlock = this.context.activeBlock;
     if (this.canvasHelper)
       this.canvasHelper.logClear();
@@ -381,7 +387,6 @@ class cView extends bView {
               <option>Assets</option>
               <option>Layout Data</option>
             </select>
-            <button class="workspace_commit_layout_changes btn-sb-icon"><i class="material-icons">save</i></button>
             <button class="workspace_regenerate_layout_changes btn-sb-icon"><i class="material-icons">gavel</i></button>
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_a_photo</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
@@ -476,9 +481,6 @@ class cView extends bView {
         <br>
         <textarea class="frames-textarea-export" rows="1" cols="6" style="width: 100%; height: 5em"></textarea>
       </div>`;
-  }
-  async canvasReady() {
-    return this.updateRecordList(this.key, this.subView);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.tag === 'block') {
