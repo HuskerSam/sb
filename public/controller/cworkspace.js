@@ -636,7 +636,7 @@ class cWorkspace {
     let name = fieldData.name;
     let asset = fieldData.asset;
 
-    function __getSceneOptionsValue(tab, name, asset, field) {
+    let __getSceneOptionsValue = (tab, name, asset, field) => {
       if (tab === 'layout')
         tab = 'scene';
       if (!this[tab + 'CSVData'])
@@ -1135,5 +1135,4 @@ class cWorkspace {
     e.preventDefault();
     return true;
   }
-
 }

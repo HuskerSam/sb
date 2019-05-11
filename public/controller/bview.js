@@ -1,11 +1,12 @@
 class bView {
-  constructor(layoutMode, tag, key = null, play = false, childKey) {
+  constructor(layoutMode, tag, key = null, play = false, childKey, subview) {
     this.playAnimation = play;
     this.expandedAll = true;
     this.tag = tag;
     this.key = key;
     this.childKey = childKey;
     this.layoutMode = layoutMode;
+    this.subView = subview;
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
     this.initDom();
@@ -36,6 +37,7 @@ class bView {
 
     if (!this.layoutMode)
       this.layoutMode = 'Left';
+
 
     this.dialog = document.querySelector('#firebase-app-main-page');
     document.body.removeChild(this.dialog);

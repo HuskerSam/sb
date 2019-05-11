@@ -1,6 +1,6 @@
 class cView extends bView {
-  constructor(layoutMode, tag, key, childKey) {
-    super(layoutMode, tag, key, false, childKey);
+  constructor(layoutMode, tag, key, childKey, subView) {
+    super(layoutMode, tag, key, false, childKey, subView);
     this.canvasHelper.initExtraOptions();
 
     this.refreshProjectList().then(() => {});
@@ -160,33 +160,35 @@ class cView extends bView {
     this.updateSubViewDisplay();
     this.framesBand.addFrame(this.framesBand.__getKey());
   }
-  updateRecordList(newKey = null) {
+  updateRecordList(newKey = null, newView = null) {
     this.tag = this.dataview_record_tag.value;
     this.key = newKey;
+    this.subView = newView;
     this._updateRecordSelect();
     this.initDataFields();
     this.updateSelectedRecord().then(() => {});
   }
   _updateRecordSelect() {
-    let options = '<option>Details</option><option>Add / Generate</option><option>Layout</option>';
-
     this.addAssetPanel.style.display = 'none';
     if (this.tag) {
-      options = `<option values="" selected>Select or Add ${this.dataview_record_tag.selectedOptions[0].label}</option>`;
+      let options = `<option values="" selected>Select or Add ${this.dataview_record_tag.selectedOptions[0].label}</option>`;
       let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
       for (let i in fS)
         options += `<option value="${i}">${fS[i].title}</option>`;
       this.addAssetButton.style.display = 'inline-block';
       if (!this.key)
         this.addAssetPanel.style.display = '';
+
+      this.dataview_record_key.innerHTML = options;
+      this.dataview_record_key.value = this.key;
     } else {
+      let options = '<option>Details</option><option>Add / Generate</option><option>Layout</option>';
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
+      this.dataview_record_key.innerHTML = options;
+      this.dataview_record_key.value = this.subView;
     }
-
-    this.dataview_record_key.innerHTML = options;
-    this.dataview_record_key.value = this.key;
   }
   async updateDisplayForWorkspaceDetailView() {
     this.form_panel_view_dom.classList.add('workspace');
@@ -317,6 +319,11 @@ class cView extends bView {
       if (key)
         queryString += `&key=${key}`;
 
+    } else {
+      if (this.dataview_record_key.selectedIndex > 0) {
+        let wDisplay = this.dataview_record_key.value;
+        queryString += `&subview=${wDisplay}`
+      }
     }
 
     let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
@@ -471,7 +478,7 @@ class cView extends bView {
       </div>`;
   }
   async canvasReady() {
-    return this.updateRecordList(this.key);
+    return this.updateRecordList(this.key, this.subView);
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     if (this.tag === 'block') {

@@ -42,7 +42,11 @@ class gApp extends gInstanceSuper {
     let layoutMode = urlParams.get('layoutmode');
     if (!layoutMode)
       layoutMode = gAPPP.a.profile.formLayoutMode;
-    this.mV = new cView(layoutMode, urlParams.get('tag'), urlParams.get('key'), urlParams.get('childkey'));
+    let tag = urlParams.get('tag');
+    let key = urlParams.get('key');
+    let childkey = urlParams.get('childkey');
+    let subview = urlParams.get('subview');
+    this.mV = new cView(layoutMode, tag, key, childkey, subview);
   }
   initializeAuthUI() {
     this.authUIInited = true;
