@@ -356,14 +356,13 @@ class bView {
         onDragEnd: () => gAPPP.resize(),
         onDrag: () => gAPPP.resize()
       });
-    }
-    if (['None', 'Full'].indexOf(this.layoutMode) !== -1) {
+    } else { //if (['Edit', 'View'].indexOf(this.layoutMode) !== -1) {
       this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
       this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
       this.dialog.style.display = 'block';
-      this.codeModeFromFull = this.dialog.querySelector('.none-layout-mode-flip');
-      this.codeModeFromFull.style.display = 'inline-block';
-      this.codeModeFromFull.addEventListener('click', e => {
+      this.codeModeFromView = this.dialog.querySelector('.none-layout-mode-flip');
+      this.codeModeFromView.style.display = 'inline-block';
+      this.codeModeFromView.addEventListener('click', e => {
         gAPPP.a.modelSets['userProfile'].commitUpdateList([{
           field: 'formLayoutMode',
           newValue: 'Top'
@@ -371,12 +370,12 @@ class bView {
           setTimeout(() => location.reload(), 1);
         })
       });
-      if (this.layoutMode === 'None') {
+      if (this.layoutMode === 'Edit') {
         this.form_canvas_wrapper.style.display = 'none';
         this.dialog.querySelector('#main-view-wrapper').style.display = 'flex';
       }
 
-      if (this.layoutMode === 'Full') {
+      if (this.layoutMode === 'View') {
         this.form_panel_view_dom.style.display = 'none';
       }
     }
@@ -385,7 +384,7 @@ class bView {
     this.dialog.classList.add('bview-layoutmode-' + this.layoutMode.toLowerCase());
   }
   layoutTemplate() {
-    if (['Left', 'Right', 'Top', 'Bottom', 'Full', 'None'].indexOf(this.layoutMode) !== -1)
+    if (['Left', 'Right', 'Top', 'Bottom', 'View', 'Edit'].indexOf(this.layoutMode) !== -1)
       return this.splitLayoutTemplate();
 
     return `<div id="firebase-app-main-page" style="display:none;">
@@ -476,8 +475,15 @@ class bView {
       document.getElementById('profile-header-panel').classList.add('expanded');
     }
   }
-
-
+  openNewWindow(tag, key) {
+    let url = this.genQueryString(null, tag, newKey);
+    let a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('target', '_blank');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
   __uploadImageFile() {
     let fileBlob = this.uploadImageFile.files[0];
 

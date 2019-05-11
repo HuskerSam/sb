@@ -56,17 +56,17 @@ class cWorkspace {
     if (gAPPP.lastWorkspaceCode)
       this.bView.workplacesSelectEditCode.value = gAPPP.lastWorkspaceCode;
     this.workplacesRemoveButton = this.domPanel.querySelector('#remove-workspace-button');
-    this.bView.workplacesSelectEditName.addEventListener('input', e => this.updateWorkspaceNameCode());
-    this.bView.workplacesSelectEditCode.addEventListener('input', e => this.updateWorkspaceNameCode());
+    this.bView.workplacesSelectEditName.addEventListener('input', e => this.workspaceUpdateNameCode());
+    this.bView.workplacesSelectEditCode.addEventListener('input', e => this.workspaceUpdateNameCode());
     this.workplacesRemoveButton.addEventListener('click', e => this.bView.deleteProject());
 
     this.import_csv_file = this.domPanel.querySelector('.import_csv_file');
-    this.import_csv_file.addEventListener('change', e => this.importAssetCSV());
+    this.import_csv_file.addEventListener('change', e => this.csvGenerateImportCSV());
     this.import_csv_records = this.domPanel.querySelector('.import_csv_records');
     this.import_csv_records.addEventListener('click', e => this.import_csv_file.click());
 
     this.import_asset_json_file = this.domPanel.querySelector('.import_asset_json_file');
-    this.import_asset_json_file.addEventListener('change', e => this.importAssetJSON());
+    this.import_asset_json_file.addEventListener('change', e => this.csvGenerationImportJSON());
     this.import_asset_json_button = this.domPanel.querySelector('.import_asset_json_button');
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
   }
@@ -131,12 +131,12 @@ class cWorkspace {
     </div>`;
   }
   workspaceNewRegister() {
-    this.retailRegister();
+    this.csvGenerateRegister();
 
     this.addProjectButton = document.querySelector('#add-workspace-button');
-    this.addProjectButton.addEventListener('click', e => this.addProject());
+    this.addProjectButton.addEventListener('click', e => this.workspaceAddProjectClick());
   }
-  updateWorkspaceNameCode() {
+  workspaceUpdateNameCode() {
     let name = this.bView.workplacesSelectEditName.value.trim();
     let code = this.bView.workplacesSelectEditCode.value.trim();
 
@@ -151,104 +151,16 @@ class cWorkspace {
       newValue: code
     }], this.bView.workplacesSelect.value);
   }
-  addProject() {
+  workspaceAddProjectClick() {
     let name = this.domPanel.querySelector('#new-workspace-name').value.trim();
     if (!name) {
       alert('please enter a name for the new workspace');
       return;
     }
-    this.bView._addProject(name).then(() => {});
-  }
-  importAssetCSV() {
-    if (this.import_csv_file.files.length > 0) {
-      Papa.parse(this.import_csv_file.files[0], {
-        header: true,
-        complete: results => {
-          if (results.data) {
-            for (let c = 0, l = results.data.length; c < l; c++) {
-              new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVRow(results.data[c]).then(() => {});
-            }
-          }
-        }
-      });
-    }
-  }
-  openAsset(tag, key) {
-    let url = this.bView.genQueryString(null, tag, key);
-    let a = document.createElement('a');
-    a.setAttribute('href', url);
-    a.setAttribute('target', '_blank');
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-  importAssetJSON() {
-    if (this.import_asset_json_file.files.length > 0) {
-      let reader = new FileReader();
-      reader.onload = e => onJSONLoad(e);
-      reader.readAsText(this.import_asset_json_file.files[0]);
-      let onJSONLoad = (e) => {
-        let json = e.target.result;
-        try {
-          json = JSON.parse(json);
-        } catch (e) {
-          alert('error parsing json check console');
-          console.log('error parsing json for import', e);
-          return;
-        }
-
-        let eleType = json.assetExportTag;
-
-        if (!gAPPP.a.modelSets[eleType]) {
-          alert('no supported assetExportTag found');
-          return;
-        }
-
-        delete json.assetExportTag;
-        delete json.assetExportKey;
-        if (eleType !== 'block') {
-          json.sortKey = new Date().getTime();
-          gAPPP.a.modelSets[eleType].createWithBlobString(json).then(results => {
-            this.openAsset(eleType, results.key);
-          });
-        } else {
-          json.sortKey = new Date().getTime();
-          let blockFrames = json.frames;
-          let blockChildren = json.children;
-
-          let __importFrames = (frames, parentKey) => {
-            for (let c = 0, l = frames.length; c < l; c++) {
-              frames[c].parentKey = parentKey;
-              gAPPP.a.modelSets['frame'].createWithBlobString(frames[c]).then(frameResult => {});
-            }
-          };
-
-          json.children = undefined;
-          delete json.children;
-          json.frames = undefined;
-          delete json.frames;
-          gAPPP.a.modelSets['block'].createWithBlobString(json).then(blockResults => {
-            __importFrames(blockFrames, blockResults.key);
-
-            for (let c = 0, l = blockChildren.length; c < l; c++) {
-              let child = blockChildren[c];
-              let childFrames = child.frames;
-              child.frames = undefined;
-              delete child.frames;
-              child.parentKey = blockResults.key;
-
-              gAPPP.a.modelSets['blockchild'].createWithBlobString(child).then(
-                childResults => __importFrames(childFrames, childResults.key));
-            }
-
-            this.openAsset(eleType, blockResults.key);
-          });
-        }
-      };
-    }
+    this.bView.workspaceAddProject(name).then(() => {});
   }
 
-  async retailRegister() {
+  async csvGenerateRegister() {
     this.templates = {
       "assetTemplates": {
         "All Assets": "asset.csv"
@@ -294,9 +206,9 @@ class cWorkspace {
     this.add_animation_product_download_file.addEventListener('change', e => this.csvGenerateUploadCSV('product'));
     this.add_animation_product_download_btn.addEventListener('click', e => this.csvGenerateDownloadCSV('product'));
 
-    this.add_animation_asset_choice.addEventListener('input', e => this.__updateAddTemplate('asset'));
-    this.add_animation_scene_choice.addEventListener('input', e => this.__updateAddTemplate('scene'));
-    this.add_animation_product_choice.addEventListener('input', e => this.__updateAddTemplate('product'));
+    this.add_animation_asset_choice.addEventListener('input', e => this.csvGenerateTemplate('asset'));
+    this.add_animation_scene_choice.addEventListener('input', e => this.csvGenerateTemplate('scene'));
+    this.add_animation_product_choice.addEventListener('input', e => this.csvGenerateTemplate('product'));
 
     this.import_asset_workspaces_select = this.domPanel.querySelector('#import_asset_workspaces_select');
     this.import_scene_workspaces_select = this.domPanel.querySelector('#import_scene_workspaces_select');
@@ -306,18 +218,25 @@ class cWorkspace {
     this.add_animation_current_workspace = this.domPanel.querySelector('#add_animation_current_workspace');
     this.generate_animation_workspace_button = this.domPanel.querySelector('#generate_animation_workspace_button');
     this.generate_animation_workspace_button.addEventListener('click', e => this.csvGenerateAnimation());
-    await this.retailInitLists();
+    await this.csvGenerateInitLists();
 
     return Promise.resolve();
   }
-  async retailInitLists() {
-    this.__loadList(this.add_animation_asset_template, Object.keys(this.templates.assetTemplates));
-    this.__loadList(this.add_animation_scene_template, Object.keys(this.templates.sceneTemplates));
-    this.__loadList(this.add_animation_product_template, Object.keys(this.templates.productTemplates));
+  async csvGenerateInitLists() {
+    function __loadList(sel, list, htmlPrefix = '') {
+      let html = '';
+      for (let c = 0; c < list.length; c++)
+        html += `<option>${list[c]}</option>`;
+      sel.innerHTML = htmlPrefix + html;
+    }
+
+    __loadList(this.add_animation_asset_template, Object.keys(this.templates.assetTemplates));
+    __loadList(this.add_animation_scene_template, Object.keys(this.templates.sceneTemplates));
+    __loadList(this.add_animation_product_template, Object.keys(this.templates.productTemplates));
 
     return Promise.resolve();
   }
-  async reloadScene(clear, animationKey = false) {
+  async csvGenerateReloadScene(clear, animationKey = false) {
     if (!animationKey)
       animationKey = gAPPP.a.profile.selectedWorkspace;
     if (!animationKey)
@@ -332,7 +251,7 @@ class cWorkspace {
             gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows', null)
               .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', null))
               .then(() => gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows', null))
-              .then(() => this.reloadScene(true))
+              .then(() => this.csvGenerateReloadScene(true))
               .then(() => {});
               */
 
@@ -359,7 +278,7 @@ class cWorkspace {
 
     return Promise.resolve();
   }
-  async __addAnimationTemplate(type, targetProjectId) {
+  async csvGenerateData(type, targetProjectId) {
     let sourceProjectId = gAPPP.a.profile.selectedWorkspace;
     let choice = document.getElementById(`add_animation_${type}_choice`).value;
     let data = null;
@@ -375,7 +294,13 @@ class cWorkspace {
       let filename = this.templates[`${type}Templates`][title];
       let response = await fetch(this.bView.templateBasePath + filename);
       let csv = await response.text();
-      let csvJSON = await this.papaParse(csv);
+      let csvJSON = await new Promise((resolve) => {
+        Papa.parse(csvData, {
+          header: true,
+          complete: results => resolve(results)
+        });
+      });
+
       if (csvJSON.data) data = csvJSON.data;
     }
 
@@ -385,7 +310,86 @@ class cWorkspace {
 
     return Promise.resolve();
   }
-  
+  csvGenerateImportCSV() {
+    if (this.import_csv_file.files.length > 0) {
+      Papa.parse(this.import_csv_file.files[0], {
+        header: true,
+        complete: results => {
+          if (results.data) {
+            for (let c = 0, l = results.data.length; c < l; c++) {
+              new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVRow(results.data[c]).then(() => {});
+            }
+          }
+        }
+      });
+    }
+  }
+  csvGenerationImportJSON() {
+    if (this.import_asset_json_file.files.length > 0) {
+      let reader = new FileReader();
+      reader.onload = e => onJSONLoad(e);
+      reader.readAsText(this.import_asset_json_file.files[0]);
+      let onJSONLoad = (e) => {
+        let json = e.target.result;
+        try {
+          json = JSON.parse(json);
+        } catch (e) {
+          alert('error parsing json check console');
+          console.log('error parsing json for import', e);
+          return;
+        }
+
+        let eleType = json.assetExportTag;
+
+        if (!gAPPP.a.modelSets[eleType]) {
+          alert('no supported assetExportTag found');
+          return;
+        }
+
+        delete json.assetExportTag;
+        delete json.assetExportKey;
+        if (eleType !== 'block') {
+          json.sortKey = new Date().getTime();
+          gAPPP.a.modelSets[eleType].createWithBlobString(json).then(results => {
+            this.bView.openNewWindow(eleType, results.key);
+          });
+        } else {
+          json.sortKey = new Date().getTime();
+          let blockFrames = json.frames;
+          let blockChildren = json.children;
+
+          let __importFrames = (frames, parentKey) => {
+            for (let c = 0, l = frames.length; c < l; c++) {
+              frames[c].parentKey = parentKey;
+              gAPPP.a.modelSets['frame'].createWithBlobString(frames[c]).then(frameResult => {});
+            }
+          };
+
+          json.children = undefined;
+          delete json.children;
+          json.frames = undefined;
+          delete json.frames;
+          gAPPP.a.modelSets['block'].createWithBlobString(json).then(blockResults => {
+            __importFrames(blockFrames, blockResults.key);
+
+            for (let c = 0, l = blockChildren.length; c < l; c++) {
+              let child = blockChildren[c];
+              let childFrames = child.frames;
+              child.frames = undefined;
+              delete child.frames;
+              child.parentKey = blockResults.key;
+
+              gAPPP.a.modelSets['blockchild'].createWithBlobString(child).then(
+                childResults => __importFrames(childFrames, childResults.key));
+            }
+
+            this.bView.openNewWindow(eleType, blockResults.key);
+          });
+        }
+      };
+    }
+  }
+
   async csvGenerateAnimation() {
     let useCurrent = this.add_animation_current_workspace.checked;
     let clearScene = this.add_animation_clear_scene.checked;
@@ -400,17 +404,17 @@ class cWorkspace {
     let wId = gAPPP.a.profile.selectedWorkspace;
     if (!useCurrent) {
       wId = gAPPP.a.modelSets['projectTitles'].getKey();
-      await this.bView._addProject(newTitle, wId, false);
+      await this.bView.workspaceAddProject(newTitle, wId, false);
     }
 
     await Promise.all([
-      this.__addAnimationTemplate('asset', wId),
-      this.__addAnimationTemplate('scene', wId)
+      this.csvGenerateData('asset', wId),
+      this.csvGenerateData('scene', wId)
     ]);
 
-    await this.__addAnimationTemplate('product', wId);
+    await this.csvGenerateData('product', wId);
 
-    return this.reloadScene(clearScene, wId);
+    return this.csvGenerateReloadScene(clearScene, wId);
   }
   csvGenerateUploadCSV(csvType) {
     if (this[`add_animation_${csvType}_download_file`].files.length > 0) {
@@ -439,24 +443,32 @@ class cWorkspace {
         document.body.removeChild(element);
       });
   }
+  csvGenerateTemplate(type) {
+    let value = this['add_animation_' + type + '_choice'].value;
 
-  __loadList(sel, list, htmlPrefix = '') {
-    let html = '';
-    for (let c = 0; c < list.length; c++)
-      html += `<option>${list[c]}</option>`;
-    sel.innerHTML = htmlPrefix + html;
+    this['add_animation_' + type + '_template'].style.display = 'none';
+    this['add_animation_' + type + '_animation'].style.display = 'none';
+    this['add_animation_' + type + '_upload_btn'].style.display = (value === 'Current') ? 'inline-block' : 'none';
+    this['add_animation_' + type + '_download_btn'].style.display = (value === 'Current') ? 'inline-block' : 'none';
+
+    if (value === 'Template') {
+      this['add_animation_' + type + '_template'].style.display = 'inline-block';
+    }
+    if (value === 'Animation') {
+      this['add_animation_' + type + '_animation'].style.display = 'inline-block';
+    }
   }
-  _refreshProjectList(thisid, optionHTML, prefixOptionHTML = '') {
+  csvGenerateRefreshProjectLists(optionHTML) {
+    this._csvGenerateRefreshProjectList(`add_animation_asset_animation`, optionHTML);
+    this._csvGenerateRefreshProjectList('add_animation_scene_animation', optionHTML);
+    this._csvGenerateRefreshProjectList('add_animation_product_animation', optionHTML);
+  }
+  _csvGenerateRefreshProjectList(thisid, optionHTML, prefixOptionHTML = '') {
     if (!this[thisid])
       return;
     let curIndex = this[thisid].selectedIndex;
     this[thisid].innerHTML = prefixOptionHTML + optionHTML;
     this[thisid].selectedIndex = (curIndex > 0) ? curIndex : 0;
-  }
-  refreshProjectLists(optionHTML) {
-    this._refreshProjectList(`add_animation_asset_animation`, optionHTML);
-    this._refreshProjectList('add_animation_scene_animation', optionHTML);
-    this._refreshProjectList('add_animation_product_animation', optionHTML);
   }
 
   workspaceLayoutTemplate() {
@@ -537,19 +549,20 @@ class cWorkspace {
     }
 
     if (sel === 'Assets') {
-      this.loadDataTable('asset');
+      this.workspaceLayoutCSVLoadTable('asset');
     }
     if (sel === 'Layout') {
-      this.loadDataTable('scene');
+      this.workspaceLayoutCSVLoadTable('scene');
     }
     if (sel === 'Products') {
-      this.loadDataTable('product');
-      this.initFieldEdit().then(() => {});
+      this.workspaceLayoutCSVLoadTable('product');
+      this.workspaceLayoutCSVProductFieldsInit().then(() => {});
     }
     if (sel === 'Layout Data') {
       this.workspaceLayoutSceneDataInit().then(() => {});
     }
   }
+
   async workspaceLayoutSceneDataInit() {
     let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
 
@@ -675,7 +688,11 @@ class cWorkspace {
   }
   workspaceLayoutSceneDataValueChange(ctl, e) {
     let data = ctl.dataset;
-    let tab = data.tab, name = data.name, asset = data.asset, field = data.field, value = ctl.value);
+    let tab = data.tab,
+      name = data.name,
+      asset = data.asset,
+      field = data.field,
+      value = ctl.value;
     if (tab === 'layout')
       tab = 'scene';
     if (!this[tab + 'CSVData'])
@@ -710,36 +727,22 @@ class cWorkspace {
     this.workspaceLayoutSceneDataValueChange(this.soUploadImageFile.editCTL);
     return;
   }
-  __updateAddTemplate(type) {
-    let value = this['add_animation_' + type + '_choice'].value;
 
-    this['add_animation_' + type + '_template'].style.display = 'none';
-    this['add_animation_' + type + '_animation'].style.display = 'none';
-    this['add_animation_' + type + '_upload_btn'].style.display = (value === 'Current') ? 'inline-block' : 'none';
-    this['add_animation_' + type + '_download_btn'].style.display = (value === 'Current') ? 'inline-block' : 'none';
-
-    if (value === 'Template') {
-      this['add_animation_' + type + '_template'].style.display = 'inline-block';
-    }
-    if (value === 'Animation') {
-      this['add_animation_' + type + '_animation'].style.display = 'inline-block';
-    }
-  }
-  async papaParse(csvData) {
-    return new Promise((resolve) => {
-      Papa.parse(csvData, {
-        header: true,
-        complete: results => resolve(results)
-      });
-    });
-  }
-  async loadDataTable(tableName) {
+  async workspaceLayoutCSVLoadTable(tableName) {
     let results = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows')
     let data = [];
     if (results) data = results;
 
     if (tableName === 'product')
-      data = this.__sortProductRows(data);
+      data = data.sort((a, b) => {
+        let aIndex = GLOBALUTIL.getNumberOrDefault(a.index, 0);
+        let bIndex = GLOBALUTIL.getNumberOrDefault(b.index, 0);
+        if (aIndex > bIndex)
+          return 1;
+        if (aIndex < bIndex)
+          return -1;
+        return 0;
+      });
 
     let columns = [];
     columns.push({
@@ -771,7 +774,7 @@ class cWorkspace {
       tag: 'delete',
       cellClick: (e, cell) => {
         cell.getRow().delete();
-        this.__reformatTable(tableName);
+        this.workspaceLayoutCSVTableReformat(tableName);
       },
       width: 30
     });
@@ -789,7 +792,7 @@ class cWorkspace {
             name: ''
           }], false, cell.getRow())
           .then(rows => {
-            this.__reformatTable(tableName);
+            this.workspaceLayoutCSVTableReformat(tableName);
             rows[0].getCells()[2].edit();
           })
       },
@@ -857,23 +860,18 @@ class cWorkspace {
       selectable: false,
       layout: "fitData",
       columns,
-      dataEdited: data => this.__tableChangedHandler(true),
-      rowMoved: (row) => this._rowMoved(tableName, row)
+      rowClick: (e, row) => this.workspaceLayoutCSVRowClick(e, row, tableName),
+      dataEdited: data => this.workspaceLayoutCSVTableChange(true),
+      rowMoved: (row) => this.workspaceLayoutCSVRowMoved(tableName, row)
     });
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
   }
-  __sortProductRows(p) {
-    return p.sort((a, b) => {
-      let aIndex = GLOBALUTIL.getNumberOrDefault(a.index, 0);
-      let bIndex = GLOBALUTIL.getNumberOrDefault(b.index, 0);
-      if (aIndex > bIndex)
-        return 1;
-      if (aIndex < bIndex)
-        return -1;
-      return 0;
-    });
+  workspaceLayoutCSVRowClick(e, row, tableName) {
+    if (tableName === 'product') {
+      this.workspaceLayoutCSVProductShow(row.getData().name);
+    }
   }
-  _rowMoved(tableName, row) {
+  workspaceLayoutCSVRowMoved(tableName, row) {
     let tbl = this.editTable;
     let data = tbl.getData();
 
@@ -894,28 +892,17 @@ class cWorkspace {
     for (let c = 0, l = data.length; c < l; c++)
       data[c].index = indexes[c];
     tbl.setData(data).then(() => {});
-    this.__tableChangedHandler();
+    this.workspaceLayoutCSVTableChange();
   }
-  async __saveChanges() {
-    this.canvasHelper.hide();
-
-    await Promise.all([
-      this.__saveTable('asset'),
-      this.__saveTable('product'),
-      this.__saveTable('scene')
-    ]);
-
-    return this.reloadScene();
-  }
-  __reformatTable(tableName) {
+  workspaceLayoutCSVTableReformat(tableName) {
     let tbl = this.editTable;
     let rows = tbl.getRows();
     for (let c = 0, l = rows.length; c < l; c++)
       rows[c].reformat();
 
-    this.__tableChangedHandler();
+    this.workspaceLayoutCSVTableChange();
   }
-  ___testTableDirty(tableName) {
+  workspaceLayoutCSVTableTestDirty(tableName) {
     let tbl = this.editTable;
     let setDirty = false;
     let newCache = JSON.stringify(this.editTable.getData());
@@ -924,32 +911,8 @@ class cWorkspace {
 
     return setDirty;
   }
-  async workspaceCanvasReadyPostTimeout() {
-    document.querySelector('.form_panel_view_dom').style.display = '';
-
-    this.canvasHelper.cameraSelect.selectedIndex = 2;
-    this.canvasHelper.noTestError = true;
-    this.canvasHelper.cameraChangeHandler();
-
-    this.updateProductList();
-    this.updatePositionList();
-    this.loadTemplateLists();
-
-    this._loadDataTables().then(() => {});
-
-    try {
-      this.canvasHelper.playAnimation();
-    } catch (e) {
-      console.log('play anim error', e);
-    }
-
-    this.changes_commit_header = document.getElementById('changes_commit_header');
-    this.changes_commit_header.addEventListener('click', e => this.saveChanges());
-
-    return Promise.resolve();
-  }
-  async __saveTable(tableName) {
-    if (!this.___testTableDirty(tableName))
+  async workspaceLayoutCSVTableSave(tableName) {
+    if (!this.workspaceLayoutCSVTableTestDirty(tableName))
       return Promise.resolve();
 
     let tbl = this.editTable;
@@ -967,12 +930,12 @@ class cWorkspace {
 
     return Promise.resolve();
   }
-  __tableChangedHandler(reloadSceneOptions) {
-    let dirty = this.___testTableDirty('asset');
+  workspaceLayoutCSVTableChange(csvGenerateReloadSceneOptions) {
+    let dirty = this.workspaceLayoutCSVTableTestDirty('asset');
     if (!dirty)
-      dirty = this.___testTableDirty('scene');
+      dirty = this.workspaceLayoutCSVTableTestDirty('scene');
     if (!dirty)
-      dirty = this.___testTableDirty('product');
+      dirty = this.workspaceLayoutCSVTableTestDirty('product');
 
     if (dirty) {
       document.getElementById('changes_commit_header').style.display = 'inline-block';
@@ -980,12 +943,12 @@ class cWorkspace {
       document.getElementById('changes_commit_header').style.display = 'none';
     }
 
-    if (reloadSceneOptions) {
+    if (csvGenerateReloadSceneOptions) {
       this.workspaceLayoutSceneDataListChange();
     }
   }
 
-  async initFieldEdit() {
+  async workspaceLayoutCSVProductFieldsInit() {
     this.record_field_list_form = this.domPanel.querySelector('.layout_product_data_panel form');
     this.record_field_list_form.innerHTML = '';
     this.fieldDivByName = {};
@@ -1033,12 +996,12 @@ class cWorkspace {
     btn.innerHTML = '<i class="material-icons">add</i>';
     this.record_field_list_form.appendChild(btn);
     this.addNewBtn = document.getElementById('update_product_fields_post');
-    this.addNewBtn.addEventListener('click', e => this.addNewProduct(e));
+    this.addNewBtn.addEventListener('click', e => this.workspaceLayoutCSVProductAdd(e));
 
     this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
-    this.assetEditField.addEventListener('input', e => this.updateVisibleEditFields());
+    this.assetEditField.addEventListener('input', e => this.workspaceLayoutCSVProductUpdateType());
 
-    this.updateVisibleEditFields();
+    this.workspaceLayoutCSVProductUpdateType();
 
     this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
     this.products = this.productData.products;
@@ -1049,25 +1012,7 @@ class cWorkspace {
       for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
         basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
     document.getElementById('blocklist').innerHTML = basketListHTML;
-    //  this.updateProductList();
-    this.updatePositionList();
-  }
-  __checkForPosition(x, y, z) {
-    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
-    let sel = document.getElementById('select-position-preset');
-    if (positionInfo) {
-      let arr = positionInfo.genericBlockData.split('|');
-      let positionHTML = '<option>positions</option>';
 
-      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
-        if (arr[c] == x && arr[c + 1] == y && arr[c + 2] == z)
-          return c / 3 + 1;
-      }
-    }
-
-    return -1;
-  }
-  updatePositionList() {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
     let sel = document.getElementById('select-position-preset');
     if (positionInfo) {
@@ -1097,7 +1042,22 @@ class cWorkspace {
       });
     }
   }
-  updateVisibleEditFields() {
+  workspaceLayoutCSVProductCheckPosition(x, y, z) {
+    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
+    let sel = document.getElementById('select-position-preset');
+    if (positionInfo) {
+      let arr = positionInfo.genericBlockData.split('|');
+      let positionHTML = '<option>positions</option>';
+
+      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
+        if (arr[c] == x && arr[c + 1] == y && arr[c + 2] == z)
+          return c / 3 + 1;
+      }
+    }
+
+    return -1;
+  }
+  workspaceLayoutCSVProductUpdateType() {
     let fieldsToShow = null;
     if (this.assetEditField.value === 'message')
       fieldsToShow = this.messageOnlyFields;
@@ -1118,64 +1078,9 @@ class cWorkspace {
       }
     }
   }
-  updateProductList() {
-    //this updates the table
-
-    /*
-          rowH += ` &nbsp;<button class="remove" data-id="${row.name}"><i class="material-icons">delete</i></button>`;
-          let x = GLOBALUTIL.getNumberOrDefault(row.x, 0).toFixed(1);
-          let y = GLOBALUTIL.getNumberOrDefault(row.y, 0).toFixed(1);
-          let z = GLOBALUTIL.getNumberOrDefault(row.z, 0).toFixed(1);
-          let pos = this.__checkForPosition(row.x, row.y, row.z);
-          */
-
-
-    /*
-        let tRows = this.productListDiv.querySelectorAll('.table-row-product-list');
-        for (let c = 0, l = tRows.length; c < l; c++)
-          tRows[c].addEventListener('click', e => {
-            return this.showSelectedProduct(e.currentTarget.dataset.id);
-          });
-
-        let removeBtns = this.productListDiv.querySelectorAll('.remove');
-        for (let c2 = 0, l2 = removeBtns.length; c2 < l2; c2++)
-          removeBtns[c2].addEventListener('click', e => {
-            return this.removeProductByName(e.currentTarget.dataset.id, e);
-          });
-          */
-  }
-  removeProductByName(name, e) {
-    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
-      .then(products => {
-        let outProducts = []
-        for (let c = 0, l = products.length; c < l; c++)
-          if (products[c].name !== name)
-            outProducts.push(products[c]);
-
-        gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows', outProducts)
-          .then(() => this.reloadScene())
-          .then(() => {});
-      });
-
-    if (e) {
-      e.preventDefault();
-    }
-  }
-  __productByName(name) {
-    for (let c = 0, l = this.productData.products.length; c < l; c++)
-      if (this.productData.products[c].origRow.name === name)
-        return this.productData.products[c];
-
-    if (name === 'FollowCamera')
-      return {
-        origRow: this.productData.cameraOrigRow
-      };
-
-    return null;
-  }
-  showSelectedProduct(name) {
+  workspaceLayoutCSVProductShow(name) {
     let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
-    let p = this.__productByName(name);
+    let p = this.workspaceLayoutCSVProductByName(name);
     let row = {};
     if (p)
       row = p.origRow;
@@ -1187,12 +1092,24 @@ class cWorkspace {
       let f = fields[c];
       let v = row[this.fieldList[c]];
       v = (v !== undefined) ? v : '';
-      f.parentElement.MaterialTextfield.change(v);
+      f.value = v;
     }
 
-    this.updateVisibleEditFields();
+    this.workspaceLayoutCSVProductUpdateType();
   }
-  addNewProduct(e) {
+  workspaceLayoutCSVProductByName(name) {
+    for (let c = 0, l = this.productData.products.length; c < l; c++)
+      if (this.productData.products[c].origRow.name === name)
+        return this.productData.products[c];
+
+    if (name === 'FollowCamera')
+      return {
+        origRow: this.productData.cameraOrigRow
+      };
+
+    return null;
+  }
+  workspaceLayoutCSVProductAdd(e) {
     let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
 
     let name = fields[0].value;
@@ -1213,9 +1130,10 @@ class cWorkspace {
     let rows = this.editTable.getData();
     rows.push(newRow);
     this.editTable.setData(rows);
-    this.__tableChangedHandler();
+    this.workspaceLayoutCSVTableChange();
 
     e.preventDefault();
     return true;
   }
+
 }

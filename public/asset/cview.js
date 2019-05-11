@@ -138,13 +138,7 @@ class cView extends bView {
       return;
     }
 
-    let url = this.genQueryString(null, null, newKey);
-    let a = document.createElement('a');
-    a.setAttribute('href', url);
-    a.setAttribute('target', '_blank');
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    this.openNewWindow(this.tag, newKey);
   }
   deleteAsset() {
     if (!this.tag)
@@ -356,12 +350,12 @@ class cView extends bView {
             <select id="workspaces-select"></select>
             <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
             <select id="view_layout_select" style="float:right;">
-              <option>Full</option>
+              <option>View</option>
               <option>Top</option>
               <option>Left</option>
               <option>Bottom</option>
               <option>Right</option>
-              <option>None</option>
+              <option>Edit</option>
             </select>
             <br>
             <select id="dataview_record_tag">
@@ -651,7 +645,7 @@ class cView extends bView {
     super.updateProjectList(records, selectedWorkspace);
 
     if (this.workspaceCTL) {
-      this.workspaceCTL.refreshProjectLists(this.workplacesSelect.innerHTML);
+      this.workspaceCTL.csvGenerateRefreshProjectLists(this.workplacesSelect.innerHTML);
     }
   }
 }
