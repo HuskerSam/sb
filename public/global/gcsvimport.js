@@ -1172,8 +1172,9 @@ class gCSVImport {
     let productsRecords = records;
     let sceneRecords = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
     if (sceneRecords.records.length < 1) {
-      console.log('scene (blockFlag) - block not found');
-      return Promise.resolve({});
+      return Promise.resolve({
+        productsRecords
+      });
     }
     let sceneId = sceneRecords.recordIds[0];
     let sceneBlock = sceneRecords.records[0];

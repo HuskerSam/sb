@@ -4,25 +4,7 @@ class cWorkspace {
     this.bView = bView;
 
     if (subKey === 'Details') {
-      let html = this.workspaceDetailsTemplate();
-      let blockCount = Object.keys(gAPPP.a.modelSets['block'].fireDataValuesByKey).length;
-      let shapeCount = Object.keys(gAPPP.a.modelSets['shape'].fireDataValuesByKey).length;
-      let frameCount = Object.keys(gAPPP.a.modelSets['frame'].fireDataValuesByKey).length;
-      let meshCount = Object.keys(gAPPP.a.modelSets['mesh'].fireDataValuesByKey).length;
-      let textureCount = Object.keys(gAPPP.a.modelSets['texture'].fireDataValuesByKey).length;
-      let materialCount = Object.keys(gAPPP.a.modelSets['material'].fireDataValuesByKey).length;
-      let blockchildCount = Object.keys(gAPPP.a.modelSets['blockchild'].fireDataValuesByKey).length;
-      html += `<hr>
-      Block Count: ${blockCount}<br>
-      Shape Count: ${shapeCount}<br>
-      Frame Count: ${frameCount}<br>
-      Mesh Count: ${meshCount}<br>
-      Texture Count: ${textureCount}<br>
-      Material Count: ${materialCount}<br>
-      Block Link Count: ${blockchildCount}<br>`;
-      this.domPanel.innerHTML = html;
-      this.workspaceDetailsRegister();
-      return;
+      this.workspaceDetailsInit();
     }
     if (subKey === 'Add / Generate') {
       this.domPanel.innerHTML = this.workspaceNewTemplate();
@@ -34,13 +16,65 @@ class cWorkspace {
       this.workspaceLayoutRegister();
       return;
     }
-    this.domPanel.innerHTML = 'View';
+  }
+  async workspaceDetailsInit() {
+    let html = this.workspaceDetailsTemplate();
+    let blockCount = Object.keys(gAPPP.a.modelSets['block'].fireDataValuesByKey).length;
+    let shapeCount = Object.keys(gAPPP.a.modelSets['shape'].fireDataValuesByKey).length;
+    let frameCount = Object.keys(gAPPP.a.modelSets['frame'].fireDataValuesByKey).length;
+    let meshCount = Object.keys(gAPPP.a.modelSets['mesh'].fireDataValuesByKey).length;
+    let textureCount = Object.keys(gAPPP.a.modelSets['texture'].fireDataValuesByKey).length;
+    let materialCount = Object.keys(gAPPP.a.modelSets['material'].fireDataValuesByKey).length;
+    let blockchildCount = Object.keys(gAPPP.a.modelSets['blockchild'].fireDataValuesByKey).length;
+
+    html += `<hr>
+    Block Count: ${blockCount}<br>
+    Shape Count: ${shapeCount}<br>
+    Frame Count: ${frameCount}<br>
+    Mesh Count: ${meshCount}<br>
+    Texture Count: ${textureCount}<br>
+    Material Count: ${materialCount}<br>
+    Block Link Count: ${blockchildCount}<br>`;
+
+
+    let gi = new gCSVImport(gAPPP.a.profile.selectedWorkspace);
+    let sceneRecords = await gi.dbFetchByLookup('block', 'blockFlag', 'scene');
+    if (sceneRecords.recordIds.length > 0) {
+      html += 'Scene Block: ' + sceneRecords.records[0].title + ` (${sceneRecords.recordIds[0]})<br>`;
+    } else {
+      html += 'Scene Block: none<br>';
+    }
+
+    let blocksData = await gi.dbFetchByLookup('block', 'blockFlag', 'displayblock');
+    html += 'Display Blocks found: ' + blocksData.records.length + '<br>';
+    blocksData.records.forEach(i => html += `${i.title}, `);
+    html += '<br>';
+
+    let baskets = await gi.dbFetchByLookup('block', 'blockFlag', 'basket');
+    if (baskets.recordIds.length > 0)
+      html += `Basket Block: ${baskets.records[0].title} (${baskets.recordIds[0]})<br>`;
+    else {
+      html += 'Basket Block: none<br>'
+    }
+
+    let result = await firebase.database().ref(gi.path('blockchild'))
+      .orderByChild('animationIndex')
+      .startAt(-100000)
+      .once('value');
+    let recordsById = result.val();
+    let animationStops = 0;
+    if (recordsById)
+      animationStops = Object.keys(recordsById).length;
+    html += `Animation Stops: ${animationStops}<br>`;
+    this.domPanel.innerHTML = html;
+    this.workspaceDetailsRegister();
+    return;
   }
   workspaceDetailsTemplate() {
     return `<div style="flex:1"><label><span>Name</span><input id="edit-workspace-name" /></label>
       <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
       <br>
-      <label><span> Z Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
+      <label><span> Lookup Code </span><input id="edit-workspace-code" style="width:5em;" /></label>
       <br>
       <input type="file" style="display:none;" class="import_csv_file">
       <button class="import_csv_records">Import CSV Records</button>
