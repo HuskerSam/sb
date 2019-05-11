@@ -174,7 +174,7 @@ class cView extends bView {
     this.updateSelectedRecord().then(() => {});
   }
   _updateRecordSelect() {
-    let options = '<option>Details</option><option>Add / Generate</option><option>Layout</option><option>View</option>';
+    let options = '<option>Details</option><option>Add / Generate</option><option>Layout</option>';
 
     this.addAssetPanel.style.display = 'none';
     if (this.tag) {
@@ -380,7 +380,8 @@ class cView extends bView {
               <option>Assets</option>
               <option>Layout Data</option>
             </select>
-            <button class="workspace_commit_layout_changes"><i class="material-icons">save</i></button>
+            <button class="workspace_commit_layout_changes btn-sb-icon"><i class="material-icons">save</i></button>
+            <button class="workspace_regenerate_layout_changes btn-sb-icon"><i class="material-icons">gavel</i></button>
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_a_photo</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
             <div class="block_child_details_block" style="display:inline-block;">

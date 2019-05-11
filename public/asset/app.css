@@ -349,7 +349,7 @@ select {
 }
 
 .form_canvas_wrapper.show-help {
-  display:flex;
+  display: flex;
   overflow: auto;
 }
 
@@ -477,7 +477,7 @@ select {
   padding: .5em;
 }
 
-#scene_options_list {
+.scene_options_list {
   height: 12em;
   overflow: auto;
   flex: 1;
@@ -496,14 +496,15 @@ select {
   flex: 1;
 }
 
-.layout_product_data_panel > form > div {
+.layout_product_data_panel>form>div {
   display: inline-block;
 }
 
-.workspace_layout_view_select, .workspace_commit_layout_changes {
+.workspace_layout_view_select, .workspace_commit_layout_changes, .workspace_regenerate_layout_changes {
   display: none;
 }
 
-.workspacelayout .workspace_layout_view_select, .workspacelayout .workspace_commit_layout_changes {
+.workspacelayout .workspace_layout_view_select, .workspacelayout .workspace_commit_layout_changes,
+.workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
 }
