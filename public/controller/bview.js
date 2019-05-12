@@ -119,8 +119,8 @@ class bView {
       </div>
       <br>
       <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
-      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--primary play-button"><i class="material-icons">play_arrow</i></button>
-      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored pause-button"><i class="material-icons">pause</i></button>
+      <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
+      <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
       <div class="run-length-label"></div>
       <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
 
