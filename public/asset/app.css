@@ -508,3 +508,16 @@ select {
 .workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
 }
+
+.tabulator .tabulator-tableHolder .tabulator-table {
+  background: none;
+  color: inherit;
+}
+
+.tabulator .tabulator-row {
+  background: inherit;
+}
+
+.tabulator .tabulator-header {
+  background: inherit;
+}

@@ -10,6 +10,7 @@ class gInstanceSuper {
       'box', 'cylinder', 'sphere', 'text', 'plane', 'torus', 'torusknot'
     ];
     this._initShapesList();
+
     window.addEventListener("resize", () => this.resize());
     firebase.database().ref('/.info/serverTimeOffset').once('value').then((data) => this.serverOffsetTime = data.val());
 
@@ -131,6 +132,12 @@ class gInstanceSuper {
       ctlColor = a;
       niteMode = true;
     }
+    this.appStyleDetails = {
+      foreColor,
+      bkgColor,
+      ctlColor,
+      niteMode
+    };
 
     let css = '* { ';
     let fontSize = this._parseFontSize(this.a.profile.fontSize);
@@ -141,10 +148,25 @@ class gInstanceSuper {
       background: transparent;
     }
 
+    .app-inverted, .app-inverted i {
+      color: ${ctlColor};
+      background: ${foreColor}
+    }
+
     select, input, button {
       background-color: ${ctlColor};
       border-radius: .5em;
       border-color: rgb(200, 200, 200);
+    }
+
+    .tabulator .tabulator-cell {
+      background: ${bkgColor};
+    }
+    .tabulator .tabulator-header .tabulator-col {
+      background: ${ctlColor};
+    }
+    .tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box .tabulator-row-handle-bar {
+      background: ${foreColor}
     }
     `;
 

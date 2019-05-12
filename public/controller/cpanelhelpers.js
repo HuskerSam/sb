@@ -424,13 +424,15 @@ class cPanelHelpers {
     if (vState) {
       helperDom.style.display = 'block';
       collapseButton.innerHTML = '<i class="material-icons">expand_less</i>';
-      collapseButton.style.color = 'white';
-      collapseButton.style.background = 'rgb(50,50,50)';
+      collapseButton.classList.add('app-inverted');
+  //    collapseButton.style.color = gAPPP.appStyleDetails.ctlColor;
+    //  collapseButton.style.background = gAPPP.appStyleDetails.foreColor;
     } else {
       helperDom.style.display = 'none';
       collapseButton.innerHTML = '<i class="material-icons">expand_more</i>';
-      collapseButton.style.color = 'black';
-      collapseButton.style.background = 'rgb(240,240,240)';
+      collapseButton.classList.remove('app-inverted');
+  //  collapseButton.style.color = gAPPP.appStyleDetails.foreColor;
+  //    collapseButton.style.background = gAPPP.appStyleDetails.ctlColor;
     }
   }
   __updateBoundingInfo() {
