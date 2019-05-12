@@ -13,6 +13,7 @@ select {
   border-radius: .5em;
   padding: .25em;
   border: outset .1em silver;
+  font-size: 1.25em;
 }
 
 html, body {

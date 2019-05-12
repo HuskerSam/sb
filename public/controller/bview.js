@@ -476,7 +476,7 @@ class bView {
     }
   }
   openNewWindow(tag, key) {
-    let url = this.genQueryString(null, tag, newKey);
+    let url = this.genQueryString(null, tag, key);
     let a = document.createElement('a');
     a.setAttribute('href', url);
     a.setAttribute('target', '_blank');

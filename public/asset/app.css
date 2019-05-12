@@ -83,10 +83,6 @@ body {
   pointer-events: none;
 }
 
-#fov-camera-bar {
-  display: none !important;
-}
-
 #-position-preset {
   background: rgb(0, 150, 136);
   color: white;
@@ -386,6 +382,11 @@ select {
   overflow: auto;
 }
 
+.asset-fields-container input, .asset-fields-container button {
+  margin: .25em;
+  padding: .25em;
+}
+
 .form_canvas_wrapper {
   position: relative;
 }
@@ -479,13 +480,14 @@ select {
 
 .scene_options_list {
   height: 12em;
+  width: 25em;
   overflow: auto;
-  flex: 1;
 }
 
 .csv_scene_field_upload_wrapper, .csv_scene_field_text_wrapper {
   white-space: nowrap;
   display: inline-block;
+  margin: .5em;
 }
 
 .tabulator {
@@ -493,11 +495,20 @@ select {
 }
 
 .scene_options_edit_fields {
-  flex: 1;
 }
 
 .layout_product_data_panel>form>div {
   display: inline-block;
+  margin: .5em;
+}
+
+.layout_product_data_panel>form>div input, .csv_scene_field_text_wrapper input {
+  padding: .25em;
+  margin-left: .25em;
+}
+
+.layout_product_data_panel>form>div select {
+  font-size: 1.1em;
 }
 
 .workspace_layout_view_select, .workspace_regenerate_layout_changes {

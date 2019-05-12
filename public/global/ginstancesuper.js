@@ -125,10 +125,12 @@ class gInstanceSuper {
     let bkgColor = GLOBALUTIL.colorRGB255(canvasColor);
     let foreColor = 'rgb(50, 50, 50)';
     let ctlColor = 'rgb(250, 250, 250)';
+    let ctlHalfColor = 'rgba(250, 250, 250, .5)';
     let niteMode = false;
     if ((bkg.r) + (bkg.b) + (2.5 * bkg.g) < 2) {
       let a = foreColor;
       foreColor = ctlColor;
+      ctlHalfColor = 'rgba(50, 50, 50, .5)';
       ctlColor = a;
       niteMode = true;
     }
@@ -136,6 +138,7 @@ class gInstanceSuper {
       foreColor,
       bkgColor,
       ctlColor,
+      ctlHalfColor,
       niteMode
     };
 
@@ -160,7 +163,7 @@ class gInstanceSuper {
     }
 
     .tabulator .tabulator-cell {
-      background: ${bkgColor};
+      background: ${ctlHalfColor};
     }
     .tabulator .tabulator-header .tabulator-col {
       background: ${ctlColor};
