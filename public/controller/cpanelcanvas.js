@@ -111,7 +111,7 @@ class cPanelCanvas {
   }
   _updateFOVRangeSlider() {
     this.parent.context.camera.fov = Number(this.fovSlider.value);
-    this.fovSlider.parentElement.querySelector('.camera-slider-label').innerHTML = 'FoV: ' + this.fovSlider.value;
+    this.fovSlider.parentElement.querySelector('.camera-slider-label').innerHTML = '<i class="material-icons">camera</i> ' + this.fovSlider.value;
   }
   exportBabylonFile() {
     let serializedScene = BABYLON.SceneSerializer.Serialize(this.parent.context.scene);

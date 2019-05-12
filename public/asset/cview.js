@@ -629,7 +629,12 @@ class cView extends bView {
 
     if (!this.tag) {
       this.workspaceCTL = new cWorkspace(this.mainDataView, this.key, this);
-      fetch('/doc/workspacehelp.html')
+      let url = '/doc/workspacehelp.html';
+      if (this.key === 'Details')
+        url = '/doc/workspacehelp.html';
+      if (this.key === 'Add / Generate')
+          url = '/doc/workspaceimporthelp.html';
+      fetch(url, {cache: "no-cache"})
         .then(res => res.text())
         .then(html => this.addAssetPanel.innerHTML = html);
       this.addAssetPanel.classList.add('help-shown-panel');
@@ -641,7 +646,7 @@ class cView extends bView {
     this.recordViewer = new cBandIcons(this.tag, this);
     this.addAssetPanel.classList.remove('help-shown-panel');
 
-    fetch(`/doc/${this.tag}help.html`)
+    fetch(`/doc/${this.tag}help.html`, {cache: "no-cache"})
       .then(res => res.text())
       .then(html => this.helpViewer.innerHTML = html);
 

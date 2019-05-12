@@ -1,5 +1,5 @@
 * {
-  font-size: 15px;
+  font-size: 10pt;
   font-family: Helvetica, Arial;
 }
 
@@ -19,8 +19,8 @@ button {
   text-align: center;
   position: absolute;
   z-index: 100;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
 }
 
@@ -36,7 +36,8 @@ button {
 
 .play-button, .pause-button {
   position: relative;
-  top: -.5em;
+  top: .25em;
+  left: -.25em;
 }
 
 .canvas-actions input.animate-range {}
@@ -49,7 +50,7 @@ button {
 .canvas-actions-shown {
   bottom: initial;
   display: block;
-  top: -10px;
+  top: 0;
 }
 
 .canvas-actions .camera-options-panel {
@@ -58,6 +59,7 @@ button {
   left: -.25em;
   line-height: 3em;
   pointer-events: none;
+  width: 100%;
 }
 
 .lightbar-fields-container .form-control {
@@ -66,8 +68,8 @@ button {
 
 .lightbar-fields-container {
   position: absolute;
-  right: -1.25em;
-  top: .5em;
+  right: -1em;
+  top: 2.5em;
 }
 
 .lightbar-fields-container .form-group-container-group {
@@ -79,11 +81,15 @@ button {
 .lightbar-fields-container label span {
   background: none;
   position: absolute;
-  top: .25em;
+  top: .75em;
   color: white;
-  font-size: 30px;
+  font-size: 1.5em;
   z-index: 1;
   left: -.9em;
+  pointer-events: none;
+}
+
+.lightbar-fields-container i {
   pointer-events: none;
 }
 
@@ -93,22 +99,40 @@ button {
 }
 
 .run-length-label, .camera-slider-label {
-  font-size: 20px;
-  left: .75em;
-  top: -.4em
+  font-size: 1.25em;
+  left: .05em;
+  top: .2em;
+  background: rgba(50, 50, 50, .5);
+  width: auto;
+  height: auto;
+  z-index: 1000;
+  pointer-events: none;
+  line-height: 1em;
+}
+
+.camera-slider-label {
+  position: absolute;
+  left: .5em;
+  top: .55em;
+  padding: 0;
 }
 
 .run-length-label i, .camera-slider-label i {
   top: .15em;
   position: relative;
+  pointer-events: none;
 }
 
 #light_intensity_value {
-  font-size: 10px;
-  top: 30px;
-  left: 10px;
-  width: 35px;
+  font-size: .65em;
+  top: 1.5em;
+  left: .75em;
+  width: auto;
   text-align: center;
+  background: rgba( 50, 50, 50, .5);
+  pointer-events: none;
+  z-index: 1000;
+  padding: 0;
 }
 
 button i.material-icons {
@@ -157,8 +181,8 @@ select {
 }
 
 .frames-panel .form-group-container-group .form-group {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 }
 
 .frames-panel button.delete-button {
@@ -175,7 +199,7 @@ select {
   border: none;
   border-radius: 0;
   border-top: solid .1em silver;
-  border-bottom: solid 1px black;
+  border-bottom: solid .05em black;
 }
 
 .frames-panel .frames-header-fields-panel {
@@ -208,7 +232,7 @@ select {
 .frame-info-panel {
   border-radius: .2em;
   overflow: auto;
-  margin: 0px;
+  margin: 0;
   text-align: left;
   font-size: 1em;
 }
@@ -310,8 +334,8 @@ select {
 .none-layout-mode-flip {
   z-index: 10000;
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: .5em;
+  right: .5em;
 }
 
 .band-background-preview {

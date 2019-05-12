@@ -45,7 +45,7 @@ html, body {
   color: rgb(50, 50, 50);
   position: absolute;
   z-index: 5;
-  left: 0px;
+  left: 0;
 }
 
 #firebase-app-main-page {
@@ -76,7 +76,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   position: relative;
-  margin-bottom: 5px;
+  margin-bottom: .05em;
 }
 
 .canvas-actions .render-log-wrapper {
@@ -130,7 +130,7 @@ html, body {
 }
 
 .canvas-actions input[type="range"] {
-  width: 18vw;
+  width: 100%;
   display: inline-block;
   position: relative;
   top: .2em;
@@ -139,7 +139,10 @@ html, body {
 }
 
 .canvas-actions input.animate-range {
-  width: 23vw;
+  width: calc(100% - 9em);
+  min-width: 12em;
+  position: absolute;
+  left: 3em;
 }
 
 .form-group.shortVector input[type="range"] {
@@ -207,7 +210,7 @@ html, body {
 .url-form-group button {
   float: right;
   font-size: .8em;
-  margin: 0px;
+  margin: 0;
   margin-right: .1em;
   border: none;
   background: rgb(240, 240, 240);
@@ -268,6 +271,13 @@ button i.material-icons {
   font-size: 1.1em;
 }
 
+.btn-sb-icon.scene-options {
+  position: absolute;
+  right: .05em;
+  top: .35em;
+  z-index: 10000;
+}
+
 .scene-options-panel .selected-mesh-bounds-helper-box {
   background: none!important;
   height: 6em;
@@ -300,6 +310,9 @@ button i.material-icons {
 
 .scene-options-panel {
   pointer-events: none;
+  position:absolute;
+  top: 2em;
+  z-index: 100;
 }
 
 .scene-options-panel .scene-fields-container {
@@ -322,6 +335,12 @@ button i.material-icons {
   margin-right: 5.5em;
 }
 
+.camera-options-panel > div {
+  position: relative;
+  width: 40%;
+  min-width: 12em;
+}
+
 .color-picker-input {
   position: absolute;
   top: -.1em;
@@ -342,6 +361,11 @@ button i.material-icons {
   color: white;
   z-index: 1;
   white-space: nowrap;
+}
+
+.camera-slider-label {
+  position: absolute;
+  left: 2.5em;
 }
 
 .light-intensity-user-panel {
@@ -377,7 +401,7 @@ button i.material-icons {
 }
 
 .selected-mesh-bounds-helper-box .action-area select {
-  padding: 0px;
+  padding: 0;
   font-size: 1em;
 }
 
@@ -425,8 +449,10 @@ button i.material-icons {
 }
 
 .canvas-play-bar {
-  display:inline-block;
   pointer-events:none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .video-overlay {
@@ -461,7 +487,7 @@ button i.material-icons {
 #profile-header-panel {
   transition: height 800ms, opacity 800ms, padding 800ms;
   overflow: auto;
-  height: 0px;
+  height: 0;
   opacity: 0;
 }
 
@@ -469,7 +495,7 @@ button i.material-icons {
   max-height: 40%;
   height: auto;
   opacity: 1;
-  padding: 10px;
+  padding: .1em;
 }
 
 .font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
