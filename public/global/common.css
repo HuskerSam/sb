@@ -27,7 +27,6 @@ html, body {
 .btn-sb-icon {
   font-size: 1.5em;
   color: black;
-  border-radius: .5em;
   border-width: .08em;
 }
 
@@ -180,7 +179,6 @@ html, body {
 .form-group input {
   text-align: center;
   width: 100%;
-  border-radius: .5em;
   font-size: 1em;
   float: left;
   padding: .25em .5em;
@@ -212,7 +210,6 @@ html, body {
   margin: 0px;
   margin-right: .1em;
   border: none;
-  border-radius: .25em;
   background: rgb(240, 240, 240);
   position: relative;
   top: -.15em;
@@ -226,7 +223,6 @@ html, body {
 
 .checkboxgroup label span {
   padding: .25em .1em;
-  border-radius: .25em;
   font-size: 1em;
   position: relative;
   top: .25em;
@@ -238,9 +234,7 @@ html, body {
 
 .form-group-container-group {
   display: inline-block;
-  border-radius: .5em;
   text-align: center;
-  background: rgba(255, 255, 255, .5);
   float: left;
   position: relative;
   margin: .25em;
@@ -259,7 +253,6 @@ html, body {
 }
 
 .form-group-container-group label {
-  border-radius: .25em;
   padding: 0;
   margin: 0;
   position: relative;
@@ -335,7 +328,6 @@ button i.material-icons {
   right: -.6em;
   width: 2.5em!important;
   padding: 0em!important;
-  border-radius: .25em!important;
   height: 1.25em;
 }
 

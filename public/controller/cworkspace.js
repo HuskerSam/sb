@@ -27,7 +27,7 @@ class cWorkspace {
     let materialCount = Object.keys(gAPPP.a.modelSets['material'].fireDataValuesByKey).length;
     let blockchildCount = Object.keys(gAPPP.a.modelSets['blockchild'].fireDataValuesByKey).length;
 
-    html += `<hr>
+    html += `<hr><div style="line-height:1.5em;padding:.5em;">
     Block Count: ${blockCount}<br>
     Shape Count: ${shapeCount}<br>
     Frame Count: ${frameCount}<br>
@@ -66,6 +66,7 @@ class cWorkspace {
     if (recordsById)
       animationStops = Object.keys(recordsById).length;
     html += `Animation Stops: ${animationStops}<br>`;
+    html += '</div>';
     this.domPanel.innerHTML = html;
     this.workspaceDetailsRegister();
     return;
@@ -80,7 +81,7 @@ class cWorkspace {
       <button class="import_csv_records">Import CSV Records</button>
       &nbsp;
       <input type="file" style="display:none;" class="import_asset_json_file">
-      <button class="import_asset_json_button">Import Asset JSON</button><div>`;
+      <button class="import_asset_json_button">Import Asset JSON</button>`;
   }
   workspaceDetailsRegister() {
     this.bView.workplacesSelectEditName = this.domPanel.querySelector('#edit-workspace-name');

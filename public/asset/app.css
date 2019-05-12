@@ -9,6 +9,11 @@ body {
   background: white;
 }
 
+button {
+  font-size: 1.35em;
+  margin: 0 .25em;
+}
+
 #firebase-app-login-page {
   width: 100%;
   text-align: center;
@@ -75,7 +80,6 @@ body {
   background: none;
   position: absolute;
   top: .25em;
-  border-radius: .25em;
   color: white;
   font-size: 30px;
   z-index: 1;
@@ -401,7 +405,6 @@ select {
 
 .add-asset-template-panel input {
   margin: .25em;
-  border-radius: .5em;
   padding: .25em;
 }
 

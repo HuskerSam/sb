@@ -125,12 +125,12 @@ class gInstanceSuper {
     let bkgColor = GLOBALUTIL.colorRGB255(canvasColor);
     let foreColor = 'rgb(50, 50, 50)';
     let ctlColor = 'rgb(250, 250, 250)';
-    let ctlHalfColor = 'rgba(250, 250, 250, .5)';
+    let ctlHalfColor = 'rgba(250, 250, 250, .7)';
     let niteMode = false;
     if ((bkg.r) + (bkg.b) + (2.5 * bkg.g) < 2) {
       let a = foreColor;
       foreColor = ctlColor;
-      ctlHalfColor = 'rgba(50, 50, 50, .5)';
+      ctlHalfColor = 'rgba(50, 50, 50, .7)';
       ctlColor = a;
       niteMode = true;
     }
@@ -254,6 +254,10 @@ class gInstanceSuper {
       css += `
       button, select {
         border-style: solid;
+        border-radius: 0;
+      }
+
+      input {
         border-radius: 0;
       }
 
