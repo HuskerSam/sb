@@ -8,6 +8,10 @@ class gAuthorization {
     this.modelSets['userProfile'] = new mFirebaseProfile();
     this.fireSets.push(this.modelSets['userProfile']);
 
+    //check for profile reset
+    let searchParams = new URLSearchParams(window.location.search);
+    this.profileReset = (searchParams.get('reset') === 'true');
+
     this.modelSets['projectTitles'] = new mFirebaseProject('projectTitles', true);
     this.modelSets['projectTitles'].valueChangedEvents = true;
     this.modelSets['projectTitles'].childListeners.push((values, type, fireData) => this.onProjectTitlesChange(values, type, fireData));
@@ -49,7 +53,7 @@ class gAuthorization {
     if (gAPPP.mV)
       gAPPP.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, null);
   }
-  onAuthStateChanged(user) {
+  async onAuthStateChanged(user) {
     //ignore unwanted events
     if (user && this.uid === user.uid) {
       return;
@@ -61,10 +65,8 @@ class gAuthorization {
       this.loggedIn = true;
       this.modelSetsInited = {};
 
-      //check for profile reset
-      let searchParams = new URLSearchParams(window.location.search);
-      if (searchParams.get('reset') === 'true')
-        this.resetProfile();
+      if (this.profileReset)
+        await this.resetProfile();
 
       this.loadProfile();
     } else {
@@ -75,6 +77,7 @@ class gAuthorization {
     }
 
     this.updateAuthUI();
+    return;
   }
   initModelSet(setTag) {
     this.modelSetsInited[setTag] = true;
@@ -186,7 +189,7 @@ class gAuthorization {
     if (this.updateAuthUICallback)
       this.updateAuthUICallback();
   }
-  resetProfile() {
+  async resetProfile() {
     let profileData = {
       fontSize: '9',
       lightIntensity: '.4',
@@ -208,7 +211,9 @@ class gAuthorization {
       profileData.showBoundsBox = false;
       profileData.showFloorGrid = false;
     }
-    this.modelSets['userProfile'].setObject(profileData);
+    await this.modelSets['userProfile'].setObject(profileData);
+
+    return;
   }
   _activateModels() {
     for (let c in this.fireSets)
