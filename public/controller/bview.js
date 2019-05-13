@@ -7,6 +7,7 @@ class bView {
     this.childKey = childKey;
     this.layoutMode = layoutMode;
     this.subView = subview;
+    this.fontsAdded = {};
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
     this.initDom();

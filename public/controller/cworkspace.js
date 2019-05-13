@@ -26,6 +26,7 @@ class cWorkspace {
     let textureCount = Object.keys(gAPPP.a.modelSets['texture'].fireDataValuesByKey).length;
     let materialCount = Object.keys(gAPPP.a.modelSets['material'].fireDataValuesByKey).length;
     let blockchildCount = Object.keys(gAPPP.a.modelSets['blockchild'].fireDataValuesByKey).length;
+    let googleFontCount = Object.keys(gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont')).length;
 
     html += `<hr><div style="line-height:1.5em;padding:.5em;">
     Block Count: ${blockCount}<br>
@@ -34,7 +35,8 @@ class cWorkspace {
     Mesh Count: ${meshCount}<br>
     Texture Count: ${textureCount}<br>
     Material Count: ${materialCount}<br>
-    Block Link Count: ${blockchildCount}<br>`;
+    Block Link Count: ${blockchildCount}<br>
+    Web Fonts: ${googleFontCount}<br>`;
 
 
     let gi = new gCSVImport(gAPPP.a.profile.selectedWorkspace);
