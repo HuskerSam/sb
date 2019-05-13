@@ -309,6 +309,8 @@ class cPanelCanvas {
     return this._playState;
   }
   set playState(newState) {
+    if (newState === undefined)
+      newState = 0;
     this._playState = newState;
     if (!this.rootBlock)
       return;

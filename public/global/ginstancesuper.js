@@ -156,7 +156,7 @@ class gInstanceSuper {
       background: ${foreColor}
     }
 
-    select, input, button {
+    select, input, button, textarea {
       background-color: ${ctlColor};
       border-radius: .5em;
       border-color: rgb(200, 200, 200);

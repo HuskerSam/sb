@@ -32,6 +32,9 @@ class cView extends bView {
     this.deleteAssetButton.addEventListener('click', e => this.deleteAsset());
     this.snapshotAssetButton = this.dialog.querySelector('.snapshot-asset-button');
     this.snapshotAssetButton.addEventListener('click', e => this.renderPreview());
+    this.openViewerAssetButton = this.dialog.querySelector('.view-asset-button');
+    this.openViewerAssetButton.addEventListener('click', e => this.openViewerForAsset());
+
     this.addAssetButton = this.dialog.querySelector('.add-asset-button');
     this.addAssetButton.addEventListener('click', e => this.addAsset());
     this.block_child_details_block = this.dialog.querySelector('.block_child_details_block');
@@ -129,7 +132,7 @@ class cView extends bView {
     let view = this.mainbandsubviewselect.value;
     this.addFrameButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
     this.framesPanel.style.display = (view === 'frame') ? 'block' : 'none';
-    this.nodedetailspanel.style.display = (view === 'node') ? 'block' : 'none';
+    this.nodedetailspanel.style.display = (view === 'node') ? '' : 'none';
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'block' : 'none';
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
 
@@ -189,6 +192,7 @@ class cView extends bView {
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
+      this.openViewerAssetButton.style.display = 'none';
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.subView;
     }
@@ -198,6 +202,7 @@ class cView extends bView {
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'none';
     this.snapshotAssetButton.style.display = 'none';
+    this.openViewerAssetButton.style.display = 'none';
     this.addAssetButton.style.display = 'none';
     this.block_child_details_block.style.display = 'none';
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
@@ -247,6 +252,8 @@ class cView extends bView {
       this.initDataFields();
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
     this._updateQueryString();
+
+    this.openViewerAssetButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
 
     if (this.tag === 'block') {
       if (this.fireFields.values.url)
@@ -389,16 +396,17 @@ class cView extends bView {
               <option>Layout Data</option>
             </select>
             <button class="workspace_regenerate_layout_changes btn-sb-icon"><i class="material-icons">gavel</i></button>
-            <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_a_photo</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
+            <button class="view-asset-button btn-sb-icon"><i class="material-icons">tv</i></button>
+            <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_photo_alternate</i></button>
             <div class="block_child_details_block" style="display:inline-block;">
               <select class="main-band-children-select" style="display:none;"></select>
               <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove</i></button>
               <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
               <select class="main-band-sub-view-select" style="display:none;">
                 <option value="frame" selected>Frames</option>
-                <option value="node">Node Details</option>
-                <option value="import">Import/Export</option>
+                <option value="node">Details</option>
+                <option value="import">JSON</option>
               </select>
               <button class="add_frame_button btn-sb-icon" style="display:none;"><i class="material-icons">playlist_add</i></button>
             </div>
@@ -468,14 +476,14 @@ class cView extends bView {
   }
   __dataviewTemplate() {
     return `<div class="asset-fields-container"></div>
-      <div class="frames-panel" style='display:none;'></div>
-      <div class="node-details-panel" style="display:none">
+      <div class="frames-panel"><div class="no-frames"></div></div>
+      <div class="node-details-panel">
         <div class="cblock-child-details-panel"></div>
         <div class="scene-fields-panel">
           <hr>
         </div>
       </div>
-      <div class="export-frames-details-panel" style='display:none'>
+      <div class="export-frames-details-panel">
         <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
         &nbsp;
         <button class="btn-sb-icon import-frames-button">Import</button>
@@ -547,7 +555,6 @@ class cView extends bView {
     this.childKey = key;
     if (!this.childEditPanel)
       return;
-    this.childEditPanel.style.display = 'none';
     this._updateQueryString();
 
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
@@ -559,7 +566,6 @@ class cView extends bView {
     } else {
       this.form_panel_view_dom.classList.remove('root-block-display');
       this.form_panel_view_dom.classList.add('child-block-display');
-      this.childEditPanel.style.display = 'block';
 
       if (this.rootBlock) {
         let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
@@ -633,8 +639,10 @@ class cView extends bView {
       if (this.key === 'Details')
         url = '/doc/workspacehelp.html';
       if (this.key === 'Add / Generate')
-          url = '/doc/workspaceimporthelp.html';
-      fetch(url, {cache: "no-cache"})
+        url = '/doc/workspaceimporthelp.html';
+      fetch(url, {
+          cache: "no-cache"
+        })
         .then(res => res.text())
         .then(html => this.addAssetPanel.innerHTML = html);
       this.addAssetPanel.classList.add('help-shown-panel');
@@ -646,7 +654,9 @@ class cView extends bView {
     this.recordViewer = new cBandIcons(this.tag, this);
     this.addAssetPanel.classList.remove('help-shown-panel');
 
-    fetch(`/doc/${this.tag}help.html`, {cache: "no-cache"})
+    fetch(`/doc/${this.tag}help.html`, {
+        cache: "no-cache"
+      })
       .then(res => res.text())
       .then(html => this.helpViewer.innerHTML = html);
 
@@ -662,5 +672,16 @@ class cView extends bView {
     if (this.workspaceCTL) {
       this.workspaceCTL.csvGenerateRefreshProjectLists(this.workplacesSelect.innerHTML);
     }
+  }
+  openViewerForAsset() {
+    let wid = gAPPP.a.profile.selectedWorkspace;
+    let key = this.key;
+    let url = `/view?w=${wid}&b=${key}`;
+    let a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('target', '_blank');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 }

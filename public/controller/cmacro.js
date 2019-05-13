@@ -982,14 +982,14 @@ class cMacro {
     });
   }
   blockCreateAnimatedLine(context, blockId, blockTitle) {
-    let barLength = GLOBALUTIL.getNumberOrDefault(this.callbackMixin.depth, 10);
+    let barLength = GLOBALUTIL.getNumberOrDefault(this.mixin.depth, 10);
     let shapeOptions = {
-      width: GLOBALUTIL.getNumberOrDefault(this.callbackMixin.width, 1),
-      depth: GLOBALUTIL.getNumberOrDefault(this.callbackMixin.dashDepth, 1),
-      height: GLOBALUTIL.getNumberOrDefault(this.callbackMixin.height, 1),
-      createShapeType: this.callbackMixin.createShapeType,
-      materialName: this.callbackMixin.materialName,
-      shapeDivs: this.callbackMixin.shapeDivs,
+      width: GLOBALUTIL.getNumberOrDefault(this.mixin.width, 1),
+      depth: GLOBALUTIL.getNumberOrDefault(this.mixin.dashDepth, 1),
+      height: GLOBALUTIL.getNumberOrDefault(this.mixin.height, 1),
+      createShapeType: this.mixin.createShapeType,
+      materialName: this.mixin.materialName,
+      shapeDivs: this.mixin.shapeDivs,
       cylinderHorizontal: false,
       rotationZ: ''
     }
@@ -1021,8 +1021,8 @@ class cMacro {
 
     moreOptions.positionZ = barLength / 2.0;
 
-    moreOptions.runTime = GLOBALUTIL.getNumberOrDefault(this.callbackMixin.runTime, 2000);
-    moreOptions.dashCount = GLOBALUTIL.getNumberOrDefault(this.callbackMixin.dashCount, 1);
+    moreOptions.runTime = GLOBALUTIL.getNumberOrDefault(this.mixin.runTime, 2000);
+    moreOptions.dashCount = GLOBALUTIL.getNumberOrDefault(this.mixin.dashCount, 1);
     moreOptions.endTime = moreOptions.runTime;
     moreOptions.timePerDash = moreOptions.runTime / moreOptions.dashCount;
 

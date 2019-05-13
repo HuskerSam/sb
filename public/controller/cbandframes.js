@@ -3,6 +3,7 @@ class cBandFrames extends bBand {
     super(gAPPP.a.modelSets['frame'], 'frame');
     this.fireSet = gAPPP.a.modelSets['frame'];
     this.childrenContainer = childrenContainer;
+    this.noFrames = this.childrenContainer.querySelector('.no-frames');
     this.frameDataViewInstances = {};
     this.parent = parent;
     this.framesHelper = new wFrames(this.parent.context);
@@ -183,6 +184,8 @@ class cBandFrames extends bBand {
 
     for (let i = 0; i < instance.dataPanel.fieldObjs.length; i++)
       instance.dataPanel.fieldObjs[i].dom.addEventListener('keydown', e => this._handleFrameKeyPress(instance, instance.dataPanel.fieldObjs[i], e), false);
+
+    this.noFrames.style.display = 'none';
   }
   __getKey() {
     let filter = this.parent.childKey;
@@ -199,7 +202,7 @@ class cBandFrames extends bBand {
       cache = this.parent.childBand.fireSet.getCache(this.parent.childKey);
     if (!cache)
       return;
-      
+
     childType = cache.childType;
 
     this.framesHelper._validateFieldList(childType);
@@ -249,6 +252,16 @@ class cBandFrames extends bBand {
       this.__removeInst(this.frameDataViewInstances[i]);
 
     this.frameDataViewInstances = {};
+
+    if (!this.initedNoFramesPanel) {
+      this.initedNoFramesPanel = true;
+      fetch(`/doc/frameshelp.html`, {
+          cache: "no-cache"
+        })
+        .then(res => res.text())
+        .then(html => this.noFrames.innerHTML = html);
+    }
+    this.noFrames.style.display = '';
   }
   __removeInst(inst) {
     for (let c = 0, l = this.fireSet.childListeners.length; c < l; c++) {

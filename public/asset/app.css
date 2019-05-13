@@ -154,6 +154,11 @@ select {
   white-space: nowrap;
   position: relative;
   min-height: 100%;
+  display: none;
+}
+
+.frames-panel .no-frames {
+  white-space: normal;
 }
 
 .frame-fields-container {
@@ -315,20 +320,6 @@ select {
 .selected-mesh-bounds-helper-box .form-control {
   width: auto;
   display: inline-block;
-}
-
-.child-block-display .scene-fields-panel {
-  display: none;
-}
-
-.child-block-display .asset-field-container {
-  display: none;
-}
-
-.asset-fields-container, .node-details-panel, .export-frames-details-panel {
-  flex: 1;
-  overflow: auto;
-  position: relative;
 }
 
 .none-layout-mode-flip {
@@ -558,4 +549,43 @@ select {
 
 .tabulator .tabulator-header {
   background: inherit;
+}
+
+.child-block-display .scene-fields-panel {
+  display: none;
+}
+
+.child-block-display .asset-field-container {
+  display: none;
+}
+
+.asset-fields-container, .node-details-panel, .export-frames-details-panel {
+  overflow: auto;
+  position: relative;
+}
+
+.export-frames-details-panel {
+  display: none;
+}
+
+.root-block-display .cblock-child-details-panel,
+.child-block-display .asset-fields-container
+ {
+  display: none;
+}
+
+.child-block-display .cblock-child-details-panel,
+  .root-block-display .asset-fields-container
+{
+  display: block;
+}
+
+.cblock-child-details-help-panel, .cblock-details-help-panel {
+  clear: both;
+  flex: 1;
+  overflow: auto;
+}
+
+.root-block-display .scene-fields-panel {
+  overflow: auto;
 }
