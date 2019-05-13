@@ -589,3 +589,8 @@ select {
 .root-block-display .scene-fields-panel {
   overflow: auto;
 }
+
+.header_wrapper {
+  padding: .5em;
+  line-height: 4em;
+}

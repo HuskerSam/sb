@@ -401,7 +401,7 @@ __localStaticStorageForBindingFields['publishFontFamilyProfile'] = [{
   floatLeft: true
 }];
 __localStaticStorageForBindingFields['fontFamilyProfile'] = [{
-  title: 'Default Canvas Color',
+  title: 'Background',
   fireSetField: 'canvasColor',
   type: 'color',
   group: 'color',

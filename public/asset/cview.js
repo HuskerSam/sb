@@ -366,7 +366,7 @@ class cView extends bView {
         <div class="form_canvas_wrapper"></div>
         <div class="form_panel_view_dom">
           <div id="profile-header-panel">${this.profilePanelTemplate()}</div>
-          <div class="header_wrapper" style="line-height: 3em;">
+          <div class="header_wrapper">
             <b>&nbsp;Workspace</b>
             <select id="workspaces-select"></select>
             <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
