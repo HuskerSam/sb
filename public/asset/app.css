@@ -594,3 +594,8 @@ select {
   padding: .5em;
   line-height: 4em;
 }
+
+.add_workspace_panel_wrapper {
+  display: inline-block;
+  white-space: nowrap;
+}

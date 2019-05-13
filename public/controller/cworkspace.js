@@ -6,7 +6,7 @@ class cWorkspace {
     if (subKey === 'Details') {
       this.workspaceDetailsInit();
     }
-    if (subKey === 'Add / Generate') {
+    if (subKey === 'Generate') {
       this.domPanel.innerHTML = this.workspaceNewTemplate();
       this.workspaceNewRegister();
       return;
@@ -106,10 +106,7 @@ class cWorkspace {
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
   }
   workspaceNewTemplate() {
-    return `<div><label>New Workspace <input id="new-workspace-name" /></label>
-    &nbsp;
-    <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
-    <hr>
+    return `<div>
     <b>Animation Templates</b>
     <div class="workspace-csv-panel-item">
       <div>ASSETS</div>
@@ -159,16 +156,13 @@ class cWorkspace {
       <button id="add_animation_product_download_btn" class="btn-sb-icon"><i class="material-icons">file_download</i></button>
       <button id="add_animation_product_upload_btn" class="btn-sb-icon"><i class="material-icons">cloud_upload</i></button>
     </div>
-    <label><input type="checkbox" id="add_animation_current_workspace" /> Use Current Workspace</label>
+    <label><input type="checkbox" id="generate_new_workspace_chk" /> Create New Workspace <input id="generate_animation_new_wrk_name" type="text" /></label>
     <br>
     <button id="generate_animation_workspace_button">Generate Animation</button>
     </div>`;
   }
   workspaceNewRegister() {
     this.csvGenerateRegister();
-
-    this.addProjectButton = document.querySelector('#add-workspace-button');
-    this.addProjectButton.addEventListener('click', e => this.workspaceAddProjectClick());
   }
   workspaceUpdateNameCode() {
     let name = this.bView.workplacesSelectEditName.value.trim();
@@ -185,15 +179,6 @@ class cWorkspace {
       newValue: code
     }], this.bView.workplacesSelect.value);
   }
-  workspaceAddProjectClick() {
-    let name = this.domPanel.querySelector('#new-workspace-name').value.trim();
-    if (!name) {
-      alert('please enter a name for the new workspace');
-      return;
-    }
-    this.bView.workspaceAddProject(name).then(() => {});
-  }
-
   async csvGenerateRegister() {
     this.templates = {
       "assetTemplates": {
@@ -248,7 +233,7 @@ class cWorkspace {
     this.import_scene_workspaces_select = this.domPanel.querySelector('#import_scene_workspaces_select');
     this.import_product_workspaces_select = this.domPanel.querySelector('#import_product_workspaces_select');
 
-    this.add_animation_current_workspace = this.domPanel.querySelector('#add_animation_current_workspace');
+    this.generate_new_workspace_chk = this.domPanel.querySelector('#generate_new_workspace_chk');
     this.generate_animation_workspace_button = this.domPanel.querySelector('#generate_animation_workspace_button');
     this.generate_animation_workspace_button.addEventListener('click', e => this.csvGenerateAnimation());
     await this.csvGenerateInitLists();
@@ -409,21 +394,21 @@ class cWorkspace {
       };
     }
   }
-
   async csvGenerateAnimation() {
-    let useCurrent = this.add_animation_current_workspace.checked;
-    let newTitle = this.domPanel.querySelector('#new-workspace-name').value.trim();
+    let genNew = this.generate_new_workspace_chk.checked;
+    let newTitle = this.domPanel.querySelector('#generate_animation_new_wrk_name').value.trim();
 
-    if (newTitle.length === 0 && !useCurrent) {
-      alert('need a name for animation');
+    if (newTitle.length === 0 && genNew) {
+      this.domPanel.querySelector('#generate_animation_new_wrk_name').focus();
+      alert('need a name for new workspace');
       return;
     }
     this.bView.canvasHelper.hide();
 
     let wId = gAPPP.a.profile.selectedWorkspace;
-    if (!useCurrent) {
+    if (genNew) {
       wId = gAPPP.a.modelSets['projectTitles'].getKey();
-      await this.bView.workspaceAddProject(newTitle, wId, false);
+      await this.bView._addProject(newTitle, wId, false);
     }
 
     await Promise.all([

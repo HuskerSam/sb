@@ -59,6 +59,10 @@ class cView extends bView {
       })
     });
 
+    this.addProjectButton = document.querySelector('#add-workspace-button');
+    this.addProjectButton.addEventListener('click', e => this.workspaceAddProjectClick());
+
+    this.add_workspace_panel_wrapper = this.dialog.querySelector('.add_workspace_panel_wrapper');
     this.view_layout_select.value = this.layoutMode;
   }
   initDataFields(tag, key) {
@@ -187,15 +191,25 @@ class cView extends bView {
 
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.key;
+      this.add_workspace_panel_wrapper.style.display = 'none';
     } else {
-      let options = '<option>Details</option><option>Add / Generate</option><option>Layout</option>';
+      let options = '<option>Details</option><option>Generate</option><option>Layout</option>';
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.openViewerAssetButton.style.display = 'none';
+      this.add_workspace_panel_wrapper.style.display = '';
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.subView;
     }
+  }
+  workspaceAddProjectClick() {
+    let name = this.dialog.querySelector('#new-workspace-name').value.trim();
+    if (!name) {
+      alert('please enter a name for the new workspace');
+      return;
+    }
+    this._addProject(name);
   }
   async updateDisplayForWorkspaceDetailView() {
     this.form_panel_view_dom.classList.add('workspace');
@@ -367,8 +381,6 @@ class cView extends bView {
         <div class="form_panel_view_dom">
           <div id="profile-header-panel">${this.profilePanelTemplate()}</div>
           <div class="header_wrapper">
-            <b>&nbsp;Workspace</b>
-            <select id="workspaces-select"></select>
             <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
             <select id="view_layout_select" style="float:right;">
               <option>View</option>
@@ -378,6 +390,11 @@ class cView extends bView {
               <option>Right</option>
               <option>Edit</option>
             </select>
+            <select id="workspaces-select"></select>
+            <div class="add_workspace_panel_wrapper">
+              <label>New <input id="new-workspace-name" /></label>
+              <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
+            </div>
             <br>
             <select id="dataview_record_tag">
               <option value="" selected>Workspace</option>
@@ -479,9 +496,7 @@ class cView extends bView {
       <div class="frames-panel"><div class="no-frames"></div></div>
       <div class="node-details-panel">
         <div class="cblock-child-details-panel"></div>
-        <div class="scene-fields-panel">
-          <hr>
-        </div>
+        <div class="scene-fields-panel"></div>
       </div>
       <div class="export-frames-details-panel">
         <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
@@ -638,7 +653,7 @@ class cView extends bView {
       let url = '/doc/workspacehelp.html';
       if (this.key === 'Details')
         url = '/doc/workspacehelp.html';
-      if (this.key === 'Add / Generate')
+      if (this.key === 'Generate')
         url = '/doc/workspaceimporthelp.html';
       fetch(url, {
           cache: "no-cache"

@@ -134,7 +134,7 @@ class bView {
           <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
         </div>
         <br>
-        <select class="camera-select"></select>    
+        <select class="camera-select"></select>
         <div>
           <div class="camera-slider-label"><i class="material-icons">straighten</i></div>
           <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
@@ -412,14 +412,6 @@ class bView {
   collapseAll() {
     this.fireFields.helpers.collapseAll();
     this.detailsShown = false;
-  }
-  addProject() {
-    let newTitle = this.addProjectName.value.trim();
-    if (newTitle.length === 0) {
-      alert('need a name for workspace');
-      return;
-    }
-    this._addProject(newTitle);
   }
   deleteProject() {
     if (this.workplacesSelect.value === 'default') {
