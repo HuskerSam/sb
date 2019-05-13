@@ -8,6 +8,11 @@ h3 {
   padding: .25em;
 }
 
+h1 {
+  font-size: 1.25em;
+  font-style: italic;
+}
+
 select {
   border-width: .25em;
   border-radius: .5em;

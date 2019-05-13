@@ -654,7 +654,7 @@ class cView extends bView {
       if (this.key === 'Details')
         url = '/doc/workspacehelp.html';
       if (this.key === 'Generate')
-        url = '/doc/workspaceimporthelp.html';
+        url = '/doc/layouthelp.html';
       fetch(url, {
           cache: "no-cache"
         })

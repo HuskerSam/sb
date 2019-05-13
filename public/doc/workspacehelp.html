@@ -9,35 +9,46 @@
 </head>
 
 <body>
-  <div style="padding:1em;">
-    <div style="font-size:2em;text-align:center;font-weight:bold;">Have fun scene building!</div>
+  <div style="padding:.25em 1em">
+    <h3>Have fun scene building!</h3>
+    <h1>Camera And Lighting</h1>
+    Assets and blocks without a camera specificed use the <a href="https://doc.babylonjs.com/babylon101/cameras#arc-rotate-camera" target="_blank">Arc Rotate Camera</a>.
     <br>
-    <div style="font-size:1.5em;text-align:center;font-weight:bold;">Getting started with workspaces...</div>
-
-
-    <h2>Quick Tips</h2>
-    The default camera provided for scenes is the Arc Rotate camera. You can zoom in and out with the mouse wheel, or on touch enabled devices you can use gestures.
-    Hold down the right mouse button to move the camera target, and the left mouse button allows you to rotate around the target.
+     - zoom in and out with the mouse wheel, page up/dn or gestures
+     <br> - right mouse button to move the point of focus
+     <br> - left mouse allows you to rotate around the point of focus
+     <br>
     <br>
-    To search for items, expand the element type (shape or mesh, etc) and use ctrl f (browser find) to filter through the names - opening and closing an item will move it to the far left in the list
+    Blocks without a light specificed use a <a href="https://doc.babylonjs.com/babylon101/lights#the-hemispheric-light" target="_blank">Hemispheric Light</a> with color (0.2, 0.8, 0.2)
+    <br> -  intensity is adjustable - 1.0 is approximately sunlight.
+    <br> -  adding a light to a block (or any child block), the default light is disabled.
     <br>
-    The default light provided is a hemispheric light, from (0.2, 0.8, 0.2). The intensity is adjustable - 1.0 is approximately sunlight. If you add a light to a block (or any child block), the default light is disabled.
     <br>
-    Blocks also function as scenes, and a skybox and ground can be added to a block. The skybox doesn't show if the block is being used as a child block.
+    Blocks specify a <a href="https://doc.babylonjs.com/how_to/skybox" target="_blank">skybox</a>
+    and <a href="https://doc.babylonjs.com/babylon101/discover_basic_elements#ground" target="_blank">ground</a>
+    when acting as a scene (root - not linked child).
     <br>
-    A few shortcuts have been added to accelerate prototyping.
+    <h1>Shortcuts and macros</h1>
+    <b><a href="/doc/materialhelp.html" target="_blank">Materials</a></b>: rgb (0-1 levels) color, use the format "color:r,g,b" - i.e. "color:1,0,0" is diffuse red, for emissive color, use "ecolor:1,0,0", to set both use "decolor:1,0,0"
     <br>
-    For materials, to specify a material that is just an rgb (0-1 levels) color, use the format "color:r,g,b" - i.e. "color:1,0,0" is red. This sets the diffuse color of the material, the most reactive to light.
     <br>
-    To set the emissive color, use "ecolor:1,0,0", or to set both the diffuse and emissive, use "decolor:1,0,0".
+    <b><a href="/doc/texturehelp.html" target="_blank">Textures</a></b>: there is an image library available using the prefix "sb: 123.jpg".
     <br>
-
-    For textures, there is an image library available using the prefix "sb: 123.jpg".
     <br>
-    For meshes, there is an babylon file library available using the prefix "sb: mesh.babylon".
+    <b><a href="/doc/meshhelp.html" target="_blank">Meshes</a></b>: there is an babylon file library available using the prefix "sb: mesh.babylon".
     <br>
-    The idea of these files is to provide a number of usable images and meshes for quick consumption in your scene. You can always upload the pictures and meshes you
-    need as your project matures.
+    <br>
+    <b><a href="/doc/frameshelp.html" target="_blank">Frames</a></b>: cp (clone previous), lf (last frame) generate redundant frames
+    <br>&nbsp; %, +, ++ and * for computed time, position, color, scale and rotate
+    <br>
+    <br>
+    <b><a href="/doc/blockhelp.html" target="_blank">Blocks</a></b>: Tools for generating scenes, shapes, 3D text, connector and animated lines
+    <br>
+    <br>
+    <b><a href="/doc/layouthelp.html" target="_blank">Workspace Generation</a></b>: Tools for generating virtual stores from CSV based data
+    <br>
+    <br>
+    <br>
   </div>
 </body>
 

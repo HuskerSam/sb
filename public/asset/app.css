@@ -599,3 +599,7 @@ select {
   display: inline-block;
   white-space: nowrap;
 }
+
+#new-workspace-name {
+  width: 8em;
+}
