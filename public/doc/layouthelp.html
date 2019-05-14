@@ -9,10 +9,57 @@
 </head>
 
 <body>
+  <div style="padding:.25em 1em">
+    Importing CSV Data into frames - CSV record types:<br>
+    <br>
+    <b>Common CSV Columns (asset field)</b>
+    <br>title (name)<br>
+    materialname (materialName)<br>
+    color (diffuseColorName, ...)<br>
+    texturepath (diffuseTextureName, ...)<br>
+    diffuse, ambient, emissive ('x' applies)<br>
+    bmppath (bumpTextureName)<br>
+    x (positionX)<br>
+    y (positionY)<br>
+    z (positionZ)<br>
+    rx (rotationX)<br>
+    ry (rotationY)<br>
+    rz (rotationZ)<br>
+    sx (scalingX)<br>
+    sy (scalingY)<br>
+    sz (scalingZ)
+    <br>
+    <br>
+    <b>CSV Import Types</b>
+    <br><br>
+    <b>meshtexture</b> - a row for a mesh asset and optional texture asset (url)
+    <br> &nbsp; [url]: mesh path
+<br>
+    <b>block</b> - row for a block asset
+    <br> &nbsp; basic fields - [materialname], [height], [width], [depth]
+    <br> &nbsp; [blockcode] (blockCode) - lookup field
+    <br> &nbsp; [blockflag] (blockFlag) - field flagging block as special case
+    <br> &nbsp; [genericblockdata] (genericblockdata) - import data (i.e. hashed position list)
+    <br>
+    <b>blockchild</b> - [parent] relates to title of parent block, parent must exist
+    <br> &nbsp; [materialname] = 'inherit' sets (inheritMaterial) = true
+    <br> &nbsp; [childtype](childType) - shape, mesh, camera, light, block
+    <br> &nbsp; [childname](childName) - title/name of Linked Asset - linked asset can be created later
+    <br>
+    <b>textplane</b> - a row for texture and shape (plane) assets showing 2D text
 
-  Importing CSV Data into frames - CSV record types:<br>
-  <br>
-  
+    <br><br>
+    case 'shape':
+    case 'blockchildframe':
+
+
+    case 'displaycamera':
+    case 'animationfinalize':
+
+    case 'message':
+    case 'product':
+    case 'image':
+  </div>
 </body>
 
 </html>
