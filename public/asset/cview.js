@@ -669,7 +669,10 @@ class cView extends bView {
     this.recordViewer = new cBandIcons(this.tag, this);
     this.addAssetPanel.classList.remove('help-shown-panel');
 
-    fetch(`/doc/${this.tag}help.html`, {
+    let helpTag = this.tag;
+    if (helpTag === 'texture')
+      helpTag = 'material';
+    fetch(`/doc/${helpTag}help.html`, {
         cache: "no-cache"
       })
       .then(res => res.text())
