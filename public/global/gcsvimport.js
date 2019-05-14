@@ -463,8 +463,8 @@ class gCSVImport {
         return this.addCSVDisplayMessage(row);
       case 'product':
         return this.addCSVDisplayProduct(row);
-      case 'image':
-        return this.addCSVDisplayImage(row);
+    //  case 'image':
+    //    return this.addCSVDisplayImage(row);
     }
 
     console.log('type not found', row);
@@ -520,37 +520,37 @@ class gCSVImport {
     let key = sceneRecords.recordIds[0];
     let sceneData = sceneRecords.records[0];
 
-    let cameraBlock = this.defaultCSVRow();
-    cameraBlock.asset = 'textplane';
-    cameraBlock.name = row.name;
-    cameraBlock.width = row.width;
-    cameraBlock.depth = row.depth;
-    cameraBlock.height = row.height;
-    cameraBlock.textfontfamily = row.textfontfamily;
-    cameraBlock.textfontcolor = row.textfontcolor;
-    cameraBlock.texturetext = row.text1;
-    cameraBlock.texturetext2 = row.text2;
-    cameraBlock.textfontsize = row.textfontsize;
-    cameraBlock.texturetextrendersize = row.texturetextrendersize;
-    cameraBlock.textfontweight = row.textfontweight;
+    let textPlaneBlock = this.defaultCSVRow();
+    textPlaneBlock.asset = 'textplane';
+    textPlaneBlock.name = row.name;
+    textPlaneBlock.width = row.width;
+    textPlaneBlock.depth = row.depth;
+    textPlaneBlock.height = row.height;
+    textPlaneBlock.textfontfamily = row.textfontfamily;
+    textPlaneBlock.textfontcolor = row.textfontcolor;
+    textPlaneBlock.texturetext = row.text1;
+    textPlaneBlock.texturetext2 = row.text2;
+    textPlaneBlock.textfontsize = row.textfontsize;
+    textPlaneBlock.texturetextrendersize = row.texturetextrendersize;
+    textPlaneBlock.textfontweight = row.textfontweight;
 
-    let cameraBlockBC = this.defaultCSVRow();
-    cameraBlockBC.asset = 'blockchild';
-    cameraBlockBC.name = row.name;
-    cameraBlockBC.childtype = 'block';
-    cameraBlockBC.parent = sceneData.title;
-    cameraBlockBC.rx = row.rx;
-    cameraBlockBC.ry = row.ry;
-    cameraBlockBC.rz = row.rz;
-    cameraBlockBC.x = row.x;
-    cameraBlockBC.y = '-50';
-    cameraBlockBC.z = row.z;
-    cameraBlockBC.realOrigRow = row;
-    cameraBlockBC.index = row.index;
+    let textPlaneBlockBC = this.defaultCSVRow();
+    textPlaneBlockBC.asset = 'blockchild';
+    textPlaneBlockBC.name = row.name;
+    textPlaneBlockBC.childtype = 'block';
+    textPlaneBlockBC.parent = sceneData.title;
+    textPlaneBlockBC.rx = row.rx;
+    textPlaneBlockBC.ry = row.ry;
+    textPlaneBlockBC.rz = row.rz;
+    textPlaneBlockBC.x = row.x;
+    textPlaneBlockBC.y = '-50';
+    textPlaneBlockBC.z = row.z;
+    textPlaneBlockBC.realOrigRow = row;
+    textPlaneBlockBC.index = row.index;
 
     return Promise.all([
-      this.addCSVRow(cameraBlock),
-      this.addCSVRow(cameraBlockBC)
+      this.addCSVRow(textPlaneBlock),
+      this.addCSVRow(textPlaneBlockBC)
     ]);
   }
   async addCSVTextPlane(row) {
