@@ -432,9 +432,11 @@ class bView {
     return `<div id="record_field_list">
       <form autocomplete="off" onsubmit="return false;"></form>
     </div>
+    <img src='' class="user-profile-image" />
+    <div class="user-profile-info"></div>
     <button id="sign-out-button" style="float:right;"><i class="material-icons">account_box</i> Sign out </button>
     <button id="user-profile-dialog-reset-button" style="float:right;"><i class="material-icons">account_circle</i> Reset Profile </button>
-    <div class="fields-container" style="float:left;"></div>`;
+    <div class="fields-container" style="float:left"></div>`;
   }
   profilePanelRegister() {
     this.signOutBtn = document.querySelector('#sign-out-button');
@@ -459,12 +461,12 @@ class bView {
   profilePanelToggle() {
     if (this.profilePanelShown) {
       this.profilePanelShown = false;
-      this.profile_description_panel_btn.classList.remove('button-expanded');
-      document.getElementById('profile-header-panel').classList.remove('expanded');
+      this.profile_description_panel_btn.classList.remove('app-inverted');
+      this.form_panel_view_dom.classList.remove('header-expanded');
     } else {
       this.profilePanelShown = true;
-      this.profile_description_panel_btn.classList.add('button-expanded');
-      document.getElementById('profile-header-panel').classList.add('expanded');
+      this.profile_description_panel_btn.classList.add('app-inverted');
+      this.form_panel_view_dom.classList.add('header-expanded');
     }
   }
   openNewWindow(tag, key) {

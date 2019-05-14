@@ -496,7 +496,7 @@ button i.material-icons {
   opacity: 0;
 }
 
-#profile-header-panel.expanded {
+.form_panel_view_dom.header-expanded #profile-header-panel {
   max-height: 40%;
   height: auto;
   opacity: 1;
@@ -509,4 +509,16 @@ button i.material-icons {
   left: -12.75em;
   top: .25em;
   margin-bottom: .75em;
+}
+
+.user-profile-info {
+  display: inline-block;
+  padding: .5em;
+}
+
+.user-profile-image {
+  max-width: 2em;
+  max-height: 2em;
+  float:left;
+  border-radius: .5em;
 }

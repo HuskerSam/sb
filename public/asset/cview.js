@@ -3,6 +3,15 @@ class cView extends bView {
     super(layoutMode, tag, key, false, childKey, subView);
     this.canvasHelper.initExtraOptions();
 
+    this.userProfileName = this.dialog.querySelector('.user-profile-info');
+    this.userprofileimage = this.dialog.querySelector('.user-profile-image');
+    if ( gAPPP.a.currentUser.isAnonymous)
+      this.userProfileName.innerHTML = 'Anonymous User';
+    else {
+      this.userProfileName.innerHTML = gAPPP.a.currentUser.email;
+      this.userprofileimage.setAttribute('src', gAPPP.a.currentUser.photoURL);
+    }
+
     this.refreshProjectList().then(() => {});
     this._updateGoogleFonts().then(() => {});
 
