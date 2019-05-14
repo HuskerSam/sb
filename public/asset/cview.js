@@ -63,6 +63,17 @@ class cView extends bView {
     this.addProjectButton.addEventListener('click', e => this.workspaceAddProjectClick());
 
     this.add_workspace_panel_wrapper = this.dialog.querySelector('.add_workspace_panel_wrapper');
+    this.workspace_show_home_btn = this.dialog.querySelector('.workspace_show_home_btn');
+    this.workspace_show_home_btn.addEventListener('click', e => {
+      this.dataview_record_tag.value = '';
+      this.updateRecordList();
+    });
+    this.asset_show_home_btn = this.dialog.querySelector('.asset_show_home_btn');
+    this.asset_show_home_btn.addEventListener('click', e => {
+      this.dataview_record_key.value = '';
+      this.updateSelectedRecord();
+    });
+
     this.view_layout_select.value = this.layoutMode;
   }
   initDataFields(tag, key) {
@@ -186,18 +197,21 @@ class cView extends bView {
       for (let i in fS)
         options += `<option value="${i}">${fS[i].title}</option>`;
       this.addAssetButton.style.display = 'inline-block';
-      if (!this.key)
+      if (!this.key) {
         this.addAssetPanel.style.display = '';
+      }
 
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.key;
       this.add_workspace_panel_wrapper.style.display = 'none';
+      this.workspace_show_home_btn.style.display = '';
     } else {
       let options = '<option>Details</option><option>Generate</option><option>Layout</option>';
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.openViewerAssetButton.style.display = 'none';
+      this.workspace_show_home_btn.style.display = 'none';
       this.add_workspace_panel_wrapper.style.display = '';
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.subView;
@@ -262,6 +276,10 @@ class cView extends bView {
     this.addAssetPanel.style.display = 'none';
 
     this.key = this.dataview_record_key.value;
+
+    if (this.key)
+      this.asset_show_home_btn.style.display = '';
+
     if (!this.dataFieldsInited)
       this.initDataFields();
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
@@ -326,6 +344,7 @@ class cView extends bView {
   async updateSelectedRecord() {
     this.form_panel_view_dom.classList.remove('workspace');
     this.form_panel_view_dom.classList.remove('workspacelayout');
+    this.asset_show_home_btn.style.display = 'none';
 
     if (this.dataview_record_key.selectedIndex < 1)
       return this.updateDisplayForMainView();
@@ -395,6 +414,8 @@ class cView extends bView {
               <label>New <input id="new-workspace-name" /></label>
               <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
             </div>
+            <button class="workspace_show_home_btn" class="btn-sb-icon"><i class="material-icons">video_library</i></button>
+            <button class="asset_show_home_btn" class="btn-sb-icon"><i class="material-icons">library_books</i></button>
             <br>
             <select id="dataview_record_tag">
               <option value="" selected>Workspace</option>

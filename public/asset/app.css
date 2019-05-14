@@ -410,6 +410,10 @@ select {
   position: relative;
 }
 
+.form_canvas_wrapper.show-help .add-asset-template-panel {
+  padding: .5em;
+}
+
 .form_canvas_wrapper.show-help.workspace .add-asset-template-panel {
   display: flex;
 }
@@ -418,6 +422,9 @@ select {
   flex: 1;
 }
 
+.help-viewer {
+  padding: .25em;
+}
 .add-asset-template-panel input {
   margin: .25em;
   padding: .25em;

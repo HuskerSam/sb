@@ -26,8 +26,8 @@ class cMacro {
     textDom.style.fontFamily = textDom.value;
   }
   baseTemplate() {
-    return `<label><b>Add ${this.tag} asset</b>
-     <input style="width:20em;" class="add-item-name" /></label>
+    return `<label><b>${this.tag} name</b>
+     <input class="add-item-name" /></label>
       <button class="add-button btn-sb-icon"><i class="material-icons">add_circle</i></button>
       <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
       <br>

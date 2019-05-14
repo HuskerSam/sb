@@ -29,15 +29,14 @@ class cWorkspace {
     let googleFontCount = Object.keys(gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont')).length;
 
     html += `<hr><div style="line-height:1.5em;padding:.5em;">
-    Block Count: ${blockCount}<br>
-    Shape Count: ${shapeCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="block">Block</a> Count: ${blockCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="mesh">Mesh</a> Count: ${meshCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="shape">Shape</a> Count: ${shapeCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="texture">Texture</a> Count: ${textureCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="material">Material</a> Count: ${materialCount}<br>
+    Web Fonts: ${googleFontCount}<br>
     Frame Count: ${frameCount}<br>
-    Mesh Count: ${meshCount}<br>
-    Texture Count: ${textureCount}<br>
-    Material Count: ${materialCount}<br>
-    Block Link Count: ${blockchildCount}<br>
-    Web Fonts: ${googleFontCount}<br>`;
-
+    Block Link Count: ${blockchildCount}<br>`;
 
     let gi = new gCSVImport(gAPPP.a.profile.selectedWorkspace);
     let sceneRecords = await gi.dbFetchByLookup('block', 'blockFlag', 'scene');
@@ -48,7 +47,7 @@ class cWorkspace {
     }
 
     let blocksData = await gi.dbFetchByLookup('block', 'blockFlag', 'displayblock');
-    html += 'Display Blocks found: ' + blocksData.records.length + '<br>';
+    html += 'Display Blocks found: ' + blocksData.records.length + '<br>Blocks: ';
     blocksData.records.forEach(i => html += `${i.title}, `);
     html += '<br>';
 
@@ -74,7 +73,7 @@ class cWorkspace {
     return;
   }
   workspaceDetailsTemplate() {
-    return `<div style="flex:1"><label><span>Name</span><input id="edit-workspace-name" /></label>
+    return `<div style="flex:1"><hr><label><span>Workspace Name</span><input id="edit-workspace-name" /></label>
       <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
       <br>
       <label><span> Lookup Tags (active,indexNum)</span><input id="edit-workspace-code" /></label>
@@ -106,6 +105,15 @@ class cWorkspace {
     this.import_asset_json_file.addEventListener('change', e => this.csvGenerationImportJSON());
     this.import_asset_json_button = this.domPanel.querySelector('.import_asset_json_button');
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
+
+    this.domPanel.querySelectorAll('.navigate_tag_select').forEach(i => {
+      i.addEventListener('click', e => {
+        this.bView.dataview_record_tag.value = e.currentTarget.dataset.value;
+        this.bView.updateRecordList();
+        e.preventDefault();
+        return false;
+      })
+    })
   }
   workspaceNewTemplate() {
     return `<div>
