@@ -44,6 +44,7 @@ class gCSVImport {
     if (!id)
       id = firebase.database().ref().child(this.path(type)).push().key;
     let updates = {};
+    data.sortKey = new Date();
     updates['/' + this.path(type) + '/' + id] = data;
     await firebase.database().ref().update(updates);
 

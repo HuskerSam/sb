@@ -213,9 +213,10 @@ class cView extends bView {
     this.addAssetPanel.style.display = 'none';
     if (this.tag) {
       let options = `<option values="" selected>Select or Add ${this.dataview_record_tag.selectedOptions[0].label}</option>`;
-      let fS = gAPPP.a.modelSets[this.tag].fireDataValuesByKey;
-      for (let i in fS)
-        options += `<option value="${i}">${fS[i].title}</option>`;
+
+      gAPPP.a.modelSets[this.tag].updateChildOrder();
+      let keyOrder = gAPPP.a.modelSets[this.tag].childOrderByKey;
+      keyOrder.forEach(key => options += `<option value="${key}">${gAPPP.a.modelSets[this.tag].fireDataValuesByKey[key].title}</option>)`);
       this.addAssetButton.style.display = 'inline-block';
       if (!this.key) {
         this.addAssetPanel.style.display = '';
