@@ -11,7 +11,6 @@ class bView {
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
 
     this.initDom();
-
     this.dialog.context = this.context;
     this.show(null);
   }
@@ -310,6 +309,7 @@ class bView {
     }
   }
   splitLayout() {
+    this.mainViewWrapper = this.dialog.querySelector('#main-view-wrapper');
     if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1) {
       this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
       this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
@@ -353,7 +353,7 @@ class bView {
       });
       if (this.layoutMode === 'Edit') {
         this.form_canvas_wrapper.style.display = 'none';
-        this.dialog.querySelector('#main-view-wrapper').style.display = 'flex';
+        this.mainViewWrapper.style.display = 'flex';
       }
 
       if (this.layoutMode === 'View') {
@@ -390,11 +390,13 @@ class bView {
   }
   _headerTemplate() {}
   expandAll() {
-    this.fireFields.helpers.expandAll();
+    if (this.fireFields)
+      this.fireFields.helpers.expandAll();
     this.detailsShown = true;
   }
   collapseAll() {
-    this.fireFields.helpers.collapseAll();
+    if (this.fireFields)
+      this.fireFields.helpers.collapseAll();
     this.detailsShown = false;
   }
   deleteProject() {

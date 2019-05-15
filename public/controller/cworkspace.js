@@ -49,26 +49,31 @@ class cWorkspace {
           url = '/images/webgl.png';
 
         html += `<a class="workspace-asset-link-display" href="${href}">
-          <img src="${url}" /><br>${data.title}<br><span>${od}</span></a>`;
+          <img src="${url}" />${data.title}<br><span>${od}</span></a>`;
       });
 
       return html;
     }
 
     html += `<div style="line-height:1.5em;padding:.5em;">
-    <a href="#" class="navigate_tag_select" data-value="block">Block</a> Count: ${blockCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="block">Blocks</a>: ${blockCount}
+    &nbsp;
     ${getAssetLinks('block')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="mesh">Mesh</a> Count: ${meshCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="mesh">Meshes</a>: ${meshCount}
+    &nbsp;
     ${getAssetLinks('mesh')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="shape">Shape</a> Count: ${shapeCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="shape">Shapes</a>: ${shapeCount}
+    &nbsp;
     ${getAssetLinks('shape')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="texture">Texture</a> Count: ${textureCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="texture">Textures</a>: ${textureCount}
+    &nbsp;
     ${getAssetLinks('texture')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="material">Material</a> Count: ${materialCount}<br>
+    <a href="#" class="navigate_tag_select" data-value="material">Materials</a>: ${materialCount}
+    &nbsp;
     ${getAssetLinks('material')}
     <br>
     Web Fonts: ${googleFontCount}<br>

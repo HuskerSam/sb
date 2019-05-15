@@ -26,7 +26,7 @@ class cBandIcons extends bBand {
     }
   }
   _getDomForChild(key, values) {
-    let html = '<span class="img-holder"></span><div class="band-title"></div>';
+    let html = '<span class="img-holder"></span><div class="band-title"></div><br>';
 
     let outer = document.createElement('div');
     outer.setAttribute('class', `band-background-preview`);

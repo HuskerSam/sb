@@ -295,6 +295,10 @@ button i.material-icons {
   display: inline-block;
 }
 
+.form_panel_view_dom #profile-header-panel .selected-mesh-helper-collapse-button {
+  display: none;
+}
+
 .scene-options-panel .form-group-container-group {
   background: rgba(127, 127, 127, 1);
 }

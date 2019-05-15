@@ -294,12 +294,12 @@ class cView extends bView {
     this.deleteAssetButton.style.display = 'inline-block';
     this.snapshotAssetButton.style.display = 'inline-block';
     this.addAssetPanel.style.display = 'none';
+    this.expand_all_global_btn.style.display = '';
 
     this.key = this.dataview_record_key.value;
 
     if (this.key) {
       this.asset_show_home_btn.style.display = '';
-      this.expand_all_global_btn.style.display = '';
     }
 
     if (!this.dataFieldsInited)
@@ -656,18 +656,24 @@ class cView extends bView {
     this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_less';
     this.expand_all_global_btn.classList.add('app-inverted');
     this.detailsShown = true;
-    if (this.tag === 'block') {
+    if (this.framesBand) {
       this.framesBand._updateFrameHelpersUI();
     }
+
+    this.mainViewWrapper.classList.add('app-expanded');
+    this.mainViewWrapper.classList.remove('app-collapsed');
   }
   collapseAll() {
     super.collapseAll();
     this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_more';
     this.expand_all_global_btn.classList.remove('app-inverted');
     this.detailsShown = false;
-    if (this.tag === 'block') {
+    if (this.framesBand) {
       this.framesBand._updateFrameHelpersUI();
     }
+
+    this.mainViewWrapper.classList.remove('app-expanded');
+    this.mainViewWrapper.classList.add('app-collapsed');
   }
   _updateFollowTargetListOptions() {
     let optionText = '';
@@ -726,6 +732,7 @@ class cView extends bView {
     this.generate = new cMacro(this.addAssetPanel, this.tag, this);
     this.recordViewer = new cBandIcons(this.tag, this);
     this.addAssetPanel.classList.remove('help-shown-panel');
+    this.expand_all_global_btn.style.display = '';
 
     let helpTag = this.tag;
     if (helpTag === 'texture')
