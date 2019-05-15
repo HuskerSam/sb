@@ -389,8 +389,7 @@ class cPanelHelpers {
     helperDom.style.display = 'none';
     let collapseButton = document.createElement('button');
     collapseButton.setAttribute('class', 'selected-mesh-helper-collapse-button');
-    collapseButton.style.display = 'none';
-    collapseButton.innerHTML = '<i class="material-icons">expand_more</i>';
+    collapseButton.innerHTML = '<i class="material-icons">unfold_more</i>';
     collapseButton.addEventListener('click', e => this.__toggleHelper(helperDom, collapseButton));
     collapseButton.helperDom = helperDom;
     this.toggleButtons.push(collapseButton);
@@ -423,16 +422,12 @@ class cPanelHelpers {
 
     if (vState) {
       helperDom.style.display = 'block';
-      collapseButton.innerHTML = '<i class="material-icons">expand_less</i>';
+      collapseButton.innerHTML = '<i class="material-icons">unfold_less</i>';
       collapseButton.classList.add('app-inverted');
-  //    collapseButton.style.color = gAPPP.appStyleDetails.ctlColor;
-    //  collapseButton.style.background = gAPPP.appStyleDetails.foreColor;
     } else {
       helperDom.style.display = 'none';
-      collapseButton.innerHTML = '<i class="material-icons">expand_more</i>';
+      collapseButton.innerHTML = '<i class="material-icons">unfold_more</i>';
       collapseButton.classList.remove('app-inverted');
-  //  collapseButton.style.color = gAPPP.appStyleDetails.foreColor;
-  //    collapseButton.style.background = gAPPP.appStyleDetails.ctlColor;
     }
   }
   __updateBoundingInfo() {

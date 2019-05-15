@@ -81,6 +81,15 @@ class cView extends bView {
       this.dataview_record_key.value = '';
       this.updateSelectedRecord();
     });
+    this.expandedAll = true;
+    this.expand_all_global_btn = this.dialog.querySelector('.expand_all_global_btn');
+    this.expand_all_global_btn.addEventListener('click', e => {
+      if (this.detailsShown) {
+        this.collapseAll();
+      } else {
+        this.expandAll();
+      }
+    });
 
     this.view_layout_select.value = this.layoutMode;
   }
@@ -287,8 +296,10 @@ class cView extends bView {
 
     this.key = this.dataview_record_key.value;
 
-    if (this.key)
+    if (this.key) {
       this.asset_show_home_btn.style.display = '';
+      this.expand_all_global_btn.style.display = '';
+    }
 
     if (!this.dataFieldsInited)
       this.initDataFields();
@@ -343,7 +354,14 @@ class cView extends bView {
     this.fireFields.loadedURL = this.fireFields.values['url'];
     let sceneReloadRequired = this.fireFields.paint();
     this.fireFields.helpers.resetUI();
-    this.expandAll();
+
+    if (this.detailsShown)
+      this.expandAll();
+    else
+      this.collapseAll();
+
+    if (this.tag === 'block')
+      this.setChildKey(this.childKey);
 
     if (this.sceneFireFields) {
       this.sceneFireFields.paint();
@@ -355,6 +373,7 @@ class cView extends bView {
     this.form_panel_view_dom.classList.remove('workspace');
     this.form_panel_view_dom.classList.remove('workspacelayout');
     this.asset_show_home_btn.style.display = 'none';
+    this.expand_all_global_btn.style.display = 'none';
     this.workspace_show_home_btn.style.display = '';
     this.add_workspace_panel_wrapper.style.display = 'none';
 
@@ -428,6 +447,7 @@ class cView extends bView {
             </div>
             <button class="workspace_show_home_btn" class="btn-sb-icon"><i class="material-icons">video_library</i></button>
             <button class="asset_show_home_btn" class="btn-sb-icon"><i class="material-icons">library_books</i></button>
+            <button class="expand_all_global_btn" class="btn-sb-icon"><i class="material-icons">unfold_more</i></button>
             <br>
             <select id="dataview_record_tag">
               <option value="" selected>Workspace</option>
@@ -438,7 +458,7 @@ class cView extends bView {
               <option value="block">Block</option>
             </select>
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
-            <select id="dataview_record_key" style="max-width:calc(100% - 12.5em);"></select>
+            <select id="dataview_record_key" style="max-width:calc(100% - 16em);"></select>
             <select class="workspace_layout_view_select">
               <option>Products</option>
               <option>Layout</option>
@@ -630,17 +650,19 @@ class cView extends bView {
   _handleActiveObjectUpdate(e) {}
   expandAll() {
     super.expandAll();
+    this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_less';
+    this.expand_all_global_btn.classList.add('app-inverted');
     this.detailsShown = true;
     if (this.tag === 'block') {
-      this.setChildKey(this.childKey);
       this.framesBand._updateFrameHelpersUI();
     }
   }
   collapseAll() {
     super.collapseAll();
+    this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_more';
+    this.expand_all_global_btn.classList.remove('app-inverted');
     this.detailsShown = false;
     if (this.tag === 'block') {
-      this.setChildKey(this.childKey);
       this.framesBand._updateFrameHelpersUI();
     }
   }

@@ -287,6 +287,18 @@ button i.material-icons {
   height: 6em;
 }
 
+.selected-mesh-helper-collapse-button {
+  display: none;
+}
+
+.form_panel_view_dom .selected-mesh-helper-collapse-button {
+  display: inline-block;
+}
+
+.scene-options-panel .form-group-container-group {
+  background: rgba(127, 127, 127, 1);
+}
+
 .render-log-panel {
   background: rgba(255, 255, 255, .5);
   white-space: pre;
