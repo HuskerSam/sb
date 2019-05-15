@@ -91,6 +91,13 @@ class cPanelCanvas {
       group: 'group2',
       groupClass: 'light-intensity-user-panel'
     }];
+
+    this.parent.context.canvas.addEventListener('wheel', e => this.updateCameraSlidersFromCanvas());
+    this.parent.context.canvas.addEventListener('keypress', e => this.updateCameraSlidersFromCanvas());
+  }
+  updateCameraSlidersFromCanvas() {
+    this.arcRangeSlider.value = this.cameraSliderPosition(this.parent.context.camera.radius);
+    this._updateCameraRangeSlider();
   }
   animSliderChange() {
     this.rootBlock.setAnimationPosition(this.animateSlider.value);

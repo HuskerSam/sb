@@ -355,7 +355,6 @@ class cMacro {
 
   blockTemplate() {
     return `<select class="block-type-select">
-     <option>Empty</option>
      <option>Scene</option>
      <option>Text and Shape</option>
      <option>Animated Line</option>
@@ -364,11 +363,6 @@ class cMacro {
     </select>
     <div class="web-font-block-add-options" style="display:none;">
       <label><span>Font Name</span><input type="text" class="block-web-font" style="width:15em;" value="" /></label>
-    </div>
-    <div class="scene-empty-block-add-options">
-      <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
-      <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
-      <label><span>D</span><input type="text" class="block-box-depth" value="" /></label>
     </div>
     <div class="connector-line-block-add-options" style="display:none;">
       <label><span>Length</span><input type="text" class="line-length" value="10" /></label>
@@ -473,7 +467,6 @@ class cMacro {
     this.blockShapePicker.addEventListener('input', e => this.blockShapeChange());
     this.blockShapePanel = this.panel.querySelector('.shape-and-text-block-options');
     this.sceneBlockPanel = this.panel.querySelector('.scene-block-add-options');
-    this.emptyBlockPanel = this.panel.querySelector('.scene-empty-block-add-options');
     this.connectorLinePanel = this.panel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.panel.querySelector('.animated-line-block-add-options');
     this.webFontPanel = this.panel.querySelector('.web-font-block-add-options');
@@ -504,13 +497,6 @@ class cMacro {
     this.file = null;
     this.mixin.materialName = '';
 
-    if (bType === 'Empty') {
-      this.mixin.width = this.emptyBlockPanel.querySelector('.block-box-width').value;
-      this.mixin.height = this.emptyBlockPanel.querySelector('.block-box-height').value;
-      this.mixin.depth = this.emptyBlockPanel.querySelector('.block-box-depth').value;
-      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
-      return results.key;
-    }
     if (bType === 'Web Font') {
       let webFontName = this.webFontPanel.querySelector('.block-web-font').value;
 
@@ -664,7 +650,6 @@ class cMacro {
   blockHelperChange() {
     this.blockShapePanel.style.display = 'none';
     this.sceneBlockPanel.style.display = 'none';
-    this.emptyBlockPanel.style.display = 'none';
     this.animatedDashPanel.style.display = 'none';
     this.connectorLinePanel.style.display = 'none';
     this.webFontPanel.style.display = 'none';
@@ -680,8 +665,6 @@ class cMacro {
       this.animatedDashPanel.style.display = '';
     else if (sel === 'Web Font')
       this.webFontPanel.style.display = '';
-    else
-      this.emptyBlockPanel.style.display = '';
   }
   blockCreateLight(blockKey, blockTitle) {
     gAPPP.activeContext.createObject('blockchild', '', null, {

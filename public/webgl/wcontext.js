@@ -114,7 +114,7 @@ class wContext {
 
     this._renderDefaultCamera();
 
-    this.camera.attachControl(this.canvas, true);
+    this.rebindCamera();
 
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => {
@@ -127,6 +127,9 @@ class wContext {
       });
     });
     this.engine.resize();
+  }
+  rebindCamera() {
+    this.camera.attachControl(this.canvas, true);
   }
   async createObject(objectType, title, file, mixinData = {}) {
     let objectData = sDataDefinition.getDefaultDataCloned(objectType);
@@ -608,7 +611,7 @@ class wContext {
     if (maxCameraSpeed)
       this.camera.maxCameraSpeed = Number(maxCameraSpeed);
 
-    this.camera.attachControl(this.canvas, true);
+    this.rebindCamera();
 
     let targetBlock = this.dialogForCamera.rootBlock;
     let mesh = targetBlock._findBestTargetObject(cameraDetails.cameraTargetBlock);
@@ -631,7 +634,7 @@ class wContext {
     this.cameraAimTarget = cameraDetails.cameraAimTarget;
 
     this.camera.setPosition(cameraOrigin);
-    this.camera.attachControl(this.canvas, true);
+    this.rebindCamera();
   }
   _renderDefaultCamera() {
     if (this.camera)
@@ -644,7 +647,7 @@ class wContext {
 
     this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, radius, new BABYLON.Vector3(0, 0, 0), this.scene);
     this.camera.setPosition(cameraVector);
-    this.camera.attachControl(this.canvas, true);
+    this.rebindCamera();
     this.camera.radius = radius;
   }
   _renderArcCamera() {
@@ -656,7 +659,7 @@ class wContext {
     let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, values.cameraOriginY, new BABYLON.Vector3(0, 0, 0), this.scene)
-    this.camera.attachControl(this.canvas, true);
+    this.rebindCamera();
     if (values.cameraRadius)
       this.camera.radius = Number(values.cameraRadius);
     let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);

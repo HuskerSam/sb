@@ -169,18 +169,21 @@ class cView extends bView {
 
     this.openNewWindow(this.tag, newKey);
   }
-  deleteAsset() {
+  async deleteAsset() {
     if (!this.tag)
       return;
     if (!this.key)
       return;
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
       return;
-    gAPPP.a.modelSets[this.tag].removeByKey(this.key);
+    await gAPPP.a.modelSets[this.tag].removeByKey(this.key);
+
+    this.dataview_record_key.value = '';
+    return this.updateSelectedRecord();
   }
   addAsset() {
     this.dialog.context.createObject(this.tag, 'new ' + this.tag).then(results => {
-      dataview_record_key.value = results.key;
+      this.dataview_record_key.value = results.key;
       return this.updateSelectedRecord();
     });
   }
