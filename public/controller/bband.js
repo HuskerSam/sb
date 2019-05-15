@@ -19,7 +19,7 @@ class bBand {
     this._getDomForChild(fireData.key, fireData.val());
   }
   childChanged(fireData) {
-    let div = document.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
+    let div = this.childrenContainer.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
     if (!div)
       return console.log(fireData, 'changed bBand missing dom');
     let values = fireData.val();
