@@ -219,8 +219,7 @@ class cView extends bView {
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.openViewerAssetButton.style.display = 'none';
-      this.workspace_show_home_btn.style.display = 'none';
-      this.add_workspace_panel_wrapper.style.display = '';
+
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.subView;
     }
@@ -353,6 +352,8 @@ class cView extends bView {
     this.form_panel_view_dom.classList.remove('workspace');
     this.form_panel_view_dom.classList.remove('workspacelayout');
     this.asset_show_home_btn.style.display = 'none';
+    this.workspace_show_home_btn.style.display = '';
+    this.add_workspace_panel_wrapper.style.display = 'none';
 
     if (this.dataview_record_key.selectedIndex < 1)
       return this.updateDisplayForMainView();
@@ -450,8 +451,8 @@ class cView extends bView {
               <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove</i></button>
               <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
               <select class="main-band-sub-view-select" style="display:none;">
-                <option value="frame" selected>Frames</option>
-                <option value="node">Details</option>
+                <option value="frame">Frames</option>
+                <option value="node" selected>Details</option>
                 <option value="import">JSON</option>
               </select>
               <button class="add_frame_button btn-sb-icon" style="display:none;"><i class="material-icons">playlist_add</i></button>

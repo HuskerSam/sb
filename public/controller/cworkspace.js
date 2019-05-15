@@ -55,7 +55,7 @@ class cWorkspace {
       return html;
     }
 
-    html += `<hr><div style="line-height:1.5em;padding:.5em;">
+    html += `<div style="line-height:1.5em;padding:.5em;">
     <a href="#" class="navigate_tag_select" data-value="block">Block</a> Count: ${blockCount}<br>
     ${getAssetLinks('block')}
     <br>
@@ -107,19 +107,22 @@ class cWorkspace {
     html += '</div>';
     this.domPanel.innerHTML = html;
     this.workspaceDetailsRegister();
+    this.bView.workspace_show_home_btn.style.display = 'none';
+    this.bView.add_workspace_panel_wrapper.style.display = '';
+
     return;
   }
   workspaceDetailsTemplate() {
-    return `<div style="flex:1"><hr><label><span>Workspace Name</span><input id="edit-workspace-name" /></label>
+    return `<div style="flex:1;">
+    <button class="import_csv_records" style="float:right;">Import CSV</button>
+    <button class="import_asset_json_button" style="float:right;clear:right;">Import JSON</button>
+    <label><span>Name</span><input id="edit-workspace-name" /></label>
       <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
       <br>
-      <label><span> Lookup Tags (active,indexNum)</span><input id="edit-workspace-code" /></label>
-      <br>
+      <label><span>Tags</span><input id="edit-workspace-code" /></label>
       <input type="file" style="display:none;" class="import_csv_file">
-      <button class="import_csv_records">Import CSV Records</button>
-      &nbsp;
       <input type="file" style="display:none;" class="import_asset_json_file">
-      <button class="import_asset_json_button">Import Asset JSON</button>`;
+      </div>`;
   }
   workspaceDetailsRegister() {
     this.bView.workplacesSelectEditName = this.domPanel.querySelector('#edit-workspace-name');

@@ -598,8 +598,7 @@ select {
 }
 
 .header_wrapper {
-  padding: .5em;
-  line-height: 4em;
+  padding: .25em;
 }
 
 .add_workspace_panel_wrapper {
