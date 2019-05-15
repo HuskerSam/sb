@@ -43,7 +43,8 @@ class gApp extends gInstanceSuper {
 
     super.profileReadyAndLoaded();
   }
-  workspaceLoaded(wId) {
+  async workspaceLoaded(wId) {
+    await super.workspaceLoaded(wId);
     if (this.workspaceProcessed) return;
     this.workspaceProcessed = true;
     let urlParams = new URLSearchParams(window.location.search);

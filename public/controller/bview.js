@@ -7,30 +7,13 @@ class bView {
     this.childKey = childKey;
     this.layoutMode = layoutMode;
     this.subView = subview;
-    this.fontsAdded = {};
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
+
     this.initDom();
 
     this.dialog.context = this.context;
     this.show(null);
-  }
-  async _updateGoogleFonts() {
-    let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont');
-    for (let id in editInfoBlocks) {
-      let fontName = editInfoBlocks[id].genericBlockData;
-      let newLink = document.createElement('link');
-      fontName = fontName.replace(/ /g, '+');
-
-      if (!this.fontsAdded[fontName]) {
-        this.fontsAdded[fontName] = true;
-        newLink.setAttribute('href', `https://fonts.googleapis.com/css?family=${fontName}`);
-        newLink.setAttribute('rel', 'stylesheet');
-        document.head.append(newLink);
-      }
-    }
-
-    return Promise.resolve();
   }
   initDom() {
     if (this.context)

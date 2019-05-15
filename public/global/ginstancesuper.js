@@ -4,6 +4,7 @@ class gInstanceSuper {
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
     this.styleProfileDom = null;
     this.activeContext = null;
+    this.fontsAdded = {};
     this.lastStyleProfileCSS = '';
     this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
     this.shapeTypes = [
@@ -68,7 +69,10 @@ class gInstanceSuper {
     this.workspaceProcessed = false;
     gAPPP.a.workspaceLoadedCallback = () => this.workspaceLoaded(wId);
   }
-  workspaceLoaded(workspaceId) {}
+  async workspaceLoaded(workspaceId) {
+    await this._updateGoogleFonts();
+    return;
+  }
   profileReady() {
     if (!this.initialUILoad)
       return;
@@ -105,6 +109,25 @@ class gInstanceSuper {
     if (size > 22)
       size = 22;
     return size;
+  }
+  async _updateGoogleFonts() {
+    let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont');
+    for (let id in editInfoBlocks) {
+      let fontName = editInfoBlocks[id].genericBlockData;
+      fontName = fontName.replace(/ /g, '+');
+
+      if (!this.fontsAdded[fontName]) {
+        this.fontsAdded[fontName] = true;
+        let newLink = document.createElement('style');
+        newLink.innerHTML = `@import url(https://fonts.googleapis.com/css?family=${fontName});`;
+        document.body.append(newLink);
+      }
+    }
+
+    //allow fonts to reflow
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(), 1);
+    });
   }
   _initShapesList() {
     this._domShapeList = document.createElement('datalist');

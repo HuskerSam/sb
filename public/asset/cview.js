@@ -13,7 +13,6 @@ class cView extends bView {
     }
 
     this.refreshProjectList().then(() => {});
-    this._updateGoogleFonts().then(() => {});
 
     this.profilePanelRegister();
   }

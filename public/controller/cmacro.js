@@ -360,7 +360,11 @@ class cMacro {
      <option>Text and Shape</option>
      <option>Animated Line</option>
      <option>Connector Line</option>
+     <option>Web Font</option>
     </select>
+    <div class="web-font-block-add-options" style="display:none;">
+      <label><span>Font Name</span><input type="text" class="block-web-font" style="width:15em;" value="" /></label>
+    </div>
     <div class="scene-empty-block-add-options">
       <label><span>W</span><input type="text" class="block-box-width" value="" /></label>
       <label><span>H</span><input type="text" class="block-box-height" value="" /></label>
@@ -404,42 +408,6 @@ class cMacro {
       <label><span>Sides</span><input type="text" class="tail-sides" value="" /></label>
       <br>
       <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
-    </div>
-    <div class="store-item-block-add-options" style="text-align:right;display:none;">
-      <b>Highlight Details</b>
-      <br>
-      <label><span>Description</span><textarea style="width:15em;" rows="2" cols="1"  class="store-item-block-description"></textarea></label>
-      <br>
-      <label><span>Image</span><input style="width:15em;"  class="store-item-block-description-image" /></label>
-      <br>
-      <label><span>Video</span><input style="width:15em;"  class="store-item-block-description-video" /></label>
-      <br>
-      <b>Item Details</b>
-      <br>
-      <label><span>Price</span><input type="text" style="width:7em;"  class="store-item-block-price" value="$1.00" /></label>
-      &nbsp;
-      <label><span>Name</span><input type="text" style="width:10em;"  class="store-item-block-name" value="" /></label>
-      <br>
-      <label>
-        <span></span>
-        <select class="store-item-block-type-options">
-          <option selected>Block</option>
-          <option>Mesh</option>
-          <option>Shape</option>
-        </select>
-      </label>
-      <label><span></span><input type="text" style="width:15em;"  class="store-item-block-block" list="blockdatatitlelookuplist" /></label>
-
-      <label><span></span><input type="text" style="width:15em;"  class="store-item-block-mesh" list="sbmesheslist" /></label>
-      <br>
-      <label><span></span><input type="text" style="width:15em;"  class="store-item-block-shape" list="shapedatatitlelookuplist" /></label>
-      <br>
-      <br>
-      <label><span>Location</span><input type="text" style="width:6em;" class="store-item-block-location" value="0,0,0" /></label>
-      &nbsp;
-      <label><span>Rotation</span><input type="text" style="width:8em;" class="store-item-block-rotation" value="" /></label>
-      <br>
-      <label><span>Parent Block</span><input type="text" style="width:15em;"  class="store-item-parent-block" list="blockdatatitlelookuplist"  /></label>
     </div>
     <div class="animated-line-block-add-options">
       <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
@@ -508,7 +476,7 @@ class cMacro {
     this.emptyBlockPanel = this.panel.querySelector('.scene-empty-block-add-options');
     this.connectorLinePanel = this.panel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.panel.querySelector('.animated-line-block-add-options');
-    this.storeItemPanel = this.panel.querySelector('.store-item-block-add-options');
+    this.webFontPanel = this.panel.querySelector('.web-font-block-add-options');
 
     this.blockAddFontFamily = this.blockShapePanel.querySelector('.font-family-block-add');
     this.blockAddFontFamily.addEventListener('input', e => this.updateFontField(this.blockAddFontFamily));
@@ -540,6 +508,15 @@ class cMacro {
       this.mixin.width = this.emptyBlockPanel.querySelector('.block-box-width').value;
       this.mixin.height = this.emptyBlockPanel.querySelector('.block-box-height').value;
       this.mixin.depth = this.emptyBlockPanel.querySelector('.block-box-depth').value;
+      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+      return results.key;
+    }
+    if (bType === 'Web Font') {
+      let webFontName = this.webFontPanel.querySelector('.block-web-font').value;
+
+      this.mixin.blockFlag = 'googlefont';
+      this.mixin.genericBlockData = webFontName;
+
       let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
       return results.key;
     }
@@ -690,7 +667,7 @@ class cMacro {
     this.emptyBlockPanel.style.display = 'none';
     this.animatedDashPanel.style.display = 'none';
     this.connectorLinePanel.style.display = 'none';
-    this.storeItemPanel.style.display = 'none';
+    this.webFontPanel.style.display = 'none';
 
     let sel = this.blockOptionsPicker.value;
     if (sel === 'Text and Shape')
@@ -701,8 +678,8 @@ class cMacro {
       this.connectorLinePanel.style.display = '';
     else if (sel === 'Animated Line')
       this.animatedDashPanel.style.display = '';
-    else if (sel === 'Store Item')
-      this.storeItemPanel.style.display = '';
+    else if (sel === 'Web Font')
+      this.webFontPanel.style.display = '';
     else
       this.emptyBlockPanel.style.display = '';
   }
