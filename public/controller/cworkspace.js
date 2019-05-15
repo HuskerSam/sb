@@ -153,10 +153,13 @@ class cWorkspace {
     })
   }
   workspaceNewTemplate() {
-    return `<div>
-    <b>Animation Templates</b>
+    return `<div style="padding: .25em;">
+    <button style="float:right;" id="generate_animation_workspace_button">Generate Animation</button>
+    <label style="float:right;clear:right;"><input type="checkbox" id="generate_new_workspace_chk" /> Create Workspace
+    <br>
+     <input id="generate_animation_new_wrk_name" type="text" /></label>
+    <div>ASSETS</div>
     <div class="workspace-csv-panel-item">
-      <div>ASSETS</div>
       <select id="add_animation_asset_choice">
         <option>Current</option>
         <option>Animation</option>
@@ -171,8 +174,8 @@ class cWorkspace {
       <button id="add_animation_asset_download_btn" class="btn-sb-icon"><i class="material-icons">file_download</i></button>
       <button id="add_animation_asset_upload_btn" class="btn-sb-icon"><i class="material-icons">cloud_upload</i></button>
     </div>
+    <div>LAYOUT</div>
     <div class="workspace-csv-panel-item">
-      <div>LAYOUT</div>
       <select id="add_animation_scene_choice">
         <option>Current</option>
         <option>Animation</option>
@@ -187,8 +190,8 @@ class cWorkspace {
       <button id="add_animation_scene_download_btn" class="btn-sb-icon"><i class="material-icons">file_download</i></button>
       <button id="add_animation_scene_upload_btn" class="btn-sb-icon"><i class="material-icons">cloud_upload</i></button>
     </div>
+    <div>PRODUCTS</div>
     <div class="workspace-csv-panel-item">
-      <div>PRODUCTS</div>
       <select id="add_animation_product_choice">
         <option>Current</option>
         <option>Animation</option>
@@ -203,9 +206,6 @@ class cWorkspace {
       <button id="add_animation_product_download_btn" class="btn-sb-icon"><i class="material-icons">file_download</i></button>
       <button id="add_animation_product_upload_btn" class="btn-sb-icon"><i class="material-icons">cloud_upload</i></button>
     </div>
-    <label><input type="checkbox" id="generate_new_workspace_chk" /> Create New Workspace <input id="generate_animation_new_wrk_name" type="text" /></label>
-    <br>
-    <button id="generate_animation_workspace_button">Generate Animation</button>
     </div>`;
   }
   workspaceNewRegister() {
@@ -321,12 +321,14 @@ class cWorkspace {
       await csvImport.importRows(products);
       await csvImport.addCSVDisplayFinalize();
 
+      this.bView._updateQueryString(animationKey, 'Layout');
+      /*
       await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'selectedWorkspace',
         newValue: animationKey
       }]);
-
-      location.reload();
+      */
+      window.location.href = `/asset/?wid=${animationKey}&subview=Layout`;
     }, 10);
 
   }
@@ -450,6 +452,10 @@ class cWorkspace {
       alert('need a name for new workspace');
       return;
     }
+
+    if (!genNew && !confirm('This will clear existing data - proceed?'))
+      return;
+
     this.bView.canvasHelper.hide();
 
     let wId = gAPPP.a.profile.selectedWorkspace;

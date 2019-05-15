@@ -384,11 +384,11 @@ class cView extends bView {
     let newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
     return newURL;
   }
-  _updateQueryString(newWid) {
+  _updateQueryString(newWid, tag = null) {
     let urlParams = new URLSearchParams(window.location.search);
     let url = '';
     if (newWid) {
-      url = this.genQueryString(newWid);
+      url = this.genQueryString(newWid, tag);
     } else {
       url = this.genQueryString();
     }
