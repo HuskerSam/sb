@@ -610,3 +610,23 @@ select {
 #new-workspace-name {
   width: 8em;
 }
+
+.workspace-asset-link-display {
+  text-decoration: none;
+  text-align:center;
+  display: inline-block;
+  line-height: .75em;
+  border: solid .05em silver;
+  border-radius: .5em;
+  padding: .1em;
+  margin: .1em;
+}
+
+.workspace-asset-link-display span {
+  font-size: .5em;
+}
+
+.workspace-asset-link-display img {
+  max-width: 3em;
+  max-height: 3em;
+}

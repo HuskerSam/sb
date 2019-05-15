@@ -28,12 +28,49 @@ class cWorkspace {
     let blockchildCount = Object.keys(gAPPP.a.modelSets['blockchild'].fireDataValuesByKey).length;
     let googleFontCount = Object.keys(gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont')).length;
 
+    let getAssetLinks = (asset) => {
+      let set = gAPPP.a.modelSets[asset];
+      set.updateChildOrder();
+      let keyOrder = set.childOrderByKey;
+      let html = '';
+      keyOrder = keyOrder.slice(0, 5);
+
+      keyOrder.forEach(i => {
+        let data = set.fireDataValuesByKey[i];
+        let d = new Date(data.sortKey);
+        if (data.sortKey === undefined)
+          d = new Date('1/1/1970');
+        let od = d.toISOString().substring(0,10);
+        od += ' ' + d.toISOString().substring(11,16);
+        let href = this.bView.genQueryString(null, asset, i);
+
+        let url = data.renderImageURL;
+        if (!url)
+          url = '/images/webgl.png';
+
+        html += `<a class="workspace-asset-link-display" href="${href}">
+          <img src="${url}" /><br>${data.title}<br><span>${od}</span></a>`;
+      });
+
+      return html;
+    }
+
     html += `<hr><div style="line-height:1.5em;padding:.5em;">
     <a href="#" class="navigate_tag_select" data-value="block">Block</a> Count: ${blockCount}<br>
+    ${getAssetLinks('block')}
+    <br>
     <a href="#" class="navigate_tag_select" data-value="mesh">Mesh</a> Count: ${meshCount}<br>
+    ${getAssetLinks('mesh')}
+    <br>
     <a href="#" class="navigate_tag_select" data-value="shape">Shape</a> Count: ${shapeCount}<br>
+    ${getAssetLinks('shape')}
+    <br>
     <a href="#" class="navigate_tag_select" data-value="texture">Texture</a> Count: ${textureCount}<br>
+    ${getAssetLinks('texture')}
+    <br>
     <a href="#" class="navigate_tag_select" data-value="material">Material</a> Count: ${materialCount}<br>
+    ${getAssetLinks('material')}
+    <br>
     Web Fonts: ${googleFontCount}<br>
     Frame Count: ${frameCount}<br>
     Block Link Count: ${blockchildCount}<br>`;
