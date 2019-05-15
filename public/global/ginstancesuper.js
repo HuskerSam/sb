@@ -112,8 +112,10 @@ class gInstanceSuper {
   }
   async _updateGoogleFonts() {
     let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont');
+    let fontLoaded = false;
     for (let id in editInfoBlocks) {
       let fontName = editInfoBlocks[id].genericBlockData;
+      let origFontName = fontName;
       fontName = fontName.replace(/ /g, '+');
 
       if (!this.fontsAdded[fontName]) {
@@ -121,6 +123,11 @@ class gInstanceSuper {
         let newLink = document.createElement('style');
         newLink.innerHTML = `@import url(https://fonts.googleapis.com/css?family=${fontName});`;
         document.body.append(newLink);
+        let newSpan = document.createElement('span');
+        newSpan.setAttribute('style', `font-family:${origFontName}`);
+        document.body.append(newSpan);
+        let a = newSpan.offsetHeight;
+        newSpan.style.display = 'none';
       }
     }
 
