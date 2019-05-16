@@ -56,23 +56,23 @@ class cWorkspace {
     }
 
     html += `<div style="line-height:1.5em;padding:.5em;">
-    <a href="#" class="navigate_tag_select" data-value="block">Blocks</a>: ${blockCount}
+    <a href="#" class="navigate_tag_select" data-value="block">Blocks: ${blockCount}</a>
     &nbsp;
     ${getAssetLinks('block')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="mesh">Meshes</a>: ${meshCount}
+    <a href="#" class="navigate_tag_select" data-value="mesh">Meshes: ${meshCount}</a>
     &nbsp;
     ${getAssetLinks('mesh')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="shape">Shapes</a>: ${shapeCount}
+    <a href="#" class="navigate_tag_select" data-value="shape">Shapes: ${shapeCount}</a>
     &nbsp;
     ${getAssetLinks('shape')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="texture">Textures</a>: ${textureCount}
+    <a href="#" class="navigate_tag_select" data-value="texture">Textures: ${textureCount}</a>
     &nbsp;
     ${getAssetLinks('texture')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="material">Materials</a>: ${materialCount}
+    <a href="#" class="navigate_tag_select" data-value="material">Materials: ${materialCount}</a>
     &nbsp;
     ${getAssetLinks('material')}
     <br>

@@ -255,11 +255,7 @@ class cBandFrames extends bBand {
 
     if (!this.initedNoFramesPanel) {
       this.initedNoFramesPanel = true;
-      fetch(`/doc/frameshelp.html`, {
-          cache: "no-cache"
-        })
-        .then(res => res.text())
-        .then(html => this.noFrames.innerHTML = html);
+      this.noFrames.innerHTML = 'No Frames';
     }
     this.noFrames.style.display = '';
   }

@@ -9,7 +9,7 @@ class bView {
     this.subView = subview;
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
-
+    this.detailsShown = gAPPP.a.profile.applicationDetailsShown;
     this.initDom();
     this.dialog.context = this.context;
     this.show(null);
@@ -393,11 +393,21 @@ class bView {
     if (this.fireFields)
       this.fireFields.helpers.expandAll();
     this.detailsShown = true;
+
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'applicationDetailsShown',
+      newValue: this.detailsShown
+    }]);
   }
   collapseAll() {
     if (this.fireFields)
       this.fireFields.helpers.collapseAll();
     this.detailsShown = false;
+
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'applicationDetailsShown',
+      newValue: this.detailsShown
+    }]);
   }
   deleteProject() {
     if (this.workplacesSelect.value === 'default') {

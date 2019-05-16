@@ -94,6 +94,7 @@ class cPanelCanvas {
 
     this.parent.context.canvas.addEventListener('wheel', e => this.updateCameraSlidersFromCanvas());
     this.parent.context.canvas.addEventListener('keypress', e => this.updateCameraSlidersFromCanvas());
+    this.parent.context.canvas.addEventListener('click', e => this.updateCameraSlidersFromCanvas());
   }
   updateCameraSlidersFromCanvas() {
     this.arcRangeSlider.value = this.cameraSliderPosition(this.parent.context.camera.radius);

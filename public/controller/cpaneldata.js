@@ -303,7 +303,7 @@ class cPanelData {
       l.appendChild(a);
 
       let b = document.createElement('button');
-      b.innerHTML = '<i class="material-icons">cloud_upload</i> Upload';
+      b.innerHTML = '<i class="material-icons">cloud_upload</i>';
       c.classList.add('url-form-group');
       c.insertBefore(b, c.childNodes[0]);
       c.appendChild(field.dom);

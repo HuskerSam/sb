@@ -108,6 +108,7 @@ button {
   z-index: 1000;
   pointer-events: none;
   line-height: 1em;
+  border-radius: 10%;
 }
 
 .camera-slider-label {
@@ -133,10 +134,7 @@ button {
   pointer-events: none;
   z-index: 1000;
   padding: 0;
-}
-
-button i.material-icons {
-  font-size: inherit;
+  border-radius: 10%;
 }
 
 select {
@@ -367,12 +365,15 @@ select {
 }
 
 .app-collapsed .band-background-preview button {
-  margin: .1em;
-  padding: 0;
+  margin: .05em;
 }
 
-.app-expanded .band-background-preview br {
+.band-background-preview br {
   display: none;
+}
+
+.app-collapsed .band-background-preview br {
+  display: inline;
 }
 
 .asset-fields-container .band-background-preview button {
@@ -383,6 +384,7 @@ select {
   display: inline-block;
   margin: .25em;
   width: 18em;
+  text-align: center;
 }
 
 .app-collapsed .menu-clipper-wrapper {
@@ -431,8 +433,7 @@ select {
 }
 
 .asset-fields-container input, .asset-fields-container button {
-  margin: .25em;
-  padding: .25em;
+
 }
 
 .form_canvas_wrapper {
@@ -662,4 +663,12 @@ select {
   max-width: 2em;
   max-height: 2em;
   float: left;
+}
+
+.navigate_tag_select {
+  padding: .5em .15em;
+  border-radius: .5em;
+  position: relative;
+  top: -1em;
+  border-style: solid;
 }

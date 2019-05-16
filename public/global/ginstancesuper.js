@@ -297,6 +297,11 @@ class gInstanceSuper {
         border-radius: .1em;
       }
 
+      .form-group-container-group {
+        border-radius: 0;
+        border-style: solid;
+      }
+
       input[type=range]::-webkit-slider-thumb {
         background: rgb(250, 250, 250);
         border-radius: .1em;
@@ -314,6 +319,8 @@ class gInstanceSuper {
         background-image: linear-gradient(0deg,
           ${foreColor},
           ${bkgColor},
+          ${foreColor},
+          ${bkgColor},
           ${foreColor});
         background-color: ${foreColor};
         border: solid 0px ${bkgColor};
@@ -324,6 +331,8 @@ class gInstanceSuper {
 
       .gutter.gutter-horizontal {
         background-image: linear-gradient(90deg,
+          ${foreColor},
+          ${bkgColor},
           ${foreColor},
           ${bkgColor},
           ${foreColor});

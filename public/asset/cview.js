@@ -90,7 +90,11 @@ class cView extends bView {
         this.expandAll();
       }
     });
-
+    if (this.detailsShown)
+      this.expandAll();
+    else
+      this.collapseAll();
+      
     this.view_layout_select.value = this.layoutMode;
   }
   initDataFields(tag, key) {
@@ -429,7 +433,7 @@ class cView extends bView {
   splitLayoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;flex-direction:column;">
       <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
-      <div id="main-view-wrapper">
+      <div id="main-view-wrapper" class="app-collapsed">
         <div class="form_canvas_wrapper"></div>
         <div class="form_panel_view_dom">
           <div id="profile-header-panel">${this.profilePanelTemplate()}</div>
@@ -474,8 +478,8 @@ class cView extends bView {
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_photo_alternate</i></button>
             <div class="block_child_details_block" style="display:inline-block;">
               <select class="main-band-children-select" style="display:none;"></select>
-              <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove</i></button>
-              <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add</i></button>
+              <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove_from_queue</i></button>
+              <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add_to_queue</i></button>
               <select class="main-band-sub-view-select" style="display:none;">
                 <option value="frame">Frames</option>
                 <option value="node" selected>Details</option>
@@ -655,7 +659,6 @@ class cView extends bView {
     super.expandAll();
     this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_less';
     this.expand_all_global_btn.classList.add('app-inverted');
-    this.detailsShown = true;
     if (this.framesBand) {
       this.framesBand._updateFrameHelpersUI();
     }
@@ -667,7 +670,6 @@ class cView extends bView {
     super.collapseAll();
     this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_more';
     this.expand_all_global_btn.classList.remove('app-inverted');
-    this.detailsShown = false;
     if (this.framesBand) {
       this.framesBand._updateFrameHelpersUI();
     }
