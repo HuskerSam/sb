@@ -27,7 +27,12 @@ class cBandIcons extends bBand {
   }
   _getDomForChild(key, values) {
     let html = '<span class="img-holder"></span><div class="band-title"></div><br>';
-
+    let d = new Date(values.sortKey);
+    if (values.sortKey === undefined)
+      d = new Date('1/1/1970');
+    let od = d.toISOString().substring(0,10);
+    od += ' ' + d.toISOString().substring(11,16);
+    html += `<div class="sort-date-last-edit">${od}</div>`;
     let outer = document.createElement('div');
     outer.setAttribute('class', `band-background-preview app-border`);
     outer.innerHTML = html.trim();
@@ -36,8 +41,9 @@ class cBandIcons extends bBand {
     dd.setAttribute('class', `${this.tag}${this.myKey}-${key} menu-clipper-wrapper`);
     dd.appendChild(outer);
 
-    let b = this.__addMenuItem(outer, 'open_with', e => this.selectItem(e, key));
-    b = this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
+    outer.addEventListener('click',  e => this.selectItem(e, key));
+
+    let b = this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
     b = this.__addMenuItem(outer, 'file_download', e => this.downloadJSON(e, key), true);
     b = this.__addMenuItem(outer, 'delete', e => this._removeElement(e, key), true);
 
@@ -69,7 +75,12 @@ class cBandIcons extends bBand {
     btn.innerHTML = '<i class="material-icons">' + title + '</i>';
     btn.classList.add('btn-sb-icon');
     button.appendChild(btn);
-    btn.addEventListener('click', e => clickHandler(e), false);
+    btn.addEventListener('click', e =>
+    {
+      e.stopPropagation();
+      clickHandler(e);
+      return false;
+    }, false);
     return btn;
   }
 }

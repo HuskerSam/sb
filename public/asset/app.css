@@ -14,6 +14,10 @@ button {
   margin: 0 .25em;
 }
 
+input[type="text"] {
+  padding: .25em;
+}
+
 #firebase-app-login-page {
   width: 100%;
   text-align: center;
@@ -145,6 +149,11 @@ select {
   display: block;
   height: 100vh;
   width: 100vw;
+}
+
+.block_child_details_block {
+  float: left;
+  margin-top: .25em;
 }
 
 .frames-panel {
@@ -341,6 +350,7 @@ select {
   margin: 0 .05em;
   overflow: hidden;
   width: 100%;
+  cursor: pointer;
 }
 
 .band-background-preview .img-holder {
@@ -354,7 +364,6 @@ select {
 
 .app-collapsed .band-background-preview .img-holder {
   height: 2em;
-  max-width: 3em;
   display: inline-block;
 }
 
@@ -365,19 +374,26 @@ select {
 }
 
 .app-collapsed .band-background-preview .band-title {
-  display: inline-block;
+}
+
+.app-collapsed .band-background-preview br {
+  display: none;
 }
 
 .app-collapsed .band-background-preview button {
-  margin: .05em;
+  display: none;
 }
 
 .band-background-preview br {
   display: none;
 }
 
-.app-collapsed .band-background-preview br {
-  display: inline;
+.sort-date-last-edit {
+  font-size: .7em;
+}
+
+.app-collapsed .sort-date-last-edit {
+  display: none;
 }
 
 .asset-fields-container .band-background-preview button {
@@ -465,7 +481,6 @@ select {
 }
 
 .add-asset-template-panel input[type="file"] {
-  background: silver;
 }
 
 .material-add-options .material-color-add {
@@ -633,12 +648,13 @@ select {
 
 .header_wrapper {
   padding: .25em;
-  line-height: 3em;
+  line-height: 2.5em;
 }
 
 .add_workspace_panel_wrapper {
   display: inline-block;
   white-space: nowrap;
+  margin-left:.5em
 }
 
 #new-workspace-name {
@@ -646,7 +662,6 @@ select {
 }
 
 .workspace-asset-link-display {
-  text-decoration: none;
   text-align:center;
   display: inline-block;
   line-height: .75em;
@@ -654,7 +669,6 @@ select {
   border-radius: .5em;
   padding: .1em;
   margin: .1em;
-  max-width: 6em;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -670,11 +684,8 @@ select {
 }
 
 .navigate_tag_select {
-  padding: .5em .15em;
-  border-radius: .5em;
-  position: relative;
-  top: -1em;
-  border-style: solid;
+  float: left;
+  padding: .5em;
 }
 
 .view-asset-button {
@@ -687,7 +698,7 @@ select {
 }
 
 #workspaces-select {
-  max-width: calc(100% - 16.5em);
+  max-width: calc(100% - 18.25em);
   float: left;
 }
 

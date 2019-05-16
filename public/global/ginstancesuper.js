@@ -323,8 +323,9 @@ class gInstanceSuper {
 
       ::-webkit-scrollbar-thumb {
         background: none;
-        background-image: radial-gradient(${bkgColor} 10%,
-          ${foreColor});
+        background-image: radial-gradient(${foreColor} 10%,
+          ${bkgColor} 35%,
+        ${foreColor} 70%);
         border: solid .05em ${bkgColor};
         border-radius: .1em;
       }

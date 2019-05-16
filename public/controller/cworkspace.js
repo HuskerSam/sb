@@ -75,30 +75,37 @@ class cWorkspace {
     <a href="#" class="navigate_tag_select" data-value="material">Materials: ${materialCount}</a>
     &nbsp;
     ${getAssetLinks('material')}
-    <br>
-    Web Fonts: ${googleFontCount}<br>
-    Frame Count: ${frameCount}<br>
-    Block Link Count: ${blockchildCount}<br>`;
+    <br>`;
 
     let gi = new gCSVImport(gAPPP.a.profile.selectedWorkspace);
     let sceneRecords = await gi.dbFetchByLookup('block', 'blockFlag', 'scene');
     if (sceneRecords.recordIds.length > 0) {
-      html += 'Scene Block: ' + sceneRecords.records[0].title + ` (${sceneRecords.recordIds[0]})<br>`;
+      let href = this.bView.genQueryString(null, 'block', sceneRecords.recordIds[0]);
+      html += `Generated animation block: <a href="${href}">${sceneRecords.records[0].title}</a><br>`
     } else {
-      html += 'Scene Block: none<br>';
+      html += 'Generated animation block: none<br>';
     }
 
     let blocksData = await gi.dbFetchByLookup('block', 'blockFlag', 'displayblock');
-    html += 'Display Blocks found: ' + blocksData.records.length + '<br>Blocks: ';
-    blocksData.records.forEach(i => html += `${i.title}, `);
+    html += `Display Blocks (${blocksData.records.length}): `;
+    for (let c = 0, l = blocksData.records.length; c < l; c++) {
+      let href = this.bView.genQueryString(null, 'block', blocksData.recordIds[c]);
+      html += ` &nbsp; <a href="${href}">${blocksData.records[c].title}</a>`;
+    }
     html += '<br>';
 
     let baskets = await gi.dbFetchByLookup('block', 'blockFlag', 'basket');
-    if (baskets.recordIds.length > 0)
-      html += `Basket Block: ${baskets.records[0].title} (${baskets.recordIds[0]})<br>`;
+    if (baskets.recordIds.length > 0) {
+      let href = this.bView.genQueryString(null, 'block', baskets.recordIds[0]);
+      html += `Basket Block: <a href="${href}">${baskets.records[0].title}</a><br>`;
+    }
     else {
       html += 'Basket Block: none<br>'
     }
+
+    html += `Web Fonts: ${googleFontCount}<br>
+    Frame Count: ${frameCount}<br>
+    Block Link Count: ${blockchildCount}<br>`;
 
     let result = await firebase.database().ref(gi.path('blockchild'))
       .orderByChild('animationIndex')
@@ -118,16 +125,19 @@ class cWorkspace {
     return;
   }
   workspaceDetailsTemplate() {
-    return `<div style="flex:1;">
-    <button class="import_csv_records" style="float:right;">Import CSV</button>
-    <button class="import_asset_json_button" style="float:right;clear:right;">Import JSON</button>
-    <label><span>Name</span><input id="edit-workspace-name" /></label>
-      <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
-      <br>
-      <label><span>Tags</span><input id="edit-workspace-code" /></label>
-      <input type="file" style="display:none;" class="import_csv_file">
-      <input type="file" style="display:none;" class="import_asset_json_file">
-      </div>`;
+    return `<div style="ine-height:2.5em;">
+    <label><span>Name </span><input id="edit-workspace-name" type="text" /></label>
+    &nbsp;
+    <label><span>Tags </span><input id="edit-workspace-code" type="text" /></label>
+    &nbsp;
+    <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
+    <input type="file" style="display:none;" class="import_csv_file">
+    <input type="file" style="display:none;" class="import_asset_json_file">
+    &nbsp;
+    <button class="import_csv_records">Import CSV</button>
+    &nbsp;
+    <button class="import_asset_json_button">Import JSON</button>
+    </div>`;
   }
   workspaceDetailsRegister() {
     this.bView.workplacesSelectEditName = this.domPanel.querySelector('#edit-workspace-name');

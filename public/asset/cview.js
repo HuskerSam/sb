@@ -380,6 +380,8 @@ class cView extends bView {
   async updateSelectedRecord() {
     this.form_panel_view_dom.classList.remove('workspace');
     this.form_panel_view_dom.classList.remove('workspacelayout');
+    this.form_panel_view_dom.classList.remove('child-block-display');
+    this.form_panel_view_dom.classList.remove('root-block-display');
     this.asset_show_home_btn.style.display = 'none';
     this.expand_all_global_btn.style.display = 'none';
     this.workspace_show_home_btn.style.display = '';
@@ -450,8 +452,8 @@ class cView extends bView {
             </select>
             <select id="workspaces-select"></select>
             <div class="add_workspace_panel_wrapper">
-              <label>New <input id="new-workspace-name" /></label>
-              <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
+              <label>New <input id="new-workspace-name" type="text" /></label>
+              <button id="add-workspace-button" class="btn-sb-icon" style="float:right;"><i class="material-icons">add</i></button>
             </div>
             <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">video_library</i></button>
             <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
@@ -477,7 +479,7 @@ class cView extends bView {
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
             <button class="view-asset-button btn-sb-icon"><i class="material-icons">tv</i></button>
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_photo_alternate</i></button>
-            <div class="block_child_details_block" style="display:inline-block;">
+            <div class="block_child_details_block">
               <select class="main-band-children-select" style="display:none;"></select>
               <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove_from_queue</i></button>
               <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add_to_queue</i></button>
@@ -487,6 +489,7 @@ class cView extends bView {
                 <option value="import">JSON</option>
               </select>
               <button class="add_frame_button btn-sb-icon" style="display:none;"><i class="material-icons">playlist_add</i></button>
+              <div style="clear:both;"></div>
             </div>
           </div>
           <div class="data-view-container">
