@@ -178,7 +178,7 @@ class cBandFrames extends bBand {
     deleteButton.innerHTML = '<i class="material-icons">delete_sweep</i>';
     deleteButton.setAttribute('class', 'delete-button btn-sb-icon');
     deleteButton.addEventListener('click', e => this._removeFrame(instance));
-    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[framesContainer.childNodes.length - 1]);
+    framesContainer.insertBefore(deleteButton, framesContainer.childNodes[0]);
 
     instance.dataPanel.paint(values);
 

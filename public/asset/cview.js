@@ -457,7 +457,7 @@ class cView extends bView {
             <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
             <button class="expand_all_global_btn btn-sb-icon"><i class="material-icons">unfold_more</i></button>
             <br>
-            <select id="dataview_record_tag" style="float:left;">
+            <select id="dataview_record_tag" style="float:left;clear:left;">
               <option value="" selected>Workspace</option>
               <option value="block">Block</option>
               <option value="mesh">Mesh</option>
@@ -481,7 +481,7 @@ class cView extends bView {
               <select class="main-band-children-select" style="display:none;"></select>
               <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove_from_queue</i></button>
               <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add_to_queue</i></button>
-              <select class="main-band-sub-view-select" style="display:none;">
+              <select class="main-band-sub-view-select" style="display:none;float:left;">
                 <option value="frame">Frames</option>
                 <option value="node" selected>Details</option>
                 <option value="import">JSON</option>

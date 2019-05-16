@@ -163,6 +163,11 @@ select {
   clear: both;
   position: relative;
   margin: 0em;
+  padding-left: 3.25em;
+}
+
+.app-collapsed .frame-fields-container {
+  padding-left: 2.5em;
 }
 
 .frames-panel .frame-fields-container label span {
@@ -175,8 +180,15 @@ select {
   font-size: 1em;
 }
 
+.frames-panel>div:nth-child(1) .delete-button {
+  top: 1em;
+}
+
+.app-collapsed .frames-panel>div:nth-child(1) .delete-button {
+  top: 1.5em;
+}
+
 .frames-panel input {
-  padding: 0em;
 }
 
 .frames-panel .add-button {
@@ -189,15 +201,17 @@ select {
 }
 
 .frames-panel button.delete-button {
-  font-size: 1.2em;
-  top: -.4em;
-  position: relative;
+  position: absolute;
+  left: 0;
+}
+
+.app-collapsed button.delete-button {
+  font-size: 1.1em;
 }
 
 .frames-panel .form-group-container-group {
   float: none;
   margin: 0 0em;
-  background: rgba(255, 255, 255, .5);
   padding-top: .35em;
   border: none;
   border-radius: 0;
@@ -216,7 +230,6 @@ select {
 .frames-panel .frames-header-fields-panel .form-group-container-group {
   float: left;
   display: inline-block;
-  background: rgba(255, 255, 255, .5);
   margin: .25em;
   padding: .25em;
   padding-right: .5em;
@@ -232,7 +245,6 @@ select {
 }
 
 .frames-header-bar {
-  background: rgba(255, 255, 255, .5);
 }
 
 .frame-info-panel {
@@ -263,14 +275,6 @@ select {
 .camera-select-range-slider {}
 
 .camera-select-height-slider {}
-
-.select-block-animation-button {
-  position: absolute;
-  bottom: .1em;
-  right: 2.275em;
-  background: rgba(240, 240, 240, .5);
-  color: black;
-}
 
 .export-frames-details-panel {
   padding: .5em;
@@ -684,5 +688,10 @@ select {
 
 #workspaces-select {
   max-width: calc(100% - 16.5em);
+  float: left;
+}
+
+.header_wrapper button {
+  margin: 0 .1em;
   float: left;
 }
