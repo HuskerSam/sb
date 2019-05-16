@@ -29,7 +29,7 @@ class cBandIcons extends bBand {
     let html = '<span class="img-holder"></span><div class="band-title"></div><br>';
 
     let outer = document.createElement('div');
-    outer.setAttribute('class', `band-background-preview`);
+    outer.setAttribute('class', `band-background-preview app-border`);
     outer.innerHTML = html.trim();
     let button = outer.childNodes[0];
     let dd = document.createElement('div');

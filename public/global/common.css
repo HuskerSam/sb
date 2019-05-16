@@ -293,9 +293,6 @@ button i.material-icons {
   display: none;
 }
 
-.scene-options-panel .form-group-container-group {
-  background: rgba(127, 127, 127, 1);
-}
 
 .render-log-panel {
   background: rgba(255, 255, 255, .5);
@@ -325,15 +322,16 @@ button i.material-icons {
 .scene-options-panel {
   pointer-events: none;
   position:absolute;
-  top: 2em;
+  top: 2.5em;
   z-index: 100;
+  margin: .5em;
+  padding: .25em;
 }
 
 .scene-options-panel .scene-fields-container {
   overflow: hidden;
   pointer-events: none;
   display: inline-block;
-  padding-top: .75em;
 }
 
 .scene-options-panel .scene-fields-container * {
@@ -500,17 +498,18 @@ button i.material-icons {
 }
 
 #profile-header-panel {
-  transition: height 800ms, opacity 800ms, padding 800ms;
   overflow: auto;
-  height: 0;
-  opacity: 0;
+  display: none;
+  position: absolute;
+  top: 2.25em;
+  right: 0em;
+  z-index: 1000;
+  padding: .5em;
+  margin: .5em
 }
 
 .form_panel_view_dom.header-expanded #profile-header-panel {
-  max-height: 40%;
-  height: auto;
-  opacity: 1;
-  padding: .1em;
+  display: inline-block;
 }
 
 .font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {

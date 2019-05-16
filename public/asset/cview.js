@@ -94,7 +94,7 @@ class cView extends bView {
       this.expandAll();
     else
       this.collapseAll();
-      
+
     this.view_layout_select.value = this.layoutMode;
   }
   initDataFields(tag, key) {
@@ -318,7 +318,6 @@ class cView extends bView {
         await this.context.loadSceneURL(this.fireFields.values.url);
 
       this.sceneFireFields.values = this.fireSet.fireDataByKey[this.key].val();
-      this._updateFollowTargetListOptions();
 
       this.block_child_details_block.style.display = '';
     }
@@ -346,6 +345,8 @@ class cView extends bView {
     if (this.tag === 'block') {
       this.setChildKey(this.childKey);
       this.childBand.updateSelectDom();
+      this._updateFollowTargetListOptions();
+
       if (this.blockChildrenSelect.selectedIndex === -1) {
         this.childKey = '';
         this.blockChildrenSelect.value = '';
@@ -436,7 +437,7 @@ class cView extends bView {
       <div id="main-view-wrapper" class="app-collapsed">
         <div class="form_canvas_wrapper"></div>
         <div class="form_panel_view_dom">
-          <div id="profile-header-panel">${this.profilePanelTemplate()}</div>
+          <div id="profile-header-panel" class="app-panel">${this.profilePanelTemplate()}</div>
           <div class="header_wrapper">
             <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
             <select id="view_layout_select" style="float:right;">
@@ -452,21 +453,21 @@ class cView extends bView {
               <label>New <input id="new-workspace-name" /></label>
               <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
             </div>
-            <button class="workspace_show_home_btn" class="btn-sb-icon"><i class="material-icons">video_library</i></button>
-            <button class="asset_show_home_btn" class="btn-sb-icon"><i class="material-icons">library_books</i></button>
-            <button class="expand_all_global_btn" class="btn-sb-icon"><i class="material-icons">unfold_more</i></button>
+            <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">video_library</i></button>
+            <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
+            <button class="expand_all_global_btn btn-sb-icon"><i class="material-icons">unfold_more</i></button>
             <br>
-            <select id="dataview_record_tag">
+            <select id="dataview_record_tag" style="float:left;">
               <option value="" selected>Workspace</option>
-              <option value="shape">Shape</option>
+              <option value="block">Block</option>
               <option value="mesh">Mesh</option>
+              <option value="shape">Shape</option>
               <option value="material">Material</option>
               <option value="texture">Texture</option>
-              <option value="block">Block</option>
             </select>
+            <select id="dataview_record_key" style="max-width:calc(100% - 16em);float:left;"></select>
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
-            <select id="dataview_record_key" style="max-width:calc(100% - 16em);"></select>
-            <select class="workspace_layout_view_select">
+            <select class="workspace_layout_view_select" style="float:left;">
               <option>Products</option>
               <option>Layout</option>
               <option>Assets</option>
@@ -492,64 +493,61 @@ class cView extends bView {
           </div>
         </div>
       </div>
-    </div>
-    <datalist id="framecommandoptionslist">
-      <option>Set</option>
-      <option>GSet</option>
-      <option>Animation</option>
-      <option>Video</option>
-      <option>Audio</option>
-      <option>Function</option>
-      <option>Camera</option>
-    </datalist>
-    <datalist id="framecommandfieldslist">
-      <option>videoURL</option>
-      <option>videoHeight</option>
-      <option>videoWidth</option>
-      <option>fogType</option>
-      <option>fogDensity</option>
-      <option>skybox</option>
-      <option>groundMaterial</option>
-      <option>material</option>
-      <option>play</option>
-      <option>pause</option>
-      <option>stop</option>
-      <option>position</option>
-      <option>target</option>
-    </datalist>
-    <datalist id="blockchildtypelist">
-      <option>block</option>
-      <option>mesh</option>
-      <option>shape</option>
-      <option>light</option>
-      <option>camera</option>
-    </datalist>
-    <datalist id="htmlvideosourcelist">
-      <option>video/webm</option>
-      <option>video/mp4</option>
-      <option>video/ogg</option>
-    </datalist>
-    <datalist id="fogtypelist">
-      <option>none</option>
-      <option>EXP</option>
-      <option>EXP2</option>
-      <option>LINEAR</option>
-    </datalist>
-    <datalist id="lightsourceslist">
-      <option>Point</option>
-      <option>Directional</option>
-      <option>Spot</option>
-      <option>Hemispheric</option>
-    </datalist>
-    <datalist id="camerasourceslist">
-      <option>UniversalCamera</option>
-      <option>ArcRotate</option>
-      <option>FollowCamera</option>
-    </datalist>
-    <datalist id="fontfamilydatalist"></datalist>
-    <datalist id="skyboxlist"></datalist>
-    <datalist id="sbmesheslist"></datalist>
-    <datalist id="followblocktargetoptionslist"></datalist>`;
+
+      <datalist id="framecommandoptionslist">
+        <option>Set</option>
+        <option>GSet</option>
+        <option>Animation</option>
+        <option>Video</option>
+        <option>Audio</option>
+        <option>Function</option>
+        <option>Camera</option>
+      </datalist>
+      <datalist id="framecommandfieldslist">
+        <option>videoURL</option>
+        <option>videoHeight</option>
+        <option>videoWidth</option>
+        <option>fogType</option>
+        <option>fogDensity</option>
+        <option>skybox</option>
+        <option>groundMaterial</option>
+        <option>material</option>
+        <option>play</option>
+        <option>pause</option>
+        <option>stop</option>
+        <option>position</option>
+        <option>target</option>
+      </datalist>
+      <datalist id="blockchildtypelist">
+        <option>block</option>
+        <option>mesh</option>
+        <option>shape</option>
+        <option>light</option>
+        <option>camera</option>
+      </datalist>
+      <datalist id="htmlvideosourcelist">
+        <option>video/webm</option>
+        <option>video/mp4</option>
+        <option>video/ogg</option>
+      </datalist>
+      <datalist id="fogtypelist">
+        <option>none</option>
+        <option>EXP</option>
+        <option>EXP2</option>
+        <option>LINEAR</option>
+      </datalist>
+      <datalist id="lightsourceslist">
+        <option>Point</option>
+        <option>Directional</option>
+        <option>Spot</option>
+        <option>Hemispheric</option>
+      </datalist>
+      <datalist id="camerasourceslist">
+        <option>UniversalCamera</option>
+        <option>ArcRotate</option>
+        <option>FollowCamera</option>
+      </datalist>
+    </div>`;
   }
   __dataviewTemplate() {
     return `<div class="asset-fields-container"></div>

@@ -192,6 +192,15 @@ class gInstanceSuper {
       border-color: rgb(200, 200, 200);
     }
 
+    .app-panel {
+      background: ${bkgColor};
+    }
+
+    .app-panel, .app-border {
+      border-style: outset;
+      border-radius: 1em;
+    }
+
     .tabulator .tabulator-cell {
       background: ${ctlHalfColor};
     }
@@ -288,6 +297,11 @@ class gInstanceSuper {
       }
 
       input {
+        border-radius: 0;
+      }
+
+      .app-panel, .app-border {
+        border-style: solid;
         border-radius: 0;
       }
 

@@ -672,3 +672,17 @@ select {
   top: -1em;
   border-style: solid;
 }
+
+.view-asset-button {
+  display: none!important;
+}
+
+.main-band-children-select {
+  max-width: calc(100% - 15em);
+  float: left;
+}
+
+#workspaces-select {
+  max-width: calc(100% - 16.5em);
+  float: left;
+}

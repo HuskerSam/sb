@@ -87,7 +87,7 @@ class bView {
   <div class="help-overlay"></div>
   <div class="canvas-actions">
     <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
-    <div class="scene-options-panel" style="display:none;">
+    <div class="scene-options-panel app-panel" style="display:none;">
       <div class="scene-fields-container"></div>
       <div class="render-log-wrapper" style="display:none;">
         <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
@@ -431,7 +431,7 @@ class bView {
     <div class="user-profile-info"></div>
     <button id="sign-out-button" style="float:right;"><i class="material-icons">account_box</i> Sign out </button>
     <button id="user-profile-dialog-reset-button" style="float:right;"><i class="material-icons">account_circle</i> Reset Profile </button>
-    <div class="fields-container" style="float:left"></div>`;
+    <div class="fields-container" style="float:right;clear:right;"></div>`;
   }
   profilePanelRegister() {
     this.signOutBtn = document.querySelector('#sign-out-button');
