@@ -674,9 +674,6 @@ class cView extends bView {
   }
   setChildKey(key) {
     this.childKey = key;
-    if (!this.childEditPanel)
-      return;
-
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
 
     if (!this.childKey) {

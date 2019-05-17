@@ -253,26 +253,6 @@ select {
   margin: 0 .5em;
 }
 
-.frames-header-bar {}
-
-.frame-info-panel {
-  border-radius: .2em;
-  overflow: auto;
-  margin: 0;
-  text-align: left;
-  font-size: 1em;
-}
-
-.frame-info-panel * {}
-
-.genFrame {
-  color: rgb(80, 50, 150);
-}
-
-.frame-fields-container .frame-time {
-  width: 10em;
-}
-
 .canvas-actions .sb-floating-toolbar-item {
   display: inline-block;
   clear: both;
@@ -407,6 +387,32 @@ select {
   width: 12em;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.frames-header-bar {}
+
+.frame-info-panel {
+  overflow: auto;
+  margin: 0;
+  text-align: left;
+  padding: 0;
+}
+
+.frame-info-panel > div {
+  font-size: .75em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.frame-info-panel * {}
+
+.frame-info-panel .genFrame {
+  font-style: italic;
+  font-weight: normal;
+}
+
+.frame-fields-container .frame-time {
+  width: 10em;
 }
 
 .form_canvas_wrapper.show-help {
