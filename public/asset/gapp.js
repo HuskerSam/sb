@@ -64,6 +64,7 @@ class gApp extends gInstanceSuper {
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
     document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);
+/*
     this.emailBtn = document.querySelector('#sign-in-email-button');
     this.emailBtn.addEventListener('click', e => {
       let email = document.querySelector('#sign-in-by-email-link').value;
@@ -71,5 +72,6 @@ class gApp extends gInstanceSuper {
       this.emailBtn.innerHTML = 'Email Sent';
       setTimeout(() => this.emailBtn.innerHTML = 'Send Link', 5000);
     }, false);
+    */
   }
 }

@@ -379,10 +379,11 @@ class gInstanceSuper {
     <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
     <br>
     <br>
-
-    <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
-    <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
   </div>
 </div>`;
+/*
+    <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
+    <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
+*/
   }
 }

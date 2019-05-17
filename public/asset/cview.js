@@ -232,6 +232,9 @@ class cView extends bView {
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.subView;
     }
+
+    if (this.dataview_record_key.selectedIndex < 0)
+      this.dataview_record_key.selectedIndex = 0;
   }
   workspaceAddProjectClick() {
     let name = this.dialog.querySelector('#new-workspace-name').value.trim();
