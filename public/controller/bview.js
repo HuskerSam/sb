@@ -273,18 +273,16 @@ class bView {
     }
   }
   _updateQueryString(wId) {}
-  selectProject() {
+  async selectProject() {
     this._updateQueryString(gAPPP.mV.workplacesSelect.value);
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+    await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'selectedWorkspace',
         newValue: gAPPP.mV.workplacesSelect.value
-      }])
-      .then(() => {
-        setTimeout(() => location.reload(), 1);
-      })
-      .catch(e => {
-        console.log(e);
-      });
+      }]);
+
+    setTimeout(() => location.reload(), 1);
+
+    return;
   }
   async _addProject(newTitle, key = false, reload = true, newCode) {
     if (!key)

@@ -36,7 +36,6 @@ class cWorkspace {
     let textureCount = Object.keys(gAPPP.a.modelSets['texture'].fireDataValuesByKey).length;
     let materialCount = Object.keys(gAPPP.a.modelSets['material'].fireDataValuesByKey).length;
     let blockchildCount = Object.keys(gAPPP.a.modelSets['blockchild'].fireDataValuesByKey).length;
-    let googleFontCount = Object.keys(gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont')).length;
 
     let getAssetLinks = (asset) => {
       let set = gAPPP.a.modelSets[asset];
@@ -113,8 +112,14 @@ class cWorkspace {
       html += 'Basket Block: none<br>'
     }
 
-    html += `Web Fonts: ${googleFontCount}<br>
-    Frame Count: ${frameCount}<br>
+    let fontsData = await gi.dbFetchByLookup('block', 'blockFlag', 'googlefont');
+    html += `Web Font Blocks (${fontsData.records.length}): `;
+    for (let c = 0, l = fontsData.records.length; c < l; c++) {
+      let href = this.bView.genQueryString(null, 'block', fontsData.recordIds[c]);
+      html += ` &nbsp; <a href="${href}" style="font-family:'${fontsData.records[c].genericBlockData}'" class="tag_key_redirect" data-tag="block" data-key="${fontsData.recordIds[c]}">${fontsData.records[c].title}</a>`;
+    }
+    html += '<br>';
+    html += `Frame Count: ${frameCount}<br>
     Block Link Count: ${blockchildCount}<br>`;
 
     let result = await firebase.database().ref(gi.path('blockchild'))

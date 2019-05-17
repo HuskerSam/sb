@@ -624,6 +624,9 @@ class cView extends bView {
       }
     }
     this._updateRecordSelect();
+    if (this.tag === '' && this.dataview_record_key.selectedIndex < 1) {
+      this.updateSelectedRecord();
+    }
     super._updateContextWithDataChange(tag, values, type, fireData);
   }
   refreshExportText() {
