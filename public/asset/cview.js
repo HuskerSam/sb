@@ -5,7 +5,7 @@ class cView extends bView {
 
     this.userProfileName = this.dialog.querySelector('.user-profile-info');
     this.userprofileimage = this.dialog.querySelector('.user-profile-image');
-    if ( gAPPP.a.currentUser.isAnonymous)
+    if (gAPPP.a.currentUser.isAnonymous)
       this.userProfileName.innerHTML = 'Anonymous User';
     else {
       this.userProfileName.innerHTML = gAPPP.a.currentUser.email;
@@ -67,10 +67,6 @@ class cView extends bView {
       })
     });
 
-    this.addProjectButton = document.querySelector('#add-workspace-button');
-    this.addProjectButton.addEventListener('click', e => this.workspaceAddProjectClick());
-
-    this.add_workspace_panel_wrapper = this.dialog.querySelector('.add_workspace_panel_wrapper');
     this.workspace_show_home_btn = this.dialog.querySelector('.workspace_show_home_btn');
     this.workspace_show_home_btn.addEventListener('click', e => {
       this.dataview_record_tag.value = '';
@@ -228,10 +224,9 @@ class cView extends bView {
 
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.key;
-      this.add_workspace_panel_wrapper.style.display = 'none';
       this.workspace_show_home_btn.style.display = '';
     } else {
-      let options = '<option>Details</option><option>Generate</option><option>Layout</option>';
+      let options = '<option>Overview</option><option>Details</option><option>Generate</option><option>Layout</option>';
       this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
@@ -249,7 +244,88 @@ class cView extends bView {
     }
     this._addProject(name);
   }
-  async updateDisplayForWorkspaceDetailView() {
+  async updateSelectedRecord() {
+    this.form_panel_view_dom.classList.remove('workspace');
+    this.form_panel_view_dom.classList.remove('workspaceoverview');
+    this.form_panel_view_dom.classList.remove('workspacelayout');
+    this.form_panel_view_dom.classList.remove('child-block-display');
+    this.form_panel_view_dom.classList.remove('root-block-display');
+    this.asset_show_home_btn.style.display = 'none';
+    this.expand_all_global_btn.style.display = 'none';
+    this.workspace_show_home_btn.style.display = '';
+
+    if (this.dataview_record_tag.selectedIndex < 1) {
+      if (this.dataview_record_key.selectedIndex < 3)
+        await this.updateDisplayForWorkspaceDetails();
+      else if (this.dataview_record_key.selectedIndex === 3)
+        await this.updateDisplayForWorkspaceLayout();
+    }
+    if (this.dataview_record_tag.selectedIndex > 0) {
+      if (this.dataview_record_key.selectedIndex < 1)
+        await this.updateDisplayForAssetsList();
+      else
+        await this.updateDisplayForAssetEditView();
+    }
+
+    this._updateQueryString();
+
+    return;
+  }
+  async updateDisplayForAssetsList() {
+    this.context.activate(null);
+    this.dataview_record_key.selectedIndex = 0;
+    this.generate = new cMacro(this.addAssetPanel, this.tag, this);
+    this.recordViewer = new cBandIcons(this.tag, this);
+    this.addAssetPanel.classList.remove('help-shown-panel');
+    this.expand_all_global_btn.style.display = '';
+    this.form_canvas_wrapper.classList.add('show-help');
+    this.addAssetPanel.style.display = '';
+
+    let helpTag = this.tag;
+    if (helpTag === 'texture')
+      helpTag = 'material';
+    fetch(`/doc/${helpTag}help.html`, {
+        cache: "no-cache"
+      })
+      .then(res => res.text())
+      .then(html => this.helpViewer.innerHTML = html);
+  }
+  async updateDisplayForWorkspaceDetails() {
+    this.context.activate(null);
+    if (this.dataview_record_key.selectedIndex < 0)
+      this.dataview_record_key.selectedIndex = 0;
+
+    if (this.tag === '')
+      this.key = this.dataview_record_key.value;
+    else
+      this.key = '';
+
+    this.initDataFields();
+    if (this.addFrameButton)
+      this.addFrameButton.style.display = 'none';
+    if (this.removeChildButton)
+      this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
+
+    this.addAssetPanel.style.display = '';
+    this.form_canvas_wrapper.classList.add('show-help');
+
+    this.workspaceCTL = new cWorkspace(this.mainDataView, this.key, this);
+    let url = '/doc/workspacehelp.html';
+    if (this.key === 'Details')
+      url = '/doc/workspacehelp.html';
+    if (this.key === 'Overview')
+      url = '/doc/overview.html';
+    if (this.key === 'Generate')
+      url = '/doc/layouthelp.html';
+    fetch(url, {
+        cache: "no-cache"
+      })
+      .then(res => res.text())
+      .then(html => this.addAssetPanel.innerHTML = html);
+    this.addAssetPanel.classList.add('help-shown-panel');
+    this.helpViewer.innerHTML = '';
+  }
+  async updateDisplayForWorkspaceLayout() {
     this.form_panel_view_dom.classList.add('workspace');
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'none';
@@ -293,7 +369,7 @@ class cView extends bView {
     }
     this.workspaceCTL = new cWorkspace(this.mainDataView, 'Layout', this);
   }
-  async updateDisplayForDetailView() {
+  async updateDisplayForAssetEditView() {
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'inline-block';
     this.snapshotAssetButton.style.display = 'inline-block';
@@ -309,7 +385,6 @@ class cView extends bView {
     if (!this.dataFieldsInited)
       this.initDataFields();
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
-    this._updateQueryString();
 
     this.openViewerAssetButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
 
@@ -377,25 +452,6 @@ class cView extends bView {
     }
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
-  async updateSelectedRecord() {
-    this.form_panel_view_dom.classList.remove('workspace');
-    this.form_panel_view_dom.classList.remove('workspacelayout');
-    this.form_panel_view_dom.classList.remove('child-block-display');
-    this.form_panel_view_dom.classList.remove('root-block-display');
-    this.asset_show_home_btn.style.display = 'none';
-    this.expand_all_global_btn.style.display = 'none';
-    this.workspace_show_home_btn.style.display = '';
-    this.add_workspace_panel_wrapper.style.display = 'none';
-
-    if (this.dataview_record_key.selectedIndex < 1)
-      return this.updateDisplayForMainView();
-    if (this.dataview_record_tag.selectedIndex < 1 && this.dataview_record_key.selectedIndex < 2)
-      return this.updateDisplayForMainView();
-    if (this.dataview_record_tag.selectedIndex < 1)
-      return this.updateDisplayForWorkspaceDetailView();
-
-    return this.updateDisplayForDetailView();
-  }
   genQueryString(wid = null, tag = null, key = null, childkey = null) {
     if (wid === null) wid = gAPPP.a.profile.selectedWorkspace;
     if (tag === null) tag = this.tag;
@@ -451,10 +507,6 @@ class cView extends bView {
               <option>Edit</option>
             </select>
             <select id="workspaces-select"></select>
-            <div class="add_workspace_panel_wrapper">
-              <label>New <input id="new-workspace-name" type="text" /></label>
-              <button id="add-workspace-button" class="btn-sb-icon" style="float:right;"><i class="material-icons">add</i></button>
-            </div>
             <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">video_library</i></button>
             <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
             <button class="expand_all_global_btn btn-sb-icon"><i class="material-icons">unfold_more</i></button>
@@ -692,60 +744,6 @@ class cView extends bView {
       document.body.appendChild(this.followblocktargetoptionslist);
     }
     this.followblocktargetoptionslist.innerHTML = optionText;
-  }
-  updateDisplayForMainView() {
-    this.context.activate(null);
-    if (this.dataview_record_key.selectedIndex < 0)
-      this.dataview_record_key.selectedIndex = 0;
-
-    if (this.tag === '')
-      this.key = this.dataview_record_key.value;
-    else
-      this.key = '';
-
-    this.initDataFields();
-    this._updateQueryString();
-    if (this.addFrameButton)
-      this.addFrameButton.style.display = 'none';
-    if (this.removeChildButton)
-      this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
-    this.deleteAssetButton.style.display = 'none';
-    this.snapshotAssetButton.style.display = 'none';
-    this.addAssetPanel.style.display = '';
-
-    this.form_canvas_wrapper.classList.add('show-help');
-
-    if (!this.tag) {
-      this.workspaceCTL = new cWorkspace(this.mainDataView, this.key, this);
-      let url = '/doc/workspacehelp.html';
-      if (this.key === 'Details')
-        url = '/doc/workspacehelp.html';
-      if (this.key === 'Generate')
-        url = '/doc/layouthelp.html';
-      fetch(url, {
-          cache: "no-cache"
-        })
-        .then(res => res.text())
-        .then(html => this.addAssetPanel.innerHTML = html);
-      this.addAssetPanel.classList.add('help-shown-panel');
-      this.helpViewer.innerHTML = '';
-
-      return;
-    }
-    this.generate = new cMacro(this.addAssetPanel, this.tag, this);
-    this.recordViewer = new cBandIcons(this.tag, this);
-    this.addAssetPanel.classList.remove('help-shown-panel');
-    this.expand_all_global_btn.style.display = '';
-
-    let helpTag = this.tag;
-    if (helpTag === 'texture')
-      helpTag = 'material';
-    fetch(`/doc/${helpTag}help.html`, {
-        cache: "no-cache"
-      })
-      .then(res => res.text())
-      .then(html => this.helpViewer.innerHTML = html);
-
   }
   renderPreview() {
     if (this.context)

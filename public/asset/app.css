@@ -183,7 +183,7 @@ select {
   display: none;
 }
 
-.frames-panel>div:nth-child(1) label span {
+.frames-panel .frame-fields-container:nth-child(1) label span {
   display: inline-block;
   padding: .25em;
   font-size: 1em;
@@ -651,26 +651,21 @@ select {
   line-height: 2.5em;
 }
 
-.add_workspace_panel_wrapper {
-  display: inline-block;
-  white-space: nowrap;
-  margin-left:.5em
-}
-
-#new-workspace-name {
-  width: 8em;
-}
 
 .workspace-asset-link-display {
   text-align:center;
   display: inline-block;
   line-height: .75em;
-  border: solid .05em silver;
   border-radius: .5em;
   padding: .1em;
   margin: .1em;
   white-space: nowrap;
   overflow: hidden;
+  max-width: 6em;
+}
+
+.workspace-asset-link-display img {
+  display: none;
 }
 
 .workspace-asset-link-display span {
@@ -685,7 +680,8 @@ select {
 
 .navigate_tag_select {
   float: left;
-  padding: .5em;
+  clear: both;
+  font-weight: bold;
 }
 
 .view-asset-button {

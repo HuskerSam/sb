@@ -6,9 +6,12 @@ class cWorkspace {
     if (subKey === 'Details') {
       this.workspaceDetailsInit();
     }
+    if (subKey === 'Overview') {
+      this.workspaceOverviewInit();
+    }
     if (subKey === 'Generate') {
-      this.domPanel.innerHTML = this.workspaceNewTemplate();
-      this.workspaceNewRegister();
+      this.domPanel.innerHTML = this.workspaceGenerateTemplate();
+      this.workspaceGenerateRegister();
       return;
     }
     if (subKey === 'Layout') {
@@ -19,6 +22,13 @@ class cWorkspace {
   }
   async workspaceDetailsInit() {
     let html = this.workspaceDetailsTemplate();
+    this.domPanel.innerHTML = html;
+    this.workspaceDetailsRegister();
+    
+    return;
+  }
+  async workspaceOverviewInit() {
+    let html = '';
     let blockCount = Object.keys(gAPPP.a.modelSets['block'].fireDataValuesByKey).length;
     let shapeCount = Object.keys(gAPPP.a.modelSets['shape'].fireDataValuesByKey).length;
     let frameCount = Object.keys(gAPPP.a.modelSets['frame'].fireDataValuesByKey).length;
@@ -118,22 +128,23 @@ class cWorkspace {
     html += `Animation Stops: ${animationStops}<br>`;
     html += '</div>';
     this.domPanel.innerHTML = html;
-    this.workspaceDetailsRegister();
     this.bView.workspace_show_home_btn.style.display = 'none';
-    this.bView.add_workspace_panel_wrapper.style.display = '';
 
     return;
   }
   workspaceDetailsTemplate() {
-    return `<div style="ine-height:2.5em;">
-    <label><span>Name </span><input id="edit-workspace-name" type="text" /></label>
-    &nbsp;
-    <label><span>Tags </span><input id="edit-workspace-code" type="text" /></label>
+    return `<div style="line-height:2.5em;padding: .5em">
+    <label><span>New Workspace </span><input id="new-workspace-name" type="text" /></label>
+    <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
+    <br>
+    <label><span>Workspace Name </span><input id="edit-workspace-name" type="text" /></label>
+    <br>
+    <label><span>Workspace Tags (,) </span><input id="edit-workspace-code" type="text" /></label>
     &nbsp;
     <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
     <input type="file" style="display:none;" class="import_csv_file">
     <input type="file" style="display:none;" class="import_asset_json_file">
-    &nbsp;
+    <br><br>
     <button class="import_csv_records">Import CSV</button>
     &nbsp;
     <button class="import_asset_json_button">Import JSON</button>
@@ -161,6 +172,9 @@ class cWorkspace {
     this.import_asset_json_button = this.domPanel.querySelector('.import_asset_json_button');
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
 
+    this.addProjectButton = this.domPanel.querySelector('#add-workspace-button');
+    this.addProjectButton.addEventListener('click', e => this.bView.workspaceAddProjectClick());
+
     this.domPanel.querySelectorAll('.navigate_tag_select').forEach(i => {
       i.addEventListener('click', e => {
         this.bView.dataview_record_tag.value = e.currentTarget.dataset.value;
@@ -170,7 +184,7 @@ class cWorkspace {
       })
     })
   }
-  workspaceNewTemplate() {
+  workspaceGenerateTemplate() {
     return `<div style="padding: .25em;">
     <button style="float:right;" id="generate_animation_workspace_button">Generate Animation</button>
     <label style="float:right;clear:right;"><input type="checkbox" id="generate_new_workspace_chk" /> Create Workspace
@@ -226,7 +240,7 @@ class cWorkspace {
     </div>
     </div>`;
   }
-  workspaceNewRegister() {
+  workspaceGenerateRegister() {
     this.csvGenerateRegister();
   }
   workspaceUpdateNameCode() {
