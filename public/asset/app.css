@@ -343,7 +343,6 @@ select {
 
 .band-background-preview {
   display: inline-block;
-  border: solid .15em rgba(0, 0, 0, .5);
   border-radius: 1em;
   margin: 0 .05em;
   overflow: hidden;
@@ -610,6 +609,11 @@ select {
 .asset-fields-container, .node-details-panel, .export-frames-details-panel {
   overflow: auto;
   position: relative;
+}
+
+.data-view-container {
+  border-width: 0;
+  border-top-width: .25em;
 }
 
 .export-frames-details-panel {

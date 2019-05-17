@@ -24,7 +24,7 @@ class cWorkspace {
     let html = this.workspaceDetailsTemplate();
     this.domPanel.innerHTML = html;
     this.workspaceDetailsRegister();
-    
+
     return;
   }
   async workspaceOverviewInit() {
@@ -58,7 +58,7 @@ class cWorkspace {
         if (!url)
           url = '/images/webgl.png';
 
-        html += `<a class="workspace-asset-link-display" href="${href}">
+        html += `<a class="workspace-asset-link-display tag_key_redirect" data-tag="${asset}" data-key="${i}" href="${href}">
           <img src="${url}" />${data.title}<br><span>${od}</span></a>`;
       });
 
@@ -66,23 +66,23 @@ class cWorkspace {
     }
 
     html += `<div style="line-height:1.5em;padding:.5em;">
-    <a href="#" class="navigate_tag_select" data-value="block">Blocks: ${blockCount}</a>
+    <a href="${this.bView.genQueryString(null, 'block', '')}" class="navigate_tag_select" data-value="block">Blocks: ${blockCount}</a>
     &nbsp;
     ${getAssetLinks('block')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="mesh">Meshes: ${meshCount}</a>
+    <a href="${this.bView.genQueryString(null, 'mesh', '')}" class="navigate_tag_select" data-value="mesh">Meshes: ${meshCount}</a>
     &nbsp;
     ${getAssetLinks('mesh')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="shape">Shapes: ${shapeCount}</a>
+    <a href="${this.bView.genQueryString(null, 'shape', '')}" class="navigate_tag_select" data-value="shape">Shapes: ${shapeCount}</a>
     &nbsp;
     ${getAssetLinks('shape')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="texture">Textures: ${textureCount}</a>
+    <a href="${this.bView.genQueryString(null, 'texture', '')}" class="navigate_tag_select" data-value="texture">Textures: ${textureCount}</a>
     &nbsp;
     ${getAssetLinks('texture')}
     <br>
-    <a href="#" class="navigate_tag_select" data-value="material">Materials: ${materialCount}</a>
+    <a href="${this.bView.genQueryString(null, 'material', '')}" class="navigate_tag_select" data-value="material">Materials: ${materialCount}</a>
     &nbsp;
     ${getAssetLinks('material')}
     <br>`;
@@ -91,7 +91,7 @@ class cWorkspace {
     let sceneRecords = await gi.dbFetchByLookup('block', 'blockFlag', 'scene');
     if (sceneRecords.recordIds.length > 0) {
       let href = this.bView.genQueryString(null, 'block', sceneRecords.recordIds[0]);
-      html += `Generated animation block: <a href="${href}">${sceneRecords.records[0].title}</a><br>`
+      html += `Generated animation block: <a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a><br>`
     } else {
       html += 'Generated animation block: none<br>';
     }
@@ -100,14 +100,14 @@ class cWorkspace {
     html += `Display Blocks (${blocksData.records.length}): `;
     for (let c = 0, l = blocksData.records.length; c < l; c++) {
       let href = this.bView.genQueryString(null, 'block', blocksData.recordIds[c]);
-      html += ` &nbsp; <a href="${href}">${blocksData.records[c].title}</a>`;
+      html += ` &nbsp; <a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${blocksData.recordIds[c]}">${blocksData.records[c].title}</a>`;
     }
     html += '<br>';
 
     let baskets = await gi.dbFetchByLookup('block', 'blockFlag', 'basket');
     if (baskets.recordIds.length > 0) {
       let href = this.bView.genQueryString(null, 'block', baskets.recordIds[0]);
-      html += `Basket Block: <a href="${href}">${baskets.records[0].title}</a><br>`;
+      html += `Basket Block: <a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${baskets.recordIds[0]}">${baskets.records[0].title}</a><br>`;
     }
     else {
       html += 'Basket Block: none<br>'
@@ -129,14 +129,29 @@ class cWorkspace {
     html += '</div>';
     this.domPanel.innerHTML = html;
     this.bView.workspace_show_home_btn.style.display = 'none';
+    this.domPanel.querySelectorAll('.navigate_tag_select').forEach(i => {
+      i.addEventListener('click', e => {
+        this.bView.dataview_record_tag.value = e.currentTarget.dataset.value;
+        this.bView.key = e.currentTarget.dataset.key;
+        this.bView.updateRecordList();
+        e.preventDefault();
+        return false;
+      })
+    });
+    this.domPanel.querySelectorAll('.tag_key_redirect').forEach(i => {
+      i.addEventListener('click', e => {
+        this.bView.dataview_record_tag.value = e.currentTarget.dataset.tag;
+        this.bView.key = e.currentTarget.dataset.key;
+        this.bView.updateRecordList(this.bView.key);
+        e.preventDefault();
+        return false;
+      })
+    });
 
     return;
   }
   workspaceDetailsTemplate() {
     return `<div style="line-height:2.5em;padding: .5em">
-    <label><span>New Workspace </span><input id="new-workspace-name" type="text" /></label>
-    <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
-    <br>
     <label><span>Workspace Name </span><input id="edit-workspace-name" type="text" /></label>
     <br>
     <label><span>Workspace Tags (,) </span><input id="edit-workspace-code" type="text" /></label>
@@ -148,6 +163,10 @@ class cWorkspace {
     <button class="import_csv_records">Import CSV</button>
     &nbsp;
     <button class="import_asset_json_button">Import JSON</button>
+    <hr>
+    <label><span>New Workspace </span><input id="new-workspace-name" type="text" /></label>
+    <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
+    <br>
     </div>`;
   }
   workspaceDetailsRegister() {
@@ -174,15 +193,6 @@ class cWorkspace {
 
     this.addProjectButton = this.domPanel.querySelector('#add-workspace-button');
     this.addProjectButton.addEventListener('click', e => this.bView.workspaceAddProjectClick());
-
-    this.domPanel.querySelectorAll('.navigate_tag_select').forEach(i => {
-      i.addEventListener('click', e => {
-        this.bView.dataview_record_tag.value = e.currentTarget.dataset.value;
-        this.bView.updateRecordList();
-        e.preventDefault();
-        return false;
-      })
-    })
   }
   workspaceGenerateTemplate() {
     return `<div style="padding: .25em;">

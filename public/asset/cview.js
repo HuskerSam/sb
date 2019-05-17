@@ -535,7 +535,7 @@ class cView extends bView {
               <div style="clear:both;"></div>
             </div>
           </div>
-          <div class="data-view-container">
+          <div class="data-view-container app-border">
           </div>
         </div>
       </div>
