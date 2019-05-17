@@ -15,7 +15,7 @@ h1 {
 select {
   border-width: .25em;
   border-radius: .5em;
-  padding: .25em;
+  padding: .15em;
   border: outset .1em silver;
   font-size: 1.25em;
 }

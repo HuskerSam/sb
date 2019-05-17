@@ -20,8 +20,8 @@ class cView extends bView {
     this.updateRecordList(this.key, this.subView);
   }
   initUI() {
-    this.dataview_record_tag = this.dialog.querySelector('#dataview_record_tag');
-    this.dataview_record_key = this.dialog.querySelector('#dataview_record_key');
+    this.dataview_record_tag = this.dialog.querySelector('.dataview_record_tag');
+    this.dataview_record_key = this.dialog.querySelector('.dataview_record_key');
     this.dataview_record_tag.value = this.tag;
     if (this.dataview_record_tag.selectedIndex === -1)
       this.dataview_record_tag.selectedIndex = 0;
@@ -93,13 +93,12 @@ class cView extends bView {
 
     this.view_layout_select.value = this.layoutMode;
   }
-  initDataFields(tag, key) {
+  initRecordEditFields(tag, key) {
     if (this.fireSetCallback)
       this.fireSet.removeListener(this.fireSetCallback);
     this.dataViewContainer = this.form_panel_view_dom.querySelector('.data-view-container');
     this.dataViewContainer.innerHTML = this.__dataviewTemplate();
     this.mainDataView = this.form_panel_view_dom.querySelector('.asset-fields-container');
-    this.dataFieldsInited = false;
 
     this.blockChildrenSelect.style.display = 'none';
     this.addChildButton.style.display = 'none';
@@ -111,8 +110,6 @@ class cView extends bView {
 
     if (!key) key = this.key;
     if (!key) return;
-
-    this.dataFieldsInited = true;
 
     this.fields = sDataDefinition.bindingFieldsCloned(tag);
     this.fireSet = gAPPP.a.modelSets[tag];
@@ -206,7 +203,7 @@ class cView extends bView {
     this.key = newKey;
     this.subView = newView;
     this._updateRecordSelect();
-    this.initDataFields();
+    this.initRecordEditFields();
     this.updateSelectedRecord();
   }
   _updateRecordSelect() {
@@ -274,12 +271,15 @@ class cView extends bView {
   async updateDisplayForAssetsList() {
     this.context.activate(null);
     this.dataview_record_key.selectedIndex = 0;
+    this.key = '';
     this.generate = new cMacro(this.addAssetPanel, this.tag, this);
     this.recordViewer = new cBandIcons(this.tag, this);
     this.addAssetPanel.classList.remove('help-shown-panel');
     this.expand_all_global_btn.style.display = '';
     this.form_canvas_wrapper.classList.add('show-help');
     this.addAssetPanel.style.display = '';
+    this.deleteAssetButton.style.display = 'none';
+    this.snapshotAssetButton.style.display = 'none';
 
     let helpTag = this.tag;
     if (helpTag === 'texture')
@@ -300,7 +300,7 @@ class cView extends bView {
     else
       this.key = '';
 
-    this.initDataFields();
+    this.initRecordEditFields();
     if (this.addFrameButton)
       this.addFrameButton.style.display = 'none';
     if (this.removeChildButton)
@@ -382,8 +382,7 @@ class cView extends bView {
       this.asset_show_home_btn.style.display = '';
     }
 
-    if (!this.dataFieldsInited)
-      this.initDataFields();
+    this.initRecordEditFields();
     this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
 
     this.openViewerAssetButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
@@ -498,20 +497,12 @@ class cView extends bView {
           <div id="profile-header-panel" class="app-panel">${this.profilePanelTemplate()}</div>
           <div class="header_wrapper">
             <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
-            <select id="view_layout_select" style="float:right;">
-              <option>View</option>
-              <option>Top</option>
-              <option>Left</option>
-              <option>Bottom</option>
-              <option>Right</option>
-              <option>Edit</option>
-            </select>
             <select id="workspaces-select"></select>
-            <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">video_library</i></button>
+            <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">home</i></button>
             <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
             <button class="expand_all_global_btn btn-sb-icon"><i class="material-icons">unfold_more</i></button>
             <br>
-            <select id="dataview_record_tag" style="float:left;clear:left;">
+            <select class="dataview_record_tag">
               <option value="" selected>Workspace</option>
               <option value="block">Block</option>
               <option value="mesh">Mesh</option>
@@ -519,7 +510,7 @@ class cView extends bView {
               <option value="material">Material</option>
               <option value="texture">Texture</option>
             </select>
-            <select id="dataview_record_key" style="max-width:calc(100% - 16em);float:left;"></select>
+            <select class="dataview_record_key"></select>
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <select class="workspace_layout_view_select" style="float:left;">
               <option>Products</option>

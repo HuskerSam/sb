@@ -427,11 +427,21 @@ class bView {
     return `<div id="record_field_list">
       <form autocomplete="off" onsubmit="return false;"></form>
     </div>
-    <img src='' class="user-profile-image" />
-    <div class="user-profile-info"></div>
     <button id="sign-out-button" style="float:right;"><i class="material-icons">account_box</i> Sign out </button>
     <button id="user-profile-dialog-reset-button" style="float:right;"><i class="material-icons">account_circle</i> Reset Profile </button>
-    <div class="fields-container" style="float:right;clear:right;"></div>`;
+    <select id="view_layout_select" style="float:right;">
+      <option>View</option>
+      <option>Top</option>
+      <option>Left</option>
+      <option>Bottom</option>
+      <option>Right</option>
+      <option>Edit</option>
+    </select>
+    <div class="fields-container" style="float:right;clear:right;"></div>
+    <div style="clear:both;display:inline-block;float:right;">
+      <img src='' class="user-profile-image" />
+      <div class="user-profile-info"></div>
+    </div>`;
   }
   profilePanelRegister() {
     this.signOutBtn = document.querySelector('#sign-out-button');

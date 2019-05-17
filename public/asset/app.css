@@ -134,7 +134,7 @@ input[type="text"] {
   left: .75em;
   width: auto;
   text-align: center;
-  background: rgba( 50, 50, 50, .5);
+  background: rgba(50, 50, 50, .5);
   pointer-events: none;
   z-index: 1000;
   padding: 0;
@@ -197,8 +197,7 @@ select {
   top: 1.5em;
 }
 
-.frames-panel input {
-}
+.frames-panel input {}
 
 .frames-panel .add-button {
   margin: .5em;
@@ -253,8 +252,7 @@ select {
   margin: 0 .5em;
 }
 
-.frames-header-bar {
-}
+.frames-header-bar {}
 
 .frame-info-panel {
   border-radius: .2em;
@@ -373,8 +371,7 @@ select {
   margin: .05em;
 }
 
-.app-collapsed .band-background-preview .band-title {
-}
+.app-collapsed .band-background-preview .band-title {}
 
 .app-collapsed .band-background-preview br {
   display: none;
@@ -396,9 +393,7 @@ select {
   display: none;
 }
 
-.asset-fields-container .band-background-preview button {
-
-}
+.asset-fields-container .band-background-preview button {}
 
 .menu-clipper-wrapper {
   display: inline-block;
@@ -452,9 +447,7 @@ select {
   overflow: auto;
 }
 
-.asset-fields-container input, .asset-fields-container button {
-
-}
+.asset-fields-container input, .asset-fields-container button {}
 
 .form_canvas_wrapper {
   position: relative;
@@ -475,13 +468,13 @@ select {
 .help-viewer {
   padding: .25em;
 }
+
 .add-asset-template-panel input {
   margin: .25em;
   padding: .25em;
 }
 
-.add-asset-template-panel input[type="file"] {
-}
+.add-asset-template-panel input[type="file"] {}
 
 .material-add-options .material-color-add {
   border-radius: .25em;
@@ -568,8 +561,7 @@ select {
   background: none;
 }
 
-.scene_options_edit_fields {
-}
+.scene_options_edit_fields {}
 
 .layout_product_data_panel>form>div {
   display: inline-block;
@@ -625,14 +617,12 @@ select {
 }
 
 .root-block-display .cblock-child-details-panel,
-.child-block-display .asset-fields-container
- {
+.child-block-display .asset-fields-container {
   display: none;
 }
 
 .child-block-display .cblock-child-details-panel,
-  .root-block-display .asset-fields-container
-{
+.root-block-display .asset-fields-container {
   display: block;
 }
 
@@ -648,12 +638,11 @@ select {
 
 .header_wrapper {
   padding: .25em;
-  line-height: 2.5em;
+  line-height: 3.5em;
 }
 
-
 .workspace-asset-link-display {
-  text-align:center;
+  text-align: center;
   display: inline-block;
   line-height: .75em;
   border-radius: .5em;
@@ -685,7 +674,7 @@ select {
 }
 
 .view-asset-button {
-  display: none!important;
+  display: none !important;
 }
 
 .main-band-children-select {
@@ -694,11 +683,22 @@ select {
 }
 
 #workspaces-select {
-  max-width: calc(100% - 18.25em);
+  max-width: calc(100% - 3em);
   float: left;
 }
 
 .header_wrapper button {
   margin: 0 .1em;
   float: left;
+}
+
+.dataview_record_key {
+  max-width: calc(100% - 16em);
+  float: left;
+  margin-left: .5em;
+}
+
+.dataview_record_tag {
+  float: left;
+  clear: left;
 }
