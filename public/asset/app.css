@@ -154,6 +154,7 @@ select {
 .block_child_details_block {
   float: left;
   margin-top: .25em;
+  clear: left;
 }
 
 .frames-panel {
@@ -598,6 +599,14 @@ select {
   background: inherit;
 }
 
+.scene-fields-panel {
+  display: none;
+}
+
+.root-block-display .scene-fields-panel {
+  display: block;
+}
+
 .child-block-display .scene-fields-panel {
   display: none;
 }
@@ -617,6 +626,10 @@ select {
 }
 
 .export-frames-details-panel {
+  display: none;
+}
+
+.cblock-child-details-panel {
   display: none;
 }
 

@@ -238,7 +238,6 @@ html, body {
   float: left;
   position: relative;
   margin: .25em;
-  border: outset .15em silver;
   padding: .25em;
   padding-top: 0;
   max-width: 99%;

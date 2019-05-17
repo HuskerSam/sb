@@ -250,6 +250,12 @@ class cView extends bView {
     this.asset_show_home_btn.style.display = 'none';
     this.expand_all_global_btn.style.display = 'none';
     this.workspace_show_home_btn.style.display = '';
+    this.form_canvas_wrapper.classList.remove('show-help');
+    this.deleteAssetButton.style.display = 'none';
+    this.snapshotAssetButton.style.display = 'none';
+    this.openViewerAssetButton.style.display = 'none';
+    this.addAssetButton.style.display = 'none';
+    this.block_child_details_block.style.display = 'none';
 
     if (this.dataview_record_tag.selectedIndex < 1) {
       if (this.dataview_record_key.selectedIndex < 3)
@@ -327,16 +333,9 @@ class cView extends bView {
   }
   async updateDisplayForWorkspaceLayout() {
     this.form_panel_view_dom.classList.add('workspace');
-    this.form_canvas_wrapper.classList.remove('show-help');
-    this.deleteAssetButton.style.display = 'none';
-    this.snapshotAssetButton.style.display = 'none';
-    this.openViewerAssetButton.style.display = 'none';
-    this.addAssetButton.style.display = 'none';
-    this.block_child_details_block.style.display = 'none';
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
     this.form_panel_view_dom.classList.add('workspacelayout');
 
-    this._updateQueryString();
     if (this.key) {
       let fireValues = gAPPP.a.modelSets['block'].fireDataByKey[this.key].val();
       //load saved scene if exists
@@ -674,7 +673,6 @@ class cView extends bView {
     this.childKey = key;
     if (!this.childEditPanel)
       return;
-    this._updateQueryString();
 
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
 

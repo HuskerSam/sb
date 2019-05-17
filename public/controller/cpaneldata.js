@@ -28,6 +28,7 @@ class cPanelData {
       if (!g) {
         g = document.createElement('div');
         g.classList.add('form-group-container-group');
+        g.classList.add('app-panel');
         this.container.appendChild(g);
         this.groups[f.group] = g;
       }
