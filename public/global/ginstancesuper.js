@@ -201,12 +201,19 @@ class gInstanceSuper {
       border-radius: 1em;
     }
 
-    .tabulator .tabulator-cell {
-      background: ${ctlHalfColor};
-    }
+
     .tabulator .tabulator-header .tabulator-col {
       background: ${ctlColor};
     }
+
+    .tabulator .tabulator-header .tabulator-col.tabulator-frozen {
+      background: ${bkgColor};
+    }
+
+    .tabulator .tabulator-cell {
+      background: ${bkgColor};
+    }
+
     .tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box .tabulator-row-handle-bar {
       background: ${foreColor}
     }

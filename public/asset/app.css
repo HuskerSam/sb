@@ -725,3 +725,7 @@ select {
   float: left;
   clear: left;
 }
+
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {
+  font-size: .75em;
+}
