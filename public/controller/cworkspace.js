@@ -77,20 +77,20 @@ class cWorkspace {
     &nbsp;
     ${getAssetLinks('shape')}
     <br>
-    <a href="${this.bView.genQueryString(null, 'texture', '')}" class="navigate_tag_select" data-value="texture">Textures: ${textureCount}</a>
-    &nbsp;
-    ${getAssetLinks('texture')}
-    <br>
     <a href="${this.bView.genQueryString(null, 'material', '')}" class="navigate_tag_select" data-value="material">Materials: ${materialCount}</a>
     &nbsp;
     ${getAssetLinks('material')}
+    <br>
+    <a href="${this.bView.genQueryString(null, 'texture', '')}" class="navigate_tag_select" data-value="texture">Textures: ${textureCount}</a>
+    &nbsp;
+    ${getAssetLinks('texture')}
     <br>`;
 
     let gi = new gCSVImport(gAPPP.a.profile.selectedWorkspace);
     let sceneRecords = await gi.dbFetchByLookup('block', 'blockFlag', 'scene');
     if (sceneRecords.recordIds.length > 0) {
       let href = this.bView.genQueryString(null, 'block', sceneRecords.recordIds[0]);
-      html += `Generated animation block: <a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a><br>`
+      html += `Generated animation block: <b><a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b><br>`
     } else {
       html += 'Generated animation block: none<br>';
     }
@@ -862,6 +862,7 @@ class cWorkspace {
       headerSort: false,
       cssClass: 'row-handle-table-cell',
       frozen: true,
+      resizable: false,
       width: 45,
       minWidth: 45
     });
@@ -870,6 +871,7 @@ class cWorkspace {
         rowHandle: true,
         formatter: "rownum",
         headerSort: false,
+        resizable: false,
         align: 'center',
         frozen: true,
         width: 30
@@ -882,6 +884,7 @@ class cWorkspace {
       frozen: true,
       align: 'center',
       cssClass: 'delete-table-cell',
+      resizable: false,
       tag: 'delete',
       cellClick: (e, cell) => {
         cell.getRow().delete();
@@ -897,6 +900,7 @@ class cWorkspace {
       frozen: true,
       align: 'center',
       tag: 'addBelow',
+      resizable: false,
       cssClass: 'add-table-cell',
       cellClick: (e, cell) => {
         cell.getTable().addData([{
@@ -929,8 +933,8 @@ class cWorkspace {
         align,
         formatter: rightColumn ? 'money' : undefined,
         layoutColumnsOnNewData: true,
-        columnResizing: 'headerOnly',
         cssClass,
+        resizable: false,
         headerVertical: longLabel,
         minWidth
       });
