@@ -202,9 +202,11 @@ class cWorkspace {
   workspaceGenerateTemplate() {
     return `<div style="padding: .25em;">
     <button style="float:right;" id="generate_animation_workspace_button">Generate Animation</button>
-    <label style="float:right;clear:right;"><input type="checkbox" id="generate_new_workspace_chk" /> Create Workspace
+    <label style="float:right;clear:right;"><input type="checkbox" checked id="generate_new_workspace_chk" /> Create Workspace
     <br>
-     <input id="generate_animation_new_wrk_name" type="text" /></label>
+    <input id="generate_animation_new_wrk_name" type="text" /></label>
+    <label style="float:right;clear:right;"><input type="checkbox"  id="generate_clear_wrkspace" /> Clear Workspace</label>
+    <br>
     <div>ASSETS</div>
     <div class="workspace-csv-panel-item">
       <select id="add_animation_asset_choice">
