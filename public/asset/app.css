@@ -12,7 +12,7 @@ body {
 
 button {
   font-size: 1.35em;
-  margin: 0 .25em;
+  margin: 0 .1em;
 }
 
 input[type="text"] {
@@ -525,7 +525,7 @@ select {
 }
 
 .workspace-csv-panel-item {
-  font-weight: bold;
+  margin: .25em;
 }
 
 .workspace-csv-panel-item>div {
@@ -630,7 +630,7 @@ select {
 
 .data-view-container {
   border-width: 0;
-  border-top-width: .25em;
+  border-top-width: .15em;
 }
 
 .export-frames-details-panel {
@@ -663,7 +663,7 @@ select {
 
 .header_wrapper {
   padding: .25em;
-  line-height: 3.5em;
+  line-height: 3em;
 }
 
 .workspace-asset-link-display {
@@ -736,4 +736,14 @@ select {
 }
 .tabulator .tabulator-header .tabulator-col.right-column-data .tabulator-col-content .tabulator-col-title {
   text-align: center;
+}
+
+.csv_data_date_span {
+  font-size: .9em;
+  font-style: italic;
+}
+
+.cgenerate_panel_wrapper {
+  padding: 0 .5em;
+  line-height: 2.75em;
 }

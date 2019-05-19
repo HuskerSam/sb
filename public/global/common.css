@@ -198,13 +198,6 @@ html, body {
 }
 
 .url-form-group a {
-  margin-bottom: 0;
-  float: left;
-  text-decoration: underline;
-  padding: .1em;
-  font-size: 1.2em;
-  top: .1em;
-  position: relative;
 }
 
 .url-form-group {
@@ -286,6 +279,7 @@ button i.material-icons {
 
 .form_panel_view_dom .selected-mesh-helper-collapse-button {
   display: inline-block;
+  float: right;
 }
 
 .form_panel_view_dom #profile-header-panel .selected-mesh-helper-collapse-button {
@@ -396,8 +390,9 @@ button i.material-icons {
 }
 
 .url-type-input-group {
-  width: 45vw;
+  width: 20em;
   max-width: 100%;
+  float:left;
 }
 
 

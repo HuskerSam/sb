@@ -130,6 +130,12 @@ class GLOBALUTIL {
 
     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
   }
+  static shortDateTime(d) {
+    d = new Date(d);
+    let od = d.toISOString().substring(0,10);
+    od += ' ' + d.toISOString().substring(11,16);
+    return od;
+  }
 }
 if (!String.prototype.padStart) {
   String.prototype.padStart = function padStart(targetLength, padString) {

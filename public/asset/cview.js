@@ -318,7 +318,10 @@ class cView extends bView {
     this.addAssetPanel.style.display = '';
     this.form_canvas_wrapper.classList.add('show-help');
 
-    this.workspaceCTL = new cWorkspace(this.mainDataView, this.key, this);
+    if (this.key === 'Generate')
+      this.workspaceCTL = new cGenerate(this.mainDataView, this.key, this);
+    else
+      this.workspaceCTL = new cWorkspace(this.mainDataView, this.key, this);
     let url = '/doc/workspacehelp.html';
     if (this.key === 'Details')
       url = '/doc/workspacehelp.html';
@@ -745,7 +748,7 @@ class cView extends bView {
   updateProjectList(records, selectedWorkspace = null) {
     super.updateProjectList(records, selectedWorkspace);
 
-    if (this.workspaceCTL) {
+    if (this.workspaceCTL && this.workspaceCTL.csvGenerateRefreshProjectLists) {
       this.workspaceCTL.csvGenerateRefreshProjectLists(this.workplacesSelect.innerHTML);
     }
   }

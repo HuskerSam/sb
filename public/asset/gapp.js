@@ -65,4 +65,22 @@ class gApp extends gInstanceSuper {
     document.body.insertBefore(div, document.body.firstChild);
     document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);
   }
+  async updateGenerateDataTimes() {
+    let results = await Promise.all([
+      gAPPP.a.readProjectRawDataDate(gAPPP.a.profile.selectedWorkspace, 'assetRows'),
+      gAPPP.a.readProjectRawDataDate(gAPPP.a.profile.selectedWorkspace, 'sceneRows'),
+      gAPPP.a.readProjectRawDataDate(gAPPP.a.profile.selectedWorkspace, 'productRows'),
+      gAPPP.a.readProjectRawDataDate(gAPPP.a.profile.selectedWorkspace, 'animationGenerated')
+    ]);
+    this.assetRowsDate = results[0];
+    this.assetRowsDateDisplay = (this.assetRowsDate) ? GLOBALUTIL.shortDateTime(gAPPP.assetRowsDate) : 'none';
+    this.sceneRowsDate = results[1];
+    this.sceneRowsDateDisplay = (this.sceneRowsDate) ? GLOBALUTIL.shortDateTime(gAPPP.sceneRowsDate) : 'none';
+    this.productRowsDate = results[2];
+    this.productRowsDateDisplay = (this.productRowsDate) ? GLOBALUTIL.shortDateTime(gAPPP.productRowsDate) : 'none';
+    this.animationGeneratedDate = results[3];
+    this.animationGeneratedDateDisplay = (this.animationGeneratedDate) ? GLOBALUTIL.shortDateTime(gAPPP.animationGeneratedDate) : 'none';
+
+    return;
+  }
 }

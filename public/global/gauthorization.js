@@ -160,21 +160,29 @@ class gAuthorization {
 
     return firebase.database().ref().update(fireUpdates);
   }
-  writeProjectRawData(key, rawName, data) {
+  async writeProjectRawData(key, rawName, data) {
     if (!key || !rawName)
       return Promise.resolve();
 
     let fireUpdates = {
-      [`/project/${key}/rawData${rawName}`]: data
+      [`/project/${key}/rawData${rawName}`]: data,
+      [`/project/${key}/rawData${rawName}Date`]: new Date()
     };
 
     return firebase.database().ref().update(fireUpdates);
   }
-  readProjectRawData(key, rawName) {
+  async readProjectRawData(key, rawName) {
     if (!key || !rawName)
       return Promise.resolve();
 
     return firebase.database().ref(`/project/${key}/rawData${rawName}`).once('value')
+      .then(r => r.val());
+  }
+  async readProjectRawDataDate(key, rawName) {
+    if (!key || !rawName)
+      return Promise.resolve();
+
+    return firebase.database().ref(`/project/${key}/rawData${rawName}Date`).once('value')
       .then(r => r.val());
   }
   signInAnon() {

@@ -306,14 +306,14 @@ class cPanelData {
       let b = document.createElement('button');
       b.innerHTML = '<i class="material-icons">cloud_upload</i>';
       c.classList.add('url-form-group');
-      c.insertBefore(b, c.childNodes[0]);
+      c.parentElement.appendChild(b);
       c.appendChild(field.dom);
       b.addEventListener('click', e => field.fileDom.click(), false);
 
       let file = document.createElement('input');
       file.setAttribute('type', 'file');
       file.style.display = 'none';
-      c.insertBefore(file, b);
+      c.appendChild(file);
       file.addEventListener('change', e => this.uploadURL(field), false);
       field.fileDom = file;
 

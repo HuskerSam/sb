@@ -111,7 +111,7 @@ __localStaticStorageForBindingFields['mesh'] = [{
   group: 'title',
   type: 'material'
 }, {
-  title: 'Mesh Url',
+  title: 'Url',
   fireSetField: 'url',
   type: 'url',
   uploadType: 'mesh',
