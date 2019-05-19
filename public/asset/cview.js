@@ -12,7 +12,7 @@ class cView extends bView {
       this.userprofileimage.setAttribute('src', gAPPP.a.currentUser.photoURL);
     }
 
-    this.refreshProjectList().then(() => {});
+    this.refreshProjectList();
 
     this.profilePanelRegister();
   }
@@ -43,8 +43,7 @@ class cView extends bView {
     this.openViewerAssetButton = this.dialog.querySelector('.view-asset-button');
     this.openViewerAssetButton.addEventListener('click', e => this.openViewerForAsset());
 
-    this.addAssetButton = this.dialog.querySelector('.add-asset-button');
-    this.addAssetButton.addEventListener('click', e => this.addAsset());
+    this.dialog.querySelector('.add-asset-button').addEventListener('click', e => this.addAsset());
     this.block_child_details_block = this.dialog.querySelector('.block_child_details_block');
     this.workspace_layout_view_select = this.dialog.querySelector('.workspace_layout_view_select');
 
@@ -66,6 +65,9 @@ class cView extends bView {
         setTimeout(() => location.reload(), 1);
       })
     });
+
+    this.workspace_regenerate_layout_changes = document.body.querySelector('.workspace_regenerate_layout_changes');
+    this.workspace_regenerate_layout_changes.addEventListener('click', e => this.generateAnimation());
 
     this.workspace_show_home_btn = this.dialog.querySelector('.workspace_show_home_btn');
     this.workspace_show_home_btn.addEventListener('click', e => {
@@ -92,6 +94,36 @@ class cView extends bView {
       this.collapseAll();
 
     this.view_layout_select.value = this.layoutMode;
+  }
+  generateAnimation(genNew = false, animationKey = false, clearWorkspace = true, reload = true) {
+    if (!animationKey)
+      animationKey = gAPPP.a.profile.selectedWorkspace;
+    if (!animationKey)
+      return;
+
+    if (!genNew && !confirm('This will clear existing data - proceed?'))
+      return;
+
+    this.canvasHelper.hide();
+    gAPPP.a._deactivateModels();
+    setTimeout(async () => {
+      let csvImport = new gCSVImport(animationKey);
+      if (clearWorkspace)
+        await gAPPP.a.clearProjectData(animationKey);
+      let assets = await gAPPP.a.readProjectRawData(animationKey, 'assetRows');
+      await csvImport.importRows(assets);
+      let scene = await gAPPP.a.readProjectRawData(animationKey, 'sceneRows');
+      await csvImport.importRows(scene);
+      let products = await gAPPP.a.readProjectRawData(animationKey, 'productRows');
+      await csvImport.importRows(products);
+      await csvImport.addCSVDisplayFinalize();
+      await gAPPP.a.writeProjectRawData(animationKey, 'animationGenerated', null);
+      this._updateQueryString(animationKey, 'Layout');
+
+      if (reload)
+        window.location.href = `/asset/?wid=${animationKey}&subview=Layout`;
+    }, 10);
+
   }
   initRecordEditFields(tag, key) {
     if (this.fireSetCallback)
@@ -214,7 +246,6 @@ class cView extends bView {
       gAPPP.a.modelSets[this.tag].updateChildOrder();
       let keyOrder = gAPPP.a.modelSets[this.tag].childOrderByKey;
       keyOrder.forEach(key => options += `<option value="${key}">${gAPPP.a.modelSets[this.tag].fireDataValuesByKey[key].title}</option>)`);
-      this.addAssetButton.style.display = 'inline-block';
       if (!this.key) {
         this.addAssetPanel.style.display = '';
       }
@@ -224,7 +255,6 @@ class cView extends bView {
       this.workspace_show_home_btn.style.display = '';
     } else {
       let options = '<option>Overview</option><option>Details</option><option>Generate</option><option>Layout</option>';
-      this.addAssetButton.style.display = 'none';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.openViewerAssetButton.style.display = 'none';
@@ -245,9 +275,11 @@ class cView extends bView {
     this._addProject(name);
   }
   async updateSelectedRecord() {
-    this.form_panel_view_dom.classList.remove('workspace');
-    this.form_panel_view_dom.classList.remove('workspaceoverview');
-    this.form_panel_view_dom.classList.remove('workspacelayout');
+    this.dialog.classList.remove('workspace');
+    this.dialog.classList.remove('workspacelayout');
+    this.dialog.classList.remove('generatelayout');
+    this.workspaceCTL = null;
+
     this.form_panel_view_dom.classList.remove('child-block-display');
     this.form_panel_view_dom.classList.remove('root-block-display');
     this.asset_show_home_btn.style.display = 'none';
@@ -257,10 +289,10 @@ class cView extends bView {
     this.deleteAssetButton.style.display = 'none';
     this.snapshotAssetButton.style.display = 'none';
     this.openViewerAssetButton.style.display = 'none';
-    this.addAssetButton.style.display = 'none';
     this.block_child_details_block.style.display = 'none';
 
     if (this.dataview_record_tag.selectedIndex < 1) {
+      this.dialog.classList.add('workspace');
       if (this.dataview_record_key.selectedIndex < 3)
         await this.updateDisplayForWorkspaceDetails();
       else if (this.dataview_record_key.selectedIndex === 3)
@@ -338,9 +370,8 @@ class cView extends bView {
     this.helpViewer.innerHTML = '';
   }
   async updateDisplayForWorkspaceLayout() {
-    this.form_panel_view_dom.classList.add('workspace');
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
-    this.form_panel_view_dom.classList.add('workspacelayout');
+    this.dialog.classList.add('workspacelayout');
 
     if (this.key) {
       let fireValues = gAPPP.a.modelSets['block'].fireDataByKey[this.key].val();
@@ -521,7 +552,7 @@ class cView extends bView {
               <option>Products</option>
               <option>Layout</option>
               <option>Assets</option>
-              <option>Layout Data</option>
+              <option>Custom Data</option>
             </select>
             <button class="workspace_regenerate_layout_changes btn-sb-icon"><i class="material-icons">gavel</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>

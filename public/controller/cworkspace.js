@@ -3,17 +3,19 @@ class cWorkspace {
     this.domPanel = domPanel;
     this.bView = bView;
 
-    if (subKey === 'Details') {
-      this.workspaceDetailsInit();
-    }
-    if (subKey === 'Overview') {
-      this.workspaceOverviewInit();
-    }
-    if (subKey === 'Layout') {
-      this.domPanel.innerHTML = this.workspaceLayoutTemplate();
-      this.workspaceLayoutRegister();
-      return;
-    }
+    gAPPP.updateGenerateDataTimes()
+      .then(() => {
+        if (subKey === 'Details') {
+          this.workspaceDetailsInit();
+        }
+        if (subKey === 'Overview') {
+          this.workspaceOverviewInit();
+        }
+        if (subKey === 'Layout') {
+          this.domPanel.innerHTML = this.workspaceLayoutTemplate();
+          this.workspaceLayoutRegister();
+        }
+      });
   }
   async workspaceDetailsInit() {
     let html = this.workspaceDetailsTemplate();
@@ -85,7 +87,8 @@ class cWorkspace {
     let sceneRecords = await gi.dbFetchByLookup('block', 'blockFlag', 'scene');
     if (sceneRecords.recordIds.length > 0) {
       let href = this.bView.genQueryString(null, 'block', sceneRecords.recordIds[0]);
-      html += `Generated animation block: <b><a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b><br>`
+      html += `Generated animation block: <b><a href="${href}" class="tag_key_redirect" data-tag="block"
+       data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b> <span class="csv_data_date_span">${gAPPP.animationGeneratedDateDisplay}<br>`
     } else {
       html += 'Generated animation block: none<br>';
     }
@@ -270,16 +273,13 @@ class cWorkspace {
     this.scene_options_edit_fields = this.domPanel.querySelector('.scene_options_edit_fields');
     this.layout_product_data_panel = this.domPanel.querySelector('.layout_product_data_panel');
 
-    this.workspace_regenerate_layout_changes = document.body.querySelector('.workspace_regenerate_layout_changes');
-    this.workspace_regenerate_layout_changes.addEventListener('click', e => this.csvGenerateReloadScene());
-
     this.workspaceLayoutShowView();
   }
   workspaceLayoutShowView() {
     let sel = this.workspace_layout_view_select.value;
-    this.scene_layout_data_panel.style.display = (sel === 'Layout Data') ? 'flex' : 'none';
+    this.scene_layout_data_panel.style.display = (sel === 'Custom Data') ? 'flex' : 'none';
     this.layout_product_data_panel.style.display = (sel === 'Products') ? 'block' : 'none';
-    this.scene_options_edit_fields.style.display = (sel === 'Layout Data') ? 'block' : 'none';
+    this.scene_options_edit_fields.style.display = (sel === 'Custom Data') ? 'block' : 'none';
     if (this.editTable) {
       this.editTable.destroy();
       this.editTable = null;
@@ -302,7 +302,7 @@ class cWorkspace {
       this.workspaceLayoutCSVLoadTable('product');
       this.workspaceLayoutCSVProductFieldsInit().then(() => {});
     }
-    if (sel === 'Layout Data') {
+    if (sel === 'Custom Data') {
       this.workspaceLayoutSceneDataInit().then(() => {});
     }
   }
@@ -430,7 +430,7 @@ class cWorkspace {
 
     return;
   }
-  workspaceLayoutSceneDataValueChange(ctl, e) {
+  async workspaceLayoutSceneDataValueChange(ctl, e) {
     let data = ctl.dataset;
     let tab = data.tab,
       name = data.name,
@@ -453,7 +453,8 @@ class cWorkspace {
       }
 
     if (dataChanged) {
-      gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tab + 'Rows', rows);
+      await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tab + 'Rows', rows);
+      gAPPP.updateGenerateDataTimes();
     }
 
     return;
@@ -558,7 +559,7 @@ class cWorkspace {
       if (!rightColumn && longLabel)
         cssClass += 'tab-header-cell-large';
 
-      columns.push({
+      let col = {
         title: field,
         field,
         editor: true,
@@ -570,7 +571,13 @@ class cWorkspace {
         resizable: false,
         headerVertical: longLabel,
         minWidth
-      });
+      };
+
+      if (field === 'image' || field === 'meshpath' || field === 'texturepath' || field === 'bmppath') {
+        col.width = '40em';
+      }
+
+      columns.push(col);
     }
 
     if (tableName === 'product') {
@@ -677,10 +684,10 @@ class cWorkspace {
     }
 
     await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data);
-
-    return Promise.resolve();
+    gAPPP.updateGenerateDataTimes();
+    return;
   }
-  async workspaceLayoutCSVTableChange(csvGenerateReloadSceneOptions) {
+  async workspaceLayoutCSVTableChange(generateAnimationOptions) {
     let dirty = this.workspaceLayoutCSVTableTestDirty(this.tableName);
 
     if (!dirty)

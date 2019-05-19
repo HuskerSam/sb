@@ -8,6 +8,9 @@ class cGenerate {
     let html = '';
     if (this.bView.workplacesSelect)
       html = this.bView.workplacesSelect.innerHTML;
+
+    this.bView.dialog.classList.add('generatelayout');
+
     this.csvGenerateRefreshProjectLists(html);
   }
   template() {
@@ -33,14 +36,11 @@ class cGenerate {
     <b>Products CSV Data</b>
     <input type="file" class="add_animation_product_download_file" style="display:none">
     <span class="product csv_data_date_span"></span>
-    <br>
-    <button class="generate_animation_workspace_button" style="float:right;">Generate</button>
-    <label style="float:right;"><input type="checkbox" checked  class="generate_clear_wrkspace" /> Clear Workspace &nbsp;</label>
-    <div class="workspace-csv-panel-item" style="clear:both;">
+    <div class="workspace-csv-panel-item">
       <select class="add_animation_asset_choice">
-        <option>Assets CSV Data</option>
-        <option>Workspace Assets</option>
-        <option>Template Assets</option>
+        <option value="current">Assets CSV Data</option>
+        <option value="workspace">Workspace Assets</option>
+        <option value="template">Template Assets</option>
         <option>No Assets</option>
       </select>
       <select class="add_animation_asset_animation" style="display:none;"></select>
@@ -51,9 +51,9 @@ class cGenerate {
     </div>
     <div class="workspace-csv-panel-item">
       <select class="add_animation_scene_choice">
-        <option>Layout CSV Data</option>
-        <option>Workspace Layout</option>
-        <option>Template Layout</option>
+        <option value="current">Layout CSV Data</option>
+        <option value="workspace">Workspace Layout</option>
+        <option value="template">Template Layout</option>
         <option>No Layout</option>
       </select>
       <select class="add_animation_scene_animation" style="display:none;"></select>
@@ -64,9 +64,9 @@ class cGenerate {
     </div>
     <div class="workspace-csv-panel-item">
       <select class="add_animation_product_choice">
-        <option>Products CSV Data</option>
-        <option>Workspace Products</option>
-        <option>Template Products</option>
+        <option value="current">Products CSV Data</option>
+        <option value="workspace">Workspace Products</option>
+        <option value="template">Template Products</option>
         <option>No Products</option>
       </select>
       <select class="add_animation_product_animation" style="display:none;"></select>
@@ -75,7 +75,7 @@ class cGenerate {
       </select>
       <span class="product_workspace csv_data_date_span"></span>
     </div>
-    <button class="generate_new_animation_workspace_button" style="float:right;">Generate New</button>
+    <button class="generate_new_animation_workspace_button" style="float:right;"><i class="material-icons">gavel</i><i class="material-icons">add</i></button>
     <input class="generate_animation_new_wrk_name" type="text" style="float:right;" />
     </div>`;
   }
@@ -125,29 +125,24 @@ class cGenerate {
     this.add_animation_product_download_file.addEventListener('change', e => this.csvGenerateUploadCSV('product'));
     this.add_animation_product_download_btn.addEventListener('click', e => this.csvGenerateDownloadCSV('product'));
 
-    this.add_animation_asset_choice.addEventListener('input', e => this.csvGenerateTemplate('asset'));
-    this.add_animation_scene_choice.addEventListener('input', e => this.csvGenerateTemplate('scene'));
-    this.add_animation_product_choice.addEventListener('input', e => this.csvGenerateTemplate('product'));
+    this.add_animation_asset_choice.addEventListener('input', e => this.updateCSVDataDisplay('asset'));
+    this.add_animation_scene_choice.addEventListener('input', e => this.updateCSVDataDisplay('scene'));
+    this.add_animation_product_choice.addEventListener('input', e => this.updateCSVDataDisplay('product'));
 
     this.import_asset_workspaces_select = this.domPanel.querySelector('.import_asset_workspaces_select');
     this.import_scene_workspaces_select = this.domPanel.querySelector('.import_scene_workspaces_select');
     this.import_product_workspaces_select = this.domPanel.querySelector('.import_product_workspaces_select');
 
-    this.generate_animation_workspace_button = this.domPanel.querySelector('.generate_animation_workspace_button');
-    this.generate_animation_workspace_button.addEventListener('click', e => this.csvGenerateAnimation());
-    this.csvGenerateInitLists();
+    this.generate_new_animation_workspace_button = this.domPanel.querySelector('.generate_new_animation_workspace_button');
+    this.generate_new_animation_workspace_button.addEventListener('click', e => this.generateNewAnimation());
 
-    gAPPP.updateGenerateDataTimes()
-      .then(() => {
-        this.domPanel.querySelector('.asset.csv_data_date_span').innerHTML = gAPPP.assetRowsDateDisplay;
-        this.domPanel.querySelector('.layout.csv_data_date_span').innerHTML = gAPPP.sceneRowsDateDisplay;
-        this.domPanel.querySelector('.product.csv_data_date_span').innerHTML = gAPPP.productRowsDateDisplay;
-        this.domPanel.querySelector('.generated.csv_data_date_span').innerHTML = gAPPP.animationGeneratedDateDisplay;
-      });
+    await gAPPP.updateGenerateDataTimes();
 
-    return Promise.resolve();
-  }
-  async csvGenerateInitLists() {
+    this.domPanel.querySelector('.asset.csv_data_date_span').innerHTML = gAPPP.assetRowsDateDisplay;
+    this.domPanel.querySelector('.layout.csv_data_date_span').innerHTML = gAPPP.sceneRowsDateDisplay;
+    this.domPanel.querySelector('.product.csv_data_date_span').innerHTML = gAPPP.productRowsDateDisplay;
+    this.domPanel.querySelector('.generated.csv_data_date_span').innerHTML = gAPPP.animationGeneratedDateDisplay;
+
     function __loadList(sel, list, htmlPrefix = '') {
       let html = '';
       for (let c = 0; c < list.length; c++)
@@ -158,48 +153,50 @@ class cGenerate {
     __loadList(this.add_animation_asset_template, Object.keys(this.templates.assetTemplates));
     __loadList(this.add_animation_scene_template, Object.keys(this.templates.sceneTemplates));
     __loadList(this.add_animation_product_template, Object.keys(this.templates.productTemplates));
+    this.updateCSVDataDisplay('asset');
+    this.updateCSVDataDisplay('scene');
+    this.updateCSVDataDisplay('product');
+
+    this.generate_animation_new_wrk_name = this.domPanel.querySelector('.generate_animation_new_wrk_name');
+    this.generate_animation_new_wrk_name.value = 'Created ' + new Date().toISOString().substring(0, 10);
 
     return Promise.resolve();
   }
-  csvGenerateReloadScene(animationKey = false) {
-    if (!animationKey)
-      animationKey = gAPPP.a.profile.selectedWorkspace;
-    if (!animationKey)
-      return;
+  updateCSVDataDisplay(type) {
+    let value = this['add_animation_' + type + '_choice'].value;
 
-    this.bView.canvasHelper.hide();
-    gAPPP.a._deactivateModels();
-//generate_clear_wrkspace
-    setTimeout(async () => {
-      let csvImport = new gCSVImport(animationKey);
-      await gAPPP.a.clearProjectData(animationKey);
-      let assets = await gAPPP.a.readProjectRawData(animationKey, 'assetRows');
-      await csvImport.importRows(assets);
-      let scene = await gAPPP.a.readProjectRawData(animationKey, 'sceneRows');
-      await csvImport.importRows(scene);
-      let products = await gAPPP.a.readProjectRawData(animationKey, 'productRows');
-      await csvImport.importRows(products);
-      await csvImport.addCSVDisplayFinalize();
-      gAPPP.a.writeProjectRawData(animationKey, 'animationGenerated', null);
-      this.bView._updateQueryString(animationKey, 'Layout');
+    let dSpan = this.domPanel.querySelector(`.${type}_workspace.csv_data_date_span`);
+    dSpan.innerHTML = gAPPP[type + `RowsDateDisplay`];
+    this['add_animation_' + type + '_template'].style.display = 'none';
+    this['add_animation_' + type + '_animation'].style.display = 'none';
 
-      window.location.href = `/asset/?wid=${animationKey}&subview=Layout`;
-    }, 10);
-
+    if (value === 'template') {
+      this['add_animation_' + type + '_template'].style.display = 'inline-block';
+      dSpan.innerHTML = '';
+    }
+    if (value === 'workspace') {
+      dSpan.innerHTML = '';
+      this['add_animation_' + type + '_animation'].style.display = 'inline-block';
+      this._csvUpdateWorkspaceCSVDisplayDate(type);
+      if (!this['add_animation_' + type + '_animation'].handlerAddedAlready) {
+        this['add_animation_' + type + '_animation'].handlerAddedAlready = true;
+        this['add_animation_' + type + '_animation'].addEventListener('change', e => this._csvUpdateWorkspaceCSVDisplayDate(type));
+      }
+    }
   }
-  async csvGenerateData(type, targetProjectId) {
+  async setCSVData(type, targetProjectId) {
     let sourceProjectId = gAPPP.a.profile.selectedWorkspace;
-    let choice = document.getElementById(`add_animation_${type}_choice`).value;
+    let choice = this[`add_animation_${type}_choice`].value;
     let data = null;
 
-    if (choice === 'Current') {
+    if (choice === 'current') {
       data = await gAPPP.a.readProjectRawData(sourceProjectId, type + 'Rows');
     }
-    if (choice === 'Animation') {
+    if (choice === 'workspace') {
       let id = document.getElementById(`add_animation_${type}_animation`);
       data = await gAPPP.a.readProjectRawData(id, type + 'Rows');
     }
-    if (choice === 'Template') {
+    if (choice === 'template') {
       let title = this[`add_animation_${type}_template`].value;
       let filename = this.templates[`${type}Templates`][title];
       let response = await fetch(this.bView.templateBasePath + filename);
@@ -299,35 +296,28 @@ class cGenerate {
       };
     }
   }
-  async csvGenerateAnimation() {
-    let genNew = false;
-    let newTitle = this.domPanel.querySelector('#generate_animation_new_wrk_name').value.trim();
+  async generateNewAnimation() {
+    let newTitle = this.generate_animation_new_wrk_name.value.trim();
 
     if (newTitle.length === 0 && genNew) {
-      this.domPanel.querySelector('#generate_animation_new_wrk_name').focus();
+      this.generate_animation_new_wrk_name.focus();
       alert('need a name for new workspace');
       return;
     }
 
-    if (!genNew && !confirm('This will clear existing data - proceed?'))
-      return;
-
     this.bView.canvasHelper.hide();
 
-    let wId = gAPPP.a.profile.selectedWorkspace;
-    if (genNew) {
-      wId = gAPPP.a.modelSets['projectTitles'].getKey();
-      await this.bView._addProject(newTitle, wId, false);
-    }
+    let wId = gAPPP.a.modelSets['projectTitles'].getKey();
+    await this.bView._addProject(newTitle, wId, false);
 
     await Promise.all([
-      this.csvGenerateData('asset', wId),
-      this.csvGenerateData('scene', wId)
+      this.setCSVData('asset', wId),
+      this.setCSVData('scene', wId)
     ]);
 
-    await this.csvGenerateData('product', wId);
+    await this.setCSVData('product', wId);
 
-    this.csvGenerateReloadScene(wId);
+    this.bView.generateAnimation(true, wId);
 
     return '';
   }
@@ -357,26 +347,6 @@ class cGenerate {
         element.click();
         document.body.removeChild(element);
       });
-  }
-  csvGenerateTemplate(type) {
-    let value = this['add_animation_' + type + '_choice'].value;
-
-    let dSpan = this.domPanel.querySelector(`.${type}_workspace.csv_data_date_span`);
-    dSpan.innerHTML = '';
-    this['add_animation_' + type + '_template'].style.display = 'none';
-    this['add_animation_' + type + '_animation'].style.display = 'none';
-
-    if (value.indexOf('Template') !== -1) {
-      this['add_animation_' + type + '_template'].style.display = 'inline-block';
-    }
-    if (value.indexOf('Workspace') !== -1) {
-      this['add_animation_' + type + '_animation'].style.display = 'inline-block';
-      this._csvUpdateWorkspaceCSVDisplayDate(type);
-      if (!this['add_animation_' + type + '_animation'].handlerAddedAlready) {
-        this['add_animation_' + type + '_animation'].handlerAddedAlready = true;
-        this['add_animation_' + type + '_animation'].addEventListener('change', e => this._csvUpdateWorkspaceCSVDisplayDate(type));
-      }
-    }
   }
   _csvUpdateWorkspaceCSVDisplayDate(type) {
     let dSpan = this.domPanel.querySelector(`.${type}_workspace.csv_data_date_span`);

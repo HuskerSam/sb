@@ -81,6 +81,23 @@ class gApp extends gInstanceSuper {
     this.animationGeneratedDate = results[3];
     this.animationGeneratedDateDisplay = (this.animationGeneratedDate) ? GLOBALUTIL.shortDateTime(gAPPP.animationGeneratedDate) : 'none';
 
+    this.animationRegenerationNeeded = false;
+    if (this.animationGeneratedDate) {
+      if (this.assetRowsDate > this.animationGeneratedDate)
+        this.animationRegenerationNeeded = true;
+      if (this.sceneRowsDate > this.animationGeneratedDate)
+        this.animationRegenerationNeeded = true;
+      if (this.productRowsDate > this.animationGeneratedDate)
+        this.animationRegenerationNeeded = true;
+    }
+
+    if (this.mV) {
+      if (this.animationRegenerationNeeded)
+        this.mV.dialog.classList.add('animation_regeneration_needed');
+      else
+        this.mV.dialog.classList.remove('animation_regeneration_needed');
+    }
+
     return;
   }
 }

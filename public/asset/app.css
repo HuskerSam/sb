@@ -589,7 +589,12 @@ select {
   display: none;
 }
 
+.workspace.animation_regeneration_needed .workspace_regenerate_layout_changes {
+  display: inline-block;
+}
+
 .workspacelayout .workspace_layout_view_select,
+.generatelayout .workspace_regenerate_layout_changes,
 .workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
 }
@@ -721,6 +726,7 @@ select {
   max-width: calc(100% - 16em);
   float: left;
   margin-left: .5em;
+  min-width: 5em;
 }
 
 .dataview_record_tag {
@@ -739,11 +745,19 @@ select {
 }
 
 .csv_data_date_span {
-  font-size: .9em;
+  margin-left: 1em;
   font-style: italic;
 }
 
 .cgenerate_panel_wrapper {
   padding: 0 .5em;
   line-height: 2.75em;
+}
+
+.animation_regeneration_needed .workspace_regenerate_layout_changes {
+  background: red;
+}
+
+.workspace .add-asset-button {
+  display: none;
 }

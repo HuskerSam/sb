@@ -132,7 +132,7 @@ class GLOBALUTIL {
   }
   static shortDateTime(d) {
     d = new Date(d);
-    let od = d.toISOString().substring(0,10);
+    let od = d.toISOString().substring(5,10);
     od += ' ' + d.toISOString().substring(11,16);
     return od;
   }
