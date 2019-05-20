@@ -158,10 +158,10 @@ class cWorkspace {
   workspaceDetailsTemplate() {
     return `<div style="line-height:2.5em;padding: .5em">
     <label><span>Workspace Name </span><input id="edit-workspace-name" type="text" /></label>
+    <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
     <br>
     <label><span>Workspace Tags (,) </span><input id="edit-workspace-code" type="text" /></label>
     &nbsp;
-    <button id="remove-workspace-button" class="btn-sb-icon"><i class="material-icons">delete</i></button>
     <input type="file" style="display:none;" class="import_csv_file">
     <input type="file" style="display:none;" class="import_asset_json_file">
     <br><br>

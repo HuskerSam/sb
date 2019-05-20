@@ -46,6 +46,11 @@ class gCSVImport {
     let updates = {};
     data.sortKey = new Date().getTime();
     updates['/' + this.path(type) + '/' + id] = data;
+
+    if (data)
+      for (let i in data)
+        if (data[i] === undefined) delete data[i];
+
     await firebase.database().ref().update(updates);
 
     return Promise.resolve({
@@ -201,24 +206,25 @@ class gCSVImport {
     if (row.blockflag) blockData.blockFlag = row.blockflag;
 
     let blockResult = await this.dbSetRecord('block', blockData);
-    let frameTime = '0';
-    if (row.frametime)
-      frameTime = row.frametime;
+    if (row.frametime) {
+      let frameTime = row.frametime;
+      this.dbSetRecord('frame', {
+        parentKey: blockResult.key,
+        positionX: row.x,
+        positionY: row.y,
+        positionZ: row.z,
+        rotationX: row.rx,
+        rotationY: row.ry,
+        rotationZ: row.rz,
+        scalingX: row.sx,
+        scalingY: row.sy,
+        scalingZ: row.sz,
+        frameOrder: 10,
+        frameTime
+      });
+    }
 
-    return this.dbSetRecord('frame', {
-      parentKey: blockResult.key,
-      positionX: row.x,
-      positionY: row.y,
-      positionZ: row.z,
-      rotationX: row.rx,
-      rotationY: row.ry,
-      rotationZ: row.rz,
-      scalingX: row.sx,
-      scalingY: row.sy,
-      scalingZ: row.sz,
-      frameOrder: 10,
-      frameTime
-    });
+    return blockResult;
   }
   async csvFetchSceneBlock() {
     let results = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
@@ -350,7 +356,7 @@ class gCSVImport {
         emissiveColor: row.color,
         emissiveTextureName: texturename,
         bumpTextureName: bumptexturename
-      }).then(results => {});
+      });
 
     await this.addParentBlockChild(row);
 
@@ -364,7 +370,18 @@ class gCSVImport {
       textFontFamily: row.textfontfamily,
       textText: row.texttext,
       textDepth: row.textdepth,
-      textSize: row.textsize
+      textSize: row.textsize,
+      boxSize: row.boxsize,
+      cylinderHeight: row.height,
+      cylinderDiameter: row.width,
+      cylinderTessellation: row.tessellation,
+      cylinderDiameterTop: row.diametertop,
+      cylinderDiameterBottom: row.diameterbottom,
+      sphereDiameter: row.boxsize,
+      sphereSegments: row.tessellation,
+      sphereDiameterX: row.width,
+      sphereDiameterY: row.height,
+      sphereDiameterZ: row.depth
     });
   }
   async addParentBlockChild(row) {
@@ -464,12 +481,135 @@ class gCSVImport {
         return this.addCSVDisplayMessage(row);
       case 'product':
         return this.addCSVDisplayProduct(row);
-    //  case 'image':
-    //    return this.addCSVDisplayImage(row);
+
+      case 'shapeandtext':
+        return this.addCSVShapeAndText(row);
+        //  case 'image':
+        //    return this.addCSVDisplayImage(row);
     }
 
     console.log('type not found', row);
-    return Promise.resolve();
+    return;
+  }
+  async addCSVShapeAndText(row) {
+    let height = GLOBALUTIL.getNumberOrDefault(row.height, 1).toFixed(3);
+    let width = GLOBALUTIL.getNumberOrDefault(row.width, 1).toFixed(3);
+    let depth = GLOBALUTIL.getNumberOrDefault(row.depth, 1).toFixed(3);
+    let minDim = Math.min(Math.min(width, height), depth);
+    let maxDim = Math.max(Math.max(width, height), depth);
+    let blockrow = {
+      name: row.name,
+      height,
+      width,
+      depth,
+      materialname: ''
+    };
+    let blockResult = await this.addCSVBlockRow(blockrow);
+
+    let textDepth = GLOBALUTIL.getNumberOrDefault(row.textdepth, .25);
+    if (!row.texttextline2)
+      row.texttextline2 = '';
+    if (!row.texttext)
+      row.texttext = '';
+
+    let textLen = Math.max(row.texttext.length, row.texttextline2.length);
+    let scale = 2 * width / textLen;
+    let positionY = scale * .5;
+    let textRow = {
+      name: row.name + '_shapeText',
+      texttext: row.texttext,
+      ry: '-90deg',
+      rz: '-90deg',
+      sx: scale,
+      sy: scale,
+      y: positionY.toFixed(3),
+      z: (textDepth / 2.0).toFixed(3),
+      textfontfamily: row.textfontfamily,
+      materialname: row.textmaterial,
+      textdepth: textDepth,
+      parent: row.name,
+      asset: 'shape',
+      shapetype: 'text'
+    };
+
+    let textRowLine2 = Object.assign({}, textRow);
+    textRowLine2.y = (-1 * positionY).toFixed(3);
+    textRowLine2.name = textRowLine2.name + '2';
+    textRowLine2.texttext = row.texttextline2;
+
+    if (row.texttextline2)
+      textRow.y = 0;
+
+    this.addCSVShapeRow(Object.assign(this.defaultCSVRow(), textRow));
+    if (row.texttextline2)
+      this.addCSVShapeRow(Object.assign(this.defaultCSVRow(), textRowLine2));
+
+
+    let shapeRow = {};
+
+    if (row.createshapetype === 'box') {
+      shapeRow = {
+        shapetype: 'box',
+        height,
+        width,
+        depth
+      };
+    }
+
+    if (row.createshapetype === 'cube') {
+      shapeRow = {
+        shapetype: 'box',
+        boxsize: minDim
+      };
+    }
+
+    if (row.createshapetype === 'cone' || row.createshapetype === 'cylinder') {
+      shapeRow = {
+        shapetype: 'cylinder',
+        tessellation: row.tessellation,
+        width,
+        height,
+        depth
+      }
+
+      if (row.cylinderhorizontal) {
+        shapeRow.rz = '90deg';
+        shapeRow.height = width;
+        shapeRow.width = height;
+      }
+
+      if (width !== depth)
+        shapeRow.sz = (depth / width).toFixed(3);
+
+      if (row.createshapetype === 'cone')
+        shapeRow.diametertop = 0;
+    }
+    if (row.createshapetype === 'sphere') {
+      shapeRow = {
+        shapetype: 'sphere',
+        boxsize: minDim,
+        tessellation: row.tessellation
+      };
+    }
+    if (row.createshapetype === 'ellipsoid') {
+      shapeRow = {
+        shapetype: 'sphere',
+        width,
+        height,
+        depth,
+        tessellation: row.tessellation
+      };
+    }
+
+    shapeRow.materialname = row.shapematerial;
+    shapeRow.parent = row.name;
+    shapeRow.name = row.name + "_shape";
+    shapeRow.asset = 'shape';
+    shapeRow.z = (-1.0 * minDim / 2.0).toFixed(3);
+
+    this.addCSVShapeRow(Object.assign(this.defaultCSVRow(), shapeRow));
+
+    return blockResult;
   }
   async addCSVDisplayProduct(row) {
     let sceneRecords = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
@@ -715,7 +855,7 @@ class gCSVImport {
     newObjects.push(blockRowBC);
 
     await this.addCSVRowList(newObjects);
-  //  await this._addSignPost3D(product, productData);
+    //  await this._addSignPost3D(product, productData);
 
     let showFrame = this.defaultCSVRow();
     showFrame.asset = 'blockchildframe';

@@ -512,6 +512,8 @@ class cView extends bView {
     let urlParams = new URLSearchParams(window.location.search);
     let url = '';
     if (newWid) {
+      if (!tag)
+        this.dataview_record_key.selectedIndex = 0;
       url = this.genQueryString(newWid, tag);
     } else {
       url = this.genQueryString();

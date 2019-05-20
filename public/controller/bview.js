@@ -415,10 +415,8 @@ class bView {
     if (confirm(`Are you sure you want to delete the project: ${this.workplacesSelect.selectedOptions[0].innerText}?`))
       if (confirm('Really?  Really sure?  this won\'t come back...')) {
         gAPPP.a.modelSets['projectTitles'].removeByKey(this.workplacesSelect.value);
-        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-          field: 'selectedWorkspace',
-          newValue: 'default'
-        }]);
+        this.workplacesSelect.selectedIndex = 0;
+        this.selectProject();
       }
   }
   profilePanelTemplate() {

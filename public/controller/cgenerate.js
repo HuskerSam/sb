@@ -75,8 +75,10 @@ class cGenerate {
       </select>
       <span class="product_workspace csv_data_date_span"></span>
     </div>
-    <button class="generate_new_animation_workspace_button" style="float:right;"><i class="material-icons">gavel</i><i class="material-icons">add</i></button>
-    <input class="generate_animation_new_wrk_name" type="text" style="float:right;" />
+    <button class="generate_new_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">add</i></button>
+    <input class="generate_animation_new_wrk_name" type="text" />
+    <br>
+    <button class="generate_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">cached</i></button>
     </div>`;
   }
   async register() {
@@ -135,6 +137,8 @@ class cGenerate {
 
     this.generate_new_animation_workspace_button = this.domPanel.querySelector('.generate_new_animation_workspace_button');
     this.generate_new_animation_workspace_button.addEventListener('click', e => this.generateNewAnimation());
+    this.generate_animation_workspace_button = this.domPanel.querySelector('.generate_animation_workspace_button');
+    this.generate_animation_workspace_button.addEventListener('click', e => this.generateNewAnimation(false));
 
     await gAPPP.updateGenerateDataTimes();
 
@@ -296,7 +300,7 @@ class cGenerate {
       };
     }
   }
-  async generateNewAnimation() {
+  async generateNewAnimation(genNew = true) {
     let newTitle = this.generate_animation_new_wrk_name.value.trim();
 
     if (newTitle.length === 0 && genNew) {
@@ -307,8 +311,11 @@ class cGenerate {
 
     this.bView.canvasHelper.hide();
 
-    let wId = gAPPP.a.modelSets['projectTitles'].getKey();
-    await this.bView._addProject(newTitle, wId, false);
+    let wId = gAPPP.a.profile.selectedWorkspace;
+    if (genNew) {
+      wId = gAPPP.a.modelSets['projectTitles'].getKey();
+      await this.bView._addProject(newTitle, wId, false);
+    }
 
     await Promise.all([
       this.setCSVData('asset', wId),

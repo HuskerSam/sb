@@ -75,7 +75,6 @@ class cMacro {
       alert('Please enter a name');
       return;
     }
-    this.panelInput.value = '';
     this.createMesage.style.display = 'block';
 
     this[this.tag + 'Create']()
@@ -425,23 +424,31 @@ class cMacro {
       <label><span>Len</span><input type="text" class="block-box-depth" value="10" /></label>
     </div>
     <div class="shape-and-text-block-options">
-      <label><span>Line 1</span><input type="text" style="width:15em;" class="block-box-text" value="Block Text" /></label>
-      <label><span>Line 2</span><input type="text" style="width:15em;" class="block-box-text-line2" value="" /></label>
+      <label><span>texttext</span><input type="text" style="width:15em;" class="texttext" value="Block Text" /></label>
       <br>
-      <label><span>Font</span><input class="font-family-block-add" list="fontfamilydatalist" /></label>
-      <label><span>Depth</span><input type="text" class="block-text-depth" value=".1" /></label>
-      <label><span>Material</span>&nbsp;<input type="text" style="width:15em;" class="block-material-picker-select" list="materialdatatitlelookuplist" /></label>
+      <label><span>texttextline2</span><input type="text" style="width:15em;" class="texttextline2" value="" /></label>
       <br>
-      <label><span>Shape</span><select class="block-add-shape-type-options"><option>Cube</option><option>Box</option><option selected>Cone</option>
-        <option>Cylinder</option><option>Sphere</option><option>Ellipsoid</option></select></label>
-      <label class="block-shape-add-label"><span>Divs</span><input type="text" class="block-add-shape-sides" /></label>
-      <label class="block-stretch-along-width-label"><input type="checkbox" class="shape-stretch-checkbox" />Horizontal</label>
+      <label><span>textfontfamily</span><input class="textfontfamily" list="fontfamilydatalist" /></label>
+      <label><span>textdepth</span><input type="text" class="textdepth" value=".1" /></label>
       <br>
-      <label><span>Material</span><input type="text" style="width:15em;" class="block-shapematerial-picker-select" list="materialdatatitlelookuplist" /></label>
+      <label><span>textmaterial</span>&nbsp;<input type="text" style="width:15em;" class="textmaterial" list="materialdatatitlelookuplist" /></label>
       <br>
-      <label><span>W</span><input type="text" class="block-box-width" value="4" /></label>
-      <label><span>H</span><input type="text" class="block-box-height" value="1" /></label>
-      <label><span>D</span><input type="text" class="block-box-depth" value="1" /></label>
+      <label><span>createshapetype</span><select class="createshapetype">
+        <option>cube</option>
+        <option>box</option>
+        <option selected>cone</option>
+        <option>cylinder</option>
+        <option>sphere</option>
+        <option>ellipsoid</option>
+      </select></label>
+      <label><span>tessellation</span><input type="text" class="tessellation" /></label>
+      <label><input type="checkbox" class="cylinderhorizontal" />cylinderhorizontal</label>
+      <br>
+      <label><span>shapematerial</span><input type="text" style="width:15em;" class="shapematerial" list="materialdatatitlelookuplist" /></label>
+      <br>
+      <label><span>width</span><input type="text" class="width" value="4" /></label>
+      <label><span>height</span><input type="text" class="height" value="1" /></label>
+      <label><span>depth</span><input type="text" class="depth" value="1" /></label>
     </div>
     <div class="scene-block-add-options" style="text-align:center;">
       <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
@@ -456,22 +463,21 @@ class cMacro {
       <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
       <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
       <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
-    </div>`;
+    </div>
+    <div class="csv_block_import_preview"></div>`;
   }
   blockRegister() {
 
     this.blockOptionsPicker = this.panel.querySelector('.block-type-select');
     this.blockOptionsPicker.addEventListener('input', e => this.blockHelperChange());
 
-    this.blockShapePicker = this.panel.querySelector('.block-add-shape-type-options');
-    this.blockShapePicker.addEventListener('input', e => this.blockShapeChange());
     this.blockShapePanel = this.panel.querySelector('.shape-and-text-block-options');
     this.sceneBlockPanel = this.panel.querySelector('.scene-block-add-options');
     this.connectorLinePanel = this.panel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.panel.querySelector('.animated-line-block-add-options');
     this.webFontPanel = this.panel.querySelector('.web-font-block-add-options');
 
-    this.blockAddFontFamily = this.blockShapePanel.querySelector('.font-family-block-add');
+    this.blockAddFontFamily = this.blockShapePanel.querySelector('.textfontfamily');
     this.blockAddFontFamily.addEventListener('input', e => this.updateFontField(this.blockAddFontFamily));
 
     this.skyBoxImages = this.panel.querySelector('.skybox-preview-images');
@@ -484,12 +490,32 @@ class cMacro {
     this.cloudImageInput.addEventListener('input', e => this.blockGroundChange());
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
-    this.shapeDetailsPanel = this.panel.querySelector('.block-shape-add-label');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
+    this.csv_block_import_preview = this.panel.querySelector('.csv_block_import_preview');
+
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
 
     this.blockHelperChange();
-    this.blockShapeChange();
     this.blockSkyboxChange();
+  }
+  _blockScrapeShape() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      name: this.newName
+    };
+    let textshapefields = [
+      'texttext', 'texttextline2', 'textfontfamily', 'textdepth', 'textmaterial', 'shapematerial',
+      'width', 'height', 'depth', 'tessellation', 'cylinderhorizontal', 'createshapetype'
+    ];
+    textshapefields.forEach(field => {
+      let f = this.blockShapePanel.querySelector('.' + field);
+      if (f.getAttribute('type') === 'checkbox')
+        csv_row[field] = f.checked ? '1' : '';
+      else
+        csv_row[field] = f.value;
+    });
+    return csv_row;
   }
   async blockCreate() {
     let bType = this.blockOptionsPicker.value;
@@ -507,22 +533,11 @@ class cMacro {
       return results.key;
     }
     if (bType === 'Text and Shape') {
-      this.mixin.width = this.blockShapePanel.querySelector('.block-box-width').value;
-      this.mixin.height = this.blockShapePanel.querySelector('.block-box-height').value;
-      this.mixin.depth = this.blockShapePanel.querySelector('.block-box-depth').value;
 
-      this.mixin.textText = this.blockShapePanel.querySelector('.block-box-text').value;
-      this.mixin.textTextLine2 = this.blockShapePanel.querySelector('.block-box-text-line2').value;
-      this.mixin.textFontFamily = this.blockShapePanel.querySelector('.font-family-block-add').value;
-      this.mixin.textMaterial = this.blockShapePanel.querySelector('.block-material-picker-select').value;
-      this.mixin.textDepth = this.blockShapePanel.querySelector('.block-text-depth').value;
-      this.mixin.shapeMaterial = this.blockShapePanel.querySelector('.block-shapematerial-picker-select').value;
-      this.mixin.shapeDivs = this.blockShapePanel.querySelector('.block-add-shape-sides').value;
-      this.mixin.cylinderHorizontal = this.blockShapePanel.querySelector('.shape-stretch-checkbox').checked;
-      this.mixin.createShapeType = this.blockShapePicker.value;
-      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
-      this.blockCreateShapeAndText(gAPPP.activeContext, results.key, this.newName);
-      return results.key;
+      let row = this._blockScrapeShape();
+
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVShapeAndText(row);
+      return blockResult.key;
     }
     if (bType === 'Scene') {
       this.mixin.width = this.sceneBlockPanel.querySelector('.block-box-width').value;
@@ -602,17 +617,6 @@ class cMacro {
     }
 
   }
-  blockShapeChange() {
-    this.shapeDetailsPanel.style.display = 'none';
-    this.stretchDetailsPanel.style.display = 'none';
-    let shape = this.blockShapePicker.value;
-
-    if (shape !== 'Box' && shape !== 'Cube')
-      this.shapeDetailsPanel.style.display = '';
-
-    if (shape === 'Cone' || shape === 'Cylinder')
-      this.stretchDetailsPanel.style.display = '';
-  }
   blockGroundChange() {
     let cloudImage = this.cloudImageInput.value.trim();
 
@@ -665,6 +669,18 @@ class cMacro {
       this.animatedDashPanel.style.display = '';
     else if (sel === 'Web Font')
       this.webFontPanel.style.display = '';
+  }
+  blockUpdateCSV() {
+    let macrotype = this.blockOptionsPicker.value;
+    let r = null;
+    if (macrotype === 'Text and Shape')
+      r = this._blockScrapeShape();
+
+    if (r) {
+      this.csv_block_import_preview.innerHTML = Papa.unparse([r]);
+    }
+    else
+      this.csv_block_import_preview.innerHTML = new Date();
   }
   blockCreateLight(blockKey, blockTitle) {
     gAPPP.activeContext.createObject('blockchild', '', null, {
@@ -859,6 +875,62 @@ class cMacro {
         context.createObject('frame', '', null, newObj).then(resultB => {});
       });
   }
+
+  blockGetShapeRow(shapeOptions) {
+    let width = GLOBALUTIL.getNumberOrDefault(shapeOptions.width, 1).toFixed(3);
+    let height = GLOBALUTIL.getNumberOrDefault(shapeOptions.height, 1).toFixed(3);
+    let depth = GLOBALUTIL.getNumberOrDefault(shapeOptions.depth, 1).toFixed(3);
+    let minDim = Math.min(Math.min(width, height), depth);
+    let maxDim = Math.max(Math.max(width, height), depth);
+    let shapeRow = {
+      shapetype: 'box',
+      height,
+      width,
+      depth,
+      z: (-1.0 * minDim / 2.0).toFixed(3)
+    };
+
+    if (shapeOptions.createShapeType === 'Box') {
+    }
+
+    if (shapeOptions.createShapeType === 'Cube') {
+      shapeRow.height = '';
+      shapeRow.width = '';
+      shapeRow.depth = '';
+      shapeRow.boxsize = minDim;
+    }
+
+    if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
+      if (shapeOptions.cylinderHorizontal) {
+        shapeRow.rz = '90deg';
+        let h = shapeRow.height;
+        shapeRow.height = width;
+        shapeRow.width = h;
+      }
+
+      shapeRow.shapetype = 'cylinder';
+      if (width !== depth)
+        shapeRow.sz = (depth / width).toFixed(3);
+
+      shapeRow.tessellation = shapeOptions.shapeDivs;
+
+      if (shapeOptions.createShapeType === 'Cone')
+        shapeRow.diametertop = 0;
+    }
+    if (shapeOptions.createShapeType === 'Sphere') {
+      shapeRow.shapetype = 'sphere';
+      shapeRow.boxsize = minDim;
+      shapeRow.tessellation = shapeOptions.shapeDivs;
+      shapeRow.width = '';
+      shapeRow.height = '';
+      shapeRow.depth = '';
+    }
+    if (shapeOptions.createShapeType === 'Ellipsoid') {
+      shapeRow.shapetype = 'sphere';
+      shapeRow.boxsize = '';
+      shapeRow.tessellation = shapeOptions.tessellation;
+    }
+  }
   blockCreateShapeChild(context, blockId, shapeBlockName, shapeOptions, createShape = true) {
     let width = shapeOptions.width;
     let height = shapeOptions.height;
@@ -867,7 +939,6 @@ class cMacro {
     let maxDim = Math.max(Math.max(width, height), depth);
     let firstFrameOptions = {};
 
-    firstFrameOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
 
     if (shapeOptions.createShapeType === 'Cube') {
       shapeOptions.shapeType = 'box';
@@ -875,7 +946,6 @@ class cMacro {
       shapeOptions.boxWidth = '';
       shapeOptions.boxHeight = '';
       shapeOptions.boxDepth = '';
-      firstFrameOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
     }
     if (shapeOptions.createShapeType === 'Box') {
       shapeOptions.shapeType = 'box';
@@ -912,7 +982,6 @@ class cMacro {
       shapeOptions.boxWidth = '';
       shapeOptions.boxHeight = '';
       shapeOptions.boxDepth = '';
-      firstFrameOptions.positionZ = (-1.0 * minDim / 2.0).toFixed(3);
     }
     if (shapeOptions.createShapeType === 'Ellipsoid') {
       shapeOptions.shapeType = 'sphere';

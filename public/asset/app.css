@@ -594,7 +594,6 @@ select {
 }
 
 .workspacelayout .workspace_layout_view_select,
-.generatelayout .workspace_regenerate_layout_changes,
 .workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
 }
@@ -725,7 +724,6 @@ select {
 .dataview_record_key {
   max-width: calc(100% - 16em);
   float: left;
-  margin-left: .5em;
   min-width: 5em;
 }
 
@@ -760,4 +758,15 @@ select {
 
 .workspace .add-asset-button {
   display: none;
+}
+
+.csv_block_import_preview {
+  display: none;
+  overflow: auto;
+  text-overflow: clip;
+  white-space: pre;
+}
+
+.app-expanded .csv_block_import_preview {
+  display: block;
 }
