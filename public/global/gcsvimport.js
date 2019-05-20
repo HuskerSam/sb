@@ -41,6 +41,14 @@ class gCSVImport {
     return firebase.database().ref().update(updates);
   }
   async dbSetRecord(type, data, id) {
+    if (type === 'material') {
+      if (data.title.substring(0, 8) === 'decolor:' ||
+        data.title.substring(0, 7) === 'ecolor:' ||
+        data.title.substring(0, 6) === 'color:')
+        return {
+          key: null
+        };
+    }
     if (!id)
       id = firebase.database().ref().child(this.path(type)).push().key;
     let updates = {};
@@ -345,7 +353,7 @@ class gCSVImport {
       }).then(results => {});
     }
 
-    if (row.materialname)
+    if (row.materialname) {
       this.dbSetRecord('material', {
         title: row.materialname,
         ambientColor: row.color,
@@ -357,6 +365,7 @@ class gCSVImport {
         emissiveTextureName: texturename,
         bumpTextureName: bumptexturename
       });
+    }
 
     await this.addParentBlockChild(row);
 
@@ -481,22 +490,110 @@ class gCSVImport {
         return this.addCSVDisplayMessage(row);
       case 'product':
         return this.addCSVDisplayProduct(row);
+        //  case 'image':
+        //    return this.addCSVDisplayImage(row);
 
       case 'shapeandtext':
         return this.addCSVShapeAndText(row);
-        //  case 'image':
-        //    return this.addCSVDisplayImage(row);
+      case 'connectorline':
+        return this.addCSVConnectorLine(row);
     }
 
     console.log('type not found', row);
     return;
+  }
+  async addCSVConnectorLine(row) {
+    row.length = GLOBALUTIL.getNumberOrDefault(row.length, 1);
+    row.diameter = GLOBALUTIL.getNumberOrDefault(row.diameter, 1);
+    row.pointlength = GLOBALUTIL.getNumberOrDefault(row.pointlength, 1);
+    row.pointdiameter = GLOBALUTIL.getNumberOrDefault(row.pointdiameter, 1);
+    row.taillength = GLOBALUTIL.getNumberOrDefault(row.taillength, 1);
+    row.taildiameter = GLOBALUTIL.getNumberOrDefault(row.taildiameter, 1);
+
+    let adjPointLength = row.pointlength;
+    let adjPointDiameter = row.pointdiameter;
+    if (row.pointshape === 'none') {
+      adjPointLength = 0;
+      adjPointDiameter = 0;
+    }
+    let adjTailLength = row.taillength;
+    let adjTailDiameter = row.taildiameter;
+    if (row.tailshape === 'none') {
+      adjTailLength = 0;
+      adjTailDiameter = 0;
+    }
+
+    let depth = Math.max(row.diameter, Math.max(adjTailDiameter, adjPointDiameter));
+    let height = depth;
+    let width = row.length + adjPointLength / 2.0 + adjTailLength / 2.0;
+
+    let blockrow = {
+      name: row.name,
+      height,
+      width,
+      depth,
+      materialname: ''
+    };
+    let blockResult = await this.addCSVBlockRow(blockrow);
+
+    let lineRow = {
+      width: row.diameter,
+      tessellation: row.tessellation,
+      height: row.length,
+      depth: row.diameter,
+      shapematerial: row.material,
+      cylinderhorizontal: false,
+      createshapetype: 'cylinder',
+      name: row.name + '_lineshape',
+      parent: row.name,
+      rz: '90deg',
+      rx: '90deg'
+    };
+    this.addCSVShapeRow(this.__childShapeRow(lineRow));
+
+    let pointRow = {
+      width: row.pointdiameter,
+      tessellation: row.pointtessellation,
+      height: row.pointdiameter,
+      depth: row.pointlength,
+      shapematerial: row.pointmaterial,
+      createshapetype: row.pointshape,
+      name: row.name + '_pointshape',
+      parent: row.name,
+      rz: '90deg',
+      x: -1.0 * row.length / 2.0
+    };
+    if (row.pointshape === 'cone' || row.pointshape === 'cylinder')
+      pointRow.rY = '90deg';
+    if (row.pointshape !== 'none')
+      this.addCSVShapeRow(this.__childShapeRow(pointRow));
+
+    let tailRow = {
+      width: row.taildiameter,
+      tessellation: row.tailtessellation,
+      height: row.taildiameter,
+      depth: row.taillength,
+      shapematerial: row.tailmaterial,
+      createshapetype: row.tailshape,
+      name: row.name + '_tailshape',
+      parent: row.name,
+      rz: '90deg',
+      x: row.length / 2.0
+    };
+    if (row.tailshape === 'cone' || row.tailshape === 'cylinder')
+      tailRow.rY = '90deg';
+
+    if (row.tailshape !== 'none')
+      this.addCSVShapeRow(this.__childShapeRow(tailRow));
+
+    return blockResult;
   }
   async addCSVShapeAndText(row) {
     let height = GLOBALUTIL.getNumberOrDefault(row.height, 1).toFixed(3);
     let width = GLOBALUTIL.getNumberOrDefault(row.width, 1).toFixed(3);
     let depth = GLOBALUTIL.getNumberOrDefault(row.depth, 1).toFixed(3);
     let minDim = Math.min(Math.min(width, height), depth);
-    let maxDim = Math.max(Math.max(width, height), depth);
+
     let blockrow = {
       name: row.name,
       height,
@@ -537,15 +634,28 @@ class gCSVImport {
     textRowLine2.name = textRowLine2.name + '2';
     textRowLine2.texttext = row.texttextline2;
 
-    if (row.texttextline2)
+    if (!row.texttextline2)
       textRow.y = 0;
 
     this.addCSVShapeRow(Object.assign(this.defaultCSVRow(), textRow));
     if (row.texttextline2)
       this.addCSVShapeRow(Object.assign(this.defaultCSVRow(), textRowLine2));
 
+    row.parent = row.name;
+    row.name = row.name + '_shape';
 
+    row.z = (-1.0 * minDim / 2.0).toFixed(3);
+    this.addCSVShapeRow(this.__childShapeRow(row));
+
+    return blockResult;
+  }
+  __childShapeRow(row) {
     let shapeRow = {};
+    let height = GLOBALUTIL.getNumberOrDefault(row.height, 1).toFixed(3);
+    let width = GLOBALUTIL.getNumberOrDefault(row.width, 1).toFixed(3);
+    let depth = GLOBALUTIL.getNumberOrDefault(row.depth, 1).toFixed(3);
+    let minDim = Math.min(Math.min(width, height), depth);
+    let maxDim = Math.max(Math.max(width, height), depth);
 
     if (row.createshapetype === 'box') {
       shapeRow = {
@@ -602,14 +712,17 @@ class gCSVImport {
     }
 
     shapeRow.materialname = row.shapematerial;
-    shapeRow.parent = row.name;
-    shapeRow.name = row.name + "_shape";
+    shapeRow.parent = row.parent;
+    shapeRow.name = row.name;
     shapeRow.asset = 'shape';
-    shapeRow.z = (-1.0 * minDim / 2.0).toFixed(3);
+    shapeRow.x = row.x;
+    shapeRow.y = row.y;
+    shapeRow.z = row.z;
+    shapeRow.rx = row.rx;
+    shapeRow.ry = row.ry;
+    shapeRow.rz = row.rz;
 
-    this.addCSVShapeRow(Object.assign(this.defaultCSVRow(), shapeRow));
-
-    return blockResult;
+    return Object.assign(this.defaultCSVRow(), shapeRow);
   }
   async addCSVDisplayProduct(row) {
     let sceneRecords = await this.dbFetchByLookup('block', 'blockFlag', 'scene');

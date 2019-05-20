@@ -364,43 +364,46 @@ class cMacro {
       <label><span>Font Name</span><input type="text" class="block-web-font" style="width:15em;" value="" /></label>
     </div>
     <div class="connector-line-block-add-options" style="display:none;">
-      <label><span>Length</span><input type="text" class="line-length" value="10" /></label>
-      <label><span>Diameter</span><input type="text" class="line-diameter" value=".5" /></label>
-      <label><span>Sides</span><input type="text" class="line-sides" value="" /></label>
+      <label><span>length</span><input type="text" class="length" value="10" /></label>
+      <label><span>diameter</span><input type="text" class="diameter" value=".5" /></label>
       <br>
-      <label><span>Material</span>&nbsp;<input type="text" style="width:15em;" class="line-material" list="materialdatatitlelookuplist" /></label>
+      <label><span>tessellation</span><input type="text" class="tessellation" value="" /></label>
+      <br>
+      <label><span>material</span>&nbsp;<input type="text" style="width:15em;" class="material" list="materialdatatitlelookuplist" /></label>
       <br>
       <label>
         <span>Point</span>
-        <select class="point-shape">
-          <option>None</option>
-          <option>Cylinder</option>
-          <option selected>Cone</option>
-          <option>Ellipsoid</option>
+        <select class="pointshape">
+          <option>none</option>
+          <option>cylinder</option>
+          <option selected>cone</option>
+          <option>sphere</option>
         </select>
       </label>
       <br>
-      <label><span>Length</span><input type="text" class="point-length" value="1" /></label>
-      <label><span>Diameter</span><input type="text" class="point-diameter" value="2" /></label>
-      <label><span>Sides</span><input type="text" class="point-sides" value="" /></label>
+      <label><span>pointlength</span><input type="text" class="pointlength" value="1" /></label>
+      <label><span>pointdiameter</span><input type="text" class="pointdiameter" value="2" /></label>
       <br>
-      <label><span>Material</span><input type="text" style="width:15em;" class="point-material" list="materialdatatitlelookuplist" /></label>
+      <label><span>pointtessellation</span><input type="text" class="pointtessellation" value="" /></label>
+      <br>
+      <label><span>pointmaterial</span><input type="text" style="width:15em;" class="pointmaterial" list="materialdatatitlelookuplist" /></label>
       <br>
       <label>
         <span>Tail Shape</span>
-        <select class="tail-shape">
-          <option>None</option>
-          <option>Cylinder</option>
-          <option>Cone</option>
-          <option selected>Ellipsoid</option>
+        <select class="tailshape">
+          <option>none</option>
+          <option>cylinder</option>
+          <option>cone</option>
+          <option selected>sphere</option>
         </select>
       </label>
       <br>
-      <label><span>Length</span><input type="text" class="tail-length" value="1" /></label>
-      <label><span>Diameter</span><input type="text" class="tail-diameter" value="1" /></label>
-      <label><span>Sides</span><input type="text" class="tail-sides" value="" /></label>
+      <label><span>taillength</span><input type="text" class="taillength" value="1" /></label>
+      <label><span>taildiameter</span><input type="text" class="taildiameter" value="1" /></label>
       <br>
-      <label><span>Material</span><input type="text" style="width:15em;" class="tail-material" list="materialdatatitlelookuplist" /></label>
+      <label><span>tailtessellation</span><input type="text" class="tailtessellation" value="" /></label>
+      <br>
+      <label><span>tailmaterial</span><input type="text" style="width:15em;" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
     </div>
     <div class="animated-line-block-add-options">
       <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
@@ -499,7 +502,7 @@ class cMacro {
     this.blockHelperChange();
     this.blockSkyboxChange();
   }
-  _blockScrapeShape() {
+  _blockScrapeTextAndShape() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
       name: this.newName
@@ -510,6 +513,25 @@ class cMacro {
     ];
     textshapefields.forEach(field => {
       let f = this.blockShapePanel.querySelector('.' + field);
+      if (f.getAttribute('type') === 'checkbox')
+        csv_row[field] = f.checked ? '1' : '';
+      else
+        csv_row[field] = f.value;
+    });
+    return csv_row;
+  }
+  _blockScrapeConnectorLine() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      name: this.newName
+    };
+    let fields = [
+      'length', 'diameter', 'tessellation', 'material', 'pointshape', 'pointlength',
+      'pointdiameter', 'pointtessellation', 'pointmaterial', 'tailshape', 'taillength',
+      'taildiameter', 'tailtessellation', 'tailmaterial'
+    ];
+    fields.forEach(field => {
+      let f = this.connectorLinePanel.querySelector('.' + field);
       if (f.getAttribute('type') === 'checkbox')
         csv_row[field] = f.checked ? '1' : '';
       else
@@ -534,7 +556,7 @@ class cMacro {
     }
     if (bType === 'Text and Shape') {
 
-      let row = this._blockScrapeShape();
+      let row = this._blockScrapeTextAndShape();
 
       let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVShapeAndText(row);
       return blockResult.key;
@@ -573,47 +595,11 @@ class cMacro {
       return results.key;
     }
     if (bType === 'Connector Line') {
-      this.callbackMixin = {};
-      this.callbackMixin.lineLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-length').value, 1);
-      this.callbackMixin.lineDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.line-diameter').value, 1);
-      this.callbackMixin.lineMaterial = this.connectorLinePanel.querySelector('.line-material').value;
-      this.callbackMixin.lineSides = this.connectorLinePanel.querySelector('.line-sides').value;
 
-      this.callbackMixin.pointLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-length').value, 1);
-      this.callbackMixin.pointDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.point-diameter').value, 1);
-      this.callbackMixin.pointMaterial = this.connectorLinePanel.querySelector('.point-material').value;
-      this.callbackMixin.pointSides = this.connectorLinePanel.querySelector('.point-sides').value;
-      this.callbackMixin.pointShape = this.connectorLinePanel.querySelector('.point-shape').value;
+      let row = this._blockScrapeConnectorLine();
 
-      this.callbackMixin.tailLength = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-length').value, 1);
-      this.callbackMixin.tailDiameter = GLOBALUTIL.getNumberOrDefault(this.connectorLinePanel.querySelector('.tail-diameter').value, 1);
-      this.callbackMixin.tailMaterial = this.connectorLinePanel.querySelector('.tail-material').value;
-      this.callbackMixin.tailSides = this.connectorLinePanel.querySelector('.tail-sides').value;
-      this.callbackMixin.tailShape = this.connectorLinePanel.querySelector('.tail-shape').value;
-
-      this.callbackMixin.adjPointLength = this.callbackMixin.pointLength;
-      this.callbackMixin.adjPointDiameter = this.callbackMixin.pointDiameter;
-      if (this.callbackMixin.pointShape === 'None') {
-        this.callbackMixin.adjPointLength = 0;
-        this.callbackMixin.adjPointDiameter = 0;
-      }
-      this.callbackMixin.adjTailLength = this.callbackMixin.tailLength;
-      this.callbackMixin.adjTailDiameter = this.callbackMixin.tailDiameter;
-      if (this.callbackMixin.tailShape === 'None') {
-        this.callbackMixin.adjTailLength = 0;
-        this.callbackMixin.adjTailDiameter = 0;
-      }
-      this.callbackMixin.depth = Math.max(this.callbackMixin.lineDiameter, Math.max(this.callbackMixin.adjTailDiameter, this.callbackMixin.adjPointDiameter));
-      this.callbackMixin.height = this.callbackMixin.depth;
-      this.callbackMixin.width = this.callbackMixin.lineLength + this.callbackMixin.adjPointLength / 2.0 + this.callbackMixin.adjTailLength / 2.0;
-
-      this.mixin.width = this.callbackMixin.width;
-      this.mixin.height = this.callbackMixin.height;
-      this.mixin.depth = this.callbackMixin.depth;
-
-      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
-      this.blockCreateConnectorLine(gAPPP.activeContext, results.key, this.newName);
-      return results.key;
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVConnectorLine(row);
+      return blockResult.key;
     }
 
   }
@@ -674,12 +660,13 @@ class cMacro {
     let macrotype = this.blockOptionsPicker.value;
     let r = null;
     if (macrotype === 'Text and Shape')
-      r = this._blockScrapeShape();
+      r = this._blockScrapeTextAndShape();
+    if (macrotype === 'Connector Line')
+      r = this._blockScrapeConnectorLine();
 
     if (r) {
       this.csv_block_import_preview.innerHTML = Papa.unparse([r]);
-    }
-    else
+    } else
       this.csv_block_import_preview.innerHTML = new Date();
   }
   blockCreateLight(blockKey, blockTitle) {
@@ -808,73 +795,6 @@ class cMacro {
       context.createObject('frame', '', null, newObj).then(resultB => {});
     });
   }
-  blockCreateConnectorLine(context, blockId, blockTitle) {
-    let lineShapeOptions = {
-      width: this.callbackMixin.lineDiameter,
-      shapeDivs: this.callbackMixin.lineSides,
-      height: this.callbackMixin.lineLength,
-      depth: this.callbackMixin.lineDiameter,
-      materialName: this.callbackMixin.lineMaterial,
-      cylinderHorizontal: false,
-      createShapeType: 'Cylinder'
-    };
-    this.blockCreateShapeChild(context, blockId, blockTitle + '_connectorLineShape', lineShapeOptions).then(resultsObj => {
-      let frameOrder = 10;
-      let newObj = {
-        parentKey: resultsObj.blockChildResults.key
-      };
-      newObj.rotationZ = '90deg';
-      newObj.rotationX = '90deg';
-      newObj.frameOrder = frameOrder.toString();
-      newObj.frameTime = "0";
-      context.createObject('frame', '', null, newObj).then(resultB => {});
-    });
-    let pointShapeOptions = {
-      width: this.callbackMixin.pointDiameter,
-      shapeDivs: this.callbackMixin.pointSides,
-      height: this.callbackMixin.pointDiameter,
-      depth: this.callbackMixin.pointLength,
-      materialName: this.callbackMixin.pointMaterial,
-      createShapeType: this.callbackMixin.pointShape
-    };
-
-    if (this.callbackMixin.pointShape !== 'None')
-      this.blockCreateShapeChild(context, blockId, blockTitle + '_connectorPointShape', pointShapeOptions).then(resultsObj => {
-        let frameOrder = 10;
-        let newObj = {
-          parentKey: resultsObj.blockChildResults.key
-        };
-        if (this.callbackMixin.pointShape !== 'Cone' && this.callbackMixin.pointShape !== 'Cylinder')
-          newObj.rotationY = '90deg';
-        newObj.rotationZ = '90deg';
-        newObj.positionX = -1.0 * (this.callbackMixin.lineLength) / 2.0;
-        newObj.frameOrder = frameOrder.toString();
-        newObj.frameTime = "0";
-        context.createObject('frame', '', null, newObj).then(resultB => {});
-      });
-    let tailShapeOptions = {
-      width: this.callbackMixin.tailDiameter,
-      shapeDivs: this.callbackMixin.tailSides,
-      height: this.callbackMixin.tailDiameter,
-      depth: this.callbackMixin.tailLength,
-      materialName: this.callbackMixin.tailMaterial,
-      createShapeType: this.callbackMixin.tailShape
-    };
-    if (this.callbackMixin.tailShape !== 'None')
-      this.blockCreateShapeChild(context, blockId, blockTitle + '_connectorTailShape', tailShapeOptions).then(resultsObj => {
-        let frameOrder = 10;
-        let newObj = {
-          parentKey: resultsObj.blockChildResults.key
-        };
-        if (this.callbackMixin.tailShape !== 'Cone' && this.callbackMixin.tailShape !== 'Cylinder')
-          newObj.rotationY = '90deg';
-        newObj.rotationZ = '90deg';
-        newObj.positionX = (this.callbackMixin.lineLength) / 2.0;
-        newObj.frameOrder = frameOrder.toString();
-        newObj.frameTime = "0";
-        context.createObject('frame', '', null, newObj).then(resultB => {});
-      });
-  }
 
   blockGetShapeRow(shapeOptions) {
     let width = GLOBALUTIL.getNumberOrDefault(shapeOptions.width, 1).toFixed(3);
@@ -890,8 +810,7 @@ class cMacro {
       z: (-1.0 * minDim / 2.0).toFixed(3)
     };
 
-    if (shapeOptions.createShapeType === 'Box') {
-    }
+    if (shapeOptions.createShapeType === 'Box') {}
 
     if (shapeOptions.createShapeType === 'Cube') {
       shapeRow.height = '';
