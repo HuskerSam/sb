@@ -655,6 +655,16 @@ class cPanelCanvas {
     if (this.isValidAnimation !== animStatus)
       this.updateButtonStatus();
 
+
+    let lightIntensityDom = this.dialog.querySelector('#light_intensity_value');
+    if (lightIntensityDom) {
+      if (!this.parent.context.defaultLight) {
+        lightIntensityDom.innerHTML = '(disabled)';
+      } else {
+        lightIntensityDom.innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
+      }
+    }
+
     if (!this.parent.context.defaultLight) {
       this.lightIntensityLabel.innerHTML = '(disabled)';
     } else {
@@ -754,15 +764,6 @@ class cPanelCanvas {
     if (pS !== this.playState || pT !== this.lastSliderValue || pO !== this.lastOffset) {
       this._playState = pS;
       this.__updatePlayState();
-    }
-
-    this.lightIntensityDom = this.dialog.querySelector('#light_intensity_value');
-    if (this.lightIntensityDom) {
-      if (!this.parent.context.defaultLight) {
-        this.lightIntensityDom.innerHTML = '(disabled)';
-      } else {
-        this.lightIntensityDom.innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
-      }
     }
   }
 }

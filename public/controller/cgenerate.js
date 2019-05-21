@@ -197,7 +197,7 @@ class cGenerate {
       data = await gAPPP.a.readProjectRawData(sourceProjectId, type + 'Rows');
     }
     if (choice === 'workspace') {
-      let id = document.getElementById(`add_animation_${type}_animation`);
+      let id = this.domPanel.querySelector(`.add_animation_${type}_animation`).value;
       data = await gAPPP.a.readProjectRawData(id, type + 'Rows');
     }
     if (choice === 'template') {
