@@ -536,10 +536,6 @@ select {
   text-align: left;
 }
 
-.asset-fields-container.help-shown-panel {
-  padding: .5em;
-}
-
 .workspace .asset-fields-container {
   display: flex;
   flex-direction: column;
@@ -778,4 +774,9 @@ select {
   font-size: 2em;
   text-align: center;
   line-height: 5em;
+}
+
+.add-asset-template-panel input.new-workspace-name {
+  width: 15em;
+  text-align: left;
 }

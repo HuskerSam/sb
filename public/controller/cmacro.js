@@ -52,8 +52,13 @@ class cMacro {
     if (tag !== 'workspace')
       base = this.baseTemplate();
 
-    panel.innerHTML = base + this[tag + 'Template']() + `<hr>`;
-    this[tag + 'Register']();
+    let t = '';
+    if (this[tag + 'Template'])
+      t = this[tag + 'Template']();
+    panel.innerHTML = base + t + `<hr>`;
+
+    if (this[tag + 'Register'])
+      this[tag + 'Register']();
 
     if (tag !== 'workspace') {
       this.panelCreateBtn = this.panel.querySelector('.add-button');
@@ -111,7 +116,7 @@ class cMacro {
     ele.assetExportKey = key;
     return JSON.stringify(ele, null, 4);
   }
-  createItem(newWindow) {
+  async createItem(newWindow) {
     this.newName = this.panelInput.value.trim();
     if (this.newName === '') {
       alert('Please enter a name');
@@ -126,55 +131,46 @@ class cMacro {
 
     this.createMesage.style.display = 'block';
 
-    this[this.tag + 'Create']()
-      .then(newKey => {
-        this.view.selectItem(newKey, newWindow);
-        this.createMesage.style.display = 'none';
-      });
+    let newKey;
+    if (this[this.tag + 'Create'])
+      newKey = await this[this.tag + 'Create']();
+    else {
+      newKey = await this.create();
+    }
+    this.view.selectItem(newKey, newWindow);
+    this.createMesage.style.display = 'none';
+  }
+  async create() {
+    let results = await gAPPP.activeContext.createObject(this.tag, this.newName);
+    return results.key;
   }
 
   shapeTemplate() {
     return `<select class="shape-type-select">
-         <option>Box</option>
          <option>2D Text Plane</option>
          <option>3D Text</option>
-         <option>Sphere</option>
-         <option>Cylinder</option>
         </select>
-        <div class="create-sphere-options" style="display:inline-block">
-      <label><span>Diameter</span><input type="text" class="sphere-diameter" /></label>
-    </div>
     <div class="create-2d-text-plane">
-      <label><span>Text</span><input class="text-2d-line-1" value="Text Line" /></label>
-      <label><span>Line 2</span><input class="text-2d-line-2" value="" /></label>
-      <label><span>Line 3</span><input class="text-2d-line-3" value="" /></label>
-      <label><span>Line 4</span><input class="text-2d-line-4" value="" /></label>
-      <label><span>Font</span><input class="font-family-2d-add" list="fontfamilydatalist" /></label>
-      <label><span>Color</span><input class="font-2d-color" color="0,0,0" /></label>
-      <label><span>Text Size</span><input class="font-2d-text-size" value="100" /></label>
-      <label><span>Plane Size</span><input class="font-2d-plane-size" value="4" /></label>
-    </div>
-    <div class="create-cylinder-options">
-      <label><span>Diameter</span><input type="text" class="cylinder-diameter"></label>
-      <label><span>Height</span><input type="text" class="cylinder-height"></label>
+      <label><span>Text</span><input class="text-2d-line-1" value="Text Line" /></label><br>
+      <label><span>Line 2</span><input class="text-2d-line-2" value="" /></label><br>
+      <label><span>Line 3</span><input class="text-2d-line-3" value="" /></label><br>
+      <label><span>Line 4</span><input class="text-2d-line-4" value="" /></label><br>
+      <label><span>Font</span><input class="font-family-2d-add" list="fontfamilydatalist" /></label><br>
+      <label><span>Color</span><input class="font-2d-color" color="0,0,0" /></label><br>
+      <label><span>Text Size</span><input class="font-2d-text-size" value="100" /></label><br>
+      <label><span>Plane Size</span><input class="font-2d-plane-size" value="4" /></label><br>
     </div>
     <div class="create-text-options">
       <label><span>Text</span><input class="text-shape-add" value="3D Text" /></label>
       <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
     </div>
-    <label><span>Material</span><input type="text" style="width:15em;" class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
-    <div class="create-box-options" style="display:inline-block;">
-      <label><span>Width</span>&nbsp;<input type="text" class="box-width" /></label>
-      <label><span>Height</span>&nbsp;<input type="text" class="box-height" /></label>
-      <label><span>Depth</span>&nbsp;<input type="text" class="box-depth" /></label>
-    </div>`;
+    <label><span>Material</span><input type="text" style="width:15em;"
+     class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+    <div class="csv_block_import_preview"></div>`;
   }
   shapeRegister() {
     this.add2dTextPanel = this.panel.querySelector('.create-2d-text-plane');
-    this.createBoxOptions = this.panel.querySelector('.create-box-options');
-    this.createSphereOptions = this.panel.querySelector('.create-sphere-options');
     this.createTextOptions = this.panel.querySelector('.create-text-options');
-    this.createCylinderOptions = this.panel.querySelector('.create-cylinder-options');
     this.createShapesSelect = this.panel.querySelector('.shape-type-select');
     this.createShapesSelect.addEventListener('input', e => this.shapeTypeChange());
     this.shapeMaterialSelectPicker = this.panel.querySelector('.shape-material-picker-select');
@@ -185,36 +181,22 @@ class cMacro {
     this.shapeTypeChange();
   }
   async shapeCreate() {
-    this.mixin = {};
-    let sT = this.createShapesSelect.value;
-    let shapeType = 'box';
-    if (sT === 'Sphere')
-      shapeType = 'sphere';
-    else if (sT === '3D Text')
-      shapeType = 'text';
-    else if (sT === 'Cylinder')
-      shapeType = 'cylinder';
-    else if (sT === '2D Text Plane')
-      shapeType = 'plane';
+    let shape = {
+      shapeType: 'text'
+    };
+    let texture = {
 
-    this.mixin.shapeType = shapeType;
+    };
+    let sT = this.createShapesSelect.value;
+
+    if (sT === '2D Text Plane')
+      shape = shapeType = 'plane';
+
+    this.mixin.materialName = this.shapeMaterialSelectPicker.value;
     if (shapeType === 'text') {
       this.mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
       this.mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
     }
-    if (shapeType === 'sphere') {
-      this.mixin.sphereDiameter = this.panel.querySelector('.sphere-diameter').value;
-    }
-    if (shapeType === 'box') {
-      this.mixin.boxWidth = this.panel.querySelector('.box-width').value;
-      this.mixin.boxHeight = this.panel.querySelector('.box-height').value;
-      this.mixin.boxDepth = this.panel.querySelector('.box-depth').value;
-    }
-    if (shapeType === 'cylinder') {
-      this.mixin.cylinderDiameter = this.panel.querySelector('.cylinder-diameter').value;
-      this.mixin.cylinderHeight = this.panel.querySelector('.cylinder-height').value;
-    }
-    this.mixin.materialName = this.shapeMaterialSelectPicker.value;
 
     if (shapeType === 'plane') {
       this.mixin.width = this.panel.querySelector('.font-2d-plane-size').value;
@@ -229,106 +211,22 @@ class cMacro {
       this.callbackMixin.textFontFamily = this.panel.querySelector('.font-family-2d-add').value;
       this.callbackMixin.textFontColor = this.panel.querySelector('.font-2d-color').value;
       this.callbackMixin.textFontSize = this.panel.querySelector('.font-2d-text-size').value;
-
-      this.blockCreate2DTexture(gAPPP.activeContext, this.newName, this.callbackMixin);
+      context.createObject('material', shapeTitle + '_2d_material', null, {
+        diffuseTextureName: shapeTitle + '_2d_texture',
+        emissiveTextureName: shapeTitle + '_2d_texture'
+      }).then(() => {});
+      textOptions.isText = true;
+      textOptions.hasAlpha = true;
+      context.createObject('texture', shapeTitle + '_2d_texture', null, textOptions).then(() => {});
     }
 
     let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
     return results.key;
   }
   shapeTypeChange() {
-    this.createBoxOptions.style.display = this.createShapesSelect.value === 'Box' ? '' : 'none';
-    this.createSphereOptions.style.display = this.createShapesSelect.value === 'Sphere' ? '' : 'none';
     this.createTextOptions.style.display = this.createShapesSelect.value === '3D Text' ? '' : 'none';
-    this.createCylinderOptions.style.display = this.createShapesSelect.value === 'Cylinder' ? '' : 'none';
     this.add2dTextPanel.style.display = this.createShapesSelect.value === '2D Text Plane' ? '' : 'none';
     this.shapeMaterialSelectPicker.parentElement.style.display = this.createShapesSelect.value != '2D Text Plane' ? '' : 'none';
-  }
-
-  textureTemplate() {
-    return ``;
-  }
-  textureRegister() {}
-  async textureCreate() {
-    let results = await gAPPP.activeContext.createObject(this.tag, this.newName);
-    return results.key;
-  }
-
-  materialTemplate() {
-    return `<label><input type="checkbox" class="diffuse-color-checkbox" checked />Diffuse</label>
-      <label><input type="checkbox" class="ambient-color-checkbox" checked />Ambient</label>
-      <label><input type="checkbox" class="emissive-color-checkbox" />Emissive</label>
-      <label><input type="checkbox" class="specular-color-checkbox" />Specular</label>
-      <br>
-      <label>Color <input style="width:12em;" class="material-color-add" type="text" value="1,.5,0" /></label>
-      <input type="color" class="material-color-add-colorinput" />
-      <br>
-      <label><span>Texture</span>&nbsp;<input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>`;
-  }
-  materialRegister() {
-    this.addMaterialOptionsPanel = this.panel.querySelector('.material-add-options');
-    this.materialColorInput = this.panel.querySelector('.material-color-add');
-    this.materialColorPicker = this.panel.querySelector('.material-color-add-colorinput');
-    this.diffuseCheckBox = this.panel.querySelector('.diffuse-color-checkbox');
-    this.emissiveCheckBox = this.panel.querySelector('.emissive-color-checkbox');
-    this.ambientCheckBox = this.panel.querySelector('.ambient-color-checkbox');
-    this.specularCheckBox = this.panel.querySelector('.specular-color-checkbox');
-    this.texturePickerMaterial = this.panel.querySelector('.texture-picker-select');
-
-    this.materialColorPicker.addEventListener('input', e => this.materialColorInputChange());
-    this.materialColorInput.addEventListener('input', e => this.materialColorTextChange());
-    this.materialColorTextChange();
-  }
-  async materialCreate() {
-    this.mixin = {};
-    let color = this.materialColorInput.value;
-    let texture = this.texturePickerMaterial.value;
-    if (this.diffuseCheckBox.checked) {
-      this.mixin.diffuseColor = color;
-      this.mixin.diffuseTextureName = texture;
-    }
-    if (this.emissiveCheckBox.checked) {
-      this.mixin.emissiveColor = color;
-      this.mixin.emissiveTextureName = texture;
-    }
-    if (this.ambientCheckBox.checked) {
-      this.mixin.ambientColor = color;
-      this.mixin.ambientTextureName = texture;
-    }
-    if (this.specularCheckBox.checked) {
-      this.mixin.specularColor = color;
-      this.mixin.specularTextureName = texture;
-    }
-    let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
-    return results.key;
-  }
-  materialColorTextChange() {
-    let bColor = GLOBALUTIL.color(this.materialColorInput.value);
-    let rH = Math.round(bColor.r * 255).toString(16);
-    if (rH.length === 1)
-      rH = '0' + rH;
-    let gH = Math.round(bColor.g * 255).toString(16);
-    if (gH.length === 1)
-      gH = '0' + gH;
-    let bH = Math.round(bColor.b * 255).toString(16);
-    if (bH.length === 1)
-      bH = '0' + bH;
-
-    let hex = '#' + rH + gH + bH;
-    this.materialColorPicker.value = hex;
-  }
-  materialColorInputChange() {
-    let bColor = GLOBALUTIL.HexToRGB(this.materialColorPicker.value);
-    this.materialColorInput.value = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
-  }
-
-  meshTemplate() {
-    return ``;
-  }
-  meshRegister() {}
-  async meshCreate() {
-    let results = await gAPPP.activeContext.createObject(this.tag, this.newName);
-    return results.key;
   }
 
   blockTemplate() {
@@ -694,14 +592,5 @@ class cMacro {
       this.csv_block_import_preview.innerHTML = Papa.unparse([r]);
     } else
       this.csv_block_import_preview.innerHTML = new Date();
-  }
-  blockCreate2DTexture(context, shapeTitle, textOptions) {
-    context.createObject('material', shapeTitle + '_2d_material', null, {
-      diffuseTextureName: shapeTitle + '_2d_texture',
-      emissiveTextureName: shapeTitle + '_2d_texture'
-    }).then(() => {});
-    textOptions.isText = true;
-    textOptions.hasAlpha = true;
-    context.createObject('texture', shapeTitle + '_2d_texture', null, textOptions).then(() => {});
   }
 }

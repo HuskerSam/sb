@@ -305,6 +305,8 @@ class bView {
       }]);
       setTimeout(() => location.reload(), 100);
     }
+
+    return key;
   }
   splitLayout() {
     this.mainViewWrapper = this.dialog.querySelector('#main-view-wrapper');
@@ -470,8 +472,8 @@ class bView {
       this.form_panel_view_dom.classList.add('header-expanded');
     }
   }
-  openNewWindow(tag, key) {
-    let url = this.genQueryString(null, tag, key);
+  openNewWindow(tag, key, wid = null) {
+    let url = this.genQueryString(wid, tag, key);
     let a = document.createElement('a');
     a.setAttribute('href', url);
     a.setAttribute('target', '_blank');

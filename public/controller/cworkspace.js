@@ -168,10 +168,6 @@ class cWorkspace {
     <button class="import_csv_records">Import CSV</button>
     &nbsp;
     <button class="import_asset_json_button">Import JSON</button>
-    <hr>
-    <label><span>New Workspace </span><input id="new-workspace-name" type="text" /></label>
-    <button id="add-workspace-button" class="btn-sb-icon"><i class="material-icons">add</i></button>
-    <br>
     </div>`;
   }
   workspaceDetailsRegister() {
@@ -195,9 +191,6 @@ class cWorkspace {
     this.import_asset_json_file.addEventListener('change', e => this.csvGenerationImportJSON());
     this.import_asset_json_button = this.domPanel.querySelector('.import_asset_json_button');
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
-
-    this.addProjectButton = this.domPanel.querySelector('#add-workspace-button');
-    this.addProjectButton.addEventListener('click', e => this.bView.workspaceAddProjectClick());
   }
   workspaceUpdateTagsList() {
     let name = this.bView.workplacesSelectEditName.value.trim();

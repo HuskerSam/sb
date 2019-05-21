@@ -266,13 +266,17 @@ class cView extends bView {
     if (this.dataview_record_key.selectedIndex < 0)
       this.dataview_record_key.selectedIndex = 0;
   }
-  workspaceAddProjectClick() {
-    let name = this.dialog.querySelector('#new-workspace-name').value.trim();
+  async workspaceAddProjectClick(newWindow = false) {
+    let name = this.dialog.querySelector('.new-workspace-name').value.trim();
     if (!name) {
       alert('please enter a name for the new workspace');
       return;
     }
-    this._addProject(name);
+
+    let newW = await this._addProject(name, false, !newWindow);
+
+    if (newWindow)
+      this.openNewWindow('', '', newW);
   }
   async updateSelectedRecord() {
     this.dialog.classList.remove('workspace');
@@ -315,7 +319,6 @@ class cView extends bView {
     this.key = '';
     this.generate = new cMacro(this.addAssetPanel, this.tag, this);
     this.recordViewer = new cBandIcons(this.tag, this);
-    this.addAssetPanel.classList.remove('help-shown-panel');
     this.expand_all_global_btn.style.display = '';
     this.form_canvas_wrapper.classList.add('show-help');
     this.addAssetPanel.style.display = '';
@@ -348,6 +351,12 @@ class cView extends bView {
       this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
 
     this.addAssetPanel.style.display = '';
+    this.addAssetPanel.innerHTML = `<label><span>Add Workspace </span><input class="new-workspace-name" type="text" /></label>
+      <button class="add-workspace-button btn-sb-icon"><i class="material-icons">add</i></button>
+      <button class="add-workspace-button-nw btn-sb-icon"><i class="material-icons">open_in_new</i></button><hr>`;
+
+    this.dialog.querySelector('.add-workspace-button').addEventListener('click', e => this.workspaceAddProjectClick());
+    this.dialog.querySelector('.add-workspace-button-nw').addEventListener('click', e => this.workspaceAddProjectClick(true));
     this.form_canvas_wrapper.classList.add('show-help');
 
     if (this.key === 'Generate')
@@ -365,9 +374,7 @@ class cView extends bView {
         cache: "no-cache"
       })
       .then(res => res.text())
-      .then(html => this.addAssetPanel.innerHTML = html);
-    this.addAssetPanel.classList.add('help-shown-panel');
-    this.helpViewer.innerHTML = '';
+      .then(html => this.helpViewer.innerHTML = html);
   }
   async updateDisplayForWorkspaceLayout() {
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
@@ -543,8 +550,8 @@ class cView extends bView {
             <select class="dataview_record_tag">
               <option value="" selected>Workspace</option>
               <option value="block">Block</option>
-              <option value="mesh">Mesh</option>
               <option value="shape">Shape</option>
+              <option value="mesh">Mesh</option>
               <option value="material">Material</option>
               <option value="texture">Texture</option>
             </select>
