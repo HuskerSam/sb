@@ -26,21 +26,27 @@ class gInstanceSuper {
     this.a.signInWithURL();
     this.a.updateAuthUICallback = () => this.updateAuthUI();
   }
-  loadDataLists(name) {
-    return fetch(`/global/${name}.json`)
-      .then(rrr => rrr.json())
-      .then(json => {
-        let list = document.getElementById(name);
-        if (!list) {
-          list = document.createElement('datalist');
-          list.setAttribute('id', name);
-          document.body.appendChild(list);
-        }
-        let outHtml = '';
-        for (let c = 0, l = json.length; c < l; c++)
-          outHtml += `<option>${json[c]}</option>`
-        list.innerHTML = outHtml;
-      });
+  async loadDataLists(name) {
+    let rrr = await fetch(`/global/${name}.json`)
+    let json = await rrr.json();
+
+    let list = document.getElementById(name);
+    if (!list) {
+      list = document.createElement('datalist');
+      list.setAttribute('id', name);
+      document.body.appendChild(list);
+    }
+    let outHtml = '';
+    for (let c = 0, l = json.length; c < l; c++)
+      outHtml += `<option>${json[c]}</option>`;
+
+    if (name === 'fontfamilydatalist') {
+      Object.keys(this.fontsAdded).forEach(font => outHtml = `<option>${font}</option>` + outHtml);
+    }
+
+    list.innerHTML = outHtml;
+
+    return;
   }
   updateAuthUI() {
     let loginPage = document.getElementById('firebase-app-login-page');
@@ -118,8 +124,8 @@ class gInstanceSuper {
       let origFontName = fontName;
       fontName = fontName.replace(/ /g, '+');
 
-      if (!this.fontsAdded[fontName]) {
-        this.fontsAdded[fontName] = true;
+      if (!this.fontsAdded[origFontName]) {
+        this.fontsAdded[origFontName] = true;
         let newLink = document.createElement('style');
         newLink.innerHTML = `@import url(https://fonts.googleapis.com/css?family=${fontName});`;
         document.body.append(newLink);
@@ -128,13 +134,17 @@ class gInstanceSuper {
         document.body.append(newSpan);
         let a = newSpan.offsetHeight;
         newSpan.style.display = 'none';
+        fontLoaded = true;
       }
     }
 
-    //allow fonts to reflow
-    return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(), 1);
-    });
+    if (fontLoaded) {
+      this.loadDataLists('fontfamilydatalist');
+      //allow fonts to reflow
+      return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(), 1);
+      });
+    }
   }
   _initShapesList() {
     this._domShapeList = document.createElement('datalist');
@@ -388,9 +398,9 @@ class gInstanceSuper {
     <br>
   </div>
 </div>`;
-/*
-    <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
-    <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
-*/
+    /*
+        <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
+        <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
+    */
   }
 }

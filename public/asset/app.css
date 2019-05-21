@@ -761,9 +761,10 @@ select {
 
 .csv_block_import_preview {
   display: none;
-  overflow: auto;
+  overflow: hidden;
   text-overflow: clip;
   white-space: pre;
+  font-size: .8em;
 }
 
 .app-expanded .csv_block_import_preview {

@@ -21,10 +21,10 @@ class gApp extends gInstanceSuper {
         }
       }
     });
-    this.loadDataLists('sbimageslist').then(() => {});
-    this.loadDataLists('sbmesheslist').then(() => {});
-    this.loadDataLists('skyboxlist').then(() => {});
-    this.loadDataLists('fontfamilydatalist').then(() => {});
+    this.loadDataLists('sbimageslist');
+    this.loadDataLists('sbmesheslist');
+    this.loadDataLists('skyboxlist');
+    this.loadDataLists('fontfamilydatalist');
   }
   profileReadyAndLoaded() {
     let urlParams = new URLSearchParams(window.location.search);
