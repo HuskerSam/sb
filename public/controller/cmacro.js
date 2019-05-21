@@ -372,7 +372,7 @@ class cMacro {
       <label><span>material</span>&nbsp;<input type="text" style="width:15em;" class="material" list="materialdatatitlelookuplist" /></label>
       <br>
       <label>
-        <span>Point</span>
+        <span>pointshape</span>
         <select class="pointshape">
           <option>none</option>
           <option>cylinder</option>
@@ -389,7 +389,7 @@ class cMacro {
       <label><span>pointmaterial</span><input type="text" style="width:15em;" class="pointmaterial" list="materialdatatitlelookuplist" /></label>
       <br>
       <label>
-        <span>Tail Shape</span>
+        <span>tailshape</span>
         <select class="tailshape">
           <option>none</option>
           <option>cylinder</option>
@@ -406,25 +406,26 @@ class cMacro {
       <label><span>tailmaterial</span><input type="text" style="width:15em;" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
     </div>
     <div class="animated-line-block-add-options">
-      <label><span>Dashes</span><input type="text" class="animated-line-dash-count" value="5" /></label>
-      <label><span>Run Time</span><input type="text" class="animated-run-time" value="1500" /></label>
+      <label><span>dashes</span><input type="text" class="dashes" value="5" /></label>
+      <label><span>runlength</span><input type="text" class="runlength" value="1500" /></label>
       <br>
       <label>
-        <span>Shape</span>
-        <select class="block-add-dash-shape-type-options">
-          <option>Cylinder</option>
-          <option selected>Cone</option>
-          <option>Ellipsoid</option>
+        <span>dotshape</span>
+        <select class="dotshape">
+          <option>cylinder</option>
+          <option selected>cone</option>
+          <option>ellipsoid</option>
         </select>
       </label>
-      <label><span>Sides</span><input type="text" class="dash-shape-sides" value="" /></label>
-      <label><span>Length</span><input type="text" class="dash-box-depth" value=".5" /></label>
+      <label><span>dashlength</span><input type="text" class="dashlength" value=".5" /></label>
       <br>
-      <label><span>Material</span><input type="text" style="width:15em;" class="dash-shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
+      <label><span>tessellation</span><input type="text" class="tessellation" value="" /></label>
       <br>
-      <label><span>W</span><input type="text" class="block-box-width" value="1" /></label>
-      <label><span>H</span><input type="text" class="block-box-height" value="2" /></label>
-      <label><span>Len</span><input type="text" class="block-box-depth" value="10" /></label>
+      <label><span>material</span><input type="text" style="width:15em;" class="material"" list="materialdatatitlelookuplist" /></label>
+      <br>
+      <label><span>width</span><input type="text" class="width" value="1" /></label>
+      <label><span>height</span><input type="text" class="height" value="2" /></label>
+      <label><span>depth</span><input type="text" class="depth" value="10" /></label>
     </div>
     <div class="shape-and-text-block-options">
       <label><span>texttext</span><input type="text" style="width:15em;" class="texttext" value="Block Text" /></label>
@@ -539,6 +540,23 @@ class cMacro {
     });
     return csv_row;
   }
+  _blockScrapeAnimatedline() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      name: this.newName
+    };
+    let fields = [
+      'dashes', 'runlength', 'dotshape', 'dashlength', 'tessellation', 'material', 'width', 'height', 'depth'
+    ];
+    fields.forEach(field => {
+      let f = this.animatedDashPanel.querySelector('.' + field);
+      if (f.getAttribute('type') === 'checkbox')
+        csv_row[field] = f.checked ? '1' : '';
+      else
+        csv_row[field] = f.value;
+    });
+    return csv_row;
+  }
   async blockCreate() {
     let bType = this.blockOptionsPicker.value;
     this.mixin = {};
@@ -578,24 +596,12 @@ class cMacro {
       return results.key;
     }
     if (bType === 'Animated Line') {
-      this.mixin.width = this.animatedDashPanel.querySelector('.block-box-width').value;
-      this.mixin.height = this.animatedDashPanel.querySelector('.block-box-height').value;
-      this.mixin.depth = this.animatedDashPanel.querySelector('.block-box-depth').value;
+      let row = this._blockScrapeAnimatedline();
 
-      this.mixin.dashCount = this.animatedDashPanel.querySelector('.animated-line-dash-count').value;
-      this.mixin.runTime = this.animatedDashPanel.querySelector('.animated-run-time').value;
-
-      this.mixin.createShapeType = this.animatedDashPanel.querySelector('.block-add-dash-shape-type-options').value;
-      this.mixin.dashDepth = this.animatedDashPanel.querySelector('.dash-box-depth').value;
-      this.mixin.shapeDivs = this.animatedDashPanel.querySelector('.dash-shape-sides').value;
-      this.mixin.materialName = this.animatedDashPanel.querySelector('.dash-shape-material-picker-select').value;
-
-      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
-      this.blockCreateAnimatedLine(gAPPP.activeContext, results.key, this.newName);
-      return results.key;
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVAnimatedLine(row);
+      return blockResult.key;
     }
     if (bType === 'Connector Line') {
-
       let row = this._blockScrapeConnectorLine();
 
       let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVConnectorLine(row);
@@ -663,6 +669,8 @@ class cMacro {
       r = this._blockScrapeTextAndShape();
     if (macrotype === 'Connector Line')
       r = this._blockScrapeConnectorLine();
+    if (macrotype === 'Animated Line')
+      r = this._blockScrapeAnimatedline();
 
     if (r) {
       this.csv_block_import_preview.innerHTML = Papa.unparse([r]);
@@ -705,285 +713,6 @@ class cMacro {
       diffuseTextureName: textureName
     }).then(results => {});
   }
-  blockCreateShapeAndText(context, blockId, blockTitle) {
-    let shapeTextName = blockTitle + '_shapeText';
-    let shapeTextNameLine2 = blockTitle + '_shapeTextLine2';
-    let textLen = Math.max(this.mixin.textText.length, this.mixin.textTextLine2.length);
-    let scale = 2 * this.mixin.width / textLen;
-    let textDepth = GLOBALUTIL.getNumberOrDefault(this.mixin.textDepth, .25);
-    let height = GLOBALUTIL.getNumberOrDefault(this.mixin.height, 1);
-    let depth = textDepth;
-    if (!depth) depth = '.001';
-    let positionY = scale * .5;
-    if (this.mixin.textTextLine2 === '')
-      positionY = 0;
-    context.createObject('shape', shapeTextName, null, {
-      textText: this.mixin.textText,
-      shapeType: 'text',
-      textFontFamily: this.mixin.textFontFamily,
-      materialName: this.mixin.textMaterial,
-      scalingX: scale,
-      scalingZ: scale,
-      positionY: positionY.toFixed(3),
-      textDepth: depth
-    }).then(results => {
-      context.createObject('blockchild', '', null, {
-        childType: 'shape',
-        childName: shapeTextName,
-        parentKey: blockId
-      }).then(innerResults => {
-        context.createObject('frame', '', null, {
-          frameTime: '',
-          frameOrder: '10',
-          parentKey: innerResults.key,
-          rotationY: '-90deg',
-          rotationZ: '-90deg',
-          positionZ: (textDepth / 2.0).toFixed(3)
-        });
-      });
-    });
-
-    if (this.mixin.textTextLine2 !== '') {
-      context.createObject('shape', shapeTextNameLine2, null, {
-        textText: this.mixin.textTextLine2,
-        shapeType: 'text',
-        textFontFamily: this.mixin.textFontFamily,
-        materialName: this.mixin.textMaterial,
-        scalingX: scale,
-        scalingZ: scale,
-        positionY: (-1 * positionY).toFixed(3),
-        textDepth: depth
-      }).then(results => {
-        context.createObject('blockchild', '', null, {
-          childType: 'shape',
-          childName: shapeTextNameLine2,
-          parentKey: blockId
-        }).then(innerResults => {
-          context.createObject('frame', '', null, {
-            frameTime: '',
-            frameOrder: '10',
-            parentKey: innerResults.key,
-            rotationY: '-90deg',
-            rotationZ: '-90deg',
-            positionZ: (textDepth / 2.0).toFixed(3)
-          });
-        });
-      });
-    }
-
-    let shapeOptions = {
-      width: GLOBALUTIL.getNumberOrDefault(this.mixin.width, 1),
-      height: GLOBALUTIL.getNumberOrDefault(this.mixin.height, 1),
-      depth: GLOBALUTIL.getNumberOrDefault(this.mixin.depth, 1),
-      createShapeType: this.mixin.createShapeType,
-      materialName: this.mixin.shapeMaterial,
-      shapeDivs: this.mixin.shapeDivs,
-      cylinderHorizontal: this.mixin.cylinderHorizontal,
-      rotationZ: ''
-    }
-
-    this.blockCreateShapeChild(context, blockId, blockTitle + '_shapeShape', shapeOptions).then(resultsObj => {
-      let newObj = {
-        frameTime: '',
-        frameOrder: '10',
-        parentKey: resultsObj.blockChildResults.key
-      };
-
-      for (let i in resultsObj.firstFrameOptions)
-        newObj[i] = resultsObj.firstFrameOptions[i];
-
-      context.createObject('frame', '', null, newObj).then(resultB => {});
-    });
-  }
-
-  blockGetShapeRow(shapeOptions) {
-    let width = GLOBALUTIL.getNumberOrDefault(shapeOptions.width, 1).toFixed(3);
-    let height = GLOBALUTIL.getNumberOrDefault(shapeOptions.height, 1).toFixed(3);
-    let depth = GLOBALUTIL.getNumberOrDefault(shapeOptions.depth, 1).toFixed(3);
-    let minDim = Math.min(Math.min(width, height), depth);
-    let maxDim = Math.max(Math.max(width, height), depth);
-    let shapeRow = {
-      shapetype: 'box',
-      height,
-      width,
-      depth,
-      z: (-1.0 * minDim / 2.0).toFixed(3)
-    };
-
-    if (shapeOptions.createShapeType === 'Box') {}
-
-    if (shapeOptions.createShapeType === 'Cube') {
-      shapeRow.height = '';
-      shapeRow.width = '';
-      shapeRow.depth = '';
-      shapeRow.boxsize = minDim;
-    }
-
-    if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
-      if (shapeOptions.cylinderHorizontal) {
-        shapeRow.rz = '90deg';
-        let h = shapeRow.height;
-        shapeRow.height = width;
-        shapeRow.width = h;
-      }
-
-      shapeRow.shapetype = 'cylinder';
-      if (width !== depth)
-        shapeRow.sz = (depth / width).toFixed(3);
-
-      shapeRow.tessellation = shapeOptions.shapeDivs;
-
-      if (shapeOptions.createShapeType === 'Cone')
-        shapeRow.diametertop = 0;
-    }
-    if (shapeOptions.createShapeType === 'Sphere') {
-      shapeRow.shapetype = 'sphere';
-      shapeRow.boxsize = minDim;
-      shapeRow.tessellation = shapeOptions.shapeDivs;
-      shapeRow.width = '';
-      shapeRow.height = '';
-      shapeRow.depth = '';
-    }
-    if (shapeOptions.createShapeType === 'Ellipsoid') {
-      shapeRow.shapetype = 'sphere';
-      shapeRow.boxsize = '';
-      shapeRow.tessellation = shapeOptions.tessellation;
-    }
-  }
-  blockCreateShapeChild(context, blockId, shapeBlockName, shapeOptions, createShape = true) {
-    let width = shapeOptions.width;
-    let height = shapeOptions.height;
-    let depth = shapeOptions.depth;
-    let minDim = Math.min(Math.min(width, height), depth);
-    let maxDim = Math.max(Math.max(width, height), depth);
-    let firstFrameOptions = {};
-
-
-    if (shapeOptions.createShapeType === 'Cube') {
-      shapeOptions.shapeType = 'box';
-      shapeOptions.boxSize = minDim;
-      shapeOptions.boxWidth = '';
-      shapeOptions.boxHeight = '';
-      shapeOptions.boxDepth = '';
-    }
-    if (shapeOptions.createShapeType === 'Box') {
-      shapeOptions.shapeType = 'box';
-      shapeOptions.boxSize = '';
-      shapeOptions.boxWidth = width.toFixed(3);
-      shapeOptions.boxHeight = height.toFixed(3);
-      shapeOptions.boxDepth = depth.toFixed(3);
-    }
-    if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
-      if (shapeOptions.cylinderHorizontal) {
-        firstFrameOptions.rotationZ = '90deg';
-        let h = height;
-        height = width;
-        width = h;
-      }
-
-      shapeOptions.shapeType = 'cylinder';
-      shapeOptions.cylinderHeight = height.toFixed(3);
-      shapeOptions.cylinderDiameter = width.toFixed(3);
-      if (width !== depth) {
-        firstFrameOptions.scalingZ = (depth / width).toFixed(3);
-      }
-
-      shapeOptions.cylinderTessellation = shapeOptions.shapeDivs;
-      firstFrameOptions.positionZ = (-1.0 * depth / 2.0).toFixed(3);
-
-      if (shapeOptions.createShapeType === 'Cone')
-        shapeOptions.cylinderDiameterTop = 0;
-    }
-    if (shapeOptions.createShapeType === 'Sphere') {
-      shapeOptions.shapeType = 'sphere';
-      shapeOptions.sphereDiameter = minDim;
-      shapeOptions.sphereSegments = shapeOptions.shapeDivs;
-      shapeOptions.boxWidth = '';
-      shapeOptions.boxHeight = '';
-      shapeOptions.boxDepth = '';
-    }
-    if (shapeOptions.createShapeType === 'Ellipsoid') {
-      shapeOptions.shapeType = 'sphere';
-      shapeOptions.sphereDiameter = '';
-      shapeOptions.sphereDiameterX = width.toFixed(3);
-      shapeOptions.sphereDiameterY = height.toFixed(3);
-      shapeOptions.sphereDiameterZ = depth.toFixed(3);
-      shapeOptions.sphereSegments = shapeOptions.shapeDivs;
-    }
-
-    let createShapePromise = new Promise((resolve) => resolve({}));
-    if (createShape)
-      createShapePromise = context.createObject('shape', shapeBlockName, null, shapeOptions);
-
-    return new Promise((resolve, reject) => {
-      createShapePromise.then(results => {
-        context.createObject('blockchild', '', null, {
-          childType: 'shape',
-          childName: shapeBlockName,
-          parentKey: blockId
-        }).then(innerResults => resolve({
-          blockChildResults: innerResults,
-          shapeOptions,
-          firstFrameOptions
-        }));
-      });
-    });
-  }
-  blockCreateAnimatedLine(context, blockId, blockTitle) {
-    let barLength = GLOBALUTIL.getNumberOrDefault(this.mixin.depth, 10);
-    let shapeOptions = {
-      width: GLOBALUTIL.getNumberOrDefault(this.mixin.width, 1),
-      depth: GLOBALUTIL.getNumberOrDefault(this.mixin.dashDepth, 1),
-      height: GLOBALUTIL.getNumberOrDefault(this.mixin.height, 1),
-      createShapeType: this.mixin.createShapeType,
-      materialName: this.mixin.materialName,
-      shapeDivs: this.mixin.shapeDivs,
-      cylinderHorizontal: false,
-      rotationZ: ''
-    }
-    if (shapeOptions.width <= 0.0)
-      shapeOptions.width = 0.001;
-    if (shapeOptions.height <= 0.0)
-      shapeOptions.height = 0.001;
-    if (shapeOptions.depth <= 0.0)
-      shapeOptions.depth = 0.001;
-
-    let moreOptions = {};
-    if (shapeOptions.createShapeType === 'Cone' || shapeOptions.createShapeType === 'Cylinder') {
-      let h = shapeOptions.height;
-      shapeOptions.height = shapeOptions.depth;
-      shapeOptions.depth = h;
-      if (shapeOptions.width !== shapeOptions.height) {
-        moreOptions.scalingX = (shapeOptions.width / shapeOptions.height).toFixed(3);
-        shapeOptions.width = shapeOptions.height;
-      }
-      moreOptions.rotationX = '90deg';
-    }
-    if (shapeOptions.createShapeType === 'Ellispoid') {
-      let width = shapeOptions.width;
-      let height = shapeOptions.height;
-      let depth = shapeOptions.depth;
-      shapeOptions.depth = width;
-      shapeOptions.width = depth;
-    }
-
-    moreOptions.positionZ = barLength / 2.0;
-
-    moreOptions.runTime = GLOBALUTIL.getNumberOrDefault(this.mixin.runTime, 2000);
-    moreOptions.dashCount = GLOBALUTIL.getNumberOrDefault(this.mixin.dashCount, 1);
-    moreOptions.endTime = moreOptions.runTime;
-    moreOptions.timePerDash = moreOptions.runTime / moreOptions.dashCount;
-
-    for (let i = 0; i < moreOptions.dashCount; i++)
-      this.blockCreateLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, i, (i === 0));
-
-    let blockFrame = {
-      frameTime: moreOptions.endTime.toFixed(3),
-      frameOrder: '10',
-      parentKey: blockId
-    };
-    context.createObject('frame', '', null, blockFrame).then(resultB => {});
-  }
   blockCreate2DTexture(context, shapeTitle, textOptions) {
     context.createObject('material', shapeTitle + '_2d_material', null, {
       diffuseTextureName: shapeTitle + '_2d_texture',
@@ -992,52 +721,5 @@ class cMacro {
     textOptions.isText = true;
     textOptions.hasAlpha = true;
     context.createObject('texture', shapeTitle + '_2d_texture', null, textOptions).then(() => {});
-  }
-  blockCreateLineNode(context, blockId, blockTitle, shapeOptions, moreOptions, index, createShape = true) {
-    this.blockCreateShapeChild(context, blockId, blockTitle + '_shapeShape', shapeOptions, createShape).then(resultsObj => {
-      let frameOrder = 10;
-      let newObj = {
-        parentKey: resultsObj.blockChildResults.key
-      };
-
-      for (let i in resultsObj.firstFrameOptions)
-        newObj[i] = resultsObj.firstFrameOptions[i];
-      for (let i in moreOptions)
-        newObj[i] = moreOptions[i];
-
-      let zLen = newObj.positionZ * 2;
-      let minZTime = index * moreOptions.timePerDash;
-
-      let startPos = (-0.5 * zLen) + (index * moreOptions.timePerDash / moreOptions.endTime * zLen);
-
-      newObj.positionZ = startPos;
-      newObj.frameOrder = frameOrder.toString();
-      newObj.frameTime = "0";
-      context.createObject('frame', '', null, newObj).then(resultB => {});
-      frameOrder += 10;
-
-      if (minZTime > .001) {
-        let zh = zLen / 2.0;
-        let iTime = moreOptions.endTime - minZTime;
-        newObj.frameTime = (iTime / moreOptions.endTime * 100.0).toFixed(2).toString() + '%';
-        newObj.frameOrder = frameOrder.toString();
-        newObj.positionZ = zh.toFixed(3);
-        context.createObject('frame', '', null, newObj).then(resultB => {});
-        frameOrder += 10;
-
-        newObj.frameTime = ((iTime + 5) / moreOptions.endTime * 100.0).toFixed(2).toString() + '%';
-        newObj.frameOrder = frameOrder.toString();
-        newObj.positionZ = (-1.0 * zh).toFixed(3);
-        context.createObject('frame', '', null, newObj).then(resultB => {});
-        frameOrder += 10;
-      }
-
-      newObj.positionZ = startPos + zLen;
-      if (newObj.positionZ > (zLen / 2.0))
-        newObj.positionZ -= zLen;
-      newObj.frameOrder = frameOrder.toString();
-      newObj.frameTime = '100%';
-      context.createObject('frame', '', null, newObj).then(resultB => {});
-    });
   }
 }

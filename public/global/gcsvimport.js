@@ -49,6 +49,13 @@ class gCSVImport {
           key: null
         };
     }
+    if (type === 'texture') {
+      if (data.title.substring(0, 3) === 'sb:')
+        return {
+          key: null
+        };
+    }
+
     if (!id)
       id = firebase.database().ref().child(this.path(type)).push().key;
     let updates = {};
@@ -395,7 +402,7 @@ class gCSVImport {
   }
   async addParentBlockChild(row) {
     if (!row.parent)
-      return Promise.resolve();
+      return;
 
     if (row.parent.substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
@@ -419,7 +426,7 @@ class gCSVImport {
 
     await this.addCSVRow(sceneBC);
 
-    return Promise.resolve();
+    return;
   }
   async addCSVBlockChildFrameRow(row) {
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
@@ -497,10 +504,109 @@ class gCSVImport {
         return this.addCSVShapeAndText(row);
       case 'connectorline':
         return this.addCSVConnectorLine(row);
+      case 'animatedline':
+        return this.addCSVAnimatedLine(row);
     }
 
     console.log('type not found', row);
     return;
+  }
+  async addCSVAnimatedLine(row) {
+    let dashes = GLOBALUTIL.getNumberOrDefault(row.dashes, 1);
+    let runlength = GLOBALUTIL.getNumberOrDefault(row.runlength, 2000);
+    let width = GLOBALUTIL.getNumberOrDefault(row.width, 1);
+    let height = GLOBALUTIL.getNumberOrDefault(row.height, 1);
+    let depth = GLOBALUTIL.getNumberOrDefault(row.depth, 10);
+    let dashlength = GLOBALUTIL.getNumberOrDefault(row.dashlength, 1);
+
+    if (width <= 0.0)
+      width = 0.001;
+    if (height <= 0.0)
+      height = 0.001;
+    if (depth <= 0.0)
+      depth = 0.001;
+
+    let blockrow = {
+      name: row.name,
+      height,
+      width,
+      depth,
+      materialname: '',
+      frametime: runlength
+    };
+    let blockResult = await this.addCSVBlockRow(blockrow);
+
+    let shaperow = {
+      width,
+      dashlength,
+      height,
+      createshapetype: row.dotshape,
+      material: row.material,
+      tessellation: row.tessellation,
+      name: row.name + 'linenode'
+    };
+
+    if (shaperow.createshapetype === 'cone' || shaperow.createshapetype === 'ellipsis'){
+      let h = shaperow.height;
+      shaperow.height = dashlength;
+      shaperow.depth = h;
+    }
+
+    this.addCSVShapeRow(this.__childShapeRow(shaperow));
+
+    let timePerDash = runlength / dashes;
+    let z = (depth / 2.0).toFixed(3);
+
+    for (let i = 0; i < dashes; i++) {
+      let childResults = await this.dbSetRecord('blockchild', {
+        childType: 'shape',
+        childName: shaperow.name,
+        parentKey: blockResult.key
+      });
+
+      let frameOrder = 10;
+      let frame = {
+        parentKey: childResults.key
+      };
+      let zLen = z * 2;
+      let minZTime = i * timePerDash;
+      let startPos = (-0.5 * zLen) + (i * timePerDash / runlength * zLen);
+      frame.positionZ = startPos;
+      frame.frameOrder = frameOrder.toString();
+      frame.frameTime = "0";
+      if (shaperow.createshapetype === 'cone' || shaperow.createshapetype === 'ellipsis'){
+        frame.rotationX = '90deg';
+        if (height !== width)
+          frame.scalingZ = (height / width).toFixed(3);
+      }
+      this.dbSetRecord('frame', frame);
+      frameOrder += 10;
+
+      if (minZTime > .001) {
+        let zh = zLen / 2.0;
+        let iTime = runlength - minZTime;
+        frame.frameTime = (iTime / runlength * 100.0).toFixed(2).toString() + '%';
+        frame.frameOrder = frameOrder.toString();
+        frame.positionZ = zh.toFixed(3);
+        this.dbSetRecord('frame', frame);
+        frameOrder += 10;
+
+        frame.frameTime = ((iTime + 5) / runlength * 100.0).toFixed(2).toString() + '%';
+        frame.frameOrder = frameOrder.toString();
+        frame.positionZ = (-1.0 * zh).toFixed(3);
+        this.dbSetRecord('frame', frame);
+        frameOrder += 10;
+      }
+
+      frame.positionZ = startPos + zLen;
+      if (frame.positionZ > (zLen / 2.0))
+        frame.positionZ -= zLen;
+      frame.frameOrder = frameOrder.toString();
+      frame.frameTime = '100%';
+      this.dbSetRecord('frame', frame);
+    }
+
+    return blockResult;
   }
   async addCSVConnectorLine(row) {
     row.length = GLOBALUTIL.getNumberOrDefault(row.length, 1);
