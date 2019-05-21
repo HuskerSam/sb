@@ -17,18 +17,22 @@ class bBand {
   }
   childAdded(fireData) {
     this._getDomForChild(fireData.key, fireData.val());
+    this.childMoved();
   }
+  childMoved() {}
   childChanged(fireData) {
     let div = this.childrenContainer.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
     if (!div)
       return console.log(fireData, 'changed bBand missing dom');
     let values = fireData.val();
     this._nodeApplyValues(values, div.querySelector('.band-background-preview'));
+    this.childMoved();
   }
   childRemoved(fireData) {
     let post = this.childrenContainer.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
     if (post)
       this.childrenContainer.removeChild(post);
+    this.childMoved();
   }
   handleDataChange(fireData, type) {
     if (type === 'add')

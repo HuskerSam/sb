@@ -506,6 +506,8 @@ class gCSVImport {
         return this.addCSVConnectorLine(row);
       case 'animatedline':
         return this.addCSVAnimatedLine(row);
+      case 'sceneblock':
+        return this.addCSVSceneBlock(row);
     }
 
     console.log('type not found', row);
@@ -755,6 +757,62 @@ class gCSVImport {
     this.addCSVShapeRow(this.__childShapeRow(row));
 
     return blockResult;
+  }
+  async addCSVSceneBlock(row) {
+    if (row.generateground === '1') {
+      let texture = {
+        title: row.name + '_groundtexture',
+        url: row.groundimage,
+        vScale: row.depth,
+        uScale: row.width
+      };
+      this.dbSetRecord('texture', texture);
+      let material = {
+        title: row.name + '_groundmaterial',
+        diffuseTextureName: texture.title
+      }
+      row.groundmaterial = material.title;
+      this.dbSetRecord('material', material);
+    }
+
+    let block = {
+      title: row.name,
+      width: row.width,
+      height: row.height,
+      depth: row.depth,
+      groundMaterial: row.groundmaterial,
+      skybox: row.skybox
+    }
+
+    let blockresult = await this.dbSetRecord('block', block);
+
+    if (row.hemilight === '1') {
+      let light = {
+        childType: 'light',
+        childName: 'Hemispheric',
+        parentKey: blockresult.key
+      };
+      let lightresult = await this.dbSetRecord('blockchild', light);
+
+      let lightFrame = {
+        frameTime: '',
+        frameOrder: '10',
+        parentKey: lightresult.key,
+        lightDiffuseR: '1',
+        lightIntensity: '.35',
+        lightDiffuseG: '1',
+        lightDiffuseB: '1',
+        lightSpecularR: '1',
+        lightSpecularG: '1',
+        lightSpecularB: '1',
+        lightDirectionX: '0',
+        lightDirectionY: '1',
+        lightDirectionZ: '0'
+      };
+      this.dbSetRecord('frame', lightFrame);
+    }
+
+    return blockresult;
   }
   __childShapeRow(row) {
     let shapeRow = {};

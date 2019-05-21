@@ -11,10 +11,6 @@ class cBandIcons extends bBand {
       this.childMoved();
     }, 1);
   }
-  childChanged(fireData) {
-    super.childChanged(fireData);
-    this.childMoved();
-  }
   childMoved() {
     this.modelSet.updateChildOrder();
     let keyOrder = this.modelSet.childOrderByKey;
@@ -23,6 +19,20 @@ class cBandIcons extends bBand {
       let div = document.querySelector('.' + this.tag + this.myKey + '-' + key);
       if (div)
         this.childrenContainer.appendChild(div);
+    }
+    this._updateNoRecords();
+  }
+  _updateNoRecords() {
+    let keyOrder = this.modelSet.childOrderByKey;
+    if (Object.keys(keyOrder).length === 0) {
+      let noAssets = document.createElement('div');
+      noAssets.innerHTML = 'No ' + this.tag + ' found';
+      noAssets.classList.add('noassetsfound');
+      this.childrenContainer.appendChild(noAssets);
+    } else {
+      let noAssets = this.childrenContainer.querySelector('.noassetsfound');
+      if (noAssets)
+        noAssets.remove();
     }
   }
   _getDomForChild(key, values) {

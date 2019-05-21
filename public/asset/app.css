@@ -132,7 +132,7 @@ input[type="text"] {
 #light_intensity_value {
   font-size: .65em;
   top: 1.5em;
-  left: .75em;
+  left: .3em;
   width: auto;
   text-align: center;
   background: rgba(50, 50, 50, .5);
@@ -168,6 +168,9 @@ select {
 
 .frames-panel .no-frames {
   white-space: normal;
+  line-height: 5em;
+  font-size: 2em;
+  text-align: center;
 }
 
 .frame-fields-container {
@@ -769,4 +772,10 @@ select {
 
 .app-expanded .csv_block_import_preview {
   display: block;
+}
+
+.noassetsfound {
+  font-size: 2em;
+  text-align: center;
+  line-height: 5em;
 }

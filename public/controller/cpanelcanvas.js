@@ -81,7 +81,7 @@ class cPanelCanvas {
     this.errorCount = 0;
 
     this.lightBarFields = [{
-      title: '<i class="material-icons">wb_sunny</i><span id="light_intensity_value">1</span>',
+      title: '<i class="material-icons">wb_sunny</i><span id="light_intensity_value"></span>',
       fireSetField: 'lightIntensity',
       helperType: 'singleSlider',
       rangeMin: '0',
@@ -757,7 +757,12 @@ class cPanelCanvas {
     }
 
     this.lightIntensityDom = this.dialog.querySelector('#light_intensity_value');
-    if (this.lightIntensityDom)
-      this.lightIntensityDom.innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
+    if (this.lightIntensityDom) {
+      if (!this.parent.context.defaultLight) {
+        this.lightIntensityDom.innerHTML = '(disabled)';
+      } else {
+        this.lightIntensityDom.innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
+      }
+    }
   }
 }

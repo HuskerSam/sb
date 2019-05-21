@@ -255,7 +255,7 @@ class cBandFrames extends bBand {
 
     if (!this.initedNoFramesPanel) {
       this.initedNoFramesPanel = true;
-      this.noFrames.innerHTML = 'No Frames';
+      this.noFrames.innerHTML = 'No frame found';
     }
     this.noFrames.style.display = '';
   }

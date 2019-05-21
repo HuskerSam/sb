@@ -3,6 +3,48 @@ class cMacro {
     this.panel = panel;
     this.tag = tag;
     this.view = view;
+    this.webFonts = [
+      'Work Sans',
+      'IBM Plex Sans',
+      'Space Mono',
+      'Libre Franklin',
+      'Rubik',
+      'Cormorant',
+      'Fira Sans',
+      'Eczar',
+      'Alegreya Sans',
+      'Alegreya',
+      'Chivo',
+      'Lora',
+      'Source Sans Pro',
+      'Source Serif Pro',
+      'Roboto',
+      'Roboto Slab',
+      'BioRhyme',
+      'Poppins',
+      'Achivo Narrow',
+      'Libre Baskerville',
+      'Playfair Display',
+      'Karla',
+      'Montserrat',
+      'Proza Libre',
+      'Spectral',
+      'Domine',
+      'Crimson Text',
+      'Inknut Antiqua',
+      'PT Sans',
+      'PT Serif',
+      'Lato',
+      'Cardo',
+      'Newton',
+      'Open Sans',
+      'Inconsolata',
+      'Cabin',
+      'Anonymous Pro',
+      'Raleway',
+      'Arvo',
+      'Merriweather'
+    ];
     if (!tag)
       return this.panel.innerHTML = '';
 
@@ -75,6 +117,13 @@ class cMacro {
       alert('Please enter a name');
       return;
     }
+    let existingTitles = gAPPP.a.modelSets[this.tag].queryCache('title', this.newName);
+    let keys = Object.keys(existingTitles);
+    if (keys.length > 0) {
+      alert(this.tag + ' asset already exists with title ' + this.newName);
+      return;
+    }
+
     this.createMesage.style.display = 'block';
 
     this[this.tag + 'Create']()
@@ -361,7 +410,7 @@ class cMacro {
      <option>Web Font</option>
     </select>
     <div class="web-font-block-add-options" style="display:none;">
-      <label><span>Font Name</span><input type="text" class="block-web-font" style="width:15em;" value="" /></label>
+      <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:15em;" value="" /></label>
     </div>
     <div class="connector-line-block-add-options" style="display:none;">
       <label><span>length</span><input type="text" class="length" value="10" /></label>
@@ -454,21 +503,22 @@ class cMacro {
       <label><span>height</span><input type="text" class="height" value="1" /></label>
       <label><span>depth</span><input type="text" class="depth" value="1" /></label>
     </div>
-    <div class="scene-block-add-options" style="text-align:center;">
-      <label><input type="checkbox" class="block-add-hemi-light" /><span>Add Hemispheric Light</span></label>
-      <label><input type="checkbox" class="block-generate-ground" /><span>Create Ground Material</span></label>
-      <label><span>Image Path</span><input type="text" style="width:15em;" class="block-scene-cloudfile-picker-input" list="sbimageslist" /></label>
+      <div class="scene-block-add-options" style="text-align:center;">
+      <label><span>width</span><input type="text" class="width" value="50" /></label>
+      <label><span>height</span><input type="text" class="height" value="16" /></label>
+      <label><span>depth</span><input type="text" class="depth" value="50" /></label>
       <br>
+      <label><input type="checkbox" class="hemilight" /><span>Add Hemispheric Light</span></label>
+      <br>
+      <label><input type="checkbox" class="generateground" /><span>Ground</span>
+      <input type="text" style="width:15em;" class="groundimage" list="sbimageslist" /></label>
       <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
       <br>
-      <label><span>Skybox</span><input type="text" style="width:15em;" class="block-skybox-picker-select" list="skyboxlist" /></label>
+      <label><span>Skybox</span><input type="text" style="width:15em;" class="skybox" list="skyboxlist" /></label>
       <div class="skybox-preview-images"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"></div>
-      <br>
-      <label><span>W</span><input type="text" class="block-box-width" value="50" /></label>
-      <label><span>H</span><input type="text" class="block-box-height" value="16" /></label>
-      <label><span>D</span><input type="text" class="block-box-depth" value="50" /></label>
     </div>
-    <div class="csv_block_import_preview"></div>`;
+    <div class="csv_block_import_preview"></div>
+    <datalist id="webfontsuggestionlist"></datalist>`;
   }
   blockRegister() {
 
@@ -484,28 +534,36 @@ class cMacro {
     this.blockAddFontFamily = this.blockShapePanel.querySelector('.textfontfamily');
     this.blockAddFontFamily.addEventListener('input', e => this.updateFontField(this.blockAddFontFamily));
 
-    this.skyBoxImages = this.panel.querySelector('.skybox-preview-images');
-    this.skyBoxInput = this.panel.querySelector('.block-skybox-picker-select');
+    this.skyBoxImages = this.sceneBlockPanel.querySelector('.skybox-preview-images');
+    this.skyBoxInput = this.sceneBlockPanel.querySelector('.skybox');
     this.skyBoxInput.addEventListener('input', e => this.blockSkyboxChange());
 
-    this.cloudImageInput = this.panel.querySelector('.block-scene-cloudfile-picker-input');
-    this.groundImagePreview = this.panel.querySelector('.cloud-file-ground-preview');
-    this.generateGroundMaterial = this.panel.querySelector('.block-generate-ground');
+    this.cloudImageInput = this.sceneBlockPanel.querySelector('.groundimage');
+    this.groundImagePreview = this.sceneBlockPanel.querySelector('.cloud-file-ground-preview');
+    this.generateGroundMaterial = this.panel.querySelector('.generateground');
     this.cloudImageInput.addEventListener('input', e => this.blockGroundChange());
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
     this.csv_block_import_preview = this.panel.querySelector('.csv_block_import_preview');
 
+    this.webfontsuggestionlist = this.panel.querySelector('#webfontsuggestionlist');
+    let html = '';
+    this.webFonts.forEach(font => html += `<option>${font}</option>`);
+    this.webfontsuggestionlist.innerHTML = html;
+
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
 
+    this.panelInput = document.createElement('input'); //place holder
     this.blockHelperChange();
     this.blockSkyboxChange();
+    this.blockUpdateCSV();
   }
   _blockScrapeTextAndShape() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
+      asset: 'shapeandtext',
       name: this.newName
     };
     let textshapefields = [
@@ -524,6 +582,7 @@ class cMacro {
   _blockScrapeConnectorLine() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
+      asset: 'connectorline',
       name: this.newName
     };
     let fields = [
@@ -543,6 +602,7 @@ class cMacro {
   _blockScrapeAnimatedline() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
+      asset: 'animatedline',
       name: this.newName
     };
     let fields = [
@@ -557,6 +617,43 @@ class cMacro {
     });
     return csv_row;
   }
+  _blockScrapeWebFont() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      asset: 'block',
+      name: this.newName,
+      blockflag: 'googlefont'
+    };
+    let fields = [
+      'genericblockdata'
+    ];
+    fields.forEach(field => {
+      let f = this.webFontPanel.querySelector('.' + field);
+      if (f.getAttribute('type') === 'checkbox')
+        csv_row[field] = f.checked ? '1' : '';
+      else
+        csv_row[field] = f.value;
+    });
+    return csv_row;
+  }
+  _blockScrapeScene() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      asset: 'sceneblock',
+      name: this.newName
+    };
+    let fields = [
+      'hemilight', 'generateground', 'groundimage', 'skybox', 'width', 'height', 'depth'
+    ];
+    fields.forEach(field => {
+      let f = this.sceneBlockPanel.querySelector('.' + field);
+      if (f.getAttribute('type') === 'checkbox')
+        csv_row[field] = f.checked ? '1' : '';
+      else
+        csv_row[field] = f.value;
+    });
+    return csv_row;
+  }
   async blockCreate() {
     let bType = this.blockOptionsPicker.value;
     this.mixin = {};
@@ -564,47 +661,34 @@ class cMacro {
     this.mixin.materialName = '';
 
     if (bType === 'Web Font') {
-      let webFontName = this.webFontPanel.querySelector('.block-web-font').value;
+      let row = this._blockScrapeWebFont();
 
-      this.mixin.blockFlag = 'googlefont';
-      this.mixin.genericBlockData = webFontName;
-
-      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
-      return results.key;
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      gAPPP._updateGoogleFonts();
+      return blockResult.key;
     }
     if (bType === 'Text and Shape') {
-
       let row = this._blockScrapeTextAndShape();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVShapeAndText(row);
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
       return blockResult.key;
     }
     if (bType === 'Scene') {
-      this.mixin.width = this.sceneBlockPanel.querySelector('.block-box-width').value;
-      this.mixin.height = this.sceneBlockPanel.querySelector('.block-box-height').value;
-      this.mixin.depth = this.sceneBlockPanel.querySelector('.block-box-depth').value;
-      this.mixin.skybox = this.skyBoxInput.value.trim();
-      if (this.generateGroundMaterial.checked)
-        this.mixin.groundMaterial = this.newName + '_groundmaterial';
-      let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+      let row = this._blockScrapeScene();
 
-      if (this.generateGroundMaterial.checked)
-        this.blockGenerateGround(results.key, this.newName, this.cloudImageInput.value.trim());
-      if (this.addSceneLight.checked)
-        this.blockCreateLight(results.key, this.newName);
-
-      return results.key;
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      return blockResult.key;
     }
     if (bType === 'Animated Line') {
       let row = this._blockScrapeAnimatedline();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVAnimatedLine(row);
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
       return blockResult.key;
     }
     if (bType === 'Connector Line') {
       let row = this._blockScrapeConnectorLine();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVConnectorLine(row);
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
       return blockResult.key;
     }
 
@@ -671,47 +755,15 @@ class cMacro {
       r = this._blockScrapeConnectorLine();
     if (macrotype === 'Animated Line')
       r = this._blockScrapeAnimatedline();
+    if (macrotype === 'Web Font')
+      r = this._blockScrapeWebFont();
+    if (macrotype === 'Scene')
+      r = this._blockScrapeScene();
 
     if (r) {
       this.csv_block_import_preview.innerHTML = Papa.unparse([r]);
     } else
       this.csv_block_import_preview.innerHTML = new Date();
-  }
-  blockCreateLight(blockKey, blockTitle) {
-    gAPPP.activeContext.createObject('blockchild', '', null, {
-      childType: 'light',
-      childName: 'Hemispheric',
-      parentKey: blockKey
-    }).then(results => {
-      gAPPP.activeContext.createObject('frame', '', null, {
-        frameTime: '',
-        frameOrder: '10',
-        parentKey: results.key,
-        lightDiffuseR: '1',
-        lightIntensity: '.35',
-        lightDiffuseG: '1',
-        lightDiffuseB: '1',
-        lightSpecularR: '1',
-        lightSpecularG: '1',
-        lightSpecularB: '1',
-        lightDirectionX: '0',
-        lightDirectionY: '1',
-        lightDirectionZ: '0'
-      })
-    });
-
-  }
-  blockGenerateGround(blockKey, blockTitle, imgPath) {
-    let textureName = blockTitle + '_groundtexture';
-    let materialName = blockTitle + '_groundmaterial';
-    gAPPP.activeContext.createObject('texture', textureName, null, {
-      url: imgPath,
-      vScale: this.mixin.depth,
-      uScale: this.mixin.width
-    }).then(results => {});
-    gAPPP.activeContext.createObject('material', materialName, null, {
-      diffuseTextureName: textureName
-    }).then(results => {});
   }
   blockCreate2DTexture(context, shapeTitle, textOptions) {
     context.createObject('material', shapeTitle + '_2d_material', null, {
