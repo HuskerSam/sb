@@ -983,17 +983,15 @@ class gCSVImport {
       width: row.width,
       depth: row.depth
     };
-    promises.push(this.dbSetRecord('block', blockWrapper)
-      .then(r => {
-        let textChildBC = this.defaultCSVRow();
-        textChildBC.asset = 'blockchild';
-        textChildBC.name = textPlaneName;
-        textChildBC.childtype = 'shape';
-        textChildBC.parent = row.name;
-        textChildBC.ry = '90deg';
+    let blockResult = await this.dbSetRecord('block', blockWrapper);
 
-        return this.addCSVRow(textChildBC);
-      }));
+    let textChildBC = this.defaultCSVRow();
+    textChildBC.asset = 'blockchild';
+    textChildBC.name = textPlaneName;
+    textChildBC.childtype = 'shape';
+    textChildBC.parent = row.name;
+    textChildBC.ry = '90deg';
+    this.addCSVRow(textChildBC);
 
     let shapeData = {
       title: textPlaneName,
@@ -1039,7 +1037,8 @@ class gCSVImport {
     };
     promises.push(this.dbSetRecord('material', materialData));
 
-    return Promise.all(promises);
+    //Promise.all(promises);
+    return blockResult;
   }
   async __addSignPost(product, productData) {
     let newObjects = [];

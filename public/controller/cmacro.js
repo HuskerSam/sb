@@ -145,98 +145,26 @@ class cMacro {
     return results.key;
   }
 
-  shapeTemplate() {
-    return `<select class="shape-type-select">
-         <option>2D Text Plane</option>
-         <option>3D Text</option>
-        </select>
-    <div class="create-2d-text-plane">
-      <label><span>Text</span><input class="text-2d-line-1" value="Text Line" /></label><br>
-      <label><span>Line 2</span><input class="text-2d-line-2" value="" /></label><br>
-      <label><span>Line 3</span><input class="text-2d-line-3" value="" /></label><br>
-      <label><span>Line 4</span><input class="text-2d-line-4" value="" /></label><br>
-      <label><span>Font</span><input class="font-family-2d-add" list="fontfamilydatalist" /></label><br>
-      <label><span>Color</span><input class="font-2d-color" color="0,0,0" /></label><br>
-      <label><span>Text Size</span><input class="font-2d-text-size" value="100" /></label><br>
-      <label><span>Plane Size</span><input class="font-2d-plane-size" value="4" /></label><br>
-    </div>
-    <div class="create-text-options">
-      <label><span>Text</span><input class="text-shape-add" value="3D Text" /></label>
-      <label><span>Font</span><input class="font-family-shape-add" list="fontfamilydatalist" /></label>
-    </div>
-    <label><span>Material</span><input type="text" style="width:15em;"
-     class="shape-material-picker-select" list="materialdatatitlelookuplist" /></label>
-    <div class="csv_block_import_preview"></div>`;
-  }
-  shapeRegister() {
-    this.add2dTextPanel = this.panel.querySelector('.create-2d-text-plane');
-    this.createTextOptions = this.panel.querySelector('.create-text-options');
-    this.createShapesSelect = this.panel.querySelector('.shape-type-select');
-    this.createShapesSelect.addEventListener('input', e => this.shapeTypeChange());
-    this.shapeMaterialSelectPicker = this.panel.querySelector('.shape-material-picker-select');
-    this.shapeAddFontFamily = this.panel.querySelector('.font-family-shape-add');
-    this.shapeAddFontFamily.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily));
-    this.shapeAddFontFamily2D = this.panel.querySelector('.font-family-2d-add');
-    this.shapeAddFontFamily2D.addEventListener('input', e => this.updateFontField(this.shapeAddFontFamily2D));
-    this.shapeTypeChange();
-  }
-  async shapeCreate() {
-    let shape = {
-      shapeType: 'text'
-    };
-    let texture = {
-
-    };
-    let sT = this.createShapesSelect.value;
-
-    if (sT === '2D Text Plane')
-      shape = shapeType = 'plane';
-
-    this.mixin.materialName = this.shapeMaterialSelectPicker.value;
-    if (shapeType === 'text') {
-      this.mixin.textText = this.createTextOptions.querySelector('.text-shape-add').value;
-      this.mixin.textFontFamily = this.createTextOptions.querySelector('.font-family-shape-add').value;
-    }
-
-    if (shapeType === 'plane') {
-      this.mixin.width = this.panel.querySelector('.font-2d-plane-size').value;
-      this.mixin.height = this.mixin.width;
-      this.mixin.materialName = this.newName + '_2d_material';
-
-      this.callbackMixin = {};
-      this.callbackMixin.textureText = this.panel.querySelector('.text-2d-line-1').value;
-      this.callbackMixin.textureText2 = this.panel.querySelector('.text-2d-line-2').value;
-      this.callbackMixin.textureText3 = this.panel.querySelector('.text-2d-line-3').value;
-      this.callbackMixin.textureText4 = this.panel.querySelector('.text-2d-line-4').value;
-      this.callbackMixin.textFontFamily = this.panel.querySelector('.font-family-2d-add').value;
-      this.callbackMixin.textFontColor = this.panel.querySelector('.font-2d-color').value;
-      this.callbackMixin.textFontSize = this.panel.querySelector('.font-2d-text-size').value;
-      context.createObject('material', shapeTitle + '_2d_material', null, {
-        diffuseTextureName: shapeTitle + '_2d_texture',
-        emissiveTextureName: shapeTitle + '_2d_texture'
-      }).then(() => {});
-      textOptions.isText = true;
-      textOptions.hasAlpha = true;
-      context.createObject('texture', shapeTitle + '_2d_texture', null, textOptions).then(() => {});
-    }
-
-    let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
-    return results.key;
-  }
-  shapeTypeChange() {
-    this.createTextOptions.style.display = this.createShapesSelect.value === '3D Text' ? '' : 'none';
-    this.add2dTextPanel.style.display = this.createShapesSelect.value === '2D Text Plane' ? '' : 'none';
-    this.shapeMaterialSelectPicker.parentElement.style.display = this.createShapesSelect.value != '2D Text Plane' ? '' : 'none';
-  }
-
   blockTemplate() {
     return `<select class="block-type-select">
      <option>Scene</option>
      <option>Text and Shape</option>
      <option selected>Animated Line</option>
      <option>Connector Line</option>
+     <option>2D Text Plane</option>
      <option>Web Font</option>
     </select>
+    <div class="create-2d-text-plane">
+      <label><span>texturetext</span><input class="texturetext" value="Text Line" /></label><br>
+      <label><span>texturetext2</span><input class="texturetext2" value="" /></label><br>
+      <label><span>textfontfamily</span><input class="textfontfamily" list="fontfamilydatalist" /></label><br>
+      <label><span>textfontcolor</span><input class="textfontcolor" value="0,0,0" /></label><br>
+      <label><span>textfontweight</span><input class="textfontweight" value="" /></label><br>
+      <label><span>textfontsize</span><input class="textfontsize" value="100" /></label><br>
+      <label><span>texturetextrendersize</span><input class="texturetextrendersize" value="512" /></label><br>
+      <label><span>width</span><input class="width" value="4" /></label><br>
+      <label><span>height</span><input class="height" value="4" /></label><br>
+    </div>
     <div class="web-font-block-add-options" style="display:none;">
       <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:15em;" value="" /></label>
     </div>
@@ -349,7 +277,6 @@ class cMacro {
     <datalist id="webfontsuggestionlist"></datalist>`;
   }
   blockRegister() {
-
     this.blockOptionsPicker = this.panel.querySelector('.block-type-select');
     this.blockOptionsPicker.addEventListener('input', e => this.blockHelperChange());
 
@@ -358,9 +285,7 @@ class cMacro {
     this.connectorLinePanel = this.panel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.panel.querySelector('.animated-line-block-add-options');
     this.webFontPanel = this.panel.querySelector('.web-font-block-add-options');
-
-    this.blockAddFontFamily = this.blockShapePanel.querySelector('.textfontfamily');
-    this.blockAddFontFamily.addEventListener('input', e => this.updateFontField(this.blockAddFontFamily));
+    this.text2dpanel = this.panel.querySelector('.create-2d-text-plane');
 
     this.skyBoxImages = this.sceneBlockPanel.querySelector('.skybox-preview-images');
     this.skyBoxInput = this.sceneBlockPanel.querySelector('.skybox');
@@ -380,6 +305,7 @@ class cMacro {
     this.webFonts.forEach(font => html += `<option>${font}</option>`);
     this.webfontsuggestionlist.innerHTML = html;
 
+    this.panel.querySelectorAll('.textfontfamily').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
 
@@ -387,6 +313,25 @@ class cMacro {
     this.blockHelperChange();
     this.blockSkyboxChange();
     this.blockUpdateCSV();
+  }
+  _shapeScrapeTextPlane() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      asset: 'textplane',
+      name: this.newName
+    };
+    let textshapefields = [
+      'texturetext', 'texturetext2', 'textfontfamily', 'textfontcolor', 'textfontweight', 'textfontsize',
+      'texturetextrendersize', 'width', 'height'
+    ];
+    textshapefields.forEach(field => {
+      let f = this.text2dpanel.querySelector('.' + field);
+      if (f.getAttribute('type') === 'checkbox')
+        csv_row[field] = f.checked ? '1' : '';
+      else
+        csv_row[field] = f.value;
+    });
+    return csv_row;
   }
   _blockScrapeTextAndShape() {
     this.newName = this.panelInput.value.trim();
@@ -488,6 +433,12 @@ class cMacro {
     this.file = null;
     this.mixin.materialName = '';
 
+    if (bType === '2D Text Plane') {
+      let row = this._shapeScrapeTextPlane();
+
+      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      return blockResult.key;
+    }
     if (bType === 'Web Font') {
       let row = this._blockScrapeWebFont();
 
@@ -561,6 +512,7 @@ class cMacro {
     this.animatedDashPanel.style.display = 'none';
     this.connectorLinePanel.style.display = 'none';
     this.webFontPanel.style.display = 'none';
+    this.text2dpanel.style.display = 'none';
 
     let sel = this.blockOptionsPicker.value;
     if (sel === 'Text and Shape')
@@ -571,6 +523,8 @@ class cMacro {
       this.connectorLinePanel.style.display = '';
     else if (sel === 'Animated Line')
       this.animatedDashPanel.style.display = '';
+    else if (sel === '2D Text Plane')
+      this.text2dpanel.style.display = '';
     else if (sel === 'Web Font')
       this.webFontPanel.style.display = '';
   }
@@ -587,6 +541,8 @@ class cMacro {
       r = this._blockScrapeWebFont();
     if (macrotype === 'Scene')
       r = this._blockScrapeScene();
+    if (macrotype === '2D Text Plane')
+      r = this._shapeScrapeTextPlane();
 
     if (r) {
       this.csv_block_import_preview.innerHTML = Papa.unparse([r]);
