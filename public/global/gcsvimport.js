@@ -546,11 +546,12 @@ class gCSVImport {
       name: row.name + 'linenode'
     };
 
-    if (shaperow.createshapetype === 'cone' || shaperow.createshapetype === 'ellipsis'){
+    if (shaperow.createshapetype === 'cone' || shaperow.createshapetype === 'cylinder') {
       let h = shaperow.height;
       shaperow.height = dashlength;
       shaperow.depth = h;
     }
+
 
     this.addCSVShapeRow(this.__childShapeRow(shaperow));
 
@@ -574,7 +575,7 @@ class gCSVImport {
       frame.positionZ = startPos;
       frame.frameOrder = frameOrder.toString();
       frame.frameTime = "0";
-      if (shaperow.createshapetype === 'cone' || shaperow.createshapetype === 'ellipsis'){
+      if (shaperow.createshapetype === 'cone' || shaperow.createshapetype === 'cylinder') {
         frame.rotationX = '90deg';
         if (height !== width)
           frame.scalingZ = (height / width).toFixed(3);

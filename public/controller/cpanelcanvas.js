@@ -345,6 +345,8 @@ class cPanelCanvas {
       sVal -= fullLen;
 
     sVal = sVal * 100.0 / fullLen;
+    if (isNaN(sVal))
+      sVal = 0;
 
     this.rootBlock.setAnimationPosition(sVal);
     this.animateSlider.value = sVal;
