@@ -246,45 +246,12 @@ class cMacro {
   }
 
   textureTemplate() {
-    return `<select class="texture-type-select">
-        <option>Upload</option>
-        <option>Path</option>
-      </select>
-      <input type="file" class="file-upload-texture" />&nbsp;
-      <label class="texture-path-label"><span>Path</span> <input type="text" style="width:17em;" class="text-path-texture" list="sbimageslist" /></label>`;
+    return ``;
   }
-  textureRegister() {
-    this.texturePanel = this.panel.querySelector('.texture-add-options');
-    this.selectTextureType = this.panel.querySelector('.texture-type-select');
-    this.selectTextureType.addEventListener('input', e => this.textureTypeChange());
-    this.textureFile = this.panel.querySelector('.file-upload-texture');
-    this.texturePathInputLabel = this.panel.querySelector('.texture-path-label');
-    this.texturePathInput = this.panel.querySelector('.text-path-texture');
-    this.textureTypeChange();
-  }
+  textureRegister() {}
   async textureCreate() {
-    this.file = null;
-    this.mixin = {};
-    let sel = this.selectTextureType.value;
-    if (sel === 'Upload') {
-      if (this.textureFile.files.length > 0)
-        this.file = this.textureFile.files[0];
-    }
-    if (sel === 'Path') {
-      this.mixin.url = this.texturePathInput.value.trim();
-    }
-    let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+    let results = await gAPPP.activeContext.createObject(this.tag, this.newName);
     return results.key;
-  }
-  textureTypeChange() {
-    this.texturePathInputLabel.style.display = 'none';
-    this.textureFile.style.display = 'none';
-
-    let sel = this.selectTextureType.value;
-    if (sel === 'Upload')
-      this.textureFile.style.display = '';
-    else if (sel === 'Path')
-      this.texturePathInputLabel.style.display = '';
   }
 
   materialTemplate() {
@@ -295,7 +262,8 @@ class cMacro {
       <br>
       <label>Color <input style="width:12em;" class="material-color-add" type="text" value="1,.5,0" /></label>
       <input type="color" class="material-color-add-colorinput" />
-      &nbsp; <label><span>Texture</span>&nbsp;<input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>`;
+      <br>
+      <label><span>Texture</span>&nbsp;<input type="text" style="width:15em;" class="texture-picker-select" list="texturedatatitlelookuplist" /></label>`;
   }
   materialRegister() {
     this.addMaterialOptionsPanel = this.panel.querySelector('.material-add-options');
@@ -355,57 +323,19 @@ class cMacro {
   }
 
   meshTemplate() {
-    return `<select class="mesh-type-select">
-        <option>Upload</option>
-        <option>Path</option>
-      </select>
-    <input type="file" class="mesh-file-upload" />
-    <label class="mesh-path-label"><span>Path</span><input type="text" style="width:17em;" class="text-path-mesh" list="sbmesheslist" /></label>
-    <br>
-    <label><span>Material</span><input type="text" style="width:15em;" class="mesh-material-picker-select" list="materialdatatitlelookuplist" /></label>`;
+    return ``;
   }
-  meshRegister() {
-    this.addMeshOptionsPanel = this.panel.querySelector('.mesh-add-options');
-    this.meshMaterialSelectPicker = this.panel.querySelector('.mesh-material-picker-select');
-    this.meshFile = this.panel.querySelector('.mesh-file-upload');
-    this.selectMeshType = this.panel.querySelector('.mesh-type-select');
-    this.selectMeshType.addEventListener('input', e => this.meshTypeChange());
-    this.meshPathInputLabel = this.panel.querySelector('.mesh-path-label');
-    this.meshPathInput = this.panel.querySelector('.text-path-mesh');
-
-    this.meshTypeChange();
-  }
+  meshRegister() {}
   async meshCreate() {
-    this.mixin = {};
-    this.file = null;
-    this.mixin.materialName = this.meshMaterialSelectPicker.value;
-    let sel = this.selectMeshType.value;
-    if (sel === 'Upload') {
-      if (this.meshFile.files.length > 0)
-        this.file = this.meshFile.files[0];
-    }
-    if (sel === 'Path') {
-      this.mixin.url = this.meshPathInput.value.trim();
-    }
-    let results = await gAPPP.activeContext.createObject(this.tag, this.newName, this.file, this.mixin);
+    let results = await gAPPP.activeContext.createObject(this.tag, this.newName);
     return results.key;
-  }
-  meshTypeChange() {
-    this.meshPathInputLabel.style.display = 'none';
-    this.meshFile.style.display = 'none';
-
-    let sel = this.selectMeshType.value;
-    if (sel === 'Upload')
-      this.meshFile.style.display = '';
-    else if (sel === 'Path')
-      this.meshPathInputLabel.style.display = '';
   }
 
   blockTemplate() {
     return `<select class="block-type-select">
      <option>Scene</option>
      <option>Text and Shape</option>
-     <option>Animated Line</option>
+     <option selected>Animated Line</option>
      <option>Connector Line</option>
      <option>Web Font</option>
     </select>
