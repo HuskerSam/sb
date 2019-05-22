@@ -76,10 +76,10 @@ class cGenerate {
     </div>
     <div class="workspace-csv-panel-item">
       <select class="add_animation_product_choice">
-        <option value="current">Products CSV Data</option>
+        <option value="current" selected>Products CSV Data</option>
         <option value="workspace">Workspace Products</option>
         <option value="template">Template Products</option>
-        <option selected>No Products</option>
+        <option>No Products</option>
       </select>
       <select class="add_animation_product_animation" style="display:none;"></select>
       <select class="add_animation_product_template" style="display:none;">
@@ -309,6 +309,7 @@ class cGenerate {
       return;
     }
 
+    this.bView.context.activate(null);
     this.bView.canvasHelper.hide();
 
     let wId = gAPPP.a.profile.selectedWorkspace;

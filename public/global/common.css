@@ -48,7 +48,7 @@ html, body {
   text-align: center;
   color: rgb(50, 50, 50);
   position: absolute;
-  z-index: 5;
+  z-index: 100000;
   left: 0;
 }
 

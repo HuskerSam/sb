@@ -487,41 +487,12 @@ class bView {
     if (!fileBlob)
       return;
 
-    this.uploadImageEditField.parentElement.MaterialTextfield.change('Uploading...');
+    this.uploadImageEditField.value = 'Uploading...';
 
     let fireSet = gAPPP.a.modelSets['block'];
     let key = this.productData.sceneId + '/productfiles';
     fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
-      this.uploadImageEditField.parentElement.MaterialTextfield.change(uploadResult.downloadURL);
+      this.uploadImageEditField.value = uploadResult.downloadURL;
     });
-  }
-  async FromLayoutremoveWorkspace() {
-    let sel = this.remove_workspace_select_template;
-    if (sel.selectedIndex === 0)
-      return;
-    if (confirm(`Delete animation ${sel.options[sel.selectedIndex].text}?`)) {
-      let changeWorkspace = (sel.value === gAPPP.a.profile.selectedWorkspace);
-
-      let removeResult = await new gCSVImport().dbRemove('project', sel.value);
-      if (!changeWorkspace) this.loadTemplateLists();
-
-      if (changeWorkspace) {
-        let newIndex = 1;
-        let newId = 'none';
-        if (sel.options.length > 2) {
-          if (sel.selectedIndex === 1)
-            newIndex = 2;
-          newId = sel.options[newIndex].value;
-        }
-
-        await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-          field: 'selectedWorkspace',
-          newValue: newId
-        }]);
-
-        setTimeout(() => location.reload(), 1);
-      }
-    }
-    return Promise.resolve();
   }
 }

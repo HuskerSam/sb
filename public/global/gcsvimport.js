@@ -44,7 +44,8 @@ class gCSVImport {
     if (type === 'material') {
       if (data.title.substring(0, 8) === 'decolor:' ||
         data.title.substring(0, 7) === 'ecolor:' ||
-        data.title.substring(0, 6) === 'color:')
+        data.title.substring(0, 6) === 'color:' ||
+        data.title === 'inherit')
         return {
           key: null
         };
@@ -239,6 +240,8 @@ class gCSVImport {
       });
     }
 
+    this.addParentBlockChild(row);
+
     return blockResult;
   }
   async csvFetchSceneBlock() {
@@ -297,7 +300,6 @@ class gCSVImport {
       blockChildData.cameraTargetBlock = row.cameratargetblock;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
 
-    console.log(row);
     let childResults = await this.dbSetRecord('blockchild', blockChildData);
 
     let frameData = {
@@ -374,7 +376,7 @@ class gCSVImport {
       });
     }
 
-    await this.addParentBlockChild(row);
+    this.addParentBlockChild(row);
 
     return this.dbSetRecord('shape', {
       title: row.name,
@@ -423,6 +425,7 @@ class gCSVImport {
     sceneBC.sx = row.sx;
     sceneBC.sy = row.sy;
     sceneBC.sz = row.sz;
+    sceneBC.materialname = row.materialname;
 
     await this.addCSVRow(sceneBC);
 
@@ -1037,11 +1040,12 @@ class gCSVImport {
     };
     promises.push(this.dbSetRecord('material', materialData));
 
-    //Promise.all(promises);
+    row.asset = 'block';
+    this.addParentBlockChild(row);
+
     return blockResult;
   }
   async __addSignPost(product, productData) {
-    let newObjects = [];
     let blockRow = this.defaultCSVRow();
     blockRow.asset = 'block';
     blockRow.height = '1';
@@ -1049,90 +1053,17 @@ class gCSVImport {
     blockRow.depth = '2';
     blockRow.materialname = this.getProductColors().colors[product.colorIndex];
     blockRow.name = product.childName + '_signpost';
+    blockRow.parent = product.childName;
+    blockRow.x = '.1';
+    blockRow.rz = '10deg';
+    blockRow.ry = '180deg';
+    blockRow.y = '-50';
     await this.addCSVRow(blockRow);
 
-    let textPlane = this.defaultCSVRow();
-    textPlane.asset = 'textplane';
-    textPlane.hasalpha = true;
-    textPlane.istext = true;
-    textPlane.textfontcolor = '0,0,0';
-    textPlane.texturetext = product.title;
-    textPlane.texturetext2 = product.desc;
-    textPlane.width = '10';
-    textPlane.height = '10';
-    textPlane.depth = '10';
-    textPlane.textfontfamily = 'Geneva';
-    textPlane.name = product.childName + '_pricedesc';
-    newObjects.push(textPlane);
-
-    let blockDescShapeBC = this.defaultCSVRow();
-    blockDescShapeBC.asset = 'blockchild';
-    blockDescShapeBC.childtype = 'block';
-    blockDescShapeBC.parent = blockRow.name;
-    blockDescShapeBC.name = textPlane.name;
-    blockDescShapeBC.x = '.06';
-    blockDescShapeBC.y = '1.5';
-    blockDescShapeBC.z = '.5';
-    blockDescShapeBC.sx = '.5';
-    blockDescShapeBC.sy = '.5';
-    blockDescShapeBC.sz = '.5';
-    blockDescShapeBC.ry = '180deg';
-    newObjects.push(blockDescShapeBC);
-
-    let blockImageShape = this.defaultCSVRow();
-    blockImageShape.asset = 'shape';
-    blockImageShape.materialname = product.childName + '_signpostimage';
-    blockImageShape.name = product.childName + '_signpostimage';
-    blockImageShape.scaleu = '1';
-    blockImageShape.scalev = '1';
-    blockImageShape.shapetype = 'plane';
-    blockImageShape.texturepath = product.itemImage;
-    blockImageShape.width = '3';
-    blockImageShape.height = '3';
-    newObjects.push(blockImageShape);
-
-    let blockImageBC = this.defaultCSVRow();
-    blockImageBC.asset = 'blockchild';
-    blockImageBC.childtype = 'shape';
-    blockImageBC.parent = blockRow.name;
-    blockImageBC.name = blockImageShape.name;
-    blockImageBC.x = '.06';
-    blockImageBC.y = '6';
-    blockImageBC.ry = '-90deg';
-    newObjects.push(blockImageBC);
-
-    let blockSPBC = this.defaultCSVRow();
-    blockSPBC.asset = 'blockchild';
-    blockSPBC.childtype = 'shape';
-    blockSPBC.parent = blockRow.name;
-    blockSPBC.name = 'signboard';
-    blockSPBC.materialname = 'inherit';
-    blockSPBC.y = '5';
-    newObjects.push(blockSPBC);
-
-    let blockSP2BC = this.defaultCSVRow();
-    blockSP2BC.asset = 'blockchild';
-    blockSP2BC.childtype = 'shape';
-    blockSP2BC.parent = blockRow.name;
-    blockSP2BC.name = 'signpost';
-    blockSP2BC.materialname = 'inherit';
-    blockSP2BC.x = '-0.05';
-    blockSP2BC.y = '1.5';
-    newObjects.push(blockSP2BC);
-
-    let blockRowBC = this.defaultCSVRow();
-    blockRowBC.asset = 'blockchild';
-    blockRowBC.childtype = 'block';
-    blockRowBC.parent = product.childName;
-    blockRowBC.name = blockRow.name;
-    blockRowBC.x = '.1';
-    blockRowBC.rz = '10deg';
-    blockRowBC.ry = '180deg';
-    blockRowBC.y = '-50';
-    newObjects.push(blockRowBC);
-
-    await this.addCSVRowList(newObjects);
-    //  await this._addSignPost3D(product, productData);
+    if (product.origRow.displaystyle === '3dbasic')
+      this._addSignPost3D(product, productData, blockRow.name);
+    else
+      this._addSignPost2D(product, productData, blockRow.name);
 
     let showFrame = this.defaultCSVRow();
     showFrame.asset = 'blockchildframe';
@@ -1167,107 +1098,118 @@ class gCSVImport {
       this.addCSVRow(endFrame)
     ]);
   }
-  async _addSignPost3D(product, productData) {
-    let parent = product.childName + '_signpost';
+  async _addSignPost2D(product, productData, parent) {
+    let newObjects = [];
+    let textPlane = this.defaultCSVRow();
+    textPlane.asset = 'textplane';
+    textPlane.hasalpha = true;
+    textPlane.istext = true;
+    textPlane.textfontcolor = '0,0,0';
+    textPlane.texturetext = product.title;
+    textPlane.texturetext2 = product.desc;
+    textPlane.width = '10';
+    textPlane.height = '10';
+    textPlane.depth = '10';
+    textPlane.textfontfamily = 'Geneva';
+    textPlane.name = product.childName + '_pricedesc';
+    textPlane.parent = parent;
+    textPlane.x = '.06';
+    textPlane.y = '1.5';
+    textPlane.z = '.5';
+    textPlane.sx = '.5';
+    textPlane.sy = '.5';
+    textPlane.sz = '.5';
+    textPlane.ry = '180deg';
+    newObjects.push(textPlane);
+
+    let blockImageShape = this.defaultCSVRow();
+    blockImageShape.asset = 'shape';
+    blockImageShape.materialname = product.childName + '_signpostimage';
+    blockImageShape.name = product.childName + '_signpostimage';
+    blockImageShape.scaleu = '1';
+    blockImageShape.scalev = '1';
+    blockImageShape.shapetype = 'plane';
+    blockImageShape.texturepath = product.itemImage;
+    blockImageShape.width = '3';
+    blockImageShape.height = '3';
+    blockImageShape.parent = parent;
+    blockImageShape.x = '.06';
+    blockImageShape.y = '6';
+    blockImageShape.ry = '-90deg';
+    newObjects.push(blockImageShape);
+
+    let blockSPBC = this.defaultCSVRow();
+    blockSPBC.asset = 'blockchild';
+    blockSPBC.childtype = 'shape';
+    blockSPBC.parent = parent;
+    blockSPBC.name = 'signboard';
+    blockSPBC.materialname = 'inherit';
+    blockSPBC.y = '5';
+    newObjects.push(blockSPBC);
+
+    let blockSP2BC = this.defaultCSVRow();
+    blockSP2BC.asset = 'blockchild';
+    blockSP2BC.childtype = 'shape';
+    blockSP2BC.parent = parent;
+    blockSP2BC.name = 'signpost';
+    blockSP2BC.materialname = 'inherit';
+    blockSP2BC.x = '-0.05';
+    blockSP2BC.y = '1.5';
+    newObjects.push(blockSP2BC);
+
+    return this.addCSVRowList(newObjects);
+  }
+  async _addSignPost3D(product, productData, parent) {
     let priceText = this.defaultCSVRow();
     priceText.asset = 'shape';
     priceText.name = parent + '_3ddesc';
-    priceText.materialname = 'decolor: .5,.1,.1';
+    priceText.materialname = 'decolor: .1,.1,.1';
     priceText.shapetype = 'text';
     priceText.textfontfamily = 'Arial';
     priceText.texttext = product.desc;
-    priceText.textdepth = '.1';
+    priceText.textdepth = '.5';
     priceText.textsize = '100';
     priceText.parent = parent;
     priceText.y = '2';
     priceText.x = '.5';
     priceText.ry = '0deg';
     priceText.rz = '-90deg';
+    this.addCSVRow(priceText);
 
     let descText = this.defaultCSVRow();
     descText.asset = 'shape';
-    descText.name = parent + '_3ddesc';
-    descText.materialname = 'decolor: .5,.1,.1';
+    descText.name = parent + '_3dtitle';
+    descText.materialname = 'inherit';
     descText.shapetype = 'text';
     descText.textfontfamily = 'Times';
-    descText.texttext = product.desc;
-    descText.textdepth = '.1';
+    descText.texttext = product.title;
+    descText.textdepth = '.25';
     descText.textsize = '100';
     descText.parent = parent;
-    descText.y = '2';
+    descText.y = '5';
     descText.x = '.5';
     descText.ry = '0deg';
     descText.rz = '-90deg';
-    await this.addCSVRow(descText);
+    this.addCSVRow(descText);
 
-    return Promise.all([
-      this.addCSVRow(priceText),
-    ]);
-    /*
-    promises.push(gAPPP.a.modelSets['shape'].createWithBlobString({
-      title: product.titleShape,
-      materialName: 'decolor: .1,.5,.5',
-      shapeType: 'text',
-      textFontFamily: 'Times',
-      textText: product.title,
-      textDepth: '.3',
-      textSize: 100
-    }));
+    let blockImageShape = this.defaultCSVRow();
+    blockImageShape.asset = 'shape';
+    blockImageShape.materialname = product.childName + '_signpostimage';
+    blockImageShape.name = product.childName + '_signpostimage';
+    blockImageShape.scaleu = '1';
+    blockImageShape.scalev = '1';
+    blockImageShape.shapetype = 'plane';
+    blockImageShape.texturepath = product.itemImage;
+    blockImageShape.width = '3';
+    blockImageShape.height = '3';
+    blockImageShape.parent = parent;
+    blockImageShape.x = '.06';
+    blockImageShape.y = '6';
+    blockImageShape.ry = '-90deg';
+    this.addCSVRow(blockImageShape);
 
-    promises.push(gAPPP.a.modelSets['blockchild'].createWithBlobString({
-      parentKey: product.blockId,
-      childType: 'shape',
-      childName: product.priceShape,
-      inheritMaterial: false
-    }).then(childResults => {
-      product.priceBlockChildKey = childResults.key;
-
-      return gAPPP.a.modelSets['frame'].createWithBlobString({
-        parentKey: product.priceBlockChildKey,
-        positionX: '',
-        positionY: '2',
-        positionZ: '',
-        rotationX: '',
-        rotationY: '180deg',
-        rotationZ: '-90deg',
-        scalingX: '',
-        scalingY: '',
-        scalingZ: '',
-        visibility: '',
-        frameOrder: 10,
-        frameTime: 0
-      });
-    }));
-
-    promises.push(gAPPP.a.modelSets['blockchild'].createWithBlobString({
-      parentKey: product.blockId,
-      childType: 'shape',
-      childName: product.titleShape,
-      inheritMaterial: false
-    }).then(childResults => {
-      product.titleBlockChildKey = childResults.key;
-      return gAPPP.a.modelSets['frame'].createWithBlobString({
-        parentKey: product.titleBlockChildKey,
-        positionX: '',
-        positionY: '3',
-        positionZ: '',
-        rotationX: '',
-        rotationY: '180deg',
-        rotationZ: '-90deg',
-        scalingX: '',
-        scalingY: '',
-        scalingZ: '',
-        visibility: '',
-        frameOrder: 10,
-        frameTime: 0
-      })
-    }));
-*/
-
+    return;
   }
-
-
-
   async __addTextShowHide(product, productData, origRow) {
     let childName = product.childName;
 

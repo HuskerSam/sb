@@ -243,7 +243,7 @@ class cWorkspace {
       'sku', 'price', 'count', 'pricetext',
       'height', 'width',
       'x', 'y', 'z',
-      'rx', 'ry', 'rz'
+      'rx', 'ry', 'rz', 'displaystyle'
     ];
     this.messageOnlyFields = [
       'index', 'name', 'asset', 'text1', 'text2',
