@@ -804,7 +804,7 @@ __localStaticStorageForBindingFields['block'] = [{
   group: 'main'
 }];
 __localStaticStorageForBindingFields['sceneFields'] = [{
-  title: 'Y Code',
+  title: 'Tags(,)',
   fireSetField: 'blockCode',
   group: 'ground',
   floatLeft: true
@@ -911,7 +911,8 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   fireSetField: 'videoClearURL',
   group: 'video',
   type: 'boolean',
-  floatLeft: true
+  floatLeft: true,
+  clearLeft: true
 }, {
   title: 'blockFlag',
   fireSetField: 'blockFlag',

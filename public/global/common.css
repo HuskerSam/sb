@@ -269,7 +269,8 @@ button i.material-icons {
 
 .scene-options-panel .selected-mesh-bounds-helper-box {
   background: none!important;
-  height: 6em;
+  height: 7.5em;
+  padding-top: 1.25em;
 }
 
 .selected-mesh-helper-collapse-button {

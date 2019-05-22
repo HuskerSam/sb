@@ -34,9 +34,9 @@ class cWorkspace {
     let materialCount = Object.keys(gAPPP.a.modelSets['material'].fireDataValuesByKey).length;
     let blockchildCount = Object.keys(gAPPP.a.modelSets['blockchild'].fireDataValuesByKey).length;
 
-    html += `<div style="padding:.75em;"><a href="${this.bView.genQueryString(null, null, null, null, 'Details')}" class="tag_key_redirect" data-value="Details">Details</a>
-      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Generate')}" class="tag_key_redirect" data-value="Generate">Generate</a>
-      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Layout')}" class="tag_key_redirect" data-value="Layout">Layout</a>
+    html += `<div style="padding:.75em;"><a href="${this.bView.genQueryString(null, null, null, null, 'Details')}" class="tag_key_redirect" data-value="Details" data-type="w">Details</a>
+      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Generate')}" class="tag_key_redirect" data-value="Generate" data-type="w">Generate</a>
+      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Layout')}" class="tag_key_redirect" data-value="Layout" data-type="w">Layout</a>
       </div>`;
 
     let getAssetLinks = (asset) => {
@@ -151,9 +151,14 @@ class cWorkspace {
     });
     this.domPanel.querySelectorAll('.tag_key_redirect').forEach(i => {
       i.addEventListener('click', e => {
-        this.bView.dataview_record_tag.value = e.currentTarget.dataset.tag;
-        this.bView.key = e.currentTarget.dataset.key;
-        this.bView.updateRecordList(this.bView.key);
+        if (e.currentTarget.dataset.type === 'w') {
+          this.bView.dataview_record_key.value = e.currentTarget.dataset.value;
+          this.bView.updateSelectedRecord();
+        } else {
+          this.bView.dataview_record_tag.value = e.currentTarget.dataset.tag;
+          this.bView.key = e.currentTarget.dataset.key;
+          this.bView.updateRecordList(this.bView.key);
+        }
         e.preventDefault();
         return false;
       })

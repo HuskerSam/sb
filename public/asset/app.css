@@ -96,6 +96,7 @@ input[type="text"] {
 
 .lightbar-fields-container i {
   pointer-events: none;
+  color: white;
 }
 
 #-position-preset {
@@ -127,6 +128,7 @@ input[type="text"] {
   top: .15em;
   position: relative;
   pointer-events: none;
+  color: white;
 }
 
 #light_intensity_value {
@@ -291,11 +293,16 @@ select {
   margin-right: 0;
 }
 
-.font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+#profile-header-panel .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  width: 100%;
+  margin-bottom: .5em;
+}
+
+#profile-header-panel .font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
   transform: none;
-  width: 18em;
-  left: -12.75em;
-  top: .25em;
+  width: 16.5em;
+  left: -12em;
+  top: .75em;
   margin-bottom: .75em;
 }
 
@@ -308,6 +315,11 @@ select {
   font-size: inherit;
   padding-top: .35em;
 }
+
+#profile-header-panel .selected-mesh-bounds-helper-box {
+  padding-bottom: 1em;
+}
+
 
 .selected-mesh-bounds-helper-box input[type="text"] {
   border-radius: .25em;

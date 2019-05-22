@@ -750,7 +750,6 @@ class cView extends bView {
   expandAll() {
     super.expandAll();
     this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_less';
-    this.expand_all_global_btn.classList.add('app-inverted');
     if (this.framesBand) {
       this.framesBand._updateFrameHelpersUI();
     }
@@ -761,7 +760,6 @@ class cView extends bView {
   collapseAll() {
     super.collapseAll();
     this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_more';
-    this.expand_all_global_btn.classList.remove('app-inverted');
     if (this.framesBand) {
       this.framesBand._updateFrameHelpersUI();
     }
