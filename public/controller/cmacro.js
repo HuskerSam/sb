@@ -155,15 +155,15 @@ class cMacro {
      <option>Web Font</option>
     </select>
     <div class="create-2d-text-plane">
-      <label><span>texturetext</span><input class="texturetext" value="Text Line" /></label><br>
-      <label><span>texturetext2</span><input class="texturetext2" value="" /></label><br>
-      <label><span>textfontfamily</span><input class="textfontfamily" list="fontfamilydatalist" /></label><br>
-      <label><span>textfontcolor</span><input class="textfontcolor" value="0,0,0" /></label><br>
-      <label><span>textfontweight</span><input class="textfontweight" value="" /></label><br>
-      <label><span>textfontsize</span><input class="textfontsize" value="100" /></label><br>
-      <label><span>texturetextrendersize</span><input class="texturetextrendersize" value="512" /></label><br>
-      <label><span>width</span><input class="width" value="4" /></label><br>
-      <label><span>height</span><input class="height" value="4" /></label><br>
+      <label><span>texturetext</span><input class="texturetext" style="width:15em" type="text" value="Text Line" /></label><br>
+      <label><span>texturetext2</span><input class="texturetext2" type="text" value="" style="width:15em" /></label><br>
+      <label><span>textfontfamily</span><input class="textfontfamily" type="text" list="fontfamilydatalist" style="width:15em" /></label><br>
+      <label><span>textfontcolor</span><input class="textfontcolor" type="text" value="0,0,0" style="width:15em" /></label><br>
+      <label><span>textfontweight</span><input class="textfontweight" type="text" value="" style="width:15em" /></label><br>
+      <label><span>textfontsize</span><input class="textfontsize" type="text" value="100" /></label><br>
+      <label><span>texturetextrendersize</span><input class="texturetextrendersize" type="text" value="512" /></label><br>
+      <label><span>width</span><input class="width" type="text" value="4" /></label><br>
+      <label><span>height</span><input class="height" type="text" value="4" /></label><br>
     </div>
     <div class="web-font-block-add-options" style="display:none;">
       <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:15em;" value="" /></label>
@@ -237,7 +237,7 @@ class cMacro {
       <br>
       <label><span>texttextline2</span><input type="text" style="width:15em;" class="texttextline2" value="" /></label>
       <br>
-      <label><span>textfontfamily</span><input class="textfontfamily" list="fontfamilydatalist" /></label>
+      <label><span>textfontfamily</span><input class="textfontfamily" type="text" list="fontfamilydatalist" /></label>
       <label><span>textdepth</span><input type="text" class="textdepth" value=".1" /></label>
       <br>
       <label><span>textmaterial</span>&nbsp;<input type="text" style="width:15em;" class="textmaterial" list="materialdatatitlelookuplist" /></label>

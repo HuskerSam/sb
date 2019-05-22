@@ -319,6 +319,7 @@ button i.material-icons {
   z-index: 100;
   margin: .5em;
   padding: .25em;
+  right: .25em;
 }
 
 .scene-options-panel .scene-fields-container {

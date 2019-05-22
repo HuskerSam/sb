@@ -155,7 +155,6 @@ select {
 }
 
 .block_child_details_block {
-  float: left;
   margin-top: .25em;
   clear: left;
 }
