@@ -53,7 +53,7 @@ class cGenerate {
         <option value="current">Assets CSV Data</option>
         <option value="workspace">Workspace Assets</option>
         <option value="template" selected>Template Assets</option>
-        <option>No Assets</option>
+        <option value="none">No Assets</option>
       </select>
       <select class="add_animation_asset_animation" style="display:none;"></select>
       <select class="add_animation_asset_template">
@@ -66,7 +66,7 @@ class cGenerate {
         <option value="current">Layout CSV Data</option>
         <option value="workspace">Workspace Layout</option>
         <option value="template" selected>Template Layout</option>
-        <option>No Layout</option>
+        <option value="none">No Layout</option>
       </select>
       <select class="add_animation_scene_animation" style="display:none;"></select>
       <select class="add_animation_scene_template">
@@ -79,7 +79,7 @@ class cGenerate {
         <option value="current" selected>Products CSV Data</option>
         <option value="workspace">Workspace Products</option>
         <option value="template">Template Products</option>
-        <option>No Products</option>
+        <option value="none">No Products</option>
       </select>
       <select class="add_animation_product_animation" style="display:none;"></select>
       <select class="add_animation_product_template" style="display:none;">
@@ -173,7 +173,9 @@ class cGenerate {
     dSpan.innerHTML = gAPPP[type + `RowsDateDisplay`];
     this['add_animation_' + type + '_template'].style.display = 'none';
     this['add_animation_' + type + '_animation'].style.display = 'none';
-
+    if (value === 'none') {
+      dSpan.innerHTML = '';
+    }
     if (value === 'template') {
       this['add_animation_' + type + '_template'].style.display = 'inline-block';
       dSpan.innerHTML = '';

@@ -193,6 +193,8 @@ class wContext {
   refreshFocus(timeoutCall) {
     if (gAPPP.activeContext !== this)
       return;
+    if (!gAPPP.a.profile)
+      return;
     if (!timeoutCall) //do this after it renders a frame
     {
       if (this.activeBlock) {
@@ -395,6 +397,9 @@ class wContext {
     });
   }
   _renderFocusDetails() {
+    if (!gAPPP.a.profile)
+      return;
+
     if (gAPPP.a.profile.showForceWireframe)
       this.scene.forceWireframe = true;
     else

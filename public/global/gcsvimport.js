@@ -427,9 +427,7 @@ class gCSVImport {
     sceneBC.sz = row.sz;
     sceneBC.materialname = row.materialname;
 
-    await this.addCSVRow(sceneBC);
-
-    return;
+    return this.addCSVRow(sceneBC);
   }
   async addCSVBlockChildFrameRow(row) {
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
@@ -941,7 +939,7 @@ class gCSVImport {
     }
     let key = sceneRecords.recordIds[0];
     let sceneData = sceneRecords.records[0];
-
+  //  row.materialname = 'decolor: 0,1,0';
     let textPlaneBlock = this.defaultCSVRow();
     textPlaneBlock.asset = 'textplane';
     textPlaneBlock.name = row.name;
@@ -955,6 +953,8 @@ class gCSVImport {
     textPlaneBlock.textfontsize = row.textfontsize;
     textPlaneBlock.texturetextrendersize = row.texturetextrendersize;
     textPlaneBlock.textfontweight = row.textfontweight;
+    textPlaneBlock.displaystyle = row.displaystyle;
+    textPlaneBlock.materialname = row.materialname;
 
     let textPlaneBlockBC = this.defaultCSVRow();
     textPlaneBlockBC.asset = 'blockchild';
@@ -977,22 +977,34 @@ class gCSVImport {
   }
   async addCSVTextPlane(row) {
     let promises = [];
-    let textPlaneName = row.name + '_textplane';
 
     let blockWrapper = {
       title: row.name,
-      materialName: '',
+      materialName: row.materialname,
       height: row.height,
       width: row.width,
       depth: row.depth
     };
     let blockResult = await this.dbSetRecord('block', blockWrapper);
 
+    if (row.displaystyle === '3dbasic')
+      this.__add3dTextPlane(row);
+    else
+      this.__add2dTextPlane(row);
+
+    row.asset = 'block';
+    this.addParentBlockChild(row);
+
+    return blockResult;
+  }
+  async __add2dTextPlane(row) {
+    let parent = row.name;
+    let textPlaneName = parent + '_textplane';
     let textChildBC = this.defaultCSVRow();
     textChildBC.asset = 'blockchild';
     textChildBC.name = textPlaneName;
     textChildBC.childtype = 'shape';
-    textChildBC.parent = row.name;
+    textChildBC.parent = parent;
     textChildBC.ry = '90deg';
     this.addCSVRow(textChildBC);
 
@@ -1004,7 +1016,7 @@ class gCSVImport {
       boxDepth: row.depth,
       shapeType: 'plane'
     };
-    promises.push(this.dbSetRecord('shape', shapeData));
+    this.dbSetRecord('shape', shapeData);
 
     if (!row.texturetext)
       row.texturetext = '';
@@ -1026,7 +1038,7 @@ class gCSVImport {
     textureData.textFontWeight = row.textfontweight ? row.textfontweight : '';
     textureData.isFittedText = true;
 
-    promises.push(this.dbSetRecord('texture', textureData));
+    this.dbSetRecord('texture', textureData);
 
     let materialData = {
       title: textPlaneName,
@@ -1038,12 +1050,41 @@ class gCSVImport {
       emissiveColor: '',
       emissiveTextureName: textPlaneName
     };
-    promises.push(this.dbSetRecord('material', materialData));
+    this.dbSetRecord('material', materialData);
+  }
+  async __add3dTextPlane(row) {
+    let parent = row.name;
+    let descText = this.defaultCSVRow();
+    descText.asset = 'shape';
+    descText.name = parent + '_3dtitle';
+    descText.materialname = 'inherit';
+    descText.shapetype = 'text';
+    descText.textfontfamily = 'Times';
+    descText.texttext = row.texturetext;
+    descText.textdepth = '.25';
+    descText.textsize = '100';
+    descText.parent = parent;
+    descText.y = '5';
+    descText.x = '.5';
+    descText.ry = '180deg';
+    descText.rz = '-90deg';
+    this.addCSVRow(descText);
 
-    row.asset = 'block';
-    this.addParentBlockChild(row);
-
-    return blockResult;
+    descText = this.defaultCSVRow();
+    descText.asset = 'shape';
+    descText.name = parent + '_3dtitle2';
+    descText.materialname = 'inherit';
+    descText.shapetype = 'text';
+    descText.textfontfamily = 'Times';
+    descText.texttext = row.texturetext2;
+    descText.textdepth = '.25';
+    descText.textsize = '100';
+    descText.parent = parent;
+    descText.y = '3';
+    descText.x = '.5';
+    descText.ry = '180deg';
+    descText.rz = '-90deg';
+    this.addCSVRow(descText);
   }
   async __addSignPost(product, productData) {
     let blockRow = this.defaultCSVRow();
@@ -1122,21 +1163,23 @@ class gCSVImport {
     textPlane.ry = '180deg';
     newObjects.push(textPlane);
 
-    let blockImageShape = this.defaultCSVRow();
-    blockImageShape.asset = 'shape';
-    blockImageShape.materialname = product.childName + '_signpostimage';
-    blockImageShape.name = product.childName + '_signpostimage';
-    blockImageShape.scaleu = '1';
-    blockImageShape.scalev = '1';
-    blockImageShape.shapetype = 'plane';
-    blockImageShape.texturepath = product.itemImage;
-    blockImageShape.width = '3';
-    blockImageShape.height = '3';
-    blockImageShape.parent = parent;
-    blockImageShape.x = '.06';
-    blockImageShape.y = '6';
-    blockImageShape.ry = '-90deg';
-    newObjects.push(blockImageShape);
+    if (product.itemImage) {
+      let blockImageShape = this.defaultCSVRow();
+      blockImageShape.asset = 'shape';
+      blockImageShape.materialname = product.childName + '_signpostimage';
+      blockImageShape.name = product.childName + '_signpostimage';
+      blockImageShape.scaleu = '1';
+      blockImageShape.scalev = '1';
+      blockImageShape.shapetype = 'plane';
+      blockImageShape.texturepath = product.itemImage;
+      blockImageShape.width = '3';
+      blockImageShape.height = '3';
+      blockImageShape.parent = parent;
+      blockImageShape.x = '.06';
+      blockImageShape.y = '6';
+      blockImageShape.ry = '-90deg';
+      newObjects.push(blockImageShape);
+    }
 
     let blockSPBC = this.defaultCSVRow();
     blockSPBC.asset = 'blockchild';
@@ -1163,7 +1206,9 @@ class gCSVImport {
     let priceText = this.defaultCSVRow();
     priceText.asset = 'shape';
     priceText.name = parent + '_3ddesc';
-    priceText.materialname = 'decolor: .1,.1,.1';
+    //priceText.materialname = 'ecolor: .1,.1,.1';
+
+    priceText.materialname = product.origRow.materialname;
     priceText.shapetype = 'text';
     priceText.textfontfamily = 'Arial';
     priceText.texttext = product.desc;
@@ -1192,39 +1237,41 @@ class gCSVImport {
     descText.rz = '-90deg';
     this.addCSVRow(descText);
 
-    let blockImageShape = this.defaultCSVRow();
-    blockImageShape.asset = 'shape';
-    blockImageShape.materialname = product.childName + '_signpostimage';
-    blockImageShape.name = product.childName + '_signpostimage';
-    blockImageShape.scaleu = '1';
-    blockImageShape.scalev = '1';
-    blockImageShape.shapetype = 'plane';
-    blockImageShape.texturepath = product.itemImage;
-    blockImageShape.width = '3';
-    blockImageShape.height = '3';
-    blockImageShape.parent = parent;
-    blockImageShape.x = '.06';
-    blockImageShape.y = '6';
-    blockImageShape.ry = '-90deg';
-    this.addCSVRow(blockImageShape);
+    if (product.itemImage) {
+      let blockImageShape = this.defaultCSVRow();
+      blockImageShape.asset = 'shape';
+      blockImageShape.materialname = product.childName + '_signpostimage';
+      blockImageShape.name = product.childName + '_signpostimage';
+      blockImageShape.scaleu = '1';
+      blockImageShape.scalev = '1';
+      blockImageShape.shapetype = 'plane';
+      blockImageShape.texturepath = product.itemImage;
+      blockImageShape.width = '3';
+      blockImageShape.height = '3';
+      blockImageShape.parent = parent;
+      blockImageShape.x = '.06';
+      blockImageShape.y = '6';
+      blockImageShape.ry = '-90deg';
+      this.addCSVRow(blockImageShape);
+    }
 
     return;
   }
-  async __addTextShowHide(product, productData, origRow) {
-    let childName = product.childName;
+  async __addTextShowHide(product, productData) {
+    let parent = product.childName;
 
     let showFrame = this.defaultCSVRow();
     showFrame.asset = 'blockchildframe';
-    showFrame.name = childName;
+    showFrame.name = parent;
     showFrame.childtype = 'block';
     showFrame.parent = productData.sceneBlock.title;
     showFrame.frameorder = '20';
     showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
-    showFrame.y = origRow.y;
+    showFrame.y = product.origRow.y;
 
     let hideFrame = this.defaultCSVRow();
     hideFrame.asset = 'blockchildframe';
-    hideFrame.name = childName;
+    hideFrame.name = parent;
     hideFrame.childtype = 'block';
     hideFrame.parent = productData.sceneBlock.title;
     hideFrame.frameorder = '30';
@@ -1233,7 +1280,7 @@ class gCSVImport {
 
     let endFrame = this.defaultCSVRow();
     endFrame.asset = 'blockchildframe';
-    endFrame.name = product.childName;
+    endFrame.name = parent;
     endFrame.childtype = 'block';
     endFrame.parent = productData.sceneBlock.title;
     endFrame.frameorder = '40';
@@ -1493,10 +1540,8 @@ class gCSVImport {
     for (let c = 0, l = pInfo.products.length; c < l; c++)
       if (pInfo.products[c].itemId)
         promises.push(this.__addSignPost(pInfo.products[c], pInfo));
-      else {
-        let origRow = pInfo.productsRecords[c].origRow;
-        promises.push(this.__addTextShowHide(pInfo.products[c], pInfo, origRow));
-      }
+      else
+        promises.push(this.__addTextShowHide(pInfo.products[c], pInfo));
 
     if (!pInfo.sceneId)
       return Promise.resolve();
