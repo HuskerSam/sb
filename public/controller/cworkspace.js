@@ -34,6 +34,11 @@ class cWorkspace {
     let materialCount = Object.keys(gAPPP.a.modelSets['material'].fireDataValuesByKey).length;
     let blockchildCount = Object.keys(gAPPP.a.modelSets['blockchild'].fireDataValuesByKey).length;
 
+    html += `<div style="padding:.75em;"><a href="${this.bView.genQueryString(null, null, null, null, 'Details')}" class="tag_key_redirect" data-value="Details">Details</a>
+      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Generate')}" class="tag_key_redirect" data-value="Generate">Generate</a>
+      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Layout')}" class="tag_key_redirect" data-value="Layout">Layout</a>
+      </div>`;
+
     let getAssetLinks = (asset) => {
       let set = gAPPP.a.modelSets[asset];
       set.updateChildOrder();
@@ -46,8 +51,8 @@ class cWorkspace {
         let d = new Date(data.sortKey);
         if (data.sortKey === undefined)
           d = new Date('1/1/1970');
-        let od = d.toISOString().substring(0,10);
-        od += ' ' + d.toISOString().substring(11,16);
+        let od = d.toISOString().substring(0, 10);
+        od += ' ' + d.toISOString().substring(11, 16);
         let href = this.bView.genQueryString(null, asset, i);
 
         let url = data.renderImageURL;
@@ -88,25 +93,16 @@ class cWorkspace {
     if (sceneRecords.recordIds.length > 0) {
       let href = this.bView.genQueryString(null, 'block', sceneRecords.recordIds[0]);
       html += `Generated animation block: <b><a href="${href}" class="tag_key_redirect" data-tag="block"
-       data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b> <span class="csv_data_date_span">${gAPPP.animationGeneratedDateDisplay}<br>`
+       data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b> <span class="csv_data_date_span">${gAPPP.animationGeneratedDateDisplay}</span><br>`
     } else {
       html += 'Generated animation block: none<br>';
     }
-
-    let blocksData = await gi.dbFetchByLookup('block', 'blockFlag', 'displayblock');
-    html += `Display Blocks (${blocksData.records.length}): `;
-    for (let c = 0, l = blocksData.records.length; c < l; c++) {
-      let href = this.bView.genQueryString(null, 'block', blocksData.recordIds[c]);
-      html += ` &nbsp; <a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${blocksData.recordIds[c]}">${blocksData.records[c].title}</a>`;
-    }
-    html += '<br>';
 
     let baskets = await gi.dbFetchByLookup('block', 'blockFlag', 'basket');
     if (baskets.recordIds.length > 0) {
       let href = this.bView.genQueryString(null, 'block', baskets.recordIds[0]);
       html += `Basket Block: <a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${baskets.recordIds[0]}">${baskets.records[0].title}</a><br>`;
-    }
-    else {
+    } else {
       html += 'Basket Block: none<br>'
     }
 
@@ -131,6 +127,16 @@ class cWorkspace {
     html += `Animation Stops: ${animationStops}<br>`;
     html += `Mesh [sb:] ${gAPPP.cdnPrefix}meshes/<br>`;
     html += `Texture [sb:] ${gAPPP.cdnPrefix}textures/<br>`;
+
+
+    let blocksData = await gi.dbFetchByLookup('block', 'blockFlag', 'displayblock');
+    html += `Display Blocks (${blocksData.records.length}): `;
+    for (let c = 0, l = blocksData.records.length; c < l; c++) {
+      let href = this.bView.genQueryString(null, 'block', blocksData.recordIds[c]);
+      html += ` &nbsp; <a href="${href}" class="tag_key_redirect" data-tag="block" data-key="${blocksData.recordIds[c]}">${blocksData.records[c].title}</a>`;
+    }
+    html += '<br>';
+
     html += '</div>';
     this.domPanel.innerHTML = html;
     this.bView.workspace_show_home_btn.style.display = 'none';

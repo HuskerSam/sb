@@ -77,7 +77,7 @@ class cView extends bView {
     this.asset_show_home_btn = this.dialog.querySelector('.asset_show_home_btn');
     this.asset_show_home_btn.addEventListener('click', e => {
       this.dataview_record_key.value = '';
-      this.updateSelectedRecord();
+      this.updateRecordList();
     });
     this.expandedAll = true;
     this.expand_all_global_btn = this.dialog.querySelector('.expand_all_global_btn');
@@ -130,7 +130,7 @@ class cView extends bView {
       this.fireSet.removeListener(this.fireSetCallback);
     this.dataViewContainer = this.form_panel_view_dom.querySelector('.data-view-container');
     this.dataViewContainer.innerHTML = this.__dataviewTemplate();
-    this.mainDataView = this.form_panel_view_dom.querySelector('.asset-fields-container');
+    this.assetsFieldsContainer = this.form_panel_view_dom.querySelector('.asset-fields-container');
 
     this.blockChildrenSelect.style.display = 'none';
     this.addChildButton.style.display = 'none';
@@ -146,12 +146,12 @@ class cView extends bView {
     this.fields = sDataDefinition.bindingFieldsCloned(tag);
     this.fireSet = gAPPP.a.modelSets[tag];
 
-    this.fireFields = new cPanelData(this.fields, this.mainDataView, this);
+    this.fireFields = new cPanelData(this.fields, this.assetsFieldsContainer, this);
     this.fireFields.updateContextObject = true;
 
     let clearDiv = document.createElement('div');
     clearDiv.style.clear = 'both';
-    this.mainDataView.appendChild(clearDiv);
+    this.assetsFieldsContainer.appendChild(clearDiv);
 
     this.fireSetCallback = (values, type, fireData) => this.fireFields._handleDataChange(values, type, fireData);
     this.fireSet.childListeners.push(this.fireSetCallback);
@@ -187,7 +187,7 @@ class cView extends bView {
 
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBand = new cBandSelect(this.blockChildrenSelect, this, this.childEditPanel);
-    this.childEditPanel.parentNode.insertBefore(this.mainDataView, this.childEditPanel.parentNode.firstChild);
+    this.childEditPanel.parentNode.insertBefore(this.assetsFieldsContainer, this.childEditPanel.parentNode.firstChild);
   }
   updateSubViewDisplay() {
     let view = this.mainbandsubviewselect.value;
@@ -318,6 +318,7 @@ class cView extends bView {
     this.dataview_record_key.selectedIndex = 0;
     this.key = '';
     this.generate = new cMacro(this.addAssetPanel, this.tag, this);
+    this.assetsFieldsContainer = this.form_panel_view_dom.querySelector('.asset-fields-container');
     this.recordViewer = new cBandIcons(this.tag, this);
     this.expand_all_global_btn.style.display = '';
     this.form_canvas_wrapper.classList.add('show-help');
@@ -360,9 +361,9 @@ class cView extends bView {
     this.form_canvas_wrapper.classList.add('show-help');
 
     if (this.key === 'Generate')
-      this.workspaceCTL = new cGenerate(this.mainDataView, this.key, this);
+      this.workspaceCTL = new cGenerate(this.assetsFieldsContainer, this.key, this);
     else
-      this.workspaceCTL = new cWorkspace(this.mainDataView, this.key, this);
+      this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, this.key, this);
     let url = '/doc/workspacehelp.html';
     if (this.key === 'Details')
       url = '/doc/workspacehelp.html';
@@ -410,7 +411,7 @@ class cView extends bView {
 
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }
-    this.workspaceCTL = new cWorkspace(this.mainDataView, 'Layout', this);
+    this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, 'Layout', this);
   }
   async updateDisplayForAssetEditView() {
     this.form_canvas_wrapper.classList.remove('show-help');
@@ -494,7 +495,7 @@ class cView extends bView {
     }
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
   }
-  genQueryString(wid = null, tag = null, key = null, childkey = null) {
+  genQueryString(wid = null, tag = null, key = null, childkey = null, subView = null) {
     if (wid === null) wid = gAPPP.a.profile.selectedWorkspace;
     if (tag === null) tag = this.tag;
     if (key === null) key = this.key;
@@ -506,7 +507,10 @@ class cView extends bView {
         queryString += `&key=${key}`;
 
     } else {
-      if (this.dataview_record_key.selectedIndex > 0) {
+      if (subView) {
+        queryString += `&subview=${subView}`
+      }
+      else if (this.dataview_record_key.selectedIndex > 0) {
         let wDisplay = this.dataview_record_key.value;
         queryString += `&subview=${wDisplay}`
       }

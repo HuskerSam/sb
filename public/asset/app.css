@@ -16,7 +16,7 @@ button {
 }
 
 input[type="text"] {
-  padding: .25em;
+  padding: .35em;
 }
 
 #firebase-app-login-page {
@@ -73,8 +73,8 @@ input[type="text"] {
 
 .lightbar-fields-container {
   position: absolute;
-  right: -1em;
-  top: 2.5em;
+  right: -1.25em;
+  top: 3em;
 }
 
 .lightbar-fields-container .form-group-container-group {
@@ -86,7 +86,7 @@ input[type="text"] {
 .lightbar-fields-container label span {
   background: none;
   position: absolute;
-  top: .75em;
+  top: 1em;
   color: white;
   font-size: 1.5em;
   z-index: 1;
@@ -107,12 +107,11 @@ input[type="text"] {
   font-size: 1.25em;
   left: .05em;
   top: .2em;
-  background: rgba(50, 50, 50, .5);
+  background: rgba(50, 50, 50, .3);
   width: auto;
   height: auto;
   z-index: 1000;
   pointer-events: none;
-  line-height: 1em;
   border-radius: 10%;
 }
 
@@ -121,6 +120,7 @@ input[type="text"] {
   left: .5em;
   top: .55em;
   padding: 0;
+  line-height: 1em;
 }
 
 .run-length-label i, .camera-slider-label i {
@@ -131,11 +131,11 @@ input[type="text"] {
 
 #light_intensity_value {
   font-size: .65em;
-  top: 1.5em;
+  top: -1.25em;
   left: .3em;
   width: auto;
   text-align: center;
-  background: rgba(50, 50, 50, .5);
+  background: rgba(50, 50, 50, .3);
   pointer-events: none;
   z-index: 1000;
   padding: 0;
@@ -482,7 +482,6 @@ select {
 
 .add-asset-template-panel input {
   margin: .25em;
-  padding: .25em;
 }
 
 .add-asset-template-panel input[type="file"] {}
@@ -678,7 +677,7 @@ select {
   margin: .1em;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 6em;
+  max-width: calc(20% - 2em);
 }
 
 .workspace-asset-link-display img {

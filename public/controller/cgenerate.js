@@ -2,6 +2,18 @@ class cGenerate {
   constructor(domPanel, subKey, bView) {
     this.domPanel = domPanel;
     this.bView = bView;
+    this.templates = {
+      "assetTemplates": {
+        "Grocery": "asset.csv",
+        "Nature": "asset.csv"
+      },
+      "sceneTemplates": {
+        "Produce": "layout.csv"
+      },
+      "productTemplates": {
+        "Produce 1": "product.csv"
+      }
+    };
 
     this.domPanel.innerHTML = this.template();
     this.register();
@@ -40,11 +52,11 @@ class cGenerate {
       <select class="add_animation_asset_choice">
         <option value="current">Assets CSV Data</option>
         <option value="workspace">Workspace Assets</option>
-        <option value="template">Template Assets</option>
+        <option value="template" selected>Template Assets</option>
         <option>No Assets</option>
       </select>
       <select class="add_animation_asset_animation" style="display:none;"></select>
-      <select class="add_animation_asset_template" style="display:none;">
+      <select class="add_animation_asset_template">
         <option>select template</option>
       </select>
       <span class="asset_workspace csv_data_date_span"></span>
@@ -53,11 +65,11 @@ class cGenerate {
       <select class="add_animation_scene_choice">
         <option value="current">Layout CSV Data</option>
         <option value="workspace">Workspace Layout</option>
-        <option value="template">Template Layout</option>
+        <option value="template" selected>Template Layout</option>
         <option>No Layout</option>
       </select>
       <select class="add_animation_scene_animation" style="display:none;"></select>
-      <select class="add_animation_scene_template" style="display:none;">
+      <select class="add_animation_scene_template">
         <option>select template</option>
       </select>
       <span class="scene_workspace csv_data_date_span"></span>
@@ -67,7 +79,7 @@ class cGenerate {
         <option value="current">Products CSV Data</option>
         <option value="workspace">Workspace Products</option>
         <option value="template">Template Products</option>
-        <option>No Products</option>
+        <option selected>No Products</option>
       </select>
       <select class="add_animation_product_animation" style="display:none;"></select>
       <select class="add_animation_product_template" style="display:none;">
@@ -82,18 +94,6 @@ class cGenerate {
     </div>`;
   }
   async register() {
-    this.templates = {
-      "assetTemplates": {
-        "All Assets": "asset.csv"
-      },
-      "sceneTemplates": {
-        "Produce": "layout.csv"
-      },
-      "productTemplates": {
-        "Produce Sales Week 1": "product.csv"
-      }
-    };
-
     this.add_animation_asset_animation = this.domPanel.querySelector('.add_animation_asset_animation');
     this.add_animation_asset_template = this.domPanel.querySelector('.add_animation_asset_template');
     this.add_animation_asset_choice = this.domPanel.querySelector('.add_animation_asset_choice');

@@ -189,7 +189,6 @@ html, body {
   width: 100%;
   font-size: 1em;
   float: left;
-  padding: .25em .5em;
 }
 
 .checkboxgroup input {
@@ -421,7 +420,7 @@ button i.material-icons {
   width: 10em;
   display: inline-block;
   position: relative;
-  top: .3em;
+  top: .75em;
   font-size: inherit;
 }
 

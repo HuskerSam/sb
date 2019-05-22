@@ -40,6 +40,7 @@ class cPanelData {
       c.appendChild(l);
       c.classList.add('checkboxgroup');
     } else {
+      t.setAttribute('type', 'text');
       l.innerHTML = '<span>' + f.title + '</span>';
       l.appendChild(t);
       t.classList.add('form-control');

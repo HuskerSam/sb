@@ -74,7 +74,7 @@ class cMacro {
   }
   baseTemplate() {
     return `<label><b>${this.tag} name</b>
-     <input class="add-item-name" /></label>
+     <input class="add-item-name" type="text" style="width:15em;" /></label>
       <button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
       <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
       <br>
