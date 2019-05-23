@@ -812,3 +812,8 @@ select {
   margin: .25em;
   cursor: pointer;
 }
+
+.block-editor-child i {
+  position: relative;
+  top: .12em;
+}

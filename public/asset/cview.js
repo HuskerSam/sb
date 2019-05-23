@@ -18,6 +18,7 @@ class cView extends bView {
   }
   async canvasReady() {
     this.updateRecordList(this.key, this.subView);
+    this.canvasHelper.userProfileChange();
   }
   initUI() {
     this.dataview_record_tag = this.dialog.querySelector('.dataview_record_tag');
@@ -173,10 +174,9 @@ class cView extends bView {
     this.sceneFireFields.updateContextObject = false;
     this.fireFields.updateContextObject = false;
 
-    this.refreshExportButton = this.dialog.querySelector('.refresh-export-frames-button');
-    this.refreshExportButton.addEventListener('click', e => this.refreshExportText());
-    this.importButton = this.dialog.querySelector('.import-frames-button');
-    this.importButton.addEventListener('click', e => this.importFramesFromText());
+    this.dialog.querySelector('.refresh-export-frames-button').addEventListener('click', e => this.fetchExportFrames());
+    this.dialog.querySelector('.refresh-export-json-button').addEventListener('click', e => this.fetchExportJSON());
+    this.dialog.querySelector('.import-frames-button').addEventListener('click', e => this.importFramesFromText());
     this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
     this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
 
@@ -581,7 +581,7 @@ class cView extends bView {
               <select class="main-band-sub-view-select" style="display:none;float:left;">
                 <option value="frame">Frames</option>
                 <option value="node" selected>Details</option>
-                <option value="import">JSON</option>
+                <option value="import">Data</option>
               </select>
               <button class="add_frame_button btn-sb-icon" style="display:none;"><i class="material-icons">playlist_add</i></button>
               <div style="clear:both;"></div>
@@ -656,9 +656,11 @@ class cView extends bView {
         <div class="scene-fields-panel"></div>
       </div>
       <div class="export-frames-details-panel">
-        <button class="btn-sb-icon refresh-export-frames-button">Refresh</button>
-        &nbsp;
-        <button class="btn-sb-icon import-frames-button">Import</button>
+      <button class="btn-sb-icon refresh-export-json-button">Fetch JSON</button>
+      &nbsp;
+      <button class="btn-sb-icon refresh-export-frames-button">Fetch Frames</button>
+      &nbsp;
+        <button class="btn-sb-icon import-frames-button">Import Frames</button>
         <br>
         <textarea class="frames-textarea-export" rows="1" cols="6" style="width: 100%; height: 5em"></textarea>
       </div>`;
@@ -681,7 +683,7 @@ class cView extends bView {
     }
     super._updateContextWithDataChange(tag, values, type, fireData);
   }
-  refreshExportText() {
+  fetchExportFrames() {
     let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
     if (!block)
       block = this.rootBlock;
@@ -690,6 +692,9 @@ class cView extends bView {
       outFrames.push(block.framesHelper.rawFrames[i]);
 
     this.ieTextArea.value = JSON.stringify(outFrames).replace(/},/g, '},\n');
+  }
+  fetchExportJSON() {
+    this.ieTextArea.value = cMacro.assetJSON(this.tag, this.key);
   }
   importFramesFromText() {
     let obj;
@@ -704,6 +709,12 @@ class cView extends bView {
 
     if (!Array.isArray(obj)) {
       alert('Frames need to be in an array');
+      return;
+    }
+
+    if (obj.length < 1) {
+      if (!confirm('0 frames found - this will clear existing frames - proceed?'))
+        return;
     }
 
     let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);

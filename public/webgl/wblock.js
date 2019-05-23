@@ -660,9 +660,6 @@ class wBlock {
       if (gAPPP.a.profile.canvasColor)
         this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
 
-      this.context.scene.getBoundingBoxRenderer().frontColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsLines);
-      this.context.scene.getBoundingBoxRenderer().backColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsLines);
-
       return;
     }
 

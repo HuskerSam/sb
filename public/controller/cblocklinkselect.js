@@ -75,11 +75,11 @@ class cBlockLinkSelect extends bBand {
     let title = 'main';
     let html = '';
     for (let i in children)
-      html = `<option value="${i}">Linked ${children[i].childType}:${children[i].childName}</option>`
-        + html;
+      html = `<option value="${i}">Linked ${children[i].childType}:${children[i].childName}</option>` +
+      html;
 
-    html =  `<option value="">Block: ${title} [${this.parent.rootBlock.getBlockDimDesc()}]</option>`
-      + html;
+    html = `<option value="">Block: ${title} [${this.parent.rootBlock.getBlockDimDesc()}]</option>` +
+      html;
 
     this.childSelect.innerHTML = html;
     if (this.parent.childKey)
@@ -106,7 +106,7 @@ class cBlockLinkSelect extends bBand {
     else
       this.childSelect.selectedIndex = 0;
 
-    this.key = childKey;
+    this.key = (childKey) ? childKey : null;
     this.childEditFields.paint(this.fireSet.getCache(this.key));
     this._refreshChildBandFromCache();
   }
@@ -116,28 +116,37 @@ class cBlockLinkSelect extends bBand {
       children = this.fireSet.queryCache('parentKey', this.parent.key);
 
     let keyEle = null;
-    let noChildren = true;
-    for (let i in children) {
-      noChildren = false;
+    let addDom = (key, values) => {
       let d = document.createElement('div');
-      let values = children[i];
-      let key = i;
       this.childExpandedBand.insertBefore(d, this.childExpandedBand.childNodes[0]);
       d.addEventListener('click', e => this.setKey(key));
 
-      let html = `${values.childName + ' (' + values.childType + ')'}`;
+      let html = '';
+      if (!this.key)
+        this.key = null;
+
+      if (key)
+        html += `${values.childName + ' (' + values.childType + ')'}`;
+      else
+        html += '<i class="material-icons">trip_origin</i>';
       d.innerHTML = html;
       let className = `${this.tag}${this.myKey}-${key} block-editor-child app-panel`;
-      if (this.key === key){
+      if (this.key === key) {
         className += ' app-inverted';
         keyEle = d;
       }
       d.setAttribute('class', className);
+      return d;
     }
-    if (noChildren)
-      this.childExpandedBand.innerHTML = ' No child assets linked';
 
-    if (keyEle)
-      keyEle.scrollIntoView();
+    for (let i in children)
+      addDom(i, children[i]);
+    let root = addDom(null);
+    if (!keyEle) {
+      keyEle = root;
+      root.classList.add('app-inverted');
+    }
+
+    keyEle.scrollIntoView();
   }
 }
