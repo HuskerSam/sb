@@ -195,7 +195,7 @@ class cView extends bView {
     this.addFrameButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
     this.framesPanel.style.display = (view === 'frame') ? 'block' : 'none';
     this.nodedetailspanel.style.display = (view === 'node') ? '' : 'none';
-    this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'block' : 'none';
+    this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'flex' : 'none';
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
 
   }
@@ -656,13 +656,14 @@ class cView extends bView {
         <div class="scene-fields-panel"></div>
       </div>
       <div class="export-frames-details-panel">
-      <button class="btn-sb-icon refresh-export-json-button">Fetch JSON</button>
-      &nbsp;
-      <button class="btn-sb-icon refresh-export-frames-button">Fetch Frames</button>
-      &nbsp;
-        <button class="btn-sb-icon import-frames-button">Import Frames</button>
-        <br>
-        <textarea class="frames-textarea-export" rows="1" cols="6" style="width: 100%; height: 5em"></textarea>
+        <div>
+          <button class="btn-sb-icon refresh-export-json-button">Fetch JSON</button>
+          &nbsp;
+          <button class="btn-sb-icon refresh-export-frames-button">Fetch Frames</button>
+          &nbsp;
+          <button class="btn-sb-icon import-frames-button">Import Frames</button>
+        </div>
+        <textarea class="frames-textarea-export" rows="1" cols="6"></textarea>
       </div>`;
   }
   _updateContextWithDataChange(tag, values, type, fireData) {

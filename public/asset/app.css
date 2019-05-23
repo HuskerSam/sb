@@ -271,8 +271,6 @@ select {
 
 .export-frames-details-panel {
   padding: .5em;
-  border: solid .1em silver;
-  background: rgb(50, 50, 50);
 }
 
 .material-add-options .material-color-add {
@@ -648,6 +646,9 @@ select {
 
 .export-frames-details-panel {
   display: none;
+  line-height: 3em;
+  flex-direction: column;
+  flex: 1;
 }
 
 .cblock-child-details-panel {
@@ -816,4 +817,9 @@ select {
 .block-editor-child i {
   position: relative;
   top: .12em;
+}
+
+.frames-textarea-export {
+  width: 100%;
+  flex: 1;
 }
