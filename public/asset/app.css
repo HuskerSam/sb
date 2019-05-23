@@ -810,4 +810,5 @@ select {
   display: inline-block;
   padding: .5em;
   margin: .25em;
+  cursor: pointer;
 }
