@@ -582,6 +582,7 @@ class cView extends bView {
               </select>
               <button class="add_frame_button btn-sb-icon" style="display:none;"><i class="material-icons">playlist_add</i></button>
               <div style="clear:both;"></div>
+              <div class="child_band_picker_expanded"></div>
             </div>
           </div>
           <div class="data-view-container app-border">
@@ -660,7 +661,7 @@ class cView extends bView {
       </div>`;
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
-    if (this.tag === 'block') {
+    if (tag === 'block') {
       if (this.rootBlock) {
         this.rootBlock.handleDataUpdate(tag, values, type, fireData);
         this.childBand.updateSelectDom();
@@ -671,6 +672,7 @@ class cView extends bView {
       }
     }
     this._updateRecordSelect();
+
     if (this.tag === '' && this.dataview_record_key.selectedIndex < 1) {
       this.updateSelectedRecord();
     }

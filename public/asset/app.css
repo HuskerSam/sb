@@ -791,3 +791,11 @@ select {
   width: 15em;
   text-align: left;
 }
+
+.child_band_picker_expanded {
+  display: none;
+}
+
+.app-expanded .child_band_picker_expanded {
+  display: block;
+}

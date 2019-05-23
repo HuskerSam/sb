@@ -110,7 +110,6 @@ class wBlock {
     }
   }
   handleDataUpdate(tag, values, type, fireData) {
-    console.log(tag, values, type, fireData);
     if (!this.parent)
       this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type, true);
 
@@ -138,7 +137,7 @@ class wBlock {
           this.parent.containerCache = {};
           return this.parent.setData();
         }
-    } else if (type === 'add' && tag === 'blockchild') {
+    } else if ((type === 'add' || type === 'change') && tag === 'blockchild') {
       if (values.parentKey === this._blockKey)
         return this.setData();
 
