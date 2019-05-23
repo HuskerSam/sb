@@ -44,7 +44,7 @@ class cWorkspace {
       set.updateChildOrder();
       let keyOrder = set.childOrderByKey;
       let html = '';
-      keyOrder = keyOrder.slice(0, 5);
+      //keyOrder = keyOrder.slice(0, 5);
 
       keyOrder.forEach(i => {
         let data = set.fireDataValuesByKey[i];
@@ -59,7 +59,7 @@ class cWorkspace {
         if (!url)
           url = '/images/webgl.png';
 
-        html += `<a class="workspace-asset-link-display tag_key_redirect" data-tag="${asset}" data-key="${i}" href="${href}">
+        html += `<a class="workspace-asset-link-display tag_key_redirect app-control" data-tag="${asset}" data-key="${i}" href="${href}">
           <img src="${url}" />${data.title}<br><span>${od}</span></a>`;
       });
 
@@ -67,26 +67,31 @@ class cWorkspace {
     }
 
     html += `<div style="line-height:1.5em;padding:.5em;">
-    <a href="${this.bView.genQueryString(null, 'block', '')}" class="navigate_tag_select" data-value="block">Blocks: ${blockCount}</a>
-    &nbsp;
-    ${getAssetLinks('block')}
-    <br>
-    <a href="${this.bView.genQueryString(null, 'mesh', '')}" class="navigate_tag_select" data-value="mesh">Meshes: ${meshCount}</a>
-    &nbsp;
-    ${getAssetLinks('mesh')}
-    <br>
-    <a href="${this.bView.genQueryString(null, 'shape', '')}" class="navigate_tag_select" data-value="shape">Shapes: ${shapeCount}</a>
-    &nbsp;
-    ${getAssetLinks('shape')}
-    <br>
-    <a href="${this.bView.genQueryString(null, 'material', '')}" class="navigate_tag_select" data-value="material">Materials: ${materialCount}</a>
-    &nbsp;
-    ${getAssetLinks('material')}
-    <br>
-    <a href="${this.bView.genQueryString(null, 'texture', '')}" class="navigate_tag_select" data-value="texture">Textures: ${textureCount}</a>
-    &nbsp;
-    ${getAssetLinks('texture')}
-    <br>`;
+    <div class="workspace_band_wrapper">
+      <a href="${this.bView.genQueryString(null, 'block', '')}" class="navigate_tag_select" data-value="block">Blocks: ${blockCount}</a>
+      &nbsp;
+      ${getAssetLinks('block')}
+    </div>
+    <div class="workspace_band_wrapper">
+      <a href="${this.bView.genQueryString(null, 'mesh', '')}" class="navigate_tag_select" data-value="mesh">Meshes: ${meshCount}</a>
+      &nbsp;
+      ${getAssetLinks('mesh')}
+    </div>
+    <div class="workspace_band_wrapper">
+      <a href="${this.bView.genQueryString(null, 'shape', '')}" class="navigate_tag_select" data-value="shape">Shapes: ${shapeCount}</a>
+      &nbsp;
+      ${getAssetLinks('shape')}
+    </div>
+    <div class="workspace_band_wrapper">
+      <a href="${this.bView.genQueryString(null, 'material', '')}" class="navigate_tag_select" data-value="material">Materials: ${materialCount}</a>
+      &nbsp;
+      ${getAssetLinks('material')}
+    </div>
+    <div class="workspace_band_wrapper">
+      <a href="${this.bView.genQueryString(null, 'texture', '')}" class="navigate_tag_select" data-value="texture">Textures: ${textureCount}</a>
+      &nbsp;
+      ${getAssetLinks('texture')}
+    </div>`;
 
     let gi = new gCSVImport(gAPPP.a.profile.selectedWorkspace);
     let sceneRecords = await gi.dbFetchByLookup('block', 'blockFlag', 'scene');
