@@ -654,6 +654,8 @@ class wContext {
     this.camera.setPosition(cameraVector);
     this.rebindCamera();
     this.camera.radius = radius;
+
+    this.camera.inputs.attached.mousewheel.wheelPrecision = 50;
   }
   _renderArcCamera() {
     if (this.camera)

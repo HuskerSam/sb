@@ -77,7 +77,7 @@ class GLOBALUTIL {
       else
         return this.path(obj[is[0]], is.slice(1), value);
     } catch (e) {
-      console.log('path() err', e);
+    //  console.log('path() err', e);
     }
   }
   static replaceAll(str, search, replacement) {

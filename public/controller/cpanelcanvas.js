@@ -16,10 +16,9 @@ class cPanelCanvas {
     this.cameraSelect = this.dialog.querySelector('.camera-select');
     this.cameraSelect.addEventListener('input', e => this.cameraChangeHandler());
     this.arcRangeSlider = this.dialog.querySelector('.camera-select-range-slider');
-    this.arcRangeSlider.addEventListener('input', e => this.arcRangeSliderChange());
+    this.arcRangeSlider.addEventListener('input', e => this.arcRangeSliderChange(e));
     this.minpos = 1;
-    this.maxpos = 200;
-    this.negativeSize = 100;
+    this.maxpos = 300;
     this.scaleFactor = 50;
     this.minlval = Math.log(10);
     this.maxlval = Math.log(100000);
@@ -97,8 +96,16 @@ class cPanelCanvas {
     this.parent.context.canvas.addEventListener('click', e => this.updateCameraSlidersFromCanvas());
   }
   updateCameraSlidersFromCanvas() {
-    this.arcRangeSlider.value = this.cameraSliderPosition(this.parent.context.camera.radius);
-    this._updateCameraRangeSlider();
+    let radiusPos = this.cameraSliderPosition(this.parent.context.camera.radius);
+    if (this.arcRangeSlider.value !== radiusPos) {
+      this.arcRangeSlider.value = radiusPos;
+      this._updateCameraRangeSlider();
+    }
+
+    if (!this.cameraViewMatrixCallback) {
+      this.cameraViewMatrixCallback = () => this.updateCameraSlidersFromCanvas();
+      this.parent.context.camera.onViewMatrixChangedObservable.add(this.cameraViewMatrixCallback);
+    }
   }
   animSliderChange() {
     this.rootBlock.setAnimationPosition(this.animateSlider.value);
@@ -145,7 +152,7 @@ class cPanelCanvas {
     val = Number(val).toFixed(2);
     this.arcRangeSlider.parentElement.querySelector('.camera-slider-label').innerHTML = '<i class="material-icons">straighten</i> ' + val;
   }
-  arcRangeSliderChange() {
+  arcRangeSliderChange(e) {
     let val = this.cameraSliderValue(this.arcRangeSlider.value);
 
     if (this.rootBlock)
@@ -153,6 +160,7 @@ class cPanelCanvas {
         field: 'cameraRadiusSave' + this.rootBlock.blockKey,
         newValue: val
       }]);
+
 
     this._updateCameraRangeSlider();
   }
@@ -188,6 +196,7 @@ class cPanelCanvas {
     };
   }
   cameraChangeHandler() {
+    this.cameraViewMatrixCallback = null;
     if (this.cameraSelect.value === 'reset') {
       this.cameraSelect.value = 'default';
       gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -723,16 +732,14 @@ class cPanelCanvas {
     this.__addLogLine(str, '', testError);
   }
   cameraSliderValue(position) {
-    if (position > this.negativeSize)
-      return (Math.exp(((position - this.negativeSize) - this.minpos) * this.scale + this.minlval) / this.scaleFactor).toFixed(2);
-
-    return (-1.0 * (Math.exp(((this.negativeSize - position) - this.minpos) * this.scale + this.minlval) / this.scaleFactor)).toFixed(2);
+    return (Math.exp(((position) - this.minpos) * this.scale + this.minlval) / this.scaleFactor).toFixed(2);
   }
   cameraSliderPosition(value) {
-    if (value > 0)
-      return (this.minpos + (Math.log(value * this.scaleFactor) - this.minlval) / this.scale + this.negativeSize).toFixed(2);
+    let r = (this.minpos + (Math.log(value * this.scaleFactor) - this.minlval) / this.scale).toFixed(2);
 
-    return (-1.0 * (this.minpos + (Math.log((this.negativeSize - value) * this.scaleFactor) - this.minlval) / this.scale)).toFixed(2);
+    if (isNaN(r))
+      return 0;
+    return r;
   }
   reportEngineDetails() {
     let info = this.parent.context.engine.getGlInfo();
