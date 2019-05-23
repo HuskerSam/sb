@@ -138,6 +138,6 @@ class cBlockLinkSelect extends bBand {
       root.classList.add('app-inverted');
     }
 
-    keyEle.scrollIntoView();
+    keyEle.scrollIntoView({behavior: "smooth", inline: "center"});
   }
 }
