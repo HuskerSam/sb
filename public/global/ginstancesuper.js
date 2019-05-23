@@ -164,6 +164,7 @@ class gInstanceSuper {
     let bkg = GLOBALUTIL.color(canvasColor);
     let bkgColor = GLOBALUTIL.colorRGB255(canvasColor);
     let foreColor = 'rgb(50, 50, 50)';
+    let boundsLines = '0,0,0';
     let ctlColor = 'rgb(250, 250, 250)';
     let ctlHalfColor = 'rgba(250, 250, 250, .7)';
     let niteMode = false;
@@ -173,13 +174,15 @@ class gInstanceSuper {
       ctlHalfColor = 'rgba(50, 50, 50, .7)';
       ctlColor = a;
       niteMode = true;
+      boundsLines = '1,1,1'
     }
     this.appStyleDetails = {
       foreColor,
       bkgColor,
       ctlColor,
       ctlHalfColor,
-      niteMode
+      niteMode,
+      boundsLines
     };
 
     let css = '* { ';

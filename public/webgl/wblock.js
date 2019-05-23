@@ -659,6 +659,10 @@ class wBlock {
     if (!renderData) {
       if (gAPPP.a.profile.canvasColor)
         this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+
+      this.context.scene.getBoundingBoxRenderer().frontColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsLines);
+      this.context.scene.getBoundingBoxRenderer().backColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsLines);
+
       return;
     }
 
@@ -693,8 +697,9 @@ class wBlock {
     if (renderData.clearColor)
       this.context.scene.clearColor = GLOBALUTIL.color(renderData.clearColor);
     else {
-      if (gAPPP.a.profile.canvasColor)
+      if (gAPPP.a.profile.canvasColor) {
         this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+      }
       else
         this.context.scene.clearColor = GLOBALUTIL.color('.2,.4,.4');
     }
