@@ -194,12 +194,7 @@ class gInstanceSuper {
       background: transparent;
     }
 
-    .app-inverted, .app-inverted i {
-      color: ${ctlColor};
-      background: ${foreColor}
-    }
-
-    select, input, button, textarea {
+    select, input, button, textarea, .app-control {
       background-color: ${ctlColor};
       border-radius: .5em;
       border-color: rgb(200, 200, 200);
@@ -209,7 +204,7 @@ class gInstanceSuper {
       background: ${bkgColor};
     }
 
-    .app-panel, .app-border {
+    .app-panel, .app-border, .app-control {
       border-style: outset;
       border-radius: 1em;
     }
@@ -228,6 +223,11 @@ class gInstanceSuper {
     }
 
     .tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box .tabulator-row-handle-bar {
+      background: ${foreColor}
+    }
+
+    .app-inverted, .app-inverted i {
+      color: ${ctlColor};
       background: ${foreColor}
     }
     `;
@@ -311,16 +311,7 @@ class gInstanceSuper {
 
     if (niteMode) {
       css += `
-      button, select {
-        border-style: solid;
-        border-radius: 0;
-      }
-
-      input {
-        border-radius: 0;
-      }
-
-      .app-panel, .app-border {
+      .app-panel, .app-border, button, select, .app-control, input  {
         border-style: solid;
         border-radius: 0;
       }

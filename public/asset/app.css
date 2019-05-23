@@ -801,4 +801,13 @@ select {
 
 .app-expanded .child_band_picker_expanded {
   display: block;
+  white-space: nowrap;
+  overflow-x: auto;
+  text-overflow: initial;
+}
+
+.block-editor-child {
+  display: inline-block;
+  padding: .5em;
+  margin: .25em;
 }
