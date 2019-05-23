@@ -767,6 +767,9 @@ class cPanelCanvas {
     if (!gAPPP.a.profile.cameraUpdates)
       return;
 
+    if (!this.rootBlock)
+      return;
+
     let pS = gAPPP.a.profile['playState' + this.rootBlock.blockKey];
     let pT = gAPPP.a.profile['playStateAnimTime' + this.rootBlock.blockKey];
     let pO = gAPPP.a.profile['playStateOffset' + this.rootBlock.blockKey];

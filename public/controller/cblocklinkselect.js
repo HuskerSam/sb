@@ -89,15 +89,6 @@ class cBlockLinkSelect extends bBand {
 
     this._refreshChildBandFromCache(children);
   }
-  deleteChildBlock(deleteKey, e) {
-    if (confirm('Remove this child block (only the link)?')) {
-      this.fireSet.removeByKey(deleteKey);
-      this.childSelect.selectedIndex = 0;
-    }
-
-    if (e)
-      e.stopPropagation();
-  }
   setKey(childKey) {
     this.parent.setChildKey(childKey);
 
@@ -126,7 +117,7 @@ class cBlockLinkSelect extends bBand {
         this.key = null;
 
       if (key)
-        html += `${values.childName + ' (' + values.childType + ')'}`;
+        html += `<i class="material-icons">link</i>${values.childName + ' (' + values.childType + ')'}`;
       else
         html += '<i class="material-icons">trip_origin</i>';
       d.innerHTML = html;

@@ -576,8 +576,8 @@ class cView extends bView {
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_photo_alternate</i></button>
             <div class="block_child_details_block">
               <select class="main-band-children-select" style="display:none;"></select>
-              <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">remove_from_queue</i></button>
-              <button class="main-band-add-child btn-sb-icon"><i class="material-icons">add_to_queue</i></button>
+              <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">link_off</i></button>
+              <button class="main-band-add-child btn-sb-icon"><i class="material-icons">link</i></button>
               <select class="main-band-sub-view-select" style="display:none;float:left;">
                 <option value="frame">Frames</option>
                 <option value="node" selected>Details</option>
@@ -737,7 +737,11 @@ class cView extends bView {
     this.updateSubViewDisplay();
   }
   removeChild(e) {
-    this.childBand.deleteChildBlock(this.childKey, e);
+    if (confirm('Remove this child block (only the link)?')) {
+      this.childBand.fireSet.removeByKey(this.childKey);
+      this.childBand.setKey(null);
+      this.setChildKey(null);
+    }
   }
   setChildKey(key) {
     this.childKey = key;
