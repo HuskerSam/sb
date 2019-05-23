@@ -186,7 +186,8 @@ class cView extends bView {
     this.updateSubViewDisplay();
 
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
-    this.childBand = new cBandSelect(this.blockChildrenSelect, this, this.childEditPanel);
+    this.childBlockPickerBand = this.dialog.querySelector('.child_band_picker_expanded');
+    this.childBand = new cBlockLinkSelect(this.blockChildrenSelect, this, this.childEditPanel, this.childBlockPickerBand);
     this.childEditPanel.parentNode.insertBefore(this.assetsFieldsContainer, this.childEditPanel.parentNode.firstChild);
   }
   updateSubViewDisplay() {
@@ -462,7 +463,7 @@ class cView extends bView {
 
     if (this.tag === 'block') {
       this.setChildKey(this.childKey);
-      this.childBand.updateSelectDom();
+      this.childBand.refreshUIFromCache();
       this._updateFollowTargetListOptions();
 
       if (this.blockChildrenSelect.selectedIndex === -1) {
@@ -545,12 +546,14 @@ class cView extends bView {
         <div class="form_panel_view_dom">
           <div id="profile-header-panel" class="app-panel">${this.profilePanelTemplate()}</div>
           <div class="header_wrapper">
-            <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
-            <select id="workspaces-select"></select>
-            <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">home</i></button>
-            <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
-            <button class="expand_all_global_btn btn-sb-icon"><i class="material-icons">unfold_more</i></button>
-            <br>
+            <div class="header_bar_top_row">
+              <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
+              <select id="workspaces-select"></select>
+              <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">home</i></button>
+              <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
+              <button class="expand_all_global_btn btn-sb-icon"><i class="material-icons">unfold_more</i></button>
+              <div style="clear:both;"></div>
+            </div>
             <select class="dataview_record_tag">
               <option value="" selected>Workspace</option>
               <option value="block">Block</option>
@@ -664,7 +667,7 @@ class cView extends bView {
     if (tag === 'block') {
       if (this.rootBlock) {
         this.rootBlock.handleDataUpdate(tag, values, type, fireData);
-        this.childBand.updateSelectDom();
+        this.childBand.refreshUIFromCache();
         if (tag === 'blockchild')
           this._updateFollowTargetListOptions();
         if (tag === 'blockchild')

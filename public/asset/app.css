@@ -155,7 +155,7 @@ select {
 }
 
 .block_child_details_block {
-  margin-top: .25em;
+  padding-top: .25em;
   clear: left;
 }
 
@@ -676,7 +676,6 @@ select {
 
 .header_wrapper {
   padding: .25em;
-  line-height: 3em;
 }
 
 .workspace-asset-link-display {
@@ -734,11 +733,15 @@ select {
   max-width: calc(100% - 16em);
   float: left;
   min-width: 5em;
+  margin-left: .25em;
 }
 
 .dataview_record_tag {
   float: left;
-  clear: left;
+}
+
+.header_bar_top_row {
+  margin-bottom: .25em;
 }
 
 .tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {

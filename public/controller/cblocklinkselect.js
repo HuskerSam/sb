@@ -1,11 +1,12 @@
-class cBandSelect extends bBand {
-  constructor(childSelect, parent, editPanel) {
+class cBlockLinkSelect extends bBand {
+  constructor(childSelect, parent, editPanel, childExpandedBand) {
 
     super(gAPPP.a.modelSets['blockchild'], 'blockchild');
     this.childSelect = childSelect;
     this.parent = parent;
     this.childEditPanel = editPanel;
     this.fireSet = gAPPP.a.modelSets['blockchild'];
+    this.childExpandedBand = childExpandedBand;
 
     this.childFields = sDataDefinition.bindingFieldsCloned(this.tag);
     this.childEditFields = new cPanelData(this.childFields, this.childEditPanel, this);
@@ -63,12 +64,15 @@ class cBandSelect extends bBand {
     }
   }
   handleDataChange(fireData, type) {
-    if (fireData.val().parentKey !== this.parent.key)
-     return;
+    if (type === 'clear')
+      return this.clearChildren();
 
-    this.updateSelectDom();
+    if (fireData.val().parentKey !== this.parent.key)
+      return;
+
+    this.refreshUIFromCache();
   }
-  updateSelectDom() {
+  refreshUIFromCache() {
     let children = this.fireSet.queryCache('parentKey', this.parent.key);
 
     let title = 'main';
@@ -104,4 +108,86 @@ class cBandSelect extends bBand {
     this.key = childKey;
     this.childEditFields.paint(this.fireSet.getCache(this.key));
   }
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+    refreshUIFromCache() {
+      this.clearChildren();
+      let children = this.fireSet.queryCache('parentKey', this.parent.key);
+
+      for (let i in children)
+        this._getDomForChild(i, children[i]);
+    }
+
+    _getDomForChild(key, values) {
+      let d = document.createElement('div');
+      d.setAttribute('class', 'block-editor-child');
+      this.childrenContainer.insertBefore(d, this.childrenContainer.childNodes[0]);
+      d.addEventListener('click', e => this.setKey(key));
+
+      let html = '<span class="band-title"></span>';
+      d.innerHTML = html;
+      d.setAttribute('class', `${this.tag}${this.myKey}-${key} block-editor-child`);
+
+      this._nodeApplyValues(values, d);
+
+      let db = document.createElement('button');
+      db.innerHTML = '<i class="material-icons">delete</i>';
+      db.classList.add('btn-sb-icon');
+      db.classList.add('delete-button');
+
+      db.addEventListener('click', e => this.deleteChildBlock(key, e));
+      d.appendChild(db);
+    }
+    childChanged(fireData) {
+      let div = document.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
+      let values = fireData.val();
+      this._nodeApplyValues(values, div);
+    }
+    _nodeApplyValues(values, div) {
+      super._nodeApplyValues(values, div);
+
+      let ele = div.querySelector('.band-title');
+      ele.innerHTML = values.childType + ':' + values.childName;
+    }
+    childRemoved(fireData) {
+      if (this.key === fireData.key)
+        this.setKey(null);
+
+      let post = this.childrenContainer.querySelector('.' + this.tag + this.myKey + '-' + fireData.key);
+      if (post)
+        this.childrenContainer.removeChild(post);
+    }
+    deleteChildBlock(deleteKey, e) {
+      if (confirm('Remove this child block (only the link)?'))
+        this.fireSet.removeByKey(deleteKey);
+
+      if (e)
+        e.stopPropagation();
+    }
+    setKey(childKey) {
+      this.parent.setChildKey(childKey);
+
+      let selected = this.childrenContainer.querySelectorAll('.block-editor-child.selected');
+      for (let c = 0, l = selected.length; c < l; c++) selected[c].classList.remove('selected');
+
+      if (this.parent.childKey) {
+        let d = this.childrenContainer.querySelector(`.${this.tag}${this.myKey}-${this.parent.childKey}`);
+        d.classList.add('selected');
+      }
+
+      this.key = childKey;
+      this.childEditFields.paint(this.fireSet.getCache(this.key));
+    }
+    */
 }
