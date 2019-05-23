@@ -106,7 +106,7 @@ class wContext {
 
       if (scene === null)
         this.scene = new BABYLON.Scene(this.engine);
-      else if (scene !== undefined)
+      else
         this.scene = scene;
 
       this._sceneAddDefaultObjects();
@@ -214,22 +214,6 @@ class wContext {
     this._renderFocusDetails();
     this._updateScaffoldingData();
     this.canvasHelper.refresh();
-  }
-  loadSceneFromDomFile(file) {
-    return new Promise((resolve, reject) => {
-      BABYLON.SceneLoader.ShowLoadingScreen = false;
-      let URI = URL.createObjectURL(file);
-      BABYLON.SceneLoader.Load('', URI, this.engine,
-        newScene => {
-          this.activate(newScene);
-          resolve({
-            type: 'scene',
-            context: this
-          });
-        },
-        p => {},
-        e => reject(e));
-    });
   }
   loadSceneURL(url) {
     return new Promise((resolve, reject) => {

@@ -109,20 +109,19 @@ class bView {
       <div class="lightbar-fields-container"></div>
       <div class="camera-options-panel">
         <select class="camera-select"></select>
-        <br>
-        <div>
-          <div class="camera-slider-label">FOV</div>
-          <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
-        </div>
         <div>
           <div class="camera-slider-label"><i class="material-icons" style="transform:rotate(90deg)">straighten</i></div>
           <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
         </div>
         <div>
+          <div class="camera-slider-label">FOV</div>
+          <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+        </div>
+        <div>
           <div class="camera-slider-label"><i class="material-icons">straighten</i></div>
           <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
         </div>
-        <div class="fields-container" style="float:left"></div>
+        <div class="fields-container"></div>
         <div id="extra-options-camera-area"></div>
       </div>
     </div>

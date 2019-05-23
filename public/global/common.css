@@ -344,6 +344,12 @@ button i.material-icons {
   position: relative;
   width: 40%;
   min-width: 12em;
+  float: left;
+  clear: both;
+}
+
+.camera-options-panel > select {
+ float: left;
 }
 
 .color-picker-input {

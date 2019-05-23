@@ -452,7 +452,8 @@ class cView extends bView {
     this.context.activate(null);
     this.context.setActiveBlock(b);
     this.rootBlock = b;
-    this.canvasHelper.refresh(); //arcRangeSliderChange();
+    this.rootBlock.updateCamera();
+    this.canvasHelper.refresh();
 
     this.canvasHelper.__updateVideoCallback();
     b.setData(this.fireFields.values);
