@@ -57,7 +57,7 @@ class cWorkspace {
 
         let url = data.renderImageURL;
         if (!url)
-          url = '/images/webgl.png';
+          url = '/images/addimage.svg';
 
         html += `<a class="workspace-asset-link-display tag_key_redirect app-control" data-tag="${asset}" data-key="${i}" href="${href}">
           <img src="${url}" />${data.title}<br><span>${od}</span></a>`;

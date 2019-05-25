@@ -26,7 +26,13 @@ class cBandIcons extends bBand {
     let keyOrder = this.modelSet.childOrderByKey;
     if (Object.keys(keyOrder).length === 0) {
       let noAssets = document.createElement('div');
-      noAssets.innerHTML = 'No ' + this.tag + ' found';
+      let html = 'No ' + this.tag;
+      if (this.tag === 'mesh')
+        html += 'es';
+      else
+        html += 's';
+      html +=  ' found';
+      noAssets.innerHTML = html;
       noAssets.classList.add('noassetsfound');
       this.childrenContainer.appendChild(noAssets);
     } else {

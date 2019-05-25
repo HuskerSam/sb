@@ -345,7 +345,7 @@ select {
 
 .band-background-preview .img-holder {
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   width: inherit;
   height: 10em;
@@ -828,4 +828,8 @@ a.workspace-asset-link-display {
 
 .workspace_band_wrapper a {
   border-width: .25em;
+}
+
+.add-asset-template-panel label {
+  white-space: nowrap;
 }
