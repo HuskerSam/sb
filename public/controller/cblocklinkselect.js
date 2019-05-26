@@ -108,9 +108,9 @@ class cBlockLinkSelect extends bBand {
 
     let keyEle = null;
     let addDom = (key, values) => {
-      let d = document.createElement('div');
+      let d = document.createElement('a');
       this.childExpandedBand.insertBefore(d, this.childExpandedBand.childNodes[0]);
-      d.addEventListener('click', e => this.setKey(key));
+
 
       let html = '';
       if (!this.key)
@@ -127,6 +127,10 @@ class cBlockLinkSelect extends bBand {
         keyEle = d;
       }
       d.setAttribute('class', className);
+      d.addEventListener('click', e => {
+        this.setKey(key);
+        this.parent.blockChildrenSelect.focus();
+      });
       return d;
     }
 
@@ -138,6 +142,6 @@ class cBlockLinkSelect extends bBand {
       root.classList.add('app-inverted');
     }
 
-    keyEle.scrollIntoView({behavior: "smooth", inline: "center"});
+    setTimeout(() => keyEle.scrollIntoView({behavior: "smooth", inline: "center"}), 1);
   }
 }

@@ -68,28 +68,23 @@ class cWorkspace {
 
     html += `<div style="line-height:1.5em;padding:.5em;">
     <div class="workspace_band_wrapper">
-      <a href="${this.bView.genQueryString(null, 'block', '')}" class="navigate_tag_select" data-value="block">Blocks: ${blockCount}</a>
-      &nbsp;
+      <a href="${this.bView.genQueryString(null, 'block', '')}" class="navigate_tag_select app-control" data-value="block">Blocks<br>${blockCount}</a>
       ${getAssetLinks('block')}
     </div>
     <div class="workspace_band_wrapper">
-      <a href="${this.bView.genQueryString(null, 'mesh', '')}" class="navigate_tag_select" data-value="mesh">Meshes: ${meshCount}</a>
-      &nbsp;
+      <a href="${this.bView.genQueryString(null, 'mesh', '')}" class="navigate_tag_select app-control" data-value="mesh">Meshes<br>${meshCount}</a>
       ${getAssetLinks('mesh')}
     </div>
     <div class="workspace_band_wrapper">
-      <a href="${this.bView.genQueryString(null, 'shape', '')}" class="navigate_tag_select" data-value="shape">Shapes: ${shapeCount}</a>
-      &nbsp;
+      <a href="${this.bView.genQueryString(null, 'shape', '')}" class="navigate_tag_select app-control" data-value="shape">Shapes<br>${shapeCount}</a>
       ${getAssetLinks('shape')}
     </div>
     <div class="workspace_band_wrapper">
-      <a href="${this.bView.genQueryString(null, 'material', '')}" class="navigate_tag_select" data-value="material">Materials: ${materialCount}</a>
-      &nbsp;
+      <a href="${this.bView.genQueryString(null, 'material', '')}" class="navigate_tag_select app-control" data-value="material">Materials<br>${materialCount}</a>
       ${getAssetLinks('material')}
     </div>
     <div class="workspace_band_wrapper">
-      <a href="${this.bView.genQueryString(null, 'texture', '')}" class="navigate_tag_select" data-value="texture">Textures: ${textureCount}</a>
-      &nbsp;
+      <a href="${this.bView.genQueryString(null, 'texture', '')}" class="navigate_tag_select app-control" data-value="texture">Textures<br>${textureCount}</a>
       ${getAssetLinks('texture')}
     </div>`;
 

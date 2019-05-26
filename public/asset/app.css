@@ -678,18 +678,6 @@ select {
   padding: .25em;
 }
 
-a.workspace-asset-link-display {
-  text-align: center;
-  display: inline-block;
-  line-height: .75em;
-  border-radius: .5em;
-  padding: .25em;
-  margin: .1em;
-  white-space: nowrap;
-  border: none;
-}
-
-
 .workspace-asset-link-display span {
   font-size: .5em;
 }
@@ -828,8 +816,25 @@ a.workspace-asset-link-display {
 
 .workspace_band_wrapper a {
   border-width: .25em;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  line-height: 1em;
+  padding: .3em .25em;
+  margin: .1em;
 }
 
 .add-asset-template-panel label {
   white-space: nowrap;
+}
+
+a.workspace-asset-link-display {
+  text-align: center;
+  display: inline-block;
+  line-height: .75em;
+  border-radius: .5em;
+  padding: .25em;
+  margin: .1em;
+  white-space: nowrap;
+  border: none;
 }
