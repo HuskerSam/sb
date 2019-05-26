@@ -189,6 +189,45 @@ class cView extends bView {
     this.childBlockPickerBand = this.dialog.querySelector('.child_band_picker_expanded');
     this.childBand = new cBlockLinkSelect(this.blockChildrenSelect, this, this.childEditPanel, this.childBlockPickerBand);
     this.childEditPanel.parentNode.insertBefore(this.assetsFieldsContainer, this.childEditPanel.parentNode.firstChild);
+
+    let openBtn = document.createElement('button');
+    openBtn.innerHTML = '<i class="material-icons">open_in_browser</i>';
+    openBtn.classList.add('open_in_browser_block_child');
+    openBtn.addEventListener('click', e => this.openChildBlockClick());
+    this.childEditPanel.appendChild(openBtn);
+    let openBtnInNew = document.createElement('button');
+    openBtnInNew.innerHTML = '<i class="material-icons">open_in_new</i>';
+    openBtnInNew.classList.add('open_in_new_block_child');
+    openBtnInNew.addEventListener('click', e => this.openChildBlockClick(true));
+    this.childEditPanel.appendChild(openBtnInNew);
+  }
+  openChildBlockClick(newWindow) {
+    let data = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey[this.childKey];
+    let newTag = data.childType;
+    let childName = data.childName;
+    let children = gAPPP.a.modelSets[newTag].queryCache('title', childName);
+    let keys = Object.keys(children);
+
+    if (keys.length < 1) {
+      alert('linked asset not found');
+      return;
+    }
+    if (keys.length > 1) {
+      alert('more then 1 matching asset found');
+    }
+    let key = keys[0];
+    let href = this.genQueryString(null, newTag, key);
+
+    if (newWindow) {
+      let anchor = document.createElement('a');
+      anchor.setAttribute('href', href);
+      anchor.setAttribute('target', '_blank');
+      document.body.appendChild(anchor)
+      anchor.click();
+      document.body.removeChild(anchor);
+    }
+    else
+      window.location.href = href;
   }
   updateSubViewDisplay() {
     let view = this.mainbandsubviewselect.value;
@@ -197,7 +236,6 @@ class cView extends bView {
     this.nodedetailspanel.style.display = (view === 'node') ? '' : 'none';
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'flex' : 'none';
     this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
-
   }
   selectItem(newKey, newWindow) {
     if (!newWindow) {
