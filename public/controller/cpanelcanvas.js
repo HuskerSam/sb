@@ -762,7 +762,7 @@ class cPanelCanvas {
   }
   userProfileChange() {
     this.parent.context.scene.getBoundingBoxRenderer().frontColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsLines);
-    this.parent.context.scene.getBoundingBoxRenderer().backColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsLines);
+    this.parent.context.scene.getBoundingBoxRenderer().backColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsBack);
 
     if (!gAPPP.a.profile.cameraUpdates)
       return;

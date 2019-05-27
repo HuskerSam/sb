@@ -139,7 +139,7 @@ class cWorkspace {
 
     html += '</div>';
     this.domPanel.innerHTML = html;
-    this.bView.workspace_show_home_btn.style.display = 'none';
+    this.bView.workspace_show_home_btn.style.visibility = 'hidden';
     this.domPanel.querySelectorAll('.navigate_tag_select').forEach(i => {
       i.addEventListener('click', e => {
         this.bView.dataview_record_tag.value = e.currentTarget.dataset.value;

@@ -291,7 +291,7 @@ class cView extends bView {
 
       this.dataview_record_key.innerHTML = options;
       this.dataview_record_key.value = this.key;
-      this.workspace_show_home_btn.style.display = '';
+      this.workspace_show_home_btn.style.visibility = '';
     } else {
       let options = '<option>Overview</option><option>Details</option><option>Generate</option><option>Layout</option>';
       this.deleteAssetButton.style.display = 'none';
@@ -325,9 +325,9 @@ class cView extends bView {
 
     this.form_panel_view_dom.classList.remove('child-block-display');
     this.form_panel_view_dom.classList.remove('root-block-display');
-    this.asset_show_home_btn.style.display = 'none';
-    this.expand_all_global_btn.style.display = 'none';
-    this.workspace_show_home_btn.style.display = '';
+    this.asset_show_home_btn.style.visibility = 'hidden';
+    this.expand_all_global_btn.style.display = '';
+    this.workspace_show_home_btn.style.visibility = '';
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'none';
     this.snapshotAssetButton.style.display = 'none';
@@ -462,7 +462,7 @@ class cView extends bView {
     this.key = this.dataview_record_key.value;
 
     if (this.key) {
-      this.asset_show_home_btn.style.display = '';
+      this.asset_show_home_btn.style.visibility = '';
     }
 
     this.initRecordEditFields();
