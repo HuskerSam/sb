@@ -366,10 +366,6 @@ button i.material-icons {
 }
 
 .run-length-label, .camera-slider-label {
-
-}
-
-.run-length-label, .camera-slider-label {
   font-size: 1.25em;
   background: rgba(50, 50, 50, .3);
   height: auto;
@@ -377,21 +373,23 @@ button i.material-icons {
   position: absolute;
   left: 3.25em;
   width: auto;
-  top: .5em;
+  top: .55em;
   display: inline-block;
   pointer-events: none;
   overflow: visible;
   color: white;
   z-index: 1;
   white-space: nowrap;
+  padding: 0;
+  line-height: 1em;
+}
+
+.run-length-label {
+  top: .75em;
 }
 
 .camera-slider-label {
-  position: absolute;
   left: .5em;
-  top: .55em;
-  padding: 0;
-  line-height: 1em;
 }
 
 .run-length-label i, .camera-slider-label i {

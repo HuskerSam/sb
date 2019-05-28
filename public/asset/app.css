@@ -75,6 +75,7 @@ input[type="text"] {
   z-index: 1;
   left: -.9em;
   pointer-events: none;
+  font-weight: normal;
 }
 
 .lightbar-fields-container i {
