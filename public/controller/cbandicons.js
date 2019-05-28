@@ -59,9 +59,13 @@ class cBandIcons extends bBand {
 
     outer.addEventListener('click',  e => this.selectItem(e, key));
 
-    let b = this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
-    b = this.__addMenuItem(outer, 'file_download', e => this.downloadJSON(e, key), true);
-    b = this.__addMenuItem(outer, 'delete', e => this._removeElement(e, key), true);
+    this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
+    this.__addMenuItem(outer, 'file_download', e => this.downloadJSON(e, key), true);
+    this.__addMenuItem(outer, 'delete', e => this._removeElement(e, key), true);
+
+    if (this.tag === 'block') {
+      this.__addMenuItem(outer, 'visibility', e => this._viewElement(e, key), true);
+    }
 
     this._nodeApplyValues(values, outer);
 
@@ -71,6 +75,9 @@ class cBandIcons extends bBand {
     if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
       return;
     gAPPP.a.modelSets[this.tag].removeByKey(key);
+  }
+  _viewElement(e, key) {
+    this.dialog.openViewerForAsset(key);
   }
   downloadJSON(e, key) {
     let json = cMacro.assetJSON(this.tag, key);

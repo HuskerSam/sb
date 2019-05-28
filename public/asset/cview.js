@@ -586,7 +586,7 @@ class cView extends bView {
           <div id="profile-header-panel" class="app-panel">${this.profilePanelTemplate()}</div>
           <div class="header_wrapper">
             <div class="header_bar_top_row">
-              <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">person</i></button>
+              <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">settings</i></button>
               <select id="workspaces-select"></select>
               <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">home</i></button>
               <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
@@ -611,7 +611,7 @@ class cView extends bView {
             </select>
             <button class="workspace_regenerate_layout_changes btn-sb-icon"><i class="material-icons">gavel</i></button>
             <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
-            <button class="view-asset-button btn-sb-icon"><i class="material-icons">tv</i></button>
+            <button class="view-asset-button btn-sb-icon"><i class="material-icons">visibility</i></button>
             <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_photo_alternate</i></button>
             <div class="block_child_details_block">
               <select class="main-band-children-select" style="display:none;"></select>
@@ -854,9 +854,10 @@ class cView extends bView {
       this.workspaceCTL.csvGenerateRefreshProjectLists(this.workplacesSelect.innerHTML);
     }
   }
-  openViewerForAsset() {
+  openViewerForAsset(key) {
     let wid = gAPPP.a.profile.selectedWorkspace;
-    let key = this.key;
+    if (!key)
+      key = this.key;
     let url = `/view?w=${wid}&b=${key}`;
     let a = document.createElement('a');
     a.setAttribute('href', url);

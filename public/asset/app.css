@@ -38,32 +38,16 @@ input[type="text"] {
   padding-bottom: 7.4em;
 }
 
-.play-button, .pause-button {
-  position: relative;
-  top: .25em;
-  left: -.25em;
-}
-
 .canvas-actions input.animate-range {}
 
 .canvas-actions {
   display: none;
-  bottom: 3em !important;
 }
 
 .canvas-actions-shown {
   bottom: initial;
   display: block;
   top: 0;
-}
-
-.canvas-actions .camera-options-panel {
-  position: absolute;
-  bottom: -2.5em;
-  left: -.25em;
-  line-height: 3em;
-  pointer-events: none;
-  width: 100%;
 }
 
 .lightbar-fields-container .form-control {
@@ -100,33 +84,6 @@ input[type="text"] {
 
 #-position-preset {
   background: rgb(0, 150, 136);
-  color: white;
-}
-
-.run-length-label, .camera-slider-label {
-  font-size: 1.25em;
-  left: .05em;
-  top: .2em;
-  background: rgba(50, 50, 50, .3);
-  width: auto;
-  height: auto;
-  z-index: 1000;
-  pointer-events: none;
-  border-radius: 10%;
-}
-
-.camera-slider-label {
-  position: absolute;
-  left: .5em;
-  top: .55em;
-  padding: 0;
-  line-height: 1em;
-}
-
-.run-length-label i, .camera-slider-label i {
-  top: .15em;
-  position: relative;
-  pointer-events: none;
   color: white;
 }
 
@@ -694,10 +651,6 @@ select {
   float: left;
   clear: both;
   font-weight: bold;
-}
-
-.view-asset-button {
-  display: none !important;
 }
 
 .main-band-children-select {

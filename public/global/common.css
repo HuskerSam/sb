@@ -95,20 +95,14 @@ html, body {
 
 .canvas-actions {
   position: absolute;
-  bottom: .1em;
-  left: .1em;
   width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
 .canvas-actions .expanded-toolbar-content {
   display: block;
   pointer-events: none;
-}
-
-.canvas-actions {
-  padding-bottom: .25em;
-  padding-left: .25em;
 }
 
 .canvas-actions * {
@@ -118,10 +112,6 @@ html, body {
 .canvas-actions .play-button {
   color: rgb(0, 127, 0);
 }
-
-.canvas-actions .pause-button {}
-
-.canvas-actions .stop-button {}
 
 .canvas-actions .video-button {
   color: red;
@@ -145,7 +135,7 @@ html, body {
   width: calc(100% - 9em);
   min-width: 12em;
   position: absolute;
-  left: 3em;
+  left: 3.5em;
   top: .35em;
 }
 
@@ -158,6 +148,11 @@ html, body {
 }
 
 
+.play-button, .pause-button {
+  position: absolute;
+  top: .35em;
+  left: .35emem;
+}
 
 .form-group {
   width: 12em;
@@ -340,6 +335,15 @@ button i.material-icons {
   margin-right: 5.5em;
 }
 
+.canvas-actions .camera-options-panel {
+  position: absolute;
+  bottom: 0em;
+  left: .35em;
+  line-height: 3em;
+  pointer-events: none;
+  width: 100%;
+}
+
 .camera-options-panel > div {
   position: relative;
   width: 40%;
@@ -362,10 +366,18 @@ button i.material-icons {
 }
 
 .run-length-label, .camera-slider-label {
-  position: relative;
-  left: 1em;
-  width: 0em;
-  top: -.25em;
+
+}
+
+.run-length-label, .camera-slider-label {
+  font-size: 1.25em;
+  background: rgba(50, 50, 50, .3);
+  height: auto;
+  border-radius: 10%;
+  position: absolute;
+  left: 3.25em;
+  width: auto;
+  top: .5em;
   display: inline-block;
   pointer-events: none;
   overflow: visible;
@@ -376,7 +388,17 @@ button i.material-icons {
 
 .camera-slider-label {
   position: absolute;
-  left: 2.5em;
+  left: .5em;
+  top: .55em;
+  padding: 0;
+  line-height: 1em;
+}
+
+.run-length-label i, .camera-slider-label i {
+  top: .15em;
+  position: relative;
+  pointer-events: none;
+  color: white;
 }
 
 .light-intensity-user-panel {

@@ -52,6 +52,9 @@ class cViewPublished extends bView {
     }], id);
 
   }
+  splitLayout() {
+    this.dialog.style.display = 'block';
+  }
   elementTypeChange() {
     let t = this.elementSelect.value.toLowerCase();
 
@@ -131,7 +134,6 @@ class cViewPublished extends bView {
   <div class="form_canvas_wrapper"></div>
   <button id="user-profile-dialog-reset-button">Reset Options</button>
   <button id="publish-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
-  <a href="/" id="change-view-anchor">Change View</a>
   <div id="publish-profile-panel" style="display:none;">
     <div id="value-set-panel">
       <label><span>Element</span>
