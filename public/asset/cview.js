@@ -225,8 +225,7 @@ class cView extends bView {
       document.body.appendChild(anchor)
       anchor.click();
       document.body.removeChild(anchor);
-    }
-    else
+    } else
       window.location.href = href;
   }
   updateSubViewDisplay() {
@@ -352,6 +351,37 @@ class cView extends bView {
 
     return;
   }
+  _updateHelpSections(init = false) {
+    let buttons = this.helpViewer.querySelectorAll('.help_folding_button');
+    let sections = this.helpViewer.querySelectorAll('.help_folding_section');
+
+    for (let c = 0, l = buttons.length; c < l; c++) {
+      let local = c;
+      if (init) {
+        buttons[local].addEventListener('click', e => {
+          if (buttons[local].expanded) {
+            sections[local].classList.remove('expanded');
+            buttons[local].firstChild.innerHTML = 'unfold_more';
+            buttons[local].expanded = false;
+          } else {
+            sections[local].classList.add('expanded');
+            buttons[local].firstChild.innerHTML = 'unfold_less';
+            buttons[local].expanded = true;
+          }
+        });
+      }
+
+      if (this.detailsShown) {
+        sections[local].classList.add('expanded');
+        buttons[local].firstChild.innerHTML = 'unfold_less';
+        buttons[local].expanded = true;
+      } else {
+        buttons[local].expanded = false;
+        buttons[local].firstChild.innerHTML = 'unfold_more';
+        sections[local].classList.remove('expanded');
+      }
+    }
+  }
   async updateDisplayForAssetsList() {
     this.context.activate(null);
     this.dataview_record_key.selectedIndex = 0;
@@ -368,11 +398,13 @@ class cView extends bView {
     let helpTag = this.tag;
     if (helpTag === 'texture')
       helpTag = 'material';
-    fetch(`/doc/${helpTag}help.html`, {
-        cache: "no-cache"
-      })
-      .then(res => res.text())
-      .then(html => this.helpViewer.innerHTML = html);
+    let res = await fetch(`/doc/${helpTag}help.html`, {
+      cache: "no-cache"
+    })
+    let html = await res.text();
+    this.helpViewer.innerHTML = html;
+
+    this._updateHelpSections(true);
   }
   async updateDisplayForWorkspaceDetails() {
     this.context.activate(null);
@@ -410,11 +442,13 @@ class cView extends bView {
       url = '/doc/overview.html';
     if (this.key === 'Generate')
       url = '/doc/layouthelp.html';
-    fetch(url, {
-        cache: "no-cache"
-      })
-      .then(res => res.text())
-      .then(html => this.helpViewer.innerHTML = html);
+    let res = await fetch(url, {
+      cache: "no-cache"
+    });
+    let html = await res.text();
+    this.helpViewer.innerHTML = html;
+
+    this._updateHelpSections(true);
   }
   async updateDisplayForWorkspaceLayout() {
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
@@ -549,8 +583,7 @@ class cView extends bView {
     } else {
       if (subView) {
         queryString += `&subview=${subView}`
-      }
-      else if (this.dataview_record_key.selectedIndex > 0) {
+      } else if (this.dataview_record_key.selectedIndex > 0) {
         let wDisplay = this.dataview_record_key.value;
         queryString += `&subview=${wDisplay}`
       }
@@ -809,6 +842,7 @@ class cView extends bView {
   _handleActiveObjectUpdate(e) {}
   expandAll() {
     super.expandAll();
+    this._updateHelpSections();
     this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_less';
     if (this.framesBand) {
       this.framesBand._updateFrameHelpersUI();
@@ -819,6 +853,7 @@ class cView extends bView {
   }
   collapseAll() {
     super.collapseAll();
+    this._updateHelpSections();
     this.expand_all_global_btn.querySelector('i').innerHTML = 'unfold_more';
     if (this.framesBand) {
       this.framesBand._updateFrameHelpersUI();

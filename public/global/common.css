@@ -29,8 +29,6 @@ html, body {
 }
 
 .btn-sb-icon {
-  font-size: 1.5em;
-  border-width: .08em;
 }
 
 *[disabled] {
@@ -550,4 +548,12 @@ button i.material-icons {
   max-height: 2em;
   float:left;
   border-radius: .5em;
+}
+
+.help_folding_section {
+  display: none;
+}
+
+.help_folding_section.expanded {
+  display: block;
 }
