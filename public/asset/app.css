@@ -412,6 +412,20 @@ select {
   width: 100%;
 }
 
+.form_canvas_wrapper .help-overlay h1 {
+  cursor: pointer;
+  display: inline-block;
+  padding-right: 1em;
+  padding-bottom: .5em;
+}
+
+.form_canvas_wrapper .help-overlay h1 button {
+  border: none;
+  background: none;
+  position: relative;
+  top: .15em;
+}
+
 .form_panel_view_dom.workspace .help-overlay {
   display: flex;
   width: 100%;

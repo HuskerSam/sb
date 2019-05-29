@@ -358,20 +358,22 @@ class cView extends bView {
     for (let c = 0, l = buttons.length; c < l; c++) {
       let local = c;
       if (init) {
-        buttons[local].addEventListener('click', e => {
+        buttons[local].parentNode.addEventListener('click', e => {
           if (buttons[local].expanded) {
             sections[local].classList.remove('expanded');
             buttons[local].firstChild.innerHTML = 'unfold_more';
             buttons[local].expanded = false;
+            buttons[local].parentNode.style.display = 'inline-block';
           } else {
             sections[local].classList.add('expanded');
             buttons[local].firstChild.innerHTML = 'unfold_less';
             buttons[local].expanded = true;
+            buttons[local].parentNode.style.display = 'block';
           }
         });
       }
 
-      if (this.detailsShown) {
+      if (this.detailsShown && !init) {
         sections[local].classList.add('expanded');
         buttons[local].firstChild.innerHTML = 'unfold_less';
         buttons[local].expanded = true;
