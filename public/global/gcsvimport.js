@@ -754,7 +754,10 @@ class gCSVImport {
     row.parent = row.name;
     row.name = row.name + '_shape';
 
-    row.z = (-1.0 * minDim / 2.0).toFixed(3);
+    if (row.createshapetype === 'cube' || row.createshapetype === 'sphere')
+      row.z = (-1.0 * minDim / 2.0).toFixed(3);
+    else
+      row.z = (-1.0 * depth / 2.0).toFixed(3);
     this.addCSVShapeRow(this.__childShapeRow(row));
 
     return blockResult;
@@ -839,6 +842,7 @@ class gCSVImport {
       };
     }
 
+    let rz = row.rz;
     if (row.createshapetype === 'cone' || row.createshapetype === 'cylinder') {
       shapeRow = {
         shapetype: 'cylinder',
@@ -849,13 +853,15 @@ class gCSVImport {
       }
 
       if (row.cylinderhorizontal) {
-        shapeRow.rz = '90deg';
+        rz = '90deg';
         shapeRow.height = width;
         shapeRow.width = height;
+        if (height !== depth)
+          shapeRow.sz = (depth / height).toFixed(3);
+      } else {
+        if (width !== depth)
+          shapeRow.sz = (depth / width).toFixed(3);
       }
-
-      if (width !== depth)
-        shapeRow.sz = (depth / width).toFixed(3);
 
       if (row.createshapetype === 'cone')
         shapeRow.diametertop = 0;
@@ -886,7 +892,7 @@ class gCSVImport {
     shapeRow.z = row.z;
     shapeRow.rx = row.rx;
     shapeRow.ry = row.ry;
-    shapeRow.rz = row.rz;
+    shapeRow.rz = rz;
 
     return Object.assign(this.defaultCSVRow(), shapeRow);
   }
@@ -939,7 +945,7 @@ class gCSVImport {
     }
     let key = sceneRecords.recordIds[0];
     let sceneData = sceneRecords.records[0];
-  //  row.materialname = 'decolor: 0,1,0';
+    //  row.materialname = 'decolor: 0,1,0';
     let textPlaneBlock = this.defaultCSVRow();
     textPlaneBlock.asset = 'textplane';
     textPlaneBlock.name = row.name;
