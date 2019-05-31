@@ -317,7 +317,8 @@ class cGenerate {
     let wId = gAPPP.a.profile.selectedWorkspace;
     if (genNew) {
       wId = gAPPP.a.modelSets['projectTitles'].getKey();
-      await this.bView._addProject(newTitle, wId, false);
+      let tags = 'active,' + 'gd:' + new Date().toISOString();
+      await this.bView._addProject(newTitle, wId, false, tags);
     }
 
     await Promise.all([

@@ -93,7 +93,9 @@ class cWorkspace {
     if (sceneRecords.recordIds.length > 0) {
       let href = this.bView.genQueryString(null, 'block', sceneRecords.recordIds[0]);
       html += `Generated animation block: <b><a href="${href}" class="tag_key_redirect" data-tag="block"
-       data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b> <span class="csv_data_date_span">${gAPPP.animationGeneratedDateDisplay}</span><br>`
+       data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b> <span class="csv_data_date_span">${gAPPP.animationGeneratedDateDisplay}</span>`;
+      html += ` &nbsp; <a href="/demo?wid=${gAPPP.a.profile.selectedWorkspace}" target="_blank">/demo</a>`;
+      html += '<br>';
     } else {
       html += 'Generated animation block: none<br>';
     }
@@ -214,7 +216,7 @@ class cWorkspace {
       field: 'title',
       newValue: name
     }, {
-      field: 'code',
+      field: 'tags',
       newValue: code
     }], this.bView.workplacesSelect.value);
   }

@@ -217,11 +217,24 @@ class bView {
     this.updateProjectList(projectList, gAPPP.a.profile.selectedWorkspace);
     return Promise.resolve();
   }
-  updateProjectList(records, selectedWorkspace = null) {
+  updateProjectList(rawRecordList, selectedWorkspace = null) {
     if (!this.workplacesSelect)
       return;
 
     let html = '';
+    let records = {};
+
+    if (gAPPP.filterActiveWorkspaces) {
+      for (let i in rawRecordList) {
+        let r = rawRecordList[i];
+        let tagList = (r.tags) ? r.tags.split(',') : [];
+        if (tagList.indexOf('active') !== -1)
+          records[i] = r;
+      }
+    } else {
+      records = rawRecordList;
+    }
+
 
     let orderedRecords = [];
     for (let i in records) {
@@ -237,8 +250,8 @@ class bView {
 
     for (let c = 0, l = orderedRecords.length; c < l; c++) {
       let code = '';
-      if (orderedRecords[c].code)
-        code = orderedRecords[c].code;
+      if (orderedRecords[c].tags)
+        code = orderedRecords[c].tags;
       let o = `<option value="${orderedRecords[c].id}">${orderedRecords[c].title}</option>`;
 
       if (orderedRecords[c].id === 'default')
@@ -255,13 +268,13 @@ class bView {
     if (!records || !records[val])
       return;
     gAPPP.lastWorkspaceName = records[val].title;
-    gAPPP.lastWorkspaceCode = records[val].code;
+    gAPPP.lastWorkspaceCode = records[val].tags;
 
     if (this.workplacesSelectEditName) {
       this.workplacesSelectEditName.value = records[val].title;
       let code = '';
-      if (records[val].code)
-        code = records[val].code;
+      if (records[val].tags)
+        code = records[val].tags;
       this.workplacesSelectEditCode.value = code;
       gAPPP.workspaceCode = code;
     }
@@ -275,22 +288,22 @@ class bView {
   async selectProject() {
     this._updateQueryString(gAPPP.mV.workplacesSelect.value);
     await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-        field: 'selectedWorkspace',
-        newValue: gAPPP.mV.workplacesSelect.value
-      }]);
+      field: 'selectedWorkspace',
+      newValue: gAPPP.mV.workplacesSelect.value
+    }]);
 
     setTimeout(() => location.reload(), 1);
 
     return;
   }
-  async _addProject(newTitle, key = false, reload = true, newCode) {
+  async _addProject(newTitle, key = false, reload = true, tags) {
     if (!key)
       key = gAPPP.a.modelSets['projectTitles'].getKey();
-    if (!newCode)
-      newCode = newTitle;
+    if (!tags)
+      tags = '';
     await firebase.database().ref('projectTitles/' + key).set({
       title: newTitle,
-      code: newCode
+      tags
     });
     await firebase.database().ref('project/' + key).set({
       title: newTitle

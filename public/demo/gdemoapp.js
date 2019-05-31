@@ -1,6 +1,7 @@
 class gDemoApp extends gInstanceSuper {
   constructor() {
     super();
+    this.filterActiveWorkspaces = true;
     this.a.signInAnon();
   }
   profileReadyAndLoaded() {
@@ -18,7 +19,7 @@ class gDemoApp extends gInstanceSuper {
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
       this.mV = new cViewDemo();
-      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace);
+      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace, true);
       this._updateApplicationStyle();
     };
   }
