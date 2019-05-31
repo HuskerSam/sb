@@ -1,8 +1,6 @@
 class gPublishApp extends gInstanceSuper  {
   constructor() {
     super();
-
-
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
     this.a.signInAnon();
   }
