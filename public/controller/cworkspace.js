@@ -56,11 +56,13 @@ class cWorkspace {
         let href = this.bView.genQueryString(null, asset, i);
 
         let url = data.renderImageURL;
-        if (!url)
-          url = '/images/addimage.svg';
+        let img = '';
+        if (url) {
+          img = `style="background-image:url(${url})"`;
+        }
 
         html += `<a class="workspace-asset-link-display tag_key_redirect app-control" data-tag="${asset}" data-key="${i}" href="${href}">
-          <img src="${url}" />${data.title}<br><span>${od}</span></a>`;
+          <span class="img-holder" ${img}></span>${data.title}<br><span>${od}</span></a>`;
       });
 
       return html;

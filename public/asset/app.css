@@ -308,6 +308,7 @@ select {
   width: inherit;
   height: 10em;
   display: block;
+  background-image: url(/images/addimage.svg);
 }
 
 .app-collapsed .band-background-preview .img-holder {
@@ -654,12 +655,16 @@ select {
   font-size: .5em;
 }
 
-.workspace-asset-link-display img {
-  max-width: 4em;
-  height: 2em;
-  border-radius: .25em;
-  margin-right: .25em;
+.workspace-asset-link-display .img-holder {
+  width: 4em;
+  height: 3em;
   float: left;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(/images/addimage.svg);
+  margin: .25em;
+  border-radius: .25em;
 }
 
 .navigate_tag_select {

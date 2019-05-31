@@ -74,11 +74,11 @@ class bBand {
 
         if (binding.type === 'background-image') {
           let url = val;
-          if (!url)
-            url = '/images/addimage.svg';
-          let imgHolder = element.querySelector('.img-holder');
-          if (imgHolder)
-            imgHolder.style.backgroundImage = 'url("' + url + '")';
+          if (url) {        
+            let imgHolder = element.querySelector('.img-holder');
+            if (imgHolder)
+              imgHolder.style.backgroundImage = 'url("' + url + '")';
+          }
         }
 
         if (val === undefined)

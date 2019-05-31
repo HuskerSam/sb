@@ -373,7 +373,16 @@ class gInstanceSuper {
         border-left: solid 0px ${bkgColor};
         background-size: 100% 100%;
         border-radius: 0;
-      }`;
+      }
+
+      .band-background-preview .img-holder {
+        background-image: url(/images/addimage_nitemode.svg);
+      }
+
+      .workspace-asset-link-display .img-holder {
+        background-image: url(/images/addimage_nitemode.svg);
+      }
+      `;
     }
 
     if (this.lastStyleProfileCSS === css)
