@@ -2,11 +2,24 @@ class gDemoApp extends gInstanceSuper {
   constructor() {
     super();
     this.filterActiveWorkspaces = true;
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
     this.a.signInAnon();
   }
   profileReadyAndLoaded() {
     this.loadStarted = true;
     let workspace = this.a.profile.selectedWorkspace;
+
+    let urlParams = new URLSearchParams(window.location.search);
+    let newWid = urlParams.get('wid');
+    if (newWid) {
+      workspace = newWid;
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'selectedWorkspace',
+        newValue: newWid
+      }]);
+      this.a.profile.selectedWorkspace = workspace;
+    }
+
     this.a.initProjectModels(workspace);
     this.a._activateModels();
     this.initialUILoad = false;
@@ -19,7 +32,7 @@ class gDemoApp extends gInstanceSuper {
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
 
       this.mV = new cViewDemo();
-      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, gAPPP.a.profile.selectedWorkspace, true);
+      this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, workspace, true);
       this._updateApplicationStyle();
     };
   }

@@ -1,6 +1,7 @@
 class gPublishApp extends gInstanceSuper  {
   constructor() {
     super();
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
     this.a.signInAnon();
   }
   profileReadyAndLoaded() {
@@ -17,6 +18,7 @@ class gPublishApp extends gInstanceSuper  {
       if (data)
         workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
     }
+    this.workspaceInURL = workspace;
     this.a.profile.selectedWorkspace = workspace;
     this.a.initProjectModels(workspace);
 
@@ -31,6 +33,7 @@ class gPublishApp extends gInstanceSuper  {
       }
 
       gAPPP.a.profile['selectedBlockKey' + workspace] = block;
+      gAPPP.blockInURL = block;
       this.mV = new cViewPublished();
       this._updateApplicationStyle();
     };

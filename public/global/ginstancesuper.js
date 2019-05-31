@@ -90,6 +90,9 @@ class gInstanceSuper {
   }
   get workspace() {
     let workspace = this.a.profile.selectedWorkspace;
+    if (this.workspaceInURL)
+      workspace = this.workspaceInURL;
+
     if (!workspace)
       workspace = 'default';
     return workspace;
