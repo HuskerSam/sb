@@ -260,9 +260,9 @@ class cMacro {
       <label><span>depth</span><input type="text" class="depth" value="1" /></label>
     </div>
       <div class="scene-block-add-options">
-      <label><span>width</span><input type="text" class="width" value="50" /></label>
-      <label><span>height</span><input type="text" class="height" value="16" /></label>
-      <label><span>depth</span><input type="text" class="depth" value="50" /></label>
+      <label><span>width</span><input type="text" class="width" value="800" /></label>
+      <label><span>height</span><input type="text" class="height" value="800" /></label>
+      <label><span>depth</span><input type="text" class="depth" value="800" /></label>
       <br>
       <label><input type="checkbox" class="hemilight" /><span>Add Hemispheric Light</span></label>
       <br>

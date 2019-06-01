@@ -156,12 +156,6 @@ class wBlock {
     if (values) {
       if (this._blockKey === fireData.key) {
         if (tag === 'block') {
-          if (this.currentMaterialName == values.materialName) {
-            this.blockRawData = values;
-            this.blockRenderData = values;
-            return this.__renderSceneOptions(this.blockRenderData);
-          }
-
           return this.setData(values);
         }
       }
