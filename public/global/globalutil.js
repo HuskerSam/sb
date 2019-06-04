@@ -28,6 +28,19 @@ class GLOBALUTIL {
 
     return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0) + ')'
   }
+  static colorToHex(bColor){
+    let rH = Math.round(bColor.r * 255).toString(16);
+    if (rH.length === 1)
+      rH = '0' + rH;
+    let gH = Math.round(bColor.g * 255).toString(16);
+    if (gH.length === 1)
+      gH = '0' + gH;
+    let bH = Math.round(bColor.b * 255).toString(16);
+    if (bH.length === 1)
+      bH = '0' + bH;
+
+    return '#' + rH + gH + bH;
+  }
   static dataURItoBlob(dataURI) {
     let byteString = atob(dataURI.split(',')[1]);
     let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]

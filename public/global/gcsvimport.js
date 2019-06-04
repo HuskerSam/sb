@@ -235,6 +235,7 @@ class gCSVImport {
         scalingX: row.sx,
         scalingY: row.sy,
         scalingZ: row.sz,
+        visibility: '1',
         frameOrder: 10,
         frameTime
       });
@@ -571,7 +572,8 @@ class gCSVImport {
 
       let frameOrder = 10;
       let frame = {
-        parentKey: childResults.key
+        parentKey: childResults.key,
+        visibility: '1'
       };
       let zLen = z * 2;
       let minZTime = i * timePerDash;

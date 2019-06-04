@@ -452,19 +452,7 @@ class cPanelData {
     };
   }
   __updateColorLabel(f) {
-    let bColor = GLOBALUTIL.color(f.dom.value);
-    let rH = Math.round(bColor.r * 255).toString(16);
-    if (rH.length === 1)
-      rH = '0' + rH;
-    let gH = Math.round(bColor.g * 255).toString(16);
-    if (gH.length === 1)
-      gH = '0' + gH;
-    let bH = Math.round(bColor.b * 255).toString(16);
-    if (bH.length === 1)
-      bH = '0' + bH;
-
-    let hex = '#' + rH + gH + bH;
-    f.colorPickerInput.value = hex;
+    f.colorPickerInput.value = GLOBALUTIL.colorToHex(GLOBALUTIL.color(f.dom.value));
   }
   _updateDisplayFilters() {
     for (let inner in this.fields) {

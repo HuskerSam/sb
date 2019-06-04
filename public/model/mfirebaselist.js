@@ -21,7 +21,7 @@ class mFirebaseList extends bFirebase {
   }
   startingOptionList() {
     if (this.tag === 'material')
-      return '<option>color: 1,1,1</option><option>color: 0,0,0</option><option>color: 1,0,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option>';
+      return '<option>color: 1,1,1</option><option>color: 0,0,0</option><option>color: 1,0,0</option><option>color: 1,.5,0</option><option>color: 0,1,0</option><option>color: 0,0,1</option><option>ecolor: 1,0,0</option><option>decolor: 1,0,0</option>';
 
     if (this.tag === 'texture') {
       let dl = document.getElementById('sbimageslist');

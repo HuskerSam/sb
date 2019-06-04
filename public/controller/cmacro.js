@@ -175,6 +175,7 @@ class cMacro {
       <label><span>tessellation</span><input type="text" class="tessellation" value="" /></label>
       <br>
       <label><span>material</span>&nbsp;<input type="text" style="width:15em;" class="material" list="materialdatatitlelookuplist" /></label>
+      <input type="color" class="colorpicker" data-inputclass="material">
       <br>
       <label>
         <span>pointshape</span>
@@ -192,6 +193,7 @@ class cMacro {
       <label><span>pointtessellation</span><input type="text" class="pointtessellation" value="" /></label>
       <br>
       <label><span>pointmaterial</span><input type="text" style="width:15em;" class="pointmaterial" list="materialdatatitlelookuplist" /></label>
+      <input type="color" class="colorpicker" data-inputclass="pointmaterial">
       <br>
       <label>
         <span>tailshape</span>
@@ -209,6 +211,7 @@ class cMacro {
       <label><span>tailtessellation</span><input type="text" class="tailtessellation" value="" /></label>
       <br>
       <label><span>tailmaterial</span><input type="text" style="width:15em;" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
+      <input type="color" class="colorpicker" data-inputclass="tailmaterial">
     </div>
     <div class="animated-line-block-add-options">
       <label><span>dashes</span><input type="text" class="dashes" value="5" /></label>
@@ -227,6 +230,7 @@ class cMacro {
       <label><span>tessellation</span><input type="text" class="tessellation" value="" /></label>
       <br>
       <label><span>material</span><input type="text" style="width:15em;" class="material" list="materialdatatitlelookuplist" /></label>
+      <input type="color" class="colorpicker" data-inputclass="material">
       <br>
       <label><span>width</span><input type="text" class="width" value="1" /></label>
       <label><span>height</span><input type="text" class="height" value="2" /></label>
@@ -241,6 +245,7 @@ class cMacro {
       <label><span>textdepth</span><input type="text" class="textdepth" value=".1" /></label>
       <br>
       <label><span>textmaterial</span>&nbsp;<input type="text" style="width:15em;" class="textmaterial" list="materialdatatitlelookuplist" /></label>
+      <input type="color" class="colorpicker" data-inputclass="textmaterial">
       <br>
       <label><span>createshapetype</span><select class="createshapetype">
         <option>cube</option>
@@ -254,6 +259,7 @@ class cMacro {
       <label><input type="checkbox" class="cylinderhorizontal" />cylinderhorizontal</label>
       <br>
       <label><span>shapematerial</span><input type="text" style="width:15em;" class="shapematerial" list="materialdatatitlelookuplist" /></label>
+      <input type="color" class="colorpicker" data-inputclass="shapematerial">
       <br>
       <label><span>width</span><input type="text" class="width" value="4" /></label>
       <label><span>height</span><input type="text" class="height" value="1" /></label>
@@ -310,6 +316,13 @@ class cMacro {
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
 
     this.panelInput = document.createElement('input'); //place holder
+
+    this.panel.querySelectorAll('[list=materialdatatitlelookuplist]')
+      .forEach(i => i.addEventListener('input', e => this.blockUpdateMaterialField(e, i)));
+
+    this.panel.querySelectorAll('.colorpicker')
+      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i)));
+
     this.blockHelperChange();
     this.blockSkyboxChange();
     this.blockUpdateCSV();
@@ -332,6 +345,33 @@ class cMacro {
         csv_row[field] = f.value;
     });
     return csv_row;
+  }
+  blockColorPickerClick(event, ctl) {
+    let bColor = GLOBALUTIL.HexToRGB(ctl.value);
+    let rgb = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
+    let inputCTL = ctl.parentNode.querySelector('.' + ctl.dataset.inputclass);
+    inputCTL.value = 'ecolor: ' + rgb;
+
+    this.blockUpdateMaterialField(null, inputCTL);
+  }
+  blockUpdateMaterialField(event, ctl) {
+    let val = ctl.value;
+    let index = val.indexOf('color:');
+    if (index !== -1) {
+      let color = val.substring(index + 6).trim();
+      let rgb = GLOBALUTIL.colorRGB255(color);
+
+      ctl.style.borderStyle = 'solid';
+      ctl.style.borderWidth = '.35em';
+      ctl.style.borderColor = rgb;
+
+      ctl.parentNode.nextElementSibling.value = GLOBALUTIL.colorToHex(GLOBALUTIL.color(color));
+    } else {
+      ctl.style.borderStyle = '';
+      ctl.style.borderWidth = '';
+      ctl.style.borderColor = '';
+      ctl.parentNode.nextElementSibling.value = '';
+    }
   }
   _blockScrapeTextAndShape() {
     this.newName = this.panelInput.value.trim();
