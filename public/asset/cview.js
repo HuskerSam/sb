@@ -185,6 +185,12 @@ class cView extends bView {
     this.mainbandsubviewselect.addEventListener('change', e => this.updateSubViewDisplay());
     this.updateSubViewDisplay();
 
+    let deleteBlockAndChildren = document.createElement('button');
+    deleteBlockAndChildren.innerHTML = '<i class="material-icons">delete</i> block and children';
+    deleteBlockAndChildren.classList.add('delete_block_and_children');
+    deleteBlockAndChildren.addEventListener('click', e => this.deleteBlockAndChildren());
+    this.nodedetailspanel.appendChild(deleteBlockAndChildren);
+
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBlockPickerBand = this.dialog.querySelector('.child_band_picker_expanded');
     this.childBand = new cBlockLinkSelect(this.blockChildrenSelect, this, this.childEditPanel, this.childBlockPickerBand);
@@ -200,6 +206,9 @@ class cView extends bView {
     openBtnInNew.classList.add('open_in_new_block_child');
     openBtnInNew.addEventListener('click', e => this.openChildBlockClick(true));
     this.childEditPanel.appendChild(openBtnInNew);
+  }
+  deleteBlockAndChildren() {
+    alert('this will delete all linked assets');
   }
   openChildBlockClick(newWindow) {
     let data = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey[this.childKey];
