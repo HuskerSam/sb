@@ -534,7 +534,7 @@ class gCSVImport {
       height,
       width,
       depth,
-      materialname: '',
+      materialname: row.material,
       frametime: runlength
     };
     let blockResult = await this.addCSVBlockRow(blockrow);
@@ -544,7 +544,7 @@ class gCSVImport {
       dashlength,
       height,
       createshapetype: row.dotshape,
-      shapematerial: row.material,
+      shapematerial: '',
       tessellation: row.tessellation,
       name: row.name + 'linenode'
     };
@@ -565,7 +565,8 @@ class gCSVImport {
       let childResults = await this.dbSetRecord('blockchild', {
         childType: 'shape',
         childName: shaperow.name,
-        parentKey: blockResult.key
+        parentKey: blockResult.key,
+        inheritMaterial: true
       });
 
       let frameOrder = 10;
