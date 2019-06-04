@@ -226,7 +226,7 @@ class cMacro {
       <br>
       <label><span>tessellation</span><input type="text" class="tessellation" value="" /></label>
       <br>
-      <label><span>material</span><input type="text" style="width:15em;" class="material"" list="materialdatatitlelookuplist" /></label>
+      <label><span>material</span><input type="text" style="width:15em;" class="material" list="materialdatatitlelookuplist" /></label>
       <br>
       <label><span>width</span><input type="text" class="width" value="1" /></label>
       <label><span>height</span><input type="text" class="height" value="2" /></label>

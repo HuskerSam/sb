@@ -544,7 +544,7 @@ class gCSVImport {
       dashlength,
       height,
       createshapetype: row.dotshape,
-      material: row.material,
+      shapematerial: row.material,
       tessellation: row.tessellation,
       name: row.name + 'linenode'
     };
