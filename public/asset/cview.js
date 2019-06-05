@@ -186,10 +186,10 @@ class cView extends bView {
     this.updateSubViewDisplay();
 
     let deleteBlockAndChildren = document.createElement('button');
-    deleteBlockAndChildren.innerHTML = '<i class="material-icons">delete</i> block and children';
+    deleteBlockAndChildren.innerHTML = '<i class="material-icons">delete</i> block and linked assets';
     deleteBlockAndChildren.classList.add('delete_block_and_children');
     deleteBlockAndChildren.addEventListener('click', e => this.deleteBlockAndChildren());
-    this.nodedetailspanel.appendChild(deleteBlockAndChildren);
+    this.sceneFieldsPanel.appendChild(deleteBlockAndChildren);
 
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBlockPickerBand = this.dialog.querySelector('.child_band_picker_expanded');
@@ -197,18 +197,21 @@ class cView extends bView {
     this.childEditPanel.parentNode.insertBefore(this.assetsFieldsContainer, this.childEditPanel.parentNode.firstChild);
 
     let openBtn = document.createElement('button');
-    openBtn.innerHTML = '<i class="material-icons">open_in_browser</i>';
+    openBtn.innerHTML = '<i class="material-icons">open_in_browser</i> linked asset';
     openBtn.classList.add('open_in_browser_block_child');
     openBtn.addEventListener('click', e => this.openChildBlockClick());
     this.childEditPanel.appendChild(openBtn);
     let openBtnInNew = document.createElement('button');
-    openBtnInNew.innerHTML = '<i class="material-icons">open_in_new</i>';
+    openBtnInNew.innerHTML = '<i class="material-icons">open_in_new</i> new window';
     openBtnInNew.classList.add('open_in_new_block_child');
     openBtnInNew.addEventListener('click', e => this.openChildBlockClick(true));
     this.childEditPanel.appendChild(openBtnInNew);
   }
   deleteBlockAndChildren() {
-    alert('this will delete all linked assets');
+    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', this.key);
+
+    console.log(children);
+
   }
   openChildBlockClick(newWindow) {
     let data = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey[this.childKey];
@@ -537,6 +540,7 @@ class cView extends bView {
     this.rootBlock = b;
     this.rootBlock.updateCamera();
     this.canvasHelper.refresh();
+    this.canvasHelper.playAnimation();
 
     this.canvasHelper.__updateVideoCallback();
     b.setData(this.fireFields.values);

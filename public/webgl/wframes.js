@@ -52,15 +52,13 @@ class wFrames {
   __baseDetails() {
     let root = this.isRoot;
     let frameData = this.meshValues;
-    if (root)
-      if (this.orderedKeys.length > 0)
-        frameData = this.rawFrames[this.orderedKeys[0]];
-      else
-        frameData = this.parentBlock.blockRenderData;
-
-    if (!root) {
+    if (!root)
       frameData = this.parentBlock.blockRenderData;
-    }
+    else if (this.orderedKeys.length > 0)
+      frameData = this.rawFrames[this.orderedKeys[0]];
+    else
+      frameData = this.parentBlock.blockRenderData;
+
     let details = {};
     for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
       let field = this.frameAttributeFields[c];
@@ -70,6 +68,7 @@ class wFrames {
     }
 
     details.timeMS = 0;
+
     return details;
   }
   firstFrameValues() {
@@ -319,6 +318,7 @@ class wFrames {
     this.processAnimationFrames(this.parentBlock.sceneObject);
 
     this.context.refreshFocus();
+
     if (this.processedFrames.length > 1 && this.maxLength > 10) {
       let frameIndex = 0;
       try {
@@ -329,12 +329,13 @@ class wFrames {
             frameIndex = GLOBALUTIL.getNumberOrDefault(rootFrames.activeAnimation._runtimeAnimations[0].currentFrame, 1);
         }
 
-        this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
+        if (!this.activeAnimation || this.activeAnimation.masterFrame === 0)
+          this.activeAnimation = this.context.scene.beginAnimation(this.parentBlock.sceneObject, 0, this.lastFrame, true);
 
-        if (rootFrames.playState === 0) {
+        if (playState === 0) {
           this.activeAnimation.stop();
           this.activeAnimation.reset();
-        } else if (rootFrames.playState === 1) {
+        } else if (playState === 1) {
           this.activeAnimation.goToFrame(frameIndex);
         } else {
           this.activeAnimation.goToFrame(frameIndex);
@@ -567,7 +568,6 @@ class wFrames {
   setParentKey(parentKey, parentBlock) {
     this.parentKey = parentKey;
     this.parentBlock = parentBlock;
-
     this.compileFrames();
   }
   getFieldList(fields) {

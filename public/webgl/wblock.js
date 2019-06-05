@@ -560,6 +560,7 @@ class wBlock {
     if (this.parent && this.sceneObject)
       this.sceneObject.parent = this.parent.sceneObject;
 
+    this.framesHelper.activeAnimation = null;
     this.framesHelper.setParentKey(this.blockKey, this);
 
     this.__applyFirstFrameValues();

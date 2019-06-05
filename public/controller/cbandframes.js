@@ -204,6 +204,11 @@ class cBandFrames extends bBand {
       return;
 
     childType = cache.childType;
+    
+    if (this.parent.context.activeBlock)
+      this.framesHelper = this.parent.context.activeBlock.framesHelper;
+    else
+      this.framesHelper = new wFrames(this.parent.context);
 
     this.framesHelper._validateFieldList(childType);
     let children = this.fireSet.queryCache('parentKey', this.__getKey());
