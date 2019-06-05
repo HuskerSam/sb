@@ -208,10 +208,27 @@ class cView extends bView {
     this.childEditPanel.appendChild(openBtnInNew);
   }
   deleteBlockAndChildren() {
+    if (!this.key)
+      return;
+    if (!this.tag)
+      return;
+
+    if (!confirm('Are you sure you want to delete this ' + this.tag + ' - and all of the linked assets?  This should only be done if you know what you\'re doing.'))
+      return;
+
     let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', this.key);
 
-    console.log(children);
+    for (let i in children) {
+      let child = children[i];
+      if (gAPPP.a.modelSets[child.childType]) {
+        let cDs = gAPPP.a.modelSets[child.childType].queryCache('title', child.childName);
+        let keys = Object.keys(cDs);
 
+        keys.forEach(key => gAPPP.a.modelSets[child.childType].removeByKey(key));
+      }
+    }
+
+    this.deleteAsset(false);
   }
   openChildBlockClick(newWindow) {
     let data = gAPPP.a.modelSets['blockchild'].fireDataValuesByKey[this.childKey];
@@ -257,12 +274,12 @@ class cView extends bView {
 
     this.openNewWindow(this.tag, newKey);
   }
-  async deleteAsset() {
+  async deleteAsset(warn = true) {
     if (!this.tag)
       return;
     if (!this.key)
       return;
-    if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
+    if (warn && !confirm('Are you sure you want to delete this ' + this.tag + '?'))
       return;
     await gAPPP.a.modelSets[this.tag].removeByKey(this.key);
 
