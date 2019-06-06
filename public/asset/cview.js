@@ -482,6 +482,7 @@ class cView extends bView {
     this._updateHelpSections(true);
   }
   async updateDisplayForWorkspaceLayout() {
+    await this.showBusyScreen();
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
     this.dialog.classList.add('workspacelayout');
 
@@ -517,12 +518,27 @@ class cView extends bView {
     }
     this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, 'Layout', this);
   }
+  async showBusyScreen() {
+    return new Promise((resolve, reject) => {
+      if (this.canvasHelper) {
+        this.canvasHelper.loadingScreen.style.display = '';
+        this.canvasHelper.loadingScreen.offsetHeight;
+        return window.requestAnimationFrame(() => {
+          setTimeout(() => resolve(), 1);
+        });
+      }
+
+      return resolve();
+    });
+  }
   async updateDisplayForAssetEditView() {
     this.form_canvas_wrapper.classList.remove('show-help');
     this.deleteAssetButton.style.display = 'inline-block';
     this.snapshotAssetButton.style.display = 'inline-block';
     this.addAssetPanel.style.display = 'none';
     this.expand_all_global_btn.style.display = '';
+
+    await this.showBusyScreen();
 
     this.key = this.dataview_record_key.value;
 
@@ -600,6 +616,10 @@ class cView extends bView {
       this.sceneFireFields.helpers.resetUI();
     }
     this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+
+    if (this.canvasHelper) {
+      this.canvasHelper.loadingScreen.style.display = 'none';
+    }
   }
   genQueryString(wid = null, tag = null, key = null, childkey = null, subView = null) {
     if (wid === null) wid = gAPPP.a.profile.selectedWorkspace;

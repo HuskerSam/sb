@@ -14,6 +14,10 @@ class cWorkspace {
         if (subKey === 'Layout') {
           this.domPanel.innerHTML = this.workspaceLayoutTemplate();
           this.workspaceLayoutRegister();
+
+          if (this.bView.canvasHelper) {
+            this.bView.canvasHelper.loadingScreen.style.display = 'none';
+          }
         }
       });
   }
