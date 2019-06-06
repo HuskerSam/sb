@@ -212,6 +212,7 @@ class cMacro {
       <br>
       <label><span>tailmaterial</span><input type="text" style="width:15em;" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
       <input type="color" class="colorpicker" data-inputclass="tailmaterial">
+      <label><input type="checkbox" class="tailshapeflip" />tailshapeflip</label>
     </div>
     <div class="animated-line-block-add-options">
       <label><span>dashes</span><input type="text" class="dashes" value="5" /></label>
@@ -401,7 +402,7 @@ class cMacro {
     let fields = [
       'length', 'diameter', 'tessellation', 'material', 'pointshape', 'pointlength',
       'pointdiameter', 'pointtessellation', 'pointmaterial', 'tailshape', 'taillength',
-      'taildiameter', 'tailtessellation', 'tailmaterial'
+      'taildiameter', 'tailtessellation', 'tailmaterial', 'tailshapeflip'
     ];
     fields.forEach(field => {
       let f = this.connectorLinePanel.querySelector('.' + field);

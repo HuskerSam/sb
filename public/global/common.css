@@ -28,9 +28,6 @@ html, body {
   padding: 0;
 }
 
-.btn-sb-icon {
-}
-
 *[disabled] {
   background: silver;
   opacity: .6;
@@ -252,7 +249,7 @@ button i.material-icons {
   font-size: 1.1em;
 }
 
-.btn-sb-icon.scene-options {
+button.scene-options {
   position: absolute;
   right: .05em;
   top: .35em;

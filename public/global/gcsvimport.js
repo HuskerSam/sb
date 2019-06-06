@@ -680,6 +680,9 @@ class gCSVImport {
     if (row.pointshape !== 'none')
       this.addCSVShapeRow(this.__childShapeRow(pointRow));
 
+    let tailrz = '90deg';
+    if (row.tailshapeflip)
+      tailrz = '-90deg';
     let tailRow = {
       width: row.taildiameter,
       tessellation: row.tailtessellation,
@@ -689,7 +692,7 @@ class gCSVImport {
       createshapetype: row.tailshape,
       name: row.name + '_tailshape',
       parent: row.name,
-      rz: '90deg',
+      rz: tailrz,
       x: row.length / 2.0
     };
     if (row.tailshape === 'cone' || row.tailshape === 'cylinder')

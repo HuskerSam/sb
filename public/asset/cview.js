@@ -94,6 +94,9 @@ class cView extends bView {
     else
       this.collapseAll();
 
+    this.dialog.querySelector('.open_workspace_new_window')
+      .addEventListener('click', e => this.openNewWindow(this.tag, this.key));
+
     this.view_layout_select.value = this.layoutMode;
   }
   generateAnimation(genNew = false, animationKey = false, clearWorkspace = true, reload = true) {
@@ -671,11 +674,12 @@ class cView extends bView {
           <div id="profile-header-panel" class="app-panel">${this.profilePanelTemplate()}</div>
           <div class="header_wrapper">
             <div class="header_bar_top_row">
-              <button id="profile_description_panel_btn" style="float:right;" class="btn-sb-icon"><i class="material-icons">settings</i></button>
+              <button id="profile_description_panel_btn" style="float:right;"><i class="material-icons">settings</i></button>
               <select id="workspaces-select"></select>
-              <button class="workspace_show_home_btn btn-sb-icon"><i class="material-icons">home</i></button>
-              <button class="asset_show_home_btn btn-sb-icon"><i class="material-icons">library_books</i></button>
-              <button class="expand_all_global_btn btn-sb-icon"><i class="material-icons">unfold_more</i></button>
+              <button class="workspace_show_home_btn"><i class="material-icons">home</i></button>
+              <button class="asset_show_home_btn"><i class="material-icons">library_books</i></button>
+              <button class="expand_all_global_btn"><i class="material-icons">unfold_more</i></button>
+              <button class="open_workspace_new_window"><i class="material-icons">open_in_new</i></button>
               <div style="clear:both;"></div>
             </div>
             <select class="dataview_record_tag">
