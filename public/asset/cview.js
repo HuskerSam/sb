@@ -622,6 +622,7 @@ class cView extends bView {
 
     if (this.canvasHelper) {
       this.canvasHelper.loadingScreen.style.display = 'none';
+      this.canvasHelper.show();
     }
   }
   genQueryString(wid = null, tag = null, key = null, childkey = null, subView = null) {
