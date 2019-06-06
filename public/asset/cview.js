@@ -73,11 +73,14 @@ class cView extends bView {
     this.workspace_show_home_btn = this.dialog.querySelector('.workspace_show_home_btn');
     this.workspace_show_home_btn.addEventListener('click', e => {
       this.dataview_record_tag.value = '';
+      this.tag = '';
+      this.key = '';
       this.updateRecordList();
     });
     this.asset_show_home_btn = this.dialog.querySelector('.asset_show_home_btn');
     this.asset_show_home_btn.addEventListener('click', e => {
       this.dataview_record_key.value = '';
+      this.key = '';
       this.updateRecordList();
     });
     this.expandedAll = true;
@@ -304,6 +307,8 @@ class cView extends bView {
     this.tag = this.dataview_record_tag.value;
     this.key = newKey;
     this.subView = newView;
+    this.rootBlock = null;
+
     this._updateRecordSelect();
     this.initRecordEditFields();
     this.updateSelectedRecord();
@@ -550,7 +555,13 @@ class cView extends bView {
     }
 
     this.initRecordEditFields();
-    this.fireFields.values = this.fireSet.fireDataByKey[this.key].val();
+    let data = this.fireSet.fireDataValuesByKey[this.key];
+
+    if (!data){
+      this.key = '';
+      return;
+    }
+    this.fireFields.values = data;
 
     this.openViewerAssetButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
 
@@ -558,7 +569,7 @@ class cView extends bView {
       if (this.fireFields.values.url)
         await this.context.loadSceneURL(this.fireFields.values.url);
 
-      this.sceneFireFields.values = this.fireSet.fireDataByKey[this.key].val();
+      this.sceneFireFields.values = data;
 
       this.block_child_details_block.style.display = '';
     }
