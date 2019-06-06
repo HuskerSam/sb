@@ -353,7 +353,7 @@ button.scene-options {
 
 .color-picker-input {
   position: absolute;
-  top: -.1em;
+  top: .15em;
   right: -.6em;
   width: 2.5em!important;
   padding: 0em!important;
