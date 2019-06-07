@@ -145,12 +145,16 @@ class wBlock {
         if (values.parentKey === this.blockRawData.parentKey)
           return this.parent.setData();
     } else if (tag === 'frame') {
-      if (values)
-        if (values.parentKey === this._blockKey) {
+      if (values && values.parentKey === this._blockKey) {
+        if (this.blockRawData.childType === 'block') {
           this.framesHelper.compileFrames();
           this.__applyFirstFrameValues();
-          return;
+          return this.setData(); //recalc block child frames if % values used
         }
+        this.framesHelper.compileFrames();
+        this.__applyFirstFrameValues();
+        return;
+      }
     }
 
     if (values) {
@@ -297,6 +301,7 @@ class wBlock {
     wrapper = axisX;
 
     let localScene = this.context.scene;
+
     function __make2DTextMesh(text, color, size) {
       let dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 50, localScene, true);
       dynamicTexture.hasAlpha = true;
@@ -417,7 +422,9 @@ class wBlock {
           objectData.rotationY = newMesh.rotation.y;
           objectData.rotationZ = newMesh.rotation.z;
 
-          resolve({ error: false });
+          resolve({
+            error: false
+          });
         },
         progress => {},
         (scene, msg, err) => {
@@ -691,8 +698,7 @@ class wBlock {
     else {
       if (gAPPP.a.profile.canvasColor) {
         this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
-      }
-      else
+      } else
         this.context.scene.clearColor = GLOBALUTIL.color('.2,.4,.4');
     }
 
