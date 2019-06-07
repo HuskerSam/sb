@@ -77,7 +77,9 @@ class mFirebaseList extends bFirebase {
   }
   updateStash(fireData, remove) {
     let key = fireData.key;
+    this.lastValuesDeleted = null;
     if (remove) {
+      this.lastValuesDeleted = this.fireDataValuesByKey[key];
       delete this.fireDataByKey[key];
       delete this.fireDataValuesByKey[key];
       return;
