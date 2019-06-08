@@ -29,7 +29,7 @@ class gApp extends gInstanceSuper {
     firebase.auth().getRedirectResult().then(result => {
       if (GLOBALUTIL.getCookie('autoGoogleLogin') === '1')
         if (!result.user)
-          this.a.signIn();
+          this.a.signIn(true);
     });
   }
   profileReadyAndLoaded() {
