@@ -122,11 +122,12 @@ class gAuthorization {
       this.signInAnon();
       return;
     }
-    //    if (urlParams.get('signin') !== 'true')
-    //      return;
 
-    this.provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(this.provider);
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => {
+        this.provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithRedirect(this.provider);
+      });
   }
   signInByEmail(email) {
     /*

@@ -25,6 +25,11 @@ class gApp extends gInstanceSuper {
     this.loadDataLists('sbmesheslist');
     this.loadDataLists('skyboxlist');
     this.loadDataLists('fontfamilydatalist');
+
+    firebase.auth().getRedirectResult().then(result => {
+      if (!result.user)
+        this.a.signIn();
+    });
   }
   profileReadyAndLoaded() {
     let urlParams = new URLSearchParams(window.location.search);

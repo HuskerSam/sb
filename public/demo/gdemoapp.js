@@ -2,8 +2,8 @@ class gDemoApp extends gInstanceSuper {
   constructor() {
     super();
     this.filterActiveWorkspaces = true;
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-    this.a.signInAnon();
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
+      .then(() => this.a.signInAnon());
   }
   profileReadyAndLoaded() {
     this.loadStarted = true;
