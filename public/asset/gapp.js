@@ -27,8 +27,9 @@ class gApp extends gInstanceSuper {
     this.loadDataLists('fontfamilydatalist');
 
     firebase.auth().getRedirectResult().then(result => {
-      if (!result.user)
-        this.a.signIn();
+      if (GLOBALUTIL.getCookie('autoGoogleLogin') === '1')
+        if (!result.user)
+          this.a.signIn();
     });
   }
   profileReadyAndLoaded() {
@@ -68,7 +69,10 @@ class gApp extends gInstanceSuper {
     div.innerHTML = this._loginPageTemplate('Scene Builder Asset Editor');
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
-    document.querySelector('#sign-in-button').addEventListener('click', e => gAPPP.a.signIn(), false);
+    document.querySelector('#sign-in-button').addEventListener('click', e => {
+      let chkbox = document.getElementById('stay_logged_in_with_google');
+      gAPPP.a.signIn(chkbox ? chkbox.checked : false);
+    }, false);
   }
   async updateGenerateDataTimes() {
     let results = await Promise.all([

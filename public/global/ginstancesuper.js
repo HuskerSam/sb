@@ -404,6 +404,7 @@ class gInstanceSuper {
   <div>
     <button id="sign-in-button" class="btn btn-primary">Sign in with Google</button>
     <br>
+    <label><input type="checkbox" id="stay_logged_in_with_google" checked /> login with google automatically</label>
     <br>
   </div>
 </div>`;

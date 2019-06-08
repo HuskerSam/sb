@@ -28,7 +28,7 @@ class GLOBALUTIL {
 
     return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0) + ')'
   }
-  static colorToHex(bColor){
+  static colorToHex(bColor) {
     let rH = Math.round(bColor.r * 255).toString(16);
     if (rH.length === 1)
       rH = '0' + rH;
@@ -90,7 +90,7 @@ class GLOBALUTIL {
       else
         return this.path(obj[is[0]], is.slice(1), value);
     } catch (e) {
-    //  console.log('path() err', e);
+      //  console.log('path() err', e);
     }
   }
   static replaceAll(str, search, replacement) {
@@ -145,9 +145,30 @@ class GLOBALUTIL {
   }
   static shortDateTime(d) {
     d = new Date(d);
-    let od = d.toISOString().substring(5,10);
-    od += ' ' + d.toISOString().substring(11,16);
+    let od = d.toISOString().substring(5, 10);
+    od += ' ' + d.toISOString().substring(11, 16);
     return od;
+  }
+  static getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+  static setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
 }
 if (!String.prototype.padStart) {

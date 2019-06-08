@@ -116,12 +116,20 @@ class gAuthorization {
         }
       }
   }
-  signIn() {
+  __setAutoGoogleLogin(set) {
+    if (set)
+      GLOBALUTIL.setCookie('autoGoogleLogin', '1', 7);
+    else
+      GLOBALUTIL.setCookie('autoGoogleLogin', '', 7);
+  }
+  signIn(autoGoogleLogin = false) {
     let urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('server') === 'true') {
       this.signInAnon();
       return;
     }
+
+    this.__setAutoGoogleLogin(autoGoogleLogin);
 
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .then(() => {
@@ -191,6 +199,7 @@ class gAuthorization {
     firebase.auth().signInAnonymously();
   }
   signOut() {
+    this.__setAutoGoogleLogin(false);
     firebase.auth().signOut();
     location.reload(); // just dump the dom and restart
   }
