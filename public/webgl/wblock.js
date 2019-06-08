@@ -145,7 +145,13 @@ class wBlock {
         if (values.parentKey === this.blockRawData.parentKey)
           return this.parent.setData();
     } else if (tag === 'frame') {
-      if (values && values.parentKey === this._blockKey) {
+      let parentKey = null;
+      if (values)
+        parentKey = values.parentKey;
+      if (type === 'remove' && gAPPP.a.modelSets['frame'].lastValuesDeleted)
+        parentKey = gAPPP.a.modelSets['frame'].lastValuesDeleted.parentKey;
+
+      if (parentKey === this._blockKey) {
         if (this.blockRawData.childType === 'block') {
           this.framesHelper.compileFrames();
           this.__applyFirstFrameValues();
