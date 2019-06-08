@@ -27,9 +27,10 @@ class gApp extends gInstanceSuper {
     this.loadDataLists('fontfamilydatalist');
 
     firebase.auth().getRedirectResult().then(result => {
-      if (GLOBALUTIL.getCookie('autoGoogleLogin') === '1')
-        if (!result.user)
-          this.a.signIn(true);
+      if (! firebase.auth().currentUser)
+        if (GLOBALUTIL.getCookie('autoGoogleLogin') === '1')
+          if (!result.user)
+            this.a.signIn(true);
     });
   }
   profileReadyAndLoaded() {

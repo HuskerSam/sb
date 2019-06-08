@@ -23,7 +23,7 @@ class gInstanceSuper {
     document.body.insertBefore(div, document.body.firstChild);
 
     this.a = new gAuthorization();
-    this.a.signInWithURL();
+    //this.a.signInWithURL();
     this.a.updateAuthUICallback = () => this.updateAuthUI();
   }
   async loadDataLists(name) {
