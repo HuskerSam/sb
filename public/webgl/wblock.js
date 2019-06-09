@@ -415,7 +415,7 @@ class wBlock {
 
     this.containerCache = {};
   }
-  loadMesh() {
+  async loadMesh() {
     return new Promise((resolve, reject) => {
       let path = gAPPP.storagePrefix;
       let url = this.blockRenderData['url'];
@@ -440,6 +440,7 @@ class wBlock {
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
         (newMeshes, particleSystems, skeletons) => {
           this.dispose();
+          console.log('mesh', newMeshes);
           this.sceneObject = newMeshes[0];
           this.sceneObjectMeshData = {};
           let newMesh = this.sceneObject;

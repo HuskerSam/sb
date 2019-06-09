@@ -312,8 +312,8 @@ class wContext {
       this.defaultLight = false;
     } else {
       if (!this.light) {
-        let l = GLOBALUTIL.getVector('-1,-2,-1', 0, 1, 0);
-        this.light = new BABYLON.DirectionalLight("defaultSceneBuilderLight", l, this.scene);
+        let l = GLOBALUTIL.getVector(0, 1, 0);
+        this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", l, this.scene);
         this.light.intensity = .4;
         this.light.groundColor = GLOBALUTIL.color('0,0,0');
       }
