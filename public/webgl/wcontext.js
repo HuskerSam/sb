@@ -153,11 +153,6 @@ class wContext {
       return fireSet.createWithBlob(objectData, file, filename);
 
     if (objectType === 'mesh') {
-      let ext = file.name.substr(-4);
-      if (ext === '.glb' || ext === 'gltf') {
-        return fireSet.createWithBlob(objectData, file, filename);
-      }
-
       return this._loadMeshFromDomFile(file).then(
         meshes => {
           let newMesh = meshes[0];
@@ -251,25 +246,6 @@ class wContext {
     return new Promise((resolve, reject) => {
       if (objectType === 'mesh') {
         this.activate(null);
-
-        let ext = file.name.substr(-4);
-        if (ext === '.glb' || ext === 'gltf') {
-          let fireSet = gAPPP.a.modelSets[objectType];
-          this.engine.stopRenderLoop();
-          this._sceneDisposeDefaultObjects();
-          this._sceneAddDefaultObjects();
-          return fireSet.updateBlob(key, file, file.name)
-            .then(r => {
-              let parts = r.url.split('/');
-              let filename = parts[parts.length - 1];
-              let path = r.url.replace(filename, '');
-              BABYLON.SceneLoader.Append(path, filename, this.scene, (scene) => {
-
-                this.activate();
-                return resolve();
-              });
-            });
-        }
 
         this._loadMeshFromDomFile(file).then(
           meshes => {

@@ -437,15 +437,6 @@ class wBlock {
         return resolve();
       }
 
-      let ext = url.substr(-4);
-      if (ext === '.glb' || ext === 'gltf') {
-        //path = 'https://models.babylonjs.com/';
-        BABYLON.SceneLoader.Append(path, filename, this.context.scene, (scene) => {
-          return resolve();
-        });
-        return;
-      }
-
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
         (newMeshes, particleSystems, skeletons) => {
           this.dispose();
