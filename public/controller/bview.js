@@ -203,8 +203,8 @@ class bView {
       this.canvasHelper.userProfileChange();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
-    if (!tag)
-      return;
+    //if (!this.tag)
+    //  return;
     if (this.rootBlock)
       this.rootBlock.handleDataUpdate(tag, values, type, fireData);
     this.canvasHelper.testError();

@@ -807,9 +807,15 @@ class cView extends bView {
       </div>`;
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
+    this._updateRecordSelect();
+
+    if (this.tag === '' && this.dataview_record_key.selectedIndex < 1) {
+      this.updateSelectedRecord();
+    }
+    super._updateContextWithDataChange(tag, values, type, fireData);
+
     if (this.tag === 'block') {
       if (this.rootBlock) {
-        this.rootBlock.handleDataUpdate(tag, values, type, fireData);
         this.childBand.refreshUIFromCache();
         if (tag === 'blockchild') {
           this.rootBlock.updateCamera();
@@ -817,12 +823,6 @@ class cView extends bView {
         }
       }
     }
-    this._updateRecordSelect();
-
-    if (this.tag === '' && this.dataview_record_key.selectedIndex < 1) {
-      this.updateSelectedRecord();
-    }
-    super._updateContextWithDataChange(tag, values, type, fireData);
   }
   fetchExportFrames() {
     let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
