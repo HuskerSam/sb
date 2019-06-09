@@ -351,7 +351,7 @@ class cMacro {
     let bColor = GLOBALUTIL.HexToRGB(ctl.value);
     let rgb = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
     let inputCTL = ctl.parentNode.querySelector('.' + ctl.dataset.inputclass);
-    inputCTL.value = 'ecolor: ' + rgb;
+    inputCTL.value = 'color: ' + rgb;
 
     this.blockUpdateMaterialField(null, inputCTL);
   }
