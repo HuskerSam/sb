@@ -557,7 +557,7 @@ class cView extends bView {
     this.initRecordEditFields();
     let data = this.fireSet.fireDataValuesByKey[this.key];
 
-    if (!data){
+    if (!data) {
       this.key = '';
       return;
     }
@@ -807,14 +807,14 @@ class cView extends bView {
       </div>`;
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
-    if (tag === 'block') {
+    if (this.tag === 'block') {
       if (this.rootBlock) {
         this.rootBlock.handleDataUpdate(tag, values, type, fireData);
         this.childBand.refreshUIFromCache();
-        if (tag === 'blockchild')
-          this._updateFollowTargetListOptions();
-        if (tag === 'blockchild')
+        if (tag === 'blockchild') {
           this.rootBlock.updateCamera();
+          this._updateFollowTargetListOptions();
+        }
       }
     }
     this._updateRecordSelect();
@@ -935,7 +935,7 @@ class cView extends bView {
     let options = [];
     if (this.rootBlock)
       options = this.rootBlock.generateTargetFollowList();
-    for (let i = 0; i < options.length; i++)
+    for (let i = options.length - 1; i >= 0; i--)
       optionText += '<option>' + options[i] + '</option>';
 
     if (!this.followblocktargetoptionslist) {

@@ -603,6 +603,8 @@ class wContext {
     this.rebindCamera();
 
     let targetBlock = this.dialogForCamera.rootBlock;
+    if (!targetBlock)
+      return;
     let mesh = targetBlock._findBestTargetObject(cameraDetails.cameraTargetBlock);
     if (!mesh)
       mesh = targetBlock;
