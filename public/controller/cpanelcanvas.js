@@ -438,6 +438,8 @@ class cPanelCanvas {
       this.parent.context.preRenderFrame = () => {
         if (this.cameraSelect.value !== 'default')
           return;
+        if (!this.rootBlock)
+          return;
 
         let camera = this.parent.context.camera;
         let cp = GLOBALUTIL.vectorToStr(camera.position);
