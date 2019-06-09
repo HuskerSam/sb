@@ -138,8 +138,23 @@ class wBlock {
           return this.parent.setData();
         }
     } else if ((type === 'add' || type === 'change') && tag === 'blockchild') {
-      if (values.parentKey === this._blockKey)
+      if (values.parentKey === this._blockKey){
+        if (type === 'change'  && values.childName) {
+          let childBlock = this.childBlocks[fireData.key];
+          if (childBlock) {
+            let oldType = childBlock.blockRawData.childType;
+            let newType = values.childType;
+
+            let oldAsset = wBlock._fetchChildAssetData(oldType, childBlock.blockRawData.childName);
+            let newAsset = wBlock._fetchChildAssetData(newType, values.childName);
+
+            if (!oldAsset && !newAsset)
+              return; //skip if asset didn't and still doesn't exist
+          }
+        }
+
         return this.setData();
+      }
 
       if (this.parent)
         if (values.parentKey === this.blockRawData.parentKey)
@@ -520,6 +535,15 @@ class wBlock {
       return true;
 
     return this.parent._circularTest(this.blockRawData.childName);
+  }
+  static _fetchChildAssetData(childType, childName) {
+    let fireSet = gAPPP.a.modelSets[childType];
+    let data = null;
+
+    if (fireSet)
+      data = fireSet.getValuesByFieldLookup('title', childName);
+
+    return data;
   }
   _loadBlock() {
     let children = {};

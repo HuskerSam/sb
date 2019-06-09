@@ -687,7 +687,7 @@ class cPanelCanvas {
   }
   testError() {
     clearTimeout(this.recompileTimeout);
-    this.recompileTimeout = setTimeout(() => this.__recompileTestError(), 500);
+    this.recompileTimeout = setTimeout(() => this.__recompileTestError(), 2500);
   }
   __recompileTestError() {
     clearTimeout(this.recompileTimeout);
@@ -697,7 +697,6 @@ class cPanelCanvas {
 
     this.lastError = null;
     this.clearError();
-    this.rootBlock.setData();
   }
   logAnimDetails() {
     if (!this.activeAnimation) {
