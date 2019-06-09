@@ -146,7 +146,7 @@ class wBlock {
       }
     } else if ((type === 'add' || type === 'change') && tag === 'blockchild') {
       if (values.parentKey === this._blockKey) {
-        if (type === 'change' && values.childName) {
+        if (type === 'change') {
           let childBlock = this.childBlocks[fireData.key];
           if (childBlock) {
             let oldType = childBlock.blockRawData.childType;

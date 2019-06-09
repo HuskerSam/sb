@@ -142,7 +142,7 @@ class cView extends bView {
     this.blockChildrenSelect.style.display = 'none';
     this.addChildButton.style.display = 'none';
     this.mainbandsubviewselect.style.display = 'none';
-    this.removeChildButton.style.display = 'none';
+    this.removeChildButton.style.visibility = 'hidden';
 
     if (!tag) tag = this.tag;
     if (!tag) return;
@@ -269,7 +269,7 @@ class cView extends bView {
     this.framesPanel.style.display = (view === 'frame') ? 'block' : 'none';
     this.nodedetailspanel.style.display = (view === 'node') ? '' : 'none';
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'flex' : 'none';
-    this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
+    this.removeChildButton.style.visibility = (this.tag === 'block' && this.childKey) ? 'visibile' : 'hidden';
   }
   selectItem(newKey, newWindow) {
     if (!newWindow) {
@@ -459,7 +459,7 @@ class cView extends bView {
     if (this.addFrameButton)
       this.addFrameButton.style.display = 'none';
     if (this.removeChildButton)
-      this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
+      this.removeChildButton.style.visibility = (this.tag === 'block' && this.childKey) ? 'visible' : 'hidden';
 
     this.addAssetPanel.style.display = '';
     this.addAssetPanel.innerHTML = `<label><span>Add Workspace </span><input class="new-workspace-name" type="text" /></label>
@@ -885,7 +885,7 @@ class cView extends bView {
   }
   setChildKey(key) {
     this.childKey = key;
-    this.removeChildButton.style.display = (this.tag === 'block' && this.childKey) ? 'inline-block' : 'none';
+    this.removeChildButton.style.visibility = (this.tag === 'block' && this.childKey) ? 'visible' : 'hidden';
 
     if (!this.childKey) {
       this.form_panel_view_dom.classList.add('root-block-display');
