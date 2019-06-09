@@ -86,6 +86,7 @@ class mFirebaseList extends bFirebase {
     }
 
     this.fireDataByKey[key] = fireData;
+    this.lastValuesChanged = this.fireDataValuesByKey[key];
     this.fireDataValuesByKey[key] = fireData.val();
   }
   set(id, jsonData) {

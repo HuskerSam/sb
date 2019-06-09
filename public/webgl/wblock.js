@@ -128,7 +128,7 @@ class wBlock {
         this._renderGround();
       }
     } else if (type === 'remove' && tag === 'blockchild') {
-      if (values.parentKey === this._blockKey)
+      if (values && values.parentKey === this._blockKey)
         return this.setData(this.blockRawData, true);
 
       if (this.parent)
@@ -138,11 +138,11 @@ class wBlock {
         }
     } else if (type === 'remove' && this.blockRawData.childType === 'block') {
       if (tag === 'shape' || tag === 'block' || tag === 'mesh') {
-        for (let  cb in this.childBlocks) {
+        for (let cb in this.childBlocks) {
           if (this.childBlocks[cb].blockTargetKey === fireData.key) {
             return this.setData();
           }
-        }        
+        }
       }
     } else if ((type === 'add' || type === 'change') && tag === 'blockchild') {
       if (values.parentKey === this._blockKey) {
@@ -192,9 +192,25 @@ class wBlock {
         }
       }
 
-      if (values.title)
-        if (this.blockRawData.childType === tag && values.title === this.blockRawData.childName)
+      if (values.title) {
+        if (fireData.lastValuesChanged) {
+          let oldTitle = fireData.lastValuesChanged.title;
+          if (values.title !== oldTitle) {
+            if (this.blockRawData.childType === tag && oldTitle === this.blockRawData.childName) {
+              if (this.parent)
+                return this.parent.setData();
+            }
+          }
+        }
+
+        if (this.blockRawData.childType === tag && values.title === this.blockRawData.childName) {
+          if (type === 'add' && this.blockRawData.childType === 'block') {
+            return setTimeout(() => this.setData(), 100);
+          }
+
           return this.setData();
+        }
+      }
     }
 
     for (let i in this.childBlocks) {
@@ -535,7 +551,7 @@ class wBlock {
     return this;
   }
   _circularTest(blockName) {
-    return false; //for performance for now
+    return false;
 
     if (!this.parent)
       return false;

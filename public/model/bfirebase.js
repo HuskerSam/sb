@@ -77,8 +77,13 @@ class bFirebase {
     this.fireData = fireData;
   }
   notifyChildren(fireData, type) {
-    for (let i in this.childListeners)
-      this.childListeners[i](fireData !== null ? this.getCache(fireData.key) : null, type, fireData);
+    for (let i in this.childListeners) {
+      let values = fireData !== null ? this.getCache(fireData.key) : null;
+      if (type === 'remove')
+        values = this.lastValuesDeleted;
+      fireData.lastValuesChanged = this.lastValuesChanged;
+      this.childListeners[i](values, type, fireData);
+    }
   }
   removeListener(callback) {
     let indexToRemove = this.childListeners.indexOf(callback);
