@@ -128,7 +128,6 @@ class wBlock {
         this._renderGround();
       }
     } else if (type === 'remove' && tag === 'blockchild') {
-      values = fireData.val();
       if (values.parentKey === this._blockKey)
         return this.setData(this.blockRawData, true);
 
@@ -137,9 +136,17 @@ class wBlock {
           this.parent.containerCache = {};
           return this.parent.setData();
         }
+    } else if (type === 'remove' && this.blockRawData.childType === 'block') {
+      if (tag === 'shape' || tag === 'block' || tag === 'mesh') {
+        for (let  cb in this.childBlocks) {
+          if (this.childBlocks[cb].blockTargetKey === fireData.key) {
+            return this.setData();
+          }
+        }        
+      }
     } else if ((type === 'add' || type === 'change') && tag === 'blockchild') {
-      if (values.parentKey === this._blockKey){
-        if (type === 'change'  && values.childName) {
+      if (values.parentKey === this._blockKey) {
+        if (type === 'change' && values.childName) {
           let childBlock = this.childBlocks[fireData.key];
           if (childBlock) {
             let oldType = childBlock.blockRawData.childType;
@@ -528,6 +535,8 @@ class wBlock {
     return this;
   }
   _circularTest(blockName) {
+    return false; //for performance for now
+
     if (!this.parent)
       return false;
 
