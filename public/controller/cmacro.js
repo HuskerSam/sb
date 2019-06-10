@@ -243,7 +243,7 @@ class cMacro {
       <label><span>texttextline2</span><input type="text" style="width:15em;" class="texttextline2" value="" /></label>
       <br>
       <label><span>textfontfamily</span><input class="textfontfamily" style="width:15em;" type="text" list="fontfamilydatalist" /></label>
-      <label><span>textdepth</span><input type="text" class="textdepth" value=".1" /></label>
+      <label><span>textdepth</span><input type="text" class="textdepth" value=".25" /></label>
       <br>
       <label><span>textmaterial</span>&nbsp;<input type="text" style="width:15em;" class="textmaterial" list="materialdatatitlelookuplist" /></label>
       <input type="color" class="colorpicker" data-inputclass="textmaterial">
