@@ -555,15 +555,31 @@ class gCSVImport {
       shaperow.depth = h;
     }
 
-
-    this.addCSVShapeRow(this.__childShapeRow(shaperow));
+    let childType = 'shape';
+    if (row.dotshape === 'arrow') {
+      childType = 'block';
+      this.addCSVConnectorLine({
+        name: shaperow.name,
+        asset: 'connectorline',
+        length: dashlength,
+        diameter: width / 3,
+        pointshape: 'cone',
+        pointlength: dashlength / 3,
+        pointdiameter: width,
+        pointtessellation: '',
+        pointmaterial: '',
+        tailshape: 'none'
+      });
+    }
+    else
+      this.addCSVShapeRow(this.__childShapeRow(shaperow));
 
     let timePerDash = runlength / dashes;
     let z = (depth / 2.0).toFixed(3);
 
     for (let i = 0; i < dashes; i++) {
       let childResults = await this.dbSetRecord('blockchild', {
-        childType: 'shape',
+        childType,
         childName: shaperow.name,
         parentKey: blockResult.key,
         inheritMaterial: true
@@ -584,6 +600,9 @@ class gCSVImport {
         frame.rotationX = '90deg';
         if (height !== width)
           frame.scalingZ = (height / width).toFixed(3);
+      }
+      if (shaperow.createshapetype === 'arrow') {
+        frame.rotationY = '90deg';
       }
       this.dbSetRecord('frame', frame);
       frameOrder += 10;

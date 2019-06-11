@@ -224,6 +224,7 @@ class cMacro {
           <option>cylinder</option>
           <option selected>cone</option>
           <option>ellipsoid</option>
+          <option>arrow</option>
         </select>
       </label>
       <label><span>dashlength</span><input type="text" class="dashlength" value=".5" /></label>
