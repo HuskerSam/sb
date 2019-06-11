@@ -314,12 +314,11 @@ class wContext {
       if (!this.light) {
         let l = GLOBALUTIL.getVector(0, 1, 0);
         this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", l, this.scene);
-        this.light.intensity = .4;
-        this.light.groundColor = GLOBALUTIL.color('0,0,0');
+        this.light.intensity = .7;
       }
       if (this.cachedProfile.lightIntensity !== profile.lightIntensity) {
         this.cachedProfile.lightIntensity = profile.lightIntensity;
-        this.light.intensity = GLOBALUTIL.getNumberOrDefault(profile.lightIntensity, .4);
+        this.light.intensity = GLOBALUTIL.getNumberOrDefault(profile.lightIntensity, .7);
       }
     }
   }
