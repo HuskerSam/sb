@@ -29,12 +29,18 @@ class cView extends bView {
 
     this.dataview_record_tag.addEventListener('change', e => this.updateRecordList());
     this.dataview_record_key.addEventListener('change', e => this.updateSelectedRecord());
+
     this.blockChildrenSelect = this.dialog.querySelector('.main-band-children-select');
+
+    this.main_band_sub_view_picker = this.dialog.querySelector('.main-band-sub-view-picker');
+    this.block_child_detail_view_btn = this.dialog.querySelector('.block_child_detail_view_btn');
+    this.block_child_frames_view_btn = this.dialog.querySelector('.block_child_frames_view_btn');
+    this.block_child_import_view_btn = this.dialog.querySelector('.block_child_import_view_btn');
+
     this.addChildButton = this.dialog.querySelector('.main-band-add-child');
     this.addChildButton.addEventListener('click', e => this.addChild());
     this.removeChildButton = this.dialog.querySelector('.main-band-delete-child');
     this.removeChildButton.addEventListener('click', e => this.removeChild(e));
-    this.mainbandsubviewselect = this.dialog.querySelector('.main-band-sub-view-select');
     this.addFrameButton = this.dialog.querySelector('.add_frame_button');
     this.addFrameButton.addEventListener('click', e => this.__addFrameHandler());
     this.deleteAssetButton = this.dialog.querySelector('.delete-asset-button');
@@ -141,7 +147,7 @@ class cView extends bView {
 
     this.blockChildrenSelect.style.display = 'none';
     this.addChildButton.style.display = 'none';
-    this.mainbandsubviewselect.style.display = 'none';
+    this.main_band_sub_view_picker.style.display = 'none';
     this.removeChildButton.style.visibility = 'hidden';
 
     if (!tag) tag = this.tag;
@@ -167,7 +173,7 @@ class cView extends bView {
       this.initBlockDataFields();
       this.blockChildrenSelect.style.display = '';
       this.addChildButton.style.display = '';
-      this.mainbandsubviewselect.style.display = '';
+      this.main_band_sub_view_picker.style.display = '';
     } else {}
   }
   initBlockDataFields() {
@@ -188,8 +194,10 @@ class cView extends bView {
 
     this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
     this.nodedetailspanel = this.dialog.querySelector('.node-details-panel');
-    this.mainbandsubviewselect.addEventListener('change', e => this.updateSubViewDisplay());
-    this.updateSubViewDisplay();
+    this.block_child_detail_view_btn.addEventListener('click', e => this.updateSubViewDisplay('details'));
+    this.block_child_frames_view_btn.addEventListener('click', e => this.updateSubViewDisplay('frames'));
+    this.block_child_import_view_btn.addEventListener('click', e => this.updateSubViewDisplay('import'));
+    this.updateSubViewDisplay('details');
 
     let deleteBlockAndChildren = document.createElement('button');
     deleteBlockAndChildren.innerHTML = '<i class="material-icons">delete</i> block and linked assets';
@@ -263,11 +271,17 @@ class cView extends bView {
     } else
       window.location.href = href;
   }
-  updateSubViewDisplay() {
-    let view = this.mainbandsubviewselect.value;
+  updateSubViewDisplay(view) {
+    this.block_child_detail_view_btn.classList.remove('app-inverted');
+    this.block_child_frames_view_btn.classList.remove('app-inverted');
+    this.block_child_import_view_btn.classList.remove('app-inverted');
+    if (view === 'frames') this.block_child_frames_view_btn.classList.add('app-inverted');
+    if (view === 'details') this.block_child_detail_view_btn.classList.add('app-inverted');
+    if (view === 'import') this.block_child_import_view_btn.classList.add('app-inverted');
+
     this.addFrameButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
-    this.framesPanel.style.display = (view === 'frame') ? 'block' : 'none';
-    this.nodedetailspanel.style.display = (view === 'node') ? '' : 'none';
+    this.framesPanel.style.display = (view === 'frames') ? 'block' : 'none';
+    this.nodedetailspanel.style.display = (view === 'details') ? '' : 'none';
     this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'flex' : 'none';
     this.removeChildButton.style.visibility = (this.tag === 'block' && this.childKey) ? 'visibile' : 'hidden';
   }
@@ -299,8 +313,7 @@ class cView extends bView {
     });
   }
   __addFrameHandler() {
-    this.mainbandsubviewselect.value = 'frame';
-    this.updateSubViewDisplay();
+    this.updateSubViewDisplay('frames');
     this.framesBand.addFrame(this.framesBand.__getKey());
   }
   updateRecordList(newKey = null, newView = null) {
@@ -606,7 +619,7 @@ class cView extends bView {
         this.blockChildrenSelect.value = '';
       }
 
-      this.updateSubViewDisplay();
+      this.updateSubViewDisplay('details');
     }
 
     this.rootBlock = this.context.activeBlock;
@@ -710,20 +723,20 @@ class cView extends bView {
               <option>Assets</option>
               <option>Custom Data</option>
             </select>
-            <button class="workspace_regenerate_layout_changes btn-sb-icon"><i class="material-icons">gavel</i></button>
-            <button class="delete-asset-button btn-sb-icon"><i class="material-icons">delete</i></button>
-            <button class="view-asset-button btn-sb-icon"><i class="material-icons">visibility</i></button>
-            <button class="snapshot-asset-button btn-sb-icon"><i class="material-icons">add_photo_alternate</i></button>
+            <button class="workspace_regenerate_layout_changes"><i class="material-icons">gavel</i></button>
+            <button class="delete-asset-button"><i class="material-icons">delete</i></button>
+            <button class="view-asset-button"><i class="material-icons">visibility</i></button>
+            <button class="snapshot-asset-button"><i class="material-icons">add_photo_alternate</i></button>
             <div class="block_child_details_block">
               <select class="main-band-children-select" style="display:none;"></select>
-              <button class="main-band-delete-child btn-sb-icon"><i class="material-icons">link_off</i></button>
-              <button class="main-band-add-child btn-sb-icon"><i class="material-icons">link</i></button>
-              <select class="main-band-sub-view-select" style="display:none;float:left;">
-                <option value="frame">Frames</option>
-                <option value="node" selected>Details</option>
-                <option value="import">Data</option>
-              </select>
-              <button class="add_frame_button btn-sb-icon" style="display:none;"><i class="material-icons">playlist_add</i></button>
+              <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
+              <button class="main-band-add-child"><i class="material-icons">link</i></button>
+              <div class="main-band-sub-view-picker app-control">
+                <button class="block_child_detail_view_btn app-inverted"><i class="material-icons">details</i></button>
+                <button class="block_child_frames_view_btn"><i class="material-icons">dehaze</i></button>
+                <button class="block_child_import_view_btn"><i class="material-icons">import_export</i></button>
+              </div>
+              <button class="add_frame_button" style="display:none;"><i class="material-icons">playlist_add</i></button>
               <div style="clear:both;"></div>
               <div class="child_band_picker_expanded"></div>
             </div>
@@ -873,8 +886,7 @@ class cView extends bView {
         this.childBand.setKey(r.key);
       }, 100);
     });
-    this.mainbandsubviewselect.value = 'node';
-    this.updateSubViewDisplay();
+    this.updateSubViewDisplay('details');
   }
   removeChild(e) {
     if (confirm('Remove this child block (only the link)?')) {

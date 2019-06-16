@@ -827,3 +827,14 @@ a.workspace-asset-link-display {
 .delete_block_and_children {
   margin: .5em;
 }
+
+.main-band-sub-view-picker {
+  float: left;
+  margin: 0 .25em;
+  padding: .15em;
+}
+
+.main-band-sub-view-picker button {
+  border:none;
+  margin: 0;
+}
