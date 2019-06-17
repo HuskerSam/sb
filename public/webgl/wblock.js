@@ -440,7 +440,6 @@ class wBlock {
       BABYLON.SceneLoader.ImportMesh('', path, filename, this.context.scene,
         (newMeshes, particleSystems, skeletons) => {
           this.dispose();
-          console.log('mesh', newMeshes);
           this.sceneObject = newMeshes[0];
           this.sceneObjectMeshData = {};
           let newMesh = this.sceneObject;
@@ -1186,13 +1185,17 @@ class wBlock {
       this.context.canvasHelper.cameraDetails = cameras;
       this.context.canvasHelper.camerasS = camerasS;
       let html = '';
-      for (let i in this.context.canvasHelper.cameraDetails)
+      let count = 0;
+      for (let i in this.context.canvasHelper.cameraDetails) {
         html += `<option value="${i}">${this.context.canvasHelper.cameraDetails[i].cameraName}</option>`;
-
+        count++;
+      }
       sel.innerHTML = html;
       sel.value = startValue;
       if (sel.selectedIndex === -1)
         sel.selectedIndex = 0;
+      if (count > 2)
+        sel.selectedIndex = count - 1;
     }
 
     if (this.context.canvasHelper.cameraSelect.value !== startValue)
