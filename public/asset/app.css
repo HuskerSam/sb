@@ -679,7 +679,7 @@ select {
 }
 
 #workspaces-select {
-  max-width: calc(100% - 3em);
+  max-width: calc(100% - 12em);
   float: left;
 }
 
@@ -689,7 +689,7 @@ select {
 }
 
 .dataview_record_key {
-  max-width: calc(100% - 16em);
+  max-width: calc(100% - 17.5em);
   float: left;
   min-width: 5em;
   margin-left: .25em;
