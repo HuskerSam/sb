@@ -362,7 +362,7 @@ class gCSVImport {
       }).then(results => {});
     }
 
-    if (row.materialname) {
+    if (row.materialname && row.texturename) {
       this.dbSetRecord('material', {
         title: row.materialname,
         ambientColor: row.color,
