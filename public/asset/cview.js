@@ -850,7 +850,7 @@ class cView extends bView {
   fetchExportJSON() {
     this.ieTextArea.value = cMacro.assetJSON(this.tag, this.key);
   }
-  importFramesFromText() {
+  async importFramesFromText() {
     let obj;
     let rawJSON = this.ieTextArea.value;
     try {
@@ -875,7 +875,8 @@ class cView extends bView {
     if (!block)
       block = this.rootBlock;
 
-    block.framesHelper.importFrames(obj);
+    await block.framesHelper.importFrames(obj);
+    this.updateSubViewDisplay('frames');
   }
   addChild() {
     let objectData = sDataDefinition.getDefaultDataCloned('blockchild');

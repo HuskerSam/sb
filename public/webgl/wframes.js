@@ -682,15 +682,17 @@ class wFrames {
     let cmdValue = frame.values.frameCommandValue.origValue;
     this.context.sceneCommand(cmd, cmdField, cmdValue, this.parentKey);
   }
-  importFrames(importArray) {
+  async importFrames(importArray) {
     for (let i in this.rawFrames)
       this.fireSet.removeByKey(i);
 
+    let promises = [];
     for (let i in importArray) {
       importArray[i].parentKey = this.parentKey;
-      gAPPP.a.modelSets['frame'].createWithBlobString(importArray[i]).then(r => {});
+      promises.push(gAPPP.a.modelSets['frame'].createWithBlobString(importArray[i]));
     }
 
+    return await Promise.all(promises);
   }
   __getLightDetails(values) {
     let result = {};
