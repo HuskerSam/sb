@@ -1,4 +1,4 @@
-class gPublishApp extends gInstanceSuper  {
+class gPublishApp extends gInstanceSuper {
   constructor() {
     super();
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
@@ -18,8 +18,7 @@ class gPublishApp extends gInstanceSuper  {
       if (data)
         workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
     }
-    this.workspaceInURL = workspace;
-    this.a.profile.selectedWorkspace = workspace;
+    this.loadedWID = workspace;
     this.a.initProjectModels(workspace);
 
     this.a._activateModels();

@@ -94,13 +94,13 @@ class cWorkspace {
       ${getAssetLinks('texture')}
     </div>`;
 
-    let gi = new gCSVImport(gAPPP.a.profile.selectedWorkspace);
+    let gi = new gCSVImport(gAPPP.loadedWID);
     let sceneRecords = await gi.dbFetchByLookup('block', 'blockFlag', 'scene');
     if (sceneRecords.recordIds.length > 0) {
       let href = this.bView.genQueryString(null, 'block', sceneRecords.recordIds[0]);
       html += `Generated animation block: <b><a href="${href}" class="tag_key_redirect" data-tag="block"
        data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b> <span class="csv_data_date_span">${gAPPP.animationGeneratedDateDisplay}</span>`;
-      html += ` &nbsp; <a href="/demo?wid=${gAPPP.a.profile.selectedWorkspace}" target="_blank">/demo</a>`;
+      html += ` &nbsp; <a href="/demo?wid=${gAPPP.loadedWID}" target="_blank">/demo</a>`;
       html += '<br>';
     } else {
       html += 'Generated animation block: none<br>';
@@ -322,13 +322,13 @@ class cWorkspace {
   async workspaceLayoutSceneDataInit() {
     let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
 
-    let results = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'sceneRows')
+    let results = await gAPPP.a.readProjectRawData(gAPPP.loadedWID, 'sceneRows')
     this.sceneCSVData = [];
     if (results) this.sceneCSVData = results;
-    results = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'assetRows')
+    results = await gAPPP.a.readProjectRawData(gAPPP.loadedWID, 'assetRows')
     this.assetCSVData = [];
     if (results) this.assetCSVData = results;
-    results = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, 'productRows')
+    results = await gAPPP.a.readProjectRawData(gAPPP.loadedWID, 'productRows')
     this.productCSVData = [];
     if (results) this.productCSVData = results;
     this.productCSVData = this.productCSVData.sort((a, b) => {
@@ -465,7 +465,7 @@ class cWorkspace {
       }
 
     if (dataChanged) {
-      await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tab + 'Rows', rows);
+      await gAPPP.a.writeProjectRawData(gAPPP.loadedWID, tab + 'Rows', rows);
       gAPPP.updateGenerateDataTimes();
     }
 
@@ -478,7 +478,7 @@ class cWorkspace {
       return;
 
     let fireSet = gAPPP.a.modelSets['block'];
-    let key = gAPPP.a.profile.selectedWorkspace + '/scenedatafiles';
+    let key = gAPPP.loadedWID + '/scenedatafiles';
     let uploadResult = await fireSet.setBlob(key, fileBlob, fileBlob.name);
     this.soUploadImageFile.editCTL.value = uploadResult.downloadURL;
     this.workspaceLayoutSceneDataValueChange(this.soUploadImageFile.editCTL);
@@ -486,7 +486,7 @@ class cWorkspace {
   }
 
   async workspaceLayoutCSVLoadTable(tableName) {
-    let results = await gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows')
+    let results = await gAPPP.a.readProjectRawData(gAPPP.loadedWID, tableName + 'Rows')
     let data = [];
     if (results) data = results;
 
@@ -695,7 +695,7 @@ class cWorkspace {
           data[c][i] = '';
     }
 
-    await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, tableName + 'Rows', data);
+    await gAPPP.a.writeProjectRawData(gAPPP.loadedWID, tableName + 'Rows', data);
     gAPPP.updateGenerateDataTimes();
     return;
   }
@@ -765,7 +765,7 @@ class cWorkspace {
 
     this.workspaceLayoutCSVProductUpdateType();
 
-    this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
+    this.productData = await new gCSVImport(gAPPP.loadedWID).initProducts();
     this.products = this.productData.products;
     this.productBySKU = this.productData.productsBySKU;
 

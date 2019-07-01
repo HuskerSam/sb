@@ -214,7 +214,7 @@ class bView {
     let projectListData = await firebase.database().ref('projectTitles').once('value');
     let projectList = projectListData.val();
 
-    this.updateProjectList(projectList, gAPPP.a.profile.selectedWorkspace);
+    this.updateProjectList(projectList, gAPPP.loadedWID);
     return Promise.resolve();
   }
   updateProjectList(rawRecordList, selectedWorkspace = null) {

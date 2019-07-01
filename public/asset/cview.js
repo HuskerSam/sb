@@ -110,7 +110,7 @@ class cView extends bView {
   }
   generateAnimation(genNew = false, animationKey = false, clearWorkspace = true, reload = true) {
     if (!animationKey)
-      animationKey = gAPPP.a.profile.selectedWorkspace;
+      animationKey = gAPPP.loadedWID;
     if (!animationKey)
       return;
 
@@ -650,7 +650,7 @@ class cView extends bView {
     }
   }
   genQueryString(wid = null, tag = null, key = null, childkey = null, subView = null) {
-    if (wid === null) wid = gAPPP.a.profile.selectedWorkspace;
+    if (wid === null) wid = gAPPP.loadedWID;
     if (tag === null) tag = this.tag;
     if (key === null) key = this.key;
     let queryString = `?wid=${wid}`;
@@ -970,7 +970,7 @@ class cView extends bView {
     }
   }
   openViewerForAsset(key) {
-    let wid = gAPPP.a.profile.selectedWorkspace;
+    let wid = gAPPP.loadedWID;
     if (!key)
       key = this.key;
     let url = `/view?w=${wid}&b=${key}`;

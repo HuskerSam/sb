@@ -33,18 +33,16 @@ class gApp extends gInstanceSuper {
             this.a.signIn(true);
     });
   }
-  profileReadyAndLoaded() {
+  async profileReadyAndLoaded() {
     let urlParams = new URLSearchParams(window.location.search);
     let newWid = urlParams.get('wid');
     if (newWid) {
       if (newWid !== this.a.profile.selectedWorkspace) {
-        gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
           field: 'selectedWorkspace',
           newValue: newWid
-        }]).then(() => {
-          setTimeout(() => location.reload(), 100);
-        });
-        return;
+        }]);
+        this.a.profile.selectedWorkspace = newWid;
       }
     }
 
@@ -77,10 +75,10 @@ class gApp extends gInstanceSuper {
   }
   async updateGenerateDataTimes() {
     let results = await Promise.all([
-      gAPPP.a.readProjectRawDataDate(gAPPP.a.profile.selectedWorkspace, 'assetRows'),
-      gAPPP.a.readProjectRawDataDate(gAPPP.a.profile.selectedWorkspace, 'sceneRows'),
-      gAPPP.a.readProjectRawDataDate(gAPPP.a.profile.selectedWorkspace, 'productRows'),
-      gAPPP.a.readProjectRawDataDate(gAPPP.a.profile.selectedWorkspace, 'animationGenerated')
+      gAPPP.a.readProjectRawDataDate(gAPPP.loadedWID, 'assetRows'),
+      gAPPP.a.readProjectRawDataDate(gAPPP.loadedWID, 'sceneRows'),
+      gAPPP.a.readProjectRawDataDate(gAPPP.loadedWID, 'productRows'),
+      gAPPP.a.readProjectRawDataDate(gAPPP.loadedWID, 'animationGenerated')
     ]);
     this.assetRowsDate = results[0];
     this.assetRowsDateDisplay = (this.assetRowsDate) ? GLOBALUTIL.shortDateTime(gAPPP.assetRowsDate) : 'none';

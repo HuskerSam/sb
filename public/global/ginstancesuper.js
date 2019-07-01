@@ -67,6 +67,7 @@ class gInstanceSuper {
   profileReadyAndLoaded() {
     this.loadStarted = true;
     let wId = this.a.profile.selectedWorkspace;
+    this.loadedWID = wId;
     this.a.initProjectModels(wId);
     this.a._activateModels();
     this.initialUILoad = false;
@@ -89,10 +90,7 @@ class gInstanceSuper {
     }
   }
   get workspace() {
-    let workspace = this.a.profile.selectedWorkspace;
-    if (this.workspaceInURL)
-      workspace = this.workspaceInURL;
-
+    let workspace = this.loadedWID;
     if (!workspace)
       workspace = 'default';
     return workspace;

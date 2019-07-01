@@ -191,7 +191,7 @@ class cGenerate {
     }
   }
   async setCSVData(type, targetProjectId) {
-    let sourceProjectId = gAPPP.a.profile.selectedWorkspace;
+    let sourceProjectId = gAPPP.loadedWID;
     let choice = this[`add_animation_${type}_choice`].value;
     let data = null;
 
@@ -230,7 +230,7 @@ class cGenerate {
         complete: results => {
           if (results.data) {
             for (let c = 0, l = results.data.length; c < l; c++) {
-              new gCSVImport(gAPPP.a.profile.selectedWorkspace).addCSVRow(results.data[c]).then(() => {});
+              new gCSVImport(gAPPP.loadedWID).addCSVRow(results.data[c]).then(() => {});
             }
           }
         }
@@ -314,7 +314,7 @@ class cGenerate {
     this.bView.context.activate(null);
     this.bView.canvasHelper.hide();
 
-    let wId = gAPPP.a.profile.selectedWorkspace;
+    let wId = gAPPP.loadedWID;
     if (genNew) {
       wId = gAPPP.a.modelSets['projectTitles'].getKey();
       let tags = 'active,' + 'gd:' + new Date().toISOString();
@@ -338,7 +338,7 @@ class cGenerate {
         header: true,
         complete: async (results) => {
           if (results.data)
-            await gAPPP.a.writeProjectRawData(gAPPP.a.profile.selectedWorkspace, csvType + 'Rows', results.data);
+            await gAPPP.a.writeProjectRawData(gAPPP.loadedWID, csvType + 'Rows', results.data);
         }
       });
     }
@@ -346,7 +346,7 @@ class cGenerate {
     return;
   }
   csvGenerateDownloadCSV(name) {
-    gAPPP.a.readProjectRawData(gAPPP.a.profile.selectedWorkspace, name + 'Rows')
+    gAPPP.a.readProjectRawData(gAPPP.loadedWID, name + 'Rows')
       .then(rows => {
         let csvResult = Papa.unparse(rows);
         var element = document.createElement('a');

@@ -64,7 +64,7 @@ class cViewDemo extends bView {
     }
   }
   async _cameraShown() {
-    this.productData = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).initProducts();
+    this.productData = await new gCSVImport(gAPPP.loadedWID).initProducts();
     this.products = this.productData.products;
     this.productsBySKU = this.productData.productsBySKU;
 
@@ -92,7 +92,7 @@ class cViewDemo extends bView {
   }
   profileUpdate() {
     super.profileUpdate();
-    let wsId = gAPPP.a.profile.selectedWorkspace;
+    let wsId = gAPPP.loadedWID;
 
     let basketData = gAPPP.a.profile['basketData' + wsId];
 
@@ -126,7 +126,7 @@ class cViewDemo extends bView {
       skuOrder: this.skuOrder
     };
 
-    let wsId = gAPPP.a.profile.selectedWorkspace;
+    let wsId = gAPPP.loadedWID;
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'basketData' + wsId,
       newValue: basketData
@@ -149,7 +149,7 @@ class cViewDemo extends bView {
       skuOrder: this.skuOrder
     };
 
-    let wsId = gAPPP.a.profile.selectedWorkspace;
+    let wsId = gAPPP.loadedWID;
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'basketData' + wsId,
       newValue: basketData
@@ -158,7 +158,7 @@ class cViewDemo extends bView {
     this.basketRemoveItemBlock(sku);
   }
   basketCheckout() {
-    let wsId = gAPPP.a.profile.selectedWorkspace;
+    let wsId = gAPPP.loadedWID;
     gAPPP.a.modelSets['userProfile'].commitUpdateList([{
       field: 'basketData' + wsId,
       newValue: null
@@ -226,7 +226,7 @@ class cViewDemo extends bView {
     }
   }
   async basketAddItemBlock(sku, index) {
-    let pos = new gCSVImport(gAPPP.a.profile.selectedWorkspace).basketPosition(index);
+    let pos = new gCSVImport(gAPPP.loadedWID).basketPosition(index);
     let product = this.productsBySKU[sku];
     if (!product)
       return Promise.resolve();
@@ -271,8 +271,8 @@ class cViewDemo extends bView {
     let basketBlock = product.block;
     let rootKey = this.rootBlock.blockKey;
 
-    let basketCart = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).findMatchBlocks('block', 'basketcart', rootKey);
-    let basketItems = await new gCSVImport(gAPPP.a.profile.selectedWorkspace).findMatchBlocks('block', basketBlock, basketCart[0].blockKey, 'sku', itemId);
+    let basketCart = await new gCSVImport(gAPPP.loadedWID).findMatchBlocks('block', 'basketcart', rootKey);
+    let basketItems = await new gCSVImport(gAPPP.loadedWID).findMatchBlocks('block', basketBlock, basketCart[0].blockKey, 'sku', itemId);
 
     let promises = [];
     for (let c = 0, l = basketItems.length; c < l; c++) {

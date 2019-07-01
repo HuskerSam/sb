@@ -17,8 +17,8 @@ class gDemoApp extends gInstanceSuper {
         field: 'selectedWorkspace',
         newValue: newWid
       }]);
-      this.a.profile.selectedWorkspace = workspace;
     }
+    this.loadedWID = workspace;
 
     this.a.initProjectModels(workspace);
     this.a._activateModels();

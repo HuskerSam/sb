@@ -478,38 +478,38 @@ class cMacro {
     if (bType === '2D Text Plane') {
       let row = this._shapeScrapeTextPlane();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
       return blockResult.key;
     }
     if (bType === 'Web Font') {
       let row = this._blockScrapeWebFont();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
       gAPPP._updateGoogleFonts();
       return blockResult.key;
     }
     if (bType === 'Text and Shape') {
       let row = this._blockScrapeTextAndShape();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
       return blockResult.key;
     }
     if (bType === 'Scene') {
       let row = this._blockScrapeScene();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
       return blockResult.key;
     }
     if (bType === 'Animated Line') {
       let row = this._blockScrapeAnimatedline();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
       return blockResult.key;
     }
     if (bType === 'Connector Line') {
       let row = this._blockScrapeConnectorLine();
 
-      let blockResult = await (new gCSVImport(gAPPP.a.profile.selectedWorkspace)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
       return blockResult.key;
     }
 
