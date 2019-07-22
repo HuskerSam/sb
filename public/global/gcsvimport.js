@@ -362,7 +362,7 @@ class gCSVImport {
       }).then(results => {});
     }
 
-    if (row.materialname && row.texturename) {
+    if (row.materialname && row.texturepath) {
       this.dbSetRecord('material', {
         title: row.materialname,
         ambientColor: row.color,
@@ -1645,7 +1645,7 @@ class gCSVImport {
         itemImage: blockData.itemImage,
         desc: blockData.itemDesc,
         price: blockData.itemPrice,
-        image: blockData.texturePath,
+        image: blockData.itemImage,
         animationIndex: pBC.animationIndex,
         block: origRow.block,
         childName: pBC.childName,
