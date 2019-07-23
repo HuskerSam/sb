@@ -187,6 +187,8 @@ class cWorkspace {
     <button class="import_csv_records">Import CSV</button>
     &nbsp;
     <button class="import_asset_json_button">Import JSON</button>
+    &nbsp;
+    <button class="export_asset_json_button">Export Workspace</button>
     </div>`;
   }
   workspaceDetailsRegister() {
@@ -207,9 +209,11 @@ class cWorkspace {
     this.import_csv_records.addEventListener('click', e => this.import_csv_file.click());
 
     this.import_asset_json_file = this.domPanel.querySelector('.import_asset_json_file');
-    this.import_asset_json_file.addEventListener('change', e => this.csvGenerationImportJSON());
+    this.import_asset_json_file.addEventListener('change', e => this.workspaceImportJSON());
     this.import_asset_json_button = this.domPanel.querySelector('.import_asset_json_button');
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
+    this.export_asset_json_button = this.domPanel.querySelector('.export_asset_json_button');
+    this.export_asset_json_button.addEventListener('click', e => this.workspaceExportJSON());
   }
   workspaceUpdateTagsList() {
     let name = this.bView.workplacesSelectEditName.value.trim();
@@ -225,6 +229,105 @@ class cWorkspace {
       field: 'tags',
       newValue: code
     }], this.bView.workplacesSelect.value);
+  }
+  async workspaceExportJSON() {
+    let projectData = await firebase.database().ref('/project/' + gAPPP.loadedWID).once('value');
+    let json = projectData.val();
+
+    json.assetExportTag = 'workspace';
+    json.assetExportKey = gAPPP.loadedWID;
+    let jsonStr = JSON.stringify(json, null, 4);
+
+    let element = document.createElement('a');
+    let title = json.title;
+    if (!title)
+      title = 'workspace';
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonStr));
+    element.setAttribute('download', title + '.json');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+  async workspaceImportJSON() {
+    if (this.import_asset_json_file.files.length > 0) {
+      let reader = new FileReader();
+      reader.onload = e => onJSONLoad(e);
+      reader.readAsText(this.import_asset_json_file.files[0]);
+      let onJSONLoad = (e) => {
+        let json = e.target.result;
+        try {
+          json = JSON.parse(json);
+        } catch (e) {
+          alert('error parsing json check console');
+          console.log('error parsing json for import', e);
+          return;
+        }
+
+        let eleType = json.assetExportTag;
+
+        if (eleType === 'workspace') {
+          if (!gAPPP.loadedWID) {
+            alert('no loaded workspace');
+            return;
+          }
+          if (confirm(`WORKSPACE IMPORT\n Importing this file will overwrite ` +
+              ` the current workspace - continue?`)) {
+            return firebase.database().ref().update({
+              ['/project/' + gAPPP.loadedWID]: json
+            });
+          }
+          return;
+        }
+
+        if (!gAPPP.a.modelSets[eleType]) {
+          alert('no supported assetExportTag found');
+          return;
+        }
+
+        delete json.assetExportTag;
+        delete json.assetExportKey;
+        if (eleType !== 'block') {
+          json.sortKey = new Date().getTime();
+          gAPPP.a.modelSets[eleType].createWithBlobString(json).then(results => {
+            this.bView.openNewWindow(eleType, results.key);
+          });
+        } else {
+          json.sortKey = new Date().getTime();
+          let blockFrames = json.frames;
+          let blockChildren = json.children;
+
+          let __importFrames = (frames, parentKey) => {
+            for (let c = 0, l = frames.length; c < l; c++) {
+              frames[c].parentKey = parentKey;
+              gAPPP.a.modelSets['frame'].createWithBlobString(frames[c]).then(frameResult => {});
+            }
+          };
+
+          json.children = undefined;
+          delete json.children;
+          json.frames = undefined;
+          delete json.frames;
+          gAPPP.a.modelSets['block'].createWithBlobString(json).then(blockResults => {
+            __importFrames(blockFrames, blockResults.key);
+
+            for (let c = 0, l = blockChildren.length; c < l; c++) {
+              let child = blockChildren[c];
+              let childFrames = child.frames;
+              child.frames = undefined;
+              delete child.frames;
+              child.parentKey = blockResults.key;
+
+              gAPPP.a.modelSets['blockchild'].createWithBlobString(child).then(
+                childResults => __importFrames(childFrames, childResults.key));
+            }
+
+            this.bView.openNewWindow(eleType, blockResults.key);
+          });
+        }
+      };
+    }
   }
 
   workspaceLayoutTemplate() {
