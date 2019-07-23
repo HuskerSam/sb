@@ -272,11 +272,17 @@ class cWorkspace {
             alert('no loaded workspace');
             return;
           }
-          if (confirm(`WORKSPACE IMPORT\n Importing this file will overwrite ` +
-              ` the current workspace - continue?`)) {
-            return firebase.database().ref().update({
-              ['/project/' + gAPPP.loadedWID]: json
+          if (confirm(`WORKSPACE IMPORT\n Importing this file will blend (possibly overwrite) ` +
+              ` with the current workspace - continue?`)) {
+            let updates = {};
+            let tagList = ['block', 'blockchild', 'frame', 'material', 'shape', 'texture', 'mesh'];
+            tagList.forEach(tag => {
+              let coll = json[tag];
+              for (let key in coll) {
+                updates['/project/' + gAPPP.loadedWID + '/' + tag + '/' + key] = coll[key];
+              }
             });
+            return firebase.database().ref().update(updates);
           }
           return;
         }
