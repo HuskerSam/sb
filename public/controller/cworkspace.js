@@ -2,7 +2,6 @@ class cWorkspace {
   constructor(domPanel, subKey, bView) {
     this.domPanel = domPanel;
     this.bView = bView;
-
     gAPPP.updateGenerateDataTimes()
       .then(() => {
         if (subKey === 'Details') {
@@ -11,7 +10,8 @@ class cWorkspace {
         if (subKey === 'Overview') {
           this.workspaceOverviewInit();
         }
-        if (subKey === 'Layout') {
+        if (subKey === 'Generate' || subKey === 'LayoutData' || subKey === 'LayoutAssets' ||
+         subKey === 'LayoutProducts' || subKey === 'LayoutCustom') {
           this.domPanel.innerHTML = this.workspaceLayoutTemplate();
           this.workspaceLayoutRegister();
 
@@ -40,7 +40,10 @@ class cWorkspace {
 
     html += `<div style="padding:.75em;"><a href="${this.bView.genQueryString(null, null, null, null, 'Details')}" class="tag_key_redirect" data-value="Details" data-type="w">Details</a>
       &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Generate')}" class="tag_key_redirect" data-value="Generate" data-type="w">Generate</a>
-      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Layout')}" class="tag_key_redirect" data-value="Layout" data-type="w">Layout</a>
+      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'LayoutProducts')}" class="tag_key_redirect" data-value="LayoutProducts" data-type="w">Products</a>
+      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'LayoutData')}" class="tag_key_redirect" data-value="LayoutData" data-type="w">Scene</a>
+      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'LayoutAssets')}" class="tag_key_redirect" data-value="LayoutAssets" data-type="w">Assets</a>
+      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'LayoutCustom')}" class="tag_key_redirect" data-value="LayoutCustom" data-type="w">Scene Data</a>
       </div>`;
 
     let getAssetLinks = (asset) => {
@@ -387,25 +390,20 @@ class cWorkspace {
       'price', 'count', 'height', 'width', 'x', 'y', 'z', 'rx', 'ry', 'rz'
     ];
 
-    this.workspace_layout_view_select = document.body.querySelector('.workspace_layout_view_select');
-    this.workspace_layout_view_select.addEventListener('change', e => this.workspaceLayoutShowView());
     this.scene_layout_data_panel = this.domPanel.querySelector('.scene_layout_data_panel');
     this.data_table_panel = this.domPanel.querySelector('.data_table_panel');
     this.scene_options_edit_fields = this.domPanel.querySelector('.scene_options_edit_fields');
     this.layout_product_data_panel = this.domPanel.querySelector('.layout_product_data_panel');
 
-    this.workspaceLayoutShowView();
-  }
-  workspaceLayoutShowView() {
-    let sel = this.workspace_layout_view_select.value;
-    this.scene_layout_data_panel.style.display = (sel === 'Custom Data') ? 'flex' : 'none';
-    this.layout_product_data_panel.style.display = (sel === 'Products') ? 'block' : 'none';
-    this.scene_options_edit_fields.style.display = (sel === 'Custom Data') ? 'block' : 'none';
+    let wsView = this.bView.dataview_record_key.value;
+    this.scene_layout_data_panel.style.display = (wsView === 'LayoutCustom') ? 'flex' : 'none';
+    this.layout_product_data_panel.style.display = (wsView === 'LayoutProducts') ? 'block' : 'none';
+    this.scene_options_edit_fields.style.display = (wsView === 'LayoutCustom') ? 'block' : 'none';
     if (this.editTable) {
       this.editTable.destroy();
       this.editTable = null;
     }
-    if (sel === 'Assets' || sel === 'Products' || sel === 'Layout') {
+    if (wsView === 'LayoutAssets' || wsView === 'LayoutProducts' || wsView === 'LayoutData') {
       this.data_table_panel.style.display = 'flex';
       this.data_table_panel.innerHTML = 'Loading...';
     } else {
@@ -413,17 +411,17 @@ class cWorkspace {
       this.data_table_panel.style.display = 'none';
     }
 
-    if (sel === 'Assets') {
+    if (wsView === 'LayoutAssets') {
       this.workspaceLayoutCSVLoadTable('asset');
     }
-    if (sel === 'Layout') {
+    if (wsView === 'LayoutData') {
       this.workspaceLayoutCSVLoadTable('scene');
     }
-    if (sel === 'Products') {
+    if (wsView === 'LayoutProducts') {
       this.workspaceLayoutCSVLoadTable('product');
       this.workspaceLayoutCSVProductFieldsInit().then(() => {});
     }
-    if (sel === 'Custom Data') {
+    if (wsView === 'LayoutCustom') {
       this.workspaceLayoutSceneDataInit().then(() => {});
     }
   }

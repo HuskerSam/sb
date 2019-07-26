@@ -1,15 +1,9 @@
-<!doctype html>
-<html lang="en">
+<div>
 
-<head>
-  <meta charset="utf-8">
-  <title>Help</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="/images/logo.png">
-</head>
+  <h1 class="app-border"><button class="help_folding_button"><i class="material-icons">unfold_more</i></button>
+    CSV Import Data</h1>
+  <div class="help_folding_section">
 
-<body>
-  <div>
     Importing CSV Data into frames - CSV record types<br>
     CSV column/field names are all lower case, and when possible convert (with case changes) directly to the field name on the babylon/webGL asset.
     <br>
@@ -44,7 +38,7 @@
     <br>
     <b>meshtexture</b> - a row for a mesh asset and optional texture asset (url)
     <br> &nbsp; [url]: mesh path
-<br>
+    <br>
     <b>block</b> - row for a block asset
     <br> &nbsp; basic fields - [materialname], [height], [width], [depth]
     <br> &nbsp; [blockcode] (blockCode) - lookup field
@@ -70,7 +64,7 @@
     <b>blockchildframe</b> - adds a frame to a linked block (block child)
     <br> &nbsp; [parent] - links to pre-existing block via title/name
     <br> &nbsp; [childtype, name] - all linked/child blocks matching childType and childName (block/shape/mesh title)
-    <br> &nbsp; [...fields] -  x, y, z, rx, ry, rz, sx, sy, sz, visibility, frameorder, frametime
+    <br> &nbsp; [...fields] - x, y, z, rx, ry, rz, sx, sy, sz, visibility, frameorder, frametime
     <br>
     <b>message</b> - adds message to "scene" - with index for camera stop
     <br> &nbsp; - [index] determines the order the message appears in the animation
@@ -94,6 +88,4 @@
     <br>
     <br>
   </div>
-</body>
-
-</html>
+</div>

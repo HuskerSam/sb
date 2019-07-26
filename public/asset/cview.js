@@ -52,7 +52,6 @@ class cView extends bView {
 
     this.dialog.querySelector('.add-asset-button').addEventListener('click', e => this.addAsset());
     this.block_child_details_block = this.dialog.querySelector('.block_child_details_block');
-    this.workspace_layout_view_select = this.dialog.querySelector('.workspace_layout_view_select');
 
     this.helpViewerWrapper = this.dialog.querySelector('.help-overlay');
     this.addAssetPanel = document.createElement('div');
@@ -131,10 +130,10 @@ class cView extends bView {
       await csvImport.importRows(products);
       await csvImport.addCSVDisplayFinalize();
       await gAPPP.a.writeProjectRawData(animationKey, 'animationGenerated', null);
-      this._updateQueryString(animationKey, 'Layout');
+      this._updateQueryString(animationKey, 'Generate');
 
       if (reload)
-        window.location.href = `/asset/?wid=${animationKey}&subview=Layout`;
+        window.location.href = `/asset/?wid=${animationKey}&subview=Generate`;
     }, 10);
 
   }
@@ -342,7 +341,8 @@ class cView extends bView {
       this.dataview_record_key.value = this.key;
       this.workspace_show_home_btn.style.visibility = '';
     } else {
-      let options = '<option>Overview</option><option>Details</option><option>Generate</option><option>Layout</option>';
+      let options = '<option>Overview</option><option>Details</option><option value="Generate">Generate Demo</option>'
+        + '<option value="LayoutProducts">Products Data</option><option value="LayoutData">Layout Data</option><option value="LayoutAssets">Assets Data</option><option value="LayoutCustom">Custom Data</option>';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.openViewerAssetButton.style.display = 'none';
@@ -385,9 +385,9 @@ class cView extends bView {
 
     if (this.dataview_record_tag.selectedIndex < 1) {
       this.dialog.classList.add('workspace');
-      if (this.dataview_record_key.selectedIndex < 3)
+      if (this.dataview_record_key.selectedIndex < 2)
         await this.updateDisplayForWorkspaceDetails();
-      else if (this.dataview_record_key.selectedIndex === 3)
+      else if (this.dataview_record_key.selectedIndex > 1)
         await this.updateDisplayForWorkspaceLayout();
     }
     if (this.dataview_record_tag.selectedIndex > 0) {
@@ -401,9 +401,11 @@ class cView extends bView {
 
     return;
   }
-  _updateHelpSections(init = false) {
-    let buttons = this.helpViewer.querySelectorAll('.help_folding_button');
-    let sections = this.helpViewer.querySelectorAll('.help_folding_section');
+  _updateHelpSections(init = false, helpViewer) {
+    if (!helpViewer)
+      helpViewer = this.helpViewer;
+    let buttons = helpViewer.querySelectorAll('.help_folding_button');
+    let sections = helpViewer.querySelectorAll('.help_folding_section');
 
     for (let c = 0, l = buttons.length; c < l; c++) {
       let local = c;
@@ -450,7 +452,11 @@ class cView extends bView {
     let helpTag = this.tag;
     if (helpTag === 'texture')
       helpTag = 'material';
-    let res = await fetch(`/doc/${helpTag}help.html`, {
+    if (helpTag !== '')
+      helpTag += 'help';
+    else
+      helpTag = 'overview';
+    let res = await fetch(`/doc/${helpTag}.html`, {
       cache: "no-cache"
     })
     let html = await res.text();
@@ -483,17 +489,13 @@ class cView extends bView {
     this.dialog.querySelector('.add-workspace-button-nw').addEventListener('click', e => this.workspaceAddProjectClick(true));
     this.form_canvas_wrapper.classList.add('show-help');
 
-    if (this.key === 'Generate')
-      this.workspaceCTL = new cGenerate(this.assetsFieldsContainer, this.key, this);
-    else
-      this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, this.key, this);
+    this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, this.key, this);
     let url = '/doc/workspacehelp.html';
     if (this.key === 'Details')
       url = '/doc/workspacehelp.html';
     if (this.key === 'Overview')
       url = '/doc/overview.html';
-    if (this.key === 'Generate')
-      url = '/doc/layouthelp.html';
+
     let res = await fetch(url, {
       cache: "no-cache"
     });
@@ -537,7 +539,10 @@ class cView extends bView {
 
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }
-    this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, 'Layout', this);
+    if (this.dataview_record_key.selectedIndex === 2)
+      this.workspaceCTL = new cGenerate(this.assetsFieldsContainer, this.key, this);
+    else
+      this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, this.dataview_record_key.value, this);
   }
   async showBusyScreen() {
     return new Promise((resolve, reject) => {
@@ -717,12 +722,6 @@ class cView extends bView {
             </select>
             <select class="dataview_record_key"></select>
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
-            <select class="workspace_layout_view_select" style="float:left;">
-              <option>Products</option>
-              <option>Layout</option>
-              <option>Assets</option>
-              <option>Custom Data</option>
-            </select>
             <button class="workspace_regenerate_layout_changes"><i class="material-icons">gavel</i></button>
             <button class="delete-asset-button"><i class="material-icons">delete</i></button>
             <button class="view-asset-button"><i class="material-icons">visibility</i></button>

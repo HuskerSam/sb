@@ -20,7 +20,9 @@ class cGenerate {
     let html = '';
     if (this.bView.workplacesSelect)
       html = this.bView.workplacesSelect.innerHTML;
-
+    if (this.bView.canvasHelper) {
+      this.bView.canvasHelper.loadingScreen.style.display = 'none';
+    }
     this.bView.dialog.classList.add('generatelayout');
 
     this.csvGenerateRefreshProjectLists(html);
@@ -48,6 +50,7 @@ class cGenerate {
     <b>Products CSV Data</b>
     <input type="file" class="add_animation_product_download_file" style="display:none">
     <span class="product csv_data_date_span"></span>
+    <hr>
     <div class="workspace-csv-panel-item">
       <select class="add_animation_asset_choice">
         <option value="current">Assets CSV Data</option>
@@ -87,10 +90,13 @@ class cGenerate {
       </select>
       <span class="product_workspace csv_data_date_span"></span>
     </div>
-    <button class="generate_new_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">add</i></button>
     <input class="generate_animation_new_wrk_name" type="text" />
-    <br>
+    <button class="generate_new_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">add</i></button>
     <button class="generate_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">cached</i></button>
+    <hr>
+    <div class="form_canvas_wrapper">
+      <div class="help-viewer help-overlay" style="display:block;"></div>
+    </div>
     </div>`;
   }
   async register() {
@@ -161,12 +167,20 @@ class cGenerate {
     this.updateCSVDataDisplay('scene');
     this.updateCSVDataDisplay('product');
 
+    let res = await fetch(`/doc/layouthelp.html`, {
+      cache: "no-cache"
+    })
+    let html = await res.text();
+    this.domPanel.querySelector('.help-viewer').innerHTML = html;
+
+    this.bView._updateHelpSections(true, this.domPanel.querySelector('.help-viewer'));
+
     this.generate_animation_new_wrk_name = this.domPanel.querySelector('.generate_animation_new_wrk_name');
     this.generate_animation_new_wrk_name.value = 'Created ' + new Date().toISOString().substring(0, 10);
 
     return Promise.resolve();
   }
-  updateCSVDataDisplay(type) {
+  async updateCSVDataDisplay(type) {
     let value = this['add_animation_' + type + '_choice'].value;
 
     let dSpan = this.domPanel.querySelector(`.${type}_workspace.csv_data_date_span`);

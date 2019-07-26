@@ -564,7 +564,7 @@ select {
   font-size: 1.1em;
 }
 
-.workspace_layout_view_select, .workspace_regenerate_layout_changes {
+.workspace_regenerate_layout_changes {
   display: none;
 }
 
@@ -572,7 +572,6 @@ select {
   display: inline-block;
 }
 
-.workspacelayout .workspace_layout_view_select,
 .workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
 }
