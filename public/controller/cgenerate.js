@@ -94,7 +94,7 @@ class cGenerate {
     <button class="generate_new_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">add</i></button>
     <button class="generate_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">cached</i></button>
     <hr>
-    <div class="form_canvas_wrapper">
+    <div class="form_canvas_wrapper generate_help">
       <div class="help-viewer help-overlay" style="display:block;"></div>
     </div>
     </div>`;

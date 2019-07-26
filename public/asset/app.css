@@ -427,6 +427,14 @@ select {
   top: .15em;
 }
 
+.generate_help .help-overlay h1 {
+    padding-bottom: 0;
+}
+
+.form_canvas_wrapper.generate_help {
+  height: auto;
+}
+
 .form_panel_view_dom.workspace .help-overlay {
   display: flex;
   width: 100%;
