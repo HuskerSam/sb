@@ -528,7 +528,9 @@ class cWorkspace {
         let v = __getSceneOptionsValue(fieldData.tab, name, asset, field);
         fieldHtml += `<label class="csv_scene_field_upload_wrapper">${field}
             <input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}" id="scene_edit_field_${c}_${field}"
-            data-type="${type}" data-name="${name}" data-asset="${asset}" list="sbstoreimageslist" style="width:15em;" />
+            data-type="${type}" data-name="${name}" data-imageid="scene_edit_image_${c}_${field}" data-asset="${asset}" list="sbstoreimageslist" style="width:15em;" />
+            <br>
+            <img id="scene_edit_image_${c}_${field}" crossorigin="anonymous" src="${this.url(v)}" class="scene_edit_image" />
           </label>
           <button data-fieldid="scene_edit_field_${c}_${field}" class="btn-sb-icon sceneoptionsupload">
             <i class="material-icons">cloud_upload</i></button><br>`;
@@ -555,6 +557,7 @@ class cWorkspace {
       name = data.name,
       asset = data.asset,
       field = data.field,
+      imageid = data.imageid,
       value = ctl.value;
     if (tab === 'layout')
       tab = 'scene';
@@ -576,7 +579,17 @@ class cWorkspace {
       gAPPP.updateGenerateDataTimes();
     }
 
+    if (imageid) {
+      document.getElementById(imageid).setAttribute('src', this.url(value));
+    }
+
     return;
+  }
+  url(rawUrl) {
+    if (rawUrl.substring(0, 3) === 'sb:') {
+      rawUrl = gAPPP.cdnPrefix + 'textures/' + rawUrl.substring(3);
+    }
+    return rawUrl;
   }
   async workspaceLayoutSceneDataUploadImage() {
     let fileBlob = this.soUploadImageFile.files[0];

@@ -556,7 +556,9 @@ select {
   background: none;
 }
 
-.scene_options_edit_fields {}
+.scene_options_edit_fields {
+  text-align: center;
+}
 
 .layout_product_data_panel>form>div {
   display: inline-block;
@@ -849,4 +851,13 @@ a.workspace-asset-link-display {
 .layout_data_action_select {
   float: right;
   margin: .5em;
+}
+
+.scene_edit_image {
+  max-width: 90%;
+  max-height: 100px;
+}
+
+.sceneoptionsupload {
+  float: right;
 }
