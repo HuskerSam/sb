@@ -22,6 +22,7 @@ class gApp extends gInstanceSuper {
       }
     });
     this.loadDataLists('sbimageslist');
+    this.loadDataLists('sbstoreimageslist');
     this.loadDataLists('sbmesheslist');
     this.loadDataLists('skyboxlist');
     this.loadDataLists('fontfamilydatalist');

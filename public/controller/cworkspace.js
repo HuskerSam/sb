@@ -528,7 +528,7 @@ class cWorkspace {
         let v = __getSceneOptionsValue(fieldData.tab, name, asset, field);
         fieldHtml += `<label class="csv_scene_field_upload_wrapper">${field}
             <input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}" id="scene_edit_field_${c}_${field}"
-            data-type="${type}" data-name="${name}" data-asset="${asset}" style="width:15em;" />
+            data-type="${type}" data-name="${name}" data-asset="${asset}" list="sbstoreimageslist" style="width:15em;" />
           </label>
           <button data-fieldid="scene_edit_field_${c}_${field}" class="btn-sb-icon sceneoptionsupload">
             <i class="material-icons">cloud_upload</i></button><br>`;
