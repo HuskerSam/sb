@@ -32,25 +32,18 @@ class cGenerate {
     <b>Last Generated Animation</b>
     &nbsp;
     <span class="generated csv_data_date_span"></span>
-    <br>
-    <button class="add_animation_asset_download_btn btn-sb-icon"><i class="material-icons">file_download</i></button>
-    <button class="add_animation_asset_upload_btn btn-sb-icon"><i class="material-icons">cloud_upload</i></button>
-    <b>Asset CSV Data</b>
     <input type="file" class="add_animation_asset_download_file" style="display:none">
-    <span class="asset csv_data_date_span"></span>
-    <br>
-    <button class="add_animation_scene_download_btn btn-sb-icon"><i class="material-icons">file_download</i></button>
-    <button class="add_animation_scene_upload_btn btn-sb-icon"><i class="material-icons">cloud_upload</i></button>
-    <b>Layout CSV Data</b>
     <input type="file" class="add_animation_scene_download_file" style="display:none">
-    <span class="layout csv_data_date_span"></span>
-    <br>
-    <button class="add_animation_product_download_btn btn-sb-icon"><i class="material-icons">file_download</i></button>
-    <button class="add_animation_product_upload_btn btn-sb-icon"><i class="material-icons">cloud_upload</i></button>
-    <b>Products CSV Data</b>
     <input type="file" class="add_animation_product_download_file" style="display:none">
-    <span class="product csv_data_date_span"></span>
-    <hr>
+    <select class="layout_data_action_select" >
+      <option>Layout Data Options</option>
+      <option>Download Assets</option>
+      <option>Upload Assets</option>
+      <option>Download Layout</option>
+      <option>Upload Layout</option>
+      <option>Download Products</option>
+      <option>Upload Products</option>
+    </select>
     <div class="workspace-csv-panel-item">
       <select class="add_animation_asset_choice">
         <option value="current">Assets CSV Data</option>
@@ -103,35 +96,17 @@ class cGenerate {
     this.add_animation_asset_animation = this.domPanel.querySelector('.add_animation_asset_animation');
     this.add_animation_asset_template = this.domPanel.querySelector('.add_animation_asset_template');
     this.add_animation_asset_choice = this.domPanel.querySelector('.add_animation_asset_choice');
-    this.add_animation_asset_download_btn = this.domPanel.querySelector('.add_animation_asset_download_btn');
     this.import_asset_templates_select = this.domPanel.querySelector('.import_asset_templates_select');
-    this.add_animation_asset_upload_btn = this.domPanel.querySelector('.add_animation_asset_upload_btn');
-    this.add_animation_asset_download_file = this.domPanel.querySelector('.add_animation_asset_download_file');
-    this.add_animation_asset_upload_btn.addEventListener('click', e => this.add_animation_asset_download_file.click());
-    this.add_animation_asset_download_file.addEventListener('change', e => this.csvGenerateUploadCSV('asset'));
-    this.add_animation_asset_download_btn.addEventListener('click', e => this.csvGenerateDownloadCSV('asset'));
 
     this.add_animation_scene_animation = this.domPanel.querySelector('.add_animation_scene_animation');
     this.add_animation_scene_template = this.domPanel.querySelector('.add_animation_scene_template');
     this.add_animation_scene_choice = this.domPanel.querySelector('.add_animation_scene_choice');
-    this.add_animation_scene_download_btn = this.domPanel.querySelector('.add_animation_scene_download_btn');
-    this.add_animation_scene_upload_btn = this.domPanel.querySelector('.add_animation_scene_upload_btn');
     this.import_scene_templates_select = this.domPanel.querySelector('.import_scene_templates_select');
-    this.add_animation_scene_download_file = this.domPanel.querySelector('.add_animation_scene_download_file');
-    this.add_animation_scene_upload_btn.addEventListener('click', e => this.add_animation_scene_download_file.click());
-    this.add_animation_scene_download_file.addEventListener('change', e => this.csvGenerateUploadCSV('scene'));
-    this.add_animation_scene_download_btn.addEventListener('click', e => this.csvGenerateDownloadCSV('scene'));
 
     this.add_animation_product_animation = this.domPanel.querySelector('.add_animation_product_animation');
     this.add_animation_product_template = this.domPanel.querySelector('.add_animation_product_template');
     this.add_animation_product_choice = this.domPanel.querySelector('.add_animation_product_choice');
-    this.add_animation_product_download_btn = this.domPanel.querySelector('.add_animation_product_download_btn');
-    this.add_animation_product_upload_btn = this.domPanel.querySelector('.add_animation_product_upload_btn');
     this.import_product_templates_select = this.domPanel.querySelector('.import_product_templates_select');
-    this.add_animation_product_download_file = this.domPanel.querySelector('.add_animation_product_download_file');
-    this.add_animation_product_upload_btn.addEventListener('click', e => this.add_animation_product_download_file.click());
-    this.add_animation_product_download_file.addEventListener('change', e => this.csvGenerateUploadCSV('product'));
-    this.add_animation_product_download_btn.addEventListener('click', e => this.csvGenerateDownloadCSV('product'));
 
     this.add_animation_asset_choice.addEventListener('input', e => this.updateCSVDataDisplay('asset'));
     this.add_animation_scene_choice.addEventListener('input', e => this.updateCSVDataDisplay('scene'));
@@ -148,9 +123,16 @@ class cGenerate {
 
     await gAPPP.updateGenerateDataTimes();
 
-    this.domPanel.querySelector('.asset.csv_data_date_span').innerHTML = gAPPP.assetRowsDateDisplay;
-    this.domPanel.querySelector('.layout.csv_data_date_span').innerHTML = gAPPP.sceneRowsDateDisplay;
-    this.domPanel.querySelector('.product.csv_data_date_span').innerHTML = gAPPP.productRowsDateDisplay;
+    this.layout_data_action_select = this.domPanel.querySelector('.layout_data_action_select');
+    this.layout_data_action_select.addEventListener('change', e => this.updateLayoutOptions());
+
+    this.add_animation_asset_download_file = this.domPanel.querySelector('.add_animation_asset_download_file');
+    this.add_animation_scene_download_file = this.domPanel.querySelector('.add_animation_scene_download_file');
+    this.add_animation_product_download_file = this.domPanel.querySelector('.add_animation_product_download_file');
+    this.add_animation_asset_download_file.addEventListener('change', e => this.csvGenerateUploadCSV('asset'));
+    this.add_animation_scene_download_file.addEventListener('change', e => this.csvGenerateUploadCSV('scene'));
+    this.add_animation_product_download_file.addEventListener('change', e => this.csvGenerateUploadCSV('product'));
+
     this.domPanel.querySelector('.generated.csv_data_date_span').innerHTML = gAPPP.animationGeneratedDateDisplay;
 
     function __loadList(sel, list, htmlPrefix = '') {
@@ -179,6 +161,24 @@ class cGenerate {
     this.generate_animation_new_wrk_name.value = 'Created ' + new Date().toISOString().substring(0, 10);
 
     return Promise.resolve();
+  }
+  async updateLayoutOptions() {
+    let index = this.layout_data_action_select.selectedIndex;
+
+    if (index === 1)
+      this.csvGenerateDownloadCSV('asset');
+    else if (index === 2)
+      this.add_animation_asset_download_file.click();
+    else if (index === 3)
+      this.csvGenerateDownloadCSV('scene');
+    else if (index === 4)
+      this.add_animation_scene_download_file.click();
+    else if (index === 5)
+      this.csvGenerateDownloadCSV('product');
+    else if (index === 6)
+      this.add_animation_product_download_file.click();
+
+    this.layout_data_action_select.selectedIndex = 0;
   }
   async updateCSVDataDisplay(type) {
     let value = this['add_animation_' + type + '_choice'].value;

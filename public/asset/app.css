@@ -845,3 +845,8 @@ a.workspace-asset-link-display {
   border:none;
   margin: 0;
 }
+
+.layout_data_action_select {
+  float: right;
+  margin: .5em;
+}
