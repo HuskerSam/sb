@@ -194,8 +194,9 @@ class gAuthorization {
     return firebase.database().ref(`/project/${key}/rawData${rawName}Date`).once('value')
       .then(r => r.val());
   }
-  signInAnon() {
+  async signInAnon() {
     this.anonymous = true;
+    await firebase.auth().signOut();
     firebase.auth().signInAnonymously();
   }
   signOut() {
