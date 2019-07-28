@@ -589,7 +589,8 @@ class cWorkspace {
 
       if (textureName) {
         let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
-        await (new gCSVImport(gAPPP.loadedWID)).dbSetRecordFields('texture', { 'url': value }, tid);
+        let csvImport = new gCSVImport(gAPPP.loadedWID);
+        await csvImport.dbSetRecordFields('texture', { 'url': value }, tid);
       }
     }
 
@@ -604,7 +605,8 @@ class cWorkspace {
         if (field === 'scalev')
           fieldUpdate = 'vScale';
         let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
-        await (new gCSVImport(gAPPP.loadedWID)).dbSetRecordFields('texture', { [fieldUpdate]: value }, tid);
+        let csvImport = new gCSVImport(gAPPP.loadedWID);
+        await csvImport.dbSetRecordFields('texture', { [fieldUpdate]: value }, tid);
       }
     }
 
