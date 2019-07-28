@@ -36,7 +36,7 @@ class cGenerate {
     <input type="file" class="add_animation_scene_download_file" style="display:none">
     <input type="file" class="add_animation_product_download_file" style="display:none">
     <select class="layout_data_action_select" >
-      <option>Layout Data Options</option>
+      <option>Import Data</option>
       <option>Download Assets</option>
       <option>Upload Assets</option>
       <option>Download Layout</option>
@@ -44,11 +44,16 @@ class cGenerate {
       <option>Download Products</option>
       <option>Upload Products</option>
     </select>
+    <br>
+    <input class="generate_animation_new_wrk_name" type="text" />
+    <button class="generate_new_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">add</i></button>
+    <button class="generate_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">cached</i></button>
+
     <div class="workspace-csv-panel-item">
       <select class="add_animation_asset_choice">
-        <option value="current">Assets CSV Data</option>
+        <option value="current" selected>Assets Data</option>
         <option value="workspace">Workspace Assets</option>
-        <option value="template" selected>Template Assets</option>
+        <option value="template">Template Assets</option>
         <option value="none">No Assets</option>
       </select>
       <select class="add_animation_asset_animation" style="display:none;"></select>
@@ -59,9 +64,9 @@ class cGenerate {
     </div>
     <div class="workspace-csv-panel-item">
       <select class="add_animation_scene_choice">
-        <option value="current">Layout CSV Data</option>
+        <option value="current" selected>Layout Data</option>
         <option value="workspace">Workspace Layout</option>
-        <option value="template" selected>Template Layout</option>
+        <option value="template">Template Layout</option>
         <option value="none">No Layout</option>
       </select>
       <select class="add_animation_scene_animation" style="display:none;"></select>
@@ -72,7 +77,7 @@ class cGenerate {
     </div>
     <div class="workspace-csv-panel-item">
       <select class="add_animation_product_choice">
-        <option value="current" selected>Products CSV Data</option>
+        <option value="current" selected>Products Data</option>
         <option value="workspace">Workspace Products</option>
         <option value="template">Template Products</option>
         <option value="none">No Products</option>
@@ -83,9 +88,6 @@ class cGenerate {
       </select>
       <span class="product_workspace csv_data_date_span"></span>
     </div>
-    <input class="generate_animation_new_wrk_name" type="text" />
-    <button class="generate_new_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">add</i></button>
-    <button class="generate_animation_workspace_button"><i class="material-icons">gavel</i><i class="material-icons">cached</i></button>
     <hr>
     <div class="form_canvas_wrapper generate_help">
       <div class="help-viewer help-overlay" style="display:block;"></div>

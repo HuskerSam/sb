@@ -557,6 +557,7 @@ class cWorkspace {
       name = data.name,
       asset = data.asset,
       field = data.field,
+      type = data.type,
       imageid = data.imageid,
       value = ctl.value;
     if (tab === 'layout')
@@ -579,8 +580,32 @@ class cWorkspace {
       gAPPP.updateGenerateDataTimes();
     }
 
-    if (imageid) {
+    if (type === 'image') {
       document.getElementById(imageid).setAttribute('src', this.url(value));
+      let textureName = '';
+      if (asset === 'shape') {
+        textureName = name;
+      }
+
+      if (textureName) {
+        let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
+        await (new gCSVImport(gAPPP.loadedWID)).dbSetRecordFields('texture', { 'url': value }, tid);
+      }
+    }
+
+    if (field === 'scaleu' || field === 'scalev') {
+      let textureName = '';
+      if (asset === 'shape') {
+        textureName = name;
+      }
+
+      if (textureName) {
+        let fieldUpdate = 'uScale';
+        if (field === 'scalev')
+          fieldUpdate = 'vScale';
+        let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
+        await (new gCSVImport(gAPPP.loadedWID)).dbSetRecordFields('texture', { [fieldUpdate]: value }, tid);
+      }
     }
 
     return;

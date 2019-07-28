@@ -503,6 +503,7 @@ class wBlock {
       let objectData = sDataDefinition.getDefaultDataCloned('material');
       let m = this.__material(objectData);
       m.diffuseTexture = this.__texture(values);
+      m.emissiveTexture = this.__texture(values);
       this.context.__setMaterialOnObj(this.sceneObject, m);
       return;
     }
