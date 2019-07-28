@@ -385,6 +385,7 @@ class cView extends bView {
 
     if (this.dataview_record_tag.selectedIndex < 1) {
       this.dialog.classList.add('workspace');
+      this.subView = this.dataview_record_key.value;
       if (this.dataview_record_key.selectedIndex < 2)
         await this.updateDisplayForWorkspaceDetails();
       else if (this.dataview_record_key.selectedIndex > 1)
@@ -489,6 +490,8 @@ class cView extends bView {
     this.dialog.querySelector('.add-workspace-button-nw').addEventListener('click', e => this.workspaceAddProjectClick(true));
     this.form_canvas_wrapper.classList.add('show-help');
 
+    if (this.workspaceCTL)
+      delete this.workspaceCTL;
     this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, this.key, this);
     let url = '/doc/workspacehelp.html';
     if (this.key === 'Details')
@@ -539,6 +542,8 @@ class cView extends bView {
 
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }
+    if (this.workspaceCTL)
+      delete this.workspaceCTL;
     if (this.dataview_record_key.selectedIndex === 2)
       this.workspaceCTL = new cGenerate(this.assetsFieldsContainer, this.key, this);
     else
