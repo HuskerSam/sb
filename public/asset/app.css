@@ -274,7 +274,6 @@ select {
   padding-bottom: 1em;
 }
 
-
 .selected-mesh-bounds-helper-box input[type="text"] {
   border-radius: .25em;
   border: default;
@@ -369,7 +368,7 @@ select {
   padding: 0;
 }
 
-.frame-info-panel > div {
+.frame-info-panel>div {
   font-size: .75em;
   font-weight: bold;
   text-align: center;
@@ -428,7 +427,7 @@ select {
 }
 
 .generate_help .help-overlay h1 {
-    padding-bottom: 0;
+  padding-bottom: 0;
 }
 
 .form_canvas_wrapper.generate_help {
@@ -578,10 +577,15 @@ select {
   display: none;
 }
 
+.workspace_display_layout_new_window {
+  display: none;
+}
+
 .workspace.animation_regeneration_needed .workspace_regenerate_layout_changes {
   display: inline-block;
 }
 
+.workspacelayout .workspace_display_layout_new_window,
 .workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
 }
@@ -712,12 +716,12 @@ select {
   margin-bottom: .25em;
 }
 
-.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {
-}
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {}
 
 .tabulator .tabulator-header .tabulator-col.tab-header-cell-large .tabulator-col-content .tabulator-col-title {
   font-size: .4em;
 }
+
 .tabulator .tabulator-header .tabulator-col.right-column-data .tabulator-col-content .tabulator-col-title {
   text-align: center;
 }
@@ -844,7 +848,7 @@ a.workspace-asset-link-display {
 }
 
 .main-band-sub-view-picker button {
-  border:none;
+  border: none;
   margin: 0;
 }
 

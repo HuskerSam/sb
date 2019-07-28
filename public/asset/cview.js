@@ -75,6 +75,9 @@ class cView extends bView {
     this.workspace_regenerate_layout_changes = document.body.querySelector('.workspace_regenerate_layout_changes');
     this.workspace_regenerate_layout_changes.addEventListener('click', e => this.generateAnimation());
 
+    this.workspace_display_layout_new_window = document.body.querySelector('.workspace_display_layout_new_window');
+    this.workspace_display_layout_new_window.addEventListener('click', e => this.showDisplayDemo());
+
     this.workspace_show_home_btn = this.dialog.querySelector('.workspace_show_home_btn');
     this.workspace_show_home_btn.addEventListener('click', e => {
       this.dataview_record_tag.value = '';
@@ -728,6 +731,7 @@ class cView extends bView {
             <select class="dataview_record_key"></select>
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <button class="workspace_regenerate_layout_changes"><i class="material-icons">gavel</i></button>
+            <button class="workspace_display_layout_new_window"><i class="material-icons">shop</i></button>
             <button class="delete-asset-button"><i class="material-icons">delete</i></button>
             <button class="view-asset-button"><i class="material-icons">visibility</i></button>
             <button class="snapshot-asset-button"><i class="material-icons">add_photo_alternate</i></button>
@@ -979,6 +983,15 @@ class cView extends bView {
     if (!key)
       key = this.key;
     let url = `/view?w=${wid}&b=${key}`;
+    let a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('target', '_blank');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  showDisplayDemo() {
+    let url = `/demo?wid=${gAPPP.loadedWID}`;
     let a = document.createElement('a');
     a.setAttribute('href', url);
     a.setAttribute('target', '_blank');
