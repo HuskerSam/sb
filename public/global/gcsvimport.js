@@ -349,7 +349,9 @@ class gCSVImport {
         title: texturename,
         url: row.texturepath,
         uScale: row.scaleu,
-        vScale: row.scalev
+        vScale: row.scalev,
+        uOffset: row.uoffset,
+        vOffset: row.voffset
       }).then(results => {});
     }
     if (row.bmppath) {
@@ -358,7 +360,9 @@ class gCSVImport {
         title: bumptexturename,
         url: row.bmppath,
         uScale: row.scaleu,
-        vScale: row.scalev
+        vScale: row.scalev,
+        uOffset: row.uoffset,
+        vOffset: row.voffset
       }).then(results => {});
     }
 
@@ -1478,6 +1482,8 @@ class gCSVImport {
       rz: "",
       scaleu: "",
       scalev: "",
+      uoffset: "",
+      voffset: "",
       shapetype: "",
       sx: "",
       sy: "",

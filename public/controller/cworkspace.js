@@ -11,7 +11,7 @@ class cWorkspace {
           this.workspaceOverviewInit();
         }
         if (subKey === 'Generate' || subKey === 'LayoutData' || subKey === 'LayoutAssets' ||
-         subKey === 'LayoutProducts' || subKey === 'LayoutCustom') {
+          subKey === 'LayoutProducts' || subKey === 'LayoutCustom') {
           this.domPanel.innerHTML = this.workspaceLayoutTemplate();
           this.workspaceLayoutRegister();
 
@@ -590,11 +590,13 @@ class cWorkspace {
       if (textureName) {
         let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
         let csvImport = new gCSVImport(gAPPP.loadedWID);
-        await csvImport.dbSetRecordFields('texture', { 'url': value }, tid);
+        await csvImport.dbSetRecordFields('texture', {
+          'url': value
+        }, tid);
       }
     }
 
-    if (field === 'scaleu' || field === 'scalev') {
+    if (field === 'scaleu' || field === 'scalev' || field === 'voffset' || field === 'uoffset') {
       let textureName = '';
       if (asset === 'shape') {
         textureName = name;
@@ -604,9 +606,15 @@ class cWorkspace {
         let fieldUpdate = 'uScale';
         if (field === 'scalev')
           fieldUpdate = 'vScale';
+        if (field === 'uoffset')
+          fieldUpdate = 'uOffset';
+        if (field === 'voffset')
+          fieldUpdate = 'vOffset';
         let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
         let csvImport = new gCSVImport(gAPPP.loadedWID);
-        await csvImport.dbSetRecordFields('texture', { [fieldUpdate]: value }, tid);
+        await csvImport.dbSetRecordFields('texture', {
+          [fieldUpdate]: value
+        }, tid);
       }
     }
 
