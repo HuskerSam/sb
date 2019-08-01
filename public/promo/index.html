@@ -1,0 +1,226 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Hello</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/logo.png">
+  <script>
+    if (window.location.hostname === 'xrgrafter.com')
+      window.location = '/edit';
+    else if (window.location.hostname === 'localhost')
+    ;
+    else if (window.location.hostname === 'deliciousculture.com')
+    ;
+    else
+      window.location = '/demo';
+  </script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style>
+    html,
+    body,
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .text-tab-panel {
+      background: rgb(254, 254, 254);
+      flex: 1;
+      overflow: auto;
+      overflow-y: scroll;
+      display: none;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+
+    .rant-header {
+      font-weight: bold;
+      cursor: pointer;
+      color: rgb(100, 100, 100);
+      transition: all 800ms;
+      background: rgb(240, 240, 240);
+      padding: 10px 0px;
+      margin: 0px;
+      clear: both;
+      text-align: center;
+      width: 100%;
+      font-size: 16pt;
+      font-family: Times;
+    }
+
+    .rant-text {
+      padding: 0px 10px;
+      height: 0;
+      overflow: hidden;
+      clear: both;
+      opacity: 0;
+      transition: all 1200ms;
+      text-align: center;
+    }
+
+    .sub-text-header {
+      padding-top: 20px;
+      font-weight: bold;
+    }
+
+    .intro-text {
+      font-size: larger;
+      font-family: Arial;
+      text-align: center;
+      color: rgb(0, 0, 200);
+      padding: 5px;
+    }
+
+    .preheadlineicon,
+    .postheadlineicon {
+      transition: all 800ms;
+      transform: rotate(-90deg);
+      margin-top: -4px;
+      position: relative;
+      top: 6px;
+    }
+
+    .postheadlineicon {
+      transform: rotate(90deg);
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    .team-table td {
+      padding: 6px;
+      color: black;
+    }
+
+    .team-table tr:nth-child(odd) {
+      background: rgb(250, 250, 230);
+    }
+
+    .team-table td:nth-child(2) {
+      border-right: solid 1px silver;
+    }
+
+    .team-table td:first-child {
+      background: none;
+      color: blue;
+    }
+
+    .team-table th {
+      background: white;
+      font-weight: normal;
+    }
+
+    .intro-image {
+      max-height: 300px;
+      max-width: 90%;
+      margin: 10px;
+      margin-top: 0px;
+    }
+
+    .footer {
+      text-align: center;
+      padding-top: 4px;
+    }
+
+    .collapse-expand-all {
+      position: fixed;
+      left: 0;
+      top: 0;
+      transform: rotate(-90deg);
+      transition: all 800ms;
+      cursor: pointer;
+      margin: 0;
+      padding: 10px 10px;
+      background: none;
+      border: none;
+    }
+
+    .collapse-expand-all i {
+      font-weight: bold;
+    }
+
+    body {
+      font-size: 14pt;
+      font-family: Geneva;
+      line-height: 1.5em;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="collapse-expand-all"><i class="material-icons">expand_more</i></button>
+  <div class="rant-header">LOCAL CULTURE</div>
+  <div class="rant-text">
+    Combine the retention from local resource with the focus of remote workers
+    <br>
+    <br> Quick payments to local contractors with automated invoicing and no fees
+    <br>Payout pool gender balanced using split and ranking mechanisms
+    <br>Training and tasks so contractors can climb in skill and pay
+    <br>Spaces for social and professional collaborating
+    <br><br>
+  </div>
+
+  <div class="footer"> All Rights Reserved. 2019 &copy;</div>
+  <script>
+    let rTextAll = document.querySelectorAll('.rant-header');
+    rTextAll.forEach(h => {
+      let localH = h;
+      h.addEventListener('click', e => {
+        if (h.nextElementSibling.style.height !== 'auto') {
+          h.nextElementSibling.style.height = 'auto';
+          h.style.color = 'rgb(0, 0, 200)';
+          h.nextElementSibling.style.opacity = 1.0;
+          h.firstChild.style.transform = 'rotate(0deg)';
+          h.lastChild.style.transform = 'rotate(0deg)';
+        } else {
+          h.style.color = '';
+          h.nextElementSibling.style.height = '';
+          h.nextElementSibling.style.opacity = 0;
+          h.firstChild.style.transform = '';
+          h.lastChild.style.transform = '';
+        }
+      });
+      let expandIcon = document.createElement('i');
+      expandIcon.setAttribute('class', 'preheadlineicon material-icons');
+      expandIcon.innerHTML = 'expand_more';
+      h.insertBefore(expandIcon, h.firstChild);
+      expandIcon = document.createElement('i');
+      expandIcon.setAttribute('class', 'postheadlineicon material-icons');
+      expandIcon.innerHTML = 'expand_more';
+      h.appendChild(expandIcon);
+    });
+
+    let firstH = document.querySelector('.rant-header');
+    firstH.click();
+
+    let expandAllBtn = document.querySelector('.collapse-expand-all');
+    expandAllBtn.addEventListener('click', e => {
+      if (expandAllBtn.expanded) {
+        expandAllBtn.expanded = false;
+        expandAllBtn.style.transform = '';
+        expandAllBtn.style.color = '';
+
+        rTextAll.forEach(h => {
+          if (h.nextElementSibling.style.height === 'auto')
+            h.click();
+        });
+      } else {
+        expandAllBtn.expanded = true;
+        expandAllBtn.style.transform = 'rotate(0deg)';
+        expandAllBtn.style.color = 'blue';
+
+        rTextAll.forEach(h => {
+          if (h.nextElementSibling.style.height !== 'auto')
+            h.click();
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
