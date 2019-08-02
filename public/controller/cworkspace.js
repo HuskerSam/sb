@@ -898,10 +898,10 @@ class cWorkspace {
 
       this.record_field_list_form.appendChild(this.fieldDivByName[title]);
       if (title === 'asset') {
-        let btnPositions = document.createElement('button');
-        btnPositions.innerHTML = 'Show Positions';
-        btnPositions.addEventListener('click', e => this.workspaceLayoutShowPositions());
-        this.record_field_list_form.appendChild(btnPositions);
+        this.btnPositions = document.createElement('button');
+        this.btnPositions.innerHTML = 'Show Positions';
+        this.btnPositions.addEventListener('click', e => this.workspaceLayoutShowPositions());
+        this.record_field_list_form.appendChild(this.btnPositions);
 
         let btn = document.createElement('button');
         btn.setAttribute('id', 'update_product_fields_post');
@@ -987,17 +987,25 @@ class cWorkspace {
     }
 
   }
-  workspaceLayoutShowPositions() {
+  async workspaceLayoutShowPositions() {
     if (this.layoutPositionsShown) {
       this.layoutPositionsShown = false;
       for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
         gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), null);
       }
+      this.btnPositions.innerHTML = 'Show Positions';
     } else {
       this.layoutPositionsShown = true;
+      this.btnPositions.innerHTML = 'Hide Positions';
 
       for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
         let block = new wBlock(gAPPP.activeContext, null);
+        let p = new Promise((resolve) => {
+          setTimeout(() => resolve(), 1);
+        });
+        await p;
+
+
         block.__createTextMesh('layoutPositions' + positionCounter.toString() + 'SceneObject', {
           text: (positionCounter + 1).toString(),
           depth: .2,

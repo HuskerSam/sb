@@ -210,15 +210,25 @@ class cViewDemo extends bView {
         continue;
       let itemShownIndex = this.skuOrder.indexOf(p.itemId);
       if (itemShownIndex === -1) {
-        promises.push(this.basketRemoveItemBlock(p.itemId));
+        await this.basketRemoveItemBlock(p.itemId);
       }
+
+      let ppp = new Promise((resolve) => {
+        setTimeout(() => resolve(), 1);
+      });
+      await ppp;
     }
 
     for (let skuCtr = 0; skuCtr < this.skuOrder.length; skuCtr++) {
-      promises.push(this.basketAddItemBlock(this.skuOrder[skuCtr], skuCtr));
+      await this.basketAddItemBlock(this.skuOrder[skuCtr], skuCtr);
+
+      let p = new Promise((resolve) => {
+        setTimeout(() => resolve(), 1);
+      });
+      await p;
     }
 
-    return Promise.all(promises);
+    return;
   }
   basketClearButtons() {
     for (let c = 0, l = this.itemButtons.length; c < l; c++) {
