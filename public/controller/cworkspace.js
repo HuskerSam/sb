@@ -359,10 +359,10 @@ class cWorkspace {
     this.editTable = null;
     this.fieldList = [
       'index', 'name', 'asset',
+      'x', 'y', 'z',
       'text1', 'text2', 'image', 'block',
       'sku', 'price', 'count', 'pricetext',
       'height', 'width',
-      'x', 'y', 'z',
       'rx', 'ry', 'rz', 'displaystyle', 'materialname'
     ];
     this.messageOnlyFields = [
@@ -882,7 +882,8 @@ class cWorkspace {
         let select = document.createElement('select');
         select.style.width = '1.5em';
         select.setAttribute('id', 'select-position-preset');
-        this.fieldDivByName[title].appendChild(select);
+        let xFld = this.fieldDivByName[title];
+        xFld.appendChild(select);
       }
       if (title === 'image') {
         let select = document.createElement('select');
@@ -896,6 +897,24 @@ class cWorkspace {
       }
 
       this.record_field_list_form.appendChild(this.fieldDivByName[title]);
+      if (title === 'asset') {
+        let btnPositions = document.createElement('button');
+        btnPositions.innerHTML = 'Show Positions';
+        btnPositions.addEventListener('click', e => this.workspaceLayoutShowPositions());
+        this.record_field_list_form.appendChild(btnPositions);
+
+        let btn = document.createElement('button');
+        btn.setAttribute('id', 'update_product_fields_post');
+        btn.innerHTML = '<i class="material-icons">add</i>';
+        this.record_field_list_form.appendChild(btn);
+        this.addNewBtn = document.getElementById('update_product_fields_post');
+        this.addNewBtn.addEventListener('click', e => this.workspaceLayoutCSVProductAdd(e));
+      }
+      if (title === 'asset' || title === 'z') {
+        let br = document.createElement('br');
+        this.record_field_list_form.appendChild(br);
+      }
+
     }
 
     this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
@@ -903,13 +922,6 @@ class cWorkspace {
     this.uploadImageFile = this.layout_product_data_panel.querySelector('.texturepathuploadfile');
     this.uploadImageFile.addEventListener('change', e => this.__uploadImageFile());
     this.uploadImageButton.addEventListener('click', e => this.uploadImageFile.click());
-
-    let btn = document.createElement('button');
-    btn.setAttribute('id', 'update_product_fields_post');
-    btn.innerHTML = '<i class="material-icons">add</i>';
-    this.record_field_list_form.appendChild(btn);
-    this.addNewBtn = document.getElementById('update_product_fields_post');
-    this.addNewBtn.addEventListener('click', e => this.workspaceLayoutCSVProductAdd(e));
 
     this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.workspaceLayoutCSVProductUpdateType());
@@ -928,12 +940,14 @@ class cWorkspace {
 
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
     let sel = document.getElementById('select-position-preset');
+    this.positionFrags = [];
     if (positionInfo) {
       let arr = positionInfo.genericBlockData.split('|');
       let positionHTML = '<option></option>';
 
       for (let c = 0, l = arr.length; c < l - 2; c += 3) {
         let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2];
+        this.positionFrags.push(frag);
         positionHTML += `<option value="${frag}">${(c / 3) + 1} ${frag}</option>`;
       }
 
@@ -973,6 +987,56 @@ class cWorkspace {
     }
 
   }
+  workspaceLayoutShowPositions() {
+    if (this.layoutPositionsShown) {
+      this.layoutPositionsShown = false;
+      for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
+        gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), null);
+      }
+    } else {
+      this.layoutPositionsShown = true;
+
+      for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
+        let block = new wBlock(gAPPP.activeContext, null);
+        block.__createTextMesh('layoutPositions' + positionCounter.toString() + 'SceneObject', {
+          text: (positionCounter + 1).toString(),
+          depth: .2,
+          size: 100,
+          stroke: false,
+          fontFamily: 'Courier',
+          fontStyle: undefined,
+          fontWeight: undefined,
+          fontVariant: undefined
+        });
+
+        let positionParts = this.positionFrags[positionCounter].split(',');
+        block.sceneObject.position.x = GLOBALUTIL.getNumberOrDefault(positionParts[0], 0);
+        block.sceneObject.position.y = GLOBALUTIL.getNumberOrDefault(positionParts[1], 0);
+        block.sceneObject.position.z = GLOBALUTIL.getNumberOrDefault(positionParts[2], 0);
+
+        block.sceneObject.rotation.z = 3.14159 / 2;
+        block.sceneObject.rotation.x = 3.14159;
+
+        block.sceneObject.scaling.x = 2;
+        block.sceneObject.scaling.y = 1;
+        block.sceneObject.scaling.z = 5;
+
+        let material = new BABYLON.StandardMaterial(`layoutPositions${positionCounter}SceneMaterial`, gAPPP.activeContext.scene);
+
+        let rgb = positionCounter % 3;
+        if (rgb === 1)
+          material.diffuseColor = new BABYLON.Color3(2, 0, 0);
+        else if (rgb === 2)
+          material.diffuseColor = new BABYLON.Color3(0, 2, 0);
+        else
+          material.diffuseColor = new BABYLON.Color3(0, 0, 2);
+
+
+        gAPPP.activeContext.__setMaterialOnObj(block.sceneObject, material);
+        gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), block);
+      }
+    }
+  }
   workspaceLayoutCSVProductCheckPosition(x, y, z) {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
     let sel = document.getElementById('select-position-preset');
@@ -1002,7 +1066,8 @@ class cWorkspace {
         else
           this.fieldDivByName[i].style.display = '';
       } else {
-        if (i !== 'asset' && i !== 'name' && i !== 'index')
+        let alwaysShow = ['asset', 'name', 'index', 'x', 'y', 'z']
+        if (alwaysShow.indexOf(i) === -1)
           this.fieldDivByName[i].style.display = 'none';
         else
           this.fieldDivByName[i].style.display = '';

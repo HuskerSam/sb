@@ -445,6 +445,7 @@ class wContext {
     this.setGhostBlock('scalePreview', null);
     this.setGhostBlock('offsetPreview', null);
     this.setGhostBlock('rotatePreview', null);
+    this.setGhostBlock('layoutPositions', null);
   }
   _sceneAddDefaultObjects() {
     if (gAPPP.a.profile.canvasColor)
