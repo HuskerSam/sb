@@ -880,23 +880,19 @@ class cWorkspace {
 
       if (title === 'x') {
         let select = document.createElement('select');
-        select.style.position = 'absolute';
-        select.style.top = '-.75em';
-        select.style.right = '5px';
         select.style.width = '1.5em';
         select.setAttribute('id', 'select-position-preset');
         this.fieldDivByName[title].appendChild(select);
-        this.fieldDivByName[title].style.position = 'relative';
       }
       if (title === 'image') {
+        let select = document.createElement('select');
+        select.style.width = '1.5em';
+        select.setAttribute('id', 'select-productimages-preset');
+        this.fieldDivByName[title].appendChild(select);
         let btn = document.createElement('button');
-        btn.style.position = 'absolute';
-        btn.style.top = '-2.5em';
-        btn.style.left = '75%';
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
         btn.setAttribute('class', 'texturepathupload');
         this.fieldDivByName[title].appendChild(btn);
-        this.fieldDivByName[title].style.position = 'relative;'
       }
 
       this.record_field_list_form.appendChild(this.fieldDivByName[title]);
@@ -958,6 +954,24 @@ class cWorkspace {
         sel.selectedIndex = 0;
       });
     }
+
+    let imageInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'productsignpostimages');
+    if (imageInfo) {
+      let sel = document.getElementById('select-productimages-preset');
+      let arr = imageInfo.genericBlockData.split('|');
+      let imageListHTML = '<option></option>';
+
+      for (let c = 0, l = arr.length; c < l - 1; c += 2) {
+        let frag = arr[c] + ' : ' + arr[c + 1];
+        imageListHTML += `<option value="${arr[c + 1]}">${frag}</option>`;
+      }
+
+      sel.innerHTML = imageListHTML;
+      sel.addEventListener('input', e => {
+        this.record_field_list_form.querySelector('.imageedit').value = sel.value;
+      });
+    }
+
   }
   workspaceLayoutCSVProductCheckPosition(x, y, z) {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
