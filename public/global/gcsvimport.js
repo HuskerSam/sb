@@ -109,19 +109,19 @@ class gCSVImport {
   }
   getProductColors() {
     let colors = [
-      'color: 2,0,0',
+      'color: 1.25,0,0',
       'color: 0,2,0',
       'color: 0,0,2',
-      'color: 2,2,0'
+      'color: 6,6,0'
     ];
     let buttonColors = [
-      'rgb(255,0,0)',
+      'rgb(127,0,0)',
       'rgb(0,255,0)',
       'rgb(0,0,255)',
       'rgb(255,255,0)'
     ];
     let buttonForeColors = [
-      'rgb(0,0,0)',
+      'rgb(255,255,255)',
       'rgb(0,0,0)',
       'rgb(255,255,255)',
       'rgb(0,0,0)'
@@ -1179,7 +1179,12 @@ class gCSVImport {
     textPlane.asset = 'textplane';
     textPlane.hasalpha = true;
     textPlane.istext = true;
-    textPlane.textfontcolor = '0,0,0';
+    let colorIndex = product.colorIndex;
+    if (colorIndex !== 2 && colorIndex !== 0) {
+      textPlane.textfontcolor = '0,0,0';
+    } else {
+      textPlane.textfontcolor = '255,255,255';
+    }
     textPlane.texturetext = product.title;
     textPlane.texturetext2 = product.desc;
     textPlane.width = '10';
@@ -1241,7 +1246,13 @@ class gCSVImport {
     priceText.asset = 'shape';
     priceText.name = parent + '_3ddesc';
 
-    priceText.materialname = 'decolor: 0,0,0';
+
+    if (product.colorIndex === 1 || product.colorIndex === 3) {
+      priceText.materialname = 'decolor: 0,0,0';
+    } else {
+      priceText.materialname = 'color: 4,4,4';
+    }
+
     priceText.shapetype = 'text';
     priceText.textfontfamily = 'Arial';
     priceText.texttext = product.desc;

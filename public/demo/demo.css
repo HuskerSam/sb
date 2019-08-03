@@ -46,25 +46,42 @@
   text-align: left;
 }
 
-.choice-button-one {
-  background: rgba(255, 90, 90, .8);
+button.choice-button-one {
+  background: rgba(200, 0, 0, .7);
   top: 4em;
 }
 
-.choice-button-two {
+button.choice-button-one span {
+  color: white;
+}
+
+button.choice-button-two {
   background: rgba(0, 200, 0, .67);
   top: 8em;
 }
 
-.choice-button-three {
+button.choice-button-two span {
+  color: black;
+}
+
+button.choice-button-three {
   background: rgba(0, 0, 255, .5);
+  color: white;
   top: 12em;
   color: white;
 }
 
-.choice-button-four {
-  background: rgba(255, 255, 0, .67);
+button.choice-button-three span {
+  color: white;
+}
+
+button.choice-button-four {
+  background: rgba(255, 255, 0, .9);
   top: 16em;
+}
+
+button.choice-button-four span {
+  color: black;
 }
 
 .cart-contents {
@@ -91,7 +108,7 @@
   overflow: visible;
   white-space: nowrap;
   margin-bottom: .5em;
-  background: rgba(255,255,255, .6);
+  background: rgba(250,250,100, .9);
   border-radius: 5px;
 }
 

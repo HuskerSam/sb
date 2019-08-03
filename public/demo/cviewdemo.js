@@ -21,19 +21,6 @@ class cViewDemo extends bView {
     this.displayButtonPanel = document.querySelector('.user-options-panel');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
 
-    this.buttonColors = [
-      'rgb(255,0,0)',
-      'rgb(0,255,0)',
-      'rgb(0,0,255)',
-      'rgb(255,255,0)'
-    ];
-    this.buttonForeColors = [
-      'rgb(0,0,0)',
-      'rgb(0,0,0)',
-      'rgb(255,255,255)',
-      'rgb(0,0,0)'
-    ];
-
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.cartItemTotal = document.querySelector('.cart-item-total');
     this.workplacesSelect = document.querySelector('#workspaces-select');
@@ -186,9 +173,13 @@ class cViewDemo extends bView {
       let l1 = product.title + ' $' + total.toFixed(2);
       let l2 = count.toString() + ' @ ' + product.desc;
       gTotal += total;
+      let url = product.itemImage;
+      if (url.substring(0, 3) === 'sb:') {
+        url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
+      }
       let template = `<div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <img src="${product.itemImage}" class="button-list-image">
+        <img src="${url}" class="button-list-image">
         <div class="cart-item-description">${l1}</div>
         <br>
         <div class="cart-item-detail">${l2}</div>
@@ -392,8 +383,12 @@ class cViewDemo extends bView {
         if (!this.products[c].itemId)
           continue;
         let btn = this.itemButtons[product.colorIndex];
-        let btnHtml = `<img src="${product.itemImage}" class="button-list-image">` +
-          '<span class="expanded">' + product.title + '<br></span>' + product.desc.toString() + '</span>';
+        let url = product.itemImage;
+        if (url.substring(0, 3) === 'sb:') {
+          url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
+        }
+        let btnHtml = `<img src="${url}" class="button-list-image">` +
+          '<span class="expanded">' + product.title + '<br></span><span>' + product.desc.toString() + '</span>';
 
         if (btn.innerHTMLStash !== btnHtml) {
           btn.innerHTMLStash = btnHtml;
