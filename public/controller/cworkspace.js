@@ -695,26 +695,43 @@ class cWorkspace {
       },
       width: 30
     });
-    columns.push({
-      formatter: (cell, formatterParams) => {
-        return "<i class='material-icons'>add</i>";
-      },
-      headerSort: false,
-      frozen: true,
-      align: 'center',
-      resizable: false,
-      cssClass: 'add-table-cell',
-      cellClick: (e, cell) => {
-        cell.getTable().addData([{
-            name: ''
-          }], false, cell.getRow())
-          .then(rows => {
-            this.workspaceLayoutCSVTableReformat(tableName);
-            rows[0].getCells()[2].edit();
-          })
-      },
-      width: 30
-    });
+    if (tableName !== 'product')
+      columns.push({
+        formatter: (cell, formatterParams) => {
+          return "<i class='material-icons'>add</i>";
+        },
+        headerSort: false,
+        frozen: true,
+        align: 'center',
+        resizable: false,
+        cssClass: 'add-table-cell',
+        cellClick: (e, cell) => {
+          cell.getTable().addData([{
+              name: ''
+            }], false, cell.getRow())
+            .then(rows => {
+              this.workspaceLayoutCSVTableReformat(tableName);
+              rows[0].getCells()[2].edit();
+            })
+        },
+        width: 30
+      });
+    else
+      columns.push({
+        formatter: (cell, formatterParams) => {
+          return "<i class='material-icons'>save_alt</i>";
+        },
+        headerSort: false,
+        frozen: true,
+        align: 'center',
+        resizable: false,
+        cssClass: 'clone-table-cell',
+        cellClick: (e, cell) => {
+          let row = cell.getRow();
+          this.workspaceLayoutCSVProductShow(row.getData().name, row);
+        },
+        width: 30
+      });
 
     let colList = this[tableName + 'ColumnList'];
     for (let c = 0, l = colList.length; c < l; c++) {
@@ -770,7 +787,7 @@ class cWorkspace {
     columns[2].minWidth = 200;
 
 
-    let movableRows = true;// (tableName !== 'product');
+    let movableRows = true; // (tableName !== 'product');
 
     this.dataTableDom = document.createElement('div');
     this.data_table_panel.innerHTML = '';
@@ -784,17 +801,11 @@ class cWorkspace {
       height,
       virtualDom: true,
       selectable: false,
-      rowClick: (e, row) => this.workspaceLayoutCSVRowClick(e, row, tableName),
       dataEdited: data => this.workspaceLayoutCSVTableChange(true),
       rowMoved: (row) => this.workspaceLayoutCSVRowMoved(tableName, row)
     });
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
     this.tableName = tableName;
-  }
-  workspaceLayoutCSVRowClick(e, row, tableName) {
-    if (tableName === 'product') {
-      this.workspaceLayoutCSVProductShow(row.getData().name, row);
-    }
   }
   workspaceLayoutCSVRowMoved(tableName, row) {
     let tbl = this.editTable;
@@ -1085,10 +1096,7 @@ class cWorkspace {
   }
   workspaceLayoutCSVProductShow(name, tblRow) {
     let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
-//    let p = this.workspaceLayoutCSVProductByName(name);
     let row = tblRow.getData();
-//    if (p)
-//      row = p.origRow;
 
     if (row.asset === 'block') {
       row.asset = 'displayproduct';
@@ -1135,6 +1143,7 @@ class cWorkspace {
     let rows = this.editTable.getData();
     rows.push(newRow);
     this.editTable.setData(rows);
+    this.workspaceLayoutCSVRowMoved('product', null);
     this.workspaceLayoutCSVTableChange();
 
     e.preventDefault();
