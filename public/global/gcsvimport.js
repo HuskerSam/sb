@@ -109,10 +109,10 @@ class gCSVImport {
   }
   getProductColors() {
     let colors = [
-      'decolor: 1,0,0',
-      'decolor: 0,1,0',
-      'decolor: 0,0,1',
-      'decolor: 1,1,0'
+      'color: 2,0,0',
+      'color: 0,2,0',
+      'color: 0,0,2',
+      'color: 2,2,0'
     ];
     let buttonColors = [
       'rgb(255,0,0)',
@@ -1240,9 +1240,8 @@ class gCSVImport {
     let priceText = this.defaultCSVRow();
     priceText.asset = 'shape';
     priceText.name = parent + '_3ddesc';
-    //priceText.materialname = 'ecolor: .1,.1,.1';
 
-    priceText.materialname = product.origRow.materialname;
+    priceText.materialname = 'decolor: 0,0,0';
     priceText.shapetype = 'text';
     priceText.textfontfamily = 'Arial';
     priceText.texttext = product.desc;
@@ -1280,8 +1279,8 @@ class gCSVImport {
       blockImageShape.scalev = '1';
       blockImageShape.shapetype = 'plane';
       blockImageShape.texturepath = product.itemImage;
-      blockImageShape.width = '3';
-      blockImageShape.height = '3';
+      blockImageShape.width = '6';
+      blockImageShape.height = '6';
       blockImageShape.parent = parent;
       blockImageShape.x = '.06';
       blockImageShape.y = '6';
