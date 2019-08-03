@@ -96,6 +96,8 @@ class gApp extends gInstanceSuper {
         this.animationRegenerationNeeded = true;
       if (this.sceneRowsDate > this.animationGeneratedDate)
         this.animationRegenerationNeeded = true;
+      if (this.productRowsDate === null)
+        this.animationRegenerationNeeded = true;
       if (this.productRowsDate > this.animationGeneratedDate)
         this.animationRegenerationNeeded = true;
     }

@@ -873,7 +873,7 @@ class cWorkspace {
       return;
 
     await this.workspaceLayoutCSVTableSave(this.tableName);
-
+    gAPPP.updateGenerateDataTimes();
     return;
   }
 

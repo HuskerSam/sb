@@ -344,8 +344,8 @@ class cView extends bView {
       this.dataview_record_key.value = this.key;
       this.workspace_show_home_btn.style.visibility = '';
     } else {
-      let options = '<option>Overview</option><option>Details</option><option value="Generate">Generate Demo</option>'
-        + '<option value="LayoutProducts">Products Data</option><option value="LayoutData">Layout Data</option><option value="LayoutAssets">Assets Data</option><option value="LayoutCustom">Custom Data</option>';
+      let options = '<option>Overview</option><option>Details</option><option value="Generate">Generate Display</option>'
+        + '<option value="LayoutProducts">Products Data</option><option value="LayoutData">Display Data</option><option value="LayoutAssets">Assets Data</option><option value="LayoutCustom">Custom Data</option>';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.openViewerAssetButton.style.display = 'none';
