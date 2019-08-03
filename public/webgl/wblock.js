@@ -1029,12 +1029,24 @@ class wBlock {
       if (values.textFontFamily)
         textFontFamily = values.textFontFamily;
       let textFontSize = GLOBALUTIL.getNumberOrDefault(values.textFontSize, 75);
+      let textFontSizeOrig = textFontSize;
 
       if (!values.textureText)
         values.textureText = '';
+      if (!values.textureText2)
+        values.textureText2 = '';
       let numChar = values.textureText.length;
       let minFontSize = Math.ceil(renderSize * 1.5 / numChar);
+
+      let numChar2 = values.textureText2.length;
+      let minFontSize2 = Math.ceil(renderSize * 1.5 / numChar2);
+
+      let minFontTotalSize = Math.max(minFontSize2, minFontSize);
+
+      let leftOffset = 0.0;
       textFontSize = Math.min(textFontSize, minFontSize);
+      if (textFontSize < minFontSize)
+        leftOffset = (minFontSize - textFontSize) * numChar / 4.0;
 
       let font = fontWeight + ' ' + textFontSize + 'px ' + textFontFamily;
       let invertY = true;
@@ -1045,19 +1057,23 @@ class wBlock {
         color = GLOBALUTIL.colorRGB255(values.textFontColor);
       if (values.textFontClearColor)
         clearColor = GLOBALUTIL.colorRGB255(values.textFontClearColor);
-      let x = 10;
+      let x = 0;
       let y = GLOBALUTIL.getNumberOrDefault(textFontSize, 50);
 
-      texture.drawText(values.textureText, x, y, font, color, clearColor);
+      texture.drawText(values.textureText, x + leftOffset, y, font, color, clearColor);
 
       if (values.textureText2) {
-        y += textFontSize;
-        numChar = values.textureText2.length;
-        minFontSize = Math.ceil(renderSize * 1.5 / numChar);
-        textFontSize = Math.min(textFontSize, minFontSize);
+        y += minFontSize2;
+        let textFontSize2 = GLOBALUTIL.getNumberOrDefault(values.textFontSize, 75);
 
-        font = fontWeight + ' ' + textFontSize + 'px ' + textFontFamily;
-        texture.drawText(values.textureText2, x, y, font, color, clearColor);
+        let leftOffset2 = 0.0;
+        if (textFontSize2 < minFontSize2)
+          leftOffset2 = (minFontSize2 - textFontSize2) * numChar2 / 4.0;
+        textFontSize2 = Math.min(textFontSize2, minFontSize2);
+        x = 0;
+
+        font = fontWeight + ' ' + textFontSize2 + 'px ' + textFontFamily;
+        texture.drawText(values.textureText2, x + leftOffset2, y, font, color, clearColor);
       }
     } else if (values.isText) {
       let renderSize = GLOBALUTIL.getNumberOrDefault(values.textureTextRenderSize, 512);

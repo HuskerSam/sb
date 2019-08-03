@@ -371,9 +371,9 @@ class cWorkspace {
     ];
     this.productOnlyFields = [
       'index', 'name', 'asset',
-      'text1', 'image', 'block',
+      'text1', 'text2', 'image', 'block',
       'sku', 'price', 'count', 'pricetext',
-      'x', 'y', 'z'
+      'x', 'y', 'z', 'displaystyle'
     ];
 
     this.allColumnList = [

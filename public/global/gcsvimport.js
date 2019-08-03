@@ -1188,9 +1188,9 @@ class gCSVImport {
     textPlane.textfontfamily = 'Geneva';
     textPlane.name = product.childName + '_pricedesc';
     textPlane.parent = parent;
-    textPlane.x = '.06';
-    textPlane.y = '1.5';
-    textPlane.z = '.5';
+    textPlane.x = '0.06';
+    textPlane.y = '1.8';
+    textPlane.z = '.6';
     textPlane.sx = '.5';
     textPlane.sy = '.5';
     textPlane.sz = '.5';
