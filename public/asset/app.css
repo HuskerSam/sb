@@ -526,6 +526,15 @@ select {
 .workspace .asset-fields-container {
   display: flex;
   flex-direction: column;
+  height: 100%;
+}
+
+.workspace .data_table_panel {
+  flex: 1;
+}
+
+.layout_product_data_panel {
+  flex: 1;
 }
 
 #scene_layout_data_panel {

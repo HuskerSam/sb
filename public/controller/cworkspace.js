@@ -657,6 +657,7 @@ class cWorkspace {
       });
 
     let columns = [];
+
     columns.push({
       rowHandle: true,
       formatter: "handle",
@@ -667,6 +668,7 @@ class cWorkspace {
       width: 45,
       minWidth: 45
     });
+
     if (tableName !== 'product')
       columns.push({
         rowHandle: true,
@@ -677,6 +679,7 @@ class cWorkspace {
         frozen: true,
         width: 30
       });
+
     columns.push({
       formatter: (cell, formatterParams) => {
         return "<i class='material-icons'>delete</i>";
@@ -686,7 +689,6 @@ class cWorkspace {
       align: 'center',
       cssClass: 'delete-table-cell',
       resizable: false,
-      tag: 'delete',
       cellClick: (e, cell) => {
         cell.getRow().delete();
         this.workspaceLayoutCSVTableReformat(tableName);
@@ -700,7 +702,6 @@ class cWorkspace {
       headerSort: false,
       frozen: true,
       align: 'center',
-      tag: 'addBelow',
       resizable: false,
       cssClass: 'add-table-cell',
       cellClick: (e, cell) => {
@@ -733,7 +734,6 @@ class cWorkspace {
         headerSort: false,
         align,
         formatter: rightColumn ? 'money' : undefined,
-        layoutColumnsOnNewData: true,
         cssClass,
         resizable: false,
         headerVertical: longLabel,
@@ -769,19 +769,21 @@ class cWorkspace {
     columns[1].minWidth = 45;
     columns[2].minWidth = 200;
 
+
+    let movableRows = true;// (tableName !== 'product');
+
     this.dataTableDom = document.createElement('div');
     this.data_table_panel.innerHTML = '';
     this.data_table_panel.appendChild(this.dataTableDom);
+    let height = '100%';
     this.editTable = new Tabulator(this.dataTableDom, {
       data,
-      virtualDom: true,
-      height: '100%',
-      width: '100%',
-      movableRows: true,
-      movableColumns: false,
-      selectable: false,
+      movableRows,
       layout: "fitData",
       columns,
+      height,
+      virtualDom: true,
+      selectable: false,
       rowClick: (e, row) => this.workspaceLayoutCSVRowClick(e, row, tableName),
       dataEdited: data => this.workspaceLayoutCSVTableChange(true),
       rowMoved: (row) => this.workspaceLayoutCSVRowMoved(tableName, row)
@@ -791,8 +793,7 @@ class cWorkspace {
   }
   workspaceLayoutCSVRowClick(e, row, tableName) {
     if (tableName === 'product') {
-      return;
-      this.workspaceLayoutCSVProductShow(row.getData().name);
+      this.workspaceLayoutCSVProductShow(row.getData().name, row);
     }
   }
   workspaceLayoutCSVRowMoved(tableName, row) {
@@ -1082,12 +1083,12 @@ class cWorkspace {
       }
     }
   }
-  workspaceLayoutCSVProductShow(name) {
+  workspaceLayoutCSVProductShow(name, tblRow) {
     let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
-    let p = this.workspaceLayoutCSVProductByName(name);
-    let row = {};
-    if (p)
-      row = p.origRow;
+//    let p = this.workspaceLayoutCSVProductByName(name);
+    let row = tblRow.getData();
+//    if (p)
+//      row = p.origRow;
 
     if (row.asset === 'block') {
       row.asset = 'displayproduct';
