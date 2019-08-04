@@ -1019,10 +1019,12 @@ class gCSVImport {
       width: row.width,
       depth: row.depth
     };
+
     let blockResult = await this.dbSetRecord('block', blockWrapper);
 
-    if (row.displaystyle === '3dbasic')
+    if (row.displaystyle === '3dbasic'){
       this.__add3dTextPlane(row);
+    }
     else
       this.__add2dTextPlane(row);
 
@@ -1095,13 +1097,16 @@ class gCSVImport {
     descText.shapetype = 'text';
     descText.textfontfamily = 'Times';
     descText.texttext = row.texturetext;
-    descText.textdepth = '.25';
+    descText.textdepth = '.15';
     descText.textsize = '100';
     descText.parent = parent;
     descText.y = '5';
     descText.x = '.5';
     descText.ry = '180deg';
     descText.rz = '-90deg';
+    descText.sx = '2';
+    descText.sy = '2';
+    descText.sz = '2';
     this.addCSVRow(descText);
 
     descText = this.defaultCSVRow();
@@ -1111,13 +1116,16 @@ class gCSVImport {
     descText.shapetype = 'text';
     descText.textfontfamily = 'Times';
     descText.texttext = row.texturetext2;
-    descText.textdepth = '.25';
+    descText.textdepth = '.15';
     descText.textsize = '100';
     descText.parent = parent;
     descText.y = '3';
     descText.x = '.5';
     descText.ry = '180deg';
     descText.rz = '-90deg';
+    descText.sx = '2';
+    descText.sy = '2';
+    descText.sz = '2';
     this.addCSVRow(descText);
   }
   async __addSignPost(product, productData) {

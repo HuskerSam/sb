@@ -139,7 +139,9 @@ class cView extends bView {
       this._updateQueryString(animationKey, 'Generate');
 
       if (reload)
-        window.location.href = `/asset/?wid=${animationKey}&subview=Generate`;
+        window.location.href = this.genQueryString(null, null,
+          animationKey, null, this.subView);
+
     }, 10);
 
   }
