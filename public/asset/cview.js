@@ -602,7 +602,7 @@ class cView extends bView {
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
     this.dialog.classList.add('workspacelayout');
     this.context.arcCameraRadius = 80;
-    this.context.cameraVector = new BABYLON.Vector3(-10, 10, 3);
+    this.context.cameraVector = new BABYLON.Vector3(-10, 10, 1);
 
     if (this.key && this.workspaceLayoutLoaded !== true) {
       await this.showBusyScreen();
