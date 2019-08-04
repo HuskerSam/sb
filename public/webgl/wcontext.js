@@ -16,6 +16,7 @@ class wContext {
     this.previousCameraOrigin = '';
     this.previousCameraHieghtOffset = '';
     this.preRenderFrame = () => {};
+    this.arcCameraRadius = 20;
   }
   setGhostBlock(name, block) {
     if (this.ghostBlocks[name] === block)
@@ -608,8 +609,8 @@ class wContext {
       this.camera.dispose();
     let cameraVector = GLOBALUTIL.getVector(this.cameraVector, 15, 15, -3);
     let radius = 10;
-    let newRadius = Number(gAPPP.a.profile.arcCameraRadius);
-    if (newRadius > 1 && newRadius < 500)
+    let newRadius = Number(this.arcCameraRadius);
+    if (newRadius > 0 && newRadius < 500)
       radius = newRadius;
 
     this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, radius, new BABYLON.Vector3(0, 0, 0), this.scene);

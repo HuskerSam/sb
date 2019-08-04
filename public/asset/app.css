@@ -586,6 +586,10 @@ select {
   display: none;
 }
 
+.workspace_show_layout_positions {
+  display: none;
+}
+
 .workspace_display_layout_new_window {
   display: none;
 }
@@ -595,6 +599,7 @@ select {
 }
 
 .workspacelayout .workspace_display_layout_new_window,
+.workspacelayout .workspace_show_layout_positions,
 .workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
 }

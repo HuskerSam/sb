@@ -75,6 +75,9 @@ class cView extends bView {
     this.workspace_regenerate_layout_changes = document.body.querySelector('.workspace_regenerate_layout_changes');
     this.workspace_regenerate_layout_changes.addEventListener('click', e => this.generateAnimation());
 
+    this.workspace_show_layout_positions = document.body.querySelector('.workspace_show_layout_positions');
+    this.workspace_show_layout_positions.addEventListener('click', e => this.showLayoutPositions());
+
     this.workspace_display_layout_new_window = document.body.querySelector('.workspace_display_layout_new_window');
     this.workspace_display_layout_new_window.addEventListener('click', e => this.showDisplayDemo());
 
@@ -139,6 +142,88 @@ class cView extends bView {
         window.location.href = `/asset/?wid=${animationKey}&subview=Generate`;
     }, 10);
 
+  }
+  async showLayoutPositions() {
+    this.positionFrags = this.layoutPositionFrags();
+    if (this.layoutPositionsShown) {
+      this.layoutPositionsShown = false;
+      this.workspace_show_layout_positions.innerHTML = '<i class="material-icons">grid_on</i>';
+
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+
+      for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
+        gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), null);
+      }
+    } else {
+      this.layoutPositionsShown = true;
+      this.workspace_show_layout_positions.innerHTML = '<i class="material-icons">grid_off</i>';
+
+      this.canvasHelper.cameraSelect.selectedIndex = 0;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+
+      for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
+        let block = new wBlock(gAPPP.activeContext, null);
+        let p = new Promise((resolve) => {
+          setTimeout(() => resolve(), 1);
+        });
+        await p;
+
+
+        block.__createTextMesh('layoutPositions' + positionCounter.toString() + 'SceneObject', {
+          text: (positionCounter + 1).toString(),
+          depth: .2,
+          size: 100,
+          stroke: false,
+          fontFamily: 'Courier',
+          fontStyle: undefined,
+          fontWeight: undefined,
+          fontVariant: undefined
+        });
+
+        let positionParts = this.positionFrags[positionCounter].split(',');
+        block.sceneObject.position.x = GLOBALUTIL.getNumberOrDefault(positionParts[0], 0);
+        block.sceneObject.position.y = GLOBALUTIL.getNumberOrDefault(positionParts[1], 0);
+        block.sceneObject.position.z = GLOBALUTIL.getNumberOrDefault(positionParts[2], 0);
+
+        block.sceneObject.rotation.z = 3.14159 / 2;
+        block.sceneObject.rotation.x = 3.14159;
+
+        block.sceneObject.scaling.x = 2;
+        block.sceneObject.scaling.y = 1;
+        block.sceneObject.scaling.z = 5;
+
+        let material = new BABYLON.StandardMaterial(`layoutPositions${positionCounter}SceneMaterial`, gAPPP.activeContext.scene);
+
+        let rgb = positionCounter % 3;
+        if (rgb === 1)
+          material.diffuseColor = new BABYLON.Color3(2, 0, 0);
+        else if (rgb === 2)
+          material.diffuseColor = new BABYLON.Color3(0, 2, 0);
+        else
+          material.diffuseColor = new BABYLON.Color3(0, 0, 2);
+
+
+        gAPPP.activeContext.__setMaterialOnObj(block.sceneObject, material);
+        gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), block);
+      }
+    }
+  }
+  layoutPositionFrags() {
+    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
+    let positionFrags = [];
+    if (positionInfo) {
+      let arr = positionInfo.genericBlockData.split('|');
+      let positionHTML = '<option></option>';
+
+      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
+        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2];
+        positionFrags.push(frag);
+      }
+    }
+    return positionFrags;
   }
   initRecordEditFields(tag, key) {
     if (this.fireSetCallback)
@@ -344,8 +429,8 @@ class cView extends bView {
       this.dataview_record_key.value = this.key;
       this.workspace_show_home_btn.style.visibility = '';
     } else {
-      let options = '<option>Overview</option><option>Details</option><option value="Generate">Generate Display</option>'
-        + '<option value="LayoutProducts">Products Data</option><option value="LayoutData">Display Data</option><option value="LayoutAssets">Assets Data</option><option value="LayoutCustom">Custom Data</option>';
+      let options = '<option>Overview</option><option>Details</option><option value="Generate">Generate Display</option>' +
+        '<option value="LayoutProducts">Products Data</option><option value="LayoutData">Display Data</option><option value="LayoutAssets">Assets Data</option><option value="LayoutCustom">Custom Data</option>';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.openViewerAssetButton.style.display = 'none';
@@ -389,9 +474,10 @@ class cView extends bView {
     if (this.dataview_record_tag.selectedIndex < 1) {
       this.dialog.classList.add('workspace');
       this.subView = this.dataview_record_key.value;
-      if (this.dataview_record_key.selectedIndex < 2)
+      if (this.dataview_record_key.selectedIndex < 2) {
         await this.updateDisplayForWorkspaceDetails();
-      else if (this.dataview_record_key.selectedIndex > 1)
+        this.workspaceLayoutLoaded = false;
+      } else if (this.dataview_record_key.selectedIndex > 1)
         await this.updateDisplayForWorkspaceLayout();
     }
     if (this.dataview_record_tag.selectedIndex > 0) {
@@ -399,6 +485,8 @@ class cView extends bView {
         await this.updateDisplayForAssetsList();
       else
         await this.updateDisplayForAssetEditView();
+
+      this.workspaceLayoutLoaded = false;
     }
 
     this._updateQueryString();
@@ -511,11 +599,12 @@ class cView extends bView {
     this._updateHelpSections(true);
   }
   async updateDisplayForWorkspaceLayout() {
-    await this.showBusyScreen();
     this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
     this.dialog.classList.add('workspacelayout');
-
-    if (this.key) {
+    this.context.arcCameraRadius = 100;
+    if (this.key && this.workspaceLayoutLoaded !== true) {
+      await this.showBusyScreen();
+      this.workspaceLayoutLoaded = true;
       let fireValues = gAPPP.a.modelSets['block'].fireDataByKey[this.key].val();
       //load saved scene if exists
       if (fireValues.url)
@@ -731,6 +820,7 @@ class cView extends bView {
             <select class="dataview_record_key"></select>
             <button class="add-asset-button btn-sb-icon"><i class="material-icons">add</i></button>
             <button class="workspace_regenerate_layout_changes"><i class="material-icons">gavel</i></button>
+            <button class="workspace_show_layout_positions"><i class="material-icons">grid_on</i></button>
             <button class="workspace_display_layout_new_window"><i class="material-icons">shop</i></button>
             <button class="delete-asset-button"><i class="material-icons">delete</i></button>
             <button class="view-asset-button"><i class="material-icons">visibility</i></button>

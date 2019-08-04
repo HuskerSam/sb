@@ -2,6 +2,7 @@ class cWorkspace {
   constructor(domPanel, subKey, bView) {
     this.domPanel = domPanel;
     this.bView = bView;
+
     gAPPP.updateGenerateDataTimes()
       .then(() => {
         if (subKey === 'Details') {
@@ -910,11 +911,6 @@ class cWorkspace {
 
       this.record_field_list_form.appendChild(this.fieldDivByName[title]);
       if (title === 'asset') {
-        this.btnPositions = document.createElement('button');
-        this.btnPositions.innerHTML = 'Show Positions';
-        this.btnPositions.addEventListener('click', e => this.workspaceLayoutShowPositions());
-        this.record_field_list_form.appendChild(this.btnPositions);
-
         let btn = document.createElement('button');
         btn.setAttribute('id', 'update_product_fields_post');
         btn.innerHTML = '<i class="material-icons">add</i>';
@@ -998,64 +994,6 @@ class cWorkspace {
       });
     }
 
-  }
-  async workspaceLayoutShowPositions() {
-    if (this.layoutPositionsShown) {
-      this.layoutPositionsShown = false;
-      for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
-        gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), null);
-      }
-      this.btnPositions.innerHTML = 'Show Positions';
-    } else {
-      this.layoutPositionsShown = true;
-      this.btnPositions.innerHTML = 'Hide Positions';
-
-      for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
-        let block = new wBlock(gAPPP.activeContext, null);
-        let p = new Promise((resolve) => {
-          setTimeout(() => resolve(), 1);
-        });
-        await p;
-
-
-        block.__createTextMesh('layoutPositions' + positionCounter.toString() + 'SceneObject', {
-          text: (positionCounter + 1).toString(),
-          depth: .2,
-          size: 100,
-          stroke: false,
-          fontFamily: 'Courier',
-          fontStyle: undefined,
-          fontWeight: undefined,
-          fontVariant: undefined
-        });
-
-        let positionParts = this.positionFrags[positionCounter].split(',');
-        block.sceneObject.position.x = GLOBALUTIL.getNumberOrDefault(positionParts[0], 0);
-        block.sceneObject.position.y = GLOBALUTIL.getNumberOrDefault(positionParts[1], 0);
-        block.sceneObject.position.z = GLOBALUTIL.getNumberOrDefault(positionParts[2], 0);
-
-        block.sceneObject.rotation.z = 3.14159 / 2;
-        block.sceneObject.rotation.x = 3.14159;
-
-        block.sceneObject.scaling.x = 2;
-        block.sceneObject.scaling.y = 1;
-        block.sceneObject.scaling.z = 5;
-
-        let material = new BABYLON.StandardMaterial(`layoutPositions${positionCounter}SceneMaterial`, gAPPP.activeContext.scene);
-
-        let rgb = positionCounter % 3;
-        if (rgb === 1)
-          material.diffuseColor = new BABYLON.Color3(2, 0, 0);
-        else if (rgb === 2)
-          material.diffuseColor = new BABYLON.Color3(0, 2, 0);
-        else
-          material.diffuseColor = new BABYLON.Color3(0, 0, 2);
-
-
-        gAPPP.activeContext.__setMaterialOnObj(block.sceneObject, material);
-        gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), block);
-      }
-    }
   }
   workspaceLayoutCSVProductCheckPosition(x, y, z) {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
