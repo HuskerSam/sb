@@ -1195,7 +1195,6 @@ class gCSVImport {
     textPlane.parent = parent;
     textPlane.x = '0.06';
     textPlane.y = '1.8';
-    textPlane.z = '.6';
     textPlane.sx = '.5';
     textPlane.sy = '.5';
     textPlane.sz = '.5';
