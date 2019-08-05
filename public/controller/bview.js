@@ -284,7 +284,20 @@ class bView {
       this.selectProject();
     }
   }
-  _updateQueryString(wId) {}
+  _updateQueryString(newWid) {
+    let queryString = `?wid=${newWid}`;
+
+    let url = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
+
+    if (url !== this.url) {
+      window.history.pushState({
+        path: url
+      }, '', url);
+      this.url = url;
+    }
+
+    return;
+  }
   async selectProject() {
     this._updateQueryString(gAPPP.mV.workplacesSelect.value);
     await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
