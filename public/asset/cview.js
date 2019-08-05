@@ -1085,7 +1085,7 @@ class cView extends bView {
     document.body.removeChild(a);
   }
   showDisplayDemo() {
-    let url = `/demo?wid=${gAPPP.loadedWID}`;
+    let url = `/display?wid=${gAPPP.loadedWID}`;
     let a = document.createElement('a');
     a.setAttribute('href', url);
     a.setAttribute('target', '_blank');

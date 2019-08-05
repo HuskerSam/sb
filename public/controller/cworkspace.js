@@ -104,7 +104,7 @@ class cWorkspace {
       let href = this.bView.genQueryString(null, 'block', sceneRecords.recordIds[0]);
       html += `Generated animation block: <b><a href="${href}" class="tag_key_redirect" data-tag="block"
        data-key="${sceneRecords.recordIds[0]}">${sceneRecords.records[0].title}</a></b> <span class="csv_data_date_span">${gAPPP.animationGeneratedDateDisplay}</span>`;
-      html += ` &nbsp; <a href="/demo?wid=${gAPPP.loadedWID}" target="_blank">/demo</a>`;
+      html += ` &nbsp; <a href="/display?wid=${gAPPP.loadedWID}" target="_blank">/display</a>`;
       html += '<br>';
     } else {
       html += 'Generated animation block: none<br>';

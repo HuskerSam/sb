@@ -308,7 +308,7 @@ class cViewDemo extends bView {
 
     if (projCode === 'About') {
       let anchor = document.createElement('a');
-      anchor.setAttribute('href', '/demo/about.html');
+      anchor.setAttribute('href', '/display/about.html');
       anchor.setAttribute('target', '_blank');
       document.body.appendChild(anchor)
       anchor.click();
