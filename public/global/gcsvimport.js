@@ -1095,9 +1095,9 @@ class gCSVImport {
     descText.name = parent + '_3dtitle';
     descText.materialname = 'inherit';
     descText.shapetype = 'text';
-    descText.textfontfamily = 'Times';
+    descText.textfontfamily = row.textfontfamily;
     descText.texttext = row.texturetext;
-    descText.textdepth = '.15';
+    descText.textdepth = '.08';
     descText.textsize = '100';
     descText.parent = parent;
     descText.y = '5';
@@ -1114,9 +1114,9 @@ class gCSVImport {
     descText.name = parent + '_3dtitle2';
     descText.materialname = 'inherit';
     descText.shapetype = 'text';
-    descText.textfontfamily = 'Times';
+    descText.textfontfamily = row.textfontfamily;
     descText.texttext = row.texturetext2;
-    descText.textdepth = '.15';
+    descText.textdepth = '.08';
     descText.textsize = '100';
     descText.parent = parent;
     descText.y = '3';
@@ -1198,7 +1198,7 @@ class gCSVImport {
     textPlane.width = '10';
     textPlane.height = '10';
     textPlane.depth = '10';
-    textPlane.textfontfamily = 'Geneva';
+    textPlane.textfontfamily = product.origRow.textfontfamily;
     textPlane.name = product.childName + '_pricedesc';
     textPlane.parent = parent;
     textPlane.x = '0.06';
@@ -1261,7 +1261,7 @@ class gCSVImport {
     }
 
     priceText.shapetype = 'text';
-    priceText.textfontfamily = 'Arial';
+    priceText.textfontfamily = product.origRow.textfontfamily;
     priceText.texttext = product.desc;
     priceText.textdepth = '.1';
     priceText.textsize = '100';
@@ -1277,7 +1277,7 @@ class gCSVImport {
     descText.name = parent + '_3dtitle';
     descText.materialname = 'inherit';
     descText.shapetype = 'text';
-    descText.textfontfamily = 'Times';
+    descText.textfontfamily = product.origRow.textfontfamily;
     descText.texttext = product.title;
     descText.textdepth = '.25';
     descText.textsize = '100';
@@ -1520,7 +1520,6 @@ class gCSVImport {
       startrx: '',
       startry: '',
       startrz: '',
-      textfontfamily: '',
       texttext: '',
       textdepth: '',
       textsize: ''
