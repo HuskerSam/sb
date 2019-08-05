@@ -1255,7 +1255,7 @@ class gCSVImport {
 
 
     if (product.colorIndex === 1 || product.colorIndex === 3) {
-      priceText.materialname = 'decolor: 0,0,0';
+      priceText.materialname = 'color: 0,0,0';
     } else {
       priceText.materialname = 'color: 4,4,4';
     }
@@ -1263,10 +1263,10 @@ class gCSVImport {
     priceText.shapetype = 'text';
     priceText.textfontfamily = 'Arial';
     priceText.texttext = product.desc;
-    priceText.textdepth = '.5';
+    priceText.textdepth = '.1';
     priceText.textsize = '100';
     priceText.parent = parent;
-    priceText.y = '2';
+    priceText.y = '2.75';
     priceText.x = '.5';
     priceText.ry = '0deg';
     priceText.rz = '-90deg';
@@ -1282,7 +1282,7 @@ class gCSVImport {
     descText.textdepth = '.25';
     descText.textsize = '100';
     descText.parent = parent;
-    descText.y = '5';
+    descText.y = '8';
     descText.x = '.5';
     descText.ry = '0deg';
     descText.rz = '-90deg';
