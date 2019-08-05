@@ -1079,14 +1079,22 @@ class cWorkspace {
     }
 
     let newRow = {};
-    for (let c = 0, l = fields.length; c < l; c++)
+    for (let c = 0, l = fields.length; c < l; c++){
       newRow[this.fieldList[c]] = fields[c].value;
+      fields[c].value = '';
+    }
 
     let rows = this.editTable.getData();
-    rows.push(newRow);
+    let newIndex = GLOBALUTIL.getNumberOrDefault(newRow['index'], 0);
+    let rc = 0, rl = rows.length;
+    for (; rc < rl; rc++) {
+        let rowIndex = GLOBALUTIL.getNumberOrDefault(rows[rc]['index'], 0);
+        if (newIndex < rowIndex)
+          break;
+    }
+    rows.splice(rc, 0, newRow);
     this.editTable.setData(rows);
     this.workspaceLayoutCSVRowMoved('product', null);
-    this.workspaceLayoutCSVTableChange();
 
     e.preventDefault();
     return true;
