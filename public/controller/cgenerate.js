@@ -221,7 +221,9 @@ class cGenerate {
     if (choice === 'template') {
       let title = this[`add_animation_${type}_template`].value;
       let filename = this.templates[`${type}Templates`][title];
-      let response = await fetch(this.bView.templateBasePath + filename);
+      let response = await fetch(this.bView.templateBasePath + filename, {
+        cache: "no-cache"
+      });
       let csvData = await response.text();
       let csvJSON = await new Promise((resolve) => {
         Papa.parse(csvData, {
