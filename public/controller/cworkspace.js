@@ -364,17 +364,17 @@ class cWorkspace {
       'text1', 'text2', 'image', 'block',
       'sku', 'price', 'count', 'pricetext',
       'height', 'width',
-      'rx', 'ry', 'rz', 'displaystyle', 'materialname', 'textfontfamily'
+      'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily', 'materialname'
     ];
     this.messageOnlyFields = [
       'index', 'name', 'asset', 'text1', 'text2',
-      'height', 'width', 'x', 'y', 'z'
+      'height', 'width', 'x', 'y', 'z', 'displaystyle', 'textfontfamily', 'materialname'
     ];
     this.productOnlyFields = [
       'index', 'name', 'asset',
       'text1', 'text2', 'image', 'block',
       'sku', 'price', 'count', 'pricetext',
-      'x', 'y', 'z', 'displaystyle'
+      'x', 'y', 'z', 'displaystyle', 'textfontfamily'
     ];
 
     this.allColumnList = [
@@ -886,9 +886,13 @@ class cWorkspace {
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
       let title = this.fieldList[c];
       let id = 'fieldid' + c.toString();
+      let listName = this.fieldList[c] + 'list';
+      if (title === 'textfontfamily')
+        listName = 'fontfamilydatalist';
+
       this.fieldDivByName[title] = document.createElement('div');
       this.fieldDivByName[title].innerHTML = `<label>${this.fieldList[c]}
-        <input type="text" class="fieldinput ${title}edit" list="${this.fieldList[c]}list" />
+        <input type="text" class="fieldinput ${title}edit" list="${listName}" />
       </label>`;
 
       if (title === 'x') {
