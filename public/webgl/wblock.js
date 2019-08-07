@@ -986,8 +986,8 @@ class wBlock {
       let m;
       if (!tD) {
         m = new BABYLON.StandardMaterial('material', this.context.scene);
-        if (materialName !== '')
-          this.context.logError('materal missing' + materialName);
+        if (materialName !== '' && materialName !== 'inherit')
+          this.context.logError('material missing ' + materialName);
       } else
         m = this.__material(tD);
 

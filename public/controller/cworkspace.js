@@ -802,7 +802,7 @@ class cWorkspace {
       height,
       virtualDom: true,
       selectable: false,
-      dataEdited: data => this.workspaceLayoutCSVTableChange(true),
+      dataEdited: (data, a, b, c) => this.workspaceLayoutCSVTableChange(),
       rowMoved: (row) => this.workspaceLayoutCSVRowMoved(tableName, row)
     });
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
@@ -850,7 +850,7 @@ class cWorkspace {
   }
   async workspaceLayoutCSVTableSave(tableName) {
     if (!this.workspaceLayoutCSVTableTestDirty(tableName))
-      return Promise.resolve();
+      return;
 
     let tbl = this.editTable;
     let data = tbl.getData();
@@ -864,14 +864,77 @@ class cWorkspace {
     }
 
     await gAPPP.a.writeProjectRawData(gAPPP.loadedWID, tableName + 'Rows', data);
+    this.editTable.cacheData = JSON.stringify(this.editTable.getData());
     gAPPP.updateGenerateDataTimes();
     return;
   }
-  async workspaceLayoutCSVTableChange(generateAnimationOptions) {
+  async workspaceLayoutCSVTableChange() {
     let dirty = this.workspaceLayoutCSVTableTestDirty(this.tableName);
 
     if (!dirty)
       return;
+
+    if (this.tableName === 'product') {
+      let newData = this.editTable.getData();
+      let oldData = JSON.parse(this.editTable.cacheData);
+
+      let newRows = {};
+      newData.forEach(row => {
+        let title = row['name'];
+        if (title)
+          newRows[title] = row;
+      });
+
+      let oldRows = {};
+      oldData.forEach(row => {
+        let title = row['name'];
+        if (title)
+          oldRows[title] = row;
+      });
+
+      for (let title in oldRows) {
+        let newRow = newRows[title];
+        if (newRow) {
+          let oldRow = oldRows[title];
+
+          if (oldRow.text1 !== newRow.text1 ||
+            oldRow.text2 !== newRow.text2) {
+
+              if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle !== '3dbasic') {
+                let textureName = title + '_pricedesc_textplane';
+                if (oldRow.asset === 'message')
+                  textureName = title + '_textplane';
+                let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
+                let csvImport = new gCSVImport(gAPPP.loadedWID);
+                await csvImport.dbSetRecordFields('texture', {
+                  textureText: newRow.text1,
+                  textureText2: newRow.text2
+                }, tid);
+              }
+              
+              if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle === '3dbasic') {
+                let shape1Name = title + '_signpost_3dtitle';
+                if (oldRow.asset === 'message')
+                  shape1Name = title + '_3dtitle';
+                let sid1 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape1Name);
+                let csvImport = new gCSVImport(gAPPP.loadedWID);
+                await csvImport.dbSetRecordFields('shape', {
+                  textText: newRow.text1
+                }, sid1);
+
+                let shape2Name = title + '_signpost_3ddesc';
+                if (oldRow.asset === 'message')
+                  shape2Name = title + '_3dtitle2';
+                let sid2 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape2Name);
+                let csvImport2 = new gCSVImport(gAPPP.loadedWID);
+                await csvImport2.dbSetRecordFields('shape', {
+                  textText: newRow.text2
+                }, sid2);
+              }
+          }
+        }
+      }
+    }
 
     await this.workspaceLayoutCSVTableSave(this.tableName);
     gAPPP.updateGenerateDataTimes();
@@ -1079,18 +1142,19 @@ class cWorkspace {
     }
 
     let newRow = {};
-    for (let c = 0, l = fields.length; c < l; c++){
+    for (let c = 0, l = fields.length; c < l; c++) {
       newRow[this.fieldList[c]] = fields[c].value;
       fields[c].value = '';
     }
 
     let rows = this.editTable.getData();
     let newIndex = GLOBALUTIL.getNumberOrDefault(newRow['index'], 0);
-    let rc = 0, rl = rows.length;
+    let rc = 0,
+      rl = rows.length;
     for (; rc < rl; rc++) {
-        let rowIndex = GLOBALUTIL.getNumberOrDefault(rows[rc]['index'], 0);
-        if (newIndex < rowIndex)
-          break;
+      let rowIndex = GLOBALUTIL.getNumberOrDefault(rows[rc]['index'], 0);
+      if (newIndex < rowIndex)
+        break;
     }
     rows.splice(rc, 0, newRow);
     this.editTable.setData(rows);
