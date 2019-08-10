@@ -4,11 +4,11 @@ class cGenerate {
     this.bView = bView;
     this.templates = {
       "assetTemplates": {
-        "Grocery": "asset.csv",
-        "Nature": "asset.csv"
+        "Grocery": "asset.csv"
       },
       "sceneTemplates": {
-        "Produce": "layout.csv"
+        "Produce": "layout.csv",
+        "Produce Large": "largescene.csv"
       },
       "productTemplates": {
         "Produce 1": "product.csv"
@@ -169,18 +169,17 @@ class cGenerate {
 
     if (index === 1)
       this.csvGenerateDownloadCSV('asset');
-    else if (index === 2)
-      this.add_animation_asset_download_file.click();
     else if (index === 3)
       this.csvGenerateDownloadCSV('scene');
-    else if (index === 4)
-      this.add_animation_scene_download_file.click();
     else if (index === 5)
       this.csvGenerateDownloadCSV('product');
+    else if (index === 4)
+      this.add_animation_scene_download_file.click();
+    else if (index === 2)
+      this.add_animation_asset_download_file.click();
     else if (index === 6)
       this.add_animation_product_download_file.click();
 
-    this.layout_data_action_select.selectedIndex = 0;
   }
   async updateCSVDataDisplay(type) {
     let value = this['add_animation_' + type + '_choice'].value;
@@ -292,6 +291,13 @@ class cGenerate {
         complete: async (results) => {
           if (results.data)
             await gAPPP.a.writeProjectRawData(gAPPP.loadedWID, csvType + 'Rows', results.data);
+
+
+          await gAPPP.updateGenerateDataTimes();
+          this.updateCSVDataDisplay('asset');
+          this.updateCSVDataDisplay('scene');
+          this.updateCSVDataDisplay('product');
+          this.layout_data_action_select.selectedIndex = 0;
         }
       });
     }
@@ -310,6 +316,8 @@ class cGenerate {
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);
+
+        this.layout_data_action_select.selectedIndex = 0;
       });
   }
   _csvUpdateWorkspaceCSVDisplayDate(type) {
