@@ -1200,7 +1200,7 @@ class wBlock {
     let camerasS = JSON.stringify(cameras);
     let sel = this.context.canvasHelper.cameraSelect;
     let startValue = sel.value;
-    if (camerasS !== this.cameraS) {
+    if (camerasS !== this.context.canvasHelper.camerasS) {
       this.camerasCache = cameras;
       this.context.canvasHelper.cameraDetails = cameras;
       this.context.canvasHelper.camerasS = camerasS;
