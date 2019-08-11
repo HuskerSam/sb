@@ -11,7 +11,8 @@ class cGenerate {
         "Produce Large": "largescene.csv"
       },
       "productTemplates": {
-        "Produce 1": "product.csv"
+        "Produce 1": "product.csv",
+        "Produce Large": "largeproduct.csv"
       }
     };
 
