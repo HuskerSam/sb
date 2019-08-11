@@ -500,7 +500,7 @@ class cWorkspace {
     let name = fieldData.name;
     let asset = fieldData.asset;
 
-    let __getSceneOptionsValue = (tab, name, asset, field) => {
+    let __getSceneOptionsValue = (tab, name, asset, field = null) => {
       if (tab === 'layout')
         tab = 'scene';
       if (!this[tab + 'CSVData'])
@@ -508,8 +508,10 @@ class cWorkspace {
       let rows = this[tab + 'CSVData'];
       for (let c = 0, l = rows.length; c < l; c++)
         if (rows[c]['name'] === name && rows[c]['asset'] === asset)
-          return rows[c][field];
-
+          if (field)
+            return rows[c][field];
+          else
+            return rows[c];
       return '';
     }
 
@@ -535,6 +537,15 @@ class cWorkspace {
           </label>
           <button data-fieldid="scene_edit_field_${c}_${field}" class="btn-sb-icon sceneoptionsupload">
             <i class="material-icons">cloud_upload</i></button><br>`;
+      }
+
+      if (type === 'childname') {
+        let firstChildInfo = gAPPP.a.modelSets['blockchild'].getValuesByFieldLookup('blockFlag', 'basketblockchild');
+        let v = firstChildInfo.childName;
+        fieldHtml += `<label class="csv_scene_field_text_wrapper">
+          ${field}<input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}"
+          data-type="${type}" data-name="${name}" data-asset="${asset}" data-list="basketblocktemplatelist" />
+        </label>`;
       }
     }
 
@@ -595,6 +606,14 @@ class cWorkspace {
           'url': value
         }, tid);
       }
+    }
+
+    if (type === 'childname') {
+      let bcid = gAPPP.a.modelSets['blockchild'].getIdByFieldLookup('blockFlag', 'basketblockchild');
+      let csvImport = new gCSVImport(gAPPP.loadedWID);
+      await csvImport.dbSetRecordFields('blockchild', {
+        'childName': value
+      }, bcid);
     }
 
     if (field === 'scaleu' || field === 'scalev' || field === 'voffset' || field === 'uoffset') {
@@ -900,37 +919,37 @@ class cWorkspace {
           if (oldRow.text1 !== newRow.text1 ||
             oldRow.text2 !== newRow.text2) {
 
-              if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle !== '3dbasic') {
-                let textureName = title + '_pricedesc_textplane';
-                if (oldRow.asset === 'message')
-                  textureName = title + '_textplane';
-                let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
-                let csvImport = new gCSVImport(gAPPP.loadedWID);
-                await csvImport.dbSetRecordFields('texture', {
-                  textureText: newRow.text1,
-                  textureText2: newRow.text2
-                }, tid);
-              }
-              
-              if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle === '3dbasic') {
-                let shape1Name = title + '_signpost_3dtitle';
-                if (oldRow.asset === 'message')
-                  shape1Name = title + '_3dtitle';
-                let sid1 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape1Name);
-                let csvImport = new gCSVImport(gAPPP.loadedWID);
-                await csvImport.dbSetRecordFields('shape', {
-                  textText: newRow.text1
-                }, sid1);
+            if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle !== '3dbasic') {
+              let textureName = title + '_pricedesc_textplane';
+              if (oldRow.asset === 'message')
+                textureName = title + '_textplane';
+              let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
+              let csvImport = new gCSVImport(gAPPP.loadedWID);
+              await csvImport.dbSetRecordFields('texture', {
+                textureText: newRow.text1,
+                textureText2: newRow.text2
+              }, tid);
+            }
 
-                let shape2Name = title + '_signpost_3ddesc';
-                if (oldRow.asset === 'message')
-                  shape2Name = title + '_3dtitle2';
-                let sid2 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape2Name);
-                let csvImport2 = new gCSVImport(gAPPP.loadedWID);
-                await csvImport2.dbSetRecordFields('shape', {
-                  textText: newRow.text2
-                }, sid2);
-              }
+            if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle === '3dbasic') {
+              let shape1Name = title + '_signpost_3dtitle';
+              if (oldRow.asset === 'message')
+                shape1Name = title + '_3dtitle';
+              let sid1 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape1Name);
+              let csvImport = new gCSVImport(gAPPP.loadedWID);
+              await csvImport.dbSetRecordFields('shape', {
+                textText: newRow.text1
+              }, sid1);
+
+              let shape2Name = title + '_signpost_3ddesc';
+              if (oldRow.asset === 'message')
+                shape2Name = title + '_3dtitle2';
+              let sid2 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape2Name);
+              let csvImport2 = new gCSVImport(gAPPP.loadedWID);
+              await csvImport2.dbSetRecordFields('shape', {
+                textText: newRow.text2
+              }, sid2);
+            }
           }
         }
       }
