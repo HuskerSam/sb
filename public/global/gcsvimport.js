@@ -302,6 +302,10 @@ class gCSVImport {
 
     let childResults = await this.dbSetRecord('blockchild', blockChildData);
 
+    let frameTime = row.frametime;
+    if (!frameTime)
+      frameTime = '0';
+
     let frameData = {
       parentKey: childResults.key,
       positionX: row.x,
@@ -315,7 +319,7 @@ class gCSVImport {
       scalingZ: row.sz,
       visibility: row.visibility,
       frameOrder: '10',
-      frameTime: '0'
+      frameTime
     };
 
     if (row.cameraradius)
