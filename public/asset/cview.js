@@ -395,11 +395,26 @@ class cView extends bView {
     this.dataview_record_key.value = '';
     return this.updateSelectedRecord();
   }
-  addAsset() {
-    this.dialog.context.createObject(this.tag, 'new ' + this.tag).then(results => {
-      this.dataview_record_key.value = results.key;
-      return this.updateSelectedRecord();
-    });
+  __newAssetName() {
+    let counter = 1;
+    let newName = 'new ' + this.tag + counter.toString();
+
+    while (true) {
+      let existingTitles = gAPPP.a.modelSets[this.tag].queryCache('title', newName);
+      let keys = Object.keys(existingTitles);
+      if (keys.length === 0)
+        break;
+
+      counter++;
+      newName = 'new ' + this.tag + counter.toString();
+    }
+
+    return newName;
+  }
+  async addAsset() {
+    let results = await this.dialog.context.createObject(this.tag, this.__newAssetName());
+    this.dataview_record_key.value = results.key;
+    return this.updateSelectedRecord();
   }
   __addFrameHandler() {
     this.updateSubViewDisplay('frames');
