@@ -246,27 +246,10 @@ class wContext {
   updateObjectURL(objectType, key, file) {
     return new Promise((resolve, reject) => {
       if (objectType === 'mesh') {
-        this.activate(null);
-
-        this._loadMeshFromDomFile(file).then(
-          meshes => {
-            let newMesh = meshes[0];
-            this.engine.stopRenderLoop();
-            this._sceneDisposeDefaultObjects();
-
-            let filename = file.name;
-            let fireSet = gAPPP.a.modelSets[objectType];
-            let sceneJSON = this._serializeScene();
-            this._sceneAddDefaultObjects();
-            this.activate();
-            //this.activeBlock = newMesh;
-
-            fireSet.updateBlobString(key, sceneJSON, filename).then(
-              r => resolve({
-                r,
-                newMesh
-              }));
-          });
+        let filename = file.name;
+        let fireSet = gAPPP.a.modelSets[objectType];
+        fireSet.updateBlob(key, file, filename).then(
+          r => resolve(r));
       } else if (objectType === 'texture') {
         let filename = file.name;
         let fireSet = gAPPP.a.modelSets[objectType];
