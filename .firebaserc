@@ -2,6 +2,7 @@
   "projects": {
     "grocery": "groceryblocks2",
     "grafter": "braingrafter",
-    "delicious": "deliciousculture1"
+    "delicious": "deliciousculture1",
+    "handtop": "groceryblocks"
   }
 }
