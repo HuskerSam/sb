@@ -22,7 +22,7 @@
       "source": "/supernote{,/**}",
       "destination": "/index.html"
     },{
-      "source": "/Supernote{,/**}",
+      "source": "/SuperNote{,/**}",
       "destination": "/index.html"
     },{
       "source": "/InfoView{,/**}",
@@ -35,6 +35,9 @@
       "destination": "/index.html"
     },{
       "source": "/sales.aspx",
+      "destination": "/index.html"
+    },{
+      "source": "/support.html",
       "destination": "/index.html"
     }]
   },
