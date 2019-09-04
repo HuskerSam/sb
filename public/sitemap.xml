@@ -3,25 +3,31 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
-        <loc>http://handtop.com/</loc>
+        <loc>https://handtop.com/</loc>
         <lastmod>2019-08-30</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
     <url>
-        <loc>http://handtop.com/about</loc>
+        <loc>https://handtop.com/about</loc>
         <lastmod>2019-08-30</lastmod>
         <changefreq>daily</changefreq>
         <priority>.5</priority>
     </url>
     <url>
-        <loc>http://deliciousculture.com/reality</loc>
+        <loc>https://handtop.com/reality</loc>
+        <lastmod>2019-08-30</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>.5</priority>
+    </url>
+    <url>
+        <loc>https://deliciousculture.com/reality</loc>
         <lastmod>2019-09-01</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
     <url>
-        <loc>http://deliciousculture.com/dc</loc>
+        <loc>https://deliciousculture.com/dc</loc>
         <lastmod>2019-08-30</lastmod>
         <changefreq>daily</changefreq>
         <priority>.5</priority>
