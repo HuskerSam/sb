@@ -86,14 +86,6 @@
       padding-bottom: 5px;
     }
 
-    .menu-item {
-      float: right;
-      padding-right: 10px;
-      padding-top: 5px;
-      font-family: Times;
-      background: rgba(255, 255, 210, .5);
-    }
-
     .prosecontent {
       clear: both;
       background: rgba(255, 255, 210, .5);
@@ -101,6 +93,29 @@
 
     .promoimg {
       width: 100%;
+    }
+
+    .asl_icon {
+      padding-right: .25em;
+    }
+
+    a.menu-item {
+      float: right;
+      background: rgba(255, 255, 210, .5);
+      color: rgb(200, 90,0);
+      font-family: Lexend Tera;
+      text-decoration: none;
+      font-size: 1.25em;
+      padding: .5em;
+    }
+
+    a.menu-item:hover {
+      text-decoration: underline;
+      color: black;
+    }
+
+    a.menu-item:hover .asl_icon {
+      transform: scale(1.25);
     }
 
     @import url('https://fonts.googleapis.com/css?family=Kavivanar');
@@ -120,9 +135,9 @@
       &nbsp; &nbsp; &nbsp; Founded in 1998
     </span>
   </div>
-  <a href="https://deliciousculture.com" target="_blank" class="menu-item">Delicious</a>
-  <a href="https://xrpicker.com" target="_blank" class="menu-item">Display</a>
-  <a href="/reality" target="_blank" class="menu-item">Reality</a>
+  <a href="https://deliciousculture.com" target="_blank" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Delicious</a>
+  <a href="https://xrpicker.com" target="_blank" class="menu-item">Product</a>
+  <a href="/reality" target="_blank" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Reality</a>
   <img src="/images/promoimg.jpg" class="promoimg" />
   <div class="prosecontent">
     <h1>Do you promote products for sale?</h1>
