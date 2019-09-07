@@ -23,7 +23,7 @@ class gInstanceSuper {
     document.body.insertBefore(div, document.body.firstChild);
 
     this.a = new gAuthorization();
-    //this.a.signInWithURL();
+    this.a.signInWithURL();
     this.a.updateAuthUICallback = () => this.updateAuthUI();
   }
   async loadDataLists(name) {
@@ -404,11 +404,11 @@ class gInstanceSuper {
     <br>
     <label><input type="checkbox" id="stay_logged_in_with_google" checked /> login with google automatically</label>
     <br>
+    <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
+    <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
   </div>
 </div>`;
-    /*
-        <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
-        <button id="sign-in-email-button" class="btn btn-primary">Send Link</button>
-    */
+
+
   }
 }

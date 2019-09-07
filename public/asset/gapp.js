@@ -28,7 +28,7 @@ class gApp extends gInstanceSuper {
     this.loadDataLists('fontfamilydatalist');
 
     firebase.auth().getRedirectResult().then(result => {
-      if (! firebase.auth().currentUser)
+      if (!firebase.auth().currentUser)
         if (GLOBALUTIL.getCookie('autoGoogleLogin') === '1')
           if (!result.user)
             this.a.signIn(true);
@@ -73,6 +73,18 @@ class gApp extends gInstanceSuper {
       let chkbox = document.getElementById('stay_logged_in_with_google');
       gAPPP.a.signIn(chkbox ? chkbox.checked : false);
     }, false);
+    this.emailSignInButton = document.querySelector('#sign-in-email-button');
+    if (this.emailSignInButton) {
+      this.signInEmail = document.getElementById('sign-in-by-email-link');
+      this.emailSignInButton.addEventListener('click', e => {
+        let email = this.signInEmail.value;
+        if (!email) {
+          alert('email required');
+          return;
+        }
+        gAPPP.a.signInByEmail(email);
+      });
+    }
   }
   async updateGenerateDataTimes() {
     let results = await Promise.all([

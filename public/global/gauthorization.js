@@ -137,20 +137,15 @@ class gAuthorization {
         firebase.auth().signInWithRedirect(this.provider);
       });
   }
-  signInByEmail(email) {
-    /*
-        var actionCodeSettings = {
-          url: window.location.href,
-          handleCodeInApp: true
-        };
-        firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
-          .then(() => {
-            window.localStorage.setItem('emailForSignIn', email);
-            alert('Email Sent');
-            window.location = '/doc/help.html';
-          })
-          .catch(e => console.log(e));
-          */
+  async signInByEmail(email) {
+    let actionCodeSettings = {
+      url: window.location.href,
+      handleCodeInApp: true
+    };
+    await firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings);
+
+    window.localStorage.setItem('emailForSignIn', email);
+    alert('Email Sent');
   }
   clearProjectData(key) {
     if (!key)
