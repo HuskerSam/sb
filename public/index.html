@@ -177,10 +177,34 @@
       line-height: 1.5em;
     }
 
-    video {
+    .video-wrapper {
       max-width: 30vw;
       max-height: 30vh;
       height: 25vh;
+      display: inline-block;
+      position: relative;
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+    }
+
+    .video-wrapper .playpause {
+      background-color: rgba(127, 0, 127, .5);
+      border-radius: 50%;
+      color: white;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      font-size: 100vb;
+      padding: .25em;
+      cursor: pointer;
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    .video-wrapper .playpause i {
+      font-size: 5em;
     }
 
     @import url('https://fonts.googleapis.com/css?family=Kavivanar');
@@ -237,10 +261,7 @@
     <br>
     <img src="/images/scenepipeline.svg" class="header-image" />
     <br>
-    <h1>Is your content ready for Reality today?</h1>
-    <br>
-
-    <h1>VIRTUAL DISPLAY BUILDER</h1>
+    <h1>Building Virtual Displays with Scene Builder</h1>
     aka virtual store builder, scene builder
     <br>
     product presentation more automated - products rotate thru on a time basis like a TV channel - vs the user action driving new displays<br>
@@ -248,59 +269,61 @@
     <br>
     Picker web app - <a href="https://xrpicker.com/display/" target="_blank">Produce Display Demo</a>
 
-    <br><br>Latest Display Builder Videos...<br>
-    <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" controls preload="auto"></video>
-    <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" controls preload="auto"></video>
-    <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" controls preload="auto"></video>
-    <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" controls preload="auto"></video>
-    <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" controls preload="auto"></video>
-
-  </div>
-  <h1>XYZ HYPOTHESES</h1>
-  benefits to measure and test:<br>
-  &nbsp; - new app installs and more install retention<br>
-  &nbsp; - more users accepting notifications for new sales and events<br>
-  &nbsp; - longer visits<br>
-  &nbsp; - increased sales due to previous benefits<br>
-  <br><br>
-
-  XYZ Hypotheses<br>
-  <div class="xyzblock">
-    X: At least 25% more<br>
-    Y: of local customers (elidgible purchasers)<br>
-    Z: will install the application for the first time (new install)<br>
-  </div>
-  <div class="xyzblock">
-    X: At least 10% more<br>
-    Y: of local customers<br>
-    Z: will keep the application on their phone after first install<br>
-  </div>
-  <div class="xyzblock">
-    X: At least 100% more (or 10% of all installs)<br>
-    Y: of installed application users<br>
-    Z: will enable notifications<br>
-  </div>
-  <div class="xyzblock">
-    X: At least 1% of<br>
-    Y: customers that visit store<br>
-    Z: will inform the cashier they viewed products on the 3D application understanding
-    the cashier will check a box in the system that supports the 3D development.<br>
+    <h2>Latest Videos</h2>
+    <div class="video-wrapper">
+      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" preload="auto"></video>
+      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+    </div>
+    <div class="video-wrapper">
+      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" preload="auto"></video>
+      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+    </div>
+    <div class="video-wrapper">
+      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" preload="auto"></video>
+      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+    </div>
+    <div class="video-wrapper">
+      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" preload="auto"></video>
+      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+    </div>
+    <div class="video-wrapper">
+      <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" preload="auto"></video>
+      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+    </div>
   </div>
 
   <div class="footer"><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
     <br>Lincoln, Nebraska, USA<br>
-    <div style="display:none">
-      <script src="https://platform.linkedin.com/in.js" type="text/javascript">
-        lang: en_US
-      </script>
-      <script type="IN/FollowCompany" data-id="40921557" data-counter="bottom"></script>
-    </div>
     All Rights Reserved. 1998 - 2019 &copy;
   </div>
   <div style="display:none">
     Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices. Original developers of SuperNote for the PalmOS. Come visit our site to learn about the latest in webGL for mobile. Firebase hosting.
     mobile supernote webgl handtop webgl reality babylon.js babylonjs retail store palm palmos in the palm of your hand handtop computing handtop computers handtop mobile
   </div>
+  <script>
+    window.addEventListener('DOMContentLoaded', e => {
+      let wrapperList = document.querySelectorAll('.video-wrapper');
+
+      wrapperList.forEach(wrapper => {
+        let video = wrapper.querySelector('video');
+        let btn = wrapper.querySelector('.playpause');
+
+        btn.addEventListener('click', e => {
+          if (video.paused) {
+            video.play();
+            video.setAttribute('controls', '');
+          }
+        });
+
+        video.addEventListener('pause', e => {
+          btn.style.display = '';
+        });
+        video.addEventListener('play', e => {
+          btn.style.display = 'none';
+        });
+      })
+    });
+  </script>
 </body>
 
 </html>
