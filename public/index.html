@@ -13,7 +13,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Virtual Store building services for all devices." />
   <meta property="fb:app_id" content="461141618064403" />
-  <meta name="description" content="Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices.  Original developers of SuperNote for the PalmOS.  Come visit our site to learn about the latest in webGL for mobile.  Firebase hosting.">
+  <meta name="description"
+    content="Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices.  Original developers of SuperNote for the PalmOS.  Come visit our site to learn about the latest in webGL for mobile.  Firebase hosting.">
   <script>
     if (window.location.hostname === 'xrcharting.com')
       window.location = 'https://www.handtop.com/reality';
@@ -45,7 +46,7 @@
 
     body {
       font-size: 12pt;
-      font-family: 'Lexend Tera';
+      font-family: 'Lexend Deca';
       line-height: 1.5em;
       background: rgb(255, 255, 210);
       color: rgb(0, 0, 90);
@@ -61,7 +62,7 @@
 
     .sub-item {
       display: block;
-      font-size: .85em;
+      font-size: 1em;
       padding: .5em;
       text-align: center;
     }
@@ -79,7 +80,7 @@
     .footer {
       width: 100%;
       text-align: center;
-      font-size: 9pt;
+      font-size: 10pt;
       clear: both;
       background: rgb(255, 255, 210);
       padding-top: 5px;
@@ -96,17 +97,31 @@
     }
 
     .asl_icon {
-      padding-right: .25em;
+      margin-right: .5em;
+      transform: scale(2);
+      position: relative;
+      top: .25em;
+      margin-bottom: .25em;
+      padding: 2px;
+      border: solid 1px transparent;
+    }
+
+    .menu-target-bar {
+      text-align: center;
     }
 
     a.menu-item {
-      float: right;
-      background: rgba(255, 255, 210, .5);
-      color: rgb(200, 90,0);
-      font-family: Lexend Tera;
+      display: inline-block;
+      background: rgba(255, 255, 0);
+      color: rgb(200, 90, 0);
+      font-family: Chilanka;
+      font-weight: 900;
       text-decoration: none;
-      font-size: 1.25em;
-      padding: .5em;
+      font-size: 2em;
+      padding: .5em 1em;
+      white-space: nowrap;
+      border-radius: 75%;
+      margin-bottom: .25em;
     }
 
     a.menu-item:hover {
@@ -115,36 +130,98 @@
     }
 
     a.menu-item:hover .asl_icon {
-      transform: scale(1.25);
+      background: white;
+      border-radius: 5px;
+      border-color: black;
+    }
+
+    #reality_section {
+      text-align: center;
+    }
+
+    .header-image {
+      max-width: 75vw;
+      max-height: 75vh;
+    }
+
+    .header-logo-bar {
+      white-space: nowrap;
+      padding-top: 2.5em;
+      position: relative;
+      padding-bottom: 2em;
+      text-align: center;
+    }
+
+    .header-logo {
+      font-family: Kavivanar;
+      font-style: italic;
+      color: rgb(200, 90, 0);
+      font-size: 90px;
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    .header-logo-reg {
+      position: relative;
+      left: -.25em;
+      top: -2em;
+      font-size: 1.4em;
+      font-weight: bold;
+      font-family: Geneva
+    }
+
+    .services_overview {
+      text-align: center;
+      font-size: 1.5em;
+      line-height: 1.5em;
+    }
+
+    video {
+      max-width: 100%;
+      width: 75%;
+      max-height: 100vh;
     }
 
     @import url('https://fonts.googleapis.com/css?family=Kavivanar');
-    @import url('https://fonts.googleapis.com/css?family=Lexend+Tera');
     @import url('https://fonts.googleapis.com/css?family=Righteous');
+    @import url('https://fonts.googleapis.com/css?family=Chilanka');
+    @import url('https://fonts.googleapis.com/css?family=Lexend+Deca');
   </style>
   <link href="https://fonts.googleapis.com/css?family=Kavivanar&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lexend+Tera&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <div style="white-space:nowrap;padding-top:2.5em;float:left;position:relative;padding-bottom:2em;">
-    <span style="font-family:Kavivanar;font-style:italic;color:rgb(200, 90,0);font-size:90px;padding:10px;font-weight:bold;">Handtop</span>
-    <span style="position:relative;left:-.25em;top:-2em;font-size:1.4em;font-weight:bold;font-family:Geneva">&reg;</span>
-    <span style="font-size:.75em;font-weight:bold;font-family: Geneva;position:absolute;left:.25em;top:7em;">
-      &nbsp; &nbsp; &nbsp; Founded in 1998
-    </span>
+  <div class="header-logo-bar">
+    <span class="header-logo">Handtop</span>
+    <span class="header-logo-reg">&reg;</span>
   </div>
-  <a href="https://deliciousculture.com" target="_blank" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Delicious</a>
-  <a href="https://xrpicker.com" target="_blank" class="menu-item"><img src="/images/product.png" class="asl_icon" />Product</a>
-  <a href="/reality" target="_blank" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Reality</a>
-  <img src="/images/promoimg.jpg" class="promoimg" />
-  <div class="prosecontent">
-    <h1>Do you promote products for sale?</h1>
+  <div class="menu-target-bar">
+    <a href="#product_section" class="menu-item"><img src="/images/product.png" class="asl_icon" />Promote</a>
+    <a href="#reality_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Reality</a>
+  </div>
+  <img style='display:none;' src="/images/promoimg.jpg" class="promoimg" />
+  <div class="services_overview">
+    Handtop provides realtime eXtended Reality solutions.
+    <br>
+    Virtual Store building services for all devices.
+    <br>
+    Original developers of SuperNote for the PalmOS.
+    <br>
+    Firebase and webGL integration specialists.
+    <br>
+    Business vision: <a href="https://deliciousculture.com" target="_blank">Delicious Culture</a>
+    <br>
+    Virtual Reality: <a href="https://xrpicker.com" target="_blank">Display Demonstration</a>
+    <br>
+    <br>
+  </div>
+  <div class="prosecontent" id="product_section">
+    <h1>Promote Products</h1>
     <span class="header-item">Use printed ads for newspapers and mail ...</span>
     <span class="header-item">then publish the same promotions online?</span>
-    <br>
-    <h1>Looking for more?</h1>
     <span class="sub-item"><b>How about ... </b> enhancing your store with a virtual experience</span>
     <span class="sub-item"><b>that would ... </b> encourage customers to install your application?</span>
     <span class="sub-item"><b>enabling customers ... </b> to receive and respond to notifications</span>
@@ -154,15 +231,108 @@
     <span class="sub-item"><b>Are you ready ... </b> to deliver a virtual experience to your customers?</span>
   </div>
   <br>
+  <div id="reality_section">
+    <h1>Is your content ready for tomorrow?</h1>
+    <br>
+    <img src="/images/scenepipeline.svg" class="header-image" />
+    <br>
+    <h1>Is your content ready for Reality today?</h1>
+    <br>
+
+    <div class="rant-header">VIRTUAL DISPLAY BUILDER</div>
+    <div class="rant-text">
+      aka virtual store builder, scene builder
+      <br>
+      product presentation more automated - products rotate thru on a time basis like a TV channel - vs the user action driving new displays<br>
+      spatial presentation of products - items are visually presented in 3D with meaning - i.e. holiday displays, meat counter, etc<br>
+      <br>
+      Picker web app - <a href="https://xrpicker.com/display/" target="_blank">Produce Display Demo</a>
+
+      <br><br>Latest Display Builder Videos...<br>
+      <video controls preload="auto">
+        <source src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" type="video/mp4">
+      </video>
+      <br>
+      <br>
+      part 2... (err part 1 - but part 2 is first)
+      <br>
+      <br>
+      <video controls preload="auto">
+        <source src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" type="video/mp4">
+      </video>
+      <br>
+    </div>
+    <div style="display:none;" class="rant-header">XYZ HYPOTHESES</div>
+    <div class="rant-text" style="display:none;">
+      benefits to measure and test:<br>
+      &nbsp; - new app installs and more install retention<br>
+      &nbsp; - more users accepting notifications for new sales and events<br>
+      &nbsp; - longer visits<br>
+      &nbsp; - increased sales due to previous benefits<br>
+      <br><br>
+
+      XYZ Hypotheses<br>
+      <div class="xyzblock">
+        X: At least 25% more<br>
+        Y: of local customers (elidgible purchasers)<br>
+        Z: will install the application for the first time (new install)<br>
+      </div>
+      <div class="xyzblock">
+        X: At least 10% more<br>
+        Y: of local customers<br>
+        Z: will keep the application on their phone after first install<br>
+      </div>
+      <div class="xyzblock">
+        X: At least 100% more (or 10% of all installs)<br>
+        Y: of installed application users<br>
+        Z: will enable notifications<br>
+      </div>
+      <div class="xyzblock">
+        X: At least 1% of<br>
+        Y: customers that visit store<br>
+        Z: will inform the cashier they viewed products on the 3D application understanding
+        the cashier will check a box in the system that supports the 3D development.<br>
+        These videos are "first draft" / one take format - they'll be redone as we have time/money/energy
+      </div>
+    </div>
+    <div class="rant-header">3D CHART BUILDER</div>
+    <div class="rant-text">
+      Make a 360 spinner with 3 text blocks
+      <br>
+      <video controls preload="auto">
+        <source src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" type="video/mp4">
+      </video>
+      <br>
+      <br>
+      Make a triangle with 3 animated lines
+      <br>
+      <video controls preload="auto">
+        <source src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" type="video/mp4">
+      </video>
+      <br>
+      <br>
+      Some Basics of Reality Builder
+      <br>
+      <video controls preload="auto">
+        <source src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" type="video/mp4">
+      </video>
+    </div>
+
+  </div>
 
   <div class="footer"><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
     <br>Lincoln, Nebraska, USA<br>
-    <script src="https://platform.linkedin.com/in.js" type="text/javascript">
-      lang: en_US
-    </script>
-    <script type="IN/FollowCompany" data-id="40921557" data-counter="bottom"></script>
-    <br>
+    <div style="display:none">
+      <script src="https://platform.linkedin.com/in.js" type="text/javascript">
+        lang: en_US
+      </script>
+      <script type="IN/FollowCompany" data-id="40921557" data-counter="bottom"></script>
+    </div>
     All Rights Reserved. 1998 - 2019 &copy;
+  </div>
+  <div style="display:none">
+    Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices. Original developers of SuperNote for the PalmOS. Come visit our site to learn about the latest in webGL for mobile. Firebase hosting.
+    mobile supernote webgl handtop webgl reality babylon.js babylonjs retail store palm palmos in the palm of your hand handtop computing handtop computers handtop mobile
   </div>
 </body>
 
