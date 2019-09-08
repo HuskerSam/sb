@@ -13,28 +13,16 @@
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Virtual Store building services for all devices." />
   <meta property="fb:app_id" content="461141618064403" />
-  <meta name="description" content="Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices.  Original developers of SuperNote for the PalmOS.  Come visit our site to learn about the latest in webGL for mobile.  Firebase hosting.">
-  <script>
-    if (window.location.hostname === 'xrcharting.com')
-      window.location = 'https://www.handtop.com/reality';
-    else if (window.location.hostname === 'xrgrafter.com')
-      window.location = 'https://www.handtop.com';
-    else if (window.location.hostname === 'xrgrafter.com')
-      window.location = '/edit';
-    else if (window.location.hostname === 'braingrafter.com')
-      window.location = '/asset';
-    else if (window.location.hostname === 'xrscenes.com')
-      window.location = '/asset';
-    else if (window.location.hostname === 'localhost')
-    ; //window.location = '/asset';
-    else if (window.location.hostname === 'deliciousculture.com')
-      window.location = '/dc';
-    else if (window.location.hostname === 'handtop.com')
-    ;
-    else
-      window.location = '/display';
-  </script>
+  <meta name="description"
+    content="Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices.  Original developers of SuperNote for the PalmOS.  Come visit our site to learn about the latest in webGL for mobile.  Firebase hosting.">
+  <script src="home.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <link href="https://fonts.googleapis.com/css?family=Kavivanar&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+
   <style>
     html,
     body,
@@ -63,7 +51,6 @@
     .sub-item {
       display: block;
       font-size: 1em;
-      padding: .5em;
       text-align: center;
     }
 
@@ -147,7 +134,8 @@
     }
 
     #reality_section {
-      text-align: center;
+      text-align: left;
+      padding: 0em 1em;
     }
 
     .header-image {
@@ -219,8 +207,23 @@
     hr {
       clear: both;
       border: solid .25em orange;
-      margin: .25em;
       border-radius: 75%;
+    }
+
+    .realtime-platforms-content {}
+
+    .android-head-image {
+      width: 30%;
+    }
+
+    .android-phone-image {
+      width: 10%;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+
+    .win-laptop-image {
+      width: 35%;
     }
 
     @import url('https://fonts.googleapis.com/css?family=Kavivanar');
@@ -228,10 +231,6 @@
     @import url('https://fonts.googleapis.com/css?family=Chilanka');
     @import url('https://fonts.googleapis.com/css?family=Lexend+Deca');
   </style>
-  <link href="https://fonts.googleapis.com/css?family=Kavivanar&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -240,8 +239,8 @@
     <span class="header-logo-reg">&reg;</span>
   </div>
   <div class="menu-target-bar">
-    <a href="#product_section" class="menu-item"><img src="/images/product.png" class="asl_icon" />Promote</a>
-    <a href="#reality_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Reality</a>
+    <a href="#product_section" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Display Products</a>
+    <a href="#reality_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Handtop Reality&trade;</a>
   </div>
   <h1>Handtop is being rebooted into a mobile virtual reality company!</h1>
   <div class="services_overview">
@@ -253,11 +252,14 @@
     <br>
     Firebase and webGL integration specialists.
     <br>
-    Business vision: <a href="https://deliciousculture.com" target="_blank">Delicious Culture</a>
-    <br>
     Virtual Reality: <a href="https://xrpicker.com" target="_blank">Display Demonstration</a>
     <br>
     Display Builder: <a href="#display_builder_section">Display Building Videos</a>
+    <br>
+    Business Vision: <a href="https://deliciousculture.com" target="_blank">Delicious Culture</a>
+    <br>
+    <br>
+
   </div>
   <hr>
   <img src="/images/promoimg.jpg" class="promoimg" />
@@ -271,24 +273,67 @@
     <span class="sub-item"><b>then frequent ... </b> your product displays longer and more often?</span>
     <span class="sub-item"><b>use existing ... </b> online media and order submission systems</span>
     <span class="sub-item"><b>We're ready ... </b> to make your shopping experience special</span>
-    <span class="sub-item"><b>Are you ready ... </b> to deliver a virtual experience to your customers?</span>
+    <span class="sub-item"><b>Are you ready ... </b> to deliver a virtual experience?</span>
   </div>
   <hr>
   <div id="reality_section">
-    <h1>Is your content ready for tomorrow?</h1>
+    <h1>Is your content ready for tomorrow - today?</h1>
+    <div style="text-align:center;">
+      <div class="realtime-platforms-content">
+        <img src="/images/androidtv.png" class="android-head-image" />
+        <img src="/images/androidphone.png" class="android-phone-image" />
+        <img src="/images/winlaptop.png" class="win-laptop-image" />
+      </div>
+      <a href="/images/scenepipeline.svg" target="_blank">Diagram: Interactive Virtual Reality on webGL platforms</a>
+      <br>
+      <h1>Your quality content on Android TV</h1>
+      <br>
+      If you need a platform to get the most out of multiple screen options to deliver lots of video that is driven by user choice you've found the place!
+    </div>
     <br>
-    <img src="/images/scenepipeline.svg" class="header-image" />
+    Using a mix of platforms at the same time with synchronized content allows people in different rooms and different places to share the same experience.
+    Using a realtime data source (with push capability) like <a href="https://firebase.google.com/">Firebase</a> allows us to efficently push indexed content changes
+    to TV applications in addition to rapidly synchronizing screens and choices amongst users.
     <br>
-    <h1>Building Virtual Displays with Scene Builder</h1>
-    aka virtual store builder, scene builder
     <br>
-    product presentation more automated - products rotate thru on a time basis like a TV channel - vs the user action driving new displays<br>
-    spatial presentation of products - items are visually presented in 3D with meaning - i.e. holiday displays, meat counter, etc<br>
+    We're here to deliver Android TV applications that expose <a href="https://developer.android.com/training/tv/discovery/searchable.html">searchable</a> content. We use
+    a wrapper application written in JAVA using Android Studio to host our web application. This allows us to interact
+    directly with the TV and it's special application modes for showing <a href="https://developer.android.com/training/tv/discovery/recommendations-row.html">recommendations</a>.
+    While the native application is in JAVA the logic remains in javascript. <a href="https://crosswalk-project.org/">Crosswalk</a> is used
+    for a browser that supports WebGL and Firebase on Android TV's 5.0 and up.
     <br>
-    Picker web app - <a href="https://xrpicker.com/display/" target="_blank">Produce Display Demo</a>
+    <br>
+    Our process delivers a solution for markets such as public broadcasting, music videos,
+    local tv, radio and news organizations. We want to provide a solution where a company has development resources to sustain
+    an all platform solution (especially if it's in one language html/javascript), but not the expertise and funds to develop a competitive
+    and foward leaning solution in house. Anyone that has a lot of video content, especially high resolution, will want
+    quality interfaces with Android TV and Roku.
+    <br><br>
+    Video sources are commonly described using <a href="http://ogp.me/">Open Graph</a> meta tags. Our goal is to use the tags
+    to describe videos (thumbnails, title, source and description). We use additional tags for videos of lower and
+    higher bit rates. Previewing content for TV has already been solved on the web - if you share links and content
+    with other sites now, it will only take small (if any) adjustments to improve your existing video tags. The advantage
+    to additional tags is delivering bandwidth specific content - your phone on a weak connection doesn't require or perform
+    well with 4k quality video - but your TV looks like crap without it. Most video sites let a user select the video quality
+    as an option that is saved on a per machine (not account) basis to match up with different platforms. We take the local
+    setting and match it up with the video source in the tags to find the right url.
   </div>
   <hr>
   <div id="display_builder_section">
+    <h1>Building Virtual Displays with Scene Builder</h1>
+    aka virtual store builder, scene builder, display builder
+    <br>
+    - product presentation more automated
+    <br>
+    - products rotate thru on a time basis like a TV channel
+    <br>
+    - vs the user action driving new displays
+    <br>
+    - spatial presentation of products
+    <br>
+    - items are visually presented in 3D with meaning
+    <br>
+    Picker web app - <a href="https://xrpicker.com/display/" target="_blank">Produce Display Demo</a>
     <br>
     <div class="video-wrapper">
       <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" preload="auto"></video>
@@ -311,7 +356,7 @@
       <div class="playpause"><i class="material-icons">play_arrow</i></div>
     </div>
   </div>
-
+  <hr>
   <div class="footer"><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
     <br>Founded 1998 in Lincoln, Nebraska, USA<br>
     All Rights Reserved. 1998 - 2019 &copy;
@@ -320,30 +365,6 @@
     Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices. Original developers of SuperNote for the PalmOS. Come visit our site to learn about the latest in webGL for mobile. Firebase hosting.
     mobile supernote webgl handtop webgl reality babylon.js babylonjs retail store palm palmos in the palm of your hand handtop computing handtop computers handtop mobile
   </div>
-  <script>
-    window.addEventListener('DOMContentLoaded', e => {
-      let wrapperList = document.querySelectorAll('.video-wrapper');
-
-      wrapperList.forEach(wrapper => {
-        let video = wrapper.querySelector('video');
-        let btn = wrapper.querySelector('.playpause');
-
-        video.setAttribute('controls', '');
-        btn.addEventListener('click', e => {
-          if (video.paused) {
-            video.play();
-          }
-        });
-
-        video.addEventListener('pause', e => {
-          btn.style.display = '';
-        });
-        video.addEventListener('play', e => {
-          btn.style.display = 'none';
-        });
-      })
-    });
-  </script>
 </body>
 
 </html>
