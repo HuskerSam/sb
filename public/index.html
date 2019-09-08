@@ -89,14 +89,23 @@
     }
 
     .prosecontent {
-      clear: both;
       background: rgba(255, 255, 210, .5);
+      display: inline;
     }
 
     .promoimg {
-      width: 100%;
+      width: 50%;
+      float: left;
     }
 
+    @media screen and (max-width: 600px) {
+      .promoimg {
+        width: 100%;
+      }
+      .prosecontent {
+        display: block;
+      }
+    }
     .asl_icon {
       margin-right: .5em;
       transform: scale(2);
@@ -226,7 +235,6 @@
     <a href="#product_section" class="menu-item"><img src="/images/product.png" class="asl_icon" />Promote</a>
     <a href="#reality_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Reality</a>
   </div>
-  <img style='display:none;' src="/images/promoimg.jpg" class="promoimg" />
   <div class="services_overview">
     Handtop provides realtime eXtended Reality solutions.
     <br>
@@ -242,6 +250,7 @@
     <br>
     <br>
   </div>
+  <img src="/images/promoimg.jpg" class="promoimg" />
   <div class="prosecontent" id="product_section">
     <h1>Promote Products</h1>
     <span class="header-item">Use printed ads for newspapers and mail ...</span>
@@ -306,10 +315,10 @@
         let video = wrapper.querySelector('video');
         let btn = wrapper.querySelector('.playpause');
 
+        video.setAttribute('controls', '');
         btn.addEventListener('click', e => {
           if (video.paused) {
             video.play();
-            video.setAttribute('controls', '');
           }
         });
 
