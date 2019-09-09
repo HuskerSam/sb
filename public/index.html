@@ -186,6 +186,8 @@
     .video-wrapper {
       max-width: 45vw;
       max-height: 50vh;
+      min-width: 20em;
+      height: 30vh;
       display: inline-block;
       position: relative;
     }
@@ -235,6 +237,13 @@
       width: 35%;
     }
 
+    .about_link {
+      float: right;
+      z-index: 1;
+      position: absolute;
+      right: .15em;
+    }
+
     @import url('https://fonts.googleapis.com/css?family=Kavivanar');
     @import url('https://fonts.googleapis.com/css?family=Righteous');
     @import url('https://fonts.googleapis.com/css?family=Chilanka');
@@ -243,6 +252,7 @@
 </head>
 
 <body>
+  <a href="#about_section" class="about_link">About</a>
   <div class="header-logo-bar">
     <span class="header-logo">Handtop</span>
     <span class="header-logo-reg">&reg;</span>
@@ -338,7 +348,7 @@
     </div>
   </div>
   <hr>
-  <h1>About Handtop&reg;</h1>
+  <h1 id="about_section">About Handtop&reg;</h1>
   Original developers of SuperNote for the PalmOS
   <br>
   Firebase and webGL  specialists
