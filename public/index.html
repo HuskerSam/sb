@@ -184,14 +184,16 @@
     }
 
     .video-wrapper {
-      max-width: 45vw;
-      max-height: 50vh;
-      min-width: 20em;
-      height: 30vh;
+      width: 48%;
+      height: auto;
       display: inline-block;
       position: relative;
     }
-
+    @media screen and (max-width: 800px) {
+      .video-wrapper {
+        width: 95%;
+      }
+    }
     .video-wrapper video {
       width: 100%;
       height: 100%;
@@ -327,11 +329,11 @@
     Picker web app - <a href="https://xrpicker.com/display/" target="_blank">Produce Display Demo</a>
     <br>
     <div class="video-wrapper">
-      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" preload="auto"></video>
+      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" preload="auto"></video>
       <div class="playpause"><i class="material-icons">play_arrow</i></div>
     </div>
     <div class="video-wrapper">
-      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" preload="auto"></video>
+      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" preload="auto"></video>
       <div class="playpause"><i class="material-icons">play_arrow</i></div>
     </div>
     <div class="video-wrapper">
