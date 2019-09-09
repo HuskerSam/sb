@@ -13,16 +13,72 @@
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Virtual Store building services for all devices." />
   <meta property="fb:app_id" content="461141618064403" />
-  <meta name="description"
-    content="Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices.  Original developers of SuperNote for the PalmOS.  Come visit our site to learn about the latest in webGL for mobile.  Firebase hosting.">
-  <script src="home.js"></script>
+  <meta name="description" content="Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices.  Original developers of SuperNote for the PalmOS.  Come visit our site to learn about the latest in webGL for mobile.  Firebase hosting.">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <link href="https://fonts.googleapis.com/css?family=Kavivanar&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+  <script>
+    if (window.location.hostname === 'xrcharting.com')
+      window.location = 'https://www.handtop.com/reality';
+    else if (window.location.hostname === 'xrgrafter.com')
+      window.location = 'https://www.handtop.com';
+    else if (window.location.hostname === 'xrgrafter.com')
+      window.location = '/edit';
+    else if (window.location.hostname === 'braingrafter.com')
+      window.location = '/asset';
+    else if (window.location.hostname === 'xrscenes.com')
+      window.location = '/asset';
+    else if (window.location.hostname === 'localhost')
+    ; //window.location = '/asset';
+    else if (window.location.hostname === 'deliciousculture.com')
+      window.location = '/dc';
+    else if (window.location.hostname === 'handtop.com')
+    ;
+    else
+      window.location = '/display';
 
+    window.addEventListener('DOMContentLoaded', e => {
+      let wrapperList = document.querySelectorAll('.video-wrapper');
+
+      wrapperList.forEach(wrapper => {
+        let video = wrapper.querySelector('video');
+        let btn = wrapper.querySelector('.playpause');
+
+        video.setAttribute('controls', '');
+        btn.addEventListener('click', e => {
+          if (video.paused) {
+            video.play();
+          }
+        });
+
+        video.addEventListener('pause', e => {
+          btn.style.display = '';
+        });
+        video.addEventListener('play', e => {
+          btn.style.display = 'none';
+        });
+      });
+
+      let video_linkList = document.querySelectorAll('.video_link');
+      video_linkList.forEach((anchor, index) => {
+        anchor.addEventListener('click', e => {
+          wrapperList.forEach(w => {
+            w.style.display = 'none';
+            w.querySelector('video').pause();
+          });
+          wrapperList[index].style.display = 'block';
+          wrapperList[index].querySelector('video').play();
+          video_linkList.forEach(i => i.classList.remove('selected'));
+          video_linkList[index].classList.add('selected');
+          e.preventDefault();
+          return false;
+        });
+      });
+    });
+  </script>
   <style>
     html,
     body,
@@ -184,19 +240,16 @@
     }
 
     .video-wrapper {
-      width: 48%;
-      height: auto;
-      display: inline-block;
+      display: none;
       position: relative;
     }
-    @media screen and (max-width: 800px) {
-      .video-wrapper {
-        width: 95%;
-      }
-    }
+
     .video-wrapper video {
       width: 100%;
-      height: 100%;
+      max-width: 90vw;
+      max-height: 80vh;
+      height: auto;
+      border: solid .15em rgb(200, 90, 0);
     }
 
     .video-wrapper .playpause {
@@ -244,6 +297,26 @@
       z-index: 1;
       position: absolute;
       right: .15em;
+    }
+
+    .video_link {
+      display: inline-block;
+      background: rgba(255, 255, 0);
+      color: rgb(200, 90, 0);
+      font-family: Chilanka;
+      font-weight: 900;
+      text-decoration: none;
+      font-size: 2em;
+      padding: .5em 1em;
+      white-space: nowrap;
+      border-radius: 25%;
+      margin-bottom: .25em;
+    }
+
+    .video_link.selected,
+    .video_link:hover {
+      color: rgba(255, 255, 0);
+      background: rgb(200, 90, 0);
     }
 
     @import url('https://fonts.googleapis.com/css?family=Kavivanar');
@@ -304,8 +377,7 @@
     <br>
     <a href="https://firebase.google.com/" target="_blank">Firebase</a> hosting is used to provide synchronized content playback allows people in different places to share the same experience.
     <br>
-    Make your content <a href="https://developer.android.com/training/tv/discovery/searchable.html"
-          target="_blank">searchable</a> in the Android TV catalog.
+    Make your content <a href="https://developer.android.com/training/tv/discovery/searchable.html" target="_blank">searchable</a> in the Android TV catalog.
     Display content as <a href="https://developer.android.com/training/tv/discovery/recommendations-row.html">recommendations</a>
     on the TV home screen.
     <br>
@@ -328,23 +400,28 @@
     <br>
     Picker web app - <a href="https://xrpicker.com/display/" target="_blank">Produce Display Demo</a>
     <br>
-    <div class="video-wrapper">
+    <a href="#" id="video_1_link" class="video_link selected">Display Builder Part 1</a>
+    <a href="#" id="video_2_link" class="video_link">Display Builder Part 2</a>
+    <a href="#" id="video_3_link" class="video_link">Diagramming 1</a>
+    <a href="#" id="video_4_link" class="video_link">Diagramming 2</a>
+    <a href="#" id="video_4_link" class="video_link">Scene Blocks Basics</a>
+    <div class="video-wrapper" id="video_1_link_video" style="display:block;">
       <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" preload="auto"></video>
       <div class="playpause"><i class="material-icons">play_arrow</i></div>
     </div>
-    <div class="video-wrapper">
+    <div class="video-wrapper" id="video_2_link_video">
       <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" preload="auto"></video>
       <div class="playpause"><i class="material-icons">play_arrow</i></div>
     </div>
-    <div class="video-wrapper">
+    <div class="video-wrapper" id="video_3_link_video">
       <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" preload="auto"></video>
       <div class="playpause"><i class="material-icons">play_arrow</i></div>
     </div>
-    <div class="video-wrapper">
+    <div class="video-wrapper" id="video_4_link_video">
       <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" preload="auto"></video>
       <div class="playpause"><i class="material-icons">play_arrow</i></div>
     </div>
-    <div class="video-wrapper">
+    <div class="video-wrapper" id="video_5_link_video">
       <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" preload="auto"></video>
       <div class="playpause"><i class="material-icons">play_arrow</i></div>
     </div>
@@ -353,7 +430,7 @@
   <h1 id="about_section">About Handtop&reg;</h1>
   Original developers of SuperNote for the PalmOS
   <br>
-  Firebase and webGL  specialists
+  Firebase and webGL specialists
   <br>
   Contact us for eXtended Reality(XR) solutions based on webGL and webXR
   <br>
