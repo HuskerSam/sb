@@ -80,19 +80,19 @@
     });
 
     window.addEventListener('scroll', e => {
-      let scrolled = window.pageYOffset;
-      let totalHeight = window.innerHeight;
-      let offset = scrolled % totalHeight;
-      let maxScroll = (document.documentElement.scrollHeight - document.documentElement.clientHeight) - offset / 4;
+          let scrolled = window.pageYOffset;
+          let totalHeight = window.innerHeight;
+          let offset = scrolled % totalHeight;
+          let maxScroll = (document.documentElement.scrollHeight - document.documentElement.clientHeight) - offset / 4;
 
-      let pBlocks = document.querySelectorAll('.parallax-scroll');
+          let pBlocks = document.querySelectorAll('.parallax-scroll');
 
-      if ((offset < totalHeight) / 2 && (scrolled < maxScroll) && scrolled > 0) {
-        pBlocks.forEach(p => p.style.top = (offset) + 'px');
-      } else {
-        pBlocks.forEach(p => p.style.top = 0);
-      }
-    });
+          if ((offset < (3 / 4 * totalHeight) && (scrolled < maxScroll) && scrolled > 0) {
+              pBlocks.forEach(p => p.style.top = (offset) + 'px');
+            } else {
+              pBlocks.forEach(p => p.style.top = 0);
+            }
+          });
   </script>
   <style>
     html,
@@ -124,6 +124,7 @@
       min-height: 100vh;
       transition: top 400ms;
     }
+
     .vert-center {
       top: 50%;
       transform: translateY(-50%);
@@ -171,7 +172,6 @@
 
     .prosecontent {
       background: rgba(255, 255, 210, .5);
-      display: inline;
     }
 
     .promoimg {
@@ -242,7 +242,8 @@
       float: left;
     }
 
-    .header-logo, .header-reg {
+    .header-logo,
+    .header-reg {
       font-family: Kavivanar;
       font-style: italic;
       color: rgb(200, 90, 0);
@@ -398,7 +399,6 @@
       display: flex;
       flex-direction: column;
     }
-
   </style>
 </head>
 
@@ -424,8 +424,7 @@
     <hr>
     <div style="flex:1;position:relative;">
       <div class="vert-center">
-        <img src="/images/promoimg.jpg" class="promoimg" />
-        <div class="prosecontent" id="product_section">
+        <div class="prosecontent">
           <h1>Promote Products</h1>
           <span class="header-item">Use printed ads for newspapers and mail ...</span>
           <span class="header-item">then publish the same promotions online?</span>
