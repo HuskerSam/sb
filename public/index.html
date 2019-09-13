@@ -87,7 +87,7 @@
 
       let pBlocks = document.querySelectorAll('.parallax-scroll');
 
-      if ((offset < totalHeight) && (scrolled < maxScroll) && scrolled > 0) {
+      if ((offset < totalHeight / 2) && (scrolled < maxScroll) && scrolled > 0) {
         pBlocks.forEach(p => p.style.top = (offset) + 'px');
       } else {
         pBlocks.forEach(p => p.style.top = 0);
@@ -123,7 +123,7 @@
       position: relative;
       height: 100vh;
       overflow: auto;
-      transition: top 400ms;
+      transition: top 200ms;
     }
 
 
