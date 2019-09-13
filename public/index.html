@@ -80,19 +80,19 @@
     });
 
     window.addEventListener('scroll', e => {
-          let scrolled = window.pageYOffset;
-          let totalHeight = window.innerHeight;
-          let offset = scrolled % totalHeight;
-          let maxScroll = (document.documentElement.scrollHeight - document.documentElement.clientHeight) - offset / 4;
+      let scrolled = window.pageYOffset;
+      let totalHeight = window.innerHeight;
+      let offset = scrolled % totalHeight;
+      let maxScroll = (document.documentElement.scrollHeight - document.documentElement.clientHeight) - offset / 4;
 
-          let pBlocks = document.querySelectorAll('.parallax-scroll');
+      let pBlocks = document.querySelectorAll('.parallax-scroll');
 
-          if ((offset < totalHeight) && (scrolled < maxScroll) && scrolled > 0) {
-              pBlocks.forEach(p => p.style.top = (offset) + 'px');
-            } else {
-              pBlocks.forEach(p => p.style.top = 0);
-            }
-          });
+      if ((offset < totalHeight) && (scrolled < maxScroll) && scrolled > 0) {
+        pBlocks.forEach(p => p.style.top = (offset) + 'px');
+      } else {
+        pBlocks.forEach(p => p.style.top = 0);
+      }
+    });
   </script>
   <style>
     html,
@@ -121,28 +121,11 @@
 
     .parallax-scroll {
       position: relative;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: auto;
       transition: top 400ms;
     }
 
-    .vert-center {
-      top: 50%;
-      transform: translateY(-50%);
-      position: absolute;
-      width: 100%;
-    }
-
-    @media screen and (max-width: 800px) {
-      .parallax-scroll {
-        position: unset;
-      }
-
-      .vert-center {
-        position: unset;
-        top: unset;
-        transform: unset;
-      }
-    }
 
     .sub-item {
       display: block;
