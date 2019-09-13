@@ -15,7 +15,6 @@
   <meta property="fb:app_id" content="461141618064403" />
   <meta name="description" content='Display store layouts in Virtual Reality.  Handtop Display&trade; positions your products using Handtop Reality&trade; - "Your Product Display Any Where Any Time"&trade;'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
   <link href="https://fonts.googleapis.com/css?family=Kavivanar&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
@@ -188,7 +187,7 @@
 
     a.menu-item {
       display: inline-block;
-      background: rgba(255, 255, 0, .75);
+      background: rgba(255, 255, 0);
       color: rgb(200, 90, 0);
       font-family: Chilanka;
       font-weight: 900;
@@ -230,7 +229,7 @@
       font-family: Kavivanar;
       font-style: italic;
       color: rgb(200, 90, 0);
-      font-size: 40px;
+      font-size: 55px;
       font-weight: bold;
     }
 
@@ -312,20 +311,20 @@
 
     .about_link {
       color: rgb(200, 90, 0);
-      padding: 1em;
+      padding: 2em;
       padding-top: 1.25em;
+      padding-bottom: 1em;
       border-radius: 1em;
-      margin: .5em;
       text-decoration: none;
       float: left;
-      background: rgba(255, 255, 0, .75);
+      background: rgba(255, 255, 0);
       display: inline;
       cursor: pointer;
     }
 
     .about_link:hover {
       color: rgb(255, 255, 0);
-      background: rgba(200, 90, 0, .5);
+      background: rgba(200, 90, 0);
     }
 
     .about_link:hover span {
@@ -361,11 +360,7 @@
     #landing_section {
       display: flex;
       flex-direction: column;
-      background-image: url('/images/promoimg.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-color: rgb(200, 90, 0);
+      position:relative;
     }
 
     #display_section {
@@ -382,13 +377,31 @@
       display: flex;
       flex-direction: column;
     }
+
+    #homepagevideo {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      min-width: 100vw;
+      min-height: 100vh;
+      z-index: -1;
+    }
+
+    #screencastlogooverlay {
+      position: absolute;
+      bottom: .5em;
+      z-index: 1000;
+    }
   </style>
 </head>
 
 <body>
   <div id="landing_section" class="parallax-scroll">
     <hr>
-    <div>
+    <video autoplay muted loop id="homepagevideo">
+      <source src="https://hcwebflow.s3.us-west-2.amazonaws.com/videos/runthru.mp4" type="video/mp4">
+    </video>
+    <div id="screencastlogooverlay">
       <a href="#about_section" class="about_link">
         <span class="header-logo">Handtop</span>
         <span class="header-reg">&reg;</span>
@@ -456,20 +469,11 @@
       on the TV home screen.
       <br>
       Handtop Reality detects the platform and connection and provides the right sized content source.
-      <h1>Creating a Handtop Display</h1>
-      - products rotate thru on a time basis like a TV channel
-      <br>
-      - vs the user action driving new displays
-      <br>
-      - spatial presentation of products
-      <br>
-      - items are visually presented in 3D with meaning
-      <br>
-      <br>
     </div>
     <hr>
   </div>
   <div id="display_builder_section" class="parallax-scroll">
+    <hr>
     <div style="flex:1;position:relative;display:flex;flex-direction:column">
       <div style="position:absolute;z-index:1;top:.25em;width: 100%;">
         <a href="#" id="video_1_link" class="video_link selected">Create Display</a>
@@ -501,6 +505,7 @@
         </div>
       </div>
     </div>
+    <hr>
   </div>
   <div id="about_section" class="parallax-scroll">
     <hr>
