@@ -88,7 +88,7 @@
 
       let pBlocks = document.querySelectorAll('.parallax-scroll');
 
-      if ((offset < totalHeight / 2) && (scrolled < maxScroll) && scrolled > 0) {
+      if ((offset < totalHeight) && (scrolled < maxScroll) && scrolled > 0) {
         pBlocks.forEach(p => p.style.top = (offset) + 'px');
       } else {
         pBlocks.forEach(p => p.style.top = 0);
@@ -118,6 +118,7 @@
       width: 100%;
       text-align: center;
       line-height: 1.2em;
+      color: rgb(200,90,0);
     }
 
     .parallax-scroll {
@@ -141,7 +142,7 @@
     }
 
     .sub-item {
-      display: block;
+      display: inline-block;
       font-size: 1em;
       text-align: center;
     }
@@ -149,11 +150,7 @@
     .sub-item b {
       font-family: Righteous;
       font-size: 1.25em;
-    }
-
-    .header-item {
-      display: block;
-      text-align: center;
+      color: rgb(0,0,255);
     }
 
     .footer {
@@ -169,15 +166,24 @@
     .promoimg {
       width: 50%;
       float: left;
+      border-radius: 2em;
+      margin-left: 1em;
+    }
+
+    .prosecontent {
+      margin-right: 1em;
     }
 
     @media screen and (max-width: 600px) {
       .promoimg {
         width: 100%;
+        border-radius: 0;
+        margin: 0;
       }
 
       .prosecontent {
         display: block;
+        margin: 0;
       }
     }
 
@@ -376,6 +382,7 @@
     #display_section {
       display: flex;
       flex-direction: column;
+      background: inherit;
     }
 
     #about_section {
@@ -430,29 +437,30 @@
     <hr>
     <div style="flex:1;position:relative;">
       <div class="vert-center">
+        <h1>Promote Products</h1>
+        <a href="https://xrpicker.com" target="_blank" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Live Display...</a>
+        <a href="#display_builder_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />How To Videos</a>
+        <br>
+        <h2 style="color:rgb(0,0,255);margin-bottom: 1em;">Do you create ads for print ...
+          <br>
+        then upload them to your website?</h2>
         <img src="/images/promoimg.jpg" class="promoimg" />
         <div class="prosecontent">
-          <h1>Promote Products</h1>
-          <span class="header-item">Use printed ads for newspapers and mail ...</span>
-          <span class="header-item">then publish the same promotions online?</span>
-          <span class="sub-item"><b>How about ... </b> enhancing your store with a virtual experience</span>
-          <span class="sub-item"><b>that would ... </b> encourage customers to install your application?</span>
-          <span class="sub-item"><b>enabling customers ... </b> to receive and respond to notifications</span>
-          <span class="sub-item"><b>then frequent ... </b> your product displays longer and more often?</span>
-          <span class="sub-item"><b>use existing ... </b> online media and order submission systems</span>
-          <span class="sub-item"><b>We're ready ... </b> to make your shopping experience special</span>
-          <span class="sub-item"><b>Are you ready ... </b> to deliver a virtual experience?</span>
+          <span class="sub-item"><b>How about ... </b><br>enhancing your store with a virtual experience</span>
+          <br>
+          <span class="sub-item"><b>that would ... </b><br>encourage customers to install your application?</span>
+          <br>
+          <br>
+          <span class="sub-item"><b>Enable customers ... </b><br>to receive and respond to notifications</span>
+          <br>
+          <span class="sub-item"><b>then frequent ... </b><br>your product displays longer and more often?</span>
+          <br>
+          <br>
+          <span class="sub-item"><b>We're ready ... </b><br>to make your shopping experience special</span>
+          <br>
+          <span class="sub-item"><b>are you ready ... </b><br>to deliver a virtual experience?</span>
         </div>
         <div style="clear:both;"></div>
-        <div class="services_overview">
-          <h1 style="font-family:Chilanka;display:none">BUILDING VIRTUAL STORES</h1>
-          View a Display: <a href="https://xrpicker.com" target="_blank">Live</a>
-          <br>
-          Build a Display: <a href="#display_builder_section">Videos</a>
-          <br>
-          Modus Operandi: <a href="https://deliciousculture.com" target="_blank">Delicious</a>
-        </div>
-        <div style="clear:both"></div>
       </div>
     </div>
     <hr>
@@ -549,6 +557,8 @@
           mobile supernote webgl handtop webgl reality babylon.js babylonjs retail store palm palmos in the palm of your hand handtop computing handtop computers handtop mobile
           augmented reality extended reality virtual reality mixed reality
         </div>
+        <br>
+        Modus Operandi: <a href="https://deliciousculture.com" target="_blank">Delicious</a>
       </div>
     </div>
     <hr>
