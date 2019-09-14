@@ -107,7 +107,7 @@
       font-size: 12pt;
       font-family: 'Lexend Deca';
       line-height: 1.5em;
-      background: rgb(255, 255, 210);
+      background: black;
       color: rgb(0, 0, 90);
       text-align: center;
     }
@@ -129,6 +129,10 @@
       transition: top 200ms;
       border-left: .5em solid orange;
       border-right: .5em solid orange;
+      border-radius: 2em;
+      background: rgb(255, 255, 210);
+      display: flex;
+      flex-direction: column;
     }
 
     @media screen and (max-width: 650px) {
@@ -138,11 +142,11 @@
         overflow: auto;
         transition: top 0ms;
         border: none;
+        border-radius: 0;
       }
     }
 
     .sub-item {
-      display: inline-block;
       font-size: 1em;
       text-align: center;
     }
@@ -150,7 +154,7 @@
     .sub-item b {
       font-family: Righteous;
       font-size: 1.25em;
-      color: rgb(0,0,255);
+      color: rgb(200,90,0);
     }
 
     .footer {
@@ -227,8 +231,6 @@
     }
 
     #reality_section {
-      display: flex;
-      flex-direction: column;
     }
 
     .header-logo-bar {
@@ -358,7 +360,7 @@
       padding: .5em 1em;
       padding-bottom: .25em;
       white-space: nowrap;
-      border-radius: 2em;
+      border-radius: 1.5em;
       margin-bottom: .25em;
     }
 
@@ -374,25 +376,7 @@
     @import url('https://fonts.googleapis.com/css?family=Lexend+Deca');
 
     #landing_section {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    #display_section {
-      display: flex;
-      flex-direction: column;
-      background: inherit;
-    }
-
-    #about_section {
-      display: flex;
-      flex-direction: column;
-    }
-
-    #display_builder_section {
-      display: flex;
-      flex-direction: column;
+      background: none;
     }
 
     #homepagevideo {
@@ -438,27 +422,32 @@
     <div style="flex:1;position:relative;">
       <div class="vert-center">
         <h1>Promote Products</h1>
-        <a href="https://xrpicker.com" target="_blank" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Live Display...</a>
-        <a href="#display_builder_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />How To Videos</a>
-        <br>
         <h2 style="color:rgb(0,0,255);margin-bottom: 1em;">Do you create ads for print ...
           <br>
-        then upload them to your website?</h2>
+          then upload them to your website?</h2>
+        <a href="https://xrpicker.com" target="_blank" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Live Display...</a>
+        <a href="#display_builder_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />How To Videos</a>
         <img src="/images/promoimg.jpg" class="promoimg" />
         <div class="prosecontent">
-          <span class="sub-item"><b>How about ... </b><br>enhancing your store with a virtual experience</span>
-          <br>
-          <span class="sub-item"><b>that would ... </b><br>encourage customers to install your application?</span>
-          <br>
-          <br>
-          <span class="sub-item"><b>Enable customers ... </b><br>to receive and respond to notifications</span>
-          <br>
-          <span class="sub-item"><b>then frequent ... </b><br>your product displays longer and more often?</span>
+          <div style="display: inline-block;">
+            <span class="sub-item"><b>How about ... </b><br>enhancing your store with a virtual experience</span>
+            <br>
+            <span class="sub-item"><b>that would</b><br>encourage customers to install your application?</span>
+          </div>
           <br>
           <br>
-          <span class="sub-item"><b>We're ready ... </b><br>to make your shopping experience special</span>
+          <div style="display: inline-block;">
+            <span class="sub-item"><b>Enable customers ... </b><br>to receive and respond to notifications</span>
+            <br>
+            <span class="sub-item"><b>then frequent</b><br>your product displays longer and more often?</span>
+          </div>
           <br>
-          <span class="sub-item"><b>are you ready ... </b><br>to deliver a virtual experience?</span>
+          <br>
+          <div style="display: inline-block;">
+            <span class="sub-item"><b>We're ready ... </b><br>to make your shopping experience special</span>
+            <br>
+            <span class="sub-item"><b>are you ready</b><br>to deliver a virtual experience?</span>
+          </div>
         </div>
         <div style="clear:both;"></div>
       </div>
