@@ -76,7 +76,7 @@
           return false;
         });
       });
-      
+
       document.getElementById('homepagevideo').play();
     });
 
@@ -126,6 +126,8 @@
       min-height: 100vh;
       overflow: hidden;
       transition: top 200ms;
+      border-left: .5em solid orange;
+      border-right: .5em solid orange;
     }
 
     @media screen and (max-width: 650px) {
@@ -134,6 +136,7 @@
         height: auto;
         overflow: auto;
         transition: top 0ms;
+        border: none;
       }
     }
 
