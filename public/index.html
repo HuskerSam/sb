@@ -390,6 +390,26 @@
       bottom: .5em;
       z-index: 1000;
     }
+
+    .sceneflowimg {
+      width: 60%;
+      float: left;
+    }
+
+    .sceneflowprose {
+      display: inline;
+      padding: 1em;
+    }
+
+    @media screen and (max-width: 800px) {
+      .sceneflowimg {
+        width: 100%;
+      }
+
+      .sceneflowprose {
+        display: block;
+      }
+    }
   </style>
 </head>
 
@@ -418,7 +438,7 @@
     <hr>
     <div style="flex:1;position:relative;">
       <div class="vert-center">
-        <h1 style="color:rgb(0,0,255);margin-bottom: 1em;">Do you create promotions for print ...
+        <h1 style="color:rgb(0,0,255);">Do you create promotions for print ...
           <br>
           then upload them to your website?</h1>
         <a href="https://xrpicker.com" target="_blank" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Live Display...</a>
@@ -434,7 +454,7 @@
           <br>
           <br>
           <div style="display: inline-block;">
-            <span class="sub-item"><b>Enable customers ... </b><br>to receive notifications</span>
+            <span class="sub-item"><b>Enable customers ... </b><br>to receive and respond to notifications</span>
             <br>
             <span class="sub-item"><b>so they can</b><br>visit promotions more often?</span>
           </div>
@@ -455,36 +475,25 @@
     <hr>
     <div style="flex:1;">
       <h1>Is your content ready for tomorrow - today?</h1>
-      <div style="text-align:center;">
-        <div class="realtime-platforms-content">
-          <img src="/images/androidtv.png" class="android-head-image" />
-          <img src="/images/androidphone.png" class="android-phone-image" />
-          <img src="/images/winlaptop.png" class="win-laptop-image" />
-        </div>
+      <img src="/images/sceneflow.svg" class="sceneflowimg" />
+      <div class="sceneflowprose">
+        Deliver video and animation driven by user choice ... for all your favorite platforms.
+        <br>
+        <br>
+        Make your content <a href="https://developer.android.com/training/tv/discovery/searchable.html" target="_blank">searchable</a> in the Android TV catalog.
+        Display content as <a href="https://developer.android.com/training/tv/discovery/recommendations-channel.html" target="_blank">recommendations</a>
+        on the TV home screen.
+        <br>
+        Reality detects the platform and connection sizing the content for a smooth playback.
+        <br>
+        - products rotate thru on a time basis like a TV channel
+        <br>
+        - vs the user action driving new displays
+        <br>
+        - spatial presentation of products
+        <br>
+        - items are visually presented in 3D with meaning
       </div>
-      <a href="/images/scenepipeline.svg" target="_blank">Diagram: Interactive Virtual Reality on webGL platforms</a>
-      <h1 style="display:none;">Your quality content on Android TV</h1>
-      <br>
-      Deliver video and animation driven by user choice ... for all your favorite platforms.
-      <br>
-      <a href="https://firebase.google.com/" target="_blank">Firebase</a> hosting is used to provide synchronized content playback allows people in different places to share the same experience.
-      <br>
-      Make your content <a href="https://developer.android.com/training/tv/discovery/searchable.html" target="_blank">searchable</a> in the Android TV catalog.
-      Display content as <a href="https://developer.android.com/training/tv/discovery/recommendations-row.html">recommendations</a>
-      on the TV home screen.
-      <br>
-      Handtop Reality detects the platform and connection and provides the right sized content source.
-      <br>
-      <br>
-      - products rotate thru on a time basis like a TV channel
-      <br>
-      - vs the user action driving new displays
-      <br>
-      - spatial presentation of products
-      <br>
-      - items are visually presented in 3D with meaning
-      <br>
-      <br>
     </div>
     <hr>
   </div>
