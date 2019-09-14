@@ -129,7 +129,7 @@
       position: relative;
       height: 100vh;
       min-height: 100vh;
-      overflow: hidden;
+      overflow: auto;
       transition: top 200ms;
       border-left: .5em solid orange;
       border-right: .5em solid orange;
@@ -209,7 +209,7 @@
       float: left;
     }
 
-    a.menu-item {
+    a.menu-item, a.menu-item-header {
       display: inline-block;
       background: rgba(255, 255, 0);
       color: rgb(200, 90, 0);
@@ -219,28 +219,30 @@
       font-size: 1.5em;
       padding: .5em 1em;
       white-space: nowrap;
-      border-radius: 75%;
+      border-radius: 5em;
       margin-bottom: .25em;
+    }
+
+    a.menu-item-header {
+      padding-top: .75em;
+      border-radius: 2em;
+    }
+
+    a.menu-item-header:hover {
+      color: rgb(255, 255, 0);
+      background: rgb(200, 90, 0);
     }
 
     a.menu-item:hover {
       text-decoration: underline;
-      color: black;
+        color: rgb(255, 255, 0);
+        background: rgb(200, 90, 0);
     }
 
     a.menu-item:hover .asl_icon {
       background: white;
       border-radius: 5px;
-      border-color: black;
-    }
-
-    .header-logo-bar {
-      white-space: nowrap;
-      padding-top: .5em;
-      position: relative;
-      padding-bottom: 1em;
-      text-align: center;
-      float: left;
+      border-color: rgb(255, 255, 0);
     }
 
     .header-logo,
@@ -330,9 +332,9 @@
 
     .about_link {
       color: rgb(200, 90, 0);
-      padding: 2em;
-      padding-top: 1.25em;
-      padding-bottom: 1em;
+      padding: 1.5em;
+      padding-top: 2em;
+      padding-bottom: 1.25em;
       border-radius: 1em;
       text-decoration: none;
       float: left;
@@ -445,8 +447,8 @@
         <h1>Do you create promotions for print ...
           <br>
           then upload them to your website?</h1>
-        <a href="https://xrpicker.com" target="_blank" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Live Display...</a>
-        <a href="#display_builder_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />How To Videos</a>
+        <a href="https://xrpicker.com" target="_blank" class="menu-item-header">Live Display...</a>
+        <a href="#display_builder_section" class="menu-item-header">Display Editing Videos</a>
         <br>
         <img src="/images/promoimg.jpg" class="promoimg" />
         <div class="prosecontent">
@@ -465,7 +467,8 @@
           <br>
           <br>
           <div style="display: inline-block;">
-            <span class="sub-item"><b>Handtop provides</b><br>tools to virtualize your promotions</span>
+            <span class="sub-item"><b><img src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></b>
+              <br>virtualizes products and promotions</span>
             <br>
             <span class="sub-item"><b>are you ready ... </b><br>to deliver a virtual experience?</span>
           </div>
