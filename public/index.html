@@ -202,10 +202,6 @@
       border: solid 1px transparent;
     }
 
-    .menu-target-bar {
-      float: left;
-    }
-
     a.menu-item, a.menu-item-header {
       display: inline-block;
       background: rgba(255, 255, 0);
@@ -336,11 +332,11 @@
       padding-bottom: 1.25em;
       border-radius: 1em;
       text-decoration: none;
-      float: left;
       background: rgba(255, 255, 0);
       display: inline;
       cursor: pointer;
       float: left;
+      margin-bottom: .5em;
     }
 
     .about_link:hover {
@@ -384,8 +380,6 @@
       text-align: center;
       width: 100%;
       overflow: hidden;
-      position: relative;
-      z-index: -1;
     }
 
     #homepagevideo {
@@ -416,18 +410,16 @@
 
 <body>
   <div id="landing_section" class="parallax-scroll">
-    <hr>
     <video autoplay muted loop id="homepagevideo">
       <source src="https://hcwebflow.s3.us-west-2.amazonaws.com/videos/runthru.mp4" type="video/mp4">
     </video>
-
-    <div style="flex:1;position:relative;">
-      <div class="menu-target-bar">
-        <a href="#about_section" style="margin-bottom:.25em;" class="about_link">
-          <span class="header-logo">Handtop</span>
-          <span class="header-reg">&reg;</span>
-        </a>
-        <br>
+    <hr>
+    <div style="flex:1;text-align:left">
+      <a href="#about_section" class="about_link">
+        <span class="header-logo">Handtop</span>
+        <span class="header-reg">&reg;</span>
+      </a>
+      <div style="position:absolute;bottom:.25em;">
         <a href="#display_section" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></a>
         <br>
         <a href="#reality_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Handtop Reality<span class="trademark-span">&trade;</span></a>
