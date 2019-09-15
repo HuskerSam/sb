@@ -410,22 +410,25 @@
 
 <body>
   <div id="landing_section" class="parallax-scroll">
-    <video autoplay muted loop id="homepagevideo">
-      <source src="https://hcwebflow.s3.us-west-2.amazonaws.com/videos/runthru.mp4" type="video/mp4">
-    </video>
-    <hr>
-    <div style="flex:1;text-align:left;position:relative;">
-      <a href="#about_section" class="about_link">
-        <span class="header-logo">Handtop</span>
-        <span class="header-reg">&reg;</span>
-      </a>
-      <div style="position:absolute;bottom:.25em;">
-        <a href="#display_section" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></a>
-        <br>
-        <a href="#reality_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Handtop Reality<span class="trademark-span">&trade;</span></a>
+    <div style="position:relative;flex:1;display:flex;flex-direction:column;">
+      <video autoplay muted loop id="homepagevideo">
+        <source src="https://hcwebflow.s3.us-west-2.amazonaws.com/videos/runthru.mp4" type="video/mp4">
+      </video>
+
+      <hr>
+      <div style="flex:1;text-align:left;position:relative;">
+        <a href="#about_section" class="about_link">
+          <span class="header-logo">Handtop</span>
+          <span class="header-reg">&reg;</span>
+        </a>
+        <div style="position:absolute;bottom:.25em;">
+          <a href="#display_section" class="menu-item"><img src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></a>
+          <br>
+          <a href="#reality_section" class="menu-item"><img src="/images/reality.png" class="asl_icon" />Handtop Reality<span class="trademark-span">&trade;</span></a>
+        </div>
       </div>
+      <hr>
     </div>
-    <hr>
   </div>
   <div id="display_section" style="flex:1;text-align:center;" class="parallax-scroll">
     <hr>
@@ -484,11 +487,11 @@
     <hr>
     <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
       <div style="position:absolute;z-index:1;top:.25em;width: 100%;">
-        <a href="#" id="video_1_link" class="video_link selected">Create Display</a>
-        <a href="#" id="video_2_link" class="video_link">Customize Display</a>
-        <a href="#" id="video_3_link" class="video_link">Web Spinner</a>
-        <a href="#" id="video_4_link" class="video_link">Animated Lines</a>
-        <a href="#" id="video_4_link" class="video_link">Scene Basics</a>
+        <a href="#" id="video_1_link" class="video_link selected">Create</a>
+        <a href="#" id="video_2_link" class="video_link">Customize</a>
+        <a href="#" id="video_3_link" class="video_link">Spinner</a>
+        <a href="#" id="video_4_link" class="video_link">Lines</a>
+        <a href="#" id="video_4_link" class="video_link">Basics</a>
       </div>
       <div style="flex:1;display:flex;flex-direction:1;">
         <div class="video-wrapper" id="video_1_link_video" style="display:block;">
@@ -531,9 +534,9 @@
         <br>
         <h1>eXtended Reality(XR) solutions based on webGL and webXR</h1>
         <br>
-
         <h2>Modus Operandi</h2>
         <a class="menu-item" href="https://deliciousculture.com" target="_blank">Delicious Culture...</a>
+        <div style="height:8em"></div>
         <div class="footer"><a class="menu-item" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
           <br>Founded 1998 in Lincoln, Nebraska, USA<br>
           All Rights Reserved. 1998 - 2020 &copy;
