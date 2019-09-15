@@ -325,29 +325,6 @@
       width: 35%;
     }
 
-    .about_link {
-      color: rgb(200, 90, 0);
-      padding: 1.5em;
-      padding-top: 2em;
-      padding-bottom: 1.25em;
-      border-radius: 1em;
-      text-decoration: none;
-      background: rgba(255, 255, 0);
-      display: inline;
-      cursor: pointer;
-      float: left;
-      margin-bottom: .5em;
-    }
-
-    .about_link:hover {
-      color: rgb(255, 255, 0);
-      background: rgba(200, 90, 0);
-    }
-
-    .about_link:hover span {
-      color: rgb(255, 255, 0);
-    }
-
     .video_link {
       display: inline-block;
       background: rgb(255, 255, 0);
@@ -405,6 +382,43 @@
       max-height: 75vh;
     }
 
+    .homepagebuttons {
+       position:absolute;
+       bottom:.25em;
+       left:.25em;
+    }
+    .about_link {
+      color: rgb(200, 90, 0);
+      padding: 1.5em;
+      padding-top: 2em;
+      padding-bottom: 1.25em;
+      border-radius: 1em;
+      text-decoration: none;
+      background: rgba(255, 255, 0);
+      display: inline;
+      cursor: pointer;
+      float: left;
+      margin: .25em;
+      border: solid .1em rgb(200, 90, 0);
+    }
+
+    .about_link:hover {
+      color: rgb(255, 255, 0);
+      background: rgba(200, 90, 0);
+    }
+
+    .about_link:hover span {
+      color: rgb(255, 255, 0);
+    }
+
+    @media screen and (max-width: 800px) {
+    .homepagebuttons {
+        transform: scale(.5) translateX(-50%) translateY(50%);
+      }
+    .about_link {
+        transform: scale(.5) translateX(-50%) translateY(-50%);
+      }
+    }
   </style>
 </head>
 
@@ -421,7 +435,7 @@
           <span class="header-logo">Handtop</span>
           <span class="header-reg">&reg;</span>
         </a>
-        <div style="position:absolute;bottom:.25em;">
+        <div class="homepagebuttons">
           <a href="#display_section" class="menu-item"><img alt="display asl logo" src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></a>
           <br>
           <a href="#reality_section" class="menu-item"><img alt="reality asl logo" src="/images/reality.png" class="asl_icon" />Handtop Reality<span class="trademark-span">&trade;</span></a>
@@ -473,12 +487,15 @@
     <hr>
     <div style="flex:1;">
       <h1>Is your content ready for tomorrow - today?</h1>
-      <img alt="scene flow diagram" src="/images/sceneflow.svg" class="sceneflowimg" />
+      <img alt="display flow diagram" src="/images/displayflow.svg" class="sceneflowimg" />
       <h2>Deliver video and animation to all your favorite platforms.</h2>
       <div class="sceneflowprose">
         Place entires in the <a href="https://developer.android.com/training/tv/discovery/searchable.html" target="_blank">searchable</a> TV catalog.
+        <br>
         <a href="https://developer.android.com/training/tv/discovery/recommendations-channel.html" target="_blank">Recommend</a>
-        products and from the home screen.
+        products and videos from the home screen.
+        <br>
+        The <a href="https://en.wikipedia.org/wiki/WebGL" target="_blank">webGL</a> graphics standard is used to consistently deliver content across modern platforms.
       </div>
     </div>
     <hr>
@@ -523,21 +540,23 @@
     <div style="flex:1; position: relative;">
       <div class="vert-center">
         <br>
-        <br>
-        <h1 style="display:inline-block;width: auto;">About</h1>
-        &nbsp;
-        <div style="display:inline-block">
-          <span class="header-logo">Handtop</span>
-          <span class="header-reg">&reg;</span>
-        </div>
-        <br>
+        <h1>About
+          <div style="display:inline-block; position:relative;top:.3em;">
+            <span class="header-logo">Handtop</span>
+            <span class="header-reg">&reg;</span>
+          </div>
+        </h1>
         <br>
         <h1>eXtended Reality(XR) solutions based on webGL and webXR</h1>
         <br>
-        <h2>Modus Operandi</h2>
-        <a class="menu-item" href="https://deliciousculture.com" target="_blank">Delicious Culture...</a>
+        <h2 style="display:inline-block;width:auto;">Modus Operandi</h2>
+        <a class="menu-item" style="padding-bottom:.25em" href="https://deliciousculture.com" target="_blank">Delicious Culture...</a>
+        <br>
+        <br>
+        The <a href="https://www.amazon.com/Right-Many-Ideas-Yours-Succeed/dp/0062884654" target="_blank">XYZ Hypothesis</a> is used to determine the right product fit for your enterprise.
+        <br>
         <div style="height:8em"></div>
-        <div class="footer"><a class="menu-item" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+        <div class="footer"><a class="menu-item" style="padding-bottom:.25em" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
           <br>Founded 1998 in Lincoln, Nebraska, USA<br>
           All Rights Reserved. 1998 - 2020 &copy;
         </div>
