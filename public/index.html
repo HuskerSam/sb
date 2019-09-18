@@ -118,11 +118,11 @@
       width: 100%;
       text-align: center;
       line-height: 1.3em;
-      color: rgb(0,0,255);
+      color: rgb(0, 0, 255);
     }
 
     h2 {
-      color: rgb(200,90,0);
+      color: rgb(200, 90, 0);
     }
 
     .parallax-scroll {
@@ -149,12 +149,13 @@
     .sub-item {
       font-size: 1em;
       text-align: center;
+      display: inline;
     }
 
     .sub-item b {
       font-family: Righteous;
       font-size: 1.5em;
-      color: rgb(200,90,0);
+      color: rgb(200, 90, 0);
     }
 
     .promoimg {
@@ -165,7 +166,7 @@
     }
 
     .prosecontent {
-      display:inline;
+      display: inline;
       padding-right: .5em;
     }
 
@@ -198,7 +199,8 @@
       border: solid 1px transparent;
     }
 
-    a.menu-item, a.menu-item-header {
+    a.menu-item,
+    a.menu-item-header {
       display: inline-block;
       background: rgba(255, 255, 0);
       color: rgb(200, 90, 0);
@@ -210,7 +212,7 @@
       white-space: nowrap;
       border-radius: 5em;
       margin-bottom: .25em;
-      border: solid .1em rgb(200,90,0);
+      border: solid .1em rgb(200, 90, 0);
     }
 
     a.menu-item-header {
@@ -226,8 +228,8 @@
 
     a.menu-item:hover {
       text-decoration: underline;
-        color: rgb(255, 255, 0);
-        background: rgb(200, 90, 0);
+      color: rgb(255, 255, 0);
+      background: rgb(200, 90, 0);
     }
 
     a.menu-item:hover .asl_icon {
@@ -312,8 +314,8 @@
     }
 
     .android-phone-image {
-      width: 10%;``
-      margin-left: 5%;
+      width: 10%;
+      `` margin-left: 5%;
       margin-right: 5%;
     }
 
@@ -334,7 +336,7 @@
       white-space: nowrap;
       border-radius: 1.5em;
       margin-bottom: .25em;
-      border: solid .1em rgb(200,90,0);
+      border: solid .1em rgb(200, 90, 0);
     }
 
     .video_link.selected,
@@ -379,10 +381,11 @@
     }
 
     .homepagebuttons {
-      clear:left;
-      float:left;
+      clear: left;
+      float: left;
       margin-left: .25em;
     }
+
     .about_link {
       color: rgb(200, 90, 0);
       padding: 1.5em;
@@ -408,10 +411,11 @@
     }
 
     @media screen and (max-width: 800px) {
-    .homepagebuttons {
+      .homepagebuttons {
         transform: scale(.5) translateX(-50%) translateY(-100%);
       }
-    .about_link {
+
+      .about_link {
         transform: scale(.5) translateX(-50%) translateY(-50%);
       }
     }
@@ -445,48 +449,42 @@
   </div>
   <div id="display_section" style="flex:1;text-align:center;" class="parallax-scroll">
     <hr>
-    <div style="flex:1;position:relative;">
-      <div class="vert-center">
-        <h1>Do you create promotions for print ...
-          <br>then upload them to your website?</h1>
+    <h1>Do you create promotions for print ...
+      <br>then upload them to your website?</h1>
+    <div style="flex:1"></div>
+    <div style="flex:1;">
+      <div style="clear:both;"></div>
+      <img alt="your products any time any where" src="/images/promoimg.jpg" class="promoimg" />
+      <div class="prosecontent" style="padding: 0em 1em;">
+        <span class="sub-item"><b>How about</b> &nbsp;providing virtual promotions</span>
         <br>
-        <div style="clear:both;"></div>
-        <img alt="your products any time any where" src="/images/promoimg.jpg" class="promoimg" />
-        <div class="prosecontent">
-          <br>
-          <div style="display: inline-block;">
-            <span class="sub-item"><b>How about</b><br>providing virtual promotions</span>
-            <br>
-            <span class="sub-item"><b>encouraging visits ... </b><br>to your business website?</span>
-          </div>
-          <br>
-          <br>
-          <div style="display: inline-block;">
-            <span class="sub-item"><b>Notify customers ... </b><br>about new promotions that</span>
-            <br>
-            <span class="sub-item"><b>provide displays</b><br>at the right time!</span>
-          </div>
-          <br>
-          <br>
-          <div style="display: inline-block;">
-            <span class="sub-item"><b><img alt="display asl logo" src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></b>
-              <br>virtualizes promotions</span>
-            <br>
-            <span class="sub-item"><b>are you ready ... </b><br>for tomorrow - today?</span>
-          </div>
-        </div>
-        <div class="prose-button-bar">
-          <a href="https://xrpicker.com" target="_blank" class="menu-item-header">Live Demo...</a>
-          <a href="#display_builder_section" class="menu-item-header">Display Builder</a>
-        </div>
+        <span class="sub-item"><b>encouraging visits</b> &nbsp;to your business website?</span>
+        <br>
+        <br>
+        <span class="sub-item"><b>Notify customers</b> &nbsp;about new promotions that</span>
+        <br>
+        <span class="sub-item"><b>provide displays</b> &nbsp;at the right time!</span>
+        <br>
+        <br>
+        <span class="sub-item"><b><img alt="display asl logo" src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></b>
+          &nbsp;virtualizes promotions</span>
+        <br>
+        <span class="sub-item"><b>are you ready</b> &nbsp;for tomorrow - today?</span>
+      </div>
+      <div class="prose-button-bar">
+        <a href="https://xrpicker.com" target="_blank" class="menu-item-header">Live Demo...</a>
+        <a href="#display_builder_section" class="menu-item-header">Display Builder</a>
       </div>
     </div>
+    <div style="flex:1"></div>
+    <div style="flex:1"></div>
     <hr>
   </div>
   <div id="reality_section" class="parallax-scroll">
     <hr>
+    <h1>Virtual Reality for all platforms</h1>
+    <div style="flex:1"></div>
     <div style="flex:1;">
-      <h1>Virtual Reality for all platforms</h1>
       <img alt="display flow diagram" src="/images/displayflow.svg" class="sceneflowimg" />
       <div class="sceneflowprose">
         <h2>Is your content ready for tomorrow - today?</h2>
@@ -502,6 +500,8 @@
         <a href="https://en.wikipedia.org/wiki/WebGL" target="_blank">webGL&trade;</a> standardizes virtual content for all modern devices.
       </div>
     </div>
+    <div style="flex:1"></div>
+    <div style="flex:1"></div>
     <hr>
   </div>
   <div id="display_builder_section" class="parallax-scroll">
@@ -541,39 +541,40 @@
   </div>
   <div id="about_section" class="parallax-scroll">
     <hr>
-    <div style="flex:1; position: relative;">
-      <div class="vert-center">
-        <br>
-        <h1>About
-          <div style="display:inline-block; position:relative;top:.3em;">
-            <span class="header-logo">Handtop</span>
-            <span class="header-reg">&reg;</span>
-          </div>
-        </h1>
-        <br>
-        <h2>Virtual content delivery driven by webGL&trade;</h2>
-        Let's find the right product fit using the <a href="https://www.amazon.com/Right-Many-Ideas-Yours-Succeed/dp/0062884654" target="_blank">XYZ Hypothesis</a> techniques for your needs
-        <br>
-        <a href="https://firebase.google.com/" target="_blank">Firebase</a> hosting provides realtime data and on demand scaling - while we focus on features
-        <br>
-        <br>
-        <h2>Founded in 1998 delivering mobile solutions</h2>
-        Started out developing on the PalmOS&reg; - including SuperNote&trade;
-        <br>
-        Our process is based on the <a href="https://deliciousculture.com" target="_blank">Delicious Culture&trade;</a> system
-        <br>
-        Located in the upper downtown section of <a href="https://downtownlincoln.org/" target="_blank">Lincoln, Nebraska</a>
-        <br>
-        <div style="display:none">
-          hand palm of your hand top mano top manotop palma main top hand haut main haut mainhaut
-          рука ruka ладонь móvil
-          Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices. Original developers of SuperNote for the PalmOS. Come visit our site to learn about the latest in webGL for mobile. Firebase hosting.
-          mobile supernote webgl handtop webgl reality babylon.js babylonjs retail store palm palmos in the palm of your hand handtop computing handtop computers handtop mobile
-          augmented reality extended reality virtual reality mixed reality
-        </div>
+    <h1 style="margin-top:.5em;">About
+      <div style="display:inline-block; position:relative;top:.2em;">
+        <span class="header-logo">Handtop</span>
+        <span class="header-reg">&reg;</span>
       </div>
-
+    </h1>
+    <div style="flex:1"></div>
+    <div style="flex:1;">
+      <br>
+      <br>
+      <h2>Virtual content delivery driven by webGL&trade;</h2>
+      Use data from your current promotions and extend it to virtual displays<br>
+      Measure the right product fit for your needs using the <a href="https://www.amazon.com/Right-Many-Ideas-Yours-Succeed/dp/0062884654" target="_blank">XYZ Hypothesis</a>
+      <br>
+      <a href="https://firebase.google.com/" target="_blank">Firebase</a> hosting provides realtime data and on demand scaling
+      <br>
+      <br>
+      <h2>Founded in 1998 to deliver mobile solutions</h2>
+      Started out developing on the PalmOS&reg; - including SuperNote&trade;
+      <br>
+      Our process is based on the <a href="https://deliciousculture.com" target="_blank">Delicious Culture&trade;</a> system
+      <br>
+      Located in the upper downtown section of <a href="https://downtownlincoln.org/" target="_blank">Lincoln, Nebraska</a>
+      <br>
+      <div style="display:none">
+        hand palm of your hand top mano top manotop palma main top hand haut main haut mainhaut
+        рука ruka ладонь móvil
+        Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices. Original developers of SuperNote for the PalmOS. Come visit our site to learn about the latest in webGL for mobile. Firebase hosting.
+        mobile supernote webgl handtop webgl reality babylon.js babylonjs retail store palm palmos in the palm of your hand handtop computing handtop computers handtop mobile
+        augmented reality extended reality virtual reality mixed reality
+      </div>
     </div>
+    <div style="flex:1"></div>
+    <div style="flex:1"></div>
     <div>
       <br>
       <a class="menu-item" style="padding-bottom:.25em" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
