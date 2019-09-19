@@ -202,7 +202,7 @@
     a.menu-item,
     a.menu-item-header {
       display: inline-block;
-      background: rgba(255, 255, 0);
+      background: rgb(255, 255, 0);
       color: rgb(200, 90, 0);
       font-family: Chilanka;
       font-weight: 900;
@@ -289,7 +289,7 @@
     .video-wrapper .playpause {
       background-color: rgb(200, 90, 0);
       border-radius: 50%;
-      color: rgba(255, 255, 0);
+      color: rgb(255, 255, 0);
       position: absolute;
       left: 50%;
       top: 50%;
@@ -393,7 +393,7 @@
       padding-bottom: 1.25em;
       border-radius: 1em;
       text-decoration: none;
-      background: rgba(255, 255, 0);
+      background: rgb(255, 255, 0);
       display: inline;
       cursor: pointer;
       float: left;
@@ -403,7 +403,7 @@
 
     .about_link:hover {
       color: rgb(255, 255, 0);
-      background: rgba(200, 90, 0);
+      background: rgb(200, 90, 0);
     }
 
     .about_link:hover span {
@@ -425,6 +425,20 @@
       top: .5em;
       right: .5em;
     }
+
+    .submit_email_input, .submit_email_button {
+      color: rgb(200, 90, 0);
+      background: rgb(255, 255, 0);
+      padding: .5em;
+      border: solid .1em rgb(200, 90, 0);
+      border-radius: 1em;
+      font-size: 1.5em;
+    }
+
+    .submit_email_input {
+      background: transparent;
+    }
+
   </style>
 </head>
 
@@ -583,6 +597,10 @@
     <div style="flex:1"></div>
     <div>
       <br>
+      <input type="text" placeholder="Subscribe to updates..." name="email" class="submit_email_input" />
+      <input type="button" value="Submit Email" class="submit_email_button" onclick="submitEmail()" />
+      <br>
+      <br>
       <a class="menu-item" style="padding-bottom:.25em" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
       <br>All Rights Reserved. 1998 - 2020&copy;
     </div>
@@ -599,6 +617,25 @@
     gtag('js', new Date());
 
     gtag('config', 'UA-148094829-1');
+  </script>
+  <script>
+    async function submitEmail(){
+      let email = document.querySelector('.submit_email_input').value;
+      if (!email) {
+        alert('Please provide an email');
+        return;
+      }
+//      let apiPath = 'http://localhost:5001/groceryblocks/us-central1/submitEmailToList';
+      let apiPath = 'https://us-central1-groceryblocks.cloudfunctions.net/submitEmailToList';
+      let url = `${apiPath}?email=${encodeURIComponent(email)}`;
+      document.querySelector('.submit_email_input').value = '';
+      let response = await fetch(url, {
+        method: 'POST',
+        mode: 'no-cors'
+      });
+
+      alert('Email submitted - thank you!');
+    }
   </script>
 </body>
 

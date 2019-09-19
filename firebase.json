@@ -11,37 +11,54 @@
       "functions",
       "assets/babylon/*.*"
     ],
-    "headers": [{
-      "source": "index.html",
-      "headers": [{
-        "key": "Access-Control-Allow-Origin",
-        "value": "*"
-      }]
-    }],
-    "rewrites": [{
-      "source": "/supernote{,/**}",
-      "destination": "/index.html"
-    },{
-      "source": "/SuperNote{,/**}",
-      "destination": "/index.html"
-    },{
-      "source": "/InfoView{,/**}",
-      "destination": "/index.html"
-    },{
-      "source": "/tTV{,/**}",
-      "destination": "/index.html"
-    },{
-      "source": "/SuperNote.html",
-      "destination": "/index.html"
-    },{
-      "source": "/sales.aspx",
-      "destination": "/index.html"
-    },{
-      "source": "/support.html",
-      "destination": "/index.html"
-    }]
+    "headers": [
+      {
+        "source": "index.html",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/supernote{,/**}",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/SuperNote{,/**}",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/InfoView{,/**}",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/tTV{,/**}",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/SuperNote.html",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/sales.aspx",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/support.html",
+        "destination": "/index.html"
+      }
+    ]
   },
   "storage": {
     "rules": "storage.rules"
+  },
+  "functions": {
+    "predeploy": [
+      "npm --prefix \"$RESOURCE_DIR\" run lint"
+    ]
   }
 }
