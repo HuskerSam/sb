@@ -3,15 +3,40 @@
 
 <head>
   <meta charset="utf-8">
-  <title>XR Picker</title>
+  <title>Handtop Display&trade;</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/delicious.png">
   <script>
     window.addEventListener('load', () => new gDemoApp());
   </script>
+  <style>
+    .loading-screen {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: rgb(255, 255, 210);
+      color: rgb(200, 90, 0);
+      font-size: 40px;
+      top: 0;
+      z-index: 10000;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
+    .loading-screen * {
+      background: rgb(255, 255, 210);
+      color: rgb(200, 90, 0);
+      font-size: 40px;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="loading-screen">
+    <div style="flex:1"></div>
+    <div style="flex:1;text-align:center;">Loading...</div>
+    <div style="flex:1"></div>
+  </div>
   <!-- dYnamic Reality Libraries -->
   <script src="/global/globalutil.js"></script>
   <script src="/global/sdatadefinition.js"></script>

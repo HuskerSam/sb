@@ -75,6 +75,7 @@ class cViewDemo extends bView {
 
     this.basketUpdateTotal().then(() => {});
 
+    setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 200);
     return Promise.resolve();
   }
   profileUpdate() {
@@ -454,7 +455,7 @@ class cViewDemo extends bView {
   }
   layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
-      <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
+      <div id="renderLoadingCanvas" style="display:none;"></div>
       <div class="form_canvas_wrapper"></div>
 
       <div class="user-options-panel">
