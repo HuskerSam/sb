@@ -153,6 +153,9 @@
       text-align: center;
       display: inline;
       padding: .5em;
+      background: rgb(255,255,210);
+      border-radius: 1em;
+      margin: .1em;
     }
 
     .sub-item b {
@@ -162,18 +165,20 @@
     }
 
     .promoimg {
-      width: 50%;
-      float: left;
+      width: 50vw;
       border-radius: 2em;
       margin-left: 1em;
+    }
+
+    .imgprosewrapper {
+      flex:1;
+      display:flex;
+      flex-direction:row;
     }
 
     .prosecontent {
       display: inline;
       padding: .25em 1em;
-      background: rgb(255, 255, 210);
-      border-radius: 1em;
-      margin: 0em 1em;
     }
 
     .prose-button-bar {
@@ -188,6 +193,10 @@
         margin: 0;
       }
 
+      .imgprosewrapper {
+        display: block;
+      }
+      
       .prosecontent {
         display: block;
         float: none;
@@ -382,7 +391,7 @@
     }
 
     .sceneflowimg {
-      max-width: 100%;
+      max-width: 90%;
       height: 50vh;
       background: rgba(255, 255, 210, .6);
       padding: .5em;
@@ -496,9 +505,13 @@
         <br>then upload them to your website?</h1>
     </div>
     <div style="flex:1"></div>
-    <div style="flex:1;display:flex;flex-direction:row;">
+    <div class="imgprosewrapper">
       <div style="flex:1;"></div>
-      <img alt="your products any time any where" src="/images/promoimg.jpg" class="promoimg" />
+      <div style="display:flex;flex-direction:column;text-align:right;">
+        <div style="flex:1"></div>
+        <img alt="your products any time any where" src="/images/promoimg.jpg" class="promoimg" />
+        <div style="flex:1"></div>
+      </div>
       <div class="prosecontent" style="display:flex;flex-direction:column;">
         <div style="flex:1"></div>
         <span class="sub-item"><b>How about</b> &nbsp;providing virtual promotions</span>
@@ -635,7 +648,8 @@
       <br>
       <br>
       <a class="menu-item" style="padding-bottom:.25em" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
-      <br>All Rights Reserved. 1998 - 2020&copy;
+      <br>
+      <span style="background:rgb(255,255,210);padding:.25em;">All Rights Reserved. 1998 - 2020&copy;</span>
     </div>
     <hr>
   </div>
