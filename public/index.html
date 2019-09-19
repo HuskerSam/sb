@@ -625,7 +625,7 @@
         alert('Please provide an email');
         return;
       }
-//      let apiPath = 'http://localhost:5001/groceryblocks/us-central1/submitEmailToList';
+  //    let apiPath = 'http://localhost:5001/groceryblocks/us-central1/submitEmailToList';
       let apiPath = 'https://us-central1-groceryblocks.cloudfunctions.net/submitEmailToList';
       let url = `${apiPath}?email=${encodeURIComponent(email)}`;
       document.querySelector('.submit_email_input').value = '';

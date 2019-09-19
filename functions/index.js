@@ -1,7 +1,11 @@
 var functions = require('firebase-functions');
 var admin = require("firebase-admin");
 
-admin.initializeApp();
+const serviceAccount = require('./fbcreds.json');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://groceryblocks.firebaseio.com"
+});
 
 exports.submitEmailToList = functions.https.onRequest((req, res) => {
   if (req.method === 'POST') {
