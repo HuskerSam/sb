@@ -75,7 +75,7 @@ class cViewDemo extends bView {
 
     this.basketUpdateTotal().then(() => {});
 
-    setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 200);
+    setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);
     return Promise.resolve();
   }
   profileUpdate() {
