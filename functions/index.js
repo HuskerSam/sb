@@ -25,5 +25,5 @@ exports.submitEmailToList = functions.https.onRequest((req, res) => {
         console.log(e);
       });
   }
-  res.send("Post Only");
+  return res.send("Post Only");
 });
