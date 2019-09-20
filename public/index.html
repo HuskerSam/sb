@@ -196,11 +196,6 @@
       padding: .25em 1em;
     }
 
-    .prose-button-bar {
-      clear: both
-    }
-
-
     @media screen and (max-width: 800px) {
       .promoimg {
         width: 100%;
@@ -445,20 +440,25 @@
       color: rgb(255, 255, 0);
     }
 
+    a.live-demo {
+      position: absolute;
+      top: .5em;
+      right: .5em;
+      padding-top: .75em;
+    }
+
     @media screen and (max-width: 800px) {
       .homepagebuttons {
-        transform: scale(.5) translateX(-50%) translateY(-100%);
+        transform: scale(.5) translateX(-50%) translateY(-75%);
+      }
+
+      .live-demo {
+        transform: scale(.5) translateX(50%) translateY(-50%);
       }
 
       .about_link {
         transform: scale(.5) translateX(-50%) translateY(-50%);
       }
-    }
-
-    .live-demo {
-      position: absolute;
-      top: .5em;
-      right: .5em;
     }
 
     .submit_email_input,
@@ -502,12 +502,18 @@
           <span class="header-logo">Handtop</span>
           <span class="header-reg">&reg;</span>
         </a>
-        <a href="https://xrpicker.com" target="_blank" class="menu-item-header live-demo">Demo...</a>
-        <h1 style="color:rgb(0,0,127);background:rgba(50,255,50,.5);position:absolute;top:50%;left:50%;transform:translateY(-50%) translateX(-50%);">Virtual Displays for Retailers</h1>
+        <a href="https://xrpicker.com" target="_blank" class="menu-item live-demo">Demo Display...</a>
         <div class="homepagebuttons">
-          <a href="#display_section" class="menu-item"><img alt="display asl logo" src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></a>
+          <a href="#display_section" class="menu-item"><img alt="handtop display asl logo" src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></a>
           <br>
-          <a href="#reality_section" class="menu-item"><img alt="reality asl logo" src="/images/reality.png" class="asl_icon" />Handtop Reality<span class="trademark-span">&trade;</span></a>
+          <a href="#reality_section" class="menu-item"><img alt="handtop reality asl logo" src="/images/reality.png" class="asl_icon" />Handtop Reality<span class="trademark-span">&trade;</span></a>
+          <br>
+          <a href="#display_builder_section" class="menu-item"><img alt="handtop builder asl logo" src="/images/builder.png" class="asl_icon" />Handtop Builder<span class="trademark-span">&trade;</span></a>
+        </div>
+        <div style="text-align:center;clear:both;">
+          <div style="position:absolute;bottom:1em;width:100%;">
+            <h1 style="background:rgba(255,255,100,.5);">Virtual Displays for Retailers</h1>
+          </div>
         </div>
       </div>
       <hr>
@@ -541,10 +547,6 @@
         <div style="flex:1"></div>
       </div>
       <div style="flex:1"></div>
-    </div>
-    <div class="prose-button-bar">
-      <a href="https://xrpicker.com" target="_blank" class="menu-item-header">Live Demo...</a>
-      <a href="#display_builder_section" class="menu-item-header">Display Builder</a>
     </div>
     <div style="flex:1"></div>
     <hr>
