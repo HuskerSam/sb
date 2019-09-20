@@ -87,9 +87,14 @@
       let maxScroll = (document.documentElement.scrollHeight - document.documentElement.clientHeight) - offset / 4;
 
       let pBlocks = document.querySelectorAll('.parallax-scroll');
-
-      if ((offset < totalHeight) && (scrolled < maxScroll) && scrolled > 0) {
-        pBlocks.forEach(p => p.style.top = (offset) + 'px');
+      if ((scrolled < maxScroll) && scrolled > 0) {
+        console.log(offset, totalHeight, scrolled, maxScroll);
+        if (offset > totalHeight / 2.2)
+          pBlocks.forEach(p => p.style.top = '-' + (totalHeight - offset) + 'px');
+        else if (offset < totalHeight)
+          pBlocks.forEach(p => p.style.top = (offset) + 'px');
+        else
+          pBlocks.forEach(p => p.style.top = 0);
       } else {
         pBlocks.forEach(p => p.style.top = 0);
       }
