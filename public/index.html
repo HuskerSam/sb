@@ -144,7 +144,7 @@
       z-index: 1;
     }
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 800px), screen and (max-height: 575px) {
       .parallax-scroll {
         position: static;
         height: auto;
@@ -420,28 +420,16 @@
       margin-left: .25em;
     }
 
-    .about_link {
+    .handtoplogo_div {
       color: rgb(200, 90, 0);
       padding: 1.5em;
       padding-top: 2em;
       padding-bottom: 1.25em;
       border-radius: 1em;
-      text-decoration: none;
+      display: inline-block;
       background: rgb(255, 255, 0);
-      display: inline;
-      cursor: pointer;
-      float: left;
       margin: .25em;
       border: solid .1em rgb(200, 90, 0);
-    }
-
-    .about_link:hover {
-      color: rgb(255, 255, 0);
-      background: rgb(200, 90, 0);
-    }
-
-    .about_link:hover span {
-      color: rgb(255, 255, 0);
     }
 
     a.live-demo {
@@ -460,8 +448,8 @@
         transform: scale(.5) translateX(50%) translateY(-50%);
       }
 
-      .about_link {
-        transform: scale(.5) translateX(-50%) translateY(-50%);
+      .handtoplogo_div {
+        transform: scale(.5) translateY(-50%);
       }
     }
 
@@ -501,17 +489,20 @@
   </video>
   <div id="landing_section" class="parallax-scroll">
     <div style="text-align:center;float:left;">
-      <a href="#about_section" class="about_link">
+      <div class="handtoplogo_div">
         <span class="header-logo">Handtop</span>
         <span class="header-reg">&reg;</span>
-      </a>
+      </div>
       <a href="https://xrpicker.com" target="_blank" class="menu-item live-demo">Demo Display...</a>
+      <br>
       <div class="homepagebuttons">
         <a href="#display_section" class="menu-item"><img alt="handtop display asl logo" src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></a>
         <br>
         <a href="#reality_section" class="menu-item"><img alt="handtop reality asl logo" src="/images/reality.png" class="asl_icon" />Handtop Reality<span class="trademark-span">&trade;</span></a>
         <br>
         <a href="#display_builder_section" class="menu-item"><img alt="handtop builder asl logo" src="/images/builder.png" class="asl_icon" />Handtop Builder<span class="trademark-span">&trade;</span></a>
+        <br>
+        <a href="#about_section" class="menu-item"><img alt="handtop about asl logo" src="/images/asla.png" class="asl_icon" />About Handtop<span class="trademark-span">&reg;</span></a>
       </div>
     </div>
     <div style="flex:1">
@@ -539,10 +530,10 @@
         <div style="flex:1"></div>
         <span class="sub-item top"><b>How about</b> &nbsp;providing virtual promotions</span>
         <span class="sub-item bottom"><b>encouraging visits</b> &nbsp;to your business website?</span>
-        <br>
+        <div style="flex:1"></div>
         <span class="sub-item top"><b>Notify customers</b> &nbsp;about new promotions that</span>
         <span class="sub-item bottom"><b>provide displays</b> &nbsp;at the right time!</span>
-        <br>
+        <div style="flex:1"></div>
         <span class="sub-item top"><b>Handtop Display<span class="trademark-span">&trade;</span></b>
           &nbsp;virtualizes promotions</span>
         <span class="sub-item bottom"><b>are you ready</b> &nbsp;for tomorrow - today?</span>
@@ -571,12 +562,7 @@
           <br>
           <span style="color:rgb(200,90,0);font-family:Chilanka;font-weight:bold;">Handtop Reality</span>&trade; scales and synchronizes content for displays.
           <br>
-          Reference your content in the <a href="https://developer.android.com/training/tv/discovery/searchable.html" target="_blank">searchable Android TV</a> catalog.
-          <br>
-          <a href="https://developer.android.com/training/tv/discovery/recommendations-channel.html" target="_blank">Recommend</a>
-          products and promotions from the TV home screen.
-          <br>
-          <a href="https://en.wikipedia.org/wiki/WebGL" target="_blank">webGL&trade;</a> standardizes virtual content for all modern devices.
+          <a href="https://developer.android.com/training/tv/discovery/recommendations-channel.html" target="_blank">Recommend</a> and reference your content in the <a href="https://developer.android.com/training/tv/discovery/searchable.html" target="_blank">TV catalog</a>.
         </div>
       </div>
     </div>
@@ -635,18 +621,14 @@
       <br>
       <div class="subprose">
         Use data from your current promotions and extend it to virtual displays<br>
-        Measure the right product fit for your needs using the <a href="https://www.amazon.com/Right-Many-Ideas-Yours-Succeed/dp/0062884654" target="_blank">XYZ Hypothesis</a>
-        <br>
         <a href="https://firebase.google.com/" target="_blank">Firebase</a> hosting provides realtime data and on demand scaling
       </div>
       <br>
       <br>
-      <h2>Founded in 1998 to deliver mobile solutions</h2>
+      <h2>Founded in 1998 delivering mobile experiences</h2>
       <br>
       <div class="subprose">
         Started out developing on the PalmOS&reg; - including SuperNote&trade;
-        <br>
-        Our process is based on the <a href="https://deliciousculture.com" target="_blank">Delicious Culture&trade;</a> system
         <br>
         Located in the upper downtown section of <a href="https://downtownlincoln.org/" target="_blank">Lincoln, Nebraska</a>
       </div>
