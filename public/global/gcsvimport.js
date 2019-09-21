@@ -822,32 +822,6 @@ class gCSVImport {
 
     let blockresult = await this.dbSetRecord('block', block);
 
-    if (row.hemilight === '1') {
-      let light = {
-        childType: 'light',
-        childName: 'Hemispheric',
-        parentKey: blockresult.key
-      };
-      let lightresult = await this.dbSetRecord('blockchild', light);
-
-      let lightFrame = {
-        frameTime: '',
-        frameOrder: '10',
-        parentKey: lightresult.key,
-        lightDiffuseR: '1',
-        lightIntensity: '.35',
-        lightDiffuseG: '1',
-        lightDiffuseB: '1',
-        lightSpecularR: '1',
-        lightSpecularG: '1',
-        lightSpecularB: '1',
-        lightDirectionX: '0',
-        lightDirectionY: '1',
-        lightDirectionZ: '0'
-      };
-      this.dbSetRecord('frame', lightFrame);
-    }
-
     return blockresult;
   }
   __childShapeRow(row) {

@@ -272,8 +272,6 @@ class cMacro {
       <label><span>height</span><input type="text" class="height" value="800" /></label>
       <label><span>depth</span><input type="text" class="depth" value="800" /></label>
       <br>
-      <label><input type="checkbox" class="hemilight" /><span>Add Hemispheric Light</span></label>
-      <br>
       <label><input type="checkbox" class="generateground" /><span>Ground</span>
       <input type="text" style="width:15em;" class="groundimage" list="sbimageslist" /></label>
       <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
@@ -458,7 +456,7 @@ class cMacro {
       name: this.newName
     };
     let fields = [
-      'hemilight', 'generateground', 'groundimage', 'skybox', 'width', 'height', 'depth'
+      'generateground', 'groundimage', 'skybox', 'width', 'height', 'depth'
     ];
     fields.forEach(field => {
       let f = this.sceneBlockPanel.querySelector('.' + field);
