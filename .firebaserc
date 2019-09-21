@@ -6,6 +6,7 @@
     "handtop": "groceryblocks",
     "xrcharting": "promo-39cc8",
     "xrgrafter": "husker-ac595",
-    "default": "groceryblocks"
+    "default": "groceryblocks",
+    "handtopbuilder": "handtopbuilder"
   }
 }
