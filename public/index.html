@@ -145,7 +145,7 @@
       z-index: 1;
     }
 
-    @media screen and (max-width: 800px), screen and (max-height: 575px) {
+    @media screen and (max-width: 800px), screen and (max-height: 500px) {
       .parallax-scroll {
         position: static;
         height: auto;
@@ -444,6 +444,14 @@
       font-size: 1.5em;
     }
 
+    .submit_email_button {
+      position:relative;
+      left: -1em;
+      border-left: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
     .submit_email_input {
       background: rgb(255, 255, 210);
     }
@@ -459,6 +467,10 @@
       padding: .5em;
       margin-top: .25em;
       border: solid .2em rgb(200, 90, 0);
+    }
+
+    #about_section h2 {
+      border: none;
     }
   </style>
 </head>
@@ -589,29 +601,23 @@
   <div id="about_section" class="parallax-scroll">
     <hr>
     <div>
-      <h1 style="margin-top:.5em;">About
-        <div style="display:inline-block; position:relative;top:.2em;">
-          <span class="header-logo">Handtop</span>
-          <span class="header-reg">&reg;</span>
-        </div>
-      </h1>
+      <h1 style="margin-top:.5em;">About</h1>
     </div>
     <div style="flex:1"></div>
     <div style="flex:1;">
-      <h2>Virtual content delivery driven by webGL&trade;</h2>
-      <br>
       <div class="subprose">
+        <h2>Virtual content delivery driven by webGL&trade;</h2>
+        <br>
         Use data from your current promotions and extend it to virtual displays<br>
         <a href="https://firebase.google.com/" target="_blank">Firebase</a> hosting provides realtime data and on demand scaling
       </div>
       <br>
-      <br>
-      <h2>Founded in 1998 delivering mobile experiences</h2>
-      <br>
       <div class="subprose">
-        Started out developing on the PalmOS&reg; - including SuperNote&trade;
+        <h2>Founded in 1998 delivering mobile experiences</h2>
         <br>
-        Located in the upper downtown section of <a href="https://downtownlincoln.org/" target="_blank">Lincoln, Nebraska</a>
+        Focused on delivering virtual content - will consider any interesting project
+        <br>
+        Located in downtown <a href="https://downtownlincoln.org/" target="_blank">Lincoln, Nebraska</a>
       </div>
       <div style="display:none">
         hand palm of your hand top mano top manotop palma main top hand haut main haut mainhaut
@@ -625,11 +631,11 @@
     <div style="flex:1"></div>
     <div>
       <br>
-      <input type="text" style="background:white;border-radius:0;" placeholder="Subscribe for updates..." name="email" class="submit_email_input" />
-      <input type="button" value="Submit Email" class="submit_email_button" onclick="submitEmail()" />
-      <br>
-      <br>
-      <a class="menu-item" style="padding-bottom:.25em;position:relative;top:-.25em" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+      <div style="font-size: .75em;">
+        <input type="text" style="background:white;border-radius:0;" placeholder="Subscribe for updates..." name="email" class="submit_email_input" /><input type="button" value="Submit Email" class="submit_email_button" onclick="submitEmail()" />
+        &nbsp;
+        <a class="menu-item" style="padding: .25em 1em;padding-top:.5em;" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+      </div>
       <br>
       <div>
         <span style="border:solid .1em rgb(200,90,0);background:rgb(255,255,210);padding:.25em;position:relative;top:-.25em;">All Rights Reserved. 1998 - 2020&copy;</span>
