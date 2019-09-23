@@ -278,6 +278,10 @@ class cMacro {
       <br>
       <label><span>Skybox</span><input type="text" style="width:15em;" class="skybox" list="skyboxlist" /></label>
       <div class="skybox-preview-images"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"></div>
+      <br>
+      <div style="text-align:center">
+        <img src="/images/scenebox.png" style="width:75%" />
+      </div>
     </div>
     <div class="csv_block_import_preview"></div>
     <datalist id="webfontsuggestionlist"></datalist>`;

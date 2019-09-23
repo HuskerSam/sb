@@ -210,7 +210,7 @@ class gAuthorization {
       selectedWorkspace: 'default',
       showBoundsBox: true,
       showFloorGrid: false,
-      cameraUpdates: true,
+      cameraUpdates: false,
       cameraSaves: true,
       showForceWireframe: false,
       showSceneGuides: true,
