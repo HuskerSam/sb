@@ -185,8 +185,7 @@
 
     .promoimg {
       width: 50vw;
-      margin-left: 1em;
-      border: solid .2em rgb(200, 90, 0);
+      border-radius: 1em;
     }
 
     .imgprosewrapper {
@@ -197,7 +196,6 @@
 
     .prosecontent {
       display: inline;
-      padding: .25em 1em;
     }
 
     @media screen and (max-width: 800px) {
@@ -383,7 +381,7 @@
       height: 50vh;
       background: rgba(255, 255, 210, .25);
       padding: .5em;
-      border: solid .2em rgb(200, 90, 0);
+      border-radius: 2em;
     }
 
     .homepagebuttons {
@@ -450,6 +448,10 @@
 
     #about_section h2 {
       border: none;
+    }
+
+    .sceneflowprose {
+      margin-top: -.75em;
     }
   </style>
 </head>
@@ -523,7 +525,7 @@
     </div>
     <div style="flex:1"></div>
     <div style="flex:1;">
-      <h2 style="margin-bottom:.5em;">Is your content ready for tomorrow - today?</h2>
+      <h2>Display promotions on all major platforms</h2>
       <div>
         <img alt="display flow diagram" src="/images/displayflow.svg" class="sceneflowimg" />
       </div>
@@ -591,13 +593,13 @@
     <div style="flex:1"></div>
     <div style="flex:1;">
       <div class="subprose">
-        <h2>Reliable virtual content creation, delivery and display</h2>
+        <h2>Virtual content creation, delivery and display</h2>
         <br>
         Use data from your current promotions and extend it to virtual displays<br>
         <a href="https://firebase.google.com/" target="_blank">Firebase</a> hosting provides realtime data and on demand scaling
       </div>
       <br>
-      <div class="subprose">
+      <div class="subprose" style="margin-top:-.25em;z-index:-1">
         <h2>Delivering mobile experiences since 1998</h2>
         <br>
         Delivering virtual content on all platforms with a focus on mobile
