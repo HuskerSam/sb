@@ -795,12 +795,12 @@ class gCSVImport {
     return blockResult;
   }
   async addCSVSceneBlock(row) {
-    if (row.generateground === '1') {
+    if (row.groundimage) {
       let texture = {
         title: row.name + '_groundtexture',
         url: row.groundimage,
-        vScale: row.depth,
-        uScale: row.width
+        vScale: row.skyboxgroundscalev,
+        uScale: row.skyboxgroundscaleu
       };
       this.dbSetRecord('texture', texture);
       let material = {
@@ -817,7 +817,8 @@ class gCSVImport {
       height: row.height,
       depth: row.depth,
       groundMaterial: row.groundmaterial,
-      skybox: row.skybox
+      skybox: row.skybox,
+      skyboxSize: row.skyboxsize
     }
 
     let blockresult = await this.dbSetRecord('block', block);

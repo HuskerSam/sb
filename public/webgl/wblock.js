@@ -47,9 +47,11 @@ class wBlock {
     return this._blockKey;
   }
   _addSkyBox() {
-    if (this.lastSkyBox === this.blockRawData.skybox)
+    if (this.lastSkyBox === this.blockRawData.skybox &&
+      this.lastskyboxSize === this.blockRawData.skyboxSize)
       return;
     this.lastSkyBox = this.blockRawData.skybox;
+    this.lastskyboxSize = this.blockRawData.skyboxSize;
 
     if (this.skyboxObject)
       this.skyboxObject.dispose();
@@ -59,7 +61,8 @@ class wBlock {
       return;
 
     let skyboxPath = gAPPP.cdnPrefix + 'box/' + this.blockRawData.skybox + '/skybox';
-    let skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, this.context.scene);
+    let skyboxSize = GLOBALUTIL.getNumberOrDefault(this.blockRawData.skyboxSize, 800.0);
+    let skybox = BABYLON.Mesh.CreateBox("skyBox", skyboxSize, this.context.scene);
     let skyboxMaterial = new BABYLON.StandardMaterial(skyboxPath, this.context.scene);
     skyboxMaterial.backFaceCulling = false;
 

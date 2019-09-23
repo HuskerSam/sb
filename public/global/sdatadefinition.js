@@ -823,6 +823,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   floatLeft: true,
   clearLeft: true
 }, {
+  title: 'Size',
+  fireSetField: 'skyboxSize',
+  displayType: 'number',
+  group: 'ground',
+  floatLeft: true
+}, {
   title: 'Clear Color',
   fireSetField: 'clearColor',
   group: 'sceneColor',

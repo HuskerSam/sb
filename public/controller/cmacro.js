@@ -147,9 +147,9 @@ class cMacro {
 
   blockTemplate() {
     return `<select class="block-type-select">
-     <option>Scene</option>
+     <option selected>Scene</option>
      <option>Text and Shape</option>
-     <option selected>Animated Line</option>
+     <option>Animated Line</option>
      <option>Connector Line</option>
      <option>2D Text Plane</option>
      <option>Web Font</option>
@@ -267,20 +267,36 @@ class cMacro {
       <label><span>height</span><input type="text" class="height" value="1" /></label>
       <label><span>depth</span><input type="text" class="depth" value="1" /></label>
     </div>
-      <div class="scene-block-add-options">
-      <label><span>width</span><input type="text" class="width" value="800" /></label>
-      <label><span>height</span><input type="text" class="height" value="800" /></label>
-      <label><span>depth</span><input type="text" class="depth" value="800" /></label>
-      <br>
-      <label><input type="checkbox" class="generateground" /><span>Ground</span>
-      <input type="text" style="width:15em;" class="groundimage" list="sbimageslist" /></label>
-      <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
-      <br>
-      <label><span>Skybox</span><input type="text" style="width:15em;" class="skybox" list="skyboxlist" /></label>
-      <div class="skybox-preview-images"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"></div>
-      <br>
-      <div style="text-align:center">
-        <img src="/images/scenebox.png" style="width:75%" />
+    <div class="scene-block-add-options">
+      <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span>Skybox Format</span></label>
+      <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span>Building Format</span></label>
+      <div class="skyboxscenefeatures">
+        <label><span>Skybox Size</span><input type="text" class="skyboxsize" value="400" /></label>
+        <br>
+        <label><span>Ground</span><input type="text" style="width:15em;" class="groundimage" list="sbimageslist" /></label>
+        <br>
+        <label><span>Scale v</span><input type="text" class="skyboxgroundscalev" value="1" /></label>
+        <label><span>Scale u</span><input type="text" class="skyboxgroundscaleu" value="1" /></label>
+        <br>
+        <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
+        <br>
+        <label><span>Skybox Template</span><input type="text" style="width:15em;" class="skybox" list="skyboxlist" /></label>
+        <div class="skybox-preview-images">
+          <img crossorigin="anonymous" style="position:relative;left:5em;top:.25em;">
+          <div>
+            <img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous">
+          </div>
+          <img crossorigin="anonymous" style="position:relative;left:5em;top:-.25em;">
+        </div>
+        <br>
+        <div style="text-align:center">
+          <img src="/images/scenebox.png" style="width:75%" />
+        </div>
+      </div>
+      <div class="buildingscenefeatures" style="display:none;">
+        <label><span>width</span><input type="text" class="width" value="100" /></label>
+        <label><span>height</span><input type="text" class="height" value="30" /></label>
+        <label><span>depth</span><input type="text" class="depth" value="100" /></label>
       </div>
     </div>
     <div class="csv_block_import_preview"></div>
@@ -301,9 +317,18 @@ class cMacro {
     this.skyBoxInput = this.sceneBlockPanel.querySelector('.skybox');
     this.skyBoxInput.addEventListener('input', e => this.blockSkyboxChange());
 
+    let sceneRadios = this.sceneBlockPanel.querySelectorAll('.sceneaddtype');
+    sceneRadios.forEach(rdo => {
+      rdo.addEventListener('input', e => {
+        this.sceneBlockPanel.querySelector('.buildingscenefeatures').style.display = 'none';
+        this.sceneBlockPanel.querySelector('.skyboxscenefeatures').style.display = 'none';
+        let showClass = rdo.dataset.type;
+        this.sceneBlockPanel.querySelector('.' + showClass).style.display = '';
+      });
+    });
+
     this.cloudImageInput = this.sceneBlockPanel.querySelector('.groundimage');
     this.groundImagePreview = this.sceneBlockPanel.querySelector('.cloud-file-ground-preview');
-    this.generateGroundMaterial = this.panel.querySelector('.generateground');
     this.cloudImageInput.addEventListener('input', e => this.blockGroundChange());
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
@@ -460,8 +485,9 @@ class cMacro {
       name: this.newName
     };
     let fields = [
-      'generateground', 'groundimage', 'skybox', 'width', 'height', 'depth'
+      'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox', 'width', 'height', 'depth'
     ];
+    let fieldValues = {};
     fields.forEach(field => {
       let f = this.sceneBlockPanel.querySelector('.' + field);
       if (f.getAttribute('type') === 'checkbox')
@@ -469,6 +495,13 @@ class cMacro {
       else
         csv_row[field] = f.value;
     });
+
+    let skyboxType = this.sceneBlockPanel.querySelector('.skyboxtemplatetype').checked;
+    if (skyboxType) {
+      csv_row.width = csv_row.skyboxsize;
+      csv_row.height = csv_row.skyboxsize;
+      csv_row.depth = csv_row.skyboxsize;
+    }
     return csv_row;
   }
   async blockCreate() {
@@ -542,12 +575,12 @@ class cMacro {
 
       let skyboxPath = gAPPP.cdnPrefix + 'box/' + skybox + '/skybox';
 
-      imgs[0].setAttribute('src', skyboxPath + '_nx.jpg');
-      imgs[1].setAttribute('src', skyboxPath + '_px.jpg');
-      imgs[2].setAttribute('src', skyboxPath + '_ny.jpg');
-      imgs[3].setAttribute('src', skyboxPath + '_py.jpg');
+      imgs[0].setAttribute('src', skyboxPath + '_py.jpg');
+      imgs[1].setAttribute('src', skyboxPath + '_nx.jpg');
+      imgs[2].setAttribute('src', skyboxPath + '_pz.jpg');
+      imgs[3].setAttribute('src', skyboxPath + '_px.jpg');
       imgs[4].setAttribute('src', skyboxPath + '_nz.jpg');
-      imgs[5].setAttribute('src', skyboxPath + '_pz.jpg');
+      imgs[5].setAttribute('src', skyboxPath + '_ny.jpg');
     }
   }
   blockHelperChange() {
@@ -562,7 +595,7 @@ class cMacro {
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
     else if (sel === 'Scene')
-      this.sceneBlockPanel.style.display = '';
+      this.sceneBlockPanel.style.display = 'inline';
     else if (sel === 'Connector Line')
       this.connectorLinePanel.style.display = '';
     else if (sel === 'Animated Line')
