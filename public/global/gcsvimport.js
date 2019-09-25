@@ -830,7 +830,6 @@ class gCSVImport {
       panelrow.asset = 'shape';
       panelrow.name = row.name + '_floorpanel';
       if (row.floorimage) {
-        console.log(row);
         panelrow.materialname = panelrow.name;
         panelrow.texturepath = row.floorimage;
         panelrow.scaleu = row.floorscaleu;

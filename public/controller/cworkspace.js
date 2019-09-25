@@ -1081,6 +1081,20 @@ class cWorkspace {
     }
 
   }
+  __uploadImageFile() {
+    let fileBlob = this.uploadImageFile.files[0];
+
+    if (!fileBlob)
+      return;
+
+    this.uploadImageEditField.value = 'Uploading...';
+
+    let fireSet = gAPPP.a.modelSets['block'];
+    let key = this.productData.sceneId + '/productfiles';
+    fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
+      this.uploadImageEditField.value = uploadResult.downloadURL;
+    });
+  }
   workspaceLayoutCSVProductCheckPosition(x, y, z) {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
     let sel = document.getElementById('select-position-preset');
