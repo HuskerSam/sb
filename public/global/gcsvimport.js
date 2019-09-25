@@ -578,8 +578,7 @@ class gCSVImport {
         pointmaterial: '',
         tailshape: 'none'
       });
-    }
-    else
+    } else
       this.addCSVShapeRow(this.__childShapeRow(shaperow));
 
     let timePerDash = runlength / dashes;
@@ -794,6 +793,9 @@ class gCSVImport {
 
     return blockResult;
   }
+  async _generateSceneBuildingBox(row) {
+
+  }
   async addCSVSceneBlock(row) {
     if (row.groundimage) {
       let texture = {
@@ -822,6 +824,126 @@ class gCSVImport {
     }
 
     let blockresult = await this.dbSetRecord('block', block);
+
+    if (row.skyboxtype === 'building') {
+      let panelrow = this.defaultCSVRow();
+      panelrow.asset = 'shape';
+      panelrow.name = row.name + '_floorpanel';
+      if (row.floorimage) {
+        console.log(row);
+        panelrow.materialname = panelrow.name;
+        panelrow.texturepath = row.floorimage;
+        panelrow.scaleu = row.floorscaleu;
+        panelrow.scalev = row.floorscalev;
+      } else {
+        panelrow.materialname = row.floormaterial;
+      }
+      panelrow.shapetype = 'plane';
+      panelrow.width = row.width;
+      panelrow.height = row.depth;
+      panelrow.parent = row.name;
+      panelrow.rx = '90deg';
+      this.addCSVRow(panelrow);
+
+      panelrow = this.defaultCSVRow();
+      panelrow.asset = 'shape';
+      panelrow.name = row.name + '_ceilingpanel';
+      if (row.ceilingwallimage) {
+        panelrow.materialname = panelrow.name;
+        panelrow.texturepath = row.ceilingwallimage;
+        panelrow.scaleu = row.ceilingwallscaleu;
+        panelrow.scalev = row.ceilingwallscalev;
+      } else {
+        panelrow.materialname = row.ceilingmaterial;
+      }
+      panelrow.shapetype = 'plane';
+      panelrow.width = row.width;
+      panelrow.height = row.depth;
+      panelrow.parent = row.name;
+      panelrow.y = row.height;
+      panelrow.rx = '-90deg';
+      this.addCSVRow(panelrow);
+
+      panelrow = this.defaultCSVRow();
+      panelrow.asset = 'shape';
+
+      panelrow.name = row.name + '_backwallpanel';
+      if (row.backwallimage) {
+        panelrow.materialname = panelrow.name;
+        panelrow.texturepath = row.backwallimage;
+        panelrow.scaleu = row.backwallscaleu;
+        panelrow.scalev = row.backwallscalev;
+      } else {
+        panelrow.materialname = row.backwallmaterial;
+      }
+      panelrow.shapetype = 'plane';
+      panelrow.width = row.depth;
+      panelrow.height = row.height;
+      panelrow.parent = row.name;
+      panelrow.x = (GLOBALUTIL.getNumberOrDefault(row.width, 0.0) / -2.0).toString();
+      panelrow.y = (GLOBALUTIL.getNumberOrDefault(row.height, 0.0) / 2).toString();
+      panelrow.ry = '-90deg';
+      this.addCSVRow(panelrow);
+
+      panelrow = this.defaultCSVRow();
+      panelrow.asset = 'shape';
+      panelrow.name = row.name + '_frontwallpanel';
+      if (row.frontwallimage) {
+        panelrow.materialname = panelrow.name;
+        panelrow.texturepath = row.frontwallimage;
+        panelrow.scaleu = row.frontwallscaleu;
+        panelrow.scalev = row.frontwallscalev;
+      } else {
+        panelrow.materialname = row.frontwallmaterial;
+      }
+      panelrow.shapetype = 'plane';
+      panelrow.width = row.depth;
+      panelrow.height = row.height;
+      panelrow.parent = row.name;
+      panelrow.x = (GLOBALUTIL.getNumberOrDefault(row.width, 0.0) / 2.0).toString();
+      panelrow.y = (GLOBALUTIL.getNumberOrDefault(row.height, 0.0) / 2).toString();
+      panelrow.ry = '90deg';
+      this.addCSVRow(panelrow);
+
+      panelrow = this.defaultCSVRow();
+      panelrow.asset = 'shape';
+      panelrow.name = row.name + '_rightwallpanel';
+      if (row.rightwallimage) {
+        panelrow.materialname = panelrow.name;
+        panelrow.texturepath = row.rightwallimage;
+        panelrow.scaleu = row.rightwallscaleu;
+        panelrow.scalev = row.rightwallscalev;
+      } else {
+        panelrow.materialname = row.rightwallmaterial;
+      }
+      panelrow.shapetype = 'plane';
+      panelrow.width = row.width;
+      panelrow.height = row.height;
+      panelrow.parent = row.name;
+      panelrow.z = (GLOBALUTIL.getNumberOrDefault(row.depth, 0.0) / 2.0).toString();
+      panelrow.y = (GLOBALUTIL.getNumberOrDefault(row.height, 0.0) / 2.0).toString();
+      this.addCSVRow(panelrow);
+
+      panelrow = this.defaultCSVRow();
+      panelrow.asset = 'shape';
+      panelrow.name = row.name + '_leftwallpanel';
+      if (row.leftwallimage) {
+        panelrow.materialname = panelrow.name;
+        panelrow.texturepath = row.leftwallimage;
+        panelrow.scaleu = row.leftwallscaleu;
+        panelrow.scalev = row.leftwallscalev;
+      } else {
+        panelrow.materialname = row.leftwallmaterial;
+      }
+      panelrow.shapetype = 'plane';
+      panelrow.width = row.width;
+      panelrow.height = row.height;
+      panelrow.parent = row.name;
+      panelrow.z = (GLOBALUTIL.getNumberOrDefault(row.depth, 0.0) / -2.0).toString();
+      panelrow.y = (GLOBALUTIL.getNumberOrDefault(row.height, 0.0) / 2.0).toString();
+      panelrow.ry = '180deg';
+      this.addCSVRow(panelrow);
+    }
 
     return blockresult;
   }
@@ -1001,10 +1123,9 @@ class gCSVImport {
 
     let blockResult = await this.dbSetRecord('block', blockWrapper);
 
-    if (row.displaystyle === '3dbasic'){
+    if (row.displaystyle === '3dbasic') {
       this.__add3dTextPlane(row);
-    }
-    else
+    } else
       this.__add2dTextPlane(row);
 
     row.asset = 'block';

@@ -294,9 +294,61 @@ class cMacro {
         </div>
       </div>
       <div class="buildingscenefeatures" style="display:none;">
-        <label><span>width</span><input type="text" class="width" value="100" /></label>
-        <label><span>height</span><input type="text" class="height" value="30" /></label>
-        <label><span>depth</span><input type="text" class="depth" value="100" /></label>
+        <label><span>width (x-axis)</span><input type="text" class="width" value="50" /></label>
+        <label><span>depth (z-axis)</span><input type="text" class="depth" value="100" /></label>
+        <label><span>height (y-axis)</span><input type="text" class="height" value="40" /></label>
+        <br>
+        <label><span>floormaterial</span><input type="text" style="width:15em;" class="floormaterial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="floormaterial">
+        <br>
+        <label><span>floorimage</span><input type="text" style="width:15em;" class="floorimage" list="sbimageslist" /></label>
+        <br>
+        <label><span>floorscalev (repeat x)</span><input type="text" class="floorscalev" value="1" /></label>
+        <label><span>floorscaleu (repeat z)</span><input type="text" class="floorscaleu" value="1" /></label>
+        <br>
+        <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
+        <br>
+        <label><span>backwallimage</span><input type="text" style="width:15em;" class="backwallimage" list="sbimageslist" /></label>
+        <br>
+        <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
+        <label><span>backwallscaleu</span><input type="text" class="backwallscaleu" value="1" /></label>
+        <br>
+        <label><span>frontwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="frontwallmaterial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="frontwallmaterial">
+        <br>
+        <label><span>frontwallimage</span><input type="text" style="width:15em;" class="frontwallimage" list="sbimageslist" /></label>
+        <br>
+        <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
+        <label><span>frontwallscaleu</span><input type="text" class="frontwallscaleu" value="1" /></label>
+        <br>
+        <label><span>leftwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="leftwallmaterial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="leftwallmaterial">
+        <br>
+        <label><span>leftwallimage</span><input type="text" style="width:15em;" class="leftwallimage" list="sbimageslist" /></label>
+        <br>
+        <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
+        <label><span>leftwallscaleu</span><input type="text" class="leftwallscaleu" value="1" /></label>
+        <br>
+        <label><span>rightwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="rightwallmaterial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="rightwallmaterial">
+        <br>
+        <label><span>rightwallimage</span><input type="text" style="width:15em;" class="rightwallimage" list="sbimageslist" /></label>
+        <br>
+        <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
+        <label><span>rightwallscaleu</span><input type="text" class="rightwallscaleu" value="1" /></label>
+        <br>
+        <label><span>ceilingmaterial</span>&nbsp;<input type="text" style="width:15em;" class="ceilingmaterial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="ceilingmaterial">
+        <br>
+        <label><span>ceilingwallimage</span><input type="text" style="width:15em;" class="ceilingwallimage" list="sbimageslist" /></label>
+        <br>
+        <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
+        <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
+        <br>
+        <div style="text-align:center">
+          <img src="/images/buildingtemplate.png" style="width:75%" />
+        </div>
       </div>
     </div>
     <div class="csv_block_import_preview"></div>
@@ -401,6 +453,7 @@ class cMacro {
       ctl.style.borderColor = '';
       ctl.parentNode.nextElementSibling.value = '';
     }
+    this.blockUpdateCSV();
   }
   _blockScrapeTextAndShape() {
     this.newName = this.panelInput.value.trim();
@@ -485,18 +538,36 @@ class cMacro {
       name: this.newName
     };
     let fields = [
-      'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox', 'width', 'height', 'depth'
+      'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox',
+       'width', 'height', 'depth', 'floormaterial', 'backwallmaterial',
+       'frontwallmaterial', 'leftwallmaterial', 'rightwallmaterial',
+       'ceilingmaterial',
+       'leftwallscalev', 'leftwallscaleu', 'leftwallimage',
+       'rightwallscalev', 'rightwallscaleu', 'rightwallimage',
+       'backwallscalev', 'backwallscaleu', 'backwallimage',
+       'frontwallscalev', 'frontwallscaleu', 'frontwallimage',
+       'floorscalev', 'floorscaleu', 'floorimage',
+       'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage'
     ];
+
     let fieldValues = {};
+    let skyboxType = this.sceneBlockPanel.querySelector('.skyboxtemplatetype').checked;
+
+    if (skyboxType)
+      csv_row['skyboxtype'] = 'skybox';
+    else
+      csv_row['skyboxtype'] = 'building';
+
     fields.forEach(field => {
       let f = this.sceneBlockPanel.querySelector('.' + field);
-      if (f.getAttribute('type') === 'checkbox')
-        csv_row[field] = f.checked ? '1' : '';
-      else
-        csv_row[field] = f.value;
+      if (f) {
+        if (f.getAttribute('type') === 'checkbox')
+          csv_row[field] = f.checked ? '1' : '';
+        else
+          csv_row[field] = f.value;
+      }
     });
 
-    let skyboxType = this.sceneBlockPanel.querySelector('.skyboxtemplatetype').checked;
     if (skyboxType) {
       csv_row.width = csv_row.skyboxsize;
       csv_row.height = csv_row.skyboxsize;
