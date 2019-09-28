@@ -435,7 +435,8 @@ class cMacro {
     field.value = 'Uploading...';
 
     let fireSet = gAPPP.a.modelSets['block'];
-    let key = gAPPP.a.profile.selectedWorkspace + '/buildingtemplate/';
+    let uKey = fireSet.getKey();
+    let key = gAPPP.a.profile.selectedWorkspace + `/${uKey}/`;
     fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
       field.value = uploadResult.downloadURL;
     });

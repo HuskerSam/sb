@@ -111,6 +111,9 @@ class cView extends bView {
     this.dialog.querySelector('.open_workspace_new_window')
       .addEventListener('click', e => this.openNewWindow(this.tag, this.key));
 
+    this.dialog.querySelector('.builder_image_picker_dialog')
+      .addEventListener('click', e => this.showImagePicker());
+
     this.view_layout_select.value = this.layoutMode;
   }
   generateAnimation(genNew = false, animationKey = false, clearWorkspace = true, reload = true) {
@@ -826,6 +829,7 @@ class cView extends bView {
               <button class="asset_show_home_btn"><i class="material-icons">library_books</i></button>
               <button class="expand_all_global_btn"><i class="material-icons">unfold_more</i></button>
               <button class="open_workspace_new_window"><i class="material-icons">open_in_new</i></button>
+              <button class="builder_image_picker_dialog"><i class="material-icons">collections</i></button>
               <div style="clear:both;"></div>
             </div>
             <select class="dataview_record_tag">
@@ -1107,5 +1111,8 @@ class cView extends bView {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  }
+  showImagePicker(input) {
+
   }
 }
