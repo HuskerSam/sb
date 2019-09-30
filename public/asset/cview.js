@@ -1120,19 +1120,15 @@ class cView extends bView {
 
       let template = `<div style="display:flex;flex-direction:column;height:100%;">
           <div class="dialog-header-images">
-            <h1 style="display:inline-block;">Preset Textures</h1>
+            <h1 style="display:inline-block;">Standard Assets</h1>
             <div style="text-align:center;margin:.5em;display:inline-block">
               <label>
                 <input type="radio" class="" name="texture-dialog-options" value="mesh" checked>
                 <span>Mesh</span>
               </label>
               <label>
-                <input type="radio" class="" name="texture-dialog-options" value="wall">
-                <span>Wall</span>
-              </label>
-              <label>
-                <input type="radio" class="" name="texture-dialog-options" value="floor">
-                <span>Ground/Floor</span>
+                <input type="radio" class="" name="texture-dialog-options" value="texture">
+                <span>Texture</span>
               </label>
               <label>
                 <input type="radio" name="texture-dialog-options" value="bump">
@@ -1143,13 +1139,29 @@ class cView extends bView {
           <div style="flex:1;display:flex;flex-direction:row;position:relative;">
             <select size="4" style="height:100%;flex:1;" class="texture-picker">
             </select>
-            <div class="texture-image" style="flex:1;width:50%;background-size:contain;background-position:center;background-repeat:no-repeat">
+            <div class="texture-image imagebackgrounddisplay" style="flex:1;width:50%;position:relative">
+              <div style="position:absolute;bottom:.15em;width:100%;text-align:center;">
+                <input readonly class="imagePickerPathInput" style="border:none;width:90%;margin-left:5%;" type="text" />
+                <br>
+                <button class="copy_short">Copy Short</button>
+                <button class="copy_full">Copy Full</button>
+              </div>
+            </div>
+            <div class="mesh-details" style="flex:1;width:50%;flex-direction:column">
+              <input readonly class="mesh-details-path" style="border:none;width:90%;" type="text" />
+              <div class="mesh-details-images" style="flex:1;flex-direction:row;display:flex;height:50%;">
+                <div class="mesh_texture_img imagebackgrounddisplay" style="flex:1;"></div>
+                <div class="mesh_bump_img imagebackgrounddisplay" style="flex:1;"></div>
+                <div class="mesh-preview-img imagebackgrounddisplay" style="flex:1;"></div>
+              </div>
+              <div class="mesh_message" style=""></div>
+              <div class="mesh-options" style="">
+                <label>Name<input class="mesh_import_name" type="text" /></label>
+                <button>Import</button>
+              </div>
             </div>
           </div>
-          <div style="display:flex;flex-direction:row">
-            <input readonly class="imagePickerPathInput" style="background:transparent;flex:1;" type="text" />
-            <button class="copy_short">Copy Short</button>
-            <button class="copy_full">Copy Full</button>
+          <div style="text-align:right;">
             <button class="close">Close</button>
           </div>
         </div>`;
@@ -1159,6 +1171,7 @@ class cView extends bView {
       }
 
       this.imagePickerPathInput = this.imagePickerDialog.querySelector('.imagePickerPathInput');
+      this.meshDetailsPath = this.imagePickerDialog.querySelector('.mesh-details-path');
 
       this.imagePickerDialog.querySelector('.close')
         .addEventListener('click', () => this.imagePickerDialog.close());
@@ -1170,6 +1183,11 @@ class cView extends bView {
       this.imagePickerTextureSelect.addEventListener('input', e => this.updateTexturePickerSelectedImage());
 
       this.imagePickerTextureImage = this.imagePickerDialog.querySelector('.texture-image');
+      this.imagePickerMeshDetails = this.imagePickerDialog.querySelector('.mesh-details');
+      this.mesh_import_name = this.imagePickerDialog.querySelector('.mesh_import_name');
+      this.mesh_texture_img = this.imagePickerDialog.querySelector('.mesh_texture_img');
+      this.mesh_bump_img = this.imagePickerDialog.querySelector('.mesh_bump_img');
+      this.mesh_message = this.imagePickerDialog.querySelector('.mesh_message');
 
       this.imagePickerCopyFull = this.imagePickerDialog.querySelector('.copy_full');
       this.imagePickerCopyFull
@@ -1180,13 +1198,13 @@ class cView extends bView {
           alert('Copied: ' + this.imagePickerPathInput.value);
         });
 
-        this.imagePickerCopyShort = this.imagePickerDialog.querySelector('.copy_short');
-        this.imagePickerCopyShort
-          .addEventListener('click', e => {
-            this.imagePickerTextureSelect.focus();
-            document.execCommand("copy");
-            alert('Copied: ' + this.imagePickerTextureSelect.value);
-          });
+      this.imagePickerCopyShort = this.imagePickerDialog.querySelector('.copy_short');
+      this.imagePickerCopyShort
+        .addEventListener('click', e => {
+          this.imagePickerTextureSelect.focus();
+          document.execCommand("copy");
+          alert('Copied: ' + this.imagePickerTextureSelect.value);
+        });
 
       this.updateTexturePickerDialogRadio(radios[0]);
       document.body.appendChild(this.imagePickerDialog);
@@ -1195,19 +1213,63 @@ class cView extends bView {
     this.imagePickerDialog.showModal();
   }
   updateTexturePickerSelectedImage() {
-    let fullPath = gAPPP.cdnPrefix + 'textures/' + this.imagePickerTextureSelect.value.substring(3);
-    this.imagePickerPathInput.value = fullPath;
-    let url = 'url(' + fullPath + ')';
-    this.imagePickerTextureImage.style.backgroundImage = url;
+    if (this.pickerSelectedTextureType === 'mesh') {
+      let fullPath = gAPPP.cdnPrefix + 'meshes/' + this.imagePickerTextureSelect.value.substring(3);
+      this.meshDetailsPath.value = fullPath;
+      this.mesh_import_name.value = this.imagePickerTextureSelect.value.substring(3);
+
+      let meshIndex = this.imagePickerTextureSelect.selectedIndex;
+      let texture = gAPPP.meshesDetails[meshIndex].texture;
+      let textureURL = '';
+      if (texture) {
+        textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3);
+        textureURL = 'url(' + textureURL + ')';
+      }
+      let bump = gAPPP.meshesDetails[meshIndex].bump;
+      let bumpURL = '';
+      if (bump) {
+        bumpURL = gAPPP.cdnPrefix + 'textures/' + bump.substring(3);
+        bumpURL = 'url(' + bumpURL + ')';
+      }
+      let message = gAPPP.meshesDetails[meshIndex].message;
+      let messageText = '';
+      if (message)
+        messageText = message;
+
+      this.mesh_message.innerHTML = messageText;
+      this.mesh_texture_img.style.backgroundImage = textureURL;
+      this.mesh_bump_img.style.backgroundImage = bumpURL;
+    } else {
+      let fullPath = gAPPP.cdnPrefix + 'textures/' + this.imagePickerTextureSelect.value.substring(3);
+      this.imagePickerPathInput.value = fullPath;
+      let url = 'url(' + fullPath + ')';
+      this.imagePickerTextureImage.style.backgroundImage = url;
+    }
   }
   updateTexturePickerDialogRadio(ctl) {
     let type = ctl.value;
-    let list = gAPPP[type + 'Textures'];
-    let html = '';
-    list.forEach(i => html += `<option>${i}</option>`);
-    this.imagePickerTextureSelect.innerHTML = html;
+    this.pickerSelectedTextureType = type;
+    if (type === 'mesh') {
+      this.imagePickerTextureSelect.innerHTML = '';
+      this.imagePickerTextureImage.style.display = 'none';
+      let list = gAPPP.meshesDetails;
+      let html = '';
+      list.forEach(i => html += `<option>${i.mesh}</option>`);
+      this.imagePickerMeshDetails.style.display = '';
+      this.imagePickerTextureSelect.innerHTML = html;
 
-    this.imagePickerTextureSelect.selectedIndex = 0;
-    this.updateTexturePickerSelectedImage();
+      this.imagePickerTextureSelect.selectedIndex = 0;
+      this.updateTexturePickerSelectedImage();
+    } else {
+      this.imagePickerTextureImage.style.display = '';
+      this.imagePickerMeshDetails.style.display = 'none';
+      let list = gAPPP[type + 'Textures'];
+      let html = '';
+      list.forEach(i => html += `<option>${i}</option>`);
+      this.imagePickerTextureSelect.innerHTML = html;
+
+      this.imagePickerTextureSelect.selectedIndex = 0;
+      this.updateTexturePickerSelectedImage();
+    }
   }
 }

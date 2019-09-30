@@ -39,20 +39,21 @@ class gApp extends gInstanceSuper {
     let rrr = await fetch(`/assetlist/textures.json`)
     let json = await rrr.json();
 
-    this.meshTextures = [];
-    this.wallTextures = [];
-    this.floorTextures = [];
+    this.textureTextures = [];
     this.bumpTextures = [];
     for (let c = 0, l = json.length; c < l; c++) {
       if (json[c].type === 'bump')
         this.bumpTextures.push(json[c].path);
-      if (json[c].type === 'wall')
-        this.wallTextures.push(json[c].path);
-      if (json[c].type === 'mesh')
-        this.meshTextures.push(json[c].path);
-      if (json[c].type === 'floor')
-        this.floorTextures.push(json[c].path);
+      if (json[c].type === 'texture')
+        this.textureTextures.push(json[c].path);
     }
+
+    this.meshesDetails = [];
+    let meshesResponse = await fetch(`/assetlist/meshes.json`)
+    let text = await meshesResponse.text();
+    let meshesJson = JSON.parse(text);
+    for (let c = 0, l = meshesJson.length; c < l; c++)
+      this.meshesDetails.push(meshesJson[c]);
 
     return;
   }

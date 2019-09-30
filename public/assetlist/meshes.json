@@ -1,0 +1,278 @@
+[
+  {
+    "mesh": "sb:bee.glb"
+  },
+  {
+    "mesh": "sb:doublesidedshortshelf.babylon",
+    "texture": "sb:doublesidedshortshelf.jpg"
+  },
+  {
+    "mesh": "sb:freezer.babylon",
+    "texture": "sb:freezer.jpg",
+    "bump": "sb:freezerbmp.jpg"
+  },
+  {
+    "mesh": "sb:fruitbox.babylon",
+    "texture": "sb:fruitbox3.jpg",
+    "bump": "sb:fruitbox3bmp.jpg"
+  },
+  {
+    "mesh": "sb:fruitbox2.babylon",
+    "texture": "sb:fruitbox3.jpg",
+    "bump": "sb:fruitbox3bmp.jpg"
+  },
+  {
+    "mesh": "sb:fruitbox3.babylon",
+    "texture": "sb:fruitbox3.jpg",
+    "bump": "sb:fruitbox3bmp.jpg"
+  },
+  {
+    "mesh": "sb:magalarmpost.babylon",
+    "texture": "sb:magalarmpost.jpg"
+  },
+  {
+    "mesh": "sb:meshshelf.babylon",
+    "texture": "sb:meshshelf.jpg",
+    "bump": "sb:meshshelfbmp.jpg"
+  },
+  {
+    "mesh": "sb:pallet.babylon",
+    "texture": "sb:pallet.jpg",
+    "bump": "sb:palletbmp.jpg"
+  },
+  {
+    "mesh": "sb:paperbag.babylon",
+    "texture": "sb:paperbag.jpg"
+  },
+  {
+    "mesh": "sb:shelfoneside.babylon",
+    "texture": "sb:shelfoneside.jpg"
+  },
+  {
+    "mesh": "sb:singlesidedmediumshelf.babylon",
+    "texture": "sb:singlesidedmediumshelf.jpg"
+  },
+  {
+    "mesh": "sb:singlesidedmediumshelf2.babylon",
+    "texture": "sb:singlesidedmediumshelf2.jpg"
+  },
+  {
+    "mesh": "sb:singlesidedshortshelf.babylon",
+    "texture": "sb:singlesidedshortshelf.jpg"
+  },
+  {
+    "mesh": "sb:turnstyle.babylon",
+    "texture": "sb:turnstyle.jpg"
+  },
+  {
+    "mesh": "sb:vending1.babylon",
+    "texture": "sb:vending.jpg",
+    "bump": "sb:vendingbmp.jpg"
+  },
+  {
+    "mesh": "sb:vending2.babylon",
+    "texture": "sb:vending.jpg",
+    "bump": "sb:vendingbmp.jpg"
+  },
+  {
+    "mesh": "sb:woodbox.babylon",
+    "texture": "sb:woodbox.jpg",
+    "bump": "sb:woodboxbmp.jpg"
+  },
+  {
+    "mesh": "sb:plum.babylon",
+    "texture": "sb:applegrapemilkplum.png",
+    "bump": "sb:applegrapemilkplumbmp.png"
+  },
+  {
+    "mesh": "sb:milk.babylon",
+    "texture": "sb:applegrapemilkplum.png",
+    "bump": "sb:applegrapemilkplumbmp.png"
+  },
+  {
+    "mesh": "sb:apple.babylon",
+    "texture": "sb:applegrapemilkplum.png",
+    "bump": "sb:applegrapemilkplumbmp.png"
+  },
+  {
+    "mesh": "sb:grape.babylon",
+    "texture": "sb:applegrapemilkplum.png",
+    "bump": "sb:applegrapemilkplumbmp.png"
+  },
+  {
+    "mesh": "sb:baggette.babylon",
+    "texture": "sb:bagelbaggette.png",
+    "bump": "sb:bagelbaggettebmp.png"
+  },
+  {
+    "mesh": "sb:bagel.babylon",
+    "texture": "sb:bagelbaggette.png",
+    "bump": "sb:bagelbaggettebmp.png"
+  },
+  {
+    "mesh": "sb:peach.babylon",
+    "texture": "sb:bananalimepeach.png",
+    "bump": "sb:bananalimepeachbmp.png"
+  },
+  {
+    "mesh": "sb:banana.babylon",
+    "texture": "sb:bananalimepeach.png",
+    "bump": "sb:bananalimepeachbmp.png"
+  },
+  {
+    "mesh": "sb:lime.babylon",
+    "texture": "sb:bananalimepeach.png",
+    "bump": "sb:bananalimepeachbmp.png"
+  },
+  {
+    "mesh": "sb:bellpepper.babylon",
+    "texture": "sb:bellpepper.png",
+    "bump": "sb:bellpepperbmp.png"
+  },
+  {
+    "mesh": "sb:edamcheese.babylon",
+    "texture": "sb:blueedamcheese.png",
+    "bump": "sb:blueedamcheesebmp.png"
+  },
+  {
+    "mesh": "sb:bluecheese.babylon",
+    "texture": "sb:blueedamcheese.png",
+    "bump": "sb:blueedamcheesebmp.png"
+  },
+  {
+    "mesh": "sb:broccoli.babylon",
+    "texture": "sb:broccoli.png",
+    "bump": "sb:broccolibmp.png"
+  },
+  {
+    "mesh": "sb:bucket.babylon",
+    "texture": "sb:bucket.png",
+    "bump": "sb:bucketbmp.png"
+  },
+  {
+    "mesh": "sb:cabbage.babylon",
+    "texture": "sb:cabbage.png",
+    "bump": "sb:cabbagebmp.png"
+  },
+  {
+    "mesh": "sb:pumpkin.babylon",
+    "texture": "sb:carrotpumpkin.png",
+    "bump": "sb:carrotpumpkinbmp.png"
+  },
+  {
+    "mesh": "sb:carrot.babylon",
+    "texture": "sb:carrotpumpkin.png",
+    "bump": "sb:carrotpumpkinbmp.png"
+  },
+  {
+    "mesh": "sb:coconut.babylon",
+    "texture": "sb:coconut.png"
+  },
+  {
+    "mesh": "sb:corn.babylon",
+    "texture": "sb:cornspringonion.png",
+    "bump": "sb:cornspringonionbmp.png",
+    "message": "mesh not imported/upload"
+  },
+  {
+    "mesh": "sb:springonion.babylon",
+    "texture": "sb:cornspringonion.png",
+    "bump": "sb:cornspringonionbmp.png"
+  },
+  {
+    "mesh": "sb:tomato.babylon",
+    "texture": "sb:cucumbertomato.png",
+    "bump": "sb:cucumbertomatobmp.png"
+  },
+  {
+    "mesh": "sb:cucumber.babylon",
+    "texture": "sb:cucumbertomato.png",
+    "bump": "sb:cucumbertomatobmp.png"
+  },
+  {
+    "mesh": "sb:lemon.babylon",
+    "texture": "sb:lemonorange.png",
+    "bump": "sb:lemonorangebmp.png"
+  },
+  {
+    "mesh": "sb:orange.babylon",
+    "texture": "sb:lemonorange.png",
+    "bump": "sb:lemonorangebmp.png"
+  },
+  {
+    "mesh": "sb:lettuce.babylon",
+    "texture": "sb:lettuce.png",
+    "bump": "sb:lettucebmp.png"
+  },
+  {
+    "mesh": "sb:mango.babylon",
+    "texture": "sb:mango.png",
+    "bump": "sb:mangobmp.png"
+  },
+  {
+    "mesh": "sb:mushroom.babylon",
+    "texture": "sb:mushroompotato.png",
+    "bump": "sb:mushroompotatobmp.png"
+  },
+  {
+    "mesh": "sb:potato.babylon",
+    "texture": "sb:mushroompotato.png",
+    "bump": "sb:mushroompotatobmp.png"
+  },
+  {
+    "mesh": "sb:pear.babylon",
+    "texture": "sb:pear.png",
+    "bump": "sb:pearbmp.png"
+  },
+  {
+    "mesh": "sb:pretzel.babylon",
+    "texture": "sb:pretzel.png",
+    "bump": "sb:pretzelbmp.png"
+  },
+  {
+    "mesh": "sb:raddish.babylon",
+    "texture": "sb:radish.png",
+    "bump": "sb:radishbmp.png"
+  },
+  {
+    "mesh": "sb:sweetpotato.babylon",
+    "texture": "sb:sweetpotato.png",
+    "bump": "sb:sweetpotatobmp.png"
+  },
+  {
+    "mesh": "sb:watermelonslice.babylon",
+    "texture": "sb:watermelon.png",
+    "bump": "sb:watermelonbmp.png"
+  },
+  {
+    "mesh": "sb:watermelon.babylon",
+    "texture": "sb:watermelon.png",
+    "bump": "sb:watermelonbmp.png"
+  },
+  {
+    "mesh": "sb:fullfruitstand.babylon",
+    "texture": "sb:fullfruitstand.jpg"
+  },
+  {
+    "mesh": "sb:fullvegatablestand.babylon",
+    "texture": "sb:fullvegatablestand.jpg"
+  },
+  {
+    "mesh": "sb:bowl.babylon",
+    "texture`": "sb:bowl.png",
+    "bump": "sb:bowlbmp.png"
+  },
+  {
+    "mesh": "sb:box.babylon",
+    "texture": "sb:box.png",
+    "bump": "sb:boxbmp.png"
+  },
+  {
+    "mesh": "sb:grapevine.babylon",
+    "message": "texture status unknown"
+  },
+  {
+    "mesh": "sb:edgecooler.babylon",
+    "message": "texture status unknown"
+  }
+]

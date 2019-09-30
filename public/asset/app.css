@@ -898,3 +898,9 @@ dialog::backdrop {
 .dialog-header-images input[type="radio"] {
   transform: scale(1.5)
 }
+
+div.imagebackgrounddisplay {
+  background-size:contain;
+  background-position:center;
+  background-repeat:no-repeat
+}

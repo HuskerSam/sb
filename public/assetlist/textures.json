@@ -1,214 +1,7 @@
 [
   {
-    "path": "sb:doublesidedshortshelf.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:freezer.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:freezer.jpg",
-    "type": "mesh"
-  }, {
-    "path": "freezerbmp.jpg",
-    "type": "bump"
-  }, {
-    "path": "sb:fruitbox3.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:fruitbox3bmp.jpg",
-    "type": "bump"
-  }, {
-    "path": "sb:magalarmpost.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:meshshelf.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:meshshelfbmp.jpg",
-    "type": "bump"
-  }, {
-    "path": "sb:pallet.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:palletbmp.jpg",
-    "type": "bump"
-  }, {
-    "path": "sb:paperbag.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:shelfoneside.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:singlesidedmediumshelf.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:singlesidedmediumshelf2.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:singlesidedshortshelf.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:turnstyle.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:vending.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:vendingbmp.jpg",
-    "type": "bump"
-  }, {
-    "path": "sb:woodbox.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:woodboxbmp.jpg",
-    "type": "bump"
-  }, {
-    "path": "sb:applegrapemilkplum.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:applegrapemilkplumbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:bagelbaggette.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:bagelbaggettebmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:bananalimepeach.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:bananalimepeachbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:bellpepper.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:bellpepperbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:blueedamcheese.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:blueedamcheesebmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:bowl.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:bowlbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:box.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:boxbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:broccoli.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:broccolibmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:bucket.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:bucketbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:cabbage.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:cabbagebmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:carrotpumpkin.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:carrotpumpkinbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:coconut.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:coconutbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:cornspringonion.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:cornspringonionbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:cucumbertomato.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:cucumbertomatobmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:lemonorange.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:lemonorangebmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:lettuce.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:lettucebmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:mango.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:mangobmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:mushroompotato.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:mushroompotatobmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:pear.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:pearbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:pretzel.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:pretzelbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:radish.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:radishbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:sweetpotato.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:sweetpotatobmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:watermelon.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:watermelonbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:fullfruitstand.jpg",
-    "type": "mesh"
-  }, {
-    "path": "sb:fullvegatablestand.jpg",
-    "type": "mesh"
-  }, {
     "path": "sb:boardsquare.png",
-    "type": "wall"
+    "type": "texture"
   }, {
     "path": "sb:bmp-1011.jpg",
     "type": "bump"
@@ -276,58 +69,46 @@
     "path": "sb:boobmp-p.jpg",
     "type": "bump"
   }, {
-    "path": "sb:bowl.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:bowlbmp.png",
-    "type": "bump"
-  }, {
-    "path": "sb:box.png",
-    "type": "mesh"
-  }, {
-    "path": "sb:boxbmp.png",
-    "type": "bump"
-  }, {
     "path": "sb:bricks.jpg",
-    "type": "wall"
+    "type": "texture"
   }, {
     "path": "sb:bricks2.jpg",
-    "type": "wall"
+    "type": "texture"
   }, {
     "path": "sb:bricksmallgray.jpg",
-    "type": "wall"
+    "type": "texture"
   }, {
     "path": "sb:brittle.jpg",
-    "type": "wall"
+    "type": "texture"
   }, {
     "path": "sb:earth.jpg",
-    "type": "mesh"
+    "type": "texture"
   }, {
     "path": "sb:floor.png",
-    "type": "floor"
+    "type": "texture"
   }, {
     "path": "sb:floor_bump.png",
     "type": "bump"
   }, {
     "path": "sb:fur.jpg",
-    "type": "wall"
+    "type": "texture"
   }, {
     "path": "sb:grass.jpg",
-    "type": "floor"
+    "type": "texture"
   }, {
     "path": "sb:grass.png",
-    "type": "floor"
+    "type": "texture"
   }, {
     "path": "sb:grassn.png",
     "type": "bump"
   }, {
     "path": "sb:ground.jpg",
-    "type": "floor"
+    "type": "texture"
   }, {
     "path": "sb:woodpanel.jpg",
-    "type": "wall"
+    "type": "texture"
   }, {
     "path": "sb:darkroadwhitestripes.jpg",
-    "type": "floor"
+    "type": "texture"
   }
 ]
