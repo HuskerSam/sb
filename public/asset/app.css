@@ -882,3 +882,19 @@ a.workspace-asset-link-display {
 #profile-header-panel {
   overflow: visible;
 }
+
+dialog::backdrop {
+  background: rgba(255, 255, 255, .5);
+}
+
+.dialog-header-images {
+  text-align:center;
+}
+
+.dialog-header-images label span, .dialog-header-images h1 {
+  font-size: 1.5em;
+}
+
+.dialog-header-images input[type="radio"] {
+  transform: scale(1.5)
+}

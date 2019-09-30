@@ -1113,6 +1113,97 @@ class cView extends bView {
     document.body.removeChild(a);
   }
   showImagePicker(input) {
+    if (!this.imagePickerDialog) {
+      this.imagePickerDialog = document.createElement('dialog');
+      this.imagePickerDialog.classList.add('app-panel');
+      this.imagePickerDialog.setAttribute('style', 'height:75%;width:75%;padding:0;');
 
+      let template = `<div style="display:flex;flex-direction:column;height:100%;">
+          <div class="dialog-header-images">
+            <h1 style="display:inline-block;">Preset Textures</h1>
+            <div style="text-align:center;margin:.5em;display:inline-block">
+              <label>
+                <input type="radio" class="" name="texture-dialog-options" value="mesh" checked>
+                <span>Mesh</span>
+              </label>
+              <label>
+                <input type="radio" class="" name="texture-dialog-options" value="wall">
+                <span>Wall</span>
+              </label>
+              <label>
+                <input type="radio" class="" name="texture-dialog-options" value="floor">
+                <span>Ground/Floor</span>
+              </label>
+              <label>
+                <input type="radio" name="texture-dialog-options" value="bump">
+                <span>Bump</span>
+              </label>
+            </div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:row;position:relative;">
+            <select size="4" style="height:100%;flex:1;" class="texture-picker">
+            </select>
+            <div class="texture-image" style="flex:1;width:50%;background-size:contain;background-position:center;background-repeat:no-repeat">
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:row">
+            <input readonly class="imagePickerPathInput" style="background:transparent;flex:1;" type="text" />
+            <button class="copy_short">Copy Short</button>
+            <button class="copy_full">Copy Full</button>
+            <button class="close">Close</button>
+          </div>
+        </div>`;
+      this.imagePickerDialog.innerHTML = template;
+      if (!this.imagePickerDialog) {
+        dialogPolyfill.registerDialog(this.imagePickerDialog);
+      }
+
+      this.imagePickerPathInput = this.imagePickerDialog.querySelector('.imagePickerPathInput');
+
+      this.imagePickerDialog.querySelector('.close')
+        .addEventListener('click', () => this.imagePickerDialog.close());
+
+      let radios = this.imagePickerDialog.querySelectorAll('input[type="radio"]');
+      radios.forEach(ctl => ctl.addEventListener('input', e => this.updateTexturePickerDialogRadio(ctl)));
+
+      this.imagePickerTextureSelect = this.imagePickerDialog.querySelector('.texture-picker');
+      this.imagePickerTextureSelect.addEventListener('input', e => this.updateTexturePickerSelectedImage());
+
+      this.imagePickerTextureImage = this.imagePickerDialog.querySelector('.texture-image');
+
+      this.imagePickerCopyFull = this.imagePickerDialog.querySelector('.copy_full');
+      this.imagePickerCopyFull
+        .addEventListener('click', e => {
+          this.imagePickerPathInput.focus();
+          this.imagePickerPathInput.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+          alert('Copied: ' + this.imagePickerPathInput.value);
+        });
+
+        this.imagePickerCopyShort = this.imagePickerDialog.querySelector('.copy_short');
+        this.imagePickerCopyShort
+          .addEventListener('click', e => {
+            this.imagePickerTextureSelect.focus();
+            document.execCommand("copy");
+            alert('Copied: ' + this.imagePickerTextureSelect.value);
+          });
+
+      this.updateTexturePickerDialogRadio(radios[0]);
+      document.body.appendChild(this.imagePickerDialog);
+    }
+
+    this.imagePickerDialog.showModal();
+  }
+  updateTexturePickerSelectedImage() {
+    let fullPath = gAPPP.cdnPrefix + 'textures/' + this.imagePickerTextureSelect.value.substring(3);
+    this.imagePickerPathInput.value = fullPath;
+    let url = 'url(' + fullPath + ')';
+    this.imagePickerTextureImage.style.backgroundImage = url;
+  }
+  updateTexturePickerDialogRadio(ctl) {
+    let allImages = document.getElementById('sbimageslist');
+    this.imagePickerTextureSelect.innerHTML = allImages.innerHTML;
+    this.imagePickerTextureSelect.selectedIndex = 0;
+    this.updateTexturePickerSelectedImage();
   }
 }
