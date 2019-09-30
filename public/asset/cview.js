@@ -1201,8 +1201,12 @@ class cView extends bView {
     this.imagePickerTextureImage.style.backgroundImage = url;
   }
   updateTexturePickerDialogRadio(ctl) {
-    let allImages = document.getElementById('sbimageslist');
-    this.imagePickerTextureSelect.innerHTML = allImages.innerHTML;
+    let type = ctl.value;
+    let list = gAPPP[type + 'Textures'];
+    let html = '';
+    list.forEach(i => html += `<option>${i}</option>`);
+    this.imagePickerTextureSelect.innerHTML = html;
+
     this.imagePickerTextureSelect.selectedIndex = 0;
     this.updateTexturePickerSelectedImage();
   }

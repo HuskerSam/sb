@@ -26,6 +26,7 @@ class gApp extends gInstanceSuper {
     this.loadDataLists('sbmesheslist');
     this.loadDataLists('skyboxlist');
     this.loadDataLists('fontfamilydatalist');
+    this.loadTextures();
 
     firebase.auth().getRedirectResult().then(result => {
       if (!firebase.auth().currentUser)
@@ -33,6 +34,27 @@ class gApp extends gInstanceSuper {
           if (!result.user)
             this.a.signIn(true);
     });
+  }
+  async loadTextures() {
+    let rrr = await fetch(`/assetlist/textures.json`)
+    let json = await rrr.json();
+
+    this.meshTextures = [];
+    this.wallTextures = [];
+    this.floorTextures = [];
+    this.bumpTextures = [];
+    for (let c = 0, l = json.length; c < l; c++) {
+      if (json[c].type === 'bump')
+        this.bumpTextures.push(json[c].path);
+      if (json[c].type === 'wall')
+        this.wallTextures.push(json[c].path);
+      if (json[c].type === 'mesh')
+        this.meshTextures.push(json[c].path);
+      if (json[c].type === 'floor')
+        this.floorTextures.push(json[c].path);
+    }
+
+    return;
   }
   async profileReadyAndLoaded() {
     let urlParams = new URLSearchParams(window.location.search);
