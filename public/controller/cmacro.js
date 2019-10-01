@@ -56,10 +56,6 @@ class cMacro {
     if (this[tag + 'Template'])
       t = this[tag + 'Template']();
     panel.innerHTML = base + t + `<hr>`;
-
-    if (this[tag + 'Register'])
-      this[tag + 'Register']();
-
     if (tag !== 'workspace') {
       this.panelCreateBtn = this.panel.querySelector('.add-button');
       this.panelCreateBtn.addEventListener('click', e => this.createItem());
@@ -68,6 +64,11 @@ class cMacro {
       this.panelInput = this.panel.querySelector('.add-item-name');
       this.createMesage = this.panel.querySelector('.creating-message');
     }
+
+    if (this[tag + 'Register'])
+      this[tag + 'Register']();
+
+
   }
   updateFontField(textDom) {
     textDom.style.fontFamily = textDom.value;
@@ -357,7 +358,7 @@ class cMacro {
         </div>
       </div>
     </div>
-    <div class="csv_block_import_preview"></div>
+    <div class="csv_import_preview"></div>
     <datalist id="webfontsuggestionlist"></datalist>`;
   }
   blockRegister() {
@@ -391,7 +392,7 @@ class cMacro {
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
-    this.csv_block_import_preview = this.panel.querySelector('.csv_block_import_preview');
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
 
     this.webfontsuggestionlist = this.panel.querySelector('#webfontsuggestionlist');
     let html = '';
@@ -425,6 +426,118 @@ class cMacro {
     this.blockHelperChange();
     this.blockSkyboxChange();
     this.blockUpdateCSV();
+  }
+  meshTemplate() {
+    return `<div style="font-weight:bold;line-height:2em;text-align:center;"><label><input class="importstandardmesh" type="checkbox" /><span>Import Standard Asset</span></label></div>
+    <div class="standartmeshassetpanel" style="flex:1;display:none;flex-direction:column;min-height:400px;height:75vh">
+      <select size="4" style="flex:1;" class="mesh-picker">
+      </select>
+      <input readonly class="mesh-details-path" style="border:none;width:90%;" type="text" />
+      <div class="mesh-details-images" style="flex:3;flex-direction:row;display:flex;">
+        <div class="mesh_texture_img imagebackgrounddisplay" style="flex:1;"></div>
+        <div class="mesh_bump_img imagebackgrounddisplay" style="flex:1;"></div>
+        <div class="mesh-preview-img imagebackgrounddisplay" style="display:none;flex:1;"></div>
+      </div>
+      <div class="mesh_message" style=""></div>
+    </div>
+    <div class="csv_import_preview"></div>`;
+  }
+  meshRegister() {
+    this.meshPickerTextureSelect = this.panel.querySelector('.mesh-picker');
+    this.meshPickerTextureSelect.addEventListener('input', e => this.meshUpdateCSV());
+    this.mesh_texture_img = this.panel.querySelector('.mesh_texture_img');
+    this.mesh_bump_img = this.panel.querySelector('.mesh_bump_img');
+    this.mesh_message = this.panel.querySelector('.mesh_message');
+    this.standartmeshassetpanel = this.panel.querySelector('.standartmeshassetpanel');
+
+    this.meshDetailsPath = this.panel.querySelector('.mesh-details-path');
+    this.meshPickerTextureSelect.innerHTML = '';
+    let list = gAPPP.meshesDetails;
+    let html = '';
+    list.forEach(i => html += `<option>${i.mesh}</option>`);
+    this.meshPickerTextureSelect.innerHTML = html;
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+
+    this.importstandardmesh = this.panel.querySelector('.importstandardmesh');
+    this.importstandardmesh.addEventListener('input', e => this.meshUpdateCSV());
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV()));
+
+    this.meshPickerTextureSelect.selectedIndex = 0;
+    this.meshUpdateCSV();
+  }
+  meshScrape() {
+    if (!this.importstandardmesh.checked) {
+      this.standartmeshassetpanel.style.display = 'none';
+      return {};
+    }
+    this.standartmeshassetpanel.style.display = 'flex';
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      asset: 'meshtexture',
+      name: this.newName
+    };
+
+    let meshPath = this.meshPickerTextureSelect.value;
+    let fullPath = gAPPP.cdnPrefix + 'meshes/' + meshPath.substring(3);
+    this.meshDetailsPath.value = fullPath;
+
+    let meshIndex = this.meshPickerTextureSelect.selectedIndex;
+    let texture = gAPPP.meshesDetails[meshIndex].texture;
+    let textureURL = '';
+    if (!texture)
+      texture = '';
+    if (texture) {
+      textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3);
+      textureURL = 'url(' + textureURL + ')';
+      this.mesh_texture_img.style.backgroundImage = textureURL;
+      this.mesh_texture_img.style.display = '';
+    } else {
+      this.mesh_texture_img.style.backgroundImage = '';
+      this.mesh_texture_img.style.display = 'none';
+    }
+    let bump = gAPPP.meshesDetails[meshIndex].bump;
+    if (!bump)
+      bump = '';
+    let bumpURL = '';
+    if (bump) {
+      bumpURL = gAPPP.cdnPrefix + 'textures/' + bump.substring(3);
+      bumpURL = 'url(' + bumpURL + ')';
+      this.mesh_bump_img.style.backgroundImage = bumpURL;
+      this.mesh_bump_img.style.display = '';
+
+    } else {
+      this.mesh_bump_img.style.backgroundImage = '';
+      this.mesh_bump_img.style.display = 'none';
+    }
+    let message = gAPPP.meshesDetails[meshIndex].message;
+    let messageText = '';
+    if (message)
+      messageText = message;
+
+    this.mesh_message.innerHTML = messageText;
+    csv_row['ambient'] = 'x';
+    csv_row['diffuse'] = 'x';
+    csv_row['emissive'] = 'x';
+    csv_row['meshpath'] = meshPath;
+    csv_row['materialname'] = csv_row['name'] + '_material' ;
+    csv_row['bmppath'] = bump;
+    csv_row['texturepath'] = texture;
+
+    return csv_row;
+  }
+  async meshCreate() {
+    let row = this.meshScrape();
+
+    let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+    return blockResult.key;
+  }
+  meshUpdateCSV() {
+    let csv = this.meshScrape();
+    if (csv) {
+      this.csv_import_preview.innerHTML = Papa.unparse([csv]);
+    } else
+      this.csv_import_preview.innerHTML = new Date();
   }
   _handleImageTextureUpload(fileCtl, field) {
     let fileBlob = fileCtl.files[0];
@@ -726,8 +839,8 @@ class cMacro {
       r = this._shapeScrapeTextPlane();
 
     if (r) {
-      this.csv_block_import_preview.innerHTML = Papa.unparse([r]);
+      this.csv_import_preview.innerHTML = Papa.unparse([r]);
     } else
-      this.csv_block_import_preview.innerHTML = new Date();
+      this.csv_import_preview.innerHTML = new Date();
   }
 }

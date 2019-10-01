@@ -259,7 +259,7 @@
   },
   {
     "mesh": "sb:bowl.babylon",
-    "texture`": "sb:bowl.png",
+    "texture": "sb:bowl.png",
     "bump": "sb:bowlbmp.png"
   },
   {

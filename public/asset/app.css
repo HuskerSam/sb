@@ -753,7 +753,7 @@ select {
   display: none;
 }
 
-.csv_block_import_preview {
+.csv_import_preview {
   display: none;
   overflow: hidden;
   text-overflow: clip;
@@ -761,7 +761,7 @@ select {
   font-size: .8em;
 }
 
-.app-expanded .csv_block_import_preview {
+.app-expanded .csv_import_preview {
   display: block;
 }
 

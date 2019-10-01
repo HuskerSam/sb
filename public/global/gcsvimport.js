@@ -185,7 +185,9 @@ class gCSVImport {
     };
     promises.push(this.dbSetRecord('material', materialData));
 
-    return Promise.all(promises);
+    let results = await Promise.all(promises);
+    console.log(results[0]);
+    return results[0];
   }
   async addCSVBlockRow(row) {
     let blockData = {
