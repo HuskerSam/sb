@@ -1,8 +1,4 @@
-[
-  {
-    "mesh": "sb:bee.glb"
-  },
-  {
+[{
     "mesh": "sb:doublesidedshortshelf.babylon",
     "texture": "sb:doublesidedshortshelf.jpg"
   },
@@ -47,6 +43,9 @@
   {
     "mesh": "sb:shelfoneside.babylon",
     "texture": "sb:shelfoneside.jpg"
+  },
+  {
+    "mesh": "sb:bee.glb"
   },
   {
     "mesh": "sb:singlesidedmediumshelf.babylon",

@@ -519,10 +519,54 @@ class gCSVImport {
         return this.addCSVAnimatedLine(row);
       case 'sceneblock':
         return this.addCSVSceneBlock(row);
+      case 'material':
+        return this.addCSVMaterial(row);
     }
 
     console.log('type not found', row);
     return;
+  }
+  async addCSVMaterial(row) {
+    let materialName = row.name;
+    let textureName = '';
+    if (row.texture) {
+      textureName = row.name + '_texture';
+      let textureData = {
+        title: textureName,
+        url: row.texture,
+        vScale: row.scalev,
+        uScale: row.scaleu
+      };
+      this.dbSetRecord('texture', textureData);
+    }
+
+    let bumpName = '';
+    if (row.bumptexture) {
+      bumpName = row.name + '_bumptexture';
+      let textureData = {
+        title: bumpName,
+        url: row.bumptexture,
+        vScale: row.bumpv,
+        uScale: row.bumpu
+      };
+      this.dbSetRecord('texture', textureData);
+    }
+
+    let ambientTextureName = row.ambient === 'x' ? textureName : '';
+    let diffuseTextureName = row.diffuse === 'x' ? textureName : '';
+    let emissiveTextureName = row.emissive === 'x' ? textureName : '';
+    let materialData = {
+      title: row.name,
+      diffuseTextureName,
+      ambientTextureName,
+      emissiveTextureName,
+      bumpTextureName: bumpName,
+      ambientColor: '',
+      backFaceCulling: true,
+      diffuseColor: '',
+      emissiveColor: ''
+    };
+    return await this.dbSetRecord('material', materialData);
   }
   async addCSVAnimatedLine(row) {
     let dashes = GLOBALUTIL.getNumberOrDefault(row.dashes, 1);

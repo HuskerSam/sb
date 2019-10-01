@@ -428,15 +428,15 @@ class cMacro {
     this.blockUpdateCSV();
   }
   meshTemplate() {
-    return `<div style="font-weight:bold;line-height:2em;text-align:center;"><label><input class="importstandardmesh" type="checkbox" /><span>Import Standard Asset</span></label></div>
-    <div class="standartmeshassetpanel" style="flex:1;display:none;flex-direction:column;min-height:400px;height:75vh">
+    return `<div style="font-weight:bold;line-height:2em;text-align:center;"><label><input class="importstandardmesh" type="checkbox" checked /><span>Import Standard Asset</span></label></div>
+    <div class="standardmeshassetpanel" style="flex:1;display:none;flex-direction:column;min-height:400px;height:75vh">
       <select size="4" style="flex:1;" class="mesh-picker">
       </select>
       <input readonly class="mesh-details-path" style="border:none;width:90%;" type="text" />
       <div class="mesh-details-images" style="flex:3;flex-direction:row;display:flex;">
-        <div class="mesh_texture_img imagebackgrounddisplay" style="flex:1;"></div>
-        <div class="mesh_bump_img imagebackgrounddisplay" style="flex:1;"></div>
-        <div class="mesh-preview-img imagebackgrounddisplay" style="display:none;flex:1;"></div>
+        <img class="mesh_texture_img" crossorigin="anonymous" style="flex:1;max-width:45%;max-height:100%;">
+        <img class="mesh_bump_img" crossorigin="anonymous" style="flex:1;max-width:45%;max-height:100%;">
+        <img class="mesh-preview-img" crossorigin="anonymous" style="display:none;">
       </div>
       <div class="mesh_message" style=""></div>
     </div>
@@ -448,7 +448,7 @@ class cMacro {
     this.mesh_texture_img = this.panel.querySelector('.mesh_texture_img');
     this.mesh_bump_img = this.panel.querySelector('.mesh_bump_img');
     this.mesh_message = this.panel.querySelector('.mesh_message');
-    this.standartmeshassetpanel = this.panel.querySelector('.standartmeshassetpanel');
+    this.standardmeshassetpanel = this.panel.querySelector('.standardmeshassetpanel');
 
     this.meshDetailsPath = this.panel.querySelector('.mesh-details-path');
     this.meshPickerTextureSelect.innerHTML = '';
@@ -468,10 +468,10 @@ class cMacro {
   }
   meshScrape() {
     if (!this.importstandardmesh.checked) {
-      this.standartmeshassetpanel.style.display = 'none';
+      this.standardmeshassetpanel.style.display = 'none';
       return {};
     }
-    this.standartmeshassetpanel.style.display = 'flex';
+    this.standardmeshassetpanel.style.display = 'flex';
     this.newName = this.panelInput.value.trim();
     let csv_row = {
       asset: 'meshtexture',
@@ -489,11 +489,11 @@ class cMacro {
       texture = '';
     if (texture) {
       textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3);
-      textureURL = 'url(' + textureURL + ')';
-      this.mesh_texture_img.style.backgroundImage = textureURL;
+
+      this.mesh_texture_img.setAttribute('src', textureURL);
       this.mesh_texture_img.style.display = '';
     } else {
-      this.mesh_texture_img.style.backgroundImage = '';
+      this.mesh_texture_img.setAttribute('src', '');
       this.mesh_texture_img.style.display = 'none';
     }
     let bump = gAPPP.meshesDetails[meshIndex].bump;
@@ -502,12 +502,11 @@ class cMacro {
     let bumpURL = '';
     if (bump) {
       bumpURL = gAPPP.cdnPrefix + 'textures/' + bump.substring(3);
-      bumpURL = 'url(' + bumpURL + ')';
-      this.mesh_bump_img.style.backgroundImage = bumpURL;
+      this.mesh_bump_img.setAttribute('src', bumpURL);
       this.mesh_bump_img.style.display = '';
 
     } else {
-      this.mesh_bump_img.style.backgroundImage = '';
+      this.mesh_bump_img.setAttribute('src', '');
       this.mesh_bump_img.style.display = 'none';
     }
     let message = gAPPP.meshesDetails[meshIndex].message;
@@ -520,7 +519,7 @@ class cMacro {
     csv_row['diffuse'] = 'x';
     csv_row['emissive'] = 'x';
     csv_row['meshpath'] = meshPath;
-    csv_row['materialname'] = csv_row['name'] + '_material' ;
+    csv_row['materialname'] = csv_row['name'] + '_material';
     csv_row['bmppath'] = bump;
     csv_row['texturepath'] = texture;
 
@@ -538,6 +537,141 @@ class cMacro {
       this.csv_import_preview.innerHTML = Papa.unparse([csv]);
     } else
       this.csv_import_preview.innerHTML = new Date();
+  }
+  materialTemplate() {
+    return `<div style="font-weight:bold;line-height:2em;text-align:center;"><label><input class="importstandardmaterial" type="checkbox" checked /><span>Import Standard Asset</span></label></div>
+      <div class="standardmaterialassetpanel" style="flex:1;display:none;flex-direction:column;min-height:400px;height:75vh">
+        <div style="flex:1;display:flex;flex-direction:row;">
+          <select size="4" style="flex:1;" class="materialtexturepicker">
+          </select>
+          <select size="4" style="flex:1;" class="materialbumppicker">
+          </select>
+        </div>
+        <div style="text-align:center;">
+          <label><input type="checkbox" class="materialdiffuse" checked />diffuse</label>
+          <label><input type="checkbox" class="materialambient" checked />ambient</label>
+          <label><input type="checkbox" class="materialemissive" checked />emissive</label>
+          <br>
+          <label><span>scalev</span><input type="text" class="materialscalev" value="1" /></label>
+          <label><span>scaleu</span><input type="text" class="materialscaleu" value="1" /></label>
+          <label><span>bumpv</span><input type="text" class="materialbumpv" value="1" /></label>
+          <label><span>bumpu</span><input type="text" class="materialbumpu" value="1" /></label>
+        </div>
+        <div class="material-details-images" style="flex:1;flex-direction:row;display:flex;overflow:hidden;">
+          <img class="material_texture_img" crossorigin="anonymous" style="flex:1;max-width:50%;max-height:50vh;">
+          <img class="material_bump_img" crossorigin="anonymous" style="flex:1;max-width:50%;max-height:50vh;">
+        </div>
+      </div>
+      <div class="csv_import_preview"></div>`;
+  }
+  materialRegister() {
+    this.standardmaterialassetpanel = this.panel.querySelector('.standardmaterialassetpanel');
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
+    this.materialbumppicker = this.panel.querySelector('.materialbumppicker');
+    this.material_texture_img = this.panel.querySelector('.material_texture_img');
+    this.material_bump_img = this.panel.querySelector('.material_bump_img');
+    this.materialscalev = this.panel.querySelector('.materialscalev');
+    this.materialscaleu = this.panel.querySelector('.materialscaleu');
+    this.materialbumpv = this.panel.querySelector('.materialbumpv');
+    this.materialbumpu = this.panel.querySelector('.materialbumpu');
+    this.materialdiffuse = this.panel.querySelector('.materialdiffuse');
+    this.materialambient = this.panel.querySelector('.materialambient');
+    this.materialemissive = this.panel.querySelector('.materialemissive');
+
+    let list = gAPPP.textureTextures;
+    let html = '';
+    list.forEach(i => html += `<option>${i}</option>`);
+    this.materialtexturepicker.innerHTML = html;
+
+    list = gAPPP.bumpTextures;
+    html = '<option></option>';
+    list.forEach(i => html += `<option>${i}</option>`);
+    this.materialbumppicker.innerHTML = html;
+
+    this.materialtexturepicker.selectedIndex = 0;
+    this.materialbumppicker.selectedIndex = 0;
+
+    this.importstandardmaterial = this.panel.querySelector('.importstandardmaterial');
+    this.importstandardmaterial.addEventListener('input', e => this.materialUpdateCSV());
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
+
+    this.materialUpdateCSV();
+  }
+  materialUpdateCSV() {
+    let csv = this.materialScrape();
+    if (csv) {
+      this.csv_import_preview.innerHTML = Papa.unparse([csv]);
+    } else
+      this.csv_import_preview.innerHTML = new Date();
+  }
+  materialScrape() {
+    if (!this.importstandardmaterial.checked) {
+      this.standardmaterialassetpanel.style.display = 'none';
+      return {};
+    }
+    this.standardmaterialassetpanel.style.display = 'flex';
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      asset: 'material',
+      name: this.newName
+    };
+
+    let texture = this.materialtexturepicker.value;
+    let textureURL = '';
+    if (!texture)
+      texture = '';
+    if (texture) {
+      textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3);
+
+      this.material_texture_img.setAttribute('src', textureURL);
+      this.material_texture_img.style.display = '';
+    } else {
+      this.material_texture_img.setAttribute('src', '');
+      this.material_texture_img.style.display = 'none';
+    }
+
+    let bumptexture = this.materialbumppicker.value;
+    let bumpURL = '';
+    if (!bumptexture)
+      bumptexture = '';
+    if (bumptexture) {
+      bumpURL = gAPPP.cdnPrefix + 'textures/' + bumptexture.substring(3);
+
+      this.material_bump_img.setAttribute('src', bumpURL);
+      this.material_bump_img.style.display = '';
+    } else {
+      this.material_bump_img.setAttribute('src', '');
+      this.material_bump_img.style.display = 'none';
+    }
+    let scaleu = this.materialscaleu.value;
+    let scalev = this.materialscalev.value;
+    let bumpu = this.materialbumpu.value;
+    let bumpv = this.materialbumpv.value;
+    let diffuse = this.materialdiffuse.checked ? 'x' : '';
+    let emissive = this.materialemissive.checked ? 'x' : '';
+    let ambient = this.materialambient.checked ? 'x' : '';
+
+    Object.assign(csv_row, {
+      texture,
+      bumptexture,
+      scaleu,
+      scalev,
+      bumpu,
+      bumpv,
+      diffuse,
+      emissive,
+      ambient
+    });
+
+    return csv_row;
+  }
+  async materialCreate() {
+    let row = this.materialScrape();
+
+    let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+    return blockResult.key;
   }
   _handleImageTextureUpload(fileCtl, field) {
     let fileBlob = fileCtl.files[0];
