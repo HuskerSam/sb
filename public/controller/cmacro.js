@@ -295,24 +295,25 @@ class cMacro {
         </div>
       </div>
       <div class="buildingscenefeatures" style="display:none;">
-        <label><span>width (x-axis)</span><input type="text" class="width" value="50" /></label>
-        <label><span>depth (z-axis)</span><input type="text" class="depth" value="100" /></label>
-        <label><span>height (y-axis)</span><input type="text" class="height" value="40" /></label>
+        <label><span>w (x)</span><input type="text" class="width" value="50" /></label>
+        <label><span>d (z)</span><input type="text" class="depth" value="100" /></label>
+        <label><span>h (y)</span><input type="text" class="height" value="40" /></label>
+        <label><input type="checkbox" class="show_uploads" /><span>uploads</span></label>
         <br>
         <label><span>floormaterial</span><input type="text" style="width:15em;" class="floormaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="floormaterial">
         <br>
-        <div class="image-upload-building">
+        <div class="image_upload_building">
           <label><span>floorimage</span><input type="text" style="width:15em;" class="floorimage texturepathinput" list="sbimageslist" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
-          <label><span>floorscalev (repeat x)</span><input type="text" class="floorscalev" value="1" /></label>
-          <label><span>floorscaleu (repeat z)</span><input type="text" class="floorscaleu" value="1" /></label>
+          <label><span>floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
+          <label><span>floorscaleu (z)</span><input type="text" class="floorscaleu" value="1" /></label>
         </div>
         <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
         <br>
-        <div class="image-upload-building">
+        <div class="image_upload_building">
           <label><span>backwallimage</span><input type="text" style="width:15em;" class="backwallimage texturepathinput" list="sbimageslist" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
@@ -322,7 +323,7 @@ class cMacro {
         <label><span>frontwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="frontwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="frontwallmaterial">
         <br>
-        <div class="image-upload-building">
+        <div class="image_upload_building">
           <label><span>frontwallimage</span><input type="text" style="width:15em;" class="frontwallimage texturepathinput" list="sbimageslist" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
@@ -332,7 +333,7 @@ class cMacro {
         <label><span>leftwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="leftwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="leftwallmaterial">
         <br>
-        <div class="image-upload-building">
+        <div class="image_upload_building">
           <label><span>leftwallimage</span><input type="text" style="width:15em;" class="leftwallimage texturepathinput" list="sbimageslist" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
@@ -342,7 +343,7 @@ class cMacro {
         <label><span>rightwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="rightwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="rightwallmaterial">
         <br>
-        <div class="image-upload-building">
+        <div class="image_upload_building">
           <label><span>rightwallimage</span><input type="text" style="width:15em;" class="rightwallimage texturepathinput" list="sbimageslist" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
@@ -352,7 +353,7 @@ class cMacro {
         <label><span>ceilingmaterial</span>&nbsp;<input type="text" style="width:15em;" class="ceilingmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="ceilingmaterial">
         <br>
-        <div class="image-upload-building">
+        <div class="image_upload_building">
           <label><span>ceilingwallimage</span><input type="text" style="width:15em;" class="ceilingwallimage texturepathinput" list="sbimageslist" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
@@ -425,6 +426,12 @@ class cMacro {
       let field = this.imageInputList[index];
       file.addEventListener('change', e => this._handleImageTextureUpload(file, field));
       btn.addEventListener('click', e => file.click());
+    });
+
+    this.show_uploads = this.panel.querySelector('.show_uploads');
+    this.image_upload_list = this.panel.querySelectorAll('.image_upload_building');
+    this.show_uploads.addEventListener('input', e => {
+      this.image_upload_list.forEach(ele => ele.style.display = (this.show_uploads.checked) ? 'block' : '');
     });
 
     this.blockHelperChange();
