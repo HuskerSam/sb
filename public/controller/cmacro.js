@@ -302,57 +302,63 @@ class cMacro {
         <label><span>floormaterial</span><input type="text" style="width:15em;" class="floormaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="floormaterial">
         <br>
-        <label><span>floorimage</span><input type="text" style="width:15em;" class="floorimage texturepathinput" list="sbimageslist" /></label>
-        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-        <br>
-        <label><span>floorscalev (repeat x)</span><input type="text" class="floorscalev" value="1" /></label>
-        <label><span>floorscaleu (repeat z)</span><input type="text" class="floorscaleu" value="1" /></label>
-        <br>
+        <div class="image-upload-building">
+          <label><span>floorimage</span><input type="text" style="width:15em;" class="floorimage texturepathinput" list="sbimageslist" /></label>
+          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <br>
+          <label><span>floorscalev (repeat x)</span><input type="text" class="floorscalev" value="1" /></label>
+          <label><span>floorscaleu (repeat z)</span><input type="text" class="floorscaleu" value="1" /></label>
+        </div>
         <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
         <br>
-        <label><span>backwallimage</span><input type="text" style="width:15em;" class="backwallimage texturepathinput" list="sbimageslist" /></label>
-        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-        <br>
-        <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
-        <label><span>backwallscaleu</span><input type="text" class="backwallscaleu" value="1" /></label>
-        <br>
+        <div class="image-upload-building">
+          <label><span>backwallimage</span><input type="text" style="width:15em;" class="backwallimage texturepathinput" list="sbimageslist" /></label>
+          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <br>
+          <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
+          <label><span>backwallscaleu</span><input type="text" class="backwallscaleu" value="1" /></label>
+        </div>
         <label><span>frontwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="frontwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="frontwallmaterial">
         <br>
-        <label><span>frontwallimage</span><input type="text" style="width:15em;" class="frontwallimage texturepathinput" list="sbimageslist" /></label>
-        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-        <br>
-        <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
-        <label><span>frontwallscaleu</span><input type="text" class="frontwallscaleu" value="1" /></label>
-        <br>
+        <div class="image-upload-building">
+          <label><span>frontwallimage</span><input type="text" style="width:15em;" class="frontwallimage texturepathinput" list="sbimageslist" /></label>
+          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <br>
+          <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
+          <label><span>frontwallscaleu</span><input type="text" class="frontwallscaleu" value="1" /></label>
+        </div>
         <label><span>leftwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="leftwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="leftwallmaterial">
         <br>
-        <label><span>leftwallimage</span><input type="text" style="width:15em;" class="leftwallimage texturepathinput" list="sbimageslist" /></label>
-        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-        <br>
-        <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
-        <label><span>leftwallscaleu</span><input type="text" class="leftwallscaleu" value="1" /></label>
-        <br>
+        <div class="image-upload-building">
+          <label><span>leftwallimage</span><input type="text" style="width:15em;" class="leftwallimage texturepathinput" list="sbimageslist" /></label>
+          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <br>
+          <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
+          <label><span>leftwallscaleu</span><input type="text" class="leftwallscaleu" value="1" /></label>
+        </div>
         <label><span>rightwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="rightwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="rightwallmaterial">
         <br>
-        <label><span>rightwallimage</span><input type="text" style="width:15em;" class="rightwallimage texturepathinput" list="sbimageslist" /></label>
-        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-        <br>
-        <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
-        <label><span>rightwallscaleu</span><input type="text" class="rightwallscaleu" value="1" /></label>
-        <br>
+        <div class="image-upload-building">
+          <label><span>rightwallimage</span><input type="text" style="width:15em;" class="rightwallimage texturepathinput" list="sbimageslist" /></label>
+          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <br>
+          <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
+          <label><span>rightwallscaleu</span><input type="text" class="rightwallscaleu" value="1" /></label>
+        </div>
         <label><span>ceilingmaterial</span>&nbsp;<input type="text" style="width:15em;" class="ceilingmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="ceilingmaterial">
         <br>
-        <label><span>ceilingwallimage</span><input type="text" style="width:15em;" class="ceilingwallimage texturepathinput" list="sbimageslist" /></label>
-        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-        <br>
-        <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
-        <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
-        <br>
+        <div class="image-upload-building">
+          <label><span>ceilingwallimage</span><input type="text" style="width:15em;" class="ceilingwallimage texturepathinput" list="sbimageslist" /></label>
+          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <br>
+          <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
+          <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
+        </div>
         <div style="text-align:center">
           <img src="/images/buildingtemplate.png" style="width:75%" />
         </div>
@@ -402,8 +408,6 @@ class cMacro {
     this.panel.querySelectorAll('.textfontfamily').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
-
-    this.panelInput = document.createElement('input'); //place holder
 
     this.panel.querySelectorAll('[list=materialdatatitlelookuplist]')
       .forEach(i => i.addEventListener('input', e => this.blockUpdateMaterialField(e, i)));

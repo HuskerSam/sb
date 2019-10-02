@@ -904,3 +904,7 @@ div.imagebackgrounddisplay {
   background-position:center;
   background-repeat:no-repeat
 }
+
+.image-upload-building {
+  display: none
+}
