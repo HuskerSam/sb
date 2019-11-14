@@ -270,7 +270,7 @@ class cMacro {
     </div>
     <div class="scene-block-add-options">
       <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span>Skybox</span></label>
-      <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span>Building</span></label>
+      <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span>Inside Building</span></label>
       <div class="skyboxscenefeatures">
         <label><span>Skybox Size</span><input type="text" class="skyboxsize" value="400" /></label>
         <br>

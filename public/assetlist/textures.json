@@ -1,24 +1,42 @@
 [{
     "path": "sb:display/bluestucco.jpg",
-    "type": "texture"
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "4"
   }, {
     "path": "sb:display/bricks727.jpg",
-    "type": "texture"
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
   }, {
     "path": "sb:display/floorconcretestone.jpg",
-    "type": "texture"
+    "type": "texture",
+    "filters": "floor",
+    "scaleu": "3",
+    "scalev": "4"
   },
   {
     "path": "sb:display/floorgraytile.jpg",
-    "type": "texture"
+    "type": "texture",
+    "filters": "floor",
+    "scaleu": "3",
+    "scalev": "4"
   },
   {
     "path": "sb:display/floorwhitegreyhex.jpg",
-    "type": "texture"
+    "type": "texture",
+    "filters": "floor",
+    "scaleu": "3",
+    "scalev": "4"
   },
   {
     "path": "sb:display/floorwhitetile.jpg",
-    "type": "texture"
+    "type": "texture",
+    "filters": "floor",
+    "scaleu": "3",
+    "scalev": "4"
   },
   {
     "path": "sb:display/goldishstonewall.jpg",
