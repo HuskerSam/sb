@@ -65,7 +65,28 @@ class gApp extends gInstanceSuper {
     for (let c = 0, l = meshesJson.length; c < l; c++)
       this.meshesDetails.push(meshesJson[c]);
 
+    this.appendDataList('floorTexturesDataList', this.floorTextures);
+    this.appendDataList('wallTexturesDataList', this.wallTextures);
+
     return;
+  }
+  appendDataList(listid, options, defaults = ['color: 1,1,1']) {
+    let currentList = document.getElementById(listid);
+    if (currentList)
+      currentList.remove();
+
+    currentList = document.createElement('datalist');
+    currentList.id = listid;
+
+    let outHtml = '';
+    for (let c = 0, l = defaults.length; c < l; c++)
+      outHtml += `<option>${defaults[c]}</option>`;
+
+    for (let c = 0, l = options.length; c < l; c++)
+      outHtml += `<option>${options[c]}</option>`;
+
+    currentList.innerHTML = outHtml;
+    document.body.appendChild(currentList);
   }
   async profileReadyAndLoaded() {
     let urlParams = new URLSearchParams(window.location.search);
