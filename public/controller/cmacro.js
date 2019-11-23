@@ -304,7 +304,7 @@ class cMacro {
         <input type="color" class="colorpicker" data-inputclass="floormaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>floorimage</span><input type="text" style="width:15em;" class="floorimage texturepathinput" list="sbimageslist" /></label>
+          <label><span>floorimage</span><input type="text" style="width:15em;" class="floorimage texturepathinput" list="floorTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
           <label><span>floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
@@ -314,7 +314,7 @@ class cMacro {
         <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>backwallimage</span><input type="text" style="width:15em;" class="backwallimage texturepathinput" list="sbimageslist" /></label>
+          <label><span>backwallimage</span><input type="text" style="width:15em;" class="backwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
           <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
@@ -324,7 +324,7 @@ class cMacro {
         <input type="color" class="colorpicker" data-inputclass="frontwallmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>frontwallimage</span><input type="text" style="width:15em;" class="frontwallimage texturepathinput" list="sbimageslist" /></label>
+          <label><span>frontwallimage</span><input type="text" style="width:15em;" class="frontwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
           <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
@@ -334,7 +334,7 @@ class cMacro {
         <input type="color" class="colorpicker" data-inputclass="leftwallmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>leftwallimage</span><input type="text" style="width:15em;" class="leftwallimage texturepathinput" list="sbimageslist" /></label>
+          <label><span>leftwallimage</span><input type="text" style="width:15em;" class="leftwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
           <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
@@ -344,7 +344,7 @@ class cMacro {
         <input type="color" class="colorpicker" data-inputclass="rightwallmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>rightwallimage</span><input type="text" style="width:15em;" class="rightwallimage texturepathinput" list="sbimageslist" /></label>
+          <label><span>rightwallimage</span><input type="text" style="width:15em;" class="rightwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
           <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
@@ -354,7 +354,7 @@ class cMacro {
         <input type="color" class="colorpicker" data-inputclass="ceilingmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>ceilingwallimage</span><input type="text" style="width:15em;" class="ceilingwallimage texturepathinput" list="sbimageslist" /></label>
+          <label><span>ceilingwallimage</span><input type="text" style="width:15em;" class="ceilingwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <br>
           <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
@@ -426,6 +426,17 @@ class cMacro {
       let field = this.imageInputList[index];
       file.addEventListener('change', e => this._handleImageTextureUpload(file, field));
       btn.addEventListener('click', e => file.click());
+      field.addEventListener('input', e => {
+          let path = field.value;
+          let obj = gAPPP.texturesFromFile[path];
+          if (obj) {
+            let inputs = field.parentElement.parentElement.querySelectorAll('input');
+            if (obj.scaleu)
+              inputs[2].value = obj.scaleu;
+            if (obj.scalev)
+              inputs[1].value = obj.scalev;
+          }
+      });
     });
 
     this.show_uploads = this.panel.querySelector('.show_uploads');

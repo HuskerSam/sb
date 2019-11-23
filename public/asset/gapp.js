@@ -43,6 +43,8 @@ class gApp extends gInstanceSuper {
     this.bumpTextures = [];
     this.floorTextures = [];
     this.wallTextures = [];
+    this.rawTexturesFile = json;
+    this.texturesFromFile = [];
     for (let c = 0, l = json.length; c < l; c++) {
       let filterStr = json[c].filters;
       if (!filterStr)
@@ -56,6 +58,8 @@ class gApp extends gInstanceSuper {
         this.floorTextures.push(json[c].path);
       if (filters.indexOf('wall') !== -1)
         this.wallTextures.push(json[c].path);
+
+      this.texturesFromFile[json[c].path] = json[c];
     }
 
     this.meshesDetails = [];
