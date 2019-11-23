@@ -11,6 +11,135 @@
     "scaleu": "3",
     "scalev": "3"
   }, {
+    "path": "sb:display/goldishstonewall.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/greybricklpattern.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/handdrawnbeigebrick.webp",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/handdrawnbeigebrick2.webp",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/handdrawnbeigetile.webp",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/handdrawnshingles.webp",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/handdrawnshingleslighter.webp",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  },
+  {
+    "path": "sb:display/handdrawnsimplewoodgrain.webp",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  },
+  {
+    "path": "sb:display/holzv2_08.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  },
+  {
+    "path": "sb:display/indoorwood44_1024.jpg",
+    "type": "texture",
+    "filters": "floor",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/stuccopink.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/wallart.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/wallplaster1.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/wallplasterbeige.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/wallplastermedium.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/wallplasterrough.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/bricksgrey.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/brickswithgreen.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/woodpanel11.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/woodpanel11darker.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
+    "path": "sb:display/woodpanel22.jpg",
+    "type": "texture",
+    "filters": "wall",
+    "scaleu": "3",
+    "scalev": "3"
+  }, {
     "path": "sb:display/floorconcretestone.jpg",
     "type": "texture",
     "filters": "floor",
@@ -39,82 +168,11 @@
     "scalev": "4"
   },
   {
-    "path": "sb:display/goldishstonewall.jpg",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/greybricklpattern.jpg",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/handdrawnbeigebrick.webp",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/handdrawnbeigebrick2.webp",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/handdrawnbeigetile.webp",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/handdrawnshingles.webp",
-    "type": "texture"
-  }, {
-    "path": "sb:display/handdrawnshingleslighter.webp",
-    "type": "texture"
-  }, {
-    "path": "sb:display/holzhanddrawnsimplewoodgrainv2_08.webp",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/holzv2_08.jpg",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/indoorwood44_1024.jpg",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/stuccopink.jpg",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/wallart.jpg",
-    "type": "texture"
-  }, {
-    "path": "sb:display/wallplaster1.jpg",
-    "type": "texture"
-  }, {
-    "path": "sb:display/wallplasterbeige.jpg",
-    "type": "texture"
-  }, {
-    "path": "sb:display/wallplastermedium.jpg",
-    "type": "texture"
-  }, {
-    "path": "sb:display/wallplasterrough.jpg",
-    "type": "texture"
-  }, {
-    "path": "sb:display/bricksgrey.jpg",
-    "type": "texture"
-  }, {
-    "path": "sb:display/brickswithgreen.jpg",
-    "type": "texture"
-  }, {
-    "path": "sb:display/woodpanel11.jpg",
-    "type": "texture"
-  }, {
-    "path": "sb:display/woodpanel11darker.jpg",
-    "type": "texture"
-  },
-  {
-    "path": "sb:display/woodpanel22.jpg",
-    "type": "texture"
-  },
-  {
     "path": "sb:boardsquare.png",
-    "type": "texture"
+    "type": "texture",
+    "filters": "floor",
+    "scaleu": "3",
+    "scalev": "4"
   },
   {
     "path": "sb:bmp-1011.jpg",
