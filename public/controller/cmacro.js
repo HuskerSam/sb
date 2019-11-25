@@ -452,11 +452,11 @@ class cMacro {
   meshTemplate() {
     return `<div class="standardmeshassetpanel" style="flex:1;flex-direction:column;min-height:400px">
       <div>
-        <label><span>meshpath</span><input type="text" style="width:50%;" class="mesh_details_path" value="" list="meshesDefaultsDataList" /></label>
+        <label><span>meshpath</span><input type="text" style="width:50%;" class="mesh_meshpath" value="" list="meshesDefaultsDataList" /></label>
         <br>
-        <label><span>texturepath</span><input type="text" style="width:50%;" class="texturepath_input" value="" /></label>
+        <label><span>texturepath</span><input type="text" style="width:50%;" class="mesh_texturepath" value="" /></label>
         <br>
-        <label><span>bmppath</span><input type="text" style="width:50%;" class="bmppath_input" value="" /></label>
+        <label><span>bmppath</span><input type="text" style="width:50%;" class="mesh_bmppath" value="" /></label>
         <br>
         <label><input class="show_parent_mesh_details" type="checkbox"><span>show parent details</span></label>
         <div class="mesh_parent_details" style="display:none">
@@ -492,9 +492,9 @@ class cMacro {
     this.mesh_message = this.panel.querySelector('.mesh_message');
     this.standardmeshassetpanel = this.panel.querySelector('.standardmeshassetpanel');
 
-    this.mesh_details_path = this.panel.querySelector('.mesh_details_path');
-    this.texturepath_input = this.panel.querySelector('.texturepath_input');
-    this.bmppath_input = this.panel.querySelector('.bmppath_input');
+    this.mesh_meshpath = this.panel.querySelector('.mesh_meshpath');
+    this.mesh_texturepath = this.panel.querySelector('.mesh_texturepath');
+    this.mesh_bmppath = this.panel.querySelector('.mesh_bmppath');
     this.mesh_x = this.panel.querySelector('.mesh_x');
     this.mesh_y = this.panel.querySelector('.mesh_y');
     this.mesh_z = this.panel.querySelector('.mesh_z');
@@ -520,43 +520,33 @@ class cMacro {
     this.meshUpdateCSV();
   }
   meshUpdateCSV(e, ctl) {
-    if (ctl && ctl.classList.contains('mesh_details_path')) {
+    if (ctl && ctl.classList.contains('mesh_meshpath')) {
       let meshPath = ctl.value;
       let meshIndex = gAPPP.meshesPaths.indexOf(meshPath);
 
       if (meshIndex !== -1) {
-        let texture = gAPPP.meshesDetails[meshIndex].texture;
-        if (!texture)
-          texture = '';
-        if (texture)
-          texture = gAPPP.cdnPrefix + 'textures/' + texture.substring(3);
-        this.texturepath_input.value = texture;
-
-        let bump = gAPPP.meshesDetails[meshIndex].bump;
-        if (!bump)
-          bump = '';
-        if (bump)
-          bump = gAPPP.cdnPrefix + 'textures/' + bump.substring(3);
-          this.bmppath_input.value = bump;
-
-        let message = gAPPP.meshesDetails[meshIndex].message;
-        if (!message)
-          message = '';
-        this.mesh_message.innerHTML = message;
-
-        let meshFields = ['x', 'y', 'z', 'sx', 'sy', 'sz', 'rx', 'ry', 'rz'];
+        let meshFields = ['message', 'texturepath', 'bmppath', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'rx', 'ry', 'rz'];
         let meshD = gAPPP.meshesDetails[meshIndex];
         meshFields.forEach((item, index) => {
           let value = meshD[item];
           if (!value)
             value = '';
-          this['mesh_' + item].value = value;
+          if (this['mesh_' + item].value !== undefined)
+            this['mesh_' + item].value = value;
+          else
+            this['mesh_' + item].innerHTML = value;
         });
       }
     }
 
-    this.mesh_texture_img.setAttribute('src', this.texturepath_input.value);
-    this.mesh_bump_img.setAttribute('src', this.bmppath_input.value);
+    let img = this.mesh_texturepath.value;
+    if (img.substr(0, 3) === 'sb:')
+      img = gAPPP.cdnPrefix + 'textures/' + img.substring(3);
+    this.mesh_texture_img.setAttribute('src', img);
+    let bump = this.mesh_bmppath.value;
+    if (bump.substr(0, 3) === 'sb:')
+      bump = gAPPP.cdnPrefix + 'textures/' + bump.substring(3);
+    this.mesh_bump_img.setAttribute('src', bump);
 
     let csv = this.meshScrape();
     if (csv) {
@@ -577,10 +567,10 @@ class cMacro {
     csv_row['ambient'] = 'x';
     csv_row['diffuse'] = 'x';
     csv_row['emissive'] = 'x';
-    csv_row['meshpath'] = this.mesh_details_path.value;
+    csv_row['meshpath'] = this.mesh_meshpath.value;
     csv_row['materialname'] = csv_row['name'] + '_material';
-    csv_row['bmppath'] = this.texturepath_input.value;
-    csv_row['texturepath'] = this.bmppath_input.value;
+    csv_row['bmppath'] = this.mesh_texturepath.value;
+    csv_row['texturepath'] = this.mesh_bmppath.value;
 
     return csv_row;
   }

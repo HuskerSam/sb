@@ -1,6 +1,6 @@
 [{
-    "mesh": "sb:doublesidedshortshelf.babylon",
-    "texture": "sb:doublesidedshortshelf.jpg",
+    "meshpath": "sb:doublesidedshortshelf.babylon",
+    "texturepath": "sb:doublesidedshortshelf.jpg",
     "x": "0",
     "y": "0",
     "z": "0",
@@ -12,275 +12,275 @@
     "rz": "0deg"
   },
   {
-    "mesh": "sb:freezer.babylon",
-    "texture": "sb:freezer.jpg",
-    "bump": "sb:freezerbmp.jpg"
+    "meshpath": "sb:freezer.babylon",
+    "texturepath": "sb:freezer.jpg",
+    "bmppath": "sb:freezerbmp.jpg"
   },
   {
-    "mesh": "sb:fruitbox.babylon",
-    "texture": "sb:fruitbox3.jpg",
-    "bump": "sb:fruitbox3bmp.jpg"
+    "meshpath": "sb:fruitbox.babylon",
+    "texturepath": "sb:fruitbox3.jpg",
+    "bmppath": "sb:fruitbox3bmp.jpg"
   },
   {
-    "mesh": "sb:fruitbox2.babylon",
-    "texture": "sb:fruitbox3.jpg",
-    "bump": "sb:fruitbox3bmp.jpg"
+    "meshpath": "sb:fruitbox2.babylon",
+    "texturepath": "sb:fruitbox3.jpg",
+    "bmppath": "sb:fruitbox3bmp.jpg"
   },
   {
-    "mesh": "sb:fruitbox3.babylon",
-    "texture": "sb:fruitbox3.jpg",
-    "bump": "sb:fruitbox3bmp.jpg"
+    "meshpath": "sb:fruitbox3.babylon",
+    "texturepath": "sb:fruitbox3.jpg",
+    "bmppath": "sb:fruitbox3bmp.jpg"
   },
   {
-    "mesh": "sb:magalarmpost.babylon",
-    "texture": "sb:magalarmpost.jpg"
+    "meshpath": "sb:magalarmpost.babylon",
+    "texturepath": "sb:magalarmpost.jpg"
   },
   {
-    "mesh": "sb:meshshelf.babylon",
-    "texture": "sb:meshshelf.jpg",
-    "bump": "sb:meshshelfbmp.jpg"
+    "meshpath": "sb:meshshelf.babylon",
+    "texturepath": "sb:meshshelf.jpg",
+    "bmppath": "sb:meshshelfbmp.jpg"
   },
   {
-    "mesh": "sb:pallet.babylon",
-    "texture": "sb:pallet.jpg",
-    "bump": "sb:palletbmp.jpg"
+    "meshpath": "sb:pallet.babylon",
+    "texturepath": "sb:pallet.jpg",
+    "bmppath": "sb:palletbmp.jpg"
   },
   {
-    "mesh": "sb:paperbag.babylon",
-    "texture": "sb:paperbag.jpg"
+    "meshpath": "sb:paperbag.babylon",
+    "texturepath": "sb:paperbag.jpg"
   },
   {
-    "mesh": "sb:shelfoneside.babylon",
-    "texture": "sb:shelfoneside.jpg"
+    "meshpath": "sb:shelfoneside.babylon",
+    "texturepath": "sb:shelfoneside.jpg"
   },
   {
-    "mesh": "sb:bee.glb"
+    "meshpath": "sb:bee.glb"
   },
   {
-    "mesh": "sb:singlesidedmediumshelf.babylon",
-    "texture": "sb:singlesidedmediumshelf.jpg"
+    "meshpath": "sb:singlesidedmediumshelf.babylon",
+    "texturepath": "sb:singlesidedmediumshelf.jpg"
   },
   {
-    "mesh": "sb:singlesidedmediumshelf2.babylon",
-    "texture": "sb:singlesidedmediumshelf2.jpg"
+    "meshpath": "sb:singlesidedmediumshelf2.babylon",
+    "texturepath": "sb:singlesidedmediumshelf2.jpg"
   },
   {
-    "mesh": "sb:singlesidedshortshelf.babylon",
-    "texture": "sb:singlesidedshortshelf.jpg"
+    "meshpath": "sb:singlesidedshortshelf.babylon",
+    "texturepath": "sb:singlesidedshortshelf.jpg"
   },
   {
-    "mesh": "sb:turnstyle.babylon",
-    "texture": "sb:turnstyle.jpg"
+    "meshpath": "sb:turnstyle.babylon",
+    "texturepath": "sb:turnstyle.jpg"
   },
   {
-    "mesh": "sb:vending1.babylon",
-    "texture": "sb:vending.jpg",
-    "bump": "sb:vendingbmp.jpg"
+    "meshpath": "sb:vending1.babylon",
+    "texturepath": "sb:vending.jpg",
+    "bmppath": "sb:vendingbmp.jpg"
   },
   {
-    "mesh": "sb:vending2.babylon",
-    "texture": "sb:vending.jpg",
-    "bump": "sb:vendingbmp.jpg"
+    "meshpath": "sb:vending2.babylon",
+    "texturepath": "sb:vending.jpg",
+    "bmppath": "sb:vendingbmp.jpg"
   },
   {
-    "mesh": "sb:woodbox.babylon",
-    "texture": "sb:woodbox.jpg",
-    "bump": "sb:woodboxbmp.jpg"
+    "meshpath": "sb:woodbox.babylon",
+    "texturepath": "sb:woodbox.jpg",
+    "bmppath": "sb:woodboxbmp.jpg"
   },
   {
-    "mesh": "sb:plum.babylon",
-    "texture": "sb:applegrapemilkplum.png",
-    "bump": "sb:applegrapemilkplumbmp.png"
+    "meshpath": "sb:plum.babylon",
+    "texturepath": "sb:applegrapemilkplum.png",
+    "bmppath": "sb:applegrapemilkplumbmp.png"
   },
   {
-    "mesh": "sb:milk.babylon",
-    "texture": "sb:applegrapemilkplum.png",
-    "bump": "sb:applegrapemilkplumbmp.png"
+    "meshpath": "sb:milk.babylon",
+    "texturepath": "sb:applegrapemilkplum.png",
+    "bmppath": "sb:applegrapemilkplumbmp.png"
   },
   {
-    "mesh": "sb:apple.babylon",
-    "texture": "sb:applegrapemilkplum.png",
-    "bump": "sb:applegrapemilkplumbmp.png"
+    "meshpath": "sb:apple.babylon",
+    "texturepath": "sb:applegrapemilkplum.png",
+    "bmppath": "sb:applegrapemilkplumbmp.png"
   },
   {
-    "mesh": "sb:grape.babylon",
-    "texture": "sb:applegrapemilkplum.png",
-    "bump": "sb:applegrapemilkplumbmp.png"
+    "meshpath": "sb:grape.babylon",
+    "texturepath": "sb:applegrapemilkplum.png",
+    "bmppath": "sb:applegrapemilkplumbmp.png"
   },
   {
-    "mesh": "sb:baggette.babylon",
-    "texture": "sb:bagelbaggette.png",
-    "bump": "sb:bagelbaggettebmp.png"
+    "meshpath": "sb:baggette.babylon",
+    "texturepath": "sb:bagelbaggette.png",
+    "bmppath": "sb:bagelbaggettebmp.png"
   },
   {
-    "mesh": "sb:bagel.babylon",
-    "texture": "sb:bagelbaggette.png",
-    "bump": "sb:bagelbaggettebmp.png"
+    "meshpath": "sb:bagel.babylon",
+    "texturepath": "sb:bagelbaggette.png",
+    "bmppath": "sb:bagelbaggettebmp.png"
   },
   {
-    "mesh": "sb:peach.babylon",
-    "texture": "sb:bananalimepeach.png",
-    "bump": "sb:bananalimepeachbmp.png"
+    "meshpath": "sb:peach.babylon",
+    "texturepath": "sb:bananalimepeach.png",
+    "bmppath": "sb:bananalimepeachbmp.png"
   },
   {
-    "mesh": "sb:banana.babylon",
-    "texture": "sb:bananalimepeach.png",
-    "bump": "sb:bananalimepeachbmp.png"
+    "meshpath": "sb:banana.babylon",
+    "texturepath": "sb:bananalimepeach.png",
+    "bmppath": "sb:bananalimepeachbmp.png"
   },
   {
-    "mesh": "sb:lime.babylon",
-    "texture": "sb:bananalimepeach.png",
-    "bump": "sb:bananalimepeachbmp.png"
+    "meshpath": "sb:lime.babylon",
+    "texturepath": "sb:bananalimepeach.png",
+    "bmppath": "sb:bananalimepeachbmp.png"
   },
   {
-    "mesh": "sb:bellpepper.babylon",
-    "texture": "sb:bellpepper.png",
-    "bump": "sb:bellpepperbmp.png"
+    "meshpath": "sb:bellpepper.babylon",
+    "texturepath": "sb:bellpepper.png",
+    "bmppath": "sb:bellpepperbmp.png"
   },
   {
-    "mesh": "sb:edamcheese.babylon",
-    "texture": "sb:blueedamcheese.png",
-    "bump": "sb:blueedamcheesebmp.png"
+    "meshpath": "sb:edamcheese.babylon",
+    "texturepath": "sb:blueedamcheese.png",
+    "bmppath": "sb:blueedamcheesebmp.png"
   },
   {
-    "mesh": "sb:bluecheese.babylon",
-    "texture": "sb:blueedamcheese.png",
-    "bump": "sb:blueedamcheesebmp.png"
+    "meshpath": "sb:bluecheese.babylon",
+    "texturepath": "sb:blueedamcheese.png",
+    "bmppath": "sb:blueedamcheesebmp.png"
   },
   {
-    "mesh": "sb:broccoli.babylon",
-    "texture": "sb:broccoli.png",
-    "bump": "sb:broccolibmp.png"
+    "meshpath": "sb:broccoli.babylon",
+    "texturepath": "sb:broccoli.png",
+    "bmppath": "sb:broccolibmp.png"
   },
   {
-    "mesh": "sb:bucket.babylon",
-    "texture": "sb:bucket.png",
-    "bump": "sb:bucketbmp.png"
+    "meshpath": "sb:bucket.babylon",
+    "texturepath": "sb:bucket.png",
+    "bmppath": "sb:bucketbmp.png"
   },
   {
-    "mesh": "sb:cabbage.babylon",
-    "texture": "sb:cabbage.png",
-    "bump": "sb:cabbagebmp.png"
+    "meshpath": "sb:cabbage.babylon",
+    "texturepath": "sb:cabbage.png",
+    "bmppath": "sb:cabbagebmp.png"
   },
   {
-    "mesh": "sb:pumpkin.babylon",
-    "texture": "sb:carrotpumpkin.png",
-    "bump": "sb:carrotpumpkinbmp.png"
+    "meshpath": "sb:pumpkin.babylon",
+    "texturepath": "sb:carrotpumpkin.png",
+    "bmppath": "sb:carrotpumpkinbmp.png"
   },
   {
-    "mesh": "sb:carrot.babylon",
-    "texture": "sb:carrotpumpkin.png",
-    "bump": "sb:carrotpumpkinbmp.png"
+    "meshpath": "sb:carrot.babylon",
+    "texturepath": "sb:carrotpumpkin.png",
+    "bmppath": "sb:carrotpumpkinbmp.png"
   },
   {
-    "mesh": "sb:coconut.babylon",
-    "texture": "sb:coconut.png"
+    "meshpath": "sb:coconut.babylon",
+    "texturepath": "sb:coconut.png"
   },
   {
-    "mesh": "sb:corn.babylon",
-    "texture": "sb:cornspringonion.png",
-    "bump": "sb:cornspringonionbmp.png",
+    "meshpath": "sb:corn.babylon",
+    "texturepath": "sb:cornspringonion.png",
+    "bmppath": "sb:cornspringonionbmp.png",
     "message": "mesh not imported/upload"
   },
   {
-    "mesh": "sb:springonion.babylon",
-    "texture": "sb:cornspringonion.png",
-    "bump": "sb:cornspringonionbmp.png"
+    "meshpath": "sb:springonion.babylon",
+    "texturepath": "sb:cornspringonion.png",
+    "bmppath": "sb:cornspringonionbmp.png"
   },
   {
-    "mesh": "sb:tomato.babylon",
-    "texture": "sb:cucumbertomato.png",
-    "bump": "sb:cucumbertomatobmp.png"
+    "meshpath": "sb:tomato.babylon",
+    "texturepath": "sb:cucumbertomato.png",
+    "bmppath": "sb:cucumbertomatobmp.png"
   },
   {
-    "mesh": "sb:cucumber.babylon",
-    "texture": "sb:cucumbertomato.png",
-    "bump": "sb:cucumbertomatobmp.png"
+    "meshpath": "sb:cucumber.babylon",
+    "texturepath": "sb:cucumbertomato.png",
+    "bmppath": "sb:cucumbertomatobmp.png"
   },
   {
-    "mesh": "sb:lemon.babylon",
-    "texture": "sb:lemonorange.png",
-    "bump": "sb:lemonorangebmp.png"
+    "meshpath": "sb:lemon.babylon",
+    "texturepath": "sb:lemonorange.png",
+    "bmppath": "sb:lemonorangebmp.png"
   },
   {
-    "mesh": "sb:orange.babylon",
-    "texture": "sb:lemonorange.png",
-    "bump": "sb:lemonorangebmp.png"
+    "meshpath": "sb:orange.babylon",
+    "texturepath": "sb:lemonorange.png",
+    "bmppath": "sb:lemonorangebmp.png"
   },
   {
-    "mesh": "sb:lettuce.babylon",
-    "texture": "sb:lettuce.png",
-    "bump": "sb:lettucebmp.png"
+    "meshpath": "sb:lettuce.babylon",
+    "texturepath": "sb:lettuce.png",
+    "bmppath": "sb:lettucebmp.png"
   },
   {
-    "mesh": "sb:mango.babylon",
-    "texture": "sb:mango.png",
-    "bump": "sb:mangobmp.png"
+    "meshpath": "sb:mango.babylon",
+    "texturepath": "sb:mango.png",
+    "bmppath": "sb:mangobmp.png"
   },
   {
-    "mesh": "sb:mushroom.babylon",
-    "texture": "sb:mushroompotato.png",
-    "bump": "sb:mushroompotatobmp.png"
+    "meshpath": "sb:mushroom.babylon",
+    "texturepath": "sb:mushroompotato.png",
+    "bmppath": "sb:mushroompotatobmp.png"
   },
   {
-    "mesh": "sb:potato.babylon",
-    "texture": "sb:mushroompotato.png",
-    "bump": "sb:mushroompotatobmp.png"
+    "meshpath": "sb:potato.babylon",
+    "texturepath": "sb:mushroompotato.png",
+    "bmppath": "sb:mushroompotatobmp.png"
   },
   {
-    "mesh": "sb:pear.babylon",
-    "texture": "sb:pear.png",
-    "bump": "sb:pearbmp.png"
+    "meshpath": "sb:pear.babylon",
+    "texturepath": "sb:pear.png",
+    "bmppath": "sb:pearbmp.png"
   },
   {
-    "mesh": "sb:pretzel.babylon",
-    "texture": "sb:pretzel.png",
-    "bump": "sb:pretzelbmp.png"
+    "meshpath": "sb:pretzel.babylon",
+    "texturepath": "sb:pretzel.png",
+    "bmppath": "sb:pretzelbmp.png"
   },
   {
-    "mesh": "sb:raddish.babylon",
-    "texture": "sb:radish.png",
-    "bump": "sb:radishbmp.png"
+    "meshpath": "sb:raddish.babylon",
+    "texturepath": "sb:radish.png",
+    "bmppath": "sb:radishbmp.png"
   },
   {
-    "mesh": "sb:sweetpotato.babylon",
-    "texture": "sb:sweetpotato.png",
-    "bump": "sb:sweetpotatobmp.png"
+    "meshpath": "sb:sweetpotato.babylon",
+    "texturepath": "sb:sweetpotato.png",
+    "bmppath": "sb:sweetpotatobmp.png"
   },
   {
-    "mesh": "sb:watermelonslice.babylon",
-    "texture": "sb:watermelon.png",
-    "bump": "sb:watermelonbmp.png"
+    "meshpath": "sb:watermelonslice.babylon",
+    "texturepath": "sb:watermelon.png",
+    "bmppath": "sb:watermelonbmp.png"
   },
   {
-    "mesh": "sb:watermelon.babylon",
-    "texture": "sb:watermelon.png",
-    "bump": "sb:watermelonbmp.png"
+    "meshpath": "sb:watermelon.babylon",
+    "texturepath": "sb:watermelon.png",
+    "bmppath": "sb:watermelonbmp.png"
   },
   {
-    "mesh": "sb:fullfruitstand.babylon",
-    "texture": "sb:fullfruitstand.jpg"
+    "meshpath": "sb:fullfruitstand.babylon",
+    "texturepath": "sb:fullfruitstand.jpg"
   },
   {
-    "mesh": "sb:fullvegatablestand.babylon",
-    "texture": "sb:fullvegatablestand.jpg"
+    "meshpath": "sb:fullvegatablestand.babylon",
+    "texturepath": "sb:fullvegatablestand.jpg"
   },
   {
-    "mesh": "sb:bowl.babylon",
-    "texture": "sb:bowl.png",
-    "bump": "sb:bowlbmp.png"
+    "meshpath": "sb:bowl.babylon",
+    "texturepath": "sb:bowl.png",
+    "bmppath": "sb:bowlbmp.png"
   },
   {
-    "mesh": "sb:box.babylon",
-    "texture": "sb:box.png",
-    "bump": "sb:boxbmp.png"
+    "meshpath": "sb:box.babylon",
+    "texturepath": "sb:box.png",
+    "bmppath": "sb:boxbmp.png"
   },
   {
-    "mesh": "sb:grapevine.babylon",
+    "meshpath": "sb:grapevine.babylon",
     "message": "texture status unknown"
   },
   {
-    "mesh": "sb:edgecooler.babylon",
+    "meshpath": "sb:edgecooler.babylon",
     "message": "texture status unknown"
   }
 ]
