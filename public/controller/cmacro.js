@@ -460,7 +460,7 @@ class cMacro {
         <br>
         <label><input class="show_parent_mesh_details" type="checkbox"><span>show parent details</span></label>
         <div class="mesh_parent_details" style="display:none">
-          <label><span>parent</span><input type="text" style="width:50%;" class="" value="" /></label>
+          <label><span>parent</span><input type="text" style="width:50%;" class="mesh_parent" value="" /></label>
           <br>
           <label><span>blockwrappername</span><input type="text" style="width:50%;" class="" value="" /></label>
           <br>
@@ -495,6 +495,7 @@ class cMacro {
     this.mesh_meshpath = this.panel.querySelector('.mesh_meshpath');
     this.mesh_texturepath = this.panel.querySelector('.mesh_texturepath');
     this.mesh_bmppath = this.panel.querySelector('.mesh_bmppath');
+    this.mesh_parent = this.panel.querySelector('.mesh_parent');
     this.mesh_x = this.panel.querySelector('.mesh_x');
     this.mesh_y = this.panel.querySelector('.mesh_y');
     this.mesh_z = this.panel.querySelector('.mesh_z');
@@ -517,6 +518,8 @@ class cMacro {
         this.mesh_parent_details.style.display = 'none';
     });
 
+    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'rx', 'ry', 'rz'];
+
     this.meshUpdateCSV();
   }
   meshUpdateCSV(e, ctl) {
@@ -525,9 +528,8 @@ class cMacro {
       let meshIndex = gAPPP.meshesPaths.indexOf(meshPath);
 
       if (meshIndex !== -1) {
-        let meshFields = ['message', 'texturepath', 'bmppath', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'rx', 'ry', 'rz'];
         let meshD = gAPPP.meshesDetails[meshIndex];
-        meshFields.forEach((item, index) => {
+        this.meshCSVFields.forEach((item, index) => {
           let value = meshD[item];
           if (!value)
             value = '';
@@ -564,13 +566,18 @@ class cMacro {
       name: this.newName
     };
 
+    csv_row['materialname'] = csv_row['name'] + '_material';
+    csv_row['parent'] = this.mesh_parent.value;
+
+    this.meshCSVFields.forEach((item, index) => {
+      if (item === 'message')
+        return;
+
+     csv_row[item] = this['mesh_' + item].value;
+    });
     csv_row['ambient'] = 'x';
     csv_row['diffuse'] = 'x';
     csv_row['emissive'] = 'x';
-    csv_row['meshpath'] = this.mesh_meshpath.value;
-    csv_row['materialname'] = csv_row['name'] + '_material';
-    csv_row['bmppath'] = this.mesh_texturepath.value;
-    csv_row['texturepath'] = this.mesh_bmppath.value;
 
     return csv_row;
   }

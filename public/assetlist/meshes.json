@@ -9,7 +9,8 @@
     "sz": "1",
     "rx": "0deg",
     "ry": "0deg",
-    "rz": "0deg"
+    "rz": "0deg",
+    "message": "default message<br>html possible"
   },
   {
     "meshpath": "sb:freezer.babylon",

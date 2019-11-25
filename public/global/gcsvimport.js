@@ -186,7 +186,11 @@ class gCSVImport {
     promises.push(this.dbSetRecord('material', materialData));
 
     let results = await Promise.all(promises);
-    console.log(results[0]);
+
+    let childRow = Object.assign({}, row);
+    row.asset = 'mesh';
+    this.addParentBlockChild(row);
+
     return results[0];
   }
   async addCSVBlockRow(row) {
