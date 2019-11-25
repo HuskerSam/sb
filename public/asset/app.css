@@ -763,6 +763,7 @@ select {
 
 .app-expanded .csv_import_preview {
   display: block;
+  overflow-x: auto;
 }
 
 .noassetsfound {

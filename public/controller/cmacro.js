@@ -427,15 +427,15 @@ class cMacro {
       file.addEventListener('change', e => this._handleImageTextureUpload(file, field));
       btn.addEventListener('click', e => file.click());
       field.addEventListener('input', e => {
-          let path = field.value;
-          let obj = gAPPP.texturesFromFile[path];
-          if (obj) {
-            let inputs = field.parentElement.parentElement.querySelectorAll('input');
-            if (obj.scaleu)
-              inputs[2].value = obj.scaleu;
-            if (obj.scalev)
-              inputs[1].value = obj.scalev;
-          }
+        let path = field.value;
+        let obj = gAPPP.texturesFromFile[path];
+        if (obj) {
+          let inputs = field.parentElement.parentElement.querySelectorAll('input');
+          if (obj.scaleu)
+            inputs[2].value = obj.scaleu;
+          if (obj.scalev)
+            inputs[1].value = obj.scalev;
+        }
       });
     });
 
@@ -450,14 +450,13 @@ class cMacro {
     this.blockUpdateCSV();
   }
   meshTemplate() {
-    return `<div style="font-weight:bold;line-height:2em;text-align:center;"><label><input class="importstandardmesh" type="checkbox" checked /><span>Import Standard Asset</span></label></div>
-    <div class="standardmeshassetpanel" style="flex:1;display:none;flex-direction:column;min-height:400px">
+    return `<div class="standardmeshassetpanel" style="flex:1;flex-direction:column;min-height:400px">
       <div>
-        <label><span>meshpath</span><input type="text" style="width:50%;" class="mesh-details-path" value="" list="meshesDefaultsDataList" /></label>
+        <label><span>meshpath</span><input type="text" style="width:50%;" class="mesh_details_path" value="" list="meshesDefaultsDataList" /></label>
         <br>
-        <label><span>texturepath</span><input type="text" style="width:50%;" class="" value="" /></label>
+        <label><span>texturepath</span><input type="text" style="width:50%;" class="texturepath_input" value="" /></label>
         <br>
-        <label><span>bmppath</span><input type="text" style="width:50%;" class="" value="" /></label>
+        <label><span>bmppath</span><input type="text" style="width:50%;" class="bmppath_input" value="" /></label>
         <br>
         <label><input class="show_parent_mesh_details" type="checkbox"><span>show parent details</span></label>
         <div class="mesh_parent_details" style="display:none">
@@ -465,17 +464,17 @@ class cMacro {
           <br>
           <label><span>blockwrappername</span><input type="text" style="width:50%;" class="" value="" /></label>
           <br>
-          <label><span>x</span><input type="text" class="" value="" /></label>
-          <label><span>y</span><input type="text" class="" value="" /></label>
-          <label><span>z</span><input type="text" class="" value="" /></label>
+          <label><span>x</span><input type="text" class="mesh_x" value="" /></label>
+          <label><span>y</span><input type="text" class="mesh_y" value="" /></label>
+          <label><span>z</span><input type="text" class="mesh_z" value="" /></label>
           <br>
-          <label><span>sx</span><input type="text" class="" value="" /></label>
-          <label><span>sy</span><input type="text" class="" value="" /></label>
-          <label><span>sz</span><input type="text" class="" value="" /></label>
+          <label><span>sx</span><input type="text" class="mesh_sx" value="" /></label>
+          <label><span>sy</span><input type="text" class="mesh_sy" value="" /></label>
+          <label><span>sz</span><input type="text" class="mesh_sz" value="" /></label>
           <br>
-          <label><span>rx</span><input type="text" class="" value="" /></label>
-          <label><span>ry</span><input type="text" class="" value="" /></label>
-          <label><span>rz</span><input type="text" class="" value="" /></label>
+          <label><span>rx</span><input type="text" class="mesh_rx" value="" /></label>
+          <label><span>ry</span><input type="text" class="mesh_ry" value="" /></label>
+          <label><span>rz</span><input type="text" class="mesh_rz" value="" /></label>
         </div>
       </div>
       <div class="mesh-details-images" style="flex:3;flex-direction:row;display:flex;">
@@ -493,12 +492,21 @@ class cMacro {
     this.mesh_message = this.panel.querySelector('.mesh_message');
     this.standardmeshassetpanel = this.panel.querySelector('.standardmeshassetpanel');
 
-    this.meshDetailsPath = this.panel.querySelector('.mesh-details-path');
+    this.mesh_details_path = this.panel.querySelector('.mesh_details_path');
+    this.texturepath_input = this.panel.querySelector('.texturepath_input');
+    this.bmppath_input = this.panel.querySelector('.bmppath_input');
+    this.mesh_x = this.panel.querySelector('.mesh_x');
+    this.mesh_y = this.panel.querySelector('.mesh_y');
+    this.mesh_z = this.panel.querySelector('.mesh_z');
+    this.mesh_sx = this.panel.querySelector('.mesh_sx');
+    this.mesh_sy = this.panel.querySelector('.mesh_sy');
+    this.mesh_sz = this.panel.querySelector('.mesh_sz');
+    this.mesh_rx = this.panel.querySelector('.mesh_rx');
+    this.mesh_ry = this.panel.querySelector('.mesh_ry');
+    this.mesh_rz = this.panel.querySelector('.mesh_rz');
 
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
 
-    this.importstandardmesh = this.panel.querySelector('.importstandardmesh');
-    this.importstandardmesh.addEventListener('input', e => this.meshUpdateCSV(e, this.importstandardmesh));
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV(e, i)));
     this.show_parent_mesh_details = this.panel.querySelector('.show_parent_mesh_details');
     this.mesh_parent_details = this.panel.querySelector('.mesh_parent_details');
@@ -512,9 +520,43 @@ class cMacro {
     this.meshUpdateCSV();
   }
   meshUpdateCSV(e, ctl) {
-    if (meshDetailsPath) {
+    if (ctl && ctl.classList.contains('mesh_details_path')) {
+      let meshPath = ctl.value;
+      let meshIndex = gAPPP.meshesPaths.indexOf(meshPath);
 
+      if (meshIndex !== -1) {
+        let texture = gAPPP.meshesDetails[meshIndex].texture;
+        if (!texture)
+          texture = '';
+        if (texture)
+          texture = gAPPP.cdnPrefix + 'textures/' + texture.substring(3);
+        this.texturepath_input.value = texture;
+
+        let bump = gAPPP.meshesDetails[meshIndex].bump;
+        if (!bump)
+          bump = '';
+        if (bump)
+          bump = gAPPP.cdnPrefix + 'textures/' + bump.substring(3);
+          this.bmppath_input.value = bump;
+
+        let message = gAPPP.meshesDetails[meshIndex].message;
+        if (!message)
+          message = '';
+        this.mesh_message.innerHTML = message;
+
+        let meshFields = ['x', 'y', 'z', 'sx', 'sy', 'sz', 'rx', 'ry', 'rz'];
+        let meshD = gAPPP.meshesDetails[meshIndex];
+        meshFields.forEach((item, index) => {
+          let value = meshD[item];
+          if (!value)
+            value = '';
+          this['mesh_' + item].value = value;
+        });
+      }
     }
+
+    this.mesh_texture_img.setAttribute('src', this.texturepath_input.value);
+    this.mesh_bump_img.setAttribute('src', this.bmppath_input.value);
 
     let csv = this.meshScrape();
     if (csv) {
@@ -526,61 +568,19 @@ class cMacro {
 
   }
   meshScrape() {
-    if (!this.importstandardmesh.checked) {
-      this.standardmeshassetpanel.style.display = 'none';
-      return {};
-    }
-    this.standardmeshassetpanel.style.display = 'flex';
     this.newName = this.panelInput.value.trim();
     let csv_row = {
       asset: 'meshtexture',
       name: this.newName
     };
 
-  //  let meshPath = this.meshPickerTextureSelect.value;
-  //  let fullPath = gAPPP.cdnPrefix + 'meshes/' + meshPath.substring(3);
-//    this.meshDetailsPath.value = fullPath;
-    return;
-    let meshIndex = this.meshPickerTextureSelect.selectedIndex;
-    let texture = gAPPP.meshesDetails[meshIndex].texture;
-    let textureURL = '';
-    if (!texture)
-      texture = '';
-    if (texture) {
-      textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3);
-
-      this.mesh_texture_img.setAttribute('src', textureURL);
-      this.mesh_texture_img.style.display = '';
-    } else {
-      this.mesh_texture_img.setAttribute('src', '');
-      this.mesh_texture_img.style.display = 'none';
-    }
-    let bump = gAPPP.meshesDetails[meshIndex].bump;
-    if (!bump)
-      bump = '';
-    let bumpURL = '';
-    if (bump) {
-      bumpURL = gAPPP.cdnPrefix + 'textures/' + bump.substring(3);
-      this.mesh_bump_img.setAttribute('src', bumpURL);
-      this.mesh_bump_img.style.display = '';
-
-    } else {
-      this.mesh_bump_img.setAttribute('src', '');
-      this.mesh_bump_img.style.display = 'none';
-    }
-    let message = gAPPP.meshesDetails[meshIndex].message;
-    let messageText = '';
-    if (message)
-      messageText = message;
-
-    this.mesh_message.innerHTML = messageText;
     csv_row['ambient'] = 'x';
     csv_row['diffuse'] = 'x';
     csv_row['emissive'] = 'x';
-    csv_row['meshpath'] = meshPath;
+    csv_row['meshpath'] = this.mesh_details_path.value;
     csv_row['materialname'] = csv_row['name'] + '_material';
-    csv_row['bmppath'] = bump;
-    csv_row['texturepath'] = texture;
+    csv_row['bmppath'] = this.texturepath_input.value;
+    csv_row['texturepath'] = this.bmppath_input.value;
 
     return csv_row;
   }

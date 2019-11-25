@@ -1,6 +1,15 @@
 [{
     "mesh": "sb:doublesidedshortshelf.babylon",
-    "texture": "sb:doublesidedshortshelf.jpg"
+    "texture": "sb:doublesidedshortshelf.jpg",
+    "x": "0",
+    "y": "0",
+    "z": "0",
+    "sx": "1",
+    "sy": "1",
+    "sz": "1",
+    "rx": "0deg",
+    "ry": "0deg",
+    "rz": "0deg"
   },
   {
     "mesh": "sb:freezer.babylon",
