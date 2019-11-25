@@ -39,7 +39,17 @@
   {
     "meshpath": "sb:meshshelf.babylon",
     "texturepath": "sb:meshshelf.jpg",
-    "bmppath": "sb:meshshelfbmp.jpg"
+    "bmppath": "sb:meshshelfbmp.jpg",
+    "x": "0",
+    "y": "0",
+    "z": "0",
+    "sx": "0.04",
+    "sy": "0.04",
+    "sz": "0.04",
+    "rx": "0deg",
+    "ry": "0deg",
+    "rz": "0deg",
+    "message": ""
   },
   {
     "meshpath": "sb:pallet.babylon",
