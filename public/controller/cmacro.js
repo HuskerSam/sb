@@ -454,15 +454,13 @@ class cMacro {
       <div>
         <label><span>meshpath</span><input type="text" style="width:50%;" class="mesh_meshpath" value="" list="meshesDefaultsDataList" /></label>
         <br>
-        <label><span>texturepath</span><input type="text" style="width:50%;" class="mesh_texturepath" value="" /></label>
+        <label><span>texturepath</span><input type="text" style="width:50%;" list="texturedatatitlelookuplist" class="mesh_texturepath" value="" /></label>
         <br>
-        <label><span>bmppath</span><input type="text" style="width:50%;" class="mesh_bmppath" value="" /></label>
+        <label><span>bmppath</span><input type="text" style="width:50%;" list="texturedatatitlelookuplist" class="mesh_bmppath" value="" /></label>
         <br>
         <label><input class="show_parent_mesh_details" type="checkbox"><span>show parent details</span></label>
         <div class="mesh_parent_details" style="display:none">
-          <label><span>parent</span><input type="text" style="width:50%;" class="mesh_parent" value="" /></label>
-          <br>
-          <label><span>blockwrappername</span><input type="text" style="width:50%;" class="" value="" /></label>
+          <label><span>parent</span><input type="text" style="width:50%;" list="blockdatatitlelookuplist" class="mesh_parent" value="" /></label>
           <br>
           <label><span>x</span><input type="text" class="mesh_x" value="" /></label>
           <label><span>y</span><input type="text" class="mesh_y" value="" /></label>
@@ -555,9 +553,6 @@ class cMacro {
       this.csv_import_preview.innerHTML = Papa.unparse([csv]);
     } else
       this.csv_import_preview.innerHTML = new Date();
-  }
-  meshMeshPathChange() {
-
   }
   meshScrape() {
     this.newName = this.panelInput.value.trim();

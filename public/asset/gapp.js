@@ -72,9 +72,9 @@ class gApp extends gInstanceSuper {
       this.meshesPaths.push(meshesJson[c].meshpath);
     }
 
-    this.appendDataList('floorTexturesDataList', this.floorTextures);
-    this.appendDataList('wallTexturesDataList', this.wallTextures);
-    this.appendDataList('meshesDefaultsDataList', this.meshesPaths);
+    this.appendDataList('floorTexturesDataList', this.floorTextures, []);
+    this.appendDataList('wallTexturesDataList', this.wallTextures, []);
+    this.appendDataList('meshesDefaultsDataList', this.meshesPaths, []);
 
     return;
   }

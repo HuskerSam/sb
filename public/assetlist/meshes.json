@@ -20,7 +20,17 @@
   {
     "meshpath": "sb:fruitbox.babylon",
     "texturepath": "sb:fruitbox3.jpg",
-    "bmppath": "sb:fruitbox3bmp.jpg"
+    "bmppath": "sb:fruitbox3bmp.jpg",
+    "x": "0",
+    "y": "0",
+    "z": "0",
+    "sx": ".15",
+    "sy": ".2",
+    "sz": ".12",
+    "rx": "0deg",
+    "ry": "90deg",
+    "rz": "0deg",
+    "message": ""
   },
   {
     "meshpath": "sb:fruitbox2.babylon",
@@ -96,7 +106,17 @@
   {
     "meshpath": "sb:woodbox.babylon",
     "texturepath": "sb:woodbox.jpg",
-    "bmppath": "sb:woodboxbmp.jpg"
+    "bmppath": "sb:woodboxbmp.jpg",
+    "x": "0",
+    "y": "0",
+    "z": "0",
+    "sx": ".2",
+    "sy": ".2",
+    "sz": ".2",
+    "rx": "180deg",
+    "ry": "90deg",
+    "rz": "0deg",
+    "message": ""
   },
   {
     "meshpath": "sb:plum.babylon",
@@ -270,11 +290,31 @@
   },
   {
     "meshpath": "sb:fullfruitstand.babylon",
-    "texturepath": "sb:fullfruitstand.jpg"
+    "texturepath": "sb:fullfruitstand.jpg",
+    "x": "0",
+    "y": "0",
+    "z": "0",
+    "sx": "1",
+    "sy": "0.75",
+    "sz": "0.75",
+    "rx": "0deg",
+    "ry": "90deg",
+    "rz": "0deg",
+    "message": ""
   },
   {
     "meshpath": "sb:fullvegatablestand.babylon",
-    "texturepath": "sb:fullvegatablestand.jpg"
+    "texturepath": "sb:fullvegatablestand.jpg",
+    "x": "0",
+    "y": "0",
+    "z": "0",
+    "sx": "1",
+    "sy": "0.75",
+    "sz": "0.75",
+    "rx": "0deg",
+    "ry": "-90deg",
+    "rz": "0deg",
+    "message": ""
   },
   {
     "meshpath": "sb:bowl.babylon",
@@ -292,6 +332,16 @@
   },
   {
     "meshpath": "sb:edgecooler.babylon",
-    "message": "texture status unknown"
+    "message": "use color: 1,0,1 to texture the mesh",
+    "x": "0",
+    "y": "0",
+    "z": "0",
+    "sx": "3.75",
+    "sy": "1.5",
+    "sz": "2",
+    "rx": "-90deg",
+    "ry": "180deg",
+    "rz": "180deg",
+    "message": ""
   }
 ]
