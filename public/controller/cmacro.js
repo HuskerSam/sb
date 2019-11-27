@@ -306,6 +306,7 @@ class cMacro {
         <div class="image_upload_building">
           <label><span>floorimage</span><input type="text" style="width:15em;" class="floorimage texturepathinput" list="floorTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
           <label><span>floorscaleu (z)</span><input type="text" class="floorscaleu" value="1" /></label>
@@ -316,6 +317,7 @@ class cMacro {
         <div class="image_upload_building">
           <label><span>backwallimage</span><input type="text" style="width:15em;" class="backwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
           <label><span>backwallscaleu</span><input type="text" class="backwallscaleu" value="1" /></label>
@@ -326,6 +328,7 @@ class cMacro {
         <div class="image_upload_building">
           <label><span>frontwallimage</span><input type="text" style="width:15em;" class="frontwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
           <label><span>frontwallscaleu</span><input type="text" class="frontwallscaleu" value="1" /></label>
@@ -336,6 +339,7 @@ class cMacro {
         <div class="image_upload_building">
           <label><span>leftwallimage</span><input type="text" style="width:15em;" class="leftwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
           <label><span>leftwallscaleu</span><input type="text" class="leftwallscaleu" value="1" /></label>
@@ -346,6 +350,7 @@ class cMacro {
         <div class="image_upload_building">
           <label><span>rightwallimage</span><input type="text" style="width:15em;" class="rightwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
           <label><span>rightwallscaleu</span><input type="text" class="rightwallscaleu" value="1" /></label>
@@ -356,6 +361,7 @@ class cMacro {
         <div class="image_upload_building">
           <label><span>ceilingwallimage</span><input type="text" style="width:15em;" class="ceilingwallimage texturepathinput" list="wallTexturesDataList" /></label>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
           <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
@@ -395,7 +401,6 @@ class cMacro {
 
     this.cloudImageInput = this.sceneBlockPanel.querySelector('.groundimage');
     this.groundImagePreview = this.sceneBlockPanel.querySelector('.cloud-file-ground-preview');
-    this.cloudImageInput.addEventListener('input', e => this.blockGroundChange());
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
@@ -730,6 +735,7 @@ class cMacro {
     let key = gAPPP.a.profile.selectedWorkspace + `/${uKey}/`;
     fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
       field.value = uploadResult.downloadURL;
+      this.blockUpdateCSV();
     });
   }
   _shapeScrapeTextPlane() {
@@ -887,8 +893,22 @@ class cMacro {
       if (f) {
         if (f.getAttribute('type') === 'checkbox')
           csv_row[field] = f.checked ? '1' : '';
-        else
+        else {
+          if (field.indexOf('image') !== -1) {
+            let p = f.parentElement.parentElement;
+            let img = p.querySelector('img');
+            let url = f.value;
+            if (url.substring(0, 3) === 'sb:')
+              url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
+
+            img.setAttribute('src', url);
+            if (f.value)
+              img.style.display = '';
+            else
+              img.style.display = 'none';
+          }
           csv_row[field] = f.value;
+        }
       }
     });
 
@@ -941,21 +961,6 @@ class cMacro {
 
       let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
       return blockResult.key;
-    }
-
-  }
-  blockGroundChange() {
-    let cloudImage = this.cloudImageInput.value.trim();
-
-    this.groundImagePreview.style.display = '';
-    if (cloudImage !== '') {
-      let url = cloudImage;
-      if (url.substring(0, 3) === 'sb:') {
-        url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
-      }
-      this.groundImagePreview.setAttribute('src', url);
-    } else {
-      this.groundImagePreview.style.display = 'none';
     }
 
   }

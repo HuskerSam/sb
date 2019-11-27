@@ -37,7 +37,7 @@
   }, {
     "path": "sb:display/handdrawnbeigetile.webp",
     "type": "texture",
-    "filters": "wall",
+    "filters": "floor,wall",
     "scaleu": "3",
     "scalev": "3"
   }, {
