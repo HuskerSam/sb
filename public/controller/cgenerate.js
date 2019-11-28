@@ -241,20 +241,6 @@ class cGenerate {
 
     return Promise.resolve();
   }
-  csvGenerateImportCSV() {
-    if (this.import_csv_file.files.length > 0) {
-      Papa.parse(this.import_csv_file.files[0], {
-        header: true,
-        complete: results => {
-          if (results.data) {
-            for (let c = 0, l = results.data.length; c < l; c++) {
-              new gCSVImport(gAPPP.loadedWID).addCSVRow(results.data[c]).then(() => {});
-            }
-          }
-        }
-      });
-    }
-  }
   async generateNewAnimation(genNew = true) {
     let newTitle = this.generate_animation_new_wrk_name.value.trim();
 

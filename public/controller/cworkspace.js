@@ -208,7 +208,7 @@ class cWorkspace {
     this.workplacesRemoveButton.addEventListener('click', e => this.bView.deleteProject());
 
     this.import_csv_file = this.domPanel.querySelector('.import_csv_file');
-    this.import_csv_file.addEventListener('change', e => this.csvGenerateImportCSV());
+    this.import_csv_file.addEventListener('change', e => this.workspaceImportCSV());
     this.import_csv_records = this.domPanel.querySelector('.import_csv_records');
     this.import_csv_records.addEventListener('click', e => this.import_csv_file.click());
 
@@ -218,6 +218,20 @@ class cWorkspace {
     this.import_asset_json_button.addEventListener('click', e => this.import_asset_json_file.click());
     this.export_asset_json_button = this.domPanel.querySelector('.export_asset_json_button');
     this.export_asset_json_button.addEventListener('click', e => this.workspaceExportJSON());
+  }
+  workspaceImportCSV() {
+    if (this.import_csv_file.files.length > 0) {
+      Papa.parse(this.import_csv_file.files[0], {
+        header: true,
+        complete: results => {
+          if (results.data) {
+            for (let c = 0, l = results.data.length; c < l; c++) {
+              new gCSVImport(gAPPP.loadedWID).addCSVRow(results.data[c]).then(() => {});
+            }
+          }
+        }
+      });
+    }
   }
   workspaceUpdateTagsList() {
     let name = this.bView.workplacesSelectEditName.value.trim();
