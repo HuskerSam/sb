@@ -19,8 +19,6 @@
   },
   {
     "meshpath": "sb:fruitbox.babylon",
-    "texturepath": "sb:fruitbox3.jpg",
-    "bmppath": "sb:fruitbox3bmp.jpg",
     "x": "0",
     "y": "0",
     "z": "0",
@@ -34,8 +32,16 @@
   },
   {
     "meshpath": "sb:fruitbox2.babylon",
-    "texturepath": "sb:fruitbox3.jpg",
-    "bmppath": "sb:fruitbox3bmp.jpg"
+    "x": "0",
+    "y": "0",
+    "z": "0",
+    "sx": ".15",
+    "sy": ".2",
+    "sz": ".12",
+    "rx": "0deg",
+    "ry": "90deg",
+    "rz": "0deg",
+    "message": ""
   },
   {
     "meshpath": "sb:fruitbox3.babylon",

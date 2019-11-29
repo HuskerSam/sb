@@ -444,6 +444,11 @@ class gCSVImport {
     return this.addCSVRow(sceneBC);
   }
   async addCSVBlockChildFrameRow(row) {
+    if (row.parent.substr(0, 9) === '::scene::') {
+      let sb = await this.csvFetchSceneBlock();
+      row.parent = sb.parent;
+    }
+
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
     if (parentRecords.records.length < 1) {
       console.log(row.parent, ' - block not found');
@@ -1932,12 +1937,18 @@ class gCSVImport {
   async importRows(rows) {
     if (!rows)
       return Promise.resolve();
-
+    /*
     let promises = [];
     for (let c = 0, l = rows.length; c < l; c++) {
       promises.push(this.addCSVRow(rows[c]));
     }
 
     return Promise.all(promises);
+    */
+    for (let c = 0, l = rows.length; c < l; c++)
+      await this.addCSVRow(rows[c]);
+
+    return Promise.resolve();
+
   }
 }
