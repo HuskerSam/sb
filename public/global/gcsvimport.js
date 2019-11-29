@@ -843,9 +843,6 @@ class gCSVImport {
 
     return blockResult;
   }
-  async _generateSceneBuildingBox(row) {
-
-  }
   async addCSVSceneBlock(row) {
     if (row.groundimage) {
       let texture = {
@@ -873,7 +870,19 @@ class gCSVImport {
       skyboxSize: row.skyboxsize
     }
 
+    if (row.blockflag) block.blockFlag = row.blockflag;
+    if (row.blockcode) block.blockCode = row.blockcode;
+
     let blockresult = await this.dbSetRecord('block', block);
+
+    if (row.frametime) {
+      let frameTime = row.frametime;
+      this.dbSetRecord('frame', {
+        parentKey: blockresult.key,
+        frameOrder: 10,
+        frameTime
+      });
+    }
 
     if (row.skyboxtype === 'building') {
       let panelrow = this.defaultCSVRow();
