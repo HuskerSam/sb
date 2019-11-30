@@ -522,8 +522,12 @@ class cWorkspace {
       let rows = this[tab + 'CSVData'];
       for (let c = 0, l = rows.length; c < l; c++)
         if (rows[c]['name'] === name && rows[c]['asset'] === asset)
-          if (field)
-            return rows[c][field];
+          if (field) {
+            let v = rows[c][field];
+            if (v === undefined)
+              return '';
+            return v;
+          }
           else
             return rows[c];
       return '';
