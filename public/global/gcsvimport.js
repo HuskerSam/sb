@@ -355,6 +355,10 @@ class gCSVImport {
 
     if (row.texturepath) {
       texturename = row.materialname;
+      if (!row.uoffset) row.uoffset = '';
+      if (!row.voffset) row.voffset = '';
+      if (!row.scaleu) row.scaleu = '';
+      if (!row.scalev) row.scalev = '';
       this.dbSetRecord('texture', {
         title: texturename,
         url: row.texturepath,
