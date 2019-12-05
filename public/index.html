@@ -488,7 +488,7 @@
     </div>
     <div style="flex:1">
       <div style="position:absolute;bottom:1em;width:100%;">
-        <h1>Virtual Displays for Retailers</h1>
+        <h1 class="message_header_homepage">Virtual Displays for Retailers</h1>
       </div>
     </div>
     <hr>
@@ -666,6 +666,10 @@
       });
 
       alert('Email submitted - thank you!');
+    }
+    function rotateHeaderMessages() {
+      let header = document.querySelector('.message_header_homepage');
+      let messages = ["Virtual Displays for Retailers", "Connect to Customers", ""];
     }
   </script>
 </body>
