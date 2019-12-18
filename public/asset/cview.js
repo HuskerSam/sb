@@ -915,6 +915,7 @@ class cView extends bView {
         <option>UniversalCamera</option>
         <option>ArcRotate</option>
         <option>FollowCamera</option>
+        <option>DeviceOrientationCamera</option>
       </datalist>
     </div>`;
   }

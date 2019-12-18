@@ -80,6 +80,10 @@ __animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraTargetBlock', 'ca
 __animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration',
   'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
 ];
+__animFieldFilters.blockCameraFields['DeviceOrientationCamera'] = ['cameraAimTarget', 'cameraName'];
+__animFieldFilters.animateCameraFields['DeviceOrientationCamera'] = ['cameraRadius','cameraRotationOffset', 'cameraAcceleration',
+  'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
+];
 __animFieldFilters.blockLightFields = {};
 __animFieldFilters.animateLightFields = {};
 __animFieldFilters.blockLightFields['Hemispheric'] = [];

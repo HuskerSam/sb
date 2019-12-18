@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Device Tester</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div style="text-align:center" id="data">
+
+  </div>
+  <script>
+    var data = document.getElementById('data');
+    var log = 'first line <br>';
+    data.innerHTML = log;
+    window.addEventListener('deviceorientation', function(event) {
+      
+      log = event.alpha + ' : ' + event.beta + ' : ' + event.gamma + '<br>';
+      data.innerHTML = log;
+    });
+  </script>
+
+</body>
+
+</html>
