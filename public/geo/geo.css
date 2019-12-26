@@ -1,0 +1,25 @@
+
+* {
+  font-size: 12pt
+}
+
+#user-profile-dialog-reset-button {
+  position: absolute;
+  bottom: .25em;
+  right: .25em;
+  z-index: 1;
+}
+
+.canvas-actions {
+  top: 0;
+  height: 100%;
+}
+
+.gps_info_overlay {
+  float:left;
+  padding: 2px;
+  background: rgba(255,255,255,.75);
+}
+
+.gps_info_overlay button {
+}

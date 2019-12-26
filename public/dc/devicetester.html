@@ -13,13 +13,45 @@
   </div>
   <script>
     var data = document.getElementById('data');
-    var log = 'first line <br>';
-    data.innerHTML = log;
+    var log1 = 'first line <br>';
+    var log2 = 'second line<br>';
+    data.innerHTML = log1 + log2;
     window.addEventListener('deviceorientation', function(event) {
-      
-      log = event.alpha + ' : ' + event.beta + ' : ' + event.gamma + '<br>';
-      data.innerHTML = log;
+      let alpha = event.alpha ? event.alpha.toFixed(0) : 'none';
+      let beta = event.beta ? event.beta.toFixed(1) : 'none';
+      let gamma = event.gamma ? event.gamma.toFixed(2) : 'none';
+
+      log1 = 'Alpha: ' + alpha + ', Beta:' + beta + ', Gamma:' + gamma + '<br>';
+
+      data.innerHTML = log1 + log2;
     });
+    function success(position) {
+      const latitude  = position.coords.latitude.toString();
+      const longitude = position.coords.longitude.toString();
+
+      log2 = `Latitude: ${latitude} °, Longitude: ${longitude} °<br>`;
+      log2 += latitude.substr(-4) + ', ' + longitude.substr(-4);
+      data.innerHTML = log1 + log2;
+    }
+
+    function errorWatch(err) {
+      log2 = 'ERROR(' + err.code + '): ' + err.message;
+      data.innerHTML = log1 + log2;
+    }
+
+    target = {
+      latitude : 0,
+      longitude: 0
+    };
+
+    options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    navigator.geolocation.watchPosition(success, errorWatch, options);
+
   </script>
 
 </body>

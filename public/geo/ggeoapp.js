@@ -1,4 +1,4 @@
-class gPublishApp extends gInstanceSuper {
+class gGeoApp extends gInstanceSuper {
   constructor() {
     super();
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
@@ -7,17 +7,11 @@ class gPublishApp extends gInstanceSuper {
   profileReadyAndLoaded() {
     this.loadStarted = true;
 
-    let urlParams = new URLSearchParams(window.location.search);
-    let workspace = urlParams.get('w');
-    let block = urlParams.get('b');
-    let workspaceCode = urlParams.get('z');
-    let blockCode = urlParams.get('y');
+    let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('tags', 'demo');
+    let workspace = '';
+    if (data)
+      workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
 
-    if (workspaceCode) {
-      let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('tags', workspaceCode);
-      if (data)
-        workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
-    }
     this.loadedWID = workspace;
     this.a.initProjectModels(workspace);
 
@@ -25,15 +19,14 @@ class gPublishApp extends gInstanceSuper {
     this.initialUILoad = false;
 
     gAPPP.a.workspaceLoadedCallback = () => {
-      if (blockCode) {
-        let data = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockCode', blockCode);
-        if (data)
-          block = gAPPP.a.modelSets['block'].lastKeyLookup;
-      }
+      let data = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockCode', 'demo');
+      let block = '';
+      if (data)
+        block = gAPPP.a.modelSets['block'].lastKeyLookup;
 
       gAPPP.a.profile['selectedBlockKey' + workspace] = block;
       gAPPP.blockInURL = block;
-      this.mV = new cViewPublished();
+      this.mV = new cGeoView();
       this._updateApplicationStyle();
     };
   }
