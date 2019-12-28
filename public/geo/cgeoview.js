@@ -50,8 +50,8 @@ class cGeoView extends bView {
     if (!this.context)
       return;
 
-    this.context.camera._position.x = d_result.horizontal  * -5.0;
-    this.context.camera._position.z = d_result.vertical * -5.0;
+    this.context.camera._position.x = d_result.vertical * -2.0; //west is +
+    this.context.camera._position.z = d_result.horizontal  * 2.0; //horizontal + north
   }
   initGPSUpdates() {
     this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
