@@ -21,6 +21,14 @@ class cGeoView extends bView {
     this.bandButtons.push(this.fontTools);
     this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
 
+    this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
+    this.gps_overlay_btn = this.dialog.querySelector('.gps_overlay_btn');
+    this.gpsOverlayPopup = new cBandProfileOptions(this.gps_overlay_btn, [], this.gps_info_overlay, this.gps_info_overlay);
+    this.gpsOverlayPopup.fireFields.values = gAPPP.a.profile;
+    this.gpsOverlayPopup.activate();
+    this.bandButtons.push(this.gpsOverlayPopup);
+    this.gpsOverlayPopup.closeOthersCallback = () => this.closeHeaderBands();
+
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => {
       gAPPP.a.resetProfile();
       setTimeout(() => location.reload(), 100);
@@ -171,7 +179,7 @@ class cGeoView extends bView {
       <video></video>
     </div>
     <div class="canvas-actions">
-      <div class="canvas-play-bar" style="">
+      <div class="canvas_play_bar" style="">
         <div class="scene-options-panel" style="display:none;">
           <div class="scene-fields-container">
           </div>
@@ -186,7 +194,9 @@ class cGeoView extends bView {
           <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
           <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
         </div>
-        <div class="gps_info_overlay">
+        <button class="btn-sb-icon gps_overlay_btn" style="clear:both;">GPS</button>
+        <br>
+        <div class="gps_info_overlay" style="display:none">
           <span class="gps_location"></span>
           <br>
           <span class="device_orientation"></span>
@@ -199,7 +209,6 @@ class cGeoView extends bView {
             <button class="use_current_location">Use Current Location</button>
           </div>
         </div>
-        <button class="btn-sb-icon gps-options" style="clear:both;">GPS</button>
         <div style="display:none">
           <br>
           <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
