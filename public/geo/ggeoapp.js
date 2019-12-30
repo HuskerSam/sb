@@ -27,6 +27,7 @@ class gGeoApp extends gInstanceSuper {
       gAPPP.a.profile['selectedBlockKey' + workspace] = block;
       gAPPP.blockInURL = block;
       this.mV = new cGeoView();
+      this.mV.initBlockKey = block;
       this._updateApplicationStyle();
     };
   }

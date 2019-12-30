@@ -1,6 +1,6 @@
 class cGeoView extends bView {
   constructor() {
-    super();
+    super(undefined, undefined, null, true);
 
     this.elementSelect = document.getElementById('element-type-to-edit');
     this.elementSelect.addEventListener('input', e => this.elementTypeChange());
@@ -29,6 +29,17 @@ class cGeoView extends bView {
     this.bandButtons.push(this.gpsOverlayPopup);
     this.gpsOverlayPopup.closeOthersCallback = () => this.closeHeaderBands();
 
+    this.geo_add_item_panel = this.dialog.querySelector('.geo_add_item_panel');
+    this.geo_add_btn = this.dialog.querySelector('.geo_add_btn');
+    this.geoAddPopup = new cBandProfileOptions(this.geo_add_btn, [], this.geo_add_item_panel, this.geo_add_item_panel);
+    this.geoAddPopup.fireFields.values = gAPPP.a.profile;
+    this.geoAddPopup.activate();
+    this.bandButtons.push(this.geoAddPopup);
+    this.geoAddPopup.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.geo_add_block = this.dialog.querySelector('.geo_add_block');
+    this.geo_add_block.addEventListener('click', e => this.geoAddItem());
+
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => {
       gAPPP.a.resetProfile();
       setTimeout(() => location.reload(), 100);
@@ -44,6 +55,31 @@ class cGeoView extends bView {
     this.initGPSUpdates();
 
     this._updateSelectedBlock(gAPPP.blockInURL);
+  }
+  async geoAddItem() {
+    let blockName = this.dialog.querySelector('.geo_block_name').value;
+  //  let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
+//    objectData.parentKey = this.initBlockKey;
+//    objectData.childType = 'block';
+//    objectData.childName = blockName;
+    let parent = gAPPP.a.modelSets['block'].fireDataValuesByKey[this.initBlockKey].title;
+      let csvRow = {
+      asset: 'blockchild',
+      name: blockName,
+      childtype: 'block',
+      x: this.context.camera._position.x,
+      y: 3.0,
+      z: this.context.camera._position.z,
+      sx: 5,
+      sy: 5,
+      sz 5,
+      parent
+    };
+//    await gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData);
+
+      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(csvRow);
+      //    return blockResult.key;
+    alert('done');
   }
   __updateLocation(updateCoords) {
     if (updateCoords) {
@@ -195,6 +231,7 @@ class cGeoView extends bView {
           <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
         </div>
         <button class="btn-sb-icon gps_overlay_btn" style="clear:both;">GPS</button>
+        <button class="btn-sb-icon geo_add_btn" style="clear:both;">Add Geo</button>
         <br>
         <div class="gps_info_overlay" style="display:none">
           <span class="gps_location"></span>
@@ -208,6 +245,10 @@ class cGeoView extends bView {
             <br>
             <button class="use_current_location">Use Current Location</button>
           </div>
+        </div>
+        <div class="geo_add_item_panel" style="display:none;">
+          <input class="geo_block_name" list="blockdatatitlelookuplist" />
+          <button class="geo_add_block">Add</button>
         </div>
         <div style="display:none">
           <br>
