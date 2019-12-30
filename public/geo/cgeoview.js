@@ -72,7 +72,7 @@ class cGeoView extends bView {
       z: this.context.camera._position.z,
       sx: 5,
       sy: 5,
-      sz 5,
+      sz: 5,
       parent
     };
 //    await gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData);
