@@ -90,8 +90,8 @@ class cGeoView extends bView {
   async canvasReadyPostTimeout() {
     await super.canvasReadyPostTimeout();
     //this.setChildKey(this.childKey);
-    this.childBand.refreshUIFromCache();
-
+    if (this.rootBlock)
+      this.childBand.refreshUIFromCache();
   }
   setChildKey(key) {
     this.childKey = key;
@@ -262,13 +262,14 @@ class cGeoView extends bView {
           <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
           <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
         </div>
-        <button class="btn-sb-icon gps_overlay_btn"><i class="material-icons">gps_fixed</i></button>
-        <button class="btn-sb-icon geo_add_btn"><i class="material-icons">add</i></button>
-        <button class="btn-sb-icon object_list_btn"><i class="material-icons">list</i></button>
-        <button class="btn-sb-icon object_settings_btn"><i class="material-icons">3d_rotation</i></button>
-        <button class="btn-sb-icon profile_settings_btn"><i class="material-icons">explore</i></button>
-        <button id="publish-settings-button" class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
-        <br>
+        <div>
+          <button class="btn-sb-icon gps_overlay_btn"><i class="material-icons">gps_fixed</i></button>
+          <button class="btn-sb-icon geo_add_btn"><i class="material-icons">add</i></button>
+          <button class="btn-sb-icon object_list_btn"><i class="material-icons">list</i></button>
+          <button class="btn-sb-icon object_settings_btn"><i class="material-icons">3d_rotation</i></button>
+          <button class="btn-sb-icon profile_settings_btn"><i class="material-icons">explore</i></button>
+          <button id="publish-settings-button" class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
+        </div>
         <div id="publish-profile-panel" style="display:none;">
           <div class="fields-container"></div>
           <button id="user-profile-dialog-reset-button" style="display:none">Reset Options</button>
@@ -295,7 +296,7 @@ class cGeoView extends bView {
         </div>
         <div class="asset_list_panel" style="display:none;">
           <div class="child_band_picker"></div>
-          <select class="child_select_picker"></select>      
+          <select class="child_select_picker"></select>
           <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
           <div class="child_edit_panel"></div>
         </div>

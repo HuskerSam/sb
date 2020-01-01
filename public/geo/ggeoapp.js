@@ -1,6 +1,7 @@
 class gGeoApp extends gInstanceSuper {
   constructor() {
     super();
+    this.loadDataLists('fontfamilydatalist');
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .then(() => this.a.signInAnon());
   }
