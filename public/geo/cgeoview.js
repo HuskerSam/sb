@@ -46,22 +46,6 @@ class cGeoView extends bView {
     this.bandButtons.push(this.objectListPopup);
     this.objectListPopup.closeOthersCallback = () => this.closeHeaderBands();
 
-    this.asset_settings_panel = this.dialog.querySelector('.asset_settings_panel');
-    this.object_settings_btn = this.dialog.querySelector('.object_settings_btn');
-    this.objectSettingsPopup = new cBandProfileOptions(this.object_settings_btn, [], this.asset_settings_panel, this.asset_settings_panel);
-    this.objectSettingsPopup.fireFields.values = gAPPP.a.profile;
-    this.objectSettingsPopup.activate();
-    this.bandButtons.push(this.objectSettingsPopup);
-    this.objectSettingsPopup.closeOthersCallback = () => this.closeHeaderBands();
-
-    this.profile_settings_panel = this.dialog.querySelector('.profile_settings_panel');
-    this.profile_settings_btn = this.dialog.querySelector('.profile_settings_btn');
-    this.profileSettingsPopup = new cBandProfileOptions(this.profile_settings_btn, [], this.profile_settings_panel, this.profile_settings_panel);
-    this.profileSettingsPopup.fireFields.values = gAPPP.a.profile;
-    this.profileSettingsPopup.activate();
-    this.bandButtons.push(this.profileSettingsPopup);
-    this.profileSettingsPopup.closeOthersCallback = () => this.closeHeaderBands();
-
     this.geo_add_block = this.dialog.querySelector('.geo_add_block');
     this.geo_add_block.addEventListener('click', e => this.geoAddItem());
 
@@ -263,16 +247,18 @@ class cGeoView extends bView {
           <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
         </div>
         <div>
-          <button class="btn-sb-icon gps_overlay_btn"><i class="material-icons">gps_fixed</i></button>
+          <button class="btn-sb-icon gps_overlay_btn"><i class="material-icons">explore</i></button>
           <button class="btn-sb-icon geo_add_btn"><i class="material-icons">add</i></button>
-          <button class="btn-sb-icon object_list_btn"><i class="material-icons">list</i></button>
-          <button class="btn-sb-icon object_settings_btn"><i class="material-icons">3d_rotation</i></button>
-          <button class="btn-sb-icon profile_settings_btn"><i class="material-icons">explore</i></button>
+          <button class="btn-sb-icon object_list_btn"><i class="material-icons">3d_rotation</i></button>
           <button id="publish-settings-button" class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
         </div>
         <div id="publish-profile-panel" style="display:none;">
           <div class="fields-container"></div>
           <button id="user-profile-dialog-reset-button" style="display:none">Reset Options</button>
+          <br>
+          <div style="clear:both;">
+            User Specific Color for Selection <input type="color" />
+          </div>
         </div>
         <div class="gps_info_overlay" style="display:none">
           <span class="gps_location"></span>
@@ -285,23 +271,55 @@ class cGeoView extends bView {
             <span class="offset_distances">hor, vert, crow</span>
             <br>
             <button class="use_current_location">Use Current Location</button>
+            <br>
+            Adjust Location<br>
+            <div style="display:flex;">
+              <span>X:</span>
+              <input type="range" min="0" max="1" step=".005" value="0">
+            </div>
+            <div style="display:flex;">
+              <span>Y:</span>
+              <input type="range" min="0" max="1" step=".005" value="0">
+            </div>
+            <div style="display:flex;">
+              <span>Z:</span>
+              <input type="range" min="0" max="1" step=".005" value="0">
+            </div>
+            <div style="text-align:center;padding:.25em;">
+              <button>Recenter</button>
+            </div>
           </div>
         </div>
         <div class="geo_add_item_panel" style="display:none;">
           <input class="geo_block_name" list="blockdatatitlelookuplist" />
           <button class="geo_add_block">Add</button>
         </div>
-        <div class="profile_settings_panel" style="display:none;">
-          profile settings
-        </div>
-        <div class="asset_list_panel" style="display:none;">
+        <div class="asset_list_panel" style="display:none;width:100vw;overflow:hidden;">
           <div class="child_band_picker"></div>
           <select class="child_select_picker"></select>
           <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
-          <div class="child_edit_panel"></div>
-        </div>
-        <div class="asset_settings_panel" style="display:none;">
-          asset settings
+          <div class="child_edit_panel" style="display:flex;flex-direction:column;padding-right:.25em;">
+            <div>
+              <label><input type="radio" name="typeofdimension" checked />Position</label>
+              <label><input type="radio" name="typeofdimension" />Rotation</label>
+              <label><input type="radio" name="typeofdimension" />Scale</label>
+            </div>
+            <div style="display:flex;">
+              <span>X:</span>
+              <input type="range" min="0" max="1" step=".005" value="0">
+            </div>
+            <div style="display:flex;">
+              <span>Y:</span>
+              <input type="range" min="0" max="1" step=".005" value="0">
+            </div>
+            <div style="display:flex;">
+              <span>Z:</span>
+              <input type="range" min="0" max="1" step=".005" value="0">
+            </div>
+            <div style="text-align:center;padding:.25em;">
+              <button>Recenter</button>
+            </div>
+          </div>
         </div>
         <div style="display:none">
           <br>
