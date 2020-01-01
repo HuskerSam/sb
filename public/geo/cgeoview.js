@@ -2,17 +2,18 @@ class cGeoView extends bView {
   constructor() {
     super(undefined, undefined, null, true);
 
-    this.elementSelect = document.getElementById('element-type-to-edit');
-    this.elementSelect.addEventListener('input', e => this.elementTypeChange());
-    this.blockId = document.getElementById('element-id-to-edit');
-    this.blockField = document.getElementById('field-name-to-edit');
-    this.fieldValue = document.getElementById('value-to-edit');
-    this.setButton = document.getElementById('button-to-edit');
-    this.setButton.addEventListener('click', e => this.setValue());
-
     this.bandButtons = [];
     this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
-    this.fontFields = sDataDefinition.bindingFieldsCloned('publishFontFamilyProfile');
+    this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.fontFields.push({
+      title: 'Bounds',
+      fireSetField: 'showBoundsBox',
+      type: 'boolean',
+      group: 'depthExtras',
+      floatLeft: true,
+      clearLeft: true,
+      groupClass: 'scene-tools-checkboxes'
+    });
     this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
     this.fontToolsButton = this.dialog.querySelector('#publish-settings-button');
     this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);
@@ -37,33 +38,88 @@ class cGeoView extends bView {
     this.bandButtons.push(this.geoAddPopup);
     this.geoAddPopup.closeOthersCallback = () => this.closeHeaderBands();
 
+    this.asset_list_panel = this.dialog.querySelector('.asset_list_panel');
+    this.object_list_btn = this.dialog.querySelector('.object_list_btn');
+    this.objectListPopup = new cBandProfileOptions(this.object_list_btn, [], this.asset_list_panel, this.asset_list_panel);
+    this.objectListPopup.fireFields.values = gAPPP.a.profile;
+    this.objectListPopup.activate();
+    this.bandButtons.push(this.objectListPopup);
+    this.objectListPopup.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.asset_settings_panel = this.dialog.querySelector('.asset_settings_panel');
+    this.object_settings_btn = this.dialog.querySelector('.object_settings_btn');
+    this.objectSettingsPopup = new cBandProfileOptions(this.object_settings_btn, [], this.asset_settings_panel, this.asset_settings_panel);
+    this.objectSettingsPopup.fireFields.values = gAPPP.a.profile;
+    this.objectSettingsPopup.activate();
+    this.bandButtons.push(this.objectSettingsPopup);
+    this.objectSettingsPopup.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.profile_settings_panel = this.dialog.querySelector('.profile_settings_panel');
+    this.profile_settings_btn = this.dialog.querySelector('.profile_settings_btn');
+    this.profileSettingsPopup = new cBandProfileOptions(this.profile_settings_btn, [], this.profile_settings_panel, this.profile_settings_panel);
+    this.profileSettingsPopup.fireFields.values = gAPPP.a.profile;
+    this.profileSettingsPopup.activate();
+    this.bandButtons.push(this.profileSettingsPopup);
+    this.profileSettingsPopup.closeOthersCallback = () => this.closeHeaderBands();
+
     this.geo_add_block = this.dialog.querySelector('.geo_add_block');
     this.geo_add_block.addEventListener('click', e => this.geoAddItem());
+
+    this.child_edit_panel = this.dialog.querySelector('.child_edit_panel');
+    this.child_band_picker = this.dialog.querySelector('.child_band_picker');
+    this.child_select_picker = this.dialog.querySelector('.child_select_picker');
+    this.childBand = new cBlockLinkSelect(this.child_select_picker, this, this.child_edit_panel, this.child_band_picker, true);
 
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => {
       gAPPP.a.resetProfile();
       setTimeout(() => location.reload(), 100);
     });
 
+    this.removeChildButton = this.dialog.querySelector('.main-band-delete-child');
+    this.removeChildButton.addEventListener('click', e => this.removeChild(e));
+
     this.startLat = 0;
     this.startLon = 0;
     this.latitude = '0';
     this.longitude = '0';
 
-    this.elementTypeChange();
-
     this.initGPSUpdates();
 
     this._updateSelectedBlock(gAPPP.blockInURL);
   }
+  async canvasReadyPostTimeout() {
+    await super.canvasReadyPostTimeout();
+    //this.setChildKey(this.childKey);
+    this.childBand.refreshUIFromCache();
+
+  }
+  setChildKey(key) {
+    this.childKey = key;
+
+    if (this.rootBlock) {
+      let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+      if (block)
+        this.context.setActiveBlock(block);
+      else
+        this.context.setActiveBlock(this.rootBlock);
+    }
+
+  }
+  removeChild(e) {
+    if (confirm('Remove this child block (only the link)?')) {
+      this.childBand.fireSet.removeByKey(this.childKey);
+      this.childBand.setKey(null);
+      this.setChildKey(null);
+    }
+  }
   async geoAddItem() {
     let blockName = this.dialog.querySelector('.geo_block_name').value;
-  //  let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
-//    objectData.parentKey = this.initBlockKey;
-//    objectData.childType = 'block';
-//    objectData.childName = blockName;
+    //  let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
+    //    objectData.parentKey = this.initBlockKey;
+    //    objectData.childType = 'block';
+    //    objectData.childName = blockName;
     let parent = gAPPP.a.modelSets['block'].fireDataValuesByKey[this.initBlockKey].title;
-      let csvRow = {
+    let csvRow = {
       asset: 'blockchild',
       name: blockName,
       childtype: 'block',
@@ -75,10 +131,10 @@ class cGeoView extends bView {
       sz: 5,
       parent
     };
-//    await gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData);
+    //    await gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData);
 
-      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(csvRow);
-      //    return blockResult.key;
+    let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(csvRow);
+    //    return blockResult.key;
     alert('done');
   }
   __updateLocation(updateCoords) {
@@ -88,14 +144,14 @@ class cGeoView extends bView {
     }
     this.base_location.innerHTML = 'Base :' + this.startLat.toFixed(7) + '°, ' + this.startLon.toFixed(7) + '°';
     let d_result = this.getGPSDiff(this.startLat, this.startLon, this.latitude, this.longitude);
-    this.offset_distances.innerHTML = 'crow:' + d_result.distance.toFixed(3) + '<br>h:' + d_result.horizontal.toFixed(3)
-      + ', v:' + d_result.vertical.toFixed(3);
+    this.offset_distances.innerHTML = 'crow:' + d_result.distance.toFixed(3) + '<br>h:' + d_result.horizontal.toFixed(3) +
+      ', v:' + d_result.vertical.toFixed(3);
 
     if (!this.context)
       return;
 
     this.context.camera._position.x = d_result.vertical * -2.0; //west is +
-    this.context.camera._position.z = d_result.horizontal  * 2.0; //horizontal + north
+    this.context.camera._position.z = d_result.horizontal * 2.0; //horizontal + north
   }
   initGPSUpdates() {
     this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
@@ -134,17 +190,17 @@ class cGeoView extends bView {
   }
   __distanceGPSMeters(lat1, lon1, lat2, lon2) {
     function deg2rad(deg) {
-      return deg * (Math.PI/180)
+      return deg * (Math.PI / 180)
     }
 
     let earthradius_m = 6371000;
-    let dLat = deg2rad(lat2-lat1);
-    let dLon = deg2rad(lon2-lon1);
+    let dLat = deg2rad(lat2 - lat1);
+    let dLon = deg2rad(lon2 - lon1);
     let a =
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon/2) * Math.sin(dLon/2);
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return earthradius_m * c;
   }
   getGPSDiff(lat1, lon1, lat2, lon2) {
@@ -159,7 +215,10 @@ class cGeoView extends bView {
     };
   }
   closeHeaderBands() {
-
+    for (let i in this.bandButtons) {
+      this.bandButtons[i].expanded = true;
+      this.bandButtons[i].toggle();
+    }
   }
   setValue() {
     let t = this.elementSelect.value.toLowerCase();
@@ -182,33 +241,6 @@ class cGeoView extends bView {
   splitLayout() {
     this.dialog.style.display = 'block';
   }
-  elementTypeChange() {
-    let t = this.elementSelect.value.toLowerCase();
-
-    let eleList = document.createElement('datalist');
-    let fldList = document.createElement('datalist');
-    eleList.setAttribute('id', 'elementidlist');
-    fldList.setAttribute('id', 'fieldnamelist');
-    document.body.appendChild(eleList);
-    document.body.appendChild(fldList);
-
-    let options = '';
-    let fS = gAPPP.a.modelSets[t].fireDataValuesByKey;
-    for (let i in fS)
-      options += '<option>' + i + ' ' + fS[i].title + '</option>';
-
-    eleList.innerHTML = options;
-
-    if (t === 'frame')
-      t = 'shapeFrame';
-    let fields = sDataDefinition.bindingFields(t);
-
-    let fieldOptions = '';
-    for (let c = 0, l = fields.length; c < l; c++)
-      fieldOptions += '<option>' + fields[c].fireSetField + '</option>';
-
-    fldList.innerHTML = fieldOptions;
-  }
   _canvasPanelTemplate() {
     return `<canvas class="popup-canvas"></canvas>
     <div class="video-overlay">
@@ -230,9 +262,17 @@ class cGeoView extends bView {
           <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
           <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
         </div>
-        <button class="btn-sb-icon gps_overlay_btn" style="clear:both;">GPS</button>
-        <button class="btn-sb-icon geo_add_btn" style="clear:both;">Add Geo</button>
+        <button class="btn-sb-icon gps_overlay_btn"><i class="material-icons">gps_fixed</i></button>
+        <button class="btn-sb-icon geo_add_btn"><i class="material-icons">add</i></button>
+        <button class="btn-sb-icon object_list_btn"><i class="material-icons">list</i></button>
+        <button class="btn-sb-icon object_settings_btn"><i class="material-icons">3d_rotation</i></button>
+        <button class="btn-sb-icon profile_settings_btn"><i class="material-icons">explore</i></button>
+        <button id="publish-settings-button" class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
         <br>
+        <div id="publish-profile-panel" style="display:none;">
+          <div class="fields-container"></div>
+          <button id="user-profile-dialog-reset-button" style="display:none">Reset Options</button>
+        </div>
         <div class="gps_info_overlay" style="display:none">
           <span class="gps_location"></span>
           <br>
@@ -249,6 +289,18 @@ class cGeoView extends bView {
         <div class="geo_add_item_panel" style="display:none;">
           <input class="geo_block_name" list="blockdatatitlelookuplist" />
           <button class="geo_add_block">Add</button>
+        </div>
+        <div class="profile_settings_panel" style="display:none;">
+          profile settings
+        </div>
+        <div class="asset_list_panel" style="display:none;">
+          <div class="child_band_picker"></div>
+          <select class="child_select_picker"></select>      
+          <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
+          <div class="child_edit_panel"></div>
+        </div>
+        <div class="asset_settings_panel" style="display:none;">
+          asset settings
         </div>
         <div style="display:none">
           <br>
@@ -281,33 +333,6 @@ class cGeoView extends bView {
     return `<div id="firebase-app-main-page" style="display:none;">
   <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
   <div class="form_canvas_wrapper"></div>
-  <button id="user-profile-dialog-reset-button" style="display:none">Reset Options</button>
-  <button id="publish-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
-  <div id="publish-profile-panel" style="display:none;">
-    <div id="value-set-panel">
-      <label><span>Element</span>
-      <select id="element-type-to-edit">
-        <option>Block</option>
-        <option>BlockChild</option>
-        <option>Shape</option>
-        <option>Mesh</option>
-        <option>Texture</option>
-        <option>Material</option>
-        <option>Frame</option>
-      </select>
-      </label>
-      <br>
-      <label><span>ID</span><input id="element-id-to-edit" type="text" list="elementidlist" /></label>
-      <br>
-      <label><span>Field</span><input id="field-name-to-edit" type="text" list="fieldnamelist" /></label>
-      <br>
-      <label><span>Value</span><input id="value-to-edit" type="text" /></label>
-      <br>
-      <button id="button-to-edit">Set</button>
-    </div>
-
-    <div class="fields-container"></div>
-  </div>
 </div>`;
   }
 }

@@ -23,3 +23,7 @@
 
 .gps_info_overlay button {
 }
+
+#publish-profile-panel .fields-container {
+  overflow:visible;
+}

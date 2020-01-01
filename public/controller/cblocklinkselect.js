@@ -1,5 +1,5 @@
 class cBlockLinkSelect extends bBand {
-  constructor(childSelect, parent, editPanel, childExpandedBand) {
+  constructor(childSelect, parent, editPanel, childExpandedBand, noEditFields = false) {
 
     super(gAPPP.a.modelSets['blockchild'], 'blockchild');
     this.childSelect = childSelect;
@@ -9,6 +9,8 @@ class cBlockLinkSelect extends bBand {
     this.childExpandedBand = childExpandedBand;
 
     this.childFields = sDataDefinition.bindingFieldsCloned(this.tag);
+    if (noEditFields)
+      this.childFields = [];
     this.childEditFields = new cPanelData(this.childFields, this.childEditPanel, this);
     this.fireSet.childListeners.push((values, type, fireData) => this.childEditFields._handleDataChange(values, type, fireData));
 
@@ -129,7 +131,7 @@ class cBlockLinkSelect extends bBand {
       d.setAttribute('class', className);
       d.addEventListener('click', e => {
         this.setKey(key);
-        this.parent.blockChildrenSelect.focus();
+        this.childSelect.focus();
       });
       return d;
     }
