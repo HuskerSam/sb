@@ -83,7 +83,66 @@ class cGeoView extends bView {
 
     this.initGPSUpdates();
     this.initLocationAdjustments();
+    this.initDimensionAdjustments();
     this._updateSelectedBlock(gAPPP.blockInURL);
+  }
+  initDimensionAdjustments() {
+    this.x_dimension_slider = this.dialog.querySelector('.x_dimension_slider');
+    this.y_dimension_slider = this.dialog.querySelector('.y_dimension_slider');
+    this.z_dimension_slider = this.dialog.querySelector('.z_dimension_slider');
+    this.dimensionType = 'position';
+
+    this.center_object_sliders = this.dialog.querySelector('.center_object_sliders');
+    this.center_object_sliders.addEventListener('click', e => this.resetDimensionSliders());
+
+    this.dialog.querySelectorAll('input[name="typeofdimension"]').forEach(i => i.addEventListener('click', e => {
+      this.dimensionType = i.dataset.dimension;
+      this.resetDimensionSliders();
+    }));
+
+    this.dialog.querySelectorAll('.dimension_slider').forEach(i => {
+      i.lastValue = 0;
+      i.addEventListener('input', e => {
+        let field = i.dataset.field;
+        if (this.dimensionType === 'position') {
+          let offset = Number(i.value) - i.lastValue;
+
+          let block = this.context.activeBlock;
+          if (!block)
+            return;
+          let frames = block.framesHelper.framesStash;
+          let frameIds = [];
+          for (let i in frames)
+            frameIds.push(i);
+          let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
+
+          if (existingValues) {
+            let fieldTag = 'position';
+            if (field === 'x')
+              fieldTag += 'X';
+            if (field === 'y')
+              fieldTag += 'Y';
+            if (field === 'z')
+              fieldTag += 'Z';
+
+            let val = GLOBALUTIL.getNumberOrDefault(existingValues[fieldTag], 0);
+            val += offset;
+            i.lastValue = i.value;
+
+            return gAPPP.a.modelSets['frame'].commitUpdateList([{
+              field: fieldTag,
+              newValue: val.toString()
+            }], frameIds[0]);
+          }
+        }
+      });
+    });
+  }
+  resetDimensionSliders() {
+    this.dialog.querySelectorAll('.dimension_slider').forEach(i => {
+      i.value = 0;
+      i.lastValue = 0;
+    });
   }
   initLocationAdjustments() {
     this.geo_position_x_slider = this.dialog.querySelector('.geo_position_x_slider');
@@ -178,9 +237,9 @@ class cGeoView extends bView {
     if (!this.context)
       return;
 
-    this.context.camera._position.x = this.offsetX + d_result.vertical * -2.0; //
+    this.context.camera._position.x = this.offsetX + d_result.vertical * -1.0; //
     this.context.camera._position.y = this.offsetY;
-    this.context.camera._position.z = this.offsetZ + d_result.horizontal * 2.0; //
+    this.context.camera._position.z = this.offsetZ + d_result.horizontal * 1.0; //
   }
   initGPSUpdates() {
     this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
@@ -315,6 +374,10 @@ class cGeoView extends bView {
             <div style="text-align:center;padding:.25em;">
               <button class="center_sliders_btn">Center Sliders</button>
             </div>
+            <div style="display:inline-block;width:100%;position:relative;">
+              <div class="camera-slider-label">FOV</div>
+              <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+            </div>
           </div>
         </div>
         <div class="geo_add_item_panel" style="display:none;">
@@ -325,26 +388,26 @@ class cGeoView extends bView {
           <div class="child_band_picker"></div>
           <select class="child_select_picker"></select>
           <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
-          <div class="child_edit_panel" style="display:flex;flex-direction:column;padding-right:.25em;">
-            <div>
-              <label><input type="radio" name="typeofdimension" checked />Position</label>
-              <label><input type="radio" name="typeofdimension" />Rotation</label>
-              <label><input type="radio" name="typeofdimension" />Scale</label>
+          <div class="child_edit_panel">
+            <div style="display:flex;">
+              <label><input type="radio" name="typeofdimension" data-dimension="position" class="position_dimensions" checked />Position</label>
+              <label><input type="radio" name="typeofdimension" data-dimension="rotation" class="rotation_dimensions" />Rotation</label>
+              <label><input type="radio" name="typeofdimension" data-dimension="scale" class="scale_dimensions" />Scale</label>
             </div>
             <div style="display:flex;">
               <span>X:</span>
-              <input type="range" min="0" max="1" step=".005" value="0">
+              <input type="range" class="dimension_slider" data-field="x" min="-50" max="50" step=".005" value="0">
             </div>
             <div style="display:flex;">
               <span>Y:</span>
-              <input type="range" min="0" max="1" step=".005" value="0">
+              <input type="range" class="dimension_slider" data-field="y" min="-50" max="50" step=".005" value="0">
             </div>
             <div style="display:flex;">
               <span>Z:</span>
-              <input type="range" min="0" max="1" step=".005" value="0">
+              <input type="range" class="dimension_slider" data-field="z" min="-50" max="50" step=".005" value="0">
             </div>
             <div style="text-align:center;padding:.25em;">
-              <button>Recenter</button>
+              <button class="center_object_sliders">Center Sliders</button>
             </div>
           </div>
         </div>
@@ -360,10 +423,6 @@ class cGeoView extends bView {
             <div style="display:inline-block;">
               <div class="camera-slider-label">Radius</div>
               <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
-            </div>
-            <div style="display:inline-block;">
-              <div class="camera-slider-label">FOV</div>
-              <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
             </div>
             <div style="display:inline-block;">
               <div class="camera-slider-label">Height</div>
