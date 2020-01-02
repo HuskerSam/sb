@@ -62,6 +62,17 @@ class cGeoView extends bView {
     this.removeChildButton = this.dialog.querySelector('.main-band-delete-child');
     this.removeChildButton.addEventListener('click', e => this.removeChild(e));
 
+    this.center_sliders_btn = this.dialog.querySelector('.center_sliders_btn');
+    this.center_sliders_btn.addEventListener('click', e => {
+      this.geo_position_x_slider.value = 0;
+      this.geo_position_x_slider.lastValue = 0;
+      this.geo_position_y_slider.value = 0;
+      this.geo_position_y_slider.lastValue = 0;
+      this.geo_position_z_slider.value = 0;
+      this.geo_position_z_slider.lastValue = 0;
+    });
+    this.canvasHelper.closeMenusOnClick = false;
+
     this.startLat = 0;
     this.startLon = 0;
     this.latitude = '0';
@@ -288,7 +299,7 @@ class cGeoView extends bView {
             <br>
             <button class="use_current_location">Use Current Location</button>
             <br>
-            Adjust Location<br>
+            Adjust Location (local only)<br>
             <div style="display:flex;">
               <span>X:</span>
               <input type="range" min="-50" max="50" class="geo_position_x_slider" step=".005" value="0">
@@ -302,7 +313,7 @@ class cGeoView extends bView {
               <input type="range" min="-50" max="50" class="geo_position_z_slider" step=".005" value="0">
             </div>
             <div style="text-align:center;padding:.25em;">
-              <button>Recenter</button>
+              <button class="center_sliders_btn">Center Sliders</button>
             </div>
           </div>
         </div>

@@ -71,9 +71,11 @@ class cPanelCanvas {
     this.cameraDetails = {};
     this.camerasS = '';
     this.isValidAnimation = false;
+    this.closeMenusOnClick = true;
 
     this.canvas.addEventListener('click', e => {
-      gAPPP.mV.closeHeaderBands();
+      if (this.closeMenusOnClick)
+        gAPPP.mV.closeHeaderBands();
     });
 
     this._playState = 0;
