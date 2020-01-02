@@ -66,10 +66,46 @@ class cGeoView extends bView {
     this.startLon = 0;
     this.latitude = '0';
     this.longitude = '0';
+    this.offsetX = 0;
+    this.offsetY = 15;
+    this.offsetZ = 0;
 
     this.initGPSUpdates();
-
+    this.initLocationAdjustments();
     this._updateSelectedBlock(gAPPP.blockInURL);
+  }
+  initLocationAdjustments() {
+    this.geo_position_x_slider = this.dialog.querySelector('.geo_position_x_slider');
+    this.geo_position_y_slider = this.dialog.querySelector('.geo_position_y_slider');
+    this.geo_position_z_slider = this.dialog.querySelector('.geo_position_z_slider');
+
+    this.geo_position_x_slider.addEventListener('input', e => {
+      let lastValue = this.geo_position_x_slider.lastValue;
+      if (lastValue === undefined)
+        lastValue = 0;
+      let newValue = Number(this.geo_position_x_slider.value);
+      this.offsetX += newValue - lastValue;
+      this.geo_position_x_slider.lastValue = newValue;
+      this.__updateLocation();
+    });
+    this.geo_position_y_slider.addEventListener('input', e => {
+      let lastValue = this.geo_position_y_slider.lastValue;
+      if (lastValue === undefined)
+        lastValue = 0;
+      let newValue = Number(this.geo_position_y_slider.value);
+      this.offsetY += newValue - lastValue;
+      this.geo_position_y_slider.lastValue = newValue;
+      this.__updateLocation();
+    });
+    this.geo_position_z_slider.addEventListener('input', e => {
+      let lastValue = this.geo_position_z_slider.lastValue;
+      if (lastValue === undefined)
+        lastValue = 0;
+      let newValue = Number(this.geo_position_z_slider.value);
+      this.offsetZ += newValue - lastValue;
+      this.geo_position_z_slider.lastValue = newValue;
+      this.__updateLocation();
+    });
   }
   async canvasReadyPostTimeout() {
     await super.canvasReadyPostTimeout();
@@ -98,10 +134,6 @@ class cGeoView extends bView {
   }
   async geoAddItem() {
     let blockName = this.dialog.querySelector('.geo_block_name').value;
-    //  let objectData = sDataDefinition.getDefaultDataCloned('blockchild');
-    //    objectData.parentKey = this.initBlockKey;
-    //    objectData.childType = 'block';
-    //    objectData.childName = blockName;
     let parent = gAPPP.a.modelSets['block'].fireDataValuesByKey[this.initBlockKey].title;
     let csvRow = {
       asset: 'blockchild',
@@ -115,16 +147,17 @@ class cGeoView extends bView {
       sz: 5,
       parent
     };
-    //    await gAPPP.a.modelSets['blockchild'].createWithBlobString(objectData);
-
     let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(csvRow);
-    //    return blockResult.key;
-    alert('done');
+
+    //select block if not
   }
   __updateLocation(updateCoords) {
     if (updateCoords) {
       this.startLat = Number(this.latitude);
       this.startLon = Number(this.longitude);
+      this.offsetX = 0;
+      this.offsetY = 15;
+      this.offsetZ = 0;
     }
     this.base_location.innerHTML = 'Base :' + this.startLat.toFixed(7) + '°, ' + this.startLon.toFixed(7) + '°';
     let d_result = this.getGPSDiff(this.startLat, this.startLon, this.latitude, this.longitude);
@@ -134,8 +167,9 @@ class cGeoView extends bView {
     if (!this.context)
       return;
 
-    this.context.camera._position.x = d_result.vertical * -2.0; //west is +
-    this.context.camera._position.z = d_result.horizontal * 2.0; //horizontal + north
+    this.context.camera._position.x = this.offsetX + d_result.vertical * -2.0; //
+    this.context.camera._position.y = this.offsetY;
+    this.context.camera._position.z = this.offsetZ + d_result.horizontal * 2.0; //
   }
   initGPSUpdates() {
     this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
@@ -204,24 +238,6 @@ class cGeoView extends bView {
       this.bandButtons[i].toggle();
     }
   }
-  setValue() {
-    let t = this.elementSelect.value.toLowerCase();
-    let id = this.blockId.value.split(' ')[0].trim();
-    let field = this.blockField.value.trim();
-    let v = this.fieldValue.value;
-
-    if (id === '')
-      return;
-
-    if (field === '')
-      return;
-
-    gAPPP.a.modelSets[t].commitUpdateList([{
-      field: field,
-      newValue: v
-    }], id);
-
-  }
   splitLayout() {
     this.dialog.style.display = 'block';
   }
@@ -275,15 +291,15 @@ class cGeoView extends bView {
             Adjust Location<br>
             <div style="display:flex;">
               <span>X:</span>
-              <input type="range" min="0" max="1" step=".005" value="0">
+              <input type="range" min="-50" max="50" class="geo_position_x_slider" step=".005" value="0">
             </div>
             <div style="display:flex;">
               <span>Y:</span>
-              <input type="range" min="0" max="1" step=".005" value="0">
+              <input type="range" min="-50" max="50" class="geo_position_y_slider" step=".005" value="0">
             </div>
             <div style="display:flex;">
               <span>Z:</span>
-              <input type="range" min="0" max="1" step=".005" value="0">
+              <input type="range" min="-50" max="50" class="geo_position_z_slider" step=".005" value="0">
             </div>
             <div style="text-align:center;padding:.25em;">
               <button>Recenter</button>
