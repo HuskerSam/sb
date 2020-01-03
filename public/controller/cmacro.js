@@ -1022,7 +1022,8 @@ class cMacro {
       r = this._shapeScrapeTextPlane();
 
     if (r) {
-      this.csv_import_preview.innerHTML = Papa.unparse([r]);
+      if (window.Papa)
+        this.csv_import_preview.innerHTML = Papa.unparse([r]);
     } else
       this.csv_import_preview.innerHTML = new Date();
   }

@@ -120,10 +120,20 @@ class cGeoView extends bView {
     this.offsetY = 15;
     this.offsetZ = 0;
 
+    this.initBlockAddPanel();
     this.initGPSUpdates();
     this.initLocationAdjustments();
     this.initDimensionAdjustments();
     this._updateSelectedBlock(gAPPP.blockInURL);
+  }
+  initBlockAddPanel() {
+    this.add_block_panel = this.dialog.querySelector('.add_block_panel');
+    this.generate = new cMacro(this.add_block_panel, 'block', this);
+    let sel = this.dialog.querySelector('.block-type-select');
+    sel.innerHTML = `<option selected>Text and Shape</option>
+     <option>Animated Line</option>
+     <option>Connector Line</option>`;
+    this.generate.blockHelperChange();
   }
   initDimensionAdjustments() {
     this.x_dimension_slider = this.dialog.querySelector('.x_dimension_slider');
@@ -495,6 +505,7 @@ class cGeoView extends bView {
           <input class="geo_block_name" list="blockdatatitlelookuplist" />
           <button class="geo_add_block">Add</button>
           <hr>
+          <div class="add_block_panel"></div>
         </div>
         <div class="asset_list_panel" style="display:none;width:100vw;overflow:hidden;">
           <div class="child_band_picker"></div>
