@@ -350,7 +350,7 @@ class cGeoView extends bView {
 
     this.context.camera._position.x = this.offsetX + d_result.vertical * -1.0; //east increasing
     this.context.camera._position.y = this.offsetY;
-    this.context.camera._position.z = this.offsetZ + d_result.horizontal * -1.0; //north increasing
+    this.context.camera._position.z = this.offsetZ + d_result.horizontal * 1.0; //north increasing
   }
   initGPSUpdates() {
     this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
@@ -494,6 +494,7 @@ class cGeoView extends bView {
         <div class="geo_add_item_panel" style="display:none;">
           <input class="geo_block_name" list="blockdatatitlelookuplist" />
           <button class="geo_add_block">Add</button>
+          <hr>
         </div>
         <div class="asset_list_panel" style="display:none;width:100vw;overflow:hidden;">
           <div class="child_band_picker"></div>
