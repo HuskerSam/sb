@@ -13,6 +13,45 @@ class cGeoView extends bView {
       floatLeft: true,
       clearLeft: true,
       groupClass: 'scene-tools-checkboxes'
+    }, {
+      title: 'Wireframe',
+      fireSetField: 'showForceWireframe',
+      type: 'boolean',
+      group: 'depthExtras',
+      floatLeft: true,
+      clearLeft: true,
+    }, {
+      title: 'Grid',
+      fireSetField: 'showFloorGrid',
+      type: 'boolean',
+      group: 'depthExtras',
+
+      floatLeft: true,
+      clearLeft: true
+    }, {
+      title: 'Guides',
+      fireSetField: 'showSceneGuides',
+      group: 'depthExtras',
+      type: 'boolean',
+      floatLeft: true,
+      clearLeft: true
+    }, {
+      title: 'Depth',
+      fireSetField: 'gridAndGuidesDepth',
+      displayType: 'number',
+      group: 'depthExtras',
+      clearLeft: true
+    }, {
+      title: 'Light',
+      fireSetField: 'lightIntensity',
+
+      helperType: 'singleSlider',
+      rangeMin: '0',
+      rangeMax: '2',
+      rangeStep: '.01',
+      displayType: 'number',
+      group: 'group2',
+      groupClass: 'light-intensity-user-panel'
     });
     this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
     this.fontToolsButton = this.dialog.querySelector('#publish-settings-button');
@@ -135,6 +174,78 @@ class cGeoView extends bView {
             }], frameIds[0]);
           }
         }
+        if (this.dimensionType === 'rotation') {
+          let offset = Number(i.value) - i.lastValue;
+
+          let block = this.context.activeBlock;
+          if (!block)
+            return;
+          let frames = block.framesHelper.framesStash;
+          let frameIds = [];
+          for (let i in frames)
+            frameIds.push(i);
+          let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
+
+          if (existingValues) {
+            let fieldTag = 'rotation';
+            if (field === 'x')
+              fieldTag += 'X';
+            if (field === 'y')
+              fieldTag += 'Y';
+            if (field === 'z')
+              fieldTag += 'Z';
+
+            let val = GLOBALUTIL.getNumberOrDefault(existingValues[fieldTag], 0);
+
+
+            val += offset * Math.PI / 50.0;
+            i.lastValue = i.value;
+
+            return gAPPP.a.modelSets['frame'].commitUpdateList([{
+              field: fieldTag,
+              newValue: val.toString()
+            }], frameIds[0]);
+          }
+        }
+        if (this.dimensionType === 'scale') {
+          let block = this.context.activeBlock;
+          if (!block)
+            return;
+          let frames = block.framesHelper.framesStash;
+          let frameIds = [];
+          for (let i in frames)
+            frameIds.push(i);
+          let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
+
+          if (existingValues) {
+            let fieldTag = 'scaling';
+            if (field === 'x')
+              fieldTag += 'X';
+            if (field === 'y')
+              fieldTag += 'Y';
+            if (field === 'z')
+              fieldTag += 'Z';
+
+            let val = GLOBALUTIL.getNumberOrDefault(existingValues[fieldTag], 1.0);
+            if (i.lastValue === 0) {
+              i.origScale = val;
+            }
+
+            let multiplier = 1.0;
+            if (i.value > 0) {
+              val = i.origScale * (1.0 + (i.value / 10.0));
+            } else {
+              val = i.origScale / ((i.value - 1) * -0.1);
+            }
+
+            i.lastValue = i.value;
+
+            return gAPPP.a.modelSets['frame'].commitUpdateList([{
+              field: fieldTag,
+              newValue: val.toString()
+            }], frameIds[0]);
+          }
+        }
       });
     });
   }
@@ -237,9 +348,9 @@ class cGeoView extends bView {
     if (!this.context)
       return;
 
-    this.context.camera._position.x = this.offsetX + d_result.vertical * -1.0; //
+    this.context.camera._position.x = this.offsetX + d_result.vertical * -1.0; //east increasing
     this.context.camera._position.y = this.offsetY;
-    this.context.camera._position.z = this.offsetZ + d_result.horizontal * 1.0; //
+    this.context.camera._position.z = this.offsetZ + d_result.horizontal * -1.0; //north increasing
   }
   initGPSUpdates() {
     this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
