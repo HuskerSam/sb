@@ -287,10 +287,12 @@ class mFirebaseList extends bFirebase {
       return;
     let innerHTML = this.startingOptionList();
     let list = this.childOrderByKey;
+    this.titleMap = {};
     for (let i = list.length - 1; i >= 0; i--) {
       if (this.fireDataValuesByKey[list[i]]) {
         let option = '<option>' + this.fireDataValuesByKey[list[i]]['title'] + '</option>';
         innerHTML = option + innerHTML;
+        this.titleMap[this.fireDataValuesByKey[list[i]]['title']] = list[i];
       }
     }
 

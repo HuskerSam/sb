@@ -2,7 +2,89 @@ class cGeoView extends bView {
   constructor() {
     super(undefined, undefined, null, true);
 
+    this.initBands();
+    this.initLinkBlockSelect();
+
+    this.child_edit_panel = this.dialog.querySelector('.child_edit_panel');
+    this.child_band_picker = this.dialog.querySelector('.child_band_picker');
+    this.child_select_picker = this.dialog.querySelector('.child_select_picker');
+    this.childBand = new cBlockLinkSelect(this.child_select_picker, this, this.child_edit_panel, this.child_band_picker, true);
+
+    this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => {
+      gAPPP.a.resetProfile();
+      setTimeout(() => location.reload(), 100);
+    });
+
+    this.removeChildButton = this.dialog.querySelector('.main-band-delete-child');
+    this.removeChildButton.addEventListener('click', e => this.removeChild(e));
+
+    this.center_sliders_btn = this.dialog.querySelector('.center_sliders_btn');
+    this.center_sliders_btn.addEventListener('click', e => {
+      this.geo_position_x_slider.value = 0;
+      this.geo_position_x_slider.lastValue = 0;
+      this.geo_position_y_slider.value = 0;
+      this.geo_position_y_slider.lastValue = 0;
+      this.geo_position_z_slider.value = 0;
+      this.geo_position_z_slider.lastValue = 0;
+    });
+    this.canvasHelper.closeMenusOnClick = false;
+
+    this.startLat = 0;
+    this.startLon = 0;
+    this.latitude = '0';
+    this.longitude = '0';
+    this.offsetX = 0;
+    this.offsetY = 15;
+    this.offsetZ = 0;
+
+    this.initBlockAddPanel();
+    this.initGPSUpdates();
+    this.initLocationAdjustments();
+    this.initDimensionAdjustments();
+    this._updateSelectedBlock(gAPPP.blockInURL);
+  }
+  initLinkBlockSelect() {
+    this.geo_link_block_select = this.dialog.querySelector('.geo_link_block_select');
+    this.geo_link_block_select.addEventListener('input', e => this.geoAddItem());
+    this.__updateLinkableBlocks();
+  }
+  __updateLinkableBlocks() {
+    let html = "<option>Link Block</option>";
+    for (let item in gAPPP.a.modelSets['block'].titleMap)
+      html += '<option>' + item + '</option>';
+    this.geo_link_block_select.innerHTML = html;
+  }
+  _updateContextWithDataChange(tag, values, type, fireData) {
+    super._updateContextWithDataChange(tag, values, type, fireData);
+    this.__updateLinkableBlocks();
+  }
+  initBands() {
     this.bandButtons = [];
+
+    this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
+    this.gps_overlay_btn = this.dialog.querySelector('.gps_overlay_btn');
+    this.gpsOverlayPopup = new cBandProfileOptions(this.gps_overlay_btn, [], this.gps_info_overlay, this.gps_info_overlay);
+    this.gpsOverlayPopup.fireFields.values = gAPPP.a.profile;
+    this.gpsOverlayPopup.activate();
+    this.bandButtons.push(this.gpsOverlayPopup);
+    this.gpsOverlayPopup.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.geo_add_item_panel = this.dialog.querySelector('.geo_add_item_panel');
+    this.geo_add_btn = this.dialog.querySelector('.geo_add_btn');
+    this.geoAddPopup = new cBandProfileOptions(this.geo_add_btn, [], this.geo_add_item_panel, this.geo_add_item_panel);
+    this.geoAddPopup.fireFields.values = gAPPP.a.profile;
+    this.geoAddPopup.activate();
+    this.bandButtons.push(this.geoAddPopup);
+    this.geoAddPopup.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.asset_list_panel = this.dialog.querySelector('.asset_list_panel');
+    this.object_list_btn = this.dialog.querySelector('.object_list_btn');
+    this.objectListPopup = new cBandProfileOptions(this.object_list_btn, [], this.asset_list_panel, this.asset_list_panel);
+    this.objectListPopup.fireFields.values = gAPPP.a.profile;
+    this.objectListPopup.activate();
+    this.bandButtons.push(this.objectListPopup);
+    this.objectListPopup.closeOthersCallback = () => this.closeHeaderBands();
+
     this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
     this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
     this.fontFields.push({
@@ -60,71 +142,6 @@ class cGeoView extends bView {
     this.fontTools.activate();
     this.bandButtons.push(this.fontTools);
     this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
-
-    this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
-    this.gps_overlay_btn = this.dialog.querySelector('.gps_overlay_btn');
-    this.gpsOverlayPopup = new cBandProfileOptions(this.gps_overlay_btn, [], this.gps_info_overlay, this.gps_info_overlay);
-    this.gpsOverlayPopup.fireFields.values = gAPPP.a.profile;
-    this.gpsOverlayPopup.activate();
-    this.bandButtons.push(this.gpsOverlayPopup);
-    this.gpsOverlayPopup.closeOthersCallback = () => this.closeHeaderBands();
-
-    this.geo_add_item_panel = this.dialog.querySelector('.geo_add_item_panel');
-    this.geo_add_btn = this.dialog.querySelector('.geo_add_btn');
-    this.geoAddPopup = new cBandProfileOptions(this.geo_add_btn, [], this.geo_add_item_panel, this.geo_add_item_panel);
-    this.geoAddPopup.fireFields.values = gAPPP.a.profile;
-    this.geoAddPopup.activate();
-    this.bandButtons.push(this.geoAddPopup);
-    this.geoAddPopup.closeOthersCallback = () => this.closeHeaderBands();
-
-    this.asset_list_panel = this.dialog.querySelector('.asset_list_panel');
-    this.object_list_btn = this.dialog.querySelector('.object_list_btn');
-    this.objectListPopup = new cBandProfileOptions(this.object_list_btn, [], this.asset_list_panel, this.asset_list_panel);
-    this.objectListPopup.fireFields.values = gAPPP.a.profile;
-    this.objectListPopup.activate();
-    this.bandButtons.push(this.objectListPopup);
-    this.objectListPopup.closeOthersCallback = () => this.closeHeaderBands();
-
-    this.geo_add_block = this.dialog.querySelector('.geo_add_block');
-    this.geo_add_block.addEventListener('click', e => this.geoAddItem());
-
-    this.child_edit_panel = this.dialog.querySelector('.child_edit_panel');
-    this.child_band_picker = this.dialog.querySelector('.child_band_picker');
-    this.child_select_picker = this.dialog.querySelector('.child_select_picker');
-    this.childBand = new cBlockLinkSelect(this.child_select_picker, this, this.child_edit_panel, this.child_band_picker, true);
-
-    this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => {
-      gAPPP.a.resetProfile();
-      setTimeout(() => location.reload(), 100);
-    });
-
-    this.removeChildButton = this.dialog.querySelector('.main-band-delete-child');
-    this.removeChildButton.addEventListener('click', e => this.removeChild(e));
-
-    this.center_sliders_btn = this.dialog.querySelector('.center_sliders_btn');
-    this.center_sliders_btn.addEventListener('click', e => {
-      this.geo_position_x_slider.value = 0;
-      this.geo_position_x_slider.lastValue = 0;
-      this.geo_position_y_slider.value = 0;
-      this.geo_position_y_slider.lastValue = 0;
-      this.geo_position_z_slider.value = 0;
-      this.geo_position_z_slider.lastValue = 0;
-    });
-    this.canvasHelper.closeMenusOnClick = false;
-
-    this.startLat = 0;
-    this.startLon = 0;
-    this.latitude = '0';
-    this.longitude = '0';
-    this.offsetX = 0;
-    this.offsetY = 15;
-    this.offsetZ = 0;
-
-    this.initBlockAddPanel();
-    this.initGPSUpdates();
-    this.initLocationAdjustments();
-    this.initDimensionAdjustments();
-    this._updateSelectedBlock(gAPPP.blockInURL);
   }
   initBlockAddPanel() {
     this.add_block_panel = this.dialog.querySelector('.add_block_panel');
@@ -324,7 +341,9 @@ class cGeoView extends bView {
     }
   }
   async geoAddItem() {
-    let blockName = this.dialog.querySelector('.geo_block_name').value;
+    if (this.geo_link_block_select.selectedIndex < 1)
+      return;
+    let blockName = this.geo_link_block_select.value;
     let parent = gAPPP.a.modelSets['block'].fireDataValuesByKey[this.initBlockKey].title;
     let csvRow = {
       asset: 'blockchild',
@@ -339,8 +358,9 @@ class cGeoView extends bView {
       parent
     };
     let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(csvRow);
-
-    //select block if not
+    this.geo_link_block_select.selectedIndex = 0;
+    this.child_select_picker.selectedIndex = 1;
+    this.childBand.selectedIndexChanged();
   }
   __updateLocation(updateCoords) {
     if (updateCoords) {
@@ -502,15 +522,13 @@ class cGeoView extends bView {
           </div>
         </div>
         <div class="geo_add_item_panel" style="display:none;">
-          <input class="geo_block_name" list="blockdatatitlelookuplist" />
-          <button class="geo_add_block">Add</button>
-          <hr>
           <div class="add_block_panel"></div>
         </div>
         <div class="asset_list_panel" style="display:none;width:100vw;overflow:hidden;">
           <div class="child_band_picker"></div>
           <select class="child_select_picker"></select>
           <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
+          <select class="geo_link_block_select"></select>
           <div class="child_edit_panel">
             <div style="display:flex;">
               <label><input type="radio" name="typeofdimension" data-dimension="position" class="position_dimensions" checked />Position</label>
