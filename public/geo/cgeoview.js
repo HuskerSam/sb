@@ -146,12 +146,20 @@ class cGeoView extends bView {
   initBlockAddPanel() {
     this.add_block_panel = this.dialog.querySelector('.add_block_panel');
     this.generate = new cMacro(this.add_block_panel, 'block', this);
+    this.generate.addCallback = (id, name) => {
+      this.geoAddItem(name);
+      this.closeHeaderBands();
+      this.objectListPopup.expanded = false;
+      this.objectListPopup.toggle();
+      this.resetDimensionSliders();
+    };
     let sel = this.dialog.querySelector('.block-type-select');
     sel.innerHTML = `<option selected>Text and Shape</option>
      <option>Animated Line</option>
      <option>Connector Line</option>`;
     this.generate.blockHelperChange();
   }
+  selectItem(newKey, newWindow) {}
   initDimensionAdjustments() {
     this.x_dimension_slider = this.dialog.querySelector('.x_dimension_slider');
     this.y_dimension_slider = this.dialog.querySelector('.y_dimension_slider');
@@ -340,10 +348,12 @@ class cGeoView extends bView {
       this.setChildKey(null);
     }
   }
-  async geoAddItem() {
-    if (this.geo_link_block_select.selectedIndex < 1)
-      return;
-    let blockName = this.geo_link_block_select.value;
+  async geoAddItem(blockName) {
+    if (blockName === undefined) {
+      if (this.geo_link_block_select.selectedIndex < 1)
+        return;
+      blockName = this.geo_link_block_select.value;
+    }
     let parent = gAPPP.a.modelSets['block'].fireDataValuesByKey[this.initBlockKey].title;
     let csvRow = {
       asset: 'blockchild',
@@ -476,7 +486,7 @@ class cGeoView extends bView {
         <div>
           <button class="btn-sb-icon gps_overlay_btn"><i class="material-icons">explore</i></button>
           <button class="btn-sb-icon geo_add_btn"><i class="material-icons">add</i></button>
-          <button class="btn-sb-icon object_list_btn"><i class="material-icons">3d_rotation</i></button>
+          <button class="btn-sb-icon object_list_btn"><i class="material-icons">edit</i></button>
           <button id="publish-settings-button" class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
         </div>
         <div id="publish-profile-panel" style="display:none;">

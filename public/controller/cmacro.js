@@ -68,7 +68,8 @@ class cMacro {
     if (this[tag + 'Register'])
       this[tag + 'Register']();
 
-
+    this.defaultParent = null;
+    this.addCallback = null;
   }
   updateFontField(textDom) {
     textDom.style.fontFamily = textDom.value;
@@ -119,9 +120,10 @@ class cMacro {
   }
   async createItem(newWindow) {
     this.newName = this.panelInput.value.trim();
-    if (this.newName === '') {
-      alert('Please enter a name');
-      return;
+    if (this.panelInput.value === '') {
+      this.panelInput.value = 'Created ' + new Date().toISOString();
+      //alert('Please enter a name');
+      //return;
     }
     let existingTitles = gAPPP.a.modelSets[this.tag].queryCache('title', this.newName);
     let keys = Object.keys(existingTitles);
@@ -140,6 +142,11 @@ class cMacro {
     }
     this.view.selectItem(newKey, newWindow);
     this.createMesage.style.display = 'none';
+    if (this.addCallback)
+      await this.addCallback(newKey, this.newName);
+    this.panelInput.value = '';
+
+    return;
   }
   async create() {
     let results = await gAPPP.activeContext.createObject(this.tag, this.newName);
