@@ -1,5 +1,5 @@
 class wContext {
-  constructor(canvas) {
+  constructor(canvas, geoOptions) {
     this.ghostBlocks = {};
     this.light = null;
     this.camera = null;
@@ -17,6 +17,32 @@ class wContext {
     this.previousCameraHieghtOffset = '';
     this.preRenderFrame = () => {};
     this.arcCameraRadius = 20;
+
+    this.geoFilter = false;
+    this.zeroLatitude = 0.0;
+    this.zeroLongitude = 0.0;
+    this.geoRadius = 50.0;
+    this.minLatitude = 0.0;
+    this.maxLatitude = 0.0;
+    this.minLongitude = 0.0;
+    this.maxLongitude = 0.0;
+
+    if (geoOptions) {
+      this.geoRadius = geoOptions.geoRadius;
+      this.zeroLatitude = geoOptions.zeroLatitude;
+      this.zeroLongitude = geoOptions.zeroLongitude;
+      this.geoFilter = true;
+      this.updateGPSWindow();
+    }
+  }
+  updateGPSWindow() {
+    let pt1 = GLOBALUTIL.gpsOffsetCoords(this.zeroLatitude, this.zeroLongitude, this.geoRadius, this.geoRadius);
+    let pt2 = GLOBALUTIL.gpsOffsetCoords(this.zeroLatitude, this.zeroLongitude, -1.0 * this.geoRadius, -1.0 * this.geoRadius);
+
+    this.maxLatitude = pt1.lat;
+    this.minLatitude = pt2.lat;
+    this.maxLongitude = pt1.lon;
+    this.minLongitude = pt2.lon;
   }
   setGhostBlock(name, block) {
     if (this.ghostBlocks[name] === block)

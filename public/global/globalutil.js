@@ -170,6 +170,49 @@ class GLOBALUTIL {
     var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
+  static __distanceGPSMeters(lat1, lon1, lat2, lon2) {
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180)
+    }
+
+    let earthradius_m = 6371000;
+    let dLat = deg2rad(lat2 - lat1);
+    let dLon = deg2rad(lon2 - lon1);
+    let a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return earthradius_m * c;
+  }
+  static getGPSDiff(lat1, lon1, lat2, lon2) {
+    let distance = this.__distanceGPSMeters(lat1, lon1, lat2, lon2);
+    let horizontal = this.__distanceGPSMeters(lat1, lon1, lat2, lon1);
+    let vertical = this.__distanceGPSMeters(lat1, lon1, lat1, lon2);
+
+    return {
+      horizontal,
+      vertical,
+      distance
+    };
+  }
+  static gpsOffsetCoords(lat, lon, ewDiff, nsDiff) {
+    function deg2rad(deg) {
+      return deg * (Math.PI / 180)
+    }
+    let earthradius_m = 6371000;
+    let dLat = nsDiff / earthradius_m;
+    let dLon = ewDiff / (earthradius_m * Math.cos(deg2rad(lat)));
+    dLat *= 180 / Math.PI;
+    dLon *= 180 / Math.PI;
+
+    lat += dLat;
+    lon += dLon;
+
+    return {
+      lat, lon
+    }
+  }
 }
 if (!String.prototype.padStart) {
   String.prototype.padStart = function padStart(targetLength, padString) {

@@ -289,6 +289,11 @@ class gCSVImport {
       inheritMaterial
     };
 
+    if (row.latitude)
+      blockChildData.latitude = row.latitude;
+    if (row.longitude)
+      blockChildData.longitude = row.longitude;
+
     if (row.index) {
       blockChildData.animationIndex = GLOBALUTIL.getNumberOrDefault(row.index, 0);
       blockChildData.origRow = row;

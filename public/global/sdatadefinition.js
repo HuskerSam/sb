@@ -982,6 +982,18 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   displayKey: 'childType',
   dataListId: 'followblocktargetoptionslist',
   group: 'camera'
+}, {
+  title: 'Latitude',
+  fireSetField: 'latitude',
+  displayGroup: ['mesh', 'shape', 'block'],
+  displayKey: 'childType',
+  group: 'location'
+}, {
+  title: 'Longitude',
+  fireSetField: 'longitude',
+  displayGroup: ['mesh', 'shape', 'block'],
+  displayKey: 'childType',
+  group: 'location'
 }];
 __localStaticStorageForBindingFields['frameBase'] = [{
   title: 'Time (ms)',

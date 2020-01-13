@@ -1,5 +1,5 @@
 class bView {
-  constructor(layoutMode, tag, key = null, play = false, childKey, subview) {
+  constructor(layoutMode, tag, key = null, play = false, childKey, subview, geoOptions) {
     this.playAnimation = play;
     this.expandedAll = true;
     this.tag = tag;
@@ -7,6 +7,7 @@ class bView {
     this.childKey = childKey;
     this.layoutMode = layoutMode;
     this.subView = subview;
+    this.geoOptions = geoOptions;
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
     this.detailsShown = gAPPP.a.profile.applicationDetailsShown;
@@ -50,7 +51,7 @@ class bView {
     this.canvasWrapper.innerHTML = canvasTemplate;
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
-    this.context = new wContext(this.canvas);
+    this.context = new wContext(this.canvas, this.geoOptions);
     this.canvasActions = this.dialog.querySelector('.canvas-actions');
     this.canvasActions.style.display = '';
     this.loadedSceneURL = '';

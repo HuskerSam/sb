@@ -1,6 +1,11 @@
 class cGeoView extends bView {
   constructor() {
-    super(undefined, undefined, null, true);
+    let geoOptions = {
+      zeroLatitude: GLOBALUTIL.getNumberOrDefault(gAPPP.latitude, 0.0),
+      zeroLongitude: GLOBALUTIL.getNumberOrDefault(gAPPP.longitude, 0.0),
+      geoRadius: 50.0
+    };
+    super(undefined, undefined, null, true, undefined, undefined, geoOptions);
 
     this.initBands();
     this.initLinkBlockSelect();
@@ -160,7 +165,7 @@ class cGeoView extends bView {
     this.generate.blockHelperChange();
   }
   selectItem(newKey, newWindow) {}
-  initDimensionAdjustments() {
+  async initDimensionAdjustments() {
     this.x_dimension_slider = this.dialog.querySelector('.x_dimension_slider');
     this.y_dimension_slider = this.dialog.querySelector('.y_dimension_slider');
     this.z_dimension_slider = this.dialog.querySelector('.z_dimension_slider');
@@ -176,7 +181,7 @@ class cGeoView extends bView {
 
     this.dialog.querySelectorAll('.dimension_slider').forEach(i => {
       i.lastValue = 0;
-      i.addEventListener('input', e => {
+      i.addEventListener('input', async e => {
         let field = i.dataset.field;
         if (this.dimensionType === 'position') {
           let offset = Number(i.value) - i.lastValue;
@@ -203,10 +208,14 @@ class cGeoView extends bView {
             val += offset;
             i.lastValue = i.value;
 
-            return gAPPP.a.modelSets['frame'].commitUpdateList([{
+            await gAPPP.a.modelSets['frame'].commitUpdateList([{
               field: fieldTag,
               newValue: val.toString()
             }], frameIds[0]);
+
+            this.updateBlockGPS();
+
+            return;
           }
         }
         if (this.dimensionType === 'rotation') {
@@ -284,6 +293,13 @@ class cGeoView extends bView {
       });
     });
   }
+  updateBlockGPS() {
+    let block = this.context.activeBlock;
+    if (!block)
+      return;
+//lat, lon, ewDiff, nsDiff
+    //let offsets = GLOBALUTIL.gpsOffsetCoords();
+  }
   resetDimensionSliders() {
     this.dialog.querySelectorAll('.dimension_slider').forEach(i => {
       i.value = 0;
@@ -355,16 +371,23 @@ class cGeoView extends bView {
       blockName = this.geo_link_block_select.value;
     }
     let parent = gAPPP.a.modelSets['block'].fireDataValuesByKey[this.initBlockKey].title;
+
+    //let x = this.context.camera._position.x;
+    //let z = this.context.camera._position.z;
+    let offsets = GLOBALUTIL.getGPSDiff(this.context.zeroLatitude, this.context.zeroLongitude, this.latitude, this.longitude);
+    console.log(offsets, this.context.camera._position);
     let csvRow = {
       asset: 'blockchild',
       name: blockName,
       childtype: 'block',
-      x: this.context.camera._position.x,
+      x: -1.0 * offsets.vertical,
       y: 3.0,
-      z: this.context.camera._position.z,
+      z: offsets.horizontal,
       sx: 5,
       sy: 5,
       sz: 5,
+      latitude: this.latitude,
+      longitude: this.longitude,
       parent
     };
     let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(csvRow);
@@ -373,15 +396,16 @@ class cGeoView extends bView {
     this.childBand.selectedIndexChanged();
   }
   __updateLocation(updateCoords) {
-    if (updateCoords) {
+    if (updateCoords || !this.gpsInited) {
       this.startLat = Number(this.latitude);
       this.startLon = Number(this.longitude);
       this.offsetX = 0;
       this.offsetY = 15;
       this.offsetZ = 0;
+      this.gpsInited = true;
     }
     this.base_location.innerHTML = 'Base :' + this.startLat.toFixed(7) + '°, ' + this.startLon.toFixed(7) + '°';
-    let d_result = this.getGPSDiff(this.startLat, this.startLon, this.latitude, this.longitude);
+    let d_result = GLOBALUTIL.getGPSDiff(this.startLat, this.startLon, this.latitude, this.longitude);
     this.offset_distances.innerHTML = 'crow:' + d_result.distance.toFixed(3) + '<br>h:' + d_result.horizontal.toFixed(3) +
       ', v:' + d_result.vertical.toFixed(3);
 
@@ -399,7 +423,7 @@ class cGeoView extends bView {
     this.offset_distances = this.dialog.querySelector('.offset_distances');
     this.base_location = this.dialog.querySelector('.base_location');
     this.use_current_location = this.dialog.querySelector('.use_current_location');
-    this.__updateLocation();
+
     this.use_current_location.addEventListener('click', e => this.__updateLocation(true));
     this.gps_location.innerHTML = 'initing...';
     this.device_orientation.innerHTML = 'initing...';
@@ -412,46 +436,18 @@ class cGeoView extends bView {
       this.device_orientation.innerHTML = 'A:' + alpha + '°, B:' + beta + '°, G:' + gamma;
     });
 
-    navigator.geolocation.watchPosition(position => {
-      this.latitude = position.coords.latitude.toFixed(7);
-      this.longitude = position.coords.longitude.toFixed(7);
-
-      let html = `La: ${this.latitude}°<br>Lo: ${this.longitude}°`;
-      this.gps_location.innerHTML = html;
-      this.__updateLocation();
-    }, err => {
-      this.gps_location.innerHTML = 'ERROR(' + err.code + '): ' + err.message;
-    }, {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
-    });
-  }
-  __distanceGPSMeters(lat1, lon1, lat2, lon2) {
-    function deg2rad(deg) {
-      return deg * (Math.PI / 180)
-    }
-
-    let earthradius_m = 6371000;
-    let dLat = deg2rad(lat2 - lat1);
-    let dLon = deg2rad(lon2 - lon1);
-    let a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return earthradius_m * c;
-  }
-  getGPSDiff(lat1, lon1, lat2, lon2) {
-    let distance = this.__distanceGPSMeters(lat1, lon1, lat2, lon2);
-    let horizontal = this.__distanceGPSMeters(lat1, lon1, lat2, lon1);
-    let vertical = this.__distanceGPSMeters(lat1, lon1, lat1, lon2);
-
-    return {
-      horizontal,
-      vertical,
-      distance
+    gAPPP.gpsCallback = (data, isError) => {
+      if (isError) {
+        this.gps_location.innerHTML = 'ERROR(' + data.code + '): ' + data.message;
+      } else {
+        this.latitude = gAPPP.latitude;
+        this.longitude = gAPPP.longitude;
+        let html = `La: ${this.latitude}°<br>Lo: ${this.longitude}°`;
+        this.gps_location.innerHTML = html;
+        this.__updateLocation();
+      }
     };
+
   }
   closeHeaderBands() {
     for (let i in this.bandButtons) {

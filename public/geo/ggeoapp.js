@@ -4,8 +4,33 @@ class gGeoApp extends gInstanceSuper {
     this.loadDataLists('fontfamilydatalist');
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .then(() => this.a.signInAnon());
+    this.gpsInited = false;
+  }
+  initGPSTracking() {
+    navigator.geolocation.watchPosition(position => {
+      this.latitude = position.coords.latitude.toFixed(7);
+      this.longitude = position.coords.longitude.toFixed(7);
+
+      if (this.gpsCallback)
+        this.gpsCallback(position);
+
+      if (!this.gpsInited) {
+        this.gpsInited = true;
+        this.gpsReady();
+      }
+    }, err => {
+      if (this.gpsCallback)
+        this.gpsCallback(err, true);
+    }, {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    });
   }
   profileReadyAndLoaded() {
+    this.initGPSTracking();
+  }
+  gpsReady() {
     this.loadStarted = true;
 
     let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('tags', 'demo');
