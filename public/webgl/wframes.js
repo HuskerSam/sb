@@ -488,8 +488,8 @@ class wFrames {
       if (this.context.geoFilter) {
         let offsetNeeded = this._gpsOffsetFrames();
         if (offsetNeeded) {
-          this.processedFrameValues[firstKey].positionX.value = this.parentBlock.gpsPositionX;
-          this.processedFrameValues[firstKey].positionZ.value = this.parentBlock.gpsPositionZ;
+          this.processedFrameValues[firstKey].positionX.value = -1.0 * this.parentBlock.gpsPositionX;
+          this.processedFrameValues[firstKey].positionZ.value = -1.0 * this.parentBlock.gpsPositionZ;
           console.log(this.parentBlock.gpsPositionX, this.parentBlock.gpsPositionZ);
         }
       }
