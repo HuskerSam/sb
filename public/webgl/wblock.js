@@ -324,13 +324,6 @@ class wBlock {
       return;
 
     let values = this.framesHelper.firstFrameValues();
-    if (this.parent)
-      if (!this.parent.parent && this.context.geoFilter)
-        if (['mesh', 'shape', 'block'].indexOf(this.blockRawData.childType) !== -1) {
-        //  console.log(values.positionX, values.positionY, this.blockRawData.latitude, this.blockRawData.longitude, this.blockRawData.childType);
-          //             console.log(this.framesHelper.firstFrameValues());
-        }
-
     for (let i in this.framesHelper.fieldsData) {
       let field = this.framesHelper.fieldsData[i];
       let value = values[field.fireSetField];

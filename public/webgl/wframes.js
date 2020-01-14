@@ -430,6 +430,23 @@ class wFrames {
       ownerKey
     });
   }
+  _gpsOffsetFrames() {
+    if (!this.context.geoFilter)
+      return;
+
+    let block = this.parentBlock;
+    if (block.parent)
+      if (!block.parent.parent)
+        if (['mesh', 'shape', 'block'].indexOf(block.blockRawData.childType) !== -1) {
+          let offsets = GLOBALUTIL.getGPSDiff(this.context.zeroLatitude, this.context.zeroLongitude,
+            block.blockRawData.latitude, block.blockRawData.longitude);
+          block.gpsPositionX = 1.0 * offsets.vertical;
+          block.gpsPositionZ = offsets.horizontal;
+          return true;
+        }
+
+    return false;
+  }
   _processFrames() {
     this.runningState = {
       base: {},
@@ -438,6 +455,7 @@ class wFrames {
     this.processedFrames = [];
     this.processedFrameValues = {};
     this.processedFrameValues['root'] = this._processFrameValues('root');
+
     let clonePreviousTimes = {};
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let frame = this.__getFrame(c);
@@ -467,6 +485,16 @@ class wFrames {
     if (frameCount > 0) {
       let firstFrame = this.__getFrame(0);
       let firstKey = this.orderedKeys[0];
+      if (this.context.geoFilter) {
+        let offsetNeeded = this._gpsOffsetFrames();
+        if (offsetNeeded) {
+          this.processedFrameValues[firstKey].positionX.value = this.parentBlock.gpsPositionX;
+          this.processedFrameValues[firstKey].positionZ.value = this.parentBlock.gpsPositionZ;
+          console.log(this.parentBlock.gpsPositionX, this.parentBlock.gpsPositionZ);
+        }
+      }
+
+
       if (firstFrame.processedTime !== 0)
         this.__pushFrame(0, firstFrame, true, 'first frame', this.processedFrameValues[firstKey], firstKey);
 

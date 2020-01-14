@@ -297,7 +297,7 @@ class cGeoView extends bView {
     let block = this.context.activeBlock;
     if (!block)
       return;
-//lat, lon, ewDiff, nsDiff
+    //lat, lon, ewDiff, nsDiff
     //let offsets = GLOBALUTIL.gpsOffsetCoords();
   }
   resetDimensionSliders() {
@@ -400,7 +400,7 @@ class cGeoView extends bView {
       this.startLat = Number(this.latitude);
       this.startLon = Number(this.longitude);
       this.offsetX = 0;
-      this.offsetY = 15;
+      this.offsetY = 5;
       this.offsetZ = 0;
       this.gpsInited = true;
     }
@@ -409,10 +409,7 @@ class cGeoView extends bView {
     this.offset_distances.innerHTML = 'crow:' + d_result.distance.toFixed(3) + '<br>h:' + d_result.horizontal.toFixed(3) +
       ', v:' + d_result.vertical.toFixed(3);
 
-    if (!this.context)
-      return;
-
-    this.context.camera._position.x = this.offsetX + d_result.vertical * -1.0; //east increasing
+    this.context.camera._position.x = this.offsetX + d_result.vertical * 1.0; //east increasing
     this.context.camera._position.y = this.offsetY;
     this.context.camera._position.z = this.offsetZ + d_result.horizontal * 1.0; //north increasing
   }
