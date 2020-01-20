@@ -74,3 +74,31 @@
 .add-newwindow-button {
   display: none;
 }
+
+.fov_slider {
+   width:100%;
+   padding-right: .5em;
+   position: relative;
+}
+
+.gps_location {
+  width: auto;
+  display: inline-block;
+  text-align: center;
+  color: white;
+  background: rgba(0,0,0,.4);
+}
+
+.bottom_panel {
+  text-align:center;
+  width: 100%;
+  position:absolute;
+  bottom:.25em;
+}
+
+.device_orientation {
+  display: inline-block;
+  color: white;
+  background: rgba(0,0,0,.4);
+  width: auto;
+}

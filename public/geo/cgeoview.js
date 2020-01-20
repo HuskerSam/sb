@@ -375,7 +375,6 @@ class cGeoView extends bView {
     //let x = this.context.camera._position.x;
     //let z = this.context.camera._position.z;
     let offsets = GLOBALUTIL.getGPSDiff(this.context.zeroLatitude, this.context.zeroLongitude, this.latitude, this.longitude);
-    console.log(offsets, this.context.camera._position);
     let csvRow = {
       asset: 'blockchild',
       name: blockName,
@@ -413,6 +412,43 @@ class cGeoView extends bView {
     this.context.camera._position.y = this.offsetY;
     this.context.camera._position.z = this.offsetZ + d_result.horizontal * 1.0; //north increasing
   }
+  __monitorCameraPosition() {
+    let zeroto360 = (this.alpha + 360) % 360.0;
+    if (this.alpha === 'none' || this.alpha === undefined) {
+      zeroto360 = (((gAPPP.activeContext.camera.rotation.y * 180 / Math.PI) + 360) % 360.0).toFixed(3);
+      this.beta = (gAPPP.activeContext.camera.rotation.x * 180 / Math.PI).toFixed(3);
+    }
+
+    if (this.orientationInited) {
+      let direction = "N";
+      if (zeroto360 > (360 - 22.5))
+        direction = "N";
+      else if (zeroto360 > (360 - 45 - 22.5))
+        direction = "NW";
+      else if (zeroto360 > (360 - 90 - 22.5))
+        direction = "W";
+      else if (zeroto360 > (360 - 135 - 22.5))
+        direction = "SW";
+      else if (zeroto360 > (360 - 180 - 22.5))
+        direction = "S";
+      else if (zeroto360 > (360 - 225 - 22.5))
+        direction = "SE";
+      else if (zeroto360 > (360 - 270 - 22.5))
+        direction = "E";
+      else if (zeroto360 > (360 - 315 - 22.5))
+        direction = "NE";
+      // else "N"
+
+      this.device_orientation.innerHTML = 'A:' + zeroto360 + `(${direction})` + '°  B:' + this.beta + '°';
+    }
+    this.gps_location.innerHTML = `La: ${this.latitude}° Lo: ${this.longitude}°`;
+    this.__updateLocation();
+
+    clearTimeout(this.updateCameraPositionLabel);
+    this.updateCameraPositionLabel = setTimeout(() => {
+      this.__monitorCameraPosition();
+    }, 500);
+  }
   initGPSUpdates() {
     this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
     this.gps_location = this.dialog.querySelector('.gps_location');
@@ -425,12 +461,13 @@ class cGeoView extends bView {
     this.gps_location.innerHTML = 'initing...';
     this.device_orientation.innerHTML = 'initing...';
 
-    window.addEventListener('deviceorientation', event => {
-      let alpha = event.alpha ? event.alpha.toFixed(0) : 'none';
-      let beta = event.beta ? event.beta.toFixed(1) : 'none';
-      let gamma = event.gamma ? event.gamma.toFixed(2) : 'none';
+    this.__monitorCameraPosition();
 
-      this.device_orientation.innerHTML = 'A:' + alpha + '°, B:' + beta + '°, G:' + gamma;
+    window.addEventListener('deviceorientation', event => {
+      this.orientationInited = true;
+      this.alpha = event.alpha ? event.alpha.toFixed(0) : 'none';
+      this.beta = event.beta ? event.beta.toFixed(1) : 'none';
+      this.gamma = event.gamma ? event.gamma.toFixed(2) : 'none';
     });
 
     gAPPP.gpsCallback = (data, isError) => {
@@ -439,9 +476,6 @@ class cGeoView extends bView {
       } else {
         this.latitude = gAPPP.latitude;
         this.longitude = gAPPP.longitude;
-        let html = `La: ${this.latitude}°<br>Lo: ${this.longitude}°`;
-        this.gps_location.innerHTML = html;
-        this.__updateLocation();
       }
     };
 
@@ -462,6 +496,15 @@ class cGeoView extends bView {
     </div>
     <div class="canvas-actions">
       <div class="canvas_play_bar" style="">
+        <div class="bottom_panel">
+          <div class="device_orientation"></div>
+          <br>
+          <div class="gps_location"></div>
+          <div class="fov_slider">
+            <div class="camera-slider-label">FOV</div>
+            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+          </div>
+        </div>
         <div class="scene-options-panel" style="display:none;">
           <div class="scene-fields-container">
           </div>
@@ -491,10 +534,6 @@ class cGeoView extends bView {
           </div>
         </div>
         <div class="gps_info_overlay" style="display:none">
-          <span class="gps_location"></span>
-          <br>
-          <span class="device_orientation"></span>
-          <br>
           <div class="offset_info_panel">
             <span class="base_location">base location</span>
             <br>
@@ -517,10 +556,6 @@ class cGeoView extends bView {
             </div>
             <div style="text-align:center;padding:.25em;">
               <button class="center_sliders_btn">Center Sliders</button>
-            </div>
-            <div style="display:inline-block;width:100%;position:relative;">
-              <div class="camera-slider-label">FOV</div>
-              <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
             </div>
           </div>
         </div>
