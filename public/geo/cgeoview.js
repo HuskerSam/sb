@@ -413,8 +413,8 @@ class cGeoView extends bView {
     this.context.camera._position.z = this.offsetZ + d_result.horizontal * 1.0; //north increasing
   }
   __monitorCameraPosition() {
-    let zeroto360 = (this.alpha + 360) % 360.0;
-    if (this.alpha === 'none' || this.alpha === undefined) {
+    let zeroto360 = this.alpha;
+    if (zeroto360 === 'none' || zeroto360 === undefined) {
       zeroto360 = (((gAPPP.activeContext.camera.rotation.y * 180 / Math.PI) + 360) % 360.0).toFixed(3);
       this.beta = (gAPPP.activeContext.camera.rotation.x * 180 / Math.PI).toFixed(3);
     }
@@ -424,30 +424,29 @@ class cGeoView extends bView {
       if (zeroto360 > (360 - 22.5))
         direction = "N";
       else if (zeroto360 > (360 - 45 - 22.5))
-        direction = "NW";
+        direction = "NE";
       else if (zeroto360 > (360 - 90 - 22.5))
-        direction = "W";
+        direction = "E";
       else if (zeroto360 > (360 - 135 - 22.5))
-        direction = "SW";
+        direction = "SE";
       else if (zeroto360 > (360 - 180 - 22.5))
         direction = "S";
       else if (zeroto360 > (360 - 225 - 22.5))
-        direction = "SE";
+        direction = "SW";
       else if (zeroto360 > (360 - 270 - 22.5))
-        direction = "E";
+        direction = "W";
       else if (zeroto360 > (360 - 315 - 22.5))
-        direction = "NE";
+        direction = "NW";
       // else "N"
 
-      this.device_orientation.innerHTML = 'A:' + zeroto360 + `(${direction})` + '°  B:' + this.beta + '°';
+      this.device_orientation.innerHTML = 'A:' + zeroto360 + `° (${direction}) B:` + this.beta + '°';
     }
     this.gps_location.innerHTML = `La: ${this.latitude}° Lo: ${this.longitude}°`;
-    this.__updateLocation();
 
     clearTimeout(this.updateCameraPositionLabel);
     this.updateCameraPositionLabel = setTimeout(() => {
       this.__monitorCameraPosition();
-    }, 500);
+    }, 400);
   }
   initGPSUpdates() {
     this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
@@ -476,6 +475,7 @@ class cGeoView extends bView {
       } else {
         this.latitude = gAPPP.latitude;
         this.longitude = gAPPP.longitude;
+        this.__updateLocation();
       }
     };
 
