@@ -7,7 +7,6 @@ class cGeoView extends bView {
     };
     super(undefined, undefined, null, true, undefined, undefined, geoOptions);
 
-    this.initBands();
     this.initLinkBlockSelect();
 
     this.child_edit_panel = this.dialog.querySelector('.child_edit_panel');
@@ -47,6 +46,45 @@ class cGeoView extends bView {
     this.initLocationAdjustments();
     this.initDimensionAdjustments();
     this._updateSelectedBlock(gAPPP.blockInURL);
+
+    this.bottom_panel = this.dialog.querySelector('.bottom_panel');
+    this.status_bar_btn = this.dialog.querySelector('.status_bar_btn');
+    this.status_bar_btn.addEventListener('click', e => {
+      if (this.bottom_panel.classList.contains('collapsed')) {
+        this.bottom_panel.classList.remove('collapsed');
+        this.status_bar_btn.classList.remove('app-inverted');
+      } else {
+        this.bottom_panel.classList.add('collapsed');
+        this.status_bar_btn.classList.add('app-inverted');
+      }
+    });
+
+    this.add_panel = this.dialog.querySelector('.add_panel');
+    this.geo_add_btn = this.dialog.querySelector('.geo_add_btn');
+    this.geo_add_btn.addEventListener('click', e => {
+      if (this.add_panel.classList.contains('collapsed')) {
+        this.add_panel.classList.remove('collapsed');
+        this.geo_add_btn.classList.remove('app-inverted');
+      } else {
+        this.add_panel.classList.add('collapsed');
+        this.geo_add_btn.classList.add('app-inverted');
+      }
+    });
+
+
+    this.create_panel = this.dialog.querySelector('.create_panel');
+    this.geo_create_btn = this.dialog.querySelector('.geo_create_btn');
+    this.geo_create_btn.addEventListener('click', e => {
+      if (this.create_panel.classList.contains('collapsed')) {
+        this.create_panel.classList.remove('collapsed');
+        this.geo_create_btn.classList.remove('app-inverted');
+      } else {
+        this.create_panel.classList.add('collapsed');
+        this.geo_create_btn.classList.add('app-inverted');
+      }
+    });
+
+    this.initProfilePanel();
   }
   initLinkBlockSelect() {
     this.geo_link_block_select = this.dialog.querySelector('.geo_link_block_select');
@@ -63,34 +101,7 @@ class cGeoView extends bView {
     super._updateContextWithDataChange(tag, values, type, fireData);
     this.__updateLinkableBlocks();
   }
-  initBands() {
-    this.bandButtons = [];
-
-    this.gps_info_overlay = this.dialog.querySelector('.gps_info_overlay');
-    this.gps_overlay_btn = this.dialog.querySelector('.gps_overlay_btn');
-    this.gpsOverlayPopup = new cBandProfileOptions(this.gps_overlay_btn, [], this.gps_info_overlay, this.gps_info_overlay);
-    this.gpsOverlayPopup.fireFields.values = gAPPP.a.profile;
-    this.gpsOverlayPopup.activate();
-    this.bandButtons.push(this.gpsOverlayPopup);
-    this.gpsOverlayPopup.closeOthersCallback = () => this.closeHeaderBands();
-
-    this.geo_add_item_panel = this.dialog.querySelector('.geo_add_item_panel');
-    this.geo_add_btn = this.dialog.querySelector('.geo_add_btn');
-    this.geoAddPopup = new cBandProfileOptions(this.geo_add_btn, [], this.geo_add_item_panel, this.geo_add_item_panel);
-    this.geoAddPopup.fireFields.values = gAPPP.a.profile;
-    this.geoAddPopup.activate();
-    this.bandButtons.push(this.geoAddPopup);
-    this.geoAddPopup.closeOthersCallback = () => this.closeHeaderBands();
-
-    this.asset_list_panel = this.dialog.querySelector('.asset_list_panel');
-    this.object_list_btn = this.dialog.querySelector('.object_list_btn');
-    this.objectListPopup = new cBandProfileOptions(this.object_list_btn, [], this.asset_list_panel, this.asset_list_panel);
-    this.objectListPopup.fireFields.values = gAPPP.a.profile;
-    this.objectListPopup.activate();
-    this.bandButtons.push(this.objectListPopup);
-    this.objectListPopup.closeOthersCallback = () => this.closeHeaderBands();
-
-    this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
+  initProfilePanel() {
     this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
     this.fontFields.push({
       title: 'Bounds',
@@ -131,7 +142,6 @@ class cGeoView extends bView {
     }, {
       title: 'Light',
       fireSetField: 'lightIntensity',
-
       helperType: 'singleSlider',
       rangeMin: '0',
       rangeMax: '2',
@@ -140,13 +150,24 @@ class cGeoView extends bView {
       group: 'group2',
       groupClass: 'light-intensity-user-panel'
     });
-    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
-    this.fontToolsButton = this.dialog.querySelector('#publish-settings-button');
-    this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);
-    this.fontTools.fireFields.values = gAPPP.a.profile;
-    this.fontTools.activate();
-    this.bandButtons.push(this.fontTools);
-    this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.publish_profile_panel = this.dialog.querySelector('.publish_profile_panel');
+    this.fontFieldsContainer = this.publish_profile_panel.querySelector('.fields-container');
+    this.fontFireFields = new cPanelData(this.fontFields, this.fontFieldsContainer, this);
+    this.fontFireFields.values = gAPPP.a.profile;
+    this.fontFireFields.paint()
+
+    this.profile_panel = this.dialog.querySelector('.profile_panel');
+    this.profile_show_btn = this.dialog.querySelector('.profile_show_btn');
+    this.profile_show_btn.addEventListener('click', e => {
+      if (this.profile_panel.classList.contains('collapsed')) {
+        this.profile_panel.classList.remove('collapsed');
+        this.profile_show_btn.classList.remove('app-inverted');
+      } else {
+        this.profile_panel.classList.add('collapsed');
+        this.profile_show_btn.classList.add('app-inverted');
+      }
+    });
   }
   initBlockAddPanel() {
     this.add_block_panel = this.dialog.querySelector('.add_block_panel');
@@ -496,13 +517,109 @@ class cGeoView extends bView {
     </div>
     <div class="canvas-actions">
       <div class="canvas_play_bar" style="">
-        <div class="bottom_panel">
-          <div class="device_orientation"></div>
-          <br>
-          <div class="gps_location"></div>
-          <div class="fov_slider">
-            <div class="camera-slider-label">FOV</div>
-            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+        <div class="bottom_full_panel">
+          <div class="profile_panel collapsed">
+            <div style="flex:0;display:flex;flex-direction:column">
+              <div style="flex:1"></div>
+              <button class="btn-sb-icon profile_show_btn app-inverted"><i class="material-icons">settings_brightness</i></button>
+              <div style="flex:1"></div>
+            </div>
+            <div class="publish_profile_panel">
+              <div class="fields-container"></div>
+              <button id="user-profile-dialog-reset-button" style="display:none">Reset Options</button>
+              <br>
+              <div style="clear:both;">
+                User Specific Color for Selection <input type="color" />
+              </div>
+              <div class="gps_info_overlay">
+                <div class="offset_info_panel">
+                  <span class="base_location">base location</span>
+                  <br>
+                  <span class="offset_distances">hor, vert, crow</span>
+                  <br>
+                  <button class="use_current_location">Use Current Location</button>
+                  <br>
+                  Adjust Location (local only)<br>
+                  <div style="display:flex;">
+                    <span>X:</span>
+                    <input type="range" min="-50" max="50" class="geo_position_x_slider" step=".005" value="0">
+                  </div>
+                  <div style="display:flex;">
+                    <span>Y:</span>
+                    <input type="range" min="-50" max="50" class="geo_position_y_slider" step=".005" value="0">
+                  </div>
+                  <div style="display:flex;">
+                    <span>Z:</span>
+                    <input type="range" min="-50" max="50" class="geo_position_z_slider" step=".005" value="0">
+                  </div>
+                  <div style="text-align:center;padding:.25em;">
+                    <button class="center_sliders_btn">Center Sliders</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="create_panel collapsed">
+            <div style="flex:0;display:flex;flex-direction:column">
+              <div style="flex:1"></div>
+              <button class="btn-sb-icon geo_create_btn app-inverted"><i class="material-icons">edit</i></button>
+              <div style="flex:1"></div>
+            </div>
+            <div class="geo_add_item_panel">
+              <div class="add_block_panel"></div>
+            </div>
+          </div>
+          <div class="add_panel collapsed">
+            <div style="flex:0;display:flex;flex-direction:column">
+              <div style="flex:1"></div>
+              <button class="btn-sb-icon geo_add_btn app-inverted"><i class="material-icons">add</i></button>
+              <div style="flex:1"></div>
+            </div>
+            <div class="asset_list_panel">
+              <div class="child_band_picker"></div>
+              <select class="child_select_picker"></select>
+              <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
+              <select class="geo_link_block_select"></select>
+              <div class="child_edit_panel">
+                <div style="display:flex;">
+                  <label><input type="radio" name="typeofdimension" data-dimension="position" class="position_dimensions" checked />Position</label>
+                  <label><input type="radio" name="typeofdimension" data-dimension="rotation" class="rotation_dimensions" />Rotation</label>
+                  <label><input type="radio" name="typeofdimension" data-dimension="scale" class="scale_dimensions" />Scale</label>
+                </div>
+                <div style="display:flex;">
+                  <span>X:</span>
+                  <input type="range" class="dimension_slider" data-field="x" min="-50" max="50" step=".005" value="0">
+                </div>
+                <div style="display:flex;">
+                  <span>Y:</span>
+                  <input type="range" class="dimension_slider" data-field="y" min="-50" max="50" step=".005" value="0">
+                </div>
+                <div style="display:flex;">
+                  <span>Z:</span>
+                  <input type="range" class="dimension_slider" data-field="z" min="-50" max="50" step=".005" value="0">
+                </div>
+                <div style="text-align:center;padding:.25em;">
+                  <button class="center_object_sliders">Center Sliders</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom_panel no_pointer_events">
+            <div style="flex:0;display:flex;flex-direction:column">
+              <div style="flex:1"></div>
+              <button class="status_bar_btn"><i class="material-icons">explore</i></button>
+              <div style="flex:1"></div>
+            </div>
+            <div class="status_panel no_pointer_events">
+              <div class="device_orientation"></div>
+              <br>
+              <div class="gps_location"></div>
+              <div class="fov_slider">
+                <div class="camera-slider-label">FOV</div>
+                <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+              </div>
+            </div>
           </div>
         </div>
         <div class="scene-options-panel" style="display:none;">
@@ -518,77 +635,6 @@ class cGeoView extends bView {
           <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
           <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
           <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
-        </div>
-        <div>
-          <button class="btn-sb-icon gps_overlay_btn"><i class="material-icons">explore</i></button>
-          <button class="btn-sb-icon geo_add_btn"><i class="material-icons">add</i></button>
-          <button class="btn-sb-icon object_list_btn"><i class="material-icons">edit</i></button>
-          <button id="publish-settings-button" class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
-        </div>
-        <div id="publish-profile-panel" style="display:none;">
-          <div class="fields-container"></div>
-          <button id="user-profile-dialog-reset-button" style="display:none">Reset Options</button>
-          <br>
-          <div style="clear:both;">
-            User Specific Color for Selection <input type="color" />
-          </div>
-        </div>
-        <div class="gps_info_overlay" style="display:none">
-          <div class="offset_info_panel">
-            <span class="base_location">base location</span>
-            <br>
-            <span class="offset_distances">hor, vert, crow</span>
-            <br>
-            <button class="use_current_location">Use Current Location</button>
-            <br>
-            Adjust Location (local only)<br>
-            <div style="display:flex;">
-              <span>X:</span>
-              <input type="range" min="-50" max="50" class="geo_position_x_slider" step=".005" value="0">
-            </div>
-            <div style="display:flex;">
-              <span>Y:</span>
-              <input type="range" min="-50" max="50" class="geo_position_y_slider" step=".005" value="0">
-            </div>
-            <div style="display:flex;">
-              <span>Z:</span>
-              <input type="range" min="-50" max="50" class="geo_position_z_slider" step=".005" value="0">
-            </div>
-            <div style="text-align:center;padding:.25em;">
-              <button class="center_sliders_btn">Center Sliders</button>
-            </div>
-          </div>
-        </div>
-        <div class="geo_add_item_panel" style="display:none;">
-          <div class="add_block_panel"></div>
-        </div>
-        <div class="asset_list_panel" style="display:none;width:100vw;overflow:hidden;">
-          <div class="child_band_picker"></div>
-          <select class="child_select_picker"></select>
-          <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
-          <select class="geo_link_block_select"></select>
-          <div class="child_edit_panel">
-            <div style="display:flex;">
-              <label><input type="radio" name="typeofdimension" data-dimension="position" class="position_dimensions" checked />Position</label>
-              <label><input type="radio" name="typeofdimension" data-dimension="rotation" class="rotation_dimensions" />Rotation</label>
-              <label><input type="radio" name="typeofdimension" data-dimension="scale" class="scale_dimensions" />Scale</label>
-            </div>
-            <div style="display:flex;">
-              <span>X:</span>
-              <input type="range" class="dimension_slider" data-field="x" min="-50" max="50" step=".005" value="0">
-            </div>
-            <div style="display:flex;">
-              <span>Y:</span>
-              <input type="range" class="dimension_slider" data-field="y" min="-50" max="50" step=".005" value="0">
-            </div>
-            <div style="display:flex;">
-              <span>Z:</span>
-              <input type="range" class="dimension_slider" data-field="z" min="-50" max="50" step=".005" value="0">
-            </div>
-            <div style="text-align:center;padding:.25em;">
-              <button class="center_object_sliders">Center Sliders</button>
-            </div>
-          </div>
         </div>
         <div style="display:none">
           <br>

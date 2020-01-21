@@ -90,10 +90,7 @@
 }
 
 .bottom_panel {
-  text-align:center;
-  width: 100%;
-  position:absolute;
-  bottom:.25em;
+  display: flex;
 }
 
 .device_orientation {
@@ -101,4 +98,94 @@
   color: white;
   background: rgba(0,0,0,.4);
   width: auto;
+}
+
+.status_bar_btn, .geo_add_btn, .geo_create_btn, .profile_show_btn {
+  font-size: 2em;
+}
+
+.collapsed {
+  float: left;
+  clear: both;
+}
+
+.bottom_panel.collapsed {
+  display: inline-block;
+  width: auto;
+}
+
+.bottom_panel.collapsed .status_panel {
+  display: none;
+}
+
+.status_panel {
+  flex: 1;
+  text-align: center;
+}
+
+.no_pointer_events {
+  pointer-events: none!important;
+}
+
+.no_pointer_events * {
+  pointer-events: auto;
+}
+
+.add_panel {
+  display: flex;
+}
+
+.asset_list_panel {
+  display: block;
+  flex: 1;
+}
+.add_panel.collapsed .asset_list_panel {
+  display: none;
+}
+
+.add_panel.collapsed {
+    display: inline-block;
+}
+
+.bottom_full_panel {
+  text-align:left;
+  width: 100%;
+  position:absolute;
+  bottom:.25em;
+  pointer-events: none;
+}
+
+.bottom_full_panel > div {
+  clear: both;
+}
+
+.bottom_full_panel * {
+  pointer-events: auto;
+}
+
+.create_panel {
+  display: flex;
+}
+.create_panel.collapsed {
+  display: inline-block;
+}
+
+.create_panel.collapsed .create_panel {
+  display: none;
+}
+
+.collapsed .geo_add_item_panel {
+  display: none
+}
+
+.profile_panel.collapsed {
+  display: inline-block;
+}
+
+.collapsed .publish_profile_panel {
+  display: none;
+}
+
+.profile_panel {
+  display: flex;
 }
