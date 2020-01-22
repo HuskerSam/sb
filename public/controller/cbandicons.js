@@ -1,8 +1,9 @@
 class cBandIcons extends bBand {
-  constructor(tag, dialog, childrenContainer) {
+  constructor(tag, dialog, childrenContainer, deleteOnly = false) {
     super(gAPPP.a.modelSets[tag], tag);
     this.fireSet = gAPPP.a.modelSets[tag];
     this.dialog = dialog;
+    this.deleteOnly = deleteOnly;
 
     if (childrenContainer)
       this.childrenContainer = childrenContainer;
@@ -44,13 +45,17 @@ class cBandIcons extends bBand {
         noAssets.remove();
     }
   }
-  _getDomForChild(key, values) {
-    let html = '<span class="img-holder"></span><div class="band-title"></div><br>';
+  getDateString(values) {
     let d = new Date(values.sortKey);
     if (values.sortKey === undefined)
       d = new Date('1/1/1970');
     let od = d.toISOString().substring(0,10);
     od += ' ' + d.toISOString().substring(11,16);
+    return od;
+  }
+  _getDomForChild(key, values) {
+    let html = '<span class="img-holder"></span><div class="band-title"></div><br>';
+    let od = this.getDateString(values);
     html += `<div class="sort-date-last-edit">${od}</div>`;
     let outer = document.createElement('div');
     outer.setAttribute('class', `band-background-preview app-border`);
@@ -62,8 +67,10 @@ class cBandIcons extends bBand {
 
     outer.addEventListener('click',  e => this.selectItem(e, key));
 
-    this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
-    this.__addMenuItem(outer, 'file_download', e => this.downloadJSON(e, key), true);
+    if (! this.deleteOnly) {
+      this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
+      this.__addMenuItem(outer, 'file_download', e => this.downloadJSON(e, key), true);
+    }
     this.__addMenuItem(outer, 'delete', e => this._removeElement(e, key), true);
 
     if (this.tag === 'block') {

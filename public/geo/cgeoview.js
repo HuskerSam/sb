@@ -114,6 +114,11 @@ class cGeoView extends bView {
     });
 
     this.add_spoof_location.addEventListener('click', e => {
+      if (this.latitude_to_add.value == '')
+        this.latitude_to_add.value = this.latitude;
+      if (this.longitude_to_add.value == '')
+        this.longitude_to_add.value = this.longitude;
+
       let objectData = {
         title: this.location_name_to_add.value,
         latitude: this.latitude_to_add.value,
@@ -126,9 +131,11 @@ class cGeoView extends bView {
     });
 
     gAPPP.a.modelSets['spoof_location'] = new mFirebaseList(this.loadedWID, 'spoof_location', true);
-    //this.a.fireSets.push(this.a.modelSets['spoof_location']);
     this.location_list = this.dialog.querySelector('.location_list');
-    this.locations_band = new cBandIcons('spoof_location', this, this.location_list);
+    this.locations_band = new cBandIcons('spoof_location', this, this.location_list, true);
+    this.locations_band.getDateString = (values) => {
+      return values.latitude + ' ' + values.longitude;
+    };
     gAPPP.a.modelSets['spoof_location'].activate();
   }
   initLocationBand() {
@@ -233,7 +240,13 @@ class cGeoView extends bView {
      <option>Connector Line</option>`;
     this.generate.blockHelperChange();
   }
-  selectItem(newKey, newWindow) {}
+  selectItem(newKey, newWindow) {
+    let data = gAPPP.a.modelSets['spoof_location'].getCache(newKey);
+
+    this.latitude = Number(data.latitude);
+    this.longitude = Number(data.longitude);
+    this.__updateLocation(true);
+  }
   async initDimensionAdjustments() {
     this.x_dimension_slider = this.dialog.querySelector('.x_dimension_slider');
     this.y_dimension_slider = this.dialog.querySelector('.y_dimension_slider');
@@ -508,7 +521,7 @@ class cGeoView extends bView {
         direction = "NW";
       // else "N"
 
-      this.device_orientation.innerHTML = 'A:' + zeroto360 + `° (${direction}) B:` + this.beta + '°';
+      this.device_orientation.innerHTML = 'A: ' + zeroto360 + `° (${direction}) B: ` + this.beta + '°';
     }
     this.gps_location.innerHTML = `La: ${this.latitude}° Lo: ${this.longitude}°`;
 

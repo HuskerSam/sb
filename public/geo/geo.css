@@ -205,3 +205,45 @@
 .spoof_list_panel {
   flex: 1;
 }
+
+.menu-clipper-wrapper {
+  display: inline-block;
+  margin: .25em;
+  width: 6em;
+  text-align: center;
+}
+
+
+.band-background-preview {
+  display: inline-block;
+  border-radius: 1em;
+  margin: 0 .05em;
+  overflow: hidden;
+  width: 100%;
+  cursor: pointer;
+}
+
+.band-background-preview .img-holder {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: inherit;
+  height: 5em;
+  display: block;
+  background-image: url(/images/addimage.svg);
+}
+
+.app-collapsed .band-background-preview .img-holder {
+  height: 2em;
+  display: inline-block;
+}
+
+.band-background-preview .band-title {
+  padding: .1em;
+  border-radius: .25em;
+  margin: .05em;
+}
+
+.sort-date-last-edit {
+  font-size: .6em;
+}
