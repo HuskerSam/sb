@@ -71,7 +71,6 @@ class cGeoView extends bView {
       }
     });
 
-
     this.create_panel = this.dialog.querySelector('.create_panel');
     this.geo_create_btn = this.dialog.querySelector('.geo_create_btn');
     this.geo_create_btn.addEventListener('click', e => {
@@ -84,7 +83,56 @@ class cGeoView extends bView {
       }
     });
 
+    this.spoof_location_panel = this.dialog.querySelector('.spoof_location_panel');
+    this.spoof_location_btn = this.dialog.querySelector('.spoof_location_btn');
+    this.spoof_location_btn.addEventListener('click', e => {
+      if (this.spoof_location_panel.classList.contains('collapsed')) {
+        this.spoof_location_panel.classList.remove('collapsed');
+        this.spoof_location_btn.classList.remove('app-inverted');
+      } else {
+        this.spoof_location_panel.classList.add('collapsed');
+        this.spoof_location_btn.classList.add('app-inverted');
+      }
+    });
+
     this.initProfilePanel();
+    this.initLocationBand();
+    this.initSpoofPanel();
+  }
+  initSpoofPanel() {
+    this.add_spoof_location = this.dialog.querySelector('.add_spoof_location');
+    this.use_current_location = this.dialog.querySelector('.use_current_location');
+    this.latitude_to_add = this.dialog.querySelector('.latitude_to_add');
+    this.longitude_to_add = this.dialog.querySelector('.longitude_to_add');
+    this.location_name_to_add = this.dialog.querySelector('.location_name_to_add');
+    this.use_current_location = this.dialog.querySelector('.use_current_location');
+
+    //this.use_current_location.addEventListener('click', e => this.__updateLocation(true));
+    this.use_current_location.addEventListener('click', e => {
+      this.latitude_to_add.value = this.latitude;
+      this.longitude_to_add.value = this.longitude;
+    });
+
+    this.add_spoof_location.addEventListener('click', e => {
+      let objectData = {
+        title: this.location_name_to_add.value,
+        latitude: this.latitude_to_add.value,
+        longitude: this.longitude_to_add.value
+      };
+
+      gAPPP.a.modelSets['spoof_location'].createWithBlobString(objectData).then(e => {
+        this.location_name_to_add.value = '';
+      })
+    });
+
+    gAPPP.a.modelSets['spoof_location'] = new mFirebaseList(this.loadedWID, 'spoof_location', true);
+    //this.a.fireSets.push(this.a.modelSets['spoof_location']);
+    this.location_list = this.dialog.querySelector('.location_list');
+    this.locations_band = new cBandIcons('spoof_location', this, this.location_list);
+    gAPPP.a.modelSets['spoof_location'].activate();
+  }
+  initLocationBand() {
+
   }
   initLinkBlockSelect() {
     this.geo_link_block_select = this.dialog.querySelector('.geo_link_block_select');
@@ -426,7 +474,7 @@ class cGeoView extends bView {
     }
     this.base_location.innerHTML = 'Base :' + this.startLat.toFixed(7) + '°, ' + this.startLon.toFixed(7) + '°';
     let d_result = GLOBALUTIL.getGPSDiff(this.startLat, this.startLon, this.latitude, this.longitude);
-    this.offset_distances.innerHTML = 'crow:' + d_result.distance.toFixed(3) + '<br>h:' + d_result.horizontal.toFixed(3) +
+    this.offset_distances.innerHTML = 'crow:' + d_result.distance.toFixed(3) + '&nbsp;h:' + d_result.horizontal.toFixed(3) +
       ', v:' + d_result.vertical.toFixed(3);
 
     this.context.camera._position.x = this.offsetX + d_result.vertical * -1.0; //east increasing
@@ -475,9 +523,7 @@ class cGeoView extends bView {
     this.device_orientation = this.dialog.querySelector('.device_orientation');
     this.offset_distances = this.dialog.querySelector('.offset_distances');
     this.base_location = this.dialog.querySelector('.base_location');
-    this.use_current_location = this.dialog.querySelector('.use_current_location');
 
-    this.use_current_location.addEventListener('click', e => this.__updateLocation(true));
     this.gps_location.innerHTML = 'initing...';
     this.device_orientation.innerHTML = 'initing...';
 
@@ -518,6 +564,46 @@ class cGeoView extends bView {
     <div class="canvas-actions">
       <div class="canvas_play_bar" style="">
         <div class="bottom_full_panel">
+          <div class="spoof_location_panel collapsed">
+            <div style="flex:0;display:flex;flex-direction:column">
+              <div style="flex:1"></div>
+              <button class="btn-sb-icon spoof_location_btn app-inverted"><i class="material-icons">assignment</i></button>
+              <div style="flex:1"></div>
+            </div>
+            <div class="spoof_list_panel app-panel">
+              <div>
+                <span>Name:</span><input class="location_name_to_add" />
+                <span>Lat:</span><input class="latitude_to_add" />
+                <span>Long:</span><input class="longitude_to_add" />
+                &nbsp;
+                <button class="use_current_location">Current</button>
+                &nbsp;
+                <button class="add_spoof_location">Add Spoof Location</button>
+                <br>
+                <div class="location_list"></div>
+              </div>
+              <span class="base_location">base location</span>
+              <br>
+              <span class="offset_distances">hor, vert, crow</span>
+              <br>
+              Adjust Location (local only)<br>
+              <div style="display:flex;">
+                <span>X:</span>
+                <input type="range" min="-50" max="50" class="geo_position_x_slider" step=".005" value="0">
+              </div>
+              <div style="display:flex;">
+                <span>Y:</span>
+                <input type="range" min="-50" max="50" class="geo_position_y_slider" step=".005" value="0">
+              </div>
+              <div style="display:flex;">
+                <span>Z:</span>
+                <input type="range" min="-50" max="50" class="geo_position_z_slider" step=".005" value="0">
+              </div>
+              <div style="text-align:center;padding:.25em;">
+                <button class="center_sliders_btn">Center Sliders</button>
+              </div>
+            </div>
+          </div>
           <div class="profile_panel collapsed">
             <div style="flex:0;display:flex;flex-direction:column">
               <div style="flex:1"></div>
@@ -531,33 +617,6 @@ class cGeoView extends bView {
               <div style="clear:both;">
                 User Specific Color for Selection <input type="color" />
               </div>
-              <div class="gps_info_overlay">
-                <div class="offset_info_panel">
-                  <span class="base_location">base location</span>
-                  <br>
-                  <span class="offset_distances">hor, vert, crow</span>
-                  <br>
-                  <button class="use_current_location">Use Current Location</button>
-                  <br>
-                  Adjust Location (local only)<br>
-                  <div style="display:flex;">
-                    <span>X:</span>
-                    <input type="range" min="-50" max="50" class="geo_position_x_slider" step=".005" value="0">
-                  </div>
-                  <div style="display:flex;">
-                    <span>Y:</span>
-                    <input type="range" min="-50" max="50" class="geo_position_y_slider" step=".005" value="0">
-                  </div>
-                  <div style="display:flex;">
-                    <span>Z:</span>
-                    <input type="range" min="-50" max="50" class="geo_position_z_slider" step=".005" value="0">
-                  </div>
-                  <div style="text-align:center;padding:.25em;">
-                    <button class="center_sliders_btn">Center Sliders</button>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
           <div class="create_panel collapsed">

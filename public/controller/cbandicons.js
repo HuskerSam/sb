@@ -1,10 +1,13 @@
 class cBandIcons extends bBand {
-  constructor(tag, dialog) {
+  constructor(tag, dialog, childrenContainer) {
     super(gAPPP.a.modelSets[tag], tag);
     this.fireSet = gAPPP.a.modelSets[tag];
     this.dialog = dialog;
 
-    this.childrenContainer = this.dialog.assetsFieldsContainer;
+    if (childrenContainer)
+      this.childrenContainer = childrenContainer;
+    else
+      this.childrenContainer = this.dialog.assetsFieldsContainer;
 
     setTimeout(() => {
       this.refreshUIFromCache();

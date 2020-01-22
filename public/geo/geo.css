@@ -100,7 +100,7 @@
   width: auto;
 }
 
-.status_bar_btn, .geo_add_btn, .geo_create_btn, .profile_show_btn {
+.status_bar_btn, .geo_add_btn, .geo_create_btn, .profile_show_btn, .spoof_location_btn {
   font-size: 2em;
 }
 
@@ -188,4 +188,20 @@
 
 .profile_panel {
   display: flex;
+}
+
+.spoof_location_panel.collapsed {
+  display: inline-block;
+}
+
+.collapsed .spoof_list_panel {
+  display: none;
+}
+
+.spoof_location_panel {
+  display: flex;
+}
+
+.spoof_list_panel {
+  flex: 1;
 }
