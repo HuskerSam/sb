@@ -95,9 +95,24 @@ class cGeoView extends bView {
       }
     });
 
+    this.status_wrapper_panel = this.dialog.querySelector('.status_wrapper_panel');
+    this.status_panel_btn = this.dialog.querySelector('.status_panel_btn');
+    this.status_panel_btn.addEventListener('click', e => {
+      if (this.status_wrapper_panel.classList.contains('collapsed')) {
+        this.status_wrapper_panel.classList.remove('collapsed');
+        this.status_panel_btn.classList.remove('app-inverted');
+      } else {
+        this.status_wrapper_panel.classList.add('collapsed');
+        this.status_panel_btn.classList.add('app-inverted');
+      }
+    });
+
     this.initProfilePanel();
-    this.initLocationBand();
     this.initSpoofPanel();
+    this.initStatusPanel();
+  }
+  initStatusPanel() {
+
   }
   initSpoofPanel() {
     this.add_spoof_location = this.dialog.querySelector('.add_spoof_location');
@@ -137,9 +152,13 @@ class cGeoView extends bView {
       return values.latitude + ' ' + values.longitude;
     };
     gAPPP.a.modelSets['spoof_location'].activate();
-  }
-  initLocationBand() {
 
+    this.update_spoof_image = this.dialog.querySelector('.update_spoof_image');
+    this.update_spoof_image.addEventListener('click', e => {
+      if (! this.spoofKey)
+        return;
+      this.context.renderPreview('spoof_location', this.spoofKey);
+    });
   }
   initLinkBlockSelect() {
     this.geo_link_block_select = this.dialog.querySelector('.geo_link_block_select');
@@ -245,6 +264,8 @@ class cGeoView extends bView {
 
     this.latitude = Number(data.latitude);
     this.longitude = Number(data.longitude);
+
+    this.spoofKey = newKey;
     this.__updateLocation(true);
   }
   async initDimensionAdjustments() {
@@ -577,24 +598,13 @@ class cGeoView extends bView {
     <div class="canvas-actions">
       <div class="canvas_play_bar" style="">
         <div class="bottom_full_panel">
-          <div class="spoof_location_panel collapsed">
+          <div class="status_wrapper_panel collapsed">
             <div style="flex:0;display:flex;flex-direction:column">
               <div style="flex:1"></div>
-              <button class="btn-sb-icon spoof_location_btn app-inverted"><i class="material-icons">assignment</i></button>
+              <button class="btn-sb-icon status_panel_btn app-inverted"><i class="material-icons">explore</i></button>
               <div style="flex:1"></div>
             </div>
-            <div class="spoof_list_panel app-panel">
-              <div>
-                <span>Name:</span><input class="location_name_to_add" />
-                <span>Lat:</span><input class="latitude_to_add" />
-                <span>Long:</span><input class="longitude_to_add" />
-                &nbsp;
-                <button class="use_current_location">Current</button>
-                &nbsp;
-                <button class="add_spoof_location">Add Spoof Location</button>
-                <br>
-                <div class="location_list"></div>
-              </div>
+            <div class="geo_status_panel app-panel">
               <span class="base_location">base location</span>
               <br>
               <span class="offset_distances">hor, vert, crow</span>
@@ -615,6 +625,25 @@ class cGeoView extends bView {
               <div style="text-align:center;padding:.25em;">
                 <button class="center_sliders_btn">Center Sliders</button>
               </div>
+            </div>
+          </div>
+          <div class="spoof_location_panel collapsed">
+            <div style="flex:0;display:flex;flex-direction:column">
+              <div style="flex:1"></div>
+              <button class="btn-sb-icon spoof_location_btn app-inverted"><i class="material-icons">assignment</i></button>
+              <div style="flex:1"></div>
+            </div>
+            <div class="spoof_list_panel app-panel">
+              <span>Name:</span><input class="location_name_to_add" />
+              <span>Lat:</span><input class="latitude_to_add" />
+              <span>Long:</span><input class="longitude_to_add" />
+              &nbsp;
+              <button class="use_current_location">Current</button>
+              &nbsp;
+              <button class="add_spoof_location">Add Spoof Location</button>
+              <br>
+              <div class="location_list"></div>
+              <button class="update_spoof_image">Update Spoof Image</button>
             </div>
           </div>
           <div class="profile_panel collapsed">

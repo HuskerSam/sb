@@ -100,7 +100,7 @@
   width: auto;
 }
 
-.status_bar_btn, .geo_add_btn, .geo_create_btn, .profile_show_btn, .spoof_location_btn {
+.status_bar_btn, .geo_add_btn, .geo_create_btn, .profile_show_btn, .spoof_location_btn, .status_panel_btn {
   font-size: 2em;
 }
 
@@ -190,20 +190,21 @@
   display: flex;
 }
 
-.spoof_location_panel.collapsed {
+.spoof_location_panel.collapsed, .status_wrapper_panel.collapsed {
   display: inline-block;
 }
 
-.collapsed .spoof_list_panel {
+.collapsed .spoof_list_panel, .collapsed .geo_status_panel {
   display: none;
 }
 
-.spoof_location_panel {
+.spoof_location_panel, .status_wrapper_panel {
   display: flex;
 }
 
-.spoof_list_panel {
+.spoof_list_panel, .geo_status_panel {
   flex: 1;
+  text-align: center;
 }
 
 .menu-clipper-wrapper {
@@ -246,4 +247,15 @@
 
 .sort-date-last-edit {
   font-size: .6em;
+}
+
+.location_list {
+  white-space: nowrap;
+  overflow-x: scroll;
+  width: 100%;
+  text-align: left;
+}
+
+.spoof_list_panel {
+    overflow-x: scroll;
 }
