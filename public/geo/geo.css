@@ -259,3 +259,11 @@
 .spoof_list_panel {
     overflow-x: scroll;
 }
+
+.multi-button-panel {
+  display: flex;
+}
+
+.geo_view_panel.collapsed {
+  display: none;
+}
