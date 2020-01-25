@@ -110,6 +110,7 @@ class cGeoView extends bView {
     this.initProfilePanel();
     this.initSpoofPanel();
     this.initStatusPanel();
+    this.expandAll();
   }
   initStatusPanel() {
 
@@ -176,7 +177,7 @@ class cGeoView extends bView {
     this.__updateLinkableBlocks();
   }
   initProfilePanel() {
-    this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.fontFields = [];
     this.fontFields.push({
       title: 'Bounds',
       fireSetField: 'showBoundsBox',
@@ -224,13 +225,14 @@ class cGeoView extends bView {
       group: 'group2',
       groupClass: 'light-intensity-user-panel'
     });
-
     this.publish_profile_panel = this.dialog.querySelector('.publish_profile_panel');
     this.fontFieldsContainer = this.publish_profile_panel.querySelector('.fields-container');
-    this.fontFireFields = new cPanelData(this.fontFields, this.fontFieldsContainer, this);
-    this.fontFireFields.values = gAPPP.a.profile;
-    this.fontFireFields.paint()
+    this.fontFireFields = new cBandProfileOptions(null, this.fontFields, this.fontFieldsContainer, this);
+    this.fontFireFields.fireFields.values = gAPPP.a.profile;
+    this.fontFireFields.fireFields.paint()
+    this.fontFireFields.fireFields.helpers.expandAll();
 
+    this.textFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
     this.publish_profile_panel = this.dialog.querySelector('.publish_profile_panel');
     this.profile_show_btn = this.dialog.querySelector('.profile_show_btn');
     this.profile_show_btn.addEventListener('click', e => {
@@ -242,6 +244,26 @@ class cGeoView extends bView {
         this.profile_show_btn.classList.add('app-inverted');
       }
     });
+
+    this.text_profile_panel = this.dialog.querySelector('.text_profile_panel');
+    this.textFieldsContainer = this.text_profile_panel.querySelector('.fields-container');
+    this.textFireFields = new cBandProfileOptions(null, this.textFields, this.textFieldsContainer, this);
+    this.textFireFields.fireFields.values = gAPPP.a.profile;
+    this.textFireFields.fireFields.paint()
+    this.textFireFields.fireFields.helpers.expandAll();
+
+    this.text_profile_panel = this.dialog.querySelector('.text_profile_panel');
+    this.textcolor_show_btn = this.dialog.querySelector('.textcolor_show_btn');
+    this.textcolor_show_btn.addEventListener('click', e => {
+      if (this.text_profile_panel.classList.contains('collapsed')) {
+        this.text_profile_panel.classList.remove('collapsed');
+        this.textcolor_show_btn.classList.remove('app-inverted');
+      } else {
+        this.text_profile_panel.classList.add('collapsed');
+        this.textcolor_show_btn.classList.add('app-inverted');
+      }
+    });
+
   }
   initBlockAddPanel() {
     this.add_block_panel = this.dialog.querySelector('.add_block_panel');
@@ -601,14 +623,15 @@ class cGeoView extends bView {
           <div class="multi-button-panel">
             <div style="flex:0;display:flex;flex-direction:column">
               <div style="flex:1"></div>
-              <button class="btn-sb-icon status_panel_btn app-inverted"><i class="material-icons">explore</i></button>
+              <button class="btn-sb-icon status_panel_btn app-inverted"><i class="material-icons">square_foot</i></button>
               <button class="btn-sb-icon spoof_location_btn app-inverted"><i class="material-icons">assignment</i></button>
               <button class="btn-sb-icon profile_show_btn app-inverted"><i class="material-icons">settings_brightness</i></button>
+              <button class="btn-sb-icon textcolor_show_btn app-inverted"><i class="material-icons">text_format</i></button>
               <button class="btn-sb-icon geo_create_btn app-inverted"><i class="material-icons">edit</i></button>
               <button class="btn-sb-icon geo_add_btn app-inverted"><i class="material-icons">add</i></button>
               <button class="btn-sb-icon status_bar_btn"><i class="material-icons">explore</i></button>
             </div>
-            <div class="" style="flex:1;display:flex;flex-direction:column">
+            <div class="content_flex_wrapper">
               <div style="flex:10"></div>
               <div class="geo_status_panel geo_view_panel app-panel collapsed">
                 <span class="base_location">base location</span>
@@ -644,12 +667,15 @@ class cGeoView extends bView {
                 <div class="location_list"></div>
                 <button class="update_spoof_image">Update Spoof Image</button>
               </div>
-              <div class="publish_profile_panel geo_view_panel collapsed">
+              <div class="text_profile_panel geo_view_panel app-panel header-expanded collapsed">
                 <div class="fields-container"></div>
-                <button id="user-profile-dialog-reset-button" style="display:none">Reset Options</button>
+              </div>
+              <div class="publish_profile_panel geo_view_panel app-panel header-expanded collapsed">
+                <div class="fields-container"></div>
                 <br>
                 <div style="clear:both;">
-                  User Specific Color for Selection <input type="color" />
+                  Personal Color <input type="color" />
+                  <button id="user-profile-dialog-reset-button">Reset Options</button>
                 </div>
               </div>
               <div class="geo_add_item_panel geo_view_panel collapsed">
@@ -657,8 +683,12 @@ class cGeoView extends bView {
               </div>
               <div class="asset_list_panel geo_view_panel collapsed">
                 <div class="child_band_picker"></div>
-                <select class="child_select_picker"></select>
-                <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
+                <div style="display:flex;">
+                  <div style="flex:1;width:1em;">
+                    <select class="child_select_picker" style="width:-webkit-fill-available"></select>
+                  </div>
+                  <button class="main-band-delete-child"><i class="material-icons">link_off</i></button>
+                </div>
                 <select class="geo_link_block_select"></select>
                 <div class="child_edit_panel">
                   <div style="display:flex;">

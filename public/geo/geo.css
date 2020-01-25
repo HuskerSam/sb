@@ -37,10 +37,6 @@
 .gps_info_overlay button {
 }
 
-#publish-profile-panel .fields-container {
-  overflow:visible;
-}
-
 .child_band_picker {
   display: none;
   white-space: nowrap;
@@ -59,11 +55,6 @@
 .block-editor-child i {
   position: relative;
   top: .12em;
-}
-
-.selected-mesh-bounds-helper-box .action-area input[type="range"] {
-  width: 100%;
-  margin-bottom: .5em;
 }
 
 .geo_add_item_panel {
@@ -100,7 +91,8 @@
   width: auto;
 }
 
-.status_bar_btn, .geo_add_btn, .geo_create_btn, .profile_show_btn, .spoof_location_btn, .status_panel_btn {
+.status_bar_btn, .geo_add_btn, .geo_create_btn, .profile_show_btn, .spoof_location_btn, .status_panel_btn,
+.textcolor_show_btn {
   font-size: 2em;
 }
 
@@ -182,6 +174,9 @@
   display: inline-block;
 }
 
+.publish_profile_panel {
+  position: relative;
+}
 .collapsed .publish_profile_panel {
   display: none;
 }
@@ -257,7 +252,6 @@
 }
 
 .spoof_list_panel {
-    overflow-x: scroll;
 }
 
 .multi-button-panel {
@@ -266,4 +260,44 @@
 
 .geo_view_panel.collapsed {
   display: none;
+}
+
+.selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  width: 100%;
+  margin-bottom: .5em;
+}
+
+.publish_profile_panel .fields-container, .text_profile_panel .fields-container {
+  overflow-x: hidden;
+}
+
+.selected-mesh-bounds-helper-box {
+  color: black;
+  padding-left: .2em;
+  white-space: pre;
+  text-align: center;
+  border-radius: .25em;
+  font-size: inherit;
+  padding-top: .35em;
+}
+
+.publish_profile_panel .selected-mesh-bounds-helper-box .action-area {
+  padding-bottom: 3em;
+}
+
+.selected-mesh-bounds-helper-box input[type="text"] {
+  border-radius: .25em;
+  border: default;
+}
+
+.selected-mesh-bounds-helper-box .form-control {
+  width: auto;
+  display: inline-block;
+}
+
+.content_flex_wrapper {
+   flex:1;
+   display:flex;
+   flex-direction:column;
+   overflow: hidden;
 }
