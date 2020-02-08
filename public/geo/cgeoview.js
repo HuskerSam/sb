@@ -107,10 +107,62 @@ class cGeoView extends bView {
       }
     });
 
+    this.help_panel_wrapper = this.dialog.querySelector('.help_panel_wrapper');
+    this.help_popup_btn = this.dialog.querySelector('.help_popup_btn');
+    this.help_popup_btn.addEventListener('click', e => {
+      if (this.help_panel_wrapper.classList.contains('collapsed')) {
+        this.help_panel_wrapper.classList.remove('collapsed');
+        this.help_popup_btn.classList.remove('app-inverted');
+      } else {
+        this.help_panel_wrapper.classList.add('collapsed');
+        this.help_popup_btn.classList.add('app-inverted');
+        wrapperList.forEach(w => {
+          w.querySelector('video').pause();
+        });
+      }
+    });
+
+
     this.initProfilePanel();
     this.initSpoofPanel();
     this.initStatusPanel();
     this.expandAll();
+
+    let wrapperList = document.querySelectorAll('.video-wrapper');
+    wrapperList.forEach(wrapper => {
+      let video = wrapper.querySelector('video');
+      let btn = wrapper.querySelector('.playpause');
+
+      video.setAttribute('controls', '');
+      btn.addEventListener('click', e => {
+        if (video.paused) {
+          video.play();
+        }
+      });
+
+      video.addEventListener('pause', e => {
+        btn.style.display = '';
+      });
+      video.addEventListener('play', e => {
+        btn.style.display = 'none';
+      });
+    });
+
+    let video_linkList = document.querySelectorAll('.video_link');
+    video_linkList.forEach((anchor, index) => {
+      anchor.addEventListener('click', e => {
+        wrapperList.forEach(w => {
+          w.style.display = 'none';
+          w.querySelector('video').pause();
+        });
+        wrapperList[index].style.display = 'block';
+        wrapperList[index].querySelector('video').play();
+        video_linkList.forEach(i => i.classList.remove('selected'));
+        video_linkList[index].classList.add('selected');
+        e.preventDefault();
+        return false;
+      });
+    });
   }
   initStatusPanel() {
 
@@ -623,6 +675,7 @@ class cGeoView extends bView {
           <div class="multi-button-panel">
             <div style="flex:0;display:flex;flex-direction:column">
               <div style="flex:1"></div>
+              <button class="btn-sb-icon help_popup_btn app-inverted"><i class="material-icons">help</i></button>
               <button class="btn-sb-icon status_panel_btn app-inverted"><i class="material-icons">square_foot</i></button>
               <button class="btn-sb-icon spoof_location_btn app-inverted"><i class="material-icons">assignment</i></button>
               <button class="btn-sb-icon profile_show_btn app-inverted"><i class="material-icons">settings_brightness</i></button>
@@ -633,6 +686,39 @@ class cGeoView extends bView {
             </div>
             <div class="content_flex_wrapper">
               <div style="flex:10"></div>
+              <div class="help_panel_wrapper geo_view_panel app-panel collapsed">
+                <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
+                  <div style="position:absolute;z-index:1;top:.25em;width: 100%;">
+                    <a href="#" id="video_1_link" class="video_link selected">Create</a>
+                    <a href="#" id="video_2_link" class="video_link">Customize</a>
+                    <a href="#" id="video_3_link" class="video_link">Spinner</a>
+                    <a href="#" id="video_4_link" class="video_link">Lines</a>
+                    <a href="#" id="video_4_link" class="video_link">Basics</a>
+                  </div>
+                  <div style="flex:1;display:flex;flex-direction:1;">
+                    <div class="video-wrapper" id="video_1_link_video" style="display:block;">
+                      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" muted preload="auto"></video>
+                      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+                    </div>
+                    <div class="video-wrapper" id="video_2_link_video">
+                      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" muted preload="none"></video>
+                      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+                    </div>
+                    <div class="video-wrapper" id="video_3_link_video">
+                      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" muted preload="none"></video>
+                      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+                    </div>
+                    <div class="video-wrapper" id="video_4_link_video">
+                      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" muted preload="none"></video>
+                      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+                    </div>
+                    <div class="video-wrapper" id="video_5_link_video">
+                      <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" preload="none"></video>
+                      <div class="playpause"><i class="material-icons">play_arrow</i></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="geo_status_panel geo_view_panel app-panel collapsed">
                 <span class="base_location">base location</span>
                 <br>
