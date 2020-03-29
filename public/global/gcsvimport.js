@@ -401,7 +401,7 @@ class gCSVImport {
 
     this.addParentBlockChild(row);
 
-    return this.dbSetRecord('shape', {
+    let shapeData = {
       title: row.name,
       materialName: row.materialname,
       boxHeight: row.height,
@@ -423,7 +423,15 @@ class gCSVImport {
       sphereDiameterX: row.width,
       sphereDiameterY: row.height,
       sphereDiameterZ: row.depth
-    });
+    };
+
+    if (row.shapetype === 'torus') {
+      shapeData.torusDiameter = row.width;
+      shapeData.torusThickness = row.height;
+      shapeData.torusTessellation = row.tessellation;
+    }
+
+    return this.dbSetRecord('shape', shapeData);
   }
   async addParentBlockChild(row) {
     if (!row.parent)
