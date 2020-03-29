@@ -1,12 +1,9 @@
 {
   "projects": {
-    "grocery": "groceryblocks2",
-    "grafter": "braingrafter",
-    "delicious": "deliciousculture1",
+    "groceryblocks": "groceryblocks2",
+    "groceryscenes": "braingrafter",
     "handtop": "groceryblocks",
-    "xrcharting": "promo-39cc8",
-    "xrgrafter": "husker-ac595",
-    "default": "groceryblocks",
+    "sceneblocks": "husker-ac595",
     "handtopbuilder": "handtopbuilder"
   }
 }
