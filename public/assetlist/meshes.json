@@ -349,5 +349,29 @@
     "ry": "180deg",
     "rz": "180deg",
     "message": ""
+  },
+  {
+    "meshpath": "sb:bottles/chivas.babylon",
+    "texturepath": "sb:bottles/chivasdiffuse.jpg",
+    "bmppath": "sb:bottles/chivasbump.jpg",
+    "specularpath": "sb:bottles/chivasspec.jpg"
+  },
+  {
+    "meshpath": "sb:bottles/olmeca.babylon",
+    "texturepath": "sb:bottles/olmecadiffuse.jpg",
+    "bmppath": "sb:bottles/olmecabump.jpg",
+    "specularpath": "sb:bottles/olmecaspec.jpg"
+  },
+  {
+    "meshpath": "sb:bottles/cointreau.babylon",
+    "texturepath": "sb:bottles/cointreaudiffuse.jpg",
+    "bmppath": "sb:bottles/cointreaubump.jpg",
+    "specularpath": "sb:bottles/cointreauspec.jpg"
+  },
+  {
+    "meshpath": "sb:bottles/becherovka.babylon",
+    "texturepath": "sb:bottles/becherovkadiffuse.jpg",
+    "bmppath": "sb:bottles/becherovkabump.jpg",
+    "specularpath": "sb:bottles/becherovkaspec.jpg"
   }
 ]
