@@ -1762,6 +1762,48 @@ class gCSVImport {
 
     return Promise.all(promises);
   }
+  _addProductFramesFromData(product, productData, productIndex) {
+    return new Promise(async (resolve, reject) => {
+      let freq_data = await this.dbFetchByLookup('block', 'blockFlag', 'displayfrequency' + (productIndex + 1).toString());
+
+      if (freq_data.records.length > 0) {
+        let bandData = freq_data.records[0].genericBlockData;
+        if (!bandData)
+          bandData = '';
+        bandData = bandData.split('|');
+        bandData.forEach((v,i) => bandData[i] = Number(v));
+
+        let frameCount = bandData.length;
+        let frameRows = [];
+
+        for (let index = 1; index < frameCount; index++) {
+          let timeRatio = index / frameCount;
+          let scaleRatio = bandData[index] / 100.0;
+          let bandScaleFrame = this.defaultCSVRow();
+          bandScaleFrame.asset = 'blockchildframe';
+          bandScaleFrame.name = product.childName;
+          bandScaleFrame.childtype = 'block';
+          bandScaleFrame.parent = '::scene::';
+          bandScaleFrame.frameorder = (10 * (index + 1)).toFixed(0);
+          bandScaleFrame.frametime = (timeRatio * 100).toFixed(2) + '%';
+          bandScaleFrame.y = (8 + (scaleRatio * 4)).toFixed(2);
+          bandScaleFrame.sx = (1 + scaleRatio).toFixed(3);
+          bandScaleFrame.sy = (1 + scaleRatio).toFixed(3);
+          bandScaleFrame.sz = (1 + scaleRatio).toFixed(3);
+          frameRows.push(this.addCSVRowList([bandScaleFrame]));
+
+          if (frameRows.length > 20) {
+            await Promise.all(frameRows);
+            frameRows = [];
+          }
+        }
+
+        await Promise.all(frameRows);
+      }
+
+      resolve({});
+    });
+  }
   async addCSVDisplayFinalize() {
     let pInfo = await this.initProducts();
     await this.__addCSVFollowBlock(pInfo);
@@ -1769,12 +1811,13 @@ class gCSVImport {
     let promises = [];
     if (!pInfo.products)
       pInfo.products = [];
-    for (let c = 0, l = pInfo.products.length; c < l; c++)
-      if (pInfo.products[c].itemId)
+    for (let c = 0, l = pInfo.products.length; c < l; c++) {
+      if (pInfo.products[c].itemId) {
+        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, c));
         promises.push(this.__addSignPost(pInfo.products[c], pInfo));
-      else
+      } else
         promises.push(this.__addTextShowHide(pInfo.products[c], pInfo));
-
+    }
     if (!pInfo.sceneId)
       return Promise.resolve();
 
