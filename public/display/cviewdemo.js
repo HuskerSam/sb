@@ -180,7 +180,7 @@ class cViewDemo extends bView {
       }
       let template = `<div class="cart-item">
         <button class="cart-item-remove">X</button>
-        <img src="${url}" class="button-list-image">
+        <img src="${url}" crossorigin="anonymous" class="button-list-image">
         <div class="cart-item-description">${l1}</div>
         <br>
         <div class="cart-item-detail">${l2}</div>
@@ -388,7 +388,7 @@ class cViewDemo extends bView {
         if (url.substring(0, 3) === 'sb:') {
           url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
         }
-        let btnHtml = `<img src="${url}" class="button-list-image">` +
+        let btnHtml = `<img src="${url}" crossorigin="anonymous" class="button-list-image">` +
           '<span class="expanded">' + product.title + '<br></span><span>' + product.desc.toString() + '</span>';
 
         if (btn.innerHTMLStash !== btnHtml) {
