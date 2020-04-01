@@ -73,15 +73,19 @@ class cViewDemo extends bView {
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.productsDisplayUpdate();
 
-    let audioFiles = gAPPP.a.modelSets['texture'].queryCache('title', 'audiofileplayback');
-    let audioKeys = Object.keys(audioFiles);
-    if (audioKeys.length > 0) {
-      console.log(audioFiles[audioKeys[0]].url);
+    console.log(this.rootBlock.blockRawData);
+
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.audioURL) {
       let audio = document.createElement('audio');
       audio.setAttribute('id', 'audiofileplayback');
       audio.setAttribute('crossorigin', 'anonymous');
       document.body.appendChild(audio);
-      audio.src = audioFiles[audioKeys[0]].url;
+
+      let url = this.rootBlock.blockRawData.audioURL;
+      if (url.substring(0, 3) === 'sb:') {
+        url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
+      }
+      audio.src = url;
       audio.setAttribute('style', 'display:none;position:absolute;top:0;left:0;z-index:10000');
       audio.setAttribute('controls', '');
       audio.loop = true;
@@ -100,7 +104,6 @@ class cViewDemo extends bView {
           muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
           audio.pause();
         }
-        console.log(audio);
       });
       document.body.append(muteButton);
     }

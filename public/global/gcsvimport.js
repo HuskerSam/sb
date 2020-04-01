@@ -219,8 +219,6 @@ class gCSVImport {
 
     if (row.genericblockdata)
       blockData.genericBlockData = row.genericblockdata;
-    if (row.audiourl)
-      blockData.audioURL = row.audiourl;
 
     if (row.introtime) {
       blockData.introtime = row.introtime;
@@ -893,6 +891,9 @@ class gCSVImport {
       skybox: row.skybox,
       skyboxSize: row.skyboxsize
     }
+
+    if (row.audiourl)
+      block.audioURL = row.audiourl;
 
     if (row.blockflag) block.blockFlag = row.blockflag;
     if (row.blockcode) block.blockCode = row.blockcode;
