@@ -115,7 +115,7 @@ class cViewDemo extends bView {
             if (this.muteButton) {
 
               setTimeout(() => {
-                //this.muteButton.click();
+                this.muteButton.click();
               }, 800);
             }
             break;
