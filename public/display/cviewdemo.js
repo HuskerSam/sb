@@ -50,6 +50,37 @@ class cViewDemo extends bView {
       this.workplacesSelect.style.display = 'block';
     }
   }
+  addDemoPanelOptions() {
+    if (!this.projectList)
+      return;
+    if (!this.projectList[gAPPP.loadedWID])
+      return;
+
+    let tags = this.projectList[gAPPP.loadedWID].tags;
+    if (tags === undefined)
+      return;
+
+    if (tags.indexOf('demopanel') !== -1) {
+      this.demoOptionDiv = document.createElement('div');
+      let d = this.demoOptionDiv;
+      d.setAttribute('style', 'position:absolute;top:.1em;left:5em;max-width:60%;padding: .1em 1em;font-size:1.5em;line-height:2em;');
+      d.setAttribute('class', 'app-panel');
+      let html = '';
+
+      for (let pid in this.projectList) {
+        let tags = this.projectList[pid].tags;
+        let title = this.projectList[pid].title;
+
+        if (tags)
+          if (tags.indexOf('demopanel') !== -1) {
+            html += `<a style="font-size:inherit" href="?wid=${pid}">${title}</a><br>`;
+          }
+      }
+
+      d.innerHTML = html;
+      document.body.appendChild(d);
+    }
+  }
   async _cameraShown() {
     this.productData = await new gCSVImport(gAPPP.loadedWID).initProducts();
     this.products = this.productData.products;
@@ -70,6 +101,7 @@ class cViewDemo extends bView {
     option.value = 'About';
     this.workplacesSelect.add(option);
 
+    this.addDemoPanelOptions();
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.productsDisplayUpdate();
 
@@ -80,6 +112,12 @@ class cViewDemo extends bView {
           if (options.item(c).innerHTML === this.rootBlock.blockRawData.displayCamera) {
             this.canvasHelper.cameraSelect.selectedIndex = c;
             this.canvasHelper.cameraChangeHandler();
+            if (this.muteButton) {
+
+              setTimeout(() => {
+                this.muteButton.click();
+              }, 800);
+            }
             break;
           }
         }
@@ -90,6 +128,7 @@ class cViewDemo extends bView {
       let audio = document.createElement('audio');
       audio.setAttribute('id', 'audiofileplayback');
       audio.setAttribute('crossorigin', 'anonymous');
+      this.audio = audio;
       document.body.appendChild(audio);
 
       let url = this.rootBlock.blockRawData.audioURL;
@@ -102,16 +141,22 @@ class cViewDemo extends bView {
       audio.loop = true;
 
       let muteButton = document.createElement('button');
+      this.muteButton = muteButton;
       muteButton.setAttribute('id', 'muteButton');
       muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
       muteButton.setAttribute('style', 'position:absolute;top:0.25em;left:0.25em;z-index:10000;font-size:2em;')
-      muteButton.addEventListener('click', e => {
+      muteButton.addEventListener('click', async e => {
         audio.currentTime = this.canvasHelper.timeE + .1;
         if (audio.paused) {
-          muteButton.innerHTML = '<i class="material-icons">volume_up</i>';
-          audio.play();
-        }
-        else {
+          let noError = true;
+          try {
+            await audio.play();
+          } catch (e) {
+            noError = false;
+          }
+          if (noError)
+            muteButton.innerHTML = '<i class="material-icons">volume_up</i>';
+        } else {
           muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
           audio.pause();
         }

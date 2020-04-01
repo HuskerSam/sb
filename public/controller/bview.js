@@ -219,6 +219,7 @@ class bView {
     return Promise.resolve();
   }
   updateProjectList(rawRecordList, selectedWorkspace = null) {
+    this.projectList = rawRecordList;
     if (!this.workplacesSelect)
       return;
 
