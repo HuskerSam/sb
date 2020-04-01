@@ -73,7 +73,18 @@ class cViewDemo extends bView {
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.productsDisplayUpdate();
 
-    console.log(this.rootBlock.blockRawData);
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
+      setTimeout(() => {
+        let options = this.canvasHelper.cameraSelect;
+        for (let c = 0; c < options.length; c++) {
+          if (options.item(c).innerHTML === this.rootBlock.blockRawData.displayCamera) {
+            this.canvasHelper.cameraSelect.selectedIndex = c;
+            this.canvasHelper.cameraChangeHandler();
+            break;
+          }
+        }
+      }, 100);
+    }
 
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.audioURL) {
       let audio = document.createElement('audio');

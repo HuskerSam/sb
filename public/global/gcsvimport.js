@@ -270,6 +270,11 @@ class gCSVImport {
     });
   }
   async addCSVBlockChildRow(row) {
+    if (row.parent.substr(0, 9) === '::scene::') {
+      let sb = await this.csvFetchSceneBlock();
+      row.parent = sb.parent;
+    }
+
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
     if (parentRecords.records.length < 1) {
       console.log(row.parent, ' - block not found');
@@ -309,6 +314,8 @@ class gCSVImport {
 
     if (row.cameratargetblock)
       blockChildData.cameraTargetBlock = row.cameratargetblock;
+    if (row.cameraaimtarget)
+      blockChildData.cameraAimTarget = row.cameraaimtarget;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
 
     let childResults = await this.dbSetRecord('blockchild', blockChildData);
@@ -894,6 +901,9 @@ class gCSVImport {
 
     if (row.audiourl)
       block.audioURL = row.audiourl;
+
+    if (row.displaycamera)
+      block.displayCamera = row.displaycamera;
 
     if (row.blockflag) block.blockFlag = row.blockflag;
     if (row.blockcode) block.blockCode = row.blockcode;
@@ -1774,7 +1784,7 @@ class gCSVImport {
         if (!bandData)
           bandData = '';
         bandData = bandData.split('|');
-        bandData.forEach((v,i) => bandData[i] = Number(v));
+        bandData.forEach((v, i) => bandData[i] = Number(v));
 
         let frameCount = bandData.length;
         let frameRows = [];

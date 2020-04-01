@@ -896,6 +896,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   group: 'blockData',
   floatLeft: true
 }, {
+  title: 'displayCamera',
+  fireSetField: 'displayCamera',
+  group: 'blockData',
+  clearLeft: true,
+  floatLeft: true
+}, {
   title: 'Video URL',
   fireSetField: 'videoURL',
   group: 'video',
