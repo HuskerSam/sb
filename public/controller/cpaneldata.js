@@ -204,6 +204,17 @@ class cPanelData {
           f.dom.style.display = '';
         });
       }
+    } else if (f.uploadType === 'audio') {
+      f.progressBar.style.display = '';
+      f.dom.style.display = 'none';
+
+      if (f.fileDom.files.length > 0) {
+        this.parent.context.updateObjectURL('audio', this.parent.key, f.fileDom.files[0]).then(results => {
+          f.fileDom.value = '';
+          f.progressBar.style.display = 'none';
+          f.dom.style.display = '';
+        });
+      }
     }
   }
   _blurField(domControl, field, e) {
@@ -398,7 +409,11 @@ class cPanelData {
               tag += 'es';
             else
               tag += 's';
-            outV = gAPPP.cdnPrefix + tag + '/' + v.substring(3);
+
+            let outTag = tag;
+            if (f.fireSetField === 'audioURL')
+              outTag = 'textures';
+            outV = gAPPP.cdnPrefix + outTag + '/' + v.substring(3);
           }
         }
         f.urlAnchor.setAttribute('href', outV);

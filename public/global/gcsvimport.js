@@ -219,6 +219,8 @@ class gCSVImport {
 
     if (row.genericblockdata)
       blockData.genericBlockData = row.genericblockdata;
+    if (row.audiourl)
+      blockData.audioURL = row.audiourl;
 
     if (row.introtime) {
       blockData.introtime = row.introtime;

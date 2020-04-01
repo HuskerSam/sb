@@ -250,11 +250,15 @@ class cPanelCanvas {
     this.recordedBlobs = [];
     this.recStream = new MediaStream();
     this.canvasStream = this.canvas.captureStream();
-    //this.recStream.addTrack(this.stream.getAudioTracks()[0]);
+    let audioElement = document.getElementById('audiofileplayback');
+    if (audioElement) {
+      let audioStream = audioElement.captureStream();
+      this.recStream.addTrack(audioStream.getAudioTracks()[0]);
+    }
     this.recStream.addTrack(this.canvasStream.getVideoTracks()[0]);
     this.mediaRecorder = new MediaRecorder(this.recStream, options);
     this.mediaRecorder.ondataavailable = event => this.recordedBlobs.push(event.data);
-    this.mediaRecorder.start(33);
+    this.mediaRecorder.start(25);
   }
   stopRecord() {
     this.recStream.getTracks().forEach(track => track.stop());

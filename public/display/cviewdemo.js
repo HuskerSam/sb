@@ -73,6 +73,37 @@ class cViewDemo extends bView {
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.productsDisplayUpdate();
 
+    let audioFiles = gAPPP.a.modelSets['texture'].queryCache('title', 'audiofileplayback');
+    let audioKeys = Object.keys(audioFiles);
+    if (audioKeys.length > 0) {
+      console.log(audioFiles[audioKeys[0]].url);
+      let audio = document.createElement('audio');
+      audio.setAttribute('id', 'audiofileplayback');
+      audio.setAttribute('crossorigin', 'anonymous');
+      document.body.appendChild(audio);
+      audio.src = audioFiles[audioKeys[0]].url;
+      audio.setAttribute('style', 'display:none;position:absolute;top:0;left:0;z-index:10000');
+      audio.setAttribute('controls', '');
+      audio.loop = true;
+
+      let muteButton = document.createElement('button');
+      muteButton.setAttribute('id', 'muteButton');
+      muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
+      muteButton.setAttribute('style', 'position:absolute;top:0.25em;left:0.25em;z-index:10000;font-size:2em;')
+      muteButton.addEventListener('click', e => {
+        audio.currentTime = this.canvasHelper.timeE + .1;
+        if (audio.paused) {
+          muteButton.innerHTML = '<i class="material-icons">volume_up</i>';
+          audio.play();
+        }
+        else {
+          muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
+          audio.pause();
+        }
+        console.log(audio);
+      });
+      document.body.append(muteButton);
+    }
     this.basketUpdateTotal().then(() => {});
 
     setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);

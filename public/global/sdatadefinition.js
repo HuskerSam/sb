@@ -878,6 +878,24 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   displayType: 'number',
   floatLeft: true
 }, {
+  title: 'Audio URL',
+  fireSetField: 'audioURL',
+  group: 'blockData',
+  type: 'url',
+  uploadType: 'audio',
+  floatLeft: true
+}, {
+  title: 'blockFlag',
+  fireSetField: 'blockFlag',
+  group: 'blockData',
+  floatLeft: true,
+  clearLeft: true
+}, {
+  title: 'genericBlockData',
+  fireSetField: 'genericBlockData',
+  group: 'blockData',
+  floatLeft: true
+}, {
   title: 'Video URL',
   fireSetField: 'videoURL',
   group: 'video',
@@ -923,16 +941,6 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   type: 'boolean',
   floatLeft: true,
   clearLeft: true
-}, {
-  title: 'blockFlag',
-  fireSetField: 'blockFlag',
-  group: 'blockData',
-  floatLeft: true
-}, {
-  title: 'genericBlockData',
-  fireSetField: 'genericBlockData',
-  group: 'blockData',
-  floatLeft: true
 }];
 __localStaticStorageForBindingFields['childBlock'] = [{
   title: 'Type',

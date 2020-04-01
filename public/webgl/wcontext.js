@@ -291,6 +291,11 @@ class wContext {
         let fireSet = gAPPP.a.modelSets['block'];
         fireSet.updateBlob(key, file, filename, 'videoURL').then(
           r => resolve(r));
+      } else if (objectType === 'audio') {
+        let filename = file.name;
+        let fireSet = gAPPP.a.modelSets['block'];
+        fireSet.updateBlob(key, file, filename, 'audioURL').then(
+          r => resolve(r));
       } else
         resolve({});
     });
