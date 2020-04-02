@@ -105,6 +105,15 @@ class cViewDemo extends bView {
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.productsDisplayUpdate();
 
+    this._displayCameraFeatures();
+    this._sceneDataPanel();
+    this._audioFeatures();
+    this.basketUpdateTotal().then(() => {});
+
+    setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);
+    return Promise.resolve();
+  }
+  _displayCameraFeatures() {
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
       setTimeout(() => {
         let options = this.canvasHelper.cameraSelect;
@@ -123,7 +132,208 @@ class cViewDemo extends bView {
         }
       }, 100);
     }
+  }
+  _sceneDataPanel() {
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
+      let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
 
+      this.scenePanelDiv = document.createElement('div');
+      this.scenePanelDiv.setAttribute('style', 'position:absolute;bottom:.25em;right:.25em;z-index:1000;text-align:center;background:rgba(127,127,127,.8)');
+      this.scenePanelDiv.setAttribute('class', 'app-panel');
+      this.sceneOptionsSelect = document.createElement('select');
+      this.scenePanelDiv.appendChild(this.sceneOptionsSelect);
+      this.sceneOptionsEdit = document.createElement('div');
+      this.scenePanelDiv.appendChild(this.sceneOptionsEdit);
+      document.body.appendChild(this.scenePanelDiv);
+
+      let listHTML = '';
+      this.sceneFieldEditBlocks = [];
+
+      let checked = " selected";
+      for (let id in editInfoBlocks) {
+        let data = editInfoBlocks[id].genericBlockData;
+        let parts = data.split('||');
+        let mainLabel = parts[0];
+        let tab = parts[1];
+        let name = parts[2];
+        let asset = parts[3];
+        let fieldList = [];
+        for (let c = 4, l = parts.length; c < l; c++) {
+          let subParts = parts[c].split(':');
+          let field = subParts[0];
+          let type = subParts[1];
+
+          fieldList.push({
+            field,
+            type
+          });
+        }
+
+        this.sceneFieldEditBlocks.push({
+          mainLabel,
+          tab,
+          name,
+          asset,
+          fieldList
+        });
+
+        listHTML += `<option${checked} value="${this.sceneFieldEditBlocks.length - 1}">${mainLabel}</option>`;
+        checked = '';
+      }
+
+      this.sceneOptionsSelect.innerHTML = listHTML;
+      this.sceneOptionsSelect.addEventListener('input', e => this.sceneOptionListChange());
+
+      this.sceneOptionListChange();
+    }
+  }
+  url(rawUrl) {
+    if (rawUrl.substring(0, 3) === 'sb:') {
+      rawUrl = gAPPP.cdnPrefix + 'textures/' + rawUrl.substring(3);
+    }
+    return rawUrl;
+  }
+  sceneOptionListChange() {
+    let index = this.sceneOptionsSelect.selectedIndex;
+    if (index < 0)
+      return;
+    let fieldData = this.sceneFieldEditBlocks[index];
+
+    let fieldHtml = '<input type="file" class="sotexturepathuploadfile" style="display:none;" />';
+    let name = fieldData.name;
+    let asset = fieldData.asset;
+
+    let __getSceneOptionsValue = (tab, name, asset, field = null) => {
+      if (tab === 'layout')
+        tab = 'scene';
+
+      return '';
+    }
+
+    for (let c = 0, l = fieldData.fieldList.length; c < l; c++) {
+      let type = fieldData.fieldList[c].type;
+      let field = fieldData.fieldList[c].field;
+
+      if (type === 'num') {
+        let v = __getSceneOptionsValue(fieldData.tab, name, asset, field);
+        fieldHtml += `<label class="csv_scene_field_text_wrapper">
+          ${field}<input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}"
+          data-type="${type}" data-name="${name}" data-asset="${asset}" />
+        </label>`;
+      }
+
+      if (type === 'image') {
+        let v = __getSceneOptionsValue(fieldData.tab, name, asset, field);
+        fieldHtml += `<label class="csv_scene_field_upload_wrapper">${field}
+          <input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}" id="scene_edit_field_${c}_${field}"
+          data-type="${type}" data-name="${name}" data-imageid="scene_edit_image_${c}_${field}" data-asset="${asset}" list="sbstoreimageslist" style="width:15em;" />
+          <br>
+          <img id="scene_edit_image_${c}_${field}" crossorigin="anonymous" src="${this.url(v)}" class="scene_edit_image" />
+        </label>
+        <button data-fieldid="scene_edit_field_${c}_${field}" class="btn-sb-icon sceneoptionsupload">
+          <i class="material-icons">cloud_upload</i></button><br>`;
+      }
+
+      if (type === 'childname') {
+        let firstChildInfo = gAPPP.a.modelSets['blockchild'].getValuesByFieldLookup('blockFlag', 'basketblockchild');
+        let v = firstChildInfo.childName;
+        fieldHtml += `<label class="csv_scene_field_text_wrapper">
+        ${field}<input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}"
+        data-type="${type}" data-name="${name}" data-asset="${asset}" data-list="basketblocktemplatelist" />
+      </label>`;
+      }
+    }
+
+    this.sceneOptionsEdit.innerHTML = fieldHtml;
+    this.soUploadImageFile = this.sceneOptionsEdit.querySelector('.sotexturepathuploadfile');
+    //  this.soUploadImageFile.addEventListener('change', e => this.workspaceLayoutSceneDataUploadImage(e));
+    let inputs = this.sceneOptionsEdit.querySelectorAll('input');
+    inputs.forEach(i => i.addEventListener('input', e => this.sceneOptionDataChanged(i, e)));
+    let uploadButtons = this.sceneOptionsEdit.querySelectorAll('button.sceneoptionsupload');
+    uploadButtons.forEach(i => i.addEventListener('click', e => {
+      this.soUploadImageFile.btnCTL = i;
+      this.soUploadImageFile.editCTL = this.sceneOptionsEdit.querySelector('#' + i.dataset.fieldid);
+      this.soUploadImageFile.click();
+    }));
+
+    return;
+  }
+
+  async sceneOptionDataChanged(ctl, e) {
+    let data = ctl.dataset;
+    let tab = data.tab,
+      name = data.name,
+      asset = data.asset,
+      field = data.field,
+      type = data.type,
+      imageid = data.imageid,
+      value = ctl.value;
+
+    if (type === 'image') {
+      document.getElementById(imageid).setAttribute('src', this.url(value));
+      let textureName = '';
+      if (asset === 'shape') {
+        textureName = name;
+      } else if (asset === 'sceneblock') {
+        let desc = field.replace('image', '') + 'panel';
+        textureName = name + '_' + desc;
+      }
+
+      if (textureName) {
+        let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
+        let csvImport = new gCSVImport(gAPPP.loadedWID);
+        await csvImport.dbSetRecordFields('texture', {
+          'url': value
+        }, tid);
+      }
+    }
+
+    if (type === 'childname') {
+      let bcid = gAPPP.a.modelSets['blockchild'].getIdByFieldLookup('blockFlag', 'basketblockchild');
+      let csvImport = new gCSVImport(gAPPP.loadedWID);
+      await csvImport.dbSetRecordFields('blockchild', {
+        'childName': value
+      }, bcid);
+    }
+
+    let origField = field;
+    field = field.replace('leftwall', '');
+    field = field.replace('rightwall', '');
+    field = field.replace('backwall', '');
+    field = field.replace('frontwall', '');
+    field = field.replace('floor', '');
+    field = field.replace('ceilingwall', '');
+
+    if (field === 'scaleu' || field === 'scalev' || field === 'voffset' || field === 'uoffset') {
+      let textureName = '';
+      if (asset === 'shape') {
+        textureName = name;
+      } else if (asset === 'sceneblock') {
+        let panelName = origField.replace(field, '');
+        let desc = panelName + 'panel';
+        textureName = name + '_' + desc;
+      }
+
+      if (textureName) {
+        let fieldUpdate = 'uScale';
+        if (field === 'scalev')
+          fieldUpdate = 'vScale';
+        if (field === 'uoffset')
+          fieldUpdate = 'uOffset';
+        if (field === 'voffset')
+          fieldUpdate = 'vOffset';
+        let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
+        let csvImport = new gCSVImport(gAPPP.loadedWID);
+        await csvImport.dbSetRecordFields('texture', {
+          [fieldUpdate]: value
+        }, tid);
+      }
+    }
+
+    return;
+  }
+
+  _audioFeatures() {
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.audioURL) {
       let audio = document.createElement('audio');
       audio.setAttribute('id', 'audiofileplayback');
@@ -146,7 +356,7 @@ class cViewDemo extends bView {
       muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
       muteButton.setAttribute('style', 'position:absolute;top:0.25em;left:0.25em;z-index:10000;font-size:2em;')
       muteButton.addEventListener('click', async e => {
-        audio.currentTime = this.canvasHelper.timeE + .1;
+        audio.currentTime = Math.max(0, this.canvasHelper.timeE + .2);
         if (audio.paused) {
           let noError = true;
           try {
@@ -163,10 +373,6 @@ class cViewDemo extends bView {
       });
       document.body.append(muteButton);
     }
-    this.basketUpdateTotal().then(() => {});
-
-    setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);
-    return Promise.resolve();
   }
   profileUpdate() {
     super.profileUpdate();

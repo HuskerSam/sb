@@ -172,3 +172,18 @@ button.cart-submit {
   height: 3em;
   margin-right: .5em;
 }
+
+.scene_edit_image {
+  max-width: 90%;
+  max-height: 100px;
+}
+
+.sceneoptionsupload {
+  float: right;
+}
+
+.csv_scene_field_upload_wrapper, .csv_scene_field_text_wrapper {
+  white-space: nowrap;
+  display: inline-block;
+  margin: .5em;
+}

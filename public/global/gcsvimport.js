@@ -1193,8 +1193,11 @@ class gCSVImport {
     textPlaneBlockBC.ry = row.ry;
     textPlaneBlockBC.rz = row.rz;
     textPlaneBlockBC.x = row.x;
-    textPlaneBlockBC.y = '-50';
+    textPlaneBlockBC.y = '-1';
     textPlaneBlockBC.z = row.z;
+    textPlaneBlockBC.sx = '.001';
+    textPlaneBlockBC.sy = '.001';
+    textPlaneBlockBC.sz = '.001';
     textPlaneBlockBC.realOrigRow = row;
     textPlaneBlockBC.index = row.index;
 
@@ -1333,7 +1336,10 @@ class gCSVImport {
     blockRow.x = '.1';
     blockRow.rz = '10deg';
     blockRow.ry = '180deg';
-    blockRow.y = '-50';
+    blockRow.y = '-1';
+    blockRow.sx = '.001';
+    blockRow.sy = '.001';
+    blockRow.sz = '.001';
     await this.addCSVRow(blockRow);
 
     if (product.origRow.displaystyle === '3dbasic')
@@ -1349,6 +1355,9 @@ class gCSVImport {
     showFrame.frameorder = '20';
     showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
     showFrame.y = '2';
+    showFrame.sx = '1';
+    showFrame.sy = '1';
+    showFrame.sz = '1';
 
     let hideFrame = this.defaultCSVRow();
     hideFrame.asset = 'blockchildframe';
@@ -1357,7 +1366,10 @@ class gCSVImport {
     hideFrame.parent = product.childName;
     hideFrame.frameorder = '30';
     hideFrame.frametime = (product.endShowTime * 1000).toFixed(0) + 'cp700';
-    hideFrame.y = '-50';
+    hideFrame.y = '-1';
+    hideFrame.sx = '.001';
+    hideFrame.sy = '.001';
+    hideFrame.sz = '.001';
 
     let endFrame = this.defaultCSVRow();
     endFrame.asset = 'blockchildframe';
@@ -1366,7 +1378,10 @@ class gCSVImport {
     endFrame.parent = product.childName;
     endFrame.frameorder = '40';
     endFrame.frametime = (productData.runLength * 1000).toFixed(0);
-    endFrame.y = '-50';
+    endFrame.y = '-1';
+    endFrame.sx = '.001';
+    endFrame.sy = '.001';
+    endFrame.sz = '.001';
 
     return Promise.all([
       this.addCSVRow(showFrame),
@@ -1512,6 +1527,9 @@ class gCSVImport {
     showFrame.frameorder = '20';
     showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
     showFrame.y = product.origRow.y;
+    showFrame.sx = '1';
+    showFrame.sy = '1';
+    showFrame.sz = '1';
 
     let hideFrame = this.defaultCSVRow();
     hideFrame.asset = 'blockchildframe';
@@ -1520,7 +1538,10 @@ class gCSVImport {
     hideFrame.parent = productData.sceneBlock.title;
     hideFrame.frameorder = '30';
     hideFrame.frametime = (product.endEnlargeTime * 1000).toFixed(0) + 'cp700';
-    hideFrame.y = '-50';
+    hideFrame.y = '-1';
+    hideFrame.sx = '.001';
+    hideFrame.sy = '.001';
+    hideFrame.sz = '.001';
 
     let endFrame = this.defaultCSVRow();
     endFrame.asset = 'blockchildframe';
@@ -1529,7 +1550,10 @@ class gCSVImport {
     endFrame.parent = productData.sceneBlock.title;
     endFrame.frameorder = '40';
     endFrame.frametime = (productData.runLength * 1000).toFixed(0);
-    endFrame.y = '-50';
+    endFrame.y = '-1';
+    endFrame.sx = '.001';
+    endFrame.sy = '.001';
+    endFrame.sz = '.001';
 
     return Promise.all([
       this.addCSVRow(showFrame),
@@ -1799,10 +1823,10 @@ class gCSVImport {
           bandScaleFrame.parent = '::scene::';
           bandScaleFrame.frameorder = (10 * (index + 1)).toFixed(0);
           bandScaleFrame.frametime = (timeRatio * 100).toFixed(2) + '%';
-          bandScaleFrame.y = (8 + (scaleRatio * 4)).toFixed(2);
-          bandScaleFrame.sx = (1 + scaleRatio).toFixed(3);
-          bandScaleFrame.sy = (1 + scaleRatio).toFixed(3);
-          bandScaleFrame.sz = (1 + scaleRatio).toFixed(3);
+          bandScaleFrame.y = (10 + (scaleRatio * 4)).toFixed(2);
+          bandScaleFrame.sx = (1.5 + scaleRatio).toFixed(3);
+          bandScaleFrame.sy = (1.5 + scaleRatio).toFixed(3);
+          bandScaleFrame.sz = (1.5 + scaleRatio).toFixed(3);
           frameRows.push(this.addCSVRowList([bandScaleFrame]));
 
           if (frameRows.length > 20) {
