@@ -193,6 +193,37 @@ class cViewDemo extends bView {
     }
     return rawUrl;
   }
+  __sceneOptionTextureName(asset, name, field, type) {
+    let textureName = '';
+    if (asset === 'shape') {
+      this.replacedFieldName = field;
+      return name + 'material';
+    }
+
+    if (type === 'image') {
+       if (asset === 'sceneblock') {
+        let desc = field.replace('image', '') + 'panel';
+        return name + '_' + desc;
+      }
+    }
+
+    let origField = field;
+    field = field.replace('leftwall', '');
+    field = field.replace('rightwall', '');
+    field = field.replace('backwall', '');
+    field = field.replace('frontwall', '');
+    field = field.replace('floor', '');
+    field = field.replace('ceilingwall', '');
+
+    if (origField !== field) {
+      let panelName = origField.replace(field, '');
+      let desc = panelName + 'panel';
+      textureName = name + '_' + desc;
+    }
+
+    this.replacedFieldName = field;
+    return textureName;
+  }
   sceneOptionListChange() {
     let index = this.sceneOptionsSelect.selectedIndex;
     if (index < 0)
@@ -203,9 +234,46 @@ class cViewDemo extends bView {
     let name = fieldData.name;
     let asset = fieldData.asset;
 
-    let __getSceneOptionsValue = (tab, name, asset, field = null) => {
+    let __getSceneOptionsValue = (tab, name, asset, field = null, type) => {
       if (tab === 'layout')
         tab = 'scene';
+      let textureName = this.__sceneOptionTextureName(asset, name, field, type);
+
+      if (textureName  && type === 'image') {
+        let textures = gAPPP.a.modelSets['texture'].queryCache('title', textureName);
+        let tids = Object.keys(textures);
+        if (tids.length > 0) {
+          let url = textures[tids].url;
+          if (url)
+            return url;
+        }
+      }
+
+      if (textureName  && type === 'num') {
+        let textures = gAPPP.a.modelSets['texture'].queryCache('title', textureName);
+        let tids = Object.keys(textures);
+        if (tids.length > 0) {
+          let key = '';
+          switch (this.replacedFieldName) {
+            case 'scaleu':
+              key = 'uScale';
+              break;
+            case 'scalev':
+              key = 'vScale';
+              break;
+            case 'offsetu':
+              key = 'uOffset';
+              break;
+            case 'offsetv':
+              key = 'vOffset';
+              break;
+          }
+
+          if (key)
+            return textures[tids][key];
+        }
+      }
+
 
       return '';
     }
@@ -215,7 +283,7 @@ class cViewDemo extends bView {
       let field = fieldData.fieldList[c].field;
 
       if (type === 'num') {
-        let v = __getSceneOptionsValue(fieldData.tab, name, asset, field);
+        let v = __getSceneOptionsValue(fieldData.tab, name, asset, field, type);
         fieldHtml += `<label class="csv_scene_field_text_wrapper">
           ${field}<input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}"
           data-type="${type}" data-name="${name}" data-asset="${asset}" />
@@ -223,7 +291,7 @@ class cViewDemo extends bView {
       }
 
       if (type === 'image') {
-        let v = __getSceneOptionsValue(fieldData.tab, name, asset, field);
+        let v = __getSceneOptionsValue(fieldData.tab, name, asset, field, type);
         fieldHtml += `<label class="csv_scene_field_upload_wrapper">${field}
           <input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}" id="scene_edit_field_${c}_${field}"
           data-type="${type}" data-name="${name}" data-imageid="scene_edit_image_${c}_${field}" data-asset="${asset}" list="sbstoreimageslist" style="width:15em;" />
@@ -269,15 +337,11 @@ class cViewDemo extends bView {
       imageid = data.imageid,
       value = ctl.value;
 
+    let textureName = this.__sceneOptionTextureName(asset, name, field);
+    field = this.replacedFieldName;
+
     if (type === 'image') {
       document.getElementById(imageid).setAttribute('src', this.url(value));
-      let textureName = '';
-      if (asset === 'shape') {
-        textureName = name;
-      } else if (asset === 'sceneblock') {
-        let desc = field.replace('image', '') + 'panel';
-        textureName = name + '_' + desc;
-      }
 
       if (textureName) {
         let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
@@ -296,24 +360,7 @@ class cViewDemo extends bView {
       }, bcid);
     }
 
-    let origField = field;
-    field = field.replace('leftwall', '');
-    field = field.replace('rightwall', '');
-    field = field.replace('backwall', '');
-    field = field.replace('frontwall', '');
-    field = field.replace('floor', '');
-    field = field.replace('ceilingwall', '');
-
     if (field === 'scaleu' || field === 'scalev' || field === 'voffset' || field === 'uoffset') {
-      let textureName = '';
-      if (asset === 'shape') {
-        textureName = name;
-      } else if (asset === 'sceneblock') {
-        let panelName = origField.replace(field, '');
-        let desc = panelName + 'panel';
-        textureName = name + '_' + desc;
-      }
-
       if (textureName) {
         let fieldUpdate = 'uScale';
         if (field === 'scalev')
