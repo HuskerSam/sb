@@ -428,7 +428,7 @@ class cViewDemo extends bView {
       muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
       muteButton.setAttribute('style', 'position:absolute;top:2em;left:0.25em;z-index:10000;font-size:2em;')
       muteButton.addEventListener('click', async e => {
-        audio.currentTime = Math.max(0, this.canvasHelper.timeE + .2);
+        audio.currentTime = Math.max(0, this.canvasHelper.timeE);
         if (audio.paused) {
           let noError = true;
           try {
@@ -754,6 +754,23 @@ class cViewDemo extends bView {
     this._productsUpdateButtons();
 
     this.updateDisplay = false;
+
+    try {
+      if (this.canvasHelper.playState !== 1) {
+        if (!this.audio.paused)
+          this.audio.pause();
+        muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
+      } else {
+        if (this.canvasHelperPaused !== this.canvasHelper.timeE) {
+          if (Math.abs(this.audio.currentTime - this.canvasHelper.timeE) >  .2)
+            this.audio.currentTime = Math.max(0, this.canvasHelper.timeE + .1);
+          this.canvasHelperPaused = this.canvasHelper.timeE;
+        }
+      }
+    } catch (audioError) {
+      console.log(audioError);
+    }
+
     clearTimeout(this.updateProductsTimeout);
     this.updateProductsTimeout = setTimeout(() => {
       this.productsDisplayUpdate();
