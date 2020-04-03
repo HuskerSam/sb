@@ -21,6 +21,7 @@ class cViewDemo extends bView {
     document.querySelector('.choice-button-two').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-three').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-four').addEventListener('click', e => this.basketAddItem(e));
+    this.scenePanelDiv = document.querySelector('#sceneedit-profile-panel');
 
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.cartItemTotal = document.querySelector('.cart-item-total');
@@ -33,10 +34,12 @@ class cViewDemo extends bView {
 
     this.moreContentsListBtn = document.getElementById('cart-contents-more-button');
     this.moreContentsListBtn.addEventListener('click', () => this.toggleContentsListHeight());
+    this.updateProfileUIFeatures();
 
     let key = 'selectedBlockKey' + gAPPP.workspace;
     this._updateSelectedBlock(gAPPP.a.profile[key]);
     this.canvasHelper.show();
+    this.canvasActions.style.display = 'none';
   }
   toggleContentsListHeight() {
     if (this.moreContentsLarged) {
@@ -64,7 +67,7 @@ class cViewDemo extends bView {
     if (tags.indexOf('demopanel') !== -1) {
       this.demoOptionDiv = document.createElement('div');
       let d = this.demoOptionDiv;
-      d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:60%;padding: .1em 1em;font-size:1.5em;line-height:1.25em;text-align:center;');
+      d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:60%;padding: .1em 1em;text-align:center;');
       d.setAttribute('class', 'app-panel');
       let html = `<label><input type="radio" name="controls" class="cart_ui" checked />Cart UI</label>
         <label><input type="radio" name="controls" class="anim_ui" />Anim UI</label>
@@ -100,8 +103,10 @@ class cViewDemo extends bView {
     this.canvasActions.style.display = 'none';
     this.displayButtonPanel.style.display = 'none';
     this.cartTotalPanel.style.display = 'none';
-    if (this.scenePanelDiv)
-      this.scenePanelDiv.style.display = 'none';
+    this.fontToolsButton.style.display = 'none';
+    this.fontToolsContainer.style.display = 'none';
+    this.scenePanelDiv.style.display = 'none';
+    this.sceneEditToolsButton.style.display = 'none';
     if (ui_class === 'anim_ui')
       this.canvasActions.style.display = '';
     if (ui_class === 'cart_ui') {
@@ -109,7 +114,8 @@ class cViewDemo extends bView {
       this.cartTotalPanel.style.display = '';
     }
     if (ui_class === 'edit_ui') {
-      this.scenePanelDiv.style.display = '';
+      this.fontToolsButton.style.display = '';
+      this.sceneEditToolsButton.style.display = '';
     }
   }
   async _cameraShown() {
@@ -139,10 +145,25 @@ class cViewDemo extends bView {
     this._displayCameraFeatures();
     this._sceneDataPanel();
     this._audioFeatures();
+
     this.basketUpdateTotal().then(() => {});
 
     setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);
     return Promise.resolve();
+  }
+  updateProfileUIFeatures() {
+    this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
+    this.fontFields = sDataDefinition.bindingFieldsCloned('publishFontFamilyProfile');
+    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
+    this.fontToolsButton = this.dialog.querySelector('#publish-settings-button');
+    this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);
+    this.fontTools.fireFields.values = gAPPP.a.profile;
+    this.fontTools.activate();
+
+    this.sceneEditToolsButton = this.dialog.querySelector('#sceneedit-settings-button');
+    this.sceneEditTools = new cBandProfileOptions(this.sceneEditToolsButton, [], this.scenePanelDiv, this.scenePanelDiv);
+    this.sceneEditTools.fireFields.values = gAPPP.a.profile;
+    this.sceneEditTools.activate();
   }
   _displayCameraFeatures() {
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
@@ -162,9 +183,6 @@ class cViewDemo extends bView {
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
       let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
 
-      this.scenePanelDiv = document.createElement('div');
-      this.scenePanelDiv.setAttribute('style', 'display:none;position:absolute;bottom:.25em;left:.25em;z-index:1000;text-align:center;background:rgba(127,127,127,.8)');
-      this.scenePanelDiv.setAttribute('class', 'app-panel');
       this.sceneOptionsSelect = document.createElement('select');
       this.scenePanelDiv.appendChild(this.sceneOptionsSelect);
       this.sceneOptionsEdit = document.createElement('div');
@@ -426,7 +444,7 @@ class cViewDemo extends bView {
       this.muteButton = muteButton;
       muteButton.setAttribute('id', 'muteButton');
       muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
-      muteButton.setAttribute('style', 'position:absolute;top:2em;left:0.25em;z-index:10000;font-size:2em;')
+      muteButton.setAttribute('style', 'position:absolute;top:2em;left:0.25em;z-index:10000;font-size:1.5em;')
       muteButton.addEventListener('click', async e => {
         audio.currentTime = Math.max(0, this.canvasHelper.timeE);
         if (audio.paused) {
@@ -761,10 +779,12 @@ class cViewDemo extends bView {
           this.audio.pause();
         muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
       } else {
-        if (this.canvasHelperPaused !== this.canvasHelper.timeE) {
-          if (Math.abs(this.audio.currentTime - this.canvasHelper.timeE) >  .2)
-            this.audio.currentTime = Math.max(0, this.canvasHelper.timeE + .1);
-          this.canvasHelperPaused = this.canvasHelper.timeE;
+        if (this.audio) {
+          if (this.canvasHelperPaused !== this.canvasHelper.timeE) {
+            if (Math.abs(this.audio.currentTime - this.canvasHelper.timeE) >  .2)
+              this.audio.currentTime = Math.max(0, this.canvasHelper.timeE + .1);
+            this.canvasHelperPaused = this.canvasHelper.timeE;
+          }
         }
       }
     } catch (audioError) {
@@ -815,7 +835,7 @@ class cViewDemo extends bView {
     <div class="video-overlay">
       <video></video>
     </div>
-    <div class="canvas-actions">
+    <div class="canvas-actions" style="display:none;">
       <div class="canvas-play-bar">
         <div class="scene-options-panel" style="display:none;">
           <div class="scene-fields-container">
@@ -877,6 +897,15 @@ class cViewDemo extends bView {
           <button id="cart-contents-more-button">More</button>
         </div>
       </div>
+      <button id="publish-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">text_format</i></button>
+      <div id="publish-profile-panel" class="app-panel" style="display:none;">
+        <div class="fields-container"></div>
+      </div>
+      <button id="sceneedit-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">photo_album</i></button>
+      <div id="sceneedit-profile-panel" class="app-panel" style="display:none;">
+        <div class="fields-container"></div>
+      </div>
+
     </div>`;
   }
 }

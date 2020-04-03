@@ -107,7 +107,7 @@ button.choice-button-four span {
   overflow: visible;
   white-space: nowrap;
   margin-bottom: .5em;
-  background: rgba(250,250,100, .9);
+  background: rgba(250, 250, 100, .9);
   border-radius: 5px;
 }
 
@@ -185,4 +185,50 @@ button.cart-submit {
   white-space: nowrap;
   display: inline-block;
   margin: .5em;
+}
+
+#publish-profile-panel {
+  right: 0em;
+  top: 3em;
+  position: absolute;
+}
+
+#publish-settings-button {
+  position: absolute;
+  right: .25em;
+  top: .25em;
+  font-size: 1.5em;
+}
+
+#publish-profile-panel {
+  pointer-events: none;
+}
+
+#publish-profile-panel * {
+  pointer-events: auto;
+}
+
+#publish-profile-panel .fields-container {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#publish-profile-panel .fields-container * {
+  pointer-events: auto;
+}
+
+#sceneedit-profile-panel {
+  display: none;
+  position: absolute;
+  bottom: 3em;
+  left: .25em;
+  z-index: 1000;
+  text-align: center;
+}
+
+#sceneedit-settings-button {
+  position: absolute;
+  left: .25em;
+  bottom: .25em;
+  font-size: 1.5em;
 }
