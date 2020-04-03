@@ -4,6 +4,10 @@ class cViewDemo extends bView {
 
     this.canvasHelper.cameraShownCallback = () => this._cameraShown();
 
+    this.displayButtonPanel = document.querySelector('.user-options-panel');
+    this.receiptDisplayPanel = document.querySelector('.cart-contents');
+    this.cartTotalPanel = document.querySelector('.cart-total');
+
     this.itemButtons = [];
     this.itemButtons.push(document.querySelector('.choice-button-one'));
     this.itemButtons.push(document.querySelector('.choice-button-two'));
@@ -17,9 +21,6 @@ class cViewDemo extends bView {
     document.querySelector('.choice-button-two').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-three').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-four').addEventListener('click', e => this.basketAddItem(e));
-
-    this.displayButtonPanel = document.querySelector('.user-options-panel');
-    this.receiptDisplayPanel = document.querySelector('.cart-contents');
 
     this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.cartItemTotal = document.querySelector('.cart-item-total');
@@ -63,9 +64,11 @@ class cViewDemo extends bView {
     if (tags.indexOf('demopanel') !== -1) {
       this.demoOptionDiv = document.createElement('div');
       let d = this.demoOptionDiv;
-      d.setAttribute('style', 'position:absolute;top:.1em;left:5em;max-width:60%;padding: .1em 1em;font-size:1.5em;line-height:2em;');
+      d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:60%;padding: .1em 1em;font-size:1.5em;line-height:1.25em;text-align:center;');
       d.setAttribute('class', 'app-panel');
-      let html = '';
+      let html = `<label><input type="radio" name="controls" class="cart_ui" checked />Cart UI</label>
+        <label><input type="radio" name="controls" class="anim_ui" />Anim UI</label>
+        <label><input type="radio" name="controls" class="edit_ui" />Edit UI</label><br>`;
 
       for (let pid in this.projectList) {
         let tags = this.projectList[pid].tags;
@@ -78,7 +81,35 @@ class cViewDemo extends bView {
       }
 
       d.innerHTML = html;
+      d.querySelectorAll('input[type="radio"]').forEach(ctl => ctl.addEventListener('input', e => this.updateUIDisplay(ctl)));
       document.body.appendChild(d);
+
+      this.updateUIDisplay();
+    }
+  }
+  updateUIDisplay(ctl = null) {
+    let ui_class = 'cart_ui';
+    if (ctl) {
+      if (ctl.classList.contains('cart_ui'))
+        ui_class = 'cart_ui';
+      if (ctl.classList.contains('anim_ui'))
+        ui_class = 'anim_ui';
+      if (ctl.classList.contains('edit_ui'))
+        ui_class = 'edit_ui';
+    }
+    this.canvasActions.style.display = 'none';
+    this.displayButtonPanel.style.display = 'none';
+    this.cartTotalPanel.style.display = 'none';
+    if (this.scenePanelDiv)
+      this.scenePanelDiv.style.display = 'none';
+    if (ui_class === 'anim_ui')
+      this.canvasActions.style.display = '';
+    if (ui_class === 'cart_ui') {
+      this.displayButtonPanel.style.display = '';
+      this.cartTotalPanel.style.display = '';
+    }
+    if (ui_class === 'edit_ui') {
+      this.scenePanelDiv.style.display = '';
     }
   }
   async _cameraShown() {
@@ -121,12 +152,6 @@ class cViewDemo extends bView {
           if (options.item(c).innerHTML === this.rootBlock.blockRawData.displayCamera) {
             this.canvasHelper.cameraSelect.selectedIndex = c;
             this.canvasHelper.cameraChangeHandler();
-            if (this.muteButton) {
-
-              setTimeout(() => {
-                this.muteButton.click();
-              }, 800);
-            }
             break;
           }
         }
@@ -138,7 +163,7 @@ class cViewDemo extends bView {
       let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
 
       this.scenePanelDiv = document.createElement('div');
-      this.scenePanelDiv.setAttribute('style', 'position:absolute;bottom:.25em;right:.25em;z-index:1000;text-align:center;background:rgba(127,127,127,.8)');
+      this.scenePanelDiv.setAttribute('style', 'display:none;position:absolute;bottom:.25em;left:.25em;z-index:1000;text-align:center;background:rgba(127,127,127,.8)');
       this.scenePanelDiv.setAttribute('class', 'app-panel');
       this.sceneOptionsSelect = document.createElement('select');
       this.scenePanelDiv.appendChild(this.sceneOptionsSelect);
@@ -201,7 +226,7 @@ class cViewDemo extends bView {
     }
 
     if (type === 'image') {
-       if (asset === 'sceneblock') {
+      if (asset === 'sceneblock') {
         let desc = field.replace('image', '') + 'panel';
         return name + '_' + desc;
       }
@@ -239,7 +264,7 @@ class cViewDemo extends bView {
         tab = 'scene';
       let textureName = this.__sceneOptionTextureName(asset, name, field, type);
 
-      if (textureName  && type === 'image') {
+      if (textureName && type === 'image') {
         let textures = gAPPP.a.modelSets['texture'].queryCache('title', textureName);
         let tids = Object.keys(textures);
         if (tids.length > 0) {
@@ -249,7 +274,7 @@ class cViewDemo extends bView {
         }
       }
 
-      if (textureName  && type === 'num') {
+      if (textureName && type === 'num') {
         let textures = gAPPP.a.modelSets['texture'].queryCache('title', textureName);
         let tids = Object.keys(textures);
         if (tids.length > 0) {
@@ -401,7 +426,7 @@ class cViewDemo extends bView {
       this.muteButton = muteButton;
       muteButton.setAttribute('id', 'muteButton');
       muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
-      muteButton.setAttribute('style', 'position:absolute;top:0.25em;left:0.25em;z-index:10000;font-size:2em;')
+      muteButton.setAttribute('style', 'position:absolute;top:2em;left:0.25em;z-index:10000;font-size:2em;')
       muteButton.addEventListener('click', async e => {
         audio.currentTime = Math.max(0, this.canvasHelper.timeE + .2);
         if (audio.paused) {
@@ -605,6 +630,15 @@ class cViewDemo extends bView {
       }, {
         field: 'positionZ',
         newValue: pos.z.toString()
+      }, {
+        field: 'scalingX',
+        newValue: ".5"
+      }, {
+        field: 'scalingY',
+        newValue: ".5"
+      }, {
+        field: 'scalingZ',
+        newValue: ".5"
       }], frameIds[0]);
     }
 
@@ -629,13 +663,22 @@ class cViewDemo extends bView {
 
       let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
       if (existingValues) {
-        if (existingValues.positionY === '-50')
+        if (existingValues.positionY === '-1')
           continue;
       }
 
       promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionY',
-        newValue: "-50"
+        newValue: "-1"
+      }, {
+        field: 'scalingX',
+        newValue: ".001"
+      }, {
+        field: 'scalingY',
+        newValue: ".001"
+      }, {
+        field: 'scalingZ',
+        newValue: ".001"
       }], frameIds[0]));
     }
 
@@ -783,7 +826,7 @@ class cViewDemo extends bView {
             <div class="camera-slider-label">Radius</div>
             <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
           </div>
-          <div style="display:inline-block;">
+          <div style="display:none;">
             <div class="camera-slider-label">FOV</div>
             <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
           </div>

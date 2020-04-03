@@ -1,6 +1,5 @@
 .canvas-actions {
-  display: none;
-  bottom: 3em !important;
+  top: 0;
 }
 
 #demo-profile-panel {
