@@ -138,9 +138,11 @@ class cView extends bView {
       await gAPPP.a.writeProjectRawData(animationKey, 'animationGenerated', null);
       this._updateQueryString(animationKey, 'Generate');
 
-      if (reload)
+      if (reload) {
+        alert('Generation Complete, reloading...');
         window.location.href = this.genQueryString(animationKey, null,
           null, null, this.subView);
+      }
 
     }, 10);
 

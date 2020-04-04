@@ -556,7 +556,7 @@ class gCSVImport {
         return this.addCSVMaterial(row);
     }
 
-    console.log('type not found', row);
+    console.log('type not found', row.asset, row);
     return;
   }
   async addCSVMaterial(row) {
@@ -1410,7 +1410,7 @@ class gCSVImport {
     textPlane.name = product.childName + '_pricedesc';
     textPlane.parent = parent;
     textPlane.x = '0.06';
-    textPlane.y = '1.8';
+    textPlane.y = (productData.displayParams.signYOffset - 3.2).toString();
     textPlane.sx = '.5';
     textPlane.sy = '.5';
     textPlane.sz = '.5';
@@ -1430,7 +1430,7 @@ class gCSVImport {
       blockImageShape.height = '3';
       blockImageShape.parent = parent;
       blockImageShape.x = '.06';
-      blockImageShape.y = '6';
+      blockImageShape.y = (productData.displayParams.signYOffset + 1.0).toString();
       blockImageShape.ry = '-90deg';
       newObjects.push(blockImageShape);
     }
@@ -1441,7 +1441,7 @@ class gCSVImport {
     blockSPBC.parent = parent;
     blockSPBC.name = 'signboard';
     blockSPBC.materialname = 'inherit';
-    blockSPBC.y = '5';
+    blockSPBC.y = productData.displayParams.signYOffset.toString();
     newObjects.push(blockSPBC);
 
     let blockSP2BC = this.defaultCSVRow();
@@ -1451,7 +1451,7 @@ class gCSVImport {
     blockSP2BC.name = 'signpost';
     blockSP2BC.materialname = 'inherit';
     blockSP2BC.x = '-0.05';
-    blockSP2BC.y = '1.5';
+    blockSP2BC.y = (productData.displayParams.signYOffset - 3.5).toString();
     newObjects.push(blockSP2BC);
 
     return this.addCSVRowList(newObjects);
@@ -1799,12 +1799,38 @@ class gCSVImport {
 
     return Promise.all(promises);
   }
+  async _fetchDisplayParams() {
+    let display_params = await this.dbFetchByLookup('block', 'blockFlag', 'displaygenerationparams');
+
+    let map = {};
+    if (display_params.records.length > 0) {
+      let rawData = display_params.records[0].genericBlockData;
+      if (!rawData)
+        rawData = '';
+      let data = display_params.records[0].genericBlockData.split('|');
+      for (let c = 0; c < data.length; c += 2)
+        map[data[c]] = data[c + 1];
+    }
+
+    let scaleFactor = GLOBALUTIL.getNumberOrDefault(map.datascalefactor, 2.0);
+    let signYOffset = GLOBALUTIL.getNumberOrDefault(map.signyoffset, 6.0);
+
+    return {
+      scaleFactor,
+      signYOffset
+    }
+  }
   _addProductFramesFromData(product, productData, productIndex) {
     return new Promise(async (resolve, reject) => {
       let freq_data = await this.dbFetchByLookup('block', 'blockFlag', 'displayfrequency' + (productIndex + 1).toString());
 
       if (freq_data.records.length > 0) {
+        let displayParams = await this._fetchDisplayParams();
+        let scaleFactor = productData.displayParams.scaleFactor;
+        let scaleminusone = scaleFactor - 1.0;
+
         let bandData = freq_data.records[0].genericBlockData;
+
         if (!bandData)
           bandData = '';
         bandData = bandData.split('|');
@@ -1815,18 +1841,17 @@ class gCSVImport {
 
         for (let index = 1; index < frameCount; index++) {
           let timeRatio = index / frameCount;
-          let scaleRatio = bandData[index] / 100.0;
+          let dataPoint = bandData[index] / 100.0;
           let bandScaleFrame = this.defaultCSVRow();
           bandScaleFrame.asset = 'blockchildframe';
           bandScaleFrame.name = product.childName;
           bandScaleFrame.childtype = 'block';
           bandScaleFrame.parent = '::scene::';
           bandScaleFrame.frameorder = (10 * (index + 1)).toFixed(0);
-          bandScaleFrame.frametime = (timeRatio * 100).toFixed(2) + '%';
-          bandScaleFrame.y = (10 + (scaleRatio * 4)).toFixed(2);
-          bandScaleFrame.sx = (1.5 + scaleRatio).toFixed(3);
-          bandScaleFrame.sy = (1.5 + scaleRatio).toFixed(3);
-          bandScaleFrame.sz = (1.5 + scaleRatio).toFixed(3);
+          bandScaleFrame.frametime = (timeRatio * 100).toFixed(3) + '%';
+          bandScaleFrame.sx = (1 + dataPoint * scaleminusone).toFixed(3);
+          bandScaleFrame.sy = (1 + dataPoint * scaleminusone).toFixed(3);
+          bandScaleFrame.sz = (1 + dataPoint * scaleminusone).toFixed(3);
           frameRows.push(this.addCSVRowList([bandScaleFrame]));
 
           if (frameRows.length > 20) {
@@ -1848,6 +1873,7 @@ class gCSVImport {
     let promises = [];
     if (!pInfo.products)
       pInfo.products = [];
+
     for (let c = 0, l = pInfo.products.length; c < l; c++) {
       if (pInfo.products[c].itemId) {
         promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, c));
@@ -1977,6 +2003,8 @@ class gCSVImport {
       products[postC].endEnlargeTime = incLength + products[postC].startShowTime;
     }
 
+    let displayParams = await this._fetchDisplayParams();
+
     let pInfo = {
       products,
       productsBySKU,
@@ -1991,7 +2019,8 @@ class gCSVImport {
       finishDelay,
       cameraOrigRow,
       displayBlocks,
-      sceneBlock
+      sceneBlock,
+      displayParams
     };
     return pInfo;
   }
