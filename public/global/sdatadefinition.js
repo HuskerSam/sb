@@ -885,6 +885,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   uploadType: 'audio',
   floatLeft: true
 }, {
+  title: 'Music Params',
+  fireSetField: 'musicParams',
+  group: 'blockData',
+  clearLeft: true,
+  floatLeft: true
+}, {
   title: 'blockFlag',
   fireSetField: 'blockFlag',
   group: 'blockData',

@@ -915,6 +915,7 @@ class gCSVImport {
 
     if (row.blockflag) block.blockFlag = row.blockflag;
     if (row.blockcode) block.blockCode = row.blockcode;
+    if (row.musicparams) block.musicParams = row.musicparams;
 
     let blockresult = await this.dbSetRecord('block', block);
 
@@ -1807,8 +1808,8 @@ class gCSVImport {
 
     return Promise.all(promises);
   }
-  async _fetchDisplayParams() {
-    let display_params = await this.dbFetchByLookup('block', 'blockFlag', 'displaygenerationparams');
+  async _fetchDisplayParams(freqPrefix = '') {
+    let display_params = await this.dbFetchByLookup('block', 'blockFlag', freqPrefix + 'frequencyblockparams');
 
     let map = {};
     if (display_params.records.length > 0) {
@@ -1828,18 +1829,23 @@ class gCSVImport {
       signYOffset
     }
   }
-  async _addProductFramesFromData(product, productData, productIndex) {
+  async _addProductFramesFromData(product, productData, productIndex, freqPrefix = '') {
     let child = product.childName;
     let sb = await this.csvFetchSceneBlock();
     let sceneKey = sb.key;
-    //    let existingFrames = await this.dbFetchByLookup('frames', 'blockFlag', 'displayfrequency' + (productIndex + 1).toString());
+    let blockChildren = this._getBlockChildren(sb.parent, 'block', child);
+    let deletePromises = [];
+    for (let id in blockChildren) {
+      let existingFrames = await this.dbFetchByLookup('frame', 'parentKey', id);
+      existingFrames.recordIds.forEach(frameId => deletePromises.push(this.dbRemove('frame', frameId)));
+    }
+    await Promise.all(deletePromises);
 
-
-    let freq_data = await this.dbFetchByLookup('block', 'blockFlag', 'displayfrequency' + (productIndex + 1).toString());
+    let freq_data = await this.dbFetchByLookup('block', 'blockFlag', freqPrefix + 'frequencyblock' + (productIndex + 1).toString());
     let frameRows = [];
 
     if (freq_data.records.length > 0) {
-      let displayParams = await this._fetchDisplayParams();
+      let displayParams = await this._fetchDisplayParams(freqPrefix);
       let scaleFactor = productData.displayParams.scaleFactor;
       let scaleminusone = scaleFactor - 1.0;
 
@@ -1876,26 +1882,12 @@ class gCSVImport {
     }
     return Promise.all(frameRows);
   }
-  async _removeProductAssets(pInfo) {
-    let promises = [];
-    let productIndex = 0;
-    for (let c = 0, l = pInfo.products.length; c < l; c++) {
-      if (pInfo.products[c].itemId) {
-        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, productIndex));
-        promises.push(this.__addSignPost(pInfo.products[c], pInfo));
-        productIndex++;
-      } else
-        promises.push(this.__addTextShowHide(pInfo.products[c], pInfo));
-    }
-
-    return Promise.all(promises);
-  }
   async _generateProductAssets(pInfo) {
     let promises = [];
     let productIndex = 0;
     for (let c = 0, l = pInfo.products.length; c < l; c++) {
       if (pInfo.products[c].itemId) {
-        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, productIndex));
+        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, productIndex, pInfo.sceneBlock.musicParams));
         promises.push(this.__addSignPost(pInfo.products[c], pInfo));
         productIndex++;
       } else
@@ -2036,7 +2028,7 @@ class gCSVImport {
       products[postC].endEnlargeTime = incLength + products[postC].startShowTime;
     }
 
-    let displayParams = await this._fetchDisplayParams();
+    let displayParams = await this._fetchDisplayParams(sceneBlock.musicParams);
 
     let pInfo = {
       products,
