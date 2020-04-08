@@ -467,44 +467,52 @@ class gCSVImport {
 
     return this.addCSVRow(sceneBC);
   }
-  async addCSVBlockChildFrameRow(row) {
-    if (row.parent.substr(0, 9) === '::scene::') {
+  async _getBlockChildren(blockTitle, childType, childName) {
+    if (blockTitle.substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      row.parent = sb.parent;
+      blockTitle = sb.parent;
     }
 
-    let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
+    let parentRecords = await this.dbFetchByLookup('block', 'title', blockTitle);
     if (parentRecords.records.length < 1) {
       console.log(row.parent, ' - block not found');
-      return Promise.resolve();
+      return [];
     }
     let key = parentRecords.recordIds[0];
-
-    let promises = [];
     let bcChildData = await this.dbFetchByLookup('blockchild', 'parentKey', key);
     let children = bcChildData.recordsById;
+    let matchingChildren = {};
     for (let c in children) {
       let d = children[c];
-      if (d.childType === row.childtype && d.childName === row.name) {
-        if (row.y === undefined)
-          console.log(row);
-        let frameData = {
-          parentKey: c,
-          positionX: row.x,
-          positionY: row.y,
-          positionZ: row.z,
-          rotationX: row.rx,
-          rotationY: row.ry,
-          rotationZ: row.rz,
-          scalingX: row.sx,
-          scalingY: row.sy,
-          scalingZ: row.sz,
-          visibility: row.visibility,
-          frameOrder: row.frameorder,
-          frameTime: row.frametime
-        };
-        promises.push(this.dbSetRecord('frame', frameData));
-      }
+      if (d.childType === childType && d.childName === childName)
+        matchingChildren[c] = children[c];
+    }
+    return matchingChildren;
+  }
+  async addCSVBlockChildFrameRow(row) {
+    let children = await this._getBlockChildren(row.parent, row.childtype, row.name);
+
+    let promises = [];
+    if (row.y === undefined)
+      console.log(row);
+
+    for (let parentKey in children) {
+      let frameData = {
+        parentKey,
+        positionX: row.x,
+        positionY: row.y,
+        positionZ: row.z,
+        rotationX: row.rx,
+        rotationY: row.ry,
+        rotationZ: row.rz,
+        scalingX: row.sx,
+        scalingY: row.sy,
+        scalingZ: row.sz,
+        visibility: row.visibility,
+        frameOrder: row.frameorder,
+        frameTime: row.frametime
+      };
+      promises.push(this.dbSetRecord('frame', frameData));
     }
 
     return Promise.all(promises);
@@ -1820,54 +1828,67 @@ class gCSVImport {
       signYOffset
     }
   }
-  _addProductFramesFromData(product, productData, productIndex) {
-    return new Promise(async (resolve, reject) => {
-      let freq_data = await this.dbFetchByLookup('block', 'blockFlag', 'displayfrequency' + (productIndex + 1).toString());
+  async _addProductFramesFromData(product, productData, productIndex) {
+    let child = product.childName;
+    let sb = await this.csvFetchSceneBlock();
+    let sceneKey = sb.key;
+    //    let existingFrames = await this.dbFetchByLookup('frames', 'blockFlag', 'displayfrequency' + (productIndex + 1).toString());
 
-      if (freq_data.records.length > 0) {
-        let displayParams = await this._fetchDisplayParams();
-        let scaleFactor = productData.displayParams.scaleFactor;
-        let scaleminusone = scaleFactor - 1.0;
 
-        let bandData = freq_data.records[0].genericBlockData;
+    let freq_data = await this.dbFetchByLookup('block', 'blockFlag', 'displayfrequency' + (productIndex + 1).toString());
+    let frameRows = [];
 
-        if (!bandData)
-          bandData = '';
-        bandData = bandData.split('|');
-        bandData.forEach((v, i) => bandData[i] = Number(v));
+    if (freq_data.records.length > 0) {
+      let displayParams = await this._fetchDisplayParams();
+      let scaleFactor = productData.displayParams.scaleFactor;
+      let scaleminusone = scaleFactor - 1.0;
 
-        let frameCount = bandData.length;
-        let frameRows = [];
+      let bandData = freq_data.records[0].genericBlockData;
 
-        for (let index = 1; index < frameCount; index++) {
-          let timeRatio = index / frameCount;
-          let dataPoint = bandData[index] / 100.0;
-          let bandScaleFrame = this.defaultCSVRow();
-          bandScaleFrame.asset = 'blockchildframe';
-          bandScaleFrame.name = product.childName;
-          bandScaleFrame.childtype = 'block';
-          bandScaleFrame.parent = '::scene::';
-          bandScaleFrame.frameorder = (10 * (index + 1)).toFixed(0);
-          bandScaleFrame.frametime = (timeRatio * 100).toFixed(3) + '%';
-          bandScaleFrame.sx = (1 + dataPoint * scaleminusone).toFixed(3);
-          bandScaleFrame.sy = (1 + dataPoint * scaleminusone).toFixed(3);
-          bandScaleFrame.sz = (1 + dataPoint * scaleminusone).toFixed(3);
-          frameRows.push(this.addCSVRowList([bandScaleFrame]));
+      if (!bandData)
+        bandData = '';
+      bandData = bandData.split('|');
+      bandData.forEach((v, i) => bandData[i] = Number(v));
 
-          if (frameRows.length > 20) {
-            await Promise.all(frameRows);
-            frameRows = [];
-          }
+      let frameCount = bandData.length;
+
+      for (let index = 1; index < frameCount; index++) {
+        let timeRatio = index / frameCount;
+        let dataPoint = bandData[index] / 100.0;
+        let bandScaleFrame = this.defaultCSVRow();
+        bandScaleFrame.asset = 'blockchildframe';
+        bandScaleFrame.name = product.childName;
+        bandScaleFrame.childtype = 'block';
+        bandScaleFrame.parent = '::scene::';
+        bandScaleFrame.frameorder = (10 * (index + 1)).toFixed(0);
+        bandScaleFrame.frametime = (timeRatio * 100).toFixed(3) + '%';
+        bandScaleFrame.sx = (1 + dataPoint * scaleminusone).toFixed(3);
+        bandScaleFrame.sy = (1 + dataPoint * scaleminusone).toFixed(3);
+        bandScaleFrame.sz = (1 + dataPoint * scaleminusone).toFixed(3);
+        frameRows.push(this.addCSVRowList([bandScaleFrame]));
+
+        if (frameRows.length > 20) {
+          await Promise.all(frameRows);
+          frameRows = [];
         }
-
-        await Promise.all(frameRows);
       }
 
-      resolve({});
-    });
+    }
+    return Promise.all(frameRows);
   }
   async _removeProductAssets(pInfo) {
+    let promises = [];
+    let productIndex = 0;
+    for (let c = 0, l = pInfo.products.length; c < l; c++) {
+      if (pInfo.products[c].itemId) {
+        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, productIndex));
+        promises.push(this.__addSignPost(pInfo.products[c], pInfo));
+        productIndex++;
+      } else
+        promises.push(this.__addTextShowHide(pInfo.products[c], pInfo));
+    }
 
+    return Promise.all(promises);
   }
   async _generateProductAssets(pInfo) {
     let promises = [];
