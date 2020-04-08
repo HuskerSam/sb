@@ -139,7 +139,7 @@ class cView extends bView {
       this._updateQueryString(animationKey, 'Generate');
 
       if (reload) {
-        alert('Generation Complete, reloading...');
+        //alert('Generation Complete, reloading...');
         window.location.href = this.genQueryString(animationKey, null,
           null, null, this.subView);
       }

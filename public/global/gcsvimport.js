@@ -1296,7 +1296,7 @@ class gCSVImport {
     descText.textdepth = '.08';
     descText.textsize = '100';
     descText.parent = parent;
-    descText.y = '5';
+    descText.y = "6";
     descText.x = '.5';
     descText.ry = '180deg';
     descText.rz = '-90deg';
@@ -1315,7 +1315,7 @@ class gCSVImport {
     descText.textdepth = '.08';
     descText.textsize = '100';
     descText.parent = parent;
-    descText.y = '3';
+    descText.y = "3";
     descText.x = '.5';
     descText.ry = '180deg';
     descText.rz = '-90deg';
@@ -1474,7 +1474,7 @@ class gCSVImport {
     priceText.textdepth = '.1';
     priceText.textsize = '100';
     priceText.parent = parent;
-    priceText.y = '2.75';
+    priceText.y = (productData.displayParams.signYOffset - 3.25).toString();
     priceText.x = '.5';
     priceText.ry = '0deg';
     priceText.rz = '-90deg';
@@ -1490,7 +1490,7 @@ class gCSVImport {
     descText.textdepth = '.25';
     descText.textsize = '100';
     descText.parent = parent;
-    descText.y = '8';
+    descText.y = (productData.displayParams.signYOffset + 1.0).toString();
     descText.x = '.5';
     descText.ry = '0deg';
     descText.rz = '-90deg';
@@ -1505,11 +1505,11 @@ class gCSVImport {
       blockImageShape.scalev = '1';
       blockImageShape.shapetype = 'plane';
       blockImageShape.texturepath = product.itemImage;
-      blockImageShape.width = '6';
-      blockImageShape.height = '6';
+      blockImageShape.width = '3';
+      blockImageShape.height = '3';
       blockImageShape.parent = parent;
       blockImageShape.x = '.06';
-      blockImageShape.y = '6';
+      blockImageShape.y = (productData.displayParams.signYOffset - 1).toString();
       blockImageShape.ry = '-90deg';
       this.addCSVRow(blockImageShape);
     }
@@ -1866,24 +1866,36 @@ class gCSVImport {
       resolve({});
     });
   }
+  async _removeProductAssets(pInfo) {
+
+  }
+  async _generateProductAssets(pInfo) {
+    let promises = [];
+    let productIndex = 0;
+    for (let c = 0, l = pInfo.products.length; c < l; c++) {
+      if (pInfo.products[c].itemId) {
+        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, productIndex));
+        promises.push(this.__addSignPost(pInfo.products[c], pInfo));
+        productIndex++;
+      } else
+        promises.push(this.__addTextShowHide(pInfo.products[c], pInfo));
+    }
+
+    return Promise.all(promises);
+  }
   async addCSVDisplayFinalize() {
     let pInfo = await this.initProducts();
     await this.__addCSVFollowBlock(pInfo);
 
-    let promises = [];
     if (!pInfo.products)
       pInfo.products = [];
 
-    for (let c = 0, l = pInfo.products.length; c < l; c++) {
-      if (pInfo.products[c].itemId) {
-        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, c));
-        promises.push(this.__addSignPost(pInfo.products[c], pInfo));
-      } else
-        promises.push(this.__addTextShowHide(pInfo.products[c], pInfo));
-    }
+    await this._generateProductAssets(pInfo);
+
     if (!pInfo.sceneId)
       return Promise.resolve();
 
+    let promises = [];
     let frameRecords = await this.dbFetchByLookup('frame', 'parentKey', pInfo.sceneId);
 
     if (frameRecords.records.length <= 0)

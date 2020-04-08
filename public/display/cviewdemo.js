@@ -67,31 +67,59 @@ class cViewDemo extends bView {
     if (tags.indexOf('demopanel') !== -1) {
       this.demoOptionDiv = document.createElement('div');
       let d = this.demoOptionDiv;
-      d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:60%;padding: .1em 1em;text-align:center;');
+      d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:50%;padding: .5em;text-align:center;');
       d.setAttribute('class', 'app-panel');
-      let html = `<label><input type="radio" name="controls" class="cart_ui" checked />Cart UI</label>
-        <label><input type="radio" name="controls" class="anim_ui" />Anim UI</label>
-        <label><input type="radio" name="controls" class="edit_ui" />Edit UI</label><br>`;
+      let html = `<div class="demo_options_panel">UI <label><input type="radio" name="controls" checked class="demo_ui" />Demo</label>
+        <label><input type="radio" name="controls" class="cart_ui" />Cart</label>
+        <label><input type="radio" name="controls" class="anim_ui" />Anim</label>
+        <label><input type="radio" name="controls" class="edit_ui" />Config</label>`;
 
-      for (let pid in this.projectList) {
-        let tags = this.projectList[pid].tags;
-        let title = this.projectList[pid].title;
+      html += `<hr>Labels <label><input type="radio" name="labels" class="signboards" checked />Signboards</label>
+        <label><input type="radio" name="labels" class="cantina" />Basic 3D</label>
+        <label><input type="radio" name="labels" class="elephant" />Button Only</label>`;
 
-        if (tags)
-          if (tags.indexOf('demopanel') !== -1) {
-            html += `<a style="font-size:inherit" href="?wid=${pid}">${title}</a><br>`;
-          }
-      }
+      html += `<hr>Song <label><input type="radio" name="music" class="starwars" checked />Star Wars</label>
+        <label><input type="radio" name="music" class="cantina" />Cantina</label>
+        <label><input type="radio" name="music" class="elephant" />Elephant</label>
+        <hr>`;
 
+      html += `Cam <label><input type="radio" name="camera" class="arc_rotate" checked />Rotate</label>
+        <label><input type="radio" name="camera" class="follow" />Follow</label>
+        <label><input type="radio" name="camera" class="device_orientation" />Device</label>
+        <label><input type="radio" name="camera" class="camera_vr" />VR</label><hr>`;
+
+      html += `Layout
+      <a href="/shelves" class="layout_carousel">Carousel</a>
+      <a href="/shelves" class="layout_shelves">Shelves</a>
+      <a href="/tables" class="layout_tables">Tables</a><hr></div>
+      <button style="float:right;" class="demo_options">Demo Options</button>`;
+      /*
+            for (let pid in this.projectList) {
+              let tags = this.projectList[pid].tags;
+              let title = this.projectList[pid].title;
+
+              if (tags)
+                if (tags.indexOf('demopanel') !== -1) {
+                  html += `<a style="font-size:inherit" href="?wid=${pid}">${title}</a>&nbsp;`;
+                }
+            }
+            */
       d.innerHTML = html;
-      d.querySelectorAll('input[type="radio"]').forEach(ctl => ctl.addEventListener('input', e => this.updateUIDisplay(ctl)));
+      d.querySelectorAll('input[name="controls"]').forEach(ctl => ctl.addEventListener('input', e => this.updateUIDisplay(ctl)));
+      let demo_options_panel = d.querySelector('.demo_options_panel');
+      d.querySelector('.demo_options').addEventListener('click', e => {
+        if (demo_options_panel.style.display === 'none')
+          demo_options_panel.style.display = '';
+        else
+          demo_options_panel.style.display = 'none';
+      });
       document.body.appendChild(d);
 
       this.updateUIDisplay();
     }
   }
   updateUIDisplay(ctl = null) {
-    let ui_class = 'cart_ui';
+    let ui_class = 'demo_ui';
     if (ctl) {
       if (ctl.classList.contains('cart_ui'))
         ui_class = 'cart_ui';
@@ -781,7 +809,7 @@ class cViewDemo extends bView {
       } else {
         if (this.audio) {
           if (this.canvasHelperPaused !== this.canvasHelper.timeE) {
-            if (Math.abs(this.audio.currentTime - this.canvasHelper.timeE) >  .2)
+            if (Math.abs(this.audio.currentTime - this.canvasHelper.timeE) > .2)
               this.audio.currentTime = Math.max(0, this.canvasHelper.timeE + .1);
             this.canvasHelperPaused = this.canvasHelper.timeE;
           }
