@@ -2,6 +2,69 @@ class cViewDemo extends bView {
   constructor() {
     super('Demo', null, null, true);
 
+    this.projectsMap = {
+      '-M3o8rB3zPwJLN-u4om8': {
+        label: 'flat',
+        song: 'cantina',
+        layout: 'carousel'
+      },
+      '-M3o9lFX579wmY4LiKC-': {
+        label: 'flat',
+        song: 'star wars',
+        layout: 'carousel'
+      },
+      '-M3bvko2KrsW2CxrXJC5': {
+        label: 'flat',
+        song: 'elephant',
+        layout: 'carousel'
+      },
+      '-M4UL3tfhkbtm2VwIwSP': {
+        label: 'raised',
+        song: 'cantina',
+        layout: 'carousel'
+      },
+      '-M4UKQEQRCi2BRJ3wgJ-': {
+        label: 'raised',
+        song: 'star wars',
+        layout: 'carousel'
+      },
+      '-M4UJMjRCYpdYXCFZayW': {
+        label: 'raised',
+        song: 'elephant',
+        layout: 'carousel'
+      },
+      '-M4UQh1TheexkEDeJFgt': {
+        label: 'flat',
+        song: 'cantina',
+        layout: 'shelves'
+      },
+      '-M4UQvodWWisxjus54ig': {
+        label: 'flat',
+        song: 'star wars',
+        layout: 'shelves'
+      },
+      '-M4UR0mfLqP_vLcctYuF': {
+        label: 'flat',
+        song: 'elephant',
+        layout: 'shelves'
+      },
+      '-M4UQkPe0AdLEjtx0s1M': {
+        label: 'raised',
+        song: 'cantina',
+        layout: 'shelves'
+      },
+      '-M4URe_cZDKENCki_gGM': {
+        label: 'raised',
+        song: 'star wars',
+        layout: 'shelves'
+      },
+      '-M4URjTNZwaudinSjRCA': {
+        label: 'raised',
+        song: 'elephant',
+        layout: 'shelves'
+      }
+    };
+
     this.canvasHelper.cameraShownCallback = () => this._cameraShown();
 
     this.displayButtonPanel = document.querySelector('.user-options-panel');
@@ -54,6 +117,15 @@ class cViewDemo extends bView {
       this.workplacesSelect.style.display = 'block';
     }
   }
+  __findProjectID(desc) {
+    for (let id in this.projectsMap) {
+      let p = this.projectsMap[id];
+      if (desc.label === p.label && desc.layout === p.layout && desc.song === p.song)
+        return id;
+    }
+
+    return null;
+  }
   addDemoPanelOptions() {
     if (!this.projectList)
       return;
@@ -65,45 +137,97 @@ class cViewDemo extends bView {
       return;
 
     if (tags.indexOf('demopanel') !== -1) {
+      let pageDesc = this.projectsMap[gAPPP.loadedWID];
+      if (!pageDesc)
+        return;
+
       this.demoOptionDiv = document.createElement('div');
       let d = this.demoOptionDiv;
       d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:50%;padding: .5em;text-align:center;');
       d.setAttribute('class', 'app-panel');
-      let html = `<div class="demo_options_panel">UI <label><input type="radio" name="controls" checked class="demo_ui" />Demo</label>
+      let html = `<div style="line-height:1.5em;" class="demo_options_panel">UI <label><input type="radio" name="controls" checked class="demo_ui" />Demo</label>
         <label><input type="radio" name="controls" class="cart_ui" />Cart</label>
         <label><input type="radio" name="controls" class="anim_ui" />Anim</label>
-        <label><input type="radio" name="controls" class="edit_ui" />Config</label>`;
+        <label><input type="radio" name="controls" class="edit_ui" />Config</label><br>`;
 
-      html += `<hr>Labels <label><input type="radio" name="labels" class="signboards" checked />Signboards</label>
-        <label><input type="radio" name="labels" class="cantina" />Basic 3D</label>
-        <label><input type="radio" name="labels" class="elephant" />Button Only</label>`;
-
-      html += `<hr>Song <label><input type="radio" name="music" class="starwars" checked />Star Wars</label>
-        <label><input type="radio" name="music" class="cantina" />Cantina</label>
-        <label><input type="radio" name="music" class="elephant" />Elephant</label>
-        <hr>`;
-
-      html += `Cam <label><input type="radio" name="camera" class="arc_rotate" checked />Rotate</label>
+      html += `Camera <label><input type="radio" name="camera" class="arc_rotate" checked />Rotate</label>
         <label><input type="radio" name="camera" class="follow" />Follow</label>
         <label><input type="radio" name="camera" class="device_orientation" />Device</label>
         <label><input type="radio" name="camera" class="camera_vr" />VR</label><hr>`;
 
-      html += `Layout
-      <a href="/shelves" class="layout_carousel">Carousel</a>
-      <a href="/shelves" class="layout_shelves">Shelves</a>
-      <a href="/tables" class="layout_tables">Tables</a><hr></div>
-      <button style="float:right;" class="demo_options">Demo Options</button>`;
-      /*
-            for (let pid in this.projectList) {
-              let tags = this.projectList[pid].tags;
-              let title = this.projectList[pid].title;
+      if (pageDesc.label === 'flat') {
+        let id = this.__findProjectID({
+          label: 'raised',
+          song: pageDesc.song,
+          layout: pageDesc.layout
+        });
+        html += `Labels: Flat <a href="?wid=${id}">Raised</a><br>`;
+      } else {
+        let id = this.__findProjectID({
+          label: 'flat',
+          song: pageDesc.song,
+          layout: pageDesc.layout
+        });
+        html += `Labels: <a href="?wid=${id}">Flat</a> Raised<br>`;
+      }
 
-              if (tags)
-                if (tags.indexOf('demopanel') !== -1) {
-                  html += `<a style="font-size:inherit" href="?wid=${pid}">${title}</a>&nbsp;`;
-                }
-            }
-            */
+      if (pageDesc.layout === 'carousel') {
+        let id = this.__findProjectID({
+          label: pageDesc.label,
+          song: pageDesc.song,
+          layout: 'shelves'
+        });
+        html += `Layout: Carousel <a href="?wid=${id}">Shelves</a><br>`;
+      } else {
+        let id = this.__findProjectID({
+          label: pageDesc.label,
+          song: pageDesc.song,
+          layout: 'carousel'
+        });
+        html += `Layout: <a href="?wid=${id}">Carousel</a> Shelves<br>`;
+      }
+
+      if (pageDesc.song === 'star wars') {
+        let id = this.__findProjectID({
+          label: pageDesc.label,
+          song: 'elephant',
+          layout: pageDesc.layout
+        });
+        let id2 = this.__findProjectID({
+          label: pageDesc.label,
+          song: 'cantina',
+          layout: pageDesc.layout
+        });
+        html += `Song: Star Wars <a href="?wid=${id2}">Cantina</a> <a href="?wid=${id}">Elephant</a><br>`;
+      } else if (pageDesc.song === 'cantina') {
+        let id = this.__findProjectID({
+          label: pageDesc.label,
+          song: 'elephant',
+          layout: pageDesc.layout
+        });
+        let id2 = this.__findProjectID({
+          label: pageDesc.label,
+          song: 'star wars',
+          layout: pageDesc.layout
+        });
+        html += `Song: <a href="?wid=${id2}">Star Wars</a> Cantina <a href="?wid=${id}">Elephant</a><br>`;
+      } else {
+        let id = this.__findProjectID({
+          label: pageDesc.label,
+          song: 'star wars',
+          layout: pageDesc.layout
+        });
+        let id2 = this.__findProjectID({
+          label: pageDesc.label,
+          song: 'cantina',
+          layout: pageDesc.layout
+        });
+        html += `Song: <a href="?wid=${id}">Star Wars</a> <a href="?wid=${id2}">Cantina</a> Elephant<br>`;
+      }
+
+      html += `</div>
+        <button style="float:right;" class="demo_options">Demo Options</button>`;
+
       d.innerHTML = html;
       d.querySelectorAll('input[name="controls"]').forEach(ctl => ctl.addEventListener('input', e => this.updateUIDisplay(ctl)));
       let demo_options_panel = d.querySelector('.demo_options_panel');
@@ -115,8 +239,16 @@ class cViewDemo extends bView {
       });
       document.body.appendChild(d);
 
+      d.querySelectorAll('input[name="music"]').forEach(ctl => ctl.addEventListener('input', async e => {
+        await this.updateSelectedSong(ctl.value);
+      }));
+
       this.updateUIDisplay();
     }
+  }
+  async updateSelectedSong(songName) {
+
+    return {};
   }
   updateUIDisplay(ctl = null) {
     let ui_class = 'demo_ui';
