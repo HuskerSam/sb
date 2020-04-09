@@ -656,7 +656,7 @@ class cPanelCanvas {
     } else {
       let camType = this.cameraDetails[this.cameraSelect.value].childName;
 
-      if (camType === 'ArcRotate' || camType === 'FollowCamera' || camType === 'DeviceOrientationCamera') {
+      if (camType === 'ArcRotate' || camType === 'FollowCamera' || camType === 'DeviceOrientationCamera' || camType === 'WebVRFreeCamera') {
         this.arcRangeSlider.parentNode.style.display = 'inline-block';
         this.fovSlider.parentNode.style.display = 'inline-block';
       }

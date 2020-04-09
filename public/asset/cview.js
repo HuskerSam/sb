@@ -918,6 +918,7 @@ class cView extends bView {
         <option>ArcRotate</option>
         <option>FollowCamera</option>
         <option>DeviceOrientationCamera</option>
+        <option>WebVRFreeCamera</option>
       </datalist>
     </div>`;
   }

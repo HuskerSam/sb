@@ -150,10 +150,9 @@ class cViewDemo extends bView {
         <label><input type="radio" name="controls" class="anim_ui" />Anim</label>
         <label><input type="radio" name="controls" class="edit_ui" />Config</label><br>`;
 
-      html += `Camera <label><input type="radio" name="camera" class="arc_rotate" checked />Rotate</label>
-        <label><input type="radio" name="camera" class="follow" />Follow</label>
-        <label><input type="radio" name="camera" class="device_orientation" />Device</label>
-        <label><input type="radio" name="camera" class="camera_vr" />VR</label><hr>`;
+      html += `Camera <label><input type="radio" name="camera" data-camera="arc_rotate" checked />Rotate</label>
+        <label><input type="radio" name="camera" data-camera="follow" />Follow</label>
+        <label><input type="radio" name="camera" data-camera="device_orientation" />Orientation</label><hr>`;
 
       if (pageDesc.label === 'flat') {
         let id = this.__findProjectID({
@@ -230,6 +229,23 @@ class cViewDemo extends bView {
 
       d.innerHTML = html;
       d.querySelectorAll('input[name="controls"]').forEach(ctl => ctl.addEventListener('input', e => this.updateUIDisplay(ctl)));
+      d.querySelectorAll('input[name="camera"]').forEach(ctl => ctl.addEventListener('input', e => {
+        if (ctl.dataset.camera === 'follow') {
+          this.canvasHelper.cameraSelect.selectedIndex = 2;
+          this.canvasHelper.noTestError = true;
+          this.canvasHelper.cameraChangeHandler();
+        }
+        if (ctl.dataset.camera === 'arc_rotate') {
+          this.canvasHelper.cameraSelect.selectedIndex = 3;
+          this.canvasHelper.noTestError = true;
+          this.canvasHelper.cameraChangeHandler();
+        }
+        if (ctl.dataset.camera === 'device_orientation') {
+          this.canvasHelper.cameraSelect.selectedIndex = 4;
+          this.canvasHelper.noTestError = true;
+          this.canvasHelper.cameraChangeHandler();
+        }
+      }));
       let demo_options_panel = d.querySelector('.demo_options_panel');
       d.querySelector('.demo_options').addEventListener('click', e => {
         if (demo_options_panel.style.display === 'none')
@@ -239,16 +255,9 @@ class cViewDemo extends bView {
       });
       document.body.appendChild(d);
 
-      d.querySelectorAll('input[name="music"]').forEach(ctl => ctl.addEventListener('input', async e => {
-        await this.updateSelectedSong(ctl.value);
-      }));
 
       this.updateUIDisplay();
     }
-  }
-  async updateSelectedSong(songName) {
-
-    return {};
   }
   updateUIDisplay(ctl = null) {
     let ui_class = 'demo_ui';

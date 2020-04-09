@@ -84,6 +84,10 @@ __animFieldFilters.blockCameraFields['DeviceOrientationCamera'] = ['cameraAimTar
 __animFieldFilters.animateCameraFields['DeviceOrientationCamera'] = ['cameraRadius','cameraRotationOffset', 'cameraAcceleration',
   'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
 ];
+__animFieldFilters.blockCameraFields['WebVRFreeCamera'] = ['cameraAimTarget', 'cameraName'];
+__animFieldFilters.animateCameraFields['WebVRFreeCamera'] = ['cameraRadius','cameraRotationOffset', 'cameraAcceleration',
+  'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
+];
 __animFieldFilters.blockLightFields = {};
 __animFieldFilters.animateLightFields = {};
 __animFieldFilters.blockLightFields['Hemispheric'] = [];

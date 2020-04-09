@@ -560,6 +560,8 @@ class wContext {
           this._renderArcCamera();
         } else if (cameraDetails.childName === 'DeviceOrientationCamera') {
           this._renderDeviceOrientationCamera();
+        } else if (cameraDetails.childName === 'WebVRFreeCamera') {
+          this._renderVRFreeCamera();
         } else {
           this._renderDefaultCamera();
         }
@@ -628,6 +630,22 @@ class wContext {
     let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.DeviceOrientationCamera("DeviceOrientationCamera", cameraOrigin, this.scene);
+
+    let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
+    this.camera.setTarget(aimTarget);
+    this.cameraAimTarget = cameraDetails.cameraAimTarget;
+
+    this.camera.position = cameraOrigin;
+    this.rebindCamera();
+  }
+  _renderVRFreeCamera() {
+    if (this.camera)
+      this.camera.dispose();
+    let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
+    let values = cameraDetails.firstFrameValues;
+    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+      values.cameraOriginZ, 0, 15, -15);
+    this.camera = new BABYLON.WebVRFreeCamera("WebVRFreeCamera", cameraOrigin, this.scene);
 
     let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
     this.camera.setTarget(aimTarget);

@@ -1413,13 +1413,13 @@ class gCSVImport {
     textPlane.texturetext = product.title;
     textPlane.texturetext2 = product.desc;
     textPlane.width = '10';
-    textPlane.height = '10';
+    textPlane.height = '5';
     textPlane.depth = '10';
     textPlane.textfontfamily = product.origRow.textfontfamily;
     textPlane.name = product.childName + '_pricedesc';
     textPlane.parent = parent;
     textPlane.x = '0.06';
-    textPlane.y = (productData.displayParams.signYOffset - 3.2).toString();
+    textPlane.y = (productData.displayParams.signYOffset - 2).toString();
     textPlane.sx = '.5';
     textPlane.sy = '.5';
     textPlane.sz = '.5';
