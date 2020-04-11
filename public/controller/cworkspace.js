@@ -614,7 +614,7 @@ class cWorkspace {
       document.getElementById(imageid).setAttribute('src', this.url(value));
       let textureName = '';
       if (asset === 'shape') {
-        textureName = name;
+        textureName = name + 'material';
       }
 
       if (textureName) {

@@ -455,7 +455,7 @@ class cViewDemo extends bView {
         let textures = gAPPP.a.modelSets['texture'].queryCache('title', textureName);
         let tids = Object.keys(textures);
         if (tids.length > 0) {
-          let url = textures[tids].url;
+          let url = textures[tids[0]].url;
           if (url)
             return url;
         }
@@ -482,7 +482,7 @@ class cViewDemo extends bView {
           }
 
           if (key)
-            return textures[tids][key];
+            return textures[tids[0]][key];
         }
       }
 
