@@ -40,7 +40,7 @@ class gAuthorization {
   __finishSignInURL(user) {
     window.localStorage.removeItem('emailForSignIn');
     this.onAuthStateChanged(user);
-    window.history.replaceState({}, document.title, "/edit/");
+    window.history.replaceState({}, document.title, "/asset/");
   }
   onProjectTitlesChange(values, type, fireData) {
     if (type === 'value') {
