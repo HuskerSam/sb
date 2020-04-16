@@ -3,6 +3,11 @@ class cViewDemo extends bView {
     super('Demo', null, null, true);
 
     this.projectsMap = {
+      '-Lm176Nmv_1FBowX1W5F': {
+        label: 'flat',
+        song: 'cantina',
+        layout: 'isle'
+      },
       '-M3o8rB3zPwJLN-u4om8': {
         label: 'flat',
         song: 'cantina',
@@ -171,6 +176,13 @@ class cViewDemo extends bView {
       }
 
       if (pageDesc.layout === 'carousel') {
+        let id = this.__findProjectID({
+          label: pageDesc.label,
+          song: pageDesc.song,
+          layout: 'shelves'
+        });
+        html += `Layout: Carousel <a href="?wid=${id}">Shelves</a><br>`;
+      } else if (pageDesc.layout === 'isle') {
         let id = this.__findProjectID({
           label: pageDesc.label,
           song: pageDesc.song,
