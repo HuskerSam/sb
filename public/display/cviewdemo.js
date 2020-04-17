@@ -3,6 +3,36 @@ class cViewDemo extends bView {
     super('Demo', null, null, true);
 
     this.projectsMap = {
+      '-M57Vdfd3z072998SAit': {
+        label: 'raised',
+        song: 'elephant',
+        layout: 'tables'
+      },
+      '-M57VfoXJrGeu_pTZj65': {
+        label: 'raised',
+        song: 'cantina',
+        layout: 'tables'
+      },
+      '-M57Vj8CiEpH5zgnIw6s': {
+        label: 'raised',
+        song: 'star wars',
+        layout: 'tables'
+      },
+      '-M57Vc7Oblk6k0reX__5': {
+        label: 'flat',
+        song: 'elephant',
+        layout: 'tables'
+      },
+      '-M57V_iX21-dsN56gQw8': {
+        label: 'flat',
+        song: 'cantina',
+        layout: 'tables'
+      },
+      '-M57V0Bnu_Hix0vNWSVC': {
+        label: 'flat',
+        song: 'star wars',
+        layout: 'tables'
+      },
       '-M54zh1lGmcyEohqHcZR': {
         label: 'raised',
         song: 'elephant',
@@ -215,13 +245,20 @@ class cViewDemo extends bView {
         song: pageDesc.song,
         layout: 'carousel'
       });
+      let tables = this.__findProjectID({
+        label: pageDesc.label,
+        song: pageDesc.song,
+        layout: 'tables'
+      });
 
       if (pageDesc.layout === 'carousel') {
-        html += `Layout: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a><br>`;
+        html += `Layout: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a><br>`;
       } else if (pageDesc.layout === 'isle') {
-        html += `Layout: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle<br>`;
+        html += `Layout: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle <a href="?wid=${tables}">Tables</a><br>`;
+      } else if (pageDesc.layout === 'tables') {
+        html += `Layout: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> Tables<br>`;
       } else {
-        html += `Layout: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a><br>`;
+        html += `Layout: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a><br>`;
       }
 
       let elephant = this.__findProjectID({
