@@ -3,9 +3,34 @@ class cViewDemo extends bView {
     super('Demo', null, null, true);
 
     this.projectsMap = {
-      '-Lm176Nmv_1FBowX1W5F': {
+      '-M54zh1lGmcyEohqHcZR': {
+        label: 'raised',
+        song: 'elephant',
+        layout: 'isle'
+      },
+      '-M54vz53f_PlFmScJm37': {
+        label: 'raised',
+        song: 'cantina',
+        layout: 'isle'
+      },
+      '-M54w66HRvPC9l7P2aNG': {
+        label: 'raised',
+        song: 'star wars',
+        layout: 'isle'
+      },
+      '-M53qyBeWE9NIEcm6hjp': {
+        label: 'flat',
+        song: 'elephant',
+        layout: 'isle'
+      },
+      '-M53v3f8PnSn0DJ2Gy6s': {
         label: 'flat',
         song: 'cantina',
+        layout: 'isle'
+      },
+      '-Lm176Nmv_1FBowX1W5F': {
+        label: 'flat',
+        song: 'star wars',
         layout: 'isle'
       },
       '-M3o8rB3zPwJLN-u4om8': {
@@ -175,65 +200,51 @@ class cViewDemo extends bView {
         html += `Labels: <a href="?wid=${id}">Flat</a> Raised<br>`;
       }
 
+      let shelves = this.__findProjectID({
+        label: pageDesc.label,
+        song: pageDesc.song,
+        layout: 'shelves'
+      });
+      let isle = this.__findProjectID({
+        label: pageDesc.label,
+        song: pageDesc.song,
+        layout: 'isle'
+      });
+      let carousel = this.__findProjectID({
+        label: pageDesc.label,
+        song: pageDesc.song,
+        layout: 'carousel'
+      });
+
       if (pageDesc.layout === 'carousel') {
-        let id = this.__findProjectID({
-          label: pageDesc.label,
-          song: pageDesc.song,
-          layout: 'shelves'
-        });
-        html += `Layout: Carousel <a href="?wid=${id}">Shelves</a><br>`;
+        html += `Layout: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a><br>`;
       } else if (pageDesc.layout === 'isle') {
-        let id = this.__findProjectID({
-          label: pageDesc.label,
-          song: pageDesc.song,
-          layout: 'shelves'
-        });
-        html += `Layout: Carousel <a href="?wid=${id}">Shelves</a><br>`;
+        html += `Layout: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle<br>`;
       } else {
-        let id = this.__findProjectID({
-          label: pageDesc.label,
-          song: pageDesc.song,
-          layout: 'carousel'
-        });
-        html += `Layout: <a href="?wid=${id}">Carousel</a> Shelves<br>`;
+        html += `Layout: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a><br>`;
       }
 
+      let elephant = this.__findProjectID({
+        label: pageDesc.label,
+        song: 'elephant',
+        layout: pageDesc.layout
+      });
+      let cantina = this.__findProjectID({
+        label: pageDesc.label,
+        song: 'cantina',
+        layout: pageDesc.layout
+      });
+      let starwars = this.__findProjectID({
+        label: pageDesc.label,
+        song: 'star wars',
+        layout: pageDesc.layout
+      });
       if (pageDesc.song === 'star wars') {
-        let id = this.__findProjectID({
-          label: pageDesc.label,
-          song: 'elephant',
-          layout: pageDesc.layout
-        });
-        let id2 = this.__findProjectID({
-          label: pageDesc.label,
-          song: 'cantina',
-          layout: pageDesc.layout
-        });
-        html += `Song: Star Wars <a href="?wid=${id2}">Cantina</a> <a href="?wid=${id}">Elephant</a><br>`;
+        html += `Song: Star Wars <a href="?wid=${cantina}">Cantina</a> <a href="?wid=${elephant}">Elephant</a><br>`;
       } else if (pageDesc.song === 'cantina') {
-        let id = this.__findProjectID({
-          label: pageDesc.label,
-          song: 'elephant',
-          layout: pageDesc.layout
-        });
-        let id2 = this.__findProjectID({
-          label: pageDesc.label,
-          song: 'star wars',
-          layout: pageDesc.layout
-        });
-        html += `Song: <a href="?wid=${id2}">Star Wars</a> Cantina <a href="?wid=${id}">Elephant</a><br>`;
+        html += `Song: <a href="?wid=${starwars}">Star Wars</a> Cantina <a href="?wid=${elephant}">Elephant</a><br>`;
       } else {
-        let id = this.__findProjectID({
-          label: pageDesc.label,
-          song: 'star wars',
-          layout: pageDesc.layout
-        });
-        let id2 = this.__findProjectID({
-          label: pageDesc.label,
-          song: 'cantina',
-          layout: pageDesc.layout
-        });
-        html += `Song: <a href="?wid=${id}">Star Wars</a> <a href="?wid=${id2}">Cantina</a> Elephant<br>`;
+        html += `Song: <a href="?wid=${starwars}">Star Wars</a> <a href="?wid=${cantina}">Cantina</a> Elephant<br>`;
       }
 
       html += `</div>
