@@ -1814,6 +1814,8 @@ class gCSVImport {
     let rawData = sceneData.genericBlockData;
     if (!rawData)
       rawData = '';
+    if (!sceneData.genericBlockData)
+      sceneData.genericBlockData = '';
     let data = sceneData.genericBlockData.split('|');
     for (let c = 0; c < data.length; c += 2)
       map[data[c]] = data[c + 1];
