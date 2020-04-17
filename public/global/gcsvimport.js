@@ -916,6 +916,7 @@ class gCSVImport {
     if (row.blockflag) block.blockFlag = row.blockflag;
     if (row.blockcode) block.blockCode = row.blockcode;
     if (row.musicparams) block.musicParams = row.musicparams;
+    if (row.genericblockdata) block.genericBlockData = row.genericblockdata;
 
     let blockresult = await this.dbSetRecord('block', block);
 
@@ -1419,7 +1420,7 @@ class gCSVImport {
     textPlane.name = product.childName + '_pricedesc';
     textPlane.parent = parent;
     textPlane.x = '0.06';
-    textPlane.y = (productData.displayParams.signYOffset - 2).toString();
+    textPlane.y = (productData.sceneParams.signYOffset - 2).toString();
     textPlane.sx = '.5';
     textPlane.sy = '.5';
     textPlane.sz = '.5';
@@ -1439,7 +1440,7 @@ class gCSVImport {
       blockImageShape.height = '3';
       blockImageShape.parent = parent;
       blockImageShape.x = '.06';
-      blockImageShape.y = (productData.displayParams.signYOffset + 1.0).toString();
+      blockImageShape.y = (productData.sceneParams.signYOffset + 1.0).toString();
       blockImageShape.ry = '-90deg';
       newObjects.push(blockImageShape);
     }
@@ -1450,7 +1451,7 @@ class gCSVImport {
     blockSPBC.parent = parent;
     blockSPBC.name = 'signboard';
     blockSPBC.materialname = 'inherit';
-    blockSPBC.y = productData.displayParams.signYOffset.toString();
+    blockSPBC.y = productData.sceneParams.signYOffset.toString();
     newObjects.push(blockSPBC);
 
     let blockSP2BC = this.defaultCSVRow();
@@ -1460,7 +1461,7 @@ class gCSVImport {
     blockSP2BC.name = 'signpost';
     blockSP2BC.materialname = 'inherit';
     blockSP2BC.x = '-0.05';
-    blockSP2BC.y = (productData.displayParams.signYOffset - 3.5).toString();
+    blockSP2BC.y = (productData.sceneParams.signYOffset - 3.5).toString();
     newObjects.push(blockSP2BC);
 
     return this.addCSVRowList(newObjects);
@@ -1483,7 +1484,7 @@ class gCSVImport {
     priceText.textdepth = '.1';
     priceText.textsize = '100';
     priceText.parent = parent;
-    priceText.y = (productData.displayParams.signYOffset - 3.25).toString();
+    priceText.y = (productData.sceneParams.signYOffset - 3.25).toString();
     priceText.x = '.5';
     priceText.ry = '0deg';
     priceText.rz = '-90deg';
@@ -1499,7 +1500,7 @@ class gCSVImport {
     descText.textdepth = '.25';
     descText.textsize = '100';
     descText.parent = parent;
-    descText.y = (productData.displayParams.signYOffset + 1.0).toString();
+    descText.y = (productData.sceneParams.signYOffset + 1.0).toString();
     descText.x = '.5';
     descText.ry = '0deg';
     descText.rz = '-90deg';
@@ -1518,7 +1519,7 @@ class gCSVImport {
       blockImageShape.height = '3';
       blockImageShape.parent = parent;
       blockImageShape.x = '.06';
-      blockImageShape.y = (productData.displayParams.signYOffset - 1).toString();
+      blockImageShape.y = (productData.sceneParams.signYOffset - 1).toString();
       blockImageShape.ry = '-90deg';
       this.addCSVRow(blockImageShape);
     }
@@ -1808,18 +1809,14 @@ class gCSVImport {
 
     return Promise.all(promises);
   }
-  async _fetchDisplayParams(freqPrefix = '') {
-    let display_params = await this.dbFetchByLookup('block', 'blockFlag', freqPrefix + 'frequencyblockparams');
-
+  async _fetchSceneParams(sceneData) {
     let map = {};
-    if (display_params.records.length > 0) {
-      let rawData = display_params.records[0].genericBlockData;
-      if (!rawData)
-        rawData = '';
-      let data = display_params.records[0].genericBlockData.split('|');
-      for (let c = 0; c < data.length; c += 2)
-        map[data[c]] = data[c + 1];
-    }
+    let rawData = sceneData.genericBlockData;
+    if (!rawData)
+      rawData = '';
+    let data = sceneData.genericBlockData.split('|');
+    for (let c = 0; c < data.length; c += 2)
+      map[data[c]] = data[c + 1];
 
     let scaleFactor = GLOBALUTIL.getNumberOrDefault(map.datascalefactor, 2.0);
     let signYOffset = GLOBALUTIL.getNumberOrDefault(map.signyoffset, 6.0);
@@ -1845,8 +1842,7 @@ class gCSVImport {
     let frameRows = [];
 
     if (freq_data.records.length > 0) {
-      let displayParams = await this._fetchDisplayParams(freqPrefix);
-      let scaleFactor = productData.displayParams.scaleFactor;
+      let scaleFactor = productData.sceneParams.scaleFactor;
       let scaleminusone = scaleFactor - 1.0;
 
       let bandData = freq_data.records[0].genericBlockData;
@@ -2028,7 +2024,7 @@ class gCSVImport {
       products[postC].endEnlargeTime = incLength + products[postC].startShowTime;
     }
 
-    let displayParams = await this._fetchDisplayParams(sceneBlock.musicParams);
+    let sceneParams = await this._fetchSceneParams(sceneBlock);
 
     let pInfo = {
       products,
@@ -2045,7 +2041,7 @@ class gCSVImport {
       cameraOrigRow,
       displayBlocks,
       sceneBlock,
-      displayParams
+      sceneParams
     };
     return pInfo;
   }
