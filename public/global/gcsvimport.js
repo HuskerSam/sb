@@ -1420,7 +1420,7 @@ class gCSVImport {
     textPlane.name = product.childName + '_pricedesc';
     textPlane.parent = parent;
     textPlane.x = '0.06';
-    textPlane.y = (productData.sceneParams.signYOffset - 2).toString();
+    textPlane.y = (productData.sceneParams.signYOffset - 2.75).toString();
     textPlane.sx = '.5';
     textPlane.sy = '.5';
     textPlane.sz = '.5';
