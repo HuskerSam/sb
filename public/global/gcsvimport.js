@@ -1413,9 +1413,9 @@ class gCSVImport {
     }
     textPlane.texturetext = product.title;
     textPlane.texturetext2 = product.desc;
-    textPlane.width = '10';
-    textPlane.height = '5';
-    textPlane.depth = '10';
+    textPlane.width = '8';
+    textPlane.height = '8';
+    textPlane.depth = '8';
     textPlane.textfontfamily = product.origRow.textfontfamily;
     textPlane.name = product.childName + '_pricedesc';
     textPlane.parent = parent;

@@ -210,8 +210,8 @@ class cViewDemo extends bView {
         <label><input type="radio" name="controls" class="anim_ui" />Anim</label>
         <label><input type="radio" name="controls" class="edit_ui" />Config</label><br>`;
 
-      html += `Camera <label><input type="radio" name="camera" data-camera="arc_rotate" checked />Rotate</label>
-        <label><input type="radio" name="camera" data-camera="follow" />Follow</label>
+      html += `Camera <label><input type="radio" name="camera" class="camera_rotate" data-camera="arc_rotate" checked />Rotate</label>
+        <label><input type="radio" name="camera" class="camera_follow" data-camera="follow" />Follow</label>
         <label><input type="radio" name="camera" data-camera="device_orientation" />Orientation</label><hr>`;
 
       if (pageDesc.label === 'flat') {
@@ -401,6 +401,11 @@ class cViewDemo extends bView {
         for (let c = 0; c < options.length; c++) {
           if (options.item(c).innerHTML === this.rootBlock.blockRawData.displayCamera) {
             this.canvasHelper.cameraSelect.selectedIndex = c;
+
+            if (this.canvasHelper.cameraSelect.selectedIndex === 2) {
+              document.querySelector('.camera_follow').checked = true;
+            }
+
             this.canvasHelper.cameraChangeHandler();
             break;
           }
