@@ -163,6 +163,18 @@ class cViewDemo extends bView {
     this._updateSelectedBlock(gAPPP.a.profile[key]);
     this.canvasHelper.show();
     this.canvasActions.style.display = 'none';
+
+    window.addEventListener('deviceorientation', event => {
+      this.orientationInited = true;
+      this.alpha = event.alpha ? event.alpha.toFixed(0) : 'none';
+      this.beta = event.beta ? event.beta.toFixed(1) : 'none';
+      this.gamma = event.gamma ? event.gamma.toFixed(2) : 'none';
+
+      if (this.orientation_details_div) {
+        if (this.alpha !== 'none')
+          this.orientation_details_div.innerHTML = this.alpha + ' : ' + this.beta + ' <br>';
+      }
+    });
   }
   toggleContentsListHeight() {
     if (this.moreContentsLarged) {
@@ -205,7 +217,7 @@ class cViewDemo extends bView {
       let d = this.demoOptionDiv;
       d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:50%;padding: .5em;text-align:center;');
       d.setAttribute('class', 'app-panel');
-      let html = `<div style="line-height:1.5em;" class="demo_options_panel">UI <label><input type="radio" name="controls" checked class="demo_ui" />Demo</label>
+      let html = `<div class="orientation_details_div"><br></div><div style="line-height:1.5em;" class="demo_options_panel">UI <label><input type="radio" name="controls" checked class="demo_ui" />Demo</label>
         <label><input type="radio" name="controls" class="cart_ui" />Cart</label>
         <label><input type="radio" name="controls" class="anim_ui" />Anim</label>
         <label><input type="radio" name="controls" class="edit_ui" />Config</label><br>`;
@@ -213,7 +225,6 @@ class cViewDemo extends bView {
       html += `Camera <label><input type="radio" name="camera" class="camera_rotate" data-camera="arc_rotate" checked />Rotate</label>
         <label><input type="radio" name="camera" class="camera_follow" data-camera="follow" />Follow</label>
         <label><input type="radio" name="camera" data-camera="device_orientation" />Orientation</label><hr>`;
-
       if (pageDesc.label === 'flat') {
         let id = this.__findProjectID({
           label: 'raised',
@@ -314,7 +325,7 @@ class cViewDemo extends bView {
           demo_options_panel.style.display = 'none';
       });
       document.body.appendChild(d);
-
+      this.orientation_details_div = d.querySelector('.orientation_details_div');
 
       this.updateUIDisplay();
     }
