@@ -446,6 +446,8 @@ class cViewDemo extends bView {
         let name = parts[2];
         let asset = parts[3];
         let fieldList = [];
+        if (name === 'FollowCamera')
+          continue;
         for (let c = 4, l = parts.length; c < l; c++) {
           let subParts = parts[c].split(':');
           let field = subParts[0];
@@ -483,7 +485,7 @@ class cViewDemo extends bView {
   }
   __sceneOptionTextureName(asset, name, field, type) {
     let textureName = '';
-    if (asset === 'shape') {
+    if (asset === 'shape' || asset === 'mesh') {
       this.replacedFieldName = field;
       return name + 'material';
     }

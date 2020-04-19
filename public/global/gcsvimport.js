@@ -153,23 +153,30 @@ class gCSVImport {
 
     promises.push(this.dbSetRecord('mesh', meshData));
 
+    let textureName = row.name + 'material';
+    let textureData = {
+      title: textureName,
+      url: row.texturepath
+    };
+    this.dbSetRecord('texture', textureData);
+
     let diffuseColor = '';
     let diffuseTextureName = '';
     if (row.diffuse === 'x') {
       diffuseColor = row.color;
-      diffuseTextureName = row.texturepath;
+      diffuseTextureName = textureName;
     }
     let ambientColor = '';
     let ambientTextureName = '';
     if (row.ambient === 'x') {
       ambientColor = row.color;
-      ambientTextureName = row.texturepath;
+      ambientTextureName = textureName;
     }
     let emissiveColor = '';
     let emissiveTextureName = '';
     if (row.emissive === 'x') {
       emissiveColor = row.color;
-      emissiveTextureName = row.texturepath;
+      emissiveTextureName = textureName;
     }
 
     let materialData = {
