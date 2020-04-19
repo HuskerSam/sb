@@ -600,12 +600,21 @@ class cViewDemo extends bView {
         data-type="${type}" data-name="${name}" data-asset="${asset}" data-list="basketblocktemplatelist" />
       </label>`;
       }
+
+      if (type === 'listskybox') {
+        let v = this.productData.sceneBlock.skybox;
+        fieldHtml += `<label class="csv_scene_field_text_wrapper">
+        ${field}<input data-field="${field}" type="text" value="${v}" data-tab="${fieldData.tab}"
+        data-type="${type}" data-name="${name}" data-asset="${asset}" list="skyboxlist" />
+      </label>`;
+      }
+
     }
 
     this.sceneOptionsEdit.innerHTML = fieldHtml;
     this.soUploadImageFile = this.sceneOptionsEdit.querySelector('.sotexturepathuploadfile');
-    //  this.soUploadImageFile.addEventListener('change', e => this.workspaceLayoutSceneDataUploadImage(e));
-    let inputs = this.sceneOptionsEdit.querySelectorAll('input');
+    this.soUploadImageFile.addEventListener('change', e => this.layoutSceneDataUploadImage(e));
+    let inputs = this.sceneOptionsEdit.querySelectorAll('input[type="text"]');
     inputs.forEach(i => i.addEventListener('input', e => this.sceneOptionDataChanged(i, e)));
     let uploadButtons = this.sceneOptionsEdit.querySelectorAll('button.sceneoptionsupload');
     uploadButtons.forEach(i => i.addEventListener('click', e => {
@@ -614,6 +623,19 @@ class cViewDemo extends bView {
       this.soUploadImageFile.click();
     }));
 
+    return;
+  }
+  async layoutSceneDataUploadImage() {
+    let fileBlob = this.soUploadImageFile.files[0];
+
+    if (!fileBlob)
+      return;
+
+    let fireSet = gAPPP.a.modelSets['block'];
+    let key = gAPPP.loadedWID + '/scenedatafiles';
+    let uploadResult = await fireSet.setBlob(key, fileBlob, fileBlob.name);
+    this.soUploadImageFile.editCTL.value = uploadResult.downloadURL;
+    this.sceneOptionDataChanged(this.soUploadImageFile.editCTL);
     return;
   }
 
@@ -648,6 +670,13 @@ class cViewDemo extends bView {
       await csvImport.dbSetRecordFields('blockchild', {
         'childName': value
       }, bcid);
+    }
+
+    if (type === 'listskybox') {
+      let csvImport = new gCSVImport(gAPPP.loadedWID);
+      await csvImport.dbSetRecordFields('block', {
+        'skybox': value
+      }, this.productData.sceneId);
     }
 
     if (field === 'scaleu' || field === 'scalev' || field === 'voffset' || field === 'uoffset') {
