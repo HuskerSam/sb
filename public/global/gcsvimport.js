@@ -926,15 +926,20 @@ class gCSVImport {
     if (row.genericblockdata) block.genericBlockData = row.genericblockdata;
 
     let blockresult = await this.dbSetRecord('block', block);
-
-    if (row.frametime) {
-      let frameTime = row.frametime;
-      this.dbSetRecord('frame', {
-        parentKey: blockresult.key,
-        frameOrder: 10,
-        frameTime
-      });
-    }
+    let sceneParams = this._fetchSceneParams(block);
+    let frameTime = row.frametime;
+    this.dbSetRecord('frame', {
+      parentKey: blockresult.key,
+      frameOrder: 10,
+      frameTime: 0,
+      rotationY: '0deg'
+    });
+    this.dbSetRecord('frame', {
+      parentKey: blockresult.key,
+      frameOrder: 20,
+      frameTime: 0,
+      rotationY: sceneParams.rotateY + 'deg'
+    });
 
     if (row.skyboxtype === 'building') {
       let panelrow = this.defaultCSVRow();
@@ -1816,7 +1821,7 @@ class gCSVImport {
 
     return Promise.all(promises);
   }
-  async _fetchSceneParams(sceneData) {
+  _fetchSceneParams(sceneData) {
     let map = {};
     let rawData = sceneData.genericBlockData;
     if (!rawData)
@@ -1829,23 +1834,17 @@ class gCSVImport {
 
     let scaleFactor = GLOBALUTIL.getNumberOrDefault(map.datascalefactor, 2.0);
     let signYOffset = GLOBALUTIL.getNumberOrDefault(map.signyoffset, 6.0);
+    let rotateY = GLOBALUTIL.getNumberOrDefault(map.rotatey, 0);
 
     return {
       scaleFactor,
-      signYOffset
+      signYOffset,
+      rotateY
     }
   }
   async _addProductFramesFromData(product, productData, productIndex, freqPrefix = '') {
     let child = product.childName;
     let sb = await this.csvFetchSceneBlock();
-    let sceneKey = sb.key;
-    let blockChildren = this._getBlockChildren(sb.parent, 'block', child);
-    let deletePromises = [];
-    for (let id in blockChildren) {
-      let existingFrames = await this.dbFetchByLookup('frame', 'parentKey', id);
-      existingFrames.recordIds.forEach(frameId => deletePromises.push(this.dbRemove('frame', frameId)));
-    }
-    await Promise.all(deletePromises);
 
     let freq_data = await this.dbFetchByLookup('block', 'blockFlag', freqPrefix + 'frequencyblock' + (productIndex + 1).toString());
     let frameRows = [];
@@ -1876,6 +1875,15 @@ class gCSVImport {
         bandScaleFrame.sx = (1 + dataPoint * scaleminusone).toFixed(3);
         bandScaleFrame.sy = (1 + dataPoint * scaleminusone).toFixed(3);
         bandScaleFrame.sz = (1 + dataPoint * scaleminusone).toFixed(3);
+
+        if (index === frameCount - 1) {
+          bandScaleFrame.frametime = '100%';
+        }
+          if (productData.sceneParams.rotateY !== 0) {
+
+            bandScaleFrame.ry = (-1.0 * productData.sceneParams.rotateY * timeRatio).toFixed(2) + 'deg';
+        }
+
         frameRows.push(this.addCSVRowList([bandScaleFrame]));
 
         if (frameRows.length > 20) {
@@ -1919,7 +1927,7 @@ class gCSVImport {
     if (frameRecords.records.length <= 0)
       return Promise.resolve();
 
-    let frameId = frameRecords.recordIds[0];
+    let frameId = frameRecords.recordIds[frameRecords.recordIds.length - 1];
     promises.push(
       this.dbSetRecordFields('frame', {
         frameTime: (pInfo.runLength * 1000).toString()
@@ -2033,7 +2041,7 @@ class gCSVImport {
       products[postC].endEnlargeTime = incLength + products[postC].startShowTime;
     }
 
-    let sceneParams = await this._fetchSceneParams(sceneBlock);
+    let sceneParams = this._fetchSceneParams(sceneBlock);
 
     let pInfo = {
       products,
