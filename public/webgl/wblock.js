@@ -1067,7 +1067,8 @@ class wBlock {
       texture.drawText(values.textureText, x + leftOffset, y, font, color, clearColor);
 
       if (values.textureText2) {
-        y += minFontSize2;
+        //y += minFontSize2;
+        y = renderSize / 2.25;
         let textFontSize2 = GLOBALUTIL.getNumberOrDefault(values.textFontSize, 75);
 
         textFontSize2 = Math.min(textFontSize2, minFontSize2);
