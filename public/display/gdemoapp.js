@@ -31,11 +31,14 @@ class gDemoApp extends gInstanceSuper {
     this.initialUILoad = false;
 
     this.workspaceProcessed = false;
-    gAPPP.a.workspaceLoadedCallback = () => {
+    gAPPP.a.workspaceLoadedCallback = async () => {
       if (this.workspaceProcessed) return;
 
       this.workspaceProcessed = true;
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
+
+      let animationList = await fetch(`./animations.json`)
+      this.animationList = await animationList.json();
 
       this.mV = new cViewDemo();
       this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, workspace, true);

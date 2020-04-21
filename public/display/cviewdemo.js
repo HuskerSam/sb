@@ -2,128 +2,9 @@ class cViewDemo extends bView {
   constructor() {
     super('Demo', null, null, true);
 
-    this.projectsMap = {
-      '-M57Vdfd3z072998SAit': {
-        label: 'raised',
-        song: 'elephant',
-        layout: 'tables'
-      },
-      '-M57VfoXJrGeu_pTZj65': {
-        label: 'raised',
-        song: 'cantina',
-        layout: 'tables'
-      },
-      '-M57Vj8CiEpH5zgnIw6s': {
-        label: 'raised',
-        song: 'star wars',
-        layout: 'tables'
-      },
-      '-M57Vc7Oblk6k0reX__5': {
-        label: 'flat',
-        song: 'elephant',
-        layout: 'tables'
-      },
-      '-M57V_iX21-dsN56gQw8': {
-        label: 'flat',
-        song: 'cantina',
-        layout: 'tables'
-      },
-      '-M57V0Bnu_Hix0vNWSVC': {
-        label: 'flat',
-        song: 'star wars',
-        layout: 'tables'
-      },
-      '-M54zh1lGmcyEohqHcZR': {
-        label: 'raised',
-        song: 'elephant',
-        layout: 'isle'
-      },
-      '-M54vz53f_PlFmScJm37': {
-        label: 'raised',
-        song: 'cantina',
-        layout: 'isle'
-      },
-      '-M54w66HRvPC9l7P2aNG': {
-        label: 'raised',
-        song: 'star wars',
-        layout: 'isle'
-      },
-      '-M53qyBeWE9NIEcm6hjp': {
-        label: 'flat',
-        song: 'elephant',
-        layout: 'isle'
-      },
-      '-M53v3f8PnSn0DJ2Gy6s': {
-        label: 'flat',
-        song: 'cantina',
-        layout: 'isle'
-      },
-      '-Lm176Nmv_1FBowX1W5F': {
-        label: 'flat',
-        song: 'star wars',
-        layout: 'isle'
-      },
-      '-M3o8rB3zPwJLN-u4om8': {
-        label: 'flat',
-        song: 'cantina',
-        layout: 'carousel'
-      },
-      '-M3o9lFX579wmY4LiKC-': {
-        label: 'flat',
-        song: 'star wars',
-        layout: 'carousel'
-      },
-      '-M3bvko2KrsW2CxrXJC5': {
-        label: 'flat',
-        song: 'elephant',
-        layout: 'carousel'
-      },
-      '-M4UL3tfhkbtm2VwIwSP': {
-        label: 'raised',
-        song: 'cantina',
-        layout: 'carousel'
-      },
-      '-M4UKQEQRCi2BRJ3wgJ-': {
-        label: 'raised',
-        song: 'star wars',
-        layout: 'carousel'
-      },
-      '-M4UJMjRCYpdYXCFZayW': {
-        label: 'raised',
-        song: 'elephant',
-        layout: 'carousel'
-      },
-      '-M4UQh1TheexkEDeJFgt': {
-        label: 'flat',
-        song: 'cantina',
-        layout: 'shelves'
-      },
-      '-M4UQvodWWisxjus54ig': {
-        label: 'flat',
-        song: 'star wars',
-        layout: 'shelves'
-      },
-      '-M4UR0mfLqP_vLcctYuF': {
-        label: 'flat',
-        song: 'elephant',
-        layout: 'shelves'
-      },
-      '-M4UQkPe0AdLEjtx0s1M': {
-        label: 'raised',
-        song: 'cantina',
-        layout: 'shelves'
-      },
-      '-M4URe_cZDKENCki_gGM': {
-        label: 'raised',
-        song: 'star wars',
-        layout: 'shelves'
-      },
-      '-M4URjTNZwaudinSjRCA': {
-        label: 'raised',
-        song: 'elephant',
-        layout: 'shelves'
-      }
-    };
+    let anims = gAPPP.animationList;
+    this.projectsMap = {};
+    anims.forEach(anim => this.projectsMap[anim['wid']] = anim);
 
     this.canvasHelper.cameraShownCallback = () => this._cameraShown();
 
@@ -192,7 +73,7 @@ class cViewDemo extends bView {
   __findProjectID(desc) {
     for (let id in this.projectsMap) {
       let p = this.projectsMap[id];
-      if (desc.label === p.label && desc.layout === p.layout && desc.song === p.song)
+      if (desc.label === p.label && desc.circuit === p.circuit && desc.song === p.song)
         return id;
     }
 
@@ -229,14 +110,14 @@ class cViewDemo extends bView {
         let id = this.__findProjectID({
           label: 'raised',
           song: pageDesc.song,
-          layout: pageDesc.layout
+          circuit: pageDesc.circuit
         });
         html += `Labels: Flat <a href="?wid=${id}">Raised</a><br>`;
       } else {
         let id = this.__findProjectID({
           label: 'flat',
           song: pageDesc.song,
-          layout: pageDesc.layout
+          circuit: pageDesc.circuit
         });
         html += `Labels: <a href="?wid=${id}">Flat</a> Raised<br>`;
       }
@@ -244,55 +125,62 @@ class cViewDemo extends bView {
       let shelves = this.__findProjectID({
         label: pageDesc.label,
         song: pageDesc.song,
-        layout: 'shelves'
+        circuit: 'shelves'
       });
       let isle = this.__findProjectID({
         label: pageDesc.label,
         song: pageDesc.song,
-        layout: 'isle'
+        circuit: 'isle'
       });
       let carousel = this.__findProjectID({
         label: pageDesc.label,
         song: pageDesc.song,
-        layout: 'carousel'
+        circuit: 'carousel'
       });
       let tables = this.__findProjectID({
         label: pageDesc.label,
         song: pageDesc.song,
-        layout: 'tables'
+        circuit: 'tables'
       });
 
-      if (pageDesc.layout === 'carousel') {
-        html += `Layout: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a><br>`;
-      } else if (pageDesc.layout === 'isle') {
-        html += `Layout: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle <a href="?wid=${tables}">Tables</a><br>`;
-      } else if (pageDesc.layout === 'tables') {
-        html += `Layout: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> Tables<br>`;
+      if (pageDesc.circuit === 'carousel') {
+        html += `Circuit: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a><br>`;
+      } else if (pageDesc.circuit === 'isle') {
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle <a href="?wid=${tables}">Tables</a><br>`;
+      } else if (pageDesc.circuit === 'tables') {
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> Tables<br>`;
       } else {
-        html += `Layout: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a><br>`;
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a><br>`;
       }
 
       let elephant = this.__findProjectID({
         label: pageDesc.label,
         song: 'elephant',
-        layout: pageDesc.layout
+        circuit: pageDesc.circuit
       });
       let cantina = this.__findProjectID({
         label: pageDesc.label,
         song: 'cantina',
-        layout: pageDesc.layout
+        circuit: pageDesc.circuit
       });
       let starwars = this.__findProjectID({
         label: pageDesc.label,
         song: 'star wars',
-        layout: pageDesc.layout
+        circuit: pageDesc.circuit
+      });
+      let mute = this.__findProjectID({
+        label: pageDesc.label,
+        song: 'mute',
+        circuit: pageDesc.circuit
       });
       if (pageDesc.song === 'star wars') {
-        html += `Song: Star Wars <a href="?wid=${cantina}">Cantina</a> <a href="?wid=${elephant}">Elephant</a><br>`;
+        html += `Song: Star Wars <a href="?wid=${cantina}">Cantina</a> <a href="?wid=${elephant}">Elephant</a> <a href="?wid=${mute}">Mute</a><br>`;
       } else if (pageDesc.song === 'cantina') {
-        html += `Song: <a href="?wid=${starwars}">Star Wars</a> Cantina <a href="?wid=${elephant}">Elephant</a><br>`;
+        html += `Song: <a href="?wid=${starwars}">Star Wars</a> Cantina <a href="?wid=${elephant}">Elephant</a> <a href="?wid=${mute}">Mute</a><br>`;
+      } else if (pageDesc.song === 'mute') {
+        html += `Song: <a href="?wid=${starwars}">Star Wars</a> <a href="?wid=${cantina}">Cantina</a> <a href="?wid=${elephant}">Elephant</a> Mute<br>`;
       } else {
-        html += `Song: <a href="?wid=${starwars}">Star Wars</a> <a href="?wid=${cantina}">Cantina</a> Elephant<br>`;
+        html += `Song: <a href="?wid=${starwars}">Star Wars</a> <a href="?wid=${cantina}">Cantina</a> Elephant <a href="?wid=${mute}">Mute</a><br>`;
       }
 
       html += `</div>
