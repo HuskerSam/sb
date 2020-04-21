@@ -1380,6 +1380,8 @@ class gCSVImport {
 
     if (product.origRow.displaystyle === '3dbasic')
       this._addSignPost3D(product, productData, blockRow.name);
+    else if (product.origRow.displaystyle === '3dmin')
+      this._addSignPost3DMin(product, productData, blockRow.name);
     else
       this._addSignPost2D(product, productData, blockRow.name);
 
@@ -1507,7 +1509,7 @@ class gCSVImport {
     priceText.shapetype = 'text';
     priceText.textfontfamily = product.origRow.textfontfamily;
     priceText.texttext = product.desc;
-    priceText.textdepth = '.1';
+    priceText.textdepth = '.25';
     priceText.textsize = '100';
     priceText.parent = parent;
     priceText.y = (productData.sceneParams.signYOffset - 3.25).toString();
@@ -1523,7 +1525,7 @@ class gCSVImport {
     descText.shapetype = 'text';
     descText.textfontfamily = product.origRow.textfontfamily;
     descText.texttext = product.title;
-    descText.textdepth = '.25';
+    descText.textdepth = '.5';
     descText.textsize = '100';
     descText.parent = parent;
     descText.y = (productData.sceneParams.signYOffset + 1.0).toString();
@@ -1549,6 +1551,26 @@ class gCSVImport {
       blockImageShape.ry = '-90deg';
       this.addCSVRow(blockImageShape);
     }
+
+    return;
+  }
+  async _addSignPost3DMin(product, productData, parent) {
+
+    let descText = this.defaultCSVRow();
+    descText.asset = 'shape';
+    descText.name = parent + '_3dtitle';
+    descText.materialname = 'inherit';
+    descText.shapetype = 'text';
+    descText.textfontfamily = product.origRow.textfontfamily;
+    descText.texttext = product.title;
+    descText.textdepth = '.25';
+    descText.textsize = '100';
+    descText.parent = parent;
+    descText.y = (productData.sceneParams.signYOffset - 2.0).toString();
+    descText.x = '.5';
+    descText.ry = '0deg';
+    descText.rz = '-90deg';
+    this.addCSVRow(descText);
 
     return;
   }

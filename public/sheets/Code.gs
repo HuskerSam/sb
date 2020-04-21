@@ -139,6 +139,8 @@ function truncateEmptyCSVColumns(rows) {
 
 function getJSONFromCSVSheet(sheetName) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  if (!sheet)
+    return [];
   let lastRow = sheet.getLastRow();
   let lastColumn = sheet.getLastColumn();
   let range = sheet.getRange(1, 1, lastRow, lastColumn).getValues();

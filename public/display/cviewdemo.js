@@ -98,7 +98,7 @@ class cViewDemo extends bView {
       let d = this.demoOptionDiv;
       d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:50%;padding: .5em;text-align:center;');
       d.setAttribute('class', 'app-panel');
-      let html = `<div class="orientation_details_div"><br></div><div style="line-height:1.5em;" class="demo_options_panel">UI <label><input type="radio" name="controls" checked class="demo_ui" />Demo</label>
+      let html = `<div class="orientation_details_div"></div><div style="line-height:1.5em;" class="demo_options_panel">UI <label><input type="radio" name="controls" checked class="demo_ui" />Demo</label>
         <label><input type="radio" name="controls" class="cart_ui" />Cart</label>
         <label><input type="radio" name="controls" class="anim_ui" />Anim</label>
         <label><input type="radio" name="controls" class="edit_ui" />Config</label><br>`;
@@ -106,20 +106,28 @@ class cViewDemo extends bView {
       html += `Camera <label><input type="radio" name="camera" class="camera_rotate" data-camera="arc_rotate" checked />Rotate</label>
         <label><input type="radio" name="camera" class="camera_follow" data-camera="follow" />Follow</label>
         <label><input type="radio" name="camera" data-camera="device_orientation" />Orientation</label><hr>`;
+
+      let flat = this.__findProjectID({
+        label: 'flat',
+        song: pageDesc.song,
+        circuit: pageDesc.circuit
+      });
+      let raised = this.__findProjectID({
+        label: 'raised',
+        song: pageDesc.song,
+        circuit: pageDesc.circuit
+      });
+      let min = this.__findProjectID({
+        label: 'min',
+        song: pageDesc.song,
+        circuit: pageDesc.circuit
+      });
       if (pageDesc.label === 'flat') {
-        let id = this.__findProjectID({
-          label: 'raised',
-          song: pageDesc.song,
-          circuit: pageDesc.circuit
-        });
-        html += `Labels: Flat <a href="?wid=${id}">Raised</a><br>`;
+        html += `Labels: <a href="?wid=${min}">Min</a> Flat <a href="?wid=${raised}">Raised</a><br>`;
+      } else if (pageDesc.label === 'min') {
+        html += `Labels: Min <a href="?wid=${flat}">Flat</a> <a href="?wid=${raised}">Raised</a><br>`;
       } else {
-        let id = this.__findProjectID({
-          label: 'flat',
-          song: pageDesc.song,
-          circuit: pageDesc.circuit
-        });
-        html += `Labels: <a href="?wid=${id}">Flat</a> Raised<br>`;
+        html += `Labels: <a href="?wid=${min}">Min</a> <a href="?wid=${flat}">Flat</a> Raised<br>`;
       }
 
       let shelves = this.__findProjectID({
@@ -165,7 +173,7 @@ class cViewDemo extends bView {
       });
       let starwars = this.__findProjectID({
         label: pageDesc.label,
-        song: 'star wars',
+        song: 'starwars',
         circuit: pageDesc.circuit
       });
       let mute = this.__findProjectID({
@@ -173,7 +181,7 @@ class cViewDemo extends bView {
         song: 'mute',
         circuit: pageDesc.circuit
       });
-      if (pageDesc.song === 'star wars') {
+      if (pageDesc.song === 'starwars') {
         html += `Song: Star Wars <a href="?wid=${cantina}">Cantina</a> <a href="?wid=${elephant}">Elephant</a> <a href="?wid=${mute}">Mute</a><br>`;
       } else if (pageDesc.song === 'cantina') {
         html += `Song: <a href="?wid=${starwars}">Star Wars</a> Cantina <a href="?wid=${elephant}">Elephant</a> <a href="?wid=${mute}">Mute</a><br>`;

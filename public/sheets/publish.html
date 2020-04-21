@@ -13,6 +13,10 @@
      <button id="display_publish_list">Publish List</button>
  <br>
  <br>
+ <hr>
+ <br>
+   <button id="publish_data">Log JSON List to console</button>
+ <br>
     <hr>
     <button id="display_publish">Publish Single</button>
     <br>
@@ -23,10 +27,10 @@
     assets sheet <input id="assets_sheet" value="bottleassets" />
     <br>
     <br>
-    scene sheet <input id="scene_sheet" value="starwarscarousel" />
+    circuit sheet <input id="scene_sheet" value="starwarscarousel" />
      <br>
     <br>
-    products sheet <input id="products_sheet" value="" />
+    catalog sheet <input id="products_sheet" value="carouselcatalogflat" />
     <br>
 
     <br>
@@ -42,75 +46,97 @@
 
           this.display_publish.addEventListener('click',(e) => this.publish());
           this.display_publish_list.addEventListener('click', e => this.publishList());
+
+          this.publish_data = document.getElementById('publish_data');
+          this.publish_data.addEventListener('click', async e => {
+            let publishList = await this.grabSheetCSVJSONData('PublishList');
+            console.log('list', JSON.stringify(publishList));
+          });
         }
         async publishList() {
           let publishList = await this.grabSheetCSVJSONData('PublishList');
-
+          this.display_publish_list.innerHTML = 'Working...';
           let promises = [];
 
-          publishList.forEach(row => {
+          for (let c = 0; c < publishList.length; c++) {
+            let row = publishList[c];
             console.log(row);
-            promises.push(this.publishSingle(row.wid, row.assetssheet, row.scenesheet, row.productssheet));
-          });
+            promises.push(this.publishSingle(row.wid, row.assetssheet, row.circuitsheet, row.catalogsheet));
+
+            if (promises.length > 9) {
+              let results = await Promise.all(promises);
+              console.log(c, results);
+              promises = [];
+            }
+          }
 
           let results = await Promise.all(promises);
-          console.log(results);
+          console.log('last', results);
+          this.display_publish_list.innerHTML = 'Publish Web Again';
+
           return results;
         }
         async publishSingle(id, assetSheet, sceneSheet, productSheet) {
-        console.log(id, assetSheet, sceneSheet, productSheet);
-          let assetResults = {};
-          if (assetSheet) {
-            let assets = await this.grabSheetCSVJSONData(assetSheet);
-            let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
-            url += encodeURIComponent(id) + '&type=asset';
-            let json = JSON.stringify(assets);
+          console.log(id, assetSheet, sceneSheet, productSheet);
+          try {
+            let assetResults = {};
+            if (assetSheet) {
+              let assets = await this.grabSheetCSVJSONData(assetSheet);
+              let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
+              url += encodeURIComponent(id) + '&type=asset';
+              let json = JSON.stringify(assets);
 
-            let response = await fetch(url, {
-              method: "post",
-              body: json
+              let response = await fetch(url, {
+                method: "post",
+                body: json
+              });
+              assetResults = await response.text();
+            }
+
+            let sceneResults = {};
+            if (sceneSheet) {
+              let scene = await this.grabSheetCSVJSONData(sceneSheet);
+              let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
+              url += encodeURIComponent(id) + '&type=scene';
+              let json = JSON.stringify(scene);
+              let response = await fetch(url, {
+                method: "post",
+                body: json
+              });
+              sceneResults = await response.text();
+            }
+
+            let productResults = {};
+            if (productSheet) {
+              let products = await this.grabSheetCSVJSONData(productSheet);
+              let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
+              url += encodeURIComponent(id) + '&type=product';
+              let json = JSON.stringify(products);
+              let response = await fetch(url, {
+                method: "post",
+                body: json
+              });
+              productResults = await response.text();
+            }
+
+            let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/generate/?id=' + encodeURIComponent(id);
+            let genResponse = await fetch(url, {
+              method: "post"
             });
-            assetResults = await response.text();
-          }
+            let genResults = await genResponse.text();
 
-          let sceneResults = {};
-          if (sceneSheet) {
-            let scene = await this.grabSheetCSVJSONData(sceneSheet);
-            let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
-            url += encodeURIComponent(id) + '&type=scene';
-            let json = JSON.stringify(scene);
-            let response = await fetch(url, {
-              method: "post",
-              body: json
-            });
-            sceneResults = await response.text();
-          }
-
-          let productResults = {};
-          if (productSheet) {
-            let products = await this.grabSheetCSVJSONData(productSheet);
-            let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
-            url += encodeURIComponent(id) + '&type=product';
-            let json = JSON.stringify(products);
-            let response = await fetch(url, {
-              method: "post",
-              body: json
-            });
-            productResults = await response.text();
-          }
-
-          let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/generate/?id=' + encodeURIComponent(id);
-          let genResponse = await fetch(url, {
-            method: "post"
-          });
-          let genResults = await genResponse.text();
-
-          return {
-            genResults,
-            productResults,
-            assetResults,
-            sceneResults
-          };
+            return {
+              genResults,
+              productResults,
+              assetResults,
+              sceneResults
+            };
+           } catch (error) {
+             console.log('e', error);
+             return {
+              error: error
+             };
+            }
         }
         async publish() {
           let results = await this.publishSingle(this.workspace_id.value, this.assets_sheet.value,
@@ -120,9 +146,10 @@
         }
 
         grabSheetCSVJSONData(sheetName) {
-          return new Promise((resolve, reject) => {
+          return new Promise(async (resolve, reject) => {
             google.script.run.withSuccessHandler((result) => {
-              resolve(result)
+              console.log(sheetName, result.length);
+              resolve(result);
             }).getJSONFromCSVSheet(sheetName);
           });
         }
