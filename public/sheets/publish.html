@@ -4,13 +4,19 @@
     <base target="_top">
   </head>
   <body>
-    Publish sheet(s) to web
+  <style>
+    body {
+    text-align: center;
+    }
+   </style>
+  <br>
+     <button id="display_publish_list">Publish List</button>
+ <br>
+ <br>
+    <hr>
+    <button id="display_publish">Publish Single</button>
     <br>
-    <button id="display_publish">Publish</button>
     <br>
-
-    <br>
-   <br>
     wid <input id="workspace_id" value="-M3o9lFX579wmY4LiKC-" />
     <br>
     <br>
@@ -32,49 +38,85 @@
           this.assets_sheet = document.getElementById('assets_sheet');
           this.scene_sheet = document.getElementById('scene_sheet');
           this.products_sheet = document.getElementById('products_sheet');
+          this.display_publish_list = document.getElementById('display_publish_list');
 
           this.display_publish.addEventListener('click',(e) => this.publish());
+          this.display_publish_list.addEventListener('click', e => this.publishList());
         }
-        scrapeValues() {
+        async publishList() {
+          let publishList = await this.grabSheetCSVJSONData('PublishList');
 
+          let promises = [];
+
+          publishList.forEach(row => {
+            console.log(row);
+            promises.push(this.publishSingle(row.wid, row.assetssheet, row.scenesheet, row.productssheet));
+          });
+
+          let results = await Promise.all(promises);
+          console.log(results);
+          return results;
         }
-        async publish() {
-          this.scrapeValues();
-          /*
-          if (this.assets_sheet.value) {
-            let assets = await this.grabSheetCSVJSONData(this.assets_sheet.value);
+        async publishSingle(id, assetSheet, sceneSheet, productSheet) {
+        console.log(id, assetSheet, sceneSheet, productSheet);
+          let assetResults = {};
+          if (assetSheet) {
+            let assets = await this.grabSheetCSVJSONData(assetSheet);
             let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
-            url += this.workspace_id.value + '&type=asset&data=';
+            url += encodeURIComponent(id) + '&type=asset';
             let json = JSON.stringify(assets);
-            url += encodeURIComponent(json);
+
             let response = await fetch(url, {
-              method: "post"
+              method: "post",
+              body: json
             });
-            let results = await response.json();
-            console.log(results);
+            assetResults = await response.text();
           }
-*/
-          if (this.scene_sheet.value) {
-            let scene = await this.grabSheetCSVJSONData(this.scene_sheet.value);
+
+          let sceneResults = {};
+          if (sceneSheet) {
+            let scene = await this.grabSheetCSVJSONData(sceneSheet);
             let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
-            url += encodeURIComponent(this.workspace_id.value) + '&type=scene';
+            url += encodeURIComponent(id) + '&type=scene';
             let json = JSON.stringify(scene);
             let response = await fetch(url, {
               method: "post",
               body: json
             });
-            let results = await response.text();
-            console.log(results);
-
+            sceneResults = await response.text();
           }
-          let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/generate/?id=' + encodeURIComponent(this.workspace_id.value);
+
+          let productResults = {};
+          if (productSheet) {
+            let products = await this.grabSheetCSVJSONData(productSheet);
+            let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
+            url += encodeURIComponent(id) + '&type=product';
+            let json = JSON.stringify(products);
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            productResults = await response.text();
+          }
+
+          let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/generate/?id=' + encodeURIComponent(id);
           let genResponse = await fetch(url, {
             method: "post"
           });
           let genResults = await genResponse.text();
-          console.log(genResults);
 
-          return 0;
+          return {
+            genResults,
+            productResults,
+            assetResults,
+            sceneResults
+          };
+        }
+        async publish() {
+          let results = await this.publishSingle(this.workspace_id.value, this.assets_sheet.value,
+                    this.scene_sheet.value, this.products_sheet.value);
+          console.log('single', results);
+          return results;
         }
 
         grabSheetCSVJSONData(sheetName) {

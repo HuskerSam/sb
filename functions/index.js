@@ -8,28 +8,37 @@ admin.initializeApp({
   databaseURL: "https://groceryblocks2.firebaseio.com"
 });
 
-exports.generate = functions.https.onRequest(async (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  if (req.method === 'POST') {
-    let id = req.query.id;
-    let cloudGen = new cloudGenerateDisplay(id);
-    let result_msg = await cloudGen.generateAnimation();
-    return res.status(200).send(`{ "success": true, "msg": ${result_msg} }`);
-  }
-  return res.send("Post Only");
-});
-exports.upload = functions.https.onRequest(async (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  if (req.method === 'POST') {
-    let id = req.query.id;
-    let csvType = req.query.type;
-    let data = JSON.parse(req.body);
+const runtimeOpts = {
+  timeoutSeconds: 540,
+  memory: '2GB'
+};
 
-    let cloudGen = new cloudGenerateDisplay(id);
-    let result = await cloudGen.csvImport.writeProjectRawData(csvType + 'Rows', data);
+exports.generate = functions
+  .runWith(runtimeOpts)
+  .https.onRequest(async (req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    if (req.method === 'POST') {
+      let id = req.query.id;
+      let cloudGen = new cloudGenerateDisplay(id);
+      let result_msg = await cloudGen.generateAnimation();
+      return res.status(200).send(`{ "success": true, "msg": ${result_msg} }`);
+    }
+    return res.send("Post Only");
+  });
+exports.upload = functions
+  .runWith(runtimeOpts)
+  .https.onRequest(async (req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    if (req.method === 'POST') {
+      let id = req.query.id;
+      let csvType = req.query.type;
+      let data = JSON.parse(req.body);
 
-    return res.status(200).send(`{ "success": true, "msg": ${'123'} }`);
-  }
+      let cloudGen = new cloudGenerateDisplay(id);
+      let result = await cloudGen.csvImport.writeProjectRawData(csvType + 'Rows', data);
 
-  return res.send("Post Only");
-});
+      return res.status(200).send(`{ "success": true, "msg": ${'123'} }`);
+    }
+
+    return res.send("Post Only");
+  });
