@@ -212,11 +212,13 @@ class cGenerate {
     let data = null;
 
     if (choice === 'current') {
-      data = await gAPPP.a.readProjectRawData(sourceProjectId, type + 'Rows');
+      let csvImport = new gCSVImport(sourceProjectId);
+      data = await csvImport.readProjectRawData(type + 'Rows');
     }
     if (choice === 'workspace') {
       let id = this.domPanel.querySelector(`.add_animation_${type}_animation`).value;
-      data = await gAPPP.a.readProjectRawData(id, type + 'Rows');
+      let csvImport = new gCSVImport(id);
+      data = await csvImport.readProjectRawData(type + 'Rows');
     }
     if (choice === 'template') {
       let title = this[`add_animation_${type}_template`].value;
@@ -236,7 +238,8 @@ class cGenerate {
     }
 
     if (data) {
-      await gAPPP.a.writeProjectRawData(targetProjectId, type + 'Rows', data);
+      let csvImport = new gCSVImport(targetProjectId);
+      await csvImport.writeProjectRawData(type + 'Rows', data);
     }
 
     return Promise.resolve();
@@ -276,8 +279,9 @@ class cGenerate {
       Papa.parse(this[`add_animation_${csvType}_download_file`].files[0], {
         header: true,
         complete: async (results) => {
+          let csvImport = new gCSVImport(gAPPP.loadedWID);
           if (results.data)
-            await gAPPP.a.writeProjectRawData(gAPPP.loadedWID, csvType + 'Rows', results.data);
+            await csvImport.writeProjectRawData(csvType + 'Rows', results.data);
 
 
           await gAPPP.updateGenerateDataTimes();
@@ -292,7 +296,8 @@ class cGenerate {
     return;
   }
   csvGenerateDownloadCSV(name) {
-    gAPPP.a.readProjectRawData(gAPPP.loadedWID, name + 'Rows')
+    let csvImport = new gCSVImport(gAPPP.loadedWID);
+    csvImport.readProjectRawData(name + 'Rows')
       .then(rows => {
         let csvResult = Papa.unparse(rows);
         var element = document.createElement('a');
@@ -308,8 +313,9 @@ class cGenerate {
       });
   }
   _csvUpdateWorkspaceCSVDisplayDate(type) {
+    let csvImport = new gCSVImport(this['add_animation_' + type + '_animation'].value);
     let dSpan = this.domPanel.querySelector(`.${type}_workspace.csv_data_date_span`);
-    gAPPP.a.readProjectRawDataDate(this['add_animation_' + type + '_animation'].value, type + 'Rows')
+    csvImport.readProjectRawDataDate(type + 'Rows')
       .then(r => {
         dSpan.innerHTML = (r) ? GLOBALUTIL.shortDateTime(r) : 'none';
       });

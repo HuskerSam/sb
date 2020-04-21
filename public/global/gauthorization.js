@@ -147,48 +147,6 @@ class gAuthorization {
     window.localStorage.setItem('emailForSignIn', email);
     alert('Email Sent');
   }
-  clearProjectData(key) {
-    if (!key)
-      return;
-
-    let basePath = `/project/${key}/`;
-    let fireUpdates = {
-      [basePath + 'block']: null,
-      [basePath + 'blockchild']: null,
-      [basePath + 'frame']: null,
-      [basePath + 'material']: null,
-      [basePath + 'mesh']: null,
-      [basePath + 'shape']: null,
-      [basePath + 'texture']: null
-    };
-
-    return firebase.database().ref().update(fireUpdates);
-  }
-  async writeProjectRawData(key, rawName, data) {
-    if (!key || !rawName)
-      return Promise.resolve();
-
-    let fireUpdates = {
-      [`/project/${key}/rawData${rawName}`]: data,
-      [`/project/${key}/rawData${rawName}Date`]: new Date()
-    };
-
-    return firebase.database().ref().update(fireUpdates);
-  }
-  async readProjectRawData(key, rawName) {
-    if (!key || !rawName)
-      return Promise.resolve();
-
-    return firebase.database().ref(`/project/${key}/rawData${rawName}`).once('value')
-      .then(r => r.val());
-  }
-  async readProjectRawDataDate(key, rawName) {
-    if (!key || !rawName)
-      return Promise.resolve();
-
-    return firebase.database().ref(`/project/${key}/rawData${rawName}Date`).once('value')
-      .then(r => r.val());
-  }
   async signInAnon() {
     this.anonymous = true;
     await firebase.auth().signOut();

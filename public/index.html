@@ -412,28 +412,6 @@
       }
     }
 
-    .submit_email_input,
-    .submit_email_button {
-      color: rgb(200, 90, 0);
-      background: rgb(255, 255, 0);
-      padding: .5em;
-      border: solid .1em rgb(200, 90, 0);
-      border-radius: 1em;
-      font-size: 1.5em;
-    }
-
-    .submit_email_button {
-      position:relative;
-      left: -1em;
-      border-left: none;
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    .submit_email_input {
-      background: rgb(255, 255, 210);
-    }
-
     #display_section {
       flex: 1;
       text-align: center;
@@ -609,8 +587,6 @@
         <br>
         Founded and located in downtown Lincoln, Nebraska, USA
         <div style="font-size: .75em;margin-top:.5em;">
-          <input type="text" style="background:white;" placeholder="Subscribe for updates..." name="email" class="submit_email_input" /><input type="button" value="Submit Email" class="submit_email_button" onclick="submitEmail()" />
-          &nbsp;
           <a class="menu-item" style="padding: .25em 1em;padding-top:.5em;" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         </div>
       </div>
@@ -643,24 +619,6 @@
     gtag('config', 'UA-148094829-1');
   </script>
   <script>
-    async function submitEmail() {
-      let email = document.querySelector('.submit_email_input').value;
-      if (!email) {
-        alert('Please provide an email');
-        return;
-      }
-      //    let apiPath = 'http://localhost:5001/groceryblocks/us-central1/submitEmailToList';
-      let apiPath = 'https://us-central1-groceryblocks.cloudfunctions.net/submitEmailToList';
-      let url = `${apiPath}?email=${encodeURIComponent(email)}`;
-      document.querySelector('.submit_email_input').value = '';
-      let response = await fetch(url, {
-        method: 'POST',
-        mode: 'no-cors'
-      });
-
-      alert('Email submitted - thank you!');
-    }
-
     function rotateHeaderMessages() {
       let header = document.querySelector('.message_header_homepage');
       let messages = ["Virtual Displays for Retailers", "Connect to Customers", ""];

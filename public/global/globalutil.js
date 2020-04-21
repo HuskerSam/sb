@@ -18,7 +18,7 @@ class GLOBALUTIL {
     return new BABYLON.Color3(r, g, b);
   }
   static colorRGB255(str) {
-    let bC = this.color(str);
+    let bC = GLOBALUTIL.color(str);
     if (isNaN(bC.r))
       bC.r = 1;
     if (isNaN(bC.g))
@@ -55,7 +55,7 @@ class GLOBALUTIL {
     return blob;
   }
   static getNumberOrDefault(str, d) {
-    if (this.isNumeric(str))
+    if (GLOBALUTIL.isNumeric(str))
       return Number(str);
     return d;
   }
@@ -82,13 +82,13 @@ class GLOBALUTIL {
   static path(obj, is, value) {
     try {
       if (typeof is == 'string')
-        return this.path(obj, is.split('.'), value);
+        return GLOBALUTIL.path(obj, is.split('.'), value);
       else if (is.length == 1 && value !== undefined)
         return obj[is[0]] = value;
       else if (is.length == 0)
         return obj;
       else
-        return this.path(obj[is[0]], is.slice(1), value);
+        return GLOBALUTIL.path(obj[is[0]], is.slice(1), value);
     } catch (e) {
       //  console.log('path() err', e);
     }
@@ -100,7 +100,7 @@ class GLOBALUTIL {
   static formatNumber(num) {
     let leftSide = 3;
     let rightSide = 3;
-    if (!this.isNumeric(num))
+    if (!GLOBALUTIL.isNumeric(num))
       num = 0;
     num = Number(num);
     let str = num.toFixed(rightSide);
@@ -112,19 +112,19 @@ class GLOBALUTIL {
     return leftFinal + '.' + rightFinal;
   }
   static HexToRGB(hex) {
-    var r = this.HexToR(hex) / 255;
-    var g = this.HexToG(hex) / 255;
-    var b = this.HexToB(hex) / 255;
+    var r = GLOBALUTIL.HexToR(hex) / 255;
+    var g = GLOBALUTIL.HexToG(hex) / 255;
+    var b = GLOBALUTIL.HexToB(hex) / 255;
     return new BABYLON.Color3(r, g, b);
   }
   static HexToR(h) {
-    return parseInt((this.CutHex(h)).substring(0, 2), 16)
+    return parseInt((GLOBALUTIL.CutHex(h)).substring(0, 2), 16)
   }
   static HexToG(h) {
-    return parseInt((this.CutHex(h)).substring(2, 4), 16)
+    return parseInt((GLOBALUTIL.CutHex(h)).substring(2, 4), 16)
   }
   static HexToB(h) {
-    return parseInt((this.CutHex(h)).substring(4, 6), 16)
+    return parseInt((GLOBALUTIL.CutHex(h)).substring(4, 6), 16)
   }
   static CutHex(h) {
     return (h.charAt(0) == "#") ? h.substring(1, 7) : h
@@ -186,9 +186,9 @@ class GLOBALUTIL {
     return earthradius_m * c;
   }
   static getGPSDiff(lat1, lon1, lat2, lon2) {
-    let distance = this.__distanceGPSMeters(lat1, lon1, lat2, lon2);
-    let horizontal = this.__distanceGPSMeters(lat1, lon1, lat2, lon1);
-    let vertical = this.__distanceGPSMeters(lat1, lon1, lat1, lon2);
+    let distance = GLOBALUTIL.__distanceGPSMeters(lat1, lon1, lat2, lon2);
+    let horizontal = GLOBALUTIL.__distanceGPSMeters(lat1, lon1, lat2, lon1);
+    let vertical = GLOBALUTIL.__distanceGPSMeters(lat1, lon1, lat1, lon2);
 
     return {
       horizontal,
@@ -243,4 +243,8 @@ if (!String.prototype.padEnd) {
       return String(this) + padString.slice(0, targetLength);
     }
   };
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = GLOBALUTIL;
 }

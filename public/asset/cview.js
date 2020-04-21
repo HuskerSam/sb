@@ -127,15 +127,15 @@ class cView extends bView {
     setTimeout(async () => {
       let csvImport = new gCSVImport(animationKey);
       if (clearWorkspace)
-        await gAPPP.a.clearProjectData(animationKey);
-      let assets = await gAPPP.a.readProjectRawData(animationKey, 'assetRows');
+        await csvImport.clearProjectData();
+      let assets = await csvImport.readProjectRawData('assetRows');
       await csvImport.importRows(assets);
-      let scene = await gAPPP.a.readProjectRawData(animationKey, 'sceneRows');
+      let scene = await csvImport.readProjectRawData('sceneRows');
       await csvImport.importRows(scene);
-      let products = await gAPPP.a.readProjectRawData(animationKey, 'productRows');
+      let products = await csvImport.readProjectRawData('productRows');
       await csvImport.importRows(products);
       await csvImport.addCSVDisplayFinalize();
-      await gAPPP.a.writeProjectRawData(animationKey, 'animationGenerated', null);
+      await csvImport.writeProjectRawData('animationGenerated', null);
       this._updateQueryString(animationKey, 'Generate');
 
       if (reload) {

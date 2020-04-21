@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+  <style>
+    .item_holder {
+        position: relative;
+      }
+
+    .basic_item {
+      border-radius: 50%;
+      width: 100px;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+  <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
+
+  <div>
+
+    Audio File:
+    <input type="file" class="audio_file" style="width:200px" />
+
+    <br>
+    <br>
+    <audio id="audio" controls style="width:250px;"></audio>
+    <div id="song_len_sec">&nbsp;</div>
+    <textarea id="raw_data" style="width:280px;height:200px;"></textarea>
+    <br>
+
+  </div>
+  <script>
+    class FFTSoundFile {
+      constructor() {
+        this.audio_file = document.querySelector('.audio_file');
+        this.audio_file.addEventListener('change', e => this.audio_file_onchange());
+      }
+      file_to_array(file) {
+        return new Promise((resolve, reject) => {
+          let reader = new FileReader();
+
+          reader.onload = () => {
+            let array = new Uint8Array(reader.result);
+            resolve(array);
+          };
+
+          reader.onerror = (err) => {
+            console.log('File Reader Error', err);
+            reject(err);
+          };
+
+          reader.readAsArrayBuffer(file);
+        });
+      }
+      async audio_loaded() {
+        return new Promise((resolve, reject) => {
+          audio.onloadeddata = () => {
+            resolve();
+          }
+        });
+      }
+      audio_playing() {
+        return new Promise((resolve, reject) => {
+          audio.onplaying = () => {
+            resolve();
+          }
+        });
+      }
+      smooth_bands(in_array) {
+        let l = in_array.length;
+        let out_array = [];
+
+        for (let c = 4; c < 16; c += 4) {
+          let sum = 0.0;
+          for (let d = 0; d < 4; d++) {
+            sum += in_array[d + c];
+          }
+
+          out_array.push(Math.round(sum / 4));
+        }
+
+        for (let c = 1; c < l; c += 16) {
+          let sum = 0.0;
+          for (let d = 0; d < 16; d++) {
+            sum += in_array[d + c];
+          }
+
+          out_array.push(Math.round(sum / 16));
+        }
+
+        return out_array;
+      }
+      swap_indexes_n2(in_array) {
+        let out_array = [];
+        let outer_bound = in_array[0].length;
+
+        for (let c = 0; c < outer_bound; c++) {
+          let new_n2_array = [];
+          for (let d = 0, dl = in_array.length; d < dl; d++)
+            new_n2_array.push(in_array[d][c]);
+
+          out_array.push(new_n2_array)
+        }
+
+        return out_array;
+      }
+      async convert_song_to_chunks(file_bytes) {
+        let bufferUsed = 0;
+        let bytes_per_sample = 1024;
+        let song_sample_ctr = 0;
+        let song_chunks = [];
+        let freq_chunks = [];
+
+        while (bufferUsed < (file_bytes.length - bytes_per_sample)) {
+          let data_to_process = file_bytes.slice(bufferUsed, bufferUsed + bytes_per_sample);
+          bufferUsed += bytes_per_sample;
+          song_sample_ctr++;
+
+          song_chunks.push(data_to_process);
+
+          let ft = new FFT(bytes_per_sample, 44100);
+          ft.forward(data_to_process);
+          let fewer_bands = this.smooth_bands(ft.spectrum);
+          freq_chunks.push(fewer_bands);
+        }
+
+        return freq_chunks;
+      }
+      resampleData(arrayIn, secondsLength, samplesPerSecondOut) {
+        let outArray = [];
+        arrayIn.forEach(bandArray => {
+          let outBand = [];
+          let sampleCountFactor = bandArray.length / (secondsLength * samplesPerSecondOut);
+          let runningFactor = 0;
+
+          let sampleSum = 0.0;
+          let sampleFactor = 0;
+          let bandIndex = 0;
+          let outSampleIndex = 0;
+          bandArray.forEach(sample => {
+            sampleSum += sample;
+            sampleFactor++;
+            bandIndex++;
+
+            let sampleTestIndex = Math.floor(bandIndex / sampleCountFactor);
+
+            if (sampleTestIndex > outBand.length) {
+              outBand.push(Number((sampleSum / sampleFactor).toFixed(1)));
+              sampleSum = 0.0;
+              sampleFactor = 0;
+            }
+          });
+          outArray.push(outBand);
+        });
+
+        return outArray;
+      }
+      async audio_file_onchange() {
+          document.getElementById('raw_data').value = '';
+          document.getElementById('song_len_sec').innerHTML = '&nbsp;';
+          let song_bytes = await this.file_to_array(this.audio_file.files[0]);
+
+          if (song_bytes)
+            document.getElementById('song_len_sec').innerHTML = (song_bytes.length / 44100).toFixed(1) + ' s @44100 ' + song_bytes.length + ' bytes<br>processed to 10 samples per second';
+          audio.src = URL.createObjectURL(this.audio_file.files[0]);
+
+          audio.load();
+
+          await this.audio_loaded();
+          this.time_length = audio.duration; // in seconds
+
+
+          let song_chunks = await this.convert_song_to_chunks(song_bytes);
+          let song_chunks_flipped_indexes = this.swap_indexes_n2(song_chunks);
+
+
+
+          let freqData = [];
+          for (let i = 0; i < 8; i++)
+            freqData.push(song_chunks_flipped_indexes[i]);
+          //resample to 10 per second  2584 @ 60s => 600 @ 60s
+          let resampledArray = this.resampleData(freqData, 60, 10);
+
+          document.getElementById('raw_data').value = JSON.stringify(resampledArray);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', e => {
+      let FFT_file = new FFTSoundFile();
+    })
+  </script>
+
+
+
+
+
+  </body>
+</html>

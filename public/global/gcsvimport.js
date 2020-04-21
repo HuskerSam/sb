@@ -1,12 +1,26 @@
 class gCSVImport {
   constructor(projectId = 'default') {
     this.projectId = projectId;
+    this.node = false;
+    if (typeof module !== 'undefined' && module.exports) {
+      this.firebase = require("firebase-admin");
+      this.node = true;
+    } else {
+      this.firebase = firebase;
+    }
+  }
+  getNumberOrDefault(val, d) {
+    if (this.node) {
+      return this.globalUtil.getNumberOrDefault(val, d);
+    } else {
+      return GLOBALUTIL.getNumberOrDefault(val, d);
+    }
   }
   path(eleType) {
     return '/project/' + this.projectId + '/' + eleType;
   }
   async dbFetchByLookup(type, field, value) {
-    return firebase.database().ref(this.path(type))
+    return this.firebase.database().ref(this.path(type))
       .orderByChild(field)
       .equalTo(value)
       .once('value')
@@ -38,7 +52,7 @@ class gCSVImport {
     } else {
       updates['/' + this.path(type) + '/' + key] = null;
     }
-    return firebase.database().ref().update(updates);
+    return this.firebase.database().ref().update(updates);
   }
   async dbSetRecord(type, data, id) {
     if (type === 'material') {
@@ -58,7 +72,7 @@ class gCSVImport {
     }
 
     if (!id)
-      id = firebase.database().ref().child(this.path(type)).push().key;
+      id = this.firebase.database().ref().child(this.path(type)).push().key;
     let updates = {};
     data.sortKey = new Date().getTime();
     updates['/' + this.path(type) + '/' + id] = data;
@@ -67,7 +81,7 @@ class gCSVImport {
       for (let i in data)
         if (data[i] === undefined) delete data[i];
 
-    await firebase.database().ref().update(updates);
+    await this.firebase.database().ref().update(updates);
 
     return Promise.resolve({
       key: id
@@ -75,18 +89,18 @@ class gCSVImport {
   }
   async dbSetRecordFields(type, data, id) {
     if (!id)
-      id = firebase.database().ref().child(this.path(type)).push().key;
+      id = this.firebase.database().ref().child(this.path(type)).push().key;
     let updates = {};
     for (let i in data)
       updates['/' + this.path(type) + '/' + id + '/' + i] = data[i];
-    await firebase.database().ref().update(updates);
+    await this.firebase.database().ref().update(updates);
 
     return Promise.resolve({
       key: id
     });
   }
   async dbFetchListByLookup(type, field, value) {
-    return firebase.database().ref(this.path(type))
+    return this.firebase.database().ref(this.path(type))
       .orderByChild(field)
       .equalTo(value)
       .once('value')
@@ -98,12 +112,12 @@ class gCSVImport {
       });
   }
   async setBlobFromString(id, dataString, filename) {
-    let storageRef = firebase.storage().ref();
+    let storageRef = this.firebase.storage().ref();
     let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename);
     return ref.putString(dataString)
   }
   async setBlob(id, blob, filename) {
-    let storageRef = firebase.storage().ref();
+    let storageRef = this.firebase.storage().ref();
     let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename)
     return ref.put(blob);
   }
@@ -307,7 +321,7 @@ class gCSVImport {
       blockChildData.longitude = row.longitude;
 
     if (row.index) {
-      blockChildData.animationIndex = GLOBALUTIL.getNumberOrDefault(row.index, 0);
+      blockChildData.animationIndex = this.getNumberOrDefault(row.index, 0);
       blockChildData.origRow = row;
     }
     if (row.sku)
@@ -617,12 +631,12 @@ class gCSVImport {
     return await this.dbSetRecord('material', materialData);
   }
   async addCSVAnimatedLine(row) {
-    let dashes = GLOBALUTIL.getNumberOrDefault(row.dashes, 1);
-    let runlength = GLOBALUTIL.getNumberOrDefault(row.runlength, 2000);
-    let width = GLOBALUTIL.getNumberOrDefault(row.width, 1);
-    let height = GLOBALUTIL.getNumberOrDefault(row.height, 1);
-    let depth = GLOBALUTIL.getNumberOrDefault(row.depth, 10);
-    let dashlength = GLOBALUTIL.getNumberOrDefault(row.dashlength, 1);
+    let dashes = this.getNumberOrDefault(row.dashes, 1);
+    let runlength = this.getNumberOrDefault(row.runlength, 2000);
+    let width = this.getNumberOrDefault(row.width, 1);
+    let height = this.getNumberOrDefault(row.height, 1);
+    let depth = this.getNumberOrDefault(row.depth, 10);
+    let dashlength = this.getNumberOrDefault(row.dashlength, 1);
 
     if (width <= 0.0)
       width = 0.001;
@@ -735,12 +749,12 @@ class gCSVImport {
     return blockResult;
   }
   async addCSVConnectorLine(row) {
-    row.length = GLOBALUTIL.getNumberOrDefault(row.length, 1);
-    row.diameter = GLOBALUTIL.getNumberOrDefault(row.diameter, 1);
-    row.pointlength = GLOBALUTIL.getNumberOrDefault(row.pointlength, 1);
-    row.pointdiameter = GLOBALUTIL.getNumberOrDefault(row.pointdiameter, 1);
-    row.taillength = GLOBALUTIL.getNumberOrDefault(row.taillength, 1);
-    row.taildiameter = GLOBALUTIL.getNumberOrDefault(row.taildiameter, 1);
+    row.length = this.getNumberOrDefault(row.length, 1);
+    row.diameter = this.getNumberOrDefault(row.diameter, 1);
+    row.pointlength = this.getNumberOrDefault(row.pointlength, 1);
+    row.pointdiameter = this.getNumberOrDefault(row.pointdiameter, 1);
+    row.taillength = this.getNumberOrDefault(row.taillength, 1);
+    row.taildiameter = this.getNumberOrDefault(row.taildiameter, 1);
 
     let adjPointLength = row.pointlength;
     let adjPointDiameter = row.pointdiameter;
@@ -824,9 +838,9 @@ class gCSVImport {
     return blockResult;
   }
   async addCSVShapeAndText(row) {
-    let height = GLOBALUTIL.getNumberOrDefault(row.height, 1).toFixed(3);
-    let width = GLOBALUTIL.getNumberOrDefault(row.width, 1).toFixed(3);
-    let depth = GLOBALUTIL.getNumberOrDefault(row.depth, 1).toFixed(3);
+    let height = this.getNumberOrDefault(row.height, 1).toFixed(3);
+    let width = this.getNumberOrDefault(row.width, 1).toFixed(3);
+    let depth = this.getNumberOrDefault(row.depth, 1).toFixed(3);
     let minDim = Math.min(Math.min(width, height), depth);
 
     let blockrow = {
@@ -838,7 +852,7 @@ class gCSVImport {
     };
     let blockResult = await this.addCSVBlockRow(blockrow);
 
-    let textDepth = GLOBALUTIL.getNumberOrDefault(row.textdepth, .25);
+    let textDepth = this.getNumberOrDefault(row.textdepth, .25);
     if (!row.texttextline2)
       row.texttextline2 = '';
     if (!row.texttext)
@@ -995,8 +1009,8 @@ class gCSVImport {
       panelrow.width = row.depth;
       panelrow.height = row.height;
       panelrow.parent = row.name;
-      panelrow.x = (GLOBALUTIL.getNumberOrDefault(row.width, 0.0) / -2.0).toString();
-      panelrow.y = (GLOBALUTIL.getNumberOrDefault(row.height, 0.0) / 2).toString();
+      panelrow.x = (this.getNumberOrDefault(row.width, 0.0) / -2.0).toString();
+      panelrow.y = (this.getNumberOrDefault(row.height, 0.0) / 2).toString();
       panelrow.ry = '-90deg';
       this.addCSVRow(panelrow);
 
@@ -1015,8 +1029,8 @@ class gCSVImport {
       panelrow.width = row.depth;
       panelrow.height = row.height;
       panelrow.parent = row.name;
-      panelrow.x = (GLOBALUTIL.getNumberOrDefault(row.width, 0.0) / 2.0).toString();
-      panelrow.y = (GLOBALUTIL.getNumberOrDefault(row.height, 0.0) / 2).toString();
+      panelrow.x = (this.getNumberOrDefault(row.width, 0.0) / 2.0).toString();
+      panelrow.y = (this.getNumberOrDefault(row.height, 0.0) / 2).toString();
       panelrow.ry = '90deg';
       this.addCSVRow(panelrow);
 
@@ -1035,8 +1049,8 @@ class gCSVImport {
       panelrow.width = row.width;
       panelrow.height = row.height;
       panelrow.parent = row.name;
-      panelrow.z = (GLOBALUTIL.getNumberOrDefault(row.depth, 0.0) / 2.0).toString();
-      panelrow.y = (GLOBALUTIL.getNumberOrDefault(row.height, 0.0) / 2.0).toString();
+      panelrow.z = (this.getNumberOrDefault(row.depth, 0.0) / 2.0).toString();
+      panelrow.y = (this.getNumberOrDefault(row.height, 0.0) / 2.0).toString();
       this.addCSVRow(panelrow);
 
       panelrow = this.defaultCSVRow();
@@ -1054,8 +1068,8 @@ class gCSVImport {
       panelrow.width = row.width;
       panelrow.height = row.height;
       panelrow.parent = row.name;
-      panelrow.z = (GLOBALUTIL.getNumberOrDefault(row.depth, 0.0) / -2.0).toString();
-      panelrow.y = (GLOBALUTIL.getNumberOrDefault(row.height, 0.0) / 2.0).toString();
+      panelrow.z = (this.getNumberOrDefault(row.depth, 0.0) / -2.0).toString();
+      panelrow.y = (this.getNumberOrDefault(row.height, 0.0) / 2.0).toString();
       panelrow.ry = '180deg';
       this.addCSVRow(panelrow);
     }
@@ -1064,9 +1078,9 @@ class gCSVImport {
   }
   __childShapeRow(row) {
     let shapeRow = {};
-    let height = GLOBALUTIL.getNumberOrDefault(row.height, 1).toFixed(3);
-    let width = GLOBALUTIL.getNumberOrDefault(row.width, 1).toFixed(3);
-    let depth = GLOBALUTIL.getNumberOrDefault(row.depth, 1).toFixed(3);
+    let height = this.getNumberOrDefault(row.height, 1).toFixed(3);
+    let width = this.getNumberOrDefault(row.width, 1).toFixed(3);
+    let depth = this.getNumberOrDefault(row.depth, 1).toFixed(3);
     let minDim = Math.min(Math.min(width, height), depth);
     let maxDim = Math.max(Math.max(width, height), depth);
 
@@ -1287,8 +1301,8 @@ class gCSVImport {
       url: '',
       title: textPlaneName
     };
-    textureData.textFontSize = GLOBALUTIL.getNumberOrDefault(row.textfontsize, 100).toString();
-    textureData.textureTextRenderSize = GLOBALUTIL.getNumberOrDefault(row.texturetextrendersize, 512).toString();
+    textureData.textFontSize = this.getNumberOrDefault(row.textfontsize, 100).toString();
+    textureData.textureTextRenderSize = this.getNumberOrDefault(row.texturetextrendersize, 512).toString();
     textureData.textFontWeight = row.textfontweight ? row.textfontweight : '';
     textureData.isFittedText = true;
 
@@ -1675,7 +1689,7 @@ class gCSVImport {
         let product = productData.products[c];
         cameraBlockFrame.x = p.x;
         if (product.itemId)
-          cameraBlockFrame.y = (GLOBALUTIL.getNumberOrDefault(p.y, 0) + 2).toString();
+          cameraBlockFrame.y = (this.getNumberOrDefault(p.y, 0) + 2).toString();
         else
           cameraBlockFrame.y = p.y;
 
@@ -1832,9 +1846,9 @@ class gCSVImport {
     for (let c = 0; c < data.length; c += 2)
       map[data[c]] = data[c + 1];
 
-    let scaleFactor = GLOBALUTIL.getNumberOrDefault(map.datascalefactor, 2.0);
-    let signYOffset = GLOBALUTIL.getNumberOrDefault(map.signyoffset, 6.0);
-    let rotateY = GLOBALUTIL.getNumberOrDefault(map.rotatey, 0);
+    let scaleFactor = this.getNumberOrDefault(map.datascalefactor, 2.0);
+    let signYOffset = this.getNumberOrDefault(map.signyoffset, 6.0);
+    let rotateY = this.getNumberOrDefault(map.rotatey, 0);
 
     return {
       scaleFactor,
@@ -1879,9 +1893,9 @@ class gCSVImport {
         if (index === frameCount - 1) {
           bandScaleFrame.frametime = '100%';
         }
-          if (productData.sceneParams.rotateY !== 0) {
+        if (productData.sceneParams.rotateY !== 0) {
 
-            bandScaleFrame.ry = (-1.0 * productData.sceneParams.rotateY * timeRatio).toFixed(2) + 'deg';
+          bandScaleFrame.ry = (-1.0 * productData.sceneParams.rotateY * timeRatio).toFixed(2) + 'deg';
         }
 
         frameRows.push(this.addCSVRowList([bandScaleFrame]));
@@ -1938,7 +1952,7 @@ class gCSVImport {
     return Promise.all(promises);
   }
   async initProducts(cameraData = null) {
-    let result = await firebase.database().ref(this.path('blockchild'))
+    let result = await this.firebase.database().ref(this.path('blockchild'))
       .orderByChild('animationIndex')
       .startAt(-100000)
       .once('value');
@@ -1962,8 +1976,8 @@ class gCSVImport {
     let products = [];
     let productsBySKU = {};
     productsRecords = productsRecords.sort((a, b) => {
-      let aIndex = GLOBALUTIL.getNumberOrDefault(a.animationIndex, 0);
-      let bIndex = GLOBALUTIL.getNumberOrDefault(b.animationIndex, 0);
+      let aIndex = this.getNumberOrDefault(a.animationIndex, 0);
+      let bIndex = this.getNumberOrDefault(b.animationIndex, 0);
       if (aIndex > bIndex)
         return 1;
       if (aIndex < bIndex)
@@ -2015,9 +2029,9 @@ class gCSVImport {
       introTime = 0,
       runLength = 60;
     if (cameraData) {
-      finishDelay = GLOBALUTIL.getNumberOrDefault(cameraData.finishdelay, 0);
-      introTime = GLOBALUTIL.getNumberOrDefault(cameraData.introtime, 0);
-      runLength = GLOBALUTIL.getNumberOrDefault(cameraData.runlength, 60);
+      finishDelay = this.getNumberOrDefault(cameraData.finishdelay, 0);
+      introTime = this.getNumberOrDefault(cameraData.introtime, 0);
+      runLength = this.getNumberOrDefault(cameraData.runlength, 60);
     }
 
     let blocksData = await this.dbFetchByLookup('block', 'blockFlag', 'displayblock');
@@ -2115,4 +2129,48 @@ class gCSVImport {
     return Promise.resolve();
 
   }
+
+  async clearProjectData() {
+    let basePath = `/project/${this.projectId}/`;
+    let fireUpdates = {
+      [basePath + 'block']: null,
+      [basePath + 'blockchild']: null,
+      [basePath + 'frame']: null,
+      [basePath + 'material']: null,
+      [basePath + 'mesh']: null,
+      [basePath + 'shape']: null,
+      [basePath + 'texture']: null
+    };
+
+    return this.firebase.database().ref().update(fireUpdates);
+  }
+  async writeProjectRawData(rawName, data) {
+    if (!rawName)
+      return Promise.resolve();
+
+    let fireUpdates = {
+      [`/project/${this.projectId}/rawData${rawName}`]: data,
+      [`/project/${this.projectId}/rawData${rawName}Date`]: new Date()
+    };
+
+    return this.firebase.database().ref().update(fireUpdates);
+  }
+  async readProjectRawData(rawName) {
+    if (!rawName)
+      return Promise.resolve();
+
+    return this.firebase.database().ref(`/project/${this.projectId}/rawData${rawName}`).once('value')
+      .then(r => r.val());
+  }
+  async readProjectRawDataDate(rawName) {
+    if (!rawName)
+      return Promise.resolve();
+
+    return this.firebase.database().ref(`/project/${this.projectId}/rawData${rawName}Date`).once('value')
+      .then(r => r.val());
+  }
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = gCSVImport;
 }

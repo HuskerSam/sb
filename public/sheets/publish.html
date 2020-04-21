@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    Publish sheet(s) to web
+    <br>
+    <button id="display_publish">Publish</button>
+    <br>
+
+    <br>
+   <br>
+    wid <input id="workspace_id" value="-M3o9lFX579wmY4LiKC-" />
+    <br>
+    <br>
+    assets sheet <input id="assets_sheet" value="bottleassets" />
+    <br>
+    <br>
+    scene sheet <input id="scene_sheet" value="starwarscarousel" />
+     <br>
+    <br>
+    products sheet <input id="products_sheet" value="" />
+    <br>
+
+    <br>
+    <script>
+      class PublishWeb {
+        constructor() {
+          this.display_publish = document.getElementById('display_publish');
+          this.workspace_id = document.getElementById('workspace_id');
+          this.assets_sheet = document.getElementById('assets_sheet');
+          this.scene_sheet = document.getElementById('scene_sheet');
+          this.products_sheet = document.getElementById('products_sheet');
+
+          this.display_publish.addEventListener('click',(e) => this.publish());
+        }
+        scrapeValues() {
+
+        }
+        async publish() {
+          this.scrapeValues();
+          /*
+          if (this.assets_sheet.value) {
+            let assets = await this.grabSheetCSVJSONData(this.assets_sheet.value);
+            let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
+            url += this.workspace_id.value + '&type=asset&data=';
+            let json = JSON.stringify(assets);
+            url += encodeURIComponent(json);
+            let response = await fetch(url, {
+              method: "post"
+            });
+            let results = await response.json();
+            console.log(results);
+          }
+*/
+          if (this.scene_sheet.value) {
+            let scene = await this.grabSheetCSVJSONData(this.scene_sheet.value);
+            let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
+            url += encodeURIComponent(this.workspace_id.value) + '&type=scene';
+            let json = JSON.stringify(scene);
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            let results = await response.text();
+            console.log(results);
+
+          }
+          let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/generate/?id=' + encodeURIComponent(this.workspace_id.value);
+          let genResponse = await fetch(url, {
+            method: "post"
+          });
+          let genResults = await genResponse.text();
+          console.log(genResults);
+
+          return 0;
+        }
+
+        grabSheetCSVJSONData(sheetName) {
+          return new Promise((resolve, reject) => {
+            google.script.run.withSuccessHandler((result) => {
+              resolve(result)
+            }).getJSONFromCSVSheet(sheetName);
+          });
+        }
+      }
+
+
+      document.addEventListener('DOMContentLoaded', e => {
+        let FFT_file = new PublishWeb();
+      });
+    </script>
+  </body>
+</html>

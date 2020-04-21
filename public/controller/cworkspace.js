@@ -444,13 +444,14 @@ class cWorkspace {
   async workspaceLayoutSceneDataInit() {
     let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'displayfieldedits');
 
-    let results = await gAPPP.a.readProjectRawData(gAPPP.loadedWID, 'sceneRows')
+    let csvImport = new gCSVImport(gAPPP.loadedWID);
+    let results = await csvImport.readProjectRawData('sceneRows')
     this.sceneCSVData = [];
     if (results) this.sceneCSVData = results;
-    results = await gAPPP.a.readProjectRawData(gAPPP.loadedWID, 'assetRows')
+    results = await csvImport.readProjectRawData('assetRows')
     this.assetCSVData = [];
     if (results) this.assetCSVData = results;
-    results = await gAPPP.a.readProjectRawData(gAPPP.loadedWID, 'productRows')
+    results = await csvImport.readProjectRawData('productRows')
     this.productCSVData = [];
     if (results) this.productCSVData = results;
     this.productCSVData = this.productCSVData.sort((a, b) => {
@@ -606,7 +607,8 @@ class cWorkspace {
       }
 
     if (dataChanged) {
-      await gAPPP.a.writeProjectRawData(gAPPP.loadedWID, tab + 'Rows', rows);
+      let csvImport = new gCSVImport(gAPPP.loadedWID);
+      await csvImport.writeProjectRawData(tab + 'Rows', rows);
       gAPPP.updateGenerateDataTimes();
     }
 
@@ -679,7 +681,8 @@ class cWorkspace {
   }
 
   async workspaceLayoutCSVLoadTable(tableName) {
-    let results = await gAPPP.a.readProjectRawData(gAPPP.loadedWID, tableName + 'Rows')
+    let csvImport = new gCSVImport(gAPPP.loadedWID);
+    let results = await csvImport.readProjectRawData(tableName + 'Rows')
     let data = [];
     if (results) data = results;
 
@@ -900,7 +903,8 @@ class cWorkspace {
           data[c][i] = '';
     }
 
-    await gAPPP.a.writeProjectRawData(gAPPP.loadedWID, tableName + 'Rows', data);
+    let csvImport = new gCSVImport(gAPPP.loadedWID);
+    await csvImport.writeProjectRawData(tableName + 'Rows', data);
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
     gAPPP.updateGenerateDataTimes();
     return;

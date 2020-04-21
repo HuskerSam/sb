@@ -149,11 +149,12 @@ class gApp extends gInstanceSuper {
     }
   }
   async updateGenerateDataTimes() {
+    let csvImport = new gCSVImport(gAPPP.loadedWID);
     let results = await Promise.all([
-      gAPPP.a.readProjectRawDataDate(gAPPP.loadedWID, 'assetRows'),
-      gAPPP.a.readProjectRawDataDate(gAPPP.loadedWID, 'sceneRows'),
-      gAPPP.a.readProjectRawDataDate(gAPPP.loadedWID, 'productRows'),
-      gAPPP.a.readProjectRawDataDate(gAPPP.loadedWID, 'animationGenerated')
+      csvImport.readProjectRawDataDate('assetRows'),
+      csvImport.readProjectRawDataDate('sceneRows'),
+      csvImport.readProjectRawDataDate('productRows'),
+      csvImport.readProjectRawDataDate('animationGenerated')
     ]);
     this.assetRowsDate = results[0];
     this.assetRowsDateDisplay = (this.assetRowsDate) ? GLOBALUTIL.shortDateTime(gAPPP.assetRowsDate) : 'none';
