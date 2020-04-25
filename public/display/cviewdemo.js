@@ -150,15 +150,22 @@ class cViewDemo extends bView {
         song: pageDesc.song,
         circuit: 'tables'
       });
+      let island = this.__findProjectID({
+        label: pageDesc.label,
+        song: pageDesc.song,
+        circuit: 'island'
+      });
 
       if (pageDesc.circuit === 'carousel') {
-        html += `Circuit: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a><br>`;
+        html += `Circuit: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Island</a><br>`;
       } else if (pageDesc.circuit === 'isle') {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle <a href="?wid=${tables}">Tables</a><br>`;
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Island</a><br>`;
       } else if (pageDesc.circuit === 'tables') {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> Tables<br>`;
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> Tables <a href="?wid=${island}">Island</a><br>`;
+      } else if (pageDesc.circuit === 'island') {
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> Island<br>`;
       } else {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a><br>`;
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Island</a><br>`;
       }
 
       let elephant = this.__findProjectID({
