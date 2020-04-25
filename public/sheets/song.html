@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
+
+<head>
+  <base target="_top">
+</head>
+
+<body>
   <style>
     .item_holder {
         position: relative;
@@ -25,14 +27,30 @@
 
   <div>
 
-    Audio File:
-    <input type="file" class="audio_file" style="width:200px" />
+    <br>
+    <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
+    <br>
+    <label>freq samples per second<input id="freq_samples_to_second" type="text" value="10" /></label>
+    <br>
+    <label>result bands
+      <select id="bands_to_combine">
+        <option value="1">256</option>
+        <option value="2">128</option>
+        <option value="4">64</option>
+        <option value="8">32</option>
+        <option value="16" selected>16</option>
+        <option value="32">8</option>
+      </select>
+    <br>
+<br><label>
+    WAV Audio File:
+    <input type="file" class="audio_file" style="width:100%" /></label>
 
-    <br>
-    <br>
+<br>
+<br>
     <audio id="audio" controls style="width:250px;"></audio>
     <div id="song_len_sec">&nbsp;</div>
-    <textarea id="raw_data" style="width:280px;height:200px;"></textarea>
+    <textarea id="raw_data" style="width:260px;height:200px;"></textarea>
     <br>
 
   </div>
@@ -41,6 +59,9 @@
       constructor() {
         this.audio_file = document.querySelector('.audio_file');
         this.audio_file.addEventListener('change', e => this.audio_file_onchange());
+        this.seconds_to_sample = document.querySelector('#seconds_to_sample');
+        this.bands_to_combine = document.querySelector('#bands_to_combine');
+        this.freq_samples_to_second = document.querySelector('#freq_samples_to_second');
       }
       file_to_array(file) {
         return new Promise((resolve, reject) => {
@@ -76,23 +97,15 @@
       smooth_bands(in_array) {
         let l = in_array.length;
         let out_array = [];
+        this.combined_bands = Number(this.bands_to_combine.value);
 
-        for (let c = 4; c < 16; c += 4) {
+        for (let c = 0; c < l; c += this.combined_bands) {
           let sum = 0.0;
-          for (let d = 0; d < 4; d++) {
+          for (let d = 0; d < this.combined_bands; d++) {
             sum += in_array[d + c];
           }
 
-          out_array.push(Math.round(sum / 4));
-        }
-
-        for (let c = 1; c < l; c += 16) {
-          let sum = 0.0;
-          for (let d = 0; d < 16; d++) {
-            sum += in_array[d + c];
-          }
-
-          out_array.push(Math.round(sum / 16));
+          out_array.push(Math.round(sum / this.combined_bands));
         }
 
         return out_array;
@@ -111,21 +124,21 @@
 
         return out_array;
       }
-      async convert_song_to_chunks(file_bytes) {
+      async fft_song_samples(samples_per_rift) {
         let bufferUsed = 0;
-        let bytes_per_sample = 1024;
         let song_sample_ctr = 0;
         let song_chunks = [];
         let freq_chunks = [];
+        let file_bytes = this.song_samples;
 
-        while (bufferUsed < (file_bytes.length - bytes_per_sample)) {
-          let data_to_process = file_bytes.slice(bufferUsed, bufferUsed + bytes_per_sample);
-          bufferUsed += bytes_per_sample;
+        while (bufferUsed < (this.song_samples.length - samples_per_rift)) {
+          let data_to_process = this.song_samples.slice(bufferUsed, bufferUsed + samples_per_rift);
+          bufferUsed += samples_per_rift;
           song_sample_ctr++;
 
           song_chunks.push(data_to_process);
 
-          let ft = new FFT(bytes_per_sample, 44100);
+          let ft = new FFT(samples_per_rift, this.sampleRate);
           ft.forward(data_to_process);
           let fewer_bands = this.smooth_bands(ft.spectrum);
           freq_chunks.push(fewer_bands);
@@ -163,32 +176,128 @@
         return outArray;
       }
       async audio_file_onchange() {
-          document.getElementById('raw_data').value = '';
-          document.getElementById('song_len_sec').innerHTML = '&nbsp;';
-          let song_bytes = await this.file_to_array(this.audio_file.files[0]);
+        document.getElementById('raw_data').value = '';
+        document.getElementById('song_len_sec').innerHTML = '&nbsp;';
+        let song_bytes = await this.file_to_array(this.audio_file.files[0]);
+        let html_out = '';
+        if (song_bytes) {
+          let riffTest = new TextDecoder().decode(song_bytes.slice(0, 4));
+          if (riffTest !== 'RIFF') {
+            alert('must be WAV file');
+            return;
+          }
+          this.totalSize = song_bytes[7] * (256 * 256 * 256) +
+            song_bytes[6] * (256 * 256) +
+            song_bytes[5] * (256) +
+            song_bytes[4];
+          html_out += 'total size: ' + this.totalSize + '<br>';
+          let wavTEST = new TextDecoder().decode(song_bytes.slice(8, 15));
+          if (wavTEST !== 'WAVEfmt') {
+            alert('must be WAV file');
+            return;
+          }
+          this.sampleBits = song_bytes[19] * (256 * 256 * 256) +
+            song_bytes[18] * (256 * 256) +
+            song_bytes[17] * (256) +
+            song_bytes[16];
+          html_out += 'sample bits:' + this.sampleBits + '<br>';
 
-          if (song_bytes)
-            document.getElementById('song_len_sec').innerHTML = (song_bytes.length / 44100).toFixed(1) + ' s @44100 ' + song_bytes.length + ' bytes<br>processed to 10 samples per second';
-          audio.src = URL.createObjectURL(this.audio_file.files[0]);
+          let audioFormat = song_bytes[21] * (256) +
+            song_bytes[20];
 
-          audio.load();
+          this.channels = song_bytes[23] * (256) +
+            song_bytes[22];
+          html_out += 'channels: ' + this.channels + '<br>';
 
-          await this.audio_loaded();
-          this.time_length = audio.duration; // in seconds
+          this.sampleRate = song_bytes[27] * (256 * 256 * 256) +
+            song_bytes[26] * (256 * 256) +
+            song_bytes[25] * (256) +
+            song_bytes[24];
+          html_out += 'sample rate:' + this.sampleRate + '<br>';
 
+          this.byteRate = song_bytes[31] * (256 * 256 * 256) +
+            song_bytes[30] * (256 * 256) +
+            song_bytes[29] * (256) +
+            song_bytes[28];
+          html_out += 'byteRate: ' + this.byteRate + '<br>';
 
-          let song_chunks = await this.convert_song_to_chunks(song_bytes);
-          let song_chunks_flipped_indexes = this.swap_indexes_n2(song_chunks);
+          let blockAlign = song_bytes[33] * (256) +
+            song_bytes[32];
+          html_out += 'blockAlign: ' + blockAlign + '<br>';
 
+          this.bitRate = song_bytes[35] * (256) +
+            song_bytes[34];
+          html_out += 'bitRate: ' + this.bitRate + '<br>';
+          let dataTEST = new TextDecoder().decode(song_bytes.slice(36, 40));
+          if (dataTEST !== 'data') {
+            alert('must be WAV file');
+            return;
+          }
 
+          this.dataChunkHeader = song_bytes[39] * (256 * 256 * 256) +
+            song_bytes[38] * (256 * 256) +
+            song_bytes[37] * (256) +
+            song_bytes[36];
+          html_out += 'dataChunkHeader:' + this.dataChunkHeader + '<br>';
 
-          let freqData = [];
-          for (let i = 0; i < 8; i++)
-            freqData.push(song_chunks_flipped_indexes[i]);
-          //resample to 10 per second  2584 @ 60s => 600 @ 60s
-          let resampledArray = this.resampleData(freqData, 60, 10);
+          this.fileDataSize = song_bytes[43] * (256 * 256 * 256) +
+            song_bytes[42] * (256 * 256) +
+            song_bytes[41] * (256) +
+            song_bytes[40];
+          html_out += 'fileDataSize:' + this.fileDataSize + '<br>';
 
-          document.getElementById('raw_data').value = JSON.stringify(resampledArray);
+          this.seconds = this.fileDataSize / this.byteRate;
+          this.seconds_clip = this.seconds;
+          if (this.seconds_to_sample.value !== '') {
+            this.seconds_clip = Number(this.seconds_to_sample.value);
+          }
+          html_out += 'length: ' + this.seconds.toFixed(1) + 's<br>';
+
+          let v = this.sampleRate / Number(this.bands_to_combine.value);
+          html_out += 'freq per band ' + v + 'hz<br>';
+
+          document.getElementById('song_len_sec').innerHTML = html_out;
+        } else {
+          //alert('no song');
+          return;
+        }
+        audio.src = URL.createObjectURL(this.audio_file.files[0]);
+
+        audio.load();
+
+        await this.audio_loaded();
+        this.time_length = audio.duration; // in seconds
+
+        this.rawBytes = song_bytes.slice(44);
+        this.song_samples = await this.convert_raw_to_samples(song_bytes);
+
+        let song_chunks = await this.fft_song_samples(512);
+
+        let song_chunks_flipped_indexes = this.swap_indexes_n2(song_chunks);
+        let freqData = [];
+        for (let i = 0; i < song_chunks_flipped_indexes.length; i++)
+          freqData.push(song_chunks_flipped_indexes[i]);
+        //resample to 10 per second  2584 @ 60s => 600 @ 60s
+        let resampledArray = this.resampleData(freqData, this.seconds_clip, Number(this.freq_samples_to_second.value));
+
+        console.log(resampledArray);
+        document.getElementById('raw_data').value = JSON.stringify(resampledArray);
+      }
+      convert_raw_to_samples() {
+        let samples = [];
+        let ratioToKeep = this.seconds / this.seconds_clip;
+        let sampleLimit = this.rawBytes.length / ratioToKeep;
+
+        //convert to 16 bits and clip size
+        if (this.bitSize > 8) {
+          for (let c = 0, l = this.sampleLimit - 1; c < l; c += 2) {
+            samples.push(this.rawBytes[c + 1] * 256 + this.rawBytes[c]);
+          }
+        } else {
+          samples = this.rawBytes;
+        }
+
+        return samples;
       }
     }
 
@@ -201,5 +310,6 @@
 
 
 
-  </body>
+</body>
+
 </html>
