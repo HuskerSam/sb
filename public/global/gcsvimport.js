@@ -192,6 +192,12 @@ class gCSVImport {
       emissiveColor = row.color;
       emissiveTextureName = textureName;
     }
+    let specularColor = '';
+    let specularTextureName = '';
+    if (row.specular === 'x') {
+      specularColor = row.color;
+      specularTextureName = textureName;
+    }
 
     let materialData = {
       title: row.materialname,
@@ -202,6 +208,8 @@ class gCSVImport {
       diffuseTextureName,
       emissiveColor,
       emissiveTextureName,
+      specularColor,
+      specularTextureName,
       bumpTextureName: row.bmppath
     };
     promises.push(this.dbSetRecord('material', materialData));
