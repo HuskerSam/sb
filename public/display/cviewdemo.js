@@ -98,10 +98,11 @@ class cViewDemo extends bView {
       let d = this.demoOptionDiv;
       d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:50%;padding: .5em;text-align:center;');
       d.setAttribute('class', 'app-panel');
-      let html = `<div class="orientation_details_div"></div><div style="line-height:1.5em;" class="demo_options_panel">UI <label><input type="radio" name="controls" checked class="demo_ui" />Demo</label>
-        <label><input type="radio" name="controls" class="cart_ui" />Cart</label>
-        <label><input type="radio" name="controls" class="anim_ui" />Anim</label>
-        <label><input type="radio" name="controls" class="edit_ui" />Config</label><br>`;
+      let html = `<div class="orientation_details_div"></div><div style="line-height:1.5em;" class="demo_options_panel">
+        UI <label><input type="radio" name="controls" checked class="demo_ui" />Console</label>
+        <label><input type="radio" name="controls" class="cart_ui" />Mobile</label>
+        <label><input type="radio" name="controls" class="anim_ui" />App</label>
+        <label><input type="radio" name="controls" class="edit_ui" />Options</label><br>`;
 
       html += `Camera <label><input type="radio" name="camera" class="camera_rotate" data-camera="arc_rotate" checked />Rotate</label>
         <label><input type="radio" name="camera" class="camera_follow" data-camera="follow" />Follow</label>

@@ -198,6 +198,9 @@ class gCSVImport {
       specularColor = row.color;
       specularTextureName = textureName;
     }
+    if (row.specularpath) {
+      specularTextureName = row.specularpath;
+    }
 
     let materialData = {
       title: row.materialname,
@@ -1879,14 +1882,21 @@ class gCSVImport {
     let scaleFactor = this.getNumberOrDefault(map.datascalefactor, 2.0);
     let signYOffset = this.getNumberOrDefault(map.signyoffset, 6.0);
     let rotateY = this.getNumberOrDefault(map.rotatey, 0);
+    let animType = map.animtype;
+    if (!animType)
+      animType = 'product';
 
     return {
       scaleFactor,
       signYOffset,
-      rotateY
+      rotateY,
+      animType
     }
   }
   async _addProductFramesFromData(product, productData, productIndex, freqPrefix = '') {
+    if (productData.sceneParams.animType !== 'product')
+      return;
+
     let child = product.childName;
     let sb = await this.csvFetchSceneBlock();
 
@@ -1916,9 +1926,9 @@ class gCSVImport {
         bandScaleFrame.parent = '::scene::';
         bandScaleFrame.frameorder = (10 * (index + 1)).toFixed(0);
         bandScaleFrame.frametime = (timeRatio * 100).toFixed(3) + '%';
-        bandScaleFrame.sx = (1 + dataPoint * scaleminusone).toFixed(3);
-        bandScaleFrame.sy = (1 + dataPoint * scaleminusone).toFixed(3);
-        bandScaleFrame.sz = (1 + dataPoint * scaleminusone).toFixed(3);
+        bandScaleFrame.sx = (.5 + dataPoint * scaleminusone).toFixed(3);
+        bandScaleFrame.sy = (.5 + dataPoint * scaleminusone).toFixed(3);
+        bandScaleFrame.sz = (.5 + dataPoint * scaleminusone).toFixed(3);
 
         if (index === frameCount - 1) {
           bandScaleFrame.frametime = '100%';
