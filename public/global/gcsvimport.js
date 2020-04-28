@@ -176,10 +176,9 @@ class gCSVImport {
 
     let diffuseColor = '';
     let diffuseTextureName = '';
-    if (row.diffuse === 'x') {
-      diffuseColor = row.color;
-      diffuseTextureName = textureName;
-    }
+    diffuseColor = row.color;
+    diffuseTextureName = textureName;
+
     let ambientColor = '';
     let ambientTextureName = '';
     if (row.ambient === 'x') {
@@ -191,6 +190,9 @@ class gCSVImport {
     if (row.emissive === 'x') {
       emissiveColor = row.color;
       emissiveTextureName = textureName;
+    }
+    if (row.emissivepath) {
+      emissiveTextureName = row.emissivepath;
     }
     let specularColor = '';
     let specularTextureName = '';
