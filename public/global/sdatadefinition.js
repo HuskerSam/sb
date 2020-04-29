@@ -234,7 +234,7 @@ __localStaticStorageForBindingFields['material'] = [{
 }, {
   title: 'Gloss From Specular',
   fireSetField: 'useGlossinessFromSpecularMapAlpha',
-  contextObjectField: 'specularPower',
+  contextObjectField: 'useGlossinessFromSpecularMapAlpha',
   group: 'specularColor',
   type: 'boolean',
   floatLeft: true

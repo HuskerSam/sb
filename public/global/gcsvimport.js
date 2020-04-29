@@ -168,9 +168,13 @@ class gCSVImport {
     promises.push(this.dbSetRecord('mesh', meshData));
 
     let textureName = row.name + 'material';
+    let hasAlpha = false;
+    if (row.hasalpha === 'x')
+      hasAlpha = true;
     let textureData = {
       title: textureName,
-      url: row.texturepath
+      url: row.texturepath,
+      hasAlpha
     };
     this.dbSetRecord('texture', textureData);
 
@@ -185,6 +189,9 @@ class gCSVImport {
       ambientColor = row.color;
       ambientTextureName = textureName;
     }
+    if (row.ambientpath) {
+      ambientTextureName = row.ambientpath;
+    }
     let emissiveColor = '';
     let emissiveTextureName = '';
     if (row.emissive === 'x') {
@@ -194,14 +201,19 @@ class gCSVImport {
     if (row.emissivepath) {
       emissiveTextureName = row.emissivepath;
     }
-    let specularColor = '';
+    let specularColor = '0,0,0';
     let specularTextureName = '';
+    let specularPower = "";
+    let useSpecularOverAlpha = false;
     if (row.specular === 'x') {
       specularColor = row.color;
       specularTextureName = textureName;
+      useSpecularOverAlpha = true;
     }
     if (row.specularpath) {
       specularTextureName = row.specularpath;
+      useSpecularOverAlpha = true;
+      specularPower = "2";
     }
 
     let materialData = {
@@ -215,7 +227,10 @@ class gCSVImport {
       emissiveTextureName,
       specularColor,
       specularTextureName,
-      bumpTextureName: row.bmppath
+      bumpTextureName: row.bmppath,
+      useSpecularOverAlpha,
+      specularColor,
+      specularPower
     };
     promises.push(this.dbSetRecord('material', materialData));
 
