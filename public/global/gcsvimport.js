@@ -215,6 +215,8 @@ class gCSVImport {
       useSpecularOverAlpha = true;
       specularPower = "2";
     }
+    if (row.specularpower)
+      specularPower = row.specularpower;
 
     let materialData = {
       title: row.materialname,
