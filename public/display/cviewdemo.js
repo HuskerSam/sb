@@ -98,7 +98,7 @@ class cViewDemo extends bView {
       let d = this.demoOptionDiv;
       d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:50%;padding: .5em;text-align:center;');
       d.setAttribute('class', 'app-panel');
-      let html = `<div class="orientation_details_div"></div><div style="line-height:1.5em;" class="demo_options_panel">
+      let html = `<div class="orientation_details_div"></div><div style="line-height:1.5em;display:none;" class="demo_options_panel">
         UI <label><input type="radio" name="controls" checked class="demo_ui" />Console</label>
         <label><input type="radio" name="controls" class="cart_ui" />Mobile</label>
         <label><input type="radio" name="controls" class="anim_ui" />App</label>
@@ -106,7 +106,7 @@ class cViewDemo extends bView {
 
       html += `Camera <label><input type="radio" name="camera" class="camera_rotate" data-camera="arc_rotate" checked />Rotate</label>
         <label><input type="radio" name="camera" class="camera_follow" data-camera="follow" />Follow</label>
-        <label><input type="radio" name="camera" data-camera="device_orientation" />Orientation</label><hr>`;
+        <label><input type="radio" name="camera" class="device_orientation" data-camera="device_orientation" />Orientation</label><hr>`;
 
       let flat = this.__findProjectID({
         label: 'flat',
@@ -158,15 +158,15 @@ class cViewDemo extends bView {
       });
 
       if (pageDesc.circuit === 'carousel') {
-        html += `Circuit: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Island</a><br>`;
+        html += `Circuit: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Platform</a><br>`;
       } else if (pageDesc.circuit === 'isle') {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Island</a><br>`;
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Platform</a><br>`;
       } else if (pageDesc.circuit === 'tables') {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> Tables <a href="?wid=${island}">Island</a><br>`;
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> Tables <a href="?wid=${island}">Platform</a><br>`;
       } else if (pageDesc.circuit === 'island') {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> Island<br>`;
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> Platform<br>`;
       } else {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Island</a><br>`;
+        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Platform</a><br>`;
       }
 
       let elephant = this.__findProjectID({
@@ -319,6 +319,9 @@ class cViewDemo extends bView {
 
             if (this.canvasHelper.cameraSelect.selectedIndex === 2) {
               document.querySelector('.camera_follow').checked = true;
+            }
+            if (this.canvasHelper.cameraSelect.selectedIndex === 4) {
+              document.querySelector('.device_orientation').checked = true;
             }
 
             this.canvasHelper.cameraChangeHandler();
