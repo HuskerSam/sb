@@ -580,7 +580,7 @@ class cMacro {
       if (item === 'message')
         return;
 
-     csv_row[item] = this['mesh_' + item].value;
+      csv_row[item] = this['mesh_' + item].value;
     });
     csv_row['ambient'] = 'x';
     csv_row['diffuse'] = 'x';
@@ -600,22 +600,13 @@ class cMacro {
         <div style="flex:1;display:flex;flex-direction:row;">
           <select size="4" style="flex:1;" class="materialtexturepicker">
           </select>
-          <select size="4" style="flex:1;" class="materialbumppicker">
-          </select>
         </div>
         <div style="text-align:center;">
-          <label><input type="checkbox" class="materialdiffuse" checked />diffuse</label>
-          <label><input type="checkbox" class="materialambient" checked />ambient</label>
-          <label><input type="checkbox" class="materialemissive" checked />emissive</label>
-          <br>
           <label><span>scalev</span><input type="text" class="materialscalev" value="1" /></label>
           <label><span>scaleu</span><input type="text" class="materialscaleu" value="1" /></label>
-          <label><span>bumpv</span><input type="text" class="materialbumpv" value="1" /></label>
-          <label><span>bumpu</span><input type="text" class="materialbumpu" value="1" /></label>
         </div>
         <div class="material-details-images" style="flex:1;flex-direction:row;display:flex;overflow:hidden;">
-          <img class="material_texture_img" crossorigin="anonymous" style="flex:1;max-width:50%;max-height:50vh;">
-          <img class="material_bump_img" crossorigin="anonymous" style="flex:1;max-width:50%;max-height:50vh;">
+          <img class="material_texture_img" crossorigin="anonymous" style="max-width:100%;max-height:50vh;">
         </div>
       </div>
       <div class="csv_import_preview"></div>`;
@@ -624,29 +615,28 @@ class cMacro {
     this.standardmaterialassetpanel = this.panel.querySelector('.standardmaterialassetpanel');
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
-    this.materialbumppicker = this.panel.querySelector('.materialbumppicker');
     this.material_texture_img = this.panel.querySelector('.material_texture_img');
-    this.material_bump_img = this.panel.querySelector('.material_bump_img');
     this.materialscalev = this.panel.querySelector('.materialscalev');
     this.materialscaleu = this.panel.querySelector('.materialscaleu');
-    this.materialbumpv = this.panel.querySelector('.materialbumpv');
-    this.materialbumpu = this.panel.querySelector('.materialbumpu');
-    this.materialdiffuse = this.panel.querySelector('.materialdiffuse');
-    this.materialambient = this.panel.querySelector('.materialambient');
-    this.materialemissive = this.panel.querySelector('.materialemissive');
 
-    let list = gAPPP.textureTextures;
     let html = '';
-    list.forEach(i => html += `<option>${i}</option>`);
+    for (let c = 0; c < 17; c++)
+      html += `<option>sb:matpack/brickwall${c + 1}</option>`;
+    for (let c = 0; c < 11; c++)
+      html += `<option>sb:matpack/floor${c + 1}</option>`;
+    for (let c = 0; c < 8; c++)
+      html += `<option>sb:matpack/grid${c + 1}</option>`;
+    for (let c = 0; c < 2; c++)
+      html += `<option>sb:matpack/hedgerow${c + 1}</option>`;
+    for (let c = 0; c < 4; c++)
+      html += `<option>sb:matpack/metal${c + 1}</option>`;
+    for (let c = 0; c < 16; c++)
+      html += `<option>sb:matpack/roof${c + 1}</option>`;
+    for (let c = 0; c < 7; c++)
+      html += `<option>sb:matpack/wood${c + 1}</option>`;
     this.materialtexturepicker.innerHTML = html;
 
-    list = gAPPP.bumpTextures;
-    html = '<option></option>';
-    list.forEach(i => html += `<option>${i}</option>`);
-    this.materialbumppicker.innerHTML = html;
-
     this.materialtexturepicker.selectedIndex = 0;
-    this.materialbumppicker.selectedIndex = 0;
 
     this.importstandardmaterial = this.panel.querySelector('.importstandardmaterial');
     this.importstandardmaterial.addEventListener('input', e => this.materialUpdateCSV());
@@ -676,10 +666,22 @@ class cMacro {
 
     let texture = this.materialtexturepicker.value;
     let textureURL = '';
+    let speculartexture = '';
+    let bumptexture = '';
+    let hasAlpha = '';
     if (!texture)
       texture = '';
     if (texture) {
-      textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3);
+      textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3) + '_D.jpg';
+      speculartexture = texture + '_S.jpg';
+      bumptexture = texture + '_N.jpg';
+      if (texture.substr(-5).substring(0, 4) === 'grid') {
+        textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3) + '_D.png';
+        hasAlpha = '1';
+        texture += '_D.png';
+      } else {
+        texture += '_D.jpg';
+      }
 
       this.material_texture_img.setAttribute('src', textureURL);
       this.material_texture_img.style.display = '';
@@ -688,37 +690,16 @@ class cMacro {
       this.material_texture_img.style.display = 'none';
     }
 
-    let bumptexture = this.materialbumppicker.value;
-    let bumpURL = '';
-    if (!bumptexture)
-      bumptexture = '';
-    if (bumptexture) {
-      bumpURL = gAPPP.cdnPrefix + 'textures/' + bumptexture.substring(3);
-
-      this.material_bump_img.setAttribute('src', bumpURL);
-      this.material_bump_img.style.display = '';
-    } else {
-      this.material_bump_img.setAttribute('src', '');
-      this.material_bump_img.style.display = 'none';
-    }
     let scaleu = this.materialscaleu.value;
     let scalev = this.materialscalev.value;
-    let bumpu = this.materialbumpu.value;
-    let bumpv = this.materialbumpv.value;
-    let diffuse = this.materialdiffuse.checked ? 'x' : '';
-    let emissive = this.materialemissive.checked ? 'x' : '';
-    let ambient = this.materialambient.checked ? 'x' : '';
 
     Object.assign(csv_row, {
       texture,
+      speculartexture,
       bumptexture,
       scaleu,
       scalev,
-      bumpu,
-      bumpv,
-      diffuse,
-      emissive,
-      ambient
+      hasalpha: hasAlpha
     });
 
     return csv_row;

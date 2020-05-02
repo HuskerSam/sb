@@ -629,30 +629,46 @@ class gCSVImport {
         vScale: row.scalev,
         uScale: row.scaleu
       };
+
+      if (row.hasalpha === '1') {
+        textureData.hasAlpha = true;
+      }
       this.dbSetRecord('texture', textureData);
     }
 
-    let bumpName = '';
+    let bumpTextureName = '';
     if (row.bumptexture) {
-      bumpName = row.name + '_bumptexture';
+      bumpTextureName = row.name + '_Ntexture';
       let textureData = {
-        title: bumpName,
+        title: bumpTextureName,
         url: row.bumptexture,
-        vScale: row.bumpv,
-        uScale: row.bumpu
+        vScale: row.scalev,
+        uScale: row.scaleu
+      };
+      this.dbSetRecord('texture', textureData);
+    }
+
+    let specularTextureName = '';
+    if (row.speculartexture) {
+      specularTextureName = row.name + '_Stexture';
+      let textureData = {
+        title: specularTextureName,
+        url: row.speculartexture,
+        vScale: row.scalev,
+        uScale: row.scaleu
       };
       this.dbSetRecord('texture', textureData);
     }
 
     let ambientTextureName = row.ambient === 'x' ? textureName : '';
-    let diffuseTextureName = row.diffuse === 'x' ? textureName : '';
     let emissiveTextureName = row.emissive === 'x' ? textureName : '';
     let materialData = {
       title: row.name,
-      diffuseTextureName,
+      diffuseTextureName: textureName,
       ambientTextureName,
       emissiveTextureName,
-      bumpTextureName: bumpName,
+      bumpTextureName,
+      specularTextureName,
       ambientColor: '',
       backFaceCulling: true,
       diffuseColor: '',
