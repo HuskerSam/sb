@@ -630,7 +630,7 @@ class gCSVImport {
         uScale: row.scaleu
       };
 
-      if (row.hasalpha === '1') {
+      if (row.hasalpha.toString() === '1') {
         textureData.hasAlpha = true;
       }
       this.dbSetRecord('texture', textureData);
