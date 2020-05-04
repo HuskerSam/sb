@@ -35,65 +35,6 @@
     else
       window.location = '/display';
 
-    window.addEventListener('DOMContentLoaded', e => {
-      let wrapperList = document.querySelectorAll('.video-wrapper');
-
-      wrapperList.forEach(wrapper => {
-        let video = wrapper.querySelector('video');
-        let btn = wrapper.querySelector('.playpause');
-
-        video.setAttribute('controls', '');
-        btn.addEventListener('click', e => {
-          if (video.paused) {
-            video.play();
-          }
-        });
-
-        video.addEventListener('pause', e => {
-          btn.style.display = '';
-        });
-        video.addEventListener('play', e => {
-          btn.style.display = 'none';
-        });
-      });
-
-      let video_linkList = document.querySelectorAll('.video_link');
-      video_linkList.forEach((anchor, index) => {
-        anchor.addEventListener('click', e => {
-          wrapperList.forEach(w => {
-            w.style.display = 'none';
-            w.querySelector('video').pause();
-          });
-          wrapperList[index].style.display = 'block';
-          wrapperList[index].querySelector('video').play();
-          video_linkList.forEach(i => i.classList.remove('selected'));
-          video_linkList[index].classList.add('selected');
-          e.preventDefault();
-          return false;
-        });
-      });
-
-      document.getElementById('homepagevideo').play();
-    });
-
-    window.addEventListener('scroll', e => {
-      let scrolled = window.pageYOffset;
-      let totalHeight = window.innerHeight;
-      let offset = scrolled % totalHeight;
-      let maxScroll = (document.documentElement.scrollHeight - document.documentElement.clientHeight) - offset / 4;
-
-      let pBlocks = document.querySelectorAll('.parallax-scroll');
-      if ((scrolled < maxScroll) && scrolled > 0) {
-        if (offset > totalHeight / 2.2)
-          pBlocks.forEach(p => p.style.top = '-' + (totalHeight - offset) + 'px');
-        else if (offset < totalHeight)
-          pBlocks.forEach(p => p.style.top = (offset) + 'px');
-        else
-          pBlocks.forEach(p => p.style.top = 0);
-      } else {
-        pBlocks.forEach(p => p.style.top = 0);
-      }
-    });
   </script>
   <style>
     html,
@@ -446,27 +387,7 @@
         <span class="header-reg">&reg;</span>
       </div>
       <br>
-      <div class="homepagebuttons">
-        <a href="#display_section" class="menu-item"><img alt="handtop display asl logo" src="/images/delicious.png" class="asl_icon" />Handtop Display<span class="trademark-span">&trade;</span></a>
-        <br>
-        <a href="#reality_section" class="menu-item"><img alt="handtop reality asl logo" src="/images/reality.png" class="asl_icon" />Handtop Reality<span class="trademark-span">&trade;</span></a>
-        <br>
-        <a href="#display_builder" class="menu-item"><img alt="display builder asl logo" src="/images/builder.png" class="asl_icon" />Display Builder<span class="trademark-span">&trade;</span></a>
-        <br>
-        <a href="https://groceryblocks2.web.app/" target="_blank" class="menu-item"><img alt="live display asl logo" src="/images/asll.png" class="asl_icon" />Demo in Browser</a>
-        <br>
-        <a href="#about_section" class="menu-item"><img alt="handtop about asl logo" src="/images/asla.png" class="asl_icon" />About and more</a>
-      </div>
     </div>
-    <div style="flex:1">
-      <div style="position:absolute;bottom:1em;width:100%;">
-        <h1 class="message_header_homepage">Virtual Displays for Retailers</h1>
-      </div>
-    </div>
-    <hr>
-  </div>
-  <div id="display_section" class="parallax-scroll">
-    <hr>
     <div>
       <h1 style="display:inline-block;">Do you create promotions for print ...
         <br>then upload them to your website?</h1>
@@ -497,70 +418,6 @@
     <div style="flex:1"></div>
     <hr>
   </div>
-  <div id="reality_section" class="parallax-scroll">
-    <hr>
-    <div>
-      <h1>Virtual Reality for all platforms</h1>
-    </div>
-    <div style="flex:1"></div>
-    <div style="flex:1;">
-      <h2>Display promotions on all major platforms</h2>
-      <div>
-        <img alt="display flow diagram" src="/images/displayflow.svg" class="sceneflowimg" />
-      </div>
-      <div class="sceneflowprose">
-        <div class="subprose">
-          <span style="color:rgb(200,90,0);font-family:Chilanka;font-weight:bold;">Handtop Display</span>&trade; generates virtual promotions from your data.
-          <br>
-          <span style="color:rgb(200,90,0);font-family:Chilanka;font-weight:bold;">Handtop Reality</span>&trade; scales and synchronizes content for displays.
-          <div style="display:none">
-            <br>
-            <a href="https://developer.android.com/training/tv/discovery/recommendations-channel.html" target="_blank">Recommend</a> and reference your content in the <a href="https://developer.android.com/training/tv/discovery/searchable.html"
-              target="_blank">TV
-              catalog</a>.
-          </div>
-        </div>
-      </div>
-    </div>
-    <div style="flex:1"></div>
-    <div style="flex:1"></div>
-    <hr>
-  </div>
-  <div id="display_builder" class="parallax-scroll">
-    <hr>
-    <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
-      <div style="position:absolute;z-index:1;top:.25em;width: 100%;">
-        <a href="#" id="video_1_link" class="video_link selected">Create</a>
-        <a href="#" id="video_2_link" class="video_link">Customize</a>
-        <a href="#" id="video_3_link" class="video_link">Spinner</a>
-        <a href="#" id="video_4_link" class="video_link">Lines</a>
-        <a href="#" id="video_4_link" class="video_link">Basics</a>
-      </div>
-      <div style="flex:1;display:flex;flex-direction:1;">
-        <div class="video-wrapper" id="video_1_link_video" style="display:block;">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" muted preload="auto"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-        <div class="video-wrapper" id="video_2_link_video">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" muted preload="none"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-        <div class="video-wrapper" id="video_3_link_video">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" muted preload="none"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-        <div class="video-wrapper" id="video_4_link_video">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" muted preload="none"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-        <div class="video-wrapper" id="video_5_link_video">
-          <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" preload="none"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-      </div>
-    </div>
-    <hr>
-  </div>
   <div id="about_section" class="parallax-scroll">
     <hr>
     <div>
@@ -571,13 +428,6 @@
     </div>
     <div style="flex:1"></div>
     <div style="flex:1;">
-      <div class="subprose">
-        <h2>Virtual content creation, delivery and display</h2>
-        <br>
-        Use data from your current promotions and extend it to virtual displays<br>
-        For more specifics on our services, visit <a href="/services">services</a>.
-      </div>
-      <br>
       <div class="subprose" style="margin-top:-.25em;z-index:-1">
         <h2>Delivering mobile experiences since 1998</h2>
         <br>
@@ -619,10 +469,6 @@
     gtag('config', 'UA-148094829-1');
   </script>
   <script>
-    function rotateHeaderMessages() {
-      let header = document.querySelector('.message_header_homepage');
-      let messages = ["Virtual Displays for Retailers", "Connect to Customers", ""];
-    }
   </script>
 </body>
 
