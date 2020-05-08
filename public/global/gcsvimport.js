@@ -1767,7 +1767,7 @@ class gCSVImport {
 
         cameraBlockFrame.z = p.z;
         cameraBlockFrame.rx = p.rx;
-        cameraBlockFrame.ry = p.ry;
+        cameraBlockFrame.ry = '';//p.ry;
         cameraBlockFrame.rz = p.rz;
         cameraBlockFrame.sx = p.sx;
         cameraBlockFrame.sy = p.sy;
@@ -1778,7 +1778,7 @@ class gCSVImport {
         cameraBlockFrame.y = cameraRow.y;
         cameraBlockFrame.z = cameraRow.z;
         cameraBlockFrame.rx = cameraRow.rx;
-        cameraBlockFrame.ry = cameraRow.ry;
+        cameraBlockFrame.ry = '';//cameraRow.ry;
         cameraBlockFrame.rz = cameraRow.rz;
         cameraBlockFrame.sx = cameraRow.sx;
         cameraBlockFrame.sy = cameraRow.sy;
