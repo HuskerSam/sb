@@ -375,20 +375,23 @@ class cWorkspace {
     this.fieldList = [
       'index', 'name', 'asset',
       'x', 'y', 'z',
+      'rx', 'ry', 'rz',
       'text1', 'text2', 'image', 'block',
       'sku', 'price', 'count', 'pricetext',
       'height', 'width',
-      'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily', 'materialname'
+       'displaystyle', 'textfontfamily', 'materialname'
     ];
     this.messageOnlyFields = [
       'index', 'name', 'asset', 'text1', 'text2',
-      'height', 'width', 'x', 'y', 'z', 'displaystyle', 'textfontfamily', 'materialname'
+      'height', 'width', 'x', 'y', 'z',
+      'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily', 'materialname'
     ];
     this.productOnlyFields = [
       'index', 'name', 'asset',
       'text1', 'text2', 'image', 'block',
       'sku', 'price', 'count', 'pricetext',
-      'x', 'y', 'z', 'displaystyle', 'textfontfamily'
+      'x', 'y', 'z',
+      'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily'
     ];
 
     this.allColumnList = [
@@ -1061,24 +1064,30 @@ class cWorkspace {
       let arr = positionInfo.genericBlockData.split('|');
       let positionHTML = '<option></option>';
 
-      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
-        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2];
+      for (let c = 0, l = arr.length; c < l - 5; c += 6) {
+        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2] + ',' + arr[c + 3] + ',' + arr[c + 4] + ',' + arr[c + 5];
         this.positionFrags.push(frag);
-        positionHTML += `<option value="${frag}">${(c / 3) + 1} ${frag}</option>`;
+        positionHTML += `<option value="${frag}">${(c / 6) + 1} ${frag}</option>`;
       }
 
       sel.innerHTML = positionHTML;
       sel.addEventListener('input', e => {
         let vals = sel.value.split(',');
 
-        if (vals.length === 3) {
+        if (vals.length === 6) {
           let xd = this.record_field_list_form.querySelector('.xedit');
           let yd = this.record_field_list_form.querySelector('.yedit');
           let zd = this.record_field_list_form.querySelector('.zedit');
+          let rxd = this.record_field_list_form.querySelector('.rxedit');
+          let ryd = this.record_field_list_form.querySelector('.ryedit');
+          let rzd = this.record_field_list_form.querySelector('.rzedit');
 
           xd.value = vals[0];
           yd.value = vals[1];
           zd.value = vals[2];
+          rxd.value = vals[3];
+          ryd.value = vals[4];
+          rzd.value = vals[5];
         }
 
         sel.selectedIndex = 0;
@@ -1124,7 +1133,7 @@ class cWorkspace {
       let arr = positionInfo.genericBlockData.split('|');
       let positionHTML = '<option>positions</option>';
 
-      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
+      for (let c = 0, l = arr.length; c < l - 5; c += 6) {
         if (arr[c] == x && arr[c + 1] == y && arr[c + 2] == z)
           return c / 3 + 1;
       }
@@ -1146,7 +1155,7 @@ class cWorkspace {
         else
           this.fieldDivByName[i].style.display = '';
       } else {
-        let alwaysShow = ['asset', 'name', 'index', 'x', 'y', 'z']
+        let alwaysShow = ['asset', 'name', 'index', 'x', 'y', 'z', 'rx', 'ry', 'rz']
         if (alwaysShow.indexOf(i) === -1)
           this.fieldDivByName[i].style.display = 'none';
         else

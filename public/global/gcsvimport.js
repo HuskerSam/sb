@@ -1416,7 +1416,11 @@ class gCSVImport {
     blockRow.name = product.childName + '_signpost';
     blockRow.parent = product.childName;
     blockRow.x = '.1';
-    blockRow.rz = '10deg';
+    blockRow.rz = '1deg';
+    if (product.origRow.rz) {
+      blockRow.rz = product.origRow.rz;
+    }
+
     blockRow.ry = '180deg';
     blockRow.y = '-1';
     blockRow.sx = '.001';
@@ -1527,7 +1531,7 @@ class gCSVImport {
     blockSPBC.materialname = 'inherit';
     blockSPBC.y = productData.sceneParams.signYOffset.toString();
     newObjects.push(blockSPBC);
-
+    /*
     let blockSP2BC = this.defaultCSVRow();
     blockSP2BC.asset = 'blockchild';
     blockSP2BC.childtype = 'shape';
@@ -1537,7 +1541,7 @@ class gCSVImport {
     blockSP2BC.x = '-0.05';
     blockSP2BC.y = (productData.sceneParams.signYOffset - 3.5).toString();
     newObjects.push(blockSP2BC);
-
+    */
     return this.addCSVRowList(newObjects);
   }
   async _addSignPost3D(product, productData, parent) {

@@ -192,8 +192,31 @@ class cView extends bView {
         block.sceneObject.position.y = GLOBALUTIL.getNumberOrDefault(positionParts[1], 0);
         block.sceneObject.position.z = GLOBALUTIL.getNumberOrDefault(positionParts[2], 0);
 
-        block.sceneObject.rotation.z = 3.14159 / 2;
-        block.sceneObject.rotation.x = 3.14159;
+        let rx = positionParts[3];
+        let ry = positionParts[4];
+        let rz = positionParts[5];
+        if (rx.toLowerCase().indexOf('deg') !== -1) {
+          rx = rx.toLowerCase().replace('deg', '');
+          rx = GLOBALUTIL.getNumberOrDefault(rx, 0) * Math.PI / 180.0;
+        } else {
+          rx = GLOBALUTIL.getNumberOrDefault(rx, 0);
+        }
+        if (ry.toLowerCase().indexOf('deg') !== -1) {
+          ry = ry.toLowerCase().replace('deg', '');
+          ry = GLOBALUTIL.getNumberOrDefault(ry, 0) * Math.PI / 180.0;
+        } else {
+          ry = GLOBALUTIL.getNumberOrDefault(ry, 0);
+        }
+        if (rz.toLowerCase().indexOf('deg') !== -1) {
+          rz = rz.toLowerCase().replace('deg', '');
+          rz = GLOBALUTIL.getNumberOrDefault(rz, 0) * Math.PI / 180.0;
+        } else {
+          rz = GLOBALUTIL.getNumberOrDefault(rz, 0);
+        }
+
+        block.sceneObject.rotation.z = Math.PI / 2 - rz;
+        block.sceneObject.rotation.y = ry;
+        block.sceneObject.rotation.x = Math.PI + rx;
 
         block.sceneObject.scaling.x = 2;
         block.sceneObject.scaling.y = 1;
@@ -220,10 +243,9 @@ class cView extends bView {
     let positionFrags = [];
     if (positionInfo) {
       let arr = positionInfo.genericBlockData.split('|');
-      let positionHTML = '<option></option>';
 
-      for (let c = 0, l = arr.length; c < l - 2; c += 3) {
-        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2];
+      for (let c = 0, l = arr.length; c < l - 5; c += 6) {
+        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2] + ',' + arr[c + 3] + ',' + arr[c + 4] + ',' + arr[c + 5];
         positionFrags.push(frag);
       }
     }
