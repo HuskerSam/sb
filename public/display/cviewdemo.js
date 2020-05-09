@@ -292,6 +292,8 @@ class cViewDemo extends bView {
     this.context.scene.onPointerObservable.add(evt => {
       if (evt.type === BABYLON.PointerEventTypes.POINTERDOWN) {
         let pickInfo = this.context.scene.pick(this.context.scene.pointerX, this.context.scene.pointerY, null, null, this.context.camera);
+        if (!pickInfo.pickedMesh)
+          return;
         let productBlock = this.getProductDataFromBlock(pickInfo.pickedMesh.blockWrapper);
         if (productBlock)
           this.basketAddItem(null, productBlock.blockRenderData.itemId);
@@ -835,6 +837,11 @@ class cViewDemo extends bView {
       for (let i in frames)
         frameIds.push(i);
 
+      if (frameIds.length < 4) {
+        //  alert('error');
+        return;
+      }
+
       let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
 
       if (existingValues) {
@@ -843,8 +850,8 @@ class cViewDemo extends bView {
           existingValues.positionZ === pos.z.toString())
           return Promise.resolve();
       }
-
-      return gAPPP.a.modelSets['frame'].commitUpdateList([{
+      let promises = [];
+      await gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionX',
         newValue: pos.x.toString()
       }, {
@@ -855,14 +862,107 @@ class cViewDemo extends bView {
         newValue: pos.z.toString()
       }, {
         field: 'scalingX',
-        newValue: ".5"
+        newValue: "1"
       }, {
         field: 'scalingY',
-        newValue: ".5"
+        newValue: "8"
       }, {
         field: 'scalingZ',
-        newValue: ".5"
+        newValue: "1"
       }], frameIds[0]);
+
+      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'frameTime',
+        newValue: (this.canvasHelper.timeE - .01).toFixed(2) + 's'
+      }, {
+        field: 'positionX',
+        newValue: pos.x.toString()
+      }, {
+        field: 'positionY',
+        newValue: pos.y.toString()
+      }, {
+        field: 'positionZ',
+        newValue: pos.z.toString()
+      }, {
+        field: 'scalingX',
+        newValue: "1"
+      }, {
+        field: 'scalingY',
+        newValue: "1"
+      }, {
+        field: 'scalingZ',
+        newValue: "1"
+      }], frameIds[1]);
+
+      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'frameTime',
+        newValue: (this.canvasHelper.timeE).toFixed(2) + 's'
+      }, {
+        field: 'positionX',
+        newValue: '-80'
+      }, {
+        field: 'positionY',
+        newValue: pos.y.toString()
+      }, {
+        field: 'positionZ',
+        newValue: pos.z.toString()
+      }, {
+        field: 'scalingX',
+        newValue: "5"
+      }, {
+        field: 'scalingY',
+        newValue: "5"
+      }, {
+        field: 'scalingZ',
+        newValue: "5"
+      }], frameIds[2]);
+
+      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'frameTime',
+        newValue: (this.canvasHelper.timeE + 1).toFixed(2) + 's'
+      }, {
+        field: 'positionX',
+        newValue: pos.x
+      }, {
+        field: 'positionY',
+        newValue: pos.y
+      }, {
+        field: 'positionZ',
+        newValue: pos.z
+      }, {
+        field: 'scalingX',
+        newValue: "1"
+      }, {
+        field: 'scalingY',
+        newValue: "1"
+      }, {
+        field: 'scalingZ',
+        newValue: "1"
+      }], frameIds[3]);
+
+      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'frameTime',
+        newValue: (this.canvasHelper.timeLength).toFixed(2) + 's'
+      }, {
+        field: 'positionX',
+        newValue: pos.x.toString()
+      }, {
+        field: 'positionY',
+        newValue: pos.y.toString()
+      }, {
+        field: 'positionZ',
+        newValue: pos.z.toString()
+      }, {
+        field: 'scalingX',
+        newValue: "1"
+      }, {
+        field: 'scalingY',
+        newValue: "1"
+      }, {
+        field: 'scalingZ',
+        newValue: "1"
+      }], frameIds[4]);
+
     }
 
     return Promise.resolve();
@@ -891,8 +991,14 @@ class cViewDemo extends bView {
       }
 
       promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionX',
+        newValue: ''
+      }, {
         field: 'positionY',
-        newValue: "-1"
+        newValue: '-1'
+      }, {
+        field: 'positionZ',
+        newValue: ''
       }, {
         field: 'scalingX',
         newValue: ".001"
@@ -903,6 +1009,87 @@ class cViewDemo extends bView {
         field: 'scalingZ',
         newValue: ".001"
       }], frameIds[0]));
+
+      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionX',
+        newValue: ''
+      }, {
+        field: 'positionY',
+        newValue: '-1'
+      }, {
+        field: 'positionZ',
+        newValue: ''
+      }, {
+        field: 'scalingX',
+        newValue: ".001"
+      }, {
+        field: 'scalingY',
+        newValue: ".001"
+      }, {
+        field: 'scalingZ',
+        newValue: ".001"
+      }], frameIds[1]));
+
+      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionX',
+        newValue: ''
+      }, {
+        field: 'positionY',
+        newValue: '-1'
+      }, {
+        field: 'positionZ',
+        newValue: ''
+      }, {
+        field: 'scalingX',
+        newValue: ".001"
+      }, {
+        field: 'scalingY',
+        newValue: ".001"
+      }, {
+        field: 'scalingZ',
+        newValue: ".001"
+      }], frameIds[2]));
+
+
+      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionX',
+        newValue: ''
+      }, {
+        field: 'positionY',
+        newValue: '-1'
+      }, {
+        field: 'positionZ',
+        newValue: ''
+      }, {
+        field: 'scalingX',
+        newValue: ".001"
+      }, {
+        field: 'scalingY',
+        newValue: ".001"
+      }, {
+        field: 'scalingZ',
+        newValue: ".001"
+      }], frameIds[3]));
+
+      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionX',
+        newValue: ''
+      }, {
+        field: 'positionY',
+        newValue: '-1'
+      }, {
+        field: 'positionZ',
+        newValue: ''
+      }, {
+        field: 'scalingX',
+        newValue: ".001"
+      }, {
+        field: 'scalingY',
+        newValue: ".001"
+      }, {
+        field: 'scalingZ',
+        newValue: ".001"
+      }], frameIds[4]));
     }
 
     return Promise.all(promises);

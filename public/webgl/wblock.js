@@ -182,7 +182,15 @@ class wBlock {
         if (this.blockRawData.childType === 'block') {
           this.framesHelper.compileFrames();
           this.__applyFirstFrameValues();
-          return this.setData(); //recalc block child frames if % values used
+
+          if (this.framesHelper.processedFrames.length > 1) {
+            this.setData(); //recalc block child frames if % values used
+            let curValue = this.context.canvasHelper.animateSlider.value;
+            this.context.canvasHelper.rootBlock.stopAnimation();
+            this.context.canvasHelper.rootBlock.playAnimation(curValue);
+          }
+
+          return;
         }
         this.framesHelper.compileFrames();
         this.__applyFirstFrameValues();
@@ -645,6 +653,10 @@ class wBlock {
     let newShape = this._createShape();
     if (!this.sceneObject)
       return;
+
+    if (this.blockRenderData['shapeType'] === 'plane')
+      this.sceneObject.isPickable = false;
+
     let fields = sDataDefinition.bindingFields('shape');
     for (let i in fields) {
       let field = fields[i];
@@ -1156,14 +1168,16 @@ class wBlock {
       this.framesHelper.compileFrames();
     return this.framesHelper.activeAnimation;
   }
-  playAnimation(startPercent = 0) {
+  playAnimation(startPercent = 0, setSceneTime = true) {
     if (this.activeAnimation) {
       if (this.activeAnimation._paused)
         this.activeAnimation.restart();
       else {
         let frameIndex = startPercent / 100.0 * this.framesHelper.lastFrame;
-        this.context.scene._animationTimeLast = BABYLON.Tools.now;
-        this.context.scene._animationTime = 0;
+        if (setSceneTime) {
+          this.context.scene._animationTimeLast = BABYLON.Tools.now;
+          this.context.scene._animationTime = 0;
+        }
         this.framesHelper.startAnimation(frameIndex);
       }
     }
@@ -1171,7 +1185,7 @@ class wBlock {
     this.framesHelper.playState = 1;
 
     for (let i in this.childBlocks)
-      this.childBlocks[i].playAnimation(startPercent);
+      this.childBlocks[i].playAnimation(startPercent, false);
   }
   setAnimationPosition(currentPercent = 0) {
     if (this.activeAnimation) {

@@ -1765,7 +1765,7 @@ class gCSVImport {
 
         cameraBlockFrame.z = p.z;
         cameraBlockFrame.rx = p.rx;
-        cameraBlockFrame.ry = '';//p.ry;
+        cameraBlockFrame.ry = ''; //p.ry;
         cameraBlockFrame.rz = p.rz;
         cameraBlockFrame.sx = p.sx;
         cameraBlockFrame.sy = p.sy;
@@ -1776,7 +1776,7 @@ class gCSVImport {
         cameraBlockFrame.y = cameraRow.y;
         cameraBlockFrame.z = cameraRow.z;
         cameraBlockFrame.rx = cameraRow.rx;
-        cameraBlockFrame.ry = '';//cameraRow.ry;
+        cameraBlockFrame.ry = ''; //cameraRow.ry;
         cameraBlockFrame.rz = cameraRow.rz;
         cameraBlockFrame.sx = cameraRow.sx;
         cameraBlockFrame.sy = cameraRow.sy;
@@ -1899,8 +1899,88 @@ class gCSVImport {
         sz: '.45',
         visibility: ''
       };
+      await this.addCSVRow(row);
 
-      promises.push(this.addCSVRow(row));
+      let secFrame = {
+        asset: 'blockchildframe',
+        name: productsBySKU[i].block,
+        childtype: 'block',
+        frameorder: '20',
+        frametime: '100',
+        parent: basketName,
+        x: pos.x.toString(),
+        y: pos.y.toString(),
+        z: pos.z.toString(),
+        rx: '',
+        ry: '',
+        rz: '',
+        sx: '.45',
+        sy: '.45',
+        sz: '.45',
+        visibility: ''
+      };
+
+      let secsecFrame = {
+        asset: 'blockchildframe',
+        name: productsBySKU[i].block,
+        childtype: 'block',
+        frameorder: '25',
+        frametime: '150',
+        parent: basketName,
+        x: pos.x.toString(),
+        y: pos.y.toString(),
+        z: pos.z.toString(),
+        rx: '',
+        ry: '',
+        rz: '',
+        sx: '.45',
+        sy: '.45',
+        sz: '.45',
+        visibility: ''
+      };
+
+      let thirdFrame = {
+        asset: 'blockchildframe',
+        name: productsBySKU[i].block,
+        childtype: 'block',
+        frameorder: '30',
+        frametime: '200',
+        parent: basketName,
+        x: pos.x.toString(),
+        y: pos.y.toString(),
+        z: pos.z.toString(),
+        rx: '',
+        ry: '',
+        rz: '',
+        sx: '.45',
+        sy: '.45',
+        sz: '.45',
+        visibility: ''
+      };
+
+      let fourthFrame = {
+        asset: 'blockchildframe',
+        name: productsBySKU[i].block,
+        childtype: 'block',
+        frameorder: '40',
+        frametime: '300',
+        parent: basketName,
+        x: pos.x.toString(),
+        y: pos.y.toString(),
+        z: pos.z.toString(),
+        rx: '',
+        ry: '',
+        rz: '',
+        sx: '.45',
+        sy: '.45',
+        sz: '.45',
+        visibility: ''
+      };
+
+      promises.push(this.addCSVRow(secFrame));
+      promises.push(this.addCSVRow(secsecFrame));
+      promises.push(this.addCSVRow(thirdFrame));
+      promises.push(this.addCSVRow(fourthFrame));
     }
 
     return Promise.all(promises);
