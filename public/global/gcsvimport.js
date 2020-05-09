@@ -266,6 +266,7 @@ class gCSVImport {
       blockData.itemPriceText = row.pricetext;
       blockData.basketBlock = row.block;
       blockData.origRow = row;
+      blockData.isPickable = true;
     }
 
     if (row.genericblockdata)
@@ -600,9 +601,6 @@ class gCSVImport {
         return this.addCSVDisplayMessage(row);
       case 'product':
         return this.addCSVDisplayProduct(row);
-        //  case 'image':
-        //    return this.addCSVDisplayImage(row);
-
       case 'shapeandtext':
         return this.addCSVShapeAndText(row);
       case 'connectorline':

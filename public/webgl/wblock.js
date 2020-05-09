@@ -64,6 +64,7 @@ class wBlock {
     let skyboxPath = gAPPP.cdnPrefix + 'box/' + this.blockRawData.skybox + '/skybox';
     let skyboxSize = GLOBALUTIL.getNumberOrDefault(this.blockRawData.skyboxSize, 800.0);
     let skybox = BABYLON.Mesh.CreateBox("skyBox", skyboxSize, this.context.scene);
+    skybox.isPickable = false;
     let skyboxMaterial = new BABYLON.StandardMaterial(skyboxPath, this.context.scene);
     skyboxMaterial.backFaceCulling = false;
 
@@ -272,7 +273,7 @@ class wBlock {
   }
   _createShape() {
     this.dispose();
-    let name = 'singleShapeObject';
+    let name = 'singleShapeObject' + this._blockKey;
 
     let options = {};
     let fields = sDataDefinition.bindingFields('shape');
@@ -617,6 +618,8 @@ class wBlock {
 
     if (this.parent && this.sceneObject)
       this.sceneObject.parent = this.parent.sceneObject;
+    if (this.sceneObject)
+      this.sceneObject.blockWrapper = this;
 
     this.framesHelper.activeAnimation = null;
     this.framesHelper.setParentKey(this.blockKey, this);
@@ -642,7 +645,6 @@ class wBlock {
     let newShape = this._createShape();
     if (!this.sceneObject)
       return;
-
     let fields = sDataDefinition.bindingFields('shape');
     for (let i in fields) {
       let field = fields[i];
@@ -677,6 +679,8 @@ class wBlock {
         depth
       }, this.context.scene);
       this.sceneObject.isPickable = false;
+      if (this.blockRenderData.isPickable)
+        this.sceneObject.isPickable = true;
       this.sceneObject.isContainerBlock = true;
       this.sceneObject._blockKey = this._blockKey;
       this.sceneObject.isVisible = false;

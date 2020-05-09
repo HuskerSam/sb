@@ -289,11 +289,31 @@ class cViewDemo extends bView {
     this._displayCameraFeatures();
     this._sceneDataPanel();
     this._audioFeatures();
+    this.context.scene.onPointerObservable.add(evt => {
+      if (evt.type === BABYLON.PointerEventTypes.POINTERDOWN) {
+        let pickInfo = this.context.scene.pick(this.context.scene.pointerX, this.context.scene.pointerY, null, null, this.context.camera);
+        let productBlock = this.getProductDataFromBlock(pickInfo.pickedMesh.blockWrapper);
+        if (productBlock)
+          this.basketAddItem(null, productBlock.blockRenderData.itemId);
+      }
+    });
 
     this.basketUpdateTotal().then(() => {});
 
     setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);
     return Promise.resolve();
+  }
+  getProductDataFromBlock(blk) {
+    if (!blk)
+      return null;
+
+    if (blk.blockRenderData.itemId)
+      return blk;
+
+    if (!blk.parent)
+      return null;
+
+    return this.getProductDataFromBlock(blk.parent);
   }
   updateProfileUIFeatures() {
     this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
@@ -663,9 +683,11 @@ class cViewDemo extends bView {
     this.basketUpdateTotal().then(() => {});
   }
 
-  basketAddItem(event) {
-    let btn = event.currentTarget;
-    let sku = btn.sku;
+  basketAddItem(event, sku = null) {
+    if (!sku) {
+      let btn = event.currentTarget;
+      sku = btn.sku;
+    }
 
     if (!sku)
       return;
