@@ -235,7 +235,7 @@ class wBlock {
       let curValue = this.context.canvasHelper.animateSlider.value;
       this.context.canvasHelper.rootBlock.stopAnimation();
       this.context.canvasHelper.rootBlock.playAnimation(curValue);
-    }, 100);
+    }, 30);
   }
   _framesRedraw() {
     clearTimeout(this.framesRedrawTimeout);
@@ -254,7 +254,7 @@ class wBlock {
       }
       this.framesHelper.compileFrames();
       this.__applyFirstFrameValues();
-    }, 50);
+    }, 30);
   }
   _handleTextureUpdate(values) {
     if (!values || !values.title)

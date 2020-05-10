@@ -829,8 +829,28 @@ class cViewDemo extends bView {
     let basketBlock = product.block;
 
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
+    let sceneProduct = this.rootBlock._findBestTargetObject(`block:${product.childName}`);
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
-console.log(basketCart);
+
+    let basketPos = basketCart.sceneObject.getAbsolutePosition();
+    let productPos = sceneProduct.sceneObject.getAbsolutePosition();
+    let rawOffset = {
+      x: basketPos.x - productPos.x,
+      y: basketPos.y - productPos.y,
+      z: basketPos.z - productPos.z
+    };
+    let bRot = basketCart.sceneObject.rotation;
+    console.log('basket rotation', );
+    let cos = Math.cos(-bRot.y);
+    let sin = Math.sin(-bRot.y);
+
+    let offset = {
+      x: -1 * (rawOffset.x * cos + rawOffset.z * sin),
+      y: -1 * rawOffset.y,
+      z: (rawOffset.x * sin + rawOffset.z * cos)
+    };
+    console.log('offset', offset);
+
     if (existingItemBlock !== null) {
       let frames = existingItemBlock.framesHelper.rawFrames;
       let frameIds = [];
@@ -853,22 +873,22 @@ console.log(basketCart);
       let promises = [];
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionX',
-        newValue: pos.x.toString()
+        newValue: offset.x
       }, {
         field: 'positionY',
-        newValue: pos.y.toString()
+        newValue: offset.y
       }, {
         field: 'positionZ',
-        newValue: pos.z.toString()
+        newValue: offset.z
       }, {
         field: 'scalingX',
-        newValue: "1"
+        newValue: "3"
       }, {
         field: 'scalingY',
-        newValue: "1"
+        newValue: "3"
       }, {
         field: 'scalingZ',
-        newValue: "1"
+        newValue: "3"
       }], frameIds[0]);
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
@@ -876,7 +896,7 @@ console.log(basketCart);
         newValue: (this.canvasHelper.timeE - .1).toFixed(3) + 's'
       }, {
         field: 'positionX',
-        newValue: pos.x.toString()
+        newValue: ''
       }, {
         field: 'positionY',
         newValue: pos.y.toString()
@@ -885,13 +905,13 @@ console.log(basketCart);
         newValue: pos.z.toString()
       }, {
         field: 'scalingX',
-        newValue: "1"
+        newValue: ""
       }, {
         field: 'scalingY',
-        newValue: "1"
+        newValue: ""
       }, {
         field: 'scalingZ',
-        newValue: "1"
+        newValue: ""
       }], frameIds[1]);
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
@@ -899,22 +919,22 @@ console.log(basketCart);
         newValue: (this.canvasHelper.timeE).toFixed(3) + 's'
       }, {
         field: 'positionX',
-        newValue: '-80'
+        newValue: offset.x
       }, {
         field: 'positionY',
-        newValue: pos.y.toString()
+        newValue: offset.y
       }, {
         field: 'positionZ',
-        newValue: pos.z.toString()
+        newValue: offset.z
       }, {
         field: 'scalingX',
-        newValue: "8"
+        newValue: "3"
       }, {
         field: 'scalingY',
-        newValue: "8"
+        newValue: "3"
       }, {
         field: 'scalingZ',
-        newValue: "8"
+        newValue: "3"
       }], frameIds[2]);
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
@@ -982,7 +1002,28 @@ console.log(basketCart);
         }, {
           field: 'scalingZ',
           newValue: "1"
+        }], frameIds[0]);
+        await gAPPP.a.modelSets['frame'].commitUpdateList([{
+          field: 'positionX',
+          newValue: pos.x.toString()
+        }, {
+          field: 'positionY',
+          newValue: pos.y.toString()
+        }, {
+          field: 'positionZ',
+          newValue: pos.z.toString()
+        }, {
+          field: 'scalingX',
+          newValue: "1"
+        }, {
+          field: 'scalingY',
+          newValue: "1"
+        }, {
+          field: 'scalingZ',
+          newValue: "1"
         }], frameIds[2]);
+
+
       }, 1200);
 
     }
