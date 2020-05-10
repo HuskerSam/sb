@@ -232,10 +232,16 @@ class wBlock {
     clearTimeout(rootBlock.restartTimeoutPtr);
 
     rootBlock.restartTimeoutPtr = setTimeout(() => {
-      let curValue = this.context.canvasHelper.animateSlider.value;
+      let curValue = 0;
+      if (this.context.canvasHelper.activeAnimation) {
+        let elapsed = this.context.canvasHelper.activeAnimation._runtimeAnimations[0].currentFrame;
+        let total = this.context.canvasHelper.activeAnimation.toFrame;
+        curValue = elapsed / total * 100.0;
+      }
+
       this.context.canvasHelper.rootBlock.stopAnimation();
       this.context.canvasHelper.rootBlock.playAnimation(curValue);
-    }, 30);
+    }, 120);
   }
   _framesRedraw() {
     clearTimeout(this.framesRedrawTimeout);
@@ -243,18 +249,19 @@ class wBlock {
     this.framesRedrawTimeout = setTimeout(() => {
       if (this.blockRawData.childType === 'block') {
         this.framesHelper.compileFrames();
-        this.__applyFirstFrameValues();
 
         if (this.framesHelper.processedFrames.length > 1) {
           this.setData(); //recalc block child frames if % values used
           this._restartRootAnimation();
+        } else {
+          this.__applyFirstFrameValues();
         }
 
         return;
       }
       this.framesHelper.compileFrames();
       this.__applyFirstFrameValues();
-    }, 30);
+    }, 100);
   }
   _handleTextureUpdate(values) {
     if (!values || !values.title)

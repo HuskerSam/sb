@@ -840,7 +840,6 @@ class cViewDemo extends bView {
       z: basketPos.z - productPos.z
     };
     let bRot = basketCart.sceneObject.rotation;
-    console.log('basket rotation', );
     let cos = Math.cos(-bRot.y);
     let sin = Math.sin(-bRot.y);
 
@@ -849,7 +848,6 @@ class cViewDemo extends bView {
       y: -1 * rawOffset.y,
       z: (rawOffset.x * sin + rawOffset.z * cos)
     };
-    console.log('offset', offset);
 
     if (existingItemBlock !== null) {
       let frames = existingItemBlock.framesHelper.rawFrames;
