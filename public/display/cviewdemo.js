@@ -880,13 +880,13 @@ class cViewDemo extends bView {
         newValue: offset.z
       }, {
         field: 'scalingX',
-        newValue: "3"
+        newValue: "5"
       }, {
         field: 'scalingY',
-        newValue: "3"
+        newValue: "5"
       }, {
         field: 'scalingZ',
-        newValue: "3"
+        newValue: "5"
       }], frameIds[0]);
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
@@ -897,10 +897,10 @@ class cViewDemo extends bView {
         newValue: ''
       }, {
         field: 'positionY',
-        newValue: pos.y.toString()
+        newValue: ''
       }, {
         field: 'positionZ',
-        newValue: pos.z.toString()
+        newValue: ''
       }, {
         field: 'scalingX',
         newValue: ""
@@ -914,7 +914,7 @@ class cViewDemo extends bView {
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
-        newValue: (this.canvasHelper.timeE).toFixed(3) + 's'
+        newValue: (this.canvasHelper.timeE + .4).toFixed(3) + 's'
       }, {
         field: 'positionX',
         newValue: offset.x
@@ -926,27 +926,27 @@ class cViewDemo extends bView {
         newValue: offset.z
       }, {
         field: 'scalingX',
-        newValue: "3"
+        newValue: "5"
       }, {
         field: 'scalingY',
-        newValue: "3"
+        newValue: "5"
       }, {
         field: 'scalingZ',
-        newValue: "3"
+        newValue: "5"
       }], frameIds[2]);
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
-        newValue: (this.canvasHelper.timeE + 1).toFixed(3) + 's'
+        newValue: (this.canvasHelper.timeE + 2).toFixed(3) + 's'
       }, {
         field: 'positionX',
-        newValue: pos.x
+        newValue: pos.x.toString()
       }, {
         field: 'positionY',
-        newValue: pos.y
+        newValue: pos.y.toString()
       }, {
         field: 'positionZ',
-        newValue: pos.z
+        newValue: pos.z.toString()
       }, {
         field: 'scalingX',
         newValue: "1"
