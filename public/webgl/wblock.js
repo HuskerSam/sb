@@ -179,21 +179,7 @@ class wBlock {
         parentKey = gAPPP.a.modelSets['frame'].lastValuesDeleted.parentKey;
 
       if (parentKey === this._blockKey) {
-        if (this.blockRawData.childType === 'block') {
-          this.framesHelper.compileFrames();
-          this.__applyFirstFrameValues();
-
-          if (this.framesHelper.processedFrames.length > 1) {
-            this.setData(); //recalc block child frames if % values used
-            let curValue = this.context.canvasHelper.animateSlider.value;
-            this.context.canvasHelper.rootBlock.stopAnimation();
-            this.context.canvasHelper.rootBlock.playAnimation(curValue);
-          }
-
-          return;
-        }
-        this.framesHelper.compileFrames();
-        this.__applyFirstFrameValues();
+        this._framesRedraw();
         return;
       }
     }
@@ -240,6 +226,35 @@ class wBlock {
 
       this.childBlocks[i].handleDataUpdate(tag, values, type, fireData);
     }
+  }
+  _restartRootAnimation() {
+    let rootBlock = this.context.canvasHelper.rootBlock;
+    clearTimeout(rootBlock.restartTimeoutPtr);
+
+    rootBlock.restartTimeoutPtr = setTimeout(() => {
+      let curValue = this.context.canvasHelper.animateSlider.value;
+      this.context.canvasHelper.rootBlock.stopAnimation();
+      this.context.canvasHelper.rootBlock.playAnimation(curValue);
+    }, 100);
+  }
+  _framesRedraw() {
+    clearTimeout(this.framesRedrawTimeout);
+
+    this.framesRedrawTimeout = setTimeout(() => {
+      if (this.blockRawData.childType === 'block') {
+        this.framesHelper.compileFrames();
+        this.__applyFirstFrameValues();
+
+        if (this.framesHelper.processedFrames.length > 1) {
+          this.setData(); //recalc block child frames if % values used
+          this._restartRootAnimation();
+        }
+
+        return;
+      }
+      this.framesHelper.compileFrames();
+      this.__applyFirstFrameValues();
+    }, 50);
   }
   _handleTextureUpdate(values) {
     if (!values || !values.title)

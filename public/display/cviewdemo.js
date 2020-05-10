@@ -830,9 +830,9 @@ class cViewDemo extends bView {
 
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
-
+console.log(basketCart);
     if (existingItemBlock !== null) {
-      let frames = existingItemBlock.framesHelper.framesStash;
+      let frames = existingItemBlock.framesHelper.rawFrames;
       let frameIds = [];
       for (let i in frames)
         frameIds.push(i);
@@ -865,7 +865,7 @@ class cViewDemo extends bView {
         newValue: "1"
       }, {
         field: 'scalingY',
-        newValue: "8"
+        newValue: "1"
       }, {
         field: 'scalingZ',
         newValue: "1"
@@ -873,7 +873,7 @@ class cViewDemo extends bView {
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
-        newValue: (this.canvasHelper.timeE - .01).toFixed(2) + 's'
+        newValue: (this.canvasHelper.timeE - .1).toFixed(3) + 's'
       }, {
         field: 'positionX',
         newValue: pos.x.toString()
@@ -896,7 +896,7 @@ class cViewDemo extends bView {
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
-        newValue: (this.canvasHelper.timeE).toFixed(2) + 's'
+        newValue: (this.canvasHelper.timeE).toFixed(3) + 's'
       }, {
         field: 'positionX',
         newValue: '-80'
@@ -908,18 +908,18 @@ class cViewDemo extends bView {
         newValue: pos.z.toString()
       }, {
         field: 'scalingX',
-        newValue: "5"
+        newValue: "8"
       }, {
         field: 'scalingY',
-        newValue: "5"
+        newValue: "8"
       }, {
         field: 'scalingZ',
-        newValue: "5"
+        newValue: "8"
       }], frameIds[2]);
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
-        newValue: (this.canvasHelper.timeE + 1).toFixed(2) + 's'
+        newValue: (this.canvasHelper.timeE + 1).toFixed(3) + 's'
       }, {
         field: 'positionX',
         newValue: pos.x
@@ -942,7 +942,7 @@ class cViewDemo extends bView {
 
       await gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
-        newValue: (this.canvasHelper.timeLength).toFixed(2) + 's'
+        newValue: (this.canvasHelper.timeLength).toFixed() + 's'
       }, {
         field: 'positionX',
         newValue: pos.x.toString()
@@ -963,7 +963,30 @@ class cViewDemo extends bView {
         newValue: "1"
       }], frameIds[4]);
 
+      setTimeout(async () => {
+        await gAPPP.a.modelSets['frame'].commitUpdateList([{
+          field: 'positionX',
+          newValue: pos.x.toString()
+        }, {
+          field: 'positionY',
+          newValue: pos.y.toString()
+        }, {
+          field: 'positionZ',
+          newValue: pos.z.toString()
+        }, {
+          field: 'scalingX',
+          newValue: "1"
+        }, {
+          field: 'scalingY',
+          newValue: "1"
+        }, {
+          field: 'scalingZ',
+          newValue: "1"
+        }], frameIds[2]);
+      }, 1200);
+
     }
+
 
     return Promise.resolve();
   }
