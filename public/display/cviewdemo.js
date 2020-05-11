@@ -844,6 +844,11 @@ class cViewDemo extends bView {
       z: basketPos.z - productPos.z
     };
     let bRot = basketCart.sceneObject.rotation;
+    if (bRot.y < 0) {
+      bRot.y = -1 * bRot.y + Math.PI;
+    }
+    bRot.y = bRot.y % (2 * Math.PI);
+
     let cos = Math.cos(-bRot.y);
     let sin = Math.sin(-bRot.y);
 
@@ -852,6 +857,7 @@ class cViewDemo extends bView {
       y: -1 * rawOffset.y,
       z: (rawOffset.x * sin + rawOffset.z * cos)
     };
+
 
     if (existingItemBlock !== null) {
       let frames = existingItemBlock.framesHelper.rawFrames;
@@ -873,7 +879,7 @@ class cViewDemo extends bView {
           existingValues.positionZ === pos.z.toString())
           render = false;
 
-        if (this.forceAddAnimation === sku){
+        if (this.forceAddAnimation === sku) {
           this.forceAddAnimation = false;
           render = true;
         }
@@ -881,6 +887,14 @@ class cViewDemo extends bView {
 
       if (!render)
         return Promise.resolve();
+
+      if (bRot.y < Math.PI / 2) {
+        offset.z = -offset.z;
+      } else if ( bRot.y < Math.PI) {
+      } else if (bRot.y < 1.5 * Math.PI) {
+        offset.z = -offset.z;
+      } else {
+      }
 
       gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionX',
@@ -1177,7 +1191,7 @@ class cViewDemo extends bView {
   basketRemoveAllItems() {
     for (let c = 0, l = this.products.length; c < l; c++)
       if (this.products[c].itemId)
-        this.basketRemoveItemBlock(this.products[c].itemId).then(() => {});
+        this.basketRemoveItemBlock(this.products[c].itemId);
   }
 
   sceneSelect() {
