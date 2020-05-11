@@ -750,6 +750,7 @@ class cViewDemo extends bView {
       field: 'basketData' + wsId,
       newValue: null
     }]);
+    this.basketRemoveAllItems();
   }
   async basketUpdateTotal() {
     this.receiptDisplayPanel.innerHTML = '';
@@ -801,7 +802,7 @@ class cViewDemo extends bView {
         continue;
       let itemShownIndex = this.skuOrder.indexOf(p.itemId);
       if (itemShownIndex === -1) {
-        await this.basketRemoveItemBlock(p.itemId);
+      //  await this.basketRemoveItemBlock(p.itemId);
       }
 
       let ppp = new Promise((resolve) => {
@@ -816,6 +817,35 @@ class cViewDemo extends bView {
     for (let c = 0, l = this.itemButtons.length; c < l; c++) {
       this.itemButtons[c].innerHTML = '&nbsp;';
     }
+  }
+  __shakePosition(meshGL) {
+    let x = meshGL.position.x;
+    let y = meshGL.position.y;
+    let z = meshGL.position.z;
+
+    meshGL.position.x += 2.0;
+    meshGL.position.y += 2.0;
+    meshGL.position.z += 2.0;
+    meshGL.position.rx += .5;
+    meshGL.position.ry += .5;
+    meshGL.position.rz += .5;
+
+
+    setTimeout(() => {
+      meshGL.position.x -= 4.0;
+    }, 50);
+
+    setTimeout(() => {
+      meshGL.position.x += 2.0;
+      meshGL.position.y -= 2.0;
+      meshGL.position.rz -= .5;
+    }, 100);
+
+    setTimeout(() => {
+      meshGL.position.x += 2.0;
+      meshGL.position.z -= 2.0;
+      meshGL.position.rz -= .5;
+    }, 150);
   }
   async basketAddItemBlock(sku, index) {
     let pos = new gCSVImport(gAPPP.loadedWID).basketPosition(index);
@@ -846,6 +876,8 @@ class cViewDemo extends bView {
 
     let cos = Math.cos(-bRot.y);
     let sin = Math.sin(-bRot.y);
+
+        this.__shakePosition(sceneProduct.sceneObject);
 
     let offset = {
       x: -1 * (rawOffset.x * cos + rawOffset.z * sin),
