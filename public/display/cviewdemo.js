@@ -844,9 +844,8 @@ class cViewDemo extends bView {
       z: basketPos.z - productPos.z
     };
     let bRot = basketCart.sceneObject.rotation;
-    if (bRot.y < 0) {
-      bRot.y = -1 * bRot.y + Math.PI;
-    }
+
+    bRot.y = bRot.y + (6 * Math.PI);
     bRot.y = bRot.y % (2 * Math.PI);
 
     let cos = Math.cos(-bRot.y);
@@ -888,14 +887,14 @@ class cViewDemo extends bView {
       if (!render)
         return Promise.resolve();
 
-      if (bRot.y < Math.PI / 2) {
+      if (bRot.y < Math.round(Math.floor(Math.PI * 1000 / 2)) / 1000) {
         offset.z = -offset.z;
-      } else if ( bRot.y < Math.PI) {
-      } else if (bRot.y < 1.5 * Math.PI) {
+        console.log(1);
+      } else if (bRot.y < Math.round(Math.floor(0.9 * Math.PI * 1000)) / 1000) {
+      } else if (bRot.y < Math.round(Math.floor(1.4 * Math.PI * 1000)) / 1000) {
         offset.z = -offset.z;
       } else {
       }
-
       gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionX',
         newValue: offset.x
