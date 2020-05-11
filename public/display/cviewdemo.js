@@ -865,6 +865,8 @@ class cViewDemo extends bView {
 
     let basketPos = basketCart.sceneObject.getAbsolutePosition();
     let productPos = sceneProduct.sceneObject.getAbsolutePosition();
+    let basketRot = basketCart.sceneObject.rotation;
+    let productRot = sceneProduct.sceneObject.rotation;
     let rawOffset = {
       x: basketPos.x - productPos.x,
       y: basketPos.y - productPos.y,
@@ -905,6 +907,9 @@ class cViewDemo extends bView {
       offset.z = -offset.z;
     } else {}
     gAPPP.a.modelSets['frame'].commitUpdateList([{
+      field: 'rotationY',
+      newValue: (-(basketRot.y - productRot.y)).toFixed(2)
+    }, {
       field: 'positionX',
       newValue: offset.x
     }, {
@@ -927,6 +932,9 @@ class cViewDemo extends bView {
     gAPPP.a.modelSets['frame'].commitUpdateList([{
       field: 'frameTime',
       newValue: (this.canvasHelper.timeE - .1).toFixed(3) + 's'
+    }, {
+      field: 'rotationY',
+      newValue: ""
     }, {
       field: 'positionX',
       newValue: ''
@@ -951,6 +959,9 @@ class cViewDemo extends bView {
       field: 'frameTime',
       newValue: (this.canvasHelper.timeE + .4).toFixed(3) + 's'
     }, {
+      field: 'rotationY',
+      newValue: (-(basketRot.y - productRot.y)).toFixed(2)
+    }, {
       field: 'positionX',
       newValue: offset.x
     }, {
@@ -973,6 +984,9 @@ class cViewDemo extends bView {
     gAPPP.a.modelSets['frame'].commitUpdateList([{
       field: 'frameTime',
       newValue: (this.canvasHelper.timeE + 2).toFixed(3) + 's'
+    }, {
+      field: 'rotationY',
+      newValue: "0"
     }, {
       field: 'positionX',
       newValue: pos.x.toString()
@@ -1018,6 +1032,9 @@ class cViewDemo extends bView {
 
     setTimeout(async () => {
       gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'rotationY',
+        newValue: "0"
+      }, {
         field: 'positionX',
         newValue: pos.x.toString()
       }, {
@@ -1042,6 +1059,9 @@ class cViewDemo extends bView {
     this.productPickUpdateTimeouts[sku] = setTimeout(async () => {
 
       gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'rotationY',
+        newValue: "0"
+      }, {
         field: 'positionX',
         newValue: pos.x.toString()
       }, {
