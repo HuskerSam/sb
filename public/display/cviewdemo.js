@@ -868,8 +868,7 @@ class cViewDemo extends bView {
           existingValues.positionZ === pos.z.toString())
           return Promise.resolve();
       }
-      let promises = [];
-      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionX',
         newValue: offset.x
       }, {
@@ -889,7 +888,7 @@ class cViewDemo extends bView {
         newValue: "5"
       }], frameIds[0]);
 
-      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
         newValue: (this.canvasHelper.timeE - .1).toFixed(3) + 's'
       }, {
@@ -912,7 +911,7 @@ class cViewDemo extends bView {
         newValue: ""
       }], frameIds[1]);
 
-      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
         newValue: (this.canvasHelper.timeE + .4).toFixed(3) + 's'
       }, {
@@ -935,7 +934,7 @@ class cViewDemo extends bView {
         newValue: "5"
       }], frameIds[2]);
 
-      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
         newValue: (this.canvasHelper.timeE + 2).toFixed(3) + 's'
       }, {
@@ -958,7 +957,7 @@ class cViewDemo extends bView {
         newValue: "1"
       }], frameIds[3]);
 
-      await gAPPP.a.modelSets['frame'].commitUpdateList([{
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
         newValue: (this.canvasHelper.timeLength).toFixed() + 's'
       }, {
@@ -982,7 +981,7 @@ class cViewDemo extends bView {
       }], frameIds[4]);
 
       setTimeout(async () => {
-        await gAPPP.a.modelSets['frame'].commitUpdateList([{
+        gAPPP.a.modelSets['frame'].commitUpdateList([{
           field: 'positionX',
           newValue: pos.x.toString()
         }, {
@@ -1001,7 +1000,7 @@ class cViewDemo extends bView {
           field: 'scalingZ',
           newValue: "1"
         }], frameIds[0]);
-        await gAPPP.a.modelSets['frame'].commitUpdateList([{
+        gAPPP.a.modelSets['frame'].commitUpdateList([{
           field: 'positionX',
           newValue: pos.x.toString()
         }, {
@@ -1022,7 +1021,7 @@ class cViewDemo extends bView {
         }], frameIds[2]);
 
 
-      }, 1200);
+      }, 2500);
 
     }
 

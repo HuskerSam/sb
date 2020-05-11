@@ -229,9 +229,9 @@ class wBlock {
   }
   _restartRootAnimation() {
     let rootBlock = this.context.canvasHelper.rootBlock;
-    clearTimeout(rootBlock.restartTimeoutPtr);
+  //  clearTimeout(rootBlock.restartTimeoutPtr);
 
-    rootBlock.restartTimeoutPtr = setTimeout(() => {
+  //  rootBlock.restartTimeoutPtr = setTimeout(() => {
       let curValue = 0;
       if (this.context.canvasHelper.activeAnimation) {
         let elapsed = this.context.canvasHelper.activeAnimation._runtimeAnimations[0].currentFrame;
@@ -239,9 +239,9 @@ class wBlock {
         curValue = elapsed / total * 100.0;
       }
 
-      this.context.canvasHelper.rootBlock.stopAnimation();
+  //    this.context.canvasHelper.rootBlock.stopAnimation();
       this.context.canvasHelper.rootBlock.playAnimation(curValue);
-    }, 120);
+  //  }, 150);
   }
   _framesRedraw() {
     clearTimeout(this.framesRedrawTimeout);
