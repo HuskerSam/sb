@@ -696,11 +696,12 @@ class cViewDemo extends bView {
     if (!sku)
       return;
 
-    if (event)
-      this.forceAddAnimation = sku;
-
-    if (this.skuOrder.indexOf(sku) === -1)
+    let skuIndex = this.skuOrder.indexOf(sku);
+    if (skuIndex === -1) {
       this.skuOrder.push(sku);
+      skuIndex = this.skuOrder.length - 1;
+    }
+    this.basketAddItemBlock(sku, skuIndex);
 
     if (!this.basketSKUs[sku])
       this.basketSKUs[sku] = 1.0;
@@ -808,14 +809,6 @@ class cViewDemo extends bView {
       });
       await ppp;
     }
-    for (let skuCtr = 0; skuCtr < this.skuOrder.length; skuCtr++) {
-      await this.basketAddItemBlock(this.skuOrder[skuCtr], skuCtr);
-
-      let p = new Promise((resolve) => {
-        setTimeout(() => resolve(), 1);
-      });
-      await p;
-    }
 
     return;
   }
@@ -835,6 +828,9 @@ class cViewDemo extends bView {
     let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
     let sceneProduct = this.rootBlock._findBestTargetObject(`block:${product.childName}`);
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
+
+    if (!existingItemBlock)
+      return Promise.resolve();
 
     let basketPos = basketCart.sceneObject.getAbsolutePosition();
     let productPos = sceneProduct.sceneObject.getAbsolutePosition();
@@ -858,205 +854,182 @@ class cViewDemo extends bView {
     };
 
 
-    if (existingItemBlock !== null) {
-      let frames = existingItemBlock.framesHelper.rawFrames;
-      let frameIds = [];
-      for (let i in frames)
-        frameIds.push(i);
+    let frames = existingItemBlock.framesHelper.rawFrames;
+    let frameIds = [];
+    for (let i in frames)
+      frameIds.push(i);
 
-      if (frameIds.length < 4) {
-        //  alert('error');
-        return;
-      }
-
-      let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
-
-      let render = true;
-      if (existingValues) {
-        if (existingValues.positionX === pos.x.toString() &&
-          existingValues.positionY === pos.y.toString() &&
-          existingValues.positionZ === pos.z.toString())
-          render = false;
-
-        if (this.forceAddAnimation === sku) {
-          this.forceAddAnimation = false;
-          render = true;
-        }
-      }
-
-      if (!render)
-        return Promise.resolve();
-
-      if (bRot.y < Math.round(Math.floor(Math.PI * 1000 / 2)) / 1000) {
-        offset.z = -offset.z;
-        console.log(1);
-      } else if (bRot.y < Math.round(Math.floor(0.9 * Math.PI * 1000)) / 1000) {
-      } else if (bRot.y < Math.round(Math.floor(1.4 * Math.PI * 1000)) / 1000) {
-        offset.z = -offset.z;
-      } else {
-      }
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionX',
-        newValue: offset.x
-      }, {
-        field: 'positionY',
-        newValue: offset.y
-      }, {
-        field: 'positionZ',
-        newValue: offset.z
-      }, {
-        field: 'scalingX',
-        newValue: "5"
-      }, {
-        field: 'scalingY',
-        newValue: "5"
-      }, {
-        field: 'scalingZ',
-        newValue: "5"
-      }], frameIds[0]);
-
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'frameTime',
-        newValue: (this.canvasHelper.timeE - .1).toFixed(3) + 's'
-      }, {
-        field: 'positionX',
-        newValue: ''
-      }, {
-        field: 'positionY',
-        newValue: ''
-      }, {
-        field: 'positionZ',
-        newValue: ''
-      }, {
-        field: 'scalingX',
-        newValue: ""
-      }, {
-        field: 'scalingY',
-        newValue: ""
-      }, {
-        field: 'scalingZ',
-        newValue: ""
-      }], frameIds[1]);
-
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'frameTime',
-        newValue: (this.canvasHelper.timeE + .4).toFixed(3) + 's'
-      }, {
-        field: 'positionX',
-        newValue: offset.x
-      }, {
-        field: 'positionY',
-        newValue: offset.y
-      }, {
-        field: 'positionZ',
-        newValue: offset.z
-      }, {
-        field: 'scalingX',
-        newValue: "5"
-      }, {
-        field: 'scalingY',
-        newValue: "5"
-      }, {
-        field: 'scalingZ',
-        newValue: "5"
-      }], frameIds[2]);
-
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'frameTime',
-        newValue: (this.canvasHelper.timeE + 2).toFixed(3) + 's'
-      }, {
-        field: 'positionX',
-        newValue: pos.x.toString()
-      }, {
-        field: 'positionY',
-        newValue: pos.y.toString()
-      }, {
-        field: 'positionZ',
-        newValue: pos.z.toString()
-      }, {
-        field: 'scalingX',
-        newValue: "1"
-      }, {
-        field: 'scalingY',
-        newValue: "1"
-      }, {
-        field: 'scalingZ',
-        newValue: "1"
-      }], frameIds[3]);
-
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'frameTime',
-        newValue: (this.canvasHelper.timeLength).toFixed() + 's'
-      }, {
-        field: 'positionX',
-        newValue: pos.x.toString()
-      }, {
-        field: 'positionY',
-        newValue: pos.y.toString()
-      }, {
-        field: 'positionZ',
-        newValue: pos.z.toString()
-      }, {
-        field: 'scalingX',
-        newValue: "1"
-      }, {
-        field: 'scalingY',
-        newValue: "1"
-      }, {
-        field: 'scalingZ',
-        newValue: "1"
-      }], frameIds[4]);
-
-      setTimeout(async () => {
-        gAPPP.a.modelSets['frame'].commitUpdateList([{
-          field: 'positionX',
-          newValue: pos.x.toString()
-        }, {
-          field: 'positionY',
-          newValue: pos.y.toString()
-        }, {
-          field: 'positionZ',
-          newValue: pos.z.toString()
-        }, {
-          field: 'scalingX',
-          newValue: "1"
-        }, {
-          field: 'scalingY',
-          newValue: "1"
-        }, {
-          field: 'scalingZ',
-          newValue: "1"
-        }], frameIds[0]);
-      }, 500);
-
-      clearTimeout(this.productPickUpdateTimeouts[sku]);
-      this.productPickUpdateTimeouts[sku] = setTimeout(async () => {
-
-        gAPPP.a.modelSets['frame'].commitUpdateList([{
-          field: 'positionX',
-          newValue: pos.x.toString()
-        }, {
-          field: 'positionY',
-          newValue: pos.y.toString()
-        }, {
-          field: 'positionZ',
-          newValue: pos.z.toString()
-        }, {
-          field: 'scalingX',
-          newValue: "1"
-        }, {
-          field: 'scalingY',
-          newValue: "1"
-        }, {
-          field: 'scalingZ',
-          newValue: "1"
-        }], frameIds[2]);
-
-
-      }, 2000);
-
+    if (frameIds.length < 4) {
+      //  alert('error');
+      return;
     }
 
+    let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
+    if (bRot.y < Math.round(Math.floor(Math.PI * 1000 / 2)) / 1000) {
+      offset.z = -offset.z;
+      console.log(1);
+    } else if (bRot.y < Math.round(Math.floor(0.9 * Math.PI * 1000)) / 1000) {} else if (bRot.y < Math.round(Math.floor(1.4 * Math.PI * 1000)) / 1000) {
+      offset.z = -offset.z;
+    } else {}
+    gAPPP.a.modelSets['frame'].commitUpdateList([{
+      field: 'positionX',
+      newValue: offset.x
+    }, {
+      field: 'positionY',
+      newValue: offset.y
+    }, {
+      field: 'positionZ',
+      newValue: offset.z
+    }, {
+      field: 'scalingX',
+      newValue: "5"
+    }, {
+      field: 'scalingY',
+      newValue: "5"
+    }, {
+      field: 'scalingZ',
+      newValue: "5"
+    }], frameIds[0]);
+
+    gAPPP.a.modelSets['frame'].commitUpdateList([{
+      field: 'frameTime',
+      newValue: (this.canvasHelper.timeE - .1).toFixed(3) + 's'
+    }, {
+      field: 'positionX',
+      newValue: ''
+    }, {
+      field: 'positionY',
+      newValue: ''
+    }, {
+      field: 'positionZ',
+      newValue: ''
+    }, {
+      field: 'scalingX',
+      newValue: ""
+    }, {
+      field: 'scalingY',
+      newValue: ""
+    }, {
+      field: 'scalingZ',
+      newValue: ""
+    }], frameIds[1]);
+
+    gAPPP.a.modelSets['frame'].commitUpdateList([{
+      field: 'frameTime',
+      newValue: (this.canvasHelper.timeE + .4).toFixed(3) + 's'
+    }, {
+      field: 'positionX',
+      newValue: offset.x
+    }, {
+      field: 'positionY',
+      newValue: offset.y
+    }, {
+      field: 'positionZ',
+      newValue: offset.z
+    }, {
+      field: 'scalingX',
+      newValue: "5"
+    }, {
+      field: 'scalingY',
+      newValue: "5"
+    }, {
+      field: 'scalingZ',
+      newValue: "5"
+    }], frameIds[2]);
+
+    gAPPP.a.modelSets['frame'].commitUpdateList([{
+      field: 'frameTime',
+      newValue: (this.canvasHelper.timeE + 2).toFixed(3) + 's'
+    }, {
+      field: 'positionX',
+      newValue: pos.x.toString()
+    }, {
+      field: 'positionY',
+      newValue: pos.y.toString()
+    }, {
+      field: 'positionZ',
+      newValue: pos.z.toString()
+    }, {
+      field: 'scalingX',
+      newValue: "1"
+    }, {
+      field: 'scalingY',
+      newValue: "1"
+    }, {
+      field: 'scalingZ',
+      newValue: "1"
+    }], frameIds[3]);
+
+    gAPPP.a.modelSets['frame'].commitUpdateList([{
+      field: 'frameTime',
+      newValue: (this.canvasHelper.timeLength).toFixed() + 's'
+    }, {
+      field: 'positionX',
+      newValue: pos.x.toString()
+    }, {
+      field: 'positionY',
+      newValue: pos.y.toString()
+    }, {
+      field: 'positionZ',
+      newValue: pos.z.toString()
+    }, {
+      field: 'scalingX',
+      newValue: "1"
+    }, {
+      field: 'scalingY',
+      newValue: "1"
+    }, {
+      field: 'scalingZ',
+      newValue: "1"
+    }], frameIds[4]);
+
+    setTimeout(async () => {
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionX',
+        newValue: pos.x.toString()
+      }, {
+        field: 'positionY',
+        newValue: pos.y.toString()
+      }, {
+        field: 'positionZ',
+        newValue: pos.z.toString()
+      }, {
+        field: 'scalingX',
+        newValue: "1"
+      }, {
+        field: 'scalingY',
+        newValue: "1"
+      }, {
+        field: 'scalingZ',
+        newValue: "1"
+      }], frameIds[0]);
+    }, 500);
+
+    clearTimeout(this.productPickUpdateTimeouts[sku]);
+    this.productPickUpdateTimeouts[sku] = setTimeout(async () => {
+
+      gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'positionX',
+        newValue: pos.x.toString()
+      }, {
+        field: 'positionY',
+        newValue: pos.y.toString()
+      }, {
+        field: 'positionZ',
+        newValue: pos.z.toString()
+      }, {
+        field: 'scalingX',
+        newValue: "1"
+      }, {
+        field: 'scalingY',
+        newValue: "1"
+      }, {
+        field: 'scalingZ',
+        newValue: "1"
+      }], frameIds[2]);
+
+
+    }, 2000);
 
     return Promise.resolve();
   }
