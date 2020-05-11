@@ -844,6 +844,7 @@ class cViewDemo extends bView {
     setTimeout(() => {
       meshGL.position.x += 1.0;
       meshGL.position.rx += .5;
+      meshGL.position.y -= 1.0;
       meshGL.position.z += 1.0;
       meshGL.position.rz += .5;
     }, 150);
@@ -908,7 +909,7 @@ class cViewDemo extends bView {
     } else {}
     gAPPP.a.modelSets['frame'].commitUpdateList([{
       field: 'rotationY',
-      newValue: (-(basketRot.y - productRot.y)).toFixed(2)
+      newValue: ((basketRot.y + productRot.y - Math.PI)).toFixed(2)
     }, {
       field: 'positionX',
       newValue: offset.x
@@ -960,7 +961,7 @@ class cViewDemo extends bView {
       newValue: (this.canvasHelper.timeE + .4).toFixed(3) + 's'
     }, {
       field: 'rotationY',
-      newValue: (-(basketRot.y - productRot.y)).toFixed(2)
+      newValue: ((basketRot.y + productRot.y - Math.PI)).toFixed(2)
     }, {
       field: 'positionX',
       newValue: offset.x
