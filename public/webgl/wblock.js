@@ -261,7 +261,7 @@ class wBlock {
       }
       this.framesHelper.compileFrames();
       this.__applyFirstFrameValues();
-    }, 100);
+    }, 200);
   }
   _handleTextureUpdate(values) {
     if (!values || !values.title)

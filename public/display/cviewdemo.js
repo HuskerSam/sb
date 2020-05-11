@@ -36,6 +36,8 @@ class cViewDemo extends bView {
     this.basketSKUs = {};
     this.sceneIndex = 0;
 
+    this.productPickUpdateTimeouts = {};
+
     this.moreContentsListBtn = document.getElementById('cart-contents-more-button');
     this.moreContentsListBtn.addEventListener('click', () => this.toggleContentsListHeight());
     this.updateProfileUIFeatures();
@@ -296,7 +298,7 @@ class cViewDemo extends bView {
           return;
         let productBlock = this.getProductDataFromBlock(pickInfo.pickedMesh.blockWrapper);
         if (productBlock)
-          this.basketAddItem(null, productBlock.blockRenderData.itemId);
+          this.basketAddItem(true, productBlock.blockRenderData.itemId);
       }
     });
 
@@ -694,6 +696,9 @@ class cViewDemo extends bView {
     if (!sku)
       return;
 
+    if (event)
+      this.forceAddAnimation = sku;
+
     if (this.skuOrder.indexOf(sku) === -1)
       this.skuOrder.push(sku);
 
@@ -803,7 +808,6 @@ class cViewDemo extends bView {
       });
       await ppp;
     }
-
     for (let skuCtr = 0; skuCtr < this.skuOrder.length; skuCtr++) {
       await this.basketAddItemBlock(this.skuOrder[skuCtr], skuCtr);
 
@@ -862,12 +866,22 @@ class cViewDemo extends bView {
 
       let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
 
+      let render = true;
       if (existingValues) {
         if (existingValues.positionX === pos.x.toString() &&
           existingValues.positionY === pos.y.toString() &&
           existingValues.positionZ === pos.z.toString())
-          return Promise.resolve();
+          render = false;
+
+        if (this.forceAddAnimation === sku){
+          this.forceAddAnimation = false;
+          render = true;
+        }
       }
+
+      if (!render)
+        return Promise.resolve();
+
       gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'positionX',
         newValue: offset.x
@@ -1000,6 +1014,11 @@ class cViewDemo extends bView {
           field: 'scalingZ',
           newValue: "1"
         }], frameIds[0]);
+      }, 500);
+
+      clearTimeout(this.productPickUpdateTimeouts[sku]);
+      this.productPickUpdateTimeouts[sku] = setTimeout(async () => {
+
         gAPPP.a.modelSets['frame'].commitUpdateList([{
           field: 'positionX',
           newValue: pos.x.toString()
@@ -1021,7 +1040,7 @@ class cViewDemo extends bView {
         }], frameIds[2]);
 
 
-      }, 2500);
+      }, 2000);
 
     }
 
