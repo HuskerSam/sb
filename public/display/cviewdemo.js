@@ -823,28 +823,29 @@ class cViewDemo extends bView {
     let y = meshGL.position.y;
     let z = meshGL.position.z;
 
-    meshGL.position.x += 2.0;
-    meshGL.position.y += 2.0;
-    meshGL.position.z += 2.0;
+    meshGL.position.x += 1.0;
+    meshGL.position.y += 1.0;
+    meshGL.position.z += 1.0;
     meshGL.position.rx += .5;
     meshGL.position.ry += .5;
     meshGL.position.rz += .5;
 
 
     setTimeout(() => {
-      meshGL.position.x -= 4.0;
+      meshGL.position.x -= 2.0;
+      meshGL.position.rx -= 1;
     }, 50);
 
     setTimeout(() => {
-      meshGL.position.x += 2.0;
-      meshGL.position.y -= 2.0;
-      meshGL.position.rz -= .5;
+      meshGL.position.z -= 2.0;
+      meshGL.position.rz -= 1;
     }, 100);
 
     setTimeout(() => {
-      meshGL.position.x += 2.0;
-      meshGL.position.z -= 2.0;
-      meshGL.position.rz -= .5;
+      meshGL.position.x += 1.0;
+      meshGL.position.rx += .5;
+      meshGL.position.z += 1.0;
+      meshGL.position.rz += .5;
     }, 150);
   }
   async basketAddItemBlock(sku, index) {
