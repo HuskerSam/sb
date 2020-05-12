@@ -146,10 +146,25 @@ class cViewDemo extends bView {
           this.displayCamera = "deviceOrientation";
         }
         this.updateDemoPanel();
+        this.updateURL();
       }));
       this.updateUIDisplay();
       this.updateDemoPanel();
     }
+  }
+  updateURL() {
+    let searchParams = new URLSearchParams(window.location.search);
+    if (this.displayCamera)
+      searchParams.set("displayCamera", this.displayCamera);
+    if (this.uiOverlay)
+      searchParams.set("uiOverlay", this.uiOverlay);
+
+    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+    window.history.pushState({
+      path: newurl
+    }, '', newurl);
+
+    //    window.location.search = searchParams.toString();
   }
   _optionsURL() {
     let url = '';
@@ -268,6 +283,8 @@ class cViewDemo extends bView {
       ui_class = uiOverlay;
 
     if (ctl) {
+      if (ctl.classList.contains('demo_ui'))
+        ui_class = 'demo_ui';
       if (ctl.classList.contains('cart_ui'))
         ui_class = 'cart_ui';
       if (ctl.classList.contains('anim_ui'))
@@ -276,6 +293,7 @@ class cViewDemo extends bView {
         ui_class = 'edit_ui';
       this.uiOverlay = ui_class;
       this.updateDemoPanel();
+      this.updateURL();
     } else {
       document.querySelector('.' + ui_class).checked = true;
     }
