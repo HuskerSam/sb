@@ -96,133 +96,26 @@ class cViewDemo extends bView {
       if (!pageDesc)
         return;
 
-      this.demoOptionDiv = document.createElement('div');
+      if (!this.demoOptionDiv) {
+        this.demoOptionDiv = document.createElement('div');
+        document.body.appendChild(this.demoOptionDiv);
+      }
       let d = this.demoOptionDiv;
       d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:50%;padding: .5em;text-align:center;');
       d.setAttribute('class', 'app-panel');
-      let html = `<div class="orientation_details_div"></div><div style="line-height:1.5em;display:none;" class="demo_options_panel">
-        UI <label><input type="radio" name="controls" checked class="demo_ui" />Console</label>
+      let html = `<div class="orientation_details_div"></div><div style="line-height:1.5em;display:none;" class="demo_options_panel">`;
+      html +=
+        `UI <label><input type="radio" name="controls" checked class="demo_ui" />Console</label>
         <label><input type="radio" name="controls" class="cart_ui" />Mobile</label>
         <label><input type="radio" name="controls" class="anim_ui" />App</label>
         <label><input type="radio" name="controls" class="edit_ui" />Options</label><br>`;
 
-      html += `Camera <label><input type="radio" name="camera" class="camera_rotate" data-camera="arc_rotate" checked />Rotate</label>
-        <label><input type="radio" name="camera" class="camera_follow" data-camera="follow" />Follow</label>
-        <label><input type="radio" name="camera" class="device_orientation" data-camera="device_orientation" />Orientation</label><hr>`;
+      html += `Camera <label><input type="radio" name="camera" class="camera_rotate" data-camera="arcRotateCamera" checked />Rotate</label>
+        <label><input type="radio" name="camera" class="camera_follow" data-camera="demo" />Follow</label>
+        <label><input type="radio" name="camera" class="device_orientation" data-camera="deviceOrientation" />Orientation</label><hr>`;
 
-      let flat = this.__findProjectID({
-        label: 'flat',
-        song: pageDesc.song,
-        circuit: pageDesc.circuit
-      });
-      let raised = this.__findProjectID({
-        label: 'raised',
-        song: pageDesc.song,
-        circuit: pageDesc.circuit
-      });
-      let min = this.__findProjectID({
-        label: 'min',
-        song: pageDesc.song,
-        circuit: pageDesc.circuit
-      });
-      if (pageDesc.label === 'flat') {
-        html += `Labels: <a href="?wid=${min}">Min</a> Flat <a href="?wid=${raised}">Raised</a><br>`;
-      } else if (pageDesc.label === 'min') {
-        html += `Labels: Min <a href="?wid=${flat}">Flat</a> <a href="?wid=${raised}">Raised</a><br>`;
-      } else {
-        html += `Labels: <a href="?wid=${min}">Min</a> <a href="?wid=${flat}">Flat</a> Raised<br>`;
-      }
-
-      let shelves = this.__findProjectID({
-        label: pageDesc.label,
-        song: pageDesc.song,
-        circuit: 'shelves'
-      });
-      let isle = this.__findProjectID({
-        label: pageDesc.label,
-        song: pageDesc.song,
-        circuit: 'isle'
-      });
-      let carousel = this.__findProjectID({
-        label: pageDesc.label,
-        song: pageDesc.song,
-        circuit: 'carousel'
-      });
-      let tables = this.__findProjectID({
-        label: pageDesc.label,
-        song: pageDesc.song,
-        circuit: 'tables'
-      });
-      let island = this.__findProjectID({
-        label: pageDesc.label,
-        song: pageDesc.song,
-        circuit: 'island'
-      });
-
-      if (pageDesc.circuit === 'carousel') {
-        html += `Circuit: Carousel <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Platform</a><br>`;
-      } else if (pageDesc.circuit === 'isle') {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> Isle <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Platform</a><br>`;
-      } else if (pageDesc.circuit === 'tables') {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> Tables <a href="?wid=${island}">Platform</a><br>`;
-      } else if (pageDesc.circuit === 'island') {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> <a href="?wid=${shelves}">Shelves</a> <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> Platform<br>`;
-      } else {
-        html += `Circuit: <a href="?wid=${carousel}">Carousel</a> Shelves <a href="?wid=${isle}">Isle</a> <a href="?wid=${tables}">Tables</a> <a href="?wid=${island}">Platform</a><br>`;
-      }
-
-      let elephant = this.__findProjectID({
-        label: pageDesc.label,
-        song: 'elephant',
-        circuit: pageDesc.circuit
-      });
-      let cantina = this.__findProjectID({
-        label: pageDesc.label,
-        song: 'cantina',
-        circuit: pageDesc.circuit
-      });
-      let starwars = this.__findProjectID({
-        label: pageDesc.label,
-        song: 'starwars',
-        circuit: pageDesc.circuit
-      });
-      let mute = this.__findProjectID({
-        label: pageDesc.label,
-        song: 'mute',
-        circuit: pageDesc.circuit
-      });
-      if (pageDesc.song === 'starwars') {
-        html += `Song: Star Wars <a href="?wid=${cantina}">Cantina</a> <a href="?wid=${elephant}">Elephant</a> <a href="?wid=${mute}">Mute</a><br>`;
-      } else if (pageDesc.song === 'cantina') {
-        html += `Song: <a href="?wid=${starwars}">Star Wars</a> Cantina <a href="?wid=${elephant}">Elephant</a> <a href="?wid=${mute}">Mute</a><br>`;
-      } else if (pageDesc.song === 'mute') {
-        html += `Song: <a href="?wid=${starwars}">Star Wars</a> <a href="?wid=${cantina}">Cantina</a> <a href="?wid=${elephant}">Elephant</a> Mute<br>`;
-      } else {
-        html += `Song: <a href="?wid=${starwars}">Star Wars</a> <a href="?wid=${cantina}">Cantina</a> Elephant <a href="?wid=${mute}">Mute</a><br>`;
-      }
-
-      html += `</div>
-        <button style="float:right;" class="demo_options">Demo Options</button>`;
-
+      html += `<div class="nav_options"></div></div><button style="float:right;" class="demo_options">Demo Options</button>`;
       d.innerHTML = html;
-      d.querySelectorAll('input[name="controls"]').forEach(ctl => ctl.addEventListener('input', e => this.updateUIDisplay(ctl)));
-      d.querySelectorAll('input[name="camera"]').forEach(ctl => ctl.addEventListener('input', e => {
-        if (ctl.dataset.camera === 'follow') {
-          this.canvasHelper.cameraSelect.selectedIndex = 2;
-          this.canvasHelper.noTestError = true;
-          this.canvasHelper.cameraChangeHandler();
-        }
-        if (ctl.dataset.camera === 'arc_rotate') {
-          this.canvasHelper.cameraSelect.selectedIndex = 3;
-          this.canvasHelper.noTestError = true;
-          this.canvasHelper.cameraChangeHandler();
-        }
-        if (ctl.dataset.camera === 'device_orientation') {
-          this.canvasHelper.cameraSelect.selectedIndex = 4;
-          this.canvasHelper.noTestError = true;
-          this.canvasHelper.cameraChangeHandler();
-        }
-      }));
       let demo_options_panel = d.querySelector('.demo_options_panel');
       d.querySelector('.demo_options').addEventListener('click', e => {
         if (demo_options_panel.style.display === 'none')
@@ -230,14 +123,150 @@ class cViewDemo extends bView {
         else
           demo_options_panel.style.display = 'none';
       });
-      document.body.appendChild(d);
       this.orientation_details_div = d.querySelector('.orientation_details_div');
 
+      d.querySelectorAll('input[name="controls"]').forEach(ctl => ctl.addEventListener('input', e => this.updateUIDisplay(ctl)));
+      d.querySelectorAll('input[name="camera"]').forEach(ctl => ctl.addEventListener('input', e => {
+        if (ctl.dataset.camera === 'demo') {
+          this.canvasHelper.cameraSelect.selectedIndex = 2;
+          this.canvasHelper.noTestError = true;
+          this.canvasHelper.cameraChangeHandler();
+          this.displayCamera = "demo";
+        }
+        if (ctl.dataset.camera === 'arcRotateCamera') {
+          this.canvasHelper.cameraSelect.selectedIndex = 3;
+          this.canvasHelper.noTestError = true;
+          this.canvasHelper.cameraChangeHandler();
+          this.displayCamera = "arcRotateCamera";
+        }
+        if (ctl.dataset.camera === 'deviceOrientation') {
+          this.canvasHelper.cameraSelect.selectedIndex = 4;
+          this.canvasHelper.noTestError = true;
+          this.canvasHelper.cameraChangeHandler();
+          this.displayCamera = "deviceOrientation";
+        }
+        this.updateDemoPanel();
+      }));
       this.updateUIDisplay();
+      this.updateDemoPanel();
     }
+  }
+  _optionsURL() {
+    let url = '';
+    if (this.displayCamera)
+      url += `&displayCamera=${this.displayCamera}`;
+    if (this.uiOverlay)
+      url += `&uiOverlay=${this.uiOverlay}`;
+    return url;
+  }
+  updateDemoPanel() {
+    let pageDesc = this.projectsMap[gAPPP.loadedWID];
+    if (!pageDesc)
+      return;
+
+    let d = this.demoOptionDiv.querySelector('.nav_options');
+    let html = '';
+    let flat = this.__findProjectID({
+      label: 'flat',
+      song: pageDesc.song,
+      circuit: pageDesc.circuit
+    });
+    let raised = this.__findProjectID({
+      label: 'raised',
+      song: pageDesc.song,
+      circuit: pageDesc.circuit
+    });
+    let min = this.__findProjectID({
+      label: 'min',
+      song: pageDesc.song,
+      circuit: pageDesc.circuit
+    });
+    if (pageDesc.label === 'flat') {
+      html += `Labels: <a href="?wid=${min}${this._optionsURL()}">Min</a> Flat <a href="?wid=${raised}${this._optionsURL()}">Raised</a><br>`;
+    } else if (pageDesc.label === 'min') {
+      html += `Labels: Min <a href="?wid=${flat}${this._optionsURL()}">Flat</a> <a href="?wid=${raised}${this._optionsURL()}">Raised</a><br>`;
+    } else {
+      html += `Labels: <a href="?wid=${min}${this._optionsURL()}">Min</a> <a href="?wid=${flat}${this._optionsURL()}">Flat</a> Raised<br>`;
+    }
+
+    let shelves = this.__findProjectID({
+      label: pageDesc.label,
+      song: pageDesc.song,
+      circuit: 'shelves'
+    });
+    let isle = this.__findProjectID({
+      label: pageDesc.label,
+      song: pageDesc.song,
+      circuit: 'isle'
+    });
+    let carousel = this.__findProjectID({
+      label: pageDesc.label,
+      song: pageDesc.song,
+      circuit: 'carousel'
+    });
+    let tables = this.__findProjectID({
+      label: pageDesc.label,
+      song: pageDesc.song,
+      circuit: 'tables'
+    });
+    let island = this.__findProjectID({
+      label: pageDesc.label,
+      song: pageDesc.song,
+      circuit: 'island'
+    });
+
+    if (pageDesc.circuit === 'carousel') {
+      html += `Circuit: Carousel <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+    } else if (pageDesc.circuit === 'isle') {
+      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> Isle <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+    } else if (pageDesc.circuit === 'tables') {
+      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> Tables <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+    } else if (pageDesc.circuit === 'island') {
+      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> Platform<br>`;
+    } else {
+      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> Shelves <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+    }
+
+    let elephant = this.__findProjectID({
+      label: pageDesc.label,
+      song: 'elephant',
+      circuit: pageDesc.circuit
+    });
+    let cantina = this.__findProjectID({
+      label: pageDesc.label,
+      song: 'cantina',
+      circuit: pageDesc.circuit
+    });
+    let starwars = this.__findProjectID({
+      label: pageDesc.label,
+      song: 'starwars',
+      circuit: pageDesc.circuit
+    });
+    let mute = this.__findProjectID({
+      label: pageDesc.label,
+      song: 'mute',
+      circuit: pageDesc.circuit
+    });
+    if (pageDesc.song === 'starwars') {
+      html += `Song: Star Wars <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+    } else if (pageDesc.song === 'cantina') {
+      html += `Song: <a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> Cantina <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+    } else if (pageDesc.song === 'mute') {
+      html += `Song: <a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> Mute<br>`;
+    } else {
+      html += `Song: <a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> Elephant <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+    }
+    d.innerHTML = html;
   }
   updateUIDisplay(ctl = null) {
     let ui_class = 'demo_ui';
+
+    let urlParams = new URLSearchParams(window.location.search);
+    let uiOverlay = urlParams.get('uiOverlay');
+    this.uiOverlay = uiOverlay;
+    if (uiOverlay)
+      ui_class = uiOverlay;
+
     if (ctl) {
       if (ctl.classList.contains('cart_ui'))
         ui_class = 'cart_ui';
@@ -245,6 +274,10 @@ class cViewDemo extends bView {
         ui_class = 'anim_ui';
       if (ctl.classList.contains('edit_ui'))
         ui_class = 'edit_ui';
+      this.uiOverlay = ui_class;
+      this.updateDemoPanel();
+    } else {
+      document.querySelector('.' + ui_class).checked = true;
     }
     this.canvasActions.style.display = 'none';
     this.displayButtonPanel.style.display = 'none';
@@ -253,8 +286,9 @@ class cViewDemo extends bView {
     this.fontToolsContainer.style.display = 'none';
     this.scenePanelDiv.style.display = 'none';
     this.sceneEditToolsButton.style.display = 'none';
-    if (ui_class === 'anim_ui')
+    if (ui_class === 'anim_ui') {
       this.canvasActions.style.display = '';
+    }
     if (ui_class === 'cart_ui') {
       this.displayButtonPanel.style.display = '';
       this.cartTotalPanel.style.display = '';
@@ -284,11 +318,11 @@ class cViewDemo extends bView {
     option.value = 'About';
     this.workplacesSelect.add(option);
 
-    this.addDemoPanelOptions();
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.productsDisplayUpdate();
 
     this._displayCameraFeatures();
+    this.addDemoPanelOptions();
     this._sceneDataPanel();
     this._audioFeatures();
     this.context.scene.onPointerObservable.add(evt => {
@@ -302,7 +336,7 @@ class cViewDemo extends bView {
       }
     });
 
-    this.basketUpdateTotal().then(() => {});
+    this.basketUpdateTotal();
 
     setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);
     return Promise.resolve();
@@ -334,17 +368,26 @@ class cViewDemo extends bView {
     this.sceneEditTools.activate();
   }
   _displayCameraFeatures() {
-    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
+    let cameraName = '';
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera)
+      cameraName = this.rootBlock.blockRawData.displayCamera;
+    let urlParams = new URLSearchParams(window.location.search);
+    let displayCamera = urlParams.get('displayCamera');
+    this.displayCamera = displayCamera;
+    if (displayCamera)
+      cameraName = displayCamera;
+
+    if (cameraName) {
       setTimeout(() => {
         let options = this.canvasHelper.cameraSelect;
         for (let c = 0; c < options.length; c++) {
-          if (options.item(c).innerHTML === this.rootBlock.blockRawData.displayCamera) {
+          if (options.item(c).innerHTML === cameraName) {
             this.canvasHelper.cameraSelect.selectedIndex = c;
 
-            if (this.canvasHelper.cameraSelect.selectedIndex === 2) {
+            if (cameraName === 'demo') {
               document.querySelector('.camera_follow').checked = true;
             }
-            if (this.canvasHelper.cameraSelect.selectedIndex === 4) {
+            if (cameraName === 'deviceOrientation') {
               document.querySelector('.device_orientation').checked = true;
             }
 
@@ -802,7 +845,7 @@ class cViewDemo extends bView {
         continue;
       let itemShownIndex = this.skuOrder.indexOf(p.itemId);
       if (itemShownIndex === -1) {
-      //  await this.basketRemoveItemBlock(p.itemId);
+        //  await this.basketRemoveItemBlock(p.itemId);
       }
 
       let ppp = new Promise((resolve) => {
@@ -881,7 +924,7 @@ class cViewDemo extends bView {
     let cos = Math.cos(-bRot.y);
     let sin = Math.sin(-bRot.y);
 
-        this.__shakePosition(sceneProduct.sceneObject);
+    this.__shakePosition(sceneProduct.sceneObject);
 
     let offset = {
       x: -1 * (rawOffset.x * cos + rawOffset.z * sin),
