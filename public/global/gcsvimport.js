@@ -1118,6 +1118,12 @@ class gCSVImport {
       this.addCSVRow(panelrow);
     }
 
+    let displayBC = this.defaultCSVRow();
+    displayBC.asset = 'block';
+    displayBC.name = row.name + '_productsWrapper';
+    displayBC.parent = row.name;
+    this.addCSVRow(displayBC);
+
     return blockresult;
   }
   __childShapeRow(row) {
@@ -1223,7 +1229,7 @@ class gCSVImport {
     sceneBC.asset = 'blockchild';
     sceneBC.childtype = 'block';
     sceneBC.name = blockRow.name;
-    sceneBC.parent = sceneData.title;
+    sceneBC.parent = sceneData.title + '_productsWrapper';
     sceneBC.x = blockRow.x;
     sceneBC.y = blockRow.y;
     sceneBC.z = blockRow.z;
@@ -1247,7 +1253,7 @@ class gCSVImport {
     }
     let key = sceneRecords.recordIds[0];
     let sceneData = sceneRecords.records[0];
-    //  row.materialname = 'decolor: 0,1,0';
+
     let textPlaneBlock = this.defaultCSVRow();
     textPlaneBlock.asset = 'textplane';
     textPlaneBlock.name = row.name;
@@ -1268,7 +1274,7 @@ class gCSVImport {
     textPlaneBlockBC.asset = 'blockchild';
     textPlaneBlockBC.name = row.name;
     textPlaneBlockBC.childtype = 'block';
-    textPlaneBlockBC.parent = sceneData.title;
+    textPlaneBlockBC.parent = sceneData.title + '_productsWrapper';
     textPlaneBlockBC.rx = row.rx;
     textPlaneBlockBC.ry = row.ry;
     textPlaneBlockBC.rz = row.rz;
@@ -2033,6 +2039,8 @@ class gCSVImport {
 
       let frameCount = bandData.length;
 
+      let sb = await this.csvFetchSceneBlock();
+
       for (let index = 1; index < frameCount; index++) {
         let timeRatio = index / frameCount;
         let dataPoint = bandData[index] / 100.0;
@@ -2040,7 +2048,7 @@ class gCSVImport {
         bandScaleFrame.asset = 'blockchildframe';
         bandScaleFrame.name = product.childName;
         bandScaleFrame.childtype = 'block';
-        bandScaleFrame.parent = '::scene::';
+        bandScaleFrame.parent = sb.parent + '_productsWrapper';
         bandScaleFrame.frameorder = (10 * (index + 1)).toFixed(0);
         bandScaleFrame.frametime = (timeRatio * 100).toFixed(3) + '%';
         bandScaleFrame.sx = (.5 + dataPoint * scaleminusone).toFixed(3);
@@ -2141,10 +2149,17 @@ class gCSVImport {
         return -1;
       return 0;
     });
+    let productParent = sceneBlock.title + '_productsWrapper';
+    let prodRecords = await this.dbFetchByLookup('block', 'title', productParent);
+    if (prodRecords.records.length < 1) {
+      console.log('error', 'no prod wrapper found');
+      return;
+    }
+    let prodWrapperId = prodRecords.recordIds[0];
 
     for (let c = 0, l = productsRecords.length; c < l; c++) {
       let pBC = productsRecords[c];
-      let obj = await this.findMatchBlocks(pBC.childType, pBC.childName, sceneId);
+      let obj = await this.findMatchBlocks(pBC.childType, pBC.childName, prodWrapperId);
       if (!obj[0]) {
         console.log(pBC.childType, pBC.childName, sceneId, 'not found');
         continue;
