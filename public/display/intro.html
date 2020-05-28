@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/delicious.png">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+
+    h3 {
+      font-size: 1.5em;
+    }
+
+    select {
+      border-width: .25em;
+      border-radius: .5em;
+      padding: .15em;
+      border: outset .1em silver;
+      font-size: 1.25em;
+    }
+
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      padding: .5em;
+      flex-direction: row;
+    }
+
+    .option_panel {
+      flex: 1;
+      text-align: center;
+      background: silver;
+      border-radius: 15%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .option_panel>div {
+      flex: 1;
+    }
+
+    .option_1_panel {
+      background: #fff2ccff;
+    }
+
+    .option_2_panel {
+      background: #d9ead3ff;
+    }
+
+    .option_2_panel div:nth-child(2) {
+      transform: rotate(-90deg);
+    }
+
+    .option_3_panel {
+      background: #c9daf8ff;
+    }
+
+    .option_3_panel div:nth-child(2) {
+      transform: rotate(90deg);
+    }
+
+    .option_4_panel {
+      background: rgb(220, 220, 220);
+    }
+
+    .option_4_panel div:nth-child(2) {
+      transform: rotate(180deg);
+    }
+
+    .detail_panel,
+    .video_panel {
+      font-weight: bold;
+      text-align: center;
+      font-size: 2.5em;
+      padding-top: 2em;
+      margin: .1em;
+    }
+
+    .video_panel {
+      margin-top: 0;
+      margin-left: 0;
+      margin-bottom: 0;
+    }
+
+    .selected_option {
+      border-radius: 0;
+      color: black;
+    }
+
+    .button_panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .button_panel_flex_row .button_panel {
+      flex-direction: row;
+    }
+  </style>
+</head>
+
+<body style="background:#fff2ccff">
+  <div class="wrapper">
+    <div class="button_panel">
+      <div class="option_1_panel option_panel selected_option">
+        <div></div>
+        <div> <b>Mobile (low bandwidth, low poly)</b><br>
+          Orientation Camera (360º)<br>
+          9 x 16 display target<br>
+          Link 1
+        </div>
+        <div></div>
+      </div>
+      <div class="option_2_panel option_panel">
+        <div></div>
+        <div> <b>Mobile (low bandwidth, high poly)</b><br>
+          Orientation Camera (45º)<br>
+          9 x 16 display target<br>
+          Link 2 </div>
+        <div></div>
+      </div>
+
+    </div>
+    <div class="video_panel" style="flex:1;">Video</div>
+    <div class="button_panel">
+      <div class="option_3_panel option_panel">
+        <div></div>
+        <div>
+          <b>Mobile Portrait (high bandwidth)</b><br>
+          Orientation Camera<br>
+          16 x 9 display target<br>
+          Music driven background animation<br>
+          Link 3
+        </div>
+        <div></div>
+      </div>
+      <div class="option_4_panel option_panel">
+        <div></div>
+        <div> <b>Console</b><br>
+          Follow Camera<br>
+          16 x 9 HD quality display target<br>
+          Music driven background animation<br>
+          Link 4 </div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script>
+    let video_panel = document.querySelector('.video_panel');
+    let detail_panel = document.querySelector('.detail_panel');
+    let wrapper_panel = document.querySelector('.wrapper');
+    window.addEventListener('load', () => {
+      document.querySelector('.option_1_panel').addEventListener('click', e => {
+        let lst = document.querySelectorAll('.selected_option');
+        lst.forEach(ctl => ctl.classList.remove('selected_option'));
+        e.target.classList.add('selected_option');
+        document.body.style.background = '#fff2ccff';
+        wrapper_panel.style.flexDirection = 'row';
+        wrapper_panel.classList.remove('button_panel_flex_row');
+      });
+      document.querySelector('.option_2_panel').addEventListener('click', e => {
+        let lst = document.querySelectorAll('.selected_option');
+        lst.forEach(ctl => ctl.classList.remove('selected_option'));
+        e.target.classList.add('selected_option');
+        document.body.style.background = '#d9ead3ff';
+        wrapper_panel.style.flexDirection = 'row';
+        wrapper_panel.classList.remove('button_panel_flex_row');
+      });
+      document.querySelector('.option_3_panel').addEventListener('click', e => {
+        let lst = document.querySelectorAll('.selected_option');
+        lst.forEach(ctl => ctl.classList.remove('selected_option'));
+        e.target.classList.add('selected_option');
+        document.body.style.background = '#c9daf8ff';
+        wrapper_panel.style.flexDirection = 'column';
+        wrapper_panel.classList.add('button_panel_flex_row');
+      });
+      document.querySelector('.option_4_panel').addEventListener('click', e => {
+        let lst = document.querySelectorAll('.selected_option');
+        lst.forEach(ctl => ctl.classList.remove('selected_option'));
+        e.target.classList.add('selected_option');
+        document.body.style.background = 'rgb(220,220,220)';
+        wrapper_panel.style.flexDirection = 'column';
+        wrapper_panel.classList.add('button_panel_flex_row');
+      });
+    });
+  </script>
+</body>
+
+</html>
