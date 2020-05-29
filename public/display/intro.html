@@ -54,7 +54,7 @@
       width: 200px;
       height: 200px;
       position: absolute;
-      transition: all 800ms;
+      transition: all 800ms ease-in-out;
       border: .5em double rgba(225, 255, 255, .5);
       z-index: 100;
       cursor: pointer;
@@ -223,25 +223,41 @@
       position: absolute;
       top: .25em;
       left: 50%;
-      transform: translate(-50%,0);
+      transform: translate(-50%, 0);
       z-index: 1000;
     }
 
-    .open_demo_link, .next_button, .prev_button {
+    .open_demo_link,
+    .next_button,
+    .prev_button {
       color: black;
       padding: .5em;
-      background: rgba(255,255,255, .25);
+      background: rgba(255, 255, 255, .1);
       border: none;
       cursor: pointer;
     }
 
     .open_demo_link {
       padding-top: 1em;
+      position: relative;
     }
 
     .open_demo_link span {
       position: relative;
       top: -.35em;
+    }
+
+    .progress_bar {
+      position: absolute;
+      width: 0%;
+      height: 100%;
+      background: rgba(0, 255, 0, .25);
+      transition: width 15s linear;
+      z-index: -1;
+    }
+
+    .progress_bar_transition {
+      width: 100%;
     }
   </style>
 </head>
@@ -252,6 +268,7 @@
     <video class="video_panel" loop muted autoplay src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/ninebysixteen.mp4">
     </video>
     <div class="nav_buttons">
+      <div class="progress_bar"></div>
       <button class="prev_button"><i class="material-icons">keyboard_arrow_left</i></button>
       <a href="jkl" target="_blank" class="open_demo_link"><span></span><i class="material-icons">open_in_new</i></a>
       <button class="next_button"><i class="material-icons">keyboard_arrow_right</i></button>
@@ -303,29 +320,42 @@
     let next_button = document.querySelector('.next_button');
     let prev_button = document.querySelector('.prev_button');
     let open_demo_label = document.querySelector('.open_demo_link span');
+    let progress_bar = document.querySelector('.progress_bar');
+    let progressTimeout = null;
 
     let position = 1;
 
-    let position_data = [
-      {
-        video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/ninebysixteen.mp4",
-        url: '/display?wid=-M5nQBSpIJunfJLgrs1S&displayCamera=deviceOrientation',
-        label: 'One (portrait)'
-      }, {
-        video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/runthru.mp4",
-        url: '/display?wid=-M5SQqjBktAwKspIIc1F&displayCamera=demo',
-        label: 'Two (landscape)'
-      }, {
-        video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/ninebysixteen.mp4",
-        url: '/display?wid=-M5nQBSpIJunfJLgrs1S&displayCamera=deviceOrientation',
-        label: 'Three (portrait)'
+    let position_data = [{
+      video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/ninebysixteen.mp4",
+      url: '/display?wid=-M5nQBSpIJunfJLgrs1S&displayCamera=deviceOrientation',
+      label: 'One (portrait)'
+    }, {
+      video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/runthru.mp4",
+      url: '/display?wid=-M5SQqjBktAwKspIIc1F&displayCamera=demo',
+      label: 'Two (landscape)'
+    }, {
+      video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/ninebysixteen.mp4",
+      url: '/display?wid=-M5nQBSpIJunfJLgrs1S&displayCamera=deviceOrientation',
+      label: 'Three (portrait)'
 
-      }, {
-        video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/runthru.mp4",
-        url: '/display?wid=-M5SQqjBktAwKspIIc1F&displayCamera=demo',
-        label: 'Four (landscape)'
-      }
-    ];
+    }, {
+      video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/runthru.mp4",
+      url: '/display?wid=-M5SQqjBktAwKspIIc1F&displayCamera=demo',
+      label: 'Four (landscape)'
+    }];
+
+    function resetProgressBar() {
+      progress_bar.classList.remove('progress_bar_transition');
+      progress_bar.style.transition = 'none';
+      progress_bar.getBoundingClientRect();
+      progress_bar.style.transition = '';
+      progress_bar.classList.add('progress_bar_transition');
+
+      window.clearTimeout(progressTimeout);
+      progressTimeout = window.setTimeout(() => {
+        next_button.click();
+      }, 15000);
+    }
 
     window.addEventListener('load', () => {
       document.querySelector('.option_1_panel').addEventListener('click', e => {
@@ -341,6 +371,7 @@
         video_panel.setAttribute('src', position_data[position - 1].video);
         open_demo_label.innerHTML = position_data[position - 1].label;
         open_demo_link.setAttribute('href', position_data[position - 1].url);
+        resetProgressBar();
       });
       document.querySelector('.option_2_panel').addEventListener('click', e => {
         let lst = document.querySelectorAll('.selected_option');
@@ -356,6 +387,7 @@
         video_panel.setAttribute('src', position_data[position - 1].video);
         open_demo_label.innerHTML = position_data[position - 1].label;
         open_demo_link.setAttribute('href', position_data[position - 1].url);
+        resetProgressBar();
       });
       document.querySelector('.option_3_panel').addEventListener('click', e => {
         let lst = document.querySelectorAll('.selected_option');
@@ -371,6 +403,7 @@
         video_panel.setAttribute('src', position_data[position - 1].video);
         open_demo_label.innerHTML = position_data[position - 1].label;
         open_demo_link.setAttribute('href', position_data[position - 1].url);
+        resetProgressBar();
       });
       document.querySelector('.option_4_panel').addEventListener('click', e => {
         let lst = document.querySelectorAll('.selected_option');
@@ -386,10 +419,10 @@
         video_panel.setAttribute('src', position_data[position - 1].video);
         open_demo_label.innerHTML = position_data[position - 1].label;
         open_demo_link.setAttribute('href', position_data[position - 1].url);
+        resetProgressBar();
       });
 
       document.querySelector('.option_1_panel').click();
-
       next_button.addEventListener('click', e => {
         if (position === 4)
           position = 1;
@@ -399,15 +432,14 @@
         document.querySelector('.option_' + position.toString() + '_panel').click();
       });
 
+      prev_button.addEventListener('click', e => {
+        if (position === 1)
+          position = 4;
+        else
+          position--;
 
-            prev_button.addEventListener('click', e => {
-              if (position === 1)
-                position = 4;
-              else
-                position--;
-
-              document.querySelector('.option_' + position.toString() + '_panel').click();
-            });
+        document.querySelector('.option_' + position.toString() + '_panel').click();
+      });
     });
   </script>
 </body>
