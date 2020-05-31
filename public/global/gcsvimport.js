@@ -2005,6 +2005,7 @@ class gCSVImport {
     let scaleFactor = this.getNumberOrDefault(map.datascalefactor, 2.0);
     let signYOffset = this.getNumberOrDefault(map.signyoffset, 6.0);
     let rotateY = this.getNumberOrDefault(map.rotatey, 0);
+    let dataFramesFilter = this.getNumberOrDefault(map.dataframefilter, .05);
     let animType = map.animtype;
     if (!animType)
       animType = 'product';
@@ -2012,6 +2013,7 @@ class gCSVImport {
     return {
       scaleFactor,
       signYOffset,
+      dataFramesFilter,
       rotateY,
       animType
     }
@@ -2041,9 +2043,12 @@ class gCSVImport {
 
       let sb = await this.csvFetchSceneBlock();
 
+      let lastScale = -1;
+      let count = 0, skip = 0;
       for (let index = 1; index < frameCount; index++) {
         let timeRatio = index / frameCount;
         let dataPoint = bandData[index] / 100.0;
+        let skipFrame = false;
         let bandScaleFrame = this.defaultCSVRow();
         bandScaleFrame.asset = 'blockchildframe';
         bandScaleFrame.name = product.childName;
@@ -2063,14 +2068,22 @@ class gCSVImport {
           bandScaleFrame.ry = (-1.0 * productData.sceneParams.rotateY * timeRatio).toFixed(2) + 'deg';
         }
 
-        frameRows.push(this.addCSVRowList([bandScaleFrame]));
+        if (Math.abs(lastScale - dataPoint) < productData.sceneParams.dataFramesFilter)
+          skipFrame = true;
+
+        if (skipFrame && index < frameCount -1) {
+          skip++;
+        } else {
+          count++;
+          lastScale = dataPoint;
+          frameRows.push(this.addCSVRowList([bandScaleFrame]));
+        }
 
         if (frameRows.length > 20) {
           await Promise.all(frameRows);
           frameRows = [];
         }
       }
-
     }
     return Promise.all(frameRows);
   }
