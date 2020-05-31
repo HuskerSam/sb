@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Visual Catalogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/delicious.png">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: blue;
+    }
+
+    img {
+      max-height: 50vh;
+      max-width: 75vw;
+    }
+
+    .wrapper {
+      text-align: center;
+    }
+
+    .video-wrapper {
+      display: none;
+      position: relative;
+      background: rgb(200, 90, 0);
+      flex: 1;
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: 100%;
+      max-width: 100vw;
+      max-height: 100vh;
+    }
+
+    .video-wrapper .playpause {
+      background-color: rgb(255, 255, 0);
+      border-radius: 50%;
+      color: rgb(200, 90, 0);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      font-size: 2.5em;
+      padding: .25em;
+      cursor: pointer;
+      border: solid .2em rgb(200, 90, 0);
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    .video-wrapper .playpause i {
+      font-size: 5em;
+    }
+
+    .video_link {
+      display: inline-block;
+      background: rgb(255, 255, 0);
+      color: rgb(200, 90, 0);
+      font-family: Chilanka;
+      font-weight: 900;
+      text-decoration: none;
+      font-size: 1.25em;
+      padding: .5em 1em;
+      padding-bottom: .25em;
+      white-space: nowrap;
+      border-radius: 1.5em;
+      margin-bottom: .25em;
+      border: solid .1em rgb(200, 90, 0);
+    }
+
+    .video_link.selected,
+    .video_link:hover {
+      color: rgb(255, 255, 0);
+      background: rgb(200, 90, 0);
+    }
+
+    .parallax-scroll {
+      position: relative;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: auto;
+      transition: top 200ms;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+  </style>
+  <script>
+    window.addEventListener('DOMContentLoaded', e => {
+      let wrapperList = document.querySelectorAll('.video-wrapper');
+
+      wrapperList.forEach(wrapper => {
+        let video = wrapper.querySelector('video');
+        let btn = wrapper.querySelector('.playpause');
+
+        video.setAttribute('controls', '');
+        btn.addEventListener('click', e => {
+          if (video.paused) {
+            video.play();
+          }
+        });
+
+        video.addEventListener('pause', e => {
+          btn.style.display = '';
+        });
+        video.addEventListener('play', e => {
+          btn.style.display = 'none';
+        });
+      });
+
+      let video_linkList = document.querySelectorAll('.video_link');
+      video_linkList.forEach((anchor, index) => {
+        anchor.addEventListener('click', e => {
+          wrapperList.forEach(w => {
+            w.style.display = 'none';
+            w.querySelector('video').pause();
+          });
+          wrapperList[index].style.display = 'block';
+          wrapperList[index].querySelector('video').play();
+          video_linkList.forEach(i => i.classList.remove('selected'));
+          video_linkList[index].classList.add('selected');
+          e.preventDefault();
+          return false;
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>Visual Catalogs</h1>
+    <div style="display:flex;flex-direction: row">
+      <img src="visualcatalog.png" />
+      <div style="flex:1; text-align:left;white-space: pre">
+        Video Script planning:
+        Intro:
+        I am an app developer and the thing people want the most is app installs
+        however as a phone user, I hate installing applications.
+        How do you get more people to look at your stuff more online?
+        Stay engaged and make an impression? Get app
+        installs? Growing monthly active users?
+        How do you users check notifications on their phone?
+
+        Problems: What innovations can improve user shopping experience?
+        How do you acquire and afford leading-edge display technology?
+        Creating a Novel and Engaging User Experience
+        How do you close the gap between the physical and digital shopping experience?
+        Lost of visual and spatial association of products
+        Recommendation example, hamburger and buns
+        As your company begins to phase out print media, how do you maintain your advertising footprint?
+        How do you appeal to young customers?
+
+        A catalog-driven virtual reality experience on mobile
+        Spatially arrange and display your products
+        Displays can automatically be updated from your promotion catalog
+        Ability to create catalog-based and event-based displays
+        Event-based display can be used to generate new business
+        Visualizations allow for user participation
+
+      </div>
+    </div>
+    <h1>Sheets Import Pipeline</h1>
+    <div style="display:flex;flex-direction: row">
+      <img src="pipeline.png" />
+      <div style="flex:1; text-align:left;white-space: pre">
+
+        Conceptually break down what the app does - once you’re set up, a lot of resue
+        List of assets (3D mesh library)
+        Layout - store design
+        Living room layout for furniture
+        Stadium for Book Store
+        Catalog (3D assets + product data + bin data)
+        distinguishes an asset into a specific product
+        Example: 3D Grape + Coloration + Price,
+        Position, Size etc = Concord,
+        Champagne, or Riesling
+
+        How is content continually generated?
+        Make layouts that represent the store
+        Assets come from a 3D library and are added over time
+        Updated catalogs can be manually or automatically generated into a virtual scene
+
+        How is this integrated into my existing system?
+        Stand alone application that can be redirected
+        Overlay over existing application
+
+      </div>
+    </div>
+    <h1>Videos</h1>
+    <div id="display_builder" class="parallax-scroll">
+      <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
+        <div style="position:absolute;z-index:1;top:.25em;width: 100%;">
+          <a href="#" id="video_1_link" class="video_link selected">Create</a>
+          <a href="#" id="video_2_link" class="video_link">Customize</a>
+          <a href="#" id="video_3_link" class="video_link">Spinner</a>
+          <a href="#" id="video_4_link" class="video_link">Lines</a>
+          <a href="#" id="video_5_link" class="video_link">Basics</a>
+          <a href="#" id="video_6_link" class="video_link">Catalog</a>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:1;">
+          <div class="video-wrapper" id="video_1_link_video" style="display:block;">
+            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" muted preload="auto"></video>
+            <div class="playpause"><i class="material-icons">play_arrow</i></div>
+          </div>
+          <div class="video-wrapper" id="video_2_link_video">
+            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" muted preload="none"></video>
+            <div class="playpause"><i class="material-icons">play_arrow</i></div>
+          </div>
+          <div class="video-wrapper" id="video_3_link_video">
+            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" muted preload="none"></video>
+            <div class="playpause"><i class="material-icons">play_arrow</i></div>
+          </div>
+          <div class="video-wrapper" id="video_4_link_video">
+            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" muted preload="none"></video>
+            <div class="playpause"><i class="material-icons">play_arrow</i></div>
+          </div>
+          <div class="video-wrapper" id="video_5_link_video">
+            <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" preload="none"></video>
+            <div class="playpause"><i class="material-icons">play_arrow</i></div>
+          </div>
+          <div class="video-wrapper" id="video_6_link_video">
+            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/spreadsheetexport.mp4" preload="none"></video>
+            <div class="playpause"><i class="material-icons">play_arrow</i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script>
+
+  </script>
+</body>
+
+</html>

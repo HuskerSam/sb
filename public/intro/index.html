@@ -243,18 +243,23 @@
 
     .open_demo_link,
     .next_button,
+    .info_button,
     .prev_button,
     .stretch_video {
       color: black;
       padding: .5em;
-      background: rgba(255, 255, 255, .1);
+      background: rgba(255, 255, 255, .2);
       border: none;
       cursor: pointer;
     }
 
-    .open_demo_link {
+    .open_demo_link, .info_button {
       padding-top: 1em;
       position: relative;
+    }
+
+    .open_demo_link {
+      text-decoration: none;
     }
 
     .open_demo_link span {
@@ -266,7 +271,7 @@
       position: absolute;
       width: 0%;
       height: 100%;
-      background: rgba(0, 255, 0, .25);
+      background: rgba(0, 255, 0, .3);
       transition: width 15s linear;
       z-index: -1;
     }
@@ -285,8 +290,9 @@
     <div class="nav_buttons">
       <div class="progress_bar"></div>
       <button class="prev_button"><i class="material-icons">keyboard_arrow_left</i></button>
-      <a href="jkl" target="_blank" class="open_demo_link"><span></span><i class="material-icons">open_in_new</i></a>
+      <a href="jkl" target="_blank" class="open_demo_link"><span>Open</span><i class="material-icons">open_in_new</i></a>
       <button class="stretch_video"><i class="material-icons">open_with</i></button>
+      <a href="/info" target="_blank" class="info_button"><i class="material-icons">info</i></a>
       <button class="next_button"><i class="material-icons">keyboard_arrow_right</i></button>
     </div>
     <div class="option_1_panel option_panel selected_option">
@@ -386,7 +392,7 @@
         wrapper_panel.classList.remove('position_4');
         position = 1;
         video_panel.setAttribute('src', position_data[position - 1].video);
-        open_demo_label.innerHTML = position_data[position - 1].label;
+        //open_demo_label.innerHTML = position_data[position - 1].label;
         open_demo_link.setAttribute('href', position_data[position - 1].url);
         resetProgressBar();
       });
@@ -402,7 +408,7 @@
 
         position = 2;
         video_panel.setAttribute('src', position_data[position - 1].video);
-        open_demo_label.innerHTML = position_data[position - 1].label;
+        //open_demo_label.innerHTML = position_data[position - 1].label;
         open_demo_link.setAttribute('href', position_data[position - 1].url);
         resetProgressBar();
       });
@@ -418,7 +424,7 @@
 
         position = 3;
         video_panel.setAttribute('src', position_data[position - 1].video);
-        open_demo_label.innerHTML = position_data[position - 1].label;
+        //open_demo_label.innerHTML = position_data[position - 1].label;
         open_demo_link.setAttribute('href', position_data[position - 1].url);
         resetProgressBar();
       });
@@ -434,13 +440,13 @@
 
         position = 4;
         video_panel.setAttribute('src', position_data[position - 1].video);
-        open_demo_label.innerHTML = position_data[position - 1].label;
+        //open_demo_label.innerHTML = position_data[position - 1].label;
         open_demo_link.setAttribute('href', position_data[position - 1].url);
         resetProgressBar();
       });
 
       document.querySelector('.option_1_panel').click();
-      next_button.addEventListener('click', e => {
+      prev_button.addEventListener('click', e => {
         if (position === 4)
           position = 1;
         else
@@ -449,7 +455,7 @@
         document.querySelector('.option_' + position.toString() + '_panel').click();
       });
 
-      prev_button.addEventListener('click', e => {
+      next_button.addEventListener('click', e => {
         if (position === 1)
           position = 4;
         else
