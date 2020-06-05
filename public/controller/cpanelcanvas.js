@@ -75,7 +75,7 @@ class cPanelCanvas {
 
     this.canvas.addEventListener('click', e => {
       if (this.closeMenusOnClick)
-        gAPPP.mV.closeHeaderBands();
+        gAPPP.mV.closeHeaderBands(true);
     });
 
     this._playState = 0;

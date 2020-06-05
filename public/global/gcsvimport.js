@@ -982,6 +982,7 @@ class gCSVImport {
     if (row.blockcode) block.blockCode = row.blockcode;
     if (row.musicparams) block.musicParams = row.musicparams;
     if (row.genericblockdata) block.genericBlockData = row.genericblockdata;
+    if (row.displayui) block.displayUI = row.displayui;
 
     let blockresult = await this.dbSetRecord('block', block);
     let sceneParams = this._fetchSceneParams(block);

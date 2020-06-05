@@ -162,8 +162,15 @@ class gInstanceSuper {
     let canvasColor = gAPPP.a.profile.canvasColor;
     if (!canvasColor)
       canvasColor = '';
+    let opacityLevel = gAPPP.a.profile.opacityLevel;
+    if (!opacityLevel)
+      opacityLevel = .5;
+
     let bkg = GLOBALUTIL.color(canvasColor);
     let bkgColor = GLOBALUTIL.colorRGB255(canvasColor);
+    let bkgColorTransparent = bkgColor.replace('rgb(', '');
+    bkgColorTransparent = bkgColorTransparent.replace(')', '');
+    bkgColorTransparent = 'rgba(' + bkgColorTransparent + ',' + opacityLevel.toString() + ')';
     let foreColor = 'rgb(50, 50, 50)';
     let boundsLines = '.1,.1,.1';
     let boundsBack = '.9,.9,.9';
@@ -206,6 +213,10 @@ class gInstanceSuper {
 
     .app-panel {
       background: ${bkgColor};
+    }
+
+    .app-transparent {
+      background: ${bkgColorTransparent};
     }
 
     .app-panel, .app-border, .app-control {

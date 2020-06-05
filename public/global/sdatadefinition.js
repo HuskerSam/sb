@@ -895,6 +895,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   clearLeft: true,
   floatLeft: true
 }, {
+  title: 'Display UI',
+  fireSetField: 'displayUI',
+  group: 'blockData',
+  clearLeft: true,
+  floatLeft: true
+}, {
   title: 'blockFlag',
   fireSetField: 'blockFlag',
   group: 'blockData',

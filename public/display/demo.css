@@ -232,3 +232,127 @@ button.cart-submit {
   bottom: .25em;
   font-size: 1.5em;
 }
+
+.display_header_bar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.display_header_bar * {
+  pointer-events: auto;
+}
+
+.display_header_bar .btn-sb-icon {
+  font-size: 2em;
+  float:left;
+}
+
+.display_header_bar .cart_button {
+  float: right;
+}
+
+#muteButton {
+  display: none;
+}
+
+.demo_options {
+  display: none;
+}
+
+.display_header_slideout {
+  clear:both;
+  position: relative;
+}
+
+
+.display_header_slideout > div {
+  width: 0%;
+  overflow: hidden;
+  transition: width 800ms, max-height 800ms, opacity 500ms;
+  top: 0;
+  position: absolute;
+  right: 0;
+  left: auto;
+  opacity: 0;
+  max-height: 2em;
+}
+
+.display_header_slideout > div.profile-panel-shown {
+  width: 100%;
+  right: auto;
+  left: 0;
+  opacity: 1;
+  max-height: 100vh;
+}
+
+.volume_panel .selected-mesh-bounds-helper-box {
+  background: none!important;
+  height: 7.5em;
+  padding-top: 1.25em;
+}
+
+
+.display_header_slideout .fields-container {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.display_header_slideout .fields-container * {
+  pointer-events: auto;
+}
+
+.display_header_slideout > div {
+  pointer-events:  none;
+}
+
+.selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  width: 100%;
+  margin-bottom: .5em;
+}
+
+.movie_panel .fields-container, .volume_panel .fields-container {
+  overflow-x: hidden;
+}
+
+.selected-mesh-bounds-helper-box {
+  color: black;
+  padding-left: .2em;
+  white-space: pre;
+  text-align: center;
+  border-radius: .25em;
+  font-size: inherit;
+  padding-top: .35em;
+}
+
+.movie_panel .selected-mesh-bounds-helper-box .action-area {
+  padding-bottom: .5em;
+}
+
+.selected-mesh-bounds-helper-box input[type="text"] {
+  border-radius: .25em;
+  border: default;
+}
+
+.selected-mesh-bounds-helper-box .form-control {
+  width: auto;
+  display: inline-block;
+}
+
+.nav_options {
+  padding: .5em;
+  text-align: center;
+  border-bottom: solid .05em silver;
+  margin-bottom: .5em;
+  font-size: 1.5em;
+  display: inline-block;
+}
+
+.nav_options a {
+  font-size: 1em;
+}
+.demo_panel_contents {
+  text-align: center;
+}

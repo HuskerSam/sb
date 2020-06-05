@@ -1,6 +1,7 @@
 class cViewDemo extends bView {
   constructor() {
     super('Demo', null, null, true);
+    this.bandButtons = [];
 
     let anims = gAPPP.animationList;
     this.projectsMap = {};
@@ -46,6 +47,7 @@ class cViewDemo extends bView {
     this._updateSelectedBlock(gAPPP.a.profile[key]);
     this.canvasHelper.show();
     this.canvasActions.style.display = 'none';
+    this.initHeaderBar();
 
     window.addEventListener('deviceorientation', event => {
       this.orientationInited = true;
@@ -58,6 +60,56 @@ class cViewDemo extends bView {
           this.orientation_details_div.innerHTML = this.alpha + ' : ' + this.beta + ' <br>';
       }
     });
+  }
+  initHeaderBar() {
+    this.display_header_bar = this.dialog.querySelector('.display_header_bar');
+
+    this.movie_panel_button = this.dialog.querySelector('.movie_panel_button');
+    this.movie_panel = this.dialog.querySelector('.movie_panel');
+    this.movieFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.movie_panel_fc = this.movie_panel.querySelector('.fields-container');
+    this.movie_panel_ctl = new cBandProfileOptions(this.movie_panel_button, this.movieFields,
+      this.movie_panel_fc, this.movie_panel);
+    this.movie_panel_ctl.fireFields.values = gAPPP.a.profile;
+    this.movie_panel_ctl.panelShownClass = 'profile-panel-shown';
+    this.movie_panel_ctl.activate();
+    this.bandButtons.push(this.movie_panel_ctl);
+    this.movie_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.volume_panel_button = this.dialog.querySelector('.volume_panel_button');
+    this.volume_panel = this.dialog.querySelector('.volume_panel');
+    this.volumeFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
+    this.volume_panel_fc = this.volume_panel.querySelector('.fields-container');
+    this.volume_panel_ctl = new cBandProfileOptions(this.volume_panel_button, this.volumeFields,
+      this.volume_panel_fc, this.volume_panel);
+    this.volume_panel_ctl.fireFields.values = gAPPP.a.profile;
+    this.volume_panel_ctl.panelShownClass = 'profile-panel-shown';
+    this.volume_panel_ctl.activate();
+    this.bandButtons.push(this.volume_panel_ctl);
+    this.volume_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.profile_panel_button = this.dialog.querySelector('.profile_panel_button');
+    this.profile_panel = this.dialog.querySelector('.profile_panel');
+    this.profileFields = [];
+    this.profile_panel_fc = this.profile_panel.querySelector('.fields-container');
+    this.profile_panel_ctl = new cBandProfileOptions(this.profile_panel_button, this.profileFields,
+      this.profile_panel_fc, this.profile_panel);
+    this.profile_panel_ctl.fireFields.values = gAPPP.a.profile;
+    this.profile_panel_ctl.panelShownClass = 'profile-panel-shown';
+    this.profile_panel_ctl.activate();
+    this.bandButtons.push(this.profile_panel_ctl);
+    this.profile_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.demo_panel_button = this.dialog.querySelector('.demo_panel_button');
+    this.demo_panel = this.dialog.querySelector('.demo_panel');
+    this.demo_panel_fc = this.demo_panel.querySelector('.fields-container');
+    this.demo_panel_ctl = new cBandProfileOptions(this.demo_panel_button, [],
+      this.demo_panel_fc, this.demo_panel);
+    this.demo_panel_ctl.fireFields.values = gAPPP.a.profile;
+    this.demo_panel_ctl.panelShownClass = 'profile-panel-shown';
+    this.demo_panel_ctl.activate();
+    this.bandButtons.push(this.demo_panel_ctl);
+    this.demo_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
   }
   toggleContentsListHeight() {
     if (this.moreContentsLarged) {
@@ -97,57 +149,23 @@ class cViewDemo extends bView {
         return;
 
       if (!this.demoOptionDiv) {
-        this.demoOptionDiv = document.createElement('div');
-        document.body.appendChild(this.demoOptionDiv);
+        this.demoOptionDiv = this.dialog.querySelector('.demo_panel_contents');
       }
-      let d = this.demoOptionDiv;
-      d.setAttribute('style', 'position:absolute;right:.1em;bottom:.1em;max-width:50%;padding: .5em;text-align:center;');
-      d.setAttribute('class', 'app-panel');
-      let html = `<div class="orientation_details_div"></div><div style="line-height:1.5em;display:none;" class="demo_options_panel">`;
+      let html = `<select class="ui_select" name="controls">
+        <option value="demo_ui" selected>Console UI</option>
+        <option value="cart_ui">Mobile</option>
+        <option value="anim_ui">Animation</option>
+        <option value="edit_ui">Options</option>
+      </select><br>`;
       html +=
-        `UI <label><input type="radio" name="controls" checked class="demo_ui" />Console</label>
-        <label><input type="radio" name="controls" class="cart_ui" />Mobile</label>
-        <label><input type="radio" name="controls" class="anim_ui" />App</label>
-        <label><input type="radio" name="controls" class="edit_ui" />Options</label><br>`;
+        `<div class="nav_options app-panel"></div><div class="orientation_details_div"></div>`;
 
-      html += `Camera <label><input type="radio" name="camera" class="camera_rotate" data-camera="arcRotateCamera" checked />Rotate</label>
-        <label><input type="radio" name="camera" class="camera_follow" data-camera="demo" />Follow</label>
-        <label><input type="radio" name="camera" class="device_orientation" data-camera="deviceOrientation" />Orientation</label><hr>`;
+      html += ``;
+      this.demoOptionDiv.innerHTML = html;
+      this.ui_select = this.demoOptionDiv.querySelector('.ui_select');
+      this.orientation_details_div = this.demoOptionDiv.querySelector('.orientation_details_div');
 
-      html += `<div class="nav_options"></div></div><button style="float:right;" class="demo_options">Demo Options</button>`;
-      d.innerHTML = html;
-      let demo_options_panel = d.querySelector('.demo_options_panel');
-      d.querySelector('.demo_options').addEventListener('click', e => {
-        if (demo_options_panel.style.display === 'none')
-          demo_options_panel.style.display = '';
-        else
-          demo_options_panel.style.display = 'none';
-      });
-      this.orientation_details_div = d.querySelector('.orientation_details_div');
-
-      d.querySelectorAll('input[name="controls"]').forEach(ctl => ctl.addEventListener('input', e => this.updateUIDisplay(ctl)));
-      d.querySelectorAll('input[name="camera"]').forEach(ctl => ctl.addEventListener('input', e => {
-        if (ctl.dataset.camera === 'demo') {
-          this.canvasHelper.cameraSelect.selectedIndex = 2;
-          this.canvasHelper.noTestError = true;
-          this.canvasHelper.cameraChangeHandler();
-          this.displayCamera = "demo";
-        }
-        if (ctl.dataset.camera === 'arcRotateCamera') {
-          this.canvasHelper.cameraSelect.selectedIndex = 3;
-          this.canvasHelper.noTestError = true;
-          this.canvasHelper.cameraChangeHandler();
-          this.displayCamera = "arcRotateCamera";
-        }
-        if (ctl.dataset.camera === 'deviceOrientation') {
-          this.canvasHelper.cameraSelect.selectedIndex = 4;
-          this.canvasHelper.noTestError = true;
-          this.canvasHelper.cameraChangeHandler();
-          this.displayCamera = "deviceOrientation";
-        }
-        this.updateDemoPanel();
-        this.updateURL();
-      }));
+      this.ui_select.addEventListener('input', e => this.updateUIDisplay(e));
       this.updateUIDisplay();
       this.updateDemoPanel();
     }
@@ -181,28 +199,6 @@ class cViewDemo extends bView {
 
     let d = this.demoOptionDiv.querySelector('.nav_options');
     let html = '';
-    let flat = this.__findProjectID({
-      label: 'flat',
-      song: pageDesc.song,
-      circuit: pageDesc.circuit
-    });
-    let raised = this.__findProjectID({
-      label: 'raised',
-      song: pageDesc.song,
-      circuit: pageDesc.circuit
-    });
-    let min = this.__findProjectID({
-      label: 'min',
-      song: pageDesc.song,
-      circuit: pageDesc.circuit
-    });
-    if (pageDesc.label === 'flat') {
-      html += `Labels: <a href="?wid=${min}${this._optionsURL()}">Min</a> Flat <a href="?wid=${raised}${this._optionsURL()}">Raised</a><br>`;
-    } else if (pageDesc.label === 'min') {
-      html += `Labels: Min <a href="?wid=${flat}${this._optionsURL()}">Flat</a> <a href="?wid=${raised}${this._optionsURL()}">Raised</a><br>`;
-    } else {
-      html += `Labels: <a href="?wid=${min}${this._optionsURL()}">Min</a> <a href="?wid=${flat}${this._optionsURL()}">Flat</a> Raised<br>`;
-    }
 
     let shelves = this.__findProjectID({
       label: pageDesc.label,
@@ -231,15 +227,37 @@ class cViewDemo extends bView {
     });
 
     if (pageDesc.circuit === 'carousel') {
-      html += `Circuit: Carousel <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `Circuit: Carousel <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'isle') {
-      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> Isle <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> Isle<br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'tables') {
-      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> Tables <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> Tables <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'island') {
-      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> Platform<br>`;
+      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> Platform<br>`;
     } else {
-      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> Shelves <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> Shelves <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+    }
+    let flat = this.__findProjectID({
+      label: 'flat',
+      song: pageDesc.song,
+      circuit: pageDesc.circuit
+    });
+    let raised = this.__findProjectID({
+      label: 'raised',
+      song: pageDesc.song,
+      circuit: pageDesc.circuit
+    });
+    let min = this.__findProjectID({
+      label: 'min',
+      song: pageDesc.song,
+      circuit: pageDesc.circuit
+    });
+    if (pageDesc.label === 'flat') {
+      html += `<a href="?wid=${min}${this._optionsURL()}">Min</a> Flat <a href="?wid=${raised}${this._optionsURL()}">Raised</a><br>`;
+    } else if (pageDesc.label === 'min') {
+      html += `Min <a href="?wid=${flat}${this._optionsURL()}">Flat</a> <a href="?wid=${raised}${this._optionsURL()}">Raised</a><br>`;
+    } else {
+      html += `<a href="?wid=${min}${this._optionsURL()}">Min</a> <a href="?wid=${flat}${this._optionsURL()}">Flat</a> Raised<br>`;
     }
 
     let elephant = this.__findProjectID({
@@ -263,18 +281,18 @@ class cViewDemo extends bView {
       circuit: pageDesc.circuit
     });
     if (pageDesc.song === 'starwars') {
-      html += `Song: Star Wars <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+      html += `Star Wars <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
     } else if (pageDesc.song === 'cantina') {
-      html += `Song: <a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> Cantina <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> Cantina <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
     } else if (pageDesc.song === 'mute') {
-      html += `Song: <a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> Mute<br>`;
+      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> Mute<br>`;
     } else {
-      html += `Song: <a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> Elephant <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> Elephant <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
     }
     d.innerHTML = html;
   }
-  updateUIDisplay(ctl = null) {
-    let ui_class = 'demo_ui';
+  updateUIDisplay(evt) {
+    let ui_class = this.ui_select.value;
 
     let urlParams = new URLSearchParams(window.location.search);
     let uiOverlay = urlParams.get('uiOverlay');
@@ -282,21 +300,12 @@ class cViewDemo extends bView {
     if (uiOverlay)
       ui_class = uiOverlay;
 
-    if (ctl) {
-      if (ctl.classList.contains('demo_ui'))
-        ui_class = 'demo_ui';
-      if (ctl.classList.contains('cart_ui'))
-        ui_class = 'cart_ui';
-      if (ctl.classList.contains('anim_ui'))
-        ui_class = 'anim_ui';
-      if (ctl.classList.contains('edit_ui'))
-        ui_class = 'edit_ui';
-      this.uiOverlay = ui_class;
+    if (evt) {
       this.updateDemoPanel();
       this.updateURL();
-    } else {
-      document.querySelector('.' + ui_class).checked = true;
+      this.displayCamera = '';
     }
+
     this.canvasActions.style.display = 'none';
     this.displayButtonPanel.style.display = 'none';
     this.cartTotalPanel.style.display = 'none';
@@ -306,15 +315,34 @@ class cViewDemo extends bView {
     this.sceneEditToolsButton.style.display = 'none';
     if (ui_class === 'anim_ui') {
       this.canvasActions.style.display = '';
+      if (!this.displayCamera)
+        this.displayCamera = 'arcRotateCamera';
     }
     if (ui_class === 'cart_ui') {
       this.displayButtonPanel.style.display = '';
       this.cartTotalPanel.style.display = '';
+      if (!this.displayCamera)
+        this.displayCamera = 'demo';
     }
     if (ui_class === 'edit_ui') {
       this.fontToolsButton.style.display = '';
       this.sceneEditToolsButton.style.display = '';
+      if (!this.displayCamera)
+        this.displayCamera = 'deviceOrientation';
     }
+
+    let camera = this.displayCamera;
+    if (camera === 'demo') {
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+    }
+    if (camera === 'arcRotateCamera') {
+      this.canvasHelper.cameraSelect.selectedIndex = 3;
+    }
+    if (camera === 'deviceOrientation') {
+      this.canvasHelper.cameraSelect.selectedIndex = 4;
+    }
+    this.canvasHelper.noTestError = true;
+    this.canvasHelper.cameraChangeHandler();
   }
   async _cameraShown() {
     this.productData = await new gCSVImport(gAPPP.loadedWID).initProducts();
@@ -386,29 +414,24 @@ class cViewDemo extends bView {
     this.sceneEditTools.activate();
   }
   _displayCameraFeatures() {
-    let cameraName = '';
-    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera)
-      cameraName = this.rootBlock.blockRawData.displayCamera;
+    this.displayCamera = 'demo';
+    this.sceneDefaultCamera = '';
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
+      this.displayCamera = this.rootBlock.blockRawData.displayCamera;
+      this.sceneDefaultCamera = this.displayCamera;
+    }
     let urlParams = new URLSearchParams(window.location.search);
     let displayCamera = urlParams.get('displayCamera');
     this.displayCamera = displayCamera;
     if (displayCamera)
-      cameraName = displayCamera;
+      this.displayCamera = displayCamera;
 
-    if (cameraName) {
+    if (this.displayCamera) {
       setTimeout(() => {
         let options = this.canvasHelper.cameraSelect;
         for (let c = 0; c < options.length; c++) {
-          if (options.item(c).innerHTML === cameraName) {
+          if (options.item(c).innerHTML === this.displayCamera) {
             this.canvasHelper.cameraSelect.selectedIndex = c;
-
-            if (cameraName === 'demo') {
-              document.querySelector('.camera_follow').checked = true;
-            }
-            if (cameraName === 'deviceOrientation') {
-              document.querySelector('.device_orientation').checked = true;
-            }
-
             this.canvasHelper.cameraChangeHandler();
             break;
           }
@@ -1454,6 +1477,22 @@ class cViewDemo extends bView {
       <div id="renderLoadingCanvas" style="display:none;"></div>
       <div class="form_canvas_wrapper"></div>
 
+      <div class="display_header_bar">
+        <button class="cart_button btn-sb-icon app-transparent">$100.56</button>
+        <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons">movie</i></button>
+        <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons">volume_off</i></button>
+        <button class="btn-sb-icon app-transparent profile_panel_button" style="clear:left;"><i class="material-icons">person</i></button>
+        <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons">extension</i></button>
+
+        <div class="display_header_slideout">
+          <div class="movie_panel"><div class="fields-container"></div></div>
+          <div class="volume_panel"><div class="fields-container"></div></div>
+          <div class="profile_panel">profile panel<div class="fields-container"></div></div>
+          <div class="demo_panel"><div class="demo_panel_contents"></div><div class="fields-container"></div></div>
+        </div>
+
+      </div>
+
       <div class="user-options-panel">
         <button class="choice-button-one" style="display:none;">&nbsp;</button>
         <button class="choice-button-two" style="display:none;">&nbsp;</button>
@@ -1480,5 +1519,14 @@ class cViewDemo extends bView {
       </div>
 
     </div>`;
+  }
+  closeHeaderBands(canvasClick) {
+    if (canvasClick)
+      return;
+
+    for (let i in this.bandButtons) {
+      this.bandButtons[i].expanded = true;
+      this.bandButtons[i].toggle();
+    }
   }
 }
