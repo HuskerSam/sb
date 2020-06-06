@@ -141,7 +141,6 @@ html, body {
 .play-button, .pause-button {
   position: absolute;
   top: .35em;
-  left: .35emem;
 }
 
 .form-group {

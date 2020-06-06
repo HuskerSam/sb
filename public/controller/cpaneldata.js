@@ -29,6 +29,7 @@ class cPanelData {
         g = document.createElement('div');
         g.classList.add('form-group-container-group');
         g.classList.add('app-panel');
+        g.classList.add('app-transparent');
         this.container.appendChild(g);
         this.groups[f.group] = g;
       }

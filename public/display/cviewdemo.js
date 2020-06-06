@@ -28,7 +28,6 @@ class cViewDemo extends bView {
     document.querySelector('.choice-button-four').addEventListener('click', e => this.basketAddItem(e));
     this.scenePanelDiv = document.querySelector('#sceneedit-profile-panel');
 
-    this.canvasActionsDom = document.querySelector('.canvas-actions');
     this.cartItemTotal = document.querySelector('.cart-item-total');
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelect.addEventListener('input', e => this.sceneSelect());
@@ -66,7 +65,7 @@ class cViewDemo extends bView {
 
     this.movie_panel_button = this.dialog.querySelector('.movie_panel_button');
     this.movie_panel = this.dialog.querySelector('.movie_panel');
-    this.movieFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.movieFields = [];
     this.movie_panel_fc = this.movie_panel.querySelector('.fields-container');
     this.movie_panel_ctl = new cBandProfileOptions(this.movie_panel_button, this.movieFields,
       this.movie_panel_fc, this.movie_panel);
@@ -74,6 +73,7 @@ class cViewDemo extends bView {
     this.movie_panel_ctl.panelShownClass = 'profile-panel-shown';
     this.movie_panel_ctl.activate();
     this.bandButtons.push(this.movie_panel_ctl);
+    this.canvasHelper.renderTools.panelDisplayCSS = 'block';
     this.movie_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
 
     this.volume_panel_button = this.dialog.querySelector('.volume_panel_button');
@@ -90,7 +90,7 @@ class cViewDemo extends bView {
 
     this.profile_panel_button = this.dialog.querySelector('.profile_panel_button');
     this.profile_panel = this.dialog.querySelector('.profile_panel');
-    this.profileFields = [];
+    this.profileFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
     this.profile_panel_fc = this.profile_panel.querySelector('.fields-container');
     this.profile_panel_ctl = new cBandProfileOptions(this.profile_panel_button, this.profileFields,
       this.profile_panel_fc, this.profile_panel);
@@ -158,7 +158,7 @@ class cViewDemo extends bView {
         <option value="edit_ui">Options</option>
       </select><br>`;
       html +=
-        `<div class="nav_options app-panel"></div><div class="orientation_details_div"></div>`;
+        `<div class="nav_options"></div><div class="orientation_details_div"></div>`;
 
       html += ``;
       this.demoOptionDiv.innerHTML = html;
@@ -177,7 +177,10 @@ class cViewDemo extends bView {
     if (this.uiOverlay)
       searchParams.set("uiOverlay", this.uiOverlay);
 
-    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+    let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+
+    if (searchParams.toString())
+      newurl += '?' + searchParams.toString();
     window.history.pushState({
       path: newurl
     }, '', newurl);
@@ -1322,10 +1325,10 @@ class cViewDemo extends bView {
       this.workplacesSelect.selectedIndex = this.sceneIndex;
       if (this.optionsShown) {
         this.optionsShown = false;
-        this.canvasActionsDom.classList.remove('canvas-actions-shown');
+        this.canvasActions.classList.remove('canvas-actions-shown');
       } else {
         this.optionsShown = true;
-        this.canvasActionsDom.classList.add('canvas-actions-shown');
+        this.canvasActions.classList.add('canvas-actions-shown');
       }
 
       return;
@@ -1436,37 +1439,10 @@ class cViewDemo extends bView {
         <div class="scene-options-panel" style="display:none;">
           <div class="scene-fields-container">
           </div>
-          <div class="render-log-wrapper" style="display:none;">
-            <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
-            <textarea class="render-log-panel" spellcheck="false"></textarea>
-            <div class="fields-container" style="display:none;"></div>
-          </div>
-          <br>
-          <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
-          <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
-          <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
-          <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
         </div>
         <br>
         <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
-        <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
-        <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
-        <div class="run-length-label"></div>
-        <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
         <div class="camera-options-panel" style="display:inline-block;">
-          <select class="camera-select" style=""></select>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">Radius</div>
-            <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
-          </div>
-          <div style="display:none;">
-            <div class="camera-slider-label">FOV</div>
-            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
-          </div>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">Height</div>
-            <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
-          </div>
           <div class="fields-container" style="float:left"></div>
         </div>
       </div>
@@ -1485,10 +1461,40 @@ class cViewDemo extends bView {
         <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons">extension</i></button>
 
         <div class="display_header_slideout">
-          <div class="movie_panel"><div class="fields-container"></div></div>
+          <div class="movie_panel">
+            <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
+            <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
+            <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+            <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+            <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+            <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+            <div class="render-log-wrapper" style="display:none;">
+              <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+              <textarea class="render-log-panel" spellcheck="false"></textarea>
+              <div class="fields-container" style="display:none;"></div>
+            </div>
+            <div style="position:relative;clear:both;">
+              <div class="run-length-label"></div>
+              <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+            </div>
+            <select class="camera-select"></select>
+            <div style="display:inline-block;position:relative;">
+              <div class="camera-slider-label">Radius</div>
+              <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+            </div>
+            <div style="display:none;position:relative;">
+              <div class="camera-slider-label">FOV</div>
+              <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+            </div>
+            <div style="display:inline-block;position:relative;">
+              <div class="camera-slider-label">Height</div>
+              <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+            </div>
+            <div class="fields-container"></div>
+          </div>
           <div class="volume_panel"><div class="fields-container"></div></div>
           <div class="profile_panel">profile panel<div class="fields-container"></div></div>
-          <div class="demo_panel"><div class="demo_panel_contents"></div><div class="fields-container"></div></div>
+          <div class="demo_panel"><div class="demo_panel_contents app-panel app-transparent"></div><div class="fields-container"></div></div>
         </div>
 
       </div>

@@ -50,10 +50,10 @@ class cPanelCanvas {
 
     this.lightIntensityLabel = this.sceneToolsContainer.querySelector('.light-intensity-user-panel span');
 
-    this.renderShowBtn = this.sceneToolsContainer.querySelector('.show-hide-log');
-    this.renderPanel = this.sceneToolsContainer.querySelector('.render-log-panel');
-    this.renderPanelWrapper = this.sceneToolsContainer.querySelector('.render-log-wrapper');
-    this.renderPanelClear = this.sceneToolsContainer.querySelector('.log-clear');
+    this.renderShowBtn = this.dialog.querySelector('.show-hide-log');
+    this.renderPanel = this.dialog.querySelector('.render-log-panel');
+    this.renderPanelWrapper = this.dialog.querySelector('.render-log-wrapper');
+    this.renderPanelClear = this.dialog.querySelector('.log-clear');
     this.renderPanelClear.addEventListener('click', e => this.logClear());
     this.renderFieldsContainer = this.renderPanel.parentElement.querySelector('.fields-container');
     this.renderTools = new cBandProfileOptions(this.renderShowBtn, [], this.renderFieldsContainer, this.renderPanelWrapper);
@@ -61,7 +61,7 @@ class cPanelCanvas {
     this.renderTools.activate();
     this.bandButtons.push(this.renderTools);
 
-    this.downloadButton = this.dialog.querySelector('.canvas-actions .download-button');
+    this.downloadButton = this.dialog.querySelector('.download-button');
     this.downloadButton.addEventListener('click', e => this.exportBabylonFile());
 
     this.stopButton.setAttribute('disabled', "true");

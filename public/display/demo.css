@@ -258,10 +258,6 @@ button.cart-submit {
   display: none;
 }
 
-.demo_options {
-  display: none;
-}
-
 .display_header_slideout {
   clear:both;
   position: relative;
@@ -269,23 +265,25 @@ button.cart-submit {
 
 
 .display_header_slideout > div {
-  width: 0%;
   overflow: hidden;
-  transition: width 800ms, max-height 800ms, opacity 500ms;
+  transition: transform 1ms 500ms, right 500ms, visibility 500ms, z-index 200ms;
   top: 0;
-  position: absolute;
-  right: 0;
   left: auto;
-  opacity: 0;
-  max-height: 2em;
+  position: absolute;
+  right: -100%;
+  width: 100%;
+  visibility: hidden;
+  transform: translateX(-100%);
+  z-index: 0;
 }
 
 .display_header_slideout > div.profile-panel-shown {
-  width: 100%;
-  right: auto;
+  transition: transform 500ms, left 500ms, right 500ms, visibility 500ms, z-index 200ms;
   left: 0;
-  opacity: 1;
-  max-height: 100vh;
+  right: 0;
+  visibility: visible;
+  z-index: 100;
+  transform: translateX(0);
 }
 
 .volume_panel .selected-mesh-bounds-helper-box {
@@ -317,6 +315,10 @@ button.cart-submit {
   overflow-x: hidden;
 }
 
+.movie_panel {
+  padding: .5em;
+}
+
 .selected-mesh-bounds-helper-box {
   color: black;
   padding-left: .2em;
@@ -344,10 +346,7 @@ button.cart-submit {
 .nav_options {
   padding: .5em;
   text-align: center;
-  border-bottom: solid .05em silver;
-  margin-bottom: .5em;
   font-size: 1.5em;
-  display: inline-block;
 }
 
 .nav_options a {
@@ -355,4 +354,44 @@ button.cart-submit {
 }
 .demo_panel_contents {
   text-align: center;
+  float: left;
+}
+
+.scene-tools-checkboxes {
+  top: 0;
+}
+
+input.animate-range {
+  width: 100%;
+}
+
+.run-length-label, .camera-slider-label {
+  font-size: 1.25em;
+  height: auto;
+  border-radius: 10%;
+  position: absolute;
+  left: .75em;
+  width: auto;
+  top: .25em;
+  display: inline-block;
+  pointer-events: none;
+  overflow: visible;
+  color: white;
+  z-index: 1;
+  white-space: nowrap;
+  padding: 0;
+  line-height: 1em;
+}
+
+.play-button, .pause-button {
+  position: static;
+}
+
+.render-log-panel {
+  width: 100%;
+}
+
+.camera-select {
+  position:relative;
+  top:-.5em
 }
