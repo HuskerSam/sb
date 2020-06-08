@@ -9,7 +9,7 @@ class cViewDemo extends bView {
 
     this.canvasHelper.cameraShownCallback = () => this._cameraShown();
 
-    this.displayButtonPanel = document.querySelector('.user-options-panel');
+    this.displayButtonPanel = document.querySelector('.nontouch_button_options');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
 
     this.itemButtons = [];
@@ -165,10 +165,10 @@ class cViewDemo extends bView {
         this.demoOptionDiv = this.dialog.querySelector('.demo_panel_contents');
       }
       let html = `<select class="ui_select" name="controls">
-        <option value="demo_ui" selected>Console UI</option>
-        <option value="cart_ui">Mobile</option>
-        <option value="anim_ui">Animation</option>
-        <option value="edit_ui">Options</option>
+        <option value="mobile_orientation">Mobile Orientation</option>
+        <option value="mobile_follow" selected>Mobile Follow</option>
+        <option value="console_follow">Console Follow</option>
+        <option value="mobile_portrait">Mobile Portrait</option>
       </select><br>`;
       html +=
         `<div class="nav_options"></div><div class="orientation_details_div"></div>`;
@@ -179,14 +179,10 @@ class cViewDemo extends bView {
       this.orientation_details_div = this.demoOptionDiv.querySelector('.orientation_details_div');
 
       this.ui_select.addEventListener('input', e => this.updateUIDisplay(e));
-      this.updateUIDisplay();
-      this.updateDemoPanel();
     }
   }
   updateURL() {
     let searchParams = new URLSearchParams(window.location.search);
-    if (this.displayCamera)
-      searchParams.set("displayCamera", this.displayCamera);
     if (this.uiOverlay)
       searchParams.set("uiOverlay", this.uiOverlay);
 
@@ -308,48 +304,61 @@ class cViewDemo extends bView {
     d.innerHTML = html;
   }
   updateUIDisplay(evt) {
-    let ui_class = this.ui_select.value;
+    let ui_overlay = this.ui_select.value;
 
-    let urlParams = new URLSearchParams(window.location.search);
-    let uiOverlay = urlParams.get('uiOverlay');
-    this.uiOverlay = uiOverlay;
-    if (uiOverlay)
-      ui_class = uiOverlay;
+    if (!evt) {
+      let urlParams = new URLSearchParams(window.location.search);
+      let uiOverlay = urlParams.get('uiOverlay');
+      if (uiOverlay)
+        ui_overlay = uiOverlay;
+    }
+    this.uiOverlay = ui_overlay;
 
     if (evt) {
-      this.updateDemoPanel();
-      this.updateURL();
       this.displayCamera = '';
+      this.updateURL();
     }
 
     this.canvasActions.style.display = 'none';
     this.displayButtonPanel.style.display = 'none';
-    if (ui_class === 'anim_ui') {
+    if (this.uiOverlay === 'mobile_portrait') {
       if (!this.displayCamera)
         this.displayCamera = 'arcRotateCamera';
     }
-    if (ui_class === 'cart_ui') {
+    if (this.uiOverlay === 'console_follow') {
       this.displayButtonPanel.style.display = '';
       if (!this.displayCamera)
         this.displayCamera = 'demo';
     }
-    if (ui_class === 'edit_ui') {
+    if (this.uiOverlay === 'mobile_follow') {
+      if (!this.displayCamera)
+        this.displayCamera = 'demo';
+    }
+    if (this.uiOverlay === 'mobile_orientation') {
       if (!this.displayCamera)
         this.displayCamera = 'deviceOrientation';
     }
 
+    let cameraIndex = this.canvasHelper.cameraSelect.selectedIndex;
+    let newCameraIndex = cameraIndex;
     let camera = this.displayCamera;
     if (camera === 'demo') {
-      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      newCameraIndex = 2;
     }
     if (camera === 'arcRotateCamera') {
-      this.canvasHelper.cameraSelect.selectedIndex = 3;
+      newCameraIndex = 3;
     }
     if (camera === 'deviceOrientation') {
-      this.canvasHelper.cameraSelect.selectedIndex = 4;
+      newCameraIndex = 4;
     }
-    this.canvasHelper.noTestError = true;
-    this.canvasHelper.cameraChangeHandler();
+
+    setTimeout(() => {
+      if (cameraIndex !== newCameraIndex)
+        this.canvasHelper.cameraSelect.selectedIndex = newCameraIndex;
+
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+    }, 10);
   }
   async _cameraShown() {
     this.productData = await new gCSVImport(gAPPP.loadedWID).initProducts();
@@ -376,7 +385,8 @@ class cViewDemo extends bView {
 
     this._displayCameraFeatures();
     this.addDemoPanelOptions();
-    //  this._sceneDataPanel();
+    this.updateDemoPanel();
+    this.updateUIDisplay();
     this._audioFeatures();
     this.context.scene.onPointerObservable.add(evt => {
       if (evt.type === BABYLON.PointerEventTypes.POINTERDOWN) {
@@ -1426,7 +1436,7 @@ class cViewDemo extends bView {
       <div class="form_canvas_wrapper"></div>
 
       <div class="display_header_bar">
-        <div class="display_header_row" style="flex:0">
+        <div class="display_header_row">
           <button class="btn-sb-icon app-transparent choice-button-clear cart-submit"><i class="material-icons">send</i></button>
           <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
           <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons">movie</i></button>
@@ -1436,7 +1446,7 @@ class cViewDemo extends bView {
           <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons">info</i></button>
           <div style="clear:both"></div>
         </div>
-        <div class="display_header_slideout" style="flex:1">
+        <div class="display_header_slideout">
           <div class="movie_panel">
             <button class="btn-sb-icon play-button app-transparent"><i class="material-icons">play_arrow</i></button>
             <button class="btn-sb-icon pause-button app-transparent"><i class="material-icons">pause</i></button>
@@ -1479,14 +1489,15 @@ class cViewDemo extends bView {
             <div class="fields-container"></div>
           </div>
         </div>
-
       </div>
-
-      <div class="user-options-panel">
-        <button class="choice-button-one" style="display:none;">&nbsp;</button>
-        <button class="choice-button-two" style="display:none;">&nbsp;</button>
-        <button class="choice-button-three" style="display:none;">&nbsp;</button>
-        <button class="choice-button-four" style="display:none;">&nbsp;</button>
+      <div class="bottom_options_panel">
+        <div class="nontouch_button_options">
+          <button class="choice-button-one" style="display:none;">&nbsp;</button>
+          <button class="choice-button-two" style="display:none;">&nbsp;</button>
+          <button class="choice-button-three" style="display:none;">&nbsp;</button>
+          <button class="choice-button-four" style="display:none;">&nbsp;</button>
+        </div>
+        <div class="mobile_orientation_options"></div>
       </div>
     </div>`;
   }

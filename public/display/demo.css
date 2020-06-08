@@ -18,71 +18,6 @@
   display: none;
 }
 
-.user-options-panel {
-  bottom: 0;
-  padding: .25em;
-  position: absolute;
-  z-index: 1000;
-  transition: width .6s;
-  height: 21em;
-  width: 50%;
-  max-width: 20em;
-}
-
-.user-options-panel button {
-  border: none;
-  padding: .15em;
-  font-size: 9pt;
-  margin: .35em 0;
-  width: 100%;
-  border-radius: .25em;
-  line-height: 1.15em;
-  max-width: 35em;
-  overflow: hidden;
-  white-space: nowrap;
-  position: absolute;
-  height: 3.75em;
-  text-align: left;
-}
-
-button.choice-button-one {
-  background: rgba(200, 0, 0, .7);
-  top: 4em;
-}
-
-button.choice-button-one span {
-  color: white;
-}
-
-button.choice-button-two {
-  background: rgba(0, 200, 0, .67);
-  top: 8em;
-}
-
-button.choice-button-two span {
-  color: black;
-}
-
-button.choice-button-three {
-  background: rgba(0, 0, 255, .5);
-  color: white;
-  top: 12em;
-  color: white;
-}
-
-button.choice-button-three span {
-  color: white;
-}
-
-button.choice-button-four {
-  background: rgba(255, 255, 0, .9);
-  top: 16em;
-}
-
-button.choice-button-four span {
-  color: black;
-}
-
 .canvas-actions-shown {
   bottom: initial;
   display: block;
@@ -341,3 +276,71 @@ input.animate-range {
 ::-webkit-scrollbar {
     background: none!important;
   }
+
+.bottom_options_panel {
+  position: absolute;
+  bottom: 0;
+  z-index: 1000;
+  pointer-events: none;
+  text-align: center;
+  width: 100%;
+}
+
+.bottom_options_panel * {
+  pointer-events: auto;
+}
+
+
+.nontouch_button_options {
+  width: 50%;
+  max-width: 20em;
+  float: left;
+}
+
+.nontouch_button_options button {
+  border: none;
+  padding: .15em;
+  font-size: 9pt;
+  margin: .35em 0;
+  width: 100%;
+  line-height: 1.15em;
+  max-width: 35em;
+  overflow: hidden;
+  height: 3.75em;
+  text-align: left;
+}
+
+
+button.choice-button-one {
+  background: rgba(200, 0, 0, .7);
+}
+
+button.choice-button-one span {
+  color: white;
+}
+
+button.choice-button-two {
+  background: rgba(0, 200, 0, .67);
+}
+
+button.choice-button-two span {
+  color: black;
+}
+
+button.choice-button-three {
+  background: rgba(0, 0, 255, .5);
+  color: white;
+  color: white;
+}
+
+button.choice-button-three span {
+  color: white;
+}
+
+button.choice-button-four {
+  background: rgba(255, 255, 0, .9);
+}
+
+button.choice-button-four span {
+  color: black;
+}
