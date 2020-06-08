@@ -11,7 +11,6 @@ class cViewDemo extends bView {
 
     this.displayButtonPanel = document.querySelector('.user-options-panel');
     this.receiptDisplayPanel = document.querySelector('.cart-contents');
-    this.cartTotalPanel = document.querySelector('.cart-total');
 
     this.itemButtons = [];
     this.itemButtons.push(document.querySelector('.choice-button-one'));
@@ -26,7 +25,6 @@ class cViewDemo extends bView {
     document.querySelector('.choice-button-two').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-three').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-four').addEventListener('click', e => this.basketAddItem(e));
-    this.scenePanelDiv = document.querySelector('#sceneedit-profile-panel');
 
     this.cartItemTotal = document.querySelector('.cart-item-total');
     this.workplacesSelect = document.querySelector('#workspaces-select');
@@ -37,10 +35,6 @@ class cViewDemo extends bView {
     this.sceneIndex = 0;
 
     this.productPickUpdateTimeouts = {};
-
-    this.moreContentsListBtn = document.getElementById('cart-contents-more-button');
-    this.moreContentsListBtn.addEventListener('click', () => this.toggleContentsListHeight());
-    this.updateProfileUIFeatures();
 
     let key = 'selectedBlockKey' + gAPPP.workspace;
     this._updateSelectedBlock(gAPPP.a.profile[key]);
@@ -78,7 +72,7 @@ class cViewDemo extends bView {
 
     this.volume_panel_button = this.dialog.querySelector('.volume_panel_button');
     this.volume_panel = this.dialog.querySelector('.volume_panel');
-    this.volumeFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
+    this.volumeFields = this.getSceneFields();
     this.volume_panel_fc = this.volume_panel.querySelector('.fields-container');
     this.volume_panel_ctl = new cBandProfileOptions(this.volume_panel_button, this.volumeFields,
       this.volume_panel_fc, this.volume_panel);
@@ -90,7 +84,7 @@ class cViewDemo extends bView {
 
     this.profile_panel_button = this.dialog.querySelector('.profile_panel_button');
     this.profile_panel = this.dialog.querySelector('.profile_panel');
-    this.profileFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.profileFields = sDataDefinition.bindingFieldsCloned('displayProfileFields');
     this.profile_panel_fc = this.profile_panel.querySelector('.fields-container');
     this.profile_panel_ctl = new cBandProfileOptions(this.profile_panel_button, this.profileFields,
       this.profile_panel_fc, this.profile_panel);
@@ -110,19 +104,38 @@ class cViewDemo extends bView {
     this.demo_panel_ctl.activate();
     this.bandButtons.push(this.demo_panel_ctl);
     this.demo_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
-  }
-  toggleContentsListHeight() {
-    if (this.moreContentsLarged) {
-      this.moreContentsListBtn.innerHTML = 'More';
-      this.moreContentsLarged = false;
-      this.receiptDisplayPanel.style.maxHeight = '6em';
-      this.workplacesSelect.style.display = 'none';
-    } else {
-      this.moreContentsListBtn.innerHTML = 'Less';
-      this.moreContentsLarged = true;
-      this.receiptDisplayPanel.style.maxHeight = '20em';
-      this.workplacesSelect.style.display = 'block';
-    }
+
+    this.cart_panel_button = this.dialog.querySelector('.cart_panel_button');
+    this.cart_panel = this.dialog.querySelector('.cart_panel');
+    this.cart_panel_fc = this.demo_panel.querySelector('.fields-container');
+    this.cart_panel_ctl = new cBandProfileOptions(this.cart_panel_button, [],
+      this.cart_panel_fc, this.cart_panel);
+    this.cart_panel_ctl.fireFields.values = gAPPP.a.profile;
+    this.cart_panel_ctl.panelShownClass = 'profile-panel-shown';
+    this.cart_panel_ctl.activate();
+    this.bandButtons.push(this.cart_panel_ctl);
+    this.cart_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.mute_header_button = this.dialog.querySelector('.mute_header_button');
+    this.mute_header_button.addEventListener('click', async e => {
+      this.audio.currentTime = Math.max(0, this.canvasHelper.timeE);
+      if (this.audio.paused) {
+        let noError = true;
+        try {
+          await this.audio.play();
+        } catch (e) {
+          noError = false;
+        }
+        if (noError) {
+          this.mute_header_button.innerHTML = '<i class="material-icons">volume_up</i>';
+          this.mute_header_button.classList.remove('app-inverted');
+        }
+      } else {
+        this.mute_header_button.innerHTML = '<i class="material-icons">volume_off</i>';
+        this.mute_header_button.classList.add('app-inverted');
+        this.audio.pause();
+      }
+    });
   }
   __findProjectID(desc) {
     for (let id in this.projectsMap) {
@@ -230,9 +243,9 @@ class cViewDemo extends bView {
     });
 
     if (pageDesc.circuit === 'carousel') {
-      html += `Circuit: Carousel <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `Carousel <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'isle') {
-      html += `Circuit: <a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> Isle<br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> Isle<br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'tables') {
       html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> Tables <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'island') {
@@ -311,25 +324,16 @@ class cViewDemo extends bView {
 
     this.canvasActions.style.display = 'none';
     this.displayButtonPanel.style.display = 'none';
-    this.cartTotalPanel.style.display = 'none';
-    this.fontToolsButton.style.display = 'none';
-    this.fontToolsContainer.style.display = 'none';
-    this.scenePanelDiv.style.display = 'none';
-    this.sceneEditToolsButton.style.display = 'none';
     if (ui_class === 'anim_ui') {
-      this.canvasActions.style.display = '';
       if (!this.displayCamera)
         this.displayCamera = 'arcRotateCamera';
     }
     if (ui_class === 'cart_ui') {
       this.displayButtonPanel.style.display = '';
-      this.cartTotalPanel.style.display = '';
       if (!this.displayCamera)
         this.displayCamera = 'demo';
     }
     if (ui_class === 'edit_ui') {
-      this.fontToolsButton.style.display = '';
-      this.sceneEditToolsButton.style.display = '';
       if (!this.displayCamera)
         this.displayCamera = 'deviceOrientation';
     }
@@ -372,7 +376,7 @@ class cViewDemo extends bView {
 
     this._displayCameraFeatures();
     this.addDemoPanelOptions();
-    this._sceneDataPanel();
+    //  this._sceneDataPanel();
     this._audioFeatures();
     this.context.scene.onPointerObservable.add(evt => {
       if (evt.type === BABYLON.PointerEventTypes.POINTERDOWN) {
@@ -401,20 +405,6 @@ class cViewDemo extends bView {
       return null;
 
     return this.getProductDataFromBlock(blk.parent);
-  }
-  updateProfileUIFeatures() {
-    this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
-    this.fontFields = sDataDefinition.bindingFieldsCloned('publishFontFamilyProfile');
-    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
-    this.fontToolsButton = this.dialog.querySelector('#publish-settings-button');
-    this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);
-    this.fontTools.fireFields.values = gAPPP.a.profile;
-    this.fontTools.activate();
-
-    this.sceneEditToolsButton = this.dialog.querySelector('#sceneedit-settings-button');
-    this.sceneEditTools = new cBandProfileOptions(this.sceneEditToolsButton, [], this.scenePanelDiv, this.scenePanelDiv);
-    this.sceneEditTools.fireFields.values = gAPPP.a.profile;
-    this.sceneEditTools.activate();
   }
   _displayCameraFeatures() {
     this.displayCamera = 'demo';
@@ -734,28 +724,8 @@ class cViewDemo extends bView {
       audio.setAttribute('controls', '');
       audio.loop = true;
 
-      let muteButton = document.createElement('button');
-      this.muteButton = muteButton;
-      muteButton.setAttribute('id', 'muteButton');
-      muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
-      muteButton.setAttribute('style', 'position:absolute;top:2em;left:0.25em;z-index:10000;font-size:1.5em;')
-      muteButton.addEventListener('click', async e => {
-        audio.currentTime = Math.max(0, this.canvasHelper.timeE);
-        if (audio.paused) {
-          let noError = true;
-          try {
-            await audio.play();
-          } catch (e) {
-            noError = false;
-          }
-          if (noError)
-            muteButton.innerHTML = '<i class="material-icons">volume_up</i>';
-        } else {
-          muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
-          audio.pause();
-        }
-      });
-      document.body.append(muteButton);
+    } else {
+      this.mute_header_button.style.display = 'none';
     }
   }
   profileUpdate() {
@@ -866,7 +836,7 @@ class cViewDemo extends bView {
         url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
       }
       let template = `<div class="cart-item">
-        <button class="cart-item-remove">X</button>
+        <button class="cart-item-remove btn-sb-icon"><i class="material-icons">delete</i></button>
         <img src="${url}" crossorigin="anonymous" class="button-list-image">
         <div class="cart-item-description">${l1}</div>
         <br>
@@ -875,6 +845,7 @@ class cViewDemo extends bView {
 
       let cartItem = document.createElement('div');
       cartItem.innerHTML = template;
+      cartItem = cartItem.children[0];
       this.receiptDisplayPanel.appendChild(cartItem);
       let removeDom = cartItem.querySelector('.cart-item-remove');
       removeDom.sku = sku;
@@ -1377,6 +1348,7 @@ class cViewDemo extends bView {
         if (!this.audio.paused)
           this.audio.pause();
         muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
+        muteButton.classList.add('app-inverted');
       } else {
         if (this.audio) {
           if (this.canvasHelperPaused !== this.canvasHelper.timeE) {
@@ -1454,25 +1426,30 @@ class cViewDemo extends bView {
       <div class="form_canvas_wrapper"></div>
 
       <div class="display_header_bar">
-        <button class="cart_button btn-sb-icon app-transparent">$100.56</button>
-        <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons">movie</i></button>
-        <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons">volume_off</i></button>
-        <button class="btn-sb-icon app-transparent profile_panel_button" style="clear:left;"><i class="material-icons">person</i></button>
-        <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons">extension</i></button>
-
-        <div class="display_header_slideout">
+        <div class="display_header_row" style="flex:0">
+          <button class="btn-sb-icon app-transparent choice-button-clear cart-submit"><i class="material-icons">send</i></button>
+          <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
+          <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons">movie</i></button>
+          <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons">settings_brightness</i></button>
+          <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons">volume_off</i></button>
+          <button class="btn-sb-icon app-transparent profile_panel_button" style="clear:left;"><i class="material-icons">person</i></button>
+          <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons">info</i></button>
+          <div style="clear:both"></div>
+        </div>
+        <div class="display_header_slideout" style="flex:1">
           <div class="movie_panel">
-            <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
-            <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
-            <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
-            <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
-            <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
-            <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+            <button class="btn-sb-icon play-button app-transparent"><i class="material-icons">play_arrow</i></button>
+            <button class="btn-sb-icon pause-button app-transparent"><i class="material-icons">pause</i></button>
+            <button class="btn-sb-icon stop-button app-transparent"><i class="material-icons">stop</i></button>
+            <button class="btn-sb-icon video-button app-transparent"><i class="material-icons">fiber_manual_record</i></button>
+            <button class="btn-sb-icon download-button app-transparent" style="margin-bottom:.25em"><i class="material-icons">file_download</i></button>
+            <button class="btn-sb-icon show-hide-log app-transparent"><i class="material-icons">info_outline</i></button>
             <div class="render-log-wrapper" style="display:none;">
-              <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
-              <textarea class="render-log-panel" spellcheck="false"></textarea>
+              <button class="btn-sb-icon log-clear app-transparent"><i class="material-icons">clear_all</i></button>
+              <textarea class="render-log-panel app-transparent" spellcheck="false"></textarea>
               <div class="fields-container" style="display:none;"></div>
             </div>
+            <br>
             <div style="position:relative;clear:both;">
               <div class="run-length-label"></div>
               <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
@@ -1493,8 +1470,14 @@ class cViewDemo extends bView {
             <div class="fields-container"></div>
           </div>
           <div class="volume_panel"><div class="fields-container"></div></div>
-          <div class="profile_panel">profile panel<div class="fields-container"></div></div>
+          <div class="profile_panel"><div class="fields-container"></div></div>
           <div class="demo_panel"><div class="demo_panel_contents app-panel app-transparent"></div><div class="fields-container"></div></div>
+          <div class="cart_panel">
+            <select id="workspaces-select"></select>
+            <div class="cart-contents app-panel app-transparent">
+            </div>
+            <div class="fields-container"></div>
+          </div>
         </div>
 
       </div>
@@ -1505,25 +1488,6 @@ class cViewDemo extends bView {
         <button class="choice-button-three" style="display:none;">&nbsp;</button>
         <button class="choice-button-four" style="display:none;">&nbsp;</button>
       </div>
-      <div class="cart-total">
-        <select id="workspaces-select"></select>
-        <button class="choice-button-clear cart-submit">Checkout</button>
-        <div class="cart-item-total">$ 0.00</div>
-        <div class="cart-contents">
-        </div>
-        <div style="text-align:center;">
-          <button id="cart-contents-more-button">More</button>
-        </div>
-      </div>
-      <button id="publish-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">text_format</i></button>
-      <div id="publish-profile-panel" class="app-panel" style="display:none;">
-        <div class="fields-container"></div>
-      </div>
-      <button id="sceneedit-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">photo_album</i></button>
-      <div id="sceneedit-profile-panel" class="app-panel" style="display:none;">
-        <div class="fields-container"></div>
-      </div>
-
     </div>`;
   }
   closeHeaderBands(canvasClick) {
@@ -1534,5 +1498,40 @@ class cViewDemo extends bView {
       this.bandButtons[i].expanded = true;
       this.bandButtons[i].toggle();
     }
+  }
+  getSceneFields() {
+    return [{
+      title: 'Light',
+      fireSetField: 'lightIntensity',
+      helperType: 'singleSlider',
+      rangeMin: '0',
+      rangeMax: '2',
+      rangeStep: '.01',
+      displayType: 'number',
+      group: 'group2',
+      groupClass: 'light-intensity-user-panel'
+    }, {
+      title: 'Camera Updates',
+      fireSetField: 'cameraUpdates',
+
+      group: 'cameraTrack',
+      type: 'boolean',
+      floatLeft: true,
+      clearLeft: true
+    }, {
+      title: 'Camera Saves',
+      fireSetField: 'cameraSaves',
+      group: 'cameraTrack',
+      type: 'boolean',
+      floatLeft: true,
+      clearLeft: true
+    }, {
+      title: 'Wireframe',
+      fireSetField: 'showForceWireframe',
+      type: 'boolean',
+      group: 'cameraTrack',
+      floatLeft: true,
+      clearLeft: true,
+    }];
   }
 }

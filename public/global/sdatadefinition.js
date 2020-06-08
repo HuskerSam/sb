@@ -81,11 +81,11 @@ __animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'camer
   'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
 ];
 __animFieldFilters.blockCameraFields['DeviceOrientationCamera'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['DeviceOrientationCamera'] = ['cameraRadius','cameraRotationOffset', 'cameraAcceleration',
+__animFieldFilters.animateCameraFields['DeviceOrientationCamera'] = ['cameraRadius', 'cameraRotationOffset', 'cameraAcceleration',
   'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
 ];
 __animFieldFilters.blockCameraFields['WebVRFreeCamera'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['WebVRFreeCamera'] = ['cameraRadius','cameraRotationOffset', 'cameraAcceleration',
+__animFieldFilters.animateCameraFields['WebVRFreeCamera'] = ['cameraRadius', 'cameraRotationOffset', 'cameraAcceleration',
   'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
 ];
 __animFieldFilters.blockLightFields = {};
@@ -1437,6 +1437,45 @@ __localStaticStorageForBindingFields['frameColor'] = [{
   contextObjectField: 'material.specularColor.b',
   displayType: 'number',
   group: 'specular'
+}];
+__localStaticStorageForBindingFields['displayProfileFields'] = [{
+  title: 'Font',
+  fireSetField: 'fontFamily',
+  group: 'main',
+  dataListId: 'fontfamilydatalist',
+  type: 'font',
+  floatLeft: true
+}, {
+  title: 'Background',
+  fireSetField: 'canvasColor',
+  type: 'color',
+  group: 'color',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.005',
+  floatLeft: true,
+  displayType: 'shortVector'
+}, {
+  title: 'Size',
+  fireSetField: 'fontSize',
+  group: 'main',
+  displayType: 'number',
+  helperType: 'singleSlider',
+  rangeMin: '7',
+  rangeMax: '22',
+  rangeStep: '.25',
+  groupClass: 'font-size-main-view',
+  floatLeft: true
+}, {
+  title: 'Opacity',
+  fireSetField: 'opacityLevel',
+  group: 'two',
+  displayType: 'number',
+  helperType: 'singleSlider',
+  rangeMin: '0',
+  rangeMax: '1',
+  rangeStep: '.01',
+  groupClass: 'opacity-main-view'
 }];
 __defaultData['mesh'] = {
   title: 'Mesh',
