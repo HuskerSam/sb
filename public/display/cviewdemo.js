@@ -26,6 +26,8 @@ class cViewDemo extends bView {
     document.querySelector('.choice-button-three').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-four').addEventListener('click', e => this.basketAddItem(e));
 
+    this.mobile_orientation_options = this.dialog.querySelector('.mobile_orientation_options');
+
     this.cartItemTotal = document.querySelector('.cart-item-total');
     this.workplacesSelect = document.querySelector('#workspaces-select');
     this.workplacesSelect.addEventListener('input', e => this.sceneSelect());
@@ -41,6 +43,7 @@ class cViewDemo extends bView {
     this.canvasHelper.show();
     this.canvasActions.style.display = 'none';
     this.initHeaderBar();
+    this.initBottomBar();
 
     window.addEventListener('deviceorientation', event => {
       this.orientationInited = true;
@@ -53,6 +56,104 @@ class cViewDemo extends bView {
           this.orientation_details_div.innerHTML = this.alpha + ' : ' + this.beta + ' <br>';
       }
     });
+  }
+  initBottomBar() {
+    let expand_more = this.dialog.querySelector('.mobile_orientation_options .expand_more');
+    let expand_less = this.dialog.querySelector('.mobile_orientation_options .expand_less');
+    this.mobile_orientation_options = this.dialog.querySelector('.mobile_orientation_options');
+    expand_more.addEventListener('click', e => {
+      this.mobile_orientation_options.classList.remove('collapsed');
+    });
+    expand_less.addEventListener('click', e => {
+      this.mobile_orientation_options.classList.add('collapsed');
+    });
+
+    this.arrow_upward = this.dialog.querySelector('.mobile_orientation_options .arrow_upward');
+    this.arrow_upward.addEventListener('mousedown', e => {
+      this.moveCamera('up');
+      clearInterval(this.upwardMoveTimeout);
+      this.upwardMoveTimeout = setInterval(() => this.moveCamera('up'), 100);
+    });
+    this.arrow_upward.addEventListener('mouseup', e => {
+      clearInterval(this.upwardMoveTimeout);
+    });
+
+    this.arrow_downward = this.dialog.querySelector('.mobile_orientation_options .arrow_downward');
+    this.arrow_downward.addEventListener('mousedown', e => {
+      this.moveCamera('up');
+      clearInterval(this.upwardMoveTimeout);
+      this.upwardMoveTimeout = setInterval(() => this.moveCamera('down'), 100);
+    });
+    this.arrow_downward.addEventListener('mouseup', e => {
+      clearInterval(this.upwardMoveTimeout);
+    });
+
+
+    this.arrow_forward = this.dialog.querySelector('.mobile_orientation_options .arrow_forward');
+    this.arrow_forward.addEventListener('mousedown', e => {
+      this.moveCamera('right');
+      clearInterval(this.upwardMoveTimeout);
+      this.upwardMoveTimeout = setInterval(() => this.moveCamera('right'), 100);
+    });
+    this.arrow_forward.addEventListener('mouseup', e => {
+      clearInterval(this.upwardMoveTimeout);
+    });
+
+    this.arrow_back = this.dialog.querySelector('.mobile_orientation_options .arrow_back');
+    this.arrow_back.addEventListener('mousedown', e => {
+      this.moveCamera('left');
+      clearInterval(this.upwardMoveTimeout);
+      this.upwardMoveTimeout = setInterval(() => this.moveCamera('left'), 100);
+    });
+    this.arrow_back.addEventListener('mouseup', e => {
+      clearInterval(this.upwardMoveTimeout);
+    });
+
+    this.rotate_left = this.dialog.querySelector('.mobile_orientation_options .rotate_left');
+    this.rotate_left.addEventListener('mousedown', e => {
+      gAPPP.activeContext.camera.cameraRotation.y -= .05;
+      clearInterval(this.upwardMoveTimeout);
+      this.upwardMoveTimeout = setInterval(() => gAPPP.activeContext.camera.cameraRotation.y -= .05, 100);
+    });
+    this.rotate_left.addEventListener('mouseup', e => {
+      clearInterval(this.upwardMoveTimeout);
+    });
+
+    this.rotate_right = this.dialog.querySelector('.mobile_orientation_options .rotate_right');
+    this.rotate_right.addEventListener('mousedown', e => {
+      gAPPP.activeContext.camera.cameraRotation.y += .05;
+      clearInterval(this.upwardMoveTimeout);
+      this.upwardMoveTimeout = setInterval(() => gAPPP.activeContext.camera.cameraRotation.y += .05, 100);
+    });
+    this.rotate_right.addEventListener('mouseup', e => {
+      clearInterval(this.upwardMoveTimeout);
+    });
+    
+  }
+  moveCamera(dir) {
+    let camera = gAPPP.activeContext.camera;
+    let speed = camera._computeLocalCameraSpeed();
+
+    if (!camera)
+      return;
+    if (!camera._localDirection)
+      return;
+    if (dir === 'left')
+      camera._localDirection.copyFromFloats(-speed, 0, 0);
+    else if (dir === 'up')
+      camera._localDirection.copyFromFloats(0, 0, speed);
+    else if (dir === 'right')
+      camera._localDirection.copyFromFloats(speed, 0, 0);
+    else if (dir === 'down')
+      camera._localDirection.copyFromFloats(0, 0, -speed);
+
+    if (camera.getScene().useRightHandedSystem) {
+      camera._localDirection.z *= -1;
+    }
+
+    camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+    BABYLON.Vector3.TransformNormalToRef(camera._localDirection, camera._cameraTransformMatrix, camera._transformedDirection);
+    camera.cameraDirection.addInPlace(camera._transformedDirection);
   }
   initHeaderBar() {
     this.display_header_bar = this.dialog.querySelector('.display_header_bar');
@@ -321,6 +422,7 @@ class cViewDemo extends bView {
 
     this.canvasActions.style.display = 'none';
     this.displayButtonPanel.style.display = 'none';
+    this.mobile_orientation_options.style.display = 'none';
     if (this.uiOverlay === 'mobile_portrait') {
       if (!this.displayCamera)
         this.displayCamera = 'arcRotateCamera';
@@ -337,6 +439,7 @@ class cViewDemo extends bView {
     if (this.uiOverlay === 'mobile_orientation') {
       if (!this.displayCamera)
         this.displayCamera = 'deviceOrientation';
+      this.mobile_orientation_options.style.display = '';
     }
 
     let cameraIndex = this.canvasHelper.cameraSelect.selectedIndex;
@@ -753,7 +856,6 @@ class cViewDemo extends bView {
     }
     this.basketUpdateTotal().then(() => {});
   }
-
   basketAddItem(event, sku = null) {
     if (!sku) {
       let btn = event.currentTarget;
@@ -1497,7 +1599,26 @@ class cViewDemo extends bView {
           <button class="choice-button-three" style="display:none;">&nbsp;</button>
           <button class="choice-button-four" style="display:none;">&nbsp;</button>
         </div>
-        <div class="mobile_orientation_options"></div>
+        <div class="mobile_orientation_options collapsed">
+          <div class="sub_button_bar">
+            <button class="btn-sb-icon app-transparent rotate_left"><i class="material-icons">rotate_left</i></button>
+            &nbsp; &nbsp;
+            <button class="btn-sb-icon app-transparent arrow_downward"><i class="material-icons">arrow_downward</i></button>
+            &nbsp; &nbsp;
+            <button class="btn-sb-icon app-transparent rotate_right"><i class="material-icons">rotate_right</i></button>
+            <br>
+            <button class="btn-sb-icon app-transparent arrow_back"><i class="material-icons">arrow_back</i></button>
+            <button class="btn-sb-icon app-transparent"><i class="material-icons">my_location</i></button>
+            <button class="btn-sb-icon app-transparent arrow_forward"><i class="material-icons">arrow_forward</i></button>
+          </div>
+          <button class="btn-sb-icon app-transparent"><i class="material-icons">pause</i></button>
+          &nbsp; &nbsp;
+          <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
+          &nbsp; &nbsp;
+          <button class="btn-sb-icon app-transparent expand_less"><i class="material-icons">expand_more</i></button>
+          <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">expand_less</i></button>
+
+        </div>
       </div>
     </div>`;
   }
@@ -1524,7 +1645,6 @@ class cViewDemo extends bView {
     }, {
       title: 'Camera Updates',
       fireSetField: 'cameraUpdates',
-
       group: 'cameraTrack',
       type: 'boolean',
       floatLeft: true,

@@ -344,3 +344,47 @@ button.choice-button-four {
 button.choice-button-four span {
   color: black;
 }
+
+.mobile_orientation_options button {
+  font-size: 2em;
+}
+
+.mobile_orientation_options {
+  pointer-events: none;
+  line-height: 3em;
+}
+
+.mobile_orientation_options * {
+  pointer-events: auto;
+}
+
+.mobile_orientation_options .sub_button_bar {
+  visibility: visible;
+  transition: top 400ms;
+  position: relative;
+  top: 0;
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar * {
+  pointer-events: auto;
+}
+
+.mobile_orientation_options.collapsed .sub_button_bar {
+  transition: top 400ms, visibility 400ms;
+  top: 7em;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.mobile_orientation_options.collapsed .expand_less {
+  display: none;
+}
+
+.mobile_orientation_options.collapsed .expand_more {
+  display: inline-block;
+}
+
+.mobile_orientation_options .expand_more {
+  display: none;
+}
