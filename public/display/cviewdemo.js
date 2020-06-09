@@ -69,66 +69,102 @@ class cViewDemo extends bView {
     });
 
     this.arrow_upward = this.dialog.querySelector('.mobile_orientation_options .arrow_upward');
-    this.arrow_upward.addEventListener('mousedown', e => {
-      this.moveCamera('up');
+    this.arrow_upward.addEventListener('click', e => {
       clearInterval(this.upwardMoveTimeout);
-      this.upwardMoveTimeout = setInterval(() => this.moveCamera('up'), 100);
-    });
-    this.arrow_upward.addEventListener('mouseup', e => {
-      clearInterval(this.upwardMoveTimeout);
+
+      if (this.arrow_upward.running) {
+        this.arrow_upward.running = false;
+        this.arrow_upward.classList.remove('app-inverted');
+      } else {
+        this.arrow_upward.running = true;
+        this.arrow_upward.classList.add('app-inverted');
+        this.moveCamera('up');
+        this.upwardMoveTimeout = setInterval(() => this.moveCamera('up'), 100);
+      }
     });
 
     this.arrow_downward = this.dialog.querySelector('.mobile_orientation_options .arrow_downward');
-    this.arrow_downward.addEventListener('mousedown', e => {
-      this.moveCamera('up');
-      clearInterval(this.upwardMoveTimeout);
-      this.upwardMoveTimeout = setInterval(() => this.moveCamera('down'), 100);
-    });
-    this.arrow_downward.addEventListener('mouseup', e => {
-      clearInterval(this.upwardMoveTimeout);
-    });
+    this.arrow_downward.addEventListener('click', e => {
+      clearInterval(this.downwardMoveTimeout);
 
+      if (this.arrow_downward.running) {
+        this.arrow_downward.running = false;
+        this.arrow_downward.classList.remove('app-inverted');
+      } else {
+        this.arrow_downward.running = true;
+        this.arrow_downward.classList.add('app-inverted');
+        this.moveCamera('down');
+        this.downwardMoveTimeout = setInterval(() => this.moveCamera('down'), 100);
+      }
+    });
 
     this.arrow_forward = this.dialog.querySelector('.mobile_orientation_options .arrow_forward');
-    this.arrow_forward.addEventListener('mousedown', e => {
-      this.moveCamera('right');
-      clearInterval(this.upwardMoveTimeout);
-      this.upwardMoveTimeout = setInterval(() => this.moveCamera('right'), 100);
-    });
-    this.arrow_forward.addEventListener('mouseup', e => {
-      clearInterval(this.upwardMoveTimeout);
+    this.arrow_forward.addEventListener('click', e => {
+      clearInterval(this.forwardMoveTimeout);
+
+      if (this.arrow_forward.running) {
+        this.arrow_forward.running = false;
+        this.arrow_forward.classList.remove('app-inverted');
+      } else {
+        this.arrow_forward.running = true;
+        this.arrow_forward.classList.add('app-inverted');
+        this.moveCamera('right');
+        this.forwardMoveTimeout = setInterval(() => this.moveCamera('right'), 100);
+      }
     });
 
-    this.arrow_back = this.dialog.querySelector('.mobile_orientation_options .arrow_back');
-    this.arrow_back.addEventListener('mousedown', e => {
-      this.moveCamera('left');
-      clearInterval(this.upwardMoveTimeout);
-      this.upwardMoveTimeout = setInterval(() => this.moveCamera('left'), 100);
-    });
-    this.arrow_back.addEventListener('mouseup', e => {
-      clearInterval(this.upwardMoveTimeout);
+    this.arrow_backward = this.dialog.querySelector('.mobile_orientation_options .arrow_backward');
+    this.arrow_backward.addEventListener('click', e => {
+      clearInterval(this.backwardMoveTimeout);
+
+      if (this.arrow_backward.running) {
+        this.arrow_backward.running = false;
+        this.arrow_backward.classList.remove('app-inverted');
+      } else {
+        this.arrow_backward.running = true;
+        this.arrow_backward.classList.add('app-inverted');
+        this.moveCamera('left');
+        this.backwardMoveTimeout = setInterval(() => this.moveCamera('left'), 100);
+      }
     });
 
     this.rotate_left = this.dialog.querySelector('.mobile_orientation_options .rotate_left');
-    this.rotate_left.addEventListener('mousedown', e => {
-      gAPPP.activeContext.camera.cameraRotation.y -= .05;
-      clearInterval(this.upwardMoveTimeout);
-      this.upwardMoveTimeout = setInterval(() => gAPPP.activeContext.camera.cameraRotation.y -= .05, 100);
-    });
-    this.rotate_left.addEventListener('mouseup', e => {
-      clearInterval(this.upwardMoveTimeout);
+    this.rotate_left.addEventListener('click', e => {
+      clearInterval(this.rotateLeftMoveTimeout);
+
+      if (this.rotate_left.running) {
+        this.rotate_left.running = false;
+        this.rotate_left.classList.remove('app-inverted');
+      } else {
+        this.rotate_left.running = true;
+        this.rotate_left.classList.add('app-inverted');
+
+        gAPPP.activeContext.camera.updateUpVectorFromRotation = true;
+        gAPPP.activeContext.camera.cameraRotation.y -= .02;
+        this.rotateLeftMoveTimeout = setInterval(() => {
+          gAPPP.activeContext.camera.cameraRotation.y -= .02;
+        }, 100);
+      }
     });
 
     this.rotate_right = this.dialog.querySelector('.mobile_orientation_options .rotate_right');
-    this.rotate_right.addEventListener('mousedown', e => {
-      gAPPP.activeContext.camera.cameraRotation.y += .05;
-      clearInterval(this.upwardMoveTimeout);
-      this.upwardMoveTimeout = setInterval(() => gAPPP.activeContext.camera.cameraRotation.y += .05, 100);
+    this.rotate_right.addEventListener('click', e => {
+      clearInterval(this.rotateRightMoveTimeout);
+
+      if (this.rotate_right.running) {
+        this.rotate_right.running = false;
+        this.rotate_right.classList.remove('app-inverted');
+      } else {
+        this.rotate_right.running = true;
+        this.rotate_right.classList.add('app-inverted');
+
+        gAPPP.activeContext.camera.updateUpVectorFromRotation = true;
+        gAPPP.activeContext.camera.cameraRotation.y += .02;
+        this.rotateRightMoveTimeout = setInterval(() => {
+          gAPPP.activeContext.camera.cameraRotation.y += .02;
+        }, 100);
+      }
     });
-    this.rotate_right.addEventListener('mouseup', e => {
-      clearInterval(this.upwardMoveTimeout);
-    });
-    
   }
   moveCamera(dir) {
     let camera = gAPPP.activeContext.camera;
@@ -1607,7 +1643,7 @@ class cViewDemo extends bView {
             &nbsp; &nbsp;
             <button class="btn-sb-icon app-transparent rotate_right"><i class="material-icons">rotate_right</i></button>
             <br>
-            <button class="btn-sb-icon app-transparent arrow_back"><i class="material-icons">arrow_back</i></button>
+            <button class="btn-sb-icon app-transparent arrow_backward"><i class="material-icons">arrow_back</i></button>
             <button class="btn-sb-icon app-transparent"><i class="material-icons">my_location</i></button>
             <button class="btn-sb-icon app-transparent arrow_forward"><i class="material-icons">arrow_forward</i></button>
           </div>
