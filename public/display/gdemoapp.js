@@ -48,6 +48,41 @@ class gDemoApp extends gInstanceSuper {
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">Loading...</div>`;
   }
+  initGPSTracking(enable = true) {
+    this.gpsEnabled = enable;
+    if (this.gpsInited)
+      return;
+
+    this.gpsInited = true;
+    navigator.geolocation.watchPosition(position => {
+      if (!this.gpsEnabled)
+        return;
+      this.latitude = position.coords.latitude.toFixed(7);
+      this.longitude = position.coords.longitude.toFixed(7);
+
+      if (!this.origLatitude)
+        this.origLatitude = this.latitude;
+      if (!this.origLongitude)
+        this.origLongitude = this.longitude;
+
+      if (this.gpsCallback)
+        this.gpsCallback(position);
+
+      if (!this.gpsInited) {
+        this.gpsInited = true;
+        this.gpsReady();
+      }
+    }, err => {
+      if (this.gpsCallback)
+        this.gpsCallback(err, true);
+    }, {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    });
+  }
+  gpsReady() {
+  }
   initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');

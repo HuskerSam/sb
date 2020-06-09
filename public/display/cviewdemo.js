@@ -165,6 +165,47 @@ class cViewDemo extends bView {
         }, 100);
       }
     });
+
+    this.geo_gps_coords = this.dialog.querySelector('.geo_gps_coords');
+    this.geo_lock = this.dialog.querySelector('.mobile_orientation_options .geo_lock');
+    this.geo_lock.addEventListener('click', e => {
+
+      gAPPP.gpsCallback = (data, isError) => {
+        if (isError) {
+          this.geo_gps_coords.innerHTML = 'ERROR(' + data.code + '): ' + data.message;
+        } else {
+          this.__updateGPSLocation();
+        }
+      };
+      if (this.geo_lock.running) {
+        this.geo_lock.running = false;
+        this.geo_lock.classList.remove('app-inverted');
+        gAPPP.initGPSTracking(false);
+        this.geo_gps_coords.style.display = 'none';
+      } else {
+        this.geo_lock.running = true;
+        this.geo_lock.classList.add('app-inverted');
+        gAPPP.initGPSTracking(true);
+        this.geo_gps_coords.style.display = 'inline-block';
+      }
+    });
+  }
+  __updateGPSLocation() {
+    this.geo_gps_coords.innerHTML = '' + gAPPP.latitude + '°, ' + gAPPP.longitude + '°';
+
+    if (!this.startLon) {
+      this.startLon = gAPPP.longitude;
+      this.startLat = gAPPP.latitude;
+      return;
+    }
+
+    let d_result = GLOBALUTIL.getGPSDiff(this.startLat, this.startLon, gAPPP.latitude, gAPPP.longitude);
+
+    this.startLon = gAPPP.longitude;
+    this.startLat = gAPPP.latitude;
+
+    this.context.camera._position.x += d_result.vertical * -1.0; //east increasing
+    this.context.camera._position.z += d_result.horizontal * 1.0; //north increasing\
   }
   moveCamera(dir) {
     let camera = gAPPP.activeContext.camera;
@@ -1575,12 +1616,12 @@ class cViewDemo extends bView {
 
       <div class="display_header_bar">
         <div class="display_header_row">
-          <button class="btn-sb-icon app-transparent choice-button-clear cart-submit"><i class="material-icons">send</i></button>
           <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
           <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons">movie</i></button>
           <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons">settings_brightness</i></button>
           <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons">volume_off</i></button>
-          <button class="btn-sb-icon app-transparent profile_panel_button" style="clear:left;"><i class="material-icons">person</i></button>
+          <button class="btn-sb-icon app-transparent choice-button-clear cart-submit" style="clear:both;"><i class="material-icons">send</i></button>
+          <button class="btn-sb-icon app-transparent profile_panel_button"><i class="material-icons">person</i></button>
           <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons">info</i></button>
           <div style="clear:both"></div>
         </div>
@@ -1637,21 +1678,25 @@ class cViewDemo extends bView {
         </div>
         <div class="mobile_orientation_options collapsed">
           <div class="sub_button_bar">
+            <div class="geo_gps_coords app-panel app-transparent" style="display:none;"></div>
+            <br>
             <button class="btn-sb-icon app-transparent rotate_left"><i class="material-icons">rotate_left</i></button>
-            &nbsp; &nbsp;
+            &nbsp;
             <button class="btn-sb-icon app-transparent arrow_downward"><i class="material-icons">arrow_downward</i></button>
-            &nbsp; &nbsp;
+            &nbsp;
             <button class="btn-sb-icon app-transparent rotate_right"><i class="material-icons">rotate_right</i></button>
             <br>
             <button class="btn-sb-icon app-transparent arrow_backward"><i class="material-icons">arrow_back</i></button>
-            <button class="btn-sb-icon app-transparent"><i class="material-icons">my_location</i></button>
+            &nbsp;
+            <button class="btn-sb-icon app-transparent geo_lock"><i class="material-icons">my_location</i></button>
+            &nbsp;
             <button class="btn-sb-icon app-transparent arrow_forward"><i class="material-icons">arrow_forward</i></button>
           </div>
           <button class="btn-sb-icon app-transparent"><i class="material-icons">pause</i></button>
-          &nbsp; &nbsp;
+          &nbsp;
           <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
-          &nbsp; &nbsp;
-          <button class="btn-sb-icon app-transparent expand_less"><i class="material-icons">expand_more</i></button>
+          &nbsp;
+          <button class="btn-sb-icon app-transparent expand_less app-inverted"><i class="material-icons">expand_more</i></button>
           <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">expand_less</i></button>
 
         </div>

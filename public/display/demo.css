@@ -65,7 +65,7 @@
 
 .display_header_bar .cart_panel_button {
   float: right;
-  padding: .15em;
+  padding: .05em;
 }
 
 #muteButton {
@@ -346,7 +346,7 @@ button.choice-button-four span {
 
 .mobile_orientation_options {
   pointer-events: none;
-  line-height: 3em;
+  line-height: 3.5em;
 }
 
 .mobile_orientation_options * {
@@ -386,4 +386,8 @@ button.choice-button-four span {
 
 button, i, .no-selection {
   user-select: none;
+}
+
+.geo_gps_coords {
+  line-height: 1.5em;
 }
