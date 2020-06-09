@@ -493,8 +493,10 @@ class cViewDemo extends bView {
     if (!evt) {
       let urlParams = new URLSearchParams(window.location.search);
       let uiOverlay = urlParams.get('uiOverlay');
-      if (uiOverlay)
+      if (uiOverlay) {
         ui_overlay = uiOverlay;
+        this.ui_select.value = ui_overlay;
+      }
     }
     this.uiOverlay = ui_overlay;
 
