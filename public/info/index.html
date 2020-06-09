@@ -26,8 +26,7 @@
     }
 
     img {
-      max-height: 50vh;
-      max-width: 75vw;
+      max-width: 100vw;
     }
 
     .wrapper {
@@ -145,8 +144,7 @@
   <div class="wrapper">
     <h1><span style="color:black;">Product:</span> Visual Catalogs</h1>
     <div>
-      <img src="colorcircuittree.png" style="padding:1em;" />
-      <br>
+      <img src="colorcircuittree.png"/>
       <div>
         Get app installs?
         <br>
@@ -172,11 +170,11 @@
 
       </div>
     </div>
-    <h1><span style="color:black;">Service:</span> Sheets Pipeline</h1>
+    <h1><span style="color:black;">Service:</span> Sheets to Cloud Pipeline</h1>
     <div>
-      <img src="pipeline.png" />
+      <img  src="pipeline.png" />
       <br>
-      <div style="flex:1; text-align:left;">
+      <div>
 
         Conceptually break down what the app does - once you’re set up, a lot of resue
         List of assets (3D mesh library)
@@ -201,16 +199,40 @@
       </div>
     </div>
 
-    <h1><span style="color: black;">Consoles:</span> Interact synchronously with all devices</h1>
+    <h1><span style="color: black;">Consoles:</span> Interact with all devices</h1>
     <div>
-      <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/scenepipeline.png">
-      <br>
+      <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/scenepipeline.png" />
+      <h2>Your quality content on console (Android TV)</h2>
       If you need a platform to get the most out of multiple screen options to deliver lots of video that is driven by user choice you've found the place!
       <br>
       Using a mix of platforms at the same time with synchronized content allows people in different rooms and different places to share the same experience.
       Using a realtime data source (with push capability) like <a href="https://firebase.google.com/">Firebase</a> allows us to efficently push indexed content changes
       to TV applications in addition to rapidly synchronizing screens and choices amongst users.
-    </div>
+      <br>
+      <br>
+      We're here to deliver console applications that expose <a href="https://developer.android.com/training/tv/discovery/searchable.html">searchable</a> content.  We use
+      a wrapper application written in JAVA using Android Studio to host our web application.  This allows us to interact
+      directly with the TV and it's special application modes for showing <a href="https://developer.android.com/training/tv/discovery/recommendations-row.html">recommendations</a>.
+      While the native application is in JAVA the logic remains in javascript.  <a href="https://crosswalk-project.org/">Crosswalk</a> is used
+      for a browser that supports WebGL and Firebase on Android TV's 5.0 and up.
+      <br>
+      <br>
+      Our process delivers a solution for markets such as public broadcasting, music videos,
+      local tv, radio and news organizations.  We want to provide a solution where a company has development resources to sustain
+      an all platform solution (especially if it's in one language html/javascript), but not the expertise and funds to develop a competitive
+      and foward leaning solution in house.  Anyone that has a lot of video content, especially high resolution, will want
+      quality interfaces with Android TV and Roku.
+    <br><br>
+      Video sources are commonly described using <a href="http://ogp.me/">Open Graph</a> meta tags.  Our goal is to use the tags
+      to describe videos (thumbnails, title, source and description).  We use additional tags for videos of lower and
+      higher bit rates.  Previewing content for TV has already been solved on the web - if you share links and content
+      with other sites now, it will only take small (if any) adjustments to improve your existing video tags.  The advantage
+      to additional tags is delivering bandwidth specific content - your phone on a weak connection doesn't require or perform
+      well with 4k quality video - but your TV looks like crap without it.  Most video sites let a user select the video quality
+      as an option that is saved on a per machine (not account) basis to match up with different platforms.  We take the local
+      setting and match it up with the video source in the tags to find the right url.
+      <br><br><br>
+      </div>
     <h1><span style="color: black;">Videos:</span> Circuit creation, model import, animations</h1>
     <div id="display_builder" class="parallax-scroll">
       <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
