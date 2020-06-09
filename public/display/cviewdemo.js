@@ -18,6 +18,12 @@ class cViewDemo extends bView {
     this.itemButtons.push(document.querySelector('.choice-button-three'));
     this.itemButtons.push(document.querySelector('.choice-button-four'));
 
+    this.itemSymbols = [];
+    this.itemSymbols.push('<i class="material-icons">fiber_manual_record</i>');
+    this.itemSymbols.push('<i class="material-icons">clear</i>');
+    this.itemSymbols.push('<i class="material-icons">stop</i>');
+    this.itemSymbols.push('<i class="material-icons" style="transform:rotate(-90deg)">play_arrow</i>');
+
     this.basketClearButtons();
 
     document.querySelector('.choice-button-clear').addEventListener('click', () => this.basketCheckout());
@@ -1567,11 +1573,12 @@ class cViewDemo extends bView {
         if (!this.products[c].itemId)
           continue;
         let btn = this.itemButtons[product.colorIndex];
+        let symHtml = this.itemSymbols[product.colorIndex];
         let url = product.itemImage;
         if (url.substring(0, 3) === 'sb:') {
           url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
         }
-        let btnHtml = `<img src="${url}" crossorigin="anonymous" class="button-list-image">` +
+        let btnHtml = symHtml + `<img src="${url}" crossorigin="anonymous" class="button-list-image">` +
           '<span class="expanded">' + product.title + '<br></span><span>' + product.desc.toString() + '</span>';
 
         if (btn.innerHTMLStash !== btnHtml) {
@@ -1579,14 +1586,14 @@ class cViewDemo extends bView {
           btn.innerHTML = btnHtml;
         }
         btn.sku = product.itemId;
-        btn.style.display = 'inline-block';
+        btn.style.visibility = 'visible';
         btnsShown[product.colorIndex] = true;
       }
     }
 
     for (let d = 0, dl = btnsShown.length; d < dl; d++)
       if (!btnsShown[d]) {
-        this.itemButtons[d].style.display = 'none';
+        this.itemButtons[d].style.visibility = 'hidden';
         this.itemButtons[d].sku = '';
       }
   }
@@ -1671,10 +1678,10 @@ class cViewDemo extends bView {
       </div>
       <div class="bottom_options_panel">
         <div class="nontouch_button_options">
-          <button class="choice-button-one" style="display:none;">&nbsp;</button>
-          <button class="choice-button-two" style="display:none;">&nbsp;</button>
-          <button class="choice-button-three" style="display:none;">&nbsp;</button>
-          <button class="choice-button-four" style="display:none;">&nbsp;</button>
+          <button class="choice-button-one">&nbsp;</button>
+          <button class="choice-button-two">&nbsp;</button>
+          <button class="choice-button-three">&nbsp;</button>
+          <button class="choice-button-four">&nbsp;</button>
         </div>
         <div class="mobile_orientation_options collapsed">
           <div class="sub_button_bar">
