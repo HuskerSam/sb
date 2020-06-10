@@ -1713,10 +1713,10 @@ class cViewDemo extends bView {
             <div class="fields-container"></div>
           </div>
           <div class="chat_panel">
-            <div class="inner_chat_panel">
-              <div class="raw_macro_panel app-panel app-transparent"></div>
+            <div class="inner_chat_panel app-panel app-transparent">
+              <div class="raw_macro_panel"></div>
               <div class="fields-container"></div>
-              <button class="chat_clear_button btn-sb-icon app-transparent" style="float:right;">Clear Chat</button>
+              <button class="chat_clear_button btn-sb-icon" style="float:right;">Clear Chat</button>
               <div style="clear:both"></div>
             </div>
           </div>

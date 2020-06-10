@@ -36,29 +36,28 @@
 
     .video-wrapper {
       display: none;
-      position: relative;
-      background: rgb(200, 90, 0);
+      background: rgb(255, 255, 255);
       flex: 1;
     }
 
     .video-wrapper video {
       width: 100%;
       height: 100%;
-      max-width: 100vw;
-      max-height: 100vh;
+      max-width: 90vw;
+      max-height: 90vh;
     }
 
     .video-wrapper .playpause {
-      background-color: rgb(255, 255, 0);
+      background-color: rgb(100, 100, 255);
       border-radius: 50%;
-      color: rgb(200, 90, 0);
+      color: rgb(255, 255, 255);
       position: absolute;
       left: 50%;
       top: 50%;
       font-size: 2.5em;
       padding: .25em;
       cursor: pointer;
-      border: solid .2em rgb(200, 90, 0);
+      border: solid .2em rgb(255, 255, 255);
       transform: translateX(-50%) translateY(-50%);
     }
 
@@ -68,8 +67,8 @@
 
     .video_link {
       display: inline-block;
-      background: rgb(255, 255, 0);
-      color: rgb(200, 90, 0);
+      background: rgb(100, 100, 255);
+      color: rgb(255, 255, 255);
       font-family: Chilanka;
       font-weight: 900;
       text-decoration: none;
@@ -79,29 +78,19 @@
       white-space: nowrap;
       border-radius: 1.5em;
       margin-bottom: .25em;
-      border: solid .1em rgb(200, 90, 0);
+      border: solid .1em rgb(255, 255, 255);
     }
 
     .video_link.selected,
     .video_link:hover {
-      color: rgb(255, 255, 0);
-      background: rgb(200, 90, 0);
+      color: rgb(100, 100, 255);
+      background: rgb(255, 255, 255);
     }
 
-    .parallax-scroll {
-      position: relative;
-      height: 100vh;
-      min-height: 100vh;
-      overflow: auto;
-      transition: top 200ms;
-      display: flex;
-      flex-direction: column;
-      z-index: 1;
-    }
 
     .image-bkg {
-      background-image:url(colorcircuittree.png);
-      background-repeat:no-repeat;
+      background-image: url(colorcircuittree.png);
+      background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
     }
@@ -150,92 +139,77 @@
 
 <body>
   <div class="wrapper">
-    <h1>Visual Catalogs</h1>
+    <h1 style="color:rgb(255,150,0)">Visual Catalogs</h1>
     <div class="image-bkg" style="">
-      <br>
-      <br>
-      <div style="font-family:monospace;background: rgba(255,255,255,.8);border-radius:5em;color:rgb(0,0,0)">
-        What innovations can improve the online shopping experience?
+      <div style="font-family:monospace;
+          display:inline-block;color:rgb(255,150,0);font-size:2em;">
+        Online graphical shopping experience
         <br>
         <br>
-        How do you close the gap between the physical and digital shopping experience?
+        Narrow the gap between physical and digital
         <br>
-        <br>
-        <h2>Let's create novel and engaging experiences for shopping on mobile!</h2>
+        Mobile first novel and engaging experiences
       </div>
-      <br>
-      <br>
     </div>
-    <h1 style="color:green">Sheets Pipeline</h1>
+    <h1 style="color:rgb(0,200,0)">Cloud Pipeline</h1>
     <div>
       <div class="image-bkg" style="background-image:url(pipeline.png)">
-        <br>
-        <br>
-        <div style="font-family:monospace;background: rgba(255,255,255,.8);border-radius:5em;color:rgb(0,0,0)">
-
-          List of assets (3D mesh library)<br>
+        <div style="font-family:monospace;display:inline-block;color:rgb(0,200,0);font-size: 2em;">
+          Download models on demand from the cloud<br>
           <br>
+          CSV based import of catalogs and all data
           <br>
-          Layout - store design
-
+          Scale on demand (serverless) hosting
+        </div>
       </div>
-      <br>
-      <br>
     </div>
-
-    <h1 style="color:red">Consoles</h1>
+    <h1 style="color:rgb(255,127,255)">Console Displays</h1>
     <div>
       <div class="image-bkg" style="background-image:url(https://s3-us-west-2.amazonaws.com/hcwebflow/himage/scenepipeline.png)">
-        <br>
-        <br>
-        <div style="font-family:monospace;background: rgba(255,255,255,.8);border-radius:5em;color:rgb(0,0,0)">
-          <h2>Your quality content on console (Android TV)</h2>
-
-          <br>
-          Mix platforms with synchronized content in different rooms and different places
+        <div style="font-family:monospace;color:rgb(255,127,255);font-size:2em;">
+          Your quality content on console (Android TV)
           <br>
           <br>
-      </div>
-      <br>
-      <br>
-    </div>
-
-    <h1 style="color:black">Videos</h1>
-    <div id="display_builder" class="parallax-scroll">
-      <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
-        <div style="position:absolute;z-index:1;top:.25em;width: 100%;">
-          <a href="#" id="video_1_link" class="video_link selected">Create</a>
-          <a href="#" id="video_2_link" class="video_link">Customize</a>
-          <a href="#" id="video_3_link" class="video_link">Spinner</a>
-          <a href="#" id="video_4_link" class="video_link">Lines</a>
-          <a href="#" id="video_5_link" class="video_link">Basics</a>
-          <a href="#" id="video_6_link" class="video_link">Catalog</a>
+          Synchronize all platforms and locations
+          <br>
+          Content sized for the device and connection
         </div>
-        <div style="flex:1;display:flex;flex-direction:1;">
-          <div class="video-wrapper" id="video_1_link_video" style="display:block;">
-            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" muted preload="auto"></video>
-            <div class="playpause"><i class="material-icons">play_arrow</i></div>
-          </div>
-          <div class="video-wrapper" id="video_2_link_video">
-            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" muted preload="none"></video>
-            <div class="playpause"><i class="material-icons">play_arrow</i></div>
-          </div>
-          <div class="video-wrapper" id="video_3_link_video">
-            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" muted preload="none"></video>
-            <div class="playpause"><i class="material-icons">play_arrow</i></div>
-          </div>
-          <div class="video-wrapper" id="video_4_link_video">
-            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" muted preload="none"></video>
-            <div class="playpause"><i class="material-icons">play_arrow</i></div>
-          </div>
-          <div class="video-wrapper" id="video_5_link_video">
-            <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" preload="none"></video>
-            <div class="playpause"><i class="material-icons">play_arrow</i></div>
-          </div>
-          <div class="video-wrapper" id="video_6_link_video">
-            <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/spreadsheetexport.mp4" preload="none"></video>
-            <div class="playpause"><i class="material-icons">play_arrow</i></div>
-          </div>
+      </div>
+    </div>
+    <h1 style="color:rgb(100,100,255)">How To Videos</h1>
+    <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="width: 100%;">
+        <a href="#" id="video_1_link" class="video_link selected">Create</a>
+        <a href="#" id="video_2_link" class="video_link">Customize</a>
+        <a href="#" id="video_3_link" class="video_link">Spinner</a>
+        <a href="#" id="video_4_link" class="video_link">Lines</a>
+        <a href="#" id="video_5_link" class="video_link">Basics</a>
+        <a href="#" id="video_6_link" class="video_link">Catalog</a>
+      </div>
+      <div style="">
+        <div class="video-wrapper" id="video_1_link_video" style="display:block;">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" muted preload="auto"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_2_link_video">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" muted preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_3_link_video">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" muted preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_4_link_video">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" muted preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_5_link_video">
+          <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_6_link_video">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/spreadsheetexport.mp4" preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
         </div>
       </div>
     </div>
