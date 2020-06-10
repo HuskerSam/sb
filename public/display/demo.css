@@ -8,13 +8,7 @@
 }
 
 #workspaces-select {
-  font-size: 12pt;
-  margin: .25em;
-  padding: .5em;
-  background: rgb(240, 240, 240);
-  border: none;
-  float: none;
-  position: static;
+  float: left;
   display: none;
 }
 
@@ -119,7 +113,7 @@
   pointer-events: none;
 }
 
-.display_header_bar button.cart-submit {
+.display_header_bar button.chat_panel_button {
   float: right;
 }
 
@@ -396,4 +390,70 @@ button, i, .no-selection {
 
 .geo_gps_coords {
   line-height: 1.5em;
+}
+
+.raw_macro_panel {
+  display: inline-block
+}
+
+.raw_macro_panel hr {
+  display: none;
+}
+
+.raw_macro_panel .add-newwindow-button.btn-sb-icon {
+  display: none;
+}
+
+
+.raw_macro_panel .add-button {
+  float: right;
+}
+
+.raw_macro_panel label {
+  white-space: nowrap;
+}
+
+.raw_macro_panel label input {
+  width: 6em;
+}
+
+.raw_macro_panel label span {
+  flex: 0;
+  white-space: nowrap;
+}
+
+.raw_macro_panel label.add_template_name_label {
+  display: none;
+}
+
+.raw_macro_panel {
+  overflow: auto;
+  width: 100%;
+  max-height: 55vh;
+  padding: .1em;
+}
+
+.raw_macro_panel .width, .raw_macro_panel .height, .raw_macro_panel .depth {
+  width: 4em;
+}
+
+
+.raw_macro_panel .texttext, .raw_macro_panel .texttextline2 {
+  width: auto;
+}
+
+.new_button_break {
+  display: none;
+}
+
+.shape-and-text-block-options {
+  clear: both;
+}
+
+.display_header_row {
+  pointer-events: none;
+}
+
+.display_header_row * {
+  pointer-events: auto;
 }

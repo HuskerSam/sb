@@ -300,6 +300,19 @@ class cViewDemo extends bView {
     this.bandButtons.push(this.cart_panel_ctl);
     this.cart_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
 
+    this.chat_panel_button = this.dialog.querySelector('.chat_panel_button');
+    this.chat_panel = this.dialog.querySelector('.chat_panel');
+    this.chat_panel_fc = this.demo_panel.querySelector('.fields-container');
+    this.chat_panel_ctl = new cBandProfileOptions(this.chat_panel_button, [],
+      this.chat_panel_fc, this.chat_panel);
+    this.chat_panel_ctl.fireFields.values = gAPPP.a.profile;
+    this.chat_panel_ctl.panelShownClass = 'profile-panel-shown';
+    this.chat_panel_ctl.activate();
+    this.bandButtons.push(this.chat_panel_ctl);
+    this.chat_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
+
+    this.initBlockAddPanel();
+
     this.mute_header_button = this.dialog.querySelector('.mute_header_button');
     this.mute_header_button.addEventListener('click', async e => {
       this.audio.currentTime = Math.max(0, this.canvasHelper.timeE);
@@ -1629,7 +1642,7 @@ class cViewDemo extends bView {
           <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons">movie</i></button>
           <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons">settings_brightness</i></button>
           <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons">volume_off</i></button>
-          <button class="btn-sb-icon app-transparent choice-button-clear cart-submit" style="clear:both;"><i class="material-icons">send</i></button>
+          <button class="btn-sb-icon app-transparent chat_panel_button" style="clear:both;"><i class="material-icons">chat</i></button>
           <button class="btn-sb-icon app-transparent profile_panel_button"><i class="material-icons">person</i></button>
           <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons">info</i></button>
           <div style="clear:both"></div>
@@ -1672,8 +1685,14 @@ class cViewDemo extends bView {
           <div class="demo_panel"><div class="demo_panel_contents app-panel app-transparent"></div><div class="fields-container"></div></div>
           <div class="cart_panel">
             <select id="workspaces-select"></select>
+            <button class="btn-sb-icon app-transparent choice-button-clear cart-submit">Checkout</button>
+            <br style="clear:both;">
             <div class="cart-contents app-panel app-transparent">
             </div>
+            <div class="fields-container"></div>
+          </div>
+          <div class="chat_panel">
+            <div class="raw_macro_panel app-panel app-transparent"></div>
             <div class="fields-container"></div>
           </div>
         </div>
@@ -1711,6 +1730,20 @@ class cViewDemo extends bView {
         </div>
       </div>
     </div>`;
+  }
+  initBlockAddPanel() {
+    this.raw_macro_panel = this.dialog.querySelector('.raw_macro_panel');
+    this.generate = new cMacro(this.raw_macro_panel, 'block', this);
+    this.generate.addCallback = (id, name) => {
+
+
+      //this.geoAddItem(name);
+    };
+    let sel = this.dialog.querySelector('.block-type-select');
+    sel.innerHTML = `<option selected>Text and Shape</option>
+     <option>Animated Line</option>
+     <option>Connector Line</option><option>Web Font</option>`;
+    this.generate.blockHelperChange();
   }
   closeHeaderBands(canvasClick) {
     if (canvasClick)

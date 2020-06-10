@@ -75,11 +75,11 @@ class cMacro {
     textDom.style.fontFamily = textDom.value;
   }
   baseTemplate() {
-    return `<label><b>${this.tag} name</b>
+    return `<label class="add_template_name_label"><b>${this.tag} name</b>
      <input class="add-item-name" type="text" style="width:15em;" /></label>
       <button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
       <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
-      <br>
+      <br class="new_button_break">
       <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>`;
   }
   static assetJSON(tag, key) {
@@ -177,16 +177,16 @@ class cMacro {
       <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:15em;" value="" /></label>
     </div>
     <div class="connector-line-block-add-options" style="display:none;">
-      <label><span>length</span><input type="text" class="length" value="10" /></label>
-      <label><span>diameter</span><input type="text" class="diameter" value=".5" /></label>
+      <label><span>L </span><input type="text" class="length" value="10" /></label>
+      <label><span>D </span><input type="text" class="diameter" value=".5" /></label>
       <br>
-      <label><span>tessellation</span><input type="text" class="tessellation" value="" /></label>
+      <label><span>Tess </span><input type="text" class="tessellation" value="" /></label>
       <br>
-      <label><span>material</span>&nbsp;<input type="text" style="width:15em;" class="material" list="materialdatatitlelookuplist" /></label>
+      <label><span>Mat </span>&nbsp;<input type="text" class="material" list="materialdatatitlelookuplist" /></label>
       <input type="color" class="colorpicker" data-inputclass="material">
       <br>
       <label>
-        <span>pointshape</span>
+        <span>Pt </span>
         <select class="pointshape">
           <option>none</option>
           <option>cylinder</option>
@@ -195,16 +195,16 @@ class cMacro {
         </select>
       </label>
       <br>
-      <label><span>pointlength</span><input type="text" class="pointlength" value="1" /></label>
-      <label><span>pointdiameter</span><input type="text" class="pointdiameter" value="2" /></label>
+      <label><span>Pt L </span><input type="text" class="pointlength" value="1" /></label>
+      <label><span>Pt D </span><input type="text" class="pointdiameter" value="2" /></label>
       <br>
-      <label><span>pointtessellation</span><input type="text" class="pointtessellation" value="" /></label>
+      <label><span>Pt Tess </span><input type="text" class="pointtessellation" value="" /></label>
       <br>
-      <label><span>pointmaterial</span><input type="text" style="width:15em;" class="pointmaterial" list="materialdatatitlelookuplist" /></label>
+      <label><span>Pt Mat </span><input type="text" class="pointmaterial" list="materialdatatitlelookuplist" /></label>
       <input type="color" class="colorpicker" data-inputclass="pointmaterial">
       <br>
       <label>
-        <span>tailshape</span>
+        <span>Tl</span>
         <select class="tailshape">
           <option>none</option>
           <option>cylinder</option>
@@ -213,21 +213,21 @@ class cMacro {
         </select>
       </label>
       <br>
-      <label><span>taillength</span><input type="text" class="taillength" value="1" /></label>
-      <label><span>taildiameter</span><input type="text" class="taildiameter" value="1" /></label>
+      <label><span>Tl L </span><input type="text" class="taillength" value="1" /></label>
+      <label><span>Tl D </span><input type="text" class="taildiameter" value="1" /></label>
       <br>
-      <label><span>tailtessellation</span><input type="text" class="tailtessellation" value="" /></label>
+      <label><span>Tl Tess </span><input type="text" class="tailtessellation" value="" /></label>
       <br>
-      <label><span>tailmaterial</span><input type="text" style="width:15em;" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
+      <label><span>Tl Mat </span><input type="text" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
       <input type="color" class="colorpicker" data-inputclass="tailmaterial">
-      <label><input type="checkbox" class="tailshapeflip" />tailshapeflip</label>
+      <label><input type="checkbox" class="tailshapeflip"  style="width:auto;line-height:1.5em" />Flip</label>
     </div>
     <div class="animated-line-block-add-options">
-      <label><span>dashes</span><input type="text" class="dashes" value="5" /></label>
-      <label><span>runlength</span><input type="text" class="runlength" value="1500" /></label>
+      <label><span>Num </span><input type="text" class="dashes" value="5" /></label>
+      <label><span>Run </span><input type="text" class="runlength" value="1500" /></label>
       <br>
       <label>
-        <span>dotshape</span>
+        <span>Shape </span>
         <select class="dotshape">
           <option>cylinder</option>
           <option selected>cone</option>
@@ -235,29 +235,32 @@ class cMacro {
           <option>arrow</option>
         </select>
       </label>
-      <label><span>dashlength</span><input type="text" class="dashlength" value=".5" /></label>
+      <label><span>Len </span><input type="text" class="dashlength" value=".5" /></label>
       <br>
-      <label><span>tessellation</span><input type="text" class="tessellation" value="" /></label>
+      <label><span>Tess </span><input type="text" class="tessellation" value="" /></label>
       <br>
-      <label><span>material</span><input type="text" style="width:15em;" class="material" list="materialdatatitlelookuplist" /></label>
+      <label><span>Mat </span><input type="text" class="material" list="materialdatatitlelookuplist" /></label>
       <input type="color" class="colorpicker" data-inputclass="material">
       <br>
-      <label><span>width</span><input type="text" class="width" value="1" /></label>
-      <label><span>height</span><input type="text" class="height" value="2" /></label>
-      <label><span>depth</span><input type="text" class="depth" value="10" /></label>
+      <label><span>W </span><input type="text" class="width" value="1" /></label>
+      <label><span>H </span><input type="text" class="height" value="2" /></label>
+      <label><span>D </span><input type="text" class="depth" value="10" /></label>
     </div>
     <div class="shape-and-text-block-options">
-      <label><span>texttext</span><input type="text" style="width:15em;" class="texttext" value="Block Text" /></label>
+      <label><span>W </span><input type="text" class="width" value="4" /></label>
+      <label><span>H </span><input type="text" class="height" value="1" /></label>
+      <label><span>D </span><input type="text" class="depth" value="1" /></label>
       <br>
-      <label><span>texttextline2</span><input type="text" style="width:15em;" class="texttextline2" value="" /></label>
-      <br>
-      <label><span>textfontfamily</span><input class="textfontfamily" style="width:15em;" type="text" list="fontfamilydatalist" /></label>
-      <label><span>textdepth</span><input type="text" class="textdepth" value=".25" /></label>
-      <br>
-      <label><span>textmaterial</span>&nbsp;<input type="text" style="width:15em;" class="textmaterial" list="materialdatatitlelookuplist" /></label>
+      <label><span>L1 </span><input type="text" class="texttext" value="My Message" /></label>
+      <label><span>L2 </span><input type="text" class="texttextline2" value="" /></label>
+      <label><span>Font </span><input class="textfontfamily" type="text" list="fontfamilydatalist" /></label>
+      <label><span>D </span><input type="text" class="textdepth" value=".25" /></label>
+      <label><span>Fill </span><input type="text" class="textmaterial" list="materialdatatitlelookuplist" />
+      </label>
       <input type="color" class="colorpicker" data-inputclass="textmaterial">
       <br>
-      <label><span>createshapetype</span><select class="createshapetype">
+      <br>
+      <label><select class="createshapetype">
         <option>cube</option>
         <option>box</option>
         <option selected>cone</option>
@@ -265,15 +268,12 @@ class cMacro {
         <option>sphere</option>
         <option>ellipsoid</option>
       </select></label>
-      <label><span>tessellation</span><input type="text" class="tessellation" /></label>
-      <label><input type="checkbox" class="cylinderhorizontal" />cylinderhorizontal</label>
+      <label><span>Tess </span><input type="text" class="tessellation" /></label>
+      <label><input type="checkbox" style="width:auto;line-height:1.5em" class="cylinderhorizontal" /> <span>Rotate</span></label>
       <br>
-      <label><span>shapematerial</span><input type="text" style="width:15em;" class="shapematerial" list="materialdatatitlelookuplist" /></label>
+      <label><span>Mat </span><input type="text" class="shapematerial" list="materialdatatitlelookuplist" /></label>
       <input type="color" class="colorpicker" data-inputclass="shapematerial">
       <br>
-      <label><span>width</span><input type="text" class="width" value="4" /></label>
-      <label><span>height</span><input type="text" class="height" value="1" /></label>
-      <label><span>depth</span><input type="text" class="depth" value="1" /></label>
     </div>
     <div class="scene-block-add-options">
       <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span>Skybox</span></label>

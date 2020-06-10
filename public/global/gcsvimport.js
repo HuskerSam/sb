@@ -1125,6 +1125,12 @@ class gCSVImport {
     displayBC.parent = row.name;
     this.addCSVRow(displayBC);
 
+    let displayBC = this.defaultCSVRow();
+    displayBC.asset = 'block';
+    displayBC.name = row.name + '_chatWrapper';
+    displayBC.parent = row.name;
+    this.addCSVRow(displayBC);
+
     return blockresult;
   }
   __childShapeRow(row) {
@@ -2045,7 +2051,8 @@ class gCSVImport {
       let sb = await this.csvFetchSceneBlock();
 
       let lastScale = -1;
-      let count = 0, skip = 0;
+      let count = 0,
+        skip = 0;
       for (let index = 1; index < frameCount; index++) {
         let timeRatio = index / frameCount;
         let dataPoint = bandData[index] / 100.0;
@@ -2072,7 +2079,7 @@ class gCSVImport {
         if (Math.abs(lastScale - dataPoint) < productData.sceneParams.dataFramesFilter)
           skipFrame = true;
 
-        if (skipFrame && index < frameCount -1) {
+        if (skipFrame && index < frameCount - 1) {
           skip++;
         } else {
           count++;
