@@ -157,8 +157,6 @@ class wContext {
   }
   rebindCamera() {
     this.camera.attachControl(this.canvas, true);
-    this.canvas.addEventListener('keydown', e => console.log('keydown', e));
-    this.canvas.addEventListener('keypress', e => console.log('keypress', e));
   }
   async createObject(objectType, title, file, mixinData = {}) {
     let objectData = sDataDefinition.getDefaultDataCloned(objectType);

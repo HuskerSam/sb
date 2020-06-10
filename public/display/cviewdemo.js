@@ -302,8 +302,30 @@ class cViewDemo extends bView {
 
     this.chat_panel_button = this.dialog.querySelector('.chat_panel_button');
     this.chat_panel = this.dialog.querySelector('.chat_panel');
-    this.chat_panel_fc = this.demo_panel.querySelector('.fields-container');
-    this.chat_panel_ctl = new cBandProfileOptions(this.chat_panel_button, [],
+    this.chat_panel_fc = this.chat_panel.querySelector('.fields-container');
+    this.chat_fields = [{
+      title: 'X',
+      fireSetField: 'chatStartX',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true
+    }, {
+      title: 'Y',
+      fireSetField: 'chatStartY',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true
+    }, {
+      title: 'Z',
+      fireSetField: 'chatStartZ',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true
+    }];
+    this.chat_panel_ctl = new cBandProfileOptions(this.chat_panel_button, this.chat_fields,
       this.chat_panel_fc, this.chat_panel);
     this.chat_panel_ctl.fireFields.values = gAPPP.a.profile;
     this.chat_panel_ctl.panelShownClass = 'profile-panel-shown';
@@ -1691,8 +1713,12 @@ class cViewDemo extends bView {
             <div class="fields-container"></div>
           </div>
           <div class="chat_panel">
-            <div class="raw_macro_panel app-panel app-transparent"></div>
-            <div class="fields-container"></div>
+            <div class="inner_chat_panel">
+              <div class="raw_macro_panel app-panel app-transparent"></div>
+              <div class="fields-container"></div>
+              <button class="chat_clear_button btn-sb-icon app-transparent" style="float:right;">Clear Chat</button>
+              <div style="clear:both"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1742,19 +1768,27 @@ class cViewDemo extends bView {
         return;
       }
       let parent = this.productData.sceneBlock.title + '_chatWrapper';
+      let x = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartX, 0.0);
+      let y = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartY, 10.0);
+      let z = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartZ, 0.0);
 
       let csvRow = {
         asset: 'blockchild',
         name: blockName,
         childtype: 'block',
-        x: 0,
-        y: 3.0,
-        z: 0,
+        x,
+        y,
+        z,
         sx: 5,
         sy: 5,
         sz: 5,
         parent
       };
+
+      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+        field: 'chatStartY',
+        newValue: (y + 10.0).toString()
+      }]);
 
       if (this.generate.lastRowAdded && this.generate.lastRowAdded.runlength)
         csvRow.frametime = this.generate.lastRowAdded.runlength;
@@ -1768,6 +1802,21 @@ class cViewDemo extends bView {
      <option>Animated Line</option>
      <option>Connector Line</option><option>Web Font</option>`;
     this.generate.blockHelperChange();
+
+    this.chat_clear_button = this.dialog.querySelector('.chat_clear_button');
+    this.chat_clear_button.addEventListener('click', e => this.clearChat());
+  }
+  clearChat() {
+    let parent = this.productData.sceneBlock.title + '_chatWrapper';
+    let b = gAPPP.a.modelSets['block'].getIdByFieldLookup('title', parent);
+    let blkChildren = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', b);
+    for (let i in blkChildren)
+      gAPPP.a.modelSets['blockchild'].removeByKey(i);
+
+    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
+      field: 'chatStartY',
+      newValue: "10"
+    }]);
   }
   closeHeaderBands(canvasClick) {
     if (canvasClick)

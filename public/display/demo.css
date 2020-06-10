@@ -427,10 +427,7 @@ button, i, .no-selection {
 }
 
 .raw_macro_panel {
-  overflow: auto;
   width: 100%;
-  max-height: 55vh;
-  padding: .1em;
 }
 
 .raw_macro_panel .width, .raw_macro_panel .height, .raw_macro_panel .depth {
@@ -440,6 +437,12 @@ button, i, .no-selection {
 
 .raw_macro_panel .texttext, .raw_macro_panel .texttextline2 {
   width: auto;
+}
+
+.inner_chat_panel {
+  overflow: auto;
+  max-height: 55vh;
+  padding: .1em;
 }
 
 .new_button_break {
@@ -456,4 +459,8 @@ button, i, .no-selection {
 
 .display_header_row * {
   pointer-events: auto;
+}
+
+.chat_x, .chat_y, .chat_z {
+  width: 4em;
 }
