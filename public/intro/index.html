@@ -74,13 +74,13 @@
     }
 
     .option_1_panel {
-      background: #fff2ccff;
+      background: #fff2cc55;
       top: .25em;
       left: .25em;
     }
 
     .option_2_panel {
-      background: #d9ead3ff;
+      background: #d9ead355;
       top: .25em;
       left: calc(100% - 200px - .75em);
     }
@@ -90,7 +90,7 @@
     }
 
     .option_3_panel {
-      background: rgb(220, 220, 220);
+      background: rgba(220, 220, 220, .35);
       top: calc(100% - 200px - .75em);
       left: calc(100% - 200px - .75em);
     }
@@ -100,7 +100,7 @@
     }
 
     .option_4_panel {
-      background: #c9daf8ff;
+      background: #c9daf855;
       top: calc(100% - 200px - .75em);
       left: .25em;
     }
@@ -132,7 +132,9 @@
       transform: translate(-50%, -50%);
     }
 
-    .selected_option {}
+    .selected_option {
+      z-index: 1000;
+    }
 
     .button_panel_flex_row .button_panel {
       flex-direction: row;
@@ -148,6 +150,8 @@
 
     .wrapper.position_1 .option_1_panel {
       border-color: rgba(255, 255, 255, 0);
+      background: #fff2ccff;
+      z-index: 1000;
     }
 
     .wrapper.position_2 {
@@ -167,6 +171,8 @@
       left: .25em;
       transform: rotate(270deg);
       border-color: rgba(255, 255, 255, 0);
+      z-index: 1000;
+        background: #d9ead3ff;
     }
 
     .wrapper.position_2 .option_3_panel {
@@ -208,6 +214,8 @@
       top: .25em;
       transform: rotate(810deg);
       border-color: rgba(255, 255, 255, 0);
+      background: #c9daf8ff;
+      z-index: 1000;
     }
 
     .wrapper.position_3 {
@@ -235,6 +243,8 @@
       left: .25em;
       top: .25em;
       transform: rotate(540deg);
+      background: rgb(220, 220, 220);
+      z-index: 1000;
     }
 
     .wrapper.position_3 .option_4_panel {
@@ -248,7 +258,8 @@
       top: .25em;
       left: 50%;
       transform: translate(-50%, 0);
-      z-index: 1000;
+      z-index: 1100;
+      white-space: nowrap;
     }
 
     .open_demo_link,
@@ -263,7 +274,8 @@
       cursor: pointer;
     }
 
-    .open_demo_link, .info_button {
+    .open_demo_link,
+    .info_button {
       padding-top: 1em;
       position: relative;
     }
@@ -302,7 +314,7 @@
       <button class="prev_button"><i class="material-icons">keyboard_arrow_left</i></button>
       <a href="jkl" target="_blank" class="open_demo_link"><span>Open</span><i class="material-icons">open_in_new</i></a>
       <button class="stretch_video"><i class="material-icons">aspect_ratio</i></button>
-      <a href="/info" target="_blank" class="info_button"><i class="material-icons">info</i></a>
+      <a href="/info" class="info_button"><i class="material-icons">info</i></a>
       <button class="next_button"><i class="material-icons">keyboard_arrow_right</i></button>
     </div>
     <div class="option_1_panel option_panel selected_option">
