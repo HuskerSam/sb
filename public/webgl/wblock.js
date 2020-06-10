@@ -141,6 +141,12 @@ class wBlock {
           this.parent.containerCache = {};
           return this.parent.setData();
         }
+
+      for (let cb in this.childBlocks) {
+        if (this.childBlocks[cb].blockTargetKey === values.parentKey) {
+          return this.childBlocks[cb].setData(null, true);
+        }
+      }
     } else if (type === 'remove' && this.blockRawData.childType === 'block') {
       if (tag === 'shape' || tag === 'block' || tag === 'mesh') {
         for (let cb in this.childBlocks) {
@@ -169,8 +175,15 @@ class wBlock {
       }
 
       if (this.parent)
-        if (values.parentKey === this.blockRawData.parentKey)
+        if (values.parentKey === this.blockRawData.parentKey) {
           return this.parent.setData();
+        }
+
+      for (let cb in this.childBlocks) {
+        if (this.childBlocks[cb].blockTargetKey === values.parentKey) {
+          return this.childBlocks[cb].setData();
+        }
+      }
     } else if (tag === 'frame') {
       let parentKey = null;
       if (values)
@@ -229,19 +242,19 @@ class wBlock {
   }
   _restartRootAnimation() {
     let rootBlock = this.context.canvasHelper.rootBlock;
-  //  clearTimeout(rootBlock.restartTimeoutPtr);
+    //  clearTimeout(rootBlock.restartTimeoutPtr);
 
-  //  rootBlock.restartTimeoutPtr = setTimeout(() => {
-      let curValue = 0;
-      if (this.context.canvasHelper.activeAnimation) {
-        let elapsed = this.context.canvasHelper.activeAnimation._runtimeAnimations[0].currentFrame;
-        let total = this.context.canvasHelper.activeAnimation.toFrame;
-        curValue = elapsed / total * 100.0;
-      }
+    //  rootBlock.restartTimeoutPtr = setTimeout(() => {
+    let curValue = 0;
+    if (this.context.canvasHelper.activeAnimation) {
+      let elapsed = this.context.canvasHelper.activeAnimation._runtimeAnimations[0].currentFrame;
+      let total = this.context.canvasHelper.activeAnimation.toFrame;
+      curValue = elapsed / total * 100.0;
+    }
 
-  //    this.context.canvasHelper.rootBlock.stopAnimation();
-      this.context.canvasHelper.rootBlock.playAnimation(curValue);
-  //  }, 150);
+    //    this.context.canvasHelper.rootBlock.stopAnimation();
+    this.context.canvasHelper.rootBlock.playAnimation(curValue);
+    //  }, 150);
   }
   _framesRedraw() {
     clearTimeout(this.framesRedrawTimeout);
@@ -448,6 +461,8 @@ class wBlock {
       this.sceneObject.dispose();
     this.sceneObject = null;
 
+    clearTimeout(this.framesRedrawTimeout);
+
     this.containerCache = {};
   }
   async loadMesh() {
@@ -568,7 +583,7 @@ class wBlock {
       this.framesHelper.blockWrapper = this;
       this._renderBlock(forceRedraw);
     } else
-      this._loadBlock();
+      this._loadBlock(forceRedraw);
 
     this.context.refreshFocus();
   }
@@ -597,7 +612,7 @@ class wBlock {
 
     return data;
   }
-  _loadBlock() {
+  _loadBlock(forceRedraw) {
     let children = {};
     if (this._circularTest(this.blockRawData.childName)) {
       this.context.logError('Circular Reference Error  :' + this.__getParentRoute());
@@ -624,7 +639,7 @@ class wBlock {
         this.context.refreshFocus();
       });
     else
-      this._renderBlock();
+      this._renderBlock(forceRedraw);
   }
   __getParentRoute() {
     let thisPart = '[' + this.blockRawData.childName + ' / ' + this.blockRawData.childType + ']';

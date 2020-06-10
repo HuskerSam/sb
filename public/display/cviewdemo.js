@@ -1171,7 +1171,6 @@ class cViewDemo extends bView {
     let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
     if (bRot.y < Math.round(Math.floor(Math.PI * 1000 / 2)) / 1000) {
       offset.z = -offset.z;
-      console.log(1);
     } else if (bRot.y < Math.round(Math.floor(0.9 * Math.PI * 1000)) / 1000) {} else if (bRot.y < Math.round(Math.floor(1.4 * Math.PI * 1000)) / 1000) {
       offset.z = -offset.z;
     } else {}
@@ -1731,13 +1730,38 @@ class cViewDemo extends bView {
       </div>
     </div>`;
   }
+  selectItem(newKey, newWindow) {
+
+  }
   initBlockAddPanel() {
     this.raw_macro_panel = this.dialog.querySelector('.raw_macro_panel');
     this.generate = new cMacro(this.raw_macro_panel, 'block', this);
-    this.generate.addCallback = (id, name) => {
+    this.generate.addCallback = async (id, blockName) => {
+      if (blockName === undefined) {
+        alert('no block name');
+        return;
+      }
+      let parent = this.productData.sceneBlock.title + '_chatWrapper';
 
+      let csvRow = {
+        asset: 'blockchild',
+        name: blockName,
+        childtype: 'block',
+        x: 0,
+        y: 3.0,
+        z: 0,
+        sx: 5,
+        sy: 5,
+        sz: 5,
+        parent
+      };
 
-      //this.geoAddItem(name);
+      if (this.generate.lastRowAdded && this.generate.lastRowAdded.runlength)
+        csvRow.frametime = this.generate.lastRowAdded.runlength;
+
+      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(csvRow);
+
+      this.generate.lastRowAdded = null;
     };
     let sel = this.dialog.querySelector('.block-type-select');
     sel.innerHTML = `<option selected>Text and Shape</option>

@@ -930,6 +930,7 @@ class cMacro {
       let row = this._blockScrapeTextAndShape();
 
       let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+      this.lastRowAdded = row;
       return blockResult.key;
     }
     if (bType === 'Scene') {
@@ -942,12 +943,14 @@ class cMacro {
       let row = this._blockScrapeAnimatedline();
 
       let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+      this.lastRowAdded = row;
       return blockResult.key;
     }
     if (bType === 'Connector Line') {
       let row = this._blockScrapeConnectorLine();
 
       let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+      this.lastRowAdded = row;
       return blockResult.key;
     }
 

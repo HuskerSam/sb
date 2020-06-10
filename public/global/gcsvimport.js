@@ -1123,13 +1123,15 @@ class gCSVImport {
     displayBC.asset = 'block';
     displayBC.name = row.name + '_productsWrapper';
     displayBC.parent = row.name;
+    displayBC.x = '0';
     this.addCSVRow(displayBC);
 
-    let displayBC = this.defaultCSVRow();
-    displayBC.asset = 'block';
-    displayBC.name = row.name + '_chatWrapper';
-    displayBC.parent = row.name;
-    this.addCSVRow(displayBC);
+    let chatBC = this.defaultCSVRow();
+    chatBC.asset = 'block';
+    chatBC.name = row.name + '_chatWrapper';
+    chatBC.parent = row.name;
+    chatBC.x = '0';
+    this.addCSVRow(chatBC);
 
     return blockresult;
   }
