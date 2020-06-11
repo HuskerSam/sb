@@ -26,7 +26,7 @@ class cViewDemo extends bView {
 
     this.basketClearButtons();
 
-    document.querySelector('.choice-button-clear').addEventListener('click', () => this.basketCheckout());
+    document.querySelector('.cart-submit').addEventListener('click', () => this.basketCheckout());
     document.querySelector('.choice-button-one').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-two').addEventListener('click', e => this.basketAddItem(e));
     document.querySelector('.choice-button-three').addEventListener('click', e => this.basketAddItem(e));
@@ -51,6 +51,8 @@ class cViewDemo extends bView {
     this.initHeaderBar();
     this.initBottomBar();
 
+    this.orientation_details_div = this.dialog.querySelector('.orientation_details_div');
+
     window.addEventListener('deviceorientation', event => {
       this.orientationInited = true;
       this.alpha = event.alpha ? event.alpha.toFixed(0) : 'none';
@@ -58,8 +60,10 @@ class cViewDemo extends bView {
       this.gamma = event.gamma ? event.gamma.toFixed(2) : 'none';
 
       if (this.orientation_details_div) {
-        if (this.alpha !== 'none')
+        if (this.alpha !== 'none') {
           this.orientation_details_div.innerHTML = this.alpha + ' : ' + this.beta + ' <br>';
+          this.orientation_details_div.style.display = 'inline-block';
+        }
       }
     });
   }
@@ -195,6 +199,24 @@ class cViewDemo extends bView {
         this.geo_gps_coords.style.display = 'inline-block';
       }
     });
+
+    this.sub_bar_pause_button = this.dialog.querySelector('.sub_bar_pause_button');
+    this.sub_bar_pause_button.addEventListener('click', e => {
+      if (this.canvasHelper.playState === 1)
+        this.canvasHelper.playState = 2;
+      else
+        this.canvasHelper.playState = 1;
+    });
+    this.canvasHelper.playStateChangedCallback = () => {
+      if (this.canvasHelper.playState === 1) {
+        this.sub_bar_pause_button.innerHTML = '<i class="material-icons">pause</i>';
+        this.sub_bar_pause_button.classList.remove('app-inverted');
+      }
+      else {
+        this.sub_bar_pause_button.innerHTML = '<i class="material-icons">play_arrow</i>';
+        this.sub_bar_pause_button.classList.add('app-inverted');
+      }
+    };
   }
   __updateGPSLocation() {
     this.geo_gps_coords.innerHTML = '' + gAPPP.latitude + '°, ' + gAPPP.longitude + '°';
@@ -390,13 +412,11 @@ class cViewDemo extends bView {
         <option value="mobile_portrait">Mobile Portrait</option>
       </select><br>`;
       html +=
-        `<div class="nav_options"></div><div class="orientation_details_div"></div>`;
+        `<div class="nav_options"></div>`;
 
       html += ``;
       this.demoOptionDiv.innerHTML = html;
       this.ui_select = this.demoOptionDiv.querySelector('.ui_select');
-      this.orientation_details_div = this.demoOptionDiv.querySelector('.orientation_details_div');
-
       this.ui_select.addEventListener('input', e => this.updateUIDisplay(e));
     }
   }
@@ -1706,11 +1726,10 @@ class cViewDemo extends bView {
           <div class="demo_panel"><div class="demo_panel_contents app-panel app-transparent"></div><div class="fields-container"></div></div>
           <div class="cart_panel">
             <select id="workspaces-select"></select>
-            <button class="btn-sb-icon app-transparent choice-button-clear cart-submit">Checkout</button>
-            <br style="clear:both;">
             <div class="cart-contents app-panel app-transparent">
             </div>
             <div class="fields-container"></div>
+            <button class="btn-sb-icon app-transparent cart-submit">Checkout</button>
           </div>
           <div class="chat_panel">
             <div class="inner_chat_panel app-panel app-transparent">
@@ -1731,8 +1750,9 @@ class cViewDemo extends bView {
         </div>
         <div class="mobile_orientation_options collapsed">
           <div class="sub_button_bar">
-            <div class="geo_gps_coords app-panel app-transparent" style="display:none;"></div>
-            <br>
+            <div class="geo_gps_coords app-transparent" style="display:none;"></div>
+            <div class="orientation_details_div app-transparent" style="display:none;"></div>
+            <div></div>
             <button class="btn-sb-icon app-transparent rotate_left"><i class="material-icons">rotate_left</i></button>
             &nbsp;
             <button class="btn-sb-icon app-transparent arrow_downward"><i class="material-icons">arrow_downward</i></button>
@@ -1745,7 +1765,7 @@ class cViewDemo extends bView {
             &nbsp;
             <button class="btn-sb-icon app-transparent arrow_forward"><i class="material-icons">arrow_forward</i></button>
           </div>
-          <button class="btn-sb-icon app-transparent"><i class="material-icons">pause</i></button>
+          <button class="btn-sb-icon app-transparent sub_bar_pause_button"><i class="material-icons">pause</i></button>
           &nbsp;
           <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
           &nbsp;

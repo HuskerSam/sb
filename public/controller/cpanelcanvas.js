@@ -349,6 +349,9 @@ class cPanelCanvas {
         newValue: firebase.database.ServerValue.TIMESTAMP
       }]);
     this.__updatePlayState();
+
+    if (this.playStateChangedCallback)
+      this.playStateChangedCallback(this);
   }
   __updateAnimOffset() {
     let fullLen = this.activeAnimation.toFrame / this.rootBlock.framesHelper.fps * 1000.0;

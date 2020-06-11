@@ -388,10 +388,6 @@ button, i, .no-selection {
   user-select: none;
 }
 
-.geo_gps_coords {
-  line-height: 1.5em;
-}
-
 .raw_macro_panel {
   display: inline-block
 }
@@ -464,4 +460,18 @@ button, i, .no-selection {
 
 .chat_x, .chat_y, .chat_z {
   width: 4em;
+}
+
+.display_header_bar button.cart-submit {
+  font-weight: bold;
+
+}
+
+.sub_button_bar .geo_gps_coords, .sub_button_bar .orientation_details_div {
+  line-height: 1em;
+  font-size: .65em;
+  padding: .25em;
+  pointer-events: none;
+  position: relative;
+  top: .75em;
 }
