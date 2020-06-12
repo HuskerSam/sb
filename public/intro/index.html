@@ -94,6 +94,27 @@
       background-position: center;
       background-size: contain;
     }
+
+    .demo_item {
+      display: inline-block;
+      border: rgb(0,150,255) .5em double;
+      border-radius: 5em;
+      padding: 2.5em;
+    }
+
+    .demo_item img {
+      max-width: 40vw;
+      max-height: 40vh;
+      float: left;
+    }
+
+    .demo_item a {
+      font-size: 1.5em;
+    }
+
+    .demo_item a i {
+      font-size: .75em;
+    }
   </style>
   <script>
     window.addEventListener('DOMContentLoaded', e => {
@@ -148,19 +169,47 @@
         <br>
         Narrow the gap between physical and digital
         <br>
-        Mobile first novel and engaging experiences
+        Mobile first to drive app installs
       </div>
     </div>
     <h1 style="color:rgb(0,150,255)">Versatile Interfaces</h1>
     <div>
-      <img src="mildorientationdrivenUI.png" style="max-width:40vw;max-height:40vh;" />
-      <img src="heavyorientationdrivenUI.png" style="max-width:40vw;max-height:40vh;" />
-      <img src="gpsmovement.png" style="max-width:40vw;max-height:40vh;" />
-      <br>
-      <img src="followcameraUI.png" style="max-width:50vw;max-height:40vh;" />
-      <img src="consoledrivenUI.png" style="max-width:50vw;max-height:40vh;" />
+      <div class="demo_item">
+        <img src="mildorientationdrivenUI.png">
+        <b>Mobile Portrait</b><br>
+        low bandwidth, low poly<br>
+        Orientation Camera (360º)<br>
+        9 x 16 display target<br>
+        <a target="_blank" href="/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation">Open Example <i class="material-icons">exit_to_app</i></a>
+      </div>
+      <div class="demo_item">
+        <img src="heavyorientationui.png">
+        <br>
+        <b>Mobile Landscape</b><br>
+        high bandwidth<br>
+        Orientation Camera<br>
+        16 x 9 display target<br>
+        Music driven background animation<br>
+        <a target="_blank" href="/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation">Open Example <i class="material-icons">exit_to_app</i></a>
+      </div>
+      <div class="demo_item">
+        <img src="followcameraUI.png">
+        <b>Mobile (low bandwidth, high poly)</b><br>
+          Orientation Camera (45º)<br>
+          9 x 16 display target<br>
+          <a target="_blank" href="/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation">Open Example <i class="material-icons">exit_to_app</i></a>
+      </div>
+      <div class="demo_item">
+        <img src="consoledrivenUI.png">
+        <br>
+        <b>Console</b><br>
+          Follow Camera<br>
+          16 x 9 HD quality display target<br>
+          Music driven background animation<br>
+          <a target="_blank" href="/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation">Open Example <i class="material-icons">exit_to_app</i></a>
+      </div>
     </div>
-    <h1 style="color:rgb(0,200,0)">Cloud Pipeline</h1>
+    <h1 style="color:rgb(0,200,0);clear:both;">Cloud Pipeline</h1>
     <div>
       <div class="image-bkg" style="background-image:url(pipeline.png)">
         <div style="font-family:monospace;display:inline-block;color:rgb(0,200,0);font-size: 2em;">
