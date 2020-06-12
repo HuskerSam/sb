@@ -3,18 +3,9 @@
 
 <head>
   <meta charset="utf-8">
+  <title>Visual Catalogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/delicious.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="/images/handtop.png">
-  <meta property="og:title" content="Visual Catalogs" />
-  <meta property="og:url" content="https://groceryblocks.com" />
-  <meta property="og:site_name" content="Handtop" />
-  <meta property="og:image" content="https://groceryblocks.com/info/pipeline.png" />
-  <meta property="og:type" content="website" />
-  <meta property="og:description" content="Visual Catalog creation and hosting." />
-  <meta property="fb:app_id" content="461141618064403" />
-  <meta name="description" content='Visual Catalog creation and hosting.'>
 
   <style>
     * {
@@ -22,482 +13,220 @@
       font-size: 1em;
     }
 
-    h3 {
-      font-size: 1.5em;
-    }
-
-    select {
-      border-width: .25em;
-      border-radius: .5em;
-      padding: .15em;
-      border: outset .1em silver;
-      font-size: 1.25em;
-    }
 
     html,
     body {
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
       margin: 0;
       padding: 0;
     }
 
+    h1 {
+      font-size: 3em;
+      color: blue;
+    }
+
+    img {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
     .wrapper {
-      width: 100vw;
-      height: 100vh;
-      flex-direction: row;
-      position: relative;
-      background-color: #fff2ccff;
-      transition: background-color 800ms;
-    }
-
-    .option_panel {
-      flex: 1;
       text-align: center;
-      background: silver;
-      border-radius: 15%;
-      display: flex;
-      flex-direction: column;
-      margin: .25em;
-      width: 200px;
-      height: 200px;
-      position: absolute;
-      transition: all 800ms ease-in-out;
-      border: .5em double rgba(225, 255, 255, .5);
-      z-index: 100;
-      cursor: pointer;
     }
 
-    .option_panel>div {
+    .video-wrapper {
+      display: none;
+      background: rgb(255, 255, 255);
       flex: 1;
     }
 
-    .option_1_panel {
-      background: #fff2cc55;
-      top: .25em;
-      left: .25em;
-    }
-
-    .option_2_panel {
-      background: #d9ead355;
-      top: .25em;
-      left: calc(100% - 200px - .75em);
-    }
-
-    .option_2_panel div:nth-child(2) {
-      transform: rotate(90deg);
-    }
-
-    .option_3_panel {
-      background: rgba(220, 220, 220, .35);
-      top: calc(100% - 200px - .75em);
-      left: calc(100% - 200px - .75em);
-    }
-
-    .option_3_panel div:nth-child(2) {
-      transform: rotate(-180deg);
-    }
-
-    .option_4_panel {
-      background: #c9daf855;
-      top: calc(100% - 200px - .75em);
-      left: .25em;
-    }
-
-    .option_4_panel div:nth-child(2) {
-      transform: rotate(270deg);
-    }
-
-
-    .video_panel {
-      margin: 0;
+    .video-wrapper video {
       width: 100%;
       height: 100%;
-      background: transparent;
+      max-width: 90vw;
+      max-height: 90vh;
     }
 
-    .video_panel_fill {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      width: auto;
-      height: auto;
+    .video-wrapper .playpause {
+      background-color: rgb(100, 100, 255);
+      border-radius: 50%;
+      color: rgb(255, 255, 255);
       position: absolute;
+      left: 50%;
       top: 50%;
-      left: 50%;
-      min-height: 100%;
-      min-width: 100%;
-      transform: translate(-50%, -50%);
-    }
-
-    .selected_option {
-      z-index: 1000;
-    }
-
-    .button_panel_flex_row .button_panel {
-      flex-direction: row;
-    }
-
-    .wrapper.position_1 {
-      background-color: #fff2ccff;
-    }
-
-    .wrapper.position_1 .ninebysixteen {
-      opacity: 1;
-    }
-
-    .wrapper.position_1 .option_1_panel {
-      border-color: rgba(255, 255, 255, 0);
-      background: #fff2ccff;
-      z-index: 1000;
-    }
-
-    .wrapper.position_2 {
-      background-color: #d9ead3ff;
-    }
-
-    .wrapper.position_2 .ninebysixteen {
-      opacity: 1;
-    }
-
-    .wrapper.position_2 .option_1_panel {
-      top: calc(100% - 200px - .75em);
-      transform: rotate(270deg);
-    }
-
-    .wrapper.position_2 .option_2_panel {
-      left: .25em;
-      transform: rotate(270deg);
-      border-color: rgba(255, 255, 255, 0);
-      z-index: 1000;
-        background: #d9ead3ff;
-    }
-
-    .wrapper.position_2 .option_3_panel {
-      top: .25em;
-      transform: rotate(270deg);
-    }
-
-    .wrapper.position_2 .option_4_panel {
-      left: calc(100% - 200px - .75em);
-      transform: rotate(270deg);
-    }
-
-    .wrapper.position_4 {
-      background-color: #c9daf8ff;
-    }
-
-    .wrapper.position_4 .sixteenbynine {
-      opacity: 1;
-    }
-
-    .wrapper.position_4 .option_1_panel {
-      left: calc(100% - 200px - .75em);
-      transform: rotate(810deg);
-    }
-
-    .wrapper.position_4 .option_2_panel {
-      left: calc(100% - 200px - .75em);
-      top: calc(100% - 200px - .75em);
-      transform: rotate(810deg);
-    }
-
-    .wrapper.position_4 .option_3_panel {
-      left: .25em;
-      transform: rotate(810deg);
-    }
-
-    .wrapper.position_4 .option_4_panel {
-      left: .25em;
-      top: .25em;
-      transform: rotate(810deg);
-      border-color: rgba(255, 255, 255, 0);
-      background: #c9daf8ff;
-      z-index: 1000;
-    }
-
-    .wrapper.position_3 {
-      background-color: rgb(220, 220, 220);
-    }
-
-    .wrapper.position_3 .sixteenbynine {
-      opacity: 1;
-    }
-
-    .wrapper.position_3 .option_1_panel {
-      left: calc(100% - 200px - .75em);
-      top: calc(100% - 200px - .75em);
-      transform: rotate(540deg);
-    }
-
-    .wrapper.position_3 .option_2_panel {
-      top: calc(100% - 200px - .75em);
-      left: .25em;
-      transform: rotate(540deg);
-    }
-
-    .wrapper.position_3 .option_3_panel {
-      border-color: rgba(255, 255, 255, 0);
-      left: .25em;
-      top: .25em;
-      transform: rotate(540deg);
-      background: rgb(220, 220, 220);
-      z-index: 1000;
-    }
-
-    .wrapper.position_3 .option_4_panel {
-      left: calc(100% - 200px - .75em);
-      top: .25em;
-      transform: rotate(540deg);
-    }
-
-    .nav_buttons {
-      position: absolute;
-      top: .25em;
-      left: 50%;
-      transform: translate(-50%, 0);
-      z-index: 1100;
-      white-space: nowrap;
-    }
-
-    .open_demo_link,
-    .next_button,
-    .info_button,
-    .prev_button,
-    .stretch_video {
-      color: black;
-      padding: .5em;
-      background: rgba(255, 255, 255, .4);
-      border: none;
+      font-size: 2.5em;
+      padding: .25em;
       cursor: pointer;
+      border: solid .2em rgb(255, 255, 255);
+      transform: translateX(-50%) translateY(-50%);
     }
 
-    .open_demo_link,
-    .info_button {
-      padding-top: 1em;
-      position: relative;
+    .video-wrapper .playpause i {
+      font-size: 3em;
     }
 
-    .open_demo_link {
+    .video_link {
+      display: inline-block;
+      background: rgb(100, 100, 255);
+      color: rgb(255, 255, 255);
+      font-family: Chilanka;
+      font-weight: 900;
       text-decoration: none;
+      font-size: 1.25em;
+      padding: .5em 1em;
+      padding-bottom: .25em;
+      white-space: nowrap;
+      border-radius: 1.5em;
+      margin-bottom: .25em;
+      border: solid .1em rgb(255, 255, 255);
     }
 
-    .open_demo_link span {
-      position: relative;
-      top: -.35em;
+    .video_link.selected,
+    .video_link:hover {
+      color: rgb(100, 100, 255);
+      background: rgb(255, 255, 255);
     }
 
-    .progress_bar {
-      position: absolute;
-      width: 0%;
-      height: 100%;
-      background: rgba(0, 255, 0, .3);
-      transition: width 15s linear;
-      z-index: -1;
-    }
 
-    .progress_bar_transition {
-      width: 100%;
+    .image-bkg {
+      background-image: url(colorcircuittree.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
     }
   </style>
+  <script>
+    window.addEventListener('DOMContentLoaded', e => {
+      let wrapperList = document.querySelectorAll('.video-wrapper');
+
+      wrapperList.forEach(wrapper => {
+        let video = wrapper.querySelector('video');
+        let btn = wrapper.querySelector('.playpause');
+
+        video.setAttribute('controls', '');
+        btn.addEventListener('click', e => {
+          if (video.paused) {
+            video.play();
+          }
+        });
+
+        video.addEventListener('pause', e => {
+          btn.style.display = '';
+        });
+        video.addEventListener('play', e => {
+          btn.style.display = 'none';
+        });
+      });
+
+      let video_linkList = document.querySelectorAll('.video_link');
+      video_linkList.forEach((anchor, index) => {
+        anchor.addEventListener('click', e => {
+          wrapperList.forEach(w => {
+            w.style.display = 'none';
+            w.querySelector('video').pause();
+          });
+          wrapperList[index].style.display = 'block';
+          wrapperList[index].querySelector('video').play();
+          video_linkList.forEach(i => i.classList.remove('selected'));
+          video_linkList[index].classList.add('selected');
+          e.preventDefault();
+          return false;
+        });
+      });
+    });
+  </script>
 </head>
 
 <body>
-  <div class="wrapper position_1">
+  <div class="wrapper">
+    <h1 style="color:rgb(255,150,0)">Visual Catalogs</h1>
+    <div class="image-bkg" style="">
+      <div style="font-family:monospace;
+          display:inline-block;color:rgb(255,150,0);font-size:2em;">
+        <b>Dynamic, graphical and interactive shopping</b>
+        <br>
+        <br>
+        Narrow the gap between physical and digital
+        <br>
+        Mobile first novel and engaging experiences
+      </div>
+    </div>
+    <h1 style="color:rgb(0,150,255)">Versatile Interfaces</h1>
+    <div>
+      <img src="mildorientationdrivenUI.png" style="max-width:40vw;max-height:40vh;" />
+      <img src="heavyorientationdrivenUI.png" style="max-width:40vw;max-height:40vh;" />
+      <img src="gpsmovement.png" style="max-width:40vw;max-height:40vh;" />
+      <br>
+      <img src="followcameraUI.png" style="max-width:50vw;max-height:40vh;" />
+      <img src="consoledrivenUI.png" style="max-width:50vw;max-height:40vh;" />
+    </div>
+    <h1 style="color:rgb(0,200,0)">Cloud Pipeline</h1>
+    <div>
+      <div class="image-bkg" style="background-image:url(pipeline.png)">
+        <div style="font-family:monospace;display:inline-block;color:rgb(0,200,0);font-size: 2em;">
+          Download models on demand from the cloud<br>
+          <br>
+          CSV based import of catalogs and all data
+          <br>
+          Scale on demand (serverless) hosting
+        </div>
+      </div>
+    </div>
+    <h1 style="color:rgb(255,127,255)">Console Displays</h1>
+    <div>
+      <div class="image-bkg" style="background-image:url(https://s3-us-west-2.amazonaws.com/hcwebflow/himage/scenepipeline.png)">
+        <div style="font-family:monospace;color:rgb(255,127,255);font-size:2em;">
+          Your quality content on console (Android TV)
+          <br>
+          <br>
+          Synchronize all platforms and locations
+          <br>
+          Content sized for the device and connection
+        </div>
+      </div>
+    </div>
+    <h1 style="color:rgb(100,100,255)">How To Videos</h1>
+    <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
+      <div style="width: 100%;">
+        <a href="#" id="video_1_link" class="video_link selected">Create</a>
+        <a href="#" id="video_2_link" class="video_link">Customize</a>
+        <a href="#" id="video_3_link" class="video_link">Spinner</a>
+        <a href="#" id="video_4_link" class="video_link">Lines</a>
+        <a href="#" id="video_5_link" class="video_link">Basics</a>
+        <a href="#" id="video_6_link" class="video_link">Catalog</a>
+      </div>
+      <div style="">
+        <div class="video-wrapper" id="video_1_link_video" style="display:block;">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" muted preload="auto"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_2_link_video">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" muted preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_3_link_video">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" muted preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_4_link_video">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" muted preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_5_link_video">
+          <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+        <div class="video-wrapper" id="video_6_link_video">
+          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/spreadsheetexport.mp4" preload="none"></video>
+          <div class="playpause"><i class="material-icons">play_arrow</i></div>
+        </div>
+      </div>
+    </div>
 
-    <video class="video_panel" loop muted autoplay src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/ninebysixteen.mp4">
-    </video>
-    <div class="nav_buttons">
-      <div class="progress_bar"></div>
-      <button class="prev_button"><i class="material-icons">keyboard_arrow_left</i></button>
-      <a href="jkl" target="_blank" class="open_demo_link"><span>Open</span><i class="material-icons">open_in_new</i></a>
-      <button class="stretch_video"><i class="material-icons">aspect_ratio</i></button>
-      <a href="/info" class="info_button"><i class="material-icons">info</i></a>
-      <button class="next_button"><i class="material-icons">keyboard_arrow_right</i></button>
-    </div>
-    <div class="option_1_panel option_panel selected_option">
-      <div></div>
-      <div> <b>Mobile Portrait</b><br>
-        low bandwidth, low poly<br>
-        Orientation Camera (360º)<br>
-        9 x 16 display target<br>
-      </div>
-      <div></div>
-    </div>
-    <div class="option_2_panel option_panel">
-      <div></div>
-      <div>
-        <b>Mobile Landscape</b><br>
-        high bandwidth<br>
-        Orientation Camera<br>
-        16 x 9 display target<br>
-        Music driven background animation<br>
-      </div>
-      <div></div>
-    </div>
-
-    <div class="option_3_panel option_panel">
-      <div></div>
-      <div> <b>Mobile (low bandwidth, high poly)</b><br>
-        Orientation Camera (45º)<br>
-        9 x 16 display target<br>
-      </div>
-      <div></div>
-    </div>
-    <div class="option_4_panel option_panel">
-      <div></div>
-      <div> <b>Console</b><br>
-        Follow Camera<br>
-        16 x 9 HD quality display target<br>
-        Music driven background animation<br>
-      </div>
-      <div></div>
-    </div>
   </div>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script>
-    let video_panel = document.querySelector('.video_panel');
-    let wrapper_panel = document.querySelector('.wrapper');
-    let open_demo_link = document.querySelector('.open_demo_link');
-    let next_button = document.querySelector('.next_button');
-    let prev_button = document.querySelector('.prev_button');
-    let open_demo_label = document.querySelector('.open_demo_link span');
-    let progress_bar = document.querySelector('.progress_bar');
-    let stretch_video = document.querySelector('.stretch_video');
-    let progressTimeout = null;
 
-    let position = 1;
-
-    let position_data = [{
-      video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/ninebysixteen.mp4",
-      url: '/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation',
-      label: 'One (portrait)'
-    }, {
-      video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/runthru.mp4",
-      url: '/display?wid=-M5SQqjBktAwKspIIc1F&uiOverlay=mobile_orientation',
-      label: 'Two (landscape)'
-    }, {
-      video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/ninebysixteen.mp4",
-      url: '/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation',
-      label: 'Three (portrait)'
-
-    }, {
-      video: "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/runthru.mp4",
-      url: '/display?wid=-M5SQqjBktAwKspIIc1F&uiOverlay=console_follow',
-      label: 'Four (landscape)'
-    }];
-
-    function resetProgressBar() {
-      progress_bar.classList.remove('progress_bar_transition');
-      progress_bar.style.transition = 'none';
-      progress_bar.getBoundingClientRect();
-      progress_bar.style.transition = '';
-      progress_bar.classList.add('progress_bar_transition');
-
-      window.clearTimeout(progressTimeout);
-      progressTimeout = window.setTimeout(() => {
-        next_button.click();
-      }, 15000);
-    }
-
-    window.addEventListener('load', () => {
-      document.querySelector('.option_1_panel').addEventListener('click', e => {
-        let lst = document.querySelectorAll('.selected_option');
-        lst.forEach(ctl => ctl.classList.remove('selected_option'));
-        e.target.classList.add('selected_option');
-        wrapper_panel.classList.remove('button_panel_flex_row');
-        wrapper_panel.classList.add('position_1');
-        wrapper_panel.classList.remove('position_2');
-        wrapper_panel.classList.remove('position_3');
-        wrapper_panel.classList.remove('position_4');
-        position = 1;
-        video_panel.setAttribute('src', position_data[position - 1].video);
-        //open_demo_label.innerHTML = position_data[position - 1].label;
-        open_demo_link.setAttribute('href', position_data[position - 1].url);
-        resetProgressBar();
-      });
-      document.querySelector('.option_2_panel').addEventListener('click', e => {
-        let lst = document.querySelectorAll('.selected_option');
-        lst.forEach(ctl => ctl.classList.remove('selected_option'));
-        e.target.classList.add('selected_option');
-        wrapper_panel.classList.remove('button_panel_flex_row');
-        wrapper_panel.classList.add('position_2');
-        wrapper_panel.classList.remove('position_1');
-        wrapper_panel.classList.remove('position_3');
-        wrapper_panel.classList.remove('position_4');
-
-        position = 2;
-        video_panel.setAttribute('src', position_data[position - 1].video);
-        //open_demo_label.innerHTML = position_data[position - 1].label;
-        open_demo_link.setAttribute('href', position_data[position - 1].url);
-        resetProgressBar();
-      });
-      document.querySelector('.option_3_panel').addEventListener('click', e => {
-        let lst = document.querySelectorAll('.selected_option');
-        lst.forEach(ctl => ctl.classList.remove('selected_option'));
-        e.target.classList.add('selected_option');
-        wrapper_panel.classList.add('button_panel_flex_row');
-        wrapper_panel.classList.add('position_3');
-        wrapper_panel.classList.remove('position_1');
-        wrapper_panel.classList.remove('position_2');
-        wrapper_panel.classList.remove('position_4');
-
-        position = 3;
-        video_panel.setAttribute('src', position_data[position - 1].video);
-        //open_demo_label.innerHTML = position_data[position - 1].label;
-        open_demo_link.setAttribute('href', position_data[position - 1].url);
-        resetProgressBar();
-      });
-      document.querySelector('.option_4_panel').addEventListener('click', e => {
-        let lst = document.querySelectorAll('.selected_option');
-        lst.forEach(ctl => ctl.classList.remove('selected_option'));
-        e.target.classList.add('selected_option');
-        wrapper_panel.classList.add('button_panel_flex_row');
-        wrapper_panel.classList.add('position_4');
-        wrapper_panel.classList.remove('position_1');
-        wrapper_panel.classList.remove('position_2');
-        wrapper_panel.classList.remove('position_3');
-
-        position = 4;
-        video_panel.setAttribute('src', position_data[position - 1].video);
-        //open_demo_label.innerHTML = position_data[position - 1].label;
-        open_demo_link.setAttribute('href', position_data[position - 1].url);
-        resetProgressBar();
-      });
-
-      document.querySelector('.option_1_panel').click();
-      prev_button.addEventListener('click', e => {
-        if (position === 4)
-          position = 1;
-        else
-          position++;
-
-        document.querySelector('.option_' + position.toString() + '_panel').click();
-      });
-
-      next_button.addEventListener('click', e => {
-        if (position === 1)
-          position = 4;
-        else
-          position--;
-
-        document.querySelector('.option_' + position.toString() + '_panel').click();
-      });
-
-      stretch_video.addEventListener('click', e => {
-        if (stretch_video.alreadyStretched) {
-          video_panel.classList.remove('video_panel_fill');
-          stretch_video.style.background = '';
-          stretch_video.alreadyStretched = false;
-        } else {
-          video_panel.classList.add('video_panel_fill');
-          stretch_video.style.background = 'rgba(0,0,0,.4)';
-          stretch_video.alreadyStretched = true;
-        }
-      });
-    });
   </script>
 </body>
 

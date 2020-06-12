@@ -250,7 +250,6 @@ class cGeoView extends bView {
       fireSetField: 'showFloorGrid',
       type: 'boolean',
       group: 'depthExtras',
-
       floatLeft: true,
       clearLeft: true
     }, {
