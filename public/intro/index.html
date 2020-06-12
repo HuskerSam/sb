@@ -62,7 +62,7 @@
     }
 
     .video-wrapper .playpause i {
-      font-size: 3em;
+      font-size: 2em;
     }
 
     .video_link {
@@ -89,31 +89,43 @@
 
 
     .image-bkg {
-      background-image: url(colorcircuittree.png);
+      background-image: url(colorcircuittree.jpg);
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
     }
 
     .demo_item {
-      display: inline-block;
-      border: rgb(0,150,255) .5em double;
-      border-radius: 5em;
-      padding: 2.5em;
+      border: rgb(0, 150, 255) .5em double;
+      border-radius: 2em;
+      padding-top: 1em;
+      background: white;
     }
 
     .demo_item img {
-      max-width: 40vw;
-      max-height: 40vh;
-      float: left;
     }
 
     .demo_item a {
-      font-size: 1.5em;
+      position: relative;
+      color: inherit;
+      text-decoration: none;
     }
 
     .demo_item a i {
+      font-size: 3em;
+    }
+
+    .item_title {
+      font-size: 1.5em;
+      position: relative;
+      top: -.75em;
+      font-weight: bold;
+    }
+
+    .title {
       font-size: .75em;
+      font-weight: bold;
+      padding-right: 1em;
     }
   </style>
   <script>
@@ -169,49 +181,97 @@
         <br>
         Narrow the gap between physical and digital
         <br>
-        Mobile first to drive app installs
+        Mobile first design to drive app installs
       </div>
     </div>
     <h1 style="color:rgb(0,150,255)">Versatile Interfaces</h1>
-    <div>
-      <div class="demo_item">
-        <img src="mildorientationdrivenUI.png">
-        <b>Mobile Portrait</b><br>
-        low bandwidth, low poly<br>
-        Orientation Camera (360º)<br>
-        9 x 16 display target<br>
-        <a target="_blank" href="/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation">Open Example <i class="material-icons">exit_to_app</i></a>
-      </div>
-      <div class="demo_item">
-        <img src="heavyorientationui.png">
-        <br>
-        <b>Mobile Landscape</b><br>
-        high bandwidth<br>
-        Orientation Camera<br>
-        16 x 9 display target<br>
-        Music driven background animation<br>
-        <a target="_blank" href="/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation">Open Example <i class="material-icons">exit_to_app</i></a>
-      </div>
-      <div class="demo_item">
-        <img src="followcameraUI.png">
-        <b>Mobile (low bandwidth, high poly)</b><br>
-          Orientation Camera (45º)<br>
-          9 x 16 display target<br>
-          <a target="_blank" href="/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation">Open Example <i class="material-icons">exit_to_app</i></a>
-      </div>
-      <div class="demo_item">
-        <img src="consoledrivenUI.png">
-        <br>
-        <b>Console</b><br>
-          Follow Camera<br>
-          16 x 9 HD quality display target<br>
-          Music driven background animation<br>
-          <a target="_blank" href="/display?wid=-M5nQBSpIJunfJLgrs1S&uiOverlay=mobile_orientation">Open Example <i class="material-icons">exit_to_app</i></a>
+    <div style="text-align:center;">
+      <div style="display:inline-block;background:rgb(255,200,50);border-radius:1em;padding:1em;">
+        <div class="demo_item" style="float:left;color:rgb(255, 100, 50)">
+          <a target="_blank" href="/display/?wid=-M5SQwPnpEmiFnoTyDK6&uiOverlay=mobile_orientation">
+            <span class="item_title">Mild Orientation UI</span>
+            &nbsp;
+            <i class="material-icons">exit_to_app</i>
+          </a>
+          <div style="display:flex;">
+            <img style="max-height:45vh;flex:1" src="mildorientationdrivenUI.jpg">
+            <div style="flex:1;color:black;white-space:nowrap">
+              <span class="title">Platform:</span><span class="response">Mobile</span><br>
+              <span class="title">Display:</span><span class="response">9 x 16</span><br>
+              <span class="title">Camera:</span><span class="response">Orientation</span><br>
+              <span class="title">Bandwidth:</span><span class="response">Low</span><br>
+              <span class="title">Polycount:</span><span class="response">Low</span><br>
+              <span class="title">Load Time:</span><span class="response">Fast</span><br>
+              <span class="title">Music:</span><span class="response">None</span><br>
+              <span class="title">Complexity:</span><span class="response">Simple</span><br>
+            </div>
+          </div>
+          <div style="white-space:initial;">
+            <span class="title">Highlights:</span><br>
+            <span class="response">Low amount of physical motion</span><br>
+            <span class="response">Quickly load, view and pick items</span><br>
+            <span class="response">Stationary position</span><br>
+          </div>
+        </div>
+        <div class="demo_item" style="float:right;clear:right;color: rgb(200, 0, 200);">
+          <a target="_blank" href="/display/?wid=-M5ST3Ijj7pt7z1kyjRX&uiOverlay=mobile_follow">
+            <span class="item_title">Heavy Orientation UI</span>
+            &nbsp;
+            <i class="material-icons">exit_to_app</i></a>
+          <div style="display:flex;flex-direction:column">
+            <img style="max-height:40vh;" src="heavyorientationui.jpg">
+            <div style="flex:1;color:black;white-space:nowrap">
+              <span class="title">Platform:</span><span class="response">Mobile</span><br>
+              <span class="title">Display:</span><span class="response">16 x 9</span><br>
+              <span class="title">Camera:</span><span class="response">Orientation</span><br>
+              <span class="title">Bandwidth:</span><span class="response">Medium</span><br>
+              <span class="title">Polycount:</span><span class="response">Medium</span><br>
+              <span class="title">Load Time:</span><span class="response">Medium</span><br>
+              <span class="title">Music:</span><span class="response">Yes</span><br>
+              <span class="title">Complexity:</span><span class="response">High</span><br>
+            </div>
+          </div>
+          <div style="white-space:initial;">
+            <span class="title">Highlights:</span><br>
+            <span class="response">High amount of physical motion</span><br>
+            <span class="response">Slower load with more detail and complexity</span><br>
+            <span class="response">Navigation required</span><br>
+            <span class="response">Longer visit, more story line</span><br>
+          </div>
+        </div>
+        <div class="demo_item" style="float:right;clear:right;color: rgb(50, 100, 200);">
+          <a target="_blank" href="/display/?wid=-M5SSYe3MZOegWnsyR0T&uiOverlay=console_follow">
+            <span class="item_title">Console UI</span>
+            &nbsp;<i class="material-icons">exit_to_app</i></a>
+          <div style="display:flex;flex-direction:column">
+            <img style="max-height:40vh;" src="consoledrivenUI.jpg">
+            <div style="flex:1;color:black;">
+              <b>Console</b><br>
+              Follow Camera<br>
+              16 x 9 HD quality display target<br>
+              Music driven background animation<br>
+            </div>
+          </div>
+        </div>
+        <div class="demo_item" style="float:left;clear:left;color: rgb(20, 180, 0);">
+          <a target="_blank" href="/display/?wid=-M5nQ9r48x6bvg7eAr-p&uiOverlay=mobile_orientation">
+            <span class="item_title">Follow UI</span>
+            &nbsp;
+            <i class="material-icons">exit_to_app</i></a>
+          <div style="display:flex;">
+            <img src="followcameraUI.jpg" style="max-height:20vh;">
+            <div style="flex:1;color: black">
+              <b>Mobile (low bandwidth, high poly)</b><br>
+              Orientation Camera (45º)<br>
+              9 x 16 display target<br>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <h1 style="color:rgb(0,200,0);clear:both;">Cloud Pipeline</h1>
     <div>
-      <div class="image-bkg" style="background-image:url(pipeline.png)">
+      <div class="image-bkg" style="background-image:url(pipeline.jpg)">
         <div style="font-family:monospace;display:inline-block;color:rgb(0,200,0);font-size: 2em;">
           Download models on demand from the cloud<br>
           <br>
