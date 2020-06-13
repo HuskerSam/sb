@@ -22,7 +22,7 @@ class cViewDemo extends bView {
     this.itemSymbols.push('<i class="material-icons-outlined" style="transform:scaleX(.9) scaleY(.9)">fiber_manual_record</i>');
     this.itemSymbols.push('<i class="material-icons-outlined" style="transform:scaleX(.9) scaleY(.9)">clear</i>');
     this.itemSymbols.push('<i class="material-icons-outlined">stop</i>');
-    this.itemSymbols.push('<i class="material-icons-outlined" style="transform:rotate(-90deg)">play_arrow</i>');
+    this.itemSymbols.push('<i class="material-icons-outlined" style="transform:rotate(-90deg) scaleX(1.1) scaleY(1.1)">play_arrow</i>');
 
     this.basketClearButtons();
 
@@ -211,12 +211,32 @@ class cViewDemo extends bView {
       if (this.canvasHelper.playState === 1) {
         this.sub_bar_pause_button.innerHTML = '<i class="material-icons">pause</i>';
         this.sub_bar_pause_button.classList.remove('app-inverted');
-      }
-      else {
+      } else {
         this.sub_bar_pause_button.innerHTML = '<i class="material-icons">play_arrow</i>';
         this.sub_bar_pause_button.classList.add('app-inverted');
       }
     };
+
+    this.anim_rewind = this.dialog.querySelector('.anim_rewind');
+    this.anim_star_rate = this.dialog.querySelector('.anim_star_rate');
+    this.anim_skip_previous = this.dialog.querySelector('.anim_skip_previous');
+    this.anim_skip_next = this.dialog.querySelector('.anim_skip_next');
+    this.anim_rewind.addEventListener('click', e => {
+      this.canvasHelper.stopAnimation();
+      this.canvasHelper.playAnimation();
+    });
+    this.anim_skip_next.addEventListener('click', e => {
+      let newPos = Number(this.canvasHelper.animateSlider.value) + 10;
+      if (newPos > 100.0)
+        newPos -= 100.0;
+      this.rootBlock.setAnimationPosition(newPos);
+    });
+    this.anim_skip_previous.addEventListener('click', e => {
+      let newPos = Number(this.canvasHelper.animateSlider.value) - 10;
+      if (newPos < 0.0)
+        newPos += 100.0;
+      this.rootBlock.setAnimationPosition(newPos);
+    });
   }
   __updateGPSLocation() {
     this.geo_gps_coords.innerHTML = '' + gAPPP.latitude + '°, ' + gAPPP.longitude + '°';
@@ -368,11 +388,11 @@ class cViewDemo extends bView {
           noError = false;
         }
         if (noError) {
-          this.mute_header_button.innerHTML = '<i class="material-icons">volume_up</i>';
+          this.mute_header_button.innerHTML = '<i class="material-icons">music_note</i>';
           this.mute_header_button.classList.remove('app-inverted');
         }
       } else {
-        this.mute_header_button.innerHTML = '<i class="material-icons">volume_off</i>';
+        this.mute_header_button.innerHTML = '<i class="material-icons">music_off</i>';
         this.mute_header_button.classList.add('app-inverted');
         this.audio.pause();
       }
@@ -1604,7 +1624,7 @@ class cViewDemo extends bView {
       if (this.canvasHelper.playState !== 1) {
         if (!this.audio.paused)
           this.audio.pause();
-        muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
+        muteButton.innerHTML = '<i class="material-icons">music_off</i>';
         muteButton.classList.add('app-inverted');
       } else {
         if (this.audio) {
@@ -1688,7 +1708,7 @@ class cViewDemo extends bView {
           <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
           <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons-outlined">movie</i></button>
           <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons-outlined">settings_brightness</i></button>
-          <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons-outlined">volume_off</i></button>
+          <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons-outlined">music_off</i></button>
           <button class="btn-sb-icon app-transparent chat_panel_button" style="clear:both;"><i class="material-icons-outlined">chat</i></button>
           <button class="btn-sb-icon app-transparent profile_panel_button"><i class="material-icons-outlined">person</i></button>
           <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons-outlined">info</i></button>
@@ -1756,28 +1776,40 @@ class cViewDemo extends bView {
         </div>
         <div class="mobile_orientation_options collapsed">
           <div class="sub_button_bar">
-            <div class="geo_gps_coords app-transparent" style="display:none;"></div>
-            <div class="orientation_details_div app-transparent" style="display:none;"></div>
-            <div></div>
-            <button class="btn-sb-icon app-transparent rotate_left"><i class="material-icons">rotate_left</i></button>
-            &nbsp;
-            <button class="btn-sb-icon app-transparent arrow_downward"><i class="material-icons">arrow_downward</i></button>
-            &nbsp;
-            <button class="btn-sb-icon app-transparent rotate_right"><i class="material-icons">rotate_right</i></button>
-            <br>
-            <button class="btn-sb-icon app-transparent arrow_backward"><i class="material-icons">arrow_back</i></button>
-            &nbsp;
-            <button class="btn-sb-icon app-transparent geo_lock"><i class="material-icons">my_location</i></button>
-            &nbsp;
-            <button class="btn-sb-icon app-transparent arrow_forward"><i class="material-icons">arrow_forward</i></button>
+            <div class="mobile_orientation_sub_options">
+              <div class="geo_gps_coords app-transparent" style="display:none;"></div>
+              <div class="orientation_details_div app-transparent" style="display:none;"></div>
+              <div></div>
+              <button class="btn-sb-icon app-transparent rotate_left"><i class="material-icons">rotate_left</i></button>
+              &nbsp;
+              <button class="btn-sb-icon app-transparent arrow_downward"><i class="material-icons">arrow_downward</i></button>
+              &nbsp;
+              <button class="btn-sb-icon app-transparent rotate_right"><i class="material-icons">rotate_right</i></button>
+              <br>
+              <button class="btn-sb-icon app-transparent arrow_backward"><i class="material-icons">arrow_back</i></button>
+              &nbsp;
+              <button class="btn-sb-icon app-transparent geo_lock"><i class="material-icons">my_location</i></button>
+              &nbsp;
+              <button class="btn-sb-icon app-transparent arrow_forward"><i class="material-icons">arrow_forward</i></button>
+            </div>
+            <div class="mobile_follow_sub_options">
+              <button class="btn-sb-icon app-transparent anim_rewind"><i class="material-icons">replay</i></button>
+              &nbsp;
+              <button class="btn-sb-icon app-transparent anim_star_rate" style="visibility:hidden;"><i class="material-icons">star_rate</i></button>
+              <br>
+              <button class="btn-sb-icon app-transparent anim_skip_previous"><i class="material-icons">skip_previous</i></button>
+              &nbsp;
+              <button class="btn-sb-icon app-transparent anim_skip_next"><i class="material-icons">skip_next</i></button>
+            </div>
           </div>
           <button class="btn-sb-icon app-transparent sub_bar_pause_button"><i class="material-icons">pause</i></button>
           &nbsp;
-          <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
-          &nbsp;
+          <div class="mobile_orientation_base_options">
+            <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
+            &nbsp;
+          </div>
           <button class="btn-sb-icon app-transparent expand_less app-inverted"><i class="material-icons">expand_more</i></button>
           <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">expand_less</i></button>
-
         </div>
       </div>
     </div>`;

@@ -507,8 +507,31 @@ button, i, .no-selection {
 
 .mobile_orientation_options {
   display: none;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
 }
 
-.mobile_orientation .mobile_orientation_options {
+.mobile_orientation .mobile_orientation_options, .mobile_follow .mobile_orientation_options {
   display: block;
+}
+
+.mobile_orientation_base_options, .mobile_orientation_sub_options, .mobile_follow_sub_options {
+  display: none;
+}
+
+.mobile_orientation .mobile_orientation_base_options, .mobile_orientation .mobile_orientation_sub_options {
+  display: inline-block;
+}
+
+.mobile_follow .mobile_follow_sub_options {
+  display: inline-block;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options {
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options * {
+  pointer-events: auto;
 }
