@@ -425,7 +425,9 @@ class cViewDemo extends bView {
       if (!this.demoOptionDiv) {
         this.demoOptionDiv = this.dialog.querySelector('.demo_panel_contents');
       }
-      let html = `<select class="ui_select" name="controls">
+      let html = `<a href="/intro">About...</a>
+        <br>
+        <select class="ui_select" name="controls">
         <option value="mobile_orientation">Mobile Orientation</option>
         <option value="mobile_follow" selected>Mobile Follow</option>
         <option value="console_follow">Console Follow</option>
