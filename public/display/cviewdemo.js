@@ -19,10 +19,10 @@ class cViewDemo extends bView {
     this.itemButtons.push(document.querySelector('.choice-button-four'));
 
     this.itemSymbols = [];
-    this.itemSymbols.push('<i class="material-icons">fiber_manual_record</i>');
-    this.itemSymbols.push('<i class="material-icons">clear</i>');
-    this.itemSymbols.push('<i class="material-icons">stop</i>');
-    this.itemSymbols.push('<i class="material-icons" style="transform:rotate(-90deg)">play_arrow</i>');
+    this.itemSymbols.push('<i class="material-icons-outlined">fiber_manual_record</i>');
+    this.itemSymbols.push('<i class="material-icons-outlined">clear</i>');
+    this.itemSymbols.push('<i class="material-icons-outlined">stop</i>');
+    this.itemSymbols.push('<i class="material-icons-outlined" style="transform:rotate(-90deg)">play_arrow</i>');
 
     this.basketClearButtons();
 
@@ -573,6 +573,7 @@ class cViewDemo extends bView {
         this.displayCamera = 'demo';
     }
     if (this.uiOverlay === 'mobile_follow') {
+      this.displayButtonPanel.style.display = '';
       if (!this.displayCamera)
         this.displayCamera = 'demo';
     }
@@ -581,6 +582,13 @@ class cViewDemo extends bView {
         this.displayCamera = 'deviceOrientation';
       this.mobile_orientation_options.style.display = '';
     }
+
+    document.body.classList.remove('mobile_portrait');
+    document.body.classList.remove('console_follow');
+    document.body.classList.remove('mobile_follow');
+    document.body.classList.remove('mobile_orientation');
+
+    document.body.classList.add(this.uiOverlay);
 
     let cameraIndex = this.canvasHelper.cameraSelect.selectedIndex;
     let newCameraIndex = cameraIndex;
@@ -1680,12 +1688,12 @@ class cViewDemo extends bView {
       <div class="display_header_bar">
         <div class="display_header_row">
           <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
-          <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons">movie</i></button>
-          <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons">settings_brightness</i></button>
-          <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons">volume_off</i></button>
-          <button class="btn-sb-icon app-transparent chat_panel_button" style="clear:both;"><i class="material-icons">chat</i></button>
-          <button class="btn-sb-icon app-transparent profile_panel_button"><i class="material-icons">person</i></button>
-          <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons">info</i></button>
+          <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons-outlined">movie</i></button>
+          <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons-outlined">settings_brightness</i></button>
+          <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons-outlined">volume_off</i></button>
+          <button class="btn-sb-icon app-transparent chat_panel_button" style="clear:both;"><i class="material-icons-outlined">chat</i></button>
+          <button class="btn-sb-icon app-transparent profile_panel_button"><i class="material-icons-outlined">person</i></button>
+          <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons-outlined">info</i></button>
           <div style="clear:both"></div>
         </div>
         <div class="display_header_slideout">
@@ -1729,7 +1737,7 @@ class cViewDemo extends bView {
             <div class="cart-contents app-panel app-transparent">
             </div>
             <div class="fields-container"></div>
-            <button class="btn-sb-icon app-transparent cart-submit">Checkout</button>
+            <button class="btn-sb-icon app-transparent cart-submit"><i class="material-icons-outlined">shopping_cart</i>Checkout</button>
           </div>
           <div class="chat_panel">
             <div class="inner_chat_panel app-panel app-transparent">

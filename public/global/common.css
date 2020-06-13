@@ -233,11 +233,11 @@ html, body {
   position: relative;
 }
 
-i.material-icons {
+i.material-icons, i.material-icons-outlined {
   font-size: inherit;
 }
 
-button i.material-icons {
+button i.material-icons, button i.material-icons-outlined {
   position: relative;
   top: .1em;
   font-size: 1.1em;

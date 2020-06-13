@@ -302,7 +302,7 @@ input.animate-range {
 
 .nontouch_button_options button i {
   font-size: 3em;
-  float:left;
+  float: left;
   color: inherit;
 }
 
@@ -317,6 +317,7 @@ button.choice-button-one span {
 
 button.choice-button-two {
   background: rgba(0, 200, 0, .67);
+  color: black;
 }
 
 button.choice-button-two span {
@@ -334,6 +335,7 @@ button.choice-button-three span {
 
 button.choice-button-four {
   background: rgba(255, 255, 0, .9);
+  color: black;
 }
 
 button.choice-button-four span {
@@ -400,7 +402,6 @@ button, i, .no-selection {
   display: none;
 }
 
-
 .raw_macro_panel .add-button {
   float: right;
 }
@@ -430,7 +431,6 @@ button, i, .no-selection {
   width: 4em;
 }
 
-
 .raw_macro_panel .texttext, .raw_macro_panel .texttextline2 {
   width: auto;
 }
@@ -440,7 +440,6 @@ button, i, .no-selection {
   max-height: 55vh;
   padding: .1em;
 }
-
 
 .new_button_break {
   display: none;
@@ -462,10 +461,7 @@ button, i, .no-selection {
   width: 4em;
 }
 
-.display_header_bar button.cart-submit {
-  font-weight: bold;
-
-}
+.display_header_bar button.cart-submit {}
 
 .sub_button_bar .geo_gps_coords, .sub_button_bar .orientation_details_div {
   line-height: 1em;
@@ -474,4 +470,25 @@ button, i, .no-selection {
   pointer-events: none;
   position: relative;
   top: .75em;
+}
+
+.mobile_follow .nontouch_button_options button span {
+  display: none;
+}
+
+.mobile_follow .nontouch_button_options button img {
+  display: none;
+}
+
+.mobile_follow .nontouch_button_options button {
+  text-align: center;
+}
+
+.mobile_follow .nontouch_button_options button i {
+  float: none;
+}
+
+.mobile_follow .nontouch_button_options {
+  display: inline-block;
+  width: 3em;
 }
