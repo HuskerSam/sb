@@ -89,4 +89,24 @@ class gDemoApp extends gInstanceSuper {
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
   }
+  __genBaseAppStyle() {
+    let css = super.__genBaseAppStyle();
+    let opacityLevel = this.appStyleDetails.opacityLevel;
+    let choice_css = `
+    button.choice-button-one {
+      background: rgba(200, 0, 0, ${opacityLevel});
+    }
+    button.choice-button-two {
+      background: rgba(0, 200, 0, ${opacityLevel});
+    }
+    button.choice-button-three {
+      background: rgba(0, 0, 255, ${opacityLevel});
+    }
+    button.choice-button-four {
+      background: rgba(255, 255, 0, ${opacityLevel});
+    }
+    `;
+
+    return css + choice_css;
+  }
 }

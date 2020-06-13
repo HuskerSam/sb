@@ -158,7 +158,7 @@ class gInstanceSuper {
 
     document.body.appendChild(this._domShapeList);
   }
-  _updateApplicationStyle() {
+  __genBaseAppStyle() {
     let canvasColor = gAPPP.a.profile.canvasColor;
     if (!canvasColor)
       canvasColor = '';
@@ -193,7 +193,8 @@ class gInstanceSuper {
       ctlHalfColor,
       niteMode,
       boundsLines,
-      boundsBack
+      boundsBack,
+      opacityLevel
     };
 
     let css = '* { ';
@@ -393,7 +394,10 @@ class gInstanceSuper {
       }
       `;
     }
-
+    return css;
+  }
+  _updateApplicationStyle() {
+    let css = this.__genBaseAppStyle();
     if (this.lastStyleProfileCSS === css)
       return;
     this.lastStyleProfileCSS = css;

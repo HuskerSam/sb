@@ -19,8 +19,8 @@ class cViewDemo extends bView {
     this.itemButtons.push(document.querySelector('.choice-button-four'));
 
     this.itemSymbols = [];
-    this.itemSymbols.push('<i class="material-icons-outlined">fiber_manual_record</i>');
-    this.itemSymbols.push('<i class="material-icons-outlined">clear</i>');
+    this.itemSymbols.push('<i class="material-icons-outlined" style="transform:scaleX(.9) scaleY(.9)">fiber_manual_record</i>');
+    this.itemSymbols.push('<i class="material-icons-outlined" style="transform:scaleX(.9) scaleY(.9)">clear</i>');
     this.itemSymbols.push('<i class="material-icons-outlined">stop</i>');
     this.itemSymbols.push('<i class="material-icons-outlined" style="transform:rotate(-90deg)">play_arrow</i>');
 
@@ -562,7 +562,6 @@ class cViewDemo extends bView {
 
     this.canvasActions.style.display = 'none';
     this.displayButtonPanel.style.display = 'none';
-    this.mobile_orientation_options.style.display = 'none';
     if (this.uiOverlay === 'mobile_portrait') {
       if (!this.displayCamera)
         this.displayCamera = 'arcRotateCamera';
@@ -580,7 +579,6 @@ class cViewDemo extends bView {
     if (this.uiOverlay === 'mobile_orientation') {
       if (!this.displayCamera)
         this.displayCamera = 'deviceOrientation';
-      this.mobile_orientation_options.style.display = '';
     }
 
     document.body.classList.remove('mobile_portrait');
