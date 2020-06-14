@@ -545,11 +545,68 @@ button, i, .no-selection {
   position: relative;
   top: -3em;
   visibility: hidden;
-  transition: all 500ms;
+  transition: visibility 500ms, top 500ms;
   z-index: 1;
 }
 
 .display_header_row.expanded_header .expanded_option {
   top: 0;
   visibility: visible;
+}
+
+.mobile_orientation_options .sub_button_bar .second-light-intensity-user-panel {
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  padding-bottom: .65em;
+  background: none;
+  border: none;
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .second-light-intensity-user-panel input {
+  pointer-events: auto;
+}
+
+.second-light-intensity-user-panel label span {
+  display: none;
+}
+
+.second-light-intensity-user-panel input.form-control {
+  display: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .selected-mesh-bounds-helper-box {
+  height: 9.5em;
+  padding: 0;
+  padding-top: 2.25em;
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .form-group {
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .action-area {
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar  .second_light_bar {
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .fields-container {
+  overflow: visible;
+}
+
+ .second-light-intensity-user-panel  .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
+   width: 9em;
+   left: -1.5em;
+}
+
+.flare_icon {
+  position: absolute;
+  z-index: 100;
+  top: 1em;
+  font-weight: bold;
 }

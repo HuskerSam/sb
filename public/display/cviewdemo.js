@@ -237,6 +237,28 @@ class cViewDemo extends bView {
         newPos += 100.0;
       this.rootBlock.setAnimationPosition(newPos);
     });
+
+    this.second_light_bar = this.dialog.querySelector('.second_light_bar');
+    this.lightBarFields = [{
+      title: 'Light',
+      fireSetField: 'lightIntensity',
+      helperType: 'singleSlider',
+      rangeMin: '0',
+      rangeMax: '2',
+      rangeStep: '.01',
+      displayType: 'number',
+      group: 'group2',
+      groupClass: 'second-light-intensity-user-panel'
+    }];
+
+    this.second_light_bar_fc = this.second_light_bar.querySelector('.fields-container');
+    this.second_light_bar_button = document.createElement('button');
+    this.second_light_bar_ctl = new cBandProfileOptions(this.second_light_bar_button, this.lightBarFields,
+      this.second_light_bar_fc, this.second_light_bar);
+    this.second_light_bar_ctl.fireFields.values = gAPPP.a.profile;
+    this.second_light_bar_ctl.panelShownClass = 'profile-panel-shown';
+    this.second_light_bar_ctl.activate();
+    this.second_light_bar_button.click();
   }
   __updateGPSLocation() {
     this.geo_gps_coords.innerHTML = '' + gAPPP.latitude + '°, ' + gAPPP.longitude + '°';
@@ -1817,6 +1839,7 @@ class cViewDemo extends bView {
               <button class="btn-sb-icon app-transparent anim_skip_previous"><i class="material-icons">skip_previous</i></button>
               &nbsp;
               <button class="btn-sb-icon app-transparent anim_skip_next"><i class="material-icons">skip_next</i></button>
+              <div class="second_light_bar" style="position:absolute;right:0;top:0"><i class="material-icons flare_icon">flare</i><div class="fields-container"></div></div>
             </div>
           </div>
           <button class="btn-sb-icon app-transparent sub_bar_pause_button"><i class="material-icons">pause</i></button>
