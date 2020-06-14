@@ -604,9 +604,10 @@ button, i, .no-selection {
    left: -1.5em;
 }
 
-.flare_icon {
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .flare_icon {
   position: absolute;
   z-index: 100;
   top: 1em;
   font-weight: bold;
+  pointer-events: none;
 }
