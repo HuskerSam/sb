@@ -1438,45 +1438,6 @@ __localStaticStorageForBindingFields['frameColor'] = [{
   displayType: 'number',
   group: 'specular'
 }];
-__localStaticStorageForBindingFields['displayProfileFields'] = [{
-  title: 'Font',
-  fireSetField: 'fontFamily',
-  group: 'main',
-  dataListId: 'fontfamilydatalist',
-  type: 'font',
-  floatLeft: true
-}, {
-  title: 'Background',
-  fireSetField: 'canvasColor',
-  type: 'color',
-  group: 'color',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.005',
-  floatLeft: true,
-  displayType: 'shortVector'
-}, {
-  title: 'Size',
-  fireSetField: 'fontSize',
-  group: 'main',
-  displayType: 'number',
-  helperType: 'singleSlider',
-  rangeMin: '7',
-  rangeMax: '22',
-  rangeStep: '.25',
-  groupClass: 'font-size-main-view',
-  floatLeft: true
-}, {
-  title: 'Opacity',
-  fireSetField: 'opacityLevel',
-  group: 'two',
-  displayType: 'number',
-  helperType: 'singleSlider',
-  rangeMin: '0',
-  rangeMax: '1',
-  rangeStep: '.01',
-  groupClass: 'opacity-main-view'
-}];
 __defaultData['mesh'] = {
   title: 'Mesh',
   name: '',

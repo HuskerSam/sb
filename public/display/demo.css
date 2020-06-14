@@ -113,7 +113,7 @@
   pointer-events: none;
 }
 
-.display_header_bar button.chat_panel_button {
+.display_header_bar button.chat_panel_button, .display_header_bar .demo_panel_button {
   float: right;
 }
 
@@ -360,7 +360,6 @@ button.choice-button-four span {
 
 .mobile_orientation_options {
   pointer-events: none;
-  line-height: 3.5em;
 }
 
 .mobile_orientation_options * {
@@ -373,6 +372,7 @@ button.choice-button-four span {
   position: relative;
   top: 0;
   pointer-events: none;
+  line-height: 3.5em;
 }
 
 .mobile_orientation_options .sub_button_bar * {
@@ -534,4 +534,22 @@ button, i, .no-selection {
 
 .mobile_orientation_options .sub_button_bar .mobile_follow_sub_options * {
   pointer-events: auto;
+}
+
+.display_header_row button {
+  z-index: 2;
+  position: relative;
+}
+
+.display_header_row button.expanded_option {
+  position: relative;
+  top: -3em;
+  visibility: hidden;
+  transition: all 500ms;
+  z-index: 1;
+}
+
+.display_header_row.expanded_header .expanded_option {
+  top: 0;
+  visibility: visible;
 }

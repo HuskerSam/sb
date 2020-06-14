@@ -282,6 +282,7 @@ class cViewDemo extends bView {
   }
   initHeaderBar() {
     this.display_header_bar = this.dialog.querySelector('.display_header_bar');
+    this.display_header_row = this.dialog.querySelector('.display_header_row');
 
     this.movie_panel_button = this.dialog.querySelector('.movie_panel_button');
     this.movie_panel = this.dialog.querySelector('.movie_panel');
@@ -298,7 +299,7 @@ class cViewDemo extends bView {
 
     this.volume_panel_button = this.dialog.querySelector('.volume_panel_button');
     this.volume_panel = this.dialog.querySelector('.volume_panel');
-    this.volumeFields = this.getSceneFields();
+    this.volumeFields = this.getBrightnessFields();
     this.volume_panel_fc = this.volume_panel.querySelector('.fields-container');
     this.volume_panel_ctl = new cBandProfileOptions(this.volume_panel_button, this.volumeFields,
       this.volume_panel_fc, this.volume_panel);
@@ -310,7 +311,7 @@ class cViewDemo extends bView {
 
     this.profile_panel_button = this.dialog.querySelector('.profile_panel_button');
     this.profile_panel = this.dialog.querySelector('.profile_panel');
-    this.profileFields = sDataDefinition.bindingFieldsCloned('displayProfileFields');
+    this.profileFields = this.getSceneFields();
     this.profile_panel_fc = this.profile_panel.querySelector('.fields-container');
     this.profile_panel_ctl = new cBandProfileOptions(this.profile_panel_button, this.profileFields,
       this.profile_panel_fc, this.profile_panel);
@@ -375,6 +376,19 @@ class cViewDemo extends bView {
     this.bandButtons.push(this.chat_panel_ctl);
     this.chat_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
 
+    this.expand_panel_button = this.dialog.querySelector('.expand_panel_button');
+    this.expand_panel_button.addEventListener('click', e => {
+      if (this.display_header_row.classList.contains('expanded_header')) {
+        this.display_header_row.classList.remove('expanded_header');
+        this.expand_panel_button.classList.remove('app-inverted');
+        this.expand_panel_button.innerHTML = '<i class="material-icons">expand_more</i>';
+      } else {
+        this.display_header_row.classList.add('expanded_header');
+        this.expand_panel_button.classList.add('app-inverted');
+        this.expand_panel_button.innerHTML = '<i class="material-icons">expand_less</i>';
+      }
+    });
+
     this.initBlockAddPanel();
 
     this.mute_header_button = this.dialog.querySelector('.mute_header_button');
@@ -425,14 +439,14 @@ class cViewDemo extends bView {
       if (!this.demoOptionDiv) {
         this.demoOptionDiv = this.dialog.querySelector('.demo_panel_contents');
       }
-      let html = `<a href="/intro">About...</a>
-        <br>
-        <select class="ui_select" name="controls">
+      let html = `<select class="ui_select" name="controls">
+        &nbsp;
         <option value="mobile_orientation">Mobile Orientation</option>
         <option value="mobile_follow" selected>Mobile Follow</option>
         <option value="console_follow">Console Follow</option>
         <option value="mobile_portrait">Mobile Portrait</option>
-      </select><br>`;
+      </select>
+      <a style="line-height:1.5em;font-size:1.5em;" href="/intro">About...</a><br>`;
       html +=
         `<div class="nav_options"></div>`;
 
@@ -1708,12 +1722,13 @@ class cViewDemo extends bView {
       <div class="display_header_bar">
         <div class="display_header_row">
           <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
-          <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons-outlined">movie</i></button>
-          <button class="btn-sb-icon app-transparent volume_panel_button"><i class="material-icons-outlined">settings_brightness</i></button>
+          <button class="btn-sb-icon app-transparent expand_panel_button"><i class="material-icons-outlined">expand_more</i></button>
+          <button class="btn-sb-icon app-transparent movie_panel_button expanded_option"><i class="material-icons-outlined">movie</i></button>
           <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons-outlined">music_off</i></button>
-          <button class="btn-sb-icon app-transparent chat_panel_button" style="clear:both;"><i class="material-icons-outlined">chat</i></button>
-          <button class="btn-sb-icon app-transparent profile_panel_button"><i class="material-icons-outlined">person</i></button>
-          <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons-outlined">info</i></button>
+          <button class="btn-sb-icon app-transparent chat_panel_button expanded_option" style="clear:both;"><i class="material-icons-outlined">chat</i></button>
+          <button class="btn-sb-icon app-transparent profile_panel_button expanded_option"><i class="material-icons-outlined">person</i></button>
+          <button class="btn-sb-icon app-transparent volume_panel_button expanded_option"><i class="material-icons-outlined">settings_brightness</i></button>
+          <button class="btn-sb-icon app-transparent demo_panel_button expanded_option"><i class="material-icons-outlined">info</i></button>
           <div style="clear:both"></div>
         </div>
         <div class="display_header_slideout">
@@ -1888,6 +1903,44 @@ class cViewDemo extends bView {
     }
   }
   getSceneFields() {
+    return [{
+      title: 'Font',
+      fireSetField: 'fontFamily',
+      group: 'main',
+      dataListId: 'fontfamilydatalist',
+      type: 'font',
+      floatLeft: true
+    }, {
+      title: 'Background',
+      fireSetField: 'canvasColor',
+      type: 'color',
+      group: 'main',
+      rangeMin: '0',
+      rangeMax: '1',
+      rangeStep: '.005',
+      floatLeft: true,
+      clearLeft: true,
+      displayType: 'shortVector'
+    }, {
+      title: 'Size',
+      fireSetField: 'fontSize',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'font-size-main-view',
+      floatLeft: true
+    }, {
+      title: 'Opacity',
+      fireSetField: 'opacityLevel',
+      group: 'two',
+      displayType: 'number',
+      helperType: 'singleSlider',
+      rangeMin: '0',
+      rangeMax: '1',
+      rangeStep: '.01',
+      groupClass: 'opacity-main-view'
+    }];
+  }
+  getBrightnessFields() {
     return [{
       title: 'Light',
       fireSetField: 'lightIntensity',

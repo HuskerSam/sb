@@ -468,37 +468,6 @@ class bView {
       <div class="user-profile-info"></div>
     </div>`;
   }
-  profilePanelRegister() {
-    this.signOutBtn = document.querySelector('#sign-out-button');
-    if (this.signOutBtn)
-      this.signOutBtn.addEventListener('click', e => gAPPP.a.signOut(), false);
-
-    this.workplacesSelect = document.querySelector('#workspaces-select');
-    this.workplacesSelect.addEventListener('input', e => this.selectProject());
-
-    this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
-
-    this.fontToolsContainer = this.dialog.querySelector('#profile-header-panel');
-    this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
-    this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
-    this.fontTools = new cBandProfileOptions(null, this.fontFields, this.fontFieldsContainer, this.fontFieldsContainer);
-    this.fontTools.fireFields.values = gAPPP.a.profile;
-    this.fontTools.activate();
-
-    this.profile_description_panel_btn = document.getElementById('profile_description_panel_btn');
-    this.profile_description_panel_btn.addEventListener('click', e => this.profilePanelToggle());
-  }
-  profilePanelToggle() {
-    if (this.profilePanelShown) {
-      this.profilePanelShown = false;
-      this.profile_description_panel_btn.classList.remove('app-inverted');
-      this.form_panel_view_dom.classList.remove('header-expanded');
-    } else {
-      this.profilePanelShown = true;
-      this.profile_description_panel_btn.classList.add('app-inverted');
-      this.form_panel_view_dom.classList.add('header-expanded');
-    }
-  }
   openNewWindow(tag, key, wid = null) {
     let url = this.genQueryString(wid, tag, key);
     let a = document.createElement('a');
