@@ -1400,24 +1400,26 @@ class gCSVImport {
     descText.sz = '2';
     this.addCSVRow(descText);
 
-    descText = this.defaultCSVRow();
-    descText.asset = 'shape';
-    descText.name = parent + '_3dtitle2';
-    descText.materialname = 'inherit';
-    descText.shapetype = 'text';
-    descText.textfontfamily = row.textfontfamily;
-    descText.texttext = row.texturetext2;
-    descText.textdepth = '.08';
-    descText.textsize = '100';
-    descText.parent = parent;
-    descText.y = "3";
-    descText.x = '.5';
-    descText.ry = '180deg';
-    descText.rz = '-90deg';
-    descText.sx = '2';
-    descText.sy = '2';
-    descText.sz = '2';
-    this.addCSVRow(descText);
+    if (row.texturetext2) {
+      descText = this.defaultCSVRow();
+      descText.asset = 'shape';
+      descText.name = parent + '_3dtitle2';
+      descText.materialname = 'inherit';
+      descText.shapetype = 'text';
+      descText.textfontfamily = row.textfontfamily;
+      descText.texttext = row.texturetext2;
+      descText.textdepth = '.08';
+      descText.textsize = '100';
+      descText.parent = parent;
+      descText.y = "3";
+      descText.x = '.5';
+      descText.ry = '180deg';
+      descText.rz = '-90deg';
+      descText.sx = '2';
+      descText.sy = '2';
+      descText.sz = '2';
+      this.addCSVRow(descText);
+    }
   }
   async __addSignPost(product, productData) {
     let blockRow = this.defaultCSVRow();
@@ -1558,29 +1560,28 @@ class gCSVImport {
     return this.addCSVRowList(newObjects);
   }
   async _addSignPost3D(product, productData, parent) {
-    let priceText = this.defaultCSVRow();
-    priceText.asset = 'shape';
-    priceText.name = parent + '_3ddesc';
+    if (product.desc) {
+      let priceText = this.defaultCSVRow();
+      priceText.asset = 'shape';
+      priceText.name = parent + '_3ddesc';
 
-
-    if (product.colorIndex === 1 || product.colorIndex === 3) {
-      priceText.materialname = 'color: 0,0,0';
-    } else {
-      priceText.materialname = 'color: 4,4,4';
+      if (product.colorIndex === 1 || product.colorIndex === 3) {
+        priceText.materialname = 'color: 0,0,0';
+      } else {
+        priceText.materialname = 'color: 4,4,4';
+      }
+      priceText.shapetype = 'text';
+      priceText.textfontfamily = product.origRow.textfontfamily;
+      priceText.texttext = product.desc;
+      priceText.textdepth = '.25';
+      priceText.textsize = '100';
+      priceText.parent = parent;
+      priceText.y = (productData.sceneParams.signYOffset - 3.25).toString();
+      priceText.x = '.5';
+      priceText.ry = '0deg';
+      priceText.rz = '-90deg';
+      this.addCSVRow(priceText);
     }
-    priceText.shapetype = 'text';
-    priceText.textfontfamily = product.origRow.textfontfamily;
-    if (!product.desc)
-      product.desc = '?';
-    priceText.texttext = product.desc;
-    priceText.textdepth = '.25';
-    priceText.textsize = '100';
-    priceText.parent = parent;
-    priceText.y = (productData.sceneParams.signYOffset - 3.25).toString();
-    priceText.x = '.5';
-    priceText.ry = '0deg';
-    priceText.rz = '-90deg';
-    this.addCSVRow(priceText);
 
     let descText = this.defaultCSVRow();
     descText.asset = 'shape';
