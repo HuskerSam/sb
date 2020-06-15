@@ -203,10 +203,6 @@ input.animate-range {
   width: 100%;
 }
 
-.camera-select {
-  position: relative;
-  top: -.5em
-}
 
 .font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"],
 .opacity-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
@@ -611,4 +607,21 @@ button, i, .no-selection {
   top: 1em;
   font-weight: bold;
   pointer-events: none;
+}
+
+.camera-select-range-fov-slider, .camera-select-range-slider, .camera-select-range-height-slider{
+  width: 45vw;
+  margin-right: 4vw;
+  margin-bottom: 2vw;
+  float:left;
+}
+
+.camera-select-range-fov-slider {
+  clear: left;
+}
+
+.camera-select {
+  float:left;
+  width: 42vw;
+  margin-right: 4vw;
 }

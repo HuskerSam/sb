@@ -115,8 +115,12 @@ class wBlock {
     }
   }
   handleDataUpdate(tag, values, type, fireData) {
-    if (!this.parent)
-      this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type, true);
+    if (!this.parent) {
+      if (!this.skipInitEvent) {
+        this.skipInitEvent = true;
+      } else
+        this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type, true);
+    }
 
     if (type === 'moved')
       return;
@@ -670,9 +674,6 @@ class wBlock {
     this.framesHelper.setParentKey(this.blockKey, this);
 
     this.__applyFirstFrameValues();
-
-    if (!this.parent)
-      this.context.canvasHelper.logAnimDetails();
   }
   __renderMeshBlock() {
     let fields = sDataDefinition.bindingFields('mesh');

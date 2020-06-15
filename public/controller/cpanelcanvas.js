@@ -709,14 +709,6 @@ class cPanelCanvas {
     this.lastError = null;
     this.clearError();
   }
-  logAnimDetails() {
-    if (!this.activeAnimation) {
-      this.logMessage('No animation found');
-    } else {
-      let length = GLOBALUTIL.formatNumber(this.activeAnimation.toFrame / this.rootBlock.framesHelper.fps).trim();
-      this.logMessage('Length ' + length.toString() + 's');
-    }
-  }
   logClear() {
     this.renderPanel.innerHTML = '';
     this.sceneToolsButton.style.borderColor = '';

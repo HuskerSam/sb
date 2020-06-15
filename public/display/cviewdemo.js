@@ -1817,7 +1817,7 @@ class cViewDemo extends bView {
               <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
             </div>
             <select class="camera-select"></select>
-            <div style="display:inline-block;position:relative;">
+            <div style="float:left;position:relative;">
               <div class="camera-slider-label">Radius</div>
               <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
             </div>
