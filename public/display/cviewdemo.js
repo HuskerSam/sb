@@ -470,11 +470,11 @@ class cViewDemo extends bView {
         }
         if (noError) {
           this.mute_header_button.innerHTML = '<i class="material-icons">music_note</i>';
-          this.mute_header_button.classList.remove('app-inverted');
+          this.mute_header_button.classList.add('app-inverted');
         }
       } else {
         this.mute_header_button.innerHTML = '<i class="material-icons">music_off</i>';
-        this.mute_header_button.classList.add('app-inverted');
+        this.mute_header_button.classList.remove('app-inverted');
         this.audio.pause();
       }
     });
@@ -1708,7 +1708,7 @@ class cViewDemo extends bView {
         if (!this.audio.paused)
           this.audio.pause();
         muteButton.innerHTML = '<i class="material-icons">music_off</i>';
-        muteButton.classList.add('app-inverted');
+        muteButton.classList.remove('app-inverted');
       } else {
         if (this.audio) {
           if (this.canvasHelperPaused !== this.canvasHelper.timeE) {
@@ -1791,7 +1791,7 @@ class cViewDemo extends bView {
           <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
           <button class="btn-sb-icon app-transparent expand_panel_button"><i class="material-icons-outlined">expand_more</i></button>
           <button class="btn-sb-icon app-transparent movie_panel_button expanded_option"><i class="material-icons-outlined">movie</i></button>
-          <button class="btn-sb-icon app-transparent mute_header_button app-inverted"><i class="material-icons-outlined">music_off</i></button>
+          <button class="btn-sb-icon app-transparent mute_header_button"><i class="material-icons-outlined">music_off</i></button>
           <button class="btn-sb-icon app-transparent chat_panel_button expanded_option" style="clear:both;"><i class="material-icons-outlined">chat</i></button>
           <button class="btn-sb-icon app-transparent profile_panel_button expanded_option"><i class="material-icons-outlined">person</i></button>
           <button class="btn-sb-icon app-transparent volume_panel_button expanded_option"><i class="material-icons-outlined">settings_brightness</i></button>
@@ -1821,11 +1821,11 @@ class cViewDemo extends bView {
               <div class="camera-slider-label">Radius</div>
               <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
             </div>
-            <div style="display:none;position:relative;">
+            <div style="display:none;position:relative;margin-top:.5em">
               <div class="camera-slider-label">FOV</div>
               <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
             </div>
-            <div style="display:inline-block;position:relative;">
+            <div style="display:inline-block;position:relative;margin-top:.5em;">
               <div class="camera-slider-label">Height</div>
               <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
             </div>
