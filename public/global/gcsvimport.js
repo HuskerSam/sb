@@ -1568,9 +1568,10 @@ class gCSVImport {
     } else {
       priceText.materialname = 'color: 4,4,4';
     }
-
     priceText.shapetype = 'text';
     priceText.textfontfamily = product.origRow.textfontfamily;
+    if (!product.desc)
+      product.desc = '?';
     priceText.texttext = product.desc;
     priceText.textdepth = '.25';
     priceText.textsize = '100';
