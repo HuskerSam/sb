@@ -359,6 +359,7 @@ button.choice-button-four span {
 }
 
 .mobile_orientation_options {
+  overflow: hidden;
   pointer-events: none;
 }
 

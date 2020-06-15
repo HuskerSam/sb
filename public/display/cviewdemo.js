@@ -389,6 +389,50 @@ class cViewDemo extends bView {
       displayType: 'number',
       groupClass: 'chat_num_field',
       floatLeft: true
+    }, {
+      title: 'rX',
+      fireSetField: 'chatStartrX',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true,
+      clearLeft: true
+    }, {
+      title: 'rY',
+      fireSetField: 'chatStartrY',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true
+    }, {
+      title: 'rZ',
+      fireSetField: 'chatStartrZ',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true
+    }, {
+      title: 'sX',
+      fireSetField: 'chatStartsX',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true,
+      clearLeft: true
+    }, {
+      title: 'sY',
+      fireSetField: 'chatStartsY',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true
+    }, {
+      title: 'sZ',
+      fireSetField: 'chatStartsZ',
+      group: 'main',
+      displayType: 'number',
+      groupClass: 'chat_num_field',
+      floatLeft: true
     }];
     this.chat_panel_ctl = new cBandProfileOptions(this.chat_panel_button, this.chat_fields,
       this.chat_panel_fc, this.chat_panel);
@@ -404,6 +448,7 @@ class cViewDemo extends bView {
         this.display_header_row.classList.remove('expanded_header');
         this.expand_panel_button.classList.remove('app-inverted');
         this.expand_panel_button.innerHTML = '<i class="material-icons">expand_more</i>';
+        this.closeHeaderBands();
       } else {
         this.display_header_row.classList.add('expanded_header');
         this.expand_panel_button.classList.add('app-inverted');
@@ -1869,6 +1914,12 @@ class cViewDemo extends bView {
       let x = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartX, 0.0);
       let y = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartY, 10.0);
       let z = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartZ, 0.0);
+      let rx = gAPPP.a.profile.chatStartrX;
+      let ry = gAPPP.a.profile.chatStartrY;
+      let rz = gAPPP.a.profile.chatStartrZ;
+      let sx = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartsX, 5);
+      let sy = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartsY, 5);
+      let sz = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.chatStartsZ, 5);
 
       let csvRow = {
         asset: 'blockchild',
@@ -1877,9 +1928,12 @@ class cViewDemo extends bView {
         x,
         y,
         z,
-        sx: 5,
-        sy: 5,
-        sz: 5,
+        rx,
+        ry,
+        rz,
+        sx,
+        sy,
+        sz,
         parent
       };
 
