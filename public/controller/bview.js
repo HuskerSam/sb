@@ -477,4 +477,108 @@ class bView {
     a.click();
     document.body.removeChild(a);
   }
+  async showLayoutPositions() {
+    this.positionFrags = this.layoutPositionFrags();
+    if (this.layoutPositionsShown) {
+      this.layoutPositionsShown = false;
+      this.workspace_show_layout_positions.innerHTML = '<i class="material-icons">grid_on</i>';
+
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+
+      for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
+        gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), null);
+      }
+    } else {
+      this.layoutPositionsShown = true;
+      this.workspace_show_layout_positions.innerHTML = '<i class="material-icons">grid_off</i>';
+
+      this.canvasHelper.cameraSelect.selectedIndex = 0;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+
+      for (let positionCounter = 0; positionCounter < this.positionFrags.length; positionCounter++) {
+        let block = new wBlock(gAPPP.activeContext, null);
+        let p = new Promise((resolve) => {
+          setTimeout(() => resolve(), 1);
+        });
+        await p;
+
+
+        block.__createTextMesh('layoutPositions' + positionCounter.toString() + 'SceneObject', {
+          text: (positionCounter + 1).toString(),
+          depth: .2,
+          size: 100,
+          stroke: false,
+          fontFamily: 'Courier',
+          fontStyle: undefined,
+          fontWeight: undefined,
+          fontVariant: undefined
+        });
+
+        let positionParts = this.positionFrags[positionCounter].split(',');
+        block.sceneObject.position.x = GLOBALUTIL.getNumberOrDefault(positionParts[0], 0);
+        block.sceneObject.position.y = GLOBALUTIL.getNumberOrDefault(positionParts[1], 0);
+        block.sceneObject.position.z = GLOBALUTIL.getNumberOrDefault(positionParts[2], 0);
+
+        let rx = positionParts[3];
+        let ry = positionParts[4];
+        let rz = positionParts[5];
+        if (rx.toLowerCase().indexOf('deg') !== -1) {
+          rx = rx.toLowerCase().replace('deg', '');
+          rx = GLOBALUTIL.getNumberOrDefault(rx, 0) * Math.PI / 180.0;
+        } else {
+          rx = GLOBALUTIL.getNumberOrDefault(rx, 0);
+        }
+        if (ry.toLowerCase().indexOf('deg') !== -1) {
+          ry = ry.toLowerCase().replace('deg', '');
+          ry = GLOBALUTIL.getNumberOrDefault(ry, 0) * Math.PI / 180.0;
+        } else {
+          ry = GLOBALUTIL.getNumberOrDefault(ry, 0);
+        }
+        if (rz.toLowerCase().indexOf('deg') !== -1) {
+          rz = rz.toLowerCase().replace('deg', '');
+          rz = GLOBALUTIL.getNumberOrDefault(rz, 0) * Math.PI / 180.0;
+        } else {
+          rz = GLOBALUTIL.getNumberOrDefault(rz, 0);
+        }
+
+        block.sceneObject.rotation.z = Math.PI / 2 - rz;
+        block.sceneObject.rotation.y = ry;
+        block.sceneObject.rotation.x = Math.PI + rx;
+
+        block.sceneObject.scaling.x = 2;
+        block.sceneObject.scaling.y = 1;
+        block.sceneObject.scaling.z = 5;
+
+        let material = new BABYLON.StandardMaterial(`layoutPositions${positionCounter}SceneMaterial`, gAPPP.activeContext.scene);
+
+        let rgb = positionCounter % 3;
+        if (rgb === 1)
+          material.diffuseColor = new BABYLON.Color3(2, 0, 0);
+        else if (rgb === 2)
+          material.diffuseColor = new BABYLON.Color3(0, 2, 0);
+        else
+          material.diffuseColor = new BABYLON.Color3(0, 0, 2);
+
+
+        gAPPP.activeContext.__setMaterialOnObj(block.sceneObject, material);
+        gAPPP.activeContext.setGhostBlock('layoutPositions' + positionCounter.toString(), block);
+      }
+    }
+  }
+  layoutPositionFrags() {
+    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
+    let positionFrags = [];
+    if (positionInfo) {
+      let arr = positionInfo.genericBlockData.split('|');
+
+      for (let c = 0, l = arr.length; c < l - 5; c += 6) {
+        let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2] + ',' + arr[c + 3] + ',' + arr[c + 4] + ',' + arr[c + 5];
+        positionFrags.push(frag);
+      }
+    }
+    return positionFrags;
+  }
 }

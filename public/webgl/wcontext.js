@@ -16,7 +16,7 @@ class wContext {
     this.previousCameraOrigin = '';
     this.previousCameraHieghtOffset = '';
     this.preRenderFrame = () => {};
-    this.arcCameraRadius = 20;
+    this.arcCameraRadius = 50;
 
     this.geoFilter = false;
     this.zeroLatitude = 0.0;

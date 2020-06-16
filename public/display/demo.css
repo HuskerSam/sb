@@ -513,7 +513,7 @@ button, i, .no-selection {
   display: block;
 }
 
-.mobile_orientation_base_options, .mobile_orientation_sub_options, .mobile_follow_sub_options {
+.mobile_orientation_base_options, .mobile_orientation_sub_options, .mobile_follow_sub_options, .mobile_follow_base_options {
   display: none;
 }
 
@@ -521,7 +521,7 @@ button, i, .no-selection {
   display: inline-block;
 }
 
-.mobile_follow .mobile_follow_sub_options {
+.mobile_follow .mobile_follow_sub_options, .mobile_follow .mobile_follow_base_options {
   display: inline-block;
 }
 

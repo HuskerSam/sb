@@ -218,7 +218,6 @@ class cViewDemo extends bView {
     };
 
     this.anim_rewind = this.dialog.querySelector('.anim_rewind');
-    this.anim_star_rate = this.dialog.querySelector('.anim_star_rate');
     this.anim_skip_previous = this.dialog.querySelector('.anim_skip_previous');
     this.anim_skip_next = this.dialog.querySelector('.anim_skip_next');
     this.anim_rewind.addEventListener('click', e => {
@@ -259,6 +258,11 @@ class cViewDemo extends bView {
     this.second_light_bar_ctl.panelShownClass = 'profile-panel-shown';
     this.second_light_bar_ctl.activate();
     this.second_light_bar_button.click();
+
+
+        this.workspace_show_layout_positions = document.body.querySelector('.workspace_show_layout_positions');
+        this.workspace_show_layout_positions.addEventListener('click', e => this.showLayoutPositions());
+
   }
   __updateGPSLocation() {
     this.geo_gps_coords.innerHTML = '' + gAPPP.latitude + '°, ' + gAPPP.longitude + '°';
@@ -1879,7 +1883,7 @@ class cViewDemo extends bView {
             <div class="mobile_follow_sub_options">
               <button class="btn-sb-icon app-transparent anim_rewind"><i class="material-icons">replay</i></button>
               &nbsp;
-              <button class="btn-sb-icon app-transparent anim_star_rate" style="visibility:hidden;"><i class="material-icons">star_rate</i></button>
+              <button class="btn-sb-icon app-transparent workspace_show_layout_positions"><i class="material-icons">grid_on</i></button>
               <br>
               <button class="btn-sb-icon app-transparent anim_skip_previous"><i class="material-icons">skip_previous</i></button>
               &nbsp;
@@ -1892,6 +1896,8 @@ class cViewDemo extends bView {
           <div class="mobile_orientation_base_options">
             <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
             &nbsp;
+          </div>
+          <div class="mobile_follow_base_options">
           </div>
           <button class="btn-sb-icon app-transparent expand_less app-inverted"><i class="material-icons">expand_more</i></button>
           <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">expand_less</i></button>
