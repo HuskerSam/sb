@@ -326,7 +326,7 @@ class gCSVImport {
   async addCSVBlockChildRow(row) {
     if (row.parent.substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      row.parent = sb.parent;
+      row.parent = sb.parent + row.parent.substring(9);
     }
 
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
@@ -500,7 +500,7 @@ class gCSVImport {
 
     if (row.parent.substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      row.parent = sb.parent;
+      row.parent = sb.parent + row.parent.substring(9);
     }
 
     let sceneBC = this.defaultCSVRow();
@@ -524,7 +524,7 @@ class gCSVImport {
   async _getBlockChildren(blockTitle, childType, childName) {
     if (blockTitle.substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      blockTitle = sb.parent;
+      blockTitle = sb.parent + blockTitle.substring(9);
     }
 
     let parentRecords = await this.dbFetchByLookup('block', 'title', blockTitle);
@@ -1156,6 +1156,13 @@ class gCSVImport {
     chatBC.parent = row.name;
     chatBC.x = '0';
     this.addCSVRow(chatBC);
+
+    let fixturesBC = this.defaultCSVRow();
+    fixturesBC.asset = 'block';
+    fixturesBC.name = row.name + '_fixturesWrapper';
+    fixturesBC.parent = row.name;
+    fixturesBC.x = '0';
+    this.addCSVRow(fixturesBC);
 
     return blockresult;
   }

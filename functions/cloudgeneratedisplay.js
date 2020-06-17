@@ -1,7 +1,7 @@
 const requireFromUrl = require('require-from-url/sync');
 let firebase =  require("firebase-admin");
-let gcsvimport = requireFromUrl("https://groceryblocks2.web.app/global/gcsvimport.js?abc=15");
-let GLOBALUTIL = requireFromUrl("https://groceryblocks2.web.app/global/globalutil.js?abc=17");
+let gcsvimport = requireFromUrl("https://groceryblocks2.web.app/global/gcsvimport.js?abc=51544");
+let GLOBALUTIL = requireFromUrl("https://groceryblocks2.web.app/global/globalutil.js?abc=17445");
 
 module.exports = class cloudGenerateDisplay {
   constructor(id) {
