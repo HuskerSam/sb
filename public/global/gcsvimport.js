@@ -662,6 +662,14 @@ class gCSVImport {
 
     let ambientTextureName = row.ambient === 'x' ? textureName : '';
     let emissiveTextureName = row.emissive === 'x' ? textureName : '';
+    let specularPower = '4';
+    if (row.specularpower)
+      specularPower = row.specularpower;
+    if (row.ambienttexture)
+      ambientTextureName = row.ambienttexture;
+    if (row.emissivetexture)
+      emissiveTextureName = row.emissivetexture;
+
     let materialData = {
       title: row.name,
       diffuseTextureName: textureName,
@@ -669,6 +677,7 @@ class gCSVImport {
       emissiveTextureName,
       bumpTextureName,
       specularTextureName,
+      specularPower,
       ambientColor: '',
       backFaceCulling: true,
       diffuseColor: '',
