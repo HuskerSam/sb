@@ -167,74 +167,76 @@ class gCSVImport {
 
     promises.push(this.dbSetRecord('mesh', meshData));
 
-    let textureName = row.name + 'material';
-    let hasAlpha = false;
-    if (row.hasalpha === 'x')
-      hasAlpha = true;
-    let textureData = {
-      title: textureName,
-      url: row.texturepath,
-      hasAlpha
-    };
-    this.dbSetRecord('texture', textureData);
+    if (row.materialname && row.texturepath) {
+      let textureName = row.name + 'material';
+      let hasAlpha = false;
+      if (row.hasalpha === 'x')
+        hasAlpha = true;
+      let textureData = {
+        title: textureName,
+        url: row.texturepath,
+        hasAlpha
+      };
+      this.dbSetRecord('texture', textureData);
 
-    let diffuseColor = '';
-    let diffuseTextureName = '';
-    diffuseColor = row.color;
-    diffuseTextureName = textureName;
+      let diffuseColor = '';
+      let diffuseTextureName = '';
+      diffuseColor = row.color;
+      diffuseTextureName = textureName;
 
-    let ambientColor = '';
-    let ambientTextureName = '';
-    if (row.ambient === 'x') {
-      ambientColor = row.color;
-      ambientTextureName = textureName;
-    }
-    if (row.ambientpath) {
-      ambientTextureName = row.ambientpath;
-    }
-    let emissiveColor = '';
-    let emissiveTextureName = '';
-    if (row.emissive === 'x') {
-      emissiveColor = row.color;
-      emissiveTextureName = textureName;
-    }
-    if (row.emissivepath) {
-      emissiveTextureName = row.emissivepath;
-    }
-    let specularColor = '0,0,0';
-    let specularTextureName = '';
-    let specularPower = "";
-    let useSpecularOverAlpha = false;
-    if (row.specular === 'x') {
-      specularColor = row.color;
-      specularTextureName = textureName;
-      useSpecularOverAlpha = true;
-    }
-    if (row.specularpath) {
-      specularTextureName = row.specularpath;
-      useSpecularOverAlpha = true;
-      specularPower = "2";
-    }
-    if (row.specularpower)
-      specularPower = row.specularpower;
+      let ambientColor = '';
+      let ambientTextureName = '';
+      if (row.ambient === 'x') {
+        ambientColor = row.color;
+        ambientTextureName = textureName;
+      }
+      if (row.ambientpath) {
+        ambientTextureName = row.ambientpath;
+      }
+      let emissiveColor = '';
+      let emissiveTextureName = '';
+      if (row.emissive === 'x') {
+        emissiveColor = row.color;
+        emissiveTextureName = textureName;
+      }
+      if (row.emissivepath) {
+        emissiveTextureName = row.emissivepath;
+      }
+      let specularColor = '0,0,0';
+      let specularTextureName = '';
+      let specularPower = "";
+      let useSpecularOverAlpha = false;
+      if (row.specular === 'x') {
+        specularColor = row.color;
+        specularTextureName = textureName;
+        useSpecularOverAlpha = true;
+      }
+      if (row.specularpath) {
+        specularTextureName = row.specularpath;
+        useSpecularOverAlpha = true;
+        specularPower = "2";
+      }
+      if (row.specularpower)
+        specularPower = row.specularpower;
 
-    let materialData = {
-      title: row.materialname,
-      ambientColor,
-      ambientTextureName,
-      backFaceCulling: true,
-      diffuseColor,
-      diffuseTextureName,
-      emissiveColor,
-      emissiveTextureName,
-      specularColor,
-      specularTextureName,
-      bumpTextureName: row.bmppath,
-      useSpecularOverAlpha,
-      specularColor,
-      specularPower
-    };
-    promises.push(this.dbSetRecord('material', materialData));
+      let materialData = {
+        title: row.materialname,
+        ambientColor,
+        ambientTextureName,
+        backFaceCulling: true,
+        diffuseColor,
+        diffuseTextureName,
+        emissiveColor,
+        emissiveTextureName,
+        specularColor,
+        specularTextureName,
+        bumpTextureName: row.bmppath,
+        useSpecularOverAlpha,
+        specularColor,
+        specularPower
+      };
+      promises.push(this.dbSetRecord('material', materialData));
+    }
 
     let results = await Promise.all(promises);
 
