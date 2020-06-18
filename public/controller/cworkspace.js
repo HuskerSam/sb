@@ -11,8 +11,7 @@ class cWorkspace {
         if (subKey === 'Overview') {
           this.workspaceOverviewInit();
         }
-        if (subKey === 'Generate' || subKey === 'LayoutData' || subKey === 'LayoutAssets' ||
-          subKey === 'LayoutProducts' || subKey === 'LayoutCustom') {
+        if (subKey === 'Generate' || subKey === 'LayoutProducts' || subKey === 'LayoutCustom') {
           this.domPanel.innerHTML = this.workspaceLayoutTemplate();
           this.workspaceLayoutRegister();
 
@@ -42,8 +41,6 @@ class cWorkspace {
     html += `<div style="padding:.75em;"><a href="${this.bView.genQueryString(null, null, null, null, 'Details')}" class="tag_key_redirect" data-value="Details" data-type="w">Details</a>
       &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'Generate')}" class="tag_key_redirect" data-value="Generate" data-type="w">Generate</a>
       &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'LayoutProducts')}" class="tag_key_redirect" data-value="LayoutProducts" data-type="w">Products</a>
-      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'LayoutData')}" class="tag_key_redirect" data-value="LayoutData" data-type="w">Scene</a>
-      &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'LayoutAssets')}" class="tag_key_redirect" data-value="LayoutAssets" data-type="w">Assets</a>
       &nbsp;<a href="${this.bView.genQueryString(null, null, null, null, 'LayoutCustom')}" class="tag_key_redirect" data-value="LayoutCustom" data-type="w">Scene Data</a>
       </div>`;
 
@@ -226,7 +223,7 @@ class cWorkspace {
         complete: results => {
           if (results.data) {
             for (let c = 0, l = results.data.length; c < l; c++) {
-              new gCSVImport(gAPPP.loadedWID).addCSVRow(results.data[c]).then(() => {});
+              new gCSVImport(gAPPP.loadedWID).addCSVRow(results.data[c]);
             }
           }
         }
@@ -394,16 +391,7 @@ class cWorkspace {
       'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily'
     ];
 
-    this.allColumnList = [
-      'name', 'asset', 'parent', 'childtype', 'shapetype', 'frametime', 'frameorder', 'height', 'width', 'depth',
-      'materialname', 'texturepath', 'bmppath', 'color', 'meshpath', 'diffuse', 'ambient', 'emissive', 'scalev', 'scaleu', 'visibility',
-      'x', 'y', 'z', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz', 'cameratargetblock', 'cameraradius', 'cameraheightoffset', 'cameramovetime',
-      'blockcode', 'introtime', 'finishdelay', 'runlength', 'startx', 'starty', 'startz', 'startrx', 'startry', 'startrz', 'blockflag',
-      'texturetext', 'texturetextrendersize', 'texture2dfontweight', 'textfontsize', 'textfontfamily', 'textfontcolor', 'genericblockdata'
-    ];
     this.productColumnList = this.fieldList;
-    this.assetColumnList = this.allColumnList;
-    this.sceneColumnList = this.allColumnList;
     this.rightAlignColumns = [
       'price', 'count', 'height', 'width', 'x', 'y', 'z', 'rx', 'ry', 'rz'
     ];
@@ -421,7 +409,7 @@ class cWorkspace {
       this.editTable.destroy();
       this.editTable = null;
     }
-    if (wsView === 'LayoutAssets' || wsView === 'LayoutProducts' || wsView === 'LayoutData') {
+    if (wsView === 'LayoutProducts') {
       this.data_table_panel.style.display = 'flex';
       this.data_table_panel.innerHTML = 'Loading...';
     } else {
@@ -429,18 +417,12 @@ class cWorkspace {
       this.data_table_panel.style.display = 'none';
     }
 
-    if (wsView === 'LayoutAssets') {
-      this.workspaceLayoutCSVLoadTable('asset');
-    }
-    if (wsView === 'LayoutData') {
-      this.workspaceLayoutCSVLoadTable('scene');
-    }
     if (wsView === 'LayoutProducts') {
-      this.workspaceLayoutCSVLoadTable('product');
-      this.workspaceLayoutCSVProductFieldsInit().then(() => {});
+      this.workspaceLayoutCSVLoadTable();
+      this.workspaceLayoutCSVProductFieldsInit();
     }
     if (wsView === 'LayoutCustom') {
-      this.workspaceLayoutSceneDataInit().then(() => {});
+      this.workspaceLayoutSceneDataInit();
     }
   }
 
@@ -683,14 +665,13 @@ class cWorkspace {
     return;
   }
 
-  async workspaceLayoutCSVLoadTable(tableName) {
+  async workspaceLayoutCSVLoadTable() {
     let csvImport = new gCSVImport(gAPPP.loadedWID);
-    let results = await csvImport.readProjectRawData(tableName + 'Rows')
+    let results = await csvImport.readProjectRawData('productRows')
     let data = [];
     if (results) data = results;
 
-    if (tableName === 'product')
-      data = data.sort((a, b) => {
+        data = data.sort((a, b) => {
         let aIndex = GLOBALUTIL.getNumberOrDefault(a.index, 0);
         let bIndex = GLOBALUTIL.getNumberOrDefault(b.index, 0);
         if (aIndex > bIndex)
@@ -713,16 +694,6 @@ class cWorkspace {
       minWidth: 45
     });
 
-    if (tableName !== 'product')
-      columns.push({
-        rowHandle: true,
-        formatter: "rownum",
-        headerSort: false,
-        resizable: false,
-        align: 'center',
-        frozen: true,
-        width: 30
-      });
 
     columns.push({
       formatter: (cell, formatterParams) => {
@@ -735,32 +706,11 @@ class cWorkspace {
       resizable: false,
       cellClick: (e, cell) => {
         cell.getRow().delete();
-        this.workspaceLayoutCSVTableReformat(tableName);
+        this.workspaceLayoutCSVTableReformat();
       },
       width: 30
     });
-    if (tableName !== 'product')
-      columns.push({
-        formatter: (cell, formatterParams) => {
-          return "<i class='material-icons'>add</i>";
-        },
-        headerSort: false,
-        frozen: true,
-        align: 'center',
-        resizable: false,
-        cssClass: 'add-table-cell',
-        cellClick: (e, cell) => {
-          cell.getTable().addData([{
-              name: ''
-            }], false, cell.getRow())
-            .then(rows => {
-              this.workspaceLayoutCSVTableReformat(tableName);
-              rows[0].getCells()[2].edit();
-            })
-        },
-        width: 30
-      });
-    else
+
       columns.push({
         formatter: (cell, formatterParams) => {
           return "<i class='material-icons'>save_alt</i>";
@@ -777,7 +727,7 @@ class cWorkspace {
         width: 30
       });
 
-    let colList = this[tableName + 'ColumnList'];
+    let colList = this.productColumnList;
     for (let c = 0, l = colList.length; c < l; c++) {
       let field = colList[c];
       let rightColumn = this.rightAlignColumns.indexOf(field) !== -1;
@@ -808,7 +758,6 @@ class cWorkspace {
       columns.push(col);
     }
 
-    if (tableName === 'product') {
       columns[4].frozen = true;
       columns[3].frozen = true;
       let tCol = columns[4];
@@ -818,20 +767,14 @@ class cWorkspace {
       columns[2] = tCol;
       columns[1] = tCol2;
       tCol2.title = '';
-    } else {
-      columns[4].frozen = true;
-      let tCol = columns[4];
-      columns[4] = columns[3];
-      columns[3] = columns[2];
-      columns[2] = tCol;
-    }
+
     columns[1].align = 'right';
     columns[1].cssClass = 'right-column-data';
     columns[1].minWidth = 45;
     columns[2].minWidth = 200;
 
 
-    let movableRows = true; // (tableName !== 'product');
+    let movableRows = true;
 
     this.dataTableDom = document.createElement('div');
     this.data_table_panel.innerHTML = '';
@@ -846,12 +789,11 @@ class cWorkspace {
       virtualDom: true,
       selectable: false,
       dataEdited: (data, a, b, c) => this.workspaceLayoutCSVTableChange(),
-      rowMoved: (row) => this.workspaceLayoutCSVRowMoved(tableName, row)
+      rowMoved: (row) => this.workspaceLayoutCSVRowMoved(row)
     });
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
-    this.tableName = tableName;
   }
-  workspaceLayoutCSVRowMoved(tableName, row) {
+  workspaceLayoutCSVRowMoved(row) {
     let tbl = this.editTable;
     let data = tbl.getData();
 
@@ -871,10 +813,10 @@ class cWorkspace {
 
     for (let c = 0, l = data.length; c < l; c++)
       data[c].index = indexes[c];
-    tbl.setData(data).then(() => {});
+    tbl.setData(data);
     this.workspaceLayoutCSVTableChange();
   }
-  workspaceLayoutCSVTableReformat(tableName) {
+  workspaceLayoutCSVTableReformat() {
     let tbl = this.editTable;
     let rows = tbl.getRows();
     for (let c = 0, l = rows.length; c < l; c++)
@@ -882,7 +824,7 @@ class cWorkspace {
 
     this.workspaceLayoutCSVTableChange();
   }
-  workspaceLayoutCSVTableTestDirty(tableName) {
+  workspaceLayoutCSVTableTestDirty() {
     let tbl = this.editTable;
     let setDirty = false;
     let newCache = JSON.stringify(this.editTable.getData());
@@ -891,8 +833,8 @@ class cWorkspace {
 
     return setDirty;
   }
-  async workspaceLayoutCSVTableSave(tableName) {
-    if (!this.workspaceLayoutCSVTableTestDirty(tableName))
+  async workspaceLayoutCSVTableSave() {
+    if (!this.workspaceLayoutCSVTableTestDirty())
       return;
 
     let tbl = this.editTable;
@@ -907,18 +849,17 @@ class cWorkspace {
     }
 
     let csvImport = new gCSVImport(gAPPP.loadedWID);
-    await csvImport.writeProjectRawData(tableName + 'Rows', data);
+    await csvImport.writeProjectRawData('productRows', data);
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
     gAPPP.updateGenerateDataTimes();
     return;
   }
   async workspaceLayoutCSVTableChange() {
-    let dirty = this.workspaceLayoutCSVTableTestDirty(this.tableName);
+    let dirty = this.workspaceLayoutCSVTableTestDirty();
 
     if (!dirty)
       return;
 
-    if (this.tableName === 'product') {
       let newData = this.editTable.getData();
       let oldData = JSON.parse(this.editTable.cacheData);
 
@@ -978,9 +919,8 @@ class cWorkspace {
           }
         }
       }
-    }
 
-    await this.workspaceLayoutCSVTableSave(this.tableName);
+    await this.workspaceLayoutCSVTableSave();
     gAPPP.updateGenerateDataTimes();
     return;
   }

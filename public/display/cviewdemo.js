@@ -1089,7 +1089,7 @@ class cViewDemo extends bView {
       this.basketSKUs = {};
       this.skuOrder = [];
     }
-    this.basketUpdateTotal().then(() => {});
+    this.basketUpdateTotal();
   }
   basketAddItem(event, sku = null) {
     if (!sku) {

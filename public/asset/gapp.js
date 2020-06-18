@@ -17,7 +17,7 @@ class gApp extends gInstanceSuper {
           this.mV.updateRecordList(key);
         } else if (this.mV.key !== key) {
           this.mV.dataview_record_key.value = key;
-          this.mV.updateSelectedRecord().then(() => {});
+          this.mV.updateSelectedRecord();
         }
       }
     });

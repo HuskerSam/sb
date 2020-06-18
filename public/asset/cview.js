@@ -398,7 +398,7 @@ class cView extends bView {
       this.workspace_show_home_btn.style.visibility = '';
     } else {
       let options = '<option>Overview</option><option>Details</option><option value="Generate">Generate Display</option>' +
-        '<option value="LayoutProducts">Products Data</option><option value="LayoutData">Display Data</option><option value="LayoutAssets">Assets Data</option><option value="LayoutCustom">Custom Data</option>';
+        '<option value="LayoutProducts">Products Data</option><option value="LayoutCustom">Custom Data</option>';
       this.deleteAssetButton.style.display = 'none';
       this.snapshotAssetButton.style.display = 'none';
       this.openViewerAssetButton.style.display = 'none';
