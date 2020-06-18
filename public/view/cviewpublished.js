@@ -12,7 +12,25 @@ class cViewPublished extends bView {
 
     this.bandButtons = [];
     this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
-    this.fontFields = sDataDefinition.bindingFieldsCloned('publishFontFamilyProfile');
+    this.fontFields = [{
+      title: 'Font',
+      fireSetField: 'fontFamily',
+      group: 'main',
+      dataListId: 'fontfamilydatalist',
+      type: 'font',
+      floatLeft: true
+    }, {
+      title: 'Size',
+      fireSetField: 'fontSize',
+      group: 'main',
+      displayType: 'number',
+      helperType: 'singleSlider',
+      rangeMin: '7',
+      rangeMax: '22',
+      rangeStep: '.25',
+      groupClass: 'font-size-main-view',
+      floatLeft: true
+    }];
     this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
     this.fontToolsButton = this.dialog.querySelector('#publish-settings-button');
     this.fontTools = new cBandProfileOptions(this.fontToolsButton, this.fontFields, this.fontFieldsContainer, this.fontToolsContainer);

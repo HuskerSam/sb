@@ -283,7 +283,43 @@ class cGeoView extends bView {
     this.fontFireFields.fireFields.paint()
     this.fontFireFields.fireFields.helpers.expandAll();
 
-    this.textFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.textFields = [{
+      title: 'Background',
+      fireSetField: 'canvasColor',
+      type: 'color',
+      group: 'color',
+      helperType: 'vector',
+      rangeMin: '0',
+      rangeMax: '1',
+      rangeStep: '.005',
+      floatLeft: true,
+      displayType: 'shortVector'
+    }, {
+      title: 'Font',
+      fireSetField: 'fontFamily',
+      group: 'main',
+      dataListId: 'fontfamilydatalist',
+      type: 'font',
+      floatLeft: true
+    }, {
+      title: 'Size',
+      fireSetField: 'fontSize',
+      group: 'main',
+      displayType: 'number',
+      helperType: 'singleSlider',
+      rangeMin: '7',
+      rangeMax: '22',
+      rangeStep: '.25',
+      groupClass: 'font-size-main-view',
+      floatLeft: true
+    }, {
+      title: 'Focus Lock',
+      fireSetField: 'inputFocusLock',
+      group: 'main',
+      type: 'boolean',
+      floatLeft: true,
+      clearLeft: true
+    }];
     this.publish_profile_panel = this.dialog.querySelector('.publish_profile_panel');
     this.profile_show_btn = this.dialog.querySelector('.profile_show_btn');
     this.profile_show_btn.addEventListener('click', e => {

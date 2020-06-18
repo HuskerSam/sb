@@ -27,7 +27,43 @@ class cView extends bView {
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e => gAPPP.a.resetProfile());
 
     this.fontToolsContainer = this.dialog.querySelector('#profile-header-panel');
-    this.fontFields = sDataDefinition.bindingFieldsCloned('fontFamilyProfile');
+    this.fontFields = [{
+      title: 'Background',
+      fireSetField: 'canvasColor',
+      type: 'color',
+      group: 'color',
+      helperType: 'vector',
+      rangeMin: '0',
+      rangeMax: '1',
+      rangeStep: '.005',
+      floatLeft: true,
+      displayType: 'shortVector'
+    }, {
+      title: 'Font',
+      fireSetField: 'fontFamily',
+      group: 'main',
+      dataListId: 'fontfamilydatalist',
+      type: 'font',
+      floatLeft: true
+    }, {
+      title: 'Size',
+      fireSetField: 'fontSize',
+      group: 'main',
+      displayType: 'number',
+      helperType: 'singleSlider',
+      rangeMin: '7',
+      rangeMax: '22',
+      rangeStep: '.25',
+      groupClass: 'font-size-main-view',
+      floatLeft: true
+    }, {
+      title: 'Focus Lock',
+      fireSetField: 'inputFocusLock',
+      group: 'main',
+      type: 'boolean',
+      floatLeft: true,
+      clearLeft: true
+    }];
     this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
     this.fontTools = new cBandProfileOptions(null, this.fontFields, this.fontFieldsContainer, this.fontFieldsContainer);
     this.fontTools.fireFields.values = gAPPP.a.profile;
