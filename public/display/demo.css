@@ -58,7 +58,6 @@
 }
 
 .display_header_bar .cart_panel_button {
-  float: right;
   padding: .05em;
 }
 
@@ -126,6 +125,8 @@
   overflow-x: hidden;
 }
 
+.movie_panel_button {
+}
 .movie_panel {
   padding: .5em;
 }

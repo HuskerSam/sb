@@ -60,6 +60,9 @@ class cBandProfileOptions {
       else
         this.panel.style.display = this.panelHideDisplayCSS;
 
+      if (this.panelClosedCallback && callback)
+        this.panelClosedCallback();
+
       this.collapseButton.classList.remove('app-inverted');
     } else {
       if (this.closeOthersCallback && callback)
