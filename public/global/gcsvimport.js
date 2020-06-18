@@ -1677,7 +1677,7 @@ class gCSVImport {
     showFrame.asset = 'blockchildframe';
     showFrame.name = parent;
     showFrame.childtype = 'block';
-    showFrame.parent = productData.sceneBlock.title;
+    showFrame.parent = productData.sceneBlock.title + '_productsWrapper';
     showFrame.frameorder = '20';
     showFrame.frametime = (product.startShowTime * 1000).toFixed(0) + 'cp700';
     showFrame.y = product.origRow.y;
@@ -1689,7 +1689,7 @@ class gCSVImport {
     hideFrame.asset = 'blockchildframe';
     hideFrame.name = parent;
     hideFrame.childtype = 'block';
-    hideFrame.parent = productData.sceneBlock.title;
+    hideFrame.parent = productData.sceneBlock.title + '_productsWrapper';
     hideFrame.frameorder = '30';
     hideFrame.frametime = (product.endEnlargeTime * 1000).toFixed(0) + 'cp700';
     hideFrame.y = '-1';
@@ -1701,7 +1701,7 @@ class gCSVImport {
     endFrame.asset = 'blockchildframe';
     endFrame.name = parent;
     endFrame.childtype = 'block';
-    endFrame.parent = productData.sceneBlock.title;
+    endFrame.parent = productData.sceneBlock.title + '_productsWrapper';
     endFrame.frameorder = '40';
     endFrame.frametime = (productData.runLength * 1000).toFixed(0);
     endFrame.y = '-1';
