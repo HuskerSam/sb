@@ -163,13 +163,14 @@ class gAuthorization {
   }
   async resetProfile() {
     let profileData = {
-      fontSize: '9',
-      lightIntensity: '.4',
+      fontSize: '10',
+      lightIntensity: '.7',
       selectedWorkspace: 'default',
       showBoundsBox: true,
       showFloorGrid: false,
       cameraUpdates: false,
       cameraSaves: true,
+      opacityLevel: '.5',
       showForceWireframe: false,
       showSceneGuides: true,
       cameraName: "Default Camera",

@@ -474,6 +474,12 @@ class cViewDemo extends bView {
         this.audio.pause();
       }
     });
+
+    this.profile_clear_button = this.dialog.querySelector('.profile_clear_button');
+    this.profile_clear_button.addEventListener('click', e => {
+      gAPPP.a.resetProfile();
+      setTimeout(() => location.reload(), 100);
+    });
   }
   clearHeaderBar() {
     this.display_header_row.classList.remove('expanded_header');
@@ -1828,7 +1834,10 @@ class cViewDemo extends bView {
             </div>
             <div class="movie-panel-fields-container"></div>
           </div>
-          <div class="profile_panel"><div class="fields-container"></div></div>
+          <div class="profile_panel">
+            <button class="profile_clear_button btn-sb-icon app-transparent" style="float:left;">Reset Profile</button>
+            <div class="fields-container" style="clear:both;"></div>
+          </div>
           <div class="demo_panel"><div class="demo_panel_contents app-panel app-transparent"></div><div class="fields-container"></div></div>
           <div class="cart_panel">
             <select id="workspaces-select"></select>
@@ -1842,7 +1851,7 @@ class cViewDemo extends bView {
               <option selected>Circuit Materials</option>
               <option>Chat Items</option>
             </select>
-            <button class="chat_clear_button btn-sb-icon app-transparent" style="float:right;">Reset</button>
+            <button class="chat_clear_button btn-sb-icon app-transparent" style="float:right;">Reset Edits</button>
             <div class="inner_circuitmaterial_panel app-panel app-transparent" style="clear:both;display:inline-block;float:left;">
               <select class="circuitmaterialselect" style="display:inline-block"></select>
               <br>
