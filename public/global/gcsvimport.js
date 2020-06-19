@@ -446,7 +446,18 @@ class gCSVImport {
       }).then(results => {});
     }
 
-    if (row.materialname && row.texturepath) {
+    if (row.materialname && row.texture) {
+      let mat = this.defaultCSVRow();
+      mat.asset = 'material';
+      mat.name = row.materialname;
+      mat.texture = row.texture;
+      mat.speculartexture = row.texture;
+      mat.bumptexture = row.texture;
+      mat.scaleu = row.scaleu;
+      mat.scalev = row.scalev;
+      mat.hasalpha = '';
+      this.addCSVRow(mat);
+    } else if (row.materialname && row.texturepath) {
       this.dbSetRecord('material', {
         title: row.materialname,
         ambientColor: row.color,
@@ -1016,10 +1027,10 @@ class gCSVImport {
       let panelrow = this.defaultCSVRow();
       if (row.floormaterial || row.floorimage) {
         panelrow.asset = 'shape';
-        panelrow.name = row.name + '_floorpanel';
+        panelrow.name = 'circuit_' + row.name + '_floorpanel';
         if (row.floorimage) {
           panelrow.materialname = panelrow.name;
-          panelrow.texturepath = row.floorimage;
+          panelrow.texture = row.floorimage;
           panelrow.scaleu = row.floorscaleu;
           panelrow.scalev = row.floorscalev;
         } else {
@@ -1036,10 +1047,10 @@ class gCSVImport {
       if (row.ceilingmaterial || row.ceilingwallimage) {
         panelrow = this.defaultCSVRow();
         panelrow.asset = 'shape';
-        panelrow.name = row.name + '_ceilingpanel';
+        panelrow.name = 'circuit_' + row.name + '_ceilingpanel';
         if (row.ceilingwallimage) {
           panelrow.materialname = panelrow.name;
-          panelrow.texturepath = row.ceilingwallimage;
+          panelrow.texture = row.ceilingwallimage;
           panelrow.scaleu = row.ceilingwallscaleu;
           panelrow.scalev = row.ceilingwallscalev;
         } else {
@@ -1058,10 +1069,10 @@ class gCSVImport {
         panelrow = this.defaultCSVRow();
         panelrow.asset = 'shape';
 
-        panelrow.name = row.name + '_backwallpanel';
+        panelrow.name = 'circuit_' + row.name + '_backwallpanel';
         if (row.backwallimage) {
           panelrow.materialname = panelrow.name;
-          panelrow.texturepath = row.backwallimage;
+          panelrow.texture = row.backwallimage;
           panelrow.scaleu = row.backwallscaleu;
           panelrow.scalev = row.backwallscalev;
         } else {
@@ -1080,10 +1091,10 @@ class gCSVImport {
       if (row.frontwallmaterial || row.frontwallimage) {
         panelrow = this.defaultCSVRow();
         panelrow.asset = 'shape';
-        panelrow.name = row.name + '_frontwallpanel';
+        panelrow.name = 'circuit_' + row.name + '_frontwallpanel';
         if (row.frontwallimage) {
           panelrow.materialname = panelrow.name;
-          panelrow.texturepath = row.frontwallimage;
+          panelrow.texture = row.frontwallimage;
           panelrow.scaleu = row.frontwallscaleu;
           panelrow.scalev = row.frontwallscalev;
         } else {
@@ -1102,10 +1113,10 @@ class gCSVImport {
       if (row.rightwallmaterial || row.rightwallimage) {
         panelrow = this.defaultCSVRow();
         panelrow.asset = 'shape';
-        panelrow.name = row.name + '_rightwallpanel';
+        panelrow.name = 'circuit_' + row.name + '_rightwallpanel';
         if (row.rightwallimage) {
           panelrow.materialname = panelrow.name;
-          panelrow.texturepath = row.rightwallimage;
+          panelrow.texture = row.rightwallimage;
           panelrow.scaleu = row.rightwallscaleu;
           panelrow.scalev = row.rightwallscalev;
         } else {
@@ -1123,10 +1134,10 @@ class gCSVImport {
       if (row.leftwallmaterial || row.leftwallimage) {
         panelrow = this.defaultCSVRow();
         panelrow.asset = 'shape';
-        panelrow.name = row.name + '_leftwallpanel';
+        panelrow.name = 'circuit_' + row.name + '_leftwallpanel';
         if (row.leftwallimage) {
           panelrow.materialname = panelrow.name;
-          panelrow.texturepath = row.leftwallimage;
+          panelrow.texture = row.leftwallimage;
           panelrow.scaleu = row.leftwallscaleu;
           panelrow.scalev = row.leftwallscalev;
         } else {
