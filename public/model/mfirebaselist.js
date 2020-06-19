@@ -213,6 +213,14 @@ class mFirebaseList extends bFirebase {
       }
     });
   }
+  queryCacheContains(keyName, keyValue) {
+    let results = {};
+    for (let i in this.fireDataValuesByKey)
+      if (this.fireDataValuesByKey[i][keyName].toString().indexOf(keyValue) !== -1)
+        results[i] = this.fireDataValuesByKey[i];
+
+    return results;
+  }
   queryCache(keyName, keyValue) {
     let results = {};
     for (let i in this.fireDataValuesByKey)

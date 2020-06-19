@@ -227,7 +227,7 @@ input.animate-range {
 }
 
 .cart-contents {
-  max-height: 50vh;
+  max-height: calc(80vh - 5em);
   overflow: auto;
   display: inline-block;
   padding: .5em;
@@ -447,7 +447,7 @@ button, i, .no-selection {
 
 .inner_chat_panel {
   overflow: auto;
-  max-height: 55vh;
+  max-height: calc(80vh - 6.5em);
   padding: .1em;
 }
 

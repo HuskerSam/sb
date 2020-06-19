@@ -441,6 +441,19 @@ class cViewDemo extends bView {
 
     this.initBlockAddPanel();
 
+    this.edit_select_panel = this.dialog.querySelector('.edit_select_panel');
+    this.inner_circuitmaterial_panel = this.dialog.querySelector('.inner_circuitmaterial_panel');
+    this.inner_chat_panel = this.dialog.querySelector('.inner_chat_panel');
+    this.edit_select_panel.addEventListener('click', e => {
+      if (this.edit_select_panel.value === 'Circuit Materials') {
+        this.inner_circuitmaterial_panel.style.display = 'block';
+        this.inner_chat_panel.style.display = 'none';
+      } else {
+        this.inner_chat_panel.style.display = 'block';
+        this.inner_circuitmaterial_panel.style.display = 'none';
+      }
+    });
+
     this.mute_header_button = this.dialog.querySelector('.mute_header_button');
     this.mute_header_button.addEventListener('click', async e => {
       this.audio.currentTime = Math.max(0, this.canvasHelper.timeE);
@@ -1825,10 +1838,25 @@ class cViewDemo extends bView {
             <button class="btn-sb-icon app-transparent cart-submit"><i class="material-icons-outlined">shopping_cart</i>Checkout</button>
           </div>
           <div class="chat_panel">
-            <div class="inner_chat_panel app-panel app-transparent">
+            <select style="float:left;font-size:1.5em;" class="edit_select_panel app-transparent">
+              <option selected>Circuit Materials</option>
+              <option>Chat Items</option>
+            </select>
+            <button class="chat_clear_button btn-sb-icon app-transparent" style="float:right;">Reset</button>
+            <div class="inner_circuitmaterial_panel app-panel app-transparent" style="clear:both;display:inline-block;float:left;">
+              <select class="circuitmaterialselect" style="display:inline-block"></select>
+              <br>
+              <select class="circuitmaterialchangeselect" style="display:inline-block"></select>
+              <br>
+              <div style="text-align:center;">
+                <label><span>repeat x</span><input type="text" class="materialscalev" style="width:3em;" value="1" /></label>
+                <label><span>repeat y</span><input type="text" class="materialscaleu" style="width:3em" value="1" /></label>
+                <label><span>s power</span><input type="text" class="materialspower" style="width:3em" value="4" /></label>
+              </div>
+            </div>
+            <div class="inner_chat_panel app-panel app-transparent" style="clear:both;display:none;">
               <div class="raw_macro_panel"></div>
               <div class="fields-container"></div>
-              <button class="chat_clear_button btn-sb-icon" style="float:right;">Clear Chat</button>
               <div style="clear:both"></div>
             </div>
           </div>
@@ -1941,9 +1969,104 @@ class cViewDemo extends bView {
     this.generate.blockHelperChange();
 
     this.chat_clear_button = this.dialog.querySelector('.chat_clear_button');
-    this.chat_clear_button.addEventListener('click', e => this.clearChat());
+    this.chat_clear_button.addEventListener('click', e => this.clearSceneEdits());
+
+    this.circuitmaterialselect = this.dialog.querySelector('.circuitmaterialselect');
+    this.circuitmaterialchangeselect = this.dialog.querySelector('.circuitmaterialchangeselect');
+    this.circuitmaterialchangeselect.addEventListener('input', e => this.circuitMaterialUpdate());
+
+    this.materialspower = this.dialog.querySelector('.materialspower');
+    this.materialscaleu = this.dialog.querySelector('.materialscaleu');
+    this.materialscalev = this.dialog.querySelector('.materialscalev');
+    this.materialspower.addEventListener('input', e => this.circuitMaterialUpdate());
+    this.materialscaleu.addEventListener('input', e => this.circuitMaterialUpdate());
+    this.materialscalev.addEventListener('input', e => this.circuitMaterialUpdate());
+
+    let circuitMaterials = gAPPP.a.modelSets['material'].queryCacheContains('title', 'circuit_');
+    let matListHtml = '';
+    for (let i in circuitMaterials)
+      matListHtml += `<option>${circuitMaterials[i].title}</option>`;
+    this.circuitmaterialselect.innerHTML = matListHtml;
+
+    let html = '<option>Set to ...</option>';
+    html += this.generate._materialGetHTMLOptionList();
+    html = html.replace(/sb:matpack\//gi, '');
+    this.circuitmaterialchangeselect.innerHTML = html;
   }
-  clearChat() {
+  circuitMaterialUpdate() {
+    let texture = this.circuitmaterialchangeselect.value;
+    let t_title = this.circuitmaterialselect.value;
+    if (this.circuitmaterialchangeselect.selectedIndex < 1)
+      return;
+
+    let textureURL = 'sb:matpack/' + texture + '_D.jpg';
+    let speculartexture = 'sb:matpack/' + texture + '_S.jpg';
+    let bumptexture = 'sb:matpack/' + texture + '_N.jpg';
+    let hasAlpha = false;
+    if (texture.substr(-5).substring(0, 4) === 'grid') {
+      textureURL = 'sb:matpack/' + texture + '_D.png';
+      hasAlpha = true;
+    }
+
+    let specularPower = this.materialspower.value;
+    let vScale = this.materialscalev.value;
+    let uScale = this.materialscaleu.value;
+
+    let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', t_title + '_texture');
+    let bid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', t_title + '_Ntexture');
+    let sid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', t_title + '_Stexture');
+
+    if (tid) {
+      gAPPP.a.modelSets['texture'].commitUpdateList([{
+        field: 'url',
+        newValue: textureURL
+      }, {
+        field: 'uScale',
+        newValue: uScale
+      }, {
+        field: 'vScale',
+        newValue: vScale
+      }, {
+        field: 'hasAlpha',
+        newValue: hasAlpha
+      }], tid);
+    }
+
+    if (sid) {
+      gAPPP.a.modelSets['texture'].commitUpdateList([{
+        field: 'url',
+        newValue: speculartexture
+      }, {
+        field: 'uScale',
+        newValue: uScale
+      }, {
+        field: 'vScale',
+        newValue: vScale
+      }], sid);
+    }
+
+    if (bid) {
+      gAPPP.a.modelSets['texture'].commitUpdateList([{
+        field: 'url',
+        newValue: bumptexture
+      }, {
+        field: 'uScale',
+        newValue: uScale
+      }, {
+        field: 'vScale',
+        newValue: vScale
+      }], sid);
+    }
+
+    let mid = gAPPP.a.modelSets['material'].getIdByFieldLookup('title', t_title);
+    if (mid) {
+      gAPPP.a.modelSets['texture'].commitUpdateList([{
+        field: 'specularPower',
+        newValue: specularPower
+      }], mid);
+    }
+  }
+  clearSceneEdits() {
     let parent = this.productData.sceneBlock.title + '_chatWrapper';
     let b = gAPPP.a.modelSets['block'].getIdByFieldLookup('title', parent);
     let blkChildren = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', b);

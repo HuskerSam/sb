@@ -611,14 +611,7 @@ class cMacro {
       </div>
       <div class="csv_import_preview"></div>`;
   }
-  materialRegister() {
-    this.standardmaterialassetpanel = this.panel.querySelector('.standardmaterialassetpanel');
-    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
-    this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
-    this.material_texture_img = this.panel.querySelector('.material_texture_img');
-    this.materialscalev = this.panel.querySelector('.materialscalev');
-    this.materialscaleu = this.panel.querySelector('.materialscaleu');
-
+  _materialGetHTMLOptionList() {
     let html = '';
     for (let c = 0; c < 17; c++)
       html += `<option>sb:matpack/brickwall${c + 1}</option>`;
@@ -634,7 +627,17 @@ class cMacro {
       html += `<option>sb:matpack/roof${c + 1}</option>`;
     for (let c = 0; c < 7; c++)
       html += `<option>sb:matpack/wood${c + 1}</option>`;
-    this.materialtexturepicker.innerHTML = html;
+    return html;
+  }
+  materialRegister() {
+    this.standardmaterialassetpanel = this.panel.querySelector('.standardmaterialassetpanel');
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
+    this.material_texture_img = this.panel.querySelector('.material_texture_img');
+    this.materialscalev = this.panel.querySelector('.materialscalev');
+    this.materialscaleu = this.panel.querySelector('.materialscaleu');
+
+    this.materialtexturepicker.innerHTML = this._materialGetHTMLOptionList();
 
     this.materialtexturepicker.selectedIndex = 0;
 
