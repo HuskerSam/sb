@@ -230,7 +230,6 @@ input.animate-range {
   max-height: calc(80vh - 5em);
   overflow: auto;
   display: inline-block;
-  padding: .5em;
 }
 
 .cart-contents * {

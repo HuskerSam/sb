@@ -2069,7 +2069,7 @@ class cViewDemo extends bView {
 
     let mid = gAPPP.a.modelSets['material'].getIdByFieldLookup('title', t_title);
     if (mid) {
-      gAPPP.a.modelSets['texture'].commitUpdateList([{
+      gAPPP.a.modelSets['material'].commitUpdateList([{
         field: 'specularPower',
         newValue: specularPower
       }], mid);
