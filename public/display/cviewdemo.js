@@ -478,7 +478,6 @@ class cViewDemo extends bView {
     this.profile_clear_button = this.dialog.querySelector('.profile_clear_button');
     this.profile_clear_button.addEventListener('click', e => {
       gAPPP.a.resetProfile();
-      setTimeout(() => location.reload(), 100);
     });
   }
   clearHeaderBar() {
@@ -559,11 +558,6 @@ class cViewDemo extends bView {
     let d = this.demoOptionDiv.querySelector('.nav_options');
     let html = '';
 
-    let shelves = this.__findProjectID({
-      label: pageDesc.label,
-      song: pageDesc.song,
-      circuit: 'shelves'
-    });
     let isle = this.__findProjectID({
       label: pageDesc.label,
       song: pageDesc.song,
@@ -586,15 +580,15 @@ class cViewDemo extends bView {
     });
 
     if (pageDesc.circuit === 'carousel') {
-      html += `Carousel <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `Carousel <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'isle') {
-      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> Isle<br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> Isle <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'tables') {
-      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> Tables <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     } else if (pageDesc.circuit === 'island') {
-      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${shelves}${this._optionsURL()}">Shelves</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> Platform<br>`;
+      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> Platform<br>`;
     } else {
-      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> Shelves <a href="?wid=${isle}${this._optionsURL()}">Isle</a><br> <a href="?wid=${tables}${this._optionsURL()}">Tables</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
+      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
     }
     let flat = this.__findProjectID({
       label: 'flat',

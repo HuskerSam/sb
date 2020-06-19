@@ -35,7 +35,6 @@ class cBandProfileOptions {
       }
       if (fieldUpdates[i].field === 'fontSize') {
         gAPPP.a.profile.fontSize = fieldUpdates[i].newValue;
-        gAPPP._handleDataUpdate();
       }
       if (fieldUpdates[i].field === 'canvasColor') {
         if (gAPPP.a.profile.canvasColor !== fieldUpdates[i].newValue) {

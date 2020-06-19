@@ -61,9 +61,6 @@ class gInstanceSuper {
     }
   }
   initializeAuthUI() {}
-  handleDataUpdate() {
-    this._handleDataUpdate();
-  }
   profileReadyAndLoaded() {
     this.loadStarted = true;
     let wId = this.a.profile.selectedWorkspace;
@@ -94,12 +91,6 @@ class gInstanceSuper {
     if (!workspace)
       workspace = 'default';
     return workspace;
-  }
-  _handleDataUpdate() {
-    if (this.initialUILoad)
-      return;
-
-    this._updateApplicationStyle();
   }
   resize() {
     if (this.activeContext)

@@ -202,6 +202,8 @@ class bView {
 
     if (this.canvasHelper)
       this.canvasHelper.userProfileChange();
+
+    gAPPP._updateApplicationStyle();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     //if (!this.tag)
