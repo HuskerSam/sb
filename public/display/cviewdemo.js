@@ -2077,6 +2077,24 @@ class cViewDemo extends bView {
       field: 'chatStartY',
       newValue: "10"
     }]);
+
+    let textures = gAPPP.a.modelSets['texture'].queryCacheContains('title', 'circuit_');
+    for (let tid in textures) {
+      let texture = textures[tid];
+      let orig = texture.orig;
+
+      if (!orig)
+        continue;
+
+      let updates = [];
+      for (let field in orig)
+        updates.push({
+          field,
+          newValue: orig[field]
+        });
+
+      gAPPP.a.modelSets['texture'].commitUpdateList(updates, tid);
+    }
   }
   closeHeaderBands(canvasClick) {
     if (canvasClick)

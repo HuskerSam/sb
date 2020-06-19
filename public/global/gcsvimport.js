@@ -635,15 +635,16 @@ class gCSVImport {
     if (row.texture) {
       textureName = row.name + '_texture';
       let textureData = {
-        title: textureName,
         url: row.texture,
         vScale: row.scalev,
-        uScale: row.scaleu
+        uScale: row.scaleu,
+        hasAlpha: (row.hasalpha.toString() === '1')
       };
 
-      if (row.hasalpha.toString() === '1') {
-        textureData.hasAlpha = true;
+      if (textureName.substring(0, 8) === 'circuit_') {
+        textureData.orig = Object.assign({}, textureData);
       }
+      textureData.title = textureName;
       this.dbSetRecord('texture', textureData);
     }
 
