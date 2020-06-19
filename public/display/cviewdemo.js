@@ -517,6 +517,7 @@ class cViewDemo extends bView {
         <option value="console_follow">Console Follow</option>
         <option value="mobile_portrait">Mobile Portrait</option>
       </select>
+      <br>
       <a style="line-height:1.5em;font-size:1.5em;" href="/intro">About...</a><br>`;
       html +=
         `<div class="nav_options"></div>`;
@@ -613,11 +614,6 @@ class cViewDemo extends bView {
       html += `<a href="?wid=${min}${this._optionsURL()}">Min</a> <a href="?wid=${flat}${this._optionsURL()}">Flat</a> Raised<br>`;
     }
 
-    let elephant = this.__findProjectID({
-      label: pageDesc.label,
-      song: 'elephant',
-      circuit: pageDesc.circuit
-    });
     let cantina = this.__findProjectID({
       label: pageDesc.label,
       song: 'cantina',
@@ -634,13 +630,13 @@ class cViewDemo extends bView {
       circuit: pageDesc.circuit
     });
     if (pageDesc.song === 'starwars') {
-      html += `Star Wars <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+      html += `Star Wars <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
     } else if (pageDesc.song === 'cantina') {
-      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> Cantina <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> Cantina <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
     } else if (pageDesc.song === 'mute') {
-      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${elephant}${this._optionsURL()}">Elephant</a> Mute<br>`;
+      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> Mute<br>`;
     } else {
-      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> Elephant <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
+      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
     }
     d.innerHTML = html;
   }

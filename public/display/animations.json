@@ -47,30 +47,6 @@
   "circuitsheet": "starwarscarousel",
   "catalogsheet": "carouselcatalogmin"
 }, {
-  "song": "elephant",
-  "assetssheet": "bottleassets",
-  "wid": "-M3bvko2KrsW2CxrXJC5",
-  "circuit": "carousel",
-  "label": "flat",
-  "circuitsheet": "elephantcarousel",
-  "catalogsheet": "carouselcatalogflat"
-}, {
-  "song": "elephant",
-  "assetssheet": "bottleassets",
-  "wid": "-M4UJMjRCYpdYXCFZayW",
-  "circuit": "carousel",
-  "label": "raised",
-  "circuitsheet": "elephantcarousel",
-  "catalogsheet": "carouselcatalograised"
-}, {
-  "song": "elephant",
-  "circuit": "carousel",
-  "assetssheet": "bottleassets",
-  "wid": "-M5T8s04p4xcrexLIn8j",
-  "label": "min",
-  "circuitsheet": "elephantcarousel",
-  "catalogsheet": "carouselcatalogmin"
-}, {
   "song": "cantina",
   "assetssheet": "bottleassets",
   "wid": "-M3o8rB3zPwJLN-u4om8",
@@ -143,30 +119,6 @@
   "circuitsheet": "starwarsisle",
   "catalogsheet": "islecatalogmin"
 }, {
-  "song": "elephant",
-  "assetssheet": "groceryassets",
-  "wid": "-M53qyBeWE9NIEcm6hjp",
-  "circuit": "isle",
-  "label": "flat",
-  "circuitsheet": "elephantisle",
-  "catalogsheet": "islecatalogflat"
-}, {
-  "song": "elephant",
-  "assetssheet": "groceryassets",
-  "wid": "-M54zh1lGmcyEohqHcZR",
-  "circuit": "isle",
-  "label": "raised",
-  "circuitsheet": "elephantisle",
-  "catalogsheet": "islecatalograised"
-}, {
-  "song": "elephant",
-  "circuit": "isle",
-  "assetssheet": "groceryassets",
-  "wid": "-M5T7Qb4ESh_2svq9J-W",
-  "label": "min",
-  "circuitsheet": "elephantisle",
-  "catalogsheet": "islecatalogmin"
-}, {
   "song": "cantina",
   "assetssheet": "groceryassets",
   "wid": "-M53v3f8PnSn0DJ2Gy6s",
@@ -237,30 +189,6 @@
   "wid": "-M5nPctCvvooa2jE5kuU",
   "label": "min",
   "circuitsheet": "cantinaisland",
-  "catalogsheet": "islandcatalogmin"
-}, {
-  "song": "elephant",
-  "assetssheet": "outdoorassets",
-  "wid": "-M5nPr4L5GLAQ61o90o2",
-  "circuit": "island",
-  "label": "flat",
-  "circuitsheet": "elephantisland",
-  "catalogsheet": "islandcatalogflat"
-}, {
-  "song": "elephant",
-  "circuit": "island",
-  "assetssheet": "outdoorassets",
-  "wid": "-M5nPsWp7iNXs0f63-oF",
-  "label": "raised",
-  "circuitsheet": "elephantisland",
-  "catalogsheet": "islandcatalograised"
-}, {
-  "song": "elephant",
-  "circuit": "island",
-  "assetssheet": "outdoorassets",
-  "wid": "-M5nPtVhCSKiv95LKtZC",
-  "label": "min",
-  "circuitsheet": "elephantisland",
   "catalogsheet": "islandcatalogmin"
 }, {
   "song": "mute",

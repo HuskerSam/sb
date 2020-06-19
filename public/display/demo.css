@@ -168,6 +168,12 @@
 .demo_panel_contents {
   text-align: center;
   float: left;
+  background: orange!important;
+  color: white;
+}
+
+.demo_panel_contents a {
+  color: white!important;
 }
 
 .scene-tools-checkboxes {
@@ -624,4 +630,25 @@ button, i, .no-selection {
   float:left;
   width: 44.5vw;
   margin-right: 1vw;
+}
+
+.demo_panel_button {
+  background: orange!important;
+  border-color: white;
+  border-style: solid;
+}
+
+.demo_panel_button i {
+  color: white!important;
+  background: orange!important;
+}
+
+.app-inverted.demo_panel_button {
+  background: white!important;
+  border-color: orange!important;
+}
+
+.app-inverted.demo_panel_button i {
+  color: orange!important;
+  background: white!important;
 }

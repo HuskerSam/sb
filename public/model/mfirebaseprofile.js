@@ -15,8 +15,6 @@ class mFirebaseProfile extends bFirebase {
       let key = fireData.key;
       this.fireData = fireData;
       this.profile[key] = value;
-
-      gAPPP.handleDataUpdate();
     }
     else {
       this.profile = fireData.val();
