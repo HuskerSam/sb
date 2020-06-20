@@ -1148,7 +1148,15 @@ class cWorkspace {
     let newRow = {};
     for (let c = 0, l = fields.length; c < l; c++) {
       newRow[this.fieldList[c]] = fields[c].value;
-      fields[c].value = '';
+      if (this.fieldList[c] === 'asset') {
+
+      }  else if (this.fieldList[c] !== 'index')
+        fields[c].value = '';
+      else {
+        let num = GLOBALUTIL.getNumberOrDefault(fields[c].value, 0);
+        num += 100;
+        fields[c].value = num;
+      }
     }
 
     let rows = this.editTable.getData();
