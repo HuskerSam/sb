@@ -1061,7 +1061,10 @@ class wBlock {
     let texture;
     if (textureName.substring(0, 3) === 'sb:') {
       let url = gAPPP.cdnPrefix + 'textures/' + textureName.substring(3);
-      return new BABYLON.Texture(url, this.context.scene);
+      let t = new BABYLON.Texture(url, this.context.scene);
+      if (textureName.substr(-4) === '.png')
+        t.hasAlpha = true;
+      return t;
     }
 
     let tD = gAPPP.a.modelSets['texture'].getValuesByFieldLookup('title', textureName);
