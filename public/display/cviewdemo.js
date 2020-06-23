@@ -503,13 +503,10 @@ class cViewDemo extends bView {
       return;
 
     if (tags.indexOf('demopanel') !== -1) {
-      let pageDesc = this.projectsMap[gAPPP.loadedWID];
-      if (!pageDesc)
-        return;
-
       if (!this.demoOptionDiv) {
         this.demoOptionDiv = this.dialog.querySelector('.demo_panel_contents');
       }
+
       let html = `<select class="ui_select" name="controls">
         &nbsp;
         <option value="mobile_orientation">Mobile Orientation</option>
