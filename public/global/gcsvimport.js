@@ -304,6 +304,102 @@ class gCSVImport {
 
     return blockResult;
   }
+  async addCSVDisplayBlock(row) {
+    let blockRow = {
+      asset: 'block',
+      name: row.name,
+      width: '5',
+      height: '3',
+      depth: '5',
+      materialname: '',
+      blockflag: 'displayBlock'
+    };
+
+    let childBlockCount = this.getNumberOrDefault(row.childcount, 1);
+    let childScale = this.getNumberOrDefault(row.childscale, 1);
+    let childName = row.childname;
+    let childType = row.childtype;
+    let childscale2 = this.getNumberOrDefault(row.childscale2, 1);
+    let childname2 = row.childname2;
+    let childType2 = row.childtype2;
+    let childrenWide = this.getNumberOrDefault(row.childrenwide, 1);
+    let childrenDeep = this.getNumberOrDefault(row.childrendeep, 1);
+    let childrenHigh = this.getNumberOrDefault(row.childrenhigh, 1);
+    let layerHeight = this.getNumberOrDefault(row.layerheight, 3);
+    let layerRotation = this.getNumberOrDefault(row.layerrotation, '45deg');
+    let childX = this.getNumberOrDefault(row.childx, 0);
+    let childY = this.getNumberOrDefault(row.childy, 0);
+    let childZ = this.getNumberOrDefault(row.childz, 0);
+    let childrX = this.getNumberOrDefault(row.childrx, 0);
+    let childrY = this.getNumberOrDefault(row.childry, 0);
+    let childrZ = this.getNumberOrDefault(row.childrz, 0);
+    let childdX = this.getNumberOrDefault(row.childdeltax, 0);
+    let childdY = this.getNumberOrDefault(row.childdeltay, 0);
+    let childdZ = this.getNumberOrDefault(row.childdeltaz, 0);
+    let childdrX = this.getNumberOrDefault(row.childdeltarx, 0);
+    let childdrY = this.getNumberOrDefault(row.childdeltary, 0);
+    let childdrZ = this.getNumberOrDefault(row.childdeltarz, 0);
+    //  let childRadius = this.getNumberOrDefault(row.childradius, 1.5);
+    let width = 5.0;
+    let depth = 5.0;
+    let localX = width / childrenWide;
+    let localZ = depth / childrenDeep;
+
+    let childBlockRows = [];
+    let curPos = {
+      x: 0,
+      y: 0,
+      z: 0,
+      rx: 0,
+      ry: 0,
+      rz: 0
+    };
+    let currentLayerRotation = 0;
+    let xIndex = 0;
+    let yIndex = 0;
+    let zIndex = 0;
+    let startX = width / -2.0;
+    let startZ = depth / -2.0;
+    for (let ctr = 0; ctr < childBlockCount; ctr++) {
+      curPos.x = startX + (xIndex * localX) + (localX / 2.0);
+      curPos.y = yIndex * layerHeight;
+      curPos.z = startZ + (zIndex * localZ) + (localZ / 2.0);
+      let childRow = {
+        asset: 'blockchild',
+        parent: row.name,
+        childtype: childType,
+        name: childName,
+        x: curPos.x,
+        y: curPos.y,
+        z: curPos.z,
+        rx: curPos.rx,
+        ry: curPos.ry,
+        rz: curPos.rz,
+        sx: childScale,
+        sy: childScale,
+        sz: childScale
+      };
+      childBlockRows.push(childRow);
+
+      xIndex++;
+      if (xIndex >= childrenWide) {
+        xIndex = 0;
+        zIndex++;
+      }
+      if (zIndex >= childrenDeep)
+        zIndex = 0;
+
+      if (ctr >= ((yIndex + 1) * childrenWide * childrenDeep - 1)) {
+        xIndex = 0;
+        zIndex = 0;
+        yIndex++;
+      }
+    }
+
+    await this.addCSVRow(blockRow);
+
+    return this.addCSVRowList(childBlockRows);
+  }
   async csvFetchSceneBlock() {
     let results = await this.dbFetchByLookup('block', 'blockFlag', 'scene');
     if (results.records.length < 1) {
@@ -624,6 +720,8 @@ class gCSVImport {
         return this.addCSVSceneBlock(row);
       case 'material':
         return this.addCSVMaterial(row);
+      case 'displayblock':
+        return this.addCSVDisplayBlock(row);
     }
 
     console.log('type not found', row.asset, row);
