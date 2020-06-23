@@ -213,6 +213,17 @@ class GLOBALUTIL {
       lat, lon
     }
   }
+  static angleDeg(angle, d = 0.0) {
+    if (angle.toLowerCase().indexOf('deg') !== -1) {
+      angle = angle.toLowerCase().replace('deg', '');
+      d = GLOBALUTIL.getNumberOrDefault(d, 0.0);
+      angle = GLOBALUTIL.getNumberOrDefault(angle, d) * Math.PI / 180.0;
+    } else {
+      d = GLOBALUTIL.getNumberOrDefault(d, 0.0);
+      angle = GLOBALUTIL.getNumberOrDefault(angle, d);
+    }
+    return angle;
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {

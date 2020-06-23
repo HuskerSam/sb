@@ -16,6 +16,13 @@ class gCSVImport {
       return GLOBALUTIL.getNumberOrDefault(val, d);
     }
   }
+  angleDeg(angle, d) {
+    if (this.node) {
+      return this.globalUtil.angleDeg(angle, d);
+    } else {
+      return GLOBALUTIL.angleDeg(angle, d);
+    }
+  }
   path(eleType) {
     return '/project/' + this.projectId + '/' + eleType;
   }
@@ -326,26 +333,21 @@ class gCSVImport {
     let childrenDeep = this.getNumberOrDefault(row.childrendeep, 1);
     let childrenHigh = this.getNumberOrDefault(row.childrenhigh, 1);
     let layerHeight = this.getNumberOrDefault(row.layerheight, 3);
-    let layerRotation = row.layerrotation;
-    this.getNumberOrDefault(row.layerrotation, '45deg');
-    if (layerRotation.toLowerCase().indexOf('deg') !== -1) {
-      layerRotation = layerRotation.toLowerCase().replace('deg', '');
-      layerRotation = GLOBALUTIL.getNumberOrDefault(layerRotation, 0) * Math.PI / 180.0;
-    } else {
-      layerRotation = this.getNumberOrDefault(row.layerrotation, Math.PI / 4.0);
-    }
+    let layerRotation = this.angleDeg(row.layerrotation, '45deg');
     let childX = this.getNumberOrDefault(row.childx, 0);
     let childY = this.getNumberOrDefault(row.childy, 0);
     let childZ = this.getNumberOrDefault(row.childz, 0);
-    let childrX = this.getNumberOrDefault(row.childrx, 0);
-    let childrY = this.getNumberOrDefault(row.childry, 0);
-    let childrZ = this.getNumberOrDefault(row.childrz, 0);
+    let childrX = this.angleDeg(row.childrx, '0');
+    let childrY = this.angleDeg(row.childry, '0');
+    let childrZ = this.angleDeg(row.childrz, '0');
     let childdX = this.getNumberOrDefault(row.childdeltax, 0);
     let childdY = this.getNumberOrDefault(row.childdeltay, 0);
     let childdZ = this.getNumberOrDefault(row.childdeltaz, 0);
+
     let childdrX = this.getNumberOrDefault(row.childdeltarx, 0);
     let childdrY = this.getNumberOrDefault(row.childdeltary, 0);
     let childdrZ = this.getNumberOrDefault(row.childdeltarz, 0);
+
     let width = 5.0;
     let depth = 5.0;
     let localX = width / childrenWide;
@@ -404,6 +406,10 @@ class gCSVImport {
       childBlockRows.push(childRow);
 
       xIndex++;
+      curPos.rx += childrX;
+      curPos.ry += childrY;
+      curPos.rz += childrZ;
+
       if (xIndex >= childrenWide) {
         xIndex = 0;
         zIndex++;
@@ -415,6 +421,9 @@ class gCSVImport {
         xIndex = 0;
         zIndex = 0;
         yIndex++;
+        curPos.rx = 0.0;
+        curPos.ry = 0.0;
+        curPos.rz = 0.0;
         currentLayerRotation += layerRotation;
       }
     }

@@ -527,24 +527,9 @@ class bView {
         let rx = positionParts[3];
         let ry = positionParts[4];
         let rz = positionParts[5];
-        if (rx.toLowerCase().indexOf('deg') !== -1) {
-          rx = rx.toLowerCase().replace('deg', '');
-          rx = GLOBALUTIL.getNumberOrDefault(rx, 0) * Math.PI / 180.0;
-        } else {
-          rx = GLOBALUTIL.getNumberOrDefault(rx, 0);
-        }
-        if (ry.toLowerCase().indexOf('deg') !== -1) {
-          ry = ry.toLowerCase().replace('deg', '');
-          ry = GLOBALUTIL.getNumberOrDefault(ry, 0) * Math.PI / 180.0;
-        } else {
-          ry = GLOBALUTIL.getNumberOrDefault(ry, 0);
-        }
-        if (rz.toLowerCase().indexOf('deg') !== -1) {
-          rz = rz.toLowerCase().replace('deg', '');
-          rz = GLOBALUTIL.getNumberOrDefault(rz, 0) * Math.PI / 180.0;
-        } else {
-          rz = GLOBALUTIL.getNumberOrDefault(rz, 0);
-        }
+        rx = GLOBALUTIL.angleDeg(rx, 0);
+        ry = GLOBALUTIL.angleDeg(ry, 0);
+        rz = GLOBALUTIL.angleDeg(rz, 0);
 
         block.sceneObject.rotation.z = Math.PI / 2 - rz;
         block.sceneObject.rotation.y = ry;
