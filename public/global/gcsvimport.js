@@ -331,7 +331,7 @@ class gCSVImport {
     let childType2 = row.childtype2;
     let childrenWide = this.getNumberOrDefault(row.childrenwide, 1);
     let childrenDeep = this.getNumberOrDefault(row.childrendeep, 1);
-    let childrenHigh = this.getNumberOrDefault(row.childrenhigh, 1);
+    let childrenHigh = this.getNumberOrDefault(row.childrenhigh, 2);
     let layerHeight = this.getNumberOrDefault(row.layerheight, 3);
     let layerRotation = this.angleDeg(row.layerrotation, '45deg');
     let childX = this.getNumberOrDefault(row.childx, 0);
@@ -358,9 +358,12 @@ class gCSVImport {
       x: 0,
       y: 0,
       z: 0,
-      rx: 0,
-      ry: 0,
-      rz: 0
+      rx: childrX,
+      ry: childrY,
+      rz: childrZ,
+      offsetx: childX,
+      offsety: childY,
+      offsetz: childZ
     };
     let currentLayerRotation = 0;
     let xIndex = 0;
@@ -393,9 +396,9 @@ class gCSVImport {
         parent: row.name,
         childtype: childType,
         name: childName,
-        x: curPos.x,
-        y: curPos.y,
-        z: curPos.z,
+        x: curPos.x + curPos.offsetx,
+        y: curPos.y + curPos.offsety,
+        z: curPos.z + curPos.offsetz,
         rx: curPos.rx,
         ry: curPos.ry,
         rz: curPos.rz,
@@ -406,9 +409,12 @@ class gCSVImport {
       childBlockRows.push(childRow);
 
       xIndex++;
-      curPos.rx += childrX;
-      curPos.ry += childrY;
-      curPos.rz += childrZ;
+      curPos.rx += childdrX;
+      curPos.ry += childdrY;
+      curPos.rz += childdrZ;
+      curPos.offsetx += childdX;
+      curPos.offsety += childdY;
+      curPos.offsetz += childdZ;
 
       if (xIndex >= childrenWide) {
         xIndex = 0;
@@ -424,8 +430,14 @@ class gCSVImport {
         curPos.rx = 0.0;
         curPos.ry = 0.0;
         curPos.rz = 0.0;
+        curPos.offsetx = 0.0;
+        curPos.offsety = 0.0;
+        curPos.offsetz = 0.0;
         currentLayerRotation += layerRotation;
       }
+
+      if (yIndex >= childrenHigh)
+        break;
     }
 
     await this.addCSVRow(blockRow);
