@@ -312,7 +312,7 @@ class gCSVImport {
       height: '3',
       depth: '5',
       materialname: '',
-      blockflag: 'displayBlock'
+      blockflag: 'displayblock'
     };
 
     let childBlockCount = this.getNumberOrDefault(row.childcount, 1);
@@ -326,7 +326,14 @@ class gCSVImport {
     let childrenDeep = this.getNumberOrDefault(row.childrendeep, 1);
     let childrenHigh = this.getNumberOrDefault(row.childrenhigh, 1);
     let layerHeight = this.getNumberOrDefault(row.layerheight, 3);
-    let layerRotation = this.getNumberOrDefault(row.layerrotation, '45deg');
+    let layerRotation = row.layerrotation;
+    this.getNumberOrDefault(row.layerrotation, '45deg');
+    if (layerRotation.toLowerCase().indexOf('deg') !== -1) {
+      layerRotation = layerRotation.toLowerCase().replace('deg', '');
+      layerRotation = GLOBALUTIL.getNumberOrDefault(layerRotation, 0) * Math.PI / 180.0;
+    } else {
+      layerRotation = this.getNumberOrDefault(row.layerrotation, Math.PI / 4.0);
+    }
     let childX = this.getNumberOrDefault(row.childx, 0);
     let childY = this.getNumberOrDefault(row.childy, 0);
     let childZ = this.getNumberOrDefault(row.childz, 0);
@@ -339,7 +346,6 @@ class gCSVImport {
     let childdrX = this.getNumberOrDefault(row.childdeltarx, 0);
     let childdrY = this.getNumberOrDefault(row.childdeltary, 0);
     let childdrZ = this.getNumberOrDefault(row.childdeltarz, 0);
-    //  let childRadius = this.getNumberOrDefault(row.childradius, 1.5);
     let width = 5.0;
     let depth = 5.0;
     let localX = width / childrenWide;
@@ -361,9 +367,25 @@ class gCSVImport {
     let startX = width / -2.0;
     let startZ = depth / -2.0;
     for (let ctr = 0; ctr < childBlockCount; ctr++) {
-      curPos.x = startX + (xIndex * localX) + (localX / 2.0);
+
       curPos.y = yIndex * layerHeight;
-      curPos.z = startZ + (zIndex * localZ) + (localZ / 2.0);
+      let x = startX + (xIndex * localX) + (localX / 2.0);
+      let z = startZ + (zIndex * localZ) + (localZ / 2.0);
+
+      if (currentLayerRotation !== 0.0) {
+        let radius = Math.sqrt(x * x + z * z);
+        let angle = Math.atan(z/x);
+        angle += currentLayerRotation;
+        let cos = Math.cos(angle);
+        let sin = Math.sin(angle);
+
+        curPos.x = (radius * cos);
+        curPos.z = (radius * sin);
+      } else {
+        curPos.x = x;
+        curPos.z = z;
+      }
+
       let childRow = {
         asset: 'blockchild',
         parent: row.name,
@@ -389,10 +411,11 @@ class gCSVImport {
       if (zIndex >= childrenDeep)
         zIndex = 0;
 
-      if (ctr >= ((yIndex + 1) * childrenWide * childrenDeep - 1)) {
+      if (ctr === ((yIndex + 1) * childrenWide * childrenDeep - 1)) {
         xIndex = 0;
         zIndex = 0;
         yIndex++;
+        currentLayerRotation += layerRotation;
       }
     }
 
