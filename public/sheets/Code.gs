@@ -55,11 +55,29 @@ function JSONArrayToPipeData(jsonArray, maxValue) {
   return outString;
 }
 
+function mergeCSVRangeStrings(rows) {
+  var ranges = [];
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+    try {
+      ranges.push(ss.getRange(rows[rowIndex]).getValues());
+     } catch (e) {
+       return 'Error with : ' + rows[rowIndex];
+     }
+  }
+
+  return _mergeCSVRanges(ranges);
+}
+
 function mergeCSVRanges() {
+  return _mergeCSVRanges(arguments);
+}
+
+function _mergeCSVRanges(rangeArray) {
   var allColumns = {};
   var processedRows = [];
-  for (var rangeIndex = 0; rangeIndex < arguments.length; rangeIndex++) {
-    var rows = arguments[rangeIndex];
+  for (var rangeIndex = 0; rangeIndex < rangeArray.length; rangeIndex++) {
+    var rows = rangeArray[rangeIndex];
     var cellHeaders = [];
     for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
       var cells = rows[rowIndex];
