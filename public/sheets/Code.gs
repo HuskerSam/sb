@@ -1,5 +1,7 @@
 function onOpen() {
-  var ui = SpreadsheetApp.getUi();
+  let ui = SpreadsheetApp.getUi();
+  PropertiesService.getScriptProperties().setProperty("accessToken", ScriptApp.getOAuthToken());
+
   ui.createAddonMenu()
     .addItem('Import Song', 'showMusicImport')
     .addItem('Publish Web', 'showPublishWeb')
@@ -58,15 +60,37 @@ function JSONArrayToPipeData(jsonArray, maxValue) {
 function mergeCSVRangeStrings(rows) {
   var ranges = [];
   var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  if (!Array.isArray(rows))
+    rows =  [rows ];
   for (var rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+    let rangeDesc = rows[rowIndex].toString();
+
     try {
-      ranges.push(ss.getRange(rows[rowIndex]).getValues());
+      let wb = rangeDesc.indexOf('||||');
+
+      if (wb === -1) {
+        ranges.push(ss.getRange(rangeDesc).getValues());
+      } else {
+        let parts = rangeDesc.split('||||');
+
+        let r = _fetchRemoteRange(parts[0], parts[1]);
+        ranges.push(r.values);
+      }
      } catch (e) {
-       return 'Error with : ' + rows[rowIndex];
+       return 'Error with : ' + rows[rowIndex] + ' ' + e.message;
      }
   }
 
   return _mergeCSVRanges(ranges);
+}
+
+function _fetchRemoteRange(spreadsheetId, rangeName) {
+  var accessToken = PropertiesService.getScriptProperties().getProperty("accessToken");
+  var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadsheetId + "/values/" + rangeName;
+  var res = UrlFetchApp.fetch(url, {headers: {"Authorization": "Bearer " + accessToken}});
+  var range = JSON.parse(res.getContentText());
+  return range;
 }
 
 function mergeCSVRanges() {
