@@ -278,6 +278,9 @@ class gCSVImport {
       blockData.isPickable = true;
     }
 
+    if (row.saveorig === 'x')
+      blockData.origRow = row;
+
     if (row.genericblockdata)
       blockData.genericBlockData = row.genericblockdata;
 
@@ -319,7 +322,13 @@ class gCSVImport {
       height: '3',
       depth: '5',
       materialname: '',
-      blockflag: 'displayblock'
+      blockflag: 'displayblock',
+      productname,
+      productdescription,
+      productprice,
+      productpricetext,
+      productimage,
+      saveorig: 'x'
     };
 
     let childBlockCount = this.getNumberOrDefault(row.childcount, 1);
