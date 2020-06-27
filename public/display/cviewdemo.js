@@ -515,7 +515,7 @@ class cViewDemo extends bView {
         <option value="mobile_portrait">Mobile Portrait</option>
       </select>
       <br>
-      <a style="line-height:1.5em;font-size:1.5em;" href="/intro">About...</a><br>`;
+      <a style="line-height:1.5em;font-size:1.5em;" href="/retail">About...</a><br>`;
       html +=
         `<div class="nav_options"></div>`;
 
