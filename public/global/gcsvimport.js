@@ -323,11 +323,11 @@ class gCSVImport {
       depth: '5',
       materialname: '',
       blockflag: 'displayblock',
-      productname,
-      productdescription,
-      productprice,
-      productpricetext,
-      productimage,
+      productname: row.productname,
+      productdescription: row.productdescription,
+      productprice: row.productprice,
+      productpricetext: row.productpricetext,
+      productimage: row.productimage,
       saveorig: 'x'
     };
 
