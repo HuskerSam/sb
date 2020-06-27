@@ -370,10 +370,10 @@ class cWorkspace {
   workspaceLayoutRegister() {
     this.editTable = null;
     this.fieldList = [
-      'index', 'name', 'asset',
+      'index', 'asset', 'block', 'name',
       'x', 'y', 'z',
       'rx', 'ry', 'rz',
-      'text1', 'text2', 'image', 'block',
+      'text1', 'text2', 'image',
       'sku', 'price', 'count', 'pricetext',
       'height', 'width',
        'displaystyle', 'textfontfamily', 'materialname'
@@ -950,10 +950,6 @@ class cWorkspace {
         xFld.appendChild(select);
       }
       if (title === 'image') {
-        let select = document.createElement('select');
-        select.style.width = '1.5em';
-        select.setAttribute('id', 'select-productimages-preset');
-        this.fieldDivByName[title].appendChild(select);
         let btn = document.createElement('button');
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
         btn.setAttribute('class', 'texturepathupload');
@@ -961,7 +957,7 @@ class cWorkspace {
       }
 
       this.record_field_list_form.appendChild(this.fieldDivByName[title]);
-      if (title === 'asset') {
+      if (title === 'name') {
         let btn = document.createElement('button');
         btn.setAttribute('id', 'update_product_fields_post');
         btn.innerHTML = '<i class="material-icons">add</i>';
@@ -969,11 +965,10 @@ class cWorkspace {
         this.addNewBtn = document.getElementById('update_product_fields_post');
         this.addNewBtn.addEventListener('click', e => this.workspaceLayoutCSVProductAdd(e));
       }
-      if (title === 'asset' || title === 'z') {
+      if (title === 'name' || title === 'z' || title === 'rz') {
         let br = document.createElement('br');
         this.record_field_list_form.appendChild(br);
       }
-
     }
 
     this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
@@ -984,6 +979,9 @@ class cWorkspace {
 
     this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.workspaceLayoutCSVProductUpdateType());
+
+    this.blockEditField = this.record_field_list_form.querySelector('.blockedit');
+    this.blockEditField.addEventListener('input', e => this.workspaceLayoutCSVProductDisplayBlock());
 
     this.workspaceLayoutCSVProductUpdateType();
 
@@ -1033,24 +1031,6 @@ class cWorkspace {
         sel.selectedIndex = 0;
       });
     }
-
-    let imageInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'productsignpostimages');
-    if (imageInfo) {
-      let sel = document.getElementById('select-productimages-preset');
-      let arr = imageInfo.genericBlockData.split('|');
-      let imageListHTML = '<option></option>';
-
-      for (let c = 0, l = arr.length; c < l - 1; c += 2) {
-        let frag = arr[c] + ' : ' + arr[c + 1];
-        imageListHTML += `<option value="${arr[c + 1]}">${frag}</option>`;
-      }
-
-      sel.innerHTML = imageListHTML;
-      sel.addEventListener('input', e => {
-        this.record_field_list_form.querySelector('.imageedit').value = sel.value;
-      });
-    }
-
   }
   __uploadImageFile() {
     let fileBlob = this.uploadImageFile.files[0];
@@ -1102,6 +1082,20 @@ class cWorkspace {
           this.fieldDivByName[i].style.display = '';
       }
     }
+  }
+  workspaceLayoutCSVProductDisplayBlock() {
+    let blockTitle = this.blockEditField.value;
+    let productInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', blockTitle);
+
+    if (productInfo) {
+      this.record_field_list_form.querySelector('.skuedit').value = productInfo.origRow.name;
+      this.record_field_list_form.querySelector('.text1edit').value = productInfo.origRow.productname;
+      this.record_field_list_form.querySelector('.text2edit').value = productInfo.origRow.productpricetext;
+      this.record_field_list_form.querySelector('.imageedit').value = productInfo.origRow.productimage;
+      this.record_field_list_form.querySelector('.priceedit').value = productInfo.origRow.price;
+      this.record_field_list_form.querySelector('.textfontfamilyedit').value = productInfo.origRow.textfontfamily;
+    }
+
   }
   workspaceLayoutCSVProductShow(name, tblRow) {
     let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
