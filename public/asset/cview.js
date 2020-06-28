@@ -180,7 +180,7 @@ class cView extends bView {
 
     this.view_layout_select.value = this.layoutMode;
   }
-  generateAnimation(genNew = false, animationKey = false, clearWorkspace = true, reload = true) {
+  async generateAnimation(genNew = false, animationKey = false, clearWorkspace = true, reload = true) {
     if (!animationKey)
       animationKey = gAPPP.loadedWID;
     if (!animationKey)
@@ -190,9 +190,15 @@ class cView extends bView {
       return;
 
     this.canvasHelper.hide();
+    let csvImport = new gCSVImport(animationKey);
+
+    await csvImport.dbSetRecordFields('block', {
+        generationState: 'not ready'
+      }, this.rootBlock.blockKey);
+
     gAPPP.a._deactivateModels();
     setTimeout(async () => {
-      let csvImport = new gCSVImport(animationKey);
+      this.rootBlock.updatesDisabled = true;
       if (clearWorkspace)
         await csvImport.clearProjectData();
       let assets = await csvImport.readProjectRawData('assetRows');
@@ -213,6 +219,7 @@ class cView extends bView {
 
     }, 10);
 
+    return;
   }
   initRecordEditFields(tag, key) {
     if (this.fireSetCallback)

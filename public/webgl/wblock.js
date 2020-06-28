@@ -26,6 +26,7 @@ class wBlock {
     this.skyboxObject = null;
     this.groundObject = null;
     this.updateVideoCallback = () => {};
+    this.updatesDisabled = false;
 
     this.updateNoBump();
   }
@@ -198,6 +199,15 @@ class wBlock {
       if (parentKey === this._blockKey) {
         this._framesRedraw();
         return;
+      }
+    } else if (tag === 'block') {
+      if (this.context.canvasHelper.rootBlock === this) {
+        if (values.generationState !== 'ready') {
+          this.context.handleAnimationNotReady();
+        }
+        if (values.generationState === 'ready') {
+          this.context.handleAnimationReady();
+        }
       }
     }
 
@@ -580,6 +590,10 @@ class wBlock {
         this.staticType = values.childType;
       }
     }
+
+    if (this.rootBlock.updatesDisabled)
+      return;
+
     if (this.staticLoad) {
       this.blockRenderData = this.blockRawData;
       this.blockRenderData.childType = this.staticType;

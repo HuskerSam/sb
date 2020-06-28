@@ -2333,7 +2333,11 @@ class gCSVImport {
 
     promises.push(this.addCSVBasketProducts());
 
-    return Promise.all(promises);
+    await Promise.all(promises);
+
+    return this.dbSetRecordFields('block', {
+        generationState: 'ready'
+      }, pInfo.sceneId);
   }
   async initProducts(cameraData = null) {
     let result = await this.firebase.database().ref(this.path('blockchild'))

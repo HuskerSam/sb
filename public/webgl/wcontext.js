@@ -26,6 +26,7 @@ class wContext {
     this.maxLatitude = 0.0;
     this.minLongitude = 0.0;
     this.maxLongitude = 0.0;
+    this.handleAnimationNotReadyCallback = null;
 
     if (geoOptions) {
       this.geoRadius = geoOptions.geoRadius;
@@ -146,8 +147,10 @@ class wContext {
     this.scene.executeWhenReady(() => {
       this.engine.runRenderLoop(() => {
         try {
-          this.preRenderFrame();
-          this.scene.render();
+          if (this.canvasHelper.cameraShown) {
+            this.preRenderFrame();
+            this.scene.render();
+          }
         } catch (e) {
           console.log('Render Error', e);
         }
@@ -703,5 +706,18 @@ class wContext {
   }
   clearError() {
     this.canvasHelper.clearError();
+  }
+  handleAnimationNotReady() {
+    if (this.handleAnimationNotReadyCallback)
+      this.handleAnimationNotReadyCallback();
+  }
+  handleAnimationReady() {
+    if (this.handleAnimationReadyCallback)
+      return this.handleAnimationReadyCallback();
+    if (!this.canvasHelper.cameraShown) {
+      this.canvasHelper.rootBlock.updatesDisabled = false;
+      this.canvasHelper.rootBlock.setData(null, true);
+      this.canvasHelper.show();
+    }
   }
 }

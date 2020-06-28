@@ -51,6 +51,14 @@ class cViewDemo extends bView {
     this.initHeaderBar();
     this.initBottomBar();
 
+    gAPPP.activeContext.handleAnimationNotReadyCallback = () => {
+      this.rootBlock.updatesDisabled = true;
+      this.canvasHelper.hide();
+    };
+    gAPPP.activeContext.handleAnimationReadyCallback = () => {
+      location.reload();
+    };
+
     this.orientation_details_div = this.dialog.querySelector('.orientation_details_div');
 
     window.addEventListener('deviceorientation', event => {
@@ -1775,7 +1783,7 @@ class cViewDemo extends bView {
   }
   layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
-      <div id="renderLoadingCanvas" style="display:none;"></div>
+      <div id="renderLoadingCanvas" style="display:none;">Reloading Visual Catalog</div>
       <div class="form_canvas_wrapper"></div>
 
       <div class="display_header_bar">
