@@ -930,6 +930,11 @@ class cWorkspace {
     this.record_field_list_form.innerHTML = '';
     this.fieldDivByName = {};
 
+    this.displaystylelist = document.createElement('datalist');
+    this.displaystylelist.setAttribute('id', 'displaystylelist');
+    this.displaystylelist.innerHTML = `<option>regular</option><option>3dbasic</option><option>3dmin</option>`;
+    this.domPanel.appendChild(this.displaystylelist);
+
     for (let c = 0, l = this.fieldList.length; c < l; c++) {
       let title = this.fieldList[c];
       let id = 'fieldid' + c.toString();
@@ -954,6 +959,11 @@ class cWorkspace {
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
         btn.setAttribute('class', 'texturepathupload');
         this.fieldDivByName[title].appendChild(btn);
+
+        this.signImagePreview = document.createElement('img');
+        this.signImagePreview.style.maxWidth = "4em";
+        this.signImagePreview.style.maxHeight = "2em";
+        this.fieldDivByName[title].appendChild(this.signImagePreview);
       }
 
       this.record_field_list_form.appendChild(this.fieldDivByName[title]);
@@ -976,6 +986,7 @@ class cWorkspace {
     this.uploadImageFile = this.layout_product_data_panel.querySelector('.texturepathuploadfile');
     this.uploadImageFile.addEventListener('change', e => this.__uploadImageFile());
     this.uploadImageButton.addEventListener('click', e => this.uploadImageFile.click());
+    this.uploadImageEditField.addEventListener('input', e => this.updateSignImagePreview());
 
     this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
     this.assetEditField.addEventListener('input', e => this.workspaceLayoutCSVProductUpdateType());
@@ -1032,6 +1043,13 @@ class cWorkspace {
       });
     }
   }
+  updateSignImagePreview() {
+    let url = this.uploadImageEditField.value;
+    if (url.substring(0, 3) === 'sb:')
+      url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
+
+    this.signImagePreview.setAttribute('src', url);
+  }
   __uploadImageFile() {
     let fileBlob = this.uploadImageFile.files[0];
 
@@ -1044,6 +1062,7 @@ class cWorkspace {
     let key = this.productData.sceneId + '/productfiles';
     fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
       this.uploadImageEditField.value = uploadResult.downloadURL;
+      this.updateSignImagePreview();
     });
   }
   workspaceLayoutCSVProductCheckPosition(x, y, z) {
@@ -1094,6 +1113,7 @@ class cWorkspace {
       this.record_field_list_form.querySelector('.imageedit').value = productInfo.origRow.productimage;
       this.record_field_list_form.querySelector('.priceedit').value = productInfo.origRow.price;
       this.record_field_list_form.querySelector('.textfontfamilyedit').value = productInfo.origRow.textfontfamily;
+      this.updateSignImagePreview()
     }
 
   }
