@@ -1754,7 +1754,7 @@ class gCSVImport {
     return this.addCSVRowList(newObjects);
   }
   async _addSignPost3D(product, productData, parent) {
-    if (product.desc) {
+    if (product.priceText) {
       let priceText = this.defaultCSVRow();
       priceText.asset = 'shape';
       priceText.name = parent + '_3ddesc';
@@ -1821,7 +1821,10 @@ class gCSVImport {
     descText.materialname = 'inherit';
     descText.shapetype = 'text';
     descText.textfontfamily = product.origRow.textfontfamily;
-    descText.texttext = product.title;
+    if (product.priceText)
+      descText.texttext = product.priceText;
+    else
+      descText.texttext = product.title;
     descText.textdepth = '.25';
     descText.textsize = '100';
     descText.parent = parent;
