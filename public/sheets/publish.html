@@ -11,8 +11,8 @@
    </style>
   <br>
      <button id="display_publish_list">Publish List</button>
- <br>
- <br>
+ <hr>
+     <button id="refresh_oauth_btn">Refresh OAuth</button>
  <hr>
  <br>
    <button id="publish_data">Log JSON List to console</button>
@@ -43,6 +43,12 @@
           this.scene_sheet = document.getElementById('scene_sheet');
           this.products_sheet = document.getElementById('products_sheet');
           this.display_publish_list = document.getElementById('display_publish_list');
+          this.refresh_oauth_btn = document.getElementById('refresh_oauth_btn');
+          this.refresh_oauth_btn.addEventListener('click', e => {
+            google.script.run.withSuccessHandler((result) => {
+              alert('done - please refresh assets tab', 'oauth refresh');
+            }).refreshOAuth();
+          });
 
           this.display_publish.addEventListener('click',(e) => this.publish());
           this.display_publish_list.addEventListener('click', e => this.publishList());
