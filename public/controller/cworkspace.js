@@ -971,6 +971,7 @@ class cWorkspace {
         this.signImagePreview = document.createElement('img');
         this.signImagePreview.style.maxWidth = "4em";
         this.signImagePreview.style.maxHeight = "2em";
+        this.signImagePreview.setAttribute('crossorigin', 'anonymous');
         this.fieldDivByName[title].appendChild(this.signImagePreview);
       }
 
@@ -1118,6 +1119,7 @@ class cWorkspace {
     let productInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', blockTitle);
 
     if (productInfo) {
+      this.record_field_list_form.querySelector('.nameedit').value = productInfo.origRow.productname;
       this.record_field_list_form.querySelector('.skuedit').value = productInfo.origRow.productname;
       this.record_field_list_form.querySelector('.text1edit').value = productInfo.origRow.productname;
       this.record_field_list_form.querySelector('.text2edit').value = productInfo.origRow.producttext2;
