@@ -374,7 +374,7 @@ class cWorkspace {
       'x', 'y', 'z',
       'rx', 'ry', 'rz',
       'text1', 'text2', 'image',
-      'sku', 'price', 'count', 'pricetext',
+      'sku', 'price', 'pricetext',
       'height', 'width',
       'displaystyle', 'textfontfamily', 'materialname'
     ];
@@ -386,14 +386,14 @@ class cWorkspace {
     this.productOnlyFields = [
       'index', 'name', 'asset',
       'text1', 'text2', 'image', 'block',
-      'sku', 'price', 'count', 'pricetext',
+      'sku', 'price', 'pricetext',
       'x', 'y', 'z',
       'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily'
     ];
 
     this.productColumnList = this.fieldList;
     this.rightAlignColumns = [
-      'price', 'count', 'height', 'width', 'x', 'y', 'z', 'rx', 'ry', 'rz'
+      'price', 'height', 'width', 'x', 'y', 'z', 'rx', 'ry', 'rz'
     ];
 
     this.scene_layout_data_panel = this.domPanel.querySelector('.scene_layout_data_panel');
@@ -672,6 +672,8 @@ class cWorkspace {
     if (results) data = results;
     this.layoutTableDataRows = data;
     let maxIndex = 0;
+    if (data.length === 1)
+      maxIndex = GLOBALUTIL.getNumberOrDefault(data[0].index, 0);
     data = data.sort((a, b) => {
       let aIndex = GLOBALUTIL.getNumberOrDefault(a.index, 0);
       let bIndex = GLOBALUTIL.getNumberOrDefault(b.index, 0);
@@ -1176,7 +1178,7 @@ class cWorkspace {
     let newRow = {};
     for (let c = 0, l = fields.length; c < l; c++) {
       newRow[this.fieldList[c]] = fields[c].value;
-      if (this.fieldList[c] === 'asset') {
+      if (this.fieldList[c] === 'asset' || this.fieldList[c] === 'displaystyle'|| this.fieldList[c] === 'textfontfamily') {
 
       } else if (this.fieldList[c] !== 'index')
         fields[c].value = '';
