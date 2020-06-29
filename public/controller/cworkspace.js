@@ -376,7 +376,7 @@ class cWorkspace {
       'text1', 'text2', 'image',
       'sku', 'price', 'count', 'pricetext',
       'height', 'width',
-       'displaystyle', 'textfontfamily', 'materialname'
+      'displaystyle', 'textfontfamily', 'materialname'
     ];
     this.messageOnlyFields = [
       'index', 'name', 'asset', 'text1', 'text2',
@@ -514,8 +514,8 @@ class cWorkspace {
               return '';
             return v;
           }
-          else
-            return rows[c];
+      else
+        return rows[c];
       return '';
     }
 
@@ -670,16 +670,23 @@ class cWorkspace {
     let results = await csvImport.readProjectRawData('productRows')
     let data = [];
     if (results) data = results;
+    this.layoutTableDataRows = data;
+    let maxIndex = 0;
+    data = data.sort((a, b) => {
+      let aIndex = GLOBALUTIL.getNumberOrDefault(a.index, 0);
+      let bIndex = GLOBALUTIL.getNumberOrDefault(b.index, 0);
+      if (aIndex > maxIndex)
+        maxIndex = aIndex;
+      if (bIndex > maxIndex)
+        maxIndex = bIndex;
+      if (aIndex > bIndex)
+        return 1;
+      if (aIndex < bIndex)
+        return -1;
+      return 0;
+    });
 
-        data = data.sort((a, b) => {
-        let aIndex = GLOBALUTIL.getNumberOrDefault(a.index, 0);
-        let bIndex = GLOBALUTIL.getNumberOrDefault(b.index, 0);
-        if (aIndex > bIndex)
-          return 1;
-        if (aIndex < bIndex)
-          return -1;
-        return 0;
-      });
+    this.updateNextProductIndex(maxIndex);
 
     let columns = [];
 
@@ -711,21 +718,21 @@ class cWorkspace {
       width: 30
     });
 
-      columns.push({
-        formatter: (cell, formatterParams) => {
-          return "<i class='material-icons'>save_alt</i>";
-        },
-        headerSort: false,
-        frozen: true,
-        align: 'center',
-        resizable: false,
-        cssClass: 'clone-table-cell',
-        cellClick: (e, cell) => {
-          let row = cell.getRow();
-          this.workspaceLayoutCSVProductShow(row.getData().name, row);
-        },
-        width: 30
-      });
+    columns.push({
+      formatter: (cell, formatterParams) => {
+        return "<i class='material-icons'>save_alt</i>";
+      },
+      headerSort: false,
+      frozen: true,
+      align: 'center',
+      resizable: false,
+      cssClass: 'clone-table-cell',
+      cellClick: (e, cell) => {
+        let row = cell.getRow();
+        this.workspaceLayoutCSVProductShow(row.getData().name, row);
+      },
+      width: 30
+    });
 
     let colList = this.productColumnList;
     for (let c = 0, l = colList.length; c < l; c++) {
@@ -758,15 +765,15 @@ class cWorkspace {
       columns.push(col);
     }
 
-      columns[4].frozen = true;
-      columns[3].frozen = true;
-      let tCol = columns[4];
-      let tCol2 = columns[3];
-      columns[4] = columns[2];
-      columns[3] = columns[1];
-      columns[2] = tCol;
-      columns[1] = tCol2;
-      tCol2.title = '';
+    columns[4].frozen = true;
+    columns[3].frozen = true;
+    let tCol = columns[4];
+    let tCol2 = columns[3];
+    columns[4] = columns[2];
+    columns[3] = columns[1];
+    columns[2] = tCol;
+    columns[1] = tCol2;
+    tCol2.title = '';
 
     columns[1].align = 'right';
     columns[1].cssClass = 'right-column-data';
@@ -860,65 +867,65 @@ class cWorkspace {
     if (!dirty)
       return;
 
-      let newData = this.editTable.getData();
-      let oldData = JSON.parse(this.editTable.cacheData);
+    let newData = this.editTable.getData();
+    let oldData = JSON.parse(this.editTable.cacheData);
 
-      let newRows = {};
-      newData.forEach(row => {
-        let title = row['name'];
-        if (title)
-          newRows[title] = row;
-      });
+    let newRows = {};
+    newData.forEach(row => {
+      let title = row['name'];
+      if (title)
+        newRows[title] = row;
+    });
 
-      let oldRows = {};
-      oldData.forEach(row => {
-        let title = row['name'];
-        if (title)
-          oldRows[title] = row;
-      });
+    let oldRows = {};
+    oldData.forEach(row => {
+      let title = row['name'];
+      if (title)
+        oldRows[title] = row;
+    });
 
-      for (let title in oldRows) {
-        let newRow = newRows[title];
-        if (newRow) {
-          let oldRow = oldRows[title];
+    for (let title in oldRows) {
+      let newRow = newRows[title];
+      if (newRow) {
+        let oldRow = oldRows[title];
 
-          if (oldRow.text1 !== newRow.text1 ||
-            oldRow.text2 !== newRow.text2) {
+        if (oldRow.text1 !== newRow.text1 ||
+          oldRow.text2 !== newRow.text2) {
 
-            if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle !== '3dbasic') {
-              let textureName = title + '_pricedesc_textplane';
-              if (oldRow.asset === 'message')
-                textureName = title + '_textplane';
-              let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
-              let csvImport = new gCSVImport(gAPPP.loadedWID);
-              await csvImport.dbSetRecordFields('texture', {
-                textureText: newRow.text1,
-                textureText2: newRow.text2
-              }, tid);
-            }
+          if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle !== '3dbasic') {
+            let textureName = title + '_pricedesc_textplane';
+            if (oldRow.asset === 'message')
+              textureName = title + '_textplane';
+            let tid = gAPPP.a.modelSets['texture'].getIdByFieldLookup('title', textureName);
+            let csvImport = new gCSVImport(gAPPP.loadedWID);
+            await csvImport.dbSetRecordFields('texture', {
+              textureText: newRow.text1,
+              textureText2: newRow.text2
+            }, tid);
+          }
 
-            if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle === '3dbasic') {
-              let shape1Name = title + '_signpost_3dtitle';
-              if (oldRow.asset === 'message')
-                shape1Name = title + '_3dtitle';
-              let sid1 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape1Name);
-              let csvImport = new gCSVImport(gAPPP.loadedWID);
-              await csvImport.dbSetRecordFields('shape', {
-                textText: newRow.text1
-              }, sid1);
+          if ((oldRow.asset === 'product' || oldRow.asset === 'message') && oldRow.displaystyle === '3dbasic') {
+            let shape1Name = title + '_signpost_3dtitle';
+            if (oldRow.asset === 'message')
+              shape1Name = title + '_3dtitle';
+            let sid1 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape1Name);
+            let csvImport = new gCSVImport(gAPPP.loadedWID);
+            await csvImport.dbSetRecordFields('shape', {
+              textText: newRow.text1
+            }, sid1);
 
-              let shape2Name = title + '_signpost_3ddesc';
-              if (oldRow.asset === 'message')
-                shape2Name = title + '_3dtitle2';
-              let sid2 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape2Name);
-              let csvImport2 = new gCSVImport(gAPPP.loadedWID);
-              await csvImport2.dbSetRecordFields('shape', {
-                textText: newRow.text2
-              }, sid2);
-            }
+            let shape2Name = title + '_signpost_3ddesc';
+            if (oldRow.asset === 'message')
+              shape2Name = title + '_3dtitle2';
+            let sid2 = gAPPP.a.modelSets['shape'].getIdByFieldLookup('title', shape2Name);
+            let csvImport2 = new gCSVImport(gAPPP.loadedWID);
+            await csvImport2.dbSetRecordFields('shape', {
+              textText: newRow.text2
+            }, sid2);
           }
         }
       }
+    }
 
     await this.workspaceLayoutCSVTableSave();
     gAPPP.updateGenerateDataTimes();
@@ -946,6 +953,7 @@ class cWorkspace {
       this.fieldDivByName[title].innerHTML = `<label>${this.fieldList[c]}
         <input type="text" class="fieldinput ${title}edit" list="${listName}" />
       </label>`;
+      this.fieldDivByName[title].inputField = this.fieldDivByName[title].querySelector('input');
 
       if (title === 'x') {
         let select = document.createElement('select');
@@ -1042,6 +1050,9 @@ class cWorkspace {
         sel.selectedIndex = 0;
       });
     }
+  }
+  updateNextProductIndex(maxIndex) {
+    this.fieldDivByName['index'].inputField.value = (maxIndex + 100).toString();
   }
   updateSignImagePreview() {
     let url = this.uploadImageEditField.value;
@@ -1164,7 +1175,7 @@ class cWorkspace {
       newRow[this.fieldList[c]] = fields[c].value;
       if (this.fieldList[c] === 'asset') {
 
-      }  else if (this.fieldList[c] !== 'index')
+      } else if (this.fieldList[c] !== 'index')
         fields[c].value = '';
       else {
         let num = GLOBALUTIL.getNumberOrDefault(fields[c].value, 0);
