@@ -1,6 +1,5 @@
 function onOpen() {
   let ui = SpreadsheetApp.getUi();
-  PropertiesService.getScriptProperties().setProperty("accessToken", ScriptApp.getOAuthToken());
 
   ui.createAddonMenu()
     .addItem('Import Song', 'showMusicImport')
@@ -13,6 +12,11 @@ function showMusicImport() {
   var html = HtmlService.createHtmlOutputFromFile('song')
     .setTitle('Upload Song')
   SpreadsheetApp.getUi().showSidebar(html);
+}
+
+function refreshOAuth() {
+  ScriptApp.invalidateAuth();
+  PropertiesService.getScriptProperties().setProperty("accessToken", ScriptApp.getOAuthToken());
 }
 
 function showPublishWeb() {

@@ -49,16 +49,28 @@
 
           this.publish_data = document.getElementById('publish_data');
           this.publish_data.addEventListener('click', async e => {
-            let publishList = await this.grabSheetCSVJSONData('PublishList');
+             let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+      console.log(publishConfig);
+             let publishListSheet = publishConfig[0].displaylist;
+             let publishList = await this.grabSheetCSVJSONData(publishListSheet);
             console.log('list', JSON.stringify(publishList));
           });
         }
         async publishList() {
-          let publishList = await this.grabSheetCSVJSONData('PublishList');
+          let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+          let publishListSheet = publishConfig[0].displaylist;
+          let publishList = await this.grabSheetCSVJSONData(publishListSheet);
+
           this.display_publish_list.innerHTML = 'Working...';
           let promises = [];
+          let start = 0;
+          let end = publishList.length - 1;
+          if (publishConfig[0].startat)
+            start = Number(publishConfig[0].startat);
+           if (publishConfig[0].endat)
+             end = Number(publishConfig[0].endat);
 
-          for (let c = 0; c < publishList.length; c++) {
+          for (let c = start; c <= end; c++) {
             let row = publishList[c];
             console.log(row);
             promises.push(this.publishSingle(row.wid, row.assetssheet, row.circuitsheet, row.catalogsheet));
