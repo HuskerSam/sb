@@ -385,7 +385,7 @@ class cWorkspace {
     ];
     this.productOnlyFields = [
       'index', 'name', 'asset',
-      'text1', 'text2', 'image', 'block',
+      'text1', 'image', 'block',
       'sku', 'price', 'pricetext',
       'x', 'y', 'z',
       'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily'
@@ -1078,21 +1078,6 @@ class cWorkspace {
       this.uploadImageEditField.value = uploadResult.downloadURL;
       this.updateSignImagePreview();
     });
-  }
-  workspaceLayoutCSVProductCheckPosition(x, y, z) {
-    let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
-    let sel = document.getElementById('select-position-preset');
-    if (positionInfo) {
-      let arr = positionInfo.genericBlockData.split('|');
-      let positionHTML = '<option>positions</option>';
-
-      for (let c = 0, l = arr.length; c < l - 5; c += 6) {
-        if (arr[c] == x && arr[c + 1] == y && arr[c + 2] == z)
-          return c / 3 + 1;
-      }
-    }
-
-    return -1;
   }
   workspaceLayoutCSVProductUpdateType() {
     let fieldsToShow = null;

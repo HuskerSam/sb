@@ -909,3 +909,7 @@ div.imagebackgrounddisplay {
 .image_upload_building {
   display: none
 }
+
+.indexedit, .xedit, .yedit, .zedit, .rxedit, .ryedit, .rzedit, .pricedit {
+  width: 4em;
+}
