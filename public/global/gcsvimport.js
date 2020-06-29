@@ -1699,7 +1699,7 @@ class gCSVImport {
       textPlane.textfontcolor = '255,255,255';
     }
     textPlane.texturetext = product.title;
-    textPlane.texturetext2 = product.desc;
+    textPlane.texturetext2 = product.priceText;
     textPlane.width = '8';
     textPlane.height = '8';
     textPlane.depth = '8';
@@ -1766,7 +1766,7 @@ class gCSVImport {
       }
       priceText.shapetype = 'text';
       priceText.textfontfamily = product.origRow.textfontfamily;
-      priceText.texttext = product.desc;
+      priceText.texttext = product.priceText;
       priceText.textdepth = '.25';
       priceText.textsize = '100';
       priceText.parent = parent;
@@ -2399,6 +2399,7 @@ class gCSVImport {
         itemCount: blockData.itemCount,
         itemImage: blockData.itemImage,
         desc: blockData.itemDesc,
+        priceText: blockData.itemPriceText,
         price: blockData.itemPrice,
         image: blockData.itemImage,
         animationIndex: pBC.animationIndex,

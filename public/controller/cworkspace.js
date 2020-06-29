@@ -1118,13 +1118,13 @@ class cWorkspace {
     let productInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('title', blockTitle);
 
     if (productInfo) {
-      this.record_field_list_form.querySelector('.skuedit').value = productInfo.origRow.name;
+      this.record_field_list_form.querySelector('.skuedit').value = productInfo.origRow.productname;
       this.record_field_list_form.querySelector('.text1edit').value = productInfo.origRow.productname;
-      this.record_field_list_form.querySelector('.text2edit').value = productInfo.origRow.productpricetext;
+      this.record_field_list_form.querySelector('.text2edit').value = productInfo.origRow.producttext2;
+      this.record_field_list_form.querySelector('.pricetextedit').value = productInfo.origRow.productpricetext;
       this.record_field_list_form.querySelector('.imageedit').value = productInfo.origRow.productimage;
-      this.record_field_list_form.querySelector('.priceedit').value = productInfo.origRow.price;
-      this.record_field_list_form.querySelector('.textfontfamilyedit').value = productInfo.origRow.textfontfamily;
-      this.updateSignImagePreview()
+      this.record_field_list_form.querySelector('.priceedit').value = productInfo.origRow.productprice;
+      this.updateSignImagePreview();
     }
 
   }
