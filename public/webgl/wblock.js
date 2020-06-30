@@ -200,20 +200,20 @@ class wBlock {
         this._framesRedraw();
         return;
       }
-    } else if (tag === 'block') {
-      if (this.context.canvasHelper.rootBlock === this) {
-        if (values.generationState !== 'ready') {
-          this.context.handleAnimationNotReady();
-        }
-        if (values.generationState === 'ready') {
-          this.context.handleAnimationReady();
-        }
-      }
     }
 
     if (values) {
       if (this._blockKey === fireData.key) {
         if (tag === 'block') {
+          if (this.context.canvasHelper.rootBlock === this) {
+            if (values.generationState !== 'ready') {
+              this.context.handleAnimationNotReady();
+            }
+            if (values.generationState === 'ready') {
+              this.context.handleAnimationReady();
+            }
+          }
+
           return this.setData(values);
         }
       }
