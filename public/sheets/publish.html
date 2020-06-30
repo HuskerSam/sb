@@ -12,7 +12,7 @@
   <br>
      <button id="display_publish_list">Publish List</button>
  <hr>
-     <button id="refresh_oauth_btn">Refresh OAuth</button>
+     <button id="refresh_oauth_btn">Refresh Assets Sheet</button>
  <hr>
  <br>
    <button id="publish_data">Log JSON List to console</button>
@@ -46,7 +46,6 @@
           this.refresh_oauth_btn = document.getElementById('refresh_oauth_btn');
           this.refresh_oauth_btn.addEventListener('click', e => {
             google.script.run.withSuccessHandler((result) => {
-              alert('done - please refresh assets tab', 'oauth refresh');
             }).refreshOAuth();
           });
 
@@ -66,6 +65,8 @@
           let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
           let publishListSheet = publishConfig[0].displaylist;
           let publishList = await this.grabSheetCSVJSONData(publishListSheet);
+
+          this.refresh_oauth_btn.click();
 
           this.display_publish_list.innerHTML = 'Working...';
           let promises = [];

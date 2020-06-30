@@ -15,12 +15,20 @@ function showMusicImport() {
 }
 
 function refreshOAuth() {
-  ScriptApp.invalidateAuth();
   PropertiesService.getScriptProperties().setProperty("accessToken", ScriptApp.getOAuthToken());
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('assets');
+
+  let formula = sheet.getRange('A1').getFormula();
+  let parts = formula.split(',');
+  let value = new Date().getTime();
+  formula = parts[0] + ',' + value.toString() + ')';
+  sheet.getRange('A1').setFormula(formula);
+  return;
 }
 
 function showPublishWeb() {
-
+  refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile('publish')
     .setTitle('Publish to web')
   SpreadsheetApp.getUi().showSidebar(html);
