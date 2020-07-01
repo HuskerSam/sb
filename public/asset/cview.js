@@ -192,9 +192,10 @@ class cView extends bView {
     this.canvasHelper.hide();
     let csvImport = new gCSVImport(animationKey);
 
-    await csvImport.dbSetRecordFields('block', {
-        generationState: 'not ready'
-      }, this.rootBlock.blockKey);
+    if (this.rootBlock)
+      await csvImport.dbSetRecordFields('block', {
+          generationState: 'not ready'
+        }, this.rootBlock.blockKey);
 
     gAPPP.a._deactivateModels();
     setTimeout(async () => {

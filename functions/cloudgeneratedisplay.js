@@ -1,7 +1,7 @@
 const requireFromUrl = require('require-from-url/sync');
 let firebase =  require("firebase-admin");
-let gcsvimport = requireFromUrl("https://groceryblocks2.web.app/global/gcsvimport.js?abc=5844");
-let GLOBALUTIL = requireFromUrl("https://groceryblocks2.web.app/global/globalutil.js?abc=13574");
+let gcsvimport = requireFromUrl("https://groceryblocks2.web.app/global/gcsvimport.js?abc=5io844");
+let GLOBALUTIL = requireFromUrl("https://groceryblocks2.web.app/global/globalutil.js?abc=13io574");
 
 module.exports = class cloudGenerateDisplay {
   constructor(id) {
@@ -14,9 +14,10 @@ module.exports = class cloudGenerateDisplay {
   async generateAnimation() {
     let sceneData = await this.csvImport.csvFetchSceneBlock();
 
-    await this.csvImport.dbSetRecordFields('block', {
-        generationState: 'not ready'
-      }, sceneData.key);
+    if (sceneData.key)
+      await this.csvImport.dbSetRecordFields('block', {
+          generationState: 'not ready'
+        }, sceneData.key);
 
     await this.csvImport.clearProjectData();
     let assets = await this.csvImport.readProjectRawData('assetRows');
