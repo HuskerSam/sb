@@ -28,6 +28,7 @@ function refreshOAuth() {
 }
 
 function showPublishWeb() {
+  refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile('publish')
     .setTitle('Publish to web')
   SpreadsheetApp.getUi().showSidebar(html);

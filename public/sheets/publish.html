@@ -66,8 +66,6 @@
           let publishListSheet = publishConfig[0].displaylist;
           let publishList = await this.grabSheetCSVJSONData(publishListSheet);
 
-          this.refresh_oauth_btn.click();
-
           this.display_publish_list.innerHTML = 'Working...';
           let promises = [];
           let start = 0;
