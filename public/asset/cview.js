@@ -199,7 +199,8 @@ class cView extends bView {
 
     gAPPP.a._deactivateModels();
     setTimeout(async () => {
-      this.rootBlock.updatesDisabled = true;
+      if (this.rootBlock)
+        this.rootBlock.updatesDisabled = true;
       if (clearWorkspace)
         await csvImport.clearProjectData();
       let assets = await csvImport.readProjectRawData('assetRows');

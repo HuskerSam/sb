@@ -315,6 +315,9 @@ class gCSVImport {
     return blockResult;
   }
   async addCSVDisplayBlock(row) {
+    if (!row.productdescription)
+      row.productdescription = '';
+      
     let blockRow = {
       asset: 'block',
       name: row.name,
