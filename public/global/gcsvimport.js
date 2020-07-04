@@ -24,6 +24,8 @@ class gCSVImport {
     }
   }
   path(eleType) {
+    if (eleType === 'projectTitles')
+      return '/projectTitles';
     return '/project/' + this.projectId + '/' + eleType;
   }
   async dbFetchByLookup(type, field, value) {
@@ -105,18 +107,6 @@ class gCSVImport {
     return Promise.resolve({
       key: id
     });
-  }
-  async dbFetchListByLookup(type, field, value) {
-    return this.firebase.database().ref(this.path(type))
-      .orderByChild(field)
-      .equalTo(value)
-      .once('value')
-      .then(result => {
-        console.log(result);
-        console.log(result.val(), result.id);
-
-        return result.val();
-      });
   }
   async setBlobFromString(id, dataString, filename) {
     let storageRef = this.firebase.storage().ref();
@@ -317,7 +307,7 @@ class gCSVImport {
   async addCSVDisplayBlock(row) {
     if (!row.productdescription)
       row.productdescription = '';
-      
+
     let blockRow = {
       asset: 'block',
       name: row.name,
@@ -391,7 +381,7 @@ class gCSVImport {
 
       if (currentLayerRotation !== 0.0) {
         let radius = Math.sqrt(x * x + z * z);
-        let angle = Math.atan(z/x);
+        let angle = Math.atan(z / x);
         angle += currentLayerRotation;
         let cos = Math.cos(angle);
         let sin = Math.sin(angle);
@@ -2342,8 +2332,8 @@ class gCSVImport {
     await Promise.all(promises);
 
     return this.dbSetRecordFields('block', {
-        generationState: 'ready'
-      }, pInfo.sceneId);
+      generationState: 'ready'
+    }, pInfo.sceneId);
   }
   async initProducts(cameraData = null) {
     let result = await this.firebase.database().ref(this.path('blockchild'))
@@ -2570,6 +2560,31 @@ class gCSVImport {
 
     return this.firebase.database().ref(`/project/${this.projectId}/rawData${rawName}Date`).once('value')
       .then(r => r.val());
+  }
+  async addProject(newTitle, key = false, tags) {
+    if (!key)
+      key = this.firebase.database().ref('projectTitles').push().key;
+    if (!tags)
+      tags = '';
+    await this.firebase.database().ref('projectTitles/' + key).set({
+      title: newTitle,
+      tags
+    });
+    await this.firebase.database().ref('project/' + key).set({
+      title: newTitle
+    });
+
+    return key;
+  }
+  async widForName(name) {
+    let projects = await this.dbFetchByLookup('projectTitles', 'title', name);
+    if (projects.recordIds.length > 1)
+      this.multipleProjectsWithSameName = true;
+
+    if (projects.recordIds.length > 0)
+      return projects.recordIds[0];
+
+    return null;
   }
 }
 

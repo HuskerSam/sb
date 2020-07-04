@@ -314,17 +314,8 @@ class bView {
     return;
   }
   async _addProject(newTitle, key = false, reload = true, tags) {
-    if (!key)
-      key = gAPPP.a.modelSets['projectTitles'].getKey();
-    if (!tags)
-      tags = '';
-    await firebase.database().ref('projectTitles/' + key).set({
-      title: newTitle,
-      tags
-    });
-    await firebase.database().ref('project/' + key).set({
-      title: newTitle
-    });
+    let csvImport = new gCSVImport();
+    key = await csvImport.addProject(newTitle, key, tags);
 
     if (reload) {
       this._updateQueryString(key);

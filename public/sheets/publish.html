@@ -13,57 +13,29 @@
      <button id="display_publish_list">Publish List</button>
  <hr>
      <button id="refresh_oauth_btn">Refresh Assets Sheet</button>
- <hr>
- <br>
-   <button id="publish_data">Log JSON List to console</button>
- <br>
-    <hr>
-    <button id="display_publish">Publish Single</button>
-    <br>
-    <br>
-    wid <input id="workspace_id" value="-M3o9lFX579wmY4LiKC-" />
-    <br>
-    <br>
-    assets sheet <input id="assets_sheet" value="bottleassets" />
-    <br>
-    <br>
-    circuit sheet <input id="scene_sheet" value="starwarscarousel" />
-     <br>
-    <br>
-    catalog sheet <input id="products_sheet" value="carouselcatalogflat" />
-    <br>
 
-    <br>
+    <hr>
+    <a href="" id="display_anchor" target="_blank">Open Display</a>
     <script>
       class PublishWeb {
         constructor() {
-          this.display_publish = document.getElementById('display_publish');
-          this.workspace_id = document.getElementById('workspace_id');
-          this.assets_sheet = document.getElementById('assets_sheet');
-          this.scene_sheet = document.getElementById('scene_sheet');
-          this.products_sheet = document.getElementById('products_sheet');
-          this.display_publish_list = document.getElementById('display_publish_list');
           this.refresh_oauth_btn = document.getElementById('refresh_oauth_btn');
           this.refresh_oauth_btn.addEventListener('click', e => {
             google.script.run.withSuccessHandler((result) => {
             }).refreshOAuth();
           });
-
-          this.display_publish.addEventListener('click',(e) => this.publish());
+          this.display_publish_list = document.getElementById('display_publish_list');
           this.display_publish_list.addEventListener('click', e => this.publishList());
 
-          this.publish_data = document.getElementById('publish_data');
-          this.publish_data.addEventListener('click', async e => {
-             let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
-      console.log(publishConfig);
-             let publishListSheet = publishConfig[0].displaylist;
-             let publishList = await this.grabSheetCSVJSONData(publishListSheet);
-            console.log('list', JSON.stringify(publishList));
+          this.display_anchor = document.getElementById('display_anchor');
+          this.grabSheetCSVJSONData('PublishConfig').then(config => {
+            this.display_anchor.setAttribute('href', 'https://' + config[0].firebaseproject + '.web.app/display');
           });
         }
         async publishList() {
           let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
           let publishListSheet = publishConfig[0].displaylist;
+          window.fbProj = publishConfig[0].firebaseproject;
           let publishList = await this.grabSheetCSVJSONData(publishListSheet);
 
           this.display_publish_list.innerHTML = 'Working...';
@@ -78,7 +50,7 @@
           for (let c = start; c <= end; c++) {
             let row = publishList[c];
             console.log(row);
-            promises.push(this.publishSingle(row.wid, row.assetssheet, row.circuitsheet, row.catalogsheet));
+            promises.push(this.publishSingle(row.name, row.assetssheet, row.circuitsheet, row.catalogsheet));
 
             if (promises.length > 9) {
               let results = await Promise.all(promises);
@@ -93,14 +65,14 @@
 
           return results;
         }
-        async publishSingle(id, assetSheet, sceneSheet, productSheet) {
-          console.log(id, assetSheet, sceneSheet, productSheet);
+        async publishSingle(name, assetSheet, sceneSheet, productSheet) {
+          console.log(name, assetSheet, sceneSheet, productSheet);
           try {
             let assetResults = {};
             if (assetSheet) {
               let assets = await this.grabSheetCSVJSONData(assetSheet);
-              let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
-              url += encodeURIComponent(id) + '&type=asset';
+              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              url += encodeURIComponent(name) + '&type=asset';
               let json = JSON.stringify(assets);
 
               let response = await fetch(url, {
@@ -113,8 +85,8 @@
             let sceneResults = {};
             if (sceneSheet) {
               let scene = await this.grabSheetCSVJSONData(sceneSheet);
-              let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
-              url += encodeURIComponent(id) + '&type=scene';
+              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              url += encodeURIComponent(name) + '&type=scene';
               let json = JSON.stringify(scene);
               let response = await fetch(url, {
                 method: "post",
@@ -126,8 +98,8 @@
             let productResults = {};
             if (productSheet) {
               let products = await this.grabSheetCSVJSONData(productSheet);
-              let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/upload?id=';
-              url += encodeURIComponent(id) + '&type=product';
+              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              url += encodeURIComponent(name) + '&type=product';
               let json = JSON.stringify(products);
               let response = await fetch(url, {
                 method: "post",
@@ -136,7 +108,7 @@
               productResults = await response.text();
             }
 
-            let url = 'https://us-central1-groceryblocks2.cloudfunctions.net/generate/?id=' + encodeURIComponent(id);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
             let genResponse = await fetch(url, {
               method: "post"
             });
@@ -155,13 +127,6 @@
              };
             }
         }
-        async publish() {
-          let results = await this.publishSingle(this.workspace_id.value, this.assets_sheet.value,
-                    this.scene_sheet.value, this.products_sheet.value);
-          console.log('single', results);
-          return results;
-        }
-
         grabSheetCSVJSONData(sheetName) {
           return new Promise(async (resolve, reject) => {
             google.script.run.withSuccessHandler((result) => {

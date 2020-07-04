@@ -32,4 +32,14 @@ module.exports = class cloudGenerateDisplay {
     return 'animation generated';
   }
 
+  async workspaceForName(name) {
+    let wid = await this.csvImport.widForName(name);
+
+    if (wid === null) {
+      let tags = 'active,' + 'gd:' + new Date().toISOString();
+      wid = await this.csvImport.addProject(name, wid, tags);
+    }
+
+    return wid;
+  }
 };

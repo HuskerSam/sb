@@ -646,6 +646,8 @@ class cViewDemo extends bView {
     d.innerHTML = html;
   }
   updateUIDisplay(evt) {
+    if (!this.ui_select)
+      return;
     let ui_overlay = this.ui_select.value;
 
     if (!evt) {
