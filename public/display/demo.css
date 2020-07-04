@@ -7,11 +7,6 @@
   position: absolute;
 }
 
-#workspaces-select {
-  float: left;
-  display: none;
-}
-
 .canvas-actions-shown {
   bottom: initial;
   display: block;

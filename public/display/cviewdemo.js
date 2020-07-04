@@ -3,10 +3,6 @@ class cViewDemo extends bView {
     super('Demo', null, null, true);
     this.bandButtons = [];
 
-    let anims = gAPPP.animationList;
-    this.projectsMap = {};
-    anims.forEach(anim => this.projectsMap[anim['wid']] = anim);
-
     this.canvasHelper.cameraShownCallback = () => this._cameraShown();
 
     this.displayButtonPanel = document.querySelector('.nontouch_button_options');
@@ -501,37 +497,8 @@ class cViewDemo extends bView {
     return null;
   }
   addDemoPanelOptions() {
-    if (!this.projectList)
-      return;
-    if (!this.projectList[gAPPP.loadedWID])
-      return;
-
-    let tags = this.projectList[gAPPP.loadedWID].tags;
-    if (tags === undefined)
-      return;
-
-    if (tags.indexOf('demopanel') !== -1) {
-      if (!this.demoOptionDiv) {
-        this.demoOptionDiv = this.dialog.querySelector('.demo_panel_contents');
-      }
-
-      let html = `<select class="ui_select" name="controls">
-        &nbsp;
-        <option value="mobile_orientation">Mobile Orientation</option>
-        <option value="mobile_follow" selected>Mobile Follow</option>
-        <option value="console_follow">Console Follow</option>
-        <option value="mobile_portrait">Mobile Portrait</option>
-      </select>
-      <br>
-      <a style="line-height:1.5em;font-size:1.5em;" href="/retail">About...</a><br>`;
-      html +=
-        `<div class="nav_options"></div>`;
-
-      html += ``;
-      this.demoOptionDiv.innerHTML = html;
-      this.ui_select = this.demoOptionDiv.querySelector('.ui_select');
-      this.ui_select.addEventListener('input', e => this.updateUIDisplay(e));
-    }
+    this.ui_select = this.dialog.querySelector('.ui_select');
+    this.ui_select.addEventListener('input', e => this.updateUIDisplay(e));
   }
   updateURL() {
     let searchParams = new URLSearchParams(window.location.search);
@@ -555,95 +522,6 @@ class cViewDemo extends bView {
     if (this.uiOverlay)
       url += `&uiOverlay=${this.uiOverlay}`;
     return url;
-  }
-  updateDemoPanel() {
-    let pageDesc = this.projectsMap[gAPPP.loadedWID];
-    if (!pageDesc)
-      return;
-
-    let d = this.demoOptionDiv.querySelector('.nav_options');
-    let html = '';
-
-    let isle = this.__findProjectID({
-      label: pageDesc.label,
-      song: pageDesc.song,
-      circuit: 'isle'
-    });
-    let carousel = this.__findProjectID({
-      label: pageDesc.label,
-      song: pageDesc.song,
-      circuit: 'carousel'
-    });
-    let tables = this.__findProjectID({
-      label: pageDesc.label,
-      song: pageDesc.song,
-      circuit: 'tables'
-    });
-    let island = this.__findProjectID({
-      label: pageDesc.label,
-      song: pageDesc.song,
-      circuit: 'island'
-    });
-
-    if (pageDesc.circuit === 'carousel') {
-      html += `Carousel <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
-    } else if (pageDesc.circuit === 'isle') {
-      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> Isle <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
-    } else if (pageDesc.circuit === 'tables') {
-      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
-    } else if (pageDesc.circuit === 'island') {
-      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> Platform<br>`;
-    } else {
-      html += `<a href="?wid=${carousel}${this._optionsURL()}">Carousel</a> <a href="?wid=${isle}${this._optionsURL()}">Isle</a> <a href="?wid=${island}${this._optionsURL()}">Platform</a><br>`;
-    }
-    let flat = this.__findProjectID({
-      label: 'flat',
-      song: pageDesc.song,
-      circuit: pageDesc.circuit
-    });
-    let raised = this.__findProjectID({
-      label: 'raised',
-      song: pageDesc.song,
-      circuit: pageDesc.circuit
-    });
-    let min = this.__findProjectID({
-      label: 'min',
-      song: pageDesc.song,
-      circuit: pageDesc.circuit
-    });
-    if (pageDesc.label === 'flat') {
-      html += `<a href="?wid=${min}${this._optionsURL()}">Min</a> Flat <a href="?wid=${raised}${this._optionsURL()}">Raised</a><br>`;
-    } else if (pageDesc.label === 'min') {
-      html += `Min <a href="?wid=${flat}${this._optionsURL()}">Flat</a> <a href="?wid=${raised}${this._optionsURL()}">Raised</a><br>`;
-    } else {
-      html += `<a href="?wid=${min}${this._optionsURL()}">Min</a> <a href="?wid=${flat}${this._optionsURL()}">Flat</a> Raised<br>`;
-    }
-
-    let cantina = this.__findProjectID({
-      label: pageDesc.label,
-      song: 'cantina',
-      circuit: pageDesc.circuit
-    });
-    let starwars = this.__findProjectID({
-      label: pageDesc.label,
-      song: 'starwars',
-      circuit: pageDesc.circuit
-    });
-    let mute = this.__findProjectID({
-      label: pageDesc.label,
-      song: 'mute',
-      circuit: pageDesc.circuit
-    });
-    if (pageDesc.song === 'starwars') {
-      html += `Star Wars <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
-    } else if (pageDesc.song === 'cantina') {
-      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> Cantina <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
-    } else if (pageDesc.song === 'mute') {
-      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> Mute<br>`;
-    } else {
-      html += `<a href="?wid=${starwars}${this._optionsURL()}">Star Wars</a> <a href="?wid=${cantina}${this._optionsURL()}">Cantina</a> <a href="?wid=${mute}${this._optionsURL()}">Mute</a><br>`;
-    }
-    d.innerHTML = html;
   }
   updateUIDisplay(evt) {
     if (!this.ui_select)
@@ -739,7 +617,6 @@ class cViewDemo extends bView {
 
     this._displayCameraFeatures();
     this.addDemoPanelOptions();
-    this.updateDemoPanel();
     this.updateUIDisplay();
     this._audioFeatures();
     this.context.scene.onPointerObservable.add(evt => {
@@ -1835,9 +1712,22 @@ class cViewDemo extends bView {
             <button class="profile_clear_button btn-sb-icon app-transparent" style="float:left;">Reset Profile</button>
             <div class="fields-container" style="clear:both;"></div>
           </div>
-          <div class="demo_panel"><div class="demo_panel_contents app-panel app-transparent"></div><div class="fields-container"></div></div>
+          <div class="demo_panel">
+            <div class="demo_panel_contents app-panel app-transparent">
+              <select class="ui_select" name="controls">
+                &nbsp;
+                <option value="mobile_orientation">Mobile Orientation</option>
+                <option value="mobile_follow" selected>Mobile Follow</option>
+                <option value="console_follow">Console Follow</option>
+                <option value="mobile_portrait">Mobile Portrait</option>
+              </select>
+              <br>
+              <a style="line-height:1.5em;font-size:1.5em;" href="/retail">About...</a>
+              <br>
+              <select id="workspaces-select"></select><div class="fields-container"></div>
+            </div>
+          </div>
           <div class="cart_panel">
-            <select id="workspaces-select"></select>
             <div class="cart-contents app-panel app-transparent">
             </div>
             <div class="fields-container"></div>

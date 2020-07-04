@@ -11,17 +11,26 @@ class gDemoApp extends gInstanceSuper {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .then(() => this.a.signInAnon());
   }
-  profileReadyAndLoaded() {
+  async profileReadyAndLoaded() {
     this.loadStarted = true;
     let workspace = this.a.profile.selectedWorkspace;
 
     let urlParams = new URLSearchParams(window.location.search);
-    let newWid = urlParams.get('wid');
-    if (newWid) {
-      workspace = newWid;
+
+    let name = urlParams.get('name');
+    let nameWid = null;
+    if (name) {
+      let csvImport = await new gCSVImport();
+      nameWid = await csvImport.widForName(name);
+    }
+
+    if (!nameWid)
+      nameWid = urlParams.get('wid');
+    if (nameWid) {
+      workspace = nameWid;
       gAPPP.a.modelSets['userProfile'].commitUpdateList([{
         field: 'selectedWorkspace',
-        newValue: newWid
+        newValue: nameWid
       }]);
     }
     this.loadedWID = workspace;
@@ -36,9 +45,6 @@ class gDemoApp extends gInstanceSuper {
 
       this.workspaceProcessed = true;
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
-
-      let animationList = await fetch(`./animations.json`)
-      this.animationList = await animationList.json();
 
       this.mV = new cViewDemo();
       this.mV.updateProjectList(gAPPP.a.modelSets['projectTitles'].fireDataValuesByKey, workspace, true);
