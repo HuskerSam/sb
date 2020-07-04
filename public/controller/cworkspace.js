@@ -969,10 +969,11 @@ class cWorkspace {
         btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
         btn.setAttribute('class', 'texturepathupload');
         this.fieldDivByName[title].appendChild(btn);
+        this.fieldDivByName[title].style.float = 'right';
 
         this.signImagePreview = document.createElement('img');
-        this.signImagePreview.style.maxWidth = "4em";
-        this.signImagePreview.style.maxHeight = "2em";
+        this.signImagePreview.style.maxWidth = "8em";
+        this.signImagePreview.style.maxHeight = "8em";
         this.signImagePreview.setAttribute('crossorigin', 'anonymous');
         this.fieldDivByName[title].appendChild(this.signImagePreview);
       }

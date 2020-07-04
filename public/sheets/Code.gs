@@ -214,3 +214,26 @@ function getJSONFromCSVSheet(sheetName) {
 
   return outData;
 }
+
+function getStringForRange() {
+  let f = SpreadsheetApp.getActiveRange().getFormula();
+  let re = new RegExp(".+getStringForRange\\s*\\((.*?)\\)","i");
+  let args = f.match(re)[1].split(/\s*,\s*/);
+  return args[0];
+}
+
+function getSheetFromRangeString(str) {
+  if (str.indexOf('!') === -1)
+    return '';
+  let parts = str.split('!');
+  let sheetName = parts[0].replace(/\'/g, '');
+  return sheetName;
+}
+
+function getCellRangeFromRangeString(str) {
+  if (str.indexOf('!') === -1)
+    return '';
+  let parts = str.split('!');
+  let sheetName = parts[1].replace(/\'/g, '');
+  return sheetName;
+}
