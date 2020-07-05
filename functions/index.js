@@ -2,12 +2,8 @@ var functions = require('firebase-functions');
 var admin = require("firebase-admin");
 let cloudGenerateDisplay = require('./cloudgeneratedisplay');
 
-const serviceAccount = require('./fbcreds.json');
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://groceryblocks2.firebaseio.com"
-});
-
+admin.initializeApp();
+let fb_config = process.env.FIREBASE_CONFIG;
 const runtimeOpts = {
   timeoutSeconds: 540,
   memory: '2GB'

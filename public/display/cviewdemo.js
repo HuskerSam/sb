@@ -355,7 +355,7 @@ class cViewDemo extends bView {
 
     this.cart_panel_button = this.dialog.querySelector('.cart_panel_button');
     this.cart_panel = this.dialog.querySelector('.cart_panel');
-    this.cart_panel_fc = this.demo_panel.querySelector('.fields-container');
+    this.cart_panel_fc = this.cart_panel.querySelector('.fields-container');
     this.cart_panel_ctl = new cBandProfileOptions(this.cart_panel_button, [],
       this.cart_panel_fc, this.cart_panel);
     this.cart_panel_ctl.fireFields.values = gAPPP.a.profile;
