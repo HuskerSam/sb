@@ -43,4 +43,30 @@ module.exports = class cloudGenerateDisplay {
 
     return wid;
   }
+
+  async validateToken(token) {
+    let fireDB = this.firebase.firestore();
+    let securityDoc = await fireDB.doc('privateConfiguration/security').get();
+    let errorMessage = "Configuration Not Found.";
+    if (!token)
+      token = '';
+    if (securityDoc.exists) {
+      let data = securityDoc.data();
+      if (token === data.token) {
+        return {
+          success: true
+        }
+      }
+
+      return {
+        success: false,
+        errorMessage: "Token didn't match"
+      }
+    }
+
+    return {
+      success: false,
+      errorMessage
+    }
+  }
 };

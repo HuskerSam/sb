@@ -1,146 +1,153 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
+
+<head>
+  <base target="_top">
+</head>
+
+<body>
   <style>
     body {
-    text-align: center;
+      text-align: center;
     }
-   </style>
+  </style>
   <br>
-     <button id="display_publish_list">Publish List</button>
- <hr>
-     <button id="refresh_oauth_btn">Refresh Assets Sheet</button>
+  <button id="display_publish_list">Publish List</button>
+  <hr>
+  <button id="refresh_oauth_btn">Refresh Assets Sheet</button>
 
-    <hr>
-    <a href="" id="display_anchor" target="_blank">Open Display</a>
-    <script>
-      class PublishWeb {
-        constructor() {
-          this.refresh_oauth_btn = document.getElementById('refresh_oauth_btn');
-          this.refresh_oauth_btn.addEventListener('click', e => {
-            google.script.run.withSuccessHandler((result) => {
-            }).refreshOAuth();
-          });
-          this.display_publish_list = document.getElementById('display_publish_list');
-          this.display_publish_list.addEventListener('click', e => this.publishList());
+  <hr>
+  <a href="" id="display_anchor" target="_blank">Open Display</a>
+  <script>
+    class PublishWeb {
+      constructor() {
+        this.refresh_oauth_btn = document.getElementById('refresh_oauth_btn');
+        this.refresh_oauth_btn.addEventListener('click', e => {
+          google.script.run.withSuccessHandler((result) => {}).refreshOAuth();
+        });
+        this.display_publish_list = document.getElementById('display_publish_list');
+        this.display_publish_list.addEventListener('click', e => this.publishList());
 
-          this.display_anchor = document.getElementById('display_anchor');
-          this.grabSheetCSVJSONData('PublishConfig').then(config => {
-            this.display_anchor.setAttribute('href', 'https://' + config[0].firebaseproject + '.web.app/display');
-          });
+        this.display_anchor = document.getElementById('display_anchor');
+        this.grabSheetCSVJSONData('PublishConfig').then(config => {
+          this.display_anchor.setAttribute('href', 'https://' + config[0].firebaseproject + '.web.app/display');
+        });
+      }
+      async publishList() {
+        let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+        let publishListSheet = publishConfig[0].displaylist;
+        window.apiToken = publishConfig[0].token;
+        window.fbProj = publishConfig[0].firebaseproject;
+        let publishList = await this.grabSheetCSVJSONData(publishListSheet);
+
+        this.display_publish_list.innerHTML = 'Working...';
+        let promises = [];
+        let start = 0;
+        let end = publishList.length - 1;
+        if (publishConfig[0].startat)
+          start = Number(publishConfig[0].startat);
+        if (publishConfig[0].endat)
+          end = Number(publishConfig[0].endat);
+
+        for (let c = start; c <= end; c++) {
+          let row = publishList[c];
+          console.log(row);
+          promises.push(this.publishSingle(row.name, row.assetssheet, row.circuitsheet, row.catalogsheet));
+
+          if (promises.length > 9) {
+            let results = await Promise.all(promises);
+            console.log(c, results);
+            promises = [];
+          }
         }
-        async publishList() {
-          let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
-          let publishListSheet = publishConfig[0].displaylist;
-          window.fbProj = publishConfig[0].firebaseproject;
-          let publishList = await this.grabSheetCSVJSONData(publishListSheet);
 
-          this.display_publish_list.innerHTML = 'Working...';
-          let promises = [];
-          let start = 0;
-          let end = publishList.length - 1;
-          if (publishConfig[0].startat)
-            start = Number(publishConfig[0].startat);
-           if (publishConfig[0].endat)
-             end = Number(publishConfig[0].endat);
+        let results = await Promise.all(promises);
+        console.log('last', results);
+        this.display_publish_list.innerHTML = 'Publish Web Again';
 
-          for (let c = start; c <= end; c++) {
-            let row = publishList[c];
-            console.log(row);
-            promises.push(this.publishSingle(row.name, row.assetssheet, row.circuitsheet, row.catalogsheet));
+        return results;
+      }
+      async publishSingle(name, assetSheet, sceneSheet, productSheet) {
+        console.log(name, assetSheet, sceneSheet, productSheet);
+        try {
+          let assetResults = {};
+          if (assetSheet) {
+            let assets = await this.grabSheetCSVJSONData(assetSheet);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=asset';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(assets);
 
-            if (promises.length > 9) {
-              let results = await Promise.all(promises);
-              console.log(c, results);
-              promises = [];
-            }
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            assetResults = await response.text();
           }
 
-          let results = await Promise.all(promises);
-          console.log('last', results);
-          this.display_publish_list.innerHTML = 'Publish Web Again';
-
-          return results;
-        }
-        async publishSingle(name, assetSheet, sceneSheet, productSheet) {
-          console.log(name, assetSheet, sceneSheet, productSheet);
-          try {
-            let assetResults = {};
-            if (assetSheet) {
-              let assets = await this.grabSheetCSVJSONData(assetSheet);
-              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
-              url += encodeURIComponent(name) + '&type=asset';
-              let json = JSON.stringify(assets);
-
-              let response = await fetch(url, {
-                method: "post",
-                body: json
-              });
-              assetResults = await response.text();
-            }
-
-            let sceneResults = {};
-            if (sceneSheet) {
-              let scene = await this.grabSheetCSVJSONData(sceneSheet);
-              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
-              url += encodeURIComponent(name) + '&type=scene';
-              let json = JSON.stringify(scene);
-              let response = await fetch(url, {
-                method: "post",
-                body: json
-              });
-              sceneResults = await response.text();
-            }
-
-            let productResults = {};
-            if (productSheet) {
-              let products = await this.grabSheetCSVJSONData(productSheet);
-              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
-              url += encodeURIComponent(name) + '&type=product';
-              let json = JSON.stringify(products);
-              let response = await fetch(url, {
-                method: "post",
-                body: json
-              });
-              productResults = await response.text();
-            }
-
-            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
-            let genResponse = await fetch(url, {
-              method: "post"
+          let sceneResults = {};
+          if (sceneSheet) {
+            let scene = await this.grabSheetCSVJSONData(sceneSheet);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=scene';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(scene);
+            let response = await fetch(url, {
+              method: "post",
+              body: json
             });
-            let genResults = await genResponse.text();
+            sceneResults = await response.text();
+          }
 
-            return {
-              genResults,
-              productResults,
-              assetResults,
-              sceneResults
-            };
-           } catch (error) {
-             console.log('e', error);
-             return {
-              error: error
-             };
-            }
-        }
-        grabSheetCSVJSONData(sheetName) {
-          return new Promise(async (resolve, reject) => {
-            google.script.run.withSuccessHandler((result) => {
-              console.log(sheetName, result.length);
-              resolve(result);
-            }).getJSONFromCSVSheet(sheetName);
+          let productResults = {};
+          if (productSheet) {
+            let products = await this.grabSheetCSVJSONData(productSheet);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=product';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(products);
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            productResults = await response.text();
+          }
+
+          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
+          url += '&token=' + encodeURIComponent(window.apiToken);
+          let genResponse = await fetch(url, {
+            method: "post"
           });
+          let genResults = await genResponse.text();
+
+          return {
+            genResults,
+            productResults,
+            assetResults,
+            sceneResults
+          };
+        } catch (error) {
+          console.log('e', error);
+          return {
+            error: error
+          };
         }
       }
+      grabSheetCSVJSONData(sheetName) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log(sheetName, result.length);
+            resolve(result);
+          }).getJSONFromCSVSheet(sheetName);
+        });
+      }
+    }
 
 
-      document.addEventListener('DOMContentLoaded', e => {
-        let FFT_file = new PublishWeb();
-      });
-    </script>
-  </body>
+    document.addEventListener('DOMContentLoaded', e => {
+      let FFT_file = new PublishWeb();
+    });
+  </script>
+</body>
+
 </html>

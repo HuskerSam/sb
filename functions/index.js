@@ -1,9 +1,9 @@
-var functions = require('firebase-functions');
-var admin = require("firebase-admin");
-let cloudGenerateDisplay = require('./cloudgeneratedisplay');
+const functions = require('firebase-functions');
+const admin = require("firebase-admin");
+const cloudGenerateDisplay = require('./cloudgeneratedisplay');
 
 admin.initializeApp();
-let fb_config = process.env.FIREBASE_CONFIG;
+const fb_config = process.env.FIREBASE_CONFIG;
 const runtimeOpts = {
   timeoutSeconds: 540,
   memory: '2GB'
@@ -21,6 +21,11 @@ exports.generate = functions
       if (!name)
         name = '';
       let cloudGen = new cloudGenerateDisplay(id);
+
+      let validateResults = await cloudGen.validateToken(req.query.token);
+      if (validateResults.success === false)
+        return res.status(200).send(validateResults);
+
       if (name)
         id = await cloudGen.workspaceForName(name);
       cloudGen = new cloudGenerateDisplay(id);
@@ -46,6 +51,11 @@ exports.upload = functions
       if (!name)
         name = '';
       let cloudGen = new cloudGenerateDisplay(id);
+
+      let validateResults = await cloudGen.validateToken(req.query.token);
+      if (validateResults.success === false)
+        return res.status(200).send(validateResults);
+
       if (name)
         id = await cloudGen.workspaceForName(name);
       cloudGen = new cloudGenerateDisplay(id);
