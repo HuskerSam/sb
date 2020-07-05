@@ -1547,6 +1547,23 @@ class cViewDemo extends bView {
     this.sceneIndex = this.workplacesSelect.selectedIndex;
     this.selectProject();
   }
+  _updateQueryString(newWid) {
+
+    let name = gAPPP.mV.workplacesSelect.selectedOptions[0].innerHTML;
+
+    let queryString = `?name=${encodeURIComponent(name)}`;
+
+    let url = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
+
+    if (url !== this.url) {
+      window.history.pushState({
+        path: url
+      }, '', url);
+      this.url = url;
+    }
+
+    return;
+  }
   sceneToggleControls() {
     if (!this.controlsShown) {
       this.controlsShown = true;
