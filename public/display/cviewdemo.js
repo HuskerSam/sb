@@ -617,6 +617,11 @@ class cViewDemo extends bView {
 
     this._displayCameraFeatures();
     this.addDemoPanelOptions();
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayUI) {
+      if (this.ui_select)
+        this.ui_select.value = this.rootBlock.blockRawData.displayUI;
+    }
+
     this.updateUIDisplay();
     this._audioFeatures();
     this.context.scene.onPointerObservable.add(evt => {

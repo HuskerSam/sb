@@ -3,6 +3,7 @@
 
 <head>
   <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
 </head>
 
 <body>
@@ -13,11 +14,10 @@
   </style>
   <br>
   <button id="display_publish_list">Publish List</button>
-  <hr>
+  <br>
+  <br>
   <button id="refresh_oauth_btn">Refresh Assets Sheet</button>
 
-  <hr>
-  <a href="" id="display_anchor" target="_blank">Open Display</a>
   <script>
     class PublishWeb {
       constructor() {
@@ -27,20 +27,19 @@
         });
         this.display_publish_list = document.getElementById('display_publish_list');
         this.display_publish_list.addEventListener('click', e => this.publishList());
-
-        this.display_anchor = document.getElementById('display_anchor');
-        this.grabSheetCSVJSONData('PublishConfig').then(config => {
-          this.display_anchor.setAttribute('href', 'https://' + config[0].firebaseproject + '.web.app/display');
-        });
       }
       async publishList() {
+        if (this.busy)
+          return;
+        this.display_publish_list.innerHTML = 'Working...';
+
+        this.busy = true;
         let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
         let publishListSheet = publishConfig[0].displaylist;
         window.apiToken = publishConfig[0].token;
         window.fbProj = publishConfig[0].firebaseproject;
         let publishList = await this.grabSheetCSVJSONData(publishListSheet);
 
-        this.display_publish_list.innerHTML = 'Working...';
         let promises = [];
         let start = 0;
         let end = publishList.length - 1;
@@ -63,6 +62,7 @@
 
         let results = await Promise.all(promises);
         console.log('last', results);
+        this.busy = false;
         this.display_publish_list.innerHTML = 'Publish Web Again';
 
         return results;
