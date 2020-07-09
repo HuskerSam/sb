@@ -2082,6 +2082,13 @@ class cViewDemo extends bView {
       group: 'cameraTrack',
       floatLeft: true,
       clearLeft: true,
+    }, {
+      title: 'No Bump Maps',
+      fireSetField: 'noBumpMaps',
+      group: 'cameraTrack',
+      type: 'boolean',
+      floatLeft: true,
+      clearLeft: true
     }];
   }
   getBrightnessFields() {
