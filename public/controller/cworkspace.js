@@ -780,7 +780,7 @@ class cWorkspace {
     columns[1].align = 'right';
     columns[1].cssClass = 'right-column-data';
     columns[1].minWidth = 45;
-    columns[2].minWidth = 200;
+    columns[2].minWidth = 90;
 
 
     let movableRows = true;
