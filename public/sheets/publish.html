@@ -14,17 +14,10 @@
   </style>
   <br>
   <button id="display_publish_list">Publish List</button>
-  <br>
-  <br>
-  <button id="refresh_oauth_btn">Refresh Assets Sheet</button>
 
   <script>
     class PublishWeb {
       constructor() {
-        this.refresh_oauth_btn = document.getElementById('refresh_oauth_btn');
-        this.refresh_oauth_btn.addEventListener('click', e => {
-          google.script.run.withSuccessHandler((result) => {}).refreshOAuth();
-        });
         this.display_publish_list = document.getElementById('display_publish_list');
         this.display_publish_list.addEventListener('click', e => this.publishList());
       }
@@ -51,7 +44,7 @@
         for (let c = start; c <= end; c++) {
           let row = publishList[c];
           console.log(row);
-          promises.push(this.publishSingle(row.name, row.assetssheet, row.circuitsheet, row.catalogsheet));
+          promises.push(this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet));
 
           if (promises.length > 9) {
             let results = await Promise.all(promises);
@@ -67,12 +60,14 @@
 
         return results;
       }
-      async publishSingle(name, assetSheet, sceneSheet, productSheet) {
-        console.log(name, assetSheet, sceneSheet, productSheet);
+      async publishSingle(name, assetRanges, circuitRanges, catalogSheet) {
+        console.log(name, assetRanges, circuitRanges, catalogSheet);
         try {
           let assetResults = {};
-          if (assetSheet) {
-            let assets = await this.grabSheetCSVJSONData(assetSheet);
+          if (assetRanges) {
+            let ranges = assetRanges.split(',');
+            let assets = await this.grabCSVForRangeStrings(ranges);
+            console.log('assets', assets);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=asset';
             url += '&token=' + encodeURIComponent(window.apiToken);
@@ -86,8 +81,10 @@
           }
 
           let sceneResults = {};
-          if (sceneSheet) {
-            let scene = await this.grabSheetCSVJSONData(sceneSheet);
+          if (circuitRanges) {
+            let ranges = circuitRanges.split(',');
+            let scene = await this.grabCSVForRangeStrings(ranges);
+            console.log('circuitRanges', scene);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=scene';
             url += '&token=' + encodeURIComponent(window.apiToken);
@@ -100,8 +97,9 @@
           }
 
           let productResults = {};
-          if (productSheet) {
-            let products = await this.grabSheetCSVJSONData(productSheet);
+          if (catalogSheet) {
+            let products = await this.grabSheetCSVJSONData(catalogSheet);
+            console.log('products', products);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=product';
             url += '&token=' + encodeURIComponent(window.apiToken);
@@ -139,6 +137,14 @@
             console.log(sheetName, result.length);
             resolve(result);
           }).getJSONFromCSVSheet(sheetName);
+        });
+      }
+      grabCSVForRangeStrings(rangeStrings) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log(rangeStrings, result.length);
+            resolve(result);
+          }).mergeCSVRangeStrings(rangeStrings);
         });
       }
     }
