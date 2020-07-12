@@ -61,7 +61,7 @@ function JSONArrayToPipeData(jsonArray, maxValue) {
   return outString;
 }
 
-function mergeCSVRangeStrings(rows) {
+function mergeCSVRangeStrings(rows, jsonResults = false) {
   var ranges = [];
   var ss = SpreadsheetApp.getActiveSpreadsheet();
 
@@ -86,7 +86,7 @@ function mergeCSVRangeStrings(rows) {
      }
   }
 
-  return _mergeCSVRanges(ranges);
+  return _mergeCSVRanges(ranges, jsonResults);
 }
 
 function _fetchRemoteRange(spreadsheetId, rangeName) {
@@ -101,7 +101,7 @@ function mergeCSVRanges() {
   return _mergeCSVRanges(arguments);
 }
 
-function _mergeCSVRanges(rangeArray) {
+function _mergeCSVRanges(rangeArray, jsonResults = false) {
   var allColumns = {};
   var processedRows = [];
   for (var rangeIndex = 0; rangeIndex < rangeArray.length; rangeIndex++) {
@@ -123,6 +123,9 @@ function _mergeCSVRanges(rangeArray) {
         processedRows.push(outRow);
     }
   }
+
+  if (jsonResults)
+    return processedRows;
 
   var outRows = [];
   var outColumns = [];

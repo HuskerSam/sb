@@ -776,6 +776,11 @@ class gCSVImport {
   async addCSVMaterial(row) {
     let materialName = row.name;
     let textureName = '';
+    if (!row.hasalpha)
+      row.hasalpha = '';
+    if (row.hasalpha === 'x')
+      row.hasalpha = '1';
+
     if (row.texture) {
       textureName = row.name + '_texture';
       let textureData = {
@@ -1683,7 +1688,7 @@ class gCSVImport {
     let newObjects = [];
     let textPlane = this.defaultCSVRow();
     textPlane.asset = 'textplane';
-    textPlane.hasalpha = true;
+    textPlane.hasalpha = 'x';
     textPlane.istext = true;
     let colorIndex = product.colorIndex;
     if (colorIndex !== 2 && colorIndex !== 0) {

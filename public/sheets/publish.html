@@ -67,7 +67,6 @@
           if (assetRanges) {
             let ranges = assetRanges.split(',');
             let assets = await this.grabCSVForRangeStrings(ranges);
-            console.log('assets', assets);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=asset';
             url += '&token=' + encodeURIComponent(window.apiToken);
@@ -84,7 +83,6 @@
           if (circuitRanges) {
             let ranges = circuitRanges.split(',');
             let scene = await this.grabCSVForRangeStrings(ranges);
-            console.log('circuitRanges', scene);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=scene';
             url += '&token=' + encodeURIComponent(window.apiToken);
@@ -99,7 +97,6 @@
           let productResults = {};
           if (catalogSheet) {
             let products = await this.grabSheetCSVJSONData(catalogSheet);
-            console.log('products', products);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=product';
             url += '&token=' + encodeURIComponent(window.apiToken);
@@ -144,7 +141,7 @@
           google.script.run.withSuccessHandler((result) => {
             console.log(rangeStrings, result.length);
             resolve(result);
-          }).mergeCSVRangeStrings(rangeStrings);
+          }).mergeCSVRangeStrings(rangeStrings, true);
         });
       }
     }
