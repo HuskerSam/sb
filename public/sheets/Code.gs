@@ -2,16 +2,8 @@ function onOpen() {
   let ui = SpreadsheetApp.getUi();
 
   ui.createAddonMenu()
-    .addItem('Import Song', 'showMusicImport')
     .addItem('Publish Web', 'showPublishWeb')
     .addToUi();
-}
-
-function showMusicImport() {
-
-  var html = HtmlService.createHtmlOutputFromFile('song')
-    .setTitle('Upload Song')
-  SpreadsheetApp.getUi().showSidebar(html);
 }
 
 function refreshOAuth() {
@@ -22,7 +14,7 @@ function refreshOAuth() {
 function showPublishWeb() {
   refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile('publish')
-    .setTitle('Publish to web')
+    .setTitle('Catalog Utilities')
   SpreadsheetApp.getUi().showSidebar(html);
 }
 
