@@ -4,6 +4,7 @@
 <head>
   <base target="_top">
   <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
   <style>
     .item_holder {
       position: relative;
@@ -23,51 +24,99 @@
   body {
     text-align: center;
   }
+
+  #import_song_expand_btn, #publish_expand_btn {
+    min-width:auto;
+    position:relative;
+    top:.5em;
+    transition: transform 400ms;
+    transform: rotate(0);
+  }
+
+  #import_song_expand_btn.rotate_button, #publish_expand_btn.rotate_button {
+    transform: rotate(90deg);
+  }
 </style>
   <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
 </head>
 
 <body>
-  <h2>Publish Catalogs</h2>
-  <button id="display_publish_list">Publish List</button>
-
+  <button id="publish_expand_btn" class="rotate_button"><i class="material-icons">keyboard_arrow_right</i></button>
+  <h2 style="display:inline-block;">Publish Catalogs</h2>
+  <div id="publish_details">
+    <button id="display_publish_list">Publish List</button>
+    <br>
+    <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
+  </div>
   <hr>
-  <h2>Import Song Data</h2>
-  <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
-  <br>
-  <label>freq samples per second<input id="freq_samples_to_second" type="text" value="10" /></label>
-  <br>
-  <label>result bands
-    <select id="bands_to_combine">
-      <option value="1">256</option>
-      <option value="2">128</option>
-      <option value="4">64</option>
-      <option value="8">32</option>
-      <option value="16" selected>16</option>
-      <option value="32">8</option>
-    </select>
-  </label>
-  <br>
-  <br><label>
-    WAV Audio File:
-    <input type="file" class="audio_file" style="width:100%" /></label>
+  <button id="import_song_expand_btn"><i class="material-icons">keyboard_arrow_right</i></button>
+  <h2 style="display:inline-block;">Import Song Data</h2>
+  <div id="song_data_details" style="display:none;">
+    <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
+    <br>
+    <label>freq samples per second<input id="freq_samples_to_second" type="text" value="10" /></label>
+    <br>
+    <label>result bands
+      <select id="bands_to_combine">
+        <option value="1">256</option>
+        <option value="2">128</option>
+        <option value="4">64</option>
+        <option value="8">32</option>
+        <option value="16" selected>16</option>
+        <option value="32">8</option>
+      </select>
+    </label>
+    <br>
+    <br><label>
+      WAV Audio File:
+      <input type="file" class="audio_file" style="width:100%" /></label>
 
-  <br>
-  <br>
-  <audio id="audio" controls style="width:250px;"></audio>
-  <div id="song_len_sec">&nbsp;</div>
-  <textarea id="raw_data" style="width:260px;height:200px;"></textarea>
-  <br>
+    <br>
+    <br>
+    <audio id="audio" controls style="width:250px;"></audio>
+    <div id="song_len_sec">&nbsp;</div>
+    <textarea id="raw_data" style="width:260px;height:200px;"></textarea>
+
+  </div>
+  <hr>
   <script>
     class PublishWeb {
       constructor() {
         this.display_publish_list = document.getElementById('display_publish_list');
         this.display_publish_list.addEventListener('click', e => this.publishList());
+
+        this.import_song_expand_btn = document.getElementById('import_song_expand_btn');
+        this.song_data_details = document.getElementById('song_data_details');
+        this.import_song_expand_btn.addEventListener('click', e => {
+          if (this.song_data_details.style.display === 'none') {
+            this.song_data_details.style.display = '';
+            this.import_song_expand_btn.classList.add('rotate_button');
+          } else {
+            this.song_data_details.style.display = 'none';
+            this.import_song_expand_btn.classList.remove('rotate_button');
+          }
+        });
+
+        this.publish_expand_btn = document.getElementById('publish_expand_btn');
+        this.publish_details = document.getElementById('publish_details');
+        this.publish_expand_btn.addEventListener('click', e => {
+          if (this.publish_details.style.display === 'none') {
+            this.publish_details.style.display = '';
+            this.publish_expand_btn.classList.add('rotate_button');
+          } else {
+            this.publish_details.style.display = 'none';
+            this.publish_expand_btn.classList.remove('rotate_button');
+          }
+        });
+
+        this.publish_results = document.getElementById('publish_results');
       }
       async publishList() {
         if (this.busy)
           return;
         this.display_publish_list.innerHTML = 'Working...';
+        this.publish_results.value = '';
+        this.publish_results.style.display = '';
 
         this.busy = true;
         let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
@@ -84,20 +133,25 @@
         if (publishConfig[0].endat)
           end = Number(publishConfig[0].endat);
 
+        let allResults = [];
         for (let c = start; c <= end; c++) {
           let row = publishList[c];
           console.log(row);
           promises.push(this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet));
 
-          if (promises.length > 9) {
+          if (promises.length > 3) {
             let results = await Promise.all(promises);
             console.log(c, results);
+            allResults = allResults.concat(results);
             promises = [];
           }
         }
 
         let results = await Promise.all(promises);
+        allResults = allResults.concat(results);
         console.log('last', results);
+        let json = JSON.stringify(allResults, null, '\n');
+        this.publish_results.value = json;
         this.busy = false;
         this.display_publish_list.innerHTML = 'Publish Web Again';
 

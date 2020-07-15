@@ -2,7 +2,7 @@ function onOpen() {
   let ui = SpreadsheetApp.getUi();
 
   ui.createAddonMenu()
-    .addItem('Publish Web', 'showPublishWeb')
+    .addItem('Catalog Utilities', 'showPublishWeb')
     .addToUi();
 }
 
