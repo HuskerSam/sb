@@ -132,6 +132,7 @@
           start = Number(publishConfig[0].startat);
         if (publishConfig[0].endat)
           end = Number(publishConfig[0].endat);
+        this.publish_results.value = 'Publishing ' + publishList.length.toString() + '\n\n';
 
         let allResults = [];
         for (let c = start; c <= end; c++) {
@@ -155,6 +156,8 @@
         let json = JSON.stringify(allResults, null, '\n');
         this.busy = false;
         this.display_publish_list.innerHTML = 'Publish Web Again';
+        this.publish_results.value += '\n\nComplete\n\n';
+        this.publish_results.scrollTop = this.publish_results.scrollHeight;
 
         return results;
       }
