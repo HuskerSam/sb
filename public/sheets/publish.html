@@ -136,10 +136,12 @@
         let allResults = [];
         for (let c = start; c <= end; c++) {
           let row = publishList[c];
-          console.log(row);
+
+          this.publish_results.value += row.name + '\n';
+          this.publish_results.scrollTop = this.publish_results.scrollHeight;
           promises.push(this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet));
 
-          if (promises.length > 3) {
+          if (promises.length > 5) {
             let results = await Promise.all(promises);
             console.log(c, results);
             allResults = allResults.concat(results);
@@ -151,7 +153,6 @@
         allResults = allResults.concat(results);
         console.log('last', results);
         let json = JSON.stringify(allResults, null, '\n');
-        this.publish_results.value = json;
         this.busy = false;
         this.display_publish_list.innerHTML = 'Publish Web Again';
 
@@ -174,7 +175,9 @@
               body: json
             });
             assetResults = await response.text();
-          }
+            this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+        }
 
           let sceneResults = {};
           if (circuitRanges) {
@@ -189,7 +192,9 @@
               body: json
             });
             sceneResults = await response.text();
-          }
+            this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+        }
 
           let productResults = {};
           if (catalogSheet) {
@@ -203,6 +208,8 @@
               body: json
             });
             productResults = await response.text();
+            this.publish_results.value += name + ':products: ' + products.length.toString() + '\n'
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
           }
 
           let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
@@ -211,6 +218,16 @@
             method: "post"
           });
           let genResults = await genResponse.text();
+          let r = {
+            result_msg: 'unknown'
+          };
+          try {
+            r = JSON.parse(genResults);
+          } catch (e) {
+            console.log(e, genResults);
+          }
+          this.publish_results.value += name + 'generated\n'
+          this.publish_results.scrollTop = this.publish_results.scrollHeight;
 
           return {
             genResults,
