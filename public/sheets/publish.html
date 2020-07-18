@@ -142,7 +142,7 @@
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
           promises.push(this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet));
 
-          if (promises.length > 5) {
+          if (promises.length > 3) {
             let results = await Promise.all(promises);
             console.log(c, results);
             allResults = allResults.concat(results);
@@ -168,6 +168,7 @@
           if (assetRanges) {
             let ranges = assetRanges.split(',');
             let assets = await this.grabCSVForRangeStrings(ranges);
+            console.log('a', assets);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=asset';
             url += '&token=' + encodeURIComponent(window.apiToken);
@@ -186,6 +187,7 @@
           if (circuitRanges) {
             let ranges = circuitRanges.split(',');
             let scene = await this.grabCSVForRangeStrings(ranges);
+            console.log('c', scene);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=scene';
             url += '&token=' + encodeURIComponent(window.apiToken);

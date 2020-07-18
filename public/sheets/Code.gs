@@ -82,8 +82,9 @@ function mergeCSVRangeStrings(rows, jsonResults = false) {
 }
 
 function _fetchRemoteRange(spreadsheetId, rangeName) {
+  let rangeCleanName = rangeName.replace(/\$/g, "");
   var accessToken = PropertiesService.getScriptProperties().getProperty("accessToken");
-  var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadsheetId + "/values/" + rangeName;
+  var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadsheetId + "/values/" + rangeCleanName;
   var res = UrlFetchApp.fetch(url, {headers: {"Authorization": "Bearer " + accessToken}});
   var range = JSON.parse(res.getContentText());
   return range;
