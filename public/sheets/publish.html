@@ -117,6 +117,7 @@
         this.display_publish_list.innerHTML = 'Working...';
         this.publish_results.value = '';
         this.publish_results.style.display = '';
+        this.dataCache = {};
 
         this.busy = true;
         let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
@@ -142,7 +143,7 @@
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
           promises.push(this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet));
 
-          if (promises.length > 3) {
+          if (promises.length > 2) {
             let results = await Promise.all(promises);
             console.log(c, results);
             allResults = allResults.concat(results);
@@ -166,40 +167,50 @@
         try {
           let assetResults = {};
           if (assetRanges) {
-            let ranges = assetRanges.split(',');
-            let assets = await this.grabCSVForRangeStrings(ranges);
-            console.log('a', assets);
-            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
-            url += encodeURIComponent(name) + '&type=asset';
-            url += '&token=' + encodeURIComponent(window.apiToken);
-            let json = JSON.stringify(assets);
+            if (this.dataCache[assetRanges])
+              assetResults = this.dataCache[assetRanges];
+            else {
+              let ranges = assetRanges.split(',');
+              let assets = await this.grabCSVForRangeStrings(ranges);
+              console.log('a', assets);
+              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              url += encodeURIComponent(name) + '&type=asset';
+              url += '&token=' + encodeURIComponent(window.apiToken);
+              let json = JSON.stringify(assets);
 
-            let response = await fetch(url, {
-              method: "post",
-              body: json
-            });
-            assetResults = await response.text();
-            this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
-            this.publish_results.scrollTop = this.publish_results.scrollHeight;
-        }
+              let response = await fetch(url, {
+                method: "post",
+                body: json
+              });
+              assetResults = await response.text();
+              this.dataCache[assetRanges] = assetResults;
+              this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
+              this.publish_results.scrollTop = this.publish_results.scrollHeight;
+            }
+          }
 
           let sceneResults = {};
           if (circuitRanges) {
-            let ranges = circuitRanges.split(',');
-            let scene = await this.grabCSVForRangeStrings(ranges);
-            console.log('c', scene);
-            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
-            url += encodeURIComponent(name) + '&type=scene';
-            url += '&token=' + encodeURIComponent(window.apiToken);
-            let json = JSON.stringify(scene);
-            let response = await fetch(url, {
-              method: "post",
-              body: json
-            });
-            sceneResults = await response.text();
-            this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
-            this.publish_results.scrollTop = this.publish_results.scrollHeight;
-        }
+            if (this.dataCache[circuitRanges])
+              sceneResults = this.dataCache[circuitRanges];
+            else {
+              let ranges = circuitRanges.split(',');
+              let scene = await this.grabCSVForRangeStrings(ranges);
+              console.log('c', scene);
+              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              url += encodeURIComponent(name) + '&type=scene';
+              url += '&token=' + encodeURIComponent(window.apiToken);
+              let json = JSON.stringify(scene);
+              let response = await fetch(url, {
+                method: "post",
+                body: json
+              });
+              sceneResults = await response.text();
+              this.dataCache[circuitRanges] = sceneResults;
+              this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
+              this.publish_results.scrollTop = this.publish_results.scrollHeight;
+            }
+          }
 
           let productResults = {};
           if (catalogSheet) {
