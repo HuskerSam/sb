@@ -779,7 +779,7 @@ class cWorkspace {
 
     columns[1].align = 'right';
     columns[1].cssClass = 'right-column-data';
-    columns[1].minWidth = 45;
+    columns[1].minWidth = 65;
     columns[2].minWidth = 90;
 
 
@@ -959,7 +959,7 @@ class cWorkspace {
 
       if (title === 'x') {
         let select = document.createElement('select');
-        select.style.width = '1.5em';
+        select.style.width = '2.75em';
         select.setAttribute('id', 'select-position-preset');
         let xFld = this.fieldDivByName[title];
         xFld.appendChild(select);
@@ -979,7 +979,7 @@ class cWorkspace {
       }
 
       this.record_field_list_form.appendChild(this.fieldDivByName[title]);
-      if (title === 'name') {
+      if (title === 'z') {
         let btn = document.createElement('button');
         btn.setAttribute('id', 'update_product_fields_post');
         btn.innerHTML = '<i class="material-icons">add</i>';
@@ -1051,7 +1051,7 @@ class cWorkspace {
           rzd.value = vals[5];
         }
 
-        sel.selectedIndex = 0;
+        //sel.selectedIndex = 0;
       });
     }
   }
@@ -1173,6 +1173,9 @@ class cWorkspace {
         num += 100;
         fields[c].value = num;
       }
+
+      if (this.fieldList[c] === 'block')
+        fields[c].focus();
     }
 
     let rows = this.editTable.getData();
@@ -1188,6 +1191,8 @@ class cWorkspace {
     this.editTable.setData(rows);
     this.workspaceLayoutCSVRowMoved('product', null);
 
+    if (this.signImagePreview)
+      this.signImagePreview.removeAttribute('src');
     e.preventDefault();
     return true;
   }
