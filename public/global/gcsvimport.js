@@ -2527,7 +2527,7 @@ class gCSVImport {
 
   }
 
-  async clearProjectData() {
+  async clearProjectData(deleteProject = false) {
     let basePath = `/project/${this.projectId}/`;
     let fireUpdates = {
       [basePath + 'block']: null,
@@ -2538,6 +2538,13 @@ class gCSVImport {
       [basePath + 'shape']: null,
       [basePath + 'texture']: null
     };
+    if (deleteProject) {
+      let updatePath = 'projectTitles/' + this.projectId;
+
+      await this.firebase.database().ref().update({
+        updatePath: null
+      });
+    }
 
     return this.firebase.database().ref().update(fireUpdates);
   }

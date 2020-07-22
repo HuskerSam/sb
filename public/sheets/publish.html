@@ -136,8 +136,24 @@
         this.publish_results.value = 'Publishing ' + publishList.length.toString() + '\n\n';
         for (let c = start; c <= end; c++) {
           let row = publishList[c];
+          let flags = row.flags;
+          if (!flags) flags = '';
+          flags = flags.toLowerCase();
 
-          this.publish_results.value += row.name + '\n';
+          if (flags.indexOf('ignore') !== -1){
+            this.publish_results.value += row.name + ' ignored\n';
+            continue;
+          }
+
+          if (flags.indexOf('remove') !== -1) {
+            let r_result = await this.deleteProject(row.name);
+            this.publish_results.value += row.name + ' removed\n';
+
+            console.log(c, 'remove', r_result);
+            continue;
+          }
+
+
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
           let result = await this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet);
           console.log(c, result);
@@ -146,8 +162,24 @@
         this.display_publish_list.innerHTML = 'Publish Web Again';
         this.publish_results.value += '\n\nComplete\n\n';
         this.publish_results.scrollTop = this.publish_results.scrollHeight;
+      }
+      async deleteProject(name) {
+        let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
+        url += '&token=' + encodeURIComponent(window.apiToken);
+        let genResponse = await fetch(url, {
+          method: "post"
+        });
+        let genResults = await genResponse.text();
+        let r = {
+          result_msg: 'unknown'
+        };
+        try {
+          r = JSON.parse(genResults);
+        } catch (e) {
+          console.log(e, genResults);
+        }
 
-        return results;
+        return r;
       }
       async publishSingle(name, assetRanges, circuitRanges, catalogSheet) {
         console.log(name, assetRanges, circuitRanges, catalogSheet);
