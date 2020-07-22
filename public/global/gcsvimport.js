@@ -2540,10 +2540,8 @@ class gCSVImport {
     };
     if (deleteProject) {
       let updatePath = 'projectTitles/' + this.projectId;
-
-      await this.firebase.database().ref().update({
-        updatePath: null
-      });
+      console.log('delete', updatePath);
+      await this.firebase.database().ref(updatePath).remove();
     }
 
     return this.firebase.database().ref().update(fireUpdates);

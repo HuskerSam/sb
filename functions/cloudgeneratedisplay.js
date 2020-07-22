@@ -1,8 +1,8 @@
 const requireFromUrl = require('require-from-url/sync');
 let firebase = require("firebase-admin");
 let project_id = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
-let gcsvimport = requireFromUrl(`https://${project_id}.web.app/global/gcsvimport.js?abc=5io84i4`);
-let GLOBALUTIL = requireFromUrl(`https://${project_id}.web.app/global/globalutil.js?abc=13iio574`);
+let gcsvimport = requireFromUrl(`https://${project_id}.web.app/global/gcsvimport.js?abc=894i4`);
+let GLOBALUTIL = requireFromUrl(`https://${project_id}.web.app/global/globalutil.js?abc=13ii8974`);
 
 module.exports = class cloudGenerateDisplay {
   constructor(id) {
