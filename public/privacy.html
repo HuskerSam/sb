@@ -98,9 +98,12 @@
             the information that we collect.</span></strong></span></p>
     <p style="font-size: 15px; line-height: 1.5;"><span style="color: rgb(89, 89, 89);"><br></span></p>
     <p style="font-size:15px;"><span style="color: rgb(0, 0, 0);"><strong><span style="font-size: 19px;"><span data-custom-class="heading_1">TABLE OF CONTENTS</span></span></strong></span></p>
-    <p style="font-size:15px;"><a data-custom-class="link" href="#infocollect"><span style="color: rgb(89, 89, 89);">1. WHAT INFORMATION DO WE COLLECT?</span></a><span style="color: rgb(89, 89, 89);">
+    <p style="font-size:15px;"><a data-custom-class="link" href="#google_sheets"><span style="color: rgb(89, 89, 89);">Google Sheets Addon (Data Privacy)</span></a><span style="color: rgb(89, 89, 89);">
         <bdt class="block-component"></bdt>
       </span></p>
+      <p style="font-size:15px;"><a data-custom-class="link" href="#infocollect"><span style="color: rgb(89, 89, 89);">1. WHAT INFORMATION DO WE COLLECT?</span></a><span style="color: rgb(89, 89, 89);">
+          <bdt class="block-component"></bdt>
+        </span></p>
     <p style="font-size:15px;"><a data-custom-class="link" href="#infouse"><span style="color: rgb(89, 89, 89);">2. HOW DO WE USE YOUR INFORMATION?</span></a><span style="color: rgb(89, 89, 89);"><span style="color: rgb(89, 89, 89);">
           <bdt class="statement-end-if-in-editor"></bdt>
         </span></span></p>
@@ -199,31 +202,7 @@
                 data-custom-class="body_text">" for further information.<span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">
                       <bdt class="statement-end-if-in-editor"></bdt>
                     </span></span></span></span></span></span></span><br><br></span></li>
-    <li><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><strong><span data-custom-class="body_text">To post testimonials.</span></strong><span data-custom-class="body_text"> We post testimonials on our <span style="font-size: 15px;"><span
-                style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">
-                  <bdt class="block-component"></bdt>Website<bdt class="statement-end-if-in-editor"></bdt>
-                  <bdt class="block-component"></bdt>
-                  <bdt class="block-component"></bdt>
-                </span></span></span> that may contain personal information. Prior to posting a testimonial, we will obtain your consent to use your name and the consent of the testimonial. If you wish to update, or delete your testimonial, please
-            contact us at <bdt class="block-component"></bdt>
-            <bdt class="question">privacy@handtop.com</bdt>
-            <bdt class="else-block"></bdt> and be sure to include your name, testimonial location, and contact information.
-          </span></span></span><span data-custom-class="body_text"><br><br></span></li>
-    <li><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><strong><span data-custom-class="body_text">Request feedback.</span></strong><span data-custom-class="body_text"> We may use your information to request feedback and to
-            contact you about your use of our <span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">
-                  <bdt class="block-component"></bdt>Website<bdt class="statement-end-if-in-editor"></bdt>
-                  <bdt class="block-component"></bdt>
-                  <bdt class="block-component"></bdt>
-                </span></span></span>.</span></span></span><span data-custom-class="body_text"><br><br></span></li>
-    <li><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><strong><span data-custom-class="body_text">To enable user-to-user communications.</span></strong><span data-custom-class="body_text"> We may use your information in order
-            to enable user-to-user communications with each user's consent.</span></span></span><span data-custom-class="body_text"><br><br></span></li>
-    <li><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span
-                      style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span
-                                    style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span
-                                                  style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text"><strong>To
-                                                              manage user accounts</strong>. We may use your information for the purposes of managing our account and keeping it in working order.</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
-      <bdt class="statement-end-if-in-editor"></bdt>
-    </li>
+
   </ul>
   <p style="font-size: 15px;">
     <bdt class="block-component"></bdt>
@@ -247,8 +226,8 @@
           </p>
           <ul>
             <li>
-              <p style="font-size: 15px;">
-                <bdt class="question"><span data-custom-class="body_text">Google Sheets</span></bdt>
+              <p style="font-size: 15px;" id="google_sheets">
+                <bdt class="question"><span data-custom-class="body_text">Google Sheets - raw data is never transfered out of GCP (Google Cloud Platform) - only processed data from the current workbook is uploaded.  No specific data from sheets is ever retained - only processed data to form catalogs.</span></bdt>
               </p>
             </li>
           </ul>
@@ -266,7 +245,6 @@
           <ul>
             <li><span data-custom-class="body_text"><span style="color: rgb(89, 89, 89); font-size: 15px;"><strong>Consent:</strong> We may process your data if you have given us specific consent to use your personal information in a specific
                   purpose.</span><br><br></span></li>
-            <li><span data-custom-class="body_text"><span style="color: rgb(89, 89, 89); font-size: 15px;"><strong>Legitimate Interests:</strong> We may process your data when it is reasonably necessary to achieve our legitimate business interests.</span><br><br></span></li>
             <li><span data-custom-class="body_text"><span style="color: rgb(89, 89, 89); font-size: 15px;"><strong>Performance of a Contract: </strong>Where we have entered into a contract with you, we may process your personal information to
                   fulfill the terms of our contract.</span><br><br></span></li>
             <li><span data-custom-class="body_text"><span style="color: rgb(89, 89, 89); font-size: 15px;"><strong>Legal Obligations:</strong> We may disclose your information where we are legally required to do so in order to comply with applicable
