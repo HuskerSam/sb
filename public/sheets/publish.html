@@ -41,6 +41,8 @@
 </head>
 
 <body>
+  <img id="google_signin" src="https://hcwebflow.s3-us-west-2.amazonaws.com/himage/btn_google_signin_light_normal_web.png">
+    <br>
   <button id="publish_expand_btn" class="rotate_button"><i class="material-icons">keyboard_arrow_right</i></button>
   <h2 style="display:inline-block;">Publish Catalogs</h2>
   <div id="publish_details">
@@ -110,6 +112,13 @@
         });
 
         this.publish_results = document.getElementById('publish_results');
+
+        this.google_signin = document.getElementById('google_signin');
+        this.google_signin.addEventListener('click', e => {
+          google.script.run.withSuccessHandler((result) => {
+            alert('Ready to publish');
+          }).refreshOAuth();
+        });
       }
       async publishList() {
         if (this.busy)

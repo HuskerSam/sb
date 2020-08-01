@@ -7,12 +7,12 @@ function onOpen() {
 }
 
 function refreshOAuth() {
-  PropertiesService.getScriptProperties().setProperty("accessToken", ScriptApp.getOAuthToken());
+  ScriptApp.invalidateAuth();
+  PropertiesService.getDocumentProperties().setProperty("accessToken", ScriptApp.getOAuthToken());
   return;
 }
 
 function showPublishWeb() {
-  refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile('publish')
     .setTitle('Catalog Utilities')
   SpreadsheetApp.getUi().showSidebar(html);
@@ -83,7 +83,7 @@ function mergeCSVRangeStrings(rows, jsonResults = false) {
 
 function _fetchRemoteRange(spreadsheetId, rangeName) {
   let rangeCleanName = rangeName.replace(/\$/g, "");
-  var accessToken = PropertiesService.getScriptProperties().getProperty("accessToken");
+  var accessToken = PropertiesService.getDocumentProperties().getProperty("accessToken");
   var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadsheetId + "/values/" + rangeCleanName;
   var res = UrlFetchApp.fetch(url, {headers: {"Authorization": "Bearer " + accessToken}});
   var range = JSON.parse(res.getContentText());
