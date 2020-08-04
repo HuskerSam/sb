@@ -4,6 +4,7 @@
     "groceryscenes": "braingrafter",
     "handtop": "groceryblocks",
     "sceneblocks": "husker-ac595",
-    "builder": "handtopbuilder"
+    "builder": "handtopbuilder",
+    "sandboxone": "visual-catalog-sandbox-1"
   }
 }
