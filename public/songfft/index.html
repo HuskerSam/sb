@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+  <style>
+    .item_holder {
+      position: relative;
+    }
+
+  .basic_item {
+    border-radius: 50%;
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+  body {
+    text-align: center;
+  }
+
+  #import_song_expand_btn, #publish_expand_btn {
+    min-width:auto;
+    position:relative;
+    top:.5em;
+    transition: transform 400ms;
+    transform: rotate(0);
+  }
+
+  #import_song_expand_btn.rotate_button, #publish_expand_btn.rotate_button {
+    transform: rotate(90deg);
+  }
+</style>
+  <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
+</head>
+
+<body>
+  <img id="google_signin" src="https://hcwebflow.s3-us-west-2.amazonaws.com/himage/btn_google_signin_light_normal_web.png">
+    <br>
+  <button id="publish_expand_btn" class="rotate_button"><i class="material-icons">keyboard_arrow_right</i></button>
+  <h2 style="display:inline-block;">Publish Catalogs</h2>
+  <div id="publish_details">
+    <button id="display_publish_list">Publish List</button>
+    <br>
+    <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
+  </div>
+  <hr>
+  <button id="import_song_expand_btn"><i class="material-icons">keyboard_arrow_right</i></button>
+  <h2 style="display:inline-block;">Import Song Data</h2>
+  <div id="song_data_details" style="display:none;">
+    <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
+    <br>
+    <label>freq samples per second<input id="freq_samples_to_second" type="text" value="10" /></label>
+    <br>
+    <label>result bands
+      <select id="bands_to_combine">
+        <option value="1">256</option>
+        <option value="2">128</option>
+        <option value="4">64</option>
+        <option value="8">32</option>
+        <option value="16" selected>16</option>
+        <option value="32">8</option>
+      </select>
+    </label>
+    <br>
+    <br><label>
+      WAV Audio File:
+      <input type="file" class="audio_file" style="width:100%" /></label>
+
+    <br>
+    <br>
+    <audio id="audio" controls style="width:250px;"></audio>
+    <div id="song_len_sec">&nbsp;</div>
+    <textarea id="raw_data" style="width:260px;height:200px;"></textarea>
+
+  </div>
+  <hr>
+  <script>
+    class PublishWeb {
+      constructor() {
+        this.display_publish_list = document.getElementById('display_publish_list');
+        this.display_publish_list.addEventListener('click', e => this.publishList());
+
+        this.import_song_expand_btn = document.getElementById('import_song_expand_btn');
+        this.song_data_details = document.getElementById('song_data_details');
+        this.import_song_expand_btn.addEventListener('click', e => {
+          if (this.song_data_details.style.display === 'none') {
+            this.song_data_details.style.display = '';
+            this.import_song_expand_btn.classList.add('rotate_button');
+          } else {
+            this.song_data_details.style.display = 'none';
+            this.import_song_expand_btn.classList.remove('rotate_button');
+          }
+        });
+
+        this.publish_expand_btn = document.getElementById('publish_expand_btn');
+        this.publish_details = document.getElementById('publish_details');
+        this.publish_expand_btn.addEventListener('click', e => {
+          if (this.publish_details.style.display === 'none') {
+            this.publish_details.style.display = '';
+            this.publish_expand_btn.classList.add('rotate_button');
+          } else {
+            this.publish_details.style.display = 'none';
+            this.publish_expand_btn.classList.remove('rotate_button');
+          }
+        });
+
+        this.publish_results = document.getElementById('publish_results');
+
+        this.google_signin = document.getElementById('google_signin');
+        this.google_signin.addEventListener('click', e => {
+          google.script.run.withSuccessHandler((result) => {
+            alert('Ready to publish');
+          }).refreshOAuth();
+        });
+      }
+      async publishList() {
+        if (this.busy)
+          return;
+        this.display_publish_list.innerHTML = 'Working...';
+        this.publish_results.value = '';
+        this.publish_results.style.display = '';
+        this.dataCache = {};
+
+        this.busy = true;
+        let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+        let publishListSheet = publishConfig[0].displaylist;
+        window.apiToken = publishConfig[0].token;
+        window.fbProj = publishConfig[0].firebaseproject;
+        let publishList = await this.grabSheetCSVJSONData(publishListSheet);
+
+        let promises = [];
+        let start = 0;
+        let end = publishList.length - 1;
+        if (publishConfig[0].startat)
+          start = Number(publishConfig[0].startat);
+        if (publishConfig[0].endat)
+          end = Number(publishConfig[0].endat);
+        this.publish_results.value = 'Publishing ' + publishList.length.toString() + '\n\n';
+        for (let c = start; c <= end; c++) {
+          let row = publishList[c];
+          let flags = row.flags;
+          if (!flags) flags = '';
+          flags = flags.toLowerCase();
+
+          if (flags.indexOf('ignore') !== -1){
+            this.publish_results.value += row.name + ' ignored\n';
+            continue;
+          }
+
+          if (flags.indexOf('remove') !== -1) {
+            let r_result = await this.deleteProject(row.name);
+            this.publish_results.value += row.name + ' removed\n';
+
+            console.log(c, 'remove', r_result);
+            continue;
+          }
+
+
+          this.publish_results.scrollTop = this.publish_results.scrollHeight;
+          let result = await this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet);
+          console.log(c, result);
+        }
+        this.busy = false;
+        this.display_publish_list.innerHTML = 'Publish Web Again';
+        this.publish_results.value += '\n\nComplete\n\n';
+        this.publish_results.scrollTop = this.publish_results.scrollHeight;
+      }
+      async deleteProject(name) {
+        let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
+        url += '&token=' + encodeURIComponent(window.apiToken);
+        let genResponse = await fetch(url, {
+          method: "post"
+        });
+        let genResults = await genResponse.text();
+        let r = {
+          result_msg: 'unknown'
+        };
+        try {
+          r = JSON.parse(genResults);
+        } catch (e) {
+          console.log(e, genResults);
+        }
+
+        return r;
+      }
+      async publishSingle(name, assetRanges, circuitRanges, catalogSheet) {
+        console.log(name, assetRanges, circuitRanges, catalogSheet);
+        try {
+          let assetResults = {};
+          if (assetRanges) {
+
+            let assets = null;
+            if (this.dataCache[assetRanges])
+              assets = this.dataCache[assetRanges];
+
+            if (!assets) {
+              let ranges = assetRanges.split(',');
+              assets = await this.grabCSVForRangeStrings(ranges);
+              console.log('asset fetch');
+            }
+            console.log('a', assets);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=asset';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(assets);
+
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            assetResults = await response.text();
+            this.dataCache[assetRanges] = assets;
+            this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+          }
+
+          let sceneResults = {};
+          if (circuitRanges) {
+
+            let scene = null;
+            if (this.dataCache[circuitRanges])
+              scene = this.dataCache[circuitRanges];
+
+            if (!scene) {
+              let ranges = circuitRanges.split(',');
+              scene = await this.grabCSVForRangeStrings(ranges);
+              console.log('scene fetched');
+            }
+            console.log('c', scene);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=scene';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(scene);
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            sceneResults = await response.text();
+            this.dataCache[circuitRanges] = scene;
+            this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+
+          }
+
+          let productResults = {};
+          if (catalogSheet) {
+            let products = await this.grabSheetCSVJSONData(catalogSheet);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=product';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(products);
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            productResults = await response.text();
+            this.publish_results.value += name + ':products: ' + products.length.toString() + '\n'
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+          }
+
+          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
+          url += '&token=' + encodeURIComponent(window.apiToken);
+          let genResponse = await fetch(url, {
+            method: "post"
+          });
+          let genResults = await genResponse.text();
+          let r = {
+            result_msg: 'unknown'
+          };
+          try {
+            r = JSON.parse(genResults);
+          } catch (e) {
+            console.log(e, genResults);
+          }
+          this.publish_results.value += name + 'generated\n'
+          this.publish_results.scrollTop = this.publish_results.scrollHeight;
+
+          return {
+            genResults,
+            productResults,
+            assetResults,
+            sceneResults
+          };
+        } catch (error) {
+          console.log('e', error);
+          return {
+            error: error
+          };
+        }
+      }
+      grabSheetCSVJSONData(sheetName) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log(sheetName, result.length);
+            resolve(result);
+          }).getJSONFromCSVSheet(sheetName);
+        });
+      }
+      grabCSVForRangeStrings(rangeStrings) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log(rangeStrings, result.length);
+            resolve(result);
+          }).mergeCSVRangeStrings(rangeStrings, true);
+        });
+      }
+    }
+    class FFTSoundFile {
+      constructor() {
+        this.audio_file = document.querySelector('.audio_file');
+        this.audio_file.addEventListener('change', e => this.audio_file_onchange());
+        this.seconds_to_sample = document.querySelector('#seconds_to_sample');
+        this.bands_to_combine = document.querySelector('#bands_to_combine');
+        this.freq_samples_to_second = document.querySelector('#freq_samples_to_second');
+      }
+      file_to_array(file) {
+        return new Promise((resolve, reject) => {
+          let reader = new FileReader();
+
+          reader.onload = () => {
+            let array = new Uint8Array(reader.result);
+            resolve(array);
+          };
+
+          reader.onerror = (err) => {
+            console.log('File Reader Error', err);
+            reject(err);
+          };
+
+          reader.readAsArrayBuffer(file);
+        });
+      }
+      async audio_loaded() {
+        return new Promise((resolve, reject) => {
+          audio.onloadeddata = () => {
+            resolve();
+          }
+        });
+      }
+      audio_playing() {
+        return new Promise((resolve, reject) => {
+          audio.onplaying = () => {
+            resolve();
+          }
+        });
+      }
+      smooth_bands(in_array) {
+        let l = in_array.length;
+        let out_array = [];
+        this.combined_bands = Number(this.bands_to_combine.value);
+
+        for (let c = 0; c < l; c += this.combined_bands) {
+          let sum = 0.0;
+          for (let d = 0; d < this.combined_bands; d++) {
+            sum += in_array[d + c];
+          }
+
+          out_array.push(Math.round(sum / this.combined_bands));
+        }
+
+        return out_array;
+      }
+      swap_indexes_n2(in_array) {
+        let out_array = [];
+        let outer_bound = in_array[0].length;
+
+        for (let c = 0; c < outer_bound; c++) {
+          let new_n2_array = [];
+          for (let d = 0, dl = in_array.length; d < dl; d++)
+            new_n2_array.push(in_array[d][c]);
+
+          out_array.push(new_n2_array)
+        }
+
+        return out_array;
+      }
+      async fft_song_samples(samples_per_rift) {
+        let bufferUsed = 0;
+        let song_sample_ctr = 0;
+        let song_chunks = [];
+        let freq_chunks = [];
+        let file_bytes = this.song_samples;
+
+        while (bufferUsed < (this.song_samples.length - samples_per_rift)) {
+          let data_to_process = this.song_samples.slice(bufferUsed, bufferUsed + samples_per_rift);
+          bufferUsed += samples_per_rift;
+          song_sample_ctr++;
+
+          song_chunks.push(data_to_process);
+
+          let ft = new FFT(samples_per_rift, this.sampleRate);
+          ft.forward(data_to_process);
+          let fewer_bands = this.smooth_bands(ft.spectrum);
+          freq_chunks.push(fewer_bands);
+        }
+
+        return freq_chunks;
+      }
+      resampleData(arrayIn, secondsLength, samplesPerSecondOut) {
+        let outArray = [];
+        arrayIn.forEach(bandArray => {
+          let outBand = [];
+          let sampleCountFactor = bandArray.length / (secondsLength * samplesPerSecondOut);
+          let runningFactor = 0;
+
+          let sampleSum = 0.0;
+          let sampleFactor = 0;
+          let bandIndex = 0;
+          let outSampleIndex = 0;
+          bandArray.forEach(sample => {
+            sampleSum += sample;
+            sampleFactor++;
+            bandIndex++;
+
+            let sampleTestIndex = Math.floor(bandIndex / sampleCountFactor);
+
+            if (sampleTestIndex > outBand.length) {
+              outBand.push(Number((sampleSum / sampleFactor).toFixed(1)));
+              sampleSum = 0.0;
+              sampleFactor = 0;
+            }
+          });
+          outArray.push(outBand);
+        });
+
+        return outArray;
+      }
+      async audio_file_onchange() {
+        document.getElementById('raw_data').value = '';
+        document.getElementById('song_len_sec').innerHTML = '&nbsp;';
+        let song_bytes = await this.file_to_array(this.audio_file.files[0]);
+        let html_out = '';
+        if (song_bytes) {
+          let riffTest = new TextDecoder().decode(song_bytes.slice(0, 4));
+          if (riffTest !== 'RIFF') {
+            alert('must be WAV file');
+            return;
+          }
+          this.totalSize = song_bytes[7] * (256 * 256 * 256) +
+            song_bytes[6] * (256 * 256) +
+            song_bytes[5] * (256) +
+            song_bytes[4];
+          html_out += 'total size: ' + this.totalSize + '<br>';
+          let wavTEST = new TextDecoder().decode(song_bytes.slice(8, 15));
+          if (wavTEST !== 'WAVEfmt') {
+            alert('must be WAV file');
+            return;
+          }
+          this.sampleBits = song_bytes[19] * (256 * 256 * 256) +
+            song_bytes[18] * (256 * 256) +
+            song_bytes[17] * (256) +
+            song_bytes[16];
+          html_out += 'sample bits:' + this.sampleBits + '<br>';
+
+          let audioFormat = song_bytes[21] * (256) +
+            song_bytes[20];
+
+          this.channels = song_bytes[23] * (256) +
+            song_bytes[22];
+          html_out += 'channels: ' + this.channels + '<br>';
+
+          this.sampleRate = song_bytes[27] * (256 * 256 * 256) +
+            song_bytes[26] * (256 * 256) +
+            song_bytes[25] * (256) +
+            song_bytes[24];
+          html_out += 'sample rate:' + this.sampleRate + '<br>';
+
+          this.byteRate = song_bytes[31] * (256 * 256 * 256) +
+            song_bytes[30] * (256 * 256) +
+            song_bytes[29] * (256) +
+            song_bytes[28];
+          html_out += 'byteRate: ' + this.byteRate + '<br>';
+
+          let blockAlign = song_bytes[33] * (256) +
+            song_bytes[32];
+          html_out += 'blockAlign: ' + blockAlign + '<br>';
+
+          this.bitRate = song_bytes[35] * (256) +
+            song_bytes[34];
+          html_out += 'bitRate: ' + this.bitRate + '<br>';
+          let dataTEST = new TextDecoder().decode(song_bytes.slice(36, 40));
+          if (dataTEST !== 'data') {
+            alert('must be WAV file');
+            return;
+          }
+
+          this.dataChunkHeader = song_bytes[39] * (256 * 256 * 256) +
+            song_bytes[38] * (256 * 256) +
+            song_bytes[37] * (256) +
+            song_bytes[36];
+          html_out += 'dataChunkHeader:' + this.dataChunkHeader + '<br>';
+
+          this.fileDataSize = song_bytes[43] * (256 * 256 * 256) +
+            song_bytes[42] * (256 * 256) +
+            song_bytes[41] * (256) +
+            song_bytes[40];
+          html_out += 'fileDataSize:' + this.fileDataSize + '<br>';
+
+          this.seconds = this.fileDataSize / this.byteRate;
+          this.seconds_clip = this.seconds;
+          if (this.seconds_to_sample.value !== '') {
+            this.seconds_clip = Number(this.seconds_to_sample.value);
+          }
+          html_out += 'length: ' + this.seconds.toFixed(1) + 's<br>';
+
+          let v = this.sampleRate / Number(this.bands_to_combine.value);
+          html_out += 'freq per band ' + v + 'hz<br>';
+
+          document.getElementById('song_len_sec').innerHTML = html_out;
+        } else {
+          //alert('no song');
+          return;
+        }
+        audio.src = URL.createObjectURL(this.audio_file.files[0]);
+
+        audio.load();
+
+        await this.audio_loaded();
+        this.time_length = audio.duration; // in seconds
+
+        this.rawBytes = song_bytes.slice(44);
+        this.song_samples = await this.convert_raw_to_samples(song_bytes);
+
+        let song_chunks = await this.fft_song_samples(512);
+
+        let song_chunks_flipped_indexes = this.swap_indexes_n2(song_chunks);
+        let freqData = [];
+        for (let i = 0; i < song_chunks_flipped_indexes.length; i++)
+          freqData.push(song_chunks_flipped_indexes[i]);
+        //resample to 10 per second  2584 @ 60s => 600 @ 60s
+        let resampledArray = this.resampleData(freqData, this.seconds_clip, Number(this.freq_samples_to_second.value));
+
+        console.log(resampledArray);
+        document.getElementById('raw_data').value = JSON.stringify(resampledArray);
+      }
+      convert_raw_to_samples() {
+        let samples = [];
+        let ratioToKeep = this.seconds / this.seconds_clip;
+        let sampleLimit = this.rawBytes.length / ratioToKeep;
+
+        //convert to 16 bits and clip size
+        if (this.bitSize > 8) {
+          for (let c = 0, l = this.sampleLimit - 1; c < l; c += 2) {
+            samples.push(this.rawBytes[c + 1] * 256 + this.rawBytes[c]);
+          }
+        } else {
+          samples = this.rawBytes;
+        }
+
+        return samples;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', e => {
+      let FFT_file = new FFTSoundFile();
+      let publish_web = new PublishWeb();
+    });
+  </script>
+</body>
+
+</html>
