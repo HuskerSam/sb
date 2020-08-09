@@ -1074,7 +1074,7 @@ class cViewDemo extends bView {
 
       let total = count * product.price;
       let l1 = product.title + ' $' + total.toFixed(2);
-      let l2 = count.toString() + ' @ ' + product.pricetext;
+      let l2 = count.toString() + ' @ ' + product.priceText;
       gTotal += total;
       let url = product.itemImage;
       if (url.substring(0, 3) === 'sb:') {
