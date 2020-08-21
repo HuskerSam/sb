@@ -9,16 +9,11 @@
   <meta property="og:title" content="Handtop" />
   <meta property="og:url" content="https://handtop.com" />
   <meta property="og:site_name" content="Handtop" />
-  <meta property="og:image" content="https://handtop.com/images/promoimg.jpg" />
+  <meta property="og:image" content="https://handtop.com/retail/pipeline.jpg" />
   <meta property="og:type" content="website" />
-  <meta property="og:description" content="Virtual Store building services for all devices." />
+  <meta property="og:description" content="Visual Catalog&trade; services for all devices." />
   <meta property="fb:app_id" content="461141618064403" />
-  <meta name="description" content='Display store layouts in Virtual Reality.  Handtop Display&trade; positions your products using Handtop Reality&trade; - "Your Product Display Any Where Any Time"&trade;'>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link href="https://fonts.googleapis.com/css?family=Kavivanar&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
+  <meta name="description" content='Display store layouts in VR with Visual Catalogs&trade;'>
   <script>
     if (window.location.hostname === 'groceryscenes.com')
       window.location = '/asset';
@@ -43,289 +38,43 @@
 
     body {
       font-size: 12pt;
-      font-family: 'Lexend Deca';
       line-height: 1.5em;
       text-align: center;
     }
 
     h2,
     h1 {
-      font-family: Righteous;
       text-align: center;
       line-height: 1.3em;
       color: rgb(0, 0, 255);
       padding: .25em .5em;
-      border-radius: 0;
       display: inline-block;
       background: white;
+      font-family:cursive;
     }
 
-    h1 {
-      margin-top: .25em;
-    }
-
-    h2 {
-      color: rgb(200, 90, 0);
-      background: rgb(255, 255, 210);
-    }
-
-    .parallax-scroll {
-      position: relative;
-      height: 100vh;
-      min-height: 100vh;
-      overflow: auto;
-      transition: top 200ms;
-      display: flex;
-      flex-direction: column;
-      z-index: 1;
-    }
-
-    @media screen and (max-width: 800px),
-    screen and (max-height: 500px) {
-      .parallax-scroll {
-        position: static;
-        height: auto;
-        overflow: auto;
-        transition: top 0ms;
-      }
-    }
-
-    .sub-item {
-      font-size: 1em;
-      text-align: center;
-      display: inline;
-      padding: .5em;
-      background: rgb(255, 255, 210);
-      border: solid .2em rgb(200, 90, 0);
-      line-height: 1.75em;
-    }
-
-    .sub-item b {
-      font-family: Righteous;
-      font-size: 1.5em;
-      color: rgb(200, 90, 0);
-      position: relative;
-      top: .1em;
-    }
-
-    .sub-item.top {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .sub-item.bottom {
-      top: -.1em;
-      border-top: none;
-      padding-top: .1em;
-      margin-bottom: .25em;
-    }
-
-    .promoimg {
-      width: 50vw;
-      border-radius: 1em;
-    }
-
-    .imgprosewrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-    }
-
-    .prosecontent {
-      display: inline;
-    }
-
-
-    .asl_icon {
-      margin-right: .5em;
-      transform: scale(2);
-      position: relative;
-      top: .25em;
-      margin-bottom: .25em;
-      padding: 2px;
-      border: solid 1px transparent;
-    }
-
-    a.menu-item {
-      display: inline-block;
-      background: rgb(255, 255, 0);
-      color: rgb(200, 90, 0);
-      font-family: Chilanka;
-      font-weight: 900;
-      text-decoration: none;
-      font-size: 1.5em;
-      padding: .5em 1em;
-      white-space: nowrap;
-      border-radius: 5em;
-      margin-bottom: .25em;
-      border: solid .1em rgb(200, 90, 0);
-    }
-
-    a.menu-item:hover {
-      text-decoration: underline;
-      color: rgb(255, 255, 0);
-      background: rgb(200, 90, 0);
-    }
-
-    a.menu-item:hover .asl_icon {
-      background: white;
-      border-radius: 5px;
-      border-color: rgb(255, 255, 0);
-    }
-
-    .header-logo,
-    .header-reg {
-      font-family: Kavivanar;
-      font-style: italic;
-      color: rgb(200, 90, 0);
-      font-size: 55px;
-      font-weight: bold;
-    }
-
-    .header-reg {
-      font-size: 15px;
-      font-weight: normal;
-      position: relative;
-      top: -30px;
-      color: rgb(0, 0, 90);
-      font-family: Geneva;
-    }
-
-    .trademark-span {
-      position: relative;
-      top: -.75em;
-      font-size: .5em;
-      font-family: Geneva;
-      font-weight: bold;
-      color: rgb(0, 0, 90);
-    }
-
-
-
-    @import url('https://fonts.googleapis.com/css?family=Kavivanar');
-    @import url('https://fonts.googleapis.com/css?family=Righteous');
-    @import url('https://fonts.googleapis.com/css?family=Chilanka');
-    @import url('https://fonts.googleapis.com/css?family=Lexend+Deca');
-
-    #landing_section {
-      background: none;
-      text-align: center;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    #screencastlogooverlay {
-      position: absolute;
-      bottom: .5em;
-      z-index: 1000;
-    }
-
-    .sceneflowimg {
-      max-width: 90%;
-      height: 50vh;
-      background: rgba(255, 255, 210, .25);
-      padding: .5em;
-      border-radius: 2em;
-    }
-
-    .homepagebuttons {
-      clear: left;
-      float: left;
-      margin-left: .25em;
-    }
-
-    .handtoplogo_div {
-      color: rgb(200, 90, 0);
-      padding: 1.5em;
-      padding-top: 2em;
-      padding-bottom: 1.25em;
-      display: inline-block;
-      background: rgb(255, 255, 210);
-      margin: .25em;
-      border: solid .2em rgb(200, 90, 0);
-    }
-
-    @media screen and (max-width: 800px) {
-      .homepagebuttons {
-        transform: scale(.75) translateX(-15%) translateY(-25%);
-      }
-
-      .handtoplogo_div {
-        transform: scale(.75) translateY(-15%);
-      }
-    }
-
-    #display_section {
-      flex: 1;
-      text-align: center;
-    }
-
-    .subprose {
-      background: rgb(255, 255, 210);
-      display: inline-block;
-      padding: .5em;
-      margin-top: .25em;
-      border: solid .2em rgb(200, 90, 0);
-    }
-
-    #about_section h2 {
-      border: none;
-    }
-
-    .sceneflowprose {
-      margin-top: -.75em;
-    }
   </style>
 </head>
 
 <body>
-  <div id="landing_section" class="parallax-scroll">
-    <div style="text-align:center;float:left;">
-      <div class="handtoplogo_div">
-        <span class="header-logo">Handtop</span>
-        <span class="header-reg">&reg;</span>
-      </div>
-      <br>
-    </div>
-    <div style="max-width:800px;margin:auto;">
-      <h1 style="color:green">Seeking the newest way to present your catalogs?</h1>
-      <Br>
-      <h1>Migrating and blending in-store experiences online with <span style="color:green">Virtual Reality</span></h1>
-      <br>
-      <br>
-      <h1 style="color:red;padding:0;margin:0">Now Available: <a style="color:black" href="/retail">Visual Catalogs</a></h1>
-    </div>
+    <img style="height:65px" src="/images/handtoplogo.png">
     <br>
-    <div style="flex:1;">
-      <div class="subprose" style="margin:1em">
-        <h2>Please <a style="color:inherit" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact us</a>
-         to generate your visual catalogs today!</h2>
-         <br>
-        <h2 style="color:black">Delivering mobile experiences since 1998</h2>
-        <br><br>
-        Located in upper downtown Lincoln, Nebraska, USA 68508
-        <div style="font-size: .75em;margin-top:.5em;">
-          <a class="menu-item" style="padding: .25em 1em;padding-top:.5em;" target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
-        </div>
-      </div>
-      <div style="display:none">
-        hand palm of your hand top mano top manotop palma main top hand haut main haut mainhaut
-        рука ruka ладонь móvil
-        Handtop provides realtime eXtended Reality solutions. Virtual Store building services for all devices. Original developers of SuperNote for the PalmOS. Come visit our site to learn about the latest in webGL for mobile. Firebase hosting.
-        mobile supernote webgl handtop webgl reality babylon.js babylonjs retail store palm palmos in the palm of your hand handtop computing handtop computers handtop mobile
-        augmented reality extended reality virtual reality mixed reality
-      </div>
+    <div style="max-width:800px;margin:auto;">
+      <h1 style="color:green">The sexiest way to show products on mobile...</h1>
+      <Br>
+      <a style="font-size:2em;color:red;font-family:cursive" href="/retail">Visual Catalogs</a>
     </div>
-    <div style="flex:1"></div>
-    <div style="flex:1"></div>
-    <div style="padding-bottom:.5em;">
-      <div>
+    <br><br>
 
-        <span style="padding:.25em;position:relative;top:-.25em;"><a href="privacy.html">Privacy Policy</a><br>&copy; 2020 Handtop. All Rights Reserved.</span>
-      </div>
+    <div style="padding-bottom:.5em;line-height:2em">
+      <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+      &nbsp;
+      <a href="privacy.html">Privacy Policy</a>
+      <br>
+      Lincoln, Nebraska, USA 68508
+        <br>&copy; 2020 Handtop. All Rights Reserved.
     </div>
-  </div>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148094829-1">
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148094829-1">
   </script>
   <script>
     window.dataLayer = window.dataLayer || [];
