@@ -6,14 +6,14 @@
   <title>Visual Catalogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/handtop.png">
-  <meta property="og:title" content="Handtop" />
+  <meta property="og:title" content="Visual Catalogs" />
   <meta property="og:url" content="https://handtop.com/retail" />
   <meta property="og:site_name" content="Handtop" />
-  <meta property="og:image" content="https://handtop.com/images/promoimg.jpg" />
+  <meta property="og:image" content="pipeline.jpg" />
   <meta property="og:type" content="website" />
-  <meta property="og:description" content="Virtual Store building services for all devices." />
+  <meta property="og:description" content="Visual Catalog creation tools" />
   <meta property="fb:app_id" content="461141618064403" />
-  <meta name="description" content='Display store layouts in Virtual Reality.  Handtop Display&trade; positions your products using Handtop Reality&trade; - "Your Product Display Any Where Any Time"&trade;'>
+  <meta name="description" content='Visual Catalog creation tools'>
 
   <style>
     html,
@@ -29,6 +29,8 @@
 
     .wrapper {
       text-align: center;
+      max-width: 900px;
+      margin: auto;
     }
 
     .video-wrapper {
@@ -138,6 +140,31 @@
       border-radius: 1em;
       border: solid 2px blue;
     }
+
+    .option_bar a {
+      padding: .5em
+    }
+
+    .prose_wrapper {
+      display: flex;
+    }
+
+    .prose_text {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    @media screen and (max-width: 905px) {
+      .prose_wrapper {
+        display: block;
+      }
+
+      .prose_text {
+        flex-direction: row;
+        display: block;
+      }
+    }
   </style>
   <script>
     window.addEventListener('DOMContentLoaded', e => {
@@ -183,48 +210,66 @@
 
 <body>
   <div class="wrapper">
-    <h1 style="color:rgb(255,150,0)">Visual Catalogs</h1>
-    <a href="#webglapp">webGL Apps</a> <a href="#deviceorientation">Device Orientation</a>
-    <a href="#interfacedemos">Interface <b>Demos</b></a>
-     <a href="#cataloginterfaces">Catalog Interfaces</a>
-      <a href="#displayvirtualassets">Displaying Virtual Assets</a>
-     <a href="#leadingedgeplatform">Leading Edge Platform</a>
-     <a href="#catalogtools">Catalog Tools (Videos)</a>
+    <img style="height:65px" src="../images/handtoplogo.png">
     <br>
-    <br>
-    Graphical shopping experiences
-    <br>
-    Mobile first design to drive app installs
-    <br>
-    Suitable for most lighting and devices
-    <br>
-    Generate displays with cyclical sales catalogs
-    <br>
-    Gracefully transition from all Mobile to some console
+    <div class="option_bar">
+      <a href="#webglapp">Apps</a>
+      <a href="#deviceorientation">Orientation</a>
+      <a href="#interfacedemos"><b>Demos</b></a>
+      <a href="#cataloginterfaces">Interface Options</a>
+      <a href="#displayvirtualassets">Virtual Assets</a>
+      <a href="#leadingedgeplatform">Platform</a>
+      <a href="#catalogtools">Tools (Videos)</a>
+    </div>
+    <h1 style="color:rgb(255,127,0);font-size:3em;font-weight:bold">Visual Catalogs</h1>
+    <div class="prose_wrapper">
+      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4" controls style="max-width:400px;" muted preload="auto"></video>
+      <div class="prose_text">
+        <div style="flex:1"></div>
+        Graphical shopping experiences
+        <br>
+        Mobile first design to drive app installs
+        <br>
+        Suitable for most lighting and devices
+        <br>
+        Generate displays with cyclical sales catalogs
+        <br>
+        Gracefully transition to include console viewing
+        <div style="flex:1"></div>
+      </div>
+    </div>
+    <h1 id="webglapp" style="color:blue">Applications</h1>
+    <div class="prose_wrapper">
+      <img style="max-width:400px;" src="visualcatalogapplication.png">
+      <div class="prose_text">
 
-    <br>
-    <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4" controls style="max-width:95vw" muted preload="auto"></video>
-
-    <h1 id="webglapp" style="color:blue">webGL Applications</h1>
-    Hybrid HTML and webGL Applications<br>
-    Write once run everywhere<br>
-    Realtime cloud datastore<br>
-    Pickable retail products<br>
-    Applications run in virtual conference<br>
-    Industry Standards (in flux) supported @ <a href="https://www.khronos.org/3dcommerce">Khronos 3D Commerce</a>
-    <br><br>
-    <img style="max-height:60vh;max-width:90vw;" src="visualcatalogapplication.png">
-
+        <div style="flex:1"></div>
+        Hybrid HTML and webGL Applications<br>
+        Write once run everywhere<br>
+        Realtime cloud datastore<br>
+        Pickable retail products<br>
+        Applications run in virtual conference<br>
+        <div>
+          Industry Standards (in flux) supported @
+          <a href="https://www.khronos.org/3dcommerce">Khronos 3D Commerce</a>
+        </div>
+        <div style="flex:1"></div>
+      </div>
+    </div>
 
     <h1 id="deviceorientation" style="color:rgb(0,160,0)">Device Orientation</h1>
-    Standard on phones for several years<br>
-    Usable as a compass or level<br>
-    Motion multiplies visual space<br>
-    Limited motion mixes with regular usages (+/- 30&deg;)<br>
-    Flat or rendered information can be displayed<br><br>
-    <img style="max-height:35vh;max-width:90vw;" src="virtualspace.png">
+    <div class="prose_wrapper">
+      <img style="max-width: 400px;" src="virtualspace.png">
+      <div class="prose_text">
+        Standard on phones for several years<br>
+        Usable as a compass or level<br>
+        Motion multiplies visual space<br>
+        Limited motion mixes with regular usages (+/- 30&deg;)<br>
+        Flat or rendered information can be displayed<br><br>
+      </div>
+    </div>
 
-    <h1 id="cataloginterfaces" style="color:rgb(0,160,0)">Catalog Interfaces</h1>
+    <h1 id="cataloginterfaces" style="color:rgb(255,0,160)">Catalog Interfaces</h1>
     The various interfaces feature button and camera combinations
     to display a variety of catalog layouts.
     <br>
@@ -390,14 +435,14 @@
 
     <h1 id="leadingedgeplatform" style="color:rgb(255,0,0);clear:both;">Leading Edge Platform</h1>
 
-      Download models on demand from the cloud<br>
-      CSV based import of catalogs and all data<br>
-      Scale on demand (serverless) hosting<br>
-      Excel add in (Sheets support) with specialized functions<br>
-      - support merging CSV with dynamic column sets<br>
-      - simplifies uploading CSV to API generating catalogs<br>
-      Share experiences across all devices at once
-<Br><br>
+    Download models on demand from the cloud<br>
+    CSV based import of catalogs and all data<br>
+    Scale on demand (serverless) hosting<br>
+    Excel add in (Sheets support) with specialized functions<br>
+    - support merging CSV with dynamic column sets<br>
+    - simplifies uploading CSV to API generating catalogs<br>
+    Share experiences across all devices at once
+    <Br><br>
     <img class="ui_image" src="pipeline.jpg">
 
     <img class="ui_image" src="sheetsaddon.png">
