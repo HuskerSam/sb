@@ -52,15 +52,39 @@
       background: white;
       font-family: cursive;
     }
+
+
+    .option_bar {
+      text-align: left;
+    }
+
+    .option_bar a {
+      padding: .25em;
+      white-space: nowrap;
+      border: solid 1px silver;
+      margin: 0;
+      color: black;
+      float: left;
+    }
+
+    .option_bar a:hover {
+      background: silver
+    }
   </style>
 </head>
 
 <body>
   <div style="display:flex;flex-direction:column;min-height:100vh;">
-    <div>
-    <img style="height:65px" src="/images/handtoplogo.png">
-  </div>
-  <Div style="flex:1"></div>
+    <div class="option_bar">
+      <a style="border:none;text-decoration:None" href="/">
+        <img style="height:40px;position:relative;top:-18px;" src="../images/handtop.png">
+        <img style="height:65px" src="../images/handtoplogo.png">
+      </a>
+      <a href="/retail">Visual Catalogs</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="mailto:contact@handtop.com?subject=sent from handtop.com" target="_blank">Contact</a>
+    </div>
+    <div style="flex:1"></div>
     <div style="text-align:center">
       <h1 style="color:green">The sexiest way to mobilize your goods...</h1>
       <Br>

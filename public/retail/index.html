@@ -141,8 +141,21 @@
       border: solid 2px blue;
     }
 
+    .option_bar {
+      text-align: left;
+    }
+
     .option_bar a {
-      padding: .5em
+      padding: .25em;
+      white-space: nowrap;
+      border: solid 1px silver;
+      margin: 0;
+      color: black;
+      float: left;
+    }
+
+    .option_bar a:hover {
+      background: silver
     }
 
     .prose_wrapper {
@@ -209,24 +222,22 @@
 </head>
 
 <body>
-  <div class="wrapper">
-    <a style="border:none" href="/">
+  <div class="option_bar">
+    <a style="border:none;text-decoration:None" href="/">
+      <img style="height:40px;position:relative;top:-18px;" src="../images/handtop.png">
       <img style="height:65px" src="../images/handtoplogo.png">
     </a>
-    <br>
-    <div class="option_bar">
-      <a href="#webglapp">Apps</a>
-      <a href="#deviceorientation">Orientation</a>
-      <a href="#interfacedemos"><b>Demos</b></a>
-      <a href="#cataloginterfaces">Interface Options</a>
-      <a href="#displayvirtualassets">Virtual Assets</a>
-      <a href="#leadingedgeplatform">Platform</a>
-      <a href="#catalogtools">Tools (Videos)</a>
-    </div>
-    <h1 style="color:rgb(255,127,0);font-size:3em;font-weight:bold">Visual Catalogs</h1>
+    <a href="#webglapp">Functionality</a>
+    <a href="#interfacedemos">Live Demos</a>
+    <a href="#displayvirtualassets">Platform and Pipeline</a>
+    <a href="#catalogtools">Videos</a>
+    <div style="clear:both"></div>
+  </div>
+  <div class="wrapper">
+    <h1 style="color:rgb(255,127,0);font-size:2.5em;font-weight:bold;font-family:cursive;">Visual Catalogs</h1>
     <div class="prose_wrapper">
       <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4" controls style="max-width:400px;" muted preload="auto"></video>
-      <div class="prose_text">
+      <div class="prose_text" style="font-size:1.5em;">
         <div style="flex:1"></div>
         Graphical shopping experiences
         <br>
@@ -240,7 +251,8 @@
         <div style="flex:1"></div>
       </div>
     </div>
-    <h1 id="webglapp" style="color:blue">Applications</h1>
+    <hr>
+    <h1 id="webglapp">Functionality</h1>
     <div class="prose_wrapper">
       <img style="max-width:400px;" src="visualcatalogapplication.png">
       <div class="prose_text">
@@ -258,8 +270,6 @@
         <div style="flex:1"></div>
       </div>
     </div>
-
-    <h1 id="deviceorientation" style="color:rgb(0,160,0)">Device Orientation</h1>
     <div class="prose_wrapper">
       <img style="max-width: 400px;" src="virtualspace.png">
       <div class="prose_text">
@@ -270,16 +280,13 @@
         Flat or rendered information can be displayed<br><br>
       </div>
     </div>
-
-    <h1 id="cataloginterfaces" style="color:rgb(255,0,160)">Catalog Interfaces</h1>
     The various interfaces feature button and camera combinations
     to display a variety of catalog layouts.
     <br>
     <br>
     <img style="max-width:90vw;" src="displaymenus.jpg">
-
-
-    <h1 id="interfacedemos" style="color:rgb(0,150,255)">Interface Demos</h1>
+    <hr>
+    <h1 id="interfacedemos">Interface Demos</h1>
     <div style="text-align:center;">
       <div style="display:inline-block;">
         <div class="demo_item" style="float:left;clear:left;color: rgb(20, 180, 0);border-color: rgb(20, 180, 0);">
@@ -422,7 +429,8 @@
       </div>
       <div style="clear:both;"></div>
     </div>
-    <h1 id="displayvirtualassets" style="color:rgb(127,0,0);clear:both;">Displaying Virtual Assets</h1>
+    <hr>
+    <h1 id="displayvirtualassets" style="clear:both;">Platform and Pipeline</h1>
     <h2 style="color:rgb(0,127,127)">Educational and work support experiences</h2>
     <img class="ui_image" src="accessorypicker.png">
     <img class="ui_image" src="graphingcalculator.png">
@@ -434,8 +442,6 @@
     <img class="ui_image" src="partpicker.png" style="max-height:35vh">
     <img class="ui_image" src="geostore.png">
     <img class="ui_image" src="https://docs.google.com/drawings/d/e/2PACX-1vR5HRoO4GHg5fdc9ASHu-Lo6Be-2_TVyUG7zjWKMi5tcNeh7XByN41xEt3HWEkuHXJQocLKF6Z_k37_/pub?w=1008&amp;h=297"></td>
-
-    <h1 id="leadingedgeplatform" style="color:rgb(255,0,0);clear:both;">Leading Edge Platform</h1>
 
     Download models on demand from the cloud<br>
     CSV based import of catalogs and all data<br>
@@ -449,8 +455,9 @@
 
     <img class="ui_image" src="sheetsaddon.png">
     <img class="ui_image" src="scenepipeline.png">
+    <hr>
+    <h1 id="catalogtools">Videos</h1>
 
-    <h1 id="catalogtools" style="color:rgb(100,100,255)">Catalog Tools</h1>
     <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
       <div style="width: 100%;">
         <a href="#" id="video_1_link" class="video_link selected">Create</a>
@@ -506,7 +513,7 @@
     <a href="privacy.html">Privacy Policy</a>
     <br>
     Lincoln, Nebraska, USA 68508
-      <br>&copy; 2020 Handtop. All Rights Reserved.
+    <br>&copy; 2020 Handtop. All Rights Reserved.
   </div>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
