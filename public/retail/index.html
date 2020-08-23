@@ -151,7 +151,6 @@
       border: solid 1px silver;
       margin: 0;
       color: black;
-      float: left;
     }
 
     .option_bar a:hover {
@@ -175,7 +174,9 @@
     .display_image {
       max-width: 400px;
     }
-
+.first_menu_break {
+  display: none;
+}
     @media screen and (max-width: 905px) {
       .prose_wrapper {
         display: block;
@@ -193,6 +194,16 @@
       .display_image {
         max-width: 90vw;
       }
+
+
+                .option_bar {
+                  text-align: center;
+                }
+
+                .first_menu_break {
+                  display: block;
+                  clear:both;
+                }
     }
   </style>
   <script>
@@ -239,19 +250,19 @@
 
 <body>
   <div class="option_bar">
-    <a style="border:none;text-decoration:None" href="/">
+    <a style="border:none;text-decoration:none;float:left" href="/">
       <img style="height:40px;position:relative;top:-18px;" src="../images/handtop.png">
       <img style="height:65px" src="../images/handtoplogo.png">
     </a>
-    <a href="#webglapp">Functionality</a>
+    <div class="first_menu_break"></div>
+    <a href="#webglapp">Features</a>
     <a href="#interfacedemos">Demos</a>
     <a href="#displayvirtualassets">Platform</a>
     <a href="#catalogtools">Videos</a>
-    <a href="/about">About</a>
     <div style="clear:both"></div>
   </div>
   <div class="wrapper" style="">
-    <h1 style="color:green;font-size:2.5em;font-weight:bold;font-family:cursive;margin:0">Visual Catalogs</h1>
+    <h1 style="color:green;font-size:3em;font-weight:bold;font-family:Brush Script MT,cursive;;margin:0">Visual Catalogs&trade;</h1>
     <br>
     Spreadsheet to 3D asset pipeline<br>
     <img class="ui_image" style="border:none;width:90%;max-width:90%;" src="widepipeline.png">
@@ -274,7 +285,7 @@
       </div>
     </div>
     <hr>
-    <h1 id="webglapp">Functionality</h1>
+    <h1 id="webglapp">Features</h1>
     <div class="prose_wrapper">
       <img class="display_image" src="visualcatalogapplication.png">
       <div class="prose_text">

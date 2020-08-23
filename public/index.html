@@ -50,7 +50,6 @@
       padding: .25em .5em;
       display: inline-block;
       background: white;
-      font-family: cursive;
     }
 
 
@@ -64,19 +63,29 @@
       border: solid 1px silver;
       margin: 0;
       color: black;
-      float: left;
     }
 
     .option_bar a:hover {
       background: silver
     }
+
+
+        @media screen and (max-width: 905px) {
+          h1 {
+            font-size: 1.5em;
+          }
+
+          .option_bar {
+            text-align: center;
+          }
+}
   </style>
 </head>
 
 <body>
   <div style="display:flex;flex-direction:column;min-height:100vh;">
     <div class="option_bar">
-      <a style="border:none;text-decoration:none">
+      <a style="border:none;text-decoration:none;float:left">
         <img style="height:40px;position:relative;top:-18px;" src="../images/handtop.png">
         <img style="height:65px" src="../images/handtoplogo.png">
       </a>
@@ -92,9 +101,12 @@
       <Br>
       <br>
       <br>
-      <a style="font-size:2.5em;font-weight: bold;color:green;font-family:cursive" href="/retail">Visual Catalogs</a>
+      <a style="font-size:2.5em;font-weight: bold;color:green;font-family:Brush Script MT,cursive;border: solid .05em green;border-radius:1em;padding:.5em;" href="/retail">Visual Catalogs&trade;</a>
     </div>
-    <div style="flex:3"></div>
+    <div style="flex:3">
+      <br>
+      <br>
+    </div>
 
     <div style="line-height:2em;padding-bottom:.5em;text-align:center;width:100%">
       <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
