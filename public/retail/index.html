@@ -168,6 +168,14 @@
       flex: 1;
     }
 
+    .intro_video {
+      max-width: 400px;
+    }
+
+    .display_image {
+      max-width: 400px;
+    }
+
     @media screen and (max-width: 905px) {
       .prose_wrapper {
         display: block;
@@ -176,6 +184,14 @@
       .prose_text {
         flex-direction: row;
         display: block;
+      }
+
+      .intro_video {
+        max-width: 90vw;
+      }
+
+      .display_image {
+        max-width: 90vw;
       }
     }
   </style>
@@ -242,7 +258,7 @@
     <br>
     <div class="prose_wrapper">
       <br>
-      <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4" controls style="max-width:400px;" muted preload="auto"></video>
+      <video class="intro_video" src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4" controls muted preload="auto"></video>
       <div class="prose_text" style="font-size:1.5em;">
         <div style="flex:1"></div>
         Graphical shopping experiences
@@ -260,7 +276,7 @@
     <hr>
     <h1 id="webglapp">Functionality</h1>
     <div class="prose_wrapper">
-      <img style="max-width:400px;" src="visualcatalogapplication.png">
+      <img class="display_image" src="visualcatalogapplication.png">
       <div class="prose_text">
 
         <div style="flex:1"></div>
@@ -277,7 +293,7 @@
       </div>
     </div>
     <div class="prose_wrapper">
-      <img style="max-width: 400px;" src="virtualspace.png">
+      <img class="display_image" style="" src="virtualspace.png">
       <div class="prose_text">
         Standard on phones for several years<br>
         Usable as a compass or level<br>
@@ -290,7 +306,7 @@
     to display a variety of catalog layouts.
     <br>
     <br>
-    <img style="max-width:90vw;" src="displaymenus.jpg">
+    <img style="max-width:90%;width:90%;max-height:initial" src="displaymenus.jpg">
     <hr>
     <h1 id="interfacedemos">Interface Demos</h1>
     <div style="text-align:center;">
@@ -454,7 +470,7 @@
     - simplifies uploading CSV to API generating catalogs<br>
     Share experiences across all devices at once
     <Br><br>
-      <img class="ui_image" src="scenepipeline.png">
+    <img class="ui_image" src="scenepipeline.png">
 
     <img class="ui_image" src="sheetsaddon.png">
     <hr>
