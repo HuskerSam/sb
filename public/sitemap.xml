@@ -4,13 +4,19 @@
    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
         <loc>https://handtop.com/</loc>
-        <lastmod>2020-08-21</lastmod>
+        <lastmod>2020-08-24</lastmod>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
     <url>
-        <loc>https://handtop.com/retail</loc>
-        <lastmod>2020-08-21</lastmod>
+        <loc>https://handtop.com/retail/</loc>
+        <lastmod>2020-08-24</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>.5</priority>
+    </url>
+    <url>
+        <loc>https://handtop.com/about/</loc>
+        <lastmod>2020-08-24</lastmod>
         <changefreq>daily</changefreq>
         <priority>.5</priority>
     </url>
