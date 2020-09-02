@@ -3,206 +3,18 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Visual Catalogs</title>
+  <title>Visual Catalogs™ - Handtop®</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="/images/handtop.png">
-  <meta property="og:title" content="Visual Catalogs&trade;" />
+  <link rel="shortcut icon" href="https://handtop.com/images/handtop.png">
+  <meta property="og:title" content="Visual Catalogs™" />
   <meta property="og:url" content="https://handtop.com/retail/" />
-  <meta property="og:site_name" content="Handtop&reg;" />
+  <meta property="og:site_name" content="Handtop®" />
   <meta property="og:image" content="pipeline.jpg" />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Creation pipeline and display tools" />
   <meta property="fb:app_id" content="461141618064403" />
   <meta name="description" content='Creation pipeline and display tools'>
-
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    img {
-      max-width: 90vw;
-      max-height: 90vh;
-    }
-
-    .wrapper {
-      text-align: center;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .video-wrapper {
-      display: none;
-      background: rgb(255, 255, 255);
-      flex: 1;
-    }
-
-    .video-wrapper video {
-      width: 100%;
-      height: 100%;
-      max-width: 90vw;
-      max-height: 90vh;
-    }
-
-    .video-wrapper .playpause {
-      background-color: black;
-      border-radius: 50%;
-      color: rgb(255, 255, 255);
-      position: absolute;
-      left: 50%;
-      font-size: 1.5em;
-      padding: .25em;
-      cursor: pointer;
-      border: solid .2em rgb(255, 255, 255);
-      transform: translateX(-50%) translateY(-50%);
-      bottom: 10%;
-    }
-
-    .video-wrapper .playpause i {
-      font-size: 2em;
-    }
-
-    .video_link {
-      display: inline-block;
-      border: solid 1px silver;
-      text-decoration: none;
-      margin-bottom: .25em;
-      padding: .25em;
-      white-space: nowrap;
-      border: solid 1px silver;
-      color: black;
-    }
-
-    .video_link.selected,
-    .video_link:hover {
-      background: silver;
-    }
-
-
-    .demo_item {
-      border: rgb(0, 150, 255) .5em double;
-      border-radius: 2em;
-      padding-top: 1em;
-    }
-
-    .demo_item img {}
-
-    .demo_item a {
-      position: relative;
-      color: inherit;
-      text-decoration: none;
-      border: outset .15em silver;
-      padding-top: 2.25em;
-      padding-left: .35em;
-      border-radius: .5em;
-    }
-
-    .demo_item a i {
-      font-size: 3em;
-    }
-
-    .item_title {
-      font-size: 1.5em;
-      position: relative;
-      top: -.75em;
-      font-weight: bold;
-      text-decoration: underline;
-    }
-
-    .title {
-      font-size: .75em;
-      font-weight: bold;
-      padding-right: 1em;
-    }
-
-    .summary {
-      padding: .5em;
-    }
-
-    .desc_panel {
-      flex: 1;
-      color: black;
-      white-space: nowrap;
-      padding: .25em;
-    }
-
-    .ui_image {
-      max-width: 40vw;
-      max-height: 50vh;
-      border-radius: 1em;
-      border: solid 2px blue;
-    }
-
-    .option_bar {
-      text-align: left;
-    }
-
-    .option_bar a {
-      padding: .25em;
-      white-space: nowrap;
-      border: solid 1px silver;
-      margin: 0;
-      color: black;
-      text-decoration: none;
-    }
-
-    .option_bar a:hover {
-      background: silver
-    }
-
-    .prose_wrapper {
-      display: flex;
-    }
-
-    .prose_text {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .intro_video {
-      max-width: 400px;
-    }
-
-    .display_image {
-      max-width: 400px;
-    }
-
-    .first_menu_break {
-      display: none;
-    }
-
-    @media screen and (max-width: 1000px) {
-      .prose_wrapper {
-        display: block;
-      }
-
-      .prose_text {
-        flex-direction: row;
-        display: block;
-      }
-
-      .intro_video {
-        max-width: 90vw;
-      }
-
-      .display_image {
-        max-width: 90vw;
-      }
-
-
-      .option_bar {
-        text-align: center;
-      }
-
-      .first_menu_break {
-        display: block;
-        clear: both;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="https://handtop.com/public.css">
   <script>
     window.addEventListener('DOMContentLoaded', e => {
       let wrapperList = document.querySelectorAll('.video-wrapper');
@@ -247,23 +59,20 @@
 
 <body>
   <div class="option_bar">
-    <a style="border:none;text-decoration:none;float:left" href="/">
-      <img style="height:40px;position:relative;top:-18px;" src="../images/handtop.png">
-      <img style="height:65px" src="../images/handtoplogo.png">
+    <a style="border:none;text-decoration:none;float:left;position:relative;top:-8px;" href="/">
+      <img style="height:40px;position:relative;top:-18px;margin-top:-18px" src="https://handtop.com/images/handtop.png">
+      <img style="height:65px" src="https://handtop.com/images/handtoplogo.png">
     </a>
     <div class="first_menu_break"></div>
     <a href="#interfacedemos">Demos</a>
     <a href="#displayvirtualassets">Platform</a>
     <a href="#catalogtools">Videos</a>
+    <a href="#services">Services</a>
     <a href="/about">About</a>
     <div style="clear:both"></div>
   </div>
   <div class="wrapper" style="">
-    <h1 style="color:green;font-size:3em;font-weight:bold;font-family:Brush Script MT,cursive;;margin:0">Visual Catalogs<span style="color:black;font-size:.5em;position:relative;top:-.5em">&trade;</span></h1>
-    <br>
-    Spreadsheet to 3D asset pipeline<br>
-    <img class="ui_image" style="border:none;width:90%;max-width:90%;" src="widepipeline.png">
-    <br>
+    <h1 style="color:green;font-size:3em;font-weight:bold;font-family:Brush Script MT,cursive;;margin:0">Visual Catalogs<span style="color:black;font-size:.5em;position:relative;top:-.5em">™</span></h1>
     <div class="prose_wrapper">
       <br>
       <video class="intro_video" src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4" controls muted preload="auto"></video>
@@ -309,6 +118,7 @@
         Flat or rendered information can be displayed<br><br>
       </div>
     </div>
+    <hr>
     The various interfaces feature button and camera combinations
     to display a variety of catalog layouts.
     <br>
@@ -531,14 +341,40 @@
       </div>
     </div>
     <div style="clear:both;"></div>
+    <hr>
+    <h1 id="services">Services</h1>
+    <div>
+      <h2>Display Builder</h2>
+      Build and deploy virtual reality displays that run on devices supporting webGL.
+      <img src="preparedisplay.svg" style="max-width:90vw;max-height:90vh" />
+      <br>
+      <h2>Spreadsheet Data</h2>
+      Use Excel or Sheets to integrate data for virtual positioning (in 2D or 3D)
+      <br>
+      <img src="excelmapdata.png" style="max-width:40vw;max-height:40vh" />
+      <br>
+      <h2>GPS and Device Orientation</h2>
+      Associate latitude and longitude with 3D assets so they can be displayed based on location.
+      <br>
+      Device Orientation sensing allows mobile devices to view a virtual environment effectively.
+      <br>
+      <img src="residentialcompass.png" style="max-width:90vw;max-height:90vh" />
+      <h2>Path Based Architecture Maps</h2>
+      Describes datastore paths, api paths, UI paths, source file paths
+      <br>Quickly find which files, paths and data are associated with each component
+      <br>Keep complexity described under control so it's reasonable to maintain
+      <br>
+      <img src="archex.png" style="max-width:60vw;max-height:60vh" />
+
+    </div>
   </div>
   <div style="line-height:2em;padding-bottom:.5em;text-align:center;width:100%">
     <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
     &nbsp;
-    <a href="privacy.html">Privacy Policy</a>
+    <a href="/privacy.html">Privacy Policy</a>
     <br>
     Lincoln, Nebraska, USA 68508
-    <br>&copy; 1998 - 2020 Handtop. All Rights Reserved.
+    <br>© 1998 - 2020 Handtop®. All Rights Reserved.
   </div>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
