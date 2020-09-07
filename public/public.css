@@ -15,6 +15,10 @@ img {
   margin: auto;
 }
 
+h1, h2 {
+  font-size: 2em;
+}
+
 .video-wrapper {
   display: none;
   background: rgb(255, 255, 255);
