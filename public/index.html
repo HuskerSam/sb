@@ -16,7 +16,6 @@
   <meta property="fb:app_id" content="461141618064403" />
   <meta name="description" content='Display catalogs and products in Virtual Reality on mobile with Visual Catalogs™'>
   <script>
-
     if (window.location.hostname === 'groceryscenes.com')
       window.location = '/asset';
     else if (window.location.hostname === 'groceryblocks.com')
@@ -36,6 +35,32 @@
   </script>
 
   <link rel="stylesheet" href="public.css">
+
+  <style>
+    .home_block {
+      display: inline-block;
+    }
+
+    .home_block img {
+      max-width: 45vw;
+      border-radius: 1em;
+    }
+
+    .graph_img {
+      width: 700px;
+      max-width: 90vw;
+    }
+
+    @media screen and (max-width: 1000px) {
+      .home_block {
+        display: block;
+      }
+
+      .home_block img {
+        max-width: 90vw;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -51,36 +76,48 @@
     </div>
     <div style="flex:1"></div>
     <div style="text-align:center">
-      <h1 style="color:blue;">Still marketing via USPS?</h1>
-      <img src="images/printedproducts.jpg" alt="Printed Mail Products" style="width:400px">
-      <br>
-      <h2 style="color:green;">At least recycling is popular!</h2>
-      <img src="images/trash.png" alt="Mail put in trash" style="width:300px">
-      <br>
-      <a href="/retail">
-        <h2>Click here to learn more about virtual reality options</h2>
-      </a>
-        <video class="intro_video" src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4" controls muted preload="auto"></video>
+      <div class="home_block">
+        <h1 style="color:blue;">Still marketing with the Postal Service?</h1>
+        <img src="images/printedproducts.jpg" alt="Printed Mail Products" style="width:400px">
+      </div>
+      <div class="home_block">
+        <h2 style="color:green;">At least recycling is popular!</h2>
+        <img src="images/trash.png" alt="Mail put in trash" style="width:300px">
+      </div>
+      <br style="clear:both;">
+      <h2 style="color:red;"><span style="color:black">Handtop<span style="font-size:.5em;position:relative;top:-10px;">®</span></span>
+        digitizes mobile better.</h2>
+      <video class="intro_video" src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4" controls muted preload="auto"></video>
     </div>
     <div style="flex:3">
-        <h2 style="color:red;"><span style="color:black">Handtop<span style="font-size:.5em;position:relative;top:-10px;">®</span></span> does digital better.</h2>
-        <h2 style="color:rgb(255,100,0)">Here is some food for thought...</h2>
-        <br>
-        <img style="width:500px" alt="Planned Marketing Budget" src="images/plannedmarketingbudget.jpg">
-        <br>
-        <img style="width:600px" alt="Digital Circular" src="images/digitalcircular.jpg">
-        <br>
-        <img style="width:600px" alt="Cost of Lead Acquisition" src="images/costofacquisition.jpg">
-        <br>
-        <img style="width:600px" alt="Marketing Desired Outcome" src="images/desiredoutcome.jpg">
-        <br>
+      <a href="/retail">
+        <h2>Discover Virtual Reality on mobile with <span style="color:green">Visual Catalogs</span>™</h2>
+      </a>
+      <div style="display:inline-block;max-width:900px;">
+        <h2>In broad terms, what % of your budget do you plan to allocate to these media categories in 2017?</h2>
+      </div>
+      <img class="graph_img" alt="Planned Marketing Budget" src="images/plannedmarketingbudget.jpg">
+      <div style="display:inline-block;max-width:900px;">
+        <h2>When would you be most likely to open a digital circular?</h2>
+      </div>
+      <img class="graph_img" alt="Digital Circular" src="images/digitalcircular.jpg">
+      <div style="display:inline-block;max-width:900px;">
+        <h2>Cost per acquisition by selected media</h2>
+      </div>
+      <img class="graph_img" alt="Cost of Lead Acquisition" src="images/costofacquisition.jpg">
+      <div style="display:inline-block;max-width:900px;">
+        <h2>Distribution of respondents by primary desired outcome of internet display ad campaign</h2>
+      </div>
+      <img class="graph_img" alt="Marketing Desired Outcome" src="images/desiredoutcome.jpg">
+      <br>
 
 
     </div>
     <div style="display:none">
       virtual reality catalogs retail visual augmented reality handtop lincoln nebraska usa sexy aesthetic
       reality delicious culture firebase palmos supernote google hanglory real webgl babylonjs
-      javascript customizations retail chain store
+      javascript customizations retail chain store handtopuv handtopusa handtop usa mobile palm palmos
+      supernote vr xr ar mr mixed reality augmented reality extended reality dynamic reality
     </div>
 
     <div style="line-height:2em;padding-bottom:.5em;text-align:center;width:100%">
