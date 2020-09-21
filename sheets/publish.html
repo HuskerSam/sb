@@ -111,12 +111,6 @@
 
         this.publish_results = document.getElementById('publish_results');
 
-        this.google_signin = document.getElementById('google_signin');
-        this.google_signin.addEventListener('click', e => {
-          google.script.run.withSuccessHandler((result) => {
-            alert('Ready to publish');
-          }).refreshOAuth();
-        });
       }
       async publishList() {
         if (this.busy)

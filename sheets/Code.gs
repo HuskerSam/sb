@@ -13,6 +13,9 @@ function refreshOAuth() {
 }
 
 function showPublishWeb() {
+//  let abc =  ScriptApp.getOAuthToken();
+//  Browser.msgBox(abc);
+  refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile('publish')
     .setTitle('Catalog Utilities')
   SpreadsheetApp.getUi().showSidebar(html);
