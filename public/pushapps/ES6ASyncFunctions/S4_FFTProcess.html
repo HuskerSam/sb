@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>FFT a song</title>
+  <style>
+    .item_holder {
+        position: relative;
+      }
+
+    .basic_item {
+      border-radius: 50%;
+      width: 100px;
+      height: 40px;
+      background: blue;
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+  <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
+</head>
+
+<body>
+  <div>
+    <div>
+      Forward<br>
+      This example demonstrates builds on previous examples to FFT the incoming song data (volume over time based) into <br>
+      sets of data (frequencies over time) ~ aka a graphic equalizer display data<br><br>
+    </div>
+    Audio File: <input type="file" class="audio_file" />
+    <br>
+    <br>
+    <audio id="audio" controls></audio>
+    <br>
+    <br>
+    <button id="next_step">Next Step</button>
+    <br>
+    <br>
+    <textarea id="output_area" style="width:600px;height:100px;"></textarea>
+
+    <br>
+    <br>
+    <div class="item_holder">
+    </div>
+  </div>
+  <script>
+    let audio_file = document.querySelector('.audio_file');
+
+    function file_to_array(file) {
+      return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+
+        reader.onload = () => {
+          let array = new Uint8Array(reader.result);
+          console.log('File Buffer Loaded.  Size: ', array.length);
+          resolve(array);
+        };
+
+        reader.onerror = (err) => {
+          console.log('File Reader Error', err);
+          reject(err);
+        };
+
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    function block_until_next_click(in_result) {
+      return new Promise(resolve => {
+        let next_step = document.getElementById('next_step');
+        let listener = next_step.addEventListener('click', e => {
+          next_step.removeEventListener('click', listener);
+          resolve(in_result);
+        });
+      });
+    }
+
+    function audio_loaded() {
+      return new Promise((resolve, reject) => {
+        audio.onloadeddata = () => {
+          resolve();
+        }
+      });
+    }
+
+    function audio_playing() {
+      return new Promise((resolve, reject) => {
+        audio.onplaying = () => {
+          resolve();
+        }
+      });
+    }
+
+    function smooth_bands(in_array) {
+      let l = in_array.length;
+      let out_array = [];
+
+      for (let c = 4; c < 16; c += 4) {
+        let sum = 0.0;
+        for (let d = 0; d < 4; d++) {
+          sum += in_array[d + c];
+        }
+
+        out_array.push(Math.round(sum / 4));
+      }
+
+      for (let c = 1; c < l; c += 16) {
+        let sum = 0.0;
+        for (let d = 0; d < 16; d++) {
+          sum += in_array[d + c];
+        }
+
+        out_array.push(Math.round(sum / 16));
+      }
+
+      return out_array;
+    }
+
+    function swap_indexes_n2(in_array) {
+      let out_array = [];
+      let outer_bound = in_array[0].length;
+
+      for (let c = 0; c < outer_bound; c++) {
+        let new_n2_array = [];
+        for (let d = 0, dl = in_array.length; d < dl; d++)
+          new_n2_array.push(in_array[d][c]);
+
+        out_array.push(new_n2_array)
+      }
+
+      return out_array;
+    }
+
+    async function convert_song_to_chunks(file_bytes) {
+      let bufferUsed = 0;
+      let bytes_per_sample = 1024;
+      let song_sample_ctr = 0;
+      let song_chunks = [];
+      let freq_chunks = [];
+
+      while (bufferUsed < (file_bytes.length - bytes_per_sample)) {
+        let data_to_process = file_bytes.slice(bufferUsed, bufferUsed + bytes_per_sample);
+        bufferUsed += bytes_per_sample;
+        song_sample_ctr++;
+
+        song_chunks.push(data_to_process);
+
+        let ft = new FFT(bytes_per_sample, 44100);
+        ft.forward(data_to_process);
+        let fewer_bands = smooth_bands(ft.spectrum);
+        freq_chunks.push(fewer_bands);
+      }
+
+      return freq_chunks;
+    }
+
+    function init_dom() {
+      let item_holder = document.querySelector('.item_holder');
+
+      if (!window.styleBlock) {
+        window.styleBlock = document.createElement('style');
+        document.body.appendChild(styleBlock);
+      }
+
+      for (let ctr = 0; ctr < 10; ctr++) {
+        let newDiv = document.createElement('div');
+        newDiv.classList.add('basic_item');
+        newDiv.id = 'itemid' + ctr.toString();
+        item_holder.appendChild(newDiv);
+        newDiv.innerHTML = ctr.toString();
+      }
+    }
+
+    function genAnimFrames(ele, index, output_data) {
+      let resultCSS = '';
+      let rawStyle = styleBlock.innerHTML;
+
+      let values = output_data[index];
+
+
+      let div_css_frames = `
+              @keyframes ${ele.id + '_frames'} {\n`;
+
+      for (let c = 0, l = values.length; c < l; c++) {
+        div_css_frames += `${(c * 100 / (l - 1)).toFixed(2)}% { left: ${(values[c] * 5.0).toFixed(2) + 'px'} } \n`
+      }
+
+      let lastFrame = `\n}`;
+
+      div_css_frames += lastFrame;
+      rawStyle += div_css_frames;
+      styleBlock.innerHTML = rawStyle;
+
+      ele.style.top = `${index * 40 + 'px'}`;
+      ele.style.animationName = ele.id + '_frames';
+      ele.style.animationDuration = time_length.toString() + 's';
+      ele.style.animationIterationCount = 'infinite';
+    }
+
+    audio_file.onchange = async () => {
+      document.getElementById('output_area').value = 'File Selected - click [Next Step] to continue';
+
+      try {
+        let song_bytes = await file_to_array(audio_file.files[0]);
+        audio.src = URL.createObjectURL(audio_file.files[0]);
+
+
+        audio.load();
+
+        await audio_loaded();
+        window.time_length = audio.duration; // in seconds
+
+
+        await block_until_next_click();
+
+        document.getElementById('output_area').value = 'File Buffering - click [Next Step] to continue';
+        //document.getElementById('output_area').value = 'Processing File into Chunks - click [Next Step] to continue';
+
+        let song_chunks = await convert_song_to_chunks(song_bytes);
+        let song_chunks_flipped_indexes = swap_indexes_n2(song_chunks);
+
+        console.log('Song Chunks', song_chunks_flipped_indexes);
+
+        await block_until_next_click();
+
+        audio.play();
+        init_dom();
+        
+        await audio_playing();
+
+        let item_holder = document.querySelectorAll('.item_holder > div');
+        for (let c = 0, l = item_holder.length; c < l; c++) {
+          let item = item_holder[c];
+          genAnimFrames(item, c, song_chunks_flipped_indexes);
+        }
+
+        document.getElementById('output_area').value = 'File Playing - click [Next Step] to stop audio';
+
+        await block_until_next_click();
+
+        audio.pause();
+
+        let msg = 'File Paused - click [Next Step] to throw error';
+        document.getElementById('output_area').value = msg;
+
+        await block_until_next_click();
+
+        throw 'generated error';
+
+        let notreached = 'not reachable step due to previous error';
+        console.log(notreached, 'so it is used');
+      } catch (err) {
+        document.getElementById('output_area').value = err;
+      }
+    };
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Nested Promises</title>
+</head>
+
+<body>
+  <div>
+    <div>
+      Forward<br>
+      This example demonstrates wrapping a callback delegate into a promise.<br>
+      This code starts with nested promises that will be called in a chain in the next step.<br><br>
+    </div>
+    Audio File:  <input type="file" class="audio_file" />
+    <br>
+    <br>
+    <audio id="audio" controls></audio>
+    <br>
+    <br>
+    <button id="next_step">Next Step</button>
+    <br>
+    <br>
+    <textarea id="output_area" style="width:600px;height:400px;"></textarea>
+  </div>
+  <script>
+    let audio_file = document.querySelector('.audio_file');
+
+    function file_to_array(file) {
+      return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+
+        reader.onload = () => {
+          let array = new Uint8Array(reader.result);
+          console.log('File Buffer Loaded.  Size: ', array.length);
+          resolve(array);
+        };
+
+        reader.onerror = (err) => {
+          console.log('File Reader Error', err);
+          reject(err);
+        };
+
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    function block_until_next_click() {
+      return new Promise(resolve => {
+        let next_step = document.getElementById('next_step');
+        let listener = next_step.addEventListener('click', e => {
+          next_step.removeEventListener('click', listener);
+          resolve(e);
+        });
+      });
+    }
+
+    function audio_loaded() {
+      return new Promise((resolve, reject) => {
+        audio.onloadeddata = () => {
+          resolve();
+        }
+      });
+    }
+
+    audio_file.onchange = function() {
+      var files = this.files;
+      document.getElementById('output_area').value = 'File Selected - click [Next Step] to continue';
+      file_to_array(files[0]).then(buffer => {
+
+        return block_until_next_click().then(() => {
+          document.getElementById('output_area').value = 'File Buffering - click [Next Step] to continue';
+          audio.src = URL.createObjectURL(files[0]);
+
+          return block_until_next_click().then(() => {
+            audio.load();
+
+            return audio_loaded().then(() => {
+              document.getElementById('output_area').value = 'File Loading - click [Next Step] to continue';
+
+              return block_until_next_click().then(() => {
+                audio.play();
+                document.getElementById('output_area').value = 'File Playing - click [Next Step] to stop audio';
+
+                return block_until_next_click().then(() => {
+                  document.getElementById('output_area').value = 'File Paused';
+                  audio.pause();
+                });
+              });
+            });
+          });
+        });
+      });
+    };
+  </script>
+</body>
+
+</html>
