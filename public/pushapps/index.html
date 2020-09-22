@@ -14,24 +14,64 @@
   <meta property="og:type" content="website" />
   <meta property="og:description" content="How to create Push Driven Apps using Firebase Hosting, Authorization and Firestore Datastore" />
   <meta name="description" content='How to create Push Driven Apps using Firebase Hosting, Authorization and Firestore Datastore'>
+  <link rel="stylesheet" href="https://handtop.com/public.css">
+
 </head>
+<style>
+  .text_stuff {
+    max-width: 900px;
+    text-align: left;
+    display: inline-block;
+  }
+</style>
+
 <body>
-  <h1>Push Driven Applications using Firebase and Firestore</h1>
-  <h2>Firebase Setup - Hosting, Authorization and Firebase Functions</h2>
-  Authorization<br>
-  Hosting and Simple UI<br>
-  UI<br>
-  Firestore<br>
-  Storage<br>
-  Functions<br>
-  <h2>User Data Setup</h2>
-  User write, public read data<br>
-  User only read, user write data<br>
-  User read only data, server write<br>
-  Server read, server write data - user only<br>
-  <h2>Query Data<h2>
-  Read once, write many (functions)<br>
-  Considerations of Firebase(~nosql) vs SQL (store data in one location)
-  <br>
+  <div style="text-align: center">
+    <h1>Push Driven Applications using Firebase and Firestore</h1>
+    <h2>Example Project - BumSleeper PWA </h2>
+    <div class="text_stuff">
+      A bed and bath finder for local missions to reserve beds<br>
+      BumChat - so bums can leave messages for each other<br>
+      Notifications if a bed opens up<br>
+      BumRatings - get ranked better if well behaved<br>
+      BedRate - Bums rank the beds and comment<br>
+      ShowerRate - good plumbing is a right<br>
+      PublicFeed - free for all posting<br>
+    </div>
+    <h2>Firebase Setup</h2>
+    <div class="text_stuff">
+      Authorization<br>
+      Hosting and Simple UI<br>
+      UI<br>
+      Firestore<br>
+      Storage<br>
+      Functions<br>
+    </div>
+    <h2>Single User Data</h2>
+    <div class="text_stuff">
+      User write, public read data<br>
+      User only read, user write data<br>
+      User read only data, server write<br>
+      Server read, server write data - user only<br>
+    </div>
+    <h2>Multi User Data</h2>
+    <div class="text_stuff">
+      Considerations of Firebase(~nosql) vs SQL (store data in one location)
+      <br>
+      Read once, write many (functions) - keep all writes per record in one cloud function<br>
+    </div>
+    <h2>Query Data</h2>
+    <div class="text_stuff">
+      Set data up specifically to optimize large sets for query <br>
+      (write to multple locations as needed with functions)
+    </div>
+    <h2>ES6 - Promises and Async Functions</h2>
+    <div class="text_stuff">
+      Javascript and Async on front and backend<br>
+      Timeout considerations and ESLint for cloud functions<br>
+    </div>
+    <h2>Datastore and Blob Storage Security Rules</h2>
+  </div>
 </body>
+
 </html>
