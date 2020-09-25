@@ -15,23 +15,36 @@
   <meta property="og:description" content="How to create Push Driven Apps using Firebase Hosting, Authorization and Firestore Datastore" />
   <meta name="description" content='How to create Push Driven Apps using Firebase Hosting, Authorization and Firestore Datastore'>
   <link rel="stylesheet" href="https://handtop.com/public.css">
+  <style>
+    .h1_desc {
+      position: relative;
+      top: -15px;
+    }
 
+    .text_stuff {
+      max-width: 900px;
+      text-align: left;
+      display: inline-block;
+    }
+  </style>
 </head>
 
 <body style="text-align:center;">
   <div style="text-align: left;max-width: 900px;display:inline-block;">
     <h1>Push Driven PWA Applications</h1>
-    Developed using Firebase and Firestore
+    <span class="h1_desc">An opinionated design using Firebase and Firestore</span>
     <br>
     <h2>Example - BumSleeper </h2>
+    <span class="h1_desc">A bed and bath finder for local missions to reserve beds</span>
     <div class="text_stuff">
-      A bed and bath finder for local missions to reserve beds<br>
+      <br>
       BumChat - so bums can leave messages for each other<br>
       Notifications if a bed opens up<br>
       BumRatings - get ranked better if well behaved<br>
       BedRate - Bums rank the beds and comment<br>
       ShowerRate - good plumbing is a right<br>
-      PublicFeed - free for all posting<br>
+      PublicFeed - free for all posting - with iggies (ignores) - after 10 votes if more iggies then ups it goes away
+        -- if you have an iggied post - no more posts for a week<br>
       Groups and Roles - owners, managers and users for beds<br>
     </div>
     <h2>Firebase Setup</h2>
