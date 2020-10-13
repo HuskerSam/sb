@@ -193,6 +193,7 @@ class bView {
     }
   }
   profileUpdate(values, type, fireData) {
+    gAPPP._updateApplicationStyle();
     if (!this.rootBlock)
       return;
     if (this.lastNoBump !== gAPPP.a.profile.noBumpMaps) {
@@ -202,8 +203,6 @@ class bView {
 
     if (this.canvasHelper)
       this.canvasHelper.userProfileChange();
-
-    gAPPP._updateApplicationStyle();
   }
   _updateContextWithDataChange(tag, values, type, fireData) {
     //if (!this.tag)
