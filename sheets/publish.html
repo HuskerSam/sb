@@ -55,6 +55,8 @@
     <button id="display_publish_list">Publish List</button>
     <br>
     <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
+    <br>
+    <div id="published_list"></div>
   </div>
   <hr>
   <button id="import_song_expand_btn"><i class="material-icons">keyboard_arrow_right</i></button>
@@ -121,6 +123,8 @@
         this.target_to_deploy = document.getElementById('target_to_deploy');
         this.token_to_deploy = document.getElementById('token_to_deploy');
         this.url_to_deploy = document.getElementById('url_to_deploy');
+        this.published_list = document.getElementById('published_list');
+        this.target_to_deploy.addEventListener('input', e => this.updateLinkList());
 
         this.preset_list_deploy = document.getElementById('preset_list_deploy');
         this.preset_list_deploy.addEventListener('input', e => {
@@ -140,6 +144,8 @@
           this.target_to_deploy.value = id;
           this.token_to_deploy.value = token;
           this.url_to_deploy.innerHTML = url;
+
+          this.updateLinkList();
         });
 
         this.fillPresets();
@@ -159,6 +165,7 @@
         let targets = await this.grabCSVForRangeStrings([assetRString]);
         this.deployTargets = targets;
         let listHTML = '<option>Deploy Targets</option>';
+
         targets.forEach(t => {
           let pid = t['project id'];
           if (!pid)
@@ -166,6 +173,19 @@
           listHTML += '<option>' + pid + '</option>';
         });
         this.preset_list_deploy.innerHTML = listHTML;
+
+        this.publishListSheet = publishConfig[0].displaylist;
+      }
+      async updateLinkList() {
+      this.published_list.innerHTML = '';
+        let publishList = await this.grabSheetCSVJSONData(this.publishListSheet);
+        let linkListHTML = '';
+        let pid = this.target_to_deploy.value;
+        publishList.forEach(t => {
+        let link = 'https://' + pid + '.web.app/display/?name=' + t['name'];
+          linkListHTML += '<a href="' + link  + '" target="_blank">' + t['name'] + '</a><br>';
+        });
+        this.published_list.innerHTML = linkListHTML;
       }
       async publishList() {
         if (this.busy)
@@ -327,7 +347,7 @@
           } catch (e) {
             console.log(e, genResults);
           }
-          this.publish_results.value += name + 'generated\n'
+          this.publish_results.value += name + ' generated\n'
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
 
           return {
