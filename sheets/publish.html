@@ -155,13 +155,15 @@
         let assetBookId = publishConfig[0].assetbookid;
         let deployOptionsRange = "'Deploy Options'!A1:A2";
 
-        if (!assetBookId)
-          return;
-
         let rangeString = assetBookId + "||||" + deployOptionsRange;
+        if (!assetBookId)
+          rangeString = deployOptionsRange;
+
         let deploys = await this.grabCSVForRangeStrings([rangeString]);
         let targetRange = deploys[0].deployrange;
         let assetRString = assetBookId + "||||" + targetRange;
+        if (!assetBookId)
+          assetRString = targetRange;
         let targets = await this.grabCSVForRangeStrings([assetRString]);
         this.deployTargets = targets;
         let listHTML = '<option>Deploy Targets</option>';
