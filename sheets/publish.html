@@ -161,9 +161,9 @@
 
         let deploys = await this.grabCSVForRangeStrings([rangeString]);
         let targetRange = deploys[0].deployrange;
-        let assetRString = assetBookId + "||||" + targetRange;
+        let assetRString = assetBookId + "||||'Deploy Options'!" + targetRange;
         if (!assetBookId)
-          assetRString = targetRange;
+          assetRString = "'Deploy Options'!" + targetRange;
         let targets = await this.grabCSVForRangeStrings([assetRString]);
         this.deployTargets = targets;
         let listHTML = '<option>Deploy Targets</option>';
