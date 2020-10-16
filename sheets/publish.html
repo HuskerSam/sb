@@ -239,7 +239,7 @@
         }
         this.busy = false;
         this.display_publish_list.innerHTML = 'Publish Web Again';
-        this.publish_results.value += '\n\nComplete\n\n';
+        this.publish_results.value += '\nComplete\n\n';
         this.publish_results.scrollTop = this.publish_results.scrollHeight;
       }
       async deleteProject(name) {
@@ -349,7 +349,7 @@
           } catch (e) {
             console.log(e, genResults);
           }
-          this.publish_results.value += name + ' generated\n'
+          this.publish_results.value += name + ' generated\n\n'
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
 
           return {
