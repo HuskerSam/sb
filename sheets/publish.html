@@ -47,11 +47,9 @@
     <label>Presets <select id="preset_list_deploy"></select></label>
     <br>
     <label>Target <input id="target_to_deploy" type="text" /></label>
-    <br>
-    <span id="url_to_deploy"></span>
-    <br>
+    <div id="url_to_deploy"><br></div>
     <label>Token <input id="token_to_deploy" type="text" /></label>
-<br>
+    <br>
     <button id="display_publish_list">Publish List</button>
     <br>
     <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
@@ -135,20 +133,32 @@
           let id = t['project id'];
           if (!id)
             id = '';
-          let url = t['public url'];
-          if (!url)
-            url = 'https://' + id + '.web.app/';
           let token = t['token'];
           if (!token)
             token = '';
           this.target_to_deploy.value = id;
           this.token_to_deploy.value = token;
-          this.url_to_deploy.innerHTML = url;
+          let url = t['public url'];
+          if (!url)
+            url = 'https://' + id + '.web.app/';
 
-          this.updateLinkList();
+          this.updateLinks(url);
         });
+        this.target_to_deploy.addEventListener('input', e => this.updateLinks());
 
         this.fillPresets();
+      }
+      async updateLinks(url) {
+        let id = this.target_to_deploy.value;
+        if (!url)
+          url = 'https://' + id + '.web.app/';
+        else {
+          if (url.substring(0, 3) !== 'htt')
+            url = 'https://' + url;
+        }
+        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + url + '">' + url + '</a>';
+
+        this.updateLinkList();
       }
       async fillPresets() {
         let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
@@ -179,13 +189,13 @@
         this.publishListSheet = publishConfig[0].displaylist;
       }
       async updateLinkList() {
-      this.published_list.innerHTML = '';
+        this.published_list.innerHTML = '';
         let publishList = await this.grabSheetCSVJSONData(this.publishListSheet);
         let linkListHTML = '';
         let pid = this.target_to_deploy.value;
         publishList.forEach(t => {
-        let link = 'https://' + pid + '.web.app/display/?name=' + t['name'];
-          linkListHTML += '<a href="' + link  + '" target="_blank">' + t['name'] + '</a><br>';
+          let link = 'https://' + pid + '.web.app/display/?name=' + t['name'];
+          linkListHTML += '<a href="' + link + '" target="_blank">' + t['name'] + '</a><br>';
         });
         this.published_list.innerHTML = linkListHTML;
       }
@@ -219,7 +229,7 @@
           if (!flags) flags = '';
           flags = flags.toLowerCase();
 
-          if (flags.indexOf('ignore') !== -1){
+          if (flags.indexOf('ignore') !== -1) {
             this.publish_results.value += row.name + ' ignored\n';
             continue;
           }
