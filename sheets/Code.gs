@@ -117,69 +117,132 @@ function CreateLayout() {
   if (circuit == null) {
     circuit = activeSpreadsheet.insertSheet();
     circuit.setName('Circuit');
-    let cols = ['result csv:','asset','name','skyboxtype','skyboxsize','groundimage','skyboxgroundscaleu','skyboxgroundscalev','skybox','width','height','depth','floormaterial','backwallmaterial','frontwallmaterial','leftwallmaterial','rightwallmaterial','ceilingmaterial','leftwallscalev','leftwallscaleu','leftwallimage','rightwallscalev','rightwallscaleu','rightwallimage','backwallscalev','backwallscaleu','backwallimage','frontwallscalev','frontwallscaleu','frontwallimage','floorscalev','floorscaleu','floorimage','ceilingwallscalev','ceilingwallscaleu','ceilingwallimage','blockflag','blockcode','frametime','audiourl','displaycamera','musicparams','genericblockdata'];
-    let row1 = ['','sceneblock','SceneRecipe','building','400','','1','1','skybox33','100','40','75','','','','','','','3','3','sb:display/goldishstonewall.jpg','3','3','sb:display/goldishstonewall.jpg','3','3','sb:display/goldishstonewall.jpg','','','','3','3','sb:display/indoorwood44_1024.jpg','1','1','sb:display/stuccopink.jpg','scene','demo','60s','','demo','','signyoffset:0|datascalefactor:1'];
-    let data = [ cols, row1 ];
+    let cols = ['result csv:', 'asset', 'name', 'skyboxtype', 'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox', 'width', 'height', 'depth', 'floormaterial', 'backwallmaterial', 'frontwallmaterial', 'leftwallmaterial', 'rightwallmaterial', 'ceilingmaterial', 'leftwallscalev', 'leftwallscaleu', 'leftwallimage', 'rightwallscalev', 'rightwallscaleu', 'rightwallimage', 'backwallscalev', 'backwallscaleu', 'backwallimage', 'frontwallscalev', 'frontwallscaleu', 'frontwallimage', 'floorscalev', 'floorscaleu', 'floorimage', 'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage', 'blockflag', 'blockcode', 'frametime', 'audiourl', 'displaycamera', 'musicparams', 'genericblockdata'];
+    let row1 = ['', 'sceneblock', 'SceneRecipe', 'building', '400', '', '1', '1', 'skybox33', '100', '40', '75', '', '', '', '', '', '', '3', '3', 'sb:display/goldishstonewall.jpg', '3', '3', 'sb:display/goldishstonewall.jpg', '3', '3', 'sb:display/goldishstonewall.jpg', '', '', '', '3', '3', 'sb:display/indoorwood44_1024.jpg', '1', '1', 'sb:display/stuccopink.jpg', 'scene', 'demo', '60s', '', 'demo', '', 'signyoffset:0|datascalefactor:1'];
+    let data = [cols, row1];
     circuit.getRange('C3:AS4').setValues(data);
     circuit.getRange('C3').setFontWeight('bold');
 
-    let cols2 = ['result csv:','asset','name','parent','childtype','shapetype','materialname','width','height','depth','x','y','z','rx','ry','rz','sx','sy','sz' ];
-    let row2_1 = ['','blockchild','fixture_fruitstand','::scene::_fixturesWrapper','block','','','','','','-13','0','-5','','','','3','3','3'];
-    let row2_2 = ['','blockchild','fixture_fruitstand','::scene::_fixturesWrapper','block','','','','','','11','0','-5','','','','3','3','3'];
-    let row2_3 = ['','blockchild','fixture_fruitstand','::scene::_fixturesWrapper','block','','','','','','-13','0','5','','','','3','3','3'];
-    let row2_4 = ['','blockchild','fixture_fruitstand','::scene::_fixturesWrapper','block','','','','','','11','0','5','','','','3','3','3'];
-    let row2_5 = ['','blockchild','register','::scene::_fixturesWrapper','mesh','','','','','','40','0','-20','-90deg','225deg','-90deg','0.065','0.065','0.065'];
-    let row2_6 = ['','blockchild','fixture_flowerstand','::scene::_fixturesWrapper','block','','','','','','30','0','32','','90deg','','9','9','9'];
-    let row2_7 = ['','blockchild','fixture_flowerstand','::scene::_fixturesWrapper','block','','','','','','10','0','32','','90deg','','9','9','9'];
-    let row2_8 = ['','blockchild','fixture_flowerstand','::scene::_fixturesWrapper','block','','','','','','-10','0','32','','90deg','','9','9','9'];
-    let row2_9 = ['','blockchild','fixture_flowerstand','::scene::_fixturesWrapper','block','','','','','','-30','0','32','','90deg','','9','9','9'];
-    let row2_10 = ['','blockchild','metalmeshstand','::scene::_fixturesWrapper','mesh','','','','','','-15','5','-31','','','','12','12','15'];
-    let row2_11 = ['','blockchild','metalmeshstand','::scene::_fixturesWrapper','mesh','','','','','','10','5','-31','','','','12','12','15'];
-    let row2_12 = ['','blockchild','fixture_cratebottom','::scene::_fixturesWrapper','block','','','','','','45','','14','','90deg','','7','7','7'];
-    let row2_13 = ['','blockchild','fixture_standard','::scene::_fixturesWrapper','block','','','','','','-44','','16','','-90deg','','8','8','8'];
-    let row2_14 = ['','blockchild','fixture_deliwall','::scene::_fixturesWrapper','block','','','','','','60','','15','','180deg','','10','10','10'];
-    let row2_15 = ['','blockchild','fixture_pegstand','::scene::_fixturesWrapper','block','','','','','','-44','','-5','','-90deg','','8','8','8'];
+    let cols2 = ['result csv:', 'asset', 'name', 'parent', 'childtype', 'shapetype', 'materialname', 'width', 'height', 'depth', 'x', 'y', 'z', 'rx', 'ry', 'rz', 'sx', 'sy', 'sz'];
+    let row2_1 = ['', 'blockchild', 'fixture_fruitstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '-13', '0', '-5', '', '', '', '3', '3', '3'];
+    let row2_2 = ['', 'blockchild', 'fixture_fruitstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '11', '0', '-5', '', '', '', '3', '3', '3'];
+    let row2_3 = ['', 'blockchild', 'fixture_fruitstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '-13', '0', '5', '', '', '', '3', '3', '3'];
+    let row2_4 = ['', 'blockchild', 'fixture_fruitstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '11', '0', '5', '', '', '', '3', '3', '3'];
+    let row2_5 = ['', 'blockchild', 'register', '::scene::_fixturesWrapper', 'mesh', '', '', '', '', '', '40', '0', '-20', '-90deg', '225deg', '-90deg', '0.065', '0.065', '0.065'];
+    let row2_6 = ['', 'blockchild', 'fixture_flowerstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '30', '0', '32', '', '90deg', '', '9', '9', '9'];
+    let row2_7 = ['', 'blockchild', 'fixture_flowerstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '10', '0', '32', '', '90deg', '', '9', '9', '9'];
+    let row2_8 = ['', 'blockchild', 'fixture_flowerstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '-10', '0', '32', '', '90deg', '', '9', '9', '9'];
+    let row2_9 = ['', 'blockchild', 'fixture_flowerstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '-30', '0', '32', '', '90deg', '', '9', '9', '9'];
+    let row2_10 = ['', 'blockchild', 'metalmeshstand', '::scene::_fixturesWrapper', 'mesh', '', '', '', '', '', '-15', '5', '-31', '', '', '', '12', '12', '15'];
+    let row2_11 = ['', 'blockchild', 'metalmeshstand', '::scene::_fixturesWrapper', 'mesh', '', '', '', '', '', '10', '5', '-31', '', '', '', '12', '12', '15'];
+    let row2_12 = ['', 'blockchild', 'fixture_cratebottom', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '45', '', '14', '', '90deg', '', '7', '7', '7'];
+    let row2_13 = ['', 'blockchild', 'fixture_standard', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '-44', '', '16', '', '-90deg', '', '8', '8', '8'];
+    let row2_14 = ['', 'blockchild', 'fixture_deliwall', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '60', '', '15', '', '180deg', '', '10', '10', '10'];
+    let row2_15 = ['', 'blockchild', 'fixture_pegstand', '::scene::_fixturesWrapper', 'block', '', '', '', '', '', '-44', '', '-5', '', '-90deg', '', '8', '8', '8'];
 
-    let data2 = [ cols2, row2_1, row2_2, row2_3, row2_4, row2_5, row2_6, row2_7, row2_8, row2_9, row2_10, row2_11, row2_12, row2_13, row2_14, row2_15 ];
+    let data2 = [cols2, row2_1, row2_2, row2_3, row2_4, row2_5, row2_6, row2_7, row2_8, row2_9, row2_10, row2_11, row2_12, row2_13, row2_14, row2_15];
     circuit.getRange('C10:U25').setValues(data2);
     circuit.getRange('C10').setFontWeight('bold');
 
-    let cols3 = [ 'result csv:','asset','name','cameraheightoffset','cameramovetime','cameraname','cameraradius','finishdelay','introtime','runlength','startx','starty','startz','startry','x','y','z','genericblockdata'];
-    let row3 = ['', 'diplaycamera','FollowCamera','25','500','','25','2','1','60','-40','6','9.5','-90deg','-50','5','0','signyoffset|0'];
-    let data3 = [ cols3, row3 ];
+    let cols3 = ['result csv:', 'asset', 'name', 'cameraheightoffset', 'cameramovetime', 'cameraname', 'cameraradius', 'finishdelay', 'introtime', 'runlength', 'startx', 'starty', 'startz', 'startry', 'x', 'y', 'z', 'genericblockdata'];
+    let row3 = ['', 'diplaycamera', 'FollowCamera', '25', '500', '', '25', '2', '1', '60', '-40', '6', '9.5', '-90deg', '-50', '5', '0', 'signyoffset|0'];
+    let data3 = [cols3, row3];
     circuit.getRange('C27:T28').setValues(data3);
     circuit.getRange('C27').setFontWeight('bold');
 
-    let cols4 = [ 'result csv:','asset','childtype','name','cameraname','cameraaimtarget','startx','starty','startz','cameraradius','cameraheightoffset','parent' ];
-    let row4_1 = ['','blockchild','camera','ArcRotate','arcRotateCamera','0,0,0','-40','30','0','30','35','::scene::'];
-    let row4_2 = ['','blockchild','camera','DeviceOrientationCamera','deviceOrientation','0,5,0','-30','10','0','30','10','::scene::'];
-    let data4 = [ cols4, row4_1, row4_2 ];
+    let cols4 = ['result csv:', 'asset', 'childtype', 'name', 'cameraname', 'cameraaimtarget', 'startx', 'starty', 'startz', 'cameraradius', 'cameraheightoffset', 'parent'];
+    let row4_1 = ['', 'blockchild', 'camera', 'ArcRotate', 'arcRotateCamera', '0,0,0', '-40', '30', '0', '30', '35', '::scene::'];
+    let row4_2 = ['', 'blockchild', 'camera', 'DeviceOrientationCamera', 'deviceOrientation', '0,5,0', '-30', '10', '0', '30', '10', '::scene::'];
+    let data4 = [cols4, row4_1, row4_2];
     circuit.getRange('C31:N33').setValues(data4);
     circuit.getRange('C31').setFontWeight('bold');
 
-    let cols5 = [ 'result csv:','asset','name','width','height','depth','blockflag','parent','x','y','z','rx','ry','rz'];
-    let row5 = [ '','block','basketcart','5','3','5','basket','::scene::','-28','5','20','','-90deg','' ];
-    let data5 = [ cols5, row5 ];
+    let cols5 = ['result csv:', 'asset', 'name', 'width', 'height', 'depth', 'blockflag', 'parent', 'x', 'y', 'z', 'rx', 'ry', 'rz'];
+    let row5 = ['', 'block', 'basketcart', '5', '3', '5', 'basket', '::scene::', '-28', '5', '20', '', '-90deg', ''];
+    let data5 = [cols5, row5];
     circuit.getRange('C35:P36').setValues(data5);
     circuit.getRange('C35').setFontWeight('bold');
 
-    let cols6 = [ '','asset','name','materialname','parent','meshpath','texturepath','bmppath','x','y','z','sx','sy','sz','rx','ry','rz','ambient','diffuse','emissive','blockflag'];
-    let row6 = [ '','meshtexture','fruitboxmesh','fruitboxmesh_material','basketcart','sb:demoadds/trolley.babylon','sb:demoadds/trolley_diff.jpg','','0','-5','0','0.1','0.1','0.1','-90deg','180deg','0deg','x','x','x','static'];
-    let data6 = [ cols6, row6];
+    let cols6 = ['', 'asset', 'name', 'materialname', 'parent', 'meshpath', 'texturepath', 'bmppath', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'rx', 'ry', 'rz', 'ambient', 'diffuse', 'emissive', 'blockflag'];
+    let row6 = ['', 'meshtexture', 'fruitboxmesh', 'fruitboxmesh_material', 'basketcart', 'sb:demoadds/trolley.babylon', 'sb:demoadds/trolley_diff.jpg', '', '0', '-5', '0', '0.1', '0.1', '0.1', '-90deg', '180deg', '0deg', 'x', 'x', 'x', 'static'];
+    let data6 = [cols6, row6];
     circuit.getRange('C38:W39').setValues(data6);
 
-    let cols7 = [ '','asset','childtype','frameorder','frametime','name','parent','x','y','z','rx','ry','rz'];
-    let row7_1 = [ '','blockchildframe','block','20','35%','basketcart','::scene::','28','','','','-90deg',''];
-    let row7_2 = [ '','blockchildframe','block','21','38%','basketcart','::scene::','30','','','','0deg',''];
-    let row7_3 = [ '','blockchildframe','block','30','50%','basketcart','::scene::','28','','-15','','0deg',''];
-    let row7_4 = [ '','blockchildframe','block','31','52%','basketcart','::scene::','28','','-20','','90deg','' ];
-    let row7_5 = [ '','blockchildframe','block','40','85%','basketcart','::scene::','-28','','-20','','90deg',''];
-    let row7_6 = [ '','blockchildframe','block','41','87%','basketcart','::scene::','-30','','-20','','180deg',''];
-    let row7_7 = [ '','blockchildframe','block','50','98%','basketcart','::scene::','-28','','20','','180deg',''];
-    let row7_8 = [ '','blockchildframe','block','70','100%','basketcart','::scene::','-28','','20','','270deg',''];
+    let cols7 = ['', 'asset', 'childtype', 'frameorder', 'frametime', 'name', 'parent', 'x', 'y', 'z', 'rx', 'ry', 'rz'];
+    let row7_1 = ['', 'blockchildframe', 'block', '20', '35%', 'basketcart', '::scene::', '28', '', '', '', '-90deg', ''];
+    let row7_2 = ['', 'blockchildframe', 'block', '21', '38%', 'basketcart', '::scene::', '30', '', '', '', '0deg', ''];
+    let row7_3 = ['', 'blockchildframe', 'block', '30', '50%', 'basketcart', '::scene::', '28', '', '-15', '', '0deg', ''];
+    let row7_4 = ['', 'blockchildframe', 'block', '31', '52%', 'basketcart', '::scene::', '28', '', '-20', '', '90deg', ''];
+    let row7_5 = ['', 'blockchildframe', 'block', '40', '85%', 'basketcart', '::scene::', '-28', '', '-20', '', '90deg', ''];
+    let row7_6 = ['', 'blockchildframe', 'block', '41', '87%', 'basketcart', '::scene::', '-30', '', '-20', '', '180deg', ''];
+    let row7_7 = ['', 'blockchildframe', 'block', '50', '98%', 'basketcart', '::scene::', '-28', '', '20', '', '180deg', ''];
+    let row7_8 = ['', 'blockchildframe', 'block', '70', '100%', 'basketcart', '::scene::', '-28', '', '20', '', '270deg', ''];
     let data7 = [cols7, row7_1, row7_2, row7_3, row7_4, row7_5, row7_6, row7_7, row7_8];
     circuit.getRange('C41:O49').setValues(data7);
 
+
+    let cols8 = ['result csv:', 'asset', 'name', 'blockflag', 'genericblockdata'];
+    let row8 = ['', 'block', 'displaypositionsblock', 'displaypositions', '']
+    circuit.getRange('C51:G52').setValues([cols8, row8]);
+    circuit.getRange('C51').setFontWeight('bold');
+    circuit.getRange('G52').setFormula('M53');
+    circuit.getRange('M53').setFormula('CONCATENATE(K53:K79)');
+    let positionRows = [
+      ['positions', '-33.5', '11', '30', '', '', ''],
+      ['', '-26', '8', '26', '', '', ''],
+      ['', '-16', '7', '5', '', '', '20deg'],
+      ['', '-16', '7', '-5', '', '', '20deg'],
+      ['', '-19', '11', '-32.5', '', '', ''],
+      ['', '-18.5', '11', '30', '', '', ''],
+      ['', '-11', '8', '26', '', '', ''],
+      ['', '-8.5', '7', '5', '', '', '-20deg'],
+      ['', '-8.5', '7', '-5', '', '', '-20deg'],
+      ['', '-11', '11', '-32.5', '', '', ''],
+      ['', '-3.5', '11', '30', '', '', ''],
+      ['', '7', '7', '5', '', '', '20deg'],
+      ['', '7', '7', '-5', '', '', '20deg'],
+      ['', '5.5', '11', '-32.5', '', '', ''],
+      ['', '4', '8', '26', '', '', ''],
+      ['', '11.5', '11', '30', '', '', ''],
+      ['', '13.25', '7', '5', '', '', '-20deg'],
+      ['', '13.25', '7', '-5', '', '', '-20deg'],
+      ['', '13.5', '11', '-32.5', '', '', ''],
+      ['', '19', '8', '26', '', '', ''],
+      ['', '26.5', '11', '30', '', '', ''],
+      ['', '34', '8', '26', '', '', ''],
+      ['', '46', '11', '27', '', '', ''],
+      ['', '43', '2', '21', '', '', ''],
+      ['', '46', '11', '15', '', '', ''],
+      ['', '43', '2', '9', '', '', ''],
+      ['', '46', '11', '3', '', '', '']
+    ];
+
+    circuit.getRange('C53:I79').setValues(positionRows);
+
+    for (let c = 53; c <= 79; c++) {
+      let ctr = c.toString();
+      circuit.getRange('K' + ctr).setFormula('D' + ctr + ' & "|" & E' + ctr + ' & "|" & F' + ctr + ' & "|" & G' + ctr + ' & "|" & H' + ctr + ' & "|" & I' + ctr + ' & "|"');
+    }
+
+    let edit_fields = [
+      ['result csv:', 'asset', 'name', 'blockflag', 'genericblockdata'],
+      ['', 'block', 'Camera Start Position Edit', 'displayfieldedits', 'Camera Start Position||layout||FollowCamera||displaycamera||x:num||y:num||z:num||startx:num||starty:num||startz:num||startrx:num||startry:num||startrz:num'],
+      ['', 'block', 'Camera Range Edit', 'displayfieldedits', 'Camera Range||layout||FollowCamera||displaycamera||cameraradius:num||cameraheightoffset:num'],
+      ['', 'block', 'Camera Timing Edit', 'displayfieldedits', 'Camera Timing||layout||FollowCamera||displaycamera||cameramovetime:num||introtime:num||finishdelay:num||runlength:num'],
+      ['', 'block', 'Divider Image Edit', 'displayfieldedits', 'Divider Image||layout||dividerpanel||shape||texturepath:image||scaleu:num||scalev:num||uoffset:num||voffset:num'],
+      ['', 'block', 'Table Top Image Edit', 'displayfieldedits', 'Table Top Image||layout||tabletop||shape||texturepath:image||scaleu:num||scalev:num||uoffset:num||voffset:num'],
+      ['', 'block', 'Table Leg Image Edit', 'displayfieldedits', 'Table Leg Image||layout||tableleg||shape||texturepath:image||scaleu:num||scalev:num||uoffset:num||voffset:num'],
+      ['', 'block', 'Floor Image Edit', 'displayfieldedits', 'Floor Image||layout||SceneRecipe||sceneblock||floorimage:image||floorscaleu:num||floorscalev:num'],
+      ['', 'block', 'Left Wall Edit', 'displayfieldedits', 'Left Wall||layout||SceneRecipe||sceneblock||leftwallimage:image||leftwallscaleu:num||leftwallscalev:num'],
+      ['', 'block', 'Right Wall Edit', 'displayfieldedits', 'Right Wall||layout||SceneRecipe||sceneblock||rightwallimage:image||rightwallscaleu:num||rightwallscalev:num'],
+      ['', 'block', 'Back Wall Edit', 'displayfieldedits', 'Back Wall||layout||SceneRecipe||sceneblock||backwallimage:image||backwallscaleu:num||backwallscalev:num'],
+      ['', 'block', 'Fore Wall Edit', 'displayfieldedits', 'Front Wall||layout||SceneRecipe||sceneblock||frontwallimage:image||frontwallscaleu:num||frontwallscalev:num'],
+      ['', 'block', 'Skybox', 'displayfieldedits', 'Skybox||layout||SceneRecipe||sceneblock||skybox:listskybox'],
+      ['', 'block', 'Edge Cooler Image Edit', 'displayfieldedits', 'Edge Cooler Image||assets||edgecooler||mesh||texturepath:image||scaleu:num||scalev:num||uoffset:num||voffset:num']
+    ];
+
+    circuit.getRange('C81:G94').setValues(edit_fields);
+    circuit.getRange('C81').setFontWeight('bold');
 
   }
 
