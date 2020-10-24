@@ -25,7 +25,7 @@
     text-align: center;
   }
 
-  #import_song_expand_btn, #publish_expand_btn {
+  #import_song_expand_btn, #publish_expand_btn, #utilities_expand_btn {
     min-width:auto;
     position:relative;
     top:.5em;
@@ -33,7 +33,7 @@
     transform: rotate(0);
   }
 
-  #import_song_expand_btn.rotate_button, #publish_expand_btn.rotate_button {
+  #import_song_expand_btn.rotate_button, #publish_expand_btn.rotate_button, #utilities_expand_btn.rotate_button {
     transform: rotate(90deg);
   }
 </style>
@@ -41,9 +41,9 @@
 </head>
 
 <body>
-  <button id="publish_expand_btn" class="rotate_button"><i class="material-icons">keyboard_arrow_right</i></button>
+  <button id="publish_expand_btn" class=""><i class="material-icons">keyboard_arrow_right</i></button>
   <h2 style="display:inline-block;">Publish Catalogs</h2>
-  <div id="publish_details">
+  <div id="publish_details" style="display:none;">
     <label>Presets <select id="preset_list_deploy"></select></label>
     <br>
     <label>Target <input id="target_to_deploy" type="text" /></label>
@@ -90,8 +90,11 @@
 
   <hr>
   <button id="utilities_expand_btn"><i class="material-icons">keyboard_arrow_right</i></button>
-  <h2 style="display:inline-block;">Utilities</h2>
+  <h2 style="display:inline-block;">Helpers</h2>
   <div id="utilities_details" style="display:none;">
+    <button id="initialize_configuration_btn">Initialize Configuration</button>
+    <br><br>
+    <button id="create_layout_btn">Create Layout</button>
   </div>
   <hr>
   <script>
@@ -124,6 +127,18 @@
           }
         });
 
+        this.utilities_expand_btn = document.getElementById('utilities_expand_btn');
+        this.utilities_details = document.getElementById('utilities_details');
+        this.utilities_expand_btn.addEventListener('click', e => {
+          if (this.utilities_details.style.display === 'none') {
+            this.utilities_details.style.display = '';
+            this.utilities_expand_btn.classList.add('rotate_button');
+          } else {
+            this.utilities_details.style.display = 'none';
+            this.utilities_expand_btn.classList.remove('rotate_button');
+          }
+        });
+
         this.publish_results = document.getElementById('publish_results');
         this.target_to_deploy = document.getElementById('target_to_deploy');
         this.token_to_deploy = document.getElementById('token_to_deploy');
@@ -153,7 +168,35 @@
         });
         this.target_to_deploy.addEventListener('input', e => this.updateLinks());
 
+        this.initialize_configuration_btn = document.getElementById('initialize_configuration_btn');
+        this.initialize_configuration_btn.addEventListener('click', e => this.initializeConfiguration());
+
+        this.create_layout_btn = document.getElementById('create_layout_btn');
+        this.create_layout_btn.addEventListener('click', e => this.initializeLayout());
+
         this.fillPresets();
+      }
+      async initializeConfiguration() {
+        return new Promise(async (resolve, reject) => {
+          this.initialize_configuration_btn.innerHTML = '...';
+          google.script.run.withSuccessHandler((result) => {
+            this.initialize_configuration_btn.innerHTML = 'Initialize Configuration';
+            if (result !== 'success')
+              alert(result);
+            resolve(result);
+          }).initializeConfiguration();
+        });
+      }
+      async initializeLayout() {
+        return new Promise(async (resolve, reject) => {
+          this.create_layout_btn.innerHTML = '...';
+          google.script.run.withSuccessHandler((result) => {
+            this.create_layout_btn.innerHTML = 'Create Layout';
+            if (result !== 'success')
+              alert(result);
+            resolve(result);
+          }).CreateLayout();
+        });
       }
       async updateLinks(url) {
         let id = this.target_to_deploy.value;
