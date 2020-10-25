@@ -111,6 +111,52 @@ function CreateLayout() {
   if (circuitRanges == null) {
     circuitRanges = activeSpreadsheet.insertSheet();
     circuitRanges.setName('Circuit Ranges');
+
+    circuitRanges.getRange('E3').setValue('ranges str').setFontWeight('bold');
+    circuitRanges.getRange('E5').setValue('sheet csv formula').setFontWeight('bold');
+    circuitRanges.getRange('C6').setValue('workbookid').setFontWeight('bold');
+    circuitRanges.getRange('D6').setValue('range').setFontWeight('bold');
+    circuitRanges.getRange('G4').setFormula('CONCATENATE(E7:E15)');
+    circuitRanges.getRange('G6').setFormula('CONCATENATE(F7:F15)');
+    circuitRanges.getRange('F3').setFormula('left(G4, len(G4) - 1)');
+    circuitRanges.getRange('F5').setFormula('"mergeCSVRanges(" & left(G6, len(G6) - 1) & ")"');
+
+    circuitRanges.getRange('D7').setFormula('getStringForRange(Circuit!D$3:AS$4)');
+    circuitRanges.getRange('E7').setFormula('IF(C7 <> "", C7 & "||||", "") & D7 & ","');
+    circuitRanges.getRange('F7').setFormula('IF(C7 <> "","ImportRange(""" & C7 & """,""" & D7 & """),", E7)');
+
+    circuitRanges.getRange('D8').setFormula('getStringForRange(Circuit!D$10:U$25)');
+    circuitRanges.getRange('E8').setFormula('IF(C8 <> "", C8 & "||||", "") & D8 & ","');
+    circuitRanges.getRange('F8').setFormula('IF(C8 <> "","ImportRange(""" & C8 & """,""" & D8 & """),", E8)');
+
+    circuitRanges.getRange('D9').setFormula('getStringForRange(Circuit!D$27:S$28)');
+    circuitRanges.getRange('E9').setFormula('IF(C9 <> "", C9 & "||||", "") & D9 & ","');
+    circuitRanges.getRange('F9').setFormula('IF(C9 <> "","ImportRange(""" & C9 & """,""" & D9 & """),", E9)');
+
+    circuitRanges.getRange('D10').setFormula('getStringForRange(Circuit!D$31:N$33)');
+    circuitRanges.getRange('E10').setFormula('IF(C10 <> "", C10 & "||||", "") & D10 & ","');
+    circuitRanges.getRange('F10').setFormula('IF(C10 <> "","ImportRange(""" & C10 & """,""" & D10 & """),", E10)');
+
+    circuitRanges.getRange('D11').setFormula('getStringForRange(Circuit!D$35:P$36)');
+    circuitRanges.getRange('E11').setFormula('IF(C11 <> "", C11 & "||||", "") & D11 & ","');
+    circuitRanges.getRange('F11').setFormula('IF(C11 <> "","ImportRange(""" & C11 & """,""" & D11 & """),", E11)');
+
+    circuitRanges.getRange('D12').setFormula('getStringForRange(Circuit!D$38:W$39)');
+    circuitRanges.getRange('E12').setFormula('IF(C12 <> "", C12 & "||||", "") & D12 & ","');
+    circuitRanges.getRange('F12').setFormula('IF(C12 <> "","ImportRange(""" & C12 & """,""" & D12 & """),", E12)');
+
+    circuitRanges.getRange('D13').setFormula('getStringForRange(Circuit!D$41:N$49)');
+    circuitRanges.getRange('E13').setFormula('IF(C13 <> "", C13 & "||||", "") & D13 & ","');
+    circuitRanges.getRange('F13').setFormula('IF(C13 <> "","ImportRange(""" & C13 & """,""" & D13 & """),", E13)');
+
+    circuitRanges.getRange('D14').setFormula('getStringForRange(Circuit!D$51:G$52)');
+    circuitRanges.getRange('E14').setFormula('IF(C14 <> "", C14 & "||||", "") & D14 & ","');
+    circuitRanges.getRange('F14').setFormula('IF(C14 <> "","ImportRange(""" & C14 & """,""" & D14 & """),", E14)');
+
+    circuitRanges.getRange('D15').setFormula('getStringForRange(Circuit!D$81:G$94)');
+    circuitRanges.getRange('E15').setFormula('IF(C15 <> "", C15 & "||||", "") & D15 & ","');
+    circuitRanges.getRange('F15').setFormula('IF(C15 <> "","ImportRange(""" & C15 & """,""" & D15 & """),", E15)');
+
   }
 
   let circuit = activeSpreadsheet.getSheetByName('Circuit');
