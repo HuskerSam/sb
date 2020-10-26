@@ -129,7 +129,7 @@ function CreateLayout() {
     circuitRanges.getRange('E8').setFormula('IF(C8 <> "", C8 & "||||", "") & D8 & ","');
     circuitRanges.getRange('F8').setFormula('IF(C8 <> "","ImportRange(""" & C8 & """,""" & D8 & """),", E8)');
 
-    circuitRanges.getRange('D9').setFormula('getStringForRange(Circuit!D$27:S$28)');
+    circuitRanges.getRange('D9').setFormula('getStringForRange(Circuit!D$27:T$28)');
     circuitRanges.getRange('E9').setFormula('IF(C9 <> "", C9 & "||||", "") & D9 & ","');
     circuitRanges.getRange('F9').setFormula('IF(C9 <> "","ImportRange(""" & C9 & """,""" & D9 & """),", E9)');
 
@@ -191,7 +191,7 @@ function CreateLayout() {
     circuit.getRange('C10').setFontWeight('bold');
 
     let cols3 = ['result csv:', 'asset', 'name', 'cameraheightoffset', 'cameramovetime', 'cameraname', 'cameraradius', 'finishdelay', 'introtime', 'runlength', 'startx', 'starty', 'startz', 'startry', 'x', 'y', 'z', 'genericblockdata'];
-    let row3 = ['', 'diplaycamera', 'FollowCamera', '25', '500', '', '25', '2', '1', '60', '-40', '6', '9.5', '-90deg', '-50', '5', '0', 'signyoffset|0'];
+    let row3 = ['', 'displaycamera', 'FollowCamera', '25', '500', '', '25', '2', '1', '60', '-40', '6', '9.5', '-90deg', '-50', '5', '0', 'signyoffset|0'];
     let data3 = [cols3, row3];
     circuit.getRange('C27:T28').setValues(data3);
     circuit.getRange('C27').setFontWeight('bold');
