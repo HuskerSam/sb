@@ -31,6 +31,7 @@ function initializeConfiguration() {
     publishConfig.getRange('B1').setValue('startat');
     publishConfig.getRange('C1').setValue('endat');
     publishConfig.getRange('D1').setValue('assetbookid');
+    publishConfig.getRange('D1').setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
     publishConfig.getRange('A1:G1').setFontWeight("bold");
   }
 

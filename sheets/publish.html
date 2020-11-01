@@ -36,31 +36,60 @@
   #import_song_expand_btn.rotate_button, #publish_expand_btn.rotate_button, #utilities_expand_btn.rotate_button {
     transform: rotate(90deg);
   }
+
+  #published_list {
+    width: 100%;
+    text-align: left;
+  }
 </style>
   <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
 </head>
 
 <body>
+
   <button id="publish_expand_btn" class=""><i class="material-icons">keyboard_arrow_right</i></button>
-  <h2 style="display:inline-block;">Publish Catalogs</h2>
+  <h2 style="display:inline-block;">Cloud</h2>
   <div id="publish_details" style="display:none;">
-    <label>Presets <select id="preset_list_deploy"><option selected>Loading</option></select></label>
+    <label id="assets_anchor"></label>
+    <div id="target_display">
+      <label>Presets <select id="preset_list_deploy">
+          <option selected>Loading</option>
+        </select></label>
+      <button id="display_publish_list">Publish List</button>
+      <br>
+      <label>Target <input id="target_to_deploy" type="text" /></label>
+      <div id="url_to_deploy"><br></div>
+      <label>Token <input id="token_to_deploy" type="text" /></label>
+      <br>
+    </div>
+    <select id="published_list" size="5"></select>
     <br>
-    <label>Target <input id="target_to_deploy" type="text" /></label>
-    <div id="url_to_deploy"><br></div>
-    <label>Token <input id="token_to_deploy" type="text" /></label>
+    <button id="display_publish_list">Publish Single</button>
+    <a id="selected_display_anchor"></a>
     <br>
-    <button id="display_publish_list">Publish List</button>
+    <br>
+    <label>Name <input id="file_upload_input"></label>
+    <button>Upload</button>
+    <input type="file" style="display:none;">
+
+    <br>
+    <img id="img_preview" style="max-height:100px;max-width:300px;">
     <br>
     <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
     <br>
-    <div id="published_list"></div>
-    <label id="assets_anchor"></label>
-    <br>
   </div>
   <hr>
+  <button id="utilities_expand_btn"><i class="material-icons">keyboard_arrow_right</i></button>
+  <h2 style="display:inline-block;">Spreadsheet</h2>
+  <div id="utilities_details" style="display:none;">
+    <button id="initialize_configuration_btn">Initialize Configuration</button>
+    <br><br>
+    <button id="create_layout_btn">Initialize Layout</button>
+  </div>
+  <hr>
+
   <button id="import_song_expand_btn"><i class="material-icons">keyboard_arrow_right</i></button>
-  <h2 style="display:inline-block;">Import Song Data</h2>
+  <h2 style="display:inline-block;">Import Song</h2>
   <div id="song_data_details" style="display:none;">
     <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
     <br>
@@ -91,14 +120,7 @@
 
 
   <hr>
-  <button id="utilities_expand_btn"><i class="material-icons">keyboard_arrow_right</i></button>
-  <h2 style="display:inline-block;">Initialize</h2>
-  <div id="utilities_details" style="display:none;">
-    <button id="initialize_configuration_btn">Initialize Configuration</button>
-    <br><br>
-    <button id="create_layout_btn">Initialize Layout</button>
-  </div>
-  <hr>
+
   <script>
     class PublishWeb {
       constructor() {
@@ -178,7 +200,18 @@
 
         this.assets_anchor = document.getElementById('assets_anchor');
 
+        this.selected_display_anchor = document.getElementById('selected_display_anchor');
+        this.published_list = document.getElementById('published_list');
+        this.published_list.addEventListener('input', e => this.publishListChange());
         this.fillPresets();
+      }
+      async publishListChange() {
+        this.selectDisplayName = this.published_list.value;
+        let pid = this.target_to_deploy.value;
+        let link = 'https://' + pid + '.web.app/display/?name=' + this.selectDisplayName;
+        this.selected_display_anchor.setAttribute('href', link);
+        this.selected_display_anchor.innerHTML = 'Open Display';
+        this.selected_display_anchor.setAttribute('target', "_blank");
       }
       async initializeConfiguration() {
         return new Promise(async (resolve, reject) => {
@@ -253,11 +286,11 @@
       async updateLinkList() {
         this.published_list.innerHTML = '';
         let publishList = await this.grabSheetCSVJSONData(this.publishListSheet);
+        this.publistList = publishList;
         let linkListHTML = '';
         let pid = this.target_to_deploy.value;
         publishList.forEach(t => {
-          let link = 'https://' + pid + '.web.app/display/?name=' + t['name'];
-          linkListHTML += '<a href="' + link + '" target="_blank">' + t['name'] + '</a><br>';
+          linkListHTML += '<option>' + t['name'] + '</option>';
         });
         this.published_list.innerHTML = linkListHTML;
       }
