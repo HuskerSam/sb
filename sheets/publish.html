@@ -48,23 +48,23 @@
 <body>
 
   <button id="publish_expand_btn" class=""><i class="material-icons">keyboard_arrow_right</i></button>
-  <h2 style="display:inline-block;">Cloud</h2>
+  <h2 style="display:inline-block;">Target</h2>
   <div id="publish_details" style="display:none;">
     <label id="assets_anchor"></label>
     <div id="target_display">
       <label>Presets <select id="preset_list_deploy">
           <option selected>Loading</option>
         </select></label>
-      <button id="display_publish_list">Publish List</button>
+      <button id="display_publish_list" class="green">Publish List</button>
       <br>
       <label>Target <input id="target_to_deploy" type="text" /></label>
       <div id="url_to_deploy"><br></div>
       <label>Token <input id="token_to_deploy" type="text" /></label>
-      <br>
+      <hr>
     </div>
     <select id="published_list" size="5"></select>
     <br>
-    <button id="display_publish_list">Publish Single</button>
+    <button id="display_publish_list" class="green">Publish Single</button>
     <a id="selected_display_anchor"></a>
     <br>
     <br>
@@ -82,9 +82,9 @@
   <button id="utilities_expand_btn"><i class="material-icons">keyboard_arrow_right</i></button>
   <h2 style="display:inline-block;">Spreadsheet</h2>
   <div id="utilities_details" style="display:none;">
-    <button id="initialize_configuration_btn">Initialize Configuration</button>
+    <button id="initialize_configuration_btn" class="green">Initialize Configuration</button>
     <br><br>
-    <button id="create_layout_btn">Initialize Layout</button>
+    <button id="create_layout_btn" class="green">Initialize Layout</button>
   </div>
   <hr>
 
