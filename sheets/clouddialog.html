@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+  <style>
+    .item_holder {
+      position: relative;
+    }
+
+  .basic_item {
+    border-radius: 50%;
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+  body {
+    text-align: center;
+  }
+
+  #published_list {
+    width: 100%;
+    text-align: left;
+  }
+</style>
+</head>
+
+<body>
+  <div id="publish_details">
+    <br>
+    <label>Presets <select id="preset_list_deploy">
+        <option selected>Loading</option>
+      </select></label>
+    <br>
+    <label>Target <input id="target_to_deploy" type="text" /></label>
+    <div id="url_to_deploy"><br></div>
+    <label>Token <input id="token_to_deploy" type="text" /></label>
+    <br>
+    <label>Assets: <span id="assets_anchor"> loading...</span></label>
+    <br>
+    <br>
+    <select id="published_list" size="5"></select>
+    <br>
+    <button id="display_publish_list" class="green">Publish Single</button>
+    <button id="display_publish_list" class="green">Publish List</button>
+    <br>
+    <a id="selected_display_anchor"></a>
+    <br>
+    <br>
+    <label>Name <input id="file_upload_input"></label>
+    <button>Upload</button>
+    <input type="file" style="display:none;">
+
+    <br>
+    <img id="img_preview" style="max-height:100px;max-width:300px;">
+    <br>
+    <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
+    <br>
+  </div>
+
+  <script>
+    class PublishWeb {
+      constructor() {
+        this.display_publish_list = document.getElementById('display_publish_list');
+        this.display_publish_list.addEventListener('click', e => this.publishList());
+
+        this.publish_results = document.getElementById('publish_results');
+        this.target_to_deploy = document.getElementById('target_to_deploy');
+        this.token_to_deploy = document.getElementById('token_to_deploy');
+        this.url_to_deploy = document.getElementById('url_to_deploy');
+        this.published_list = document.getElementById('published_list');
+        this.target_to_deploy.addEventListener('input', e => this.updateLinkList());
+
+        this.preset_list_deploy = document.getElementById('preset_list_deploy');
+        this.preset_list_deploy.addEventListener('input', e => {
+          let index = preset_list_deploy.selectedIndex;
+          if (index < 1)
+            return;
+          let t = this.deployTargets[index - 1];
+          let id = t['project id'];
+          if (!id)
+            id = '';
+          let token = t['token'];
+          if (!token)
+            token = '';
+          this.target_to_deploy.value = id;
+          this.token_to_deploy.value = token;
+          let url = t['public url'];
+          if (!url)
+            url = 'https://' + id + '.web.app/';
+
+          this.updateLinks(url);
+        });
+        this.target_to_deploy.addEventListener('input', e => this.updateLinks());
+
+        this.assets_anchor = document.getElementById('assets_anchor');
+
+        this.selected_display_anchor = document.getElementById('selected_display_anchor');
+        this.published_list = document.getElementById('published_list');
+        this.published_list.addEventListener('input', e => this.publishListChange());
+        this.fillPresets();
+      }
+      async publishListChange() {
+        this.selectDisplayName = this.published_list.value;
+        let pid = this.target_to_deploy.value;
+        let link = 'https://' + pid + '.web.app/display/?name=' + this.selectDisplayName;
+        this.selected_display_anchor.setAttribute('href', link);
+        this.selected_display_anchor.innerHTML = 'Open Display';
+        this.selected_display_anchor.setAttribute('target', "_blank");
+      }
+      async updateLinks(url) {
+        let id = this.target_to_deploy.value;
+        if (!url)
+          url = 'https://' + id + '.web.app/';
+        else {
+          if (url.substring(0, 3) !== 'htt')
+            url = 'https://' + url;
+        }
+        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + url + '">' + url + '</a>';
+
+        this.updateLinkList();
+      }
+      async fillPresets() {
+        let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+        let assetBookId = publishConfig[0].assetbookid;
+        let deployOptionsRange = "'Deploy Options'!A1:A2";
+
+        let rangeString = assetBookId + "||||" + deployOptionsRange;
+        if (!assetBookId)
+          rangeString = deployOptionsRange;
+
+        let deploys = await this.grabCSVForRangeStrings([rangeString]);
+        let targetRange = deploys[0].deployrange;
+        let assetRString = assetBookId + "||||'Deploy Options'!" + targetRange;
+        if (!assetBookId)
+          assetRString = "'Deploy Options'!" + targetRange;
+        let targets = await this.grabCSVForRangeStrings([assetRString]);
+        this.deployTargets = targets;
+        let listHTML = '<option>Deploy Targets</option>';
+
+        if (assetBookId) {
+          let url = "https://docs.google.com/spreadsheets/d/";
+          url += assetBookId.toString();
+          this.assets_anchor.innerHTML = '<a target="_blank" href="' + url + '">Open Assets</a>';
+        } else {
+          this.assets_anchor.innerHTML = 'none';
+        }
+
+        targets.forEach(t => {
+          let pid = t['project id'];
+          if (!pid)
+            pid = '';
+          listHTML += '<option>' + pid + '</option>';
+        });
+        this.preset_list_deploy.innerHTML = listHTML;
+
+        this.publishListSheet = publishConfig[0].displaylist;
+      }
+      async updateLinkList() {
+        this.published_list.innerHTML = '';
+        let publishList = await this.grabSheetCSVJSONData(this.publishListSheet);
+        this.publistList = publishList;
+        let linkListHTML = '';
+        let pid = this.target_to_deploy.value;
+        publishList.forEach(t => {
+          linkListHTML += '<option>' + t['name'] + '</option>';
+        });
+        this.published_list.innerHTML = linkListHTML;
+      }
+      async publishList() {
+        if (this.busy)
+          return;
+        this.display_publish_list.innerHTML = 'Working...';
+        this.publish_results.value = '';
+        this.publish_results.style.display = '';
+        this.dataCache = {};
+
+        this.busy = true;
+        let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+        let publishListSheet = publishConfig[0].displaylist;
+
+        window.apiToken = this.token_to_deploy.value;
+        window.fbProj = this.target_to_deploy.value;
+        let publishList = await this.grabSheetCSVJSONData(publishListSheet);
+
+        let promises = [];
+        let start = 0;
+        let end = publishList.length - 1;
+        if (publishConfig[0].startat)
+          start = Number(publishConfig[0].startat);
+        if (publishConfig[0].endat)
+          end = Number(publishConfig[0].endat);
+        this.publish_results.value = 'Publishing ' + publishList.length.toString() + '\n\n';
+        for (let c = start; c <= end; c++) {
+          let row = publishList[c];
+          let flags = row.flags;
+          if (!flags) flags = '';
+          flags = flags.toLowerCase();
+
+          if (flags.indexOf('ignore') !== -1) {
+            this.publish_results.value += row.name + ' ignored\n';
+            continue;
+          }
+
+          if (flags.indexOf('remove') !== -1) {
+            let r_result = await this.deleteProject(row.name);
+            this.publish_results.value += row.name + ' removed\n';
+
+            console.log(c, 'remove', r_result);
+            continue;
+          }
+
+
+          this.publish_results.scrollTop = this.publish_results.scrollHeight;
+          let result = await this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet);
+          console.log(c, result);
+        }
+        this.busy = false;
+        this.display_publish_list.innerHTML = 'Publish Web Again';
+        this.publish_results.value += '\nComplete\n\n';
+        this.publish_results.scrollTop = this.publish_results.scrollHeight;
+      }
+      async deleteProject(name) {
+        let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
+        url += '&token=' + encodeURIComponent(window.apiToken);
+        let genResponse = await fetch(url, {
+          method: "post"
+        });
+        let genResults = await genResponse.text();
+        let r = {
+          result_msg: 'unknown'
+        };
+        try {
+          r = JSON.parse(genResults);
+        } catch (e) {
+          console.log(e, genResults);
+        }
+
+        return r;
+      }
+      async publishSingle(name, assetRanges, circuitRanges, catalogSheet) {
+        console.log(name, assetRanges, circuitRanges, catalogSheet);
+        try {
+          let assetResults = {};
+          if (assetRanges) {
+
+            let assets = null;
+            if (this.dataCache[assetRanges])
+              assets = this.dataCache[assetRanges];
+
+            if (!assets) {
+              let ranges = assetRanges.split(',');
+              assets = await this.grabCSVForRangeStrings(ranges);
+              console.log('asset fetch');
+            }
+            console.log('a', assets);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=asset';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(assets);
+
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            assetResults = await response.text();
+            this.dataCache[assetRanges] = assets;
+            this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+          }
+
+          let sceneResults = {};
+          if (circuitRanges) {
+
+            let scene = null;
+            if (this.dataCache[circuitRanges])
+              scene = this.dataCache[circuitRanges];
+
+            if (!scene) {
+              let ranges = circuitRanges.split(',');
+              scene = await this.grabCSVForRangeStrings(ranges);
+              console.log('scene fetched');
+            }
+            console.log('c', scene);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=scene';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(scene);
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            sceneResults = await response.text();
+            this.dataCache[circuitRanges] = scene;
+            this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+
+          }
+
+          let productResults = {};
+          if (catalogSheet) {
+            let products = await this.grabSheetCSVJSONData(catalogSheet);
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+            url += encodeURIComponent(name) + '&type=product';
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let json = JSON.stringify(products);
+            let response = await fetch(url, {
+              method: "post",
+              body: json
+            });
+            productResults = await response.text();
+            this.publish_results.value += name + ':products: ' + products.length.toString() + '\n'
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+          }
+
+          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
+          url += '&token=' + encodeURIComponent(window.apiToken);
+          let genResponse = await fetch(url, {
+            method: "post"
+          });
+          let genResults = await genResponse.text();
+          let r = {
+            result_msg: 'unknown'
+          };
+          try {
+            r = JSON.parse(genResults);
+          } catch (e) {
+            console.log(e, genResults);
+          }
+          this.publish_results.value += name + ' generated\n\n'
+          this.publish_results.scrollTop = this.publish_results.scrollHeight;
+
+          return {
+            genResults,
+            productResults,
+            assetResults,
+            sceneResults
+          };
+        } catch (error) {
+          console.log('e', error);
+          return {
+            error: error
+          };
+        }
+      }
+      grabSheetCSVJSONData(sheetName) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log('json for sheet', sheetName, result.length);
+            resolve(result);
+          }).getJSONFromCSVSheet(sheetName);
+        });
+      }
+      grabCSVForRangeStrings(rangeStrings) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log(rangeStrings, result.length);
+            resolve(result);
+          }).mergeCSVRangeStrings(rangeStrings, true);
+        });
+      }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', e => {
+      let publish_web = new PublishWeb();
+    });
+  </script>
+</body>
+
+</html>

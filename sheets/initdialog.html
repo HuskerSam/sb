@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base target="_top">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+  <style>
+    .item_holder {
+      position: relative;
+    }
+
+  .basic_item {
+    border-radius: 50%;
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+  body {
+    text-align: center;
+  }
+
+</style>
+</head>
+
+<body>
+  <br>
+  <button id="initialize_configuration_btn" class="green">Initialize Configuration</button>
+  <br><br>
+  <button id="create_layout_btn" class="green">Initialize Layout</button>
+
+  <script>
+    class PublishWeb {
+      constructor() {
+        this.initialize_configuration_btn = document.getElementById('initialize_configuration_btn');
+        this.initialize_configuration_btn.addEventListener('click', e => this.initializeConfiguration());
+
+        this.create_layout_btn = document.getElementById('create_layout_btn');
+        this.create_layout_btn.addEventListener('click', e => this.initializeLayout());
+      }
+      async initializeConfiguration() {
+        return new Promise(async (resolve, reject) => {
+          this.initialize_configuration_btn.innerHTML = '...';
+          google.script.run.withSuccessHandler((result) => {
+            this.initialize_configuration_btn.innerHTML = 'Initialize Configuration';
+            if (result !== 'success')
+              alert(result);
+            resolve(result);
+          }).initializeConfiguration();
+        });
+      }
+      async initializeLayout() {
+        return new Promise(async (resolve, reject) => {
+          this.create_layout_btn.innerHTML = '...';
+          google.script.run.withSuccessHandler((result) => {
+            this.create_layout_btn.innerHTML = 'Create Layout';
+            if (result !== 'success')
+              alert(result);
+            resolve(result);
+          }).CreateLayout();
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', e => {
+      let publish_web = new PublishWeb();
+    });
+  </script>
+</body>
+
+</html>

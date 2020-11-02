@@ -2,8 +2,10 @@ function onOpen() {
   let ui = SpreadsheetApp.getUi();
 
   ui.createAddonMenu()
-    .addItem('Utilities', 'showPublishWeb')
-    .addToUi();
+  .addItem('Cloud Deploy', 'showCloudDialog')
+  .addItem('Initialize Data', 'showInitDialog')
+  .addItem('Song Import', 'showSongDialog')
+  .addToUi();
 }
 
 function refreshOAuth() {
@@ -12,10 +14,24 @@ function refreshOAuth() {
   return;
 }
 
-function showPublishWeb() {
+function showCloudDialog() {
   refreshOAuth();
-  var html = HtmlService.createHtmlOutputFromFile('publish')
-    .setTitle('Catalog Utilities')
+  var html = HtmlService.createHtmlOutputFromFile('clouddialog')
+    .setTitle('Cloud Deploy')
+  SpreadsheetApp.getUi().showSidebar(html);
+}
+
+function showInitDialog() {
+  refreshOAuth();
+  var html = HtmlService.createHtmlOutputFromFile('initdialog')
+    .setTitle('Initialize Data')
+  SpreadsheetApp.getUi().showSidebar(html);
+}
+
+function showSongDialog() {
+  refreshOAuth();
+  var html = HtmlService.createHtmlOutputFromFile('songdialog')
+    .setTitle('Song Import')
   SpreadsheetApp.getUi().showSidebar(html);
 }
 
