@@ -798,7 +798,15 @@ class cWorkspace {
       virtualDom: true,
       selectable: false,
       dataEdited: (data, a, b, c) => this.workspaceLayoutCSVTableChange(),
-      rowMoved: (row) => this.workspaceLayoutCSVRowMoved(row)
+      rowMoved: (row) => this.workspaceLayoutCSVRowMoved(row),
+      clipboardCopyConfig: {
+        columnHeaders: true,
+        columnGroups: false, //do not include column groups in column headers for printed table
+        rowGroups: false, //do not include row groups in clipboard output
+        columnCalcs: false, //do not include column calculation rows in clipboard output
+        dataTree: false, //do not include data tree in printed table
+        formatCells: false, //show raw cell values without formatter
+      }
     });
     this.editTable.cacheData = JSON.stringify(this.editTable.getData());
   }
@@ -936,7 +944,7 @@ class cWorkspace {
 
   async workspaceLayoutCSVProductFieldsInit() {
     this.record_field_list_form = this.domPanel.querySelector('.layout_product_data_panel form');
-    this.record_field_list_form.innerHTML = '';
+    this.record_field_list_form.innerHTML = '<button class="copy_to_clipboard"><i class="material-icons">content_copy</i></button>';
     this.fieldDivByName = {};
 
     this.displaystylelist = document.createElement('datalist');
@@ -992,6 +1000,60 @@ class cWorkspace {
         this.record_field_list_form.appendChild(br);
       }
     }
+
+    this.copy_to_clipboard = this.record_field_list_form.querySelector('.copy_to_clipboard');
+    this.copy_to_clipboard.addEventListener('click', e => {
+      if (!this.layoutTableDataRows)
+        return;
+
+      if (this.layoutTableDataRows.length < 1)
+        return;
+
+      let firstObj = this.layoutTableDataRows[0];
+      let firstKeys = Object.keys(firstObj);
+
+      let fieldOrder = this.fieldList;
+      for (let key in firstKeys) {
+        if (!fieldOrder.indexOf(key))
+          fieldOrder.push(key);
+      }
+
+      let tableGuts = '';
+      tableGuts += '<tr>';
+      fieldOrder.forEach((field) => {
+        tableGuts += '<td>' + field.toString() + '</td>';
+      });
+      tableGuts += '</tr>';
+      this.layoutTableDataRows.forEach((row) => {
+        tableGuts += '<tr>';
+        fieldOrder.forEach((field) => {
+          let v = row[field];
+          if (!v) v = '';
+          tableGuts += '<td>' + v.toString() + '</td>';
+        });
+        tableGuts += '</tr>';
+      });
+
+      let html = '<table class="table_export">' + tableGuts + '</table>';
+      let el = document.createElement('div');
+      el.innerHTML = html;
+      el = el.children[0];
+      document.body.append(el);
+      let range = document.createRange();
+      let sel = window.getSelection();
+      sel.removeAllRanges();
+      try {
+        range.selectNodeContents(el);
+        sel.addRange(range);
+      } catch (e) {
+        range.selectNode(el);
+        sel.addRange(range);
+      }
+
+      document.execCommand("copy");
+
+      el.remove();
+    });
 
     this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
     this.uploadImageEditField = this.record_field_list_form.querySelector('.imageedit');
@@ -1164,7 +1226,7 @@ class cWorkspace {
     let newRow = {};
     for (let c = 0, l = fields.length; c < l; c++) {
       newRow[this.fieldList[c]] = fields[c].value;
-      if (this.fieldList[c] === 'asset' || this.fieldList[c] === 'displaystyle'|| this.fieldList[c] === 'textfontfamily') {
+      if (this.fieldList[c] === 'asset' || this.fieldList[c] === 'displaystyle' || this.fieldList[c] === 'textfontfamily') {
 
       } else if (this.fieldList[c] !== 'index')
         fields[c].value = '';

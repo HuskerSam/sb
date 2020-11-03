@@ -913,3 +913,7 @@ div.imagebackgrounddisplay {
 .indexedit, .xedit, .yedit, .zedit, .rxedit, .ryedit, .rzedit, .pricedit {
   width: 4em;
 }
+
+.table_export td {
+  color: black;
+}
