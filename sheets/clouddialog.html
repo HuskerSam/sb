@@ -54,7 +54,10 @@
       <br>
       <div id="single_display_options" style="display:none;">
         <button id="display_publish_single" class="blue">Publish Single</button>
-        <a id="selected_display_anchor" class="blue"></a>
+        &nbsp;
+        <a id="selected_display_anchor"></a>
+        &nbsp;
+        <a id="selected_edit_anchor"></a>
         <hr>
         <label>Name <input id="file_upload_input"></label>
         <br>
@@ -108,6 +111,7 @@
 
         this.display_sub_list = document.getElementById('display_sub_list');
         this.selected_display_anchor = document.getElementById('selected_display_anchor');
+        this.selected_edit_anchor = document.getElementById('selected_edit_anchor');
         this.published_list = document.getElementById('published_list');
         this.published_list.addEventListener('input', e => this.publishListChange());
         this.fillPresets();
@@ -117,8 +121,14 @@
         let pid = this.target_to_deploy.value;
         let link = 'https://' + pid + '.web.app/display/?name=' + this.selectDisplayName;
         this.selected_display_anchor.setAttribute('href', link);
-        this.selected_display_anchor.innerHTML = 'Open Display';
+        this.selected_display_anchor.innerHTML = 'View';
         this.selected_display_anchor.setAttribute('target', "_blank");
+
+        let editLink = 'https://' + pid + '.web.app/asset/?name=' + this.selectDisplayName;
+        this.selected_edit_anchor.setAttribute('href', editLink);
+        this.selected_edit_anchor.innerHTML = 'Edit';
+        this.selected_edit_anchor.setAttribute('target', "_blank");
+
         this.single_display_options.style.display = '';
       }
       async updateLinks(url) {

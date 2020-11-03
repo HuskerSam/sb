@@ -98,7 +98,17 @@ class gApp extends gInstanceSuper {
   }
   async profileReadyAndLoaded() {
     let urlParams = new URLSearchParams(window.location.search);
-    let newWid = urlParams.get('wid');
+
+    let name = urlParams.get('name');
+    let newWid = null;
+    if (name) {
+      let csvImport = await new gCSVImport();
+      newWid = await csvImport.widForName(name);
+    }
+
+    if(!newWid)
+      newWid = urlParams.get('wid');
+
     if (newWid) {
       if (newWid !== this.a.profile.selectedWorkspace) {
         await gAPPP.a.modelSets['userProfile'].commitUpdateList([{
