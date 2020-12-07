@@ -115,6 +115,9 @@
         this.published_list = document.getElementById('published_list');
         this.published_list.addEventListener('input', e => this.publishListChange());
         this.fillPresets();
+
+        this.upload_file_cloud = document.getElementById('upload_file_cloud');
+        this.upload_file_cloud.addEventListener('click', e => this.uploadCloudFile(e));
       }
       async publishListChange() {
         this.selectDisplayName = this.published_list.value;
@@ -382,6 +385,9 @@
             resolve(result);
           }).mergeCSVRangeStrings(rangeStrings, true);
         });
+      }
+      uploadCloudFile(e) {
+
       }
     }
 

@@ -9,7 +9,9 @@ module.exports = class cloudGenerateDisplay {
     this.csvImport = new gcsvimport(id);
     this.firebase = firebase;
     this.globalUtil = GLOBALUTIL;
+    this.wid = id;
     this.csvImport.globalUtil = this.globalUtil;
+    this.setReferencePath();
   }
 
   async generateAnimation() {
@@ -32,12 +34,10 @@ module.exports = class cloudGenerateDisplay {
 
     return 'animation generated';
   }
-
   async deleteAnimation() {
     await this.csvImport.clearProjectData(true);
     return 'animation deleted';
   }
-
   async workspaceForName(name) {
     let wid = await this.csvImport.widForName(name);
 
@@ -48,7 +48,6 @@ module.exports = class cloudGenerateDisplay {
 
     return wid;
   }
-
   async validateToken(token) {
     let fireDB = this.firebase.firestore();
     let securityDoc = await fireDB.doc('privateConfiguration/security').get();
@@ -73,5 +72,48 @@ module.exports = class cloudGenerateDisplay {
       success: false,
       errorMessage
     }
+  }
+  setReferencePath(tag = 'cloudupload') {
+    this.referencePath = 'project/' + this.wid + '/' + tag + '/';
+  }
+  async uploadProfileImage(blob, filename) {
+    try {
+      let bname = firebase.instanceId().app.options.storageBucket;
+      const bucket = firebase.storage().bucket(bname);
+      let uuid = 'handtop';
+      const imageByteArray = new Uint8Array(blob);
+      let path = this.referencePath + filename;
+      const file = bucket.file(path);
+      const options = {
+        resumable: false,
+        metadata: {
+          contentType: "image/png",
+          metadata: {
+            firebaseStorageDownloadTokens: uuid
+          }
+        }
+      }
+      let file_result = await file.save(imageByteArray, options);
+
+      let signed_url = "https://firebasestorage.googleapis.com/v0/b/" +
+        bname + "/o/" + encodeURIComponent(filename) + "?alt=media&token=" + uuid
+      return {
+        success: true,
+        file_result,
+        signed_url
+      }
+    } catch (err) {
+      return {
+        success: false,
+        error: err
+      }
+    }
+  }
+  async uploadFile(query, body) {
+    let filename = query.filename;
+    let rawfileblob = body;
+
+    let file_result = await this.uploadProfileImage(rawfileblob, filename);
+    return file_result;
   }
 };
