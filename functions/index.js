@@ -123,9 +123,9 @@ exports.fileupload = functions
 
       if (name)
         id = await cloudGen.workspaceForName(name);
-        
+
       cloudGen = new cloudGenerateDisplay(id);
-      let result_msg = await cloudGen.uploadFile(req.query, req.body);
+      let result_msg = await cloudGen.uploadFile(req.query, req.body, req.headers, req);
       return res.status(200).send({
         success: true,
         id,

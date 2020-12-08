@@ -3,6 +3,8 @@ let firebase = require("firebase-admin");
 let project_id = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
 let gcsvimport = requireFromUrl(`https://${project_id}.web.app/global/gcsvimport.js?abc=894i4`);
 let GLOBALUTIL = requireFromUrl(`https://${project_id}.web.app/global/globalutil.js?abc=13ii8974`);
+const Busboy = require('busboy');
+const toArray = require('stream-to-array');
 
 module.exports = class cloudGenerateDisplay {
   constructor(id) {
@@ -76,12 +78,13 @@ module.exports = class cloudGenerateDisplay {
   setReferencePath(tag = 'cloudupload') {
     this.referencePath = 'project/' + this.wid + '/' + tag + '/';
   }
-  async uploadProfileImage(blob, filename) {
+  async uploadProfileImage(pushBuffer, filename) {
     try {
       let bname = firebase.instanceId().app.options.storageBucket;
       const bucket = firebase.storage().bucket(bname);
       let uuid = 'handtop';
-      const imageByteArray = new Uint8Array(blob);
+
+
       let path = this.referencePath + filename;
       const file = bucket.file(path);
       const options = {
@@ -93,10 +96,12 @@ module.exports = class cloudGenerateDisplay {
           }
         }
       }
-      let file_result = await file.save(imageByteArray, options);
+
+      let file_result = await file.save(pushBuffer, options);
 
       let signed_url = "https://firebasestorage.googleapis.com/v0/b/" +
-        bname + "/o/" + encodeURIComponent(filename) + "?alt=media&token=" + uuid
+        bname + "/o/" + encodeURIComponent(this.referencePath + filename) + "?alt=media&token=" + uuid;
+
       return {
         success: true,
         file_result,
@@ -109,11 +114,33 @@ module.exports = class cloudGenerateDisplay {
       }
     }
   }
-  async uploadFile(query, body) {
-    let filename = query.filename;
-    let rawfileblob = body;
+  async convertFormData(req) {
+    return new Promise(async (res, rej) => {
+      let busboy = new Busboy({
+        headers: req.headers
+      });
+      let resultFiles = [];
+      busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+        resultFiles.push({
+          fieldname,
+          file,
+          filename,
+          encoding,
+          mimetype
+        });
+      });
 
-    let file_result = await this.uploadProfileImage(rawfileblob, filename);
+      busboy.end(req.rawBody);
+      res(resultFiles);
+    });
+  }
+  async uploadFile(query, body, headers, req) {
+    let filename = query.filename;
+
+    let results = await this.convertFormData(req);
+    let buffers = await toArray(results[0].file);
+
+    let file_result = await this.uploadProfileImage(buffers[0], filename);
     return file_result;
   }
 };

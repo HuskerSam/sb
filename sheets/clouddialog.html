@@ -59,10 +59,10 @@
         &nbsp;
         <a id="selected_edit_anchor"></a>
         <hr>
-        <label>Name <input id="file_upload_input"></label>
+        <label>Name <input id="file_upload_name"></label>
         <br>
         <button id="upload_file_cloud" class="blue">Upload File</button>
-        <input type="file" style="display:none;">
+        <input type="file" id="upload_file_input" style="display:none;">
 
         <br>
         <img id="img_preview" style="max-height:100px;max-width:300px;">
@@ -81,8 +81,10 @@
         this.target_to_deploy = document.getElementById('target_to_deploy');
         this.token_to_deploy = document.getElementById('token_to_deploy');
         this.url_to_deploy = document.getElementById('url_to_deploy');
-        this.published_list = document.getElementById('published_list');
         this.target_to_deploy.addEventListener('input', e => this.updateLinkList());
+        this.published_list = document.getElementById('published_list');
+        this.published_list.addEventListener('input', e => this.publishListChange());
+
 
         this.preset_list_deploy = document.getElementById('preset_list_deploy');
         this.preset_list_deploy.addEventListener('input', e => {
@@ -112,12 +114,15 @@
         this.display_sub_list = document.getElementById('display_sub_list');
         this.selected_display_anchor = document.getElementById('selected_display_anchor');
         this.selected_edit_anchor = document.getElementById('selected_edit_anchor');
-        this.published_list = document.getElementById('published_list');
-        this.published_list.addEventListener('input', e => this.publishListChange());
+
         this.fillPresets();
 
         this.upload_file_cloud = document.getElementById('upload_file_cloud');
-        this.upload_file_cloud.addEventListener('click', e => this.uploadCloudFile(e));
+        this.file_upload_name = document.getElementById('file_upload_name');
+        this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
+        this.upload_file_input = document.getElementById('upload_file_input');
+        this.upload_file_input.addEventListener('change', e => this.uploadCloudFile(e));
+
       }
       async publishListChange() {
         this.selectDisplayName = this.published_list.value;
@@ -386,11 +391,46 @@
           }).mergeCSVRangeStrings(rangeStrings, true);
         });
       }
-      uploadCloudFile(e) {
+      stringFromu8Array(bytes) {
+        var len = bytes.byteLength;
+        let str = '';
+        for (var i = 0; i < len; i++) {
+          str += String.fromCharCode(bytes[i]);
+        }
+        return str;
+      }
+      async uploadCloudFile(e) {
+        let filename = this.file_upload_name.value.trim();
+        if (this.file_upload_name.value === '') {
+          this.file_upload_name.value = this.upload_file_input.files[0].name;
+          filename = this.file_upload_name.value;
+        }
+        window.apiToken = this.token_to_deploy.value;
+        window.fbProj = this.target_to_deploy.value;
+        let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(this.selectDisplayName);
+        url += '&token=' + encodeURIComponent(window.apiToken);
+        url += '&filename=' + encodeURIComponent(filename);
 
+        let body = new FormData();
+        body.append('file', this.upload_file_input.files[0]);
+
+        let genResponse = await fetch(url, {
+          method: "post",
+          body
+        });
+        let genResults = await genResponse.text();
+        let r = {
+          result_msg: 'unknown'
+        };
+        try {
+          r = JSON.parse(genResults);
+        } catch (e) {
+          console.log(e, genResults);
+        }
+        console.log(r);
+        return r;
       }
     }
-
 
     document.addEventListener('DOMContentLoaded', e => {
       let publish_web = new PublishWeb();
