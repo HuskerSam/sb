@@ -157,24 +157,39 @@
         return wid;
       }
       async handleUploadNameChange() {
+        this.updateImagePreview();
+      }
+      async updateImagePreview(new_url) {
+        if (this.updatingImagePreview) {
+          clearTimeout(this.refreshPreview);
+          this.refreshPreview = setTimeout(() => this.updateImagePreview(), 50);
+          return;
+        }
+        this.updatingImagePreview = true;
+        this.signed_url = new_url;
+
         let name = this.file_upload_name.value;
         if (!name || !window.fbProj || !window.apiToken) {
           this.img_preview.setAttribute('src', '');
           this.img_preview_link.setAttribute('href', '');
           this.img_preview_link.innerHTML = '';
-
+          this.updatingImagePreview = false;
           return;
         }
 
-
         await this.setReferencePath();
 
-        let signed_url = "https://firebasestorage.googleapis.com/v0/b/" +
-          window.bucketName + "/o/" + encodeURIComponent(this.referencePath + name) + "?alt=media&token=" + 'token';
+        if (!this.signed_url)
+          this.signed_url = "https://firebasestorage.googleapis.com/v0/b/" +
+            window.bucketName + "/o/" + encodeURIComponent(this.referencePath + name) + "?alt=media&token=" + 'token';
 
+        let signed_url = this.signed_url;
+        if (signed_url)
+          signed_url += '&randomstuff=' + Number(new Date()).toString();
         this.img_preview.setAttribute('src', signed_url);
         this.img_preview_link.setAttribute('href', signed_url);
         this.img_preview_link.innerHTML = signed_url;
+        this.updatingImagePreview = false;
       }
       async publishListChange() {
         this.selectDisplayName = this.published_list.value;
@@ -190,6 +205,8 @@
         this.selected_edit_anchor.setAttribute('target', "_blank");
 
         this.single_display_options.style.display = '';
+
+        this.updateImagePreview();
       }
       async updateLinks(url) {
         let id = this.target_to_deploy.value;
@@ -444,14 +461,6 @@
           }).mergeCSVRangeStrings(rangeStrings, true);
         });
       }
-      stringFromu8Array(bytes) {
-        var len = bytes.byteLength;
-        let str = '';
-        for (var i = 0; i < len; i++) {
-          str += String.fromCharCode(bytes[i]);
-        }
-        return str;
-      }
       async uploadCloudFile(e) {
         let filename = this.file_upload_name.value.trim();
         if (this.file_upload_name.value === '') {
@@ -481,13 +490,11 @@
         console.log(r);
         if (r.success)
           if (r.result_msg.success) {
-            this.img_preview.setAttribute('src', r.result_msg.signed_url + '&randomstuff=' + Number(new Date()).toString());
-            this.img_preview_link.setAttribute('href', r.result_msg.signed_url);
-            this.img_preview_link.innerHTML = r.result_msg.signed_url;
+            this.updateImagePreview(r.result_msg.signed_url);
             this.upload_file_input.value = '';
             return r;
           }
-        this.img_preview.setAttribute('src', '');
+        this.updateImagePreview('');
 
         this.upload_file_input.value = '';
         alert('upload did not complete');
