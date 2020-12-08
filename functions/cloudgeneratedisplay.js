@@ -82,7 +82,7 @@ module.exports = class cloudGenerateDisplay {
     try {
       let bname = firebase.instanceId().app.options.storageBucket;
       const bucket = firebase.storage().bucket(bname);
-      let uuid = 'handtop';
+      let uuid = 'token';
 
 
       let path = this.referencePath + filename;

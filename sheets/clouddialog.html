@@ -60,13 +60,13 @@
         <a id="selected_edit_anchor"></a>
         <hr>
         <label>Name <input id="file_upload_name"></label>
-        <br>
         <button id="upload_file_cloud" class="blue">Upload File</button>
         <input type="file" id="upload_file_input" style="display:none;">
 
         <br>
-        <img id="img_preview" style="max-height:100px;max-width:300px;">
+        <img id="img_preview" style="max-height:80px;max-width:300px;">
         <br>
+        <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
       </div>
     </div>
   </div>
@@ -80,6 +80,9 @@
         this.publish_results = document.getElementById('publish_results');
         this.target_to_deploy = document.getElementById('target_to_deploy');
         this.token_to_deploy = document.getElementById('token_to_deploy');
+        this.token_to_deploy.addEventListener('input', e => {
+          window.apiToken = this.token_to_deploy.value;
+        });
         this.url_to_deploy = document.getElementById('url_to_deploy');
         this.target_to_deploy.addEventListener('input', e => this.updateLinkList());
         this.published_list = document.getElementById('published_list');
@@ -119,10 +122,59 @@
 
         this.upload_file_cloud = document.getElementById('upload_file_cloud');
         this.file_upload_name = document.getElementById('file_upload_name');
+        this.file_upload_name.addEventListener('input', e => this.handleUploadNameChange());
         this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
         this.upload_file_input = document.getElementById('upload_file_input');
         this.upload_file_input.addEventListener('change', e => this.uploadCloudFile(e));
+        this.img_preview = document.getElementById('img_preview');
+        this.img_preview_link = document.getElementById('img_preview_link');
 
+        this.widForName = {};
+      }
+      async setReferencePath(tag = 'cloudupload') {
+        let wid = await this.getWid();
+        this.referencePath = 'project/' + wid + '/' + tag + '/';
+      }
+      async getWid() {
+        if (!window.fbProj)
+          return 'none';
+
+        let wid = this.widForName[this.selectDisplayName];
+        if (!wid) {
+          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/widforname/?name=' + encodeURIComponent(this.selectDisplayName);
+          url += '&token=' + encodeURIComponent(window.apiToken);
+          let genResponse = await fetch(url, {
+            method: "get"
+          });
+          let genResults = await genResponse.text();
+          let r = JSON.parse(genResults);
+          wid = r.wid;
+          console.log('wid', r);
+          window.bucketName = r.bucket;
+          this.widForName[window.fbProj] = wid;
+        }
+
+        return wid;
+      }
+      async handleUploadNameChange() {
+        let name = this.file_upload_name.value;
+        if (!name || !window.fbProj || !window.apiToken) {
+          this.img_preview.setAttribute('src', '');
+          this.img_preview_link.setAttribute('href', '');
+          this.img_preview_link.innerHTML = '';
+
+          return;
+        }
+
+
+        await this.setReferencePath();
+
+        let signed_url = "https://firebasestorage.googleapis.com/v0/b/" +
+          window.bucketName + "/o/" + encodeURIComponent(this.referencePath + name) + "?alt=media&token=" + 'token';
+
+        this.img_preview.setAttribute('src', signed_url);
+        this.img_preview_link.setAttribute('href', signed_url);
+        this.img_preview_link.innerHTML = signed_url;
       }
       async publishListChange() {
         this.selectDisplayName = this.published_list.value;
@@ -198,6 +250,7 @@
           linkListHTML += '<option>' + t['name'] + '</option>';
         });
         this.published_list.innerHTML = linkListHTML;
+        window.fbProj = this.target_to_deploy.value;
       }
       async publishList() {
         if (this.busy)
@@ -405,8 +458,6 @@
           this.file_upload_name.value = this.upload_file_input.files[0].name;
           filename = this.file_upload_name.value;
         }
-        window.apiToken = this.token_to_deploy.value;
-        window.fbProj = this.target_to_deploy.value;
         let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(this.selectDisplayName);
         url += '&token=' + encodeURIComponent(window.apiToken);
         url += '&filename=' + encodeURIComponent(filename);
@@ -428,6 +479,18 @@
           console.log(e, genResults);
         }
         console.log(r);
+        if (r.success)
+          if (r.result_msg.success) {
+            this.img_preview.setAttribute('src', r.result_msg.signed_url + '&randomstuff=' + Number(new Date()).toString());
+            this.img_preview_link.setAttribute('href', r.result_msg.signed_url);
+            this.img_preview_link.innerHTML = r.result_msg.signed_url;
+            this.upload_file_input.value = '';
+            return r;
+          }
+        this.img_preview.setAttribute('src', '');
+
+        this.upload_file_input.value = '';
+        alert('upload did not complete');
         return r;
       }
     }
