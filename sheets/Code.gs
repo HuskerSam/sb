@@ -2,10 +2,10 @@ function onOpen() {
   let ui = SpreadsheetApp.getUi();
 
   ui.createAddonMenu()
-  .addItem('Cloud Deploy', 'showCloudDialog')
-  .addItem('Initialize Data', 'showInitDialog')
-  .addItem('Song Import', 'showSongDialog')
-  .addToUi();
+    .addItem('Cloud Deploy', 'showCloudDialog')
+    .addItem('Initialize Data', 'showInitDialog')
+    .addItem('Song Import', 'showSongDialog')
+    .addToUi();
 }
 
 function refreshOAuth() {
@@ -47,7 +47,7 @@ function initializeConfiguration() {
     publishConfig.getRange('B1').setValue('startat');
     publishConfig.getRange('C1').setValue('endat');
     publishConfig.getRange('D1').setValue('assetbookid');
-    publishConfig.getRange('D1').setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
+    publishConfig.getRange('D2').setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
     publishConfig.getRange('A1:G1').setFontWeight("bold");
   }
 
@@ -116,6 +116,53 @@ function initializeConfiguration() {
     assetRanges.getRange("F6").setFormula('CONCATENATE(H8:H12)');
     assetRanges.getRange("E5").setFormula('"mergeCSVRanges(" & left(F6, len(F6) - 1) & ")"');
 
+  }
+
+  return 'success';
+}
+
+function CreateProductList() {
+  let activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+
+  let productList = activeSpreadsheet.getSheetByName('Product List');
+  if (productList == null) {
+    productList = activeSpreadsheet.insertSheet();
+    productList.setName('Product List');
+
+    productList.getRange('A1').setValue('asset').setFontWeight('bold');
+    productList.getRange('B1').setValue('block').setFontWeight('bold');
+    productList.getRange('C1').setValue('displaystyle').setFontWeight('bold');
+    productList.getRange('D1').setValue('height').setFontWeight('bold');
+    productList.getRange('E1').setValue('image').setFontWeight('bold');
+    productList.getRange('F1').setValue('index').setFontWeight('bold');
+    productList.getRange('G1').setValue('materialname').setFontWeight('bold');
+    productList.getRange('H1').setValue('name').setFontWeight('bold');
+    productList.getRange('I1').setValue('price').setFontWeight('bold');
+    productList.getRange('J1').setValue('pricetext').setFontWeight('bold');
+    productList.getRange('K1').setValue('rx').setFontWeight('bold');
+    productList.getRange('L1').setValue('ry').setFontWeight('bold');
+    productList.getRange('M1').setValue('rz').setFontWeight('bold');
+    productList.getRange('N1').setValue('sku').setFontWeight('bold');
+    productList.getRange('O1').setValue('text1').setFontWeight('bold');
+    productList.getRange('P1').setValue('text2').setFontWeight('bold');
+    productList.getRange('Q1').setValue('textfontfamily').setFontWeight('bold');
+    productList.getRange('R1').setValue('width').setFontWeight('bold');
+    productList.getRange('S1').setValue('x').setFontWeight('bold');
+    productList.getRange('T1').setValue('y').setFontWeight('bold');
+    productList.getRange('U1').setValue('z').setFontWeight('bold');
+
+    productList.getRange('A2').setValue('product');
+    productList.getRange('B2').setValue('DISPLAY Asparagus bunch of 6');
+    productList.getRange('E2').setValue('sb:productsignimages/asparagus.jpg');
+    productList.getRange('F2').setValue('100');
+    productList.getRange('H2').setValue('Asparagus Bunch (small)');
+    productList.getRange('I2').setValue('1.99');
+    productList.getRange('J2').setValue('$1.99 per bunch');
+    productList.getRange('N2').setValue('Asparagus Bunch (small)');
+    productList.getRange('O2').setValue('Asparagus Bunch (small)');
+    productList.getRange('S2').setValue(-33.5);
+    productList.getRange('T2').setValue(11);
+    productList.getRange('U2').setValue(30);
   }
 
   return 'success';

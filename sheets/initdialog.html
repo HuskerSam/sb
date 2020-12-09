@@ -33,6 +33,8 @@
   <button id="initialize_configuration_btn" class="green">Initialize Configuration</button>
   <br><br>
   <button id="create_layout_btn" class="green">Initialize Layout</button>
+  <br><br>
+  <button id="create_productlist_btn" class="green">Initialize Product List</button>
 
   <script>
     class PublishWeb {
@@ -42,6 +44,20 @@
 
         this.create_layout_btn = document.getElementById('create_layout_btn');
         this.create_layout_btn.addEventListener('click', e => this.initializeLayout());
+
+        this.create_productlist_btn = document.getElementById('create_productlist_btn');
+        this.create_productlist_btn.addEventListener('click', e => this.createProductList());
+      }
+      async createProductList() {
+        return new Promise(async (resolve, reject) => {
+          this.create_productlist_btn.innerHTML = '...';
+          google.script.run.withSuccessHandler((result) => {
+            this.create_productlist_btn.innerHTML = 'Initialize Product List';
+            if (result !== 'success')
+              alert(result);
+            resolve(result);
+          }).CreateProductList();
+        });
       }
       async initializeConfiguration() {
         return new Promise(async (resolve, reject) => {
