@@ -1083,6 +1083,14 @@ class wBlock {
       return t;
     }
 
+    let texturePrefix = textureName.substring(0, 7);
+    if (texturePrefix === 'https:/' || texturePrefix === 'http://') {
+      let t = new BABYLON.Texture(textureName, this.context.scene);
+      if (textureName.substr(-4) === '.png')
+        t.hasAlpha = true;
+      return t;
+    }
+
     let tD = gAPPP.a.modelSets['texture'].getValuesByFieldLookup('title', textureName);
     if (tD === undefined)
       return;

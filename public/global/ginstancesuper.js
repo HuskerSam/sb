@@ -402,6 +402,54 @@ class gInstanceSuper {
     document.body.appendChild(this.styleProfileDom);
     this.resize();
   }
+  copyDataToClipboard(dataRows, fieldOrder = []) {
+    if (!dataRows) return;
+    if (dataRows.length < 1)  return;
+
+    let firstObj = dataRows[0];
+    let firstKeys = Object.keys(firstObj);
+
+    firstKeys.forEach(key => {
+      if (fieldOrder.indexOf(key) === -1)
+        fieldOrder.push(key);
+    });
+
+    let tableGuts = '';
+    tableGuts += '<tr>';
+    fieldOrder.forEach((field) => {
+      tableGuts += '<td>' + field.toString() + '</td>';
+    });
+    tableGuts += '</tr>';
+    dataRows.forEach((row) => {
+      tableGuts += '<tr>';
+      fieldOrder.forEach((field) => {
+        let v = row[field];
+        if (!v) v = '';
+        tableGuts += '<td>' + v.toString() + '</td>';
+      });
+      tableGuts += '</tr>';
+    });
+
+    let html = '<table class="table_export">' + tableGuts + '</table>';
+    let el = document.createElement('div');
+    el.innerHTML = html;
+    el = el.children[0];
+    document.body.append(el);
+    let range = document.createRange();
+    let sel = window.getSelection();
+    sel.removeAllRanges();
+    try {
+      range.selectNodeContents(el);
+      sel.addRange(range);
+    } catch (e) {
+      range.selectNode(el);
+      sel.addRange(range);
+    }
+
+    document.execCommand("copy");
+
+    el.remove();
+  }
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">
   <h3>${title}</h3>

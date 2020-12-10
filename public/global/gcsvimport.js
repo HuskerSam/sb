@@ -78,6 +78,12 @@ class gCSVImport {
         return {
           key: null
         };
+
+      let texturePrefix = textureName.substring(0, 7);
+      if (texturePrefix === 'https:/' || texturePrefix === 'http://')
+        return {
+          key: null
+        };
     }
 
     if (!id)

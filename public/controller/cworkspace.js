@@ -1003,56 +1003,7 @@ class cWorkspace {
 
     this.copy_to_clipboard = this.record_field_list_form.querySelector('.copy_to_clipboard');
     this.copy_to_clipboard.addEventListener('click', e => {
-      if (!this.layoutTableDataRows)
-        return;
-
-      if (this.layoutTableDataRows.length < 1)
-        return;
-
-      let firstObj = this.layoutTableDataRows[0];
-      let firstKeys = Object.keys(firstObj);
-
-      let fieldOrder = this.fieldList;
-      for (let key in firstKeys) {
-        if (!fieldOrder.indexOf(key))
-          fieldOrder.push(key);
-      }
-
-      let tableGuts = '';
-      tableGuts += '<tr>';
-      fieldOrder.forEach((field) => {
-        tableGuts += '<td>' + field.toString() + '</td>';
-      });
-      tableGuts += '</tr>';
-      this.layoutTableDataRows.forEach((row) => {
-        tableGuts += '<tr>';
-        fieldOrder.forEach((field) => {
-          let v = row[field];
-          if (!v) v = '';
-          tableGuts += '<td>' + v.toString() + '</td>';
-        });
-        tableGuts += '</tr>';
-      });
-
-      let html = '<table class="table_export">' + tableGuts + '</table>';
-      let el = document.createElement('div');
-      el.innerHTML = html;
-      el = el.children[0];
-      document.body.append(el);
-      let range = document.createRange();
-      let sel = window.getSelection();
-      sel.removeAllRanges();
-      try {
-        range.selectNodeContents(el);
-        sel.addRange(range);
-      } catch (e) {
-        range.selectNode(el);
-        sel.addRange(range);
-      }
-
-      document.execCommand("copy");
-
-      el.remove();
+      gAPPP.copyDataToClipboard(this.layoutTableDataRows, this.fieldList);
     });
 
     this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');

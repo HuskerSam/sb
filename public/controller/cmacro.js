@@ -378,7 +378,10 @@ class cMacro {
         </div>
       </div>
     </div>
-    <div class="csv_import_preview"></div>
+    <div style="display:flex">
+      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+      <div class="csv_import_preview" style="flex:1"></div>
+    </div>
     <datalist id="webfontsuggestionlist"></datalist>`;
   }
   blockRegister() {
@@ -412,6 +415,10 @@ class cMacro {
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      gAPPP.copyDataToClipboard([this.export_csv]);
+    });
 
     this.webfontsuggestionlist = this.panel.querySelector('#webfontsuggestionlist');
     let html = '';
@@ -561,6 +568,7 @@ class cMacro {
     this.mesh_bump_img.setAttribute('src', bump);
 
     let csv = this.meshScrape();
+    this.export_csv = csv;
     if (csv) {
       this.csv_import_preview.innerHTML = Papa.unparse([csv]);
     } else
@@ -650,6 +658,7 @@ class cMacro {
   }
   materialUpdateCSV() {
     let csv = this.materialScrape();
+    this.export_csv = csv;
     if (csv) {
       this.csv_import_preview.innerHTML = Papa.unparse([csv]);
     } else
@@ -1015,6 +1024,7 @@ class cMacro {
     if (macrotype === '2D Text Plane')
       r = this._shapeScrapeTextPlane();
 
+    this.export_csv = r;
     if (r) {
       if (window.Papa)
         this.csv_import_preview.innerHTML = Papa.unparse([r]);
