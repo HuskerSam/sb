@@ -501,7 +501,10 @@ class cMacro {
       </div>
       <div class="mesh_message" style=""></div>
     </div>
-    <div class="csv_import_preview"></div>`;
+    <div style="display:flex">
+      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+      <div class="csv_import_preview" style="flex:1"></div>
+    </div>`;
   }
   meshRegister() {
     this.mesh_texture_img = this.panel.querySelector('.mesh_texture_img');
@@ -524,6 +527,10 @@ class cMacro {
     this.mesh_rz = this.panel.querySelector('.mesh_rz');
 
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      gAPPP.copyDataToClipboard([this.export_csv]);
+    });
 
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV(e, i)));
     this.show_parent_mesh_details = this.panel.querySelector('.show_parent_mesh_details');
@@ -617,7 +624,10 @@ class cMacro {
           <img class="material_texture_img" crossorigin="anonymous" style="max-width:100%;max-height:50vh;">
         </div>
       </div>
-      <div class="csv_import_preview"></div>`;
+      <div style="display:flex">
+        <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+        <div class="csv_import_preview" style="flex:1"></div>
+      </div>`;
   }
   _materialGetHTMLOptionList() {
     let html = '';
@@ -640,6 +650,11 @@ class cMacro {
   materialRegister() {
     this.standardmaterialassetpanel = this.panel.querySelector('.standardmaterialassetpanel');
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      gAPPP.copyDataToClipboard([this.export_csv]);
+    });
+
     this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
     this.material_texture_img = this.panel.querySelector('.material_texture_img');
     this.materialscalev = this.panel.querySelector('.materialscalev');
