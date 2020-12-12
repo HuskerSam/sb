@@ -46,14 +46,14 @@
     <label>Assets: <span id="assets_anchor"> loading...</span></label>
     <hr>
     <div id="display_sub_list" style="display:none">
-      <button id="display_publish_list" class="blue">Publish All</button>
+      <button id="display_publish_list" class="blue">Process All</button>
       <br>
       <br>
       <select id="published_list" size="5"></select>
       <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
       <br>
       <div id="single_display_options" style="display:none;">
-        <button id="display_publish_single" class="blue">Publish Single</button>
+        <button id="display_publish_single" class="blue">Process Row</button>
         &nbsp;
         <a id="selected_display_anchor"></a>
         &nbsp;
@@ -129,6 +129,9 @@
         this.img_preview = document.getElementById('img_preview');
         this.img_preview_link = document.getElementById('img_preview_link');
 
+        this.display_publish_single = document.getElementById('display_publish_single');
+        this.display_publish_single.addEventListener('click', e => this.publishSingleFromList());
+
         this.widForName = {};
       }
       async setReferencePath(tag = 'cloudupload') {
@@ -181,7 +184,7 @@
 
         if (!this.signed_url)
           this.signed_url = "https://firebasestorage.googleapis.com/v0/b/" +
-            window.bucketName + "/o/" + encodeURIComponent(this.referencePath + name) + "?alt=media&token=" + 'token';
+          window.bucketName + "/o/" + encodeURIComponent(this.referencePath + name) + "?alt=media&token=" + 'token';
 
         let signed_url = this.signed_url;
         if (signed_url)
@@ -269,10 +272,11 @@
         this.published_list.innerHTML = linkListHTML;
         window.fbProj = this.target_to_deploy.value;
       }
-      async publishList() {
+      async publishList(singleIndex = null) {
         if (this.busy)
           return;
         this.display_publish_list.innerHTML = 'Working...';
+        this.display_publish_single.innerHTML = 'Working...';
         this.publish_results.value = '';
         this.publish_results.style.display = '';
         this.dataCache = {};
@@ -292,7 +296,15 @@
           start = Number(publishConfig[0].startat);
         if (publishConfig[0].endat)
           end = Number(publishConfig[0].endat);
-        this.publish_results.value = 'Publishing ' + publishList.length.toString() + '\n\n';
+
+        if (singleIndex !== null) {
+          start = singleIndex;
+          end = singleIndex;
+        }
+
+        this.publish_results.value = publishList.length.toString() + ' Items in ' + publishListSheet +'\n';
+        this.publish_results.value += 'Start Index:' + start + ' \nEnd Index: ' + end + '\n\n';
+
         for (let c = start; c <= end; c++) {
           let row = publishList[c];
           let flags = row.flags;
@@ -306,7 +318,12 @@
 
           if (flags.indexOf('remove') !== -1) {
             let r_result = await this.deleteProject(row.name);
-            this.publish_results.value += row.name + ' removed\n';
+            if (r_result.success)
+              this.publish_results.value += row.name + ' removed\n\n';
+            else {
+              this.publish_results.value += row.name + ' NOT removed\n';
+              this.publish_results.value += 'ERROR: ' + r_result.errorMessage + '\n\n';
+            }
 
             console.log(c, 'remove', r_result);
             continue;
@@ -318,7 +335,9 @@
           console.log(c, result);
         }
         this.busy = false;
-        this.display_publish_list.innerHTML = 'Publish Web Again';
+        this.display_publish_list.innerHTML = 'Process All Again';
+        this.display_publish_single.innerHTML = 'Process Single Again';
+
         this.publish_results.value += '\nComplete\n\n';
         this.publish_results.scrollTop = this.publish_results.scrollHeight;
       }
@@ -340,6 +359,10 @@
 
         return r;
       }
+      async publishSingleFromList() {
+        let index = this.published_list.selectedIndex;
+        return await this.publishList(index);
+      }
       async publishSingle(name, assetRanges, circuitRanges, catalogSheet) {
         console.log(name, assetRanges, circuitRanges, catalogSheet);
         try {
@@ -355,7 +378,7 @@
               assets = await this.grabCSVForRangeStrings(ranges);
               console.log('asset fetch');
             }
-            console.log('a', assets);
+            console.log('assets', assets);
             let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
             url += encodeURIComponent(name) + '&type=asset';
             url += '&token=' + encodeURIComponent(window.apiToken);
@@ -365,9 +388,16 @@
               method: "post",
               body: json
             });
-            assetResults = await response.text();
-            this.dataCache[assetRanges] = assets;
-            this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
+            let r = await response.text();
+            assetResults = JSON.parse(r);
+
+            if (assetResults.success) {
+              this.dataCache[assetRanges] = assets;
+              this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
+            } else {
+              this.publish_results.value += name + ':assets: Error ';
+              this.publish_results.value += assetResults.errorMessage + '\n';
+            }
             this.publish_results.scrollTop = this.publish_results.scrollHeight;
           }
 
@@ -392,11 +422,17 @@
               method: "post",
               body: json
             });
-            sceneResults = await response.text();
-            this.dataCache[circuitRanges] = scene;
-            this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
-            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+            let r = await response.text();
+            sceneResults = JSON.parse(r);
 
+            if (sceneResults.success) {
+              this.dataCache[circuitRanges] = scene;
+              this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
+            } else {
+              this.publish_results.value += name + ':circuit: Error ';
+              this.publish_results.value += sceneResults.errorMessage + '\n';
+            }
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
           }
 
           let productResults = {};
@@ -410,8 +446,15 @@
               method: "post",
               body: json
             });
-            productResults = await response.text();
-            this.publish_results.value += name + ':products: ' + products.length.toString() + '\n'
+            let r = await response.text();
+            productResults = JSON.parse(r);
+
+            if (productResults.success) {
+              this.publish_results.value += name + ':products: ' + products.length.toString() + '\n'
+            } else {
+              this.publish_results.value += name + ':products: Error ';
+              this.publish_results.value += productResults.errorMessage + '\n';
+            }
             this.publish_results.scrollTop = this.publish_results.scrollHeight;
           }
 
@@ -420,16 +463,15 @@
           let genResponse = await fetch(url, {
             method: "post"
           });
-          let genResults = await genResponse.text();
-          let r = {
-            result_msg: 'unknown'
-          };
-          try {
-            r = JSON.parse(genResults);
-          } catch (e) {
-            console.log(e, genResults);
+          let gr = await genResponse.text();
+          let genResults = JSON.parse(gr);
+
+          if (genResults.success) {
+            this.publish_results.value += name + ' generated\n\n'
+          } else {
+            this.publish_results.value += name + ':generate: Error ';
+            this.publish_results.value += genResults.errorMessage + '\n';
           }
-          this.publish_results.value += name + ' generated\n\n'
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
 
           return {
