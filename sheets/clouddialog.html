@@ -53,11 +53,14 @@
       <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
       <br>
       <div id="single_display_options" style="display:none;">
-        <button id="display_publish_single" class="blue">Process Row</button>
+        <b>Row</b>
+        <button id="display_publish_single" class="blue">Process</button>
         &nbsp;
         <a id="selected_display_anchor"></a>
         &nbsp;
         <a id="selected_edit_anchor"></a>
+        &nbsp;
+        <button id="set_default_proj">Pin</button>
         <hr>
         <label>Name <input id="file_upload_name"></label>
         <button id="upload_file_cloud" class="blue">Upload File</button>
@@ -131,6 +134,9 @@
 
         this.display_publish_single = document.getElementById('display_publish_single');
         this.display_publish_single.addEventListener('click', e => this.publishSingleFromList());
+
+        this.set_default_proj = document.getElementById('set_default_proj');
+        this.set_default_proj.addEventListener('click', e => this.SetDefaultCreds());
 
         this.widForName = {};
       }
@@ -223,6 +229,17 @@
 
         this.updateLinkList();
         this.display_sub_list.style.display = '';
+      }
+      async SetDefaultCreds() {
+        let token = this.token_to_deploy.value;
+        let target = this.target_to_deploy.value;
+        let project = this.published_list.value;
+
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            resolve(result);
+          }).SetDefaultCredentials(target, token, project);
+        });
       }
       async fillPresets() {
         let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');

@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
   <link rel="stylesheet" href="https://handtop.com/global/common.css">
+  <link rel="stylesheet" href="https://handtop.com/asset/app.css">
+  <script src="https://handtop.com/global/globalutil.js"></script>
   <script src="https://handtop.com/global/ginstancesuper.js"></script>
   <script src="https://handtop.com/controller/cmacro.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
@@ -30,15 +32,19 @@
       text-align: center;
     }
 
-    .skybox-preview-images img {
-      max-height: 5em;
-      max-width: 5em;
+    .csv_import_preview {
+      display: block;
     }
     .csv_import_preview {
       width: inherit;
       overflow:hidden;
       overflow-y: scroll;
     }
+
+    .add-asset-template-panel input {
+      margin: 0;
+    }
+
   </style>
 </head>
 
@@ -47,10 +53,10 @@
     <select id="wizard_choices">
       <option value="block">Blocks</option>
       <option value="mesh">Meshes</option>
-      <option value="material">Materials</option>
+      <option value="material">Materials   </option>
     </select>
 
-    <div id="macro_details">
+    <div id="macro_details" class="add-asset-template-panel">
     </div>
     <div id="helpviewer">
     </div>

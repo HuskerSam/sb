@@ -14,8 +14,14 @@ class GLOBALUTIL {
     let b = Number(parts[2]);
     if (isNaN(b))
       b = 0;
+    if (window.BABYLON)
+      return new BABYLON.Color3(r, g, b);
 
-    return new BABYLON.Color3(r, g, b);
+    return {
+      r,
+      g,
+      b
+    };
   }
   static colorRGB255(str) {
     let bC = GLOBALUTIL.color(str);
@@ -67,7 +73,15 @@ class GLOBALUTIL {
         y = GLOBALUTIL.getNumberOrDefault(parts[1], y);
         z = GLOBALUTIL.getNumberOrDefault(parts[2], z);
       }
-    return new BABYLON.Vector3(x, y, z);
+
+    if (window.BABYLON)
+      return new BABYLON.Vector3(x, y, z);
+
+    return {
+      x,
+      y,
+      z
+    };
   }
   static vectorToStr(v) {
     return v.x.toFixed(3) + ',' + v.y.toFixed(3) + ',' + v.z.toFixed(3);
@@ -115,7 +129,14 @@ class GLOBALUTIL {
     var r = GLOBALUTIL.HexToR(hex) / 255;
     var g = GLOBALUTIL.HexToG(hex) / 255;
     var b = GLOBALUTIL.HexToB(hex) / 255;
-    return new BABYLON.Color3(r, g, b);
+    if (window.BABYLON)
+      return new BABYLON.Color3(r, g, b);
+
+    return {
+      r,
+      g,
+      b
+    };
   }
   static HexToR(h) {
     return parseInt((GLOBALUTIL.CutHex(h)).substring(0, 2), 16)
@@ -210,7 +231,8 @@ class GLOBALUTIL {
     lon += dLon;
 
     return {
-      lat, lon
+      lat,
+      lon
     }
   }
   static angleDeg(angle, d = 0.0) {

@@ -81,7 +81,7 @@ class cMacro {
   }
   baseTemplate() {
     let template = `<label class="add_template_name_label"><b>${this.tag} name</b>
-     <input class="add-item-name" type="text" style="width:15em;" /></label>`;
+     <input class="add-item-name" type="text" style="width:10em;" /></label>`;
      if (!this.addonmode)
       template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
       <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>`;
@@ -101,18 +101,18 @@ class cMacro {
      <option>Web Font</option>
     </select>
     <div class="create-2d-text-plane">
-      <label><span>texturetext</span><input class="texturetext" style="width:15em" type="text" value="Text Line" /></label><br>
-      <label><span>texturetext2</span><input class="texturetext2" type="text" value="" style="width:15em" /></label><br>
-      <label><span>textfontfamily</span><input class="textfontfamily" type="text" list="fontfamilydatalist" style="width:15em" /></label><br>
-      <label><span>textfontcolor</span><input class="textfontcolor" type="text" value="0,0,0" style="width:15em" /></label><br>
-      <label><span>textfontweight</span><input class="textfontweight" type="text" value="" style="width:15em" /></label><br>
+      <label><span>texturetext</span><input class="texturetext" style="width:10em" type="text" value="Text Line" /></label><br>
+      <label><span>texturetext2</span><input class="texturetext2" type="text" value="" style="width:10em" /></label><br>
+      <label><span>textfontfamily</span><input class="textfontfamily" type="text" list="fontfamilydatalist" style="width:10em" /></label><br>
+      <label><span>textfontcolor</span><input class="textfontcolor" type="text" value="0,0,0" style="width:10em" /></label><br>
+      <label><span>textfontweight</span><input class="textfontweight" type="text" value="" style="width:10em" /></label><br>
       <label><span>textfontsize</span><input class="textfontsize" type="text" value="100" /></label><br>
       <label><span>texturetextrendersize</span><input class="texturetextrendersize" type="text" value="512" /></label><br>
       <label><span>width</span><input class="width" type="text" value="4" /></label><br>
       <label><span>height</span><input class="height" type="text" value="4" /></label><br>
     </div>
     <div class="web-font-block-add-options" style="display:none;">
-      <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:15em;" value="" /></label>
+      <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:10em;" value="" /></label>
     </div>
     <div class="connector-line-block-add-options" style="display:none;">
       <label><span>L </span><input type="text" class="length" value="10" /></label>
@@ -219,14 +219,14 @@ class cMacro {
       <div class="skyboxscenefeatures">
         <label><span>Skybox Size</span><input type="text" class="skyboxsize" value="400" /></label>
         <br>
-        <label><span>Ground</span><input type="text" style="width:15em;" class="groundimage" list="sbimageslist" /></label>
+        <label><span>Ground</span><input type="text" style="width:10em;" class="groundimage" list="sbimageslist" /></label>
         <br>
         <label><span>Scale v</span><input type="text" class="skyboxgroundscalev" value="1" /></label>
         <label><span>Scale u</span><input type="text" class="skyboxgroundscaleu" value="1" /></label>
         <br>
         <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
         <br>
-        <label><span>Skybox Template</span><input type="text" style="width:15em;" class="skybox" list="skyboxlist" /></label>
+        <label><span>Skybox Template</span><input type="text" style="width:10em;" class="skybox" list="skyboxlist" /></label>
         <div class="skybox-preview-images">
           <img crossorigin="anonymous" style="position:relative;left:5em;top:.25em;">
           <div>
@@ -245,66 +245,72 @@ class cMacro {
         <label><span>h (y)</span><input type="text" class="height" value="40" /></label>
         <label><input type="checkbox" class="show_uploads" /><span>uploads</span></label>
         <br>
-        <label><span>floormaterial</span><input type="text" style="width:15em;" class="floormaterial" list="materialdatatitlelookuplist" /></label>
+        <label><span>floormaterial</span><input type="text" style="width:10em;" class="floormaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="floormaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>floorimage</span><input type="text" style="width:15em;" class="floorimage texturepathinput" list="floorTexturesDataList" /></label>
+          <label><span>floorimage</span><input type="text" style="width:10em;" class="floorimage texturepathinput" list="floorTexturesDataList" /></label>
+          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
           <label><span>floorscaleu (z)</span><input type="text" class="floorscaleu" value="1" /></label>
         </div>
-        <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
+        <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>backwallimage</span><input type="text" style="width:15em;" class="backwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <label><span>backwallimage</span><input type="text" style="width:10em;" class="backwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
           <label><span>backwallscaleu</span><input type="text" class="backwallscaleu" value="1" /></label>
         </div>
-        <label><span>frontwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="frontwallmaterial" list="materialdatatitlelookuplist" /></label>
+        <label><span>frontwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="frontwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="frontwallmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>frontwallimage</span><input type="text" style="width:15em;" class="frontwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <label><span>frontwallimage</span><input type="text" style="width:10em;" class="frontwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
           <label><span>frontwallscaleu</span><input type="text" class="frontwallscaleu" value="1" /></label>
         </div>
-        <label><span>leftwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="leftwallmaterial" list="materialdatatitlelookuplist" /></label>
+        <label><span>leftwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="leftwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="leftwallmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>leftwallimage</span><input type="text" style="width:15em;" class="leftwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <label><span>leftwallimage</span><input type="text" style="width:10em;" class="leftwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
           <label><span>leftwallscaleu</span><input type="text" class="leftwallscaleu" value="1" /></label>
         </div>
-        <label><span>rightwallmaterial</span>&nbsp;<input type="text" style="width:15em;" class="rightwallmaterial" list="materialdatatitlelookuplist" /></label>
+        <label><span>rightwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="rightwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="rightwallmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>rightwallimage</span><input type="text" style="width:15em;" class="rightwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <label><span>rightwallimage</span><input type="text" style="width:10em;" class="rightwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
           <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
           <label><span>rightwallscaleu</span><input type="text" class="rightwallscaleu" value="1" /></label>
         </div>
-        <label><span>ceilingmaterial</span>&nbsp;<input type="text" style="width:15em;" class="ceilingmaterial" list="materialdatatitlelookuplist" /></label>
+        <label><span>ceilingmaterial</span>&nbsp;<input type="text" style="width:10em;" class="ceilingmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="ceilingmaterial">
         <br>
         <div class="image_upload_building">
-          <label><span>ceilingwallimage</span><input type="text" style="width:15em;" class="ceilingwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <label><span>ceilingwallimage</span><input type="text" style="width:10em;" class="ceilingwallimage texturepathinput" list="wallTexturesDataList" /></label>
+          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>

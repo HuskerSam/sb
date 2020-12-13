@@ -56,6 +56,9 @@ function initializeConfiguration() {
     publishConfig.getRange('C1').setValue('endat');
     publishConfig.getRange('D1').setValue('assetbookid');
     publishConfig.getRange('D2').setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
+    publishConfig.getRange('E1').setValue('defaulttarget');
+    publishConfig.getRange('F1').setValue('defaulttoken');
+    publishConfig.getRange('G1').setValue('defaultproject');
     publishConfig.getRange('A1:G1').setFontWeight("bold");
   }
 
@@ -127,6 +130,17 @@ function initializeConfiguration() {
   }
 
   return 'success';
+}
+
+function SetDefaultCredentials(target, token, project) {
+  let activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let publishConfig = activeSpreadsheet.getSheetByName("PublishConfig");
+
+  if (publishConfig) {
+    publishConfig.getRange('E2').setValue(target);
+    publishConfig.getRange('F2').setValue(token);
+    publishConfig.getRange('G2').setValue(project);
+  }
 }
 
 function CreateProductList() {
