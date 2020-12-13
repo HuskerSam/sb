@@ -21,11 +21,7 @@ class gApp extends gInstanceSuper {
         }
       }
     });
-    this.loadDataLists('sbimageslist');
-    this.loadDataLists('sbstoreimageslist');
-    this.loadDataLists('sbmesheslist');
-    this.loadDataLists('skyboxlist');
-    this.loadDataLists('fontfamilydatalist');
+    this.loadPickerData();
     this.loadTextures();
 
     firebase.auth().getRedirectResult().then(result => {
@@ -34,67 +30,6 @@ class gApp extends gInstanceSuper {
           if (!result.user)
             this.a.signIn(true);
     });
-  }
-  async loadTextures() {
-    let rrr = await fetch(`/assetlist/textures.json`)
-    let json = await rrr.json();
-
-    this.textureTextures = [];
-    this.bumpTextures = [];
-    this.floorTextures = [];
-    this.wallTextures = [];
-    this.rawTexturesFile = json;
-    this.texturesFromFile = [];
-    for (let c = 0, l = json.length; c < l; c++) {
-      let filterStr = json[c].filters;
-      if (!filterStr)
-        filterStr = '';
-      let filters = filterStr.split(',');
-      if (json[c].type === 'bump')
-        this.bumpTextures.push(json[c].path);
-      if (json[c].type === 'texture')
-        this.textureTextures.push(json[c].path);
-      if (filters.indexOf('floor') !== -1)
-        this.floorTextures.push(json[c].path);
-      if (filters.indexOf('wall') !== -1)
-        this.wallTextures.push(json[c].path);
-
-      this.texturesFromFile[json[c].path] = json[c];
-    }
-
-    this.meshesDetails = [];
-    let meshesResponse = await fetch(`/assetlist/meshes.json`)
-    let text = await meshesResponse.text();
-    let meshesJson = JSON.parse(text);
-    this.meshesPaths = [];
-    for (let c = 0, l = meshesJson.length; c < l; c++) {
-      this.meshesDetails.push(meshesJson[c]);
-      this.meshesPaths.push(meshesJson[c].meshpath);
-    }
-
-    this.appendDataList('floorTexturesDataList', this.floorTextures, []);
-    this.appendDataList('wallTexturesDataList', this.wallTextures, []);
-    this.appendDataList('meshesDefaultsDataList', this.meshesPaths, []);
-
-    return;
-  }
-  appendDataList(listid, options, defaults = ['color: 1,1,1']) {
-    let currentList = document.getElementById(listid);
-    if (currentList)
-      currentList.remove();
-
-    currentList = document.createElement('datalist');
-    currentList.id = listid;
-
-    let outHtml = '';
-    for (let c = 0, l = defaults.length; c < l; c++)
-      outHtml += `<option>${defaults[c]}</option>`;
-
-    for (let c = 0, l = options.length; c < l; c++)
-      outHtml += `<option>${options[c]}</option>`;
-
-    currentList.innerHTML = outHtml;
-    document.body.appendChild(currentList);
   }
   async profileReadyAndLoaded() {
     let urlParams = new URLSearchParams(window.location.search);

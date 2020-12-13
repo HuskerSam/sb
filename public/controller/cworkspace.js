@@ -1003,7 +1003,7 @@ class cWorkspace {
 
     this.copy_to_clipboard = this.record_field_list_form.querySelector('.copy_to_clipboard');
     this.copy_to_clipboard.addEventListener('click', e => {
-      gAPPP.copyDataToClipboard(this.layoutTableDataRows, this.fieldList);
+      cMacro.copyDataToClipboard(this.layoutTableDataRows, this.fieldList);
     });
 
     this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
@@ -1208,5 +1208,41 @@ class cWorkspace {
       this.signImagePreview.removeAttribute('src');
     e.preventDefault();
     return true;
+  }
+  static assetJSON(tag, key) {
+    if (!tag)
+      return '';
+    if (!key)
+      return '';
+
+    let asset = gAPPP.a.modelSets[tag].getCache(key);
+    if (!asset)
+      return '';
+    let ele = Object.assign({}, asset);
+
+    if (tag === 'block') {
+      let frames = gAPPP.a.modelSets['frame'].queryCache('parentKey', key);
+      let framesArray = [];
+      for (let i in frames)
+        framesArray.push(frames[i]);
+      ele.frames = framesArray;
+
+      let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', key);
+      let childArray = [];
+      for (let childKey in children) {
+        let childFrames = gAPPP.a.modelSets['frame'].queryCache('parentKey', childKey);
+        let childFramesArray = [];
+        for (let i in childFrames)
+          childFramesArray.push(childFrames[i]);
+        children[childKey].frames = childFramesArray;
+        childArray.push(children[childKey]);
+      }
+      ele.children = childArray;
+
+    }
+    delete ele.renderImageURL;
+    ele.assetExportTag = tag;
+    ele.assetExportKey = key;
+    return JSON.stringify(ele, null, 4);
   }
 }

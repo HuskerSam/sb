@@ -1,8 +1,12 @@
 class cMacro {
-  constructor(panel, tag, view) {
+  constructor(panel, tag, view, app, addonmode = false) {
+    this.app = app;
     this.panel = panel;
     this.tag = tag;
     this.view = view;
+    this.addonmode = true;
+
+    this.cdnPrefix = this.app.cdnPrefix;
     this.webFonts = [
       'Work Sans',
       'IBM Plex Sans',
@@ -57,10 +61,12 @@ class cMacro {
       t = this[tag + 'Template']();
     panel.innerHTML = base + t + `<hr>`;
     if (tag !== 'workspace') {
-      this.panelCreateBtn = this.panel.querySelector('.add-button');
-      this.panelCreateBtn.addEventListener('click', e => this.createItem());
-      this.panelCreateBtn2 = this.panel.querySelector('.add-newwindow-button');
-      this.panelCreateBtn2.addEventListener('click', e => this.createItem(true));
+      if (!this.addonmode) {
+        this.panelCreateBtn = this.panel.querySelector('.add-button');
+        this.panelCreateBtn.addEventListener('click', e => this.createItem());
+        this.panelCreateBtn2 = this.panel.querySelector('.add-newwindow-button');
+        this.panelCreateBtn2.addEventListener('click', e => this.createItem(true));
+      }
       this.panelInput = this.panel.querySelector('.add-item-name');
       this.createMesage = this.panel.querySelector('.creating-message');
     }
@@ -75,84 +81,17 @@ class cMacro {
     textDom.style.fontFamily = textDom.value;
   }
   baseTemplate() {
-    return `<label class="add_template_name_label"><b>${this.tag} name</b>
-     <input class="add-item-name" type="text" style="width:15em;" /></label>
-      <button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
-      <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
-      <br class="new_button_break">
+    let template = `<label class="add_template_name_label"><b>${this.tag} name</b>
+     <input class="add-item-name" type="text" style="width:15em;" /></label>`;
+     if (!this.addonmode)
+      template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
+      <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>`;
+
+    template += `<br class="new_button_break">
       <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>`;
+
+    return template;
   }
-  static assetJSON(tag, key) {
-    if (!tag)
-      return '';
-    if (!key)
-      return '';
-
-    let asset = gAPPP.a.modelSets[tag].getCache(key);
-    if (!asset)
-      return '';
-    let ele = Object.assign({}, asset);
-
-    if (tag === 'block') {
-      let frames = gAPPP.a.modelSets['frame'].queryCache('parentKey', key);
-      let framesArray = [];
-      for (let i in frames)
-        framesArray.push(frames[i]);
-      ele.frames = framesArray;
-
-      let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', key);
-      let childArray = [];
-      for (let childKey in children) {
-        let childFrames = gAPPP.a.modelSets['frame'].queryCache('parentKey', childKey);
-        let childFramesArray = [];
-        for (let i in childFrames)
-          childFramesArray.push(childFrames[i]);
-        children[childKey].frames = childFramesArray;
-        childArray.push(children[childKey]);
-      }
-      ele.children = childArray;
-
-    }
-    delete ele.renderImageURL;
-    ele.assetExportTag = tag;
-    ele.assetExportKey = key;
-    return JSON.stringify(ele, null, 4);
-  }
-  async createItem(newWindow) {
-    this.newName = this.panelInput.value.trim();
-    if (this.panelInput.value === '') {
-      this.panelInput.value = 'Created ' + new Date().toISOString();
-      //alert('Please enter a name');
-      //return;
-    }
-    let existingTitles = gAPPP.a.modelSets[this.tag].queryCache('title', this.newName);
-    let keys = Object.keys(existingTitles);
-    if (keys.length > 0) {
-      alert(this.tag + ' asset already exists with title ' + this.newName);
-      return;
-    }
-
-    this.createMesage.style.display = 'block';
-
-    let newKey;
-    if (this[this.tag + 'Create'])
-      newKey = await this[this.tag + 'Create']();
-    else {
-      newKey = await this.create();
-    }
-    this.view.selectItem(newKey, newWindow);
-    this.createMesage.style.display = 'none';
-    if (this.addCallback)
-      await this.addCallback(newKey, this.newName);
-    this.panelInput.value = '';
-
-    return;
-  }
-  async create() {
-    let results = await gAPPP.activeContext.createObject(this.tag, this.newName);
-    return results.key;
-  }
-
   blockTemplate() {
     return `<select class="block-type-select">
      <option selected>Scene</option>
@@ -417,7 +356,7 @@ class cMacro {
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
-      gAPPP.copyDataToClipboard([this.export_csv]);
+      cMacro.copyDataToClipboard([this.export_csv]);
     });
 
     this.webfontsuggestionlist = this.panel.querySelector('#webfontsuggestionlist');
@@ -447,7 +386,7 @@ class cMacro {
       btn.addEventListener('click', e => file.click());
       field.addEventListener('input', e => {
         let path = field.value;
-        let obj = gAPPP.texturesFromFile[path];
+        let obj = this.app.texturesFromFile[path];
         if (obj) {
           let inputs = field.parentElement.parentElement.querySelectorAll('input');
           if (obj.scaleu)
@@ -529,7 +468,7 @@ class cMacro {
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
-      gAPPP.copyDataToClipboard([this.export_csv]);
+      cMacro.copyDataToClipboard([this.export_csv]);
     });
 
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV(e, i)));
@@ -549,10 +488,10 @@ class cMacro {
   meshUpdateCSV(e, ctl) {
     if (ctl && ctl.classList.contains('mesh_meshpath')) {
       let meshPath = ctl.value;
-      let meshIndex = gAPPP.meshesPaths.indexOf(meshPath);
+      let meshIndex = this.app.meshesPaths.indexOf(meshPath);
 
       if (meshIndex !== -1) {
-        let meshD = gAPPP.meshesDetails[meshIndex];
+        let meshD = this.app.meshesDetails[meshIndex];
         this.meshCSVFields.forEach((item, index) => {
           let value = meshD[item];
           if (!value)
@@ -567,11 +506,11 @@ class cMacro {
 
     let img = this.mesh_texturepath.value;
     if (img.substr(0, 3) === 'sb:')
-      img = gAPPP.cdnPrefix + 'textures/' + img.substring(3);
+      img = this.cdnPrefix + 'textures/' + img.substring(3);
     this.mesh_texture_img.setAttribute('src', img);
     let bump = this.mesh_bmppath.value;
     if (bump.substr(0, 3) === 'sb:')
-      bump = gAPPP.cdnPrefix + 'textures/' + bump.substring(3);
+      bump = this.cdnPrefix + 'textures/' + bump.substring(3);
     this.mesh_bump_img.setAttribute('src', bump);
 
     let csv = this.meshScrape();
@@ -606,7 +545,7 @@ class cMacro {
   async meshCreate() {
     let row = this.meshScrape();
 
-    let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+    let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
     return blockResult.key;
   }
   materialTemplate() {
@@ -652,7 +591,7 @@ class cMacro {
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
-      gAPPP.copyDataToClipboard([this.export_csv]);
+      cMacro.copyDataToClipboard([this.export_csv]);
     });
 
     this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
@@ -699,11 +638,11 @@ class cMacro {
     if (!texture)
       texture = '';
     if (texture) {
-      textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3) + '_D.jpg';
+      textureURL = this.cdnPrefix + 'textures/' + texture.substring(3) + '_D.jpg';
       speculartexture = texture + '_S.jpg';
       bumptexture = texture + '_N.jpg';
       if (texture.substr(-5).substring(0, 4) === 'grid') {
-        textureURL = gAPPP.cdnPrefix + 'textures/' + texture.substring(3) + '_D.png';
+        textureURL = this.cdnPrefix + 'textures/' + texture.substring(3) + '_D.png';
         hasAlpha = '1';
         texture += '_D.png';
       } else {
@@ -734,7 +673,7 @@ class cMacro {
   async materialCreate() {
     let row = this.materialScrape();
 
-    let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+    let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
     return blockResult.key;
   }
   _handleImageTextureUpload(fileCtl, field) {
@@ -745,9 +684,9 @@ class cMacro {
 
     field.value = 'Uploading...';
 
-    let fireSet = gAPPP.a.modelSets['block'];
+    let fireSet = this.app.a.modelSets['block'];
     let uKey = fireSet.getKey();
-    let key = gAPPP.a.profile.selectedWorkspace + `/${uKey}/`;
+    let key = this.app.a.profile.selectedWorkspace + `/${uKey}/`;
     fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
       field.value = uploadResult.downloadURL;
       this.blockUpdateCSV();
@@ -914,7 +853,7 @@ class cMacro {
             let img = p.querySelector('img');
             let url = f.value;
             if (url.substring(0, 3) === 'sb:')
-              url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
+              url = this.cdnPrefix + 'textures/' + url.substring(3);
 
             img.setAttribute('src', url);
             if (f.value)
@@ -943,40 +882,40 @@ class cMacro {
     if (bType === '2D Text Plane') {
       let row = this._shapeScrapeTextPlane();
 
-      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
       return blockResult.key;
     }
     if (bType === 'Web Font') {
       let row = this._blockScrapeWebFont();
 
-      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
-      gAPPP._updateGoogleFonts();
+      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
+      this.app._updateGoogleFonts();
       return blockResult.key;
     }
     if (bType === 'Text and Shape') {
       let row = this._blockScrapeTextAndShape();
 
-      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
       this.lastRowAdded = row;
       return blockResult.key;
     }
     if (bType === 'Scene') {
       let row = this._blockScrapeScene();
 
-      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
       return blockResult.key;
     }
     if (bType === 'Animated Line') {
       let row = this._blockScrapeAnimatedline();
 
-      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
       this.lastRowAdded = row;
       return blockResult.key;
     }
     if (bType === 'Connector Line') {
       let row = this._blockScrapeConnectorLine();
 
-      let blockResult = await (new gCSVImport(gAPPP.loadedWID)).addCSVRow(row);
+      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
       this.lastRowAdded = row;
       return blockResult.key;
     }
@@ -991,7 +930,7 @@ class cMacro {
       this.skyBoxImages.style.display = '';
       let imgs = this.skyBoxImages.querySelectorAll('img');
 
-      let skyboxPath = gAPPP.cdnPrefix + 'box/' + skybox + '/skybox';
+      let skyboxPath = this.cdnPrefix + 'box/' + skybox + '/skybox';
 
       imgs[0].setAttribute('src', skyboxPath + '_py.jpg');
       imgs[1].setAttribute('src', skyboxPath + '_nx.jpg');
@@ -1045,5 +984,84 @@ class cMacro {
         this.csv_import_preview.innerHTML = Papa.unparse([r]);
     } else
       this.csv_import_preview.innerHTML = new Date();
+  }
+
+  static copyDataToClipboard(dataRows, fieldOrder = []) {
+    if (!dataRows) return;
+    if (dataRows.length < 1)  return;
+
+    let firstObj = dataRows[0];
+    let firstKeys = Object.keys(firstObj);
+
+    firstKeys.forEach(key => {
+      if (fieldOrder.indexOf(key) === -1)
+        fieldOrder.push(key);
+    });
+
+    let tableGuts = '';
+    tableGuts += '<tr>';
+    fieldOrder.forEach((field) => {
+      tableGuts += '<td>' + field.toString() + '</td>';
+    });
+    tableGuts += '</tr>';
+    dataRows.forEach((row) => {
+      tableGuts += '<tr>';
+      fieldOrder.forEach((field) => {
+        let v = row[field];
+        if (!v) v = '';
+        tableGuts += '<td>' + v.toString() + '</td>';
+      });
+      tableGuts += '</tr>';
+    });
+
+    let html = '<table class="table_export">' + tableGuts + '</table>';
+    let el = document.createElement('div');
+    el.innerHTML = html;
+    el = el.children[0];
+    document.body.append(el);
+    let range = document.createRange();
+    let sel = window.getSelection();
+    sel.removeAllRanges();
+    try {
+      range.selectNodeContents(el);
+      sel.addRange(range);
+    } catch (e) {
+      range.selectNode(el);
+      sel.addRange(range);
+    }
+
+    document.execCommand("copy");
+
+    el.remove();
+  }
+  async createItem(newWindow) {
+    this.newName = this.panelInput.value.trim();
+    if (this.panelInput.value === '') {
+      this.panelInput.value = 'Created ' + new Date().toISOString();
+      //alert('Please enter a name');
+      //return;
+    }
+    let existingTitles = this.app.a.modelSets[this.tag].queryCache('title', this.newName);
+    let keys = Object.keys(existingTitles);
+    if (keys.length > 0) {
+      alert(this.tag + ' asset already exists with title ' + this.newName);
+      return;
+    }
+
+    this.createMesage.style.display = 'block';
+
+    let newKey;
+    if (this[this.tag + 'Create'])
+      newKey = await this[this.tag + 'Create']();
+    else {
+      newKey = await this.app.activeContext.createObject(this.tag, this.newName);
+    }
+    this.view.selectItem(newKey, newWindow);
+    this.createMesage.style.display = 'none';
+    if (this.addCallback)
+      await this.addCallback(newKey, this.newName);
+    this.panelInput.value = '';
+
+    return;
   }
 }

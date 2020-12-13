@@ -354,7 +354,7 @@ class cGeoView extends bView {
   }
   initBlockAddPanel() {
     this.add_block_panel = this.dialog.querySelector('.add_block_panel');
-    this.generate = new cMacro(this.add_block_panel, 'block', this);
+    this.generate = new cMacro(this.add_block_panel, 'block', this, gAPPP);
     this.generate.addCallback = (id, name) => {
       this.geoAddItem(name);
       this.closeHeaderBands();

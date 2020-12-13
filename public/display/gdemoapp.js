@@ -2,11 +2,8 @@ class gDemoApp extends gInstanceSuper {
   constructor() {
     super();
 
-    this.loadDataLists('sbimageslist');
-    this.loadDataLists('sbstoreimageslist');
-    this.loadDataLists('fontfamilydatalist');
-
-    this.loadDataLists('skyboxlist');
+    this.loadPickerData();
+    
     this.filterActiveWorkspaces = true;
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .then(() => this.a.signInAnon());

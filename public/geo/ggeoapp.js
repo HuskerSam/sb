@@ -1,7 +1,7 @@
 class gGeoApp extends gInstanceSuper {
   constructor() {
     super();
-    this.loadDataLists('fontfamilydatalist');
+    this.loadPickerData();
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .then(() => this.a.signInAnon());
     this.gpsInited = false;

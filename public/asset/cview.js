@@ -545,7 +545,7 @@ class cView extends bView {
     this.context.activate(null);
     this.dataview_record_key.selectedIndex = 0;
     this.key = '';
-    this.generate = new cMacro(this.addAssetPanel, this.tag, this);
+    this.generate = new cMacro(this.addAssetPanel, this.tag, this, gAPPP);
     this.assetsFieldsContainer = this.form_panel_view_dom.querySelector('.asset-fields-container');
     this.recordViewer = new cBandIcons(this.tag, this);
     this.expand_all_global_btn.style.display = '';
@@ -963,7 +963,7 @@ class cView extends bView {
     this.ieTextArea.value = JSON.stringify(outFrames).replace(/},/g, '},\n');
   }
   fetchExportJSON() {
-    this.ieTextArea.value = cMacro.assetJSON(this.tag, this.key);
+    this.ieTextArea.value = cWorkspace.assetJSON(this.tag, this.key);
   }
   async importFramesFromText() {
     let obj;

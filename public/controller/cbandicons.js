@@ -90,7 +90,7 @@ class cBandIcons extends bBand {
     this.dialog.openViewerForAsset(key);
   }
   downloadJSON(e, key) {
-    let json = cMacro.assetJSON(this.tag, key);
+    let json = cWorkspace.assetJSON(this.tag, key);
     let element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(json));
     element.setAttribute('download', this.tag + '-' + key + '-asset.json');

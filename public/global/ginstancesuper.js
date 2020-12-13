@@ -1,33 +1,24 @@
-class gInstanceSuper {
-  constructor(a) {
-    window.gAPPP = this;
-    this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
-    this.styleProfileDom = null;
-    this.activeContext = null;
+class cAppDefaults {
+  constructor() {
     this.fontsAdded = {};
-    this.lastStyleProfileCSS = '';
+    this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
     this.cdnPrefix = 'https://s3-us-west-2.amazonaws.com/hcwebflow/';
     this.shapeTypes = [
       'box', 'cylinder', 'sphere', 'text', 'plane', 'torus', 'torusknot'
     ];
-    this._initShapesList();
+    this._domShapeList = document.createElement('datalist');
+    this._domShapeList.id = 'applicationdynamicshapelistlookuplist';
+    this.jsonLibPrefix = '';
 
-    window.addEventListener("resize", () => this.resize());
-    firebase.database().ref('/.info/serverTimeOffset').once('value').then((data) => this.serverOffsetTime = data.val());
+    let innerHTML = '';
+    for (let i in this.shapeTypes)
+      innerHTML += '<option>' + this.shapeTypes[i] + '</option>';
+    this._domShapeList.innerHTML = innerHTML;
 
-    this.initialUILoad = true;
-
-    this.initializeAuthUI();
-    let div = document.createElement('div');
-    div.id = 'firebase-app-main-page';
-    document.body.insertBefore(div, document.body.firstChild);
-
-    this.a = new gAuthorization();
-    this.a.signInWithURL();
-    this.a.updateAuthUICallback = () => this.updateAuthUI();
+    document.body.appendChild(this._domShapeList);
   }
-  async loadDataLists(name) {
-    let rrr = await fetch(`/global/${name}.json`)
+  async _loadDataLists(name) {
+    let rrr = await fetch(`${this.jsonLibPrefix}/global/${name}.json`)
     let json = await rrr.json();
 
     let list = document.getElementById(name);
@@ -47,6 +38,100 @@ class gInstanceSuper {
     list.innerHTML = outHtml;
 
     return;
+  }
+  async loadPickerData() {
+    return await Promise.all([
+      this._loadDataLists('sbimageslist'),
+      this._loadDataLists('sbstoreimageslist'),
+      this._loadDataLists('sbmesheslist'),
+      this._loadDataLists('skyboxlist'),
+      this._loadDataLists('fontfamilydatalist')
+    ]);
+  }
+  async loadTextures() {
+    let rrr = await fetch(`${this.jsonLibPrefix}/assetlist/textures.json`)
+    let json = await rrr.json();
+
+    this.textureTextures = [];
+    this.bumpTextures = [];
+    this.floorTextures = [];
+    this.wallTextures = [];
+    this.rawTexturesFile = json;
+    this.texturesFromFile = [];
+    for (let c = 0, l = json.length; c < l; c++) {
+      let filterStr = json[c].filters;
+      if (!filterStr)
+        filterStr = '';
+      let filters = filterStr.split(',');
+      if (json[c].type === 'bump')
+        this.bumpTextures.push(json[c].path);
+      if (json[c].type === 'texture')
+        this.textureTextures.push(json[c].path);
+      if (filters.indexOf('floor') !== -1)
+        this.floorTextures.push(json[c].path);
+      if (filters.indexOf('wall') !== -1)
+        this.wallTextures.push(json[c].path);
+
+      this.texturesFromFile[json[c].path] = json[c];
+    }
+
+    this.meshesDetails = [];
+    let meshesResponse = await fetch(`${this.jsonLibPrefix}/assetlist/meshes.json`)
+    let text = await meshesResponse.text();
+    let meshesJson = JSON.parse(text);
+    this.meshesPaths = [];
+    for (let c = 0, l = meshesJson.length; c < l; c++) {
+      this.meshesDetails.push(meshesJson[c]);
+      this.meshesPaths.push(meshesJson[c].meshpath);
+    }
+
+    this.appendDataList('floorTexturesDataList', this.floorTextures, []);
+    this.appendDataList('wallTexturesDataList', this.wallTextures, []);
+    this.appendDataList('meshesDefaultsDataList', this.meshesPaths, []);
+
+    return;
+  }
+  appendDataList(listid, options, defaults = ['color: 1,1,1']) {
+    let currentList = document.getElementById(listid);
+    if (currentList)
+      currentList.remove();
+
+    currentList = document.createElement('datalist');
+    currentList.id = listid;
+
+    let outHtml = '';
+    for (let c = 0, l = defaults.length; c < l; c++)
+      outHtml += `<option>${defaults[c]}</option>`;
+
+    for (let c = 0, l = options.length; c < l; c++)
+      outHtml += `<option>${options[c]}</option>`;
+
+    currentList.innerHTML = outHtml;
+    document.body.appendChild(currentList);
+  }
+}
+
+class gInstanceSuper extends cAppDefaults {
+  constructor() {
+    super();
+    window.gAPPP = this;
+    this.styleProfileDom = null;
+    this.activeContext = null;
+    this.lastStyleProfileCSS = '';
+
+    window.addEventListener("resize", () => this.resize());
+    firebase.database().ref('/.info/serverTimeOffset').once('value').then((data) => this.serverOffsetTime = data.val());
+
+    this.initialUILoad = true;
+
+    this.initializeAuthUI();
+    let div = document.createElement('div');
+    div.id = 'firebase-app-main-page';
+    document.body.insertBefore(div, document.body.firstChild);
+
+    this.a = new gAuthorization();
+    this.a.signInWithURL();
+    this.a.updateAuthUICallback = () => this.updateAuthUI();
   }
   updateAuthUI() {
     let loginPage = document.getElementById('firebase-app-login-page');
@@ -131,23 +216,12 @@ class gInstanceSuper {
     }
 
     if (fontLoaded) {
-      this.loadDataLists('fontfamilydatalist');
+      this._loadDataLists('fontfamilydatalist');
       //allow fonts to reflow
       return new Promise((resolve, reject) => {
         setTimeout(() => resolve(), 1);
       });
     }
-  }
-  _initShapesList() {
-    this._domShapeList = document.createElement('datalist');
-    this._domShapeList.id = 'applicationdynamicshapelistlookuplist';
-
-    let innerHTML = '';
-    for (let i in this.shapeTypes)
-      innerHTML += '<option>' + this.shapeTypes[i] + '</option>';
-    this._domShapeList.innerHTML = innerHTML;
-
-    document.body.appendChild(this._domShapeList);
   }
   __genBaseAppStyle() {
     let canvasColor = gAPPP.a.profile.canvasColor;
@@ -401,54 +475,6 @@ class gInstanceSuper {
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
     this.resize();
-  }
-  copyDataToClipboard(dataRows, fieldOrder = []) {
-    if (!dataRows) return;
-    if (dataRows.length < 1)  return;
-
-    let firstObj = dataRows[0];
-    let firstKeys = Object.keys(firstObj);
-
-    firstKeys.forEach(key => {
-      if (fieldOrder.indexOf(key) === -1)
-        fieldOrder.push(key);
-    });
-
-    let tableGuts = '';
-    tableGuts += '<tr>';
-    fieldOrder.forEach((field) => {
-      tableGuts += '<td>' + field.toString() + '</td>';
-    });
-    tableGuts += '</tr>';
-    dataRows.forEach((row) => {
-      tableGuts += '<tr>';
-      fieldOrder.forEach((field) => {
-        let v = row[field];
-        if (!v) v = '';
-        tableGuts += '<td>' + v.toString() + '</td>';
-      });
-      tableGuts += '</tr>';
-    });
-
-    let html = '<table class="table_export">' + tableGuts + '</table>';
-    let el = document.createElement('div');
-    el.innerHTML = html;
-    el = el.children[0];
-    document.body.append(el);
-    let range = document.createRange();
-    let sel = window.getSelection();
-    sel.removeAllRanges();
-    try {
-      range.selectNodeContents(el);
-      sel.addRange(range);
-    } catch (e) {
-      range.selectNode(el);
-      sel.addRange(range);
-    }
-
-    document.execCommand("copy");
-
-    el.remove();
   }
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">
