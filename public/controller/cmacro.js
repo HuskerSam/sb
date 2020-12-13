@@ -1,9 +1,8 @@
 class cMacro {
-  constructor(panel, tag, view, app, addonmode = false) {
+  constructor(panel, tag, app, addonmode = false) {
     this.app = app;
     this.panel = panel;
     this.tag = tag;
-    this.view = view;
     this.addonmode = true;
 
     this.cdnPrefix = this.app.cdnPrefix;
@@ -237,7 +236,7 @@ class cMacro {
         </div>
         <br>
         <div style="text-align:center">
-          <img src="/images/scenebox.png" style="width:75%" />
+          <img src="${this.app.jsonLibPrefix}/images/scenebox.png" style="width:75%" />
         </div>
       </div>
       <div class="buildingscenefeatures" style="display:none;">
@@ -313,7 +312,7 @@ class cMacro {
           <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
         </div>
         <div style="text-align:center">
-          <img src="/images/buildingtemplate.png" style="width:75%" />
+          <img src="${this.app.jsonLibPrefix}/images/buildingtemplate.png" style="width:75%" />
         </div>
       </div>
     </div>
@@ -1056,7 +1055,7 @@ class cMacro {
     else {
       newKey = await this.app.activeContext.createObject(this.tag, this.newName);
     }
-    this.view.selectItem(newKey, newWindow);
+    this.app.mV.selectItem(newKey, newWindow);
     this.createMesage.style.display = 'none';
     if (this.addCallback)
       await this.addCallback(newKey, this.newName);

@@ -545,7 +545,7 @@ class cView extends bView {
     this.context.activate(null);
     this.dataview_record_key.selectedIndex = 0;
     this.key = '';
-    this.generate = new cMacro(this.addAssetPanel, this.tag, this, gAPPP);
+    this.generate = new cMacro(this.addAssetPanel, this.tag, gAPPP);
     this.assetsFieldsContainer = this.form_panel_view_dom.querySelector('.asset-fields-container');
     this.recordViewer = new cBandIcons(this.tag, this);
     this.expand_all_global_btn.style.display = '';
@@ -554,19 +554,7 @@ class cView extends bView {
     this.deleteAssetButton.style.display = 'none';
     this.snapshotAssetButton.style.display = 'none';
 
-    let helpTag = this.tag;
-    if (helpTag === 'texture')
-      helpTag = 'material';
-    if (helpTag !== '')
-      helpTag += 'help';
-    else
-      helpTag = 'overview';
-    let res = await fetch(`/doc/${helpTag}.html`, {
-      cache: "no-cache"
-    })
-    let html = await res.text();
-    this.helpViewer.innerHTML = html;
-
+    gAPPP.updateHelpView(this.tag, this.helpViewer);
     this._updateHelpSections(true);
   }
   async updateDisplayForWorkspaceDetails() {

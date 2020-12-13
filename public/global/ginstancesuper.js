@@ -109,6 +109,23 @@ class cAppDefaults {
     currentList.innerHTML = outHtml;
     document.body.appendChild(currentList);
   }
+  async updateHelpView(helpTag, dom) {
+    if (helpTag === 'texture')
+      helpTag = 'material';
+    if (helpTag !== '')
+      helpTag += 'help';
+    else
+      helpTag = 'overview';
+    let res = await fetch(`${this.jsonLibPrefix}/doc/${helpTag}.html`, {
+      cache: "no-cache"
+    })
+    let html = await res.text();
+
+    if (dom)
+      dom.innerHTML = html;
+
+    return html;
+  }
 }
 
 class gInstanceSuper extends cAppDefaults {

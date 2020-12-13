@@ -5,6 +5,7 @@ function onOpen() {
     .addItem('Cloud Deploy', 'showCloudDialog')
     .addItem('Initialize Data', 'showInitDialog')
     .addItem('Song Import', 'showSongDialog')
+    .addItem('Wizards', 'showWizardDialog')
     .addToUi();
 }
 
@@ -18,6 +19,13 @@ function showCloudDialog() {
   refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile('clouddialog')
     .setTitle('Cloud Deploy')
+  SpreadsheetApp.getUi().showSidebar(html);
+}
+
+function showWizardDialog() {
+  refreshOAuth();
+  var html = HtmlService.createHtmlOutputFromFile('wizarddialog')
+    .setTitle('CSV Wizard')
   SpreadsheetApp.getUi().showSidebar(html);
 }
 

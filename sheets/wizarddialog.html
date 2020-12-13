@@ -5,39 +5,77 @@
   <base target="_top">
   <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+  <link rel="stylesheet" href="https://handtop.com/global/common.css">
+  <script src="https://handtop.com/global/ginstancesuper.js"></script>
   <script src="https://handtop.com/controller/cmacro.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
   <style>
     .item_holder {
       position: relative;
     }
 
-  .basic_item {
-    border-radius: 50%;
-    width: 100px;
-    height: 40px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-  }
-  body {
-    text-align: center;
-  }
+    .basic_item {
+      border-radius: 50%;
+      width: 100px;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
 
-</style>
+    body {
+      text-align: center;
+    }
+
+    .skybox-preview-images img {
+      max-height: 5em;
+      max-width: 5em;
+    }
+    .csv_import_preview {
+      width: inherit;
+      overflow:hidden;
+      overflow-y: scroll;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="macro_details">
+  <div style="height:inherit;overflow:auto;">
+    <select id="wizard_choices">
+      <option value="block">Blocks</option>
+      <option value="mesh">Meshes</option>
+      <option value="material">Materials</option>
+    </select>
 
+    <div id="macro_details">
+    </div>
+    <div id="helpviewer">
+    </div>
   </div>
 
   <script>
     class MacroHelper {
       constructor() {
+        this.panel = document.getElementById('macro_details');
+        this.wizard_choices = document.getElementById('wizard_choices');
+        this.helpviewer = document.getElementById('helpviewer');
+        this.wizard_choices.addEventListener('change', e => this.changeTag());
 
+        this.app = new cAppDefaults();
+        this.app.jsonLibPrefix = 'https://handtop.com';
+        this.app.loadTextures();
+        this.app.loadPickerData();
+        this.changeTag();
+        console.log('app', this.app);
+      }
+      async changeTag() {
+        this.macro = new cMacro(this.panel, this.wizard_choices.value, this.app, true);
+        console.log('macro', this.macro);
+
+        await this.app.updateHelpView(this.wizard_choices.value, this.helpviewer);
 
       }
     }

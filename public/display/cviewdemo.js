@@ -1835,7 +1835,7 @@ class cViewDemo extends bView {
   }
   initBlockAddPanel() {
     this.raw_macro_panel = this.dialog.querySelector('.raw_macro_panel');
-    this.generate = new cMacro(this.raw_macro_panel, 'block', this, gAPPP);
+    this.generate = new cMacro(this.raw_macro_panel, 'block', gAPPP);
     this.generate.addCallback = async (id, blockName) => {
       if (blockName === undefined) {
         alert('no block name');
