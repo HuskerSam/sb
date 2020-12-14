@@ -35,16 +35,16 @@
     .csv_import_preview {
       display: block;
     }
+
     .csv_import_preview {
       width: inherit;
-      overflow:hidden;
+      overflow: hidden;
       overflow-y: scroll;
     }
 
     .add-asset-template-panel input {
       margin: 0;
     }
-
   </style>
 </head>
 
@@ -53,7 +53,7 @@
     <select id="wizard_choices">
       <option value="block">Blocks</option>
       <option value="mesh">Meshes</option>
-      <option value="material">Materials   </option>
+      <option value="material">Materials </option>
     </select>
 
     <div id="macro_details" class="add-asset-template-panel">
@@ -80,9 +80,71 @@
       async changeTag() {
         this.macro = new cMacro(this.panel, this.wizard_choices.value, this.app, true);
         console.log('macro', this.macro);
+        this.macro._handleImageTextureUpload = (fileCtl, field) => {
+          return this._handleImageTextureUpload(fileCtl, field);
+        };
 
         await this.app.updateHelpView(this.wizard_choices.value, this.helpviewer);
 
+        return null;
+      }
+      async _handleImageTextureUpload(fileCtl, field) {
+        let fileBlob = fileCtl.files[0];
+
+        if (!fileBlob)
+          return;
+        field.value = 'Uploading...';
+        let filename = fileBlob.name;
+        let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+
+        let target = publishConfig[0].defaulttarget;
+        let token = publishConfig[0].defaulttoken;
+        let project = publishConfig[0].defaultproject;
+
+        if (!project) {
+          alert('No default project pinned');
+          return;
+        }
+
+        if (!target) {
+          alert('No default target pinned');
+        }
+
+        let url = 'https://us-central1-' + target + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(project);
+        url += '&token=' + encodeURIComponent(token);
+        url += '&filename=' + encodeURIComponent(filename);
+
+        let body = new FormData();
+        body.append('file', fileBlob);
+
+        let genResponse = await fetch(url, {
+          method: "post",
+          body
+        });
+        let genResults = await genResponse.json();
+        if (genResults.success)
+          if (genResults.result_msg.success) {
+            field.value = genResults.result_msg.signed_url;
+            let event = new Event('input', {
+              bubbles: true,
+              cancelable: true,
+            });
+
+            field.dispatchEvent(event);
+            return genResults;
+          }
+
+        field.value = '';
+        alert('upload did not complete');
+        return null;
+      }
+      grabSheetCSVJSONData(sheetName) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log('json for sheet', sheetName, result.length);
+            resolve(result);
+          }).getJSONFromCSVSheet(sheetName);
+        });
       }
     }
 
