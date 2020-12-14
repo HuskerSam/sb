@@ -79,7 +79,7 @@ class gCSVImport {
           key: null
         };
 
-      let texturePrefix = textureName.substring(0, 7);
+      let texturePrefix = data.title.substring(0, 7);
       if (texturePrefix === 'https:/' || texturePrefix === 'http://')
         return {
           key: null
