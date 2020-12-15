@@ -3,7 +3,7 @@ class cMacro {
     this.app = app;
     this.panel = panel;
     this.tag = tag;
-    this.addonmode = true;
+    this.addonmode = addonmode;
 
     this.cdnPrefix = this.app.cdnPrefix;
     this.webFonts = [
@@ -219,18 +219,19 @@ class cMacro {
       <div class="skyboxscenefeatures">
         <label><span>Skybox Size</span><input type="text" class="skyboxsize" value="400" /></label>
         <br>
-        <label><span>Ground</span><input type="text" style="width:10em;" class="groundimage" list="sbimageslist" /></label>
+        <label><span>Ground</span><input type="text" style="width:10em;" class="groundimage texturepathinput" list="sbimageslist" /></label>
+        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
         <br>
         <label><span>Scale v</span><input type="text" class="skyboxgroundscalev" value="1" /></label>
         <label><span>Scale u</span><input type="text" class="skyboxgroundscaleu" value="1" /></label>
         <br>
         <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
         <br>
-        <label><span>Skybox Template</span><input type="text" style="width:10em;" class="skybox" list="skyboxlist" /></label>
-        <div class="skybox-preview-images">
-          <img crossorigin="anonymous">
+        <label><span>Skybox Template</span><input type="text" style="width:10em;" class="skybox texturepathinput" list="skyboxlist" /></label>
+        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+        <br>
+        <img crossorigin="anonymous" class="skyboximage" style="max-width:100%;max-height: 10em;">
         </div>
-      </div>
       <div class="buildingscenefeatures" style="display:none;">
         <label><span>w (x)</span><input type="text" class="width" value="50" /></label>
         <label><span>d (z)</span><input type="text" class="depth" value="100" /></label>
@@ -328,9 +329,9 @@ class cMacro {
     this.webFontPanel = this.panel.querySelector('.web-font-block-add-options');
     this.text2dpanel = this.panel.querySelector('.create-2d-text-plane');
 
-    this.skyBoxImages = this.sceneBlockPanel.querySelector('.skybox-preview-images');
     this.skyBoxInput = this.sceneBlockPanel.querySelector('.skybox');
     this.skyBoxInput.addEventListener('input', e => this.blockSkyboxChange());
+    this.skyboximage = this.sceneBlockPanel.querySelector('.skyboximage');
 
     let sceneRadios = this.sceneBlockPanel.querySelectorAll('.sceneaddtype');
     sceneRadios.forEach(rdo => {
@@ -865,6 +866,9 @@ class cMacro {
       csv_row.height = csv_row.skyboxsize;
       csv_row.depth = csv_row.skyboxsize;
     }
+
+    this.blockSkyboxChange();
+
     return csv_row;
   }
   async blockCreate() {
@@ -923,12 +927,10 @@ class cMacro {
     }
 
     if (skybox === '')
-      this.skyBoxImages.style.display = 'none';
+      this.skyboximage.style.display = 'none';
     else {
-      this.skyBoxImages.style.display = '';
-      let imgs = this.skyBoxImages.querySelectorAll('img');
-
-      imgs[0].setAttribute('src', skybox);
+      this.skyboximage.style.display = '';
+      this.skyboximage.setAttribute('src', skybox);
 
     }
   }

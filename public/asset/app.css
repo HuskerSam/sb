@@ -237,11 +237,6 @@ select {
   margin-right: 0;
 }
 
-.skybox-preview-images img {
-  max-height: 10em;
-  max-width: 100%;
-}
-
 .font-size-main-view {
   height: 10.7em;
   margin-right: 0;
