@@ -218,15 +218,15 @@ class cMacro {
       <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span>Building</span></label>
       <div class="skyboxscenefeatures">
         <label><span>Skybox Size</span><input type="text" class="skyboxsize" value="400" /></label>
-        <br>
-        <label><span>Ground</span><input type="text" style="width:10em;" class="groundimage texturepathinput" list="sbimageslist" /></label>
-        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-        <br>
-        <label><span>Scale v</span><input type="text" class="skyboxgroundscalev" value="1" /></label>
-        <label><span>Scale u</span><input type="text" class="skyboxgroundscaleu" value="1" /></label>
-        <br>
-        <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
-        <br>
+        <div>
+          <label><span>Ground</span><input type="text" style="width:10em;" class="groundimage texturepathinput" list="groundTexturesDataList" /></label>
+          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+          <br>
+          <label><span>Scale v</span><input type="text" class="skyboxgroundscalev" value="1" /></label>
+          <label><span>Scale u</span><input type="text" class="skyboxgroundscaleu" value="1" /></label>
+          <br>
+          <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
+        </div>
         <label><span>Skybox Template</span><input type="text" style="width:10em;" class="skybox texturepathinput" list="skyboxlist" /></label>
         <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
         <br>

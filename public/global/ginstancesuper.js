@@ -49,32 +49,36 @@ class cAppDefaults {
     ]);
   }
   async loadTextures() {
-    let rrr = await fetch(`${this.jsonLibPrefix}/assetlist/textures.json`)
-    let json = await rrr.json();
-
-    this.textureTextures = [];
-    this.bumpTextures = [];
-    this.floorTextures = [];
-    this.wallTextures = [];
-    this.rawTexturesFile = json;
     this.texturesFromFile = [];
-    for (let c = 0, l = json.length; c < l; c++) {
-      let filterStr = json[c].filters;
-      if (!filterStr)
-        filterStr = '';
-      let filters = filterStr.split(',');
-      if (json[c].type === 'bump')
-        this.bumpTextures.push(json[c].path);
-      if (json[c].type === 'texture')
-        this.textureTextures.push(json[c].path);
-      if (filters.indexOf('floor') !== -1)
-        this.floorTextures.push(json[c].path);
-      if (filters.indexOf('wall') !== -1)
-        this.wallTextures.push(json[c].path);
+    let promises = [];
+    promises.push(this.loadTextureList(`${this.jsonLibPrefix}/assetlist/floorlist.json`, 'floorTexturesDataList'));
+    promises.push(this.loadTextureList(`${this.jsonLibPrefix}/assetlist/walllist.json`, 'wallTexturesDataList'));
+    promises.push(this.loadTextureList(`${this.jsonLibPrefix}/assetlist/texturelist.json`, 'textureTexturesDataList'));
+    promises.push(this.loadTextureList(`${this.jsonLibPrefix}/assetlist/normallist.json`, 'normalTexturesDataList'));
+    promises.push(this.loadTextureList(`${this.jsonLibPrefix}/assetlist/groundlist.json`, 'groundTexturesDataList'));
 
-      this.texturesFromFile[json[c].path] = json[c];
-    }
+    await Promise.all(promises);
 
+    await this.loadMeshes();
+
+    return null;
+  }
+  async loadTextureList(url, listid) {
+    let fetched = await fetch(url);
+    let data = await fetched.json();
+
+    if (!data)
+      return [];
+    let list = [];
+    data.forEach(i =>      {
+      this.texturesFromFile[i.path] = i;
+      list.push(i.path);
+    });
+    this.appendDataList(listid, list, []);
+
+    return data;
+  }
+  async loadMeshes() {
     this.meshesDetails = [];
     let meshesResponse = await fetch(`${this.jsonLibPrefix}/assetlist/meshes.json`)
     let text = await meshesResponse.text();
@@ -85,8 +89,6 @@ class cAppDefaults {
       this.meshesPaths.push(meshesJson[c].meshpath);
     }
 
-    this.appendDataList('floorTexturesDataList', this.floorTextures, []);
-    this.appendDataList('wallTexturesDataList', this.wallTextures, []);
     this.appendDataList('meshesDefaultsDataList', this.meshesPaths, []);
 
     return;
