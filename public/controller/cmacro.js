@@ -227,7 +227,7 @@ class cMacro {
           <br>
           <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
         </div>
-        <label><span>Skybox Template</span><input type="text" style="width:10em;" class="skybox texturepathinput" list="skyboxlist" /></label>
+        <label><span>Skybox Equirect</span><input type="text" style="width:10em;" class="skybox texturepathinput" list="skyboxlist" /></label>
         <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
         <br>
         <img crossorigin="anonymous" class="skyboximage" style="max-width:100%;max-height: 10em;">
@@ -243,19 +243,17 @@ class cMacro {
         <br>
         <div class="image_upload_building">
           <label><span>floorimage</span><input type="text" style="width:10em;" class="floorimage texturepathinput" list="floorTexturesDataList" /></label>
-          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
-          <label><span>floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
-          <label><span>floorscaleu (z)</span><input type="text" class="floorscaleu" value="1" /></label>
+          <label><span>&nbsp;floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
+          <label><span>&nbsp;floorscaleu (z)</span><input type="text" class="floorscaleu" value="1" /></label>
         </div>
         <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
         <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
         <br>
         <div class="image_upload_building">
           <label><span>backwallimage</span><input type="text" style="width:10em;" class="backwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
@@ -267,7 +265,6 @@ class cMacro {
         <br>
         <div class="image_upload_building">
           <label><span>frontwallimage</span><input type="text" style="width:10em;" class="frontwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
@@ -279,7 +276,6 @@ class cMacro {
         <br>
         <div class="image_upload_building">
           <label><span>leftwallimage</span><input type="text" style="width:10em;" class="leftwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
@@ -291,7 +287,6 @@ class cMacro {
         <br>
         <div class="image_upload_building">
           <label><span>rightwallimage</span><input type="text" style="width:10em;" class="rightwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>
@@ -303,7 +298,6 @@ class cMacro {
         <br>
         <div class="image_upload_building">
           <label><span>ceilingwallimage</span><input type="text" style="width:10em;" class="ceilingwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <br>
           <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
           <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
           <br>

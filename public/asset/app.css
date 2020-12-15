@@ -12,6 +12,7 @@ body {
 button {
   font-size: 1.35em;
   margin: 0 .1em;
+  min-width: auto;
 }
 
 input[type="text"] {
