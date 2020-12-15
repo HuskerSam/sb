@@ -18,7 +18,7 @@ class cAppDefaults {
     document.body.appendChild(this._domShapeList);
   }
   async _loadDataLists(name) {
-    let rrr = await fetch(`${this.jsonLibPrefix}/global/${name}.json`)
+    let rrr = await fetch(`${this.jsonLibPrefix}/assetlist/${name}.json`)
     let json = await rrr.json();
 
     let list = document.getElementById(name);

@@ -768,7 +768,7 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   floatLeft: true,
   clearLeft: true
 }, {
-  title: 'Skybox',
+  title: 'Equirect Skybox',
   fireSetField: 'skybox',
   dataListId: 'skyboxlist',
   group: 'ground',

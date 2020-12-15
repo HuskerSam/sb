@@ -228,11 +228,7 @@ class cMacro {
         <br>
         <label><span>Skybox Template</span><input type="text" style="width:10em;" class="skybox" list="skyboxlist" /></label>
         <div class="skybox-preview-images">
-          <img crossorigin="anonymous" style="position:relative;left:5em;top:.25em;">
-          <div>
-            <img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous"><img crossorigin="anonymous">
-          </div>
-          <img crossorigin="anonymous" style="position:relative;left:5em;top:-.25em;">
+          <img crossorigin="anonymous">
         </div>
         <br>
         <div style="text-align:center">
@@ -935,14 +931,8 @@ class cMacro {
       this.skyBoxImages.style.display = '';
       let imgs = this.skyBoxImages.querySelectorAll('img');
 
-      let skyboxPath = this.cdnPrefix + 'box/' + skybox + '/skybox';
+      imgs[0].setAttribute('src', skybox);
 
-      imgs[0].setAttribute('src', skyboxPath + '_py.jpg');
-      imgs[1].setAttribute('src', skyboxPath + '_nx.jpg');
-      imgs[2].setAttribute('src', skyboxPath + '_pz.jpg');
-      imgs[3].setAttribute('src', skyboxPath + '_px.jpg');
-      imgs[4].setAttribute('src', skyboxPath + '_nz.jpg');
-      imgs[5].setAttribute('src', skyboxPath + '_ny.jpg');
     }
   }
   blockHelperChange() {

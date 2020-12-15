@@ -62,14 +62,43 @@ class wBlock {
     if (!this.blockRawData.skybox)
       return;
 
-    let skyboxPath = gAPPP.cdnPrefix + 'box/' + this.blockRawData.skybox + '/skybox';
+    let equipath = this.blockRawData.skybox;
+    //'https://hcwebflow.s3-us-west-2.amazonaws.com/equirect/cartoon_fluffybluesky.jpg';
     let skyboxSize = GLOBALUTIL.getNumberOrDefault(this.blockRawData.skyboxSize, 800.0);
+
+    if (!BABYLON.equirectLoadFixed) {
+      BABYLON.equirectLoadFixed = true;
+      BABYLON.EquiRectangularCubeTexture.prototype.loadImage =
+        function(e, t) {
+          var i = this,
+            n = document.createElement("canvas"),
+            r = new Image;
+          r.setAttribute('crossorigin', 'anonymous');
+          r.addEventListener("load", (function() {
+              i._width = r.width,
+                i._height = r.height,
+                n.width = i._width,
+                n.height = i._height;
+              var t = n.getContext("2d");
+              t.drawImage(r, 0, 0);
+              var o = t.getImageData(0, 0, r.width, r.height);
+              i._buffer = o.data.buffer,
+                n.remove(),
+                e()
+            })),
+            r.addEventListener("error", (function(e) {
+              t && t(i.getClassName() + " could not be loaded", e)
+            })),
+            r.src = this.url
+        };
+    }
+
     let skybox = BABYLON.Mesh.CreateBox("skyBox", skyboxSize, this.context.scene);
     skybox.isPickable = false;
-    let skyboxMaterial = new BABYLON.StandardMaterial(skyboxPath, this.context.scene);
+    let skyboxMaterial = new BABYLON.StandardMaterial(equipath, this.context.scene);
     skyboxMaterial.backFaceCulling = false;
 
-    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(skyboxPath, this.context.scene);
+    skyboxMaterial.reflectionTexture = new BABYLON.EquiRectangularCubeTexture(equipath, this.context.scene, skyboxSize);
     skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
     skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
