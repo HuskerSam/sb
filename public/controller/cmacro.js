@@ -230,10 +230,6 @@ class cMacro {
         <div class="skybox-preview-images">
           <img crossorigin="anonymous">
         </div>
-        <br>
-        <div style="text-align:center">
-          <img src="${this.app.jsonLibPrefix}/images/scenebox.png" style="width:75%" />
-        </div>
       </div>
       <div class="buildingscenefeatures" style="display:none;">
         <label><span>w (x)</span><input type="text" class="width" value="50" /></label>
@@ -312,9 +308,6 @@ class cMacro {
           <br>
           <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
           <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
-        </div>
-        <div style="text-align:center">
-          <img src="${this.app.jsonLibPrefix}/images/buildingtemplate.png" style="width:75%" />
         </div>
       </div>
     </div>
