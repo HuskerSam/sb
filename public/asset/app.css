@@ -238,8 +238,8 @@ select {
 }
 
 .skybox-preview-images img {
-  max-height: 5em;
-  max-width: 5em;
+  max-height: 10em;
+  max-width: 100%;
 }
 
 .font-size-main-view {

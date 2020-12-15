@@ -925,6 +925,10 @@ class cMacro {
   blockSkyboxChange() {
     let skybox = this.skyBoxInput.value.trim();
 
+    if (skybox.substring(0, 3) === 'sb:') {
+      skybox = this.cdnPrefix + 'textures/' + skybox.substring(3);
+    }
+
     if (skybox === '')
       this.skyBoxImages.style.display = 'none';
     else {

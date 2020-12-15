@@ -63,7 +63,9 @@ class wBlock {
       return;
 
     let equipath = this.blockRawData.skybox;
-    //'https://hcwebflow.s3-us-west-2.amazonaws.com/equirect/cartoon_fluffybluesky.jpg';
+    if (equipath.substring(0, 3) === 'sb:') {
+      equipath = gAPPP.cdnPrefix + 'textures/' + equipath.substring(3);
+    }
     let skyboxSize = GLOBALUTIL.getNumberOrDefault(this.blockRawData.skyboxSize, 800.0);
 
     if (!BABYLON.equirectLoadFixed) {
