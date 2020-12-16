@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Complex Layout",
+    "key": "ComplexCircuit,ComplexRanges: Ranges"
+  },
+  {
+    "name": "Simple Layout",
+    "key": "SimpleCircuit,SimpleRanges: Ranges"
+  },
+  {
+    "name": "Product List",
+    "key": "ProductList"
+  }
+]

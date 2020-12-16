@@ -38,10 +38,7 @@
   <hr>
   <b>Templates</b>
   <br>
-  <select style="width:90%;text-align:left;" size="4">
-    <option selected>Complex Layout</option>
-    <option>Simple Layout</option>
-    <option>Product List</option>
+  <select id="templateslist" style="width:90%;text-align:left;" size="4">
   </select>
   <br>
   <label>Name <input id="sheetname"></label>
@@ -61,16 +58,40 @@
         this.create_assetranges.addEventListener('click', e => this.createSheet('AssetRanges', 'Asset Ranges'));
 
         this.sheetname = document.getElementById('sheetname');
-        this.sheetname.addEventListener('click', e => this.createSheet());
+
+        this.templateslist = document.getElementById('templateslist');
+        this.fillTemplateList();
 
         this.create_layout_btn = document.getElementById('create_layout_btn');
+        this.create_layout_btn.addEventListener('click', e => this.processTemplate());
       }
-      async createSheet(layoutName = null, sheetName = null) {
+      async fillTemplateList() {
+        let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
+          method: "get"
+        });
+        let genResults = await genResponse.json();
+
+        let html = '';
+        console.log(genResults);
+        let selected = 'selected';
+        genResults.forEach(i => {
+          html += `<option value="${i.key}" ${selected}>${i.name}</option>`;
+          selected = '';
+        });
+        this.templateslist.innerHTML = html;
+      }
+      async createSheet(layoutName, sheetName, baseSheetName = '') {
+        let sheets = layoutName.split(',');
+
         this.create_layout_btn.innerHTML = '...';
         let genResponse = await fetch('https://www.handtop.com/addontemplates/template_' + layoutName + '.json', {
           method: "get"
         });
-        let genResults = await genResponse.json();
+        let genText = await genResponse.text();
+        if (baseSheetName)
+          genText = genText.split('##sheetname').join(baseSheetName);
+
+        let genResults = JSON.parse(genText);
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             this.create_layout_btn.innerHTML = 'Create Sheet';
@@ -79,6 +100,28 @@
             resolve(result);
           }).createSheetFromTemplate(sheetName, genResults);
         });
+      }
+      async processTemplate() {
+        let sheetName = this.sheetname.value;
+        let templateString = this.templateslist.value;
+        let templates = templateString.split(',');
+
+        if (!sheetName) {
+          alert('Sheet name required');
+          return null;
+        }
+
+        let promises = [];
+        templates.forEach((item, i) => {
+          let parts = item.split(':');
+          let suffix = parts[1];
+          if (!suffix)
+            suffix = '';
+          let name = sheetName + suffix;
+          promises.push(this.createSheet(parts[0], name, sheetName));
+        });
+
+        return Promise.all(promises);
       }
     }
 
