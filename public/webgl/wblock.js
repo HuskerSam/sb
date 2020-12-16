@@ -95,6 +95,9 @@ class wBlock {
         };
     }
 
+    if (equipath.substring(0,6) === 'skybox')
+      return;
+      
     let skybox = BABYLON.Mesh.CreateBox("skyBox", skyboxSize, this.context.scene);
     skybox.isPickable = false;
     let skyboxMaterial = new BABYLON.StandardMaterial(equipath, this.context.scene);
@@ -107,6 +110,7 @@ class wBlock {
     skyboxMaterial.disableLighting = true;
     skybox.material = skyboxMaterial;
     this.skyboxObject = skybox;
+
   }
   containsLight() {
     if (this.blockRawData.childType === 'light')
