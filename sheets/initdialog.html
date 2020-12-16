@@ -10,75 +10,74 @@
       position: relative;
     }
 
-  .basic_item {
-    border-radius: 50%;
-    width: 100px;
-    height: 40px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-  }
-  body {
-    text-align: center;
-  }
+    .basic_item {
+      border-radius: 50%;
+      width: 100px;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
 
-</style>
+    body {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
   <br>
-  <button id="initialize_configuration_btn" class="green">Initialize Configuration</button>
+  <button id="create_publishconfig" class="blue">Create PublishConfig</button>
   <br><br>
-  <button id="create_layout_btn" class="green">Initialize Layout</button>
+  <button id="create_publishlist" class="blue">Create PublishList</button>
   <br><br>
-  <button id="create_productlist_btn" class="green">Initialize Product List</button>
+  <button id="create_assetranges" class="blue">Create Asset Ranges</button>
+  <hr>
+  <b>Templates</b>
+  <br>
+  <select style="width:90%;text-align:left;" size="4">
+    <option selected>Complex Layout</option>
+    <option>Simple Layout</option>
+    <option>Product List</option>
+  </select>
+  <br>
+  <label>Name <input id="sheetname"></label>
+  <br>
+  <button id="create_layout_btn" class="green">Create Sheet</button>
 
   <script>
     class PublishWeb {
       constructor() {
-        this.initialize_configuration_btn = document.getElementById('initialize_configuration_btn');
-        this.initialize_configuration_btn.addEventListener('click', e => this.initializeConfiguration());
+        this.create_publishconfig = document.getElementById('create_publishconfig');
+        this.create_publishconfig.addEventListener('click', e => this.createSheet('PublishConfig', 'PublishConfig'));
+
+        this.create_publishlist = document.getElementById('create_publishlist');
+        this.create_publishlist.addEventListener('click', e => this.createSheet('PublishList', 'PublishList'));
+
+        this.create_assetranges = document.getElementById('create_assetranges');
+        this.create_assetranges.addEventListener('click', e => this.createSheet('AssetRanges', 'Asset Ranges'));
+
+        this.sheetname = document.getElementById('sheetname');
+        this.sheetname.addEventListener('click', e => this.createSheet());
 
         this.create_layout_btn = document.getElementById('create_layout_btn');
-        this.create_layout_btn.addEventListener('click', e => this.initializeLayout());
-
-        this.create_productlist_btn = document.getElementById('create_productlist_btn');
-        this.create_productlist_btn.addEventListener('click', e => this.createProductList());
       }
-      async createProductList() {
-        return new Promise(async (resolve, reject) => {
-          this.create_productlist_btn.innerHTML = '...';
-          google.script.run.withSuccessHandler((result) => {
-            this.create_productlist_btn.innerHTML = 'Initialize Product List';
-            if (result !== 'success')
-              alert(result);
-            resolve(result);
-          }).CreateProductList();
+      async createSheet(layoutName = null, sheetName = null) {
+        this.create_layout_btn.innerHTML = '...';
+        let genResponse = await fetch('https://www.handtop.com/addontemplates/template_' + layoutName + '.json', {
+          method: "get"
         });
-      }
-      async initializeConfiguration() {
-        return new Promise(async (resolve, reject) => {
-          this.initialize_configuration_btn.innerHTML = '...';
+        let genResults = await genResponse.json();
+        return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
-            this.initialize_configuration_btn.innerHTML = 'Initialize Configuration';
+            this.create_layout_btn.innerHTML = 'Create Sheet';
             if (result !== 'success')
               alert(result);
             resolve(result);
-          }).initializeConfiguration();
-        });
-      }
-      async initializeLayout() {
-        return new Promise(async (resolve, reject) => {
-          this.create_layout_btn.innerHTML = '...';
-          google.script.run.withSuccessHandler((result) => {
-            this.create_layout_btn.innerHTML = 'Create Layout';
-            if (result !== 'success')
-              alert(result);
-            resolve(result);
-          }).CreateLayout();
+          }).createSheetFromTemplate(sheetName, genResults);
         });
       }
     }

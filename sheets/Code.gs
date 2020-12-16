@@ -43,93 +43,33 @@ function showSongDialog() {
   SpreadsheetApp.getUi().showSidebar(html);
 }
 
-function initializeConfiguration() {
+function createSheetFromTemplate(sheetName, template) {
   let activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  let publishConfig = activeSpreadsheet.getSheetByName("PublishConfig");
+  let sheet = activeSpreadsheet.getSheetByName(sheetName);
 
-  if (publishConfig == null) {
-    publishConfig = activeSpreadsheet.insertSheet();
-    publishConfig.setName("PublishConfig");
-    publishConfig.getRange('A1').setValue('displaylist');
-    publishConfig.getRange('A2').setValue('PublishList');
-    publishConfig.getRange('B1').setValue('startat');
-    publishConfig.getRange('C1').setValue('endat');
-    publishConfig.getRange('D1').setValue('assetbookid');
-    publishConfig.getRange('D2').setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
-    publishConfig.getRange('E1').setValue('defaulttarget');
-    publishConfig.getRange('F1').setValue('defaulttoken');
-    publishConfig.getRange('G1').setValue('defaultproject');
-    publishConfig.getRange('A1:G1').setFontWeight("bold");
+  if (sheet !== null) {
+    return "sheet exists";
   }
 
+  sheet = activeSpreadsheet.insertSheet();
+  sheet.setName(sheetName);
 
-  let publishList = activeSpreadsheet.getSheetByName("PublishList");
-  if (publishList == null) {
-    publishList = activeSpreadsheet.insertSheet();
-    publishList.setName("PublishList");
-    publishList.getRange('A1').setValue('name');
-    publishList.getRange('B1').setValue('assetranges');
-    publishList.getRange('C1').setValue('circuitranges');
-    publishList.getRange('D1').setValue('catalogsheet');
-    publishList.getRange('E1').setValue('flags');
-    publishList.getRange('A1:G1').setFontWeight("bold");
+  if (template) {
+    for (let i = 0, l = template.length; i < l; i++) {
+      let item = template[i];
+      let range = sheet.getRange(item.range);
+      if (!range)
+        continue;
+      if (item.value)
+        range.setValue(item.value);
+      if (item.formula)
+        range.setFormula(item.formula);
+      if (item.fontWeight)
+        range.setFontWeight(item.fontWeight);
+    }
   }
 
-  let assetRanges = activeSpreadsheet.getSheetByName('Asset Ranges');
-  if (assetRanges == null) {
-    assetRanges = activeSpreadsheet.insertSheet();
-    assetRanges.setName("Asset Ranges");
-    assetRanges.getRange("D3").setValue('Ranges Str').setFontWeight("bold");
-    assetRanges.getRange("D5").setValue('Sheet CSV Formula').setFontWeight("bold");
-
-    assetRanges.getRange("B7").setValue('workbookid').setFontWeight("bold");
-    assetRanges.getRange("C7").setValue('Sheet Name').setFontWeight("bold");
-    assetRanges.getRange("D7").setValue('Range').setFontWeight("bold");
-    assetRanges.getRange("E7").setValue('Description').setFontWeight("bold");
-    assetRanges.getRange("F7").setValue('Raw Range').setFontWeight("bold");
-    assetRanges.getRange("G7").setValue('comma').setFontWeight("bold");
-    assetRanges.getRange("H7").setValue('Import Range').setFontWeight("bold");
-    assetRanges.getRange("I7").setValue('Remote Range').setFontWeight("bold");
-
-    assetRanges.getRange("B8").setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
-    assetRanges.getRange("B9").setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
-    assetRanges.getRange("B10").setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
-    assetRanges.getRange("B11").setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
-    assetRanges.getRange("B12").setValue('12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE');
-
-    assetRanges.getRange("C8").setFormula('importrange(B8, "\'Asset Inventory\'!B3:D5")');
-    assetRanges.getRange("F8").setFormula("\"'\" & C8 & \"'!\" & D8");
-    assetRanges.getRange("G8").setFormula('F8 & ","');
-    assetRanges.getRange("H8").setFormula('IF(B8 <> "","ImportRange(""" & B8 & """,""" & F8 & """),", D8)');
-    assetRanges.getRange("I8").setFormula('IF(B8 <> "", B8 & "||||", "") & G8');
-    assetRanges.getRange("F9").setFormula("\"'\" & C9 & \"'!\" & D9");
-    assetRanges.getRange("G9").setFormula('F9 & ","');
-    assetRanges.getRange("H9").setFormula('IF(B9 <> "","ImportRange(""" & B9 & """,""" & F9 & """),", D9)');
-    assetRanges.getRange("I9").setFormula('IF(B9 <> "", B9 & "||||", "") & G9');
-    assetRanges.getRange("F10").setFormula("\"'\" & C10 & \"'!\" & D10");
-    assetRanges.getRange("G10").setFormula('F10 & ","');
-    assetRanges.getRange("H10").setFormula('IF(B10 <> "","ImportRange(""" & B10 & """,""" & F10 & """),", D10)');
-    assetRanges.getRange("I10").setFormula('IF(B10 <> "", B10 & "||||", "") & G10');
-
-    assetRanges.getRange("C11").setFormula('importrange(B11, "\'Asset Inventory\'!B22:D23")');
-    assetRanges.getRange("F11").setFormula("\"'\" & C11 & \"'!\" & D11");
-    assetRanges.getRange("G11").setFormula('F11 & ","');
-    assetRanges.getRange("H11").setFormula('IF(B11 <> "","ImportRange(""" & B11 & """,""" & F11 & """),", D11)');
-    assetRanges.getRange("I11").setFormula('IF(B11 <> "", B11 & "||||", "") & G11');
-    assetRanges.getRange("F12").setFormula("\"'\" & C12 & \"'!\" & D12");
-    assetRanges.getRange("G12").setFormula('F12 & ","');
-    assetRanges.getRange("H12").setFormula('IF(B12 <> "","ImportRange(""" & B12 & """,""" & F12 & """),", D12)');
-    assetRanges.getRange("I12").setFormula('IF(B12 <> "", B12 & "||||", "") & G12');
-
-    assetRanges.getRange("F4").setFormula('CONCATENATE(I8:I12)');
-    assetRanges.getRange("E3").setFormula('left(F4, len(F4) - 1)');
-
-    assetRanges.getRange("F6").setFormula('CONCATENATE(H8:H12)');
-    assetRanges.getRange("E5").setFormula('"mergeCSVRanges(" & left(F6, len(F6) - 1) & ")"');
-
-  }
-
-  return 'success';
+  return "success";
 }
 
 function SetDefaultCredentials(target, token, project) {
