@@ -29,6 +29,28 @@
     width: 100%;
     text-align: left;
   }
+
+  select {
+    padding-right: 1em;
+  }
+
+  #frame_wrapper {
+    width: 280px;
+    overflow:hidden;
+    height: 400px;
+  }
+
+  #preview_panel {
+    width: 560px;
+    height: 800px;
+    transform: scale(.5);
+    padding: 0;
+    margin: 0;
+    display: none;
+    position: relative;
+    top: -50%;
+    left: -50%;
+  }
 </style>
 </head>
 
@@ -67,9 +89,14 @@
         <input type="file" id="upload_file_input" style="display:none;">
 
         <br>
-        <img id="img_preview" style="max-height:80px;max-width:300px;">
+        <img id="img_preview" style="max-height:80px;max-width:100%;">
         <br>
         <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
+        <hr>
+        <label><input type="checkbox" id="show_preview_chk"> Show Display</label>
+        <div id="frame_wrapper">
+          <iframe id="preview_panel"></iframe>
+        </div>
       </div>
     </div>
   </div>
@@ -138,7 +165,23 @@
         this.set_default_proj = document.getElementById('set_default_proj');
         this.set_default_proj.addEventListener('click', e => this.SetDefaultCreds());
 
+        this.show_preview_chk = document.getElementById('show_preview_chk');
+        this.show_preview_chk.addEventListener('input', e => this.updateShowPreview());
+        this.preview_panel = document.getElementById('preview_panel');
+
         this.widForName = {};
+      }
+      async updateShowPreview() {
+
+        if (this.show_preview_chk.checked) {
+          this.preview_panel.style.display = 'inline-block';
+          let src = this.selected_display_anchor.getAttribute('href');
+          this.preview_panel.setAttribute('src', src);
+        } else {
+          this.preview_panel.style.display = 'none';
+          this.preview_panel.setAttribute('src', '');
+        }
+        return null;
       }
       async setReferencePath(tag = 'cloudupload') {
         let wid = await this.getWid();
@@ -216,6 +259,7 @@
         this.single_display_options.style.display = '';
 
         this.updateImagePreview();
+        this.updateShowPreview();
       }
       async updateLinks(url) {
         let id = this.target_to_deploy.value;
@@ -319,7 +363,7 @@
           end = singleIndex;
         }
 
-        this.publish_results.value = publishList.length.toString() + ' Items in ' + publishListSheet +'\n';
+        this.publish_results.value = publishList.length.toString() + ' Items in ' + publishListSheet + '\n';
         this.publish_results.value += 'Start Index:' + start + ' \nEnd Index: ' + end + '\n\n';
 
         for (let c = start; c <= end; c++) {
