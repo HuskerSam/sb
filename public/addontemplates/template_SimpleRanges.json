@@ -22,7 +22,7 @@
   {"range":"D11","value":"","formula":"getStringForRange(##sheetname!B16:E18)","fontWeight":""},
   {"range":"E11","value":"","formula":"IF(C11 <> \"\", C11 & \"||||\", \"\") & D11 & \",\"","fontWeight":""},
   {"range":"F11","value":"","formula":"IF(C11 <> \"\",\"ImportRange(\"\"\" & C11 & \"\"\",\"\"\" & D11 & \"\"\"),\", E11)","fontWeight":""},
-  {"range":"D12","value":"","formula":"getStringForRange(##sheetname!B20:S21)","fontWeight":""},
+  {"range":"D12","value":"","formula":"getStringForRange(##sheetname!B20:AD26)","fontWeight":""},
   {"range":"E12","value":"","formula":"IF(C12 <> \"\", C12 & \"||||\", \"\") & D12 & \",\"","fontWeight":""},
   {"range":"F12","value":"","formula":"IF(C12 <> \"\",\"ImportRange(\"\"\" & C12 & \"\"\",\"\"\" & D12 & \"\"\"),\", E12)","fontWeight":""}
 ]

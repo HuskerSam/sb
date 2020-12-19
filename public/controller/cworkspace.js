@@ -1034,7 +1034,7 @@ class cWorkspace {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
     let sel = document.getElementById('select-position-preset');
     this.positionFrags = [];
-    if (positionInfo) {
+    if (positionInfo && positionInfo.genericBlockData) {
       let arr = positionInfo.genericBlockData.split('|');
       let positionHTML = '<option></option>';
 

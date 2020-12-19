@@ -548,7 +548,7 @@ class bView {
   layoutPositionFrags() {
     let positionInfo = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockFlag', 'displaypositions');
     let positionFrags = [];
-    if (positionInfo) {
+    if (positionInfo && positionInfo.genericBlockData) {
       let arr = positionInfo.genericBlockData.split('|');
 
       for (let c = 0, l = arr.length; c < l - 5; c += 6) {
