@@ -106,7 +106,7 @@
             if (result !== 'success') {
               alert(result);
             } else {
-                if (this.add_to_publishlist.checked)
+                if (this.add_to_publishlist.checked && baseSheetName)
                   await this.addToPublishList(baseSheetName);
             }
 
