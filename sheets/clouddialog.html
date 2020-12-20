@@ -426,6 +426,7 @@
       }
       async publishSingle(name, assetRanges, circuitRanges, catalogSheet) {
         console.log(name, assetRanges, circuitRanges, catalogSheet);
+        let step = 'Assets';
         try {
           let assetResults = {};
           if (assetRanges) {
@@ -461,7 +462,7 @@
             }
             this.publish_results.scrollTop = this.publish_results.scrollHeight;
           }
-
+          step = "Circuit";
           let sceneResults = {};
           if (circuitRanges) {
 
@@ -496,6 +497,7 @@
             this.publish_results.scrollTop = this.publish_results.scrollHeight;
           }
 
+          step = "Products";
           let productResults = {};
           if (catalogSheet) {
             let products = await this.grabSheetCSVJSONData(catalogSheet);
@@ -519,6 +521,7 @@
             this.publish_results.scrollTop = this.publish_results.scrollHeight;
           }
 
+          step = "Generate";
           let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
           url += '&token=' + encodeURIComponent(window.apiToken);
           let genResponse = await fetch(url, {
@@ -543,6 +546,9 @@
           };
         } catch (error) {
           console.log('e', error);
+          this.publish_results.value += '\nERROR ' + step + '\n';
+          this.publish_results.value += error.message;
+          this.publish_results.scrollTop = this.publish_results.scrollHeight;
           return {
             error: error
           };

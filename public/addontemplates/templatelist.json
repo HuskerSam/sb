@@ -1,11 +1,15 @@
 [
   {
-    "name": "Complex Layout",
+    "name": "Complex Layout (2 sheets)",
     "key": "ComplexCircuit,ComplexRanges: Ranges"
   },
   {
-    "name": "Simple Layout",
+    "name": "Simple Layout (2 sheets)",
     "key": "SimpleCircuit,SimpleRanges: Ranges"
+  },
+  {
+    "name": "Simple Layout (1 sheets)",
+    "key": "Simple1SheetCircuit"
   },
   {
     "name": "Product List",

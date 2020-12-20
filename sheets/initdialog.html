@@ -43,6 +43,8 @@
   <br>
   <label>Name <input id="sheetname"></label>
   <br>
+  <label><input type="checkbox" id="add_to_publishlist" checked> Add to PublishList</label>
+  <br>
   <button id="create_layout_btn" class="green">Create Sheet</button>
 
   <script>
@@ -60,10 +62,16 @@
         this.sheetname = document.getElementById('sheetname');
 
         this.templateslist = document.getElementById('templateslist');
+        this.templateslist.addEventListener('input', e => {
+          if (this.sheetname.value === '')
+            this.sheetname.value = this.templateslist.options[this.templateslist.selectedIndex].text;
+        })
         this.fillTemplateList();
 
         this.create_layout_btn = document.getElementById('create_layout_btn');
         this.create_layout_btn.addEventListener('click', e => this.processTemplate());
+
+        this.add_to_publishlist = document.getElementById('add_to_publishlist');
       }
       async fillTemplateList() {
         let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
@@ -92,13 +100,25 @@
           genText = genText.split('##sheetname').join("'" + baseSheetName + "'");
 
         let genResults = JSON.parse(genText);
-        return new Promise((resolve, reject) => {
-          google.script.run.withSuccessHandler((result) => {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler(async (result) => {
             this.create_layout_btn.innerHTML = 'Create Sheet';
-            if (result !== 'success')
+            if (result !== 'success') {
               alert(result);
+            } else {
+                if (this.add_to_publishlist.checked)
+                  await this.addToPublishList(baseSheetName);
+            }
+
             resolve(result);
           }).createSheetFromTemplate(sheetName, genResults);
+        });
+      }
+      async addToPublishList(baseSheetName) {
+        return new Promise((resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            resolve(result);
+          }).AddRowToSheet('PublishList', [baseSheetName, '', "='" + baseSheetName + "'!C2"]);
         });
       }
       async processTemplate() {

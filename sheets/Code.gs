@@ -53,11 +53,13 @@ function createSheetFromTemplate(sheetName, template) {
 
   sheet = activeSpreadsheet.insertSheet();
   sheet.setName(sheetName);
+  sheet.insertColumns(sheet.getLastColumn() + 1, 30)
 
   if (template) {
     for (let i = 0, l = template.length; i < l; i++) {
       let item = template[i];
       let range = sheet.getRange(item.range);
+      sheet.setActiveRange(range);
       if (!range)
         continue;
       if (item.value)
@@ -75,7 +77,6 @@ function createSheetFromTemplate(sheetName, template) {
 }
 
 function SetDefaultCredentials(target, token, project) {
-  let activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   let publishConfig = activeSpreadsheet.getSheetByName("PublishConfig");
 
   if (publishConfig) {
@@ -83,6 +84,12 @@ function SetDefaultCredentials(target, token, project) {
     publishConfig.getRange('F2').setValue(token);
     publishConfig.getRange('G2').setValue(project);
   }
+}
+
+function AddRowToSheet(name, cols = []) {
+  let activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let publishConfig = activeSpreadsheet.getSheetByName(name);
+  publishConfig.appendRow(cols);
 }
 
 function JSONArrayMax(jsonArray) {
@@ -276,9 +283,9 @@ function getJSONFromCSVSheet(sheetName) {
 
 function getStringForRange() {
   let f = SpreadsheetApp.getActiveRange().getFormula();
-  let re = new RegExp(".+getStringForRange\\s*\\((.*?)\\)", "i");
-  let args = f.match(re)[1].split(/\s*,\s*/);
-  return args[0];
+  f = f.replace('=getStringForRange(', '');
+  f = f.slice(0, -1);
+  return f;
 }
 
 function getSheetFromRangeString(str) {

@@ -1,0 +1,100 @@
+[
+  {"range":"B2","value":"Ranges","formula":"","fontWeight":"bold"},
+  {"range":"B3","value":"Test Formula","formula":"","fontWeight":"bold"},
+  {"range":"B4","value":"workbookids","formula":"","fontWeight":"bold"},
+  {"range":"C4","value":"ranges","formula":"","fontWeight":"bold"},
+  {"range":"C2","value":"","formula":"textjoin(\",\",true, D5:D11)","fontWeight":""},
+  {"range":"C3","value":"","formula":"\"mergeCSVRanges(\" & textjoin(\",\",true, E5:E11) & \")\"","fontWeight":""},
+  {"range":"C5","value":"","formula":"getStringForRange(##sheetname!B13:AR14)","fontWeight":""},
+  {"range":"D5","value":"","formula":"IF(B5 <> \"\", B5 & \"||||\", \"\") & C5 & \"\"","fontWeight":""},
+  {"range":"E5","value":"","formula":"IF(B5 <> \"\",\"ImportRange(\"\"\" & B5 & \"\"\",\"\"\" & C5 & \"\"\"),\", C5)","fontWeight":""},
+  {"range":"C6","value":"","formula":"getStringForRange(##sheetname!B16:R17)","fontWeight":""},
+  {"range":"D6","value":"","formula":"IF(B6 <> \"\", B6 & \"||||\", \"\") & C6 & \"\"","fontWeight":""},
+  {"range":"E6","value":"","formula":"IF(B6 <> \"\",\"ImportRange(\"\"\" & B6 & \"\"\",\"\"\" & C6 & \"\"\"),\", C6)","fontWeight":""},
+  {"range":"C7","value":"","formula":"getStringForRange(##sheetname!B19:L21)","fontWeight":""},
+  {"range":"D7","value":"","formula":"IF(B7 <> \"\", B7 & \"||||\", \"\") & C7 & \"\"","fontWeight":""},
+  {"range":"E7","value":"","formula":"IF(B7 <> \"\",\"ImportRange(\"\"\" & B7 & \"\"\",\"\"\" & C7 & \"\"\"),\", C7)","fontWeight":""},
+  {"range":"C8","value":"","formula":"getStringForRange(##sheetname!B23:X25)","fontWeight":""},
+  {"range":"D8","value":"","formula":"IF(B8 <> \"\", B8 & \"||||\", \"\") & C8 & \"\"","fontWeight":""},
+  {"range":"E8","value":"","formula":"IF(B8 <> \"\",\"ImportRange(\"\"\" & B8 & \"\"\",\"\"\" & C8 & \"\"\"),\", C8)","fontWeight":""},
+  {"range":"C9","value":"","formula":"getStringForRange(##sheetname!B27:E29)","fontWeight":""},
+  {"range":"D9","value":"","formula":"IF(B9 <> \"\", B9 & \"||||\", \"\") & C9 & \"\"","fontWeight":""},
+  {"range":"E9","value":"","formula":"IF(B9 <> \"\",\"ImportRange(\"\"\" & B9 & \"\"\",\"\"\" & C9 & \"\"\"),\", C9)","fontWeight":""},
+  {"range":"C10","value":"=getStringForRange(##sheetname!B31:AD37)","fontWeight":""},
+  {"range":"D10","value":"","formula":"IF(B10 <> \"\", B10 & \"||||\", \"\") & C10 & \"\"","fontWeight":""},
+  {"range":"E10","value":"","formula":"IF(B10 <> \"\",\"ImportRange(\"\"\" & B10 & \"\"\",\"\"\" & C10 & \"\"\"),\", C10)","fontWeight":""},
+  {
+    "range": "B13:AR14",
+    "rangeValue": [
+      ["name", "asset", "blockflag", "frametime", "displayui", "displaycamera", "blockcode", "genericblockdata", "skyboxtype", "skyboxsize", "audiourl", "musicparams", "groundimage", "skyboxgroundscaleu", "skyboxgroundscalev", "skybox", "width", "height", "depth", "floormaterial", "backwallmaterial", "frontwallmaterial", "leftwallmaterial", "rightwallmaterial", "ceilingmaterial", "leftwallscalev", "leftwallscaleu", "leftwallimage", "rightwallscalev", "rightwallscaleu", "rightwallimage", "backwallscalev", "backwallscaleu", "backwallimage", "frontwallscalev", "frontwallscaleu", "frontwallimage", "floorscalev", "floorscaleu", "floorimage", "ceilingwallscalev", "ceilingwallscaleu", "ceilingwallimage"],
+      ["Simple 1 Sheet Scene", "sceneblock", "scene", "60s", "mobile_portrait", "demo", "demo", "signyoffset:0|datascalefactor:1", "building", "400", "", "", "", "1", "1", "skybox33", "100", "40", "75", "", "", "", "", "", "", "3", "3", "sb:display/goldishstonewall.jpg", "3", "3", "sb:display/goldishstonewall.jpg", "3", "3", "sb:display/goldishstonewall.jpg", "", "", "", "3", "3", "sb:display/indoorwood44_1024.jpg", "1", "1", "sb:display/stuccopink.jpg"]
+    ]
+  },
+  {
+    "range": "B13:F13",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "B16:R17",
+    "rangeValue": [
+      ["name", "asset", "cameraname", "genericblockdata", "cameraheightoffset", "cameramovetime", "cameraradius", "finishdelay", "introtime", "runlength", "startx", "starty", "startz", "startry", "x", "y", "z"],
+      ["FollowCamera", "displaycamera", "", "signyoffset|0", "25", "500", "25", "2", "1", "60", "-40", "6", "9.5", "-90deg", "-50", "5", "0"]
+    ]
+  },
+  {
+    "range": "B16:E16",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "B19:L21",
+    "rangeValue": [
+      ["cameraname", "name", "asset", "childtype", "parent", "cameraaimtarget", "startx", "starty", "startz", "cameraradius", "cameraheightoffset"],
+      ["arcRotateCamera", "ArcRotate", "blockchild", "camera", "::scene::", "0,0,0", "-40", "30", "0", "30", "35"],
+      ["deviceOrientation", "DeviceOrientationCamera", "blockchild", "camera", "::scene::", "0,5,0", "-30", "10", "0", "30", "10"]
+    ]
+  },
+  {
+    "range": "B19:F19",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "B23:X25",
+    "rangeValue": [
+      ["name", "asset", "blockflag", "parent", "materialname", "width", "height", "depth", "meshpath", "texturepath", "bmppath", "x", "y", "z", "sx", "sy", "sz", "rx", "ry", "rz", "ambient", "diffuse", "emissive"],
+      ["basketcart", "block", "basket", "::scene::", "", "5", "3", "5", "", "", "", "-28", "5", "20", "", "-90deg", "", "", "", "", "", "", ""],
+      ["fruitboxmesh", "meshtexture", "static", "basketcart", "fruitboxmesh_material", "", "", "", "sb:demoadds/trolley.babylon", "sb:demoadds/trolley_diff.jpg", "", "0", "-5", "0", "0.1", "0.1", "0.1", "-90deg", "180deg", "0deg", "x", "x", "x"]
+    ]
+  },
+  {
+    "range": "B23:F23",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "B27:E29",
+    "rangeValue": [
+      ["name", "asset", "blockflag", "genericblockdata"],
+      ["displaypositionsblock", "block", "displaypositions", ""],
+      ["Skybox", "block", "displayfieldedits", "Skybox||layout||SceneRecipe||sceneblock||skybox:listskybox"]
+    ]
+  },
+  {
+    "range": "B27:E27",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "B31:AD37",
+    "rangeValue": [
+      ["name","asset","childtype","parent","shapetype","materialname","width","height","depth","x","y","z","rx","ry","rz","sx","sy","sz","meshpath","texturepath","bmppath","ambient","diffuse","emissive","shapetype","tessellation","specularpath","specularpower","hasalpha"],
+      ["product_beer1","meshtexture","","::scene::_fixturesWrapper","","product_beer1","","","","-50","","10","","","","100","100","100","sb:product/product_beer1.babylon","sb:product/bottles_alcohol_D.jpg","sb:product/bottles_alcohol_N.jpg","x","x","x","","","sb:product/bottles_alcohol_S.png","2",""],
+      ["product_beer2","meshtexture","","::scene::_fixturesWrapper","","product_beer2","","","","-100","","5","","","","100","100","100","sb:product/product_beer2.babylon","sb:product/bottles_alcohol_D.jpg","sb:product/bottles_alcohol_N.jpg","x","x","x","","","sb:product/bottles_alcohol_S.png","2",""],
+      ["product_beer3","meshtexture","","::scene::_fixturesWrapper","","product_beer3","","","","-150","","10","","","","100","100","100","sb:product/product_beer3.babylon","sb:product/bottles_alcohol_D.jpg","sb:product/bottles_alcohol_N.jpg","x","x","x","","","sb:product/bottles_alcohol_S.png","2",""],
+      ["product_wine1","meshtexture","","::scene::_fixturesWrapper","","product_wine1","","","","10","","5","","","","100","100","100","sb:product/product_wine1.babylon","sb:product/bottles_alcohol_D.jpg","sb:product/bottles_alcohol_N.jpg","x","x","x","","","sb:product/bottles_alcohol_S.png","2",""],
+      ["product_wine2","meshtexture","","::scene::_fixturesWrapper","","product_wine2","","","","15","","10","","","","100","100","100","sb:product/product_wine2.babylon","sb:product/bottles_alcohol_D.jpg","sb:product/bottles_alcohol_N.jpg","x","x","x","","","sb:product/bottles_alcohol_S.png","2",""],
+      ["product_wine3","meshtexture","","::scene::_fixturesWrapper","","product_wine3","","","","15","","5","","","","100","100","100","sb:product/product_wine3.babylon","sb:product/bottles_alcohol_D.jpg","sb:product/bottles_alcohol_N.jpg","x","x","x","","","sb:product/bottles_alcohol_S.png","2",""]
+    ]
+  },
+  {
+    "range": "B31:E31",
+    "fontWeight": "bold"
+  }
+]
