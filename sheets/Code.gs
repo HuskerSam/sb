@@ -58,18 +58,32 @@ function createSheetFromTemplate(sheetName, template) {
   if (template) {
     for (let i = 0, l = template.length; i < l; i++) {
       let item = template[i];
-      let range = sheet.getRange(item.range);
-      sheet.setActiveRange(range);
-      if (!range)
-        continue;
-      if (item.value)
-        range.setValue(item.value);
-      if (item.formula)
-        range.setFormula(item.formula);
-      if (item.fontWeight)
-        range.setFontWeight(item.fontWeight);
-      if (item.rangeValue)
-        range.setValues(item.rangeValue);
+
+      if (item.range) {
+        let range = sheet.getRange(item.range);
+        if (range) {
+          sheet.setActiveRange(range);
+          if (item.value)
+            range.setValue(item.value);
+          if (item.formula)
+            range.setFormula(item.formula);
+          if (item.fontWeight)
+            range.setFontWeight(item.fontWeight);
+          if (item.rangeValue)
+            range.setValues(item.rangeValue);
+          if (item.fontColor)
+            range.setFontColor(item.fontColor);
+          if (item.backgroundColor)
+            range.setBackground(item.backgroundColor);
+        }
+      }
+
+      if (item.columnNumber) {
+        if (item.width) {
+          sheet.setColumnWidth(Number(item.columnNumber), Number(item.width));
+        }
+      }
+
     }
   }
 

@@ -1,5 +1,7 @@
 [
   {"range":"B2","value":"Ranges","formula":"","fontWeight":"bold"},
+  {"range":"A2","value":"Single CSV output","formula":""},
+  {"range":"C1","value":"Data to link in PublishList","formula":""},
   {"range":"B3","value":"Test Formula","formula":"","fontWeight":"bold"},
   {"range":"B4","value":"workbookids","formula":"","fontWeight":"bold"},
   {"range":"C4","value":"ranges","formula":"","fontWeight":"bold"},
@@ -24,10 +26,10 @@
   {"range":"D10","value":"","formula":"IF(B10 <> \"\", B10 & \"||||\", \"\") & C10 & \"\"","fontWeight":""},
   {"range":"E10","value":"","formula":"IF(B10 <> \"\",\"ImportRange(\"\"\" & B10 & \"\"\",\"\"\" & C10 & \"\"\"),\", C10)","fontWeight":""},
   {
-    "range": "B13:AR14",
+    "range": "A13:AR14",
     "rangeValue": [
-      ["name", "asset", "blockflag", "frametime", "displayui", "displaycamera", "blockcode", "genericblockdata", "skyboxtype", "skyboxsize", "audiourl", "musicparams", "groundimage", "skyboxgroundscaleu", "skyboxgroundscalev", "skybox", "width", "height", "depth", "floormaterial", "backwallmaterial", "frontwallmaterial", "leftwallmaterial", "rightwallmaterial", "ceilingmaterial", "leftwallscalev", "leftwallscaleu", "leftwallimage", "rightwallscalev", "rightwallscaleu", "rightwallimage", "backwallscalev", "backwallscaleu", "backwallimage", "frontwallscalev", "frontwallscaleu", "frontwallimage", "floorscalev", "floorscaleu", "floorimage", "ceilingwallscalev", "ceilingwallscaleu", "ceilingwallimage"],
-      ["Simple 1 Sheet Scene", "sceneblock", "scene", "60s", "mobile_portrait", "demo", "demo", "signyoffset:0|datascalefactor:1", "building", "400", "", "", "", "1", "1", "skybox33", "100", "40", "75", "", "", "", "", "", "", "3", "3", "sb:display/goldishstonewall.jpg", "3", "3", "sb:display/goldishstonewall.jpg", "3", "3", "sb:display/goldishstonewall.jpg", "", "", "", "3", "3", "sb:display/indoorwood44_1024.jpg", "1", "1", "sb:display/stuccopink.jpg"]
+      ["Display Definition", "name", "asset", "blockflag", "frametime", "displayui", "displaycamera", "blockcode", "genericblockdata", "skyboxtype", "skyboxsize", "audiourl", "musicparams", "groundimage", "skyboxgroundscaleu", "skyboxgroundscalev", "skybox", "width", "height", "depth", "floormaterial", "backwallmaterial", "frontwallmaterial", "leftwallmaterial", "rightwallmaterial", "ceilingmaterial", "leftwallscalev", "leftwallscaleu", "leftwallimage", "rightwallscalev", "rightwallscaleu", "rightwallimage", "backwallscalev", "backwallscaleu", "backwallimage", "frontwallscalev", "frontwallscaleu", "frontwallimage", "floorscalev", "floorscaleu", "floorimage", "ceilingwallscalev", "ceilingwallscaleu", "ceilingwallimage"],
+      ["", "Simple 1 Sheet Scene", "sceneblock", "scene", "60s", "mobile_portrait", "demo", "demo", "signyoffset:0|datascalefactor:1", "building", "400", "", "", "", "1", "1", "skybox33", "100", "40", "75", "", "", "", "", "", "", "3", "3", "sb:display/goldishstonewall.jpg", "3", "3", "sb:display/goldishstonewall.jpg", "3", "3", "sb:display/goldishstonewall.jpg", "", "", "", "3", "3", "sb:display/indoorwood44_1024.jpg", "1", "1", "sb:display/stuccopink.jpg"]
     ]
   },
   {
@@ -35,10 +37,10 @@
     "fontWeight": "bold"
   },
   {
-    "range": "B16:R17",
+    "range": "A16:R17",
     "rangeValue": [
-      ["name", "asset", "cameraname", "genericblockdata", "cameraheightoffset", "cameramovetime", "cameraradius", "finishdelay", "introtime", "runlength", "startx", "starty", "startz", "startry", "x", "y", "z"],
-      ["FollowCamera", "displaycamera", "", "signyoffset|0", "25", "500", "25", "2", "1", "60", "-40", "6", "9.5", "-90deg", "-50", "5", "0"]
+      ["Product Follow Camera", "name", "asset", "cameraname", "genericblockdata", "cameraheightoffset", "cameramovetime", "cameraradius", "finishdelay", "introtime", "runlength", "startx", "starty", "startz", "startry", "x", "y", "z"],
+      ["", "FollowCamera", "displaycamera", "", "signyoffset|0", "25", "500", "25", "2", "1", "60", "-40", "6", "9.5", "-90deg", "-50", "5", "0"]
     ]
   },
   {
@@ -46,11 +48,11 @@
     "fontWeight": "bold"
   },
   {
-    "range": "B19:L21",
+    "range": "A19:L21",
     "rangeValue": [
-      ["cameraname", "name", "asset", "childtype", "parent", "cameraaimtarget", "startx", "starty", "startz", "cameraradius", "cameraheightoffset"],
-      ["arcRotateCamera", "ArcRotate", "blockchild", "camera", "::scene::", "0,0,0", "-40", "30", "0", "30", "35"],
-      ["deviceOrientation", "DeviceOrientationCamera", "blockchild", "camera", "::scene::", "0,5,0", "-30", "10", "0", "30", "10"]
+      ["Point and Orientation Cameras", "cameraname", "name", "asset", "childtype", "parent", "cameraaimtarget", "startx", "starty", "startz", "cameraradius", "cameraheightoffset"],
+      ["", "arcRotateCamera", "ArcRotate", "blockchild", "camera", "::scene::", "0,0,0", "-40", "30", "0", "30", "35"],
+      ["", "deviceOrientation", "DeviceOrientationCamera", "blockchild", "camera", "::scene::", "0,5,0", "-30", "10", "0", "30", "10"]
     ]
   },
   {
@@ -58,11 +60,11 @@
     "fontWeight": "bold"
   },
   {
-    "range": "B23:X25",
+    "range": "A23:X25",
     "rangeValue": [
-      ["name", "asset", "blockflag", "parent", "materialname", "width", "height", "depth", "meshpath", "texturepath", "bmppath", "x", "y", "z", "sx", "sy", "sz", "rx", "ry", "rz", "ambient", "diffuse", "emissive"],
-      ["basketcart", "block", "basket", "::scene::", "", "5", "3", "5", "", "", "", "-28", "5", "20", "", "-90deg", "", "", "", "", "", "", ""],
-      ["fruitboxmesh", "meshtexture", "static", "basketcart", "fruitboxmesh_material", "", "", "", "sb:demoadds/trolley.babylon", "sb:demoadds/trolley_diff.jpg", "", "0", "-5", "0", "0.1", "0.1", "0.1", "-90deg", "180deg", "0deg", "x", "x", "x"]
+      ["Shopping Cart", "name", "asset", "blockflag", "parent", "materialname", "width", "height", "depth", "meshpath", "texturepath", "bmppath", "x", "y", "z", "sx", "sy", "sz", "rx", "ry", "rz", "ambient", "diffuse", "emissive"],
+      ["", "basketcart", "block", "basket", "::scene::", "", "5", "3", "5", "", "", "", "-28", "5", "20", "", "-90deg", "", "", "", "", "", "", ""],
+      ["", "fruitboxmesh", "meshtexture", "static", "basketcart", "fruitboxmesh_material", "", "", "", "sb:demoadds/trolley.babylon", "sb:demoadds/trolley_diff.jpg", "", "0", "-5", "0", "0.1", "0.1", "0.1", "-90deg", "180deg", "0deg", "x", "x", "x"]
     ]
   },
   {
@@ -96,5 +98,41 @@
   {
     "range": "B31:E31",
     "fontWeight": "bold"
-  }
+  },
+  {
+    "columnNumber": 1,
+    "width": 200
+  },
+  {
+    "columnNumber": 2,
+    "width": 150
+  },
+  {
+    "columnNumber": 3,
+    "width": 250
+  },
+  {
+    "columnNumber": 4,
+    "width": 125
+  },
+  {
+    "columnNumber": 5,
+    "width": 150
+  },
+  {
+    "range":"A1:A",
+    "fontColor": "blue"
+  },
+  {
+    "range":"A1:1",
+    "backgroundColor": "rgb(0,0,100)",
+    "fontColor": "white",
+    "fontWeight": "bold"
+  },
+  {
+    "range":"C2",
+    "backgroundColor": "rgb(100,255,100)"
+  },
+  {"range":"A1","value":""}
+
 ]
