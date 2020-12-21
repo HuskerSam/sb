@@ -24,6 +24,21 @@
   body {
     text-align: center;
   }
+  .item_holder {
+    position: relative;
+  }
+
+  .basic_item {
+    border-radius: 50%;
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
 
   #published_list {
     width: 100%;
@@ -55,7 +70,15 @@
 </head>
 
 <body>
-  <div id="publish_details">
+  <select id="view_choices">
+    <option value="publish_details">Cloud Deploy</option>
+    <option value="init_view">Configuration</option>
+    <option selected value="template_view">Sheet Templates</option>
+    <option>Block Wizards</option>
+    <option>Process Audio</option>
+  </select>
+  <hr>
+  <div id="publish_details" class="main_div_wrapper" style="display:none;">
     <br>
     <label>Presets <select id="preset_list_deploy">
         <option selected>Loading</option>
@@ -99,6 +122,26 @@
         </div>
       </div>
     </div>
+
+  </div>
+  <div id="init_view" style="display:none;" class="main_div_wrapper">
+    <button id="create_publishconfig" class="blue">Create PublishConfig</button>
+    <br><br>
+    <button id="create_publishlist" class="blue">Create PublishList</button>
+    <br><br>
+    <button id="create_assetranges" class="blue">Create Asset Ranges</button>
+  </div>
+  <div id="template_view" class="main_div_wrapper">
+    <select id="templateslist" style="width:100%;text-align:left;" size="8">
+    </select>
+    <br>
+    <div id="template_description"></div>
+    <br>
+    <label>Name <input id="sheetname"></label>
+    <br>
+    <label><input type="checkbox" id="add_to_publishlist" checked> Add to PublishList</label>
+    <br>
+    <button id="create_layout_btn" class="green">Create Sheet</button>
   </div>
 
   <script>
@@ -170,7 +213,123 @@
         this.preview_panel = document.getElementById('preview_panel');
 
         this.widForName = {};
+
+        this.view_choices = document.getElementById('view_choices');
+        this.view_choices.addEventListener('input', e => {
+          let wrappers = document.body.querySelectorAll('.main_div_wrapper');
+          wrappers.forEach(w => w.style.display = 'none');
+          let ele = document.getElementById(this.view_choices.value);
+          if (ele)
+            ele.style.display = 'block';
+        });
+
+        this.create_publishconfig = document.getElementById('create_publishconfig');
+        this.create_publishconfig.addEventListener('click', e => this.createSheet('PublishConfig', 'PublishConfig'));
+
+        this.create_publishlist = document.getElementById('create_publishlist');
+        this.create_publishlist.addEventListener('click', e => this.createSheet('PublishList', 'PublishList'));
+
+        this.create_assetranges = document.getElementById('create_assetranges');
+        this.create_assetranges.addEventListener('click', e => this.createSheet('AssetRanges', 'Asset Ranges'));
+
+        this.sheetname = document.getElementById('sheetname');
+
+        this.templateslist = document.getElementById('templateslist');
+        this.templateslist.addEventListener('input', e => {
+          let data = this.templateMap[this.templateslist.value];
+          if (this.sheetname.value === '')
+            this.sheetname.value = data.name;
+
+          if (data.description) {
+            this.template_description.innerHTML = data.description;
+          } else {
+            this.template_description.innerHTML = '';
+          }
+
+        })
+        this.fillTemplateList();
+
+        this.create_layout_btn = document.getElementById('create_layout_btn');
+        this.create_layout_btn.addEventListener('click', e => this.processTemplate());
+
+        this.add_to_publishlist = document.getElementById('add_to_publishlist');
+
+        this.template_description = document.getElementById('template_description');
       }
+      async fillTemplateList() {
+        let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
+          method: "get"
+        });
+        let genResults = await genResponse.json();
+
+        let html = '';
+        console.log(genResults);
+        let selected = 'selected';
+        let templateMap = {};
+        genResults.forEach(i => {
+          html += '<option value="' + i.key + '" ${selected}>' + i.name + '</option>';
+          selected = '';
+          templateMap[i.key] = i;
+        });
+        this.templateMap = templateMap;
+        this.templateslist.innerHTML = html;
+      }
+      async createSheet(layoutName, sheetName, baseSheetName = '') {
+        let sheets = layoutName.split(',');
+
+        this.create_layout_btn.innerHTML = '...';
+        let genResponse = await fetch('https://www.handtop.com/addontemplates/template_' + layoutName + '.json', {
+          method: "get"
+        });
+        let genText = await genResponse.text();
+        if (baseSheetName)
+          genText = genText.split('##sheetname').join("'" + baseSheetName + "'");
+
+        let genResults = JSON.parse(genText);
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler(async (result) => {
+            this.create_layout_btn.innerHTML = 'Create Sheet';
+            if (result !== 'success') {
+              alert(result);
+            } else {
+              if (this.add_to_publishlist.checked && baseSheetName)
+                await this.addToPublishList(baseSheetName);
+            }
+
+            resolve(result);
+          }).createSheetFromTemplate(sheetName, genResults);
+        });
+      }
+      async addToPublishList(baseSheetName) {
+        return new Promise((resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            resolve(result);
+          }).AddRowToSheet('PublishList', [baseSheetName, '', "='" + baseSheetName + "'!C2"]);
+        });
+      }
+      async processTemplate() {
+        let sheetName = this.sheetname.value;
+        let templateString = this.templateslist.value;
+        let templates = templateString.split(',');
+
+        if (!sheetName) {
+          alert('Sheet name required');
+          return null;
+        }
+
+        let promises = [];
+        templates.forEach((item, i) => {
+          let parts = item.split(':');
+          let suffix = parts[1];
+          if (!suffix)
+            suffix = '';
+          let name = sheetName + suffix;
+          promises.push(this.createSheet(parts[0], name, sheetName));
+        });
+
+        return Promise.all(promises);
+      }
+
       async updateShowPreview() {
 
         if (this.show_preview_chk.checked) {

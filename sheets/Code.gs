@@ -2,10 +2,7 @@ function onOpen() {
   let ui = SpreadsheetApp.getUi();
 
   ui.createAddonMenu()
-    .addItem('Cloud Deploy', 'showCloudDialog')
-    .addItem('Initialize Data', 'showInitDialog')
-    .addItem('Song Import', 'showSongDialog')
-    .addItem('Wizards', 'showWizardDialog')
+    .addItem('Visual Catalog Tools', 'showInitDialog')
     .addToUi();
 }
 
@@ -15,31 +12,14 @@ function refreshOAuth() {
   return;
 }
 
-function showCloudDialog() {
-  refreshOAuth();
-  var html = HtmlService.createHtmlOutputFromFile('clouddialog')
-    .setTitle('Cloud Deploy')
-  SpreadsheetApp.getUi().showSidebar(html);
-}
-
-function showWizardDialog() {
-  refreshOAuth();
-  var html = HtmlService.createHtmlOutputFromFile('wizarddialog')
-    .setTitle('CSV Wizard')
-  SpreadsheetApp.getUi().showSidebar(html);
-}
-
 function showInitDialog() {
-  refreshOAuth();
-  var html = HtmlService.createHtmlOutputFromFile('initdialog')
-    .setTitle('Initialize Data')
-  SpreadsheetApp.getUi().showSidebar(html);
+  showDialog('clouddialog');
 }
 
-function showSongDialog() {
+function showDialog(name) {
   refreshOAuth();
-  var html = HtmlService.createHtmlOutputFromFile('songdialog')
-    .setTitle('Song Import')
+  var html = HtmlService.createHtmlOutputFromFile(name)
+    .setTitle('Visual Catalog Tools')
   SpreadsheetApp.getUi().showSidebar(html);
 }
 

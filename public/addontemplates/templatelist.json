@@ -8,8 +8,9 @@
     "key": "SimpleCircuit,SimpleRanges: Ranges"
   },
   {
-    "name": "Simple Layout (1 sheets)",
-    "key": "Simple1SheetCircuit"
+    "name": "Simple Layout",
+    "key": "Simple1SheetCircuit",
+    "description": "Scene with building, 2 walls<br>1 Sheet with aggregation cells at top<br>5 wine bottle meshes shown"
   },
   {
     "name": "Product List",
