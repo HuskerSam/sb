@@ -93,72 +93,118 @@
   select {
     padding-right: 1em;
   }
+
+  #view_choices, #preset_list_deploy {
+    margin: .5em 0;
+  }
+
+  .main_div_wrapper {
+    display: none;
+  }
+
+  .target_header {
+    text-align: right;
+    padding-top: .25em;
+    padding-right: .75em;
+    flex: 1;
+    width: 15em;
+    overflow:hidden;
+  }
+
+  .target_header span {
+    white-space: nowrap;
+    font-size: .75em;
+    float: right;
+    clear: right;
+  }
+
+  #view_choices {
+    flex: 1;
+    margin: 1em .75em;
+  }
+
+  select {
+    font-size: 11px;
+    border-radius: 0;
+  }
+
+  * {
+    font-size: 12px;
+  }
+
+  button {
+    font-size: 12px;
+  }
 </style>
 </head>
 
 <body>
-  <select id="view_choices">
-    <option value="publish_details">Cloud Deploy</option>
-    <option value="init_view">Configuration</option>
-    <option selected value="template_view">Sheet Templates</option>
-    <option value="block_wizards">Block Wizards</option>
-    <option value="song_import_div">Process Audio</option>
-  </select>
-  <hr>
-  <div id="publish_details" class="main_div_wrapper" style="display:none;">
-    <br>
-    <label>Presets <select id="preset_list_deploy">
-        <option selected>Loading</option>
-      </select></label>
+  <div style="display:flex;flex-direction:row">
+    <select id="view_choices">
+      <option value="cloud_target">Cloud Target</option>
+      <option value="cloud_deploy">Cloud Deploy</option>
+      <option value="init_view">Configuration</option>
+      <option selected value="template_view">Sheet Templates</option>
+      <option value="block_wizards">Block Wizards</option>
+      <option value="song_import_div">Process Audio</option>
+    </select>
+    <div class="target_header">
+      <span id="selected_target_span">No cloud target</span>
+      <span id="selected_project_span">No publish target</span>
+    </div>
+  </div>
+
+  <div id="cloud_target" class="main_div_wrapper">
+    <select id="preset_list_deploy">
+      <option selected>Loading</option>
+    </select>
     <br>
     <label>Target <input id="target_to_deploy" type="text" /></label>
     <div id="url_to_deploy"><br></div>
     <label>Token <input id="token_to_deploy" type="text" /></label>
     <br>
     <label>Assets: <span id="assets_anchor"> loading...</span></label>
-    <hr>
-    <div id="display_sub_list" style="display:none">
-      <button id="display_publish_list" class="blue">Process All</button>
-      <br>
-      <br>
-      <select id="published_list" size="5"></select>
-      <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
-      <br>
-      <div id="single_display_options" style="display:none;">
-        <b>Row</b>
-        <button id="display_publish_single" class="blue">Process</button>
-        &nbsp;
-        <a id="selected_display_anchor"></a>
-        &nbsp;
-        <a id="selected_edit_anchor"></a>
-        &nbsp;
-        <button id="set_default_proj">Pin</button>
-        <hr>
-        <label>Name <input id="file_upload_name"></label>
-        <button id="upload_file_cloud" class="blue">Upload File</button>
-        <input type="file" id="upload_file_input" style="display:none;">
+  </div>
+  <div id="cloud_deploy" class="main_div_wrapper">
+    <button id="display_publish_list" class="blue">Process All</button>
+    <br>
+    <br>
+    <select id="published_list" size="5"></select>
+    <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
+    <br>
+    <div id="single_display_options" style="display:none;">
+      <b>Row</b>
+      <button id="display_publish_single" class="blue">Process</button>
+      &nbsp;
+      <a id="selected_display_anchor"></a>
+      &nbsp;
+      <a id="selected_edit_anchor"></a>
+      &nbsp;
+      <button id="set_default_proj">Pin</button>
+      <hr>
+      <label>Name <input id="file_upload_name"></label>
+      <button id="upload_file_cloud" class="blue">Upload File</button>
+      <input type="file" id="upload_file_input" style="display:none;">
 
-        <br>
-        <img id="img_preview" style="max-height:80px;max-width:100%;">
-        <br>
-        <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
-        <hr>
-        <label><input type="checkbox" id="show_preview_chk"> Show Display</label>
-        <div id="frame_wrapper">
-          <iframe id="preview_panel"></iframe>
-        </div>
+      <br>
+      <img id="img_preview" style="max-height:80px;max-width:100%;">
+      <br>
+      <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
+      <hr>
+      <label><input type="checkbox" id="show_preview_chk"> Show Display</label>
+      <div id="frame_wrapper">
+        <iframe id="preview_panel"></iframe>
       </div>
     </div>
-
   </div>
-  <div id="init_view" style="display:none;" class="main_div_wrapper">
+  <div id="init_view" class="main_div_wrapper">
     <button id="create_publishconfig" class="blue">Create PublishConfig</button>
     <br><br>
     <button id="create_publishlist" class="blue">Create PublishList</button>
     <br><br>
     <button id="create_assetranges" class="blue">Create Asset Ranges</button>
   </div>
-  <div id="template_view" class="main_div_wrapper">
+  <div id="template_view" class="main_div_wrapper" style="display:block">
     <select id="templateslist" style="width:100%;text-align:left;" size="8">
     </select>
     <br>
@@ -171,7 +217,7 @@
     <button id="create_layout_btn" class="green">Create Sheet</button>
   </div>
 
-  <div id="block_wizards" style="height:inherit;overflow:auto;display:none;" class="main_div_wrapper">
+  <div id="block_wizards" style="height:inherit;overflow:auto;" class="main_div_wrapper">
     <select id="wizard_choices">
       <option value="block">Blocks</option>
       <option value="mesh">Meshes</option>
@@ -183,7 +229,7 @@
     <div id="helpviewer">
     </div>
   </div>
-  <div id="song_import_div" style="display:none;" class="main_div_wrapper">
+  <div id="song_import_div" class="main_div_wrapper">
     <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
     <br>
     <label>freq samples per second<input id="freq_samples_to_second" type="text" value="10" /></label>
@@ -252,7 +298,6 @@
         this.assets_anchor = document.getElementById('assets_anchor');
         this.single_display_options = document.getElementById('single_display_options');
 
-        this.display_sub_list = document.getElementById('display_sub_list');
         this.selected_display_anchor = document.getElementById('selected_display_anchor');
         this.selected_edit_anchor = document.getElementById('selected_edit_anchor');
 
@@ -514,7 +559,6 @@
         this.url_to_deploy.innerHTML = '<a target="_blank" href="' + url + '">' + url + '</a>';
 
         this.updateLinkList();
-        this.display_sub_list.style.display = '';
       }
       async SetDefaultCreds() {
         let token = this.token_to_deploy.value;
