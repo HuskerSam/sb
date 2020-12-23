@@ -12,136 +12,12 @@
   <script src="https://handtop.com/controller/cmacro.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
   <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
-  <style>
-    .item_holder {
-      position: relative;
-    }
-
-  .basic_item {
-    border-radius: 50%;
-    width: 100px;
-    height: 40px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-  }
-  body {
-    text-align: center;
-  }
-  .item_holder {
-    position: relative;
-  }
-
-  .basic_item {
-    border-radius: 50%;
-    width: 100px;
-    height: 40px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  #published_list {
-    width: 100%;
-    text-align: left;
-  }
-
-  select {
-    padding-right: 1em;
-  }
-
-  #frame_wrapper {
-    width: 280px;
-    overflow:hidden;
-    height: 400px;
-  }
-
-  #preview_panel {
-    width: 560px;
-    height: 800px;
-    transform: scale(.5);
-    padding: 0;
-    margin: 0;
-    display: none;
-    position: relative;
-    top: -50%;
-    left: -50%;
-  }
-
-
-
-  .csv_import_preview {
-    display: block;
-  }
-
-  .csv_import_preview {
-    width: inherit;
-    overflow: hidden;
-    overflow-x: scroll;
-  }
-
-  .add-asset-template-panel input {
-    margin: 0;
-  }
-
-  select {
-    padding-right: 1em;
-  }
-
-  #view_choices, #preset_list_deploy {
-    margin: .5em 0;
-  }
-
-  .main_div_wrapper {
-    display: none;
-  }
-
-  .target_header {
-    text-align: right;
-    padding-top: .25em;
-    padding-right: .75em;
-    flex: 1;
-    width: 15em;
-    overflow:hidden;
-  }
-
-  .target_header span {
-    white-space: nowrap;
-    font-size: .75em;
-    float: right;
-    clear: right;
-  }
-
-  #view_choices {
-    flex: 1;
-    margin: 1em .75em;
-  }
-
-  select {
-    font-size: 11px;
-    border-radius: 0;
-  }
-
-  * {
-    font-size: 12px;
-  }
-
-  button {
-    font-size: 12px;
-  }
-</style>
 </head>
 
 <body>
   <div style="display:flex;flex-direction:row">
-    <select id="view_choices">
-      <option value="cloud_target">Cloud Target</option>
+    <select id="addon_display_view_select">
+      <option value="cloud_target">Cloud Server</option>
       <option value="cloud_deploy">Cloud Deploy</option>
       <option value="init_view">Configuration</option>
       <option selected value="template_view">Sheet Templates</option>
@@ -149,13 +25,12 @@
       <option value="song_import_div">Process Audio</option>
     </select>
     <div class="target_header">
-      <span id="selected_target_span">No cloud target</span>
-      <span id="selected_project_span">No publish target</span>
+      <span id="selected_target_span">No cloud server</span>
+      <span id="selected_project_span">No project name</span>
     </div>
   </div>
-
   <div id="cloud_target" class="main_div_wrapper">
-    <select id="preset_list_deploy">
+    <select id="preset_list_deploy" size="6">
       <option selected>Loading</option>
     </select>
     <br>
@@ -205,7 +80,7 @@
     <button id="create_assetranges" class="blue">Create Asset Ranges</button>
   </div>
   <div id="template_view" class="main_div_wrapper" style="display:block">
-    <select id="templateslist" style="width:100%;text-align:left;" size="8">
+    <select id="circuit_template_select" style="width:100%;text-align:left;" size="8">
     </select>
     <br>
     <div id="template_description"></div>
@@ -224,7 +99,7 @@
       <option value="material">Materials </option>
     </select>
 
-    <div id="macro_details" class="add-asset-template-panel">
+    <div id="macro_details_wrapper" class="add-asset-template-panel">
     </div>
     <div id="helpviewer">
     </div>
@@ -247,7 +122,7 @@
     <br>
     <br><label>
       WAV Audio File:
-      <input type="file" class="audio_file" style="width:100%" /></label>
+      <input type="file" id="audio_file" style="width:100%" /></label>
 
     <br>
     <br>
@@ -258,321 +133,54 @@
   <script>
     class PublishWeb {
       constructor() {
-        this.display_publish_list = document.getElementById('display_publish_list');
-        this.display_publish_list.addEventListener('click', e => this.publishList());
-
-        this.publish_results = document.getElementById('publish_results');
-        this.target_to_deploy = document.getElementById('target_to_deploy');
-        this.token_to_deploy = document.getElementById('token_to_deploy');
-        this.token_to_deploy.addEventListener('input', e => {
-          window.apiToken = this.token_to_deploy.value;
-        });
-        this.url_to_deploy = document.getElementById('url_to_deploy');
-        this.target_to_deploy.addEventListener('input', e => this.updateLinkList());
-        this.published_list = document.getElementById('published_list');
-        this.published_list.addEventListener('input', e => this.publishListChange());
-
-
-        this.preset_list_deploy = document.getElementById('preset_list_deploy');
-        this.preset_list_deploy.addEventListener('input', e => {
-          let index = preset_list_deploy.selectedIndex;
-          if (index < 1)
-            return;
-          let t = this.deployTargets[index - 1];
-          let id = t['project id'];
-          if (!id)
-            id = '';
-          let token = t['token'];
-          if (!token)
-            token = '';
-          this.target_to_deploy.value = id;
-          this.token_to_deploy.value = token;
-          let url = t['public url'];
-          if (!url)
-            url = 'https://' + id + '.web.app/';
-
-          this.updateLinks(url);
-        });
-        this.target_to_deploy.addEventListener('input', e => this.updateLinks());
-
-        this.assets_anchor = document.getElementById('assets_anchor');
-        this.single_display_options = document.getElementById('single_display_options');
-
-        this.selected_display_anchor = document.getElementById('selected_display_anchor');
-        this.selected_edit_anchor = document.getElementById('selected_edit_anchor');
-
-        this.fillPresets();
-
-        this.upload_file_cloud = document.getElementById('upload_file_cloud');
-        this.file_upload_name = document.getElementById('file_upload_name');
-        this.file_upload_name.addEventListener('input', e => this.handleUploadNameChange());
-        this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
-        this.upload_file_input = document.getElementById('upload_file_input');
-        this.upload_file_input.addEventListener('change', e => this.uploadCloudFile(e));
-        this.img_preview = document.getElementById('img_preview');
-        this.img_preview_link = document.getElementById('img_preview_link');
-
-        this.display_publish_single = document.getElementById('display_publish_single');
-        this.display_publish_single.addEventListener('click', e => this.publishSingleFromList());
-
-        this.set_default_proj = document.getElementById('set_default_proj');
-        this.set_default_proj.addEventListener('click', e => this.SetDefaultCreds());
-
-        this.show_preview_chk = document.getElementById('show_preview_chk');
-        this.show_preview_chk.addEventListener('input', e => this.updateShowPreview());
-        this.preview_panel = document.getElementById('preview_panel');
-
-        this.widForName = {};
-
-        this.view_choices = document.getElementById('view_choices');
-        this.view_choices.addEventListener('input', e => {
-          let wrappers = document.body.querySelectorAll('.main_div_wrapper');
-          wrappers.forEach(w => w.style.display = 'none');
-          let ele = document.getElementById(this.view_choices.value);
-          if (ele)
-            ele.style.display = 'block';
-        });
-
-        this.create_publishconfig = document.getElementById('create_publishconfig');
-        this.create_publishconfig.addEventListener('click', e => this.createSheet('PublishConfig', 'PublishConfig'));
-
-        this.create_publishlist = document.getElementById('create_publishlist');
-        this.create_publishlist.addEventListener('click', e => this.createSheet('PublishList', 'PublishList'));
-
-        this.create_assetranges = document.getElementById('create_assetranges');
-        this.create_assetranges.addEventListener('click', e => this.createSheet('AssetRanges', 'Asset Ranges'));
-
-        this.sheetname = document.getElementById('sheetname');
-
-        this.templateslist = document.getElementById('templateslist');
-        this.templateslist.addEventListener('input', e => {
-          let data = this.templateMap[this.templateslist.value];
-          if (this.sheetname.value === '')
-            this.sheetname.value = data.name;
-
-          if (data.description) {
-            this.template_description.innerHTML = data.description;
-          } else {
-            this.template_description.innerHTML = '';
-          }
-
-        })
-        this.fillTemplateList();
-
-        this.create_layout_btn = document.getElementById('create_layout_btn');
-        this.create_layout_btn.addEventListener('click', e => this.processTemplate());
-
-        this.add_to_publishlist = document.getElementById('add_to_publishlist');
-
-        this.template_description = document.getElementById('template_description');
-
-        this.panel = document.getElementById('macro_details');
-        this.wizard_choices = document.getElementById('wizard_choices');
-        this.helpviewer = document.getElementById('helpviewer');
-        this.wizard_choices.addEventListener('change', e => this.changeTag());
-
+        this.initDom();
+        this.loadTemplateList();
         this.app = new cAppDefaults();
         this.app.jsonLibPrefix = 'https://handtop.com';
         this.app.loadTextures();
         this.app.loadPickerData();
-        this.changeTag();
-
-        this.audio_file = document.querySelector('.audio_file');
-        this.audio_file.addEventListener('change', e => this.audio_file_onchange());
-        this.seconds_to_sample = document.querySelector('#seconds_to_sample');
-        this.bands_to_combine = document.querySelector('#bands_to_combine');
-        this.freq_samples_to_second = document.querySelector('#freq_samples_to_second');
-
+        this.loadBlockWizard();
+        this.loadPublishConfigSheetData();
+        this.loadProjectSelectList();
+        this.widForName = {};
       }
-      async fillTemplateList() {
-        let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
-          method: "get"
-        });
-        let genResults = await genResponse.json();
+      initDom() {
+        let dom_id = [
+          'publish_results', 'target_to_deploy', 'token_to_deploy', 'url_to_deploy', 'published_list',
+          'preset_list_deploy', 'display_publish_list', 'assets_anchor', 'single_display_options', 'selected_display_anchor',
+          'selected_edit_anchor', 'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
+          'img_preview_link', 'display_publish_single', 'set_default_proj', 'show_preview_chk', 'preview_panel',
+          'create_publishconfig', 'create_publishlist', 'create_assetranges', 'sheetname', 'circuit_template_select',
+          'create_layout_btn', 'add_to_publishlist', 'template_description', 'macro_details_wrapper', 'wizard_choices',
+          'helpviewer', 'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
+          'addon_display_view_select', 'audio', 'audio_file'
+        ];
 
-        let html = '';
-        console.log(genResults);
-        let selected = 'selected';
-        let templateMap = {};
-        genResults.forEach(i => {
-          html += '<option value="' + i.key + '" ${selected}>' + i.name + '</option>';
-          selected = '';
-          templateMap[i.key] = i;
-        });
-        this.templateMap = templateMap;
-        this.templateslist.innerHTML = html;
-      }
-      async createSheet(layoutName, sheetName, baseSheetName = '') {
-        let sheets = layoutName.split(',');
+        dom_id.forEach(ctl => this[ctl] = document.getElementById(ctl));
 
-        this.create_layout_btn.innerHTML = '...';
-        let genResponse = await fetch('https://www.handtop.com/addontemplates/template_' + layoutName + '.json', {
-          method: "get"
-        });
-        let genText = await genResponse.text();
-        if (baseSheetName)
-          genText = genText.split('##sheetname').join("'" + baseSheetName + "'");
+        this.display_publish_list.addEventListener('click', e => this.cloudDeployProjects('all'));
+        this.published_list.addEventListener('input', e => this.loadProjectDetails());
+        this.preset_list_deploy.addEventListener('input', e => this.loadServerDetails());
+        this.file_upload_name.addEventListener('input', e => this.loadImagePreview());
+        this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
+        this.upload_file_input.addEventListener('change', e => this.storageUploadProjectFile(e));
+        this.display_publish_single.addEventListener('click', e => this.cloudDeployProjects('selected'));
+        this.set_default_proj.addEventListener('click', e => this.sheetsStoreSelectedServer());
+        this.show_preview_chk.addEventListener('input', e => this.loadProjectPreview());
+        this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
+        this.create_publishconfig.addEventListener('click', e => this.sheetsCreateTemplateSheet('PublishConfig', 'PublishConfig'));
+        this.create_publishlist.addEventListener('click', e => this.sheetsCreateTemplateSheet('PublishList', 'PublishList'));
+        this.create_assetranges.addEventListener('click', e => this.sheetsCreateTemplateSheet('AssetRanges', 'Asset Ranges'));
+        this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails());
+        this.create_layout_btn.addEventListener('click', e => this.templateCreateSheets());
 
-        let genResults = JSON.parse(genText);
-        return new Promise(async (resolve, reject) => {
-          google.script.run.withSuccessHandler(async (result) => {
-            this.create_layout_btn.innerHTML = 'Create Sheet';
-            if (result !== 'success') {
-              alert(result);
-            } else {
-              if (this.add_to_publishlist.checked && baseSheetName)
-                await this.addToPublishList(baseSheetName);
-            }
 
-            resolve(result);
-          }).createSheetFromTemplate(sheetName, genResults);
-        });
-      }
-      async addToPublishList(baseSheetName) {
-        return new Promise((resolve, reject) => {
-          google.script.run.withSuccessHandler((result) => {
-            resolve(result);
-          }).AddRowToSheet('PublishList', [baseSheetName, '', "='" + baseSheetName + "'!C2"]);
-        });
-      }
-      async processTemplate() {
-        let sheetName = this.sheetname.value;
-        let templateString = this.templateslist.value;
-        let templates = templateString.split(',');
-
-        if (!sheetName) {
-          alert('Sheet name required');
-          return null;
-        }
-
-        let promises = [];
-        templates.forEach((item, i) => {
-          let parts = item.split(':');
-          let suffix = parts[1];
-          if (!suffix)
-            suffix = '';
-          let name = sheetName + suffix;
-          promises.push(this.createSheet(parts[0], name, sheetName));
-        });
-
-        return Promise.all(promises);
+        this.wizard_choices.addEventListener('change', e => this.loadBlockWizard());
+        this.audio_file.addEventListener('change', e => this.audioProcessFileSelected());
       }
 
-      async updateShowPreview() {
-
-        if (this.show_preview_chk.checked) {
-          this.preview_panel.style.display = 'inline-block';
-          let src = this.selected_display_anchor.getAttribute('href');
-          this.preview_panel.setAttribute('src', src);
-        } else {
-          this.preview_panel.style.display = 'none';
-          this.preview_panel.setAttribute('src', '');
-        }
-        return null;
-      }
-      async setReferencePath(tag = 'cloudupload') {
-        let wid = await this.getWid();
-        this.referencePath = 'project/' + wid + '/' + tag + '/';
-      }
-      async getWid() {
-        if (!window.fbProj)
-          return 'none';
-
-        let wid = this.widForName[this.selectDisplayName];
-        if (!wid) {
-          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/widforname/?name=' + encodeURIComponent(this.selectDisplayName);
-          url += '&token=' + encodeURIComponent(window.apiToken);
-          let genResponse = await fetch(url, {
-            method: "get"
-          });
-          let genResults = await genResponse.text();
-          let r = JSON.parse(genResults);
-          wid = r.wid;
-          console.log('wid', r);
-          window.bucketName = r.bucket;
-          this.widForName[window.fbProj] = wid;
-        }
-
-        return wid;
-      }
-      async handleUploadNameChange() {
-        this.updateImagePreview();
-      }
-      async updateImagePreview(new_url) {
-        if (this.updatingImagePreview) {
-          clearTimeout(this.refreshPreview);
-          this.refreshPreview = setTimeout(() => this.updateImagePreview(), 50);
-          return;
-        }
-        this.updatingImagePreview = true;
-        this.signed_url = new_url;
-
-        let name = this.file_upload_name.value;
-        if (!name || !window.fbProj || !window.apiToken) {
-          this.img_preview.setAttribute('src', '');
-          this.img_preview_link.setAttribute('href', '');
-          this.img_preview_link.innerHTML = '';
-          this.updatingImagePreview = false;
-          return;
-        }
-
-        await this.setReferencePath();
-
-        if (!this.signed_url)
-          this.signed_url = "https://firebasestorage.googleapis.com/v0/b/" +
-          window.bucketName + "/o/" + encodeURIComponent(this.referencePath + name) + "?alt=media&token=" + 'token';
-
-        let signed_url = this.signed_url;
-        if (signed_url)
-          signed_url += '&randomstuff=' + Number(new Date()).toString();
-        this.img_preview.setAttribute('src', signed_url);
-        this.img_preview_link.setAttribute('href', signed_url);
-        this.img_preview_link.innerHTML = signed_url;
-        this.updatingImagePreview = false;
-      }
-      async publishListChange() {
-        this.selectDisplayName = this.published_list.value;
-        let pid = this.target_to_deploy.value;
-        let link = 'https://' + pid + '.web.app/display/?name=' + this.selectDisplayName;
-        this.selected_display_anchor.setAttribute('href', link);
-        this.selected_display_anchor.innerHTML = 'View';
-        this.selected_display_anchor.setAttribute('target', "_blank");
-
-        let editLink = 'https://' + pid + '.web.app/asset/?name=' + this.selectDisplayName;
-        this.selected_edit_anchor.setAttribute('href', editLink);
-        this.selected_edit_anchor.innerHTML = 'Edit';
-        this.selected_edit_anchor.setAttribute('target', "_blank");
-
-        this.single_display_options.style.display = '';
-
-        this.updateImagePreview();
-        this.updateShowPreview();
-      }
-      async updateLinks(url) {
-        let id = this.target_to_deploy.value;
-        if (!url)
-          url = 'https://' + id + '.web.app/';
-        else {
-          if (url.substring(0, 3) !== 'htt')
-            url = 'https://' + url;
-        }
-        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + url + '">' + url + '</a>';
-
-        this.updateLinkList();
-      }
-      async SetDefaultCreds() {
-        let token = this.token_to_deploy.value;
-        let target = this.target_to_deploy.value;
-        let project = this.published_list.value;
-
-        return new Promise(async (resolve, reject) => {
-          google.script.run.withSuccessHandler((result) => {
-            resolve(result);
-          }).SetDefaultCredentials(target, token, project);
-        });
-      }
-      async fillPresets() {
-        let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+      async loadPublishConfigSheetData() {
+        let publishConfig = await this.sheetsJSONforSheetCSV('PublishConfig');
         let assetBookId = publishConfig[0].assetbookid;
         let deployOptionsRange = "'Deploy Options'!A1:A2";
 
@@ -580,12 +188,12 @@
         if (!assetBookId)
           rangeString = deployOptionsRange;
 
-        let deploys = await this.grabCSVForRangeStrings([rangeString]);
+        let deploys = await this.sheetsJSONforRangeListCSV([rangeString]);
         let targetRange = deploys[0].deployrange;
         let assetRString = assetBookId + "||||'Deploy Options'!" + targetRange;
         if (!assetBookId)
           assetRString = "'Deploy Options'!" + targetRange;
-        let targets = await this.grabCSVForRangeStrings([assetRString]);
+        let targets = await this.sheetsJSONforRangeListCSV([assetRString]);
         this.deployTargets = targets;
         let listHTML = '<option>Deploy Targets</option>';
 
@@ -607,9 +215,210 @@
 
         this.publishListSheet = publishConfig[0].displaylist;
       }
-      async updateLinkList() {
+      async loadServerDetails() {
+        let index = preset_list_deploy.selectedIndex;
+        if (index < 1)
+          return;
+        let t = this.deployTargets[index - 1];
+        let id = t['project id'];
+        if (!id)
+          id = '';
+        let token = t['token'];
+        if (!token)
+          token = '';
+        this.target_to_deploy.value = id;
+        this.token_to_deploy.value = token;
+        let url = t['public url'];
+        if (!url)
+          url = 'https://' + id + '.web.app/';
+        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + url + '">' + url + '</a>';
+      }
+      async loadTemplateDetails() {
+        let data = this.templateMap[this.circuit_template_select.value];
+        if (this.sheetname.value === '')
+          this.sheetname.value = data.name;
+
+        if (data.description) {
+          this.template_description.innerHTML = data.description;
+        } else {
+          this.template_description.innerHTML = '';
+        }
+
+        return;
+      }
+      async loadBlockWizard() {
+        this.macro = new cMacro(this.macro_details_wrapper, this.wizard_choices.value, this.app, true);
+
+
+        let handleImageTextureUpload = async (fileCtl, field) => {
+          let fileBlob = fileCtl.files[0];
+
+          if (!fileBlob)
+            return;
+          field.value = 'Uploading...';
+          let filename = fileBlob.name;
+          let publishConfig = await this.sheetsJSONforSheetCSV('PublishConfig');
+
+          let target = publishConfig[0].defaulttarget;
+          let token = publishConfig[0].defaulttoken;
+          let project = publishConfig[0].defaultproject;
+
+          if (!project) {
+            alert('No default project pinned');
+            return;
+          }
+
+          if (!target) {
+            alert('No default target pinned');
+          }
+
+          let url = 'https://us-central1-' + target + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(project);
+          url += '&token=' + encodeURIComponent(token);
+          url += '&filename=' + encodeURIComponent(filename);
+
+          let body = new FormData();
+          body.append('file', fileBlob);
+
+          let genResponse = await fetch(url, {
+            method: "post",
+            body
+          });
+          let genResults = await genResponse.json();
+          if (genResults.success)
+            if (genResults.result_msg.success) {
+              field.value = genResults.result_msg.signed_url;
+              let event = new Event('input', {
+                bubbles: true,
+                cancelable: true,
+              });
+
+              field.dispatchEvent(event);
+              return genResults;
+            }
+
+          field.value = '';
+          alert('upload did not complete');
+          return null;
+        };
+
+        this.macro._handleImageTextureUpload = (fileCtl, field) => {
+          return handleImageTextureUpload(fileCtl, field);
+        };
+
+        await this.app.updateHelpView(this.wizard_choices.value, this.helpviewer);
+
+        return null;
+      }
+      async loadAddonView() {
+        let wrappers = document.body.querySelectorAll('.main_div_wrapper');
+        wrappers.forEach(w => w.style.display = 'none');
+        let ele = document.getElementById(this.addon_display_view_select.value);
+        if (ele)
+          ele.style.display = 'block';
+
+        return;
+      }
+      async loadProjectPreview() {
+        if (this.show_preview_chk.checked) {
+          this.preview_panel.style.display = 'inline-block';
+          let src = this.selected_display_anchor.getAttribute('href');
+          this.preview_panel.setAttribute('src', src);
+        } else {
+          this.preview_panel.style.display = 'none';
+          this.preview_panel.setAttribute('src', '');
+        }
+        return null;
+      }
+      async loadTemplateList() {
+        let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
+          method: "get"
+        });
+        let genResults = await genResponse.json();
+
+        let html = '';
+        console.log(genResults);
+        let selected = 'selected';
+        let templateMap = {};
+        genResults.forEach(i => {
+          html += '<option value="' + i.key + '" ${selected}>' + i.name + '</option>';
+          selected = '';
+          templateMap[i.key] = i;
+        });
+        this.templateMap = templateMap;
+        this.circuit_template_select.innerHTML = html;
+      }
+      async loadImagePreview(new_url) {
+        if (this.updatingImagePreview) {
+          clearTimeout(this.refreshPreview);
+          this.refreshPreview = setTimeout(() => this.loadImagePreview(), 50);
+          return;
+        }
+        this.updatingImagePreview = true;
+        this.signed_url = new_url;
+
+        let name = this.file_upload_name.value;
+        if (!name || !window.fbProj || !window.apiToken) {
+          this.img_preview.setAttribute('src', '');
+          this.img_preview_link.setAttribute('href', '');
+          this.img_preview_link.innerHTML = '';
+          this.updatingImagePreview = false;
+          return;
+        }
+
+
+        let tag = 'cloudupload';
+        let wid = 'none';
+        if (window.fbProj)
+          wid = this.widForName[this.selectDisplayName];
+
+        if (!wid) {
+          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/widforname/?name=' + encodeURIComponent(this.selectDisplayName);
+          url += '&token=' + encodeURIComponent(window.apiToken);
+          let genResponse = await fetch(url, {
+            method: "get"
+          });
+          let genResults = await genResponse.text();
+          let r = JSON.parse(genResults);
+          wid = r.wid;
+          console.log('wid', r);
+          window.bucketName = r.bucket;
+          this.widForName[window.fbProj] = wid;
+        }
+        this.referencePath = 'project/' + wid + '/' + tag + '/';
+
+        if (!this.signed_url)
+          this.signed_url = "https://firebasestorage.googleapis.com/v0/b/" +
+          window.bucketName + "/o/" + encodeURIComponent(this.referencePath + name) + "?alt=media&token=" + 'token';
+
+        let signed_url = this.signed_url;
+        if (signed_url)
+          signed_url += '&randomstuff=' + Number(new Date()).toString();
+        this.img_preview.setAttribute('src', signed_url);
+        this.img_preview_link.setAttribute('href', signed_url);
+        this.img_preview_link.innerHTML = signed_url;
+        this.updatingImagePreview = false;
+      }
+      async loadProjectDetails() {
+        this.selectDisplayName = this.published_list.value;
+        let pid = this.target_to_deploy.value;
+        let link = 'https://' + pid + '.web.app/display/?name=' + this.selectDisplayName;
+        this.selected_display_anchor.setAttribute('href', link);
+        this.selected_display_anchor.innerHTML = 'View';
+        this.selected_display_anchor.setAttribute('target', "_blank");
+
+        let editLink = 'https://' + pid + '.web.app/asset/?name=' + this.selectDisplayName;
+        this.selected_edit_anchor.setAttribute('href', editLink);
+        this.selected_edit_anchor.innerHTML = 'Edit';
+        this.selected_edit_anchor.setAttribute('target', "_blank");
+
+        this.single_display_options.style.display = '';
+
+        this.loadImagePreview();
+        this.loadProjectPreview();
+      }
+      async loadProjectSelectList() {
         this.published_list.innerHTML = '';
-        let publishList = await this.grabSheetCSVJSONData(this.publishListSheet);
+        let publishList = await this.sheetsJSONforSheetCSV(this.publishListSheet);
         this.publistList = publishList;
         let linkListHTML = '';
         let pid = this.target_to_deploy.value;
@@ -619,9 +428,99 @@
         this.published_list.innerHTML = linkListHTML;
         window.fbProj = this.target_to_deploy.value;
       }
-      async publishList(singleIndex = null) {
+
+      async sheetsCreateTemplateSheet(layoutName, sheetName, baseSheetName = '') {
+        let sheets = layoutName.split(',');
+
+        this.create_layout_btn.innerHTML = '...';
+        let genResponse = await fetch('https://www.handtop.com/addontemplates/template_' + layoutName + '.json', {
+          method: "get"
+        });
+        let genText = await genResponse.text();
+        if (baseSheetName)
+          genText = genText.split('##sheetname').join("'" + baseSheetName + "'");
+
+        let genResults = JSON.parse(genText);
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler(async (result) => {
+            this.create_layout_btn.innerHTML = 'Create Sheet';
+            if (result !== 'success') {
+              alert(result);
+            } else {
+              if (this.add_to_publishlist.checked && baseSheetName)
+                await this.sheetsAddToProjectList(baseSheetName);
+            }
+
+            resolve(result);
+          }).createSheetFromTemplate(sheetName, genResults);
+        });
+      }
+      async sheetsAddToProjectList(baseSheetName) {
+        return new Promise((resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            resolve(result);
+          }).AddRowToSheet('PublishList', [baseSheetName, '', "='" + baseSheetName + "'!C2"]);
+        });
+      }
+      async sheetsStoreSelectedServer() {
+        let token = this.token_to_deploy.value;
+        let target = this.target_to_deploy.value;
+        let project = this.published_list.value;
+
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            this.loadProjectSelectList();
+            resolve(result);
+          }).SetDefaultCredentials(target, token, project);
+        });
+      }
+      async sheetsJSONforSheetCSV(sheetName) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log('json for sheet', sheetName, result.length);
+            resolve(result);
+          }).getJSONFromCSVSheet(sheetName);
+        });
+      }
+      async sheetsJSONforRangeListCSV(rangeStrings) {
+        return new Promise(async (resolve, reject) => {
+          google.script.run.withSuccessHandler((result) => {
+            console.log(rangeStrings, result.length);
+            resolve(result);
+          }).mergeCSVRangeStrings(rangeStrings, true);
+        });
+      }
+
+      async templateCreateSheets() {
+        let sheetName = this.sheetname.value;
+        let templateString = this.circuit_template_select.value;
+        let templates = templateString.split(',');
+
+        if (!sheetName) {
+          alert('Sheet name required');
+          return null;
+        }
+
+        let promises = [];
+        templates.forEach((item, i) => {
+          let parts = item.split(':');
+          let suffix = parts[1];
+          if (!suffix)
+            suffix = '';
+          let name = sheetName + suffix;
+          promises.push(this.sheetsCreateTemplateSheet(parts[0], name, sheetName));
+        });
+
+        return Promise.all(promises);
+      }
+      async cloudDeployProjects(set) {
         if (this.busy)
           return;
+
+        let singleIndex = null;
+        if (set === 'selected') {
+          singleIndex = this.published_list.selectedIndex;
+        }
         this.display_publish_list.innerHTML = 'Working...';
         this.display_publish_single.innerHTML = 'Working...';
         this.publish_results.value = '';
@@ -629,12 +528,161 @@
         this.dataCache = {};
 
         this.busy = true;
-        let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
+        let publishConfig = await this.sheetsJSONforSheetCSV('PublishConfig');
         let publishListSheet = publishConfig[0].displaylist;
 
         window.apiToken = this.token_to_deploy.value;
         window.fbProj = this.target_to_deploy.value;
-        let publishList = await this.grabSheetCSVJSONData(publishListSheet);
+        let publishList = await this.sheetsJSONforSheetCSV(publishListSheet);
+
+        let deleteProject = async (name) => {
+          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
+          url += '&token=' + encodeURIComponent(window.apiToken);
+          let genResponse = await fetch(url, {
+            method: "post"
+          });
+          let genResults = await genResponse.text();
+          let r = {
+            result_msg: 'unknown'
+          };
+          try {
+            r = JSON.parse(genResults);
+          } catch (e) {
+            console.log(e, genResults);
+          }
+
+          return r;
+        };
+        let publishSingle = async (name, assetRanges, circuitRanges, catalogSheet) => {
+          console.log(name, assetRanges, circuitRanges, catalogSheet);
+          let step = 'Assets';
+          try {
+            let assetResults = {};
+            if (assetRanges) {
+
+              let assets = null;
+              if (this.dataCache[assetRanges])
+                assets = this.dataCache[assetRanges];
+
+              if (!assets) {
+                let ranges = assetRanges.split(',');
+                assets = await this.sheetsJSONforRangeListCSV(ranges);
+                console.log('asset fetch');
+              }
+              console.log('assets', assets);
+              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              url += encodeURIComponent(name) + '&type=asset';
+              url += '&token=' + encodeURIComponent(window.apiToken);
+              let json = JSON.stringify(assets);
+
+              let response = await fetch(url, {
+                method: "post",
+                body: json
+              });
+              let r = await response.text();
+              assetResults = JSON.parse(r);
+
+              if (assetResults.success) {
+                this.dataCache[assetRanges] = assets;
+                this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
+              } else {
+                this.publish_results.value += name + ':assets: Error ';
+                this.publish_results.value += assetResults.errorMessage + '\n';
+              }
+              this.publish_results.scrollTop = this.publish_results.scrollHeight;
+            }
+            step = "Circuit";
+            let sceneResults = {};
+            if (circuitRanges) {
+
+              let scene = null;
+              if (this.dataCache[circuitRanges])
+                scene = this.dataCache[circuitRanges];
+
+              if (!scene) {
+                let ranges = circuitRanges.split(',');
+                scene = await this.sheetsJSONforRangeListCSV(ranges);
+                console.log('scene fetched');
+              }
+              console.log('c', scene);
+              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              url += encodeURIComponent(name) + '&type=scene';
+              url += '&token=' + encodeURIComponent(window.apiToken);
+              let json = JSON.stringify(scene);
+              let response = await fetch(url, {
+                method: "post",
+                body: json
+              });
+              let r = await response.text();
+              sceneResults = JSON.parse(r);
+
+              if (sceneResults.success) {
+                this.dataCache[circuitRanges] = scene;
+                this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
+              } else {
+                this.publish_results.value += name + ':circuit: Error ';
+                this.publish_results.value += sceneResults.errorMessage + '\n';
+              }
+              this.publish_results.scrollTop = this.publish_results.scrollHeight;
+            }
+
+            step = "Products";
+            let productResults = {};
+            if (catalogSheet) {
+              let products = await this.sheetsJSONforSheetCSV(catalogSheet);
+              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              url += encodeURIComponent(name) + '&type=product';
+              url += '&token=' + encodeURIComponent(window.apiToken);
+              let json = JSON.stringify(products);
+              let response = await fetch(url, {
+                method: "post",
+                body: json
+              });
+              let r = await response.text();
+              productResults = JSON.parse(r);
+
+              if (productResults.success) {
+                this.publish_results.value += name + ':products: ' + products.length.toString() + '\n'
+              } else {
+                this.publish_results.value += name + ':products: Error ';
+                this.publish_results.value += productResults.errorMessage + '\n';
+              }
+              this.publish_results.scrollTop = this.publish_results.scrollHeight;
+            }
+
+            step = "Generate";
+            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
+            url += '&token=' + encodeURIComponent(window.apiToken);
+            let genResponse = await fetch(url, {
+              method: "post"
+            });
+            let gr = await genResponse.text();
+            let genResults = JSON.parse(gr);
+
+            if (genResults.success) {
+              this.publish_results.value += name + ' generated\n\n'
+            } else {
+              this.publish_results.value += name + ':generate: Error ';
+              this.publish_results.value += genResults.errorMessage + '\n';
+            }
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+
+            return {
+              genResults,
+              productResults,
+              assetResults,
+              sceneResults
+            };
+          } catch (error) {
+            console.log('e', error);
+            this.publish_results.value += '\nERROR ' + step + '\n';
+            this.publish_results.value += error.message;
+            this.publish_results.scrollTop = this.publish_results.scrollHeight;
+            return {
+              error: error
+            };
+          }
+        };
 
         let promises = [];
         let start = 0;
@@ -664,7 +712,7 @@
           }
 
           if (flags.indexOf('remove') !== -1) {
-            let r_result = await this.deleteProject(row.name);
+            let r_result = await deleteProject(row.name);
             if (r_result.success)
               this.publish_results.value += row.name + ' removed\n\n';
             else {
@@ -688,175 +736,7 @@
         this.publish_results.value += '\nComplete\n\n';
         this.publish_results.scrollTop = this.publish_results.scrollHeight;
       }
-      async deleteProject(name) {
-        let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
-        url += '&token=' + encodeURIComponent(window.apiToken);
-        let genResponse = await fetch(url, {
-          method: "post"
-        });
-        let genResults = await genResponse.text();
-        let r = {
-          result_msg: 'unknown'
-        };
-        try {
-          r = JSON.parse(genResults);
-        } catch (e) {
-          console.log(e, genResults);
-        }
-
-        return r;
-      }
-      async publishSingleFromList() {
-        let index = this.published_list.selectedIndex;
-        return await this.publishList(index);
-      }
-      async publishSingle(name, assetRanges, circuitRanges, catalogSheet) {
-        console.log(name, assetRanges, circuitRanges, catalogSheet);
-        let step = 'Assets';
-        try {
-          let assetResults = {};
-          if (assetRanges) {
-
-            let assets = null;
-            if (this.dataCache[assetRanges])
-              assets = this.dataCache[assetRanges];
-
-            if (!assets) {
-              let ranges = assetRanges.split(',');
-              assets = await this.grabCSVForRangeStrings(ranges);
-              console.log('asset fetch');
-            }
-            console.log('assets', assets);
-            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
-            url += encodeURIComponent(name) + '&type=asset';
-            url += '&token=' + encodeURIComponent(window.apiToken);
-            let json = JSON.stringify(assets);
-
-            let response = await fetch(url, {
-              method: "post",
-              body: json
-            });
-            let r = await response.text();
-            assetResults = JSON.parse(r);
-
-            if (assetResults.success) {
-              this.dataCache[assetRanges] = assets;
-              this.publish_results.value += name + ':assets: ' + assets.length.toString() + '\n';
-            } else {
-              this.publish_results.value += name + ':assets: Error ';
-              this.publish_results.value += assetResults.errorMessage + '\n';
-            }
-            this.publish_results.scrollTop = this.publish_results.scrollHeight;
-          }
-          step = "Circuit";
-          let sceneResults = {};
-          if (circuitRanges) {
-
-            let scene = null;
-            if (this.dataCache[circuitRanges])
-              scene = this.dataCache[circuitRanges];
-
-            if (!scene) {
-              let ranges = circuitRanges.split(',');
-              scene = await this.grabCSVForRangeStrings(ranges);
-              console.log('scene fetched');
-            }
-            console.log('c', scene);
-            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
-            url += encodeURIComponent(name) + '&type=scene';
-            url += '&token=' + encodeURIComponent(window.apiToken);
-            let json = JSON.stringify(scene);
-            let response = await fetch(url, {
-              method: "post",
-              body: json
-            });
-            let r = await response.text();
-            sceneResults = JSON.parse(r);
-
-            if (sceneResults.success) {
-              this.dataCache[circuitRanges] = scene;
-              this.publish_results.value += name + ':circuit: ' + scene.length.toString() + '\n';
-            } else {
-              this.publish_results.value += name + ':circuit: Error ';
-              this.publish_results.value += sceneResults.errorMessage + '\n';
-            }
-            this.publish_results.scrollTop = this.publish_results.scrollHeight;
-          }
-
-          step = "Products";
-          let productResults = {};
-          if (catalogSheet) {
-            let products = await this.grabSheetCSVJSONData(catalogSheet);
-            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
-            url += encodeURIComponent(name) + '&type=product';
-            url += '&token=' + encodeURIComponent(window.apiToken);
-            let json = JSON.stringify(products);
-            let response = await fetch(url, {
-              method: "post",
-              body: json
-            });
-            let r = await response.text();
-            productResults = JSON.parse(r);
-
-            if (productResults.success) {
-              this.publish_results.value += name + ':products: ' + products.length.toString() + '\n'
-            } else {
-              this.publish_results.value += name + ':products: Error ';
-              this.publish_results.value += productResults.errorMessage + '\n';
-            }
-            this.publish_results.scrollTop = this.publish_results.scrollHeight;
-          }
-
-          step = "Generate";
-          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
-          url += '&token=' + encodeURIComponent(window.apiToken);
-          let genResponse = await fetch(url, {
-            method: "post"
-          });
-          let gr = await genResponse.text();
-          let genResults = JSON.parse(gr);
-
-          if (genResults.success) {
-            this.publish_results.value += name + ' generated\n\n'
-          } else {
-            this.publish_results.value += name + ':generate: Error ';
-            this.publish_results.value += genResults.errorMessage + '\n';
-          }
-          this.publish_results.scrollTop = this.publish_results.scrollHeight;
-
-          return {
-            genResults,
-            productResults,
-            assetResults,
-            sceneResults
-          };
-        } catch (error) {
-          console.log('e', error);
-          this.publish_results.value += '\nERROR ' + step + '\n';
-          this.publish_results.value += error.message;
-          this.publish_results.scrollTop = this.publish_results.scrollHeight;
-          return {
-            error: error
-          };
-        }
-      }
-      grabSheetCSVJSONData(sheetName) {
-        return new Promise(async (resolve, reject) => {
-          google.script.run.withSuccessHandler((result) => {
-            console.log('json for sheet', sheetName, result.length);
-            resolve(result);
-          }).getJSONFromCSVSheet(sheetName);
-        });
-      }
-      grabCSVForRangeStrings(rangeStrings) {
-        return new Promise(async (resolve, reject) => {
-          google.script.run.withSuccessHandler((result) => {
-            console.log(rangeStrings, result.length);
-            resolve(result);
-          }).mergeCSVRangeStrings(rangeStrings, true);
-        });
-      }
-      async uploadCloudFile(e) {
+      async storageUploadProjectFile(e) {
         let filename = this.file_upload_name.value.trim();
         if (this.file_upload_name.value === '') {
           this.file_upload_name.value = this.upload_file_input.files[0].name;
@@ -885,196 +765,122 @@
         console.log(r);
         if (r.success)
           if (r.result_msg.success) {
-            this.updateImagePreview(r.result_msg.signed_url);
+            this.loadImagePreview(r.result_msg.signed_url);
             this.upload_file_input.value = '';
             return r;
           }
-        this.updateImagePreview('');
+        this.loadImagePreview('');
 
         this.upload_file_input.value = '';
         alert('upload did not complete');
         return r;
       }
-
-      async changeTag() {
-        this.macro = new cMacro(this.panel, this.wizard_choices.value, this.app, true);
-        console.log('macro', this.macro);
-        this.macro._handleImageTextureUpload = (fileCtl, field) => {
-          return this._handleImageTextureUpload(fileCtl, field);
-        };
-
-        await this.app.updateHelpView(this.wizard_choices.value, this.helpviewer);
-
-        return null;
-      }
-      async _handleImageTextureUpload(fileCtl, field) {
-        let fileBlob = fileCtl.files[0];
-
-        if (!fileBlob)
-          return;
-        field.value = 'Uploading...';
-        let filename = fileBlob.name;
-        let publishConfig = await this.grabSheetCSVJSONData('PublishConfig');
-
-        let target = publishConfig[0].defaulttarget;
-        let token = publishConfig[0].defaulttoken;
-        let project = publishConfig[0].defaultproject;
-
-        if (!project) {
-          alert('No default project pinned');
-          return;
-        }
-
-        if (!target) {
-          alert('No default target pinned');
-        }
-
-        let url = 'https://us-central1-' + target + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(project);
-        url += '&token=' + encodeURIComponent(token);
-        url += '&filename=' + encodeURIComponent(filename);
-
-        let body = new FormData();
-        body.append('file', fileBlob);
-
-        let genResponse = await fetch(url, {
-          method: "post",
-          body
-        });
-        let genResults = await genResponse.json();
-        if (genResults.success)
-          if (genResults.result_msg.success) {
-            field.value = genResults.result_msg.signed_url;
-            let event = new Event('input', {
-              bubbles: true,
-              cancelable: true,
-            });
-
-            field.dispatchEvent(event);
-            return genResults;
-          }
-
-        field.value = '';
-        alert('upload did not complete');
-        return null;
-      }
-
-
-      file_to_array(file) {
-        return new Promise((resolve, reject) => {
-          let reader = new FileReader();
-
-          reader.onload = () => {
-            let array = new Uint8Array(reader.result);
-            resolve(array);
-          };
-
-          reader.onerror = (err) => {
-            console.log('File Reader Error', err);
-            reject(err);
-          };
-
-          reader.readAsArrayBuffer(file);
-        });
-      }
-      async audio_loaded() {
-        return new Promise((resolve, reject) => {
-          audio.onloadeddata = () => {
-            resolve();
-          }
-        });
-      }
-      audio_playing() {
-        return new Promise((resolve, reject) => {
-          audio.onplaying = () => {
-            resolve();
-          }
-        });
-      }
-      smooth_bands(in_array) {
-        let l = in_array.length;
-        let out_array = [];
-        this.combined_bands = Number(this.bands_to_combine.value);
-
-        for (let c = 0; c < l; c += this.combined_bands) {
-          let sum = 0.0;
-          for (let d = 0; d < this.combined_bands; d++) {
-            sum += in_array[d + c];
-          }
-
-          out_array.push(Math.round(sum / this.combined_bands));
-        }
-
-        return out_array;
-      }
-      swap_indexes_n2(in_array) {
-        let out_array = [];
-        let outer_bound = in_array[0].length;
-
-        for (let c = 0; c < outer_bound; c++) {
-          let new_n2_array = [];
-          for (let d = 0, dl = in_array.length; d < dl; d++)
-            new_n2_array.push(in_array[d][c]);
-
-          out_array.push(new_n2_array)
-        }
-
-        return out_array;
-      }
-      async fft_song_samples(samples_per_rift) {
-        let bufferUsed = 0;
-        let song_sample_ctr = 0;
-        let song_chunks = [];
-        let freq_chunks = [];
-        let file_bytes = this.song_samples;
-
-        while (bufferUsed < (this.song_samples.length - samples_per_rift)) {
-          let data_to_process = this.song_samples.slice(bufferUsed, bufferUsed + samples_per_rift);
-          bufferUsed += samples_per_rift;
-          song_sample_ctr++;
-
-          song_chunks.push(data_to_process);
-
-          let ft = new FFT(samples_per_rift, this.sampleRate);
-          ft.forward(data_to_process);
-          let fewer_bands = this.smooth_bands(ft.spectrum);
-          freq_chunks.push(fewer_bands);
-        }
-
-        return freq_chunks;
-      }
-      resampleData(arrayIn, secondsLength, samplesPerSecondOut) {
-        let outArray = [];
-        arrayIn.forEach(bandArray => {
-          let outBand = [];
-          let sampleCountFactor = bandArray.length / (secondsLength * samplesPerSecondOut);
-          let runningFactor = 0;
-
-          let sampleSum = 0.0;
-          let sampleFactor = 0;
-          let bandIndex = 0;
-          let outSampleIndex = 0;
-          bandArray.forEach(sample => {
-            sampleSum += sample;
-            sampleFactor++;
-            bandIndex++;
-
-            let sampleTestIndex = Math.floor(bandIndex / sampleCountFactor);
-
-            if (sampleTestIndex > outBand.length) {
-              outBand.push(Number((sampleSum / sampleFactor).toFixed(1)));
-              sampleSum = 0.0;
-              sampleFactor = 0;
-            }
-          });
-          outArray.push(outBand);
-        });
-
-        return outArray;
-      }
-      async audio_file_onchange() {
+      async audioProcessFileSelected() {
         document.getElementById('raw_data').value = '';
         document.getElementById('song_len_sec').innerHTML = '&nbsp;';
-        let song_bytes = await this.file_to_array(this.audio_file.files[0]);
+
+        let resampleData = (arrayIn, secondsLength, samplesPerSecondOut) => {
+          let outArray = [];
+          arrayIn.forEach(bandArray => {
+            let outBand = [];
+            let sampleCountFactor = bandArray.length / (secondsLength * samplesPerSecondOut);
+            let runningFactor = 0;
+
+            let sampleSum = 0.0;
+            let sampleFactor = 0;
+            let bandIndex = 0;
+            let outSampleIndex = 0;
+            bandArray.forEach(sample => {
+              sampleSum += sample;
+              sampleFactor++;
+              bandIndex++;
+
+              let sampleTestIndex = Math.floor(bandIndex / sampleCountFactor);
+
+              if (sampleTestIndex > outBand.length) {
+                outBand.push(Number((sampleSum / sampleFactor).toFixed(1)));
+                sampleSum = 0.0;
+                sampleFactor = 0;
+              }
+            });
+            outArray.push(outBand);
+          });
+
+          return outArray;
+        };
+        let fft_song_samples = async (samples_per_rift) => {
+          let bufferUsed = 0;
+          let song_sample_ctr = 0;
+          let song_chunks = [];
+          let freq_chunks = [];
+          let file_bytes = this.song_samples;
+
+          let smooth_bands = (in_array) => {
+            let l = in_array.length;
+            let out_array = [];
+            this.combined_bands = Number(this.bands_to_combine.value);
+
+            for (let c = 0; c < l; c += this.combined_bands) {
+              let sum = 0.0;
+              for (let d = 0; d < this.combined_bands; d++) {
+                sum += in_array[d + c];
+              }
+
+              out_array.push(Math.round(sum / this.combined_bands));
+            }
+
+            return out_array;
+          };
+
+          while (bufferUsed < (this.song_samples.length - samples_per_rift)) {
+            let data_to_process = this.song_samples.slice(bufferUsed, bufferUsed + samples_per_rift);
+            bufferUsed += samples_per_rift;
+            song_sample_ctr++;
+
+            song_chunks.push(data_to_process);
+
+            let ft = new FFT(samples_per_rift, this.sampleRate);
+            ft.forward(data_to_process);
+            let fewer_bands = smooth_bands(ft.spectrum);
+            freq_chunks.push(fewer_bands);
+          }
+
+          return freq_chunks;
+        };
+        let convert_raw_to_samples = () => {
+          let samples = [];
+          let ratioToKeep = this.seconds / this.seconds_clip;
+          let sampleLimit = this.rawBytes.length / ratioToKeep;
+
+          //convert to 16 bits and clip size
+          if (this.bitSize > 8) {
+            for (let c = 0, l = this.sampleLimit - 1; c < l; c += 2) {
+              samples.push(this.rawBytes[c + 1] * 256 + this.rawBytes[c]);
+            }
+          } else {
+            samples = this.rawBytes;
+          }
+
+          return samples;
+        };
+        let fileBlobToArrayBuffer = (file) => {
+          return new Promise((resolve, reject) => {
+            let reader = new FileReader();
+
+            reader.onload = () => {
+              let array = new Uint8Array(reader.result);
+              resolve(array);
+            };
+
+            reader.onerror = (err) => {
+              console.log('File Reader Error', err);
+              reject(err);
+            };
+
+            reader.readAsArrayBuffer(file);
+          });
+        }
+        let song_bytes = await fileBlobToArrayBuffer(this.audio_file.files[0]);
         let html_out = '';
         if (song_bytes) {
           let riffTest = new TextDecoder().decode(song_bytes.slice(0, 4));
@@ -1157,43 +963,49 @@
           //alert('no song');
           return;
         }
-        audio.src = URL.createObjectURL(this.audio_file.files[0]);
+        this.audio.src = URL.createObjectURL(this.audio_file.files[0]);
 
-        audio.load();
+        let audio_loaded = async () => {
+          return new Promise((resolve, reject) => {
+            this.audio.onloadeddata = () => {
+              resolve();
+            }
+          });
+        };
+        let swap_indexes_n2 = (in_array) => {
+          let out_array = [];
+          let outer_bound = in_array[0].length;
 
-        await this.audio_loaded();
-        this.time_length = audio.duration; // in seconds
+          for (let c = 0; c < outer_bound; c++) {
+            let new_n2_array = [];
+            for (let d = 0, dl = in_array.length; d < dl; d++)
+              new_n2_array.push(in_array[d][c]);
+
+            out_array.push(new_n2_array)
+          }
+
+          return out_array;
+        };
+
+        this.audio.load();
+
+
+        await audio_loaded();
+        this.time_length = this.audio.duration; // in seconds
 
         this.rawBytes = song_bytes.slice(44);
-        this.song_samples = await this.convert_raw_to_samples(song_bytes);
+        this.song_samples = await convert_raw_to_samples(song_bytes);
 
-        let song_chunks = await this.fft_song_samples(512);
-
-        let song_chunks_flipped_indexes = this.swap_indexes_n2(song_chunks);
+        let song_chunks = await fft_song_samples(512);
+        let song_chunks_flipped_indexes = swap_indexes_n2(song_chunks);
         let freqData = [];
         for (let i = 0; i < song_chunks_flipped_indexes.length; i++)
           freqData.push(song_chunks_flipped_indexes[i]);
         //resample to 10 per second  2584 @ 60s => 600 @ 60s
-        let resampledArray = this.resampleData(freqData, this.seconds_clip, Number(this.freq_samples_to_second.value));
+        let resampledArray = resampleData(freqData, this.seconds_clip, Number(this.freq_samples_to_second.value));
 
         console.log(resampledArray);
         document.getElementById('raw_data').value = JSON.stringify(resampledArray);
-      }
-      convert_raw_to_samples() {
-        let samples = [];
-        let ratioToKeep = this.seconds / this.seconds_clip;
-        let sampleLimit = this.rawBytes.length / ratioToKeep;
-
-        //convert to 16 bits and clip size
-        if (this.bitSize > 8) {
-          for (let c = 0, l = this.sampleLimit - 1; c < l; c += 2) {
-            samples.push(this.rawBytes[c + 1] * 256 + this.rawBytes[c]);
-          }
-        } else {
-          samples = this.rawBytes;
-        }
-
-        return samples;
       }
     }
 
@@ -1201,6 +1013,142 @@
       let publish_web = new PublishWeb();
     });
   </script>
+
+  <style>
+    .item_holder {
+      position: relative;
+    }
+
+    .basic_item {
+      border-radius: 50%;
+      width: 100px;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    body {
+      text-align: center;
+    }
+
+    .item_holder {
+      position: relative;
+    }
+
+    .basic_item {
+      border-radius: 50%;
+      width: 100px;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #published_list {
+      width: 100%;
+      text-align: left;
+    }
+
+    select {
+      padding-right: 1em;
+    }
+
+    #frame_wrapper {
+      width: 280px;
+      overflow: hidden;
+      height: 400px;
+    }
+
+    #preview_panel {
+      width: 560px;
+      height: 800px;
+      transform: scale(.5);
+      padding: 0;
+      margin: 0;
+      display: none;
+      position: relative;
+      top: -50%;
+      left: -50%;
+    }
+
+    .csv_import_preview {
+      display: block;
+    }
+
+    .csv_import_preview {
+      width: inherit;
+      overflow: hidden;
+      overflow-x: scroll;
+    }
+
+    .add-asset-template-panel input {
+      margin: 0;
+    }
+
+    select {
+      padding-right: 1em;
+    }
+
+    #addon_display_view_select,
+    #preset_list_deploy {
+      margin: .5em 0;
+    }
+
+    .main_div_wrapper {
+      display: none;
+    }
+
+    .target_header {
+      text-align: right;
+      padding-top: .25em;
+      padding-right: .75em;
+      flex: 1;
+      width: 15em;
+      overflow: hidden;
+    }
+
+    .target_header span {
+      white-space: nowrap;
+      font-size: .8em;
+      float: right;
+      clear: right;
+    }
+
+    #addon_display_view_select {
+      flex: 1;
+      margin-left: .5em;
+    }
+
+    select {
+      font-size: 11px;
+      border-radius: 0;
+    }
+
+    * {
+      font-size: 12px;
+    }
+
+    button {
+      font-size: 12px;
+    }
+
+    #preset_list_deploy {
+      width: 90%;
+      text-align: left;
+    }
+
+    #preset_list_deploy option {
+      padding: 4px;
+    }
+  </style>
+
 </body>
 
 </html>
