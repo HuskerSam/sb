@@ -1,0 +1,10 @@
+[
+  {"range":"A1","value":"Display List","formula":"","fontWeight":""},
+{"range":"A2","value":"Projects","formula":"","fontWeight":""},
+{"range":"B1","value":"Assets Doc ID","formula":"","fontWeight":""},
+{"range":"B2","value":"12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE","formula":"","fontWeight":""},
+{"range":"C1","value":"Target Server","formula":"","fontWeight":""},
+{"range":"D1","value":"Target Token","formula":"","fontWeight":""},
+{"range":"E1","value":"Target Project","formula":"","fontWeight":""},
+{"range":"A1:E1","value":"","formula":"","fontWeight":"bold"}
+]

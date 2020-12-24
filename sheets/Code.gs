@@ -70,14 +70,38 @@ function createSheetFromTemplate(sheetName, template) {
   return "success";
 }
 
-function SetDefaultCredentials(target, token, project) {
-  let publishConfig = activeSpreadsheet.getSheetByName("PublishConfig");
-
-  if (publishConfig) {
-    publishConfig.getRange('E2').setValue(target);
-    publishConfig.getRange('F2').setValue(token);
-    publishConfig.getRange('G2').setValue(project);
+function SetCSVSheetValue(sheetName, rowIndex, field, value) {
+  if (!sheetName || !field || !rowIndex)
+    return;
+  let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet();
+    sheet.setName(sheetName);
   }
+
+  let sheetCSV = getJSONFromCSVSheet(sheetName);
+  let cols = [];
+  if (sheetCSV[0])
+    cols = Object.keys(sheetCSV[0]);
+  let colIndex = cols.length;
+  for (let c = 0; c < cols.length; c++)
+    if (cols[c] === field) {
+      colIndex = c;
+      break;
+    }
+  let colSymbol = '';
+  if (colIndex < 27)
+    colSymbol = String.fromCharCode('A'.charCodeAt(0) + colIndex);
+  else
+    colSymbol = 'A' + String.fromCharCode('A'.charCodeAt(0) + (colIndex - 26));
+
+  if (colIndex === cols.length) {
+   sheet.getRange(colSymbol + '1').setValue(field).setFontWeight('bold');
+  }
+
+  let rowNumber = (rowIndex + 1).toString();
+  if (colSymbol && rowNumber)
+    sheet.getRange(colSymbol + rowNumber).setValue(value);
 }
 
 function AddRowToSheet(name, cols = []) {
@@ -257,6 +281,9 @@ function getJSONFromCSVSheet(sheetName) {
     return [];
   let lastRow = sheet.getLastRow();
   let lastColumn = sheet.getLastColumn();
+
+  if (lastRow === 0)
+    return [];
   let range = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
   let cols = range[0];
   let outData = [];

@@ -15,6 +15,11 @@
 </head>
 
 <body>
+  <div class="target_header">
+    <span id="selected_target_span">Loading</span>
+    <span id="selected_project_span">Loading</span>
+    <div style="clear:both;"></div>
+  </div>
   <div style="display:flex;flex-direction:row">
     <select id="addon_display_view_select">
       <option value="cloud_target">Cloud Server</option>
@@ -24,27 +29,34 @@
       <option value="block_wizards">Block Wizards</option>
       <option value="song_import_div">Process Audio</option>
     </select>
-    <div class="target_header">
-      <span id="selected_target_span">No cloud server</span>
-      <span id="selected_project_span">No project name</span>
+    <div style="padding:0 4px;">
+      <button id="reload_addon"><i class="material-icons">refresh</i></button>
     </div>
   </div>
   <div id="cloud_target" class="main_div_wrapper">
-    <select id="preset_list_deploy" size="6">
+    <select id="deploy_options_server_list" class="select_list" size="6">
       <option selected>Loading</option>
     </select>
     <br>
     <label>Target <input id="target_to_deploy" type="text" /></label>
-    <div id="url_to_deploy"><br></div>
+    <br>
     <label>Token <input id="token_to_deploy" type="text" /></label>
     <br>
+    <br>
+    <span id="url_to_deploy"></span>
+    <br>
+    <br>
+    <button id="target_server_set_button" class="green">Set Server</button>
+    <br>
+    <div id="selected_server_details_div"></div>
+    <hr>
     <label>Assets: <span id="assets_anchor"> loading...</span></label>
   </div>
   <div id="cloud_deploy" class="main_div_wrapper">
     <button id="display_publish_list" class="blue">Process All</button>
     <br>
     <br>
-    <select id="published_list" size="5"></select>
+    <select id="published_list" class="select_list" size="5"></select>
     <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
     <br>
     <div id="single_display_options" style="display:none;">
@@ -73,14 +85,16 @@
     </div>
   </div>
   <div id="init_view" class="main_div_wrapper">
-    <button id="create_publishconfig" class="blue">Create PublishConfig</button>
+    <br>
+    <br>
+    <button id="create_configuration_sheet_btn" class="blue">Create Configuration Sheet</button>
     <br><br>
-    <button id="create_publishlist" class="blue">Create PublishList</button>
+    <button id="create_projectlist_sheet_btn" class="blue">Create Projects Sheet</button>
     <br><br>
     <button id="create_assetranges" class="blue">Create Asset Ranges</button>
   </div>
   <div id="template_view" class="main_div_wrapper" style="display:block">
-    <select id="circuit_template_select" style="width:100%;text-align:left;" size="8">
+    <select id="circuit_template_select" class="select_list" size="8">
     </select>
     <br>
     <div id="template_description"></div>
@@ -134,33 +148,42 @@
     class PublishWeb {
       constructor() {
         this.initDom();
+        this.initialLoad();
+      }
+      async initialLoad() {
         this.loadTemplateList();
+        this.initSheetBasedData();
+
         this.app = new cAppDefaults();
         this.app.jsonLibPrefix = 'https://handtop.com';
         this.app.loadTextures();
         this.app.loadPickerData();
-        this.loadBlockWizard();
-        this.loadPublishConfigSheetData();
-        this.loadProjectSelectList();
         this.widForName = {};
+        this.loadBlockWizard();
+      }
+      async initSheetBasedData() {
+        await this.loadConfiguration();
+        this.loadDeployOptions();
+        this.loadProjectSelectList();
       }
       initDom() {
         let dom_id = [
           'publish_results', 'target_to_deploy', 'token_to_deploy', 'url_to_deploy', 'published_list',
-          'preset_list_deploy', 'display_publish_list', 'assets_anchor', 'single_display_options', 'selected_display_anchor',
+          'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'single_display_options', 'selected_display_anchor',
           'selected_edit_anchor', 'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'show_preview_chk', 'preview_panel',
-          'create_publishconfig', 'create_publishlist', 'create_assetranges', 'sheetname', 'circuit_template_select',
+          'create_configuration_sheet_btn', 'create_projectlist_sheet_btn', 'create_assetranges', 'sheetname', 'circuit_template_select',
           'create_layout_btn', 'add_to_publishlist', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'helpviewer', 'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
-          'addon_display_view_select', 'audio', 'audio_file'
+          'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
+          'target_server_set_button', 'selected_server_details_div'
         ];
 
         dom_id.forEach(ctl => this[ctl] = document.getElementById(ctl));
 
         this.display_publish_list.addEventListener('click', e => this.cloudDeployProjects('all'));
         this.published_list.addEventListener('input', e => this.loadProjectDetails());
-        this.preset_list_deploy.addEventListener('input', e => this.loadServerDetails());
+        this.deploy_options_server_list.addEventListener('input', e => this.loadServerDetails());
         this.file_upload_name.addEventListener('input', e => this.loadImagePreview());
         this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
         this.upload_file_input.addEventListener('change', e => this.storageUploadProjectFile(e));
@@ -168,38 +191,64 @@
         this.set_default_proj.addEventListener('click', e => this.sheetsStoreSelectedServer());
         this.show_preview_chk.addEventListener('input', e => this.loadProjectPreview());
         this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
-        this.create_publishconfig.addEventListener('click', e => this.sheetsCreateTemplateSheet('PublishConfig', 'PublishConfig'));
-        this.create_publishlist.addEventListener('click', e => this.sheetsCreateTemplateSheet('PublishList', 'PublishList'));
+        this.create_configuration_sheet_btn.addEventListener('click', e => this.sheetsCreateTemplateSheet('ConfigurationDefault', 'Configuration'));
+        this.create_projectlist_sheet_btn.addEventListener('click', e => this.sheetsCreateTemplateSheet('ProjectList', 'Projects'));
         this.create_assetranges.addEventListener('click', e => this.sheetsCreateTemplateSheet('AssetRanges', 'Asset Ranges'));
         this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails());
         this.create_layout_btn.addEventListener('click', e => this.templateCreateSheets());
-
+        this.reload_addon.addEventListener('click', e => this.initialLoad());
+        this.target_server_set_button.addEventListener('click', e => this.cloudDeploySetServer());
 
         this.wizard_choices.addEventListener('change', e => this.loadBlockWizard());
         this.audio_file.addEventListener('change', e => this.audioProcessFileSelected());
       }
 
-      async loadPublishConfigSheetData() {
-        let publishConfig = await this.sheetsJSONforSheetCSV('PublishConfig');
-        let assetBookId = publishConfig[0].assetbookid;
+      async loadConfiguration() {
+        this.configurationCSV = await this.sheetsJSONforSheetCSV('Configuration');
+        if (!this.configurationCSV || this.configurationCSV.length === 0)
+          this.configurationCSV = [{}];
+        this.assetBookId = this.configurationCSV[0]['Assets Doc ID'];
+
+        this.defaultServerTarget = '';
+        if (this.configurationCSV[0]['Target Server']) {
+          this.defaultServerTarget = this.configurationCSV[0]['Target Server'];
+          this.selected_target_span.innerHTML = this.defaultServerTarget;
+        } else {
+          this.selected_target_span.innerHTML = 'No Server Target';
+        }
+
+        this.defaultProjectTarget = '';
+        if (this.configurationCSV[0]['Target Project']) {
+          this.defaultProjectTarget = this.configurationCSV[0]['Target Project'];
+          this.selected_project_span.innerHTML = this.defaultProjectTarget;
+        } else {
+          this.selected_project_span.innerHTML = 'No Project Target';
+        }
+
+        this.defaultToken = '';
+        if (this.configurationCSV[0]['Target Token'])
+          this.defaultToken = this.configurationCSV[0]['Target Token'];
+
+
+      }
+      async loadDeployOptions() {
         let deployOptionsRange = "'Deploy Options'!A1:A2";
 
-        let rangeString = assetBookId + "||||" + deployOptionsRange;
-        if (!assetBookId)
+        let rangeString = this.assetBookId + "||||" + deployOptionsRange;
+        if (!this.assetBookId)
           rangeString = deployOptionsRange;
 
         let deploys = await this.sheetsJSONforRangeListCSV([rangeString]);
         let targetRange = deploys[0].deployrange;
-        let assetRString = assetBookId + "||||'Deploy Options'!" + targetRange;
-        if (!assetBookId)
+        let assetRString = this.assetBookId + "||||'Deploy Options'!" + targetRange;
+        if (!this.assetBookId)
           assetRString = "'Deploy Options'!" + targetRange;
         let targets = await this.sheetsJSONforRangeListCSV([assetRString]);
         this.deployTargets = targets;
-        let listHTML = '<option>Deploy Targets</option>';
-
-        if (assetBookId) {
+        let listHTML = '';
+        if (this.assetBookId) {
           let url = "https://docs.google.com/spreadsheets/d/";
-          url += assetBookId.toString();
+          url += this.assetBookId.toString();
           this.assets_anchor.innerHTML = '<a target="_blank" href="' + url + '">Open Assets</a>';
         } else {
           this.assets_anchor.innerHTML = 'none';
@@ -211,12 +260,12 @@
             pid = '';
           listHTML += '<option>' + pid + '</option>';
         });
-        this.preset_list_deploy.innerHTML = listHTML;
+        this.deploy_options_server_list.innerHTML = listHTML;
 
-        this.publishListSheet = publishConfig[0].displaylist;
+        this.projectsSheetName = this.configurationCSV[0]['Display List'];
       }
       async loadServerDetails() {
-        let index = preset_list_deploy.selectedIndex;
+        let index = deploy_options_server_list.selectedIndex;
         if (index < 1)
           return;
         let t = this.deployTargets[index - 1];
@@ -249,7 +298,6 @@
       async loadBlockWizard() {
         this.macro = new cMacro(this.macro_details_wrapper, this.wizard_choices.value, this.app, true);
 
-
         let handleImageTextureUpload = async (fileCtl, field) => {
           let fileBlob = fileCtl.files[0];
 
@@ -257,23 +305,20 @@
             return;
           field.value = 'Uploading...';
           let filename = fileBlob.name;
-          let publishConfig = await this.sheetsJSONforSheetCSV('PublishConfig');
 
-          let target = publishConfig[0].defaulttarget;
-          let token = publishConfig[0].defaulttoken;
-          let project = publishConfig[0].defaultproject;
-
-          if (!project) {
-            alert('No default project pinned');
+          if (!this.defaultProjectTarget) {
+            alert('No default project configured');
             return;
           }
-
-          if (!target) {
-            alert('No default target pinned');
+          if (!this.defaultServerTarget) {
+            alert('No default target server configured');
+          }
+          if (!this.defaultToken) {
+            alert('No default token configured');
           }
 
-          let url = 'https://us-central1-' + target + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(project);
-          url += '&token=' + encodeURIComponent(token);
+          let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(this.defaultProjectTarget);
+          url += '&token=' + encodeURIComponent(this.defaultToken);
           url += '&filename=' + encodeURIComponent(filename);
 
           let body = new FormData();
@@ -333,13 +378,12 @@
         let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
           method: "get"
         });
-        let genResults = await genResponse.json();
+        this.templateListResults = await genResponse.json();
 
         let html = '';
-        console.log(genResults);
         let selected = 'selected';
         let templateMap = {};
-        genResults.forEach(i => {
+        this.templateListResults.forEach(i => {
           html += '<option value="' + i.key + '" ${selected}>' + i.name + '</option>';
           selected = '';
           templateMap[i.key] = i;
@@ -418,7 +462,7 @@
       }
       async loadProjectSelectList() {
         this.published_list.innerHTML = '';
-        let publishList = await this.sheetsJSONforSheetCSV(this.publishListSheet);
+        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName);
         this.publistList = publishList;
         let linkListHTML = '';
         let pid = this.target_to_deploy.value;
@@ -467,11 +511,13 @@
         let target = this.target_to_deploy.value;
         let project = this.published_list.value;
 
+
+      }
+      async sheetsStoreCSVValue(sheetName, rowIndex, field, value) {
         return new Promise(async (resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
-            this.loadProjectSelectList();
             resolve(result);
-          }).SetDefaultCredentials(target, token, project);
+          }).SetCSVSheetValue(sheetName, rowIndex, field, value);
         });
       }
       async sheetsJSONforSheetCSV(sheetName) {
@@ -491,6 +537,15 @@
         });
       }
 
+      async cloudDeploySetServer() {
+        let token = this.token_to_deploy.value;
+        let server = this.target_to_deploy.value;
+
+        await this.sheetsStoreCSVValue('Configuration', 1, 'Target Token', token);
+        await this.sheetsStoreCSVValue('Configuration', 1, 'Target Server', server);
+
+        this.initSheetBasedData();
+      }
       async templateCreateSheets() {
         let sheetName = this.sheetname.value;
         let templateString = this.circuit_template_select.value;
@@ -528,12 +583,11 @@
         this.dataCache = {};
 
         this.busy = true;
-        let publishConfig = await this.sheetsJSONforSheetCSV('PublishConfig');
-        let publishListSheet = publishConfig[0].displaylist;
+        let projectsSheetName = this.configurationCSV[0]['Display List'];
 
         window.apiToken = this.token_to_deploy.value;
         window.fbProj = this.target_to_deploy.value;
-        let publishList = await this.sheetsJSONforSheetCSV(publishListSheet);
+        let publishList = await this.sheetsJSONforSheetCSV(projectsSheetName);
 
         let deleteProject = async (name) => {
           let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
@@ -687,17 +741,18 @@
         let promises = [];
         let start = 0;
         let end = publishList.length - 1;
-        if (publishConfig[0].startat)
-          start = Number(publishConfig[0].startat);
-        if (publishConfig[0].endat)
-          end = Number(publishConfig[0].endat);
-
+        /*
+        if (this.configurationCSV[0].startat)
+          start = Number(this.configurationCSV[0].startat);
+        if (this.configurationCSV[0].endat)
+          end = Number(this.configurationCSV[0].endat);
+        */
         if (singleIndex !== null) {
           start = singleIndex;
           end = singleIndex;
         }
 
-        this.publish_results.value = publishList.length.toString() + ' Items in ' + publishListSheet + '\n';
+        this.publish_results.value = publishList.length.toString() + ' Items in ' + projectsSheetName + '\n';
         this.publish_results.value += 'Start Index:' + start + ' \nEnd Index: ' + end + '\n\n';
 
         for (let c = start; c <= end; c++) {
@@ -1092,13 +1147,14 @@
       margin: 0;
     }
 
-    select {
-      padding-right: 1em;
+    select.select_list {
+      text-align: left;
+      width: 96%;
+      margin-top: 4px;
     }
 
-    #addon_display_view_select,
-    #preset_list_deploy {
-      margin: .5em 0;
+    select.select_list option {
+      padding: 4px;
     }
 
     .main_div_wrapper {
@@ -1106,12 +1162,8 @@
     }
 
     .target_header {
-      text-align: right;
-      padding-top: .25em;
-      padding-right: .75em;
-      flex: 1;
-      width: 15em;
-      overflow: hidden;
+      width: 100%;
+      padding: 0 8px;
     }
 
     .target_header span {
@@ -1121,9 +1173,9 @@
       clear: right;
     }
 
-    #addon_display_view_select {
-      flex: 1;
-      margin-left: .5em;
+    #selected_target_span {
+      float: left;
+      text-align: left;
     }
 
     select {
@@ -1139,13 +1191,11 @@
       font-size: 12px;
     }
 
-    #preset_list_deploy {
-      width: 90%;
-      text-align: left;
-    }
 
-    #preset_list_deploy option {
-      padding: 4px;
+    #addon_display_view_select {
+      flex: 1;
+      margin-left: 8px;
+      font-size: 14px;
     }
   </style>
 
