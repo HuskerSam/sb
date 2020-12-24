@@ -13,7 +13,19 @@
     "description": "Scene with building, 2 walls<br>1 Sheet with aggregation cells at top<br>5 wine bottle meshes shown"
   },
   {
-    "name": "Product List",
+    "name": "Example Product List",
     "key": "ProductList"
+  },
+  {
+    "name": "Example Asset Ranges",
+    "key": "AssetRanges"
+  },
+  {
+    "name": "Example Projects",
+    "key": "ProjectList"
+  },
+  {
+    "name": "Example Configuration",
+    "key": "ConfigurationDefault"
   }
 ]

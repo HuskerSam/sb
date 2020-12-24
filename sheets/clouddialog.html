@@ -23,9 +23,8 @@
   <div style="display:flex;flex-direction:row">
     <select id="addon_display_view_select">
       <option value="cloud_target">Cloud Server</option>
-      <option value="cloud_deploy">Cloud Deploy</option>
-      <option value="init_view">Configuration</option>
-      <option selected value="template_view">Sheet Templates</option>
+      <option value="cloud_deploy" selected>Catalog Projects</option>
+      <option value="template_view">Sheet Templates</option>
       <option value="block_wizards">Block Wizards</option>
       <option value="song_import_div">Process Audio</option>
     </select>
@@ -41,34 +40,39 @@
     <label>Target <input id="target_to_deploy" type="text" /></label>
     <br>
     <label>Token <input id="token_to_deploy" type="text" /></label>
-    <br>
-    <br>
-    <span id="url_to_deploy"></span>
-    <br>
-    <br>
+    <div id="url_to_deploy" style="padding:.5em;"></div>
     <button id="target_server_set_button" class="green">Set Server</button>
     <br>
     <div id="selected_server_details_div"></div>
     <hr>
-    <label>Assets: <span id="assets_anchor"> loading...</span></label>
+    <label><span id="assets_anchor"> loading...</span></label>
   </div>
-  <div id="cloud_deploy" class="main_div_wrapper">
-    <button id="display_publish_list" class="blue">Process All</button>
-    <br>
-    <br>
-    <select id="published_list" class="select_list" size="5"></select>
-    <textarea id="publish_results" style="width:260px;height:200px;display:none;"></textarea>
-    <br>
-    <div id="single_display_options" style="display:none;">
-      <b>Row</b>
-      <button id="display_publish_single" class="blue">Process</button>
+  <div id="cloud_deploy" class="main_div_wrapper" style="display:block">
+    <select id="project_deploy_select" class="select_list" size="6"></select>
+    <div style="display:flex;flex-direction:row">
+      <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_details_view" checked>Details</label>
+      <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_deploy_view">Deploy</label>
+      <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_upload_view">Upload</label>
+    </div>
+    <div style="padding: 8px 8px" id="project_details_view">
+      <button id="set_default_proj" class="green">Set as Project Target</button>
+      <br>
+      <br>
+      <label><input type="checkbox" id="show_preview_chk">Show Display</label>
+      <div id="frame_wrapper">
+        <iframe id="preview_panel"></iframe>
+      </div>
+    </div>
+    <div id="project_deploy_view" style="display:none;">
+      <button id="display_publish_single" class="blue">Deploy Project</button>
+      <button id="display_publish_list">Deploy All Projects</button>
+      <textarea id="publish_results" style="width:284px;height:200px;display:none;"></textarea>
       &nbsp;
       <a id="selected_display_anchor"></a>
       &nbsp;
       <a id="selected_edit_anchor"></a>
-      &nbsp;
-      <button id="set_default_proj">Pin</button>
-      <hr>
+    </div>
+    <div id="project_upload_view" style="display:none;">
       <label>Name <input id="file_upload_name"></label>
       <button id="upload_file_cloud" class="blue">Upload File</button>
       <input type="file" id="upload_file_input" style="display:none;">
@@ -77,23 +81,9 @@
       <img id="img_preview" style="max-height:80px;max-width:100%;">
       <br>
       <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
-      <hr>
-      <label><input type="checkbox" id="show_preview_chk"> Show Display</label>
-      <div id="frame_wrapper">
-        <iframe id="preview_panel"></iframe>
-      </div>
     </div>
   </div>
-  <div id="init_view" class="main_div_wrapper">
-    <br>
-    <br>
-    <button id="create_configuration_sheet_btn" class="blue">Create Configuration Sheet</button>
-    <br><br>
-    <button id="create_projectlist_sheet_btn" class="blue">Create Projects Sheet</button>
-    <br><br>
-    <button id="create_assetranges" class="blue">Create Asset Ranges</button>
-  </div>
-  <div id="template_view" class="main_div_wrapper" style="display:block">
+  <div id="template_view" class="main_div_wrapper">
     <select id="circuit_template_select" class="select_list" size="8">
     </select>
     <br>
@@ -148,12 +138,9 @@
     class PublishWeb {
       constructor() {
         this.initDom();
-        this.initialLoad();
-      }
-      async initialLoad() {
-        this.loadTemplateList();
         this.initSheetBasedData();
 
+        this.loadTemplateList();
         this.app = new cAppDefaults();
         this.app.jsonLibPrefix = 'https://handtop.com';
         this.app.loadTextures();
@@ -161,46 +148,60 @@
         this.widForName = {};
         this.loadBlockWizard();
       }
+      async setBusy() {
+        this.reload_addon.style.borderRadius = '50%';
+        this.reload_addon.style.background = 'rgb(150,220,150)';
+      }
+      async clearBusy() {
+        this.reload_addon.style.borderRadius = '';
+        this.reload_addon.style.background = '';
+      }
       async initSheetBasedData() {
+        this.setBusy();
         await this.loadConfiguration();
-        this.loadDeployOptions();
-        this.loadProjectSelectList();
+        await Promise.all([
+          this.loadDeployOptions(),
+          this.loadProjectSelectList()
+        ]);
+        this.clearBusy();
       }
       initDom() {
         let dom_id = [
-          'publish_results', 'target_to_deploy', 'token_to_deploy', 'url_to_deploy', 'published_list',
-          'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'single_display_options', 'selected_display_anchor',
+          'publish_results', 'target_to_deploy', 'token_to_deploy', 'url_to_deploy', 'project_deploy_select',
+          'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'selected_display_anchor',
           'selected_edit_anchor', 'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'show_preview_chk', 'preview_panel',
-          'create_configuration_sheet_btn', 'create_projectlist_sheet_btn', 'create_assetranges', 'sheetname', 'circuit_template_select',
+          'sheetname', 'circuit_template_select',
           'create_layout_btn', 'add_to_publishlist', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'helpviewer', 'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
-          'target_server_set_button', 'selected_server_details_div'
+          'target_server_set_button', 'selected_server_details_div', 'project_details_view', 'project_deploy_view', 'project_upload_view',
+          'rdo_project_details_view','rdo_project_deploy_view','rdo_project_upload_view'
         ];
 
         dom_id.forEach(ctl => this[ctl] = document.getElementById(ctl));
 
         this.display_publish_list.addEventListener('click', e => this.cloudDeployProjects('all'));
-        this.published_list.addEventListener('input', e => this.loadProjectDetails());
+        this.project_deploy_select.addEventListener('input', e => this.loadProjectDetails());
         this.deploy_options_server_list.addEventListener('input', e => this.loadServerDetails());
         this.file_upload_name.addEventListener('input', e => this.loadImagePreview());
         this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
         this.upload_file_input.addEventListener('change', e => this.storageUploadProjectFile(e));
         this.display_publish_single.addEventListener('click', e => this.cloudDeployProjects('selected'));
-        this.set_default_proj.addEventListener('click', e => this.sheetsStoreSelectedServer());
+        this.set_default_proj.addEventListener('click', e => this.sheetsStoreSelectedProject());
         this.show_preview_chk.addEventListener('input', e => this.loadProjectPreview());
         this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
-        this.create_configuration_sheet_btn.addEventListener('click', e => this.sheetsCreateTemplateSheet('ConfigurationDefault', 'Configuration'));
-        this.create_projectlist_sheet_btn.addEventListener('click', e => this.sheetsCreateTemplateSheet('ProjectList', 'Projects'));
-        this.create_assetranges.addEventListener('click', e => this.sheetsCreateTemplateSheet('AssetRanges', 'Asset Ranges'));
         this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails());
         this.create_layout_btn.addEventListener('click', e => this.templateCreateSheets());
-        this.reload_addon.addEventListener('click', e => this.initialLoad());
+        this.reload_addon.addEventListener('click', e => this.initSheetBasedData());
         this.target_server_set_button.addEventListener('click', e => this.cloudDeploySetServer());
 
         this.wizard_choices.addEventListener('change', e => this.loadBlockWizard());
         this.audio_file.addEventListener('change', e => this.audioProcessFileSelected());
+
+        this.rdo_project_details_view.addEventListener('input', e => this.projectUpdateView());
+        this.rdo_project_upload_view.addEventListener('input', e => this.projectUpdateView());
+        this.rdo_project_deploy_view.addEventListener('input', e => this.projectUpdateView());
       }
 
       async loadConfiguration() {
@@ -229,7 +230,9 @@
         if (this.configurationCSV[0]['Target Token'])
           this.defaultToken = this.configurationCSV[0]['Target Token'];
 
-
+        this.projectsSheetName = 'Projects';
+        if (this.configurationCSV[0]['Display List'])
+          this.projectsSheetName = this.configurationCSV[0]['Display List'];
       }
       async loadDeployOptions() {
         let deployOptionsRange = "'Deploy Options'!A1:A2";
@@ -249,11 +252,12 @@
         if (this.assetBookId) {
           let url = "https://docs.google.com/spreadsheets/d/";
           url += this.assetBookId.toString();
-          this.assets_anchor.innerHTML = '<a target="_blank" href="' + url + '">Open Assets</a>';
+          this.assets_anchor.innerHTML = '<a target="_blank" href="' + url + '">Open Asset Document</a>';
         } else {
-          this.assets_anchor.innerHTML = 'none';
+          this.assets_anchor.innerHTML = 'Asset Document not configured';
         }
 
+        let sIndex = this.deploy_options_server_list.selectedIndex;
         targets.forEach(t => {
           let pid = t['project id'];
           if (!pid)
@@ -261,14 +265,14 @@
           listHTML += '<option>' + pid + '</option>';
         });
         this.deploy_options_server_list.innerHTML = listHTML;
-
-        this.projectsSheetName = this.configurationCSV[0]['Display List'];
+        this.deploy_options_server_list.selectedIndex = (sIndex === -1) ? 0 : sIndex;
+        this.loadServerDetails();
       }
       async loadServerDetails() {
         let index = deploy_options_server_list.selectedIndex;
-        if (index < 1)
+        if (index < 0)
           return;
-        let t = this.deployTargets[index - 1];
+        let t = this.deployTargets[index];
         let id = t['project id'];
         if (!id)
           id = '';
@@ -280,7 +284,10 @@
         let url = t['public url'];
         if (!url)
           url = 'https://' + id + '.web.app/';
-        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + url + '">' + url + '</a>';
+        let navurl = url;
+        if (url.substring(0, 3) !== 'htt')
+          url = 'https://' + url;
+        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + navurl + '">' + url + '</a>';
       }
       async loadTemplateDetails() {
         let data = this.templateMap[this.circuit_template_select.value];
@@ -443,7 +450,7 @@
         this.updatingImagePreview = false;
       }
       async loadProjectDetails() {
-        this.selectDisplayName = this.published_list.value;
+        this.selectDisplayName = this.project_deploy_select.value;
         let pid = this.target_to_deploy.value;
         let link = 'https://' + pid + '.web.app/display/?name=' + this.selectDisplayName;
         this.selected_display_anchor.setAttribute('href', link);
@@ -455,13 +462,12 @@
         this.selected_edit_anchor.innerHTML = 'Edit';
         this.selected_edit_anchor.setAttribute('target', "_blank");
 
-        this.single_display_options.style.display = '';
 
         this.loadImagePreview();
         this.loadProjectPreview();
       }
       async loadProjectSelectList() {
-        this.published_list.innerHTML = '';
+        let sel = this.project_deploy_select.selectedIndex;
         let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName);
         this.publistList = publishList;
         let linkListHTML = '';
@@ -469,8 +475,9 @@
         publishList.forEach(t => {
           linkListHTML += '<option>' + t['name'] + '</option>';
         });
-        this.published_list.innerHTML = linkListHTML;
-        window.fbProj = this.target_to_deploy.value;
+        this.project_deploy_select.innerHTML = linkListHTML;
+        this.project_deploy_select.selectedIndex = sel > -1 ? sel : 0;
+        this.loadProjectDetails();
       }
 
       async sheetsCreateTemplateSheet(layoutName, sheetName, baseSheetName = '') {
@@ -506,12 +513,11 @@
           }).AddRowToSheet('PublishList', [baseSheetName, '', "='" + baseSheetName + "'!C2"]);
         });
       }
-      async sheetsStoreSelectedServer() {
-        let token = this.token_to_deploy.value;
-        let target = this.target_to_deploy.value;
-        let project = this.published_list.value;
-
-
+      async sheetsStoreSelectedProject() {
+        this.setBusy();
+        let project = this.project_deploy_select.value;
+        await this.sheetsStoreCSVValue('Configuration', 1, 'Target Project', project);
+        this.initSheetBasedData();
       }
       async sheetsStoreCSVValue(sheetName, rowIndex, field, value) {
         return new Promise(async (resolve, reject) => {
@@ -538,6 +544,7 @@
       }
 
       async cloudDeploySetServer() {
+        this.setBusy();
         let token = this.token_to_deploy.value;
         let server = this.target_to_deploy.value;
 
@@ -574,7 +581,7 @@
 
         let singleIndex = null;
         if (set === 'selected') {
-          singleIndex = this.published_list.selectedIndex;
+          singleIndex = this.project_deploy_select.selectedIndex;
         }
         this.display_publish_list.innerHTML = 'Working...';
         this.display_publish_single.innerHTML = 'Working...';
@@ -1062,6 +1069,11 @@
         console.log(resampledArray);
         document.getElementById('raw_data').value = JSON.stringify(resampledArray);
       }
+      async projectUpdateView() {
+        this.project_deploy_view.style.display = this.rdo_project_deploy_view.checked ? '' : 'none';
+        this.project_upload_view.style.display = this.rdo_project_upload_view.checked ? '' : 'none';
+        this.project_details_view.style.display = this.rdo_project_details_view.checked ? '' : 'none';
+      }
     }
 
     document.addEventListener('DOMContentLoaded', e => {
@@ -1104,11 +1116,6 @@
       color: white;
       font-weight: bold;
       text-align: center;
-    }
-
-    #published_list {
-      width: 100%;
-      text-align: left;
     }
 
     select {
