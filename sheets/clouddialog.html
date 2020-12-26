@@ -15,125 +15,140 @@
 </head>
 
 <body>
-  <div class="target_header">
-    <span id="selected_target_span">Loading</span>
-    <span id="selected_project_span">Loading</span>
-    <div style="clear:both;"></div>
-  </div>
-  <div style="display:flex;flex-direction:row">
-    <select id="addon_display_view_select">
-      <option value="cloud_target">Cloud Server</option>
-      <option value="cloud_deploy" selected>Catalog Projects</option>
-      <option value="template_view">Sheet Templates</option>
-      <option value="block_wizards">Block Wizards</option>
-      <option value="song_import_div">Process Audio</option>
-    </select>
-    <div style="padding:0 4px;">
-      <button id="reload_addon"><i class="material-icons">refresh</i></button>
+  <div class="body_flex_wrapper">
+    <div class="target_header" style="flex:0">
+      <span id="selected_target_span">Loading</span>
+      <span id="selected_project_span">Loading</span>
+      <div style="clear:both;"></div>
     </div>
-  </div>
-  <div id="cloud_target" class="main_div_wrapper">
-    <select id="deploy_options_server_list" class="select_list" size="6">
-      <option selected>Loading</option>
-    </select>
-    <br>
-    <label>Target <input id="target_to_deploy" type="text" /></label>
-    <br>
-    <label>Token <input id="token_to_deploy" type="text" /></label>
-    <div id="url_to_deploy" style="padding:.5em;"></div>
-    <button id="target_server_set_button" class="green">Set Server</button>
-    <br>
-    <div id="selected_server_details_div"></div>
-    <hr>
-    <label><span id="assets_anchor"> loading...</span></label>
-  </div>
-  <div id="cloud_deploy" class="main_div_wrapper" style="display:block">
-    <select id="project_deploy_select" class="select_list" size="6"></select>
-    <div style="display:flex;flex-direction:row">
-      <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_details_view" checked>Details</label>
-      <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_deploy_view">Deploy</label>
-      <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_upload_view">Upload</label>
-    </div>
-    <div style="padding: 8px 8px" id="project_details_view">
-      <button id="set_default_proj" class="green">Set as Project Target</button>
-      <br>
-      <br>
-      <label><input type="checkbox" id="show_preview_chk">Show Display</label>
-      <div id="frame_wrapper">
-        <iframe id="preview_panel"></iframe>
+    <div style="display:flex;flex-direction:row;flex:0">
+      <select id="addon_display_view_select">
+        <option value="cloud_target">Cloud Server</option>
+        <option value="cloud_deploy" selected>Catalog Projects</option>
+        <option value="template_view">Sheet Templates</option>
+        <option value="block_wizards">Block Wizards</option>
+        <option value="song_import_div">Process Audio</option>
+      </select>
+      <div style="padding:0 4px;">
+        <button id="reload_addon"><i class="material-icons">refresh</i></button>
       </div>
     </div>
-    <div id="project_deploy_view" style="display:none;">
-      <button id="display_publish_single" class="blue">Deploy Project</button>
-      <button id="display_publish_list">Deploy All Projects</button>
-      <textarea id="publish_results" style="width:284px;height:200px;display:none;"></textarea>
-      &nbsp;
-      <a id="selected_display_anchor"></a>
-      &nbsp;
-      <a id="selected_edit_anchor"></a>
-    </div>
-    <div id="project_upload_view" style="display:none;">
-      <label>Name <input id="file_upload_name"></label>
-      <button id="upload_file_cloud" class="blue">Upload File</button>
-      <input type="file" id="upload_file_input" style="display:none;">
-
-      <br>
-      <img id="img_preview" style="max-height:80px;max-width:100%;">
-      <br>
-      <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
-    </div>
-  </div>
-  <div id="template_view" class="main_div_wrapper">
-    <select id="circuit_template_select" class="select_list" size="8">
-    </select>
-    <br>
-    <div id="template_description"></div>
-    <br>
-    <label>Name <input id="sheetname"></label>
-    <br>
-    <label><input type="checkbox" id="add_to_publishlist" checked> Add to PublishList</label>
-    <br>
-    <button id="create_layout_btn" class="green">Create Sheet</button>
-  </div>
-
-  <div id="block_wizards" style="height:inherit;overflow:auto;" class="main_div_wrapper">
-    <select id="wizard_choices">
-      <option value="block">Blocks</option>
-      <option value="mesh">Meshes</option>
-      <option value="material">Materials </option>
-    </select>
-
-    <div id="macro_details_wrapper" class="add-asset-template-panel">
-    </div>
-    <div id="helpviewer">
-    </div>
-  </div>
-  <div id="song_import_div" class="main_div_wrapper">
-    <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
-    <br>
-    <label>freq samples per second<input id="freq_samples_to_second" type="text" value="10" /></label>
-    <br>
-    <label>result bands
-      <select id="bands_to_combine">
-        <option value="1">256</option>
-        <option value="2">128</option>
-        <option value="4">64</option>
-        <option value="8">32</option>
-        <option value="16" selected>16</option>
-        <option value="32">8</option>
+    <div id="cloud_target" class="main_div_wrapper">
+      <select id="deploy_options_server_list" class="select_list" size="5">
+        <option selected>Loading</option>
       </select>
-    </label>
-    <br>
-    <br><label>
-      WAV Audio File:
-      <input type="file" id="audio_file" style="width:100%" /></label>
+      <div class="select_flex_view">
+        <div style="display:flex;flex-direction:row;padding:2px;">
+          <div style="padding: 2px">Target</div>
+          <input id="target_to_deploy" style="flex:1" type="text" />
+        </div>
+        <div style="display:flex;flex-direction:row;padding: 2px 8px">
+          <div style="padding: 2px">Token</div>
+          <input id="token_to_deploy" type="text" style="flex:1" />
+        </div>
+        <div id="url_to_deploy" style="padding:.5em;"></div>
+        <button id="target_server_set_button" class="green">Set Server</button>
+        <br>
+        <div id="selected_server_details_div"></div>
+        <hr>
+        <label><span id="assets_anchor"> loading...</span></label>
+      </div>
+    </div>
+    <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
+      <select id="project_deploy_select" class="select_list" size="5"></select>
+      <div style="display:flex;flex-direction:row">
+        <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_deploy_view" checked>Details</label>
+        <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_display_view">Display</label>
+        <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_upload_view">Upload</label>
+      </div>
+      <div class="select_flex_view" style="padding-top:4px">
+        <div id="project_display_view" style="display:none;height:inherit;">
+          <iframe id="preview_panel"></iframe>
+        </div>
+        <div id="project_deploy_view" style="display:none;flex-direction: column;height:inherit;width: 100%;">
+          <div style="padding: 0 8px">
+            <button id="set_default_proj" class="green"><i class="material-icons">push_pin</i> Project</button>
+            <button id="display_publish_single" class="blue">Deploy</button>
+            <button id="display_publish_list">Deploy All</button>
+          </div>
+          <div style="padding: 4px;">
+            <a id="selected_display_anchor"></a>
+            &nbsp;
+            <a id="selected_edit_anchor"></a>
+          </div>
+          <textarea id="publish_results" style="flex:1"></textarea>
+        </div>
+        <div id="project_upload_view" style="display:none;flex-direction: column;height:inherit;width: 100%">
+          <div>
+            <label>Name <input id="file_upload_name"></label>
+            <button id="upload_file_cloud" class="blue">Upload File</button>
+            <input type="file" id="upload_file_input" style="display:none;">
+          </div>
+          <div style="flex:1;overflow:hidden;">
+            <img id="img_preview" style="max-width:100%;max-height:100%">
+          </div>
+          <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
+        </div>
+      </div>
+    </div>
+    <div id="template_view" class="main_div_wrapper">
+      <select id="circuit_template_select" class="select_list" size="5">
+      </select>
+      <div class="select_flex_view">
 
-    <br>
-    <br>
-    <audio id="audio" controls style="width:250px;"></audio>
-    <div id="song_len_sec">&nbsp;</div>
-    <textarea id="raw_data" style="width:260px;height:200px;"></textarea>
+        <div style="display:flex;flex-direction:row;padding: 8px;">
+          <div style="padding: 0 4px;">Name </div>
+          <input id="sheetname" style="flex:1;">
+        </div>
+        <div style="display:flex;flex-direction:row;padding: 0 8px;">
+          <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
+          <button id="create_layout_btn" class="green" style="flex:1">Create</button>
+        </div>
+        <div id="template_description" style="padding: 8px"></div>
+      </div>
+    </div>
+
+    <div id="block_wizards" class="main_div_wrapper">
+      <div style="flex:0">
+        <select id="wizard_choices">
+          <option value="block">Blocks</option>
+          <option value="mesh">Meshes</option>
+          <option value="material">Materials </option>
+        </select>
+        <div id="macro_details_wrapper" class="add-asset-template-panel">
+        </div>
+      </div>
+      <div id="helpviewer" style="flex:1">
+      </div>
+    </div>
+    <div id="song_import_div" class="main_div_wrapper">
+      <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
+      <br>
+      <label>freq samples per second<input id="freq_samples_to_second" type="text" value="10" /></label>
+      <br>
+      <label>result bands
+        <select id="bands_to_combine">
+          <option value="1">256</option>
+          <option value="2">128</option>
+          <option value="4">64</option>
+          <option value="8">32</option>
+          <option value="16" selected>16</option>
+          <option value="32">8</option>
+        </select>
+      </label>
+      <br>
+      <br><label>
+        WAV Audio File:
+        <input type="file" id="audio_file" style="width:100%" /></label>
+
+      <br>
+      <br>
+      <audio id="audio" controls style="width:250px;"></audio>
+      <div id="song_len_sec">&nbsp;</div>
+      <textarea id="raw_data" style="width:260px;height:200px;"></textarea>
+    </div>
   </div>
+
   <script>
     class PublishWeb {
       constructor() {
@@ -170,26 +185,32 @@
           'publish_results', 'target_to_deploy', 'token_to_deploy', 'url_to_deploy', 'project_deploy_select',
           'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'selected_display_anchor',
           'selected_edit_anchor', 'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
-          'img_preview_link', 'display_publish_single', 'set_default_proj', 'show_preview_chk', 'preview_panel',
+          'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel',
           'sheetname', 'circuit_template_select',
           'create_layout_btn', 'add_to_publishlist', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'helpviewer', 'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
-          'target_server_set_button', 'selected_server_details_div', 'project_details_view', 'project_deploy_view', 'project_upload_view',
-          'rdo_project_details_view','rdo_project_deploy_view','rdo_project_upload_view'
+          'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
+          'rdo_project_display_view', 'rdo_project_deploy_view', 'rdo_project_upload_view'
         ];
 
-        dom_id.forEach(ctl => this[ctl] = document.getElementById(ctl));
+        dom_id.forEach(ctl => {
+          this[ctl] = document.getElementById(ctl);
+          if (!this[ctl])
+            console.log('element for DOM ID ' + ctl + ' not found')
+        });
 
         this.display_publish_list.addEventListener('click', e => this.cloudDeployProjects('all'));
-        this.project_deploy_select.addEventListener('input', e => this.loadProjectDetails());
+        this.project_deploy_select.addEventListener('input', e => this.loadProjectView());
+        this.rdo_project_display_view.addEventListener('input', e => this.loadProjectView());
+        this.rdo_project_deploy_view.addEventListener('input', e => this.loadProjectView());
+        this.rdo_project_upload_view.addEventListener('input', e => this.loadProjectView());
         this.deploy_options_server_list.addEventListener('input', e => this.loadServerDetails());
         this.file_upload_name.addEventListener('input', e => this.loadImagePreview());
         this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
         this.upload_file_input.addEventListener('change', e => this.storageUploadProjectFile(e));
         this.display_publish_single.addEventListener('click', e => this.cloudDeployProjects('selected'));
         this.set_default_proj.addEventListener('click', e => this.sheetsStoreSelectedProject());
-        this.show_preview_chk.addEventListener('input', e => this.loadProjectPreview());
         this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
         this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails());
         this.create_layout_btn.addEventListener('click', e => this.templateCreateSheets());
@@ -198,10 +219,6 @@
 
         this.wizard_choices.addEventListener('change', e => this.loadBlockWizard());
         this.audio_file.addEventListener('change', e => this.audioProcessFileSelected());
-
-        this.rdo_project_details_view.addEventListener('input', e => this.projectUpdateView());
-        this.rdo_project_upload_view.addEventListener('input', e => this.projectUpdateView());
-        this.rdo_project_deploy_view.addEventListener('input', e => this.projectUpdateView());
       }
 
       async loadConfiguration() {
@@ -231,8 +248,8 @@
           this.defaultToken = this.configurationCSV[0]['Target Token'];
 
         this.projectsSheetName = 'Projects';
-        if (this.configurationCSV[0]['Display List'])
-          this.projectsSheetName = this.configurationCSV[0]['Display List'];
+        if (this.configurationCSV[0]['Catalog List'])
+          this.projectsSheetName = this.configurationCSV[0]['Catalog List'];
       }
       async loadDeployOptions() {
         let deployOptionsRange = "'Deploy Options'!A1:A2";
@@ -248,16 +265,24 @@
           assetRString = "'Deploy Options'!" + targetRange;
         let targets = await this.sheetsJSONforRangeListCSV([assetRString]);
         this.deployTargets = targets;
-        let listHTML = '';
+        let configDetailsHTML = '';
         if (this.assetBookId) {
+          configDetailsHTML += 'Asset Id: <span style="font-size:.75em">' + this.assetBookId.toString() + '</span>';
           let url = "https://docs.google.com/spreadsheets/d/";
           url += this.assetBookId.toString();
-          this.assets_anchor.innerHTML = '<a target="_blank" href="' + url + '">Open Asset Document</a>';
+          configDetailsHTML += '<br><a target="_blank" href="' + url + '">Open Assets Spreadsheet</a><br>';
         } else {
-          this.assets_anchor.innerHTML = 'Asset Document not configured';
+          configDetailsHTML += 'Asset Id: <b>None</b><br><br>';
         }
 
+        let dtext = '';
+        if (this.configurationCSV[0]['Catalog List'] === '')
+          dtext = ' (default)';
+        configDetailsHTML += '<br>Catalog List:' + this.projectsSheetName + dtext;
+        this.assets_anchor.innerHTML = configDetailsHTML;
+
         let sIndex = this.deploy_options_server_list.selectedIndex;
+        let listHTML = '';
         targets.forEach(t => {
           let pid = t['project id'];
           if (!pid)
@@ -291,8 +316,9 @@
       }
       async loadTemplateDetails() {
         let data = this.templateMap[this.circuit_template_select.value];
-        if (this.sheetname.value === '')
-          this.sheetname.value = data.name;
+        if (data.hint) {
+          this.sheetname.value = data.hint;
+        }
 
         if (data.description) {
           this.template_description.innerHTML = data.description;
@@ -300,6 +326,11 @@
           this.template_description.innerHTML = '';
         }
 
+        if (data.addToProjectList)
+          this.add_to_publishlist.checked = true;
+        else {
+          this.add_to_publishlist.checked = false;
+        }
         return;
       }
       async loadBlockWizard() {
@@ -366,17 +397,15 @@
         wrappers.forEach(w => w.style.display = 'none');
         let ele = document.getElementById(this.addon_display_view_select.value);
         if (ele)
-          ele.style.display = 'block';
+          ele.style.display = 'flex';
 
         return;
       }
       async loadProjectPreview() {
-        if (this.show_preview_chk.checked) {
-          this.preview_panel.style.display = 'inline-block';
+        if (this.rdo_project_display_view.checked) {
           let src = this.selected_display_anchor.getAttribute('href');
           this.preview_panel.setAttribute('src', src);
         } else {
-          this.preview_panel.style.display = 'none';
           this.preview_panel.setAttribute('src', '');
         }
         return null;
@@ -408,7 +437,7 @@
         this.signed_url = new_url;
 
         let name = this.file_upload_name.value;
-        if (!name || !window.fbProj || !window.apiToken) {
+        if (!name || !this.defaultServerTarget || !this.defaultToken) {
           this.img_preview.setAttribute('src', '');
           this.img_preview_link.setAttribute('href', '');
           this.img_preview_link.innerHTML = '';
@@ -419,12 +448,13 @@
 
         let tag = 'cloudupload';
         let wid = 'none';
-        if (window.fbProj)
-          wid = this.widForName[this.selectDisplayName];
+        let selectedProject = this.project_deploy_select.value;
+        if (this.defaultServerTarget)
+          wid = this.widForName[selectedProject];
 
         if (!wid) {
-          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/widforname/?name=' + encodeURIComponent(this.selectDisplayName);
-          url += '&token=' + encodeURIComponent(window.apiToken);
+          let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/widforname/?name=' + encodeURIComponent(selectedProject);
+          url += '&token=' + encodeURIComponent(this.defaultToken);
           let genResponse = await fetch(url, {
             method: "get"
           });
@@ -433,7 +463,7 @@
           wid = r.wid;
           console.log('wid', r);
           window.bucketName = r.bucket;
-          this.widForName[window.fbProj] = wid;
+          this.widForName[this.defaultServerTarget] = wid;
         }
         this.referencePath = 'project/' + wid + '/' + tag + '/';
 
@@ -446,25 +476,29 @@
           signed_url += '&randomstuff=' + Number(new Date()).toString();
         this.img_preview.setAttribute('src', signed_url);
         this.img_preview_link.setAttribute('href', signed_url);
-        this.img_preview_link.innerHTML = signed_url;
+        this.img_preview_link.innerHTML = 'Open in new Window';
         this.updatingImagePreview = false;
       }
-      async loadProjectDetails() {
-        this.selectDisplayName = this.project_deploy_select.value;
+      async loadProjectView() {
+        this.loadProjectPreview();
+        this.project_deploy_view.style.display = this.rdo_project_deploy_view.checked ? 'flex' : 'none';
+        this.project_upload_view.style.display = this.rdo_project_upload_view.checked ? 'flex' : 'none';
+        this.project_display_view.style.display = this.rdo_project_display_view.checked ? '' : 'none';
+
+        let selectedProject = this.project_deploy_select.value;
         let pid = this.target_to_deploy.value;
-        let link = 'https://' + pid + '.web.app/display/?name=' + this.selectDisplayName;
+        let link = 'https://' + pid + '.web.app/display/?name=' + selectedProject;
         this.selected_display_anchor.setAttribute('href', link);
         this.selected_display_anchor.innerHTML = 'View';
         this.selected_display_anchor.setAttribute('target', "_blank");
 
-        let editLink = 'https://' + pid + '.web.app/asset/?name=' + this.selectDisplayName;
+        let editLink = 'https://' + pid + '.web.app/asset/?name=' + selectedProject;
         this.selected_edit_anchor.setAttribute('href', editLink);
         this.selected_edit_anchor.innerHTML = 'Edit';
         this.selected_edit_anchor.setAttribute('target', "_blank");
 
 
         this.loadImagePreview();
-        this.loadProjectPreview();
       }
       async loadProjectSelectList() {
         let sel = this.project_deploy_select.selectedIndex;
@@ -477,7 +511,7 @@
         });
         this.project_deploy_select.innerHTML = linkListHTML;
         this.project_deploy_select.selectedIndex = sel > -1 ? sel : 0;
-        this.loadProjectDetails();
+        this.loadProjectView();
       }
 
       async sheetsCreateTemplateSheet(layoutName, sheetName, baseSheetName = '') {
@@ -586,19 +620,15 @@
         this.display_publish_list.innerHTML = 'Working...';
         this.display_publish_single.innerHTML = 'Working...';
         this.publish_results.value = '';
-        this.publish_results.style.display = '';
         this.dataCache = {};
 
         this.busy = true;
-        let projectsSheetName = this.configurationCSV[0]['Display List'];
 
-        window.apiToken = this.token_to_deploy.value;
-        window.fbProj = this.target_to_deploy.value;
-        let publishList = await this.sheetsJSONforSheetCSV(projectsSheetName);
+        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName);
 
         let deleteProject = async (name) => {
-          let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
-          url += '&token=' + encodeURIComponent(window.apiToken);
+          let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
+          url += '&token=' + encodeURIComponent(this.defaultToken);
           let genResponse = await fetch(url, {
             method: "post"
           });
@@ -631,9 +661,9 @@
                 console.log('asset fetch');
               }
               console.log('assets', assets);
-              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
               url += encodeURIComponent(name) + '&type=asset';
-              url += '&token=' + encodeURIComponent(window.apiToken);
+              url += '&token=' + encodeURIComponent(this.defaultToken);
               let json = JSON.stringify(assets);
 
               let response = await fetch(url, {
@@ -666,9 +696,9 @@
                 console.log('scene fetched');
               }
               console.log('c', scene);
-              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
               url += encodeURIComponent(name) + '&type=scene';
-              url += '&token=' + encodeURIComponent(window.apiToken);
+              url += '&token=' + encodeURIComponent(this.defaultToken);
               let json = JSON.stringify(scene);
               let response = await fetch(url, {
                 method: "post",
@@ -691,9 +721,9 @@
             let productResults = {};
             if (catalogSheet) {
               let products = await this.sheetsJSONforSheetCSV(catalogSheet);
-              let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/upload?name=';
+              let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
               url += encodeURIComponent(name) + '&type=product';
-              url += '&token=' + encodeURIComponent(window.apiToken);
+              url += '&token=' + encodeURIComponent(this.defaultToken);
               let json = JSON.stringify(products);
               let response = await fetch(url, {
                 method: "post",
@@ -712,8 +742,8 @@
             }
 
             step = "Generate";
-            let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
-            url += '&token=' + encodeURIComponent(window.apiToken);
+            let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/generate/?name=' + encodeURIComponent(name);
+            url += '&token=' + encodeURIComponent(this.defaultToken);
             let genResponse = await fetch(url, {
               method: "post"
             });
@@ -748,18 +778,13 @@
         let promises = [];
         let start = 0;
         let end = publishList.length - 1;
-        /*
-        if (this.configurationCSV[0].startat)
-          start = Number(this.configurationCSV[0].startat);
-        if (this.configurationCSV[0].endat)
-          end = Number(this.configurationCSV[0].endat);
-        */
+
         if (singleIndex !== null) {
           start = singleIndex;
           end = singleIndex;
         }
 
-        this.publish_results.value = publishList.length.toString() + ' Items in ' + projectsSheetName + '\n';
+        this.publish_results.value = publishList.length.toString() + ' Items in ' + this.projectsSheetName + '\n';
         this.publish_results.value += 'Start Index:' + start + ' \nEnd Index: ' + end + '\n\n';
 
         for (let c = start; c <= end; c++) {
@@ -800,12 +825,14 @@
       }
       async storageUploadProjectFile(e) {
         let filename = this.file_upload_name.value.trim();
+        let selectedProject = this.project_deploy_select.value;
+
         if (this.file_upload_name.value === '') {
           this.file_upload_name.value = this.upload_file_input.files[0].name;
           filename = this.file_upload_name.value;
         }
-        let url = 'https://us-central1-' + window.fbProj + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(this.selectDisplayName);
-        url += '&token=' + encodeURIComponent(window.apiToken);
+        let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(selectedProject);
+        url += '&token=' + encodeURIComponent(this.defaultToken);
         url += '&filename=' + encodeURIComponent(filename);
 
         let body = new FormData();
@@ -1069,11 +1096,6 @@
         console.log(resampledArray);
         document.getElementById('raw_data').value = JSON.stringify(resampledArray);
       }
-      async projectUpdateView() {
-        this.project_deploy_view.style.display = this.rdo_project_deploy_view.checked ? '' : 'none';
-        this.project_upload_view.style.display = this.rdo_project_upload_view.checked ? '' : 'none';
-        this.project_details_view.style.display = this.rdo_project_details_view.checked ? '' : 'none';
-      }
     }
 
     document.addEventListener('DOMContentLoaded', e => {
@@ -1122,19 +1144,12 @@
       padding-right: 1em;
     }
 
-    #frame_wrapper {
-      width: 280px;
-      overflow: hidden;
-      height: 400px;
-    }
-
     #preview_panel {
-      width: 560px;
-      height: 800px;
+      width: 200%;
+      height: 200%;
       transform: scale(.5);
       padding: 0;
       margin: 0;
-      display: none;
       position: relative;
       top: -50%;
       left: -50%;
@@ -1156,8 +1171,17 @@
 
     select.select_list {
       text-align: left;
-      width: 96%;
-      margin-top: 4px;
+      margin: 3%;
+      width: 94%;
+      flex: 1;
+      min-height: 3em;
+    }
+
+    .select_flex_view {
+      flex: 2;
+      overflow: hidden;
+      overflow-y: auto;
+      display: flex;
     }
 
     select.select_list option {
@@ -1166,6 +1190,10 @@
 
     .main_div_wrapper {
       display: none;
+      flex: 1;
+      overflow: hidden;
+      overflow-y: auto;
+      flex-direction: column;
     }
 
     .target_header {
@@ -1198,11 +1226,20 @@
       font-size: 12px;
     }
 
+    .body_flex_wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
 
     #addon_display_view_select {
       flex: 1;
       margin-left: 8px;
       font-size: 14px;
+    }
+
+    #project_display_view {
+      overflow:hidden;
     }
   </style>
 

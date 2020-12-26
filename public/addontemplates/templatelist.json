@@ -1,31 +1,54 @@
 [
   {
     "name": "Complex Layout (2 sheets)",
-    "key": "ComplexCircuit,ComplexRanges: Ranges"
+    "key": "ComplexCircuit,ComplexRanges: Ranges",
+    "hint": "My Display",
+    "uniqueName": true,
+    "addToProjectList": true,
+    "description": "Grocery Display with Products"
   },
   {
     "name": "Simple Layout (2 sheets)",
-    "key": "SimpleCircuit,SimpleRanges: Ranges"
+    "key": "SimpleCircuit,SimpleRanges: Ranges",
+    "hint": "My Display",
+    "addToProjectList": true,
+    "uniqueName": true,
+    "description": "Empty display with cameras and second sheet with range aggregration"
   },
   {
     "name": "Simple Layout",
     "key": "Simple1SheetCircuit",
+    "hint": "My Example",
+    "addToProjectList": true,
+    "uniqueName": true,
     "description": "Scene with building, 2 walls<br>1 Sheet with aggregation cells at top<br>5 wine bottle meshes shown"
   },
   {
     "name": "Example Product List",
-    "key": "ProductList"
+    "key": "ProductList",
+    "hint": "Products",
+    "uniqueName": true,
+    "description": "Product list with headers and various examples products"
   },
   {
     "name": "Example Asset Ranges",
-    "key": "AssetRanges"
+    "key": "AssetRanges",
+    "uniqueName": true,
+    "hint": "Asset Ranges",
+    "description": "Example of aggregating data from external Assets Spreadsheet"
   },
   {
     "name": "Example Projects",
-    "key": "ProjectList"
+    "key": "ProjectList",
+    "uniqueName": false,
+    "hint": "Projects",
+    "description": "Default Projects List Example (all columns) - name is specified in Configuration Sheet"
   },
   {
     "name": "Example Configuration",
-    "key": "ConfigurationDefault"
+    "key": "ConfigurationDefault",
+    "hint": "Configuration",
+    "uniqueName": false,
+    "description": "Default [Configuration] sheet - should be named Configuration"
   }
 ]
