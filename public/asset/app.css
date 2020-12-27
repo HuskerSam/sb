@@ -436,7 +436,7 @@ select {
 }
 
 .add-asset-template-panel {
-  display: block;
+  display: flex;
   flex-direction: column;
   flex: 1;
   overflow: auto;
@@ -912,4 +912,32 @@ div.imagebackgrounddisplay {
 
 .table_export td {
   color: black;
+}
+
+.block_wizard_wrapper {
+  flex:1;
+  overflow:hidden;
+  overflow-y:auto;
+  padding: 0 8px;
+  text-align:left;
+  line-height: 2.25em;
+  text-align: left;
+}
+
+table.wizard_field_container td {
+  padding: 0;
+  border: none;
+}
+
+table.wizard_field_container td:nth-child(1) {
+  white-space: nowrap;
+  padding: 4px;
+}
+
+table.wizard_field_container td:nth-child(2) {
+  width: 99%;
+}
+
+table.wizard_field_container td:nth-child(2) input {
+  width: 100%;
 }

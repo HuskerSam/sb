@@ -130,17 +130,15 @@
     </div>
 
     <div id="block_wizards" class="main_div_wrapper">
-      <div style="flex:0">
-        <select id="wizard_choices">
-          <option value="block">Blocks</option>
-          <option value="mesh">Meshes</option>
-          <option value="material">Materials </option>
-        </select>
+        <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:8px;">
+          <select id="wizard_choices" style="margin-right: 8px;">
+            <option value="block">Block</option>
+            <option value="mesh">Mesh</option>
+            <option value="material">Material</option>
+          </select>
+        </div>
         <div id="macro_details_wrapper" class="add-asset-template-panel">
         </div>
-      </div>
-      <div id="helpviewer" style="flex:1">
-      </div>
     </div>
     <div id="song_import_div" class="main_div_wrapper">
       <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
@@ -207,9 +205,9 @@
           'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'selected_display_anchor',
           'selected_edit_anchor', 'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel',
-          'sheetname', 'circuit_template_select', 'help_viewer_panel',
+          'sheetname', 'circuit_template_select', 'help_viewer_panel', 'block_wizard_select_wrapper',
           'create_layout_btn', 'add_to_publishlist', 'template_description', 'macro_details_wrapper', 'wizard_choices',
-          'helpviewer', 'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
+          'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
           'rdo_project_display_view', 'rdo_project_deploy_view', 'rdo_project_upload_view', 'show_help_panel_btn'
@@ -294,7 +292,7 @@
           url += this.assetBookId.toString();
           let open = '<a target="_blank" href="' + url + '">Open</a>';
           configDetailsHTML += '<hr>Main Spreadsheet Id &nbsp;' + open + '<br> <span style="font-size:.85em">' + this.assetBookId.toString() + '</span>';
-          } else {
+        } else {
           configDetailsHTML += 'Main Spreadsheet Id<br> <span style="font-size:.85em">None</span>';
         }
 
@@ -357,7 +355,12 @@
         return;
       }
       async loadBlockWizard() {
+        if (this.block_wizard_add_name_div)
+          this.block_wizard_add_name_div.remove();
         this.macro = new cMacro(this.macro_details_wrapper, this.wizard_choices.value, this.app, true);
+
+        this.block_wizard_add_name_div = document.querySelector('.block_wizard_add_name_div');
+        this.block_wizard_select_wrapper.appendChild(this.block_wizard_add_name_div);
 
         let handleImageTextureUpload = async (fileCtl, field) => {
           let fileBlob = fileCtl.files[0];
@@ -411,13 +414,19 @@
           return handleImageTextureUpload(fileCtl, field);
         };
 
-        await this.app.updateHelpView(this.wizard_choices.value, this.helpviewer);
+        await this.app.updateHelpView(this.wizard_choices.value, this.help_viewer_panel);
 
         return null;
       }
       async loadAddonView() {
         let wrappers = document.body.querySelectorAll('.main_div_wrapper');
         wrappers.forEach(w => w.style.display = 'none');
+
+        if (this.addon_display_view_select.value !== 'cloud_deploy')
+          this.preview_panel.setAttribute('src', '');
+        else
+          this.loadProjectView();
+
         let ele = document.getElementById(this.addon_display_view_select.value);
         if (ele)
           ele.style.display = 'flex';
@@ -1208,7 +1217,7 @@
     select.select_list {
       text-align: left;
       margin: 8px;
-      width: calc(100% = 16px);
+      width: calc(100%=16px);
       flex: 1;
       min-height: 3em;
     }
@@ -1276,7 +1285,7 @@
     }
 
     #project_display_view {
-      overflow:hidden;
+      overflow: hidden;
     }
 
     button i.material-icons {
@@ -1286,7 +1295,7 @@
 
     #help_viewer_panel {
       border: solid 1px silver;
-      overflow-y:auto;
+      overflow-y: auto;
       margin: 8px 8px 0 8px;
     }
   </style>

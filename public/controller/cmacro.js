@@ -58,7 +58,7 @@ class cMacro {
     let t = '';
     if (this[tag + 'Template'])
       t = this[tag + 'Template']();
-    panel.innerHTML = base + t + `<hr>`;
+    panel.innerHTML = base + t;
     if (tag !== 'workspace') {
       if (!this.addonmode) {
         this.panelCreateBtn = this.panel.querySelector('.add-button');
@@ -80,235 +80,268 @@ class cMacro {
     textDom.style.fontFamily = textDom.value;
   }
   baseTemplate() {
-    let template = `<label class="add_template_name_label"><b>${this.tag} name</b>
-     <input class="add-item-name" type="text" style="width:10em;" /></label>`;
+    let template = `<div class="block_wizard_add_name_div" style="flex:1;display:flex;flex-direction:row;padding-top:2px;">
+      <label class="add_template_name_label" style="padding:4px;"><b>Name</b>
+     </label><input class="add-item-name" type="text" style="width:12em;" value="name" />`;
      if (!this.addonmode)
       template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
-      <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>`;
+        <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
+        <br class="new_button_break">`;
 
-    template += `<br class="new_button_break">
-      <div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div>`;
+    template += `<div class="creating-message" style="display:none;background:silver;padding: .25em;">Creating...</div></div>`;
 
     return template;
   }
   blockTemplate() {
-    return `<select class="block-type-select">
-     <option selected>Scene</option>
-     <option>Text and Shape</option>
-     <option>Animated Line</option>
-     <option>Connector Line</option>
-     <option>2D Text Plane</option>
-     <option>Web Font</option>
-    </select>
-    <div class="create-2d-text-plane">
-      <label><span>texturetext</span><input class="texturetext" style="width:10em" type="text" value="Text Line" /></label><br>
-      <label><span>texturetext2</span><input class="texturetext2" type="text" value="" style="width:10em" /></label><br>
-      <label><span>textfontfamily</span><input class="textfontfamily" type="text" list="fontfamilydatalist" style="width:10em" /></label><br>
-      <label><span>textfontcolor</span><input class="textfontcolor" type="text" value="0,0,0" style="width:10em" /></label><br>
-      <label><span>textfontweight</span><input class="textfontweight" type="text" value="" style="width:10em" /></label><br>
-      <label><span>textfontsize</span><input class="textfontsize" type="text" value="100" /></label><br>
-      <label><span>texturetextrendersize</span><input class="texturetextrendersize" type="text" value="512" /></label><br>
-      <label><span>width</span><input class="width" type="text" value="4" /></label><br>
-      <label><span>height</span><input class="height" type="text" value="4" /></label><br>
-    </div>
-    <div class="web-font-block-add-options" style="display:none;">
-      <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:10em;" value="" /></label>
-    </div>
-    <div class="connector-line-block-add-options" style="display:none;">
-      <label><span>L </span><input type="text" class="length" value="10" /></label>
-      <label><span>D </span><input type="text" class="diameter" value=".5" /></label>
-      <br>
-      <label><span>Tess </span><input type="text" class="tessellation" value="" /></label>
-      <br>
-      <label><span>Mat </span>&nbsp;<input type="text" class="material" list="materialdatatitlelookuplist" /></label>
-      <input type="color" class="colorpicker" data-inputclass="material">
-      <br>
-      <label>
-        <span>Pt </span>
-        <select class="pointshape">
-          <option>none</option>
-          <option>cylinder</option>
+    return `<div class="block_wizard_wrapper">
+      <div style="display:flex;flex-direction:row">
+        <select class="block-type-select" style="margin-bottom: 8px;width: 10em;margin-right:1em">
+         <option selected>Scene</option>
+         <option>Text and Shape</option>
+         <option>Animated Line</option>
+         <option>Connector Line</option>
+         <option>2D Text Plane</option>
+         <option>Web Font</option>
+        </select>
+        <div class="scene_type_option_list" style="text-align:center;flex:10">
+          <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span>Skybox</span></label>
+          &nbsp;
+          <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span>Building</span></label>
+        </div>
+      </div>
+      <div class="create-2d-text-plane">
+        <label><span>texturetext</span><input class="texturetext" style="width:10em" type="text" value="Text Line" /></label><br>
+        <label><span>texturetext2</span><input class="texturetext2" type="text" value="" style="width:10em" /></label><br>
+        <label><span>textfontfamily</span><input class="textfontfamily" type="text" list="fontfamilydatalist" style="width:10em" /></label><br>
+        <label><span>textfontcolor</span><input class="textfontcolor" type="text" value="0,0,0" style="width:10em" /></label><br>
+        <label><span>textfontweight</span><input class="textfontweight" type="text" value="" style="width:10em" /></label><br>
+        <label><span>textfontsize</span><input class="textfontsize" type="text" value="100" /></label><br>
+        <label><span>texturetextrendersize</span><input class="texturetextrendersize" type="text" value="512" /></label><br>
+        <label><span>width</span><input class="width" type="text" value="4" /></label><br>
+        <label><span>height</span><input class="height" type="text" value="4" /></label><br>
+      </div>
+      <div class="web-font-block-add-options" style="display:none;">
+        <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:10em;" value="" /></label>
+      </div>
+      <div class="connector-line-block-add-options" style="display:none;">
+        <label><span>L </span><input type="text" class="length" value="10" /></label>
+        <label><span>D </span><input type="text" class="diameter" value=".5" /></label>
+        <br>
+        <label><span>Tess </span><input type="text" class="tessellation" value="" /></label>
+        <br>
+        <label><span>Mat </span>&nbsp;<input type="text" class="material" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="material">
+        <br>
+        <label>
+          <span>Pt </span>
+          <select class="pointshape">
+            <option>none</option>
+            <option>cylinder</option>
+            <option selected>cone</option>
+            <option>sphere</option>
+          </select>
+        </label>
+        <br>
+        <label><span>Pt L </span><input type="text" class="pointlength" value="1" /></label>
+        <label><span>Pt D </span><input type="text" class="pointdiameter" value="2" /></label>
+        <br>
+        <label><span>Pt Tess </span><input type="text" class="pointtessellation" value="" /></label>
+        <br>
+        <label><span>Pt Mat </span><input type="text" class="pointmaterial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="pointmaterial">
+        <br>
+        <label>
+          <span>Tl</span>
+          <select class="tailshape">
+            <option>none</option>
+            <option>cylinder</option>
+            <option>cone</option>
+            <option selected>sphere</option>
+          </select>
+        </label>
+        <br>
+        <label><span>Tl L </span><input type="text" class="taillength" value="1" /></label>
+        <label><span>Tl D </span><input type="text" class="taildiameter" value="1" /></label>
+        <br>
+        <label><span>Tl Tess </span><input type="text" class="tailtessellation" value="" /></label>
+        <br>
+        <label><span>Tl Mat </span><input type="text" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="tailmaterial">
+        <label><input type="checkbox" class="tailshapeflip"  style="width:auto;line-height:1.5em" />Flip</label>
+      </div>
+      <div class="animated-line-block-add-options">
+        <label><span>Num </span><input type="text" class="dashes" value="5" /></label>
+        <label><span>Run </span><input type="text" class="runlength" value="1500" /></label>
+        <br>
+        <label>
+          <span>Shape </span>
+          <select class="dotshape">
+            <option>cylinder</option>
+            <option selected>cone</option>
+            <option>ellipsoid</option>
+            <option>arrow</option>
+          </select>
+        </label>
+        <label><span>Len </span><input type="text" class="dashlength" value=".5" /></label>
+        <br>
+        <label><span>Tess </span><input type="text" class="tessellation" value="" /></label>
+        <br>
+        <label><span>Mat </span><input type="text" class="material" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="material">
+        <br>
+        <label><span>W </span><input type="text" class="width" value="1" /></label>
+        <label><span>H </span><input type="text" class="height" value="2" /></label>
+        <label><span>D </span><input type="text" class="depth" value="10" /></label>
+      </div>
+      <div class="shape-and-text-block-options">
+        <label><span>W </span><input type="text" class="width" value="4" /></label>
+        <label><span>H </span><input type="text" class="height" value="1" /></label>
+        <label><span>D </span><input type="text" class="depth" value="1" /></label>
+        <br>
+        <label><span>L1 </span><input type="text" class="texttext" value="My Message" /></label>
+        <label><span>L2 </span><input type="text" class="texttextline2" value="" /></label>
+        <label><span>Font </span><input class="textfontfamily" type="text" list="fontfamilydatalist" /></label>
+        <label><span>D </span><input type="text" class="textdepth" value=".25" /></label>
+        <label><span>Fill </span><input type="text" class="textmaterial" list="materialdatatitlelookuplist" />
+        </label>
+        <input type="color" class="colorpicker" data-inputclass="textmaterial">
+        <br>
+        <br>
+        <label><select class="createshapetype">
+          <option>cube</option>
+          <option>box</option>
           <option selected>cone</option>
+          <option>cylinder</option>
           <option>sphere</option>
-        </select>
-      </label>
-      <br>
-      <label><span>Pt L </span><input type="text" class="pointlength" value="1" /></label>
-      <label><span>Pt D </span><input type="text" class="pointdiameter" value="2" /></label>
-      <br>
-      <label><span>Pt Tess </span><input type="text" class="pointtessellation" value="" /></label>
-      <br>
-      <label><span>Pt Mat </span><input type="text" class="pointmaterial" list="materialdatatitlelookuplist" /></label>
-      <input type="color" class="colorpicker" data-inputclass="pointmaterial">
-      <br>
-      <label>
-        <span>Tl</span>
-        <select class="tailshape">
-          <option>none</option>
-          <option>cylinder</option>
-          <option>cone</option>
-          <option selected>sphere</option>
-        </select>
-      </label>
-      <br>
-      <label><span>Tl L </span><input type="text" class="taillength" value="1" /></label>
-      <label><span>Tl D </span><input type="text" class="taildiameter" value="1" /></label>
-      <br>
-      <label><span>Tl Tess </span><input type="text" class="tailtessellation" value="" /></label>
-      <br>
-      <label><span>Tl Mat </span><input type="text" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
-      <input type="color" class="colorpicker" data-inputclass="tailmaterial">
-      <label><input type="checkbox" class="tailshapeflip"  style="width:auto;line-height:1.5em" />Flip</label>
-    </div>
-    <div class="animated-line-block-add-options">
-      <label><span>Num </span><input type="text" class="dashes" value="5" /></label>
-      <label><span>Run </span><input type="text" class="runlength" value="1500" /></label>
-      <br>
-      <label>
-        <span>Shape </span>
-        <select class="dotshape">
-          <option>cylinder</option>
-          <option selected>cone</option>
           <option>ellipsoid</option>
-          <option>arrow</option>
-        </select>
-      </label>
-      <label><span>Len </span><input type="text" class="dashlength" value=".5" /></label>
-      <br>
-      <label><span>Tess </span><input type="text" class="tessellation" value="" /></label>
-      <br>
-      <label><span>Mat </span><input type="text" class="material" list="materialdatatitlelookuplist" /></label>
-      <input type="color" class="colorpicker" data-inputclass="material">
-      <br>
-      <label><span>W </span><input type="text" class="width" value="1" /></label>
-      <label><span>H </span><input type="text" class="height" value="2" /></label>
-      <label><span>D </span><input type="text" class="depth" value="10" /></label>
-    </div>
-    <div class="shape-and-text-block-options">
-      <label><span>W </span><input type="text" class="width" value="4" /></label>
-      <label><span>H </span><input type="text" class="height" value="1" /></label>
-      <label><span>D </span><input type="text" class="depth" value="1" /></label>
-      <br>
-      <label><span>L1 </span><input type="text" class="texttext" value="My Message" /></label>
-      <label><span>L2 </span><input type="text" class="texttextline2" value="" /></label>
-      <label><span>Font </span><input class="textfontfamily" type="text" list="fontfamilydatalist" /></label>
-      <label><span>D </span><input type="text" class="textdepth" value=".25" /></label>
-      <label><span>Fill </span><input type="text" class="textmaterial" list="materialdatatitlelookuplist" />
-      </label>
-      <input type="color" class="colorpicker" data-inputclass="textmaterial">
-      <br>
-      <br>
-      <label><select class="createshapetype">
-        <option>cube</option>
-        <option>box</option>
-        <option selected>cone</option>
-        <option>cylinder</option>
-        <option>sphere</option>
-        <option>ellipsoid</option>
-      </select></label>
-      <label><span>Tess </span><input type="text" class="tessellation" /></label>
-      <label><input type="checkbox" style="width:auto;line-height:1.5em" class="cylinderhorizontal" /> <span>Rotate</span></label>
-      <br>
-      <label><span>Mat </span><input type="text" class="shapematerial" list="materialdatatitlelookuplist" /></label>
-      <input type="color" class="colorpicker" data-inputclass="shapematerial">
-      <br>
-    </div>
-    <div class="scene-block-add-options">
-      <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span>Skybox</span></label>
-      <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span>Building</span></label>
-      <div class="skyboxscenefeatures">
-        <label><span>Skybox Size</span><input type="text" class="skyboxsize" value="400" /></label>
-        <div>
-          <label><span>Ground</span><input type="text" style="width:10em;" class="groundimage texturepathinput" list="groundTexturesDataList" /></label>
-          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-          <br>
-          <label><span>Scale v</span><input type="text" class="skyboxgroundscalev" value="1" /></label>
-          <label><span>Scale u</span><input type="text" class="skyboxgroundscaleu" value="1" /></label>
-          <br>
-          <img class="cloud-file-ground-preview" crossorigin="anonymous" style="width:5em;height:5em;display:none;">
+        </select></label>
+        <label><span>Tess </span><input type="text" class="tessellation" /></label>
+        <label><input type="checkbox" style="width:auto;line-height:1.5em" class="cylinderhorizontal" /> <span>Rotate</span></label>
+        <br>
+        <label><span>Mat </span><input type="text" class="shapematerial" list="materialdatatitlelookuplist" /></label>
+        <input type="color" class="colorpicker" data-inputclass="shapematerial">
+        <br>
+      </div>
+      <div class="scene_block_add_options">
+        <div class="skyboxscenefeatures">
+          <table class="wizard_field_container">
+            <tr>
+              <td>Skybox Equirect</td>
+              <td><input type="text" class="skybox texturepathinput" list="skyboxlist"  data-field="skybox" /></td>
+              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;" colspan="3">
+                <img class="skybox_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+              </td>
+            </tr>
+            <tr>
+              <td>Skybox Size</td>
+              <td><input type="text" class="skyboxsize" value="400" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Ground</td>
+              <td><input type="text" class="groundimage texturepathinput" data-field="groundimage" list="groundTexturesDataList" /></td>
+              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+            </tr>
+            <tr>
+              <td>Scale v</td>
+              <td><input type="text" class="skyboxgroundscalev groundimage_scalev" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Scale u</td>
+              <td><input type="text" class="skyboxgroundscaleu groundimage_scaleu" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;" colspan="3">
+                <img class="groundimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+              </td>
+            </tr>
+          </table>
         </div>
-        <label><span>Skybox Equirect</span><input type="text" style="width:10em;" class="skybox texturepathinput" list="skyboxlist" /></label>
-        <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-        <br>
-        <img crossorigin="anonymous" class="skyboximage" style="max-width:100%;max-height: 10em;">
-        </div>
-      <div class="buildingscenefeatures" style="display:none;">
-        <label><span>w (x)</span><input type="text" class="width" value="50" /></label>
-        <label><span>d (z)</span><input type="text" class="depth" value="100" /></label>
-        <label><span>h (y)</span><input type="text" class="height" value="40" /></label>
-        <label><input type="checkbox" class="show_uploads" /><span>uploads</span></label>
-        <br>
-        <label><span>floormaterial</span><input type="text" style="width:10em;" class="floormaterial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="floormaterial">
-        <br>
-        <div class="image_upload_building">
-          <label><span>floorimage</span><input type="text" style="width:10em;" class="floorimage texturepathinput" list="floorTexturesDataList" /></label>
-          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+        <div class="buildingscenefeatures" style="display:none;">
+          <label><span>w (x)</span><input type="text" class="width" value="50" /></label>
+          <label><span>d (z)</span><input type="text" class="depth" value="100" /></label>
+          <label><span>h (y)</span><input type="text" class="height" value="40" /></label>
+          <label><input type="checkbox" class="show_uploads" /><span>uploads</span></label>
           <br>
-          <label><span>&nbsp;floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
-          <label><span>&nbsp;floorscaleu (z)</span><input type="text" class="floorscaleu" value="1" /></label>
-        </div>
-        <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
-        <br>
-        <div class="image_upload_building">
-          <label><span>backwallimage</span><input type="text" style="width:10em;" class="backwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+          <label><span>floormaterial</span><input type="text" style="width:10em;" class="floormaterial" list="materialdatatitlelookuplist" /></label>
+          <input type="color" class="colorpicker" data-inputclass="floormaterial">
           <br>
-          <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
-          <label><span>backwallscaleu</span><input type="text" class="backwallscaleu" value="1" /></label>
-        </div>
-        <label><span>frontwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="frontwallmaterial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="frontwallmaterial">
-        <br>
-        <div class="image_upload_building">
-          <label><span>frontwallimage</span><input type="text" style="width:10em;" class="frontwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+          <div class="image_upload_building">
+            <label><span>floorimage</span><input type="text" style="width:10em;" class="floorimage texturepathinput" list="floorTexturesDataList" /></label>
+            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+            <br>
+            <label><span>&nbsp;floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
+            <label><span>&nbsp;floorscaleu (z)</span><input type="text" class="floorscaleu" value="1" /></label>
+          </div>
+          <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
+          <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
           <br>
-          <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
-          <label><span>frontwallscaleu</span><input type="text" class="frontwallscaleu" value="1" /></label>
-        </div>
-        <label><span>leftwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="leftwallmaterial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="leftwallmaterial">
-        <br>
-        <div class="image_upload_building">
-          <label><span>leftwallimage</span><input type="text" style="width:10em;" class="leftwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+          <div class="image_upload_building">
+            <label><span>backwallimage</span><input type="text" style="width:10em;" class="backwallimage texturepathinput" list="wallTexturesDataList" /></label>
+            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+            <br>
+            <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
+            <label><span>backwallscaleu</span><input type="text" class="backwallscaleu" value="1" /></label>
+          </div>
+          <label><span>frontwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="frontwallmaterial" list="materialdatatitlelookuplist" /></label>
+          <input type="color" class="colorpicker" data-inputclass="frontwallmaterial">
           <br>
-          <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
-          <label><span>leftwallscaleu</span><input type="text" class="leftwallscaleu" value="1" /></label>
-        </div>
-        <label><span>rightwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="rightwallmaterial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="rightwallmaterial">
-        <br>
-        <div class="image_upload_building">
-          <label><span>rightwallimage</span><input type="text" style="width:10em;" class="rightwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+          <div class="image_upload_building">
+            <label><span>frontwallimage</span><input type="text" style="width:10em;" class="frontwallimage texturepathinput" list="wallTexturesDataList" /></label>
+            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+            <br>
+            <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
+            <label><span>frontwallscaleu</span><input type="text" class="frontwallscaleu" value="1" /></label>
+          </div>
+          <label><span>leftwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="leftwallmaterial" list="materialdatatitlelookuplist" /></label>
+          <input type="color" class="colorpicker" data-inputclass="leftwallmaterial">
           <br>
-          <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
-          <label><span>rightwallscaleu</span><input type="text" class="rightwallscaleu" value="1" /></label>
-        </div>
-        <label><span>ceilingmaterial</span>&nbsp;<input type="text" style="width:10em;" class="ceilingmaterial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="ceilingmaterial">
-        <br>
-        <div class="image_upload_building">
-          <label><span>ceilingwallimage</span><input type="text" style="width:10em;" class="ceilingwallimage texturepathinput" list="wallTexturesDataList" /></label>
-          <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-          <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+          <div class="image_upload_building">
+            <label><span>leftwallimage</span><input type="text" style="width:10em;" class="leftwallimage texturepathinput" list="wallTexturesDataList" /></label>
+            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+            <br>
+            <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
+            <label><span>leftwallscaleu</span><input type="text" class="leftwallscaleu" value="1" /></label>
+          </div>
+          <label><span>rightwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="rightwallmaterial" list="materialdatatitlelookuplist" /></label>
+          <input type="color" class="colorpicker" data-inputclass="rightwallmaterial">
           <br>
-          <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
-          <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
+          <div class="image_upload_building">
+            <label><span>rightwallimage</span><input type="text" style="width:10em;" class="rightwallimage texturepathinput" list="wallTexturesDataList" /></label>
+            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+            <br>
+            <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
+            <label><span>rightwallscaleu</span><input type="text" class="rightwallscaleu" value="1" /></label>
+          </div>
+          <label><span>ceilingmaterial</span>&nbsp;<input type="text" style="width:10em;" class="ceilingmaterial" list="materialdatatitlelookuplist" /></label>
+          <input type="color" class="colorpicker" data-inputclass="ceilingmaterial">
+          <br>
+          <div class="image_upload_building">
+            <label><span>ceilingwallimage</span><input type="text" style="width:10em;" class="ceilingwallimage texturepathinput" list="wallTexturesDataList" /></label>
+            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
+            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
+            <br>
+            <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
+            <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
+          </div>
         </div>
       </div>
     </div>
-    <div style="display:flex">
+    <div style="padding:4px;text-align:left;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-      <div class="csv_import_preview" style="flex:1"></div>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0;"><i class="material-icons">table_rows</i></button>
+      <br>
+      <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
     </div>
     <datalist id="webfontsuggestionlist"></datalist>`;
   }
@@ -317,28 +350,28 @@ class cMacro {
     this.blockOptionsPicker.addEventListener('input', e => this.blockHelperChange());
 
     this.blockShapePanel = this.panel.querySelector('.shape-and-text-block-options');
-    this.sceneBlockPanel = this.panel.querySelector('.scene-block-add-options');
+    this.scene_block_add_options = this.panel.querySelector('.scene_block_add_options');
+    this.scene_type_option_list = this.panel.querySelector('.scene_type_option_list');
     this.connectorLinePanel = this.panel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.panel.querySelector('.animated-line-block-add-options');
     this.webFontPanel = this.panel.querySelector('.web-font-block-add-options');
     this.text2dpanel = this.panel.querySelector('.create-2d-text-plane');
 
-    this.skyBoxInput = this.sceneBlockPanel.querySelector('.skybox');
+    this.skyBoxInput = this.scene_block_add_options.querySelector('.skybox');
     this.skyBoxInput.addEventListener('input', e => this.blockSkyboxChange());
-    this.skyboximage = this.sceneBlockPanel.querySelector('.skyboximage');
+    this.skyboximage = this.scene_block_add_options.querySelector('.skybox_image');
 
-    let sceneRadios = this.sceneBlockPanel.querySelectorAll('.sceneaddtype');
+    let sceneRadios = this.panel.querySelectorAll('.sceneaddtype');
     sceneRadios.forEach(rdo => {
       rdo.addEventListener('input', e => {
-        this.sceneBlockPanel.querySelector('.buildingscenefeatures').style.display = 'none';
-        this.sceneBlockPanel.querySelector('.skyboxscenefeatures').style.display = 'none';
+        this.scene_block_add_options.querySelector('.buildingscenefeatures').style.display = 'none';
+        this.scene_block_add_options.querySelector('.skyboxscenefeatures').style.display = 'none';
         let showClass = rdo.dataset.type;
-        this.sceneBlockPanel.querySelector('.' + showClass).style.display = '';
+        this.scene_block_add_options.querySelector('.' + showClass).style.display = '';
       });
     });
 
-    this.cloudImageInput = this.sceneBlockPanel.querySelector('.groundimage');
-    this.groundImagePreview = this.sceneBlockPanel.querySelector('.cloud-file-ground-preview');
+    this.cloudImageInput = this.scene_block_add_options.querySelector('.groundimage');
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
@@ -346,6 +379,20 @@ class cMacro {
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       cMacro.copyDataToClipboard([this.export_csv]);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => {
+      if (!this.csv_import_shown) {
+        this.csv_import_shown = true;
+        this.csv_import_preview.style.display = '';
+        this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
+        this.show_hide_raw_csv.style.color = 'white';
+      } else {
+        this.csv_import_shown = false;
+        this.csv_import_preview.style.display = 'none';
+        this.show_hide_raw_csv.style.background = '';
+        this.show_hide_raw_csv.style.color = '';
+      }
     });
 
     this.webfontsuggestionlist = this.panel.querySelector('#webfontsuggestionlist');
@@ -378,10 +425,20 @@ class cMacro {
         let obj = this.app.texturesFromFile[path];
         if (obj) {
           let inputs = field.parentElement.parentElement.querySelectorAll('input');
+          let ctl_scaleu;
+          let ctl_scalev;
+          if (!inputs[2]) {
+            let fieldname = field.dataset.field;
+            ctl_scaleu = this.panel.querySelector('.' + fieldname + '_scaleu');
+            ctl_scalev = this.panel.querySelector('.' + fieldname + '_scalev');
+          } else {
+            ctl_scaleu = inputs[2];
+            ctl_scalev = inputs[1];
+          }
           if (obj.scaleu)
-            inputs[2].value = obj.scaleu;
+            ctl_scaleu.value = obj.scaleu;
           if (obj.scalev)
-            inputs[1].value = obj.scalev;
+            ctl_scalev.value = obj.scalev;
         }
       });
     });
@@ -429,9 +486,11 @@ class cMacro {
       </div>
       <div class="mesh_message" style=""></div>
     </div>
-    <div style="display:flex">
+    <div>
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-      <div class="csv_import_preview" style="flex:1"></div>
+      <button class="show_hide_raw_csv" style="flex:0"><i class="material-icons">table_rows</i></button>
+      <br>
+      <div class="csv_import_preview" style="flex:1;display:none"></div>
     </div>`;
   }
   meshRegister() {
@@ -458,6 +517,16 @@ class cMacro {
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       cMacro.copyDataToClipboard([this.export_csv]);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => {
+      if (!this.csv_import_shown) {
+        this.csv_import_shown = true;
+        this.csv_import_preview.style.display = '';
+      } else {
+        this.csv_import_shown = false;
+        this.csv_import_preview.style.display = 'none';
+      }
     });
 
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV(e, i)));
@@ -824,7 +893,7 @@ class cMacro {
     ];
 
     let fieldValues = {};
-    let skyboxType = this.sceneBlockPanel.querySelector('.skyboxtemplatetype').checked;
+    let skyboxType = this.panel.querySelector('.skyboxtemplatetype').checked;
 
     if (skyboxType)
       csv_row['skyboxtype'] = 'skybox';
@@ -832,7 +901,7 @@ class cMacro {
       csv_row['skyboxtype'] = 'building';
 
     fields.forEach(field => {
-      let f = this.sceneBlockPanel.querySelector('.' + field);
+      let f = this.scene_block_add_options.querySelector('.' + field);
       if (f) {
         if (f.getAttribute('type') === 'checkbox')
           csv_row[field] = f.checked ? '1' : '';
@@ -840,6 +909,9 @@ class cMacro {
           if (field.indexOf('image') !== -1) {
             let p = f.parentElement.parentElement;
             let img = p.querySelector('img');
+            if (!img) {
+              img = this.scene_block_add_options.querySelector('.' + field + '_image');
+            }
             let url = f.value;
             if (url.substring(0, 3) === 'sb:')
               url = this.cdnPrefix + 'textures/' + url.substring(3);
@@ -930,7 +1002,8 @@ class cMacro {
   }
   blockHelperChange() {
     this.blockShapePanel.style.display = 'none';
-    this.sceneBlockPanel.style.display = 'none';
+    this.scene_block_add_options.style.display = 'none';
+    this.scene_type_option_list.style.display = 'none';
     this.animatedDashPanel.style.display = 'none';
     this.connectorLinePanel.style.display = 'none';
     this.webFontPanel.style.display = 'none';
@@ -939,8 +1012,10 @@ class cMacro {
     let sel = this.blockOptionsPicker.value;
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
-    else if (sel === 'Scene')
-      this.sceneBlockPanel.style.display = 'inline';
+    else if (sel === 'Scene'){
+      this.scene_block_add_options.style.display = '';
+      this.scene_type_option_list.style.display = '';
+    }
     else if (sel === 'Connector Line')
       this.connectorLinePanel.style.display = '';
     else if (sel === 'Animated Line')
