@@ -23,22 +23,44 @@
     </div>
     <div style="display:flex;flex-direction:row;flex:0">
       <select id="addon_display_view_select">
-        <option value="cloud_target">Cloud Server</option>
+        <option value="cloud_target">Configuration</option>
         <option value="cloud_deploy" selected>Catalog Projects</option>
         <option value="template_view">Sheet Templates</option>
         <option value="block_wizards">Block Wizards</option>
         <option value="song_import_div">Process Audio</option>
       </select>
       <div style="padding:0 4px;">
+        <button id="show_help_panel_btn"><i class="material-icons">help</i></button>
+      </div>
+      <div style="padding-right:8px">
         <button id="reload_addon"><i class="material-icons">refresh</i></button>
       </div>
+    </div>
+    <div id="help_viewer_panel" style="display:none;flex:.3;">
+      <b>Configuration</b><br>
+      &nbsp; Select a server and token for project deployment and image uploading<br>
+      &nbsp; View key fields from [Configuration] sheet
+      <br><br>
+      <b>Catalog Projects</b><br>
+      &nbsp; Select a project for image uploading or to deploy<br>
+      &nbsp; Deploy all projects<br>
+      <br>
+      <b>Sheet Templates</b><br>
+      &nbsp; Create sheets for catalogs and configuration
+      <br><br>
+      <b>Block Wizards</b><br>
+      &nbsp; Helpers to create lines, meshes and scenes<br>
+      <br>
+      <b>Audio Animation</b><br>
+      &nbsp; Tools to FFT audio files to generate animation frames<br>
+      <br>
     </div>
     <div id="cloud_target" class="main_div_wrapper">
       <select id="deploy_options_server_list" class="select_list" size="5">
         <option selected>Loading</option>
       </select>
-      <div class="select_flex_view">
-        <div style="display:flex;flex-direction:row;padding:2px;">
+      <div class="select_flex_view" style="flex:1;">
+        <div style="display:flex;flex-direction:row;padding:2px 8px">
           <div style="padding: 2px">Target</div>
           <input id="target_to_deploy" style="flex:1" type="text" />
         </div>
@@ -47,36 +69,35 @@
           <input id="token_to_deploy" type="text" style="flex:1" />
         </div>
         <div id="url_to_deploy" style="padding:.5em;"></div>
-        <button id="target_server_set_button" class="green">Set Server</button>
-        <br>
+        <div style="padding:4px">
+          <button id="target_server_set_button" class="green">Set Server</button>
+        </div>
         <div id="selected_server_details_div"></div>
-        <hr>
-        <label><span id="assets_anchor"> loading...</span></label>
+        <div id="assets_anchor"> loading...</div>
       </div>
     </div>
     <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
       <select id="project_deploy_select" class="select_list" size="5"></select>
-      <div style="display:flex;flex-direction:row">
+      <div style="display:flex;flex-direction:row;">
         <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_deploy_view" checked>Details</label>
         <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_display_view">Display</label>
         <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_upload_view">Upload</label>
+        <a id="selected_display_anchor" style="padding: 1px 8px;"></a>
+        <a id="selected_edit_anchor" style="padding:1px;padding-right:16px;"></a>
       </div>
       <div class="select_flex_view" style="padding-top:4px">
-        <div id="project_display_view" style="display:none;height:inherit;">
+        <div id="project_display_view" style="display:none;height:inherit;flex:1">
           <iframe id="preview_panel"></iframe>
         </div>
-        <div id="project_deploy_view" style="display:none;flex-direction: column;height:inherit;width: 100%;">
+        <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
           <div style="padding: 0 8px">
-            <button id="set_default_proj" class="green"><i class="material-icons">push_pin</i> Project</button>
-            <button id="display_publish_single" class="blue">Deploy</button>
-            <button id="display_publish_list">Deploy All</button>
-          </div>
-          <div style="padding: 4px;">
-            <a id="selected_display_anchor"></a>
+            <button id="set_default_proj" class="blue"><i class="material-icons">push_pin</i> Pin</button>
             &nbsp;
-            <a id="selected_edit_anchor"></a>
+            <button id="display_publish_single" class="blue">Deploy</button>
+            &nbsp;
+            <button id="display_publish_list" class="blue">Deploy All</button>
           </div>
-          <textarea id="publish_results" style="flex:1"></textarea>
+          <textarea id="publish_results" style="flex:1;margin-top:8px"></textarea>
         </div>
         <div id="project_upload_view" style="display:none;flex-direction: column;height:inherit;width: 100%">
           <div>
@@ -186,12 +207,12 @@
           'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'selected_display_anchor',
           'selected_edit_anchor', 'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel',
-          'sheetname', 'circuit_template_select',
+          'sheetname', 'circuit_template_select', 'help_viewer_panel',
           'create_layout_btn', 'add_to_publishlist', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'helpviewer', 'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
-          'rdo_project_display_view', 'rdo_project_deploy_view', 'rdo_project_upload_view'
+          'rdo_project_display_view', 'rdo_project_deploy_view', 'rdo_project_upload_view', 'show_help_panel_btn'
         ];
 
         dom_id.forEach(ctl => {
@@ -219,6 +240,8 @@
 
         this.wizard_choices.addEventListener('change', e => this.loadBlockWizard());
         this.audio_file.addEventListener('change', e => this.audioProcessFileSelected());
+
+        this.show_help_panel_btn.addEventListener('click', e => this.helpPanelToggle());
       }
 
       async loadConfiguration() {
@@ -267,18 +290,18 @@
         this.deployTargets = targets;
         let configDetailsHTML = '';
         if (this.assetBookId) {
-          configDetailsHTML += 'Asset Id: <span style="font-size:.75em">' + this.assetBookId.toString() + '</span>';
           let url = "https://docs.google.com/spreadsheets/d/";
           url += this.assetBookId.toString();
-          configDetailsHTML += '<br><a target="_blank" href="' + url + '">Open Assets Spreadsheet</a><br>';
-        } else {
-          configDetailsHTML += 'Asset Id: <b>None</b><br><br>';
+          let open = '<a target="_blank" href="' + url + '">Open</a>';
+          configDetailsHTML += '<hr>Main Spreadsheet Id &nbsp;' + open + '<br> <span style="font-size:.85em">' + this.assetBookId.toString() + '</span>';
+          } else {
+          configDetailsHTML += 'Main Spreadsheet Id<br> <span style="font-size:.85em">None</span>';
         }
 
         let dtext = '';
         if (this.configurationCSV[0]['Catalog List'] === '')
           dtext = ' (default)';
-        configDetailsHTML += '<br>Catalog List:' + this.projectsSheetName + dtext;
+        configDetailsHTML += '<hr>Projects Sheet Name<br>' + this.projectsSheetName + dtext;
         this.assets_anchor.innerHTML = configDetailsHTML;
 
         let sIndex = this.deploy_options_server_list.selectedIndex;
@@ -486,7 +509,7 @@
         this.project_display_view.style.display = this.rdo_project_display_view.checked ? '' : 'none';
 
         let selectedProject = this.project_deploy_select.value;
-        let pid = this.target_to_deploy.value;
+        let pid = this.defaultServerTarget;
         let link = 'https://' + pid + '.web.app/display/?name=' + selectedProject;
         this.selected_display_anchor.setAttribute('href', link);
         this.selected_display_anchor.innerHTML = 'View';
@@ -505,7 +528,7 @@
         let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName);
         this.publistList = publishList;
         let linkListHTML = '';
-        let pid = this.target_to_deploy.value;
+        let pid = this.defaultServerTarget;
         publishList.forEach(t => {
           linkListHTML += '<option>' + t['name'] + '</option>';
         });
@@ -784,8 +807,7 @@
           end = singleIndex;
         }
 
-        this.publish_results.value = publishList.length.toString() + ' Items in ' + this.projectsSheetName + '\n';
-        this.publish_results.value += 'Start Index:' + start + ' \nEnd Index: ' + end + '\n\n';
+        this.publish_results.value = publishList.length.toString() + ' Items in ' + this.projectsSheetName + '\n\n';
 
         for (let c = start; c <= end; c++) {
           let row = publishList[c];
@@ -1096,6 +1118,20 @@
         console.log(resampledArray);
         document.getElementById('raw_data').value = JSON.stringify(resampledArray);
       }
+
+      helpPanelToggle() {
+        if (this.helpPanelVisible) {
+          this.helpPanelVisible = false;
+          this.help_viewer_panel.style.display = 'none';
+          this.show_help_panel_btn.style.background = '';
+          this.show_help_panel_btn.style.color = '';
+        } else {
+          this.helpPanelVisible = true;
+          this.help_viewer_panel.style.display = '';
+          this.show_help_panel_btn.style.background = 'rgb(100,100,100)';
+          this.show_help_panel_btn.style.color = 'white';
+        }
+      }
     }
 
     document.addEventListener('DOMContentLoaded', e => {
@@ -1171,8 +1207,8 @@
 
     select.select_list {
       text-align: left;
-      margin: 3%;
-      width: 94%;
+      margin: 8px;
+      width: calc(100% = 16px);
       flex: 1;
       min-height: 3em;
     }
@@ -1182,6 +1218,7 @@
       overflow: hidden;
       overflow-y: auto;
       display: flex;
+      flex-direction: column;
     }
 
     select.select_list option {
@@ -1240,6 +1277,17 @@
 
     #project_display_view {
       overflow:hidden;
+    }
+
+    button i.material-icons {
+      font-size: 1.5em;
+      top: .25em;
+    }
+
+    #help_viewer_panel {
+      border: solid 1px silver;
+      overflow-y:auto;
+      margin: 8px 8px 0 8px;
     }
   </style>
 
