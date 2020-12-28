@@ -706,43 +706,98 @@ class cMacro {
     this.blockUpdateCSV();
   }
   meshTemplate() {
-    return `<div class="standardmeshassetpanel" style="flex:1;flex-direction:column;">
-      <div>
-        <label><span>meshpath</span><input type="text" style="width:50%;" class="mesh_meshpath" value="" list="meshesDefaultsDataList" /></label>
-        <br>
-        <label><span>texturepath</span><input type="text" style="width:50%;" list="texturedatatitlelookuplist" class="mesh_texturepath" value="" /></label>
-        <br>
-        <label><span>bmppath</span><input type="text" style="width:50%;" list="texturedatatitlelookuplist" class="mesh_bmppath" value="" /></label>
-        <br>
-        <label><input class="show_parent_mesh_details" type="checkbox"><span>show parent details</span></label>
-        <div class="mesh_parent_details" style="display:none">
-          <label><span>parent</span><input type="text" style="width:50%;" list="blockdatatitlelookuplist" class="mesh_parent" value="" /></label>
-          <br>
-          <label><span>x</span><input type="text" class="mesh_x" value="" /></label>
-          <label><span>y</span><input type="text" class="mesh_y" value="" /></label>
-          <label><span>z</span><input type="text" class="mesh_z" value="" /></label>
-          <br>
-          <label><span>sx</span><input type="text" class="mesh_sx" value="" /></label>
-          <label><span>sy</span><input type="text" class="mesh_sy" value="" /></label>
-          <label><span>sz</span><input type="text" class="mesh_sz" value="" /></label>
-          <br>
-          <label><span>rx</span><input type="text" class="mesh_rx" value="" /></label>
-          <label><span>ry</span><input type="text" class="mesh_ry" value="" /></label>
-          <label><span>rz</span><input type="text" class="mesh_rz" value="" /></label>
-        </div>
+    return `<div class="standardmeshassetpanel mesh_wizard_wrapper">
+        <table class="wizard_field_container">
+          <tr>
+            <td>Mesh URL</td>
+            <td><input type="text" class="mesh_meshpath" list="meshesDefaultsDataList" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Texture URL</td>
+            <td><input type="text" list="texturedatatitlelookuplist" class="mesh_texturepath" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Normal Map URL</td>
+            <td><input type="text" list="texturedatatitlelookuplist" class="mesh_bmppath" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Show Parent Details</td>
+            <td><input class="show_parent_mesh_details" style="width:1.5em" type="checkbox"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="3" style="text-align:center">
+              <div class="mesh-details-images" style="flex:3;flex-direction:row;display:flex;">
+                <img class="mesh_texture_img" crossorigin="anonymous" style="flex:1;max-width:50%;max-height:100%;">
+                <img class="mesh_bump_img" crossorigin="anonymous" style="flex:1;max-width:50%;max-height:100%;">
+                <img class="mesh-preview-img" crossorigin="anonymous" style="display:none;">
+              </div>
+              <div class="mesh_message" style=""></div>
+            </td>
+          </tr>
+        </table>
+        <table class="wizard_field_container mesh_parent_details" style="display:none">
+          <tr>
+            <td>Parent</td>
+            <td><input type="text" list="blockdatatitlelookuplist" class="mesh_parent" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Position X</td>
+            <td><input type="text" class="mesh_x" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Position Y</td>
+            <td><input type="text" class="mesh_y" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Position Z</td>
+            <td><input type="text" class="mesh_z" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Scale X</td>
+            <td><input type="text" class="mesh_sx" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Scale Y</td>
+            <td><input type="text" class="mesh_sy" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Scale Z</td>
+            <td><input type="text" class="mesh_sz" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Rotate X</td>
+            <td><input type="text" class="mesh_rx" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Rotate Y</td>
+            <td><input type="text" class="mesh_ry" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Rotate Z</td>
+            <td><input type="text" class="mesh_rz" /></td>
+            <td></td>
+          </tr>
+        </table>
       </div>
-      <div class="mesh-details-images" style="flex:3;flex-direction:row;display:flex;">
-        <img class="mesh_texture_img" crossorigin="anonymous" style="flex:1;max-width:45%;max-height:100%;">
-        <img class="mesh_bump_img" crossorigin="anonymous" style="flex:1;max-width:45%;max-height:100%;">
-        <img class="mesh-preview-img" crossorigin="anonymous" style="display:none;">
-      </div>
-      <div class="mesh_message" style=""></div>
     </div>
-    <div>
+    <div style="padding:4px;text-align:left;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-      <button class="show_hide_raw_csv" style="flex:0"><i class="material-icons">table_rows</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
       <br>
-      <div class="csv_import_preview" style="flex:1;display:none"></div>
+      <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
     </div>`;
   }
   meshRegister() {
@@ -859,24 +914,28 @@ class cMacro {
     return blockResult.key;
   }
   materialTemplate() {
-    return `<div style="font-weight:bold;line-height:2em;text-align:center;"><label><input class="importstandardmaterial" type="checkbox" checked /><span>Import Standard Asset</span></label></div>
-      <div class="standardmaterialassetpanel" style="flex:1;display:none;flex-direction:column;min-height:400px;height:75vh">
-        <div style="flex:1;display:flex;flex-direction:row;">
-          <select size="4" style="flex:1;" class="materialtexturepicker">
-          </select>
-        </div>
-        <div style="text-align:center;">
-          <label><span>scalev</span><input type="text" class="materialscalev" value="1" /></label>
-          <label><span>scaleu</span><input type="text" class="materialscaleu" value="1" /></label>
-        </div>
-        <div class="material-details-images" style="flex:1;flex-direction:row;display:flex;overflow:hidden;">
-          <img class="material_texture_img" crossorigin="anonymous" style="max-width:100%;max-height:50vh;">
+    return `<div class="standardmaterialassetpanel material_wizard_wrapper" style="flex-direction:column">
+        <select size="4" style="flex:1;min-height:5em" class="materialtexturepicker">
+        </select>
+        <table class="wizard_field_container">
+          <tr>
+            <td>
+              <label><span>scalev</span><input type="text" class="materialscalev" value="1" /></label>
+              <label><span>scaleu</span><input type="text" class="materialscaleu" value="1" /></label>
+            </td>
+          </tr>
+        </table>
+        <div class="material-details-images" style="flex:1;text-align:center;">
+          <img class="material_texture_img" crossorigin="anonymous" style="max-width:100%;max-height:12em;">
         </div>
       </div>
-      <div style="display:flex">
+      <div style="padding:4px;text-align:left;">
         <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-        <div class="csv_import_preview" style="flex:1"></div>
+        <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
+        <br>
+        <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
       </div>`;
+
   }
   _materialGetHTMLOptionList() {
     let html = '';
@@ -903,6 +962,20 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       cMacro.copyDataToClipboard([this.export_csv]);
     });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => {
+      if (!this.csv_import_shown) {
+        this.csv_import_shown = true;
+        this.csv_import_preview.style.display = '';
+        this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
+        this.show_hide_raw_csv.style.color = 'white';
+      } else {
+        this.csv_import_shown = false;
+        this.csv_import_preview.style.display = 'none';
+        this.show_hide_raw_csv.style.background = '';
+        this.show_hide_raw_csv.style.color = '';
+      }
+    });
 
     this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
     this.material_texture_img = this.panel.querySelector('.material_texture_img');
@@ -913,8 +986,6 @@ class cMacro {
 
     this.materialtexturepicker.selectedIndex = 0;
 
-    this.importstandardmaterial = this.panel.querySelector('.importstandardmaterial');
-    this.importstandardmaterial.addEventListener('input', e => this.materialUpdateCSV());
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
 
@@ -929,10 +1000,6 @@ class cMacro {
       this.csv_import_preview.innerHTML = new Date();
   }
   materialScrape() {
-    if (!this.importstandardmaterial.checked) {
-      this.standardmaterialassetpanel.style.display = 'none';
-      return {};
-    }
     this.standardmaterialassetpanel.style.display = 'flex';
     this.newName = this.panelInput.value.trim();
     let csv_row = {

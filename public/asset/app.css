@@ -914,7 +914,7 @@ div.imagebackgrounddisplay {
   color: black;
 }
 
-.block_wizard_wrapper {
+.block_wizard_wrapper, .mesh_wizard_wrapper, .material_wizard_wrapper {
   flex:1;
   overflow:hidden;
   overflow-y:auto;
