@@ -885,7 +885,7 @@ dialog::backdrop {
 }
 
 .dialog-header-images {
-  text-align:center;
+  text-align: center;
 }
 
 .dialog-header-images label span, .dialog-header-images h1 {
@@ -897,9 +897,9 @@ dialog::backdrop {
 }
 
 div.imagebackgrounddisplay {
-  background-size:contain;
-  background-position:center;
-  background-repeat:no-repeat
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat
 }
 
 .image_upload_building {
@@ -915,11 +915,11 @@ div.imagebackgrounddisplay {
 }
 
 .block_wizard_wrapper, .mesh_wizard_wrapper, .material_wizard_wrapper {
-  flex:1;
-  overflow:hidden;
-  overflow-y:auto;
+  flex: 1;
+  overflow: hidden;
+  overflow-y: auto;
   padding: 0 8px;
-  text-align:left;
+  text-align: left;
   line-height: 2.25em;
   text-align: left;
 }
@@ -945,4 +945,10 @@ table.wizard_field_container td:nth-child(2) input {
 
 input[type="color"] {
   width: 3em;
+}
+
+.image_preview_div {
+  height: 10em;
+  background-image: repeat;
+  display: none;
 }

@@ -83,7 +83,7 @@ class cMacro {
     let template = `<div class="block_wizard_add_name_div" style="flex:1;display:flex;flex-direction:row;padding-top:2px;">
       <label class="add_template_name_label" style="padding:4px;"><b>Name</b>
      </label><input class="add-item-name" type="text" style="width:12em;" value="name" />`;
-     if (!this.addonmode)
+    if (!this.addonmode)
       template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
         <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
         <br class="new_button_break">`;
@@ -159,7 +159,13 @@ class cMacro {
         </table>
       </div>
       <div class="web-font-block-add-options" style="display:none;">
-        <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:10em;" value="" /></label>
+        <table class="wizard_field_container">
+          <tr>
+            <td>Web Font</td>
+            <td><input type="text" class="genericblockdata webfontname" list="webfontsuggestionlist" style="font-size:2em;padding: 8px" /></td>
+            <td></td>
+          </tr>
+        </table>
       </div>
       <div class="connector-line-block-add-options" style="display:none;">
         <table class="wizard_field_container">
@@ -399,18 +405,18 @@ class cMacro {
               <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
             </tr>
             <tr>
-              <td>Scale v</td>
+              <td>Scale v (x)</td>
               <td><input type="text" class="skyboxgroundscalev groundimage_scalev" value="1" /></td>
               <td></td>
             </tr>
             <tr>
-              <td>Scale u</td>
+              <td>Scale u (y)</td>
               <td><input type="text" class="skyboxgroundscaleu groundimage_scaleu" value="1" /></td>
               <td></td>
             </tr>
             <tr>
               <td style="text-align:center;" colspan="3">
-                <img class="groundimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+                <div class="groundimage_preview_div image_preview_div"></div>
               </td>
             </tr>
           </table>
@@ -433,7 +439,9 @@ class cMacro {
               <td></td>
             </tr>
             <tr>
-              <td colspan="3" style="text-align:left;"><label><input type="checkbox" style="margin: 0 6px;" class="show_uploads" /><span>uploads</span></label></td>
+              <td>Show Uploads</td>
+              <td><input type="checkbox" style="width:1.5em;" class="show_uploads" /></td>
+              <td></td>
             </tr>
             <tr>
               <td><b>Floor Material</b></td>
@@ -457,7 +465,7 @@ class cMacro {
             </tr>
             <tr>
               <td style="text-align:center;" colspan="3">
-                <img class="floorimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+                <div class="floorimage_preview_div image_preview_div"></div>
               </td>
             </tr>
             <tr>
@@ -482,7 +490,7 @@ class cMacro {
             </tr>
             <tr>
               <td style="text-align:center;" colspan="3">
-                <img class="backwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+                <div class="backwallimage_preview_div image_preview_div"></div>
               </td>
             </tr>
             <tr>
@@ -507,7 +515,7 @@ class cMacro {
             </tr>
             <tr>
               <td style="text-align:center;" colspan="3">
-                <img class="frontwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+                <div class="frontwallimage_preview_div image_preview_div"></div>
               </td>
             </tr>
             <tr>
@@ -532,7 +540,7 @@ class cMacro {
             </tr>
             <tr>
               <td style="text-align:center;" colspan="3">
-                <img class="rightwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+                <div class="frontwallimage_preview_div image_preview_div"></div>
               </td>
             </tr>
             <tr>
@@ -557,7 +565,7 @@ class cMacro {
             </tr>
             <tr>
               <td style="text-align:center;" colspan="3">
-                <img class="leftwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+                <div class="leftwallimage_preview_div image_preview_div"></div>
               </td>
             </tr>
             <tr>
@@ -582,7 +590,7 @@ class cMacro {
             </tr>
             <tr>
               <td style="text-align:center;" colspan="3">
-                <img class="ceilingwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+                <div class="ceilingwallimage_preview_div image_preview_div"></div>
               </td>
             </tr>
           </table>
@@ -607,6 +615,26 @@ class cMacro {
     this.connectorLinePanel = this.panel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.panel.querySelector('.animated-line-block-add-options');
     this.webFontPanel = this.panel.querySelector('.web-font-block-add-options');
+    this.webfontname = this.panel.querySelector('.webfontname');
+    this.webfontname.addEventListener('input', e => {
+      let fontName = this.webfontname.value;
+      let origFontName = fontName;
+      fontName = fontName.replace(/ /g, '+');
+
+      if (this.googleStyleLink)
+        this.googleStyleLink.remove();
+      if (this.hiddenGoogleSpan)
+        this.hiddenGoogleSpan.remove();
+      this.googleStyleLink = document.createElement('style');
+      this.googleStyleLink.innerHTML = `@import url(https://fonts.googleapis.com/css?family=${fontName});`;
+      document.body.append(this.googleStyleLink);
+      this.hiddenGoogleSpan = document.createElement('span');
+      this.hiddenGoogleSpan.setAttribute('style', `font-family:${origFontName}`);
+      document.body.append(this.hiddenGoogleSpan);
+      let a = this.hiddenGoogleSpan.offsetHeight;
+      this.webfontname.style.fontFamily = origFontName;
+      this.hiddenGoogleSpan.style.display = 'none';
+    });
     this.text2dpanel = this.panel.querySelector('.create-2d-text-plane');
 
     this.skyBoxInput = this.scene_block_add_options.querySelector('.skybox');
@@ -622,8 +650,6 @@ class cMacro {
         this.scene_block_add_options.querySelector('.' + showClass).style.display = '';
       });
     });
-
-    this.cloudImageInput = this.scene_block_add_options.querySelector('.groundimage');
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
@@ -684,12 +710,12 @@ class cMacro {
           </tr>
           <tr>
             <td>Texture URL</td>
-            <td><input type="text" list="texturedatatitlelookuplist" class="mesh_texturepath texturepathinput" data-field="mesh_texturepath" /></td>
+            <td><input type="text" list="sbimageslist" class="mesh_texturepath texturepathinput" data-field="mesh_texturepath" /></td>
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
             <td>Normal Map URL</td>
-            <td><input type="text" list="texturedatatitlelookuplist" class="mesh_bmppath texturepathinput" data-field="mesh_bmppath" /></td>
+            <td><input type="text" list="sbimageslist" class="mesh_bmppath texturepathinput" data-field="mesh_bmppath" /></td>
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
@@ -886,18 +912,20 @@ class cMacro {
   }
   materialTemplate() {
     return `<div class="standardmaterialassetpanel material_wizard_wrapper" style="flex-direction:column">
-        <select size="4" style="flex:1;min-height:5em" class="materialtexturepicker">
+        <select size="4" style="flex:1;margin:0" class="materialtexturepicker select_list">
         </select>
         <table class="wizard_field_container">
           <tr>
-            <td>
-              <label><span>scalev</span><input type="text" class="materialscalev" value="1" /></label>
-              <label><span>scaleu</span><input type="text" class="materialscaleu" value="1" /></label>
+            <td style="text-align:center;">
+              <label><span>Scale V (x)</span><input type="text" class="materialscalev" value="1" /></label>
+              <label><span>Scale U (y)</span><input type="text" class="materialscaleu" value="1" /></label>
             </td>
           </tr>
         </table>
         <div class="material-details-images" style="flex:1;text-align:center;">
-          <img class="material_texture_img" crossorigin="anonymous" style="max-width:100%;max-height:12em;">
+          <div class="material_image_bkg_div" style="width:90%;height:10em;background-image:repeat;display:inline-block;">
+          &nbsp;
+          </div>
         </div>
       </div>
       <div style="padding:4px;text-align:left;">
@@ -949,7 +977,7 @@ class cMacro {
     });
 
     this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
-    this.material_texture_img = this.panel.querySelector('.material_texture_img');
+    this.material_image_bkg_div = this.panel.querySelector('.material_image_bkg_div');
     this.materialscalev = this.panel.querySelector('.materialscalev');
     this.materialscaleu = this.panel.querySelector('.materialscaleu');
 
@@ -985,6 +1013,10 @@ class cMacro {
     let hasAlpha = '';
     if (!texture)
       texture = '';
+
+    let scaleu = this.materialscaleu.value;
+    let scalev = this.materialscalev.value;
+
     if (texture) {
       textureURL = this.cdnPrefix + 'textures/' + texture.substring(3) + '_D.jpg';
       speculartexture = texture + '_S.jpg';
@@ -997,15 +1029,28 @@ class cMacro {
         texture += '_D.jpg';
       }
 
-      this.material_texture_img.setAttribute('src', textureURL);
-      this.material_texture_img.style.display = '';
+      this.material_image_bkg_div.style.backgroundImage = 'url(' + textureURL + ')';
+
+      let u = Number(scaleu);
+      let v = Number(scalev);
+      if (!u)
+        u = 1;
+      if (!v)
+        v = 1;
+
+      let sizeX = 100;
+      let sizeY = 100;
+      if (v !== 0.0) {
+        sizeX = (sizeX / v).toFixed(2);
+      }
+      if (u !== 0.0) {
+        sizeY = (sizeY / u).toFixed(2);
+      }
+      this.material_image_bkg_div.style.backgroundSize = sizeX + '% ' + sizeY + '%';
     } else {
-      this.material_texture_img.setAttribute('src', '');
-      this.material_texture_img.style.display = 'none';
+      this.material_image_bkg_div.style.backgroundImage = '';
     }
 
-    let scaleu = this.materialscaleu.value;
-    let scalev = this.materialscalev.value;
 
     Object.assign(csv_row, {
       texture,
@@ -1204,20 +1249,38 @@ class cMacro {
           csv_row[field] = f.checked ? '1' : '';
         else {
           if (field.indexOf('image') !== -1) {
-            let p = f.parentElement.parentElement;
-            let img = p.querySelector('img');
-            if (!img) {
-              img = this.scene_block_add_options.querySelector('.' + field + '_image');
-            }
             let url = f.value;
             if (url.substring(0, 3) === 'sb:')
               url = this.cdnPrefix + 'textures/' + url.substring(3);
 
-            img.setAttribute('src', url);
-            if (f.value)
-              img.style.display = '';
-            else
-              img.style.display = 'none';
+            let p_div = this.scene_block_add_options.querySelector('.' + field + '_preview_div');
+            if (p_div) {
+              if (url) {
+                p_div.style.backgroundImage = 'url(' + url + ')';
+                p_div.style.display = 'block';
+                let scaleu = this.scene_block_add_options.querySelector('.' + field + '_scaleu');
+                let scalev = this.scene_block_add_options.querySelector('.' + field + '_scalev');
+
+                let u = Number(scaleu.value);
+                let v = Number(scalev.value);
+                if (!u)
+                  u = 1;
+                if (!v)
+                  v = 1;
+
+                let sizeX = 100;
+                let sizeY = 100;
+                if (v !== 0.0) {
+                  sizeX = (sizeX / v).toFixed(2);
+                }
+                if (u !== 0.0) {
+                  sizeY = (sizeY / u).toFixed(2);
+                }
+                p_div.style.backgroundSize = sizeX + '% ' + sizeY + '%';
+              } else {
+                p_div.style.display = 'none';
+              }
+            }
           }
           csv_row[field] = f.value;
         }
@@ -1309,11 +1372,10 @@ class cMacro {
     let sel = this.blockOptionsPicker.value;
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
-    else if (sel === 'Scene'){
+    else if (sel === 'Scene') {
       this.scene_block_add_options.style.display = '';
       this.scene_type_option_list.style.display = '';
-    }
-    else if (sel === 'Connector Line')
+    } else if (sel === 'Connector Line')
       this.connectorLinePanel.style.display = '';
     else if (sel === 'Animated Line')
       this.animatedDashPanel.style.display = '';
@@ -1345,7 +1407,6 @@ class cMacro {
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
-
   __registerFileUploaders() {
     this.imageInputList = this.panel.querySelectorAll('.texturepathinput');
     this.imageUploadButtonList = this.panel.querySelectorAll('.texturepathupload');
@@ -1360,29 +1421,35 @@ class cMacro {
       field.addEventListener('input', e => {
         let path = field.value;
         let obj = this.app.texturesFromFile[path];
+        let dirty = false;
         if (obj) {
-          let inputs = field.parentElement.parentElement.querySelectorAll('input');
-          let ctl_scaleu;
-          let ctl_scalev;
-          if (!inputs[2]) {
             let fieldname = field.dataset.field;
-            ctl_scaleu = this.panel.querySelector('.' + fieldname + '_scaleu');
-            ctl_scalev = this.panel.querySelector('.' + fieldname + '_scalev');
-          } else {
-            ctl_scaleu = inputs[2];
-            ctl_scalev = inputs[1];
-          }
-          if (obj.scaleu)
+            let ctl_scaleu = this.panel.querySelector('.' + fieldname + '_scaleu');
+            let ctl_scalev = this.panel.querySelector('.' + fieldname + '_scalev');
+
+          if (obj.scaleu && obj.scaleu.toString() !== ctl_scaleu.value) {
+            dirty = true;
             ctl_scaleu.value = obj.scaleu;
-          if (obj.scalev)
+          }
+          if (obj.scalev && obj.scalev.toString() !== ctl_scalev.value) {
+            dirty = true;
             ctl_scalev.value = obj.scalev;
+          }
+
+          if (dirty) {
+            let event = new Event('input', {
+              bubbles: true,
+              cancelable: true,
+            });
+            field.dispatchEvent(event);
+          }
         }
       });
     });
   }
   static copyDataToClipboard(dataRows, fieldOrder = []) {
     if (!dataRows) return;
-    if (dataRows.length < 1)  return;
+    if (dataRows.length < 1) return;
 
     let firstObj = dataRows[0];
     let firstKeys = Object.keys(firstObj);
