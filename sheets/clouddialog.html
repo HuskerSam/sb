@@ -130,41 +130,56 @@
     </div>
 
     <div id="block_wizards" class="main_div_wrapper">
-        <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:8px;">
-          <select id="wizard_choices" style="margin-right: 8px;">
-            <option value="block">Block</option>
-            <option value="mesh">Mesh</option>
-            <option value="material">Material</option>
-          </select>
-        </div>
-        <div id="macro_details_wrapper" style="flex:1;display:flex;flex-direction: column;" class="add_asset_template_panel">
-        </div>
+      <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:8px;">
+        <select id="wizard_choices" style="margin-right: 8px;">
+          <option value="block">Block</option>
+          <option value="mesh">Mesh</option>
+          <option value="material">Material</option>
+        </select>
+      </div>
+      <div id="macro_details_wrapper" style="flex:1;display:flex;flex-direction: column;" class="add_asset_template_panel">
+      </div>
     </div>
     <div id="song_import_div" class="main_div_wrapper">
-      <label>seconds to sample (empty for length)<input id="seconds_to_sample" type="text" /></label>
-      <br>
-      <label>freq samples per second<input id="freq_samples_to_second" type="text" value="10" /></label>
-      <br>
-      <label>result bands
-        <select id="bands_to_combine">
-          <option value="1">256</option>
-          <option value="2">128</option>
-          <option value="4">64</option>
-          <option value="8">32</option>
-          <option value="16" selected>16</option>
-          <option value="32">8</option>
-        </select>
-      </label>
-      <br>
-      <br><label>
-        WAV Audio File:
-        <input type="file" id="audio_file" style="width:100%" /></label>
-
-      <br>
-      <br>
-      <audio id="audio" controls style="width:250px;"></audio>
-      <div id="song_len_sec">&nbsp;</div>
-      <textarea id="raw_data" style="width:260px;height:200px;"></textarea>
+      <table class="wizard_field_container" style="padding: 0 8px;">
+        <tr>
+          <td>seconds to sample<br>(empty for length)</td>
+          <td><input id="seconds_to_sample" type="text" /></td>
+        </tr>
+        <tr>
+          <td>Frequency (samples/sec)</td>
+          <td><input id="freq_samples_to_second" type="text" value="10" /></td>
+        </tr>
+        <tr>
+          <td>Number of result bands</td>
+          <td> <select id="bands_to_combine">
+              <option value="1">256</option>
+              <option value="2">128</option>
+              <option value="4">64</option>
+              <option value="8">32</option>
+              <option value="16" selected>16</option>
+              <option value="32">8</option>
+            </select></td>
+        </tr>
+        <tr>
+          <td>WAV Audio File</td>
+          <td><input type="file" id="audio_file" /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><audio id="audio" controls style="width:calc(100% - 16px)"></audio></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <label><input id="song_detail_data_rdo" name="song_data_display" type="radio" checked> Details</label>
+            <label><input id="song_raw_data_rdo" name="song_data_display" type="radio"> Data</label>
+          </td>
+        </tr>
+      </table>
+      <div id="song_len_sec" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;text-align:left;"></div>
+      <div id="song_raw_data" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;word-break:break-all;display:none;"></div>
+      <div style="padding:4px;text-align:left;">
+        <button id="copy_song_data_to_clipboard" style="margin-right:0;"><i class="material-icons">content_copy</i></button>
+      </div>
     </div>
   </div>
 
@@ -210,7 +225,8 @@
           'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
-          'rdo_project_display_view', 'rdo_project_deploy_view', 'rdo_project_upload_view', 'show_help_panel_btn'
+          'rdo_project_display_view', 'rdo_project_deploy_view', 'rdo_project_upload_view', 'show_help_panel_btn',
+          'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'song_len_sec', 'copy_song_data_to_clipboard'
         ];
 
         dom_id.forEach(ctl => {
@@ -240,6 +256,14 @@
         this.audio_file.addEventListener('change', e => this.audioProcessFileSelected());
 
         this.show_help_panel_btn.addEventListener('click', e => this.helpPanelToggle());
+
+        this.song_detail_data_rdo.addEventListener('input', e => this.updateSongDataView());
+        this.song_raw_data_rdo.addEventListener('input', e => this.updateSongDataView());
+        this.copy_song_data_to_clipboard.addEventListener('click', e => {
+          cMacro.copyDataToClipboard([{
+            data: this.song_raw_data.innerHTML
+          }], [], false);
+        });
       }
 
       async loadConfiguration() {
@@ -896,8 +920,8 @@
         return r;
       }
       async audioProcessFileSelected() {
-        document.getElementById('raw_data').value = '';
-        document.getElementById('song_len_sec').innerHTML = '&nbsp;';
+        this.song_raw_data.innerHTML = '';
+        this.song_len_sec.innerHTML = '';
 
         let resampleData = (arrayIn, secondsLength, samplesPerSecondOut) => {
           let outArray = [];
@@ -1125,9 +1149,18 @@
         let resampledArray = resampleData(freqData, this.seconds_clip, Number(this.freq_samples_to_second.value));
 
         console.log(resampledArray);
-        document.getElementById('raw_data').value = JSON.stringify(resampledArray);
+        this.song_raw_data.innerHTML = JSON.stringify(resampledArray);
       }
 
+      updateSongDataView() {
+        if (this.song_detail_data_rdo.checked) {
+          this.song_raw_data.style.display = 'none';
+          this.song_len_sec.style.display = '';
+        } else {
+          this.song_raw_data.style.display = '';
+          this.song_len_sec.style.display = 'none';
+        }
+      }
       helpPanelToggle() {
         if (this.helpPanelVisible) {
           this.helpPanelVisible = false;

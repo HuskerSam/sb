@@ -1447,7 +1447,7 @@ class cMacro {
       });
     });
   }
-  static copyDataToClipboard(dataRows, fieldOrder = []) {
+  static copyDataToClipboard(dataRows, fieldOrder = [], headers = true) {
     if (!dataRows) return;
     if (dataRows.length < 1) return;
 
@@ -1460,11 +1460,14 @@ class cMacro {
     });
 
     let tableGuts = '';
-    tableGuts += '<tr>';
-    fieldOrder.forEach((field) => {
-      tableGuts += '<td>' + field.toString() + '</td>';
-    });
-    tableGuts += '</tr>';
+    if (headers) {
+      tableGuts += '<tr>';
+      fieldOrder.forEach((field) => {
+        tableGuts += '<td>' + field.toString() + '</td>';
+      });
+      tableGuts += '</tr>';
+    }
+    
     dataRows.forEach((row) => {
       tableGuts += '<tr>';
       fieldOrder.forEach((field) => {
