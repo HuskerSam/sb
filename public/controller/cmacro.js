@@ -662,38 +662,7 @@ class cMacro {
     this.panel.querySelectorAll('.colorpicker')
       .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i)));
 
-    this.imageInputList = this.panel.querySelectorAll('.texturepathinput');
-    this.imageUploadButtonList = this.panel.querySelectorAll('.texturepathupload');
-    this.imageUploadButtonList.forEach((btn, index) => {
-      let file = document.createElement('input');
-      file.setAttribute('type', 'file');
-      file.style.display = 'none';
-      btn.parentNode.appendChild(file);
-      let field = this.imageInputList[index];
-      file.addEventListener('change', e => this._handleImageTextureUpload(file, field));
-      btn.addEventListener('click', e => file.click());
-      field.addEventListener('input', e => {
-        let path = field.value;
-        let obj = this.app.texturesFromFile[path];
-        if (obj) {
-          let inputs = field.parentElement.parentElement.querySelectorAll('input');
-          let ctl_scaleu;
-          let ctl_scalev;
-          if (!inputs[2]) {
-            let fieldname = field.dataset.field;
-            ctl_scaleu = this.panel.querySelector('.' + fieldname + '_scaleu');
-            ctl_scalev = this.panel.querySelector('.' + fieldname + '_scalev');
-          } else {
-            ctl_scaleu = inputs[2];
-            ctl_scalev = inputs[1];
-          }
-          if (obj.scaleu)
-            ctl_scaleu.value = obj.scaleu;
-          if (obj.scalev)
-            ctl_scalev.value = obj.scalev;
-        }
-      });
-    });
+    this.__registerFileUploaders();
 
     this.show_uploads = this.panel.querySelector('.show_uploads');
     this.image_upload_list = this.panel.querySelectorAll('.image_upload_building');
@@ -706,22 +675,22 @@ class cMacro {
     this.blockUpdateCSV();
   }
   meshTemplate() {
-    return `<div class="standardmeshassetpanel mesh_wizard_wrapper">
+    return `<div class="standardmeshassetpanel mesh_wizard_wrapper" style="display:flex;flex-direction:column;">
         <table class="wizard_field_container">
           <tr>
             <td>Mesh URL</td>
-            <td><input type="text" class="mesh_meshpath" list="meshesDefaultsDataList" /></td>
-            <td></td>
+            <td><input type="text" class="mesh_meshpath texturepathinput" data-field="mesh_meshpath" list="meshesDefaultsDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
             <td>Texture URL</td>
-            <td><input type="text" list="texturedatatitlelookuplist" class="mesh_texturepath" /></td>
-            <td></td>
+            <td><input type="text" list="texturedatatitlelookuplist" class="mesh_texturepath texturepathinput" data-field="mesh_texturepath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
             <td>Normal Map URL</td>
-            <td><input type="text" list="texturedatatitlelookuplist" class="mesh_bmppath" /></td>
-            <td></td>
+            <td><input type="text" list="texturedatatitlelookuplist" class="mesh_bmppath texturepathinput" data-field="mesh_bmppath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
             <td>Show Parent Details</td>
@@ -730,9 +699,9 @@ class cMacro {
           </tr>
           <tr>
             <td colspan="3" style="text-align:center">
-              <div class="mesh-details-images" style="flex:3;flex-direction:row;display:flex;">
-                <img class="mesh_texture_img" crossorigin="anonymous" style="flex:1;max-width:50%;max-height:100%;">
-                <img class="mesh_bump_img" crossorigin="anonymous" style="flex:1;max-width:50%;max-height:100%;">
+              <div class="mesh-details-images">
+                <img class="mesh_texture_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
+                <img class="mesh_bump_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
                 <img class="mesh-preview-img" crossorigin="anonymous" style="display:none;">
               </div>
               <div class="mesh_message" style=""></div>
@@ -847,6 +816,8 @@ class cMacro {
     });
 
     this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'rx', 'ry', 'rz'];
+
+    this.__registerFileUploaders();
 
     this.meshUpdateCSV();
   }
@@ -1066,7 +1037,12 @@ class cMacro {
     let key = this.app.a.profile.selectedWorkspace + `/${uKey}/`;
     fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
       field.value = uploadResult.downloadURL;
-      this.blockUpdateCSV();
+      let event = new Event('input', {
+        bubbles: true,
+        cancelable: true,
+      });
+
+      field.dispatchEvent(event);
     });
   }
   _shapeScrapeTextPlane() {
@@ -1370,6 +1346,40 @@ class cMacro {
       this.csv_import_preview.innerHTML = new Date();
   }
 
+  __registerFileUploaders() {
+    this.imageInputList = this.panel.querySelectorAll('.texturepathinput');
+    this.imageUploadButtonList = this.panel.querySelectorAll('.texturepathupload');
+    this.imageUploadButtonList.forEach((btn, index) => {
+      let file = document.createElement('input');
+      file.setAttribute('type', 'file');
+      file.style.display = 'none';
+      btn.parentNode.appendChild(file);
+      let field = this.imageInputList[index];
+      file.addEventListener('change', e => this._handleImageTextureUpload(file, field));
+      btn.addEventListener('click', e => file.click());
+      field.addEventListener('input', e => {
+        let path = field.value;
+        let obj = this.app.texturesFromFile[path];
+        if (obj) {
+          let inputs = field.parentElement.parentElement.querySelectorAll('input');
+          let ctl_scaleu;
+          let ctl_scalev;
+          if (!inputs[2]) {
+            let fieldname = field.dataset.field;
+            ctl_scaleu = this.panel.querySelector('.' + fieldname + '_scaleu');
+            ctl_scalev = this.panel.querySelector('.' + fieldname + '_scalev');
+          } else {
+            ctl_scaleu = inputs[2];
+            ctl_scalev = inputs[1];
+          }
+          if (obj.scaleu)
+            ctl_scaleu.value = obj.scaleu;
+          if (obj.scalev)
+            ctl_scalev.value = obj.scalev;
+        }
+      });
+    });
+  }
   static copyDataToClipboard(dataRows, fieldOrder = []) {
     if (!dataRows) return;
     if (dataRows.length < 1)  return;

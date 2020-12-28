@@ -122,7 +122,7 @@ class cView extends bView {
 
     this.helpViewerWrapper = this.dialog.querySelector('.help-overlay');
     this.addAssetPanel = document.createElement('div');
-    this.addAssetPanel.classList.add('add-asset-template-panel');
+    this.addAssetPanel.classList.add('add_asset_template_panel');
     this.helpViewer = document.createElement('div');
     this.helpViewer.classList.add('help-viewer');
     this.helpViewerWrapper.appendChild(this.addAssetPanel);
@@ -573,7 +573,7 @@ class cView extends bView {
     if (this.removeChildButton)
       this.removeChildButton.style.visibility = (this.tag === 'block' && this.childKey) ? 'visible' : 'hidden';
 
-    this.addAssetPanel.style.display = '';
+    this.addAssetPanel.style.display = 'block';
     this.addAssetPanel.innerHTML = `<label><span>Add Workspace </span><input class="new-workspace-name" type="text" /></label>
       <button class="add-workspace-button btn-sb-icon"><i class="material-icons">add</i></button>
       <button class="add-workspace-button-nw btn-sb-icon"><i class="material-icons">open_in_new</i></button><hr>`;

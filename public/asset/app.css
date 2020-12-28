@@ -435,7 +435,7 @@ select {
   width: 100%;
 }
 
-.add-asset-template-panel {
+.add_asset_template_panel {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -448,15 +448,15 @@ select {
   position: relative;
 }
 
-.form_canvas_wrapper.show-help .add-asset-template-panel {
+.form_canvas_wrapper.show-help .add_asset_template_panel {
   padding: .5em;
 }
 
-.form_canvas_wrapper.show-help.workspace .add-asset-template-panel {
+.form_canvas_wrapper.show-help.workspace .add_asset_template_panel {
   display: flex;
 }
 
-.add-asset-template-panel .data_table_panel {
+.add_asset_template_panel .data_table_panel {
   flex: 1;
 }
 
@@ -464,11 +464,11 @@ select {
   padding: .25em;
 }
 
-.add-asset-template-panel input {
+.add_asset_template_panel input {
   margin: .25em;
 }
 
-.add-asset-template-panel input[type="file"] {}
+.add_asset_template_panel input[type="file"] {}
 
 .material-add-options .material-color-add {
   border-radius: .25em;
@@ -484,11 +484,11 @@ select {
   padding: 0;
 }
 
-.add-asset-template-panel label>span {
+.add_asset_template_panel label>span {
   margin: .1em;
 }
 
-.add-asset-template-panel input[type="text"] {
+.add_asset_template_panel input[type="text"] {
   text-align: center;
   width: 4em;
 }
@@ -768,7 +768,7 @@ select {
   line-height: 5em;
 }
 
-.add-asset-template-panel input.new-workspace-name {
+.add_asset_template_panel input.new-workspace-name {
   width: 15em;
   text-align: left;
 }
@@ -816,7 +816,7 @@ select {
   margin: .1em;
 }
 
-.add-asset-template-panel label {
+.add_asset_template_panel label {
   white-space: nowrap;
 }
 
