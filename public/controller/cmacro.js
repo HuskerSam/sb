@@ -110,15 +110,53 @@ class cMacro {
         </div>
       </div>
       <div class="create-2d-text-plane">
-        <label><span>texturetext</span><input class="texturetext" style="width:10em" type="text" value="Text Line" /></label><br>
-        <label><span>texturetext2</span><input class="texturetext2" type="text" value="" style="width:10em" /></label><br>
-        <label><span>textfontfamily</span><input class="textfontfamily" type="text" list="fontfamilydatalist" style="width:10em" /></label><br>
-        <label><span>textfontcolor</span><input class="textfontcolor" type="text" value="0,0,0" style="width:10em" /></label><br>
-        <label><span>textfontweight</span><input class="textfontweight" type="text" value="" style="width:10em" /></label><br>
-        <label><span>textfontsize</span><input class="textfontsize" type="text" value="100" /></label><br>
-        <label><span>texturetextrendersize</span><input class="texturetextrendersize" type="text" value="512" /></label><br>
-        <label><span>width</span><input class="width" type="text" value="4" /></label><br>
-        <label><span>height</span><input class="height" type="text" value="4" /></label><br>
+        <table class="wizard_field_container">
+          <tr>
+            <td>Text</td>
+            <td><input class="texturetext" type="text" value="Text Line" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Line 2</td>
+            <td><input class="texturetext2" type="text" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Font</td>
+            <td><input class="textfontfamily" type="text" list="fontfamilydatalist" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Font Color</td>
+            <td><input class="textfontcolor" type="text" value="0,0,0" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Font Weight</td>
+            <td><input class="textfontweight" type="text" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Font Size</td>
+            <td><input class="textfontsize" type="text" value="100" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Render Size</td>
+            <td><input class="texturetextrendersize" type="text" value="512" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Width</td>
+            <td><input class="width" type="text" value="4" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Height</td>
+            <td><input class="height" type="text" value="4" /></td>
+            <td></td>
+          </tr>
+        </table>
       </div>
       <div class="web-font-block-add-options" style="display:none;">
         <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:10em;" value="" /></label>
