@@ -600,6 +600,7 @@ class cMacro {
     <div style="padding:4px;text-align:left;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0;"><i class="material-icons">table_rows</i></button>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
       <br>
       <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
     </div>
@@ -655,8 +656,10 @@ class cMacro {
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
-      cMacro.copyDataToClipboard([this.export_csv]);
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => {
@@ -791,6 +794,7 @@ class cMacro {
     <div style="padding:4px;text-align:left;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
       <br>
       <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
     </div>`;
@@ -817,8 +821,10 @@ class cMacro {
 
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
-      cMacro.copyDataToClipboard([this.export_csv]);
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => {
@@ -874,11 +880,14 @@ class cMacro {
     if (bump.substr(0, 3) === 'sb:')
       bump = this.cdnPrefix + 'textures/' + bump.substring(3);
     this.mesh_bump_img.setAttribute('src', bump);
-
+    let header = this.copy_csv_header_clipboard.checked;
     let csv = this.meshScrape();
     this.export_csv = csv;
     if (csv) {
-      this.csv_import_preview.innerHTML = Papa.unparse([csv]);
+      if (window.Papa)
+        this.csv_import_preview.innerHTML = Papa.unparse([csv], {
+          header
+        });
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -931,6 +940,7 @@ class cMacro {
       <div style="padding:4px;text-align:left;">
         <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
         <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
+        <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
         <br>
         <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
       </div>`;
@@ -958,8 +968,10 @@ class cMacro {
     this.standardmaterialassetpanel = this.panel.querySelector('.standardmaterialassetpanel');
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
-      cMacro.copyDataToClipboard([this.export_csv]);
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => {
@@ -992,9 +1004,12 @@ class cMacro {
   }
   materialUpdateCSV() {
     let csv = this.materialScrape();
+    let header = this.copy_csv_header_clipboard.checked;
+
     this.export_csv = csv;
     if (csv) {
-      this.csv_import_preview.innerHTML = Papa.unparse([csv]);
+      if (window.Papa)
+        this.csv_import_preview.innerHTML = Papa.unparse([csv], { header });
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -1400,10 +1415,11 @@ class cMacro {
     if (macrotype === '2D Text Plane')
       r = this._shapeScrapeTextPlane();
 
+    let header = this.copy_csv_header_clipboard.checked;
     this.export_csv = r;
     if (r) {
       if (window.Papa)
-        this.csv_import_preview.innerHTML = Papa.unparse([r]);
+        this.csv_import_preview.innerHTML = Papa.unparse([r], { header });
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -1467,7 +1483,7 @@ class cMacro {
       });
       tableGuts += '</tr>';
     }
-    
+
     dataRows.forEach((row) => {
       tableGuts += '<tr>';
       fieldOrder.forEach((field) => {
