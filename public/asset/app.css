@@ -940,4 +940,9 @@ table.wizard_field_container td:nth-child(2) {
 
 table.wizard_field_container td:nth-child(2) input {
   width: 100%;
+  text-align: left;
+}
+
+input[type="color"] {
+  width: 3em;
 }

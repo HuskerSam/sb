@@ -124,103 +124,218 @@ class cMacro {
         <label><span>Font Name</span><input type="text" class="genericblockdata" list="webfontsuggestionlist" style="width:10em;" value="" /></label>
       </div>
       <div class="connector-line-block-add-options" style="display:none;">
-        <label><span>L </span><input type="text" class="length" value="10" /></label>
-        <label><span>D </span><input type="text" class="diameter" value=".5" /></label>
-        <br>
-        <label><span>Tess </span><input type="text" class="tessellation" value="" /></label>
-        <br>
-        <label><span>Mat </span>&nbsp;<input type="text" class="material" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="material">
-        <br>
-        <label>
-          <span>Pt </span>
-          <select class="pointshape">
-            <option>none</option>
-            <option>cylinder</option>
-            <option selected>cone</option>
-            <option>sphere</option>
-          </select>
-        </label>
-        <br>
-        <label><span>Pt L </span><input type="text" class="pointlength" value="1" /></label>
-        <label><span>Pt D </span><input type="text" class="pointdiameter" value="2" /></label>
-        <br>
-        <label><span>Pt Tess </span><input type="text" class="pointtessellation" value="" /></label>
-        <br>
-        <label><span>Pt Mat </span><input type="text" class="pointmaterial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="pointmaterial">
-        <br>
-        <label>
-          <span>Tl</span>
-          <select class="tailshape">
-            <option>none</option>
-            <option>cylinder</option>
-            <option>cone</option>
-            <option selected>sphere</option>
-          </select>
-        </label>
-        <br>
-        <label><span>Tl L </span><input type="text" class="taillength" value="1" /></label>
-        <label><span>Tl D </span><input type="text" class="taildiameter" value="1" /></label>
-        <br>
-        <label><span>Tl Tess </span><input type="text" class="tailtessellation" value="" /></label>
-        <br>
-        <label><span>Tl Mat </span><input type="text" class="tailmaterial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="tailmaterial">
-        <label><input type="checkbox" class="tailshapeflip"  style="width:auto;line-height:1.5em" />Flip</label>
+        <table class="wizard_field_container">
+          <tr>
+            <td><b>Line</b> Length</td>
+            <td><input type="text" class="length" value="10" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Diameter</td>
+            <td><input type="text" class="diameter" value=".5" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tessellation</td>
+            <td><input type="text" class="tessellation" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Material</td>
+            <td><input type="text" class="material" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="material"></td>
+          </tr>
+          <tr>
+            <td><b>Pointer</b> Shape</td>
+            <td><select class="pointshape">
+              <option>none</option>
+              <option>cylinder</option>
+              <option selected>cone</option>
+              <option>sphere</option>
+            </select></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Length</td>
+            <td><input type="text" class="pointlength" value="1" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Depth</td>
+            <td><input type="text" class="pointdiameter" value="2" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tessellation</td>
+            <td><input type="text" class="pointtessellation" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Material</td>
+            <td><input type="text" class="pointmaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="pointmaterial"></td>
+          </tr>
+          <tr>
+            <td><b>Tail</b> Shape</td>
+            <td><select class="tailshape">
+              <option>none</option>
+              <option>cylinder</option>
+              <option>cone</option>
+              <option selected>sphere</option>
+            </select></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Length</td>
+            <td><input type="text" class="taillength" value="1" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Depth</td>
+            <td><input type="text" class="taildiameter" value="2" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tessellation</td>
+            <td><input type="text" class="tailtessellation" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Material</td>
+            <td><input type="text" class="tailmaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="tailmaterial"></td>
+          </tr>
+          <tr>
+            <td>Flip</td>
+            <td><input type="checkbox" class="tailshapeflip"  style="width:1.5em;" /></td>
+            <td></td>
+          </tr>
+        </table>
       </div>
       <div class="animated-line-block-add-options">
-        <label><span>Num </span><input type="text" class="dashes" value="5" /></label>
-        <label><span>Run </span><input type="text" class="runlength" value="1500" /></label>
-        <br>
-        <label>
-          <span>Shape </span>
-          <select class="dotshape">
-            <option>cylinder</option>
-            <option selected>cone</option>
-            <option>ellipsoid</option>
-            <option>arrow</option>
-          </select>
-        </label>
-        <label><span>Len </span><input type="text" class="dashlength" value=".5" /></label>
-        <br>
-        <label><span>Tess </span><input type="text" class="tessellation" value="" /></label>
-        <br>
-        <label><span>Mat </span><input type="text" class="material" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="material">
-        <br>
-        <label><span>W </span><input type="text" class="width" value="1" /></label>
-        <label><span>H </span><input type="text" class="height" value="2" /></label>
-        <label><span>D </span><input type="text" class="depth" value="10" /></label>
+        <table class="wizard_field_container">
+          <tr>
+            <td>Number of Dashes</td>
+            <td><input type="text" class="dashes" value="5" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Run Length (ms)</td>
+            <td><input type="text" class="runlength" value="1500" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Dash Type</td>
+            <td><select class="dotshape">
+              <option>cylinder</option>
+              <option selected>cone</option>
+              <option>ellipsoid</option>
+              <option>arrow</option>
+              </select></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Dash Length</td>
+            <td><input type="text" class="dashlength" value=".5" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tessellation</td>
+            <td><input type="text" class="tessellation" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Material</td>
+            <td><input type="text" class="material" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="material"></td>
+          </tr>
+          <tr>
+            <td>Width (x)</td>
+            <td><input type="text" class="width" value="1" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Height (y)</td>
+            <td><input type="text" class="height" value="2" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Depth (z)</td>
+            <td><input type="text" class="depth" value="10" /></td>
+            <td></td>
+          </tr>
+        </table>
       </div>
-      <div class="shape-and-text-block-options">
-        <label><span>W </span><input type="text" class="width" value="4" /></label>
-        <label><span>H </span><input type="text" class="height" value="1" /></label>
-        <label><span>D </span><input type="text" class="depth" value="1" /></label>
-        <br>
-        <label><span>L1 </span><input type="text" class="texttext" value="My Message" /></label>
-        <label><span>L2 </span><input type="text" class="texttextline2" value="" /></label>
-        <label><span>Font </span><input class="textfontfamily" type="text" list="fontfamilydatalist" /></label>
-        <label><span>D </span><input type="text" class="textdepth" value=".25" /></label>
-        <label><span>Fill </span><input type="text" class="textmaterial" list="materialdatatitlelookuplist" />
-        </label>
-        <input type="color" class="colorpicker" data-inputclass="textmaterial">
-        <br>
-        <br>
-        <label><select class="createshapetype">
-          <option>cube</option>
-          <option>box</option>
-          <option selected>cone</option>
-          <option>cylinder</option>
-          <option>sphere</option>
-          <option>ellipsoid</option>
-        </select></label>
-        <label><span>Tess </span><input type="text" class="tessellation" /></label>
-        <label><input type="checkbox" style="width:auto;line-height:1.5em" class="cylinderhorizontal" /> <span>Rotate</span></label>
-        <br>
-        <label><span>Mat </span><input type="text" class="shapematerial" list="materialdatatitlelookuplist" /></label>
-        <input type="color" class="colorpicker" data-inputclass="shapematerial">
-        <br>
+      <div class="shape_and_text_block_options">
+        <table class="wizard_field_container">
+          <tr>
+            <td>Width (x)</td>
+            <td><input type="text" class="width" value="4" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Depth (z)</td>
+            <td><input type="text" class="depth" value="1" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Height (y)</td>
+            <td><input type="text" class="height" value="1" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Line 1</td>
+            <td><input type="text" class="texttext" value="My Message" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Line 2</td>
+            <td><input type="text" class="texttextline2" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Font</td>
+            <td><input type="text" class="textfontfamily"  list="fontfamilydatalist" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Text Depth</td>
+            <td><input type="text" class="textdepth"  value=".25" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Text Material</td>
+            <td><input type="text" class="textmaterial"  list="materialdatatitlelookuplist"/></td>
+            <td><input type="color" class="colorpicker" data-inputclass="textmaterial"></td>
+          </tr>
+          <tr>
+            <td>Shape Type</td>
+            <td><select class="createshapetype">
+              <option>cube</option>
+              <option>box</option>
+              <option selected>cone</option>
+              <option>cylinder</option>
+              <option>sphere</option>
+              <option>ellipsoid</option>
+            </select></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Tess</td>
+            <td><input type="text" class="tessellation" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Rotate 90 degress</td>
+            <td><input type="checkbox" style="width:1.25em;line-height:1.5em" class="cylinderhorizontal" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Shape Material</td>
+            <td><input type="text" class="shapematerial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="shapematerial"></td>
+          </tr>
+        </table>
       </div>
       <div class="scene_block_add_options">
         <div class="skyboxscenefeatures">
@@ -263,77 +378,176 @@ class cMacro {
           </table>
         </div>
         <div class="buildingscenefeatures" style="display:none;">
-          <label><span>w (x)</span><input type="text" class="width" value="50" /></label>
-          <label><span>d (z)</span><input type="text" class="depth" value="100" /></label>
-          <label><span>h (y)</span><input type="text" class="height" value="40" /></label>
-          <label><input type="checkbox" class="show_uploads" /><span>uploads</span></label>
-          <br>
-          <label><span>floormaterial</span><input type="text" style="width:10em;" class="floormaterial" list="materialdatatitlelookuplist" /></label>
-          <input type="color" class="colorpicker" data-inputclass="floormaterial">
-          <br>
-          <div class="image_upload_building">
-            <label><span>floorimage</span><input type="text" style="width:10em;" class="floorimage texturepathinput" list="floorTexturesDataList" /></label>
-            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
-            <br>
-            <label><span>&nbsp;floorscalev (x)</span><input type="text" class="floorscalev" value="1" /></label>
-            <label><span>&nbsp;floorscaleu (z)</span><input type="text" class="floorscaleu" value="1" /></label>
-          </div>
-          <label><span>backwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="backwallmaterial" list="materialdatatitlelookuplist" /></label>
-          <input type="color" class="colorpicker" data-inputclass="backwallmaterial">
-          <br>
-          <div class="image_upload_building">
-            <label><span>backwallimage</span><input type="text" style="width:10em;" class="backwallimage texturepathinput" list="wallTexturesDataList" /></label>
-            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
-            <br>
-            <label><span>backwallscalev</span><input type="text" class="backwallscalev" value="1" /></label>
-            <label><span>backwallscaleu</span><input type="text" class="backwallscaleu" value="1" /></label>
-          </div>
-          <label><span>frontwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="frontwallmaterial" list="materialdatatitlelookuplist" /></label>
-          <input type="color" class="colorpicker" data-inputclass="frontwallmaterial">
-          <br>
-          <div class="image_upload_building">
-            <label><span>frontwallimage</span><input type="text" style="width:10em;" class="frontwallimage texturepathinput" list="wallTexturesDataList" /></label>
-            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
-            <br>
-            <label><span>frontwallscalev</span><input type="text" class="frontwallscalev" value="1" /></label>
-            <label><span>frontwallscaleu</span><input type="text" class="frontwallscaleu" value="1" /></label>
-          </div>
-          <label><span>leftwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="leftwallmaterial" list="materialdatatitlelookuplist" /></label>
-          <input type="color" class="colorpicker" data-inputclass="leftwallmaterial">
-          <br>
-          <div class="image_upload_building">
-            <label><span>leftwallimage</span><input type="text" style="width:10em;" class="leftwallimage texturepathinput" list="wallTexturesDataList" /></label>
-            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
-            <br>
-            <label><span>leftwallscalev</span><input type="text" class="leftwallscalev" value="1" /></label>
-            <label><span>leftwallscaleu</span><input type="text" class="leftwallscaleu" value="1" /></label>
-          </div>
-          <label><span>rightwallmaterial</span>&nbsp;<input type="text" style="width:10em;" class="rightwallmaterial" list="materialdatatitlelookuplist" /></label>
-          <input type="color" class="colorpicker" data-inputclass="rightwallmaterial">
-          <br>
-          <div class="image_upload_building">
-            <label><span>rightwallimage</span><input type="text" style="width:10em;" class="rightwallimage texturepathinput" list="wallTexturesDataList" /></label>
-            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
-            <br>
-            <label><span>rightwallscalev</span><input type="text" class="rightwallscalev" value="1" /></label>
-            <label><span>rightwallscaleu</span><input type="text" class="rightwallscaleu" value="1" /></label>
-          </div>
-          <label><span>ceilingmaterial</span>&nbsp;<input type="text" style="width:10em;" class="ceilingmaterial" list="materialdatatitlelookuplist" /></label>
-          <input type="color" class="colorpicker" data-inputclass="ceilingmaterial">
-          <br>
-          <div class="image_upload_building">
-            <label><span>ceilingwallimage</span><input type="text" style="width:10em;" class="ceilingwallimage texturepathinput" list="wallTexturesDataList" /></label>
-            <button class="texturepathupload"><i class="material-icons">cloud_upload</i></button>
-            <img src="" style="width:2em;height:2em;" crossorigin="anonymous">
-            <br>
-            <label><span>ceilingwallscalev</span><input type="text" class="ceilingwallscalev" value="1" /></label>
-            <label><span>ceilingwallscaleu</span><input type="text" class="ceilingwallscaleu" value="1" /></label>
-          </div>
+          <table class="wizard_field_container">
+            <tr>
+              <td>Width (x)</td>
+              <td><input type="text" class="width" value="50" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Depth (z)</td>
+              <td><input type="text" class="depth" value="100" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Height (y)</td>
+              <td><input type="text" class="height" value="40" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colspan="3" style="text-align:left;"><label><input type="checkbox" style="margin: 0 6px;" class="show_uploads" /><span>uploads</span></label></td>
+            </tr>
+            <tr>
+              <td><b>Floor Material</b></td>
+              <td><input type="text" class="floormaterial" list="materialdatatitlelookuplist" /></td>
+              <td><input type="color" class="colorpicker" data-inputclass="floormaterial"></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Image</td>
+              <td><input type="text" class="floorimage texturepathinput" data-field="floorimage" list="floorTexturesDataList" /></td>
+              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale v (x)</td>
+              <td><input type="text" class="floorscalev floorimage_scalev" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale u (z)</td>
+              <td><input type="text" class="floorscaleu floorimage_scaleu" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;" colspan="3">
+                <img class="floorimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+              </td>
+            </tr>
+            <tr>
+              <td><b>Backwall Material</b></td>
+              <td><input type="text" class="backwallmaterial" list="materialdatatitlelookuplist" /></td>
+              <td><input type="color" class="colorpicker" data-inputclass="backwallmaterial"></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Image</td>
+              <td><input type="text" class="backwallimage texturepathinput" data-field="backwallimage" list="wallTexturesDataList" /></td>
+              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale v (x)</td>
+              <td><input type="text" class="backwallscalev backwallimage_scalev" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale u (z)</td>
+              <td><input type="text" class="backwallscaleu backwallimage_scaleu" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;" colspan="3">
+                <img class="backwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+              </td>
+            </tr>
+            <tr>
+              <td><b>Front Wall Material</b></td>
+              <td><input type="text" class="frontwallmaterial" list="materialdatatitlelookuplist" /></td>
+              <td><input type="color" class="colorpicker" data-inputclass="frontwallmaterial"></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Image</td>
+              <td><input type="text" class="frontwallimage texturepathinput" data-field="frontwallimage" list="wallTexturesDataList" /></td>
+              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale v (x)</td>
+              <td><input type="text" class="frontwallscalev frontwallimage_scalev" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale u (z)</td>
+              <td><input type="text" class="frontwallscaleu frontwallimage_scaleu" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;" colspan="3">
+                <img class="frontwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+              </td>
+            </tr>
+            <tr>
+              <td><b>Right Wall Material</b></td>
+              <td><input type="text" class="rightwallmaterial" list="materialdatatitlelookuplist" /></td>
+              <td><input type="color" class="colorpicker" data-inputclass="rightwallmaterial"></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Image</td>
+              <td><input type="text" class="rightwallimage texturepathinput" data-field="rightwallimage" list="wallTexturesDataList" /></td>
+              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale v (x)</td>
+              <td><input type="text" class="rightwallscalev rightwallimage_scalev" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale u (z)</td>
+              <td><input type="text" class="rightwallscaleu rightwallimage_scaleu" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;" colspan="3">
+                <img class="rightwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+              </td>
+            </tr>
+            <tr>
+              <td><b>Left Wall Material</b></td>
+              <td><input type="text" class="leftwallmaterial" list="materialdatatitlelookuplist" /></td>
+              <td><input type="color" class="colorpicker" data-inputclass="leftwallmaterial"></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Image</td>
+              <td><input type="text" class="leftwallimage texturepathinput" data-field="leftwallimage" list="wallTexturesDataList" /></td>
+              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale v (x)</td>
+              <td><input type="text" class="leftwallscalev leftwallimage_scalev" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale u (z)</td>
+              <td><input type="text" class="leftwallscaleu leftwallimage_scaleu" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;" colspan="3">
+                <img class="leftwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+              </td>
+            </tr>
+            <tr>
+              <td><b>Ceiling Material</b></td>
+              <td><input type="text" class="ceilingwallmaterial" list="materialdatatitlelookuplist" /></td>
+              <td><input type="color" class="colorpicker" data-inputclass="ceilingwallmaterial"></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Image</td>
+              <td><input type="text" class="ceilingwallimage texturepathinput" data-field="ceilingwallimage" list="wallTexturesDataList" /></td>
+              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale v (x)</td>
+              <td><input type="text" class="ceilingwallscalev ceilingwallimage_scalev" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr class="image_upload_building">
+              <td>Scale u (z)</td>
+              <td><input type="text" class="ceilingwallscaleu ceilingwallimage_scaleu" value="1" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td style="text-align:center;" colspan="3">
+                <img class="ceilingwallimage_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -349,7 +563,7 @@ class cMacro {
     this.blockOptionsPicker = this.panel.querySelector('.block-type-select');
     this.blockOptionsPicker.addEventListener('input', e => this.blockHelperChange());
 
-    this.blockShapePanel = this.panel.querySelector('.shape-and-text-block-options');
+    this.blockShapePanel = this.panel.querySelector('.shape_and_text_block_options');
     this.scene_block_add_options = this.panel.querySelector('.scene_block_add_options');
     this.scene_type_option_list = this.panel.querySelector('.scene_type_option_list');
     this.connectorLinePanel = this.panel.querySelector('.connector-line-block-add-options');
@@ -446,7 +660,7 @@ class cMacro {
     this.show_uploads = this.panel.querySelector('.show_uploads');
     this.image_upload_list = this.panel.querySelectorAll('.image_upload_building');
     this.show_uploads.addEventListener('input', e => {
-      this.image_upload_list.forEach(ele => ele.style.display = (this.show_uploads.checked) ? 'block' : '');
+      this.image_upload_list.forEach(ele => ele.style.display = (this.show_uploads.checked) ? 'table-row' : 'none');
     });
 
     this.blockHelperChange();
@@ -773,6 +987,8 @@ class cMacro {
     let bColor = GLOBALUTIL.HexToRGB(ctl.value);
     let rgb = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
     let inputCTL = ctl.parentNode.querySelector('.' + ctl.dataset.inputclass);
+    if (!inputCTL)
+      inputCTL = ctl.parentNode.parentNode.querySelector('.' + ctl.dataset.inputclass);
     inputCTL.value = 'color: ' + rgb;
 
     this.blockUpdateMaterialField(null, inputCTL);
