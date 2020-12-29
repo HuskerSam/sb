@@ -50,5 +50,12 @@
     "hint": "Configuration",
     "uniqueName": false,
     "description": "Default [Configuration] sheet - should be named Configuration"
+  },
+  {
+    "name": "Audio Animation - 8 Bands",
+    "key": "Audio8Band",
+    "hint": "8 Band Song",
+    "uniqueName": true,
+    "description": "Use addon to process a song into 8 bands and this sheet will produce the animation data"
   }
 ]

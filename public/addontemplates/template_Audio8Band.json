@@ -1,0 +1,98 @@
+[
+  {"range":"C1","value":"Range to include for assets"},
+
+  {"range":"A2","value":"Single CSV output"},
+  {"range":"B2","value":"Ranges","fontWeight":"bold"},
+  {"range":"C2","formula":"getStringForRange(C4:F12)"},
+
+  {"range":"A4:F4", "rangeValue": [[
+    "Block Data for animation", "SONG NAME", "asset", "name", "blockflag", "genericblockdata"
+    ]],
+    "fontWeight": "bold"},
+
+  {"range":"C5","value":"block" },
+  {"range":"D5","formula":"concatenate(B4, \"frequencyblock\", 1)"},
+  {"range":"E5","formula":"concatenate(B4, \"frequencyblock\", 1)"},
+  {"range":"F5","formula":"JSONArrayToPipeData(E18, C18)"},
+  {"range":"C6","value":"block" },
+  {"range":"D6","formula":"concatenate(B4, \"frequencyblock\", 2)"},
+  {"range":"E6","formula":"concatenate(B4, \"frequencyblock\", 2)"},
+  {"range":"F6","formula":"JSONArrayToPipeData(E19, C19)"},
+  {"range":"C7","value":"block" },
+  {"range":"D7","formula":"concatenate(B4, \"frequencyblock\", 3)"},
+  {"range":"E7","formula":"concatenate(B4, \"frequencyblock\", 3)"},
+  {"range":"F7","formula":"JSONArrayToPipeData(E20, C20)"},
+  {"range":"C8","value":"block" },
+  {"range":"D8","formula":"concatenate(B4, \"frequencyblock\", 4)"},
+  {"range":"E8","formula":"concatenate(B4, \"frequencyblock\", 4)"},
+  {"range":"F8","formula":"JSONArrayToPipeData(E21, C21)"},
+  {"range":"C9","value":"block" },
+  {"range":"D9","formula":"concatenate(B4, \"frequencyblock\", 5)"},
+  {"range":"E9","formula":"concatenate(B4, \"frequencyblock\", 5)"},
+  {"range":"F9","formula":"JSONArrayToPipeData(E22, C22)"},
+  {"range":"C10","value":"block" },
+  {"range":"D10","formula":"concatenate(B4, \"frequencyblock\", 6)"},
+  {"range":"E10","formula":"concatenate(B4, \"frequencyblock\", 6)"},
+  {"range":"F10","formula":"JSONArrayToPipeData(E23, C23)"},
+  {"range":"C11","value":"block" },
+  {"range":"D11","formula":"concatenate(B4, \"frequencyblock\", 7)"},
+  {"range":"E11","formula":"concatenate(B4, \"frequencyblock\", 7)"},
+  {"range":"F11","formula":"JSONArrayToPipeData(E24, C24)"},
+  {"range":"C12","value":"block" },
+  {"range":"D12","formula":"concatenate(B4, \"frequencyblock\", 8)"},
+  {"range":"E12","formula":"concatenate(B4, \"frequencyblock\", 8)"},
+  {"range":"F12","formula":"JSONArrayToPipeData(E25, C25)"},
+
+  {"range":"A15","value":"Song Data from addon","fontWeight":"bold"},
+  {"range":"C15","value":"Song Frequency Bands"},
+  {"range":"C16","value":"[[],[],[],[],[],[],[],[]]"},
+  {"range":"C17","value":"8 max band values","fontWeight":"bold"},
+  {"range":"E17","value":"8 freq bands","fontWeight":"bold"},
+
+  {"range":"E18","formula":"JSONArraysToCells(C16)"},
+  {"range":"B18","value":"1200hz"},
+  {"range":"C18","formula":"JSONArrayMax(E18)"},
+
+  {"range":"B19","value":"2400hz"},
+  {"range":"C19","formula":"JSONArrayMax(E19)"},
+  {"range":"B20","value":"3600hz"},
+  {"range":"C20","formula":"JSONArrayMax(E20)"},
+  {"range":"B21","value":"4800hz"},
+  {"range":"C21","formula":"JSONArrayMax(E21)"},
+  {"range":"B22","value":"6000hz"},
+  {"range":"C22","formula":"JSONArrayMax(E22)"},
+  {"range":"B23","value":"7200hz"},
+  {"range":"C23","formula":"JSONArrayMax(E23)"},
+  {"range":"B24","value":"8400hz"},
+  {"range":"C24","formula":"JSONArrayMax(E24)"},
+  {"range":"B25","value":"9600hz"},
+  {"range":"C25","formula":"JSONArrayMax(E25)"},
+
+  {
+    "columnNumber": 1,
+    "width": 200
+  },
+  {
+    "columnNumber": 2,
+    "width": 150
+  },
+  {
+    "range":"A1:A",
+    "fontColor": "blue"
+  },
+  {
+    "range":"A1:1",
+    "backgroundColor": "rgb(0,0,100)",
+    "fontColor": "white",
+    "fontWeight": "bold"
+  },
+  {
+    "range":"C2",
+    "backgroundColor": "rgb(100,255,100)"
+  },
+  {
+    "range":"C16",
+    "backgroundColor": "rgb(150,150,255)"
+  },
+  {"range":"A1","value":""}
+]
