@@ -55,6 +55,12 @@ function createSheetFromTemplate(sheetName, template) {
             range.setFontColor(item.fontColor);
           if (item.backgroundColor)
             range.setBackground(item.backgroundColor);
+          if (item.verticalAlignment) // 'top', 'middle', 'bottom'
+            range.setVerticalAlignment(item.verticalAlignment);
+          if (item.horizontalAlignment) // 'left', 'center', 'normal'
+            range.setHorizontalAlignment(item.horizontalAlignment);
+          if (item.wrapStrategy) // 'WRAP', 'OVERFLOW', 'CLIP'
+            range.setWrapStrategy(SpreadsheetApp.WrapStrategy[item.wrapStrategy]);
         }
       }
 
@@ -96,7 +102,7 @@ function SetCSVSheetValue(sheetName, rowIndex, field, value) {
     colSymbol = 'A' + String.fromCharCode('A'.charCodeAt(0) + (colIndex - 26));
 
   if (colIndex === cols.length) {
-   sheet.getRange(colSymbol + '1').setValue(field).setFontWeight('bold');
+    sheet.getRange(colSymbol + '1').setValue(field).setFontWeight('bold');
   }
 
   let rowNumber = (rowIndex + 1).toString();

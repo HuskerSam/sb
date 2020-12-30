@@ -260,10 +260,14 @@
         this.song_detail_data_rdo.addEventListener('input', e => this.updateSongDataView());
         this.song_raw_data_rdo.addEventListener('input', e => this.updateSongDataView());
         this.copy_song_data_to_clipboard.addEventListener('click', e => {
-          cMacro.copyDataToClipboard([{
-            data: this.song_raw_data.innerHTML
-          }], [], false);
-        });
+          let tInput = document.createElement('input');
+          tInput.value = this.song_raw_data.innerHTML;
+          document.body.appendChild(tInput);
+          tInput.select();
+          tInput.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+          tInput.remove();
+         });
       }
 
       async loadConfiguration() {
