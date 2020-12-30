@@ -4,6 +4,7 @@
   {"range":"A2","value":"Single CSV output"},
   {"range":"B2","value":"Ranges","fontWeight":"bold"},
   {"range":"C2","formula":"getStringForRange(C4:F12)"},
+  {"range":"C4:F12","backgroundColor":"rgb(230,230,230)"},
 
   {"range":"A4:F4", "rangeValue": [[
     "Block Data for animation", "SONG NAME", "asset", "name", "blockflag", "genericblockdata"
@@ -52,6 +53,7 @@
   {"range":"E18","formula":"JSONArraysToCells(C16)"},
   {"range":"B18","value":"1200hz"},
   {"range":"C18","formula":"JSONArrayMax(E18)"},
+  {"range":"E18:E25","wrapStrategy":"CLIP"},
 
   {"range":"B19","value":"2400hz"},
   {"range":"C19","formula":"JSONArrayMax(E19)"},
@@ -77,6 +79,22 @@
     "width": 150
   },
   {
+    "columnNumber": 3,
+    "width": 150
+  },
+  {
+    "columnNumber": 4,
+    "width": 150
+  },
+  {
+    "columnNumber": 5,
+    "width": 150
+  },
+  {
+    "columnNumber": 6,
+    "width": 150
+  },
+  {
     "range":"A1:A",
     "fontColor": "blue"
   },
@@ -88,11 +106,11 @@
   },
   {
     "range":"C2",
-    "backgroundColor": "rgb(100,255,100)"
+    "backgroundColor": "rgb(150,255,150)"
   },
   {
     "range":"C16",
-    "backgroundColor": "rgb(150,150,255)"
+    "backgroundColor": "rgb(200,200,255)"
   },
   {"range":"A1","value":""}
 ]
