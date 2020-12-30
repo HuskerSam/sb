@@ -1,0 +1,165 @@
+[
+  {"range":"C1","value":"Range to include for assets"},
+
+  {"range":"A2","value":"Single CSV output"},
+  {"range":"B2","value":"Ranges","fontWeight":"bold"},
+  {"range":"C2","formula":"getStringForRange(C4:F20)"},
+  {"range":"C4:F20","backgroundColor":"rgb(230,230,230)"},
+
+  {"range":"A4:F4", "rangeValue": [[
+    "Block Data for animation", "SongName", "asset", "name", "blockflag", "genericblockdata"
+    ]],
+    "fontWeight": "bold"},
+  {"range":"B4","fontWeight":"normal","backgroundColor":"rgb(255,230,230)"},
+
+  {"range":"C5","value":"block" },
+  {"range":"D5","formula":"concatenate(B4, \"frequencyblock\", 1)"},
+  {"range":"E5","formula":"concatenate(B4, \"frequencyblock\", 1)"},
+  {"range":"F5","formula":"JSONArrayToPipeData(E26, C26)","wrapStrategy":"CLIP"},
+  {"range":"C6","value":"block" },
+  {"range":"D6","formula":"concatenate(B4, \"frequencyblock\", 2)"},
+  {"range":"E6","formula":"concatenate(B4, \"frequencyblock\", 2)"},
+  {"range":"F6","formula":"JSONArrayToPipeData(E27, C27)","wrapStrategy":"CLIP"},
+  {"range":"C7","value":"block" },
+  {"range":"D7","formula":"concatenate(B4, \"frequencyblock\", 3)"},
+  {"range":"E7","formula":"concatenate(B4, \"frequencyblock\", 3)"},
+  {"range":"F7","formula":"JSONArrayToPipeData(E28, C28)","wrapStrategy":"CLIP"},
+  {"range":"C8","value":"block" },
+  {"range":"D8","formula":"concatenate(B4, \"frequencyblock\", 4)"},
+  {"range":"E8","formula":"concatenate(B4, \"frequencyblock\", 4)"},
+  {"range":"F8","formula":"JSONArrayToPipeData(E29, C29)","wrapStrategy":"CLIP"},
+  {"range":"C9","value":"block" },
+  {"range":"D9","formula":"concatenate(B4, \"frequencyblock\", 5)"},
+  {"range":"E9","formula":"concatenate(B4, \"frequencyblock\", 5)"},
+  {"range":"F9","formula":"JSONArrayToPipeData(E30, C30)","wrapStrategy":"CLIP"},
+  {"range":"C10","value":"block" },
+  {"range":"D10","formula":"concatenate(B4, \"frequencyblock\", 6)"},
+  {"range":"E10","formula":"concatenate(B4, \"frequencyblock\", 6)"},
+  {"range":"F10","formula":"JSONArrayToPipeData(E31, C31)","wrapStrategy":"CLIP"},
+  {"range":"C11","value":"block" },
+  {"range":"D11","formula":"concatenate(B4, \"frequencyblock\", 7)"},
+  {"range":"E11","formula":"concatenate(B4, \"frequencyblock\", 7)"},
+  {"range":"F11","formula":"JSONArrayToPipeData(E32, C32)","wrapStrategy":"CLIP"},
+  {"range":"C12","value":"block" },
+  {"range":"D12","formula":"concatenate(B4, \"frequencyblock\", 8)"},
+  {"range":"E12","formula":"concatenate(B4, \"frequencyblock\", 8)"},
+  {"range":"F12","formula":"JSONArrayToPipeData(E33, C33)","wrapStrategy":"CLIP"},
+  {"range":"C13","value":"block" },
+  {"range":"D13","formula":"concatenate(B4, \"frequencyblock\", 9)"},
+  {"range":"E13","formula":"concatenate(B4, \"frequencyblock\", 9)"},
+  {"range":"F13","formula":"JSONArrayToPipeData(E34, C34)","wrapStrategy":"CLIP"},
+  {"range":"C14","value":"block" },
+  {"range":"D14","formula":"concatenate(B4, \"frequencyblock\", 10)"},
+  {"range":"E14","formula":"concatenate(B4, \"frequencyblock\", 10)"},
+  {"range":"F14","formula":"JSONArrayToPipeData(E35, C35)","wrapStrategy":"CLIP"},
+  {"range":"C15","value":"block" },
+  {"range":"D15","formula":"concatenate(B4, \"frequencyblock\", 11)"},
+  {"range":"E15","formula":"concatenate(B4, \"frequencyblock\", 11)"},
+  {"range":"F15","formula":"JSONArrayToPipeData(E36, C36)","wrapStrategy":"CLIP"},
+  {"range":"C16","value":"block" },
+  {"range":"D16","formula":"concatenate(B4, \"frequencyblock\", 12)"},
+  {"range":"E16","formula":"concatenate(B4, \"frequencyblock\", 12)"},
+  {"range":"F16","formula":"JSONArrayToPipeData(E37, C37)","wrapStrategy":"CLIP"},
+  {"range":"C17","value":"block" },
+  {"range":"D17","formula":"concatenate(B4, \"frequencyblock\", 13)"},
+  {"range":"E17","formula":"concatenate(B4, \"frequencyblock\", 13)"},
+  {"range":"F17","formula":"JSONArrayToPipeData(E38, C38)","wrapStrategy":"CLIP"},
+  {"range":"C18","value":"block" },
+  {"range":"D18","formula":"concatenate(B4, \"frequencyblock\", 14)"},
+  {"range":"E18","formula":"concatenate(B4, \"frequencyblock\", 14)"},
+  {"range":"F18","formula":"JSONArrayToPipeData(E39, C39)","wrapStrategy":"CLIP"},
+  {"range":"C19","value":"block" },
+  {"range":"D19","formula":"concatenate(B4, \"frequencyblock\", 15)"},
+  {"range":"E19","formula":"concatenate(B4, \"frequencyblock\", 15)"},
+  {"range":"F19","formula":"JSONArrayToPipeData(E40, C40)","wrapStrategy":"CLIP"},
+  {"range":"C20","value":"block" },
+  {"range":"D20","formula":"concatenate(B4, \"frequencyblock\", 16)"},
+  {"range":"E20","formula":"concatenate(B4, \"frequencyblock\", 16)"},
+  {"range":"F20","formula":"JSONArrayToPipeData(E41, C41)","wrapStrategy":"CLIP"},
+
+  {"range":"A23","value":"Song Data from addon","fontWeight":"bold"},
+  {"range":"C23","value":"Song Frequency Bands"},
+  {"range":"C24","value":"[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]","wrapStrategy":"CLIP","horizontalAlignment":"left"},
+  {"range":"C25","value":"16 max band values","fontWeight":"bold"},
+  {"range":"E25","value":"16 freq bands","fontWeight":"bold"},
+
+  {"range":"E26","formula":"JSONArraysToCells(C24)"},
+  {"range":"B26","value":"600hz"},
+  {"range":"C26","formula":"JSONArrayMax(E26)"},
+  {"range":"E26:E41","wrapStrategy":"CLIP"},
+
+  {"range":"B27","value":"1200hz"},
+  {"range":"C27","formula":"JSONArrayMax(E27)"},
+  {"range":"B28","value":"1800hz"},
+  {"range":"C28","formula":"JSONArrayMax(E28)"},
+  {"range":"B29","value":"2400hz"},
+  {"range":"C29","formula":"JSONArrayMax(E29)"},
+  {"range":"B30","value":"3000hz"},
+  {"range":"C30","formula":"JSONArrayMax(E30)"},
+  {"range":"B31","value":"3600hz"},
+  {"range":"C31","formula":"JSONArrayMax(E31)"},
+  {"range":"B32","value":"4200hz"},
+  {"range":"C32","formula":"JSONArrayMax(E32)"},
+  {"range":"B33","value":"4800hz"},
+  {"range":"C33","formula":"JSONArrayMax(E33)"},
+  {"range":"B34","value":"5400hz"},
+  {"range":"C34","formula":"JSONArrayMax(E34)"},
+  {"range":"B35","value":"6000hz"},
+  {"range":"C35","formula":"JSONArrayMax(E35)"},
+  {"range":"B36","value":"6600hz"},
+  {"range":"C36","formula":"JSONArrayMax(E36)"},
+  {"range":"B37","value":"7200hz"},
+  {"range":"C37","formula":"JSONArrayMax(E37)"},
+  {"range":"B38","value":"7800hz"},
+  {"range":"C38","formula":"JSONArrayMax(E38)"},
+  {"range":"B39","value":"8400hz"},
+  {"range":"C39","formula":"JSONArrayMax(E39)"},
+  {"range":"B40","value":"9000hz"},
+  {"range":"C40","formula":"JSONArrayMax(E40)"},
+  {"range":"B41","value":"9600hz"},
+  {"range":"C41","formula":"JSONArrayMax(E41)"},
+
+  {
+    "columnNumber": 1,
+    "width": 200
+  },
+  {
+    "columnNumber": 2,
+    "width": 150
+  },
+  {
+    "columnNumber": 3,
+    "width": 150
+  },
+  {
+    "columnNumber": 4,
+    "width": 200
+  },
+  {
+    "columnNumber": 5,
+    "width": 200
+  },
+  {
+    "columnNumber": 6,
+    "width": 150
+  },
+  {
+    "range":"A1:A",
+    "fontColor": "blue"
+  },
+  {
+    "range":"A1:1",
+    "backgroundColor": "rgb(0,0,100)",
+    "fontColor": "white",
+    "fontWeight": "bold"
+  },
+  {
+    "range":"C2",
+    "backgroundColor": "rgb(150,255,150)"
+  },
+  {
+    "range":"C24",
+    "backgroundColor": "rgb(200,200,255)"
+  },
+  {"range":"A1","value":""}
+]

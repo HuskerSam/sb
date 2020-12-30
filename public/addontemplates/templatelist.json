@@ -57,5 +57,12 @@
     "hint": "8 Band Song",
     "uniqueName": true,
     "description": "Use addon to process a song into 8 bands and this sheet will produce the animation data"
+  },
+  {
+    "name": "Audio Animation - 16 Bands",
+    "key": "Audio16Band",
+    "hint": "16 Band Song",
+    "uniqueName": true,
+    "description": "Use addon to process a song into 16 bands and this sheet will produce the animation data"
   }
 ]
