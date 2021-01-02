@@ -95,7 +95,7 @@ class cMacro {
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
       <div style="display:flex;flex-direction:row">
-        <select class="block-type-select" style="margin-bottom: 8px;width: 10em;margin-right:1em">
+        <select class="block-type-select" style="margin-bottom: 8px;margin-top:4px;width: 10em;margin-right:1em">
          <option selected>Scene</option>
          <option>Text and Shape</option>
          <option>Animated Line</option>
@@ -597,7 +597,7 @@ class cMacro {
         </div>
       </div>
     </div>
-    <div style="padding:4px;text-align:left;">
+    <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0;"><i class="material-icons">table_rows</i></button>
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
@@ -791,7 +791,7 @@ class cMacro {
         </table>
       </div>
     </div>
-    <div style="padding:4px;text-align:left;">
+    <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
@@ -937,7 +937,7 @@ class cMacro {
           </div>
         </div>
       </div>
-      <div style="padding:4px;text-align:left;">
+      <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
         <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
         <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
         <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>

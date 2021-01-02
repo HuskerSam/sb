@@ -59,7 +59,7 @@
       <select id="deploy_options_server_list" class="select_list" size="5">
         <option selected>Loading</option>
       </select>
-      <div class="select_flex_view" style="flex:1;">
+      <div class="select_flex_view" style="flex:none;">
         <div style="display:flex;flex-direction:row;padding:2px 8px">
           <div style="padding: 2px">Target</div>
           <input id="target_to_deploy" style="flex:1" type="text" />
@@ -68,12 +68,14 @@
           <div style="padding: 2px">Token</div>
           <input id="token_to_deploy" type="text" style="flex:1" />
         </div>
-        <div id="url_to_deploy" style="padding:.5em;"></div>
-        <div style="padding:4px">
+        <div style="text-align:center;">
           <button id="target_server_set_button" class="green">Set Server</button>
+          &nbsp;
+          &nbsp;
+          <div id="url_to_deploy" style="display:inline-block;"></div>
         </div>
         <div id="selected_server_details_div"></div>
-        <div id="assets_anchor"> loading...</div>
+        <div id="assets_anchor" style="margin-top:.5em;"> loading...</div>
       </div>
     </div>
     <div id="cloud_deploy" class="main_div_wrapper">
@@ -85,7 +87,7 @@
         <a id="selected_display_anchor" style="padding: 1px 8px;"></a>
         <a id="selected_edit_anchor" style="padding:1px;padding-right:16px;"></a>
       </div>
-      <div class="select_flex_view" style="padding-top:4px">
+      <div class="select_flex_view" style="padding-top:4px;flex:none;">
         <div id="project_display_view" style="display:none;height:inherit;flex:1">
           <iframe id="preview_panel"></iframe>
         </div>
@@ -97,7 +99,7 @@
             &nbsp;
             <button id="display_publish_list" class="blue">Deploy All</button>
           </div>
-          <textarea id="publish_results" style="flex:1;margin-top:8px"></textarea>
+          <textarea id="publish_results" style="flex:none;height:10em;margin-top:8px"></textarea>
         </div>
         <div id="project_upload_view" style="display:none;flex-direction: column;height:inherit;width: 100%">
           <div>
@@ -115,8 +117,7 @@
     <div id="template_view" class="main_div_wrapper" style="display:flex">
       <select id="circuit_template_select" class="select_list" size="5">
       </select>
-      <div class="select_flex_view">
-
+      <div class="select_flex_view" style="flex:none;">
         <div style="display:flex;flex-direction:row;padding: 8px;">
           <div style="padding: 0 4px;">Name </div>
           <input id="sheetname" style="flex:1;">
@@ -125,7 +126,7 @@
           <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
           <button id="create_layout_btn" class="green" style="flex:1">Create</button>
         </div>
-        <div id="template_description" style="padding: 8px"></div>
+        <div id="template_description" style="padding: 8px;height: 5em;overflow: hidden auto;"></div>
       </div>
     </div>
 
@@ -137,7 +138,7 @@
           <option value="material">Material</option>
         </select>
       </div>
-      <div id="macro_details_wrapper" style="flex:1;display:flex;flex-direction: column;" class="add_asset_template_panel">
+      <div id="macro_details_wrapper" style="flex:1;display:flex;flex-direction: column;border-top:solid 1px silver;" class="add_asset_template_panel">
       </div>
     </div>
     <div id="song_import_div" class="main_div_wrapper">
@@ -317,7 +318,7 @@
           let url = "https://docs.google.com/spreadsheets/d/";
           url += this.assetBookId.toString();
           let open = '<a target="_blank" href="' + url + '">Open</a>';
-          configDetailsHTML += '<hr>Main Spreadsheet Id &nbsp;' + open + '<br> <span style="font-size:.85em">' + this.assetBookId.toString() + '</span>';
+          configDetailsHTML += 'Main Spreadsheet Id &nbsp;' + open + '<br> <span style="font-size:.85em">' + this.assetBookId.toString() + '</span>';
         } else {
           configDetailsHTML += 'Main Spreadsheet Id<br> <span style="font-size:.85em">None</span>';
         }
@@ -353,9 +354,9 @@
         if (!url)
           url = 'https://' + id + '.web.app/';
         let navurl = url;
-        if (url.substring(0, 3) !== 'htt')
-          url = 'https://' + url;
-        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + navurl + '">' + url + '</a>';
+        if (navurl.substring(0, 3) !== 'htt')
+          navurl = 'https://' + navurl;
+        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + navurl + '">Open</a>';
       }
       async loadTemplateDetails() {
         let data = this.templateMap[this.circuit_template_select.value];
