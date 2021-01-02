@@ -24,8 +24,8 @@
     <div style="display:flex;flex-direction:row;flex:0">
       <select id="addon_display_view_select">
         <option value="cloud_target">Configuration</option>
-        <option value="cloud_deploy" selected>Catalog Projects</option>
-        <option value="template_view">Sheet Templates</option>
+        <option value="cloud_deploy">Catalog Projects</option>
+        <option value="template_view" selected>Sheet Templates</option>
         <option value="block_wizards">Block Wizards</option>
         <option value="song_import_div">Process Audio</option>
       </select>
@@ -76,7 +76,7 @@
         <div id="assets_anchor"> loading...</div>
       </div>
     </div>
-    <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
+    <div id="cloud_deploy" class="main_div_wrapper">
       <select id="project_deploy_select" class="select_list" size="5"></select>
       <div style="display:flex;flex-direction:row;">
         <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_deploy_view" checked>Details</label>
@@ -112,7 +112,7 @@
         </div>
       </div>
     </div>
-    <div id="template_view" class="main_div_wrapper">
+    <div id="template_view" class="main_div_wrapper" style="display:flex">
       <select id="circuit_template_select" class="select_list" size="5">
       </select>
       <div class="select_flex_view">
@@ -297,8 +297,6 @@
           this.defaultToken = this.configurationCSV[0]['Target Token'];
 
         this.projectsSheetName = 'Projects';
-        if (this.configurationCSV[0]['Catalog List'])
-          this.projectsSheetName = this.configurationCSV[0]['Catalog List'];
       }
       async loadDeployOptions() {
         let deployOptionsRange = "'Deploy Options'!A1:A2";
@@ -324,10 +322,6 @@
           configDetailsHTML += 'Main Spreadsheet Id<br> <span style="font-size:.85em">None</span>';
         }
 
-        let dtext = '';
-        if (this.configurationCSV[0]['Catalog List'] === '')
-          dtext = ' (default)';
-        configDetailsHTML += '<hr>Projects Sheet Name<br>' + this.projectsSheetName + dtext;
         this.assets_anchor.innerHTML = configDetailsHTML;
 
         let sIndex = this.deploy_options_server_list.selectedIndex;
@@ -486,6 +480,9 @@
         });
         this.templateMap = templateMap;
         this.circuit_template_select.innerHTML = html;
+
+        this.circuit_template_select.selectedIndex = 0;
+        this.loadTemplateDetails();
       }
       async loadImagePreview(new_url) {
         if (this.updatingImagePreview) {
@@ -592,7 +589,7 @@
             if (result !== 'success') {
               alert(result);
             } else {
-              if (this.add_to_publishlist.checked && baseSheetName)
+              if (this.add_to_publishlist.checked && (baseSheetName === sheetName))
                 await this.sheetsAddToProjectList(baseSheetName);
             }
 
@@ -604,7 +601,7 @@
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).AddRowToSheet('PublishList', [baseSheetName, '', "='" + baseSheetName + "'!C2"]);
+          }).AddRowToSheet('Projects', [baseSheetName, '', "='" + baseSheetName + "'!C2"]);
         });
       }
       async sheetsStoreSelectedProject() {

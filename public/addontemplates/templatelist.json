@@ -1,9 +1,7 @@
-[
-  {
+[{
     "name": "Complex Layout (2 sheets)",
     "key": "ComplexCircuit,ComplexRanges: Ranges",
     "hint": "My Display",
-    "uniqueName": true,
     "addToProjectList": true,
     "description": "Grocery Display with Products"
   },
@@ -12,7 +10,6 @@
     "key": "SimpleCircuit,SimpleRanges: Ranges",
     "hint": "My Display",
     "addToProjectList": true,
-    "uniqueName": true,
     "description": "Empty display with cameras and second sheet with range aggregration"
   },
   {
@@ -20,49 +17,42 @@
     "key": "Simple1SheetCircuit",
     "hint": "My Example",
     "addToProjectList": true,
-    "uniqueName": true,
     "description": "Scene with building, 2 walls<br>1 Sheet with aggregation cells at top<br>5 wine bottle meshes shown"
   },
   {
     "name": "Example Product List",
     "key": "ProductList",
     "hint": "Products",
-    "uniqueName": true,
     "description": "Product list with headers and various examples products"
   },
   {
-    "name": "Example Asset Ranges",
+    "name": "Asset Ranges (Initial)",
     "key": "AssetRanges",
-    "uniqueName": true,
     "hint": "Asset Ranges",
     "description": "Example of aggregating data from external Assets Spreadsheet"
   },
   {
-    "name": "Example Projects",
+    "name": "Projects (Initial)",
     "key": "ProjectList",
-    "uniqueName": false,
     "hint": "Projects",
     "description": "Default Projects List Example (all columns) - name is specified in Configuration Sheet"
   },
   {
-    "name": "Example Configuration",
+    "name": "Configuration (Initial)",
     "key": "ConfigurationDefault",
     "hint": "Configuration",
-    "uniqueName": false,
     "description": "Default [Configuration] sheet - should be named Configuration"
   },
   {
     "name": "Audio Animation - 8 Bands",
     "key": "Audio8Band",
     "hint": "8 Band Song",
-    "uniqueName": true,
     "description": "Use addon to process a song into 8 bands and this sheet will produce the animation data"
   },
   {
     "name": "Audio Animation - 16 Bands",
     "key": "Audio16Band",
     "hint": "16 Band Song",
-    "uniqueName": true,
     "description": "Use addon to process a song into 16 bands and this sheet will produce the animation data"
   }
 ]
