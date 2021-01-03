@@ -356,7 +356,7 @@
         let sIndex = this.deploy_options_server_list.selectedIndex;
         let listHTML = '';
         targets.forEach(t => {
-          let pid = t['project id'];
+          let pid = t['server'];
           if (!pid)
             pid = '';
           listHTML += '<option>' + pid + '</option>';
@@ -370,7 +370,7 @@
         if (index < 0)
           return;
         let t = this.deployTargets[index];
-        let id = t['project id'];
+        let id = t['server'];
         if (!id)
           id = '';
         let token = t['token'];
@@ -378,13 +378,15 @@
           token = '';
         this.target_to_deploy.value = id;
         this.token_to_deploy.value = token;
-        let url = t['public url'];
+        let url = t['url'];
         if (!url)
           url = 'https://' + id + '.web.app/';
         let navurl = url;
         if (navurl.substring(0, 3) !== 'htt')
           navurl = 'https://' + navurl;
         this.url_to_deploy.innerHTML = '<a target="_blank" href="' + navurl + '">Open</a>';
+
+        this.selected_server_details_div.innerHTML = t['description'];
       }
       async loadTemplateDetails() {
         let data = this.templateMap[this.circuit_template_select.value];

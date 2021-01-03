@@ -1,19 +1,29 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true,
+    ".read": false,
+    ".write": false,
     "project": {
+      ".read": "auth !== null",
+      ".write": "auth !== null",
       "$projectId": {
         "block": {
-            ".indexOn": ["title", "blockFlag"]
+          ".indexOn": ["title", "blockFlag"]
         },
         "blockchild": {
-            ".indexOn": ["parentKey", "animationIndex", "childType", "childName"]
+          ".indexOn": ["parentKey", "animationIndex", "childType", "childName"]
         },
         "frame": {
-            ".indexOn": ["parentKey"]
+          ".indexOn": ["parentKey"]
         }
       }
+    },
+    "projectTitles": {
+      ".read": "auth !== null",
+      ".write": "auth !== null"
+    },
+    "usersprofile": {
+      ".read": "auth !== null",
+      ".write": "auth !== null"
     }
   }
 }

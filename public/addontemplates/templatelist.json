@@ -21,6 +21,13 @@
     "description": "Example of aggregating data from external Assets Spreadsheet"
   },
   {
+    "name": "Deploy Options",
+    "key": "DeployOptions",
+    "hint": "Deploy Options",
+    "categories": "Setup",
+    "description": "list of servers stored in a sheet"
+  },
+  {
     "name": "Complex Layout (2 sheets)",
     "key": "ComplexCircuit,ComplexRanges: Ranges",
     "hint": "My Display",
