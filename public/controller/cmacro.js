@@ -95,7 +95,7 @@ class cMacro {
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
       <div style="display:flex;flex-direction:row">
-        <select class="block-type-select" style="margin-bottom: 8px;margin-top:4px;width: 10em;margin-right:1em">
+        <select class="block-type-select" style="margin-bottom: 8px;margin-top:4px;width: 9em;margin-right:.25em;font-size:.9em">
          <option selected>Scene</option>
          <option>Text and Shape</option>
          <option>Animated Line</option>
@@ -104,9 +104,8 @@ class cMacro {
          <option>Web Font</option>
         </select>
         <div class="scene_type_option_list" style="text-align:center;flex:10">
-          <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span>Skybox</span></label>
-          &nbsp;
-          <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span>Building</span></label>
+          <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span style="font-size:.85em">Skybox</span></label>
+          <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span style="font-size:.85em;">Building</span></label>
         </div>
       </div>
       <div class="create-2d-text-plane">
@@ -329,18 +328,15 @@ class cMacro {
           </tr>
           <tr>
             <td>Line 1</td>
-            <td><input type="text" class="texttext" value="My Message" /></td>
-            <td></td>
+            <td colspan="2"><input type="text" class="texttext" value="My Message" /></td>
           </tr>
           <tr>
             <td>Line 2</td>
-            <td><input type="text" class="texttextline2" /></td>
-            <td></td>
+            <td colspan="2"><input type="text" class="texttextline2" /></td>
           </tr>
           <tr>
             <td>Font</td>
-            <td><input type="text" class="textfontfamily"  list="fontfamilydatalist" /></td>
-            <td></td>
+            <td colspan="2"><input type="text" class="textfontfamily"  list="fontfamilydatalist" /></td>
           </tr>
           <tr>
             <td>Text Depth</td>
@@ -370,7 +366,7 @@ class cMacro {
             <td></td>
           </tr>
           <tr>
-            <td>Rotate 90 degress</td>
+            <td>Rotate 90°</td>
             <td><input type="checkbox" style="width:1.25em;line-height:1.5em" class="cylinderhorizontal" /></td>
             <td></td>
           </tr>

@@ -931,7 +931,7 @@ table.wizard_field_container td {
 
 table.wizard_field_container td:nth-child(1) {
   white-space: nowrap;
-  padding: 4px;
+  padding: 0 4px 0 0;
 }
 
 table.wizard_field_container td:nth-child(2) {

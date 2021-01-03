@@ -36,25 +36,7 @@
         <button id="reload_addon"><i class="material-icons">refresh</i></button>
       </div>
     </div>
-    <div id="help_viewer_panel" style="display:none;flex:.3;">
-      <b>Configuration</b><br>
-      &nbsp; Select a server and token for project deployment and image uploading<br>
-      &nbsp; View key fields from [Configuration] sheet
-      <br><br>
-      <b>Catalog Projects</b><br>
-      &nbsp; Select a project for image uploading or to deploy<br>
-      &nbsp; Deploy all projects<br>
-      <br>
-      <b>Sheet Templates</b><br>
-      &nbsp; Create sheets for catalogs and configuration
-      <br><br>
-      <b>Block Wizards</b><br>
-      &nbsp; Helpers to create lines, meshes and scenes<br>
-      <br>
-      <b>Audio Animation</b><br>
-      &nbsp; Tools to FFT audio files to generate animation frames<br>
-      <br>
-    </div>
+    <div id="help_viewer_panel" style="display:none;flex:.7;"></div>
     <div id="cloud_target" class="main_div_wrapper">
       <select id="deploy_options_server_list" class="select_list" size="5">
         <option selected>Loading</option>
@@ -69,8 +51,7 @@
           <input id="token_to_deploy" type="text" style="flex:1" />
         </div>
         <div style="text-align:center;">
-          <button id="target_server_set_button" class="green">Set Server</button>
-          &nbsp;
+          <button id="target_server_set_button" class="blue">Set Server</button>
           &nbsp;
           <div id="url_to_deploy" style="display:inline-block;"></div>
         </div>
@@ -80,51 +61,70 @@
     </div>
     <div id="cloud_deploy" class="main_div_wrapper">
       <select id="project_deploy_select" class="select_list" size="5"></select>
-      <div style="display:flex;flex-direction:row;">
-        <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_deploy_view" checked>Details</label>
-        <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_display_view">Display</label>
-        <label style="flex:1"><input type="radio" name="project_view_radio" id="rdo_project_upload_view">Upload</label>
-        <a id="selected_display_anchor" style="padding: 1px 8px;"></a>
-        <a id="selected_edit_anchor" style="padding:1px;padding-right:16px;"></a>
+      <div style="display:flex;flex-direction:row">
+        <select id="project_selected_options" style="flex:1;margin:8px">
+          <option data-view="project_deploy_view">Deployment</option>
+          <option data-view="project_display_view">Display</option>
+          <option data-view="project_upload_view">Upload File</option>
+          <option>View in App...</option>
+          <option>Edit in App...</option>
+        </select>
+        <button id="set_default_proj" class="blue" style="margin:8px;">Set Project</button>
       </div>
-      <div class="select_flex_view" style="padding-top:4px;flex:none;">
+      <div class="select_flex_view" style="padding-top:0px;flex:none;">
         <div id="project_display_view" style="display:none;height:inherit;flex:1">
           <iframe id="preview_panel"></iframe>
         </div>
         <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
-          <div style="padding: 0 8px">
-            <button id="set_default_proj" class="blue"><i class="material-icons">push_pin</i> Pin</button>
-            &nbsp;
-            <button id="display_publish_single" class="blue">Deploy</button>
-            &nbsp;
-            <button id="display_publish_list" class="blue">Deploy All</button>
+          <div>
+            <button id="display_publish_single" class="green">Deploy</button>
+            <button id="display_publish_list" class="green">Deploy All</button>
           </div>
           <textarea id="publish_results" style="flex:none;height:10em;margin-top:8px"></textarea>
         </div>
-        <div id="project_upload_view" style="display:none;flex-direction: column;height:inherit;width: 100%">
-          <div>
-            <label>Name <input id="file_upload_name"></label>
-            <button id="upload_file_cloud" class="blue">Upload File</button>
+        <div id="project_upload_view" style="display:none;flex-direction: column;height:10em;width: 100%">
+          <div style="display:flex;flex-direction:row">
+            <div style="padding: 4px 4px 0 8px;font-size:.75em;">Name</div>
+            <input id="file_upload_name" type="text" style="flex:1;margin-top:2px;">
+            <button id="upload_file_cloud" style="margin:0 8px 0 4px;"><i class="material-icons">cloud_upload</i></button>
             <input type="file" id="upload_file_input" style="display:none;">
           </div>
-          <div style="flex:1;overflow:hidden;">
+          <select id="upload_file_preview_select" style="margin:8px;">
+            <option>Image Preview</option>
+            <option>Audio Preview</option>
+            <option>Mesh Preview</option>
+          </select>
+          <div style="flex:1;overflow:hidden;" id="upload_file_img_preview">
             <img id="img_preview" style="max-width:100%;max-height:100%">
           </div>
+          <div style="flex:1;overflow:hidden;display:none;" id="upload_file_audio_preview">
+            <audio id="upload_file_audio_ctl" controls style="width:calc(100% - 32px)"></audio>
+          </div>
+          <div style="flex:1;overflow:hidden;display:none;" id="upload_file_mesh_preview">
+            Preview not available in addon
+          </div>
+
           <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
         </div>
       </div>
     </div>
     <div id="template_view" class="main_div_wrapper" style="display:flex">
-      <select id="circuit_template_select" class="select_list" size="5">
+      <select id="template_filter_select" style="margin:8px;margin-bottom:0">
+        <option>All</option>
+        <option>Setup</option>
+        <option>Layouts</option>
+        <option>Blocks</option>
+        <option>Other</option>
+      </select>
+      <select id="circuit_template_select" class="select_list" size="5" style="margin-top:0">
       </select>
       <div class="select_flex_view" style="flex:none;">
-        <div style="display:flex;flex-direction:row;padding: 8px;">
-          <div style="padding: 0 4px;">Name </div>
-          <input id="sheetname" style="flex:1;">
-        </div>
         <div style="display:flex;flex-direction:row;padding: 0 8px;">
+          <input id="sheetname" style="flex:1;">
+          <button id="create_layout_btn" class="green" style="margin-left:8px">Create</button>
+        </div>
+        <div style="padding-top: 4px;">
           <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
-          <button id="create_layout_btn" class="green" style="flex:1">Create</button>
         </div>
         <div id="template_description" style="padding: 8px;height: 5em;overflow: hidden auto;"></div>
       </div>
@@ -142,17 +142,24 @@
       </div>
     </div>
     <div id="song_import_div" class="main_div_wrapper">
-      <table class="wizard_field_container" style="padding: 0 8px;">
+      <table class="wizard_field_container" style="padding: 8px 8px 0 8px">
+        <tr>
+          <td colspan="2">WAV Audio File<br>
+            <input type="file" id="audio_file" style="width:90%" /></td>
+          <td></td>
+        </tr>
         <tr>
           <td>seconds to sample<br>(empty for length)</td>
           <td><input id="seconds_to_sample" type="text" /></td>
+          <td></td>
         </tr>
         <tr>
-          <td>Frequency (samples/sec)</td>
+          <td>Frequency<br>(samples/sec)</td>
           <td><input id="freq_samples_to_second" type="text" value="10" /></td>
+          <td></td>
         </tr>
         <tr>
-          <td>Number of result bands</td>
+          <td># of result bands<br>(sample rate / #)</td>
           <td> <select id="bands_to_combine">
               <option value="1">256</option>
               <option value="2">128</option>
@@ -161,22 +168,21 @@
               <option value="16" selected>16</option>
               <option value="32">8</option>
             </select></td>
+          <td></td>
         </tr>
         <tr>
-          <td>WAV Audio File</td>
-          <td><input type="file" id="audio_file" /></td>
+          <td colspan="3"><audio id="audio" controls style="width:calc(100% - 16px)"></audio></td>
         </tr>
         <tr>
-          <td colspan="2"><audio id="audio" controls style="width:calc(100% - 16px)"></audio></td>
-        </tr>
-        <tr>
-          <td colspan="2">
+          <td colspan="3">
             <label><input id="song_detail_data_rdo" name="song_data_display" type="radio" checked> Details</label>
             <label><input id="song_raw_data_rdo" name="song_data_display" type="radio"> Data</label>
           </td>
         </tr>
       </table>
-      <div id="song_len_sec" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;text-align:left;"></div>
+      <div id="song_len_sec" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;text-align:left;">
+        No song file selected
+      </div>
       <div id="song_raw_data" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;word-break:break-all;display:none;"></div>
       <div style="padding:4px;text-align:left;">
         <button id="copy_song_data_to_clipboard" style="margin-right:0;"><i class="material-icons">content_copy</i></button>
@@ -189,7 +195,6 @@
       constructor() {
         this.initDom();
         this.initSheetBasedData();
-
         this.loadTemplateList();
         this.app = new cAppDefaults();
         this.app.jsonLibPrefix = 'https://handtop.com';
@@ -213,21 +218,29 @@
           this.loadDeployOptions(),
           this.loadProjectSelectList()
         ]);
+        if (!this.defaultProjectTarget || !this.defaultServerTarget) {
+          this.template_filter_select.value = 'Setup';
+        } else {
+          this.template_filter_select.value = 'Layout';
+        }
+        this.loadTemplateList();
+
         this.clearBusy();
       }
       initDom() {
         let dom_id = [
           'publish_results', 'target_to_deploy', 'token_to_deploy', 'url_to_deploy', 'project_deploy_select',
-          'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'selected_display_anchor',
-          'selected_edit_anchor', 'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
+          'deploy_options_server_list', 'display_publish_list', 'assets_anchor',
+          'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel',
           'sheetname', 'circuit_template_select', 'help_viewer_panel', 'block_wizard_select_wrapper',
           'create_layout_btn', 'add_to_publishlist', 'template_description', 'macro_details_wrapper', 'wizard_choices',
-          'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second',
+          'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second', 'template_filter_select',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
-          'rdo_project_display_view', 'rdo_project_deploy_view', 'rdo_project_upload_view', 'show_help_panel_btn',
-          'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'song_len_sec', 'copy_song_data_to_clipboard'
+          'show_help_panel_btn', 'project_selected_options', 'upload_file_preview_select', 'upload_file_img_preview', 'upload_file_audio_preview',
+          'upload_file_mesh_preview', 'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'upload_file_audio_ctl',
+          'song_len_sec', 'copy_song_data_to_clipboard'
         ];
 
         dom_id.forEach(ctl => {
@@ -238,9 +251,7 @@
 
         this.display_publish_list.addEventListener('click', e => this.cloudDeployProjects('all'));
         this.project_deploy_select.addEventListener('input', e => this.loadProjectView());
-        this.rdo_project_display_view.addEventListener('input', e => this.loadProjectView());
-        this.rdo_project_deploy_view.addEventListener('input', e => this.loadProjectView());
-        this.rdo_project_upload_view.addEventListener('input', e => this.loadProjectView());
+        this.project_selected_options.addEventListener('input', e => this.loadProjectView());
         this.deploy_options_server_list.addEventListener('input', e => this.loadServerDetails());
         this.file_upload_name.addEventListener('input', e => this.loadImagePreview());
         this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
@@ -249,12 +260,18 @@
         this.set_default_proj.addEventListener('click', e => this.sheetsStoreSelectedProject());
         this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
         this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails());
+        this.template_filter_select.addEventListener('input', e => this.loadTemplateList());
         this.create_layout_btn.addEventListener('click', e => this.templateCreateSheets());
         this.reload_addon.addEventListener('click', e => this.initSheetBasedData());
         this.target_server_set_button.addEventListener('click', e => this.cloudDeploySetServer());
+        this.upload_file_preview_select.addEventListener('input', e => this.cloudDeployUpdateFilePreview());
 
         this.wizard_choices.addEventListener('change', e => this.loadBlockWizard());
         this.audio_file.addEventListener('change', e => this.audioProcessFileSelected());
+        this.seconds_to_sample.addEventListener('input', e => this.audioProcessUpdateData());
+        this.freq_samples_to_second.addEventListener('input', e => this.audioProcessUpdateData());
+        this.bands_to_combine.addEventListener('input', e => this.audioProcessUpdateData());
+
 
         this.show_help_panel_btn.addEventListener('click', e => this.helpPanelToggle());
 
@@ -268,29 +285,37 @@
           tInput.setSelectionRange(0, 99999);
           document.execCommand("copy");
           tInput.remove();
-         });
+        });
       }
 
       async loadConfiguration() {
         this.configurationCSV = await this.sheetsJSONforSheetCSV('Configuration');
         if (!this.configurationCSV || this.configurationCSV.length === 0)
           this.configurationCSV = [{}];
-        this.assetBookId = this.configurationCSV[0]['Assets Doc ID'];
+        this.mainSpreadsheetID = this.configurationCSV[0]['Main Spreadsheet ID'];
 
         this.defaultServerTarget = '';
         if (this.configurationCSV[0]['Target Server']) {
           this.defaultServerTarget = this.configurationCSV[0]['Target Server'];
+          this.target_server_set_button.classList.add('blue');
+          this.target_server_set_button.classList.remove('red');
           this.selected_target_span.innerHTML = this.defaultServerTarget;
         } else {
-          this.selected_target_span.innerHTML = 'No Server Target';
+          this.target_server_set_button.classList.add('red');
+          this.target_server_set_button.classList.remove('blue');
+          this.selected_target_span.innerHTML = '<span style="color:red;font-size:1em">No Server Target</span>';
         }
 
         this.defaultProjectTarget = '';
         if (this.configurationCSV[0]['Target Project']) {
           this.defaultProjectTarget = this.configurationCSV[0]['Target Project'];
+          this.set_default_proj.classList.remove('red');
+          this.set_default_proj.classList.add('blue');
           this.selected_project_span.innerHTML = this.defaultProjectTarget;
         } else {
-          this.selected_project_span.innerHTML = 'No Project Target';
+          this.set_default_proj.classList.add('red');
+          this.set_default_proj.classList.remove('blue');
+          this.selected_project_span.innerHTML = '<span style="color:red;font-size:1em">No Project Target</span>';
         }
 
         this.defaultToken = '';
@@ -302,25 +327,28 @@
       async loadDeployOptions() {
         let deployOptionsRange = "'Deploy Options'!A1:A2";
 
-        let rangeString = this.assetBookId + "||||" + deployOptionsRange;
-        if (!this.assetBookId)
+        let rangeString = this.mainSpreadsheetID + "||||" + deployOptionsRange;
+        if (!this.mainSpreadsheetID)
           rangeString = deployOptionsRange;
 
         let deploys = await this.sheetsJSONforRangeListCSV([rangeString]);
         let targetRange = deploys[0].deployrange;
-        let assetRString = this.assetBookId + "||||'Deploy Options'!" + targetRange;
-        if (!this.assetBookId)
+        let assetRString = this.mainSpreadsheetID + "||||'Deploy Options'!" + targetRange;
+        if (!this.mainSpreadsheetID)
           assetRString = "'Deploy Options'!" + targetRange;
         let targets = await this.sheetsJSONforRangeListCSV([assetRString]);
+        if (!targets || !Array.isArray(targets))
+          targets = [];
+
         this.deployTargets = targets;
         let configDetailsHTML = '';
-        if (this.assetBookId) {
+        if (this.mainSpreadsheetID) {
           let url = "https://docs.google.com/spreadsheets/d/";
-          url += this.assetBookId.toString();
+          url += this.mainSpreadsheetID.toString();
           let open = '<a target="_blank" href="' + url + '">Open</a>';
-          configDetailsHTML += 'Main Spreadsheet Id &nbsp;' + open + '<br> <span style="font-size:.85em">' + this.assetBookId.toString() + '</span>';
+          configDetailsHTML += 'Main Spreadsheet Id &nbsp;' + open + '<br> <span style="font-size:.65em">' + this.mainSpreadsheetID.toString() + '</span>';
         } else {
-          configDetailsHTML += 'Main Spreadsheet Id<br> <span style="font-size:.85em">None</span>';
+          configDetailsHTML += 'Main Spreadsheet Id<br> <span style="font-size:.65em">None</span>';
         }
 
         this.assets_anchor.innerHTML = configDetailsHTML;
@@ -445,6 +473,18 @@
         let wrappers = document.body.querySelectorAll('.main_div_wrapper');
         wrappers.forEach(w => w.style.display = 'none');
 
+        if (this.addon_display_view_select.value === 'song_import_div') {
+          this.app.updateHelpView('processaudio', this.help_viewer_panel);
+        } else if (this.addon_display_view_select.value === 'cloud_deploy') {
+          this.app.updateHelpView('addonprojects', this.help_viewer_panel);
+        } else if (this.addon_display_view_select.value === 'cloud_target') {
+          this.app.updateHelpView('addonconfiguration', this.help_viewer_panel);
+        } else if (this.addon_display_view_select.value === 'template_view') {
+          this.app.updateHelpView('addontemplates', this.help_viewer_panel);
+        } else if (this.addon_display_view_select.value === 'block_wizards') {
+          this.app.updateHelpView(this.wizard_choices.value, this.help_viewer_panel);
+        }
+
         if (this.addon_display_view_select.value !== 'cloud_deploy')
           this.preview_panel.setAttribute('src', '');
         else
@@ -457,30 +497,50 @@
         return;
       }
       async loadProjectPreview() {
-        if (this.rdo_project_display_view.checked) {
-          let src = this.selected_display_anchor.getAttribute('href');
-          this.preview_panel.setAttribute('src', src);
+        if (this.selectedProjectView === 1) {
+          this.preview_panel.setAttribute('src', this.projectViewURL);
         } else {
           this.preview_panel.setAttribute('src', '');
         }
         return null;
       }
       async loadTemplateList() {
-        let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
-          method: "get"
-        });
-        this.templateListResults = await genResponse.json();
+        if (!this.templateListResults) {
+          let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
+            method: "get"
+          });
+          this.templateListResults = await genResponse.json();
+        }
 
         let html = '';
+        let selectedFilter = this.template_filter_select.value;
+        if (!selectedFilter)
+          selectedFilter = 'All';
         let selected = 'selected';
         let templateMap = {};
+        let categories = [];
         this.templateListResults.forEach(i => {
-          html += '<option value="' + i.key + '" ${selected}>' + i.name + '</option>';
+          let cats = i.categories;
+          if (!cats)
+            cats = '';
+          cats = cats.split(',');
+          if (selectedFilter === 'All' || cats.indexOf(selectedFilter) !== -1) {
+            html += '<option value="' + i.key + '" ${selected}>' + i.name + '</option>';
+          }
           selected = '';
           templateMap[i.key] = i;
+          cats.forEach(cat => {
+            if (categories.indexOf(cat) === -1 && cat !== '')
+              categories.push(cat);
+          });
         });
         this.templateMap = templateMap;
         this.circuit_template_select.innerHTML = html;
+
+        let filter_options = '<option>All</option>';
+        categories.forEach(cat => filter_options += '<option>' + cat + '</option>');
+        this.template_filter_select.innerHTML = filter_options;
+        this.template_filter_select.value = selectedFilter;
 
         this.circuit_template_select.selectedIndex = 0;
         this.loadTemplateDetails();
@@ -534,27 +594,44 @@
           signed_url += '&randomstuff=' + Number(new Date()).toString();
         this.img_preview.setAttribute('src', signed_url);
         this.img_preview_link.setAttribute('href', signed_url);
+        this.upload_file_audio_ctl.src = signed_url;
         this.img_preview_link.innerHTML = 'Open in new Window';
         this.updatingImagePreview = false;
       }
       async loadProjectView() {
-        this.loadProjectPreview();
-        this.project_deploy_view.style.display = this.rdo_project_deploy_view.checked ? 'flex' : 'none';
-        this.project_upload_view.style.display = this.rdo_project_upload_view.checked ? 'flex' : 'none';
-        this.project_display_view.style.display = this.rdo_project_display_view.checked ? '' : 'none';
+        if (!this.selectedProjectView)
+          this.selectedProjectView = 0;
 
         let selectedProject = this.project_deploy_select.value;
         let pid = this.defaultServerTarget;
-        let link = 'https://' + pid + '.web.app/display/?name=' + selectedProject;
-        this.selected_display_anchor.setAttribute('href', link);
-        this.selected_display_anchor.innerHTML = 'View';
-        this.selected_display_anchor.setAttribute('target', "_blank");
+        this.projectViewURL = 'https://' + pid + '.web.app/display/?name=' + selectedProject;
+        this.projectEditURL = 'https://' + pid + '.web.app/asset/?name=' + selectedProject;
 
-        let editLink = 'https://' + pid + '.web.app/asset/?name=' + selectedProject;
-        this.selected_edit_anchor.setAttribute('href', editLink);
-        this.selected_edit_anchor.innerHTML = 'Edit';
-        this.selected_edit_anchor.setAttribute('target', "_blank");
+        if (this.project_selected_options.selectedIndex === 3) {
+          let a = document.createElement('a');
+          a.setAttribute('href', this.projectViewURL);
+          a.setAttribute('target', '_blank');
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+        if (this.project_selected_options.selectedIndex === 4) {
+          let a = document.createElement('a');
+          a.setAttribute('href', this.projectEditURL);
+          a.setAttribute('target', '_blank');
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
 
+        if (this.project_selected_options.selectedIndex > 2)
+          this.project_selected_options.selectedIndex = this.selectedProjectView;
+        this.selectedProjectView = this.project_selected_options.selectedIndex;
+        this.loadProjectPreview();
+
+        this.project_deploy_view.style.display = (this.selectedProjectView === 0) ? 'flex' : 'none';
+        this.project_upload_view.style.display = (this.selectedProjectView === 2) ? 'flex' : 'none';
+        this.project_display_view.style.display = (this.selectedProjectView === 1) ? '' : 'none';
 
         this.loadImagePreview();
       }
@@ -635,6 +712,22 @@
         });
       }
 
+      async cloudDeployUpdateFilePreview() {
+        let v = this.upload_file_preview_select.selectedIndex;
+        this.upload_file_img_preview.style.display = 'none';
+        this.upload_file_mesh_preview.style.display = 'none';
+        this.upload_file_audio_preview.style.display = 'none';
+        if (v === 0) {
+          this.upload_file_img_preview.style.display = '';
+        } else if (v === 1) {
+          this.upload_file_audio_preview.style.display = '';
+        } else {
+          this.upload_file_mesh_preview.style.display = '';
+        }
+
+        if (v !== 1)
+          this.upload_file_audio_ctl.pause();
+      }
       async cloudDeploySetServer() {
         this.setBusy();
         let token = this.token_to_deploy.value;
@@ -895,6 +988,7 @@
         let body = new FormData();
         body.append('file', this.upload_file_input.files[0]);
 
+        this.upload_file_cloud.classList.add('green');
         let genResponse = await fetch(url, {
           method: "post",
           body
@@ -909,21 +1003,52 @@
           console.log(e, genResults);
         }
         console.log(r);
+
         if (r.success)
           if (r.result_msg.success) {
             this.loadImagePreview(r.result_msg.signed_url);
             this.upload_file_input.value = '';
+            this.upload_file_cloud.classList.remove('green');
             return r;
           }
         this.loadImagePreview('');
 
         this.upload_file_input.value = '';
+        this.upload_file_cloud.classList.add('red');
         alert('upload did not complete');
         return r;
       }
       async audioProcessFileSelected() {
+        let fileBlobToArrayBuffer = (file) => {
+          return new Promise((resolve, reject) => {
+            let reader = new FileReader();
+
+            reader.onload = () => {
+              let array = new Uint8Array(reader.result);
+              resolve(array);
+            };
+
+            reader.onerror = (err) => {
+              console.log('File Reader Error', err);
+              reject(err);
+            };
+
+            reader.readAsArrayBuffer(file);
+          });
+        }
+        this.audioProcessSongBytes = await fileBlobToArrayBuffer(this.audio_file.files[0]);
+        this.audio.src = URL.createObjectURL(this.audio_file.files[0]);
+
+        return this.audioProcessUpdateData();
+      }
+      async audioProcessUpdateData() {
         this.song_raw_data.innerHTML = '';
         this.song_len_sec.innerHTML = '';
+
+        if (!this.audioProcessSongBytes) {
+          this.song_len_sec.innerHTML = 'No audio file selected';
+          return;
+        }
 
         let resampleData = (arrayIn, secondsLength, samplesPerSecondOut) => {
           let outArray = [];
@@ -1009,24 +1134,7 @@
 
           return samples;
         };
-        let fileBlobToArrayBuffer = (file) => {
-          return new Promise((resolve, reject) => {
-            let reader = new FileReader();
-
-            reader.onload = () => {
-              let array = new Uint8Array(reader.result);
-              resolve(array);
-            };
-
-            reader.onerror = (err) => {
-              console.log('File Reader Error', err);
-              reject(err);
-            };
-
-            reader.readAsArrayBuffer(file);
-          });
-        }
-        let song_bytes = await fileBlobToArrayBuffer(this.audio_file.files[0]);
+        let song_bytes = this.audioProcessSongBytes;
         let html_out = '';
         if (song_bytes) {
           let riffTest = new TextDecoder().decode(song_bytes.slice(0, 4));
@@ -1101,7 +1209,7 @@
           }
           html_out += 'length: ' + this.seconds.toFixed(1) + 's<br>';
 
-          let v = this.sampleRate / Number(this.bands_to_combine.value);
+          let v = this.sampleRate * Number(this.bands_to_combine.value);
           html_out += 'freq per band ' + v + 'hz<br>';
 
           document.getElementById('song_len_sec').innerHTML = html_out;
@@ -1109,7 +1217,6 @@
           //alert('no song');
           return;
         }
-        this.audio.src = URL.createObjectURL(this.audio_file.files[0]);
 
         let audio_loaded = async () => {
           return new Promise((resolve, reject) => {
@@ -1172,7 +1279,7 @@
         } else {
           this.helpPanelVisible = true;
           this.help_viewer_panel.style.display = '';
-          this.show_help_panel_btn.style.background = 'rgb(100,100,100)';
+          this.show_help_panel_btn.style.background = 'rgb(255,200,100)';
           this.show_help_panel_btn.style.color = 'white';
         }
       }
@@ -1267,6 +1374,7 @@
 
     select.select_list option {
       padding: 4px;
+      font-size: 16px;
     }
 
     .main_div_wrapper {
@@ -1279,28 +1387,30 @@
 
     .target_header {
       width: 100%;
-      padding: 0 8px;
+      padding: 4px 8px;
     }
 
     .target_header span {
       white-space: nowrap;
-      font-size: .8em;
       float: right;
       clear: right;
+      color: blue;
     }
 
     #selected_target_span {
       float: left;
       text-align: left;
-    }
-
-    select {
-      font-size: 11px;
-      border-radius: 0;
+      color: green;
     }
 
     * {
-      font-size: 12px;
+      font-size: 16px;
+    }
+
+    select,
+    select option {
+      font-size: 16px;
+      border-radius: 0;
     }
 
     button {
@@ -1316,7 +1426,6 @@
     #addon_display_view_select {
       flex: 1;
       margin-left: 8px;
-      font-size: 14px;
     }
 
     #project_display_view {
@@ -1329,9 +1438,10 @@
     }
 
     #help_viewer_panel {
-      border: solid 1px silver;
-      overflow-y: auto;
-      margin: 8px 8px 0 8px;
+      border: solid 8px rgb(255,200,100);
+      overflow: hidden auto;
+      text-align: left;
+      padding: 0;
     }
   </style>
 
