@@ -109,7 +109,7 @@
       </div>
     </div>
     <div id="template_view" class="main_div_wrapper" style="display:flex">
-      <select id="template_filter_select" style="margin:8px;margin-bottom:0">
+      <select id="template_filter_select" style="margin:8px;">
         <option>All</option>
         <option>Setup</option>
         <option>Layouts</option>
@@ -123,8 +123,9 @@
           <input id="sheetname" style="flex:1;">
           <button id="create_layout_btn" class="green" style="margin-left:8px">Create</button>
         </div>
-        <div style="padding-top: 4px;">
+        <div style="padding-top: 4px;" id="publishlist_add_chk_wrapper">
           <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
+          <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
         </div>
         <div id="template_description" style="padding: 8px;height: 5em;overflow: hidden auto;"></div>
       </div>
@@ -234,7 +235,7 @@
           'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel',
           'sheetname', 'circuit_template_select', 'help_viewer_panel', 'block_wizard_select_wrapper',
-          'create_layout_btn', 'add_to_publishlist', 'template_description', 'macro_details_wrapper', 'wizard_choices',
+          'create_layout_btn', 'add_to_publishlist', 'set_to_defaultproject', 'publishlist_add_chk_wrapper', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second', 'template_filter_select',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
@@ -400,10 +401,15 @@
           this.template_description.innerHTML = '';
         }
 
-        if (data.addToProjectList)
+        if (data.categories.indexOf('Layout') !== -1) {
           this.add_to_publishlist.checked = true;
+          this.set_to_defaultproject.checked = true;
+          this.publishlist_add_chk_wrapper.style.display = '';
+        }
         else {
           this.add_to_publishlist.checked = false;
+          this.set_to_defaultproject.checked = false;
+          this.publishlist_add_chk_wrapper.style.display = 'none';
         }
         return;
       }
@@ -665,14 +671,16 @@
         let genResults = JSON.parse(genText);
         return new Promise(async (resolve, reject) => {
           google.script.run.withSuccessHandler(async (result) => {
-            this.create_layout_btn.innerHTML = 'Create Sheet';
             if (result !== 'success') {
               alert(result);
             } else {
               if (this.add_to_publishlist.checked && (baseSheetName === sheetName))
                 await this.sheetsAddToProjectList(baseSheetName);
+              if (this.set_to_defaultproject.checked && (baseSheetName === sheetName))
+                await this.sheetsStoreSelectedProject(sheetName);
             }
 
+            this.create_layout_btn.innerHTML = 'Create Sheet';
             resolve(result);
           }).createSheetFromTemplate(sheetName, genResults);
         });
@@ -681,12 +689,13 @@
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).AddRowToSheet('Projects', [baseSheetName, '', "='" + baseSheetName + "'!C2"]);
+          }).AddRowToProjectList(baseSheetName, '=\'' + baseSheetName + "'!C2", '', '', '');
         });
       }
-      async sheetsStoreSelectedProject() {
+      async sheetsStoreSelectedProject(project) {
         this.setBusy();
-        let project = this.project_deploy_select.value;
+        if (!project)
+          project = this.project_deploy_select.value;
         await this.sheetsStoreCSVValue('Configuration', 1, 'Target Project', project);
         this.initSheetBasedData();
       }

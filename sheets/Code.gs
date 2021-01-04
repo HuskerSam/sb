@@ -110,10 +110,21 @@ function SetCSVSheetValue(sheetName, rowIndex, field, value) {
     sheet.getRange(colSymbol + rowNumber).setValue(value);
 }
 
-function AddRowToSheet(name, cols = []) {
+function AddRowToProjectList(name, circuitranges, assetranges, productssheet, flags) {
   let activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  let publishConfig = activeSpreadsheet.getSheetByName(name);
-  publishConfig.appendRow(cols);
+  let sheet = activeSpreadsheet.getSheetByName('Projects');
+  let row = -1;
+  if (!sheet) {
+    row = 1;
+  } else {
+    row = sheet.getLastRow();
+  }
+
+  SetCSVSheetValue('Projects', row, 'name', name);
+  SetCSVSheetValue('Projects', row, 'assetranges', assetranges);
+  SetCSVSheetValue('Projects', row, 'circuitranges', circuitranges);
+  SetCSVSheetValue('Projects', row, 'catalogsheet', productssheet);
+  SetCSVSheetValue('Projects', row, 'flags', flags);
 }
 
 function JSONArrayMax(jsonArray) {
