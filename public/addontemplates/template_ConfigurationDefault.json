@@ -1,5 +1,5 @@
 [
-{"range":"A1","value":"Main Spreadsheet ID","formula":"","fontWeight":""},
+{"range":"A1","value":"Parent Spreadsheet","formula":"","fontWeight":""},
 {"range":"A2","value":"12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE","formula":"","fontWeight":""},
 {"range":"B1","value":"Target Server","formula":"","fontWeight":""},
 {"range":"B1","value":"Target Token","formula":"","fontWeight":""},

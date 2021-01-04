@@ -24,8 +24,8 @@
     <div style="display:flex;flex-direction:row;flex:0">
       <select id="addon_display_view_select">
         <option value="cloud_target">Configuration</option>
-        <option value="cloud_deploy">Catalog Projects</option>
-        <option value="template_view" selected>Sheet Templates</option>
+        <option value="cloud_deploy" selected>Catalog Projects</option>
+        <option value="template_view">Sheet Templates</option>
         <option value="block_wizards">Block Wizards</option>
         <option value="song_import_div">Process Audio</option>
       </select>
@@ -38,9 +38,7 @@
     </div>
     <div id="help_viewer_panel" style="display:none;flex:.7;"></div>
     <div id="cloud_target" class="main_div_wrapper">
-      <select id="deploy_options_server_list" class="select_list" size="5">
-        <option selected>Loading</option>
-      </select>
+      <select id="deploy_options_server_list" class="select_list" size="5"></select>
       <div class="select_flex_view" style="flex:none;">
         <div style="display:flex;flex-direction:row;padding:2px 8px">
           <div style="padding: 2px">Target</div>
@@ -59,7 +57,7 @@
         <div id="assets_anchor" style="margin-top:.5em;"> loading...</div>
       </div>
     </div>
-    <div id="cloud_deploy" class="main_div_wrapper">
+    <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
       <select id="project_deploy_select" class="select_list" size="5"></select>
       <div style="display:flex;flex-direction:row">
         <select id="project_selected_options" style="flex:1;margin:8px">
@@ -108,7 +106,7 @@
         </div>
       </div>
     </div>
-    <div id="template_view" class="main_div_wrapper" style="display:flex">
+    <div id="template_view" class="main_div_wrapper">
       <select id="template_filter_select" style="margin:8px;">
         <option>All</option>
         <option>Setup</option>
@@ -130,7 +128,6 @@
         <div id="template_description" style="padding: 8px;height: 5em;overflow: hidden auto;"></div>
       </div>
     </div>
-
     <div id="block_wizards" class="main_div_wrapper">
       <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:8px;">
         <select id="wizard_choices" style="margin-right: 8px;">
@@ -192,7 +189,7 @@
   </div>
 
   <script>
-    class PublishWeb {
+    class AddonSidePanelApp {
       constructor() {
         this.initDom();
         this.initSheetBasedData();
@@ -293,7 +290,7 @@
         this.configurationCSV = await this.sheetsJSONforSheetCSV('Configuration');
         if (!this.configurationCSV || this.configurationCSV.length === 0)
           this.configurationCSV = [{}];
-        this.mainSpreadsheetID = this.configurationCSV[0]['Main Spreadsheet ID'];
+        this.mainSpreadsheetID = this.configurationCSV[0]['Parent Spreadsheet'];
 
         this.defaultServerTarget = '';
         if (this.configurationCSV[0]['Target Server']) {
@@ -353,22 +350,27 @@
           let url = "https://docs.google.com/spreadsheets/d/";
           url += this.mainSpreadsheetID.toString();
           let open = '<a target="_blank" href="' + url + '">Open</a>';
-          configDetailsHTML += 'Main Spreadsheet Id &nbsp;' + open + '<br> <span style="font-size:.65em">' + this.mainSpreadsheetID.toString() + '</span>';
+          configDetailsHTML += 'Parent Spreadsheet &nbsp;' + open + '<br> <span style="font-size:.65em">' + this.mainSpreadsheetID.toString() + '</span>';
         } else {
-          configDetailsHTML += 'Main Spreadsheet Id<br> <span style="font-size:.65em">None</span>';
+          configDetailsHTML += 'Parent Spreadsheet<br> <span style="font-size:.65em">None</span>';
         }
 
         this.assets_anchor.innerHTML = configDetailsHTML;
 
         let sIndex = this.deploy_options_server_list.selectedIndex;
+        let sDefaultIndex = -1;
         let listHTML = '';
-        targets.forEach(t => {
+        targets.forEach((t, index) => {
           let pid = t['server'];
-          if (!pid)
-            pid = '';
-          listHTML += '<option>' + pid + '</option>';
+          if (pid) {
+            if (pid === this.defaultServerTarget) {
+              sDefaultIndex = index;
+            }
+            listHTML += '<option>' + pid + '</option>';
+          }
         });
         this.deploy_options_server_list.innerHTML = listHTML;
+        if (sIndex === -1) sIndex = sDefaultIndex;
         this.deploy_options_server_list.selectedIndex = (sIndex === -1) ? 0 : sIndex;
         this.loadServerDetails();
       }
@@ -656,11 +658,15 @@
         let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName);
         this.publistList = publishList;
         let linkListHTML = '';
-        let pid = this.defaultServerTarget;
-        publishList.forEach(t => {
+        let defaultProject = this.defaultProjectTarget;
+        let defaultIndex = -1;
+        publishList.forEach((t, index) => {
           linkListHTML += '<option>' + t['name'] + '</option>';
+          if (defaultProject === t['name'])
+            defaultIndex = index;
         });
         this.project_deploy_select.innerHTML = linkListHTML;
+        if (sel === -1)  sel = defaultIndex;
         this.project_deploy_select.selectedIndex = sel > -1 ? sel : 0;
         this.loadProjectView();
       }
@@ -779,12 +785,12 @@
 
         return Promise.all(promises);
       }
-      async cloudDeployProjects(set) {
+      async cloudDeployProjects(filter) {
         if (this.busy)
           return;
 
         let singleIndex = null;
-        if (set === 'selected') {
+        if (filter === 'selected') {
           singleIndex = this.project_deploy_select.selectedIndex;
         }
         this.display_publish_list.innerHTML = 'Working...';
@@ -982,7 +988,7 @@
 
 
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
-          let result = await this.publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet);
+          let result = await publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet);
           console.log(c, result);
         }
         this.busy = false;
@@ -1304,7 +1310,7 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', e => window.publishWebApp = new PublishWeb());
+    document.addEventListener('DOMContentLoaded', e => window.HandtopApp = new AddonSidePanelApp());
   </script>
 
   <style>

@@ -924,6 +924,10 @@ div.imagebackgrounddisplay {
   text-align: left;
 }
 
+table.wizard_field_container {
+  line-height: 1em;
+}
+
 table.wizard_field_container td {
   padding: 0;
   border: none;
@@ -932,6 +936,11 @@ table.wizard_field_container td {
 table.wizard_field_container td:nth-child(1) {
   white-space: nowrap;
   padding: 0 4px 0 0;
+  font-size: .75em;
+}
+
+table.wizard_field_container td:nth-child(1) b {
+   font-size: inherit;
 }
 
 table.wizard_field_container td:nth-child(2) {

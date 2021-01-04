@@ -160,9 +160,8 @@ class cMacro {
       <div class="web-font-block-add-options" style="display:none;">
         <table class="wizard_field_container">
           <tr>
-            <td>Web Font</td>
-            <td><input type="text" class="genericblockdata webfontname" list="webfontsuggestionlist" style="font-size:2em;padding: 8px" /></td>
-            <td></td>
+            <td colspan="3" style="text-align:center">Web Font<br>
+              <input type="text" class="genericblockdata webfontname" list="webfontsuggestionlist" style="font-size:2.25em;padding: 8px;width:100%;height:60px;" /></td>
           </tr>
         </table>
       </div>
@@ -1439,11 +1438,11 @@ class cMacro {
             let ctl_scaleu = this.panel.querySelector('.' + fieldname + '_scaleu');
             let ctl_scalev = this.panel.querySelector('.' + fieldname + '_scalev');
 
-          if (obj.scaleu && obj.scaleu.toString() !== ctl_scaleu.value) {
+          if (ctl_scaleu && obj.scaleu && obj.scaleu.toString() !== ctl_scaleu.value) {
             dirty = true;
             ctl_scaleu.value = obj.scaleu;
           }
-          if (obj.scalev && obj.scalev.toString() !== ctl_scalev.value) {
+          if (ctl_scalev && obj.scalev && obj.scalev.toString() !== ctl_scalev.value) {
             dirty = true;
             ctl_scalev.value = obj.scalev;
           }
