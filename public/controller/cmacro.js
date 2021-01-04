@@ -82,7 +82,7 @@ class cMacro {
   baseTemplate() {
     let template = `<div class="block_wizard_add_name_div" style="flex:1;display:flex;flex-direction:row;padding-top:2px;">
       <label class="add_template_name_label" style="padding:4px;"><b>Name</b>
-     </label><input class="add-item-name" type="text" style="width:12em;" value="name" />`;
+     </label><input class="add-item-name" type="text" style="width:10.5em;" value="name" />`;
     if (!this.addonmode)
       template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
         <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>

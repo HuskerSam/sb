@@ -55,7 +55,7 @@
           &nbsp;
           <div id="url_to_deploy" style="display:inline-block;"></div>
         </div>
-        <div id="selected_server_details_div"></div>
+        <div id="selected_server_details_div" style="padding-top:4px;"></div>
         <div id="assets_anchor" style="margin-top:.5em;"> loading...</div>
       </div>
     </div>
@@ -112,7 +112,7 @@
       <select id="template_filter_select" style="margin:8px;">
         <option>All</option>
         <option>Setup</option>
-        <option>Layouts</option>
+        <option selected>Layouts</option>
         <option>Blocks</option>
         <option>Other</option>
       </select>
@@ -219,7 +219,7 @@
           this.loadDeployOptions(),
           this.loadProjectSelectList()
         ]);
-        if (!this.defaultProjectTarget || !this.defaultServerTarget) {
+        if (!this.defaultServerTarget) {
           this.template_filter_select.value = 'Setup';
         } else {
           this.template_filter_select.value = 'Layout';
@@ -305,6 +305,8 @@
           this.target_server_set_button.classList.add('red');
           this.target_server_set_button.classList.remove('blue');
           this.selected_target_span.innerHTML = '<span style="color:red;font-size:1em">No Server Target</span>';
+          this.addon_display_view_select.value = 'cloud_target';
+          this.loadAddonView();
         }
 
         this.defaultProjectTarget = '';
@@ -317,6 +319,10 @@
           this.set_default_proj.classList.add('red');
           this.set_default_proj.classList.remove('blue');
           this.selected_project_span.innerHTML = '<span style="color:red;font-size:1em">No Project Target</span>';
+          if (this.defaultServerTarget !== '') {
+            this.addon_display_view_select.value = 'template_view';
+            this.loadAddonView();
+          }
         }
 
         this.defaultToken = '';
@@ -391,6 +397,8 @@
       }
       async loadTemplateDetails() {
         let data = this.templateMap[this.circuit_template_select.value];
+        if (!data)
+          return;
         if (data.hint) {
           this.sheetname.value = data.hint;
         }
@@ -1296,9 +1304,7 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', e => {
-      let publish_web = new PublishWeb();
-    });
+    document.addEventListener('DOMContentLoaded', e => window.publishWebApp = new PublishWeb());
   </script>
 
   <style>
