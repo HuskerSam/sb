@@ -75,7 +75,7 @@ class bView {
 
     try {
       this.canvasHelper.playAnimation();
-      this.canvasHelper.cameraChangeHandler();
+      setTimeout(() => this.canvasHelper.cameraChangeHandler(), 30);
     } catch (e) {
       console.log('play anim error', e);
     }
