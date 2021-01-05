@@ -961,3 +961,19 @@ input[type="color"] {
   background-image: repeat;
   display: none;
 }
+
+table.shape_parent_details tr td input[type="text"] {
+  flex: 1;
+  width: 2em;
+  margin-right: 0;
+}
+
+table.shape_parent_details tr td:nth-child(1) {
+  padding: 0;
+}
+
+.shape_parent_details span {
+  font-size: .75em;
+  padding-top: 6px;
+  margin:0 3px;
+}

@@ -700,7 +700,7 @@ class cMacro {
   }
   shapeTemplate() {
     return `<div class="standardmeshassetpanel shape_wizard_wrapper" style="display:flex;flex-direction:column;">
-      <table class="wizard_field_container">
+      <table class="wizard_field_container shape_wizard_table">
         <tr data-types="all">
           <td>Shape Type</td>
           <td><select data-field="shapetype" style="width: 100%;" class="shapetype_filter_select">
@@ -807,6 +807,45 @@ class cMacro {
           <td><input type="text" data-field="depth"></td>
           <td></td>
         </tr>
+        <tr data-types="all">
+          <td>Show Parent Details</td>
+          <td><input class="show_parent_shape_details" style="width:1.5em" type="checkbox"></td>
+          <td></td>
+        </tr>
+      </table>
+      <table class="wizard_field_container shape_parent_details" style="display:none">
+        <tr>
+          <td>Parent Block</td>
+          <td><input type="text" list="blockdatatitlelookuplist" class="shape_parent" style="width:calc(100%)" /></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div style="display:flex;flex-direction:row">
+              <span>Position X</span><input type="text" class="shape_x" />
+              <span>Y</span><input type="text" class="shape_y" />
+              <span>Z</span><input type="text" class="shape_z" />
+            </div>
+          </td>
+        </tr>
+        <tr>
+        <td colspan="3">
+          <div style="display:flex;flex-direction:row">
+            <span>Scale X</span><input type="text" class="shape_sx" />
+            <span>Y</span><input type="text" class="shape_sy" />
+            <span>Z</span><input type="text" class="shape_sz" />
+          </div>
+        </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div style="display:flex;flex-direction:row">
+              <span>Rotate X</span><input type="text" class="shape_rx" />
+              <span>Y</span><input type="text" class="shape_ry" />
+              <span>Z</span><input type="text" class="shape_rz" />
+            </div>
+          </td>
+        </tr>
       </table>
     </div>
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
@@ -823,6 +862,14 @@ class cMacro {
     this.shapetype_filter_select.addEventListener('input', e => this.shapeTypeFilterChange());
     this.wizard_field_container = this.panel.querySelector('.wizard_field_container');
 
+    this.show_parent_shape_details = this.panel.querySelector('.show_parent_shape_details');
+    this.shape_parent_details = this.panel.querySelector('.shape_parent_details');
+    this.show_parent_shape_details.addEventListener('input', e => {
+      if (this.show_parent_shape_details.checked)
+        this.shape_parent_details.style.display = '';
+      else
+        this.shape_parent_details.style.display = 'none';
+    });
 
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
@@ -847,6 +894,16 @@ class cMacro {
       }
     });
 
+    this.shape_parent = this.panel.querySelector('.shape_parent');
+    this.shape_x = this.panel.querySelector('.shape_x');
+    this.shape_y = this.panel.querySelector('.shape_y');
+    this.shape_z = this.panel.querySelector('.shape_z');
+    this.shape_sx = this.panel.querySelector('.shape_sx');
+    this.shape_sy = this.panel.querySelector('.shape_sy');
+    this.shape_sz = this.panel.querySelector('.shape_sz');
+    this.shape_rx = this.panel.querySelector('.shape_rx');
+    this.shape_ry = this.panel.querySelector('.shape_ry');
+    this.shape_rz = this.panel.querySelector('.shape_rz');
 
     this.panel.querySelectorAll('.textfontfamily').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
@@ -874,11 +931,14 @@ class cMacro {
       else
         row.style.display = '';
     });
+
+    this.shapeUpdateCSV();
   }
   shapeUpdateCSV() {
     this.newName = this.panelInput.value.trim();
     let shapetype = this.shapetype_filter_select.value;
     let allColumns = this.copy_csv_allcolumn_clipboard.checked;
+    let includeParent = this.show_parent_shape_details.checked;
 
     let csv_row = {
       asset: 'shape',
@@ -886,7 +946,7 @@ class cMacro {
       shapetype
     };
 
-    let t_rows = this.panel.querySelectorAll('.wizard_field_container input[type="text"]');
+    let t_rows = this.panel.querySelectorAll('.shape_wizard_table input[type="text"]');
     let all_fields = [];
     t_rows.forEach(f => {
       if (all_fields.indexOf(f.dataset.field) === -1)
@@ -895,7 +955,7 @@ class cMacro {
         csv_row[f.dataset.field] = '';
     });
 
-    let tr_rows = this.panel.querySelectorAll('.wizard_field_container tr');
+    let tr_rows = this.panel.querySelectorAll('.shape_wizard_table tr');
     let field_data = csv_row;
     tr_rows.forEach(row => {
       let cats = row.dataset.types;
@@ -903,16 +963,27 @@ class cMacro {
         cats = '';
       cats = cats.split(',');
       if (cats.indexOf(shapetype) !== -1 || cats[0] === 'all') {
-        let i = row.querySelector('input');
+        let i = row.querySelector('input[type="text"]');
         if (i) {
           field_data[i.dataset.field] = i.value;
         }
       }
     });
 
+    if (includeParent) {
+      field_data['parent'] = this.shape_parent.value;
+      field_data['x'] = this.shape_x.value;
+      field_data['y'] = this.shape_y.value;
+      field_data['z'] = this.shape_z.value;
+      field_data['sx'] = this.shape_sx.value;
+      field_data['sy'] = this.shape_sy.value;
+      field_data['sz'] = this.shape_sz.value;
+      field_data['rx'] = this.shape_rx.value;
+      field_data['ry'] = this.shape_ry.value;
+      field_data['rz'] = this.shape_rz.value;
+    }
 
     let r = field_data;
-
     let header = this.copy_csv_header_clipboard.checked;
     this.export_csv = r;
     if (r) {
@@ -923,7 +994,6 @@ class cMacro {
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
-
   meshTemplate() {
     return `<div class="standardmeshassetpanel mesh_wizard_wrapper" style="display:flex;flex-direction:column;">
         <table class="wizard_field_container">
