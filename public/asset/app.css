@@ -910,8 +910,16 @@ div.imagebackgrounddisplay {
   width: 4em;
 }
 
-.table_export td {
+table.table_export td {
   color: black;
+  font-size:12px;
+}
+
+table.table_export td {
+  padding: 2px 4px;
+  margin: 0;
+  text-align: left;
+  overflow: hidden;
 }
 
 .block_wizard_wrapper, .mesh_wizard_wrapper, .material_wizard_wrapper, .shape_wizard_wrapper {

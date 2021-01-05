@@ -816,7 +816,7 @@ class cMacro {
       <table class="wizard_field_container shape_parent_details" style="display:none">
         <tr>
           <td>Parent Block</td>
-          <td><input type="text" list="blockdatatitlelookuplist" class="shape_parent" style="width:100%" /></td>
+          <td><input type="text" list="blockdatatitlelookuplist" class="shape_parent" style="width:100%" value="::scene::" /></td>
           <td></td>
         </tr>
         <tr>
@@ -850,11 +850,12 @@ class cMacro {
     </div>
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
-      <label><input type="checkbox" checked class="copy_csv_allcolumn_clipboard"> all columns</label>
+      <label><input type="checkbox" checked class="copy_csv_allcolumn_clipboard"> all fields</label>
       <br>
-      <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
+      <div class="csv_import_preview" style="flex:1;display:none;"></div>
     </div>`;
   }
   shapeRegister() {
@@ -880,19 +881,9 @@ class cMacro {
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
-    this.show_hide_raw_csv.addEventListener('click', e => {
-      if (!this.csv_import_shown) {
-        this.csv_import_shown = true;
-        this.csv_import_preview.style.display = '';
-        this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
-        this.show_hide_raw_csv.style.color = 'white';
-      } else {
-        this.csv_import_shown = false;
-        this.csv_import_preview.style.display = 'none';
-        this.show_hide_raw_csv.style.background = '';
-        this.show_hide_raw_csv.style.color = '';
-      }
-    });
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
     this.shape_parent = this.panel.querySelector('.shape_parent');
     this.shape_x = this.panel.querySelector('.shape_x');
@@ -916,6 +907,34 @@ class cMacro {
       .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i)));
 
     this.shapeTypeFilterChange();
+  }
+  _updateCSVDisplay(btnIndex) {
+    this.csv_import_preview.style.display = 'none';
+    this.show_hide_raw_csv.style.background = '';
+    this.show_hide_raw_csv.style.color = '';
+    this.show_hide_table_csv.style.background = '';
+    this.show_hide_table_csv.style.color = '';
+
+    if (this.csv_import_shown === btnIndex) {
+      this.csv_import_shown = 0;
+    } else if (btnIndex === 1) {
+      this.csv_import_shown = btnIndex;
+      this.csv_import_preview.style.display = '';
+      this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
+      this.show_hide_raw_csv.style.color = 'white';
+      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+    } else if (btnIndex === 2) {
+      this.csv_import_shown = btnIndex;
+      this.csv_import_preview.style.display = '';
+      this.show_hide_table_csv.style.background = 'rgb(100,100,100)';
+      this.show_hide_table_csv.style.color = 'white';
+
+      //      cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      let headers = this.copy_csv_header_clipboard.checked;
+      let html = cMacro._dataRowsToTableHTML([this.export_csv], [], headers);
+
+      this.csv_import_preview.innerHTML = html;
+    }
   }
   shapeTypeFilterChange() {
     let rows = this.wizard_field_container.querySelectorAll('tr');
@@ -941,8 +960,8 @@ class cMacro {
     let includeParent = this.show_parent_shape_details.checked;
 
     let csv_row = {
-      asset: 'shape',
       name: this.newName,
+      asset: 'shape',
       shapetype
     };
 
@@ -987,10 +1006,16 @@ class cMacro {
     let header = this.copy_csv_header_clipboard.checked;
     this.export_csv = r;
     if (r) {
-      if (window.Papa)
-        this.csv_import_preview.innerHTML = Papa.unparse([r], {
+      if (window.Papa) {
+        this.csvImportPreviewRaw = Papa.unparse([r], {
           header
         });
+        this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+        if (this.csv_import_shown === 2) {
+          this.csv_import_shown = 0;
+          this._updateCSVDisplay(2);
+        }
+      }
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -1031,7 +1056,7 @@ class cMacro {
         <table class="wizard_field_container mesh_parent_details" style="display:none">
           <tr>
             <td>Parent</td>
-            <td><input type="text" list="blockdatatitlelookuplist" class="mesh_parent" /></td>
+            <td><input type="text" list="blockdatatitlelookuplist" class="mesh_parent" value="::scene::" /></td>
             <td></td>
           </tr>
           <tr>
@@ -1085,6 +1110,7 @@ class cMacro {
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
+      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
       <br>
       <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
@@ -1185,8 +1211,8 @@ class cMacro {
   meshScrape() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
-      asset: 'meshtexture',
-      name: this.newName
+      name: this.newName,
+      asset: 'meshtexture'
     };
 
     csv_row['materialname'] = csv_row['name'] + '_material';
@@ -1310,8 +1336,8 @@ class cMacro {
     this.standardmaterialassetpanel.style.display = 'flex';
     this.newName = this.panelInput.value.trim();
     let csv_row = {
-      asset: 'material',
-      name: this.newName
+      name: this.newName,
+      asset: 'material'
     };
 
     let texture = this.materialtexturepicker.value;
@@ -1401,8 +1427,8 @@ class cMacro {
   _shapeScrapeTextPlane() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
-      asset: 'textplane',
-      name: this.newName
+      name: this.newName,
+      asset: 'textplane'
     };
     let textshapefields = [
       'texturetext', 'texturetext2', 'textfontfamily', 'textfontcolor', 'textfontweight', 'textfontsize',
@@ -1451,8 +1477,8 @@ class cMacro {
   _blockScrapeTextAndShape() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
-      asset: 'shapeandtext',
-      name: this.newName
+      name: this.newName,
+      asset: 'shapeandtext'
     };
     let textshapefields = [
       'texttext', 'texttextline2', 'textfontfamily', 'textdepth', 'textmaterial', 'shapematerial',
@@ -1470,8 +1496,8 @@ class cMacro {
   _blockScrapeConnectorLine() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
-      asset: 'connectorline',
-      name: this.newName
+      name: this.newName,
+      asset: 'connectorline'
     };
     let fields = [
       'length', 'diameter', 'tessellation', 'material', 'pointshape', 'pointlength',
@@ -1490,8 +1516,8 @@ class cMacro {
   _blockScrapeAnimatedline() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
-      asset: 'animatedline',
-      name: this.newName
+      name: this.newName,
+      asset: 'animatedline'
     };
     let fields = [
       'dashes', 'runlength', 'dotshape', 'dashlength', 'tessellation', 'material', 'width', 'height', 'depth'
@@ -1508,8 +1534,8 @@ class cMacro {
   _blockScrapeWebFont() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
-      asset: 'block',
       name: this.newName,
+      asset: 'block',
       blockflag: 'googlefont'
     };
     let fields = [
@@ -1527,8 +1553,8 @@ class cMacro {
   _blockScrapeScene() {
     this.newName = this.panelInput.value.trim();
     let csv_row = {
-      asset: 'sceneblock',
-      name: this.newName
+      name: this.newName,
+      asset: 'sceneblock'
     };
     let fields = [
       'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox',
@@ -1759,7 +1785,7 @@ class cMacro {
       });
     });
   }
-  static copyDataToClipboard(dataRows, fieldOrder = [], headers = true) {
+  static _dataRowsToTableHTML(dataRows, fieldOrder = [], headers = true) {
     if (!dataRows) return;
     if (dataRows.length < 1) return;
 
@@ -1791,6 +1817,14 @@ class cMacro {
     });
 
     let html = '<table class="table_export">' + tableGuts + '</table>';
+
+    return html;
+  }
+  static copyDataToClipboard(dataRows, fieldOrder = [], headers = true) {
+    if (!dataRows) return;
+    if (dataRows.length < 1) return;
+
+    let html = cMacro._dataRowsToTableHTML(dataRows, fieldOrder, headers);
     let el = document.createElement('div');
     el.innerHTML = html;
     el = el.children[0];

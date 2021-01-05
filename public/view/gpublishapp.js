@@ -4,10 +4,19 @@ class gPublishApp extends gInstanceSuper {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .then(() => this.a.signInAnon());
   }
-  profileReadyAndLoaded() {
+  async profileReadyAndLoaded() {
     this.loadStarted = true;
 
     let urlParams = new URLSearchParams(window.location.search);
+
+    let name = urlParams.get('name');
+    let nameWid = null;
+    if (name) {
+      let csvImport = await new gCSVImport();
+      nameWid = await csvImport.widForName(name);
+    }
+
+
     let workspace = urlParams.get('w');
     let block = urlParams.get('b');
     let workspaceCode = urlParams.get('z');
@@ -18,8 +27,12 @@ class gPublishApp extends gInstanceSuper {
       if (data)
         workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
     }
-    this.loadedWID = workspace;
-    this.a.initProjectModels(workspace);
+    if (nameWid)
+      this.loadedWID = nameWid;
+    else
+      this.loadedWID = workspace;
+    workspace = this.loadedWID;
+    this.a.initProjectModels(this.loadedWID);
 
     this.a._activateModels();
     this.initialUILoad = false;
@@ -29,6 +42,10 @@ class gPublishApp extends gInstanceSuper {
         let data = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockCode', blockCode);
         if (data)
           block = gAPPP.a.modelSets['block'].lastKeyLookup;
+      }
+
+      if (!block) {
+        block = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
       }
 
       gAPPP.a.profile['selectedBlockKey' + workspace] = block;

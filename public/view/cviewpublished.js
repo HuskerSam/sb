@@ -1,6 +1,6 @@
 class cViewPublished extends bView {
   constructor() {
-    super();
+    super(null, null, null, true);
 
     this.elementSelect = document.getElementById('element-type-to-edit');
     this.elementSelect.addEventListener('input', e => this.elementTypeChange());
@@ -47,9 +47,21 @@ class cViewPublished extends bView {
     this.elementTypeChange();
 
     this._updateSelectedBlock(gAPPP.blockInURL);
+
+    gAPPP.activeContext.handleAnimationNotReadyCallback = () => {
+      this.rootBlock.updatesDisabled = true;
+      this.canvasHelper.hide();
+    };
+    gAPPP.activeContext.handleAnimationReadyCallback = () => {
+      location.reload();
+    };
   }
   closeHeaderBands() {
 
+  }
+  async canvasReadyPostTimeout() {
+    await super.canvasReadyPostTimeout();
+    setTimeout(() => this.canvasHelper.cameraChangeHandler(), 150);
   }
   setValue() {
     let t = this.elementSelect.value.toLowerCase();
