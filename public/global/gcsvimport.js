@@ -261,6 +261,9 @@ class gCSVImport {
     if (row.blockcode)
       blockData.blockCode = row.blockcode;
 
+    if (row.clearcolor)
+      blockData.clearColor = row.clearcolor;
+
     if (row.sku) {
       blockData.itemId = row.sku;
       blockData.itemTitle = row.text1;
@@ -1147,7 +1150,9 @@ class gCSVImport {
       depth: row.depth,
       groundMaterial: row.groundmaterial,
       skybox: row.skybox,
-      skyboxSize: row.skyboxsize
+      skyboxSize: row.skyboxsize,
+      blockCode: 'demo',
+      blockFlag: 'scene'
     }
 
     if (row.audiourl)
@@ -1161,6 +1166,7 @@ class gCSVImport {
     if (row.musicparams) block.musicParams = row.musicparams;
     if (row.genericblockdata) block.genericBlockData = row.genericblockdata;
     if (row.displayui) block.displayUI = row.displayui;
+    if (row.clearcolor) block.clearColor = row.clearcolor;
 
     let blockresult = await this.dbSetRecord('block', block);
     let sceneParams = this._fetchSceneParams(block);
@@ -1330,6 +1336,13 @@ class gCSVImport {
     fixturesBC.parent = row.name;
     fixturesBC.x = '0';
     this.addCSVRow(fixturesBC);
+
+    let basketBC = this.defaultCSVRow();
+    basketBC.asset = 'block';
+    basketBC.name = row.name + '_basketcart';
+    basketBC.parent = row.name;
+    basketBC.blockflag = 'basket';
+    this.addCSVRow(basketBC);
 
     return blockresult;
   }
@@ -1956,6 +1969,8 @@ class gCSVImport {
     let sceneData = sceneRecords.records[0];
 
     let cameraRow = productData.cameraOrigRow;
+    if (!cameraRow)
+      cameraRow = {};
     let frameRows = [];
     let frameOrder = 20;
     let frameTime = productData.introTime;
@@ -2422,8 +2437,9 @@ class gCSVImport {
 
     let cameraBC = await this.findMatchBlocks('camera', 'FollowCamera', sceneId);
     let cameraOrigRow = null;
-    if (cameraBC[0])
+    if (cameraBC[0]) {
       cameraOrigRow = cameraBC[0].BC.origRow.origCameraRow;
+    }
 
     if (!cameraData)
       cameraData = cameraOrigRow;

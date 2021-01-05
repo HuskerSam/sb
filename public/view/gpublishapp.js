@@ -18,9 +18,9 @@ class gPublishApp extends gInstanceSuper {
 
 
     let workspace = urlParams.get('w');
-    let block = urlParams.get('b');
+    this.blockId = urlParams.get('b');
     let workspaceCode = urlParams.get('z');
-    let blockCode = urlParams.get('y');
+    this.blockCode = urlParams.get('y');
 
     if (workspaceCode) {
       let data = gAPPP.a.modelSets['projectTitles'].getValuesByFieldLookup('tags', workspaceCode);
@@ -31,28 +31,25 @@ class gPublishApp extends gInstanceSuper {
       this.loadedWID = nameWid;
     else
       this.loadedWID = workspace;
-    workspace = this.loadedWID;
-    this.a.initProjectModels(this.loadedWID);
+    this.a.profile.selectedWorkspace = this.loadedWID;
+    super.profileReadyAndLoaded();
+  }
+  async workspaceLoaded(wId) {
+    await super.workspaceLoaded(wId);
+    if (this.blockCode) {
+      let data = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockCode', this.blockCode);
+      if (data)
+        this.blockId = gAPPP.a.modelSets['block'].lastKeyLookup;
+    }
 
-    this.a._activateModels();
-    this.initialUILoad = false;
+    if (!this.blockId) {
+      this.blockId = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
+    }
 
-    gAPPP.a.workspaceLoadedCallback = () => {
-      if (blockCode) {
-        let data = gAPPP.a.modelSets['block'].getValuesByFieldLookup('blockCode', blockCode);
-        if (data)
-          block = gAPPP.a.modelSets['block'].lastKeyLookup;
-      }
-
-      if (!block) {
-        block = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
-      }
-
-      gAPPP.a.profile['selectedBlockKey' + workspace] = block;
-      gAPPP.blockInURL = block;
-      this.mV = new cViewPublished();
-      this._updateApplicationStyle();
-    };
+    gAPPP.a.profile['selectedBlockKey' + wId] = this.blockId;
+    gAPPP.blockInURL = this.blockId;
+    this.mV = new cViewPublished();
+    this._updateApplicationStyle();
   }
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">Loading...</div>`;

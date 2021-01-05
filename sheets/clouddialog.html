@@ -89,7 +89,7 @@
         <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
           <div>
           </div>
-          <textarea id="publish_results" style="flex:1;margin-top:8px"></textarea>
+          <textarea id="publish_results" style="flex:1"></textarea>
         </div>
         <div id="project_upload_view" style="display:none;flex-direction: column;height:10em;width: 100%">
           <div style="display:flex;flex-direction:row">
@@ -787,6 +787,7 @@
         this.initSheetBasedData();
       }
       async templateCreateSheets() {
+        this.setBusy();
         let sheetName = this.sheetname.value;
         let templateString = this.circuit_template_select.value;
         let templates = templateString.split(',');
@@ -806,7 +807,9 @@
           promises.push(this.sheetsCreateTemplateSheet(parts[0], name, sheetName));
         });
 
-        return Promise.all(promises);
+        await Promise.all(promises);
+
+        return this.initSheetBasedData();
       }
       async cloudDeployProjects(filter) {
         if (this.busy)

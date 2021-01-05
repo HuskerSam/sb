@@ -3,7 +3,7 @@ class gDemoApp extends gInstanceSuper {
     super();
 
     this.loadPickerData();
-    
+
     this.filterActiveWorkspaces = true;
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .then(() => this.a.signInAnon());
@@ -39,6 +39,8 @@ class gDemoApp extends gInstanceSuper {
     this.workspaceProcessed = false;
     gAPPP.a.workspaceLoadedCallback = async () => {
       if (this.workspaceProcessed) return;
+
+      await this._updateGoogleFonts();
 
       this.workspaceProcessed = true;
       gAPPP.a.profile['selectedBlockKey' + workspace] = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');

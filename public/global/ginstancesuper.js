@@ -238,7 +238,7 @@ class gInstanceSuper extends cAppDefaults {
       this._loadDataLists('fontfamilydatalist');
       //allow fonts to reflow
       return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(), 1);
+        setTimeout(() => resolve(), 100);
       });
     }
   }
