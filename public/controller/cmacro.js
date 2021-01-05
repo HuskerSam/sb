@@ -698,6 +698,232 @@ class cMacro {
     this.blockSkyboxChange();
     this.blockUpdateCSV();
   }
+  shapeTemplate() {
+    return `<div class="standardmeshassetpanel shape_wizard_wrapper" style="display:flex;flex-direction:column;">
+      <table class="wizard_field_container">
+        <tr data-types="all">
+          <td>Shape Type</td>
+          <td><select data-field="shapetype" style="width: 100%;" class="shapetype_filter_select">
+           <option value="box" selected>Box</option>
+           <option value="cylinder">Cylinder</option>
+           <option value="sphere">Sphere</option>
+           <option value="text">3D Text</option>
+           <option value="plane">Plane</option>
+          </select></td>
+          <td></td>
+        </tr>
+        <tr data-types="all">
+          <td>Material</td>
+          <td><input type="text" data-field="materialname" class="materialname" list="materialdatatitlelookuplist" /></td>
+          <td><input type="color" class="colorpicker" data-inputclass="materialname"></td>
+        </tr>
+        <tr data-types="box,plane">
+          <td>Width</td>
+          <td><input type="text" data-field="width"></td>
+          <td></td>
+        </tr>
+        <tr data-types="box,plane">
+          <td>Height</td>
+          <td><input type="text" data-field="height"></td>
+          <td></td>
+        </tr>
+        <tr data-types="box">
+          <td>Depth</td>
+          <td><input type="text" data-field="depth"></td>
+          <td></td>
+        </tr>
+        <tr data-types="box">
+          <td>Box Size</td>
+          <td><input type="text" data-field="boxsize"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Font</td>
+          <td><input type="text" data-field="textfontfamily"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Text</td>
+          <td><input type="text" data-field="texttext" value="Text"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Depth</td>
+          <td><input type="text" data-field="textdepth" value=".2"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Text Size</td>
+          <td><input type="text" data-field="textsize" value="100"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder">
+          <td>Height</td>
+          <td><input type="text" data-field="height"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder">
+          <td>Diameter</td>
+          <td><input type="text" data-field="width"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder">
+          <td>Tessellation</td>
+          <td><input type="text" data-field="tessellation"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder">
+          <td>Diameter Top</td>
+          <td><input type="text" data-field="diametertop"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder">
+          <td>Diameter Bottom</td>
+          <td><input type="text" data-field="diameterbottom"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Diameter</td>
+          <td><input type="text" data-field="boxsize"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Segments</td>
+          <td><input type="text" data-field="tessellation"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Diameter X</td>
+          <td><input type="text" data-field="width"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Diameter Y</td>
+          <td><input type="text" data-field="height"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Diameter Z</td>
+          <td><input type="text" data-field="depth"></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+    <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
+      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
+      <label><input type="checkbox" checked class="copy_csv_allcolumn_clipboard"> all columns</label>
+      <br>
+      <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
+    </div>`;
+  }
+  shapeRegister() {
+    this.shapetype_filter_select = this.panel.querySelector('.shapetype_filter_select');
+    this.shapetype_filter_select.addEventListener('input', e => this.shapeTypeFilterChange());
+    this.wizard_field_container = this.panel.querySelector('.wizard_field_container');
+
+
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_allcolumn_clipboard = this.panel.querySelector('.copy_csv_allcolumn_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => {
+      if (!this.csv_import_shown) {
+        this.csv_import_shown = true;
+        this.csv_import_preview.style.display = '';
+        this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
+        this.show_hide_raw_csv.style.color = 'white';
+      } else {
+        this.csv_import_shown = false;
+        this.csv_import_preview.style.display = 'none';
+        this.show_hide_raw_csv.style.background = '';
+        this.show_hide_raw_csv.style.color = '';
+      }
+    });
+
+
+    this.panel.querySelectorAll('.textfontfamily').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
+
+    this.panel.querySelectorAll('[list=materialdatatitlelookuplist]')
+      .forEach(i => i.addEventListener('input', e => this.blockUpdateMaterialField(e, i)));
+
+    this.panel.querySelectorAll('.colorpicker')
+      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i)));
+
+    this.shapeTypeFilterChange();
+  }
+  shapeTypeFilterChange() {
+    let rows = this.wizard_field_container.querySelectorAll('tr');
+    let category = this.shapetype_filter_select.value;
+
+    rows.forEach(row => {
+      let cats = row.dataset.types;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(category) === -1 && cats[0] !== 'all')
+        row.style.display = 'none';
+      else
+        row.style.display = '';
+    });
+  }
+  shapeUpdateCSV() {
+    this.newName = this.panelInput.value.trim();
+    let shapetype = this.shapetype_filter_select.value;
+    let allColumns = this.copy_csv_allcolumn_clipboard.checked;
+
+    let csv_row = {
+      asset: 'shape',
+      name: this.newName,
+      shapetype
+    };
+
+    let t_rows = this.panel.querySelectorAll('.wizard_field_container input[type="text"]');
+    let all_fields = [];
+    t_rows.forEach(f => {
+      if (all_fields.indexOf(f.dataset.field) === -1)
+        all_fields.push(f.dataset.field);
+      if (allColumns)
+        csv_row[f.dataset.field] = '';
+    });
+
+    let tr_rows = this.panel.querySelectorAll('.wizard_field_container tr');
+    let field_data = csv_row;
+    tr_rows.forEach(row => {
+      let cats = row.dataset.types;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(shapetype) !== -1 || cats[0] === 'all') {
+        let i = row.querySelector('input');
+        if (i) {
+          field_data[i.dataset.field] = i.value;
+        }
+      }
+    });
+
+
+    let r = field_data;
+
+    let header = this.copy_csv_header_clipboard.checked;
+    this.export_csv = r;
+    if (r) {
+      if (window.Papa)
+        this.csv_import_preview.innerHTML = Papa.unparse([r], {
+          header
+        });
+    } else
+      this.csv_import_preview.innerHTML = new Date();
+  }
+
   meshTemplate() {
     return `<div class="standardmeshassetpanel mesh_wizard_wrapper" style="display:flex;flex-direction:column;">
         <table class="wizard_field_container">
@@ -1004,7 +1230,9 @@ class cMacro {
     this.export_csv = csv;
     if (csv) {
       if (window.Papa)
-        this.csv_import_preview.innerHTML = Papa.unparse([csv], { header });
+        this.csv_import_preview.innerHTML = Papa.unparse([csv], {
+          header
+        });
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -1147,7 +1375,8 @@ class cMacro {
       ctl.style.borderColor = '';
       ctl.parentNode.nextElementSibling.value = '';
     }
-    this.blockUpdateCSV();
+
+    this[this.tag + 'UpdateCSV']();
   }
   _blockScrapeTextAndShape() {
     this.newName = this.panelInput.value.trim();
@@ -1414,7 +1643,9 @@ class cMacro {
     this.export_csv = r;
     if (r) {
       if (window.Papa)
-        this.csv_import_preview.innerHTML = Papa.unparse([r], { header });
+        this.csv_import_preview.innerHTML = Papa.unparse([r], {
+          header
+        });
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -1434,9 +1665,9 @@ class cMacro {
         let obj = this.app.texturesFromFile[path];
         let dirty = false;
         if (obj) {
-            let fieldname = field.dataset.field;
-            let ctl_scaleu = this.panel.querySelector('.' + fieldname + '_scaleu');
-            let ctl_scalev = this.panel.querySelector('.' + fieldname + '_scalev');
+          let fieldname = field.dataset.field;
+          let ctl_scaleu = this.panel.querySelector('.' + fieldname + '_scaleu');
+          let ctl_scalev = this.panel.querySelector('.' + fieldname + '_scalev');
 
           if (ctl_scaleu && obj.scaleu && obj.scaleu.toString() !== ctl_scaleu.value) {
             dirty = true;
