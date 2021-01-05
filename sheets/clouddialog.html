@@ -58,7 +58,16 @@
       </div>
     </div>
     <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
-      <select id="project_deploy_select" class="select_list" size="5"></select>
+      <div style="display:flex;flex-direction:row;flex:1">
+        <select id="project_deploy_select" class="select_list" size="5" style="flex:1;height:100%"></select>
+        <div>
+          <button id="set_default_proj" class="blue">Set Project</button>
+          <br>
+          <button id="display_publish_single" class="green">Deploy</button>
+          <br>
+          <button id="display_publish_list" class="green">Deploy All</button>
+        </div>
+      </div>
       <div style="display:flex;flex-direction:row">
         <select id="project_selected_options" style="flex:1;margin:8px">
           <option data-view="project_deploy_view">Deployment</option>
@@ -67,18 +76,15 @@
           <option>View in App...</option>
           <option>Edit in App...</option>
         </select>
-        <button id="set_default_proj" class="blue" style="margin:8px;">Set Project</button>
       </div>
-      <div class="select_flex_view" style="padding-top:0px;flex:none;">
+      <div class="select_flex_view" style="padding-top:0px;">
         <div id="project_display_view" style="display:none;height:inherit;flex:1">
           <iframe id="preview_panel"></iframe>
         </div>
         <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
           <div>
-            <button id="display_publish_single" class="green">Deploy</button>
-            <button id="display_publish_list" class="green">Deploy All</button>
           </div>
-          <textarea id="publish_results" style="flex:none;height:10em;margin-top:8px"></textarea>
+          <textarea id="publish_results" style="flex:1;margin-top:8px"></textarea>
         </div>
         <div id="project_upload_view" style="display:none;flex-direction: column;height:10em;width: 100%">
           <div style="display:flex;flex-direction:row">
@@ -1383,7 +1389,7 @@
     select.select_list {
       text-align: left;
       margin: 8px;
-      width: calc(100%=16px);
+      width: calc(100% - 16px);
       flex: 1;
       min-height: 3em;
     }

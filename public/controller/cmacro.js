@@ -816,7 +816,7 @@ class cMacro {
       <table class="wizard_field_container shape_parent_details" style="display:none">
         <tr>
           <td>Parent Block</td>
-          <td><input type="text" list="blockdatatitlelookuplist" class="shape_parent" style="width:calc(100%)" /></td>
+          <td><input type="text" list="blockdatatitlelookuplist" class="shape_parent" style="width:100%" /></td>
           <td></td>
         </tr>
         <tr>

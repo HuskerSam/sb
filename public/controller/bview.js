@@ -72,10 +72,10 @@ class bView {
   }
   async canvasReadyPostTimeout() {
     this.canvasHelper.noTestError = true;
-    this.canvasHelper.cameraChangeHandler();
 
     try {
       this.canvasHelper.playAnimation();
+      this.canvasHelper.cameraChangeHandler();
     } catch (e) {
       console.log('play anim error', e);
     }
