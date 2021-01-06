@@ -401,12 +401,12 @@ class cMacro {
             </tr>
             <tr>
               <td>Scale v (x)</td>
-              <td><input type="text" class="skyboxgroundscalev groundimage_scalev" value="1" /></td>
+              <td><input type="text" class="skyboxgroundscalev groundimage_scalev" /></td>
               <td></td>
             </tr>
             <tr>
               <td>Scale u (y)</td>
-              <td><input type="text" class="skyboxgroundscaleu groundimage_scaleu" value="1" /></td>
+              <td><input type="text" class="skyboxgroundscaleu groundimage_scaleu" /></td>
               <td></td>
             </tr>
             <tr>
@@ -450,12 +450,12 @@ class cMacro {
             </tr>
             <tr class="image_upload_building">
               <td>Scale v (x)</td>
-              <td><input type="text" class="floorscalev floorimage_scalev" value="1" /></td>
+              <td><input type="text" class="floorscalev floorimage_scalev" /></td>
               <td></td>
             </tr>
             <tr class="image_upload_building">
               <td>Scale u (z)</td>
-              <td><input type="text" class="floorscaleu floorimage_scaleu" value="1" /></td>
+              <td><input type="text" class="floorscaleu floorimage_scaleu" /></td>
               <td></td>
             </tr>
             <tr>
@@ -475,12 +475,12 @@ class cMacro {
             </tr>
             <tr class="image_upload_building">
               <td>Scale v (x)</td>
-              <td><input type="text" class="backwallscalev backwallimage_scalev" value="1" /></td>
+              <td><input type="text" class="backwallscalev backwallimage_scalev" /></td>
               <td></td>
             </tr>
             <tr class="image_upload_building">
               <td>Scale u (z)</td>
-              <td><input type="text" class="backwallscaleu backwallimage_scaleu" value="1" /></td>
+              <td><input type="text" class="backwallscaleu backwallimage_scaleu" /></td>
               <td></td>
             </tr>
             <tr>
@@ -500,12 +500,12 @@ class cMacro {
             </tr>
             <tr class="image_upload_building">
               <td>Scale v (x)</td>
-              <td><input type="text" class="frontwallscalev frontwallimage_scalev" value="1" /></td>
+              <td><input type="text" class="frontwallscalev frontwallimage_scalev" /></td>
               <td></td>
             </tr>
             <tr class="image_upload_building">
               <td>Scale u (z)</td>
-              <td><input type="text" class="frontwallscaleu frontwallimage_scaleu" value="1" /></td>
+              <td><input type="text" class="frontwallscaleu frontwallimage_scaleu" /></td>
               <td></td>
             </tr>
             <tr>
@@ -525,12 +525,12 @@ class cMacro {
             </tr>
             <tr class="image_upload_building">
               <td>Scale v (x)</td>
-              <td><input type="text" class="rightwallscalev rightwallimage_scalev" value="1" /></td>
+              <td><input type="text" class="rightwallscalev rightwallimage_scalev" /></td>
               <td></td>
             </tr>
             <tr class="image_upload_building">
               <td>Scale u (z)</td>
-              <td><input type="text" class="rightwallscaleu rightwallimage_scaleu" value="1" /></td>
+              <td><input type="text" class="rightwallscaleu rightwallimage_scaleu" /></td>
               <td></td>
             </tr>
             <tr>
@@ -550,12 +550,12 @@ class cMacro {
             </tr>
             <tr class="image_upload_building">
               <td>Scale v (x)</td>
-              <td><input type="text" class="leftwallscalev leftwallimage_scalev" value="1" /></td>
+              <td><input type="text" class="leftwallscalev leftwallimage_scalev" /></td>
               <td></td>
             </tr>
             <tr class="image_upload_building">
               <td>Scale u (z)</td>
-              <td><input type="text" class="leftwallscaleu leftwallimage_scaleu" value="1" /></td>
+              <td><input type="text" class="leftwallscaleu leftwallimage_scaleu" /></td>
               <td></td>
             </tr>
             <tr>
@@ -575,12 +575,12 @@ class cMacro {
             </tr>
             <tr class="image_upload_building">
               <td>Scale v (x)</td>
-              <td><input type="text" class="ceilingwallscalev ceilingwallimage_scalev" value="1" /></td>
+              <td><input type="text" class="ceilingwallscalev ceilingwallimage_scalev" /></td>
               <td></td>
             </tr>
             <tr class="image_upload_building">
               <td>Scale u (z)</td>
-              <td><input type="text" class="ceilingwallscaleu ceilingwallimage_scaleu" value="1" /></td>
+              <td><input type="text" class="ceilingwallscaleu ceilingwallimage_scaleu" /></td>
               <td></td>
             </tr>
             <tr>
@@ -730,7 +730,7 @@ class cMacro {
         </tr>
         <tr data-types="text">
           <td>Font</td>
-          <td><input type="text" data-field="textfontfamily"></td>
+          <td><input type="text" data-field="textfontfamily"  list="fontfamilydatalist"></td>
           <td></td>
         </tr>
         <tr data-types="text">
@@ -920,7 +920,6 @@ class cMacro {
       this.show_hide_table_csv.style.background = 'rgb(100,100,100)';
       this.show_hide_table_csv.style.color = 'white';
 
-      //      cMacro.copyDataToClipboard([this.export_csv], [], headers);
       let headers = this.copy_csv_header_clipboard.checked;
       let html = cMacro._dataRowsToTableHTML([this.export_csv], [], headers);
 
@@ -1232,8 +1231,8 @@ class cMacro {
         <table class="wizard_field_container">
           <tr>
             <td style="text-align:center;">
-              <label><span>Scale V (x)</span><input type="text" class="materialscalev" value="1" /></label>
-              <label><span>Scale U (y)</span><input type="text" class="materialscaleu" value="1" /></label>
+              <label><span>Scale V (x)</span><input type="text" class="materialscalev" /></label>
+              <label><span>Scale U (y)</span><input type="text" class="materialscaleu" /></label>
             </td>
           </tr>
         </table>
@@ -1722,9 +1721,13 @@ class cMacro {
     let header = this.copy_csv_header_clipboard.checked;
     this.export_csv = r;
     if (r) {
-      this.csvImportPreviewRaw = Papa.unparse([r], {
-        header
-      });
+      if (window.Papa)
+        this.csvImportPreviewRaw = Papa.unparse([r], {
+          header
+        });
+      else
+        this.csvImportPreviewRaw = '';
+
       this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
       if (this.csv_import_shown === 2) {
         this.csv_import_shown = 0;

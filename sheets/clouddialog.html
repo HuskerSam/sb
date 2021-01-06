@@ -81,9 +81,14 @@
           <option>Open in /display</option>
           <option>Open in /edit</option>
         </select>
+        <select id="project_preview_zoom" style="visibility:hidden;margin-top:8px;margin-right:8px;">
+          <option>1x</option>
+          <option selected>1/2x</option>
+          <option>1/4x</option>
+        </select>
       </div>
       <div class="select_flex_view" style="padding-top:0px;">
-        <div id="project_display_view" style="display:none;height:inherit;flex:1">
+        <div id="project_display_view" style="display:none;height:inherit;flex:1;margin: 0 8px 8px 8px;">
           <iframe id="preview_panel"></iframe>
         </div>
         <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
@@ -118,24 +123,24 @@
       </div>
     </div>
     <div id="template_view" class="main_div_wrapper">
-      <select id="template_filter_select" style="margin:8px;">
+      <div style="display:flex;flex-direction:row;padding: 0 8px;margin-top:8px;">
+        <input id="sheetname" style="flex:1;">
+        <button id="create_layout_btn" class="green" style="margin-left:8px">Create Sheet</button>
+      </div>
+      <select id="template_filter_select" style="margin:4px 8px;">
         <option>All</option>
         <option>Setup</option>
         <option selected>Layouts</option>
         <option>Blocks</option>
         <option>Other</option>
       </select>
-      <select id="circuit_template_select" class="select_list" size="5" style="margin-top:0">
+      <div style="" id="publishlist_add_chk_wrapper">
+        <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
+        <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
+      </div>
+      <select id="circuit_template_select" class="select_list" size="5" style="margin-top:4px">
       </select>
       <div class="select_flex_view" style="flex:none;">
-        <div style="display:flex;flex-direction:row;padding: 0 8px;">
-          <input id="sheetname" style="flex:1;">
-          <button id="create_layout_btn" class="green" style="margin-left:8px">Create</button>
-        </div>
-        <div style="padding-top: 4px;" id="publishlist_add_chk_wrapper">
-          <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
-          <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
-        </div>
         <div id="template_description" style="padding: 8px;height: 5em;overflow: hidden auto;"></div>
       </div>
     </div>
@@ -250,7 +255,7 @@
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
           'show_help_panel_btn', 'project_selected_options', 'upload_file_preview_select', 'upload_file_img_preview', 'upload_file_audio_preview',
           'upload_file_mesh_preview', 'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'upload_file_audio_ctl',
-          'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header'
+          'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom'
         ];
 
         dom_id.forEach(ctl => {
@@ -262,6 +267,7 @@
         this.display_publish_list.addEventListener('click', e => this.cloudDeployProjects('all'));
         this.project_deploy_select.addEventListener('input', e => this.loadProjectView());
         this.project_selected_options.addEventListener('input', e => this.loadProjectView());
+        this.project_preview_zoom.addEventListener('input', e => this.loadProjectPreview());
         this.deploy_options_server_list.addEventListener('input', e => this.loadServerDetails());
         this.file_upload_name.addEventListener('input', e => this.loadImagePreview());
         this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
@@ -533,6 +539,44 @@
           this.preview_panel.setAttribute('src', this.projectDisplayURL);
         } else {
           this.preview_panel.setAttribute('src', '');
+        }
+
+        if (this.selectedProjectView === 1 || this.selectedProjectView === 2) {
+          this.project_preview_zoom.style.visibility = '';
+          let scaleF = this.project_preview_zoom.selectedIndex;
+          let style = {};
+
+          if (scaleF === 0) {
+            style = {
+              width: '100%',
+              height: '100%',
+              transform: 'scale(1)',
+              top: '0%',
+              left: '0%'
+            }
+          } else if (scaleF === 1) {
+            style = {
+              width: '200%',
+              height: '200%',
+              transform: 'scale(.5)',
+              top: '-50%',
+              left: '-50%'
+            }
+          } else if (scaleF === 2) {
+            style = {
+              width: '400%',
+              height: '400%',
+              transform: 'scale(.25)',
+              top: '-150%',
+              left: '-150%'
+            }
+          }
+
+          for (let key in style) {
+            this.preview_panel.style[key] = style[key];
+          }
+        } else {
+          this.project_preview_zoom.style.visibility = 'hidden';
         }
         return null;
       }
@@ -1392,6 +1436,7 @@
       position: relative;
       top: -50%;
       left: -50%;
+      border: none;
     }
 
     .csv_import_preview {
@@ -1489,6 +1534,12 @@
       overflow: hidden auto;
       text-align: left;
       padding: 0;
+    }
+
+    input[type="color"] {
+      width: 2.25em;
+      height: 1.65em;
+      margin: 0 .1em;
     }
   </style>
 

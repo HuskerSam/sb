@@ -949,7 +949,7 @@ table.wizard_field_container td {
 table.wizard_field_container td:nth-child(1) {
   white-space: nowrap;
   padding: 0 4px 0 0;
-  font-size: .75em;
+  font-size: .6em;
 }
 
 table.wizard_field_container td:nth-child(1) b {
