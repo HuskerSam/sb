@@ -755,6 +755,7 @@ select {
   text-overflow: clip;
   white-space: pre;
   font-size: .8em;
+  flex: 1;
 }
 
 .app-expanded .csv_import_preview {
@@ -910,8 +911,12 @@ div.imagebackgrounddisplay {
   width: 4em;
 }
 
+table.table_export tr.header td {
+  font-weight: bold;
+}
+
 table.table_export td {
-  color: black;
+  color: inherit;
   font-size:12px;
 }
 

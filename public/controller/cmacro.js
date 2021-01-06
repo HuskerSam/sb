@@ -594,10 +594,11 @@ class cMacro {
     </div>
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-      <button class="show_hide_raw_csv" style="flex:0;margin-left:0;"><i class="material-icons">table_rows</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
       <br>
-      <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
+      <div class="csv_import_preview"></div>
     </div>
     <datalist id="webfontsuggestionlist"></datalist>`;
   }
@@ -657,19 +658,9 @@ class cMacro {
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
-    this.show_hide_raw_csv.addEventListener('click', e => {
-      if (!this.csv_import_shown) {
-        this.csv_import_shown = true;
-        this.csv_import_preview.style.display = '';
-        this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
-        this.show_hide_raw_csv.style.color = 'white';
-      } else {
-        this.csv_import_shown = false;
-        this.csv_import_preview.style.display = 'none';
-        this.show_hide_raw_csv.style.background = '';
-        this.show_hide_raw_csv.style.color = '';
-      }
-    });
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
     this.webfontsuggestionlist = this.panel.querySelector('#webfontsuggestionlist');
     let html = '';
@@ -855,7 +846,7 @@ class cMacro {
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
       <label><input type="checkbox" checked class="copy_csv_allcolumn_clipboard"> all fields</label>
       <br>
-      <div class="csv_import_preview" style="flex:1;display:none;"></div>
+      <div class="csv_import_preview"></div>
     </div>`;
   }
   shapeRegister() {
@@ -919,13 +910,13 @@ class cMacro {
       this.csv_import_shown = 0;
     } else if (btnIndex === 1) {
       this.csv_import_shown = btnIndex;
-      this.csv_import_preview.style.display = '';
+      this.csv_import_preview.style.display = 'block';
       this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
       this.show_hide_raw_csv.style.color = 'white';
       this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
     } else if (btnIndex === 2) {
       this.csv_import_shown = btnIndex;
-      this.csv_import_preview.style.display = '';
+      this.csv_import_preview.style.display = 'block';
       this.show_hide_table_csv.style.background = 'rgb(100,100,100)';
       this.show_hide_table_csv.style.color = 'white';
 
@@ -1109,11 +1100,11 @@ class cMacro {
     </div>
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
       <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
       <br>
-      <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
+      <div class="csv_import_preview"></div>
     </div>`;
   }
   meshRegister() {
@@ -1144,15 +1135,9 @@ class cMacro {
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
-    this.show_hide_raw_csv.addEventListener('click', e => {
-      if (!this.csv_import_shown) {
-        this.csv_import_shown = true;
-        this.csv_import_preview.style.display = '';
-      } else {
-        this.csv_import_shown = false;
-        this.csv_import_preview.style.display = 'none';
-      }
-    });
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV(e, i)));
     this.show_parent_mesh_details = this.panel.querySelector('.show_parent_mesh_details');
@@ -1201,10 +1186,14 @@ class cMacro {
     let csv = this.meshScrape();
     this.export_csv = csv;
     if (csv) {
-      if (window.Papa)
-        this.csv_import_preview.innerHTML = Papa.unparse([csv], {
-          header
-        });
+      this.csvImportPreviewRaw = Papa.unparse([this.export_csv], {
+        header
+      });
+      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+      if (this.csv_import_shown === 2) {
+        this.csv_import_shown = 0;
+        this._updateCSVDisplay(2);
+      }
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -1256,10 +1245,11 @@ class cMacro {
       </div>
       <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
         <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-        <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">table_rows</i></button>
+        <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+        <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
         <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
         <br>
-        <div class="csv_import_preview" style="flex:1;display:none;font-size:1.25em;"></div>
+        <div class="csv_import_preview"></div>
       </div>`;
 
   }
@@ -1291,19 +1281,9 @@ class cMacro {
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
-    this.show_hide_raw_csv.addEventListener('click', e => {
-      if (!this.csv_import_shown) {
-        this.csv_import_shown = true;
-        this.csv_import_preview.style.display = '';
-        this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
-        this.show_hide_raw_csv.style.color = 'white';
-      } else {
-        this.csv_import_shown = false;
-        this.csv_import_preview.style.display = 'none';
-        this.show_hide_raw_csv.style.background = '';
-        this.show_hide_raw_csv.style.color = '';
-      }
-    });
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
     this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
     this.material_image_bkg_div = this.panel.querySelector('.material_image_bkg_div');
@@ -1325,10 +1305,14 @@ class cMacro {
 
     this.export_csv = csv;
     if (csv) {
-      if (window.Papa)
-        this.csv_import_preview.innerHTML = Papa.unparse([csv], {
-          header
-        });
+      this.csvImportPreviewRaw = Papa.unparse([this.export_csv], {
+        header
+      });
+      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+      if (this.csv_import_shown === 2) {
+        this.csv_import_shown = 0;
+        this._updateCSVDisplay(2);
+      }
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -1738,10 +1722,14 @@ class cMacro {
     let header = this.copy_csv_header_clipboard.checked;
     this.export_csv = r;
     if (r) {
-      if (window.Papa)
-        this.csv_import_preview.innerHTML = Papa.unparse([r], {
-          header
-        });
+      this.csvImportPreviewRaw = Papa.unparse([r], {
+        header
+      });
+      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+      if (this.csv_import_shown === 2) {
+        this.csv_import_shown = 0;
+        this._updateCSVDisplay(2);
+      }
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
@@ -1799,7 +1787,7 @@ class cMacro {
 
     let tableGuts = '';
     if (headers) {
-      tableGuts += '<tr>';
+      tableGuts += '<tr class="header">';
       fieldOrder.forEach((field) => {
         tableGuts += '<td>' + field.toString() + '</td>';
       });
