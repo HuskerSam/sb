@@ -1,14 +1,19 @@
 [{
-    "range": "C1",
-    "value": "Range List to link in Projects:circuitranges"
-  },
-  {
     "range": "A2:C3",
     "rangeValue": [
       ["Single CSV output", "Ranges", "=textjoin(\",\",true, D5:D7)"],
       ["", "Test Formula", "=\"mergeCSVRanges(\" & textjoin(\",\",true, E5:E7) & \")\""]
     ],
-    "wrapStrategy":"CLIP","horizontalAlignment":"left"
+    "wrapStrategy": "CLIP",
+    "horizontalAlignment": "left"
+  },
+  {
+    "range": "C2",
+    "backgroundColor": "rgb(100,255,100)"
+  },
+  {
+    "range": "A18:18",
+    "backgroundColor": "rgb(100,255,100)"
   },
   {
     "range": "B4:C4",
@@ -30,7 +35,14 @@
       ["=getStringForRange(##sheetname!B15:E16)", "=IF(B7 <> \"\", B7 & \"||||\", \"\") & C7 & \"\"",
         "=IF(B7 <> \"\",\"ImportRange(\"\"\" & B7 & \"\"\",\"\"\" & C7 & \"\"\"),\", C7)"
       ]
-    ]
+    ],
+    "backgroundColor": "rgb(204,204,204)",
+    "wrapStrategy": "CLIP",
+    "horizontalAlignment": "left"
+  },
+  {
+    "range": "A25:25",
+    "backgroundColor": "rgb(204,204,204)"
   },
   {
     "range": "A9:D10",
@@ -40,65 +52,131 @@
     ]
   },
   {
+    "range": "D10",
+    "backgroundColor": "rgb(208,224,227)"
+  },
+  {
+    "range": "A22:22",
+    "backgroundColor": "rgb(208,224,227)"
+  },
+  {
     "range": "B12:S13",
     "rangeValue": [
-      ["asset", "name", "shapetype", "materialname", "textfontfamily", "texttext", "textdepth", "textsize", "parent", "x", "y", "z", "sx", "sy", "sz", "rx", "ry", "rz"],
-      ["shape", "3dtext", "text", "color: 0.17,0.24,1", "=E16", "Company Logo", "0.2", "50", "::scene::", "", "", "", "5", "5", "5", "", "", "-40deg"]
+      ["name", "texttext", "materialname", "textdepth", "textsize", "asset", "shapetype", "textfontfamily", "parent", "x", "y", "z", "sx", "sy", "sz", "rx", "ry", "rz"],
+      ["3dtext", "Company Logo", "color: 0.17,0.24,1", "0.2", "50", "shape", "text", "=E16", "::scene::", "", "", "", "5", "5", "5", "", "", "-40deg"]
     ]
+  },
+  {
+    "range": "C13",
+    "backgroundColor": "rgb(252,229,205)"
+  },
+  {
+    "range": "A19:19",
+    "backgroundColor": "rgb(252,229,205)"
+  },
+  {
+    "range": "D13",
+    "backgroundColor": "rgb(217,234,211)"
+  },
+  {
+    "range": "A21:21",
+    "backgroundColor": "rgb(217,234,211)"
+  },
+  {
+    "range": "E13",
+    "backgroundColor": "rgb(207,226,243)"
+  },
+  {
+    "range": "A23:23",
+    "backgroundColor": "rgb(207,226,243)"
+  },
+  {
+    "range": "F13",
+    "backgroundColor": "rgb(234,209,220)"
+  },
+  {
+    "range": "A24:24",
+    "backgroundColor": "rgb(234,209,220)"
+  },
+  {
+    "range": "C16",
+    "backgroundColor": "rgb(255,242,204)"
+  },
+  {
+    "range": "A20:20",
+    "backgroundColor": "rgb(255,242,204)"
   },
   {
     "range": "B15:E16",
     "rangeValue": [
-      ["name", "asset", "blockflag", "genericblockdata"],
-      ["webfontblock", "block", "googlefont", "Raleway"]
+      ["name", "genericblockdata", "asset", "blockflag"],
+      ["webfontblock", "Raleway", "block", "googlefont"]
     ]
   },
-
-    {
-      "columnNumber": 1,
-      "width": 200
-    },
-    {
-      "columnNumber": 2,
-      "width": 150
-    },
-    {
-      "columnNumber": 3,
-      "width": 150
-    },
-    {
-      "columnNumber": 4,
-      "width": 150
-    },
-    {
-      "columnNumber": 5,
-      "width": 150
-    },
-    {
-      "columnNumber": 6,
-      "width": 150
-    },
-    {
-      "range":"A1:A",
-      "fontColor": "blue"
-    },
-    {
-      "range":"A1:1",
-      "backgroundColor": "rgb(0,0,100)",
-      "fontColor": "white",
-      "fontWeight": "bold"
-    },
-    {
-      "range":"C2",
-      "backgroundColor": "rgb(150,255,150)"
-    },
-    {
-      "range":"E16",
-      "backgroundColor": "rgb(200,200,255)"
-    },
-    {
-      "range":"E13",
-      "backgroundColor": "rgb(200,200,255)"
-    },
-    {"range":"A1","value":""}
+  {
+    "range": "B18:B25",
+    "rangeValue": [
+      ["C2: circuitranges cell to link on Projects sheet"],
+      ["C13: Company Logo text"],
+      ["C16: Google Web Font Name - or use html standard font - linked to I13 in the shape block"],
+      ["D13: Set the font color (optionally a material name) - the color ranges from black color: 0,0,0 -> white color: 1,1,1, also > 1 is possible, ecolor: .5,.5,.5 for emissive color, decolor: both emissive and diffuse, color: diffuse only"],
+      ["D10: Set the clear color (leave blank to have it default to user setting) - 0,0,0 is black, 1,1,1 is white - no lighting effect - this is canvas default/clear color if set"],
+      ["E13: adjust the thickness of the letters - .2 - 1.0 are typical values, higher then 1 gets hard to read"],
+      ["F13: adjust the tessellation by changing the text size - higher is more polys.  100 is pretty good, 50 is a little choppy, 200 is very high def"],
+      ["Range aggregation cells to make a single CSV output"]
+    ]
+  },
+  {
+    "columnNumber": 1,
+    "width": 200
+  },
+  {
+    "columnNumber": 2,
+    "width": 150
+  },
+  {
+    "columnNumber": 3,
+    "width": 150
+  },
+  {
+    "columnNumber": 4,
+    "width": 150
+  },
+  {
+    "columnNumber": 5,
+    "width": 150
+  },
+  {
+    "columnNumber": 6,
+    "width": 150
+  },
+  {
+    "range": "B2",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "A4:4",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "A9:9",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "A12:12",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "A15:15",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "A1:A",
+    "fontColor": "blue",
+    "fontWeight": "normal"
+  },
+  {
+    "range": "A1",
+    "value": ""
+  }
 ]
