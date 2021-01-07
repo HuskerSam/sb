@@ -32,6 +32,10 @@
   pointer-events: none;
 }
 
+#publish-profile-panel .form-group-container-group {
+  overflow:hidden;
+}
+
 #publish-profile-panel .fields-container * {
   pointer-events: auto;
 }

@@ -13,12 +13,24 @@ class cViewPublished extends bView {
     this.bandButtons = [];
     this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
     this.fontFields = [{
+      title: 'Background',
+      fireSetField: 'canvasColor',
+      type: 'color',
+      group: 'main1',
+      rangeMin: '0',
+      rangeMax: '1',
+      rangeStep: '.005',
+      floatLeft: true,
+      clearLeft: true,
+      displayType: 'shortVector'
+    },{
       title: 'Font',
       fireSetField: 'fontFamily',
       group: 'main',
       dataListId: 'fontfamilydatalist',
       type: 'font',
-      floatLeft: true
+      floatLeft: true,
+      clearLeft: true
     }, {
       title: 'Size',
       fireSetField: 'fontSize',
@@ -162,9 +174,9 @@ class cViewPublished extends bView {
   <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
   <div class="form_canvas_wrapper"></div>
   <button id="user-profile-dialog-reset-button">Reset Options</button>
-  <button id="publish-settings-button" style='display:none' class="btn-sb-icon"><i class="material-icons">settings_brightness</i></button>
+  <button id="publish-settings-button" style='bottom: 2em;' class="btn-sb-icon"><i class="material-icons">dashboard</i></button>
   <div id="publish-profile-panel" style="display:none;">
-    <div id="value-set-panel">
+    <div id="value-set-panel" style="display:none;">
       <label><span>Element</span>
       <select id="element-type-to-edit">
         <option>Block</option>
