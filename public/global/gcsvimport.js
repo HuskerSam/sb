@@ -645,7 +645,7 @@ class gCSVImport {
       sphereSegments: row.tessellation,
       sphereDiameterX: row.width,
       sphereDiameterY: row.height,
-      sphereDiameterZ: row.depth,
+      sphereDiameterZ: row.depth
     };
 
     if (row.shapetype === 'torus') {
@@ -679,6 +679,7 @@ class gCSVImport {
     sceneBC.sx = row.sx;
     sceneBC.sy = row.sy;
     sceneBC.sz = row.sz;
+    sceneBC.visibility = row.visibility;
     sceneBC.materialname = row.materialname;
 
     return this.addCSVRow(sceneBC);

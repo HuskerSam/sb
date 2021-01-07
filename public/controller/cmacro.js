@@ -821,6 +821,11 @@ class cMacro {
           <td></td>
         </tr>
         <tr>
+          <td>Visibility</td>
+          <td><input type="text" class="shape_visibility" style="width:100%" value="" /></td>
+          <td></td>
+        </tr>
+        <tr>
           <td colspan="3">
             <div style="display:flex;flex-direction:row">
               <span>Position X</span><input type="text" class="shape_x" />
@@ -888,6 +893,7 @@ class cMacro {
     this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
     this.shape_parent = this.panel.querySelector('.shape_parent');
+    this.shape_visibility = this.panel.querySelector('.shape_visibility');
     this.shape_x = this.panel.querySelector('.shape_x');
     this.shape_y = this.panel.querySelector('.shape_y');
     this.shape_z = this.panel.querySelector('.shape_z');
@@ -992,6 +998,7 @@ class cMacro {
 
     if (includeParent) {
       field_data['parent'] = this.shape_parent.value;
+      field_data['visiblity'] = this.shape_visibility.value;
       field_data['x'] = this.shape_x.value;
       field_data['y'] = this.shape_y.value;
       field_data['z'] = this.shape_z.value;
