@@ -230,9 +230,6 @@ function _mergeCSVRanges(rangeArray, jsonResults = false) {
     }
   }
 
-  if (jsonResults)
-    return processedRows;
-
   var outRows = [];
   var outColumns = [];
   for (var col in allColumns)
@@ -245,11 +242,16 @@ function _mergeCSVRanges(rangeArray, jsonResults = false) {
     for (var col in allColumns) {
       if (row[col] != undefined)
         outCells.push(row[col]);
-      else
+      else {
         outCells.push('');
+        row[col] = '';
+      }
     }
     outRows.push(outCells);
   }
+
+  if (jsonResults)
+    return processedRows;
 
   return outRows;
 }
