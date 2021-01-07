@@ -946,7 +946,7 @@ table.wizard_field_container td {
   border: none;
 }
 
-table.wizard_field_container td:nth-child(1) {
+table.wizard_field_container td:nth-child(1), table.wizard_field_container td span {
   white-space: nowrap;
   padding: 0 4px 0 0;
   font-size: .6em;
@@ -975,17 +975,17 @@ input[type="color"] {
   display: none;
 }
 
-table.shape_parent_details tr td input[type="text"] {
+table.wizard_parent_details tr td input[type="text"] {
   flex: 1;
   width: 2em;
   margin-right: 0;
 }
 
-table.shape_parent_details tr td:nth-child(1) {
+table.wizard_parent_details tr td:nth-child(1) {
   padding: 0;
 }
 
-.shape_parent_details span {
+.wizard_parent_details span {
   font-size: .75em;
   padding-top: 6px;
   margin:0 3px;

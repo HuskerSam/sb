@@ -95,6 +95,46 @@ class cMacro {
 
     return template;
   }
+  _addParentTemplate() {
+    return `<table class="wizard_field_container wizard_parent_details" style="display:none">
+      <tr>
+        <td>Parent Block</td>
+        <td><input type="text" list="blockdatatitlelookuplist" class="wizard_parent" style="width:100%" value="::scene::" /></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Visibility</td>
+        <td colspan="2"><input type="text" class="wizard_visibility" style="4em" value="" /></td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <div style="display:flex;flex-direction:row">
+            <span>Position X</span><input type="text" class="wizard_x" />
+            <span>Y</span><input type="text" class="wizard_y" />
+            <span>Z</span><input type="text" class="wizard_z" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+      <td colspan="3">
+        <div style="display:flex;flex-direction:row">
+          <span>Scale X</span><input type="text" class="wizard_sx" />
+          <span>Y</span><input type="text" class="wizard_sy" />
+          <span>Z</span><input type="text" class="wizard_sz" />
+        </div>
+      </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <div style="display:flex;flex-direction:row">
+            <span>Rotate X</span><input type="text" class="wizard_rx" />
+            <span>Y</span><input type="text" class="wizard_ry" />
+            <span>Z</span><input type="text" class="wizard_rz" />
+          </div>
+        </td>
+      </tr>
+    </table>`;
+  }
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
       <div style="display:flex;flex-direction:row">
@@ -810,49 +850,11 @@ class cMacro {
         </tr>
         <tr data-types="all">
           <td>Show Parent Details</td>
-          <td><input class="show_parent_shape_details" style="width:1.5em" type="checkbox"></td>
+          <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
           <td></td>
         </tr>
       </table>
-      <table class="wizard_field_container shape_parent_details" style="display:none">
-        <tr>
-          <td>Parent Block</td>
-          <td><input type="text" list="blockdatatitlelookuplist" class="shape_parent" style="width:100%" value="::scene::" /></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Visibility</td>
-          <td><input type="text" class="shape_visibility" style="width:100%" value="" /></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <div style="display:flex;flex-direction:row">
-              <span>Position X</span><input type="text" class="shape_x" />
-              <span>Y</span><input type="text" class="shape_y" />
-              <span>Z</span><input type="text" class="shape_z" />
-            </div>
-          </td>
-        </tr>
-        <tr>
-        <td colspan="3">
-          <div style="display:flex;flex-direction:row">
-            <span>Scale X</span><input type="text" class="shape_sx" />
-            <span>Y</span><input type="text" class="shape_sy" />
-            <span>Z</span><input type="text" class="shape_sz" />
-          </div>
-        </td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <div style="display:flex;flex-direction:row">
-              <span>Rotate X</span><input type="text" class="shape_rx" />
-              <span>Y</span><input type="text" class="shape_ry" />
-              <span>Z</span><input type="text" class="shape_rz" />
-            </div>
-          </td>
-        </tr>
-      </table>
+      ${this._addParentTemplate()}
     </div>
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
@@ -869,13 +871,13 @@ class cMacro {
     this.shapetype_filter_select.addEventListener('input', e => this.shapeTypeFilterChange());
     this.wizard_field_container = this.panel.querySelector('.wizard_field_container');
 
-    this.show_parent_shape_details = this.panel.querySelector('.show_parent_shape_details');
-    this.shape_parent_details = this.panel.querySelector('.shape_parent_details');
-    this.show_parent_shape_details.addEventListener('input', e => {
-      if (this.show_parent_shape_details.checked)
-        this.shape_parent_details.style.display = '';
+    this.show_parent_wizard_details = this.panel.querySelector('.show_parent_wizard_details');
+    this.wizard_parent_details = this.panel.querySelector('.wizard_parent_details');
+    this.show_parent_wizard_details.addEventListener('input', e => {
+      if (this.show_parent_wizard_details.checked)
+        this.wizard_parent_details.style.display = '';
       else
-        this.shape_parent_details.style.display = 'none';
+        this.wizard_parent_details.style.display = 'none';
     });
 
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
@@ -892,17 +894,17 @@ class cMacro {
     this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
     this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
-    this.shape_parent = this.panel.querySelector('.shape_parent');
-    this.shape_visibility = this.panel.querySelector('.shape_visibility');
-    this.shape_x = this.panel.querySelector('.shape_x');
-    this.shape_y = this.panel.querySelector('.shape_y');
-    this.shape_z = this.panel.querySelector('.shape_z');
-    this.shape_sx = this.panel.querySelector('.shape_sx');
-    this.shape_sy = this.panel.querySelector('.shape_sy');
-    this.shape_sz = this.panel.querySelector('.shape_sz');
-    this.shape_rx = this.panel.querySelector('.shape_rx');
-    this.shape_ry = this.panel.querySelector('.shape_ry');
-    this.shape_rz = this.panel.querySelector('.shape_rz');
+    this.wizard_parent = this.panel.querySelector('.wizard_parent');
+    this.wizard_visibility = this.panel.querySelector('.wizard_visibility');
+    this.wizard_x = this.panel.querySelector('.wizard_x');
+    this.wizard_y = this.panel.querySelector('.wizard_y');
+    this.wizard_z = this.panel.querySelector('.wizard_z');
+    this.wizard_sx = this.panel.querySelector('.wizard_sx');
+    this.wizard_sy = this.panel.querySelector('.wizard_sy');
+    this.wizard_sz = this.panel.querySelector('.wizard_sz');
+    this.wizard_rx = this.panel.querySelector('.wizard_rx');
+    this.wizard_ry = this.panel.querySelector('.wizard_ry');
+    this.wizard_rz = this.panel.querySelector('.wizard_rz');
 
     this.panel.querySelectorAll('.textfontfamily').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
@@ -964,7 +966,7 @@ class cMacro {
     this.newName = this.panelInput.value.trim();
     let shapetype = this.shapetype_filter_select.value;
     let allColumns = this.copy_csv_allcolumn_clipboard.checked;
-    let includeParent = this.show_parent_shape_details.checked;
+    let includeParent = this.show_parent_wizard_details.checked;
 
     let csv_row = {
       name: this.newName,
@@ -982,7 +984,6 @@ class cMacro {
     });
 
     let tr_rows = this.panel.querySelectorAll('.shape_wizard_table tr');
-    let field_data = csv_row;
     tr_rows.forEach(row => {
       let cats = row.dataset.types;
       if (!cats)
@@ -991,26 +992,26 @@ class cMacro {
       if (cats.indexOf(shapetype) !== -1 || cats[0] === 'all') {
         let i = row.querySelector('input[type="text"]');
         if (i) {
-          field_data[i.dataset.field] = i.value;
+          csv_row[i.dataset.field] = i.value;
         }
       }
     });
 
     if (includeParent) {
-      field_data['parent'] = this.shape_parent.value;
-      field_data['visiblity'] = this.shape_visibility.value;
-      field_data['x'] = this.shape_x.value;
-      field_data['y'] = this.shape_y.value;
-      field_data['z'] = this.shape_z.value;
-      field_data['sx'] = this.shape_sx.value;
-      field_data['sy'] = this.shape_sy.value;
-      field_data['sz'] = this.shape_sz.value;
-      field_data['rx'] = this.shape_rx.value;
-      field_data['ry'] = this.shape_ry.value;
-      field_data['rz'] = this.shape_rz.value;
+      csv_row['parent'] = this.wizard_parent.value;
+      csv_row['visibility'] = this.wizard_visibility.value;
+      csv_row['x'] = this.wizard_x.value;
+      csv_row['y'] = this.wizard_y.value;
+      csv_row['z'] = this.wizard_z.value;
+      csv_row['sx'] = this.wizard_sx.value;
+      csv_row['sy'] = this.wizard_sy.value;
+      csv_row['sz'] = this.wizard_sz.value;
+      csv_row['rx'] = this.wizard_rx.value;
+      csv_row['ry'] = this.wizard_ry.value;
+      csv_row['rz'] = this.wizard_rz.value;
     }
 
-    let r = field_data;
+    let r = csv_row;
     let header = this.copy_csv_header_clipboard.checked;
     this.export_csv = r;
     if (r) {
@@ -1046,9 +1047,18 @@ class cMacro {
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
-            <td>Show Parent Details</td>
-            <td><input class="show_parent_mesh_details" style="width:1.5em" type="checkbox"></td>
-            <td></td>
+            <td>Specular Map URL</td>
+            <td><input type="text" list="sbimageslist" class="mesh_specularpath texturepathinput" data-field="mesh_specularpath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <div style="display:flex;flex-direction:row">
+                <span style="padding-top:4px;padding-right:4px;">Specular Power</span><input type="text" class="mesh_specularpower" data-field="mesh_hasalpha" />
+
+                <span style="padding-left:8px;padding-right:4px;padding-top:4px;">Has Alpha (1)</span><input type="text" class="mesh_hasalpha" data-field="hasalpha" />
+              </div>
+            </td>
           </tr>
           <tr>
             <td colspan="3" style="text-align:center">
@@ -1060,59 +1070,13 @@ class cMacro {
               <div class="mesh_message" style=""></div>
             </td>
           </tr>
-        </table>
-        <table class="wizard_field_container mesh_parent_details" style="display:none">
-          <tr>
-            <td>Parent</td>
-            <td><input type="text" list="blockdatatitlelookuplist" class="mesh_parent" value="::scene::" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Position X</td>
-            <td><input type="text" class="mesh_x" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Position Y</td>
-            <td><input type="text" class="mesh_y" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Position Z</td>
-            <td><input type="text" class="mesh_z" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Scale X</td>
-            <td><input type="text" class="mesh_sx" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Scale Y</td>
-            <td><input type="text" class="mesh_sy" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Scale Z</td>
-            <td><input type="text" class="mesh_sz" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Rotate X</td>
-            <td><input type="text" class="mesh_rx" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Rotate Y</td>
-            <td><input type="text" class="mesh_ry" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Rotate Z</td>
-            <td><input type="text" class="mesh_rz" /></td>
+          <tr data-types="all">
+            <td>Show Parent Details</td>
+            <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
             <td></td>
           </tr>
         </table>
+        ${this._addParentTemplate()}
       </div>
     </div>
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
@@ -1133,16 +1097,21 @@ class cMacro {
     this.mesh_meshpath = this.panel.querySelector('.mesh_meshpath');
     this.mesh_texturepath = this.panel.querySelector('.mesh_texturepath');
     this.mesh_bmppath = this.panel.querySelector('.mesh_bmppath');
-    this.mesh_parent = this.panel.querySelector('.mesh_parent');
-    this.mesh_x = this.panel.querySelector('.mesh_x');
-    this.mesh_y = this.panel.querySelector('.mesh_y');
-    this.mesh_z = this.panel.querySelector('.mesh_z');
-    this.mesh_sx = this.panel.querySelector('.mesh_sx');
-    this.mesh_sy = this.panel.querySelector('.mesh_sy');
-    this.mesh_sz = this.panel.querySelector('.mesh_sz');
-    this.mesh_rx = this.panel.querySelector('.mesh_rx');
-    this.mesh_ry = this.panel.querySelector('.mesh_ry');
-    this.mesh_rz = this.panel.querySelector('.mesh_rz');
+    this.mesh_specularpath = this.panel.querySelector('.mesh_specularpath');
+    this.mesh_specularpower = this.panel.querySelector('.mesh_specularpower');
+    this.mesh_hasalpha = this.panel.querySelector('.mesh_hasalpha');
+
+    this.wizard_parent = this.panel.querySelector('.wizard_parent');
+    this.wizard_visibility = this.panel.querySelector('.wizard_visibility');
+    this.wizard_x = this.panel.querySelector('.wizard_x');
+    this.wizard_y = this.panel.querySelector('.wizard_y');
+    this.wizard_z = this.panel.querySelector('.wizard_z');
+    this.wizard_sx = this.panel.querySelector('.wizard_sx');
+    this.wizard_sy = this.panel.querySelector('.wizard_sy');
+    this.wizard_sz = this.panel.querySelector('.wizard_sz');
+    this.wizard_rx = this.panel.querySelector('.wizard_rx');
+    this.wizard_ry = this.panel.querySelector('.wizard_ry');
+    this.wizard_rz = this.panel.querySelector('.wizard_rz');
 
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
@@ -1158,16 +1127,16 @@ class cMacro {
     this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV(e, i)));
-    this.show_parent_mesh_details = this.panel.querySelector('.show_parent_mesh_details');
-    this.mesh_parent_details = this.panel.querySelector('.mesh_parent_details');
-    this.show_parent_mesh_details.addEventListener('input', e => {
-      if (this.show_parent_mesh_details.checked)
-        this.mesh_parent_details.style.display = '';
+    this.show_parent_wizard_details = this.panel.querySelector('.show_parent_wizard_details');
+    this.wizard_parent_details = this.panel.querySelector('.wizard_parent_details');
+    this.show_parent_wizard_details.addEventListener('input', e => {
+      if (this.show_parent_wizard_details.checked)
+        this.wizard_parent_details.style.display = '';
       else
-        this.mesh_parent_details.style.display = 'none';
+        this.wizard_parent_details.style.display = 'none';
     });
 
-    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'x', 'y', 'z', 'sx', 'sy', 'sz', 'rx', 'ry', 'rz'];
+    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath','specularpath','specularpower','hasalpha'];
 
     this.__registerFileUploaders();
 
@@ -1217,13 +1186,14 @@ class cMacro {
   }
   meshScrape() {
     this.newName = this.panelInput.value.trim();
+    let includeParent = this.show_parent_wizard_details.checked;
+
     let csv_row = {
       name: this.newName,
       asset: 'meshtexture'
     };
 
     csv_row['materialname'] = csv_row['name'] + '_material';
-    csv_row['parent'] = this.mesh_parent.value;
 
     this.meshCSVFields.forEach((item, index) => {
       if (item === 'message')
@@ -1231,9 +1201,24 @@ class cMacro {
 
       csv_row[item] = this['mesh_' + item].value;
     });
+
     csv_row['ambient'] = 'x';
     csv_row['diffuse'] = 'x';
     csv_row['emissive'] = 'x';
+
+    if (includeParent) {
+      csv_row['parent'] = this.wizard_parent.value;
+      csv_row['visibility'] = this.wizard_visibility.value;
+      csv_row['x'] = this.wizard_x.value;
+      csv_row['y'] = this.wizard_y.value;
+      csv_row['z'] = this.wizard_z.value;
+      csv_row['sx'] = this.wizard_sx.value;
+      csv_row['sy'] = this.wizard_sy.value;
+      csv_row['sz'] = this.wizard_sz.value;
+      csv_row['rx'] = this.wizard_rx.value;
+      csv_row['ry'] = this.wizard_ry.value;
+      csv_row['rz'] = this.wizard_rz.value;
+    }
 
     return csv_row;
   }
@@ -1629,7 +1614,6 @@ class cMacro {
 
     return csv_row;
   }
-
   async _itemCreate() {
     let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(this.export_csv);
     this.lastRowAdded = this.export_csv;
