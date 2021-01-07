@@ -972,6 +972,8 @@ class gCSVImport {
       this.dbSetRecord('frame', frame);
     }
 
+    row.asset = 'block';
+    this.addParentBlockChild(row);
     return blockResult;
   }
   async addCSVConnectorLine(row) {
@@ -1061,6 +1063,8 @@ class gCSVImport {
     if (row.tailshape !== 'none')
       this.addCSVShapeRow(this.__childShapeRow(tailRow));
 
+    row.asset = 'block';
+    this.addParentBlockChild(row);
     return blockResult;
   }
   async addCSVShapeAndText(row) {
@@ -1125,6 +1129,8 @@ class gCSVImport {
       row.z = (-1.0 * depth / 2.0).toFixed(3);
     this.addCSVShapeRow(this.__childShapeRow(row));
 
+    row.asset = 'block';
+    this.addParentBlockChild(row);
     return blockResult;
   }
   async addCSVSceneBlock(row) {

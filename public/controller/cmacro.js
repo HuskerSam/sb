@@ -95,14 +95,14 @@ class cMacro {
 
     return template;
   }
-  _addParentTemplate() {
+  _addParentTemplate(hideVisibility) {
     return `<table class="wizard_field_container wizard_parent_details" style="display:none">
       <tr>
         <td>Parent Block</td>
         <td><input type="text" list="blockdatatitlelookuplist" class="wizard_parent" style="width:100%" value="::scene::" /></td>
         <td></td>
       </tr>
-      <tr>
+      <tr style="${hideVisibility ? "display:none" : "" }">
         <td>Visibility</td>
         <td colspan="2"><input type="text" class="wizard_visibility" style="4em" value="" /></td>
       </tr>
@@ -634,6 +634,14 @@ class cMacro {
           </table>
         </div>
       </div>
+      <table class="wizard_field_container">
+        <tr data-types="all">
+          <td>Show Parent Details</td>
+          <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
+          <td></td>
+        </tr>
+      </table>
+      ${this._addParentTemplate(true)}
     </div>
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
@@ -680,6 +688,15 @@ class cMacro {
     this.skyBoxInput = this.scene_block_add_options.querySelector('.skybox');
     this.skyBoxInput.addEventListener('input', e => this.blockSkyboxChange());
     this.skyboximage = this.scene_block_add_options.querySelector('.skybox_image');
+
+    this.show_parent_wizard_details = this.panel.querySelector('.show_parent_wizard_details');
+    this.wizard_parent_details = this.panel.querySelector('.wizard_parent_details');
+    this.show_parent_wizard_details.addEventListener('input', e => {
+      if (this.show_parent_wizard_details.checked)
+        this.wizard_parent_details.style.display = '';
+      else
+        this.wizard_parent_details.style.display = 'none';
+    });
 
     let sceneRadios = this.panel.querySelectorAll('.sceneaddtype');
     sceneRadios.forEach(rdo => {
@@ -728,6 +745,17 @@ class cMacro {
     this.show_uploads.addEventListener('input', e => {
       this.image_upload_list.forEach(ele => ele.style.display = (this.show_uploads.checked) ? 'table-row' : 'none');
     });
+
+    this.wizard_parent = this.panel.querySelector('.wizard_parent');
+    this.wizard_x = this.panel.querySelector('.wizard_x');
+    this.wizard_y = this.panel.querySelector('.wizard_y');
+    this.wizard_z = this.panel.querySelector('.wizard_z');
+    this.wizard_sx = this.panel.querySelector('.wizard_sx');
+    this.wizard_sy = this.panel.querySelector('.wizard_sy');
+    this.wizard_sz = this.panel.querySelector('.wizard_sz');
+    this.wizard_rx = this.panel.querySelector('.wizard_rx');
+    this.wizard_ry = this.panel.querySelector('.wizard_ry');
+    this.wizard_rz = this.panel.querySelector('.wizard_rz');
 
     this.blockHelperChange();
     this.blockSkyboxChange();
@@ -966,7 +994,6 @@ class cMacro {
     this.newName = this.panelInput.value.trim();
     let shapetype = this.shapetype_filter_select.value;
     let allColumns = this.copy_csv_allcolumn_clipboard.checked;
-    let includeParent = this.show_parent_wizard_details.checked;
 
     let csv_row = {
       name: this.newName,
@@ -997,6 +1024,7 @@ class cMacro {
       }
     });
 
+    let includeParent = this.show_parent_wizard_details.checked;
     if (includeParent) {
       csv_row['parent'] = this.wizard_parent.value;
       csv_row['visibility'] = this.wizard_visibility.value;
@@ -1669,25 +1697,39 @@ class cMacro {
   }
   blockUpdateCSV() {
     let macrotype = this.blockOptionsPicker.value;
-    let r = null;
+    let csv_row = null;
     if (macrotype === 'Text and Shape')
-      r = this._blockScrapeTextAndShape();
+      csv_row = this._blockScrapeTextAndShape();
     if (macrotype === 'Connector Line')
-      r = this._blockScrapeConnectorLine();
+      csv_row = this._blockScrapeConnectorLine();
     if (macrotype === 'Animated Line')
-      r = this._blockScrapeAnimatedline();
+      csv_row = this._blockScrapeAnimatedline();
     if (macrotype === 'Web Font')
-      r = this._blockScrapeWebFont();
+      csv_row = this._blockScrapeWebFont();
     if (macrotype === 'Scene')
-      r = this._blockScrapeScene();
+      csv_row = this._blockScrapeScene();
     if (macrotype === '2D Text Plane')
-      r = this._shapeScrapeTextPlane();
+      csv_row = this._shapeScrapeTextPlane();
+
+    let includeParent = this.show_parent_wizard_details.checked;
+    if (includeParent) {
+      csv_row['parent'] = this.wizard_parent.value;
+      csv_row['x'] = this.wizard_x.value;
+      csv_row['y'] = this.wizard_y.value;
+      csv_row['z'] = this.wizard_z.value;
+      csv_row['sx'] = this.wizard_sx.value;
+      csv_row['sy'] = this.wizard_sy.value;
+      csv_row['sz'] = this.wizard_sz.value;
+      csv_row['rx'] = this.wizard_rx.value;
+      csv_row['ry'] = this.wizard_ry.value;
+      csv_row['rz'] = this.wizard_rz.value;
+    }
 
     let header = this.copy_csv_header_clipboard.checked;
-    this.export_csv = r;
-    if (r) {
+    this.export_csv = csv_row;
+    if (csv_row) {
       if (window.Papa)
-        this.csvImportPreviewRaw = Papa.unparse([r], {
+        this.csvImportPreviewRaw = Papa.unparse([csv_row], {
           header
         });
       else
