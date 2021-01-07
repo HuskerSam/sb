@@ -68,5 +68,12 @@
     "hint": "16 Band Song",
     "categories": "Other",
     "description": "Use addon to process a song into 16 bands and this sheet will produce the animation data"
+  },
+  {
+    "name": "3D Logo",
+    "key": "3DLogo",
+    "hint": "Company Logo",
+    "categories": "Layout",
+    "description": "Simple 3D logo example"
   }
 ]

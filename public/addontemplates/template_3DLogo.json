@@ -1,0 +1,104 @@
+[{
+    "range": "C1",
+    "value": "Range List to link in Projects:circuitranges"
+  },
+  {
+    "range": "A2:C3",
+    "rangeValue": [
+      ["Single CSV output", "Ranges", "=textjoin(\",\",true, D5:D7)"],
+      ["", "Test Formula", "=\"mergeCSVRanges(\" & textjoin(\",\",true, E5:E7) & \")\""]
+    ],
+    "wrapStrategy":"CLIP","horizontalAlignment":"left"
+  },
+  {
+    "range": "B4:C4",
+    "rangeValue": [
+      [
+        "workbookids", "ranges"
+      ]
+    ]
+  },
+  {
+    "range": "C5:E7",
+    "rangeValue": [
+      ["=getStringForRange(##sheetname!B9:D10)", "=IF(B5 <> \"\", B5 & \"||||\", \"\") & C5 & \"\"",
+        "=IF(B5 <> \"\",\"ImportRange(\"\"\" & B5 & \"\"\",\"\"\" & C5 & \"\"\"),\", C5)"
+      ],
+      ["=getStringForRange(##sheetname!B12:S13)", "=IF(B6 <> \"\", B6 & \"||||\", \"\") & C6 & \"\"",
+        "=IF(B6 <> \"\",\"ImportRange(\"\"\" & B6 & \"\"\",\"\"\" & C6 & \"\"\"),\", C6)"
+      ],
+      ["=getStringForRange(##sheetname!B15:E16)", "=IF(B7 <> \"\", B7 & \"||||\", \"\") & C7 & \"\"",
+        "=IF(B7 <> \"\",\"ImportRange(\"\"\" & B7 & \"\"\",\"\"\" & C7 & \"\"\"),\", C7)"
+      ]
+    ]
+  },
+  {
+    "range": "A9:D10",
+    "rangeValue": [
+      ["Display Definition", "name", "asset", "clearcolor"],
+      ["", "Simple 1 Sheet Scene", "sceneblock", ""]
+    ]
+  },
+  {
+    "range": "B12:S13",
+    "rangeValue": [
+      ["asset", "name", "shapetype", "materialname", "textfontfamily", "texttext", "textdepth", "textsize", "parent", "x", "y", "z", "sx", "sy", "sz", "rx", "ry", "rz"],
+      ["shape", "3dtext", "text", "color: 0.17,0.24,1", "=E16", "Company Logo", "0.2", "50", "::scene::", "", "", "", "5", "5", "5", "", "", "-40deg"]
+    ]
+  },
+  {
+    "range": "B15:E16",
+    "rangeValue": [
+      ["name", "asset", "blockflag", "genericblockdata"],
+      ["webfontblock", "block", "googlefont", "Raleway"]
+    ]
+  },
+
+    {
+      "columnNumber": 1,
+      "width": 200
+    },
+    {
+      "columnNumber": 2,
+      "width": 150
+    },
+    {
+      "columnNumber": 3,
+      "width": 150
+    },
+    {
+      "columnNumber": 4,
+      "width": 150
+    },
+    {
+      "columnNumber": 5,
+      "width": 150
+    },
+    {
+      "columnNumber": 6,
+      "width": 150
+    },
+    {
+      "range":"A1:A",
+      "fontColor": "blue"
+    },
+    {
+      "range":"A1:1",
+      "backgroundColor": "rgb(0,0,100)",
+      "fontColor": "white",
+      "fontWeight": "bold"
+    },
+    {
+      "range":"C2",
+      "backgroundColor": "rgb(150,255,150)"
+    },
+    {
+      "range":"E16",
+      "backgroundColor": "rgb(200,200,255)"
+    },
+    {
+      "range":"E13",
+      "backgroundColor": "rgb(200,200,255)"
+    },
+    {"range":"A1","value":""}
+]
