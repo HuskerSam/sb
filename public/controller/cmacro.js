@@ -73,6 +73,9 @@ class cMacro {
     if (this[tag + 'Register'])
       this[tag + 'Register']();
 
+    this.getItemName();
+    this.panelInput.addEventListener('input', e => this[tag + 'UpdateCSV']());
+
     this.defaultParent = null;
     this.addCallback = null;
   }
@@ -81,8 +84,8 @@ class cMacro {
   }
   baseTemplate() {
     let template = `<div class="block_wizard_add_name_div" style="flex:1;display:flex;flex-direction:row;padding-top:2px;">
-      <label class="add_template_name_label" style="padding:4px;"><b>Name</b>
-     </label><input class="add-item-name" type="text" style="width:10.5em;" value="name" />`;
+      <label class="add_template_name_label" style="padding:4px;"><span style="font-size:.75em;">Name</span>
+     </label><input class="add-item-name" type="text" style="width:11.5em;" value="name" />`;
     if (!this.addonmode)
       template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
         <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
@@ -656,6 +659,7 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName();
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -700,6 +704,7 @@ class cMacro {
            <option value="sphere">Sphere</option>
            <option value="text">3D Text</option>
            <option value="plane">Plane</option>
+           <option value="torus">Torus</option>
           </select></td>
           <td></td>
         </tr>
@@ -753,14 +758,19 @@ class cMacro {
           <td><input type="text" data-field="height"></td>
           <td></td>
         </tr>
-        <tr data-types="cylinder">
+        <tr data-types="cylinder,torus">
           <td>Diameter</td>
           <td><input type="text" data-field="width"></td>
           <td></td>
         </tr>
-        <tr data-types="cylinder">
+        <tr data-types="cylinder,torus">
           <td>Tessellation</td>
           <td><input type="text" data-field="tessellation"></td>
+          <td></td>
+        </tr>
+        <tr data-types="torus">
+          <td>Thickness</td>
+          <td><input type="text" data-field="height"></td>
           <td></td>
         </tr>
         <tr data-types="cylinder">
@@ -870,6 +880,7 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName();
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -1132,6 +1143,7 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName();
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -1219,10 +1231,7 @@ class cMacro {
     return csv_row;
   }
   async meshCreate() {
-    let row = this.meshScrape();
-
-    let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
-    return blockResult.key;
+    return this._itemCreate();
   }
   materialTemplate() {
     return `<div class="standardmaterialassetpanel material_wizard_wrapper" style="flex-direction:column">
@@ -1278,6 +1287,7 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName();
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -1381,10 +1391,7 @@ class cMacro {
     return csv_row;
   }
   async materialCreate() {
-    let row = this.materialScrape();
-
-    let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
-    return blockResult.key;
+    return this._itemCreate();
   }
   _handleImageTextureUpload(fileCtl, field) {
     let fileBlob = fileCtl.files[0];
@@ -1615,53 +1622,20 @@ class cMacro {
 
     return csv_row;
   }
+
+  async _itemCreate() {
+    let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(this.export_csv);
+    this.lastRowAdded = this.export_csv;
+    this.getItemName();
+    return blockResult.key;
+  }
   async blockCreate() {
-    let bType = this.blockOptionsPicker.value;
-    this.mixin = {};
-    this.file = null;
-    this.mixin.materialName = '';
-
-    if (bType === '2D Text Plane') {
-      let row = this._shapeScrapeTextPlane();
-
-      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
-      return blockResult.key;
-    }
-    if (bType === 'Web Font') {
-      let row = this._blockScrapeWebFont();
-
-      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
+    if (this.blockOptionsPicker.value === 'Web Font')
       this.app._updateGoogleFonts();
-      return blockResult.key;
-    }
-    if (bType === 'Text and Shape') {
-      let row = this._blockScrapeTextAndShape();
-
-      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
-      this.lastRowAdded = row;
-      return blockResult.key;
-    }
-    if (bType === 'Scene') {
-      let row = this._blockScrapeScene();
-
-      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
-      return blockResult.key;
-    }
-    if (bType === 'Animated Line') {
-      let row = this._blockScrapeAnimatedline();
-
-      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
-      this.lastRowAdded = row;
-      return blockResult.key;
-    }
-    if (bType === 'Connector Line') {
-      let row = this._blockScrapeConnectorLine();
-
-      let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(row);
-      this.lastRowAdded = row;
-      return blockResult.key;
-    }
-
+    return this._itemCreate();
+  }
+  async shapeCreate() {
+    return this._itemCreate();
   }
   blockSkyboxChange() {
     let skybox = this.skyBoxInput.value.trim();
@@ -1835,13 +1809,14 @@ class cMacro {
 
     el.remove();
   }
+  getItemName() {
+    let r = this.panelInput.value.trim();
+    this.panelInput.value = this.tag + ' ' + Math.floor(1000 + Math.random() * 9000).toString();
+    this[this.tag + 'UpdateCSV']();
+    return r;
+  }
   async createItem(newWindow) {
     this.newName = this.panelInput.value.trim();
-    if (this.panelInput.value === '') {
-      this.panelInput.value = 'Created ' + new Date().toISOString();
-      //alert('Please enter a name');
-      //return;
-    }
     let existingTitles = this.app.a.modelSets[this.tag].queryCache('title', this.newName);
     let keys = Object.keys(existingTitles);
     if (keys.length > 0) {
@@ -1861,8 +1836,6 @@ class cMacro {
     this.createMesage.style.display = 'none';
     if (this.addCallback)
       await this.addCallback(newKey, this.newName);
-    this.panelInput.value = '';
-
     return;
   }
 }

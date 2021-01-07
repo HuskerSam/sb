@@ -645,7 +645,7 @@ class gCSVImport {
       sphereSegments: row.tessellation,
       sphereDiameterX: row.width,
       sphereDiameterY: row.height,
-      sphereDiameterZ: row.depth
+      sphereDiameterZ: row.depth,
     };
 
     if (row.shapetype === 'torus') {
