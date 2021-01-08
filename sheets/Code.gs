@@ -120,11 +120,11 @@ function AddRowToProjectList(name, circuitranges, assetranges, productssheet, fl
     row = sheet.getLastRow();
   }
 
-  SetCSVSheetValue('Projects', row, 'name', name);
-  SetCSVSheetValue('Projects', row, 'assetranges', assetranges);
-  SetCSVSheetValue('Projects', row, 'circuitranges', circuitranges);
-  SetCSVSheetValue('Projects', row, 'catalogsheet', productssheet);
-  SetCSVSheetValue('Projects', row, 'flags', flags);
+  SetCSVSheetValue('Projects', row, 'Project Name', name);
+  SetCSVSheetValue('Projects', row, 'Asset Ranges', assetranges);
+  SetCSVSheetValue('Projects', row, 'Circuit Ranges', circuitranges);
+  SetCSVSheetValue('Projects', row, 'Catalog Sheet', productssheet);
+  SetCSVSheetValue('Projects', row, 'Flags', flags);
 }
 
 function JSONArrayMax(jsonArray) {

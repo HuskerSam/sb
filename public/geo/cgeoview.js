@@ -362,7 +362,7 @@ class cGeoView extends bView {
       this.objectListPopup.toggle();
       this.resetDimensionSliders();
     };
-    let sel = this.dialog.querySelector('.block-type-select');
+    let sel = this.dialog.querySelector('.block_wizard_type_select');
     sel.innerHTML = `<option selected>Text and Shape</option>
      <option>Animated Line</option>
      <option>Connector Line</option>`;

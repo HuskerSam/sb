@@ -680,6 +680,7 @@ class gCSVImport {
     sceneBC.sy = row.sy;
     sceneBC.sz = row.sz;
     sceneBC.visibility = row.visibility;
+    sceneBC.frametime = row.frametime;
     sceneBC.materialname = row.materialname;
 
     return this.addCSVRow(sceneBC);
@@ -973,6 +974,7 @@ class gCSVImport {
     }
 
     row.asset = 'block';
+    row.frametime = row.runlength;
     this.addParentBlockChild(row);
     return blockResult;
   }

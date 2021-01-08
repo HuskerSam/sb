@@ -138,7 +138,7 @@ class cMacro {
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
       <div style="display:flex;flex-direction:row">
-        <select class="block-type-select" style="margin-bottom: 8px;margin-top:4px;width: 9em;margin-right:.25em;font-size:.9em">
+        <select class="block_wizard_type_select" style="margin-bottom: 8px;margin-top:4px;width: 9em;margin-right:.25em;font-size:.9em">
          <option selected>Scene</option>
          <option>Text and Shape</option>
          <option>Animated Line</option>
@@ -634,14 +634,16 @@ class cMacro {
           </table>
         </div>
       </div>
-      <table class="wizard_field_container">
-        <tr data-types="all">
-          <td>Show Parent Details</td>
-          <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
-          <td></td>
-        </tr>
-      </table>
-      ${this._addParentTemplate(true)}
+      <div id="block_wizard_parent_wrapper">
+        <table class="wizard_field_container">
+          <tr data-types="all">
+            <td>Show Parent Details</td>
+            <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
+            <td></td>
+          </tr>
+        </table>
+        ${this._addParentTemplate(true)}
+      </div>
     </div>
     <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
@@ -654,7 +656,7 @@ class cMacro {
     <datalist id="webfontsuggestionlist"></datalist>`;
   }
   blockRegister() {
-    this.blockOptionsPicker = this.panel.querySelector('.block-type-select');
+    this.blockOptionsPicker = this.panel.querySelector('.block_wizard_type_select');
     this.blockOptionsPicker.addEventListener('input', e => this.blockHelperChange());
 
     this.blockShapePanel = this.panel.querySelector('.shape_and_text_block_options');
@@ -697,6 +699,7 @@ class cMacro {
       else
         this.wizard_parent_details.style.display = 'none';
     });
+    this.block_wizard_parent_wrapper = this.panel.querySelector('#block_wizard_parent_wrapper');
 
     let sceneRadios = this.panel.querySelectorAll('.sceneaddtype');
     sceneRadios.forEach(rdo => {
@@ -1681,6 +1684,9 @@ class cMacro {
     this.text2dpanel.style.display = 'none';
 
     let sel = this.blockOptionsPicker.value;
+
+    this.block_wizard_parent_wrapper.style.display = (sel === 'Web Font' || sel === 'Scene') ? 'none' : '';
+
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
     else if (sel === 'Scene') {
@@ -1712,6 +1718,9 @@ class cMacro {
       csv_row = this._shapeScrapeTextPlane();
 
     let includeParent = this.show_parent_wizard_details.checked;
+    let sel = this.blockOptionsPicker.value;
+    if (sel === 'Web Font' || sel === 'Scene')
+      includeParent = false;
     if (includeParent) {
       csv_row['parent'] = this.wizard_parent.value;
       csv_row['x'] = this.wizard_x.value;

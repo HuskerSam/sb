@@ -1,8 +1,8 @@
 [
-  {"range":"A1","value":"name","formula":"","fontWeight":""},
-{"range":"B1","value":"assetranges","formula":"","fontWeight":""},
-{"range":"C1","value":"circuitranges","formula":"","fontWeight":""},
-{"range":"D1","value":"catalogsheet","formula":"","fontWeight":""},
-{"range":"E1","value":"flags","formula":"","fontWeight":""},
+  {"range":"A1","value":"Project Name","formula":"","fontWeight":""},
+{"range":"B1","value":"Asset Ranges","formula":"","fontWeight":""},
+{"range":"C1","value":"Circuit Ranges","formula":"","fontWeight":""},
+{"range":"D1","value":"Catalog Sheet","formula":"","fontWeight":""},
+{"range":"E1","value":"Flags","formula":"","fontWeight":""},
 {"range":"A1:G1","value":"","formula":"","fontWeight":"bold"}
 ]

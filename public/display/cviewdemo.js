@@ -1880,7 +1880,7 @@ class cViewDemo extends bView {
 
       this.generate.lastRowAdded = null;
     };
-    let sel = this.dialog.querySelector('.block-type-select');
+    let sel = this.dialog.querySelector('.block_wizard_type_select');
     sel.innerHTML = `<option selected>Text and Shape</option>
      <option>Animated Line</option>
      <option>Connector Line</option><option>Web Font</option>`;

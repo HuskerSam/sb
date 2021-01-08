@@ -116,7 +116,7 @@
   {
     "range": "B18:B25",
     "rangeValue": [
-      ["C2: circuitranges cell to link on Projects sheet"],
+      ["C2: link to Projects:Circuit Ranges"],
       ["C13: Company Logo text"],
       ["C16: Google Web Font Name - or use html standard font - linked to I13 in the shape block"],
       ["D13: Set the font color (optionally a material name) - the color ranges from black color: 0,0,0 -> white color: 1,1,1, also > 1 is possible, ecolor: .5,.5,.5 for emissive color, decolor: both emissive and diffuse, color: diffuse only"],

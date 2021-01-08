@@ -26,7 +26,7 @@
         <option value="cloud_target">Configuration</option>
         <option value="cloud_deploy" selected>Catalog Projects</option>
         <option value="template_view">Sheet Templates</option>
-        <option value="block_wizards">CSV Wizards</option>
+        <option value="block_wizards">Content Wizards</option>
         <option value="song_import_div">Process Audio</option>
       </select>
       <div style="padding:0 4px;">
@@ -728,8 +728,8 @@
         let defaultProject = this.defaultProjectTarget;
         let defaultIndex = -1;
         publishList.forEach((t, index) => {
-          linkListHTML += '<option>' + t['name'] + '</option>';
-          if (defaultProject === t['name'])
+          linkListHTML += '<option>' + t['Project Name'] + '</option>';
+          if (defaultProject === t['Project Name'])
             defaultIndex = index;
         });
         this.project_deploy_select.innerHTML = linkListHTML;
@@ -1035,21 +1035,21 @@
 
         for (let c = start; c <= end; c++) {
           let row = publishList[c];
-          let flags = row.flags;
+          let flags = row.Flags;
           if (!flags) flags = '';
           flags = flags.toLowerCase();
 
           if (flags.indexOf('ignore') !== -1) {
-            this.publish_results.value += row.name + ' ignored\n';
+            this.publish_results.value += row['Project Name'] + ' ignored\n';
             continue;
           }
 
           if (flags.indexOf('remove') !== -1) {
-            let r_result = await deleteProject(row.name);
+            let r_result = await deleteProject(row['Project Name']);
             if (r_result.success)
-              this.publish_results.value += row.name + ' removed\n\n';
+              this.publish_results.value += row['Project Name'] + ' removed\n\n';
             else {
-              this.publish_results.value += row.name + ' NOT removed\n';
+              this.publish_results.value += row['Project Name'] + ' NOT removed\n';
               this.publish_results.value += 'ERROR: ' + r_result.errorMessage + '\n\n';
             }
 
@@ -1059,7 +1059,8 @@
 
 
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
-          let result = await publishSingle(row.name, row.assetranges, row.circuitranges, row.catalogsheet);
+          let result = await publishSingle(row['Project Name'], row['Asset Ranges'],
+            row['Circuit Ranges'], row['Catalog Sheet']);
           console.log(c, result);
         }
         this.busy = false;
