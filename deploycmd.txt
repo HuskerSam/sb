@@ -1,0 +1,7 @@
+firebase deploy -P groceryblocks
+firebase deploy -P groceryscenes
+firebase deploy -P handtop
+firebase deploy -P sceneblocks
+firebase deploy -P builder
+firebase deploy -P sandboxone
+firebase deploy -P vcsandbox1
