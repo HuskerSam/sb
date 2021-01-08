@@ -949,7 +949,7 @@ table.wizard_field_container td {
 table.wizard_field_container td:nth-child(1), table.wizard_field_container td span {
   white-space: nowrap;
   padding: 0 4px 0 0;
-  font-size: .6em;
+  font-size: .8em;
 }
 
 table.wizard_field_container td:nth-child(1) b {
@@ -985,8 +985,12 @@ table.wizard_parent_details tr td:nth-child(1) {
   padding: 0;
 }
 
-.wizard_parent_details span {
-  font-size: .75em;
+table.wizard_parent_details td span {
   padding-top: 6px;
   margin:0 3px;
+}
+
+table.wizard_parent_details tr td span:nth-child(1) {
+  margin:0;
+  width: 5em;
 }

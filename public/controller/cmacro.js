@@ -107,7 +107,7 @@ class cMacro {
       </tr>
       <tr style="${hideVisibility ? "display:none" : "" }">
         <td>Visibility</td>
-        <td colspan="2"><input type="text" class="wizard_visibility" style="4em" value="" /></td>
+        <td colspan="2"><input type="text" class="wizard_visibility" style="width:6em" value="" /></td>
       </tr>
       <tr>
         <td colspan="3">
@@ -1352,6 +1352,18 @@ class cMacro {
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
+  async _crossAnonLoadImg(url) {
+    return new Promise((resolve) => {
+      let img = document.createElement('img');
+      img.addEventListener('load', e => {
+        resolve();
+      });
+      img.setAttribute('crossorigin', 'anonymous');
+      img.setAttribute('src', url);
+      img.style.display = 'none';
+      document.body.appendChild(img);
+    });
+  }
   materialScrape() {
     this.standardmaterialassetpanel.style.display = 'flex';
     this.newName = this.panelInput.value.trim();
@@ -1383,7 +1395,10 @@ class cMacro {
         texture += '_D.jpg';
       }
 
-      this.material_image_bkg_div.style.backgroundImage = 'url(' + textureURL + ')';
+      this.material_image_bkg_div.style.backgroundImage = '';
+      this._crossAnonLoadImg(textureURL).then(() => {
+        this.material_image_bkg_div.style.backgroundImage = 'url(' + textureURL + ')';
+      });
 
       let u = Number(scaleu);
       let v = Number(scalev);
@@ -1608,7 +1623,10 @@ class cMacro {
             let p_div = this.scene_block_add_options.querySelector('.' + field + '_preview_div');
             if (p_div) {
               if (url) {
-                p_div.style.backgroundImage = 'url(' + url + ')';
+                p_div.style.backgroundImage = '';
+                this._crossAnonLoadImg(url).then(() => {
+                  p_div.style.backgroundImage = 'url(' + url + ')';
+                });
                 p_div.style.display = 'block';
                 let scaleu = this.scene_block_add_options.querySelector('.' + field + '_scaleu');
                 let scalev = this.scene_block_add_options.querySelector('.' + field + '_scalev');
