@@ -66,7 +66,7 @@ class cMacro {
         this.panelCreateBtn2 = this.panel.querySelector('.add-newwindow-button');
         this.panelCreateBtn2.addEventListener('click', e => this.createItem(true));
       }
-      this.panelInput = this.panel.querySelector('.add-item-name');
+      this.panelInput = this.panel.querySelector('.add_wizard_item_name');
       this.createMesage = this.panel.querySelector('.creating-message');
     }
 
@@ -74,7 +74,10 @@ class cMacro {
       this[tag + 'Register']();
 
     this.getItemName();
-    this.panelInput.addEventListener('input', e => this[tag + 'UpdateCSV']());
+    this.panelInput.addEventListener('input', e => {
+      this.panelInputUpdated = true;
+      this[tag + 'UpdateCSV']()
+    });
 
     this.defaultParent = null;
     this.addCallback = null;
@@ -84,8 +87,8 @@ class cMacro {
   }
   baseTemplate() {
     let template = `<div class="block_wizard_add_name_div" style="flex:1;display:flex;flex-direction:row;padding-top:2px;">
-      <label class="add_template_name_label" style="padding:4px;"><span style="font-size:.75em;">Name</span>
-     </label><input class="add-item-name" type="text" style="width:11.5em;" value="name" />`;
+      <label class="add_template_name_label" style="padding:2px 4px;"><span style="font-size:.75em;">Name</span>
+     </label><input class="add_wizard_item_name" type="text" style="width:11.5em;" value="name" />`;
     if (!this.addonmode)
       template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
         <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
@@ -656,8 +659,8 @@ class cMacro {
     <datalist id="webfontsuggestionlist"></datalist>`;
   }
   blockRegister() {
-    this.blockOptionsPicker = this.panel.querySelector('.block_wizard_type_select');
-    this.blockOptionsPicker.addEventListener('input', e => this.blockHelperChange());
+    this.block_wizard_type_select = this.panel.querySelector('.block_wizard_type_select');
+    this.block_wizard_type_select.addEventListener('input', e => this.blockHelperChange());
 
     this.blockShapePanel = this.panel.querySelector('.shape_and_text_block_options');
     this.scene_block_add_options = this.panel.querySelector('.scene_block_add_options');
@@ -719,7 +722,7 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
-      this.getItemName();
+      this.getItemName(true);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -918,7 +921,7 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
-      this.getItemName();
+      this.getItemName(true);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -991,6 +994,7 @@ class cMacro {
         row.style.display = '';
     });
 
+    this.getItemName();
     this.shapeUpdateCSV();
   }
   shapeUpdateCSV() {
@@ -1150,7 +1154,7 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
-      this.getItemName();
+      this.getItemName(true);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -1310,7 +1314,7 @@ class cMacro {
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
-      this.getItemName();
+      this.getItemName(true);
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -1652,7 +1656,7 @@ class cMacro {
     return blockResult.key;
   }
   async blockCreate() {
-    if (this.blockOptionsPicker.value === 'Web Font')
+    if (this.block_wizard_type_select.value === 'Web Font')
       this.app._updateGoogleFonts();
     return this._itemCreate();
   }
@@ -1683,7 +1687,7 @@ class cMacro {
     this.webFontPanel.style.display = 'none';
     this.text2dpanel.style.display = 'none';
 
-    let sel = this.blockOptionsPicker.value;
+    let sel = this.block_wizard_type_select.value;
 
     this.block_wizard_parent_wrapper.style.display = (sel === 'Web Font' || sel === 'Scene') ? 'none' : '';
 
@@ -1700,9 +1704,11 @@ class cMacro {
       this.text2dpanel.style.display = '';
     else if (sel === 'Web Font')
       this.webFontPanel.style.display = '';
+
+    this.getItemName();
   }
   blockUpdateCSV() {
-    let macrotype = this.blockOptionsPicker.value;
+    let macrotype = this.block_wizard_type_select.value;
     let csv_row = null;
     if (macrotype === 'Text and Shape')
       csv_row = this._blockScrapeTextAndShape();
@@ -1718,7 +1724,7 @@ class cMacro {
       csv_row = this._shapeScrapeTextPlane();
 
     let includeParent = this.show_parent_wizard_details.checked;
-    let sel = this.blockOptionsPicker.value;
+    let sel = this.block_wizard_type_select.value;
     if (sel === 'Web Font' || sel === 'Scene')
       includeParent = false;
     if (includeParent) {
@@ -1851,9 +1857,21 @@ class cMacro {
 
     el.remove();
   }
-  getItemName() {
+  getItemName(resetItemName) {
+    if (resetItemName)
+      this.panelInputUpdated = false;
+
     let r = this.panelInput.value.trim();
-    this.panelInput.value = this.tag + ' ' + Math.floor(1000 + Math.random() * 9000).toString();
+    let prefix = this.tag;
+
+    if (prefix === 'block') {
+      prefix = this.block_wizard_type_select.value;
+    } else if (prefix === 'shape') {
+      prefix = this.shapetype_filter_select.value;
+    }
+
+    if (!this.panelInputUpdated)
+      this.panelInput.value = prefix + ' ' + Math.floor(1000 + Math.random() * 9000).toString();
     this[this.tag + 'UpdateCSV']();
     return r;
   }

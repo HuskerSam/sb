@@ -421,7 +421,10 @@
         if (!data)
           return;
         if (data.hint) {
-          this.sheetname.value = data.hint;
+          if (data.categories === 'Setup')
+            this.sheetname.value = data.hint;
+          else
+            this.sheetname.value = data.hint + ' ' + Math.floor(1000 + Math.random() * 9000).toString();
         }
 
         if (data.description) {
