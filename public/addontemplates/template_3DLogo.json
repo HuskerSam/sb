@@ -62,8 +62,8 @@
   {
     "range": "B12:S13",
     "rangeValue": [
-      ["name", "texttext", "materialname", "textdepth", "textsize", "asset", "shapetype", "textfontfamily", "parent", "x", "y", "z", "sx", "sy", "sz", "rx", "ry", "rz"],
-      ["3dtext", "Company Logo", "color: 0.17,0.24,1", "0.2", "50", "shape", "text", "=E16", "::scene::", "", "", "", "5", "5", "5", "", "", "-40deg"]
+      ["name", "texttext", "materialname", "textdepth", "textsize", "asset", "shapetype", "textfontfamily", "parent", "x", "y", "z", "rx", "ry", "rz", "sx", "sy", "sz"],
+      ["3dtext", "Company Logo", "color: 0.17,0.24,1", "0.2", "50", "shape", "text", "=E16", "::scene::", "", "", "", "", "", "-40deg", "5", "5", "5"]
     ]
   },
   {

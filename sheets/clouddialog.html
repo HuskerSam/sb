@@ -28,6 +28,7 @@
         <option value="template_view">Sheet Templates</option>
         <option value="block_wizards">Content Wizards</option>
         <option value="song_import_div">Process Audio</option>
+        <option value="position_plotter_div">Position Plotter</option>
       </select>
       <div style="padding:0 4px;">
         <button id="show_help_panel_btn"><i class="material-icons">help</i></button>
@@ -40,6 +41,51 @@
       </div>
     </div>
     <div id="help_viewer_panel" style="display:none;flex:.7;"></div>
+    <div id="position_plotter_div" class="main_div_wrapper">
+      <table class="wizard_field_container" style="padding: 8px 8px 0 8px;flex:none;">
+        <tr>
+          <td>Plot Type</td>
+          <td>
+            <select id="plot_type_select" style="width:99%;">
+              <option selected value="bar_chart_plotter">Bar Chart</option>
+            </select>
+          </td>
+          <td></td>
+        </tr>
+        <tr data-cats="bar_chart_plotter">
+          <td># of series</td>
+          <td><input type="text" id="plotter_plots_count" value="2" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="bar_chart_plotter">
+          <td>points per series</td>
+          <td><input type="text" id="plotter_points_per_plot" value="10" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="bar_chart_plotter">
+          <td>width (x)</td>
+          <td><input type="text" id="plotter_plots_width" value="10" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="bar_chart_plotter">
+          <td>depth (z)</td>
+          <td><input type="text" id="plotter_plots_depth" value="10" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="bar_chart_plotter">
+          <td colspan="3">
+            <button id="plotter_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
+            <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
+            <label><input type="checkbox" id="plotter_plots_includebreaks" /><span>breaks</span></label>
+            <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
+            <label><input type="checkbox" id="plotter_plots_includelabelslong" /><span>long</span></label>
+          </td>
+        </tr>
+      </table>
+      <div style="flex:1;overflow: auto;">
+        <table id="plotter_output_table" style="min-width:100%" class="table_export"></table>
+      </div>
+    </div>
     <div id="cloud_target" class="main_div_wrapper">
       <select id="deploy_options_server_list" class="select_list" size="5"></select>
       <div class="select_flex_view" style="flex:none;">
@@ -203,6 +249,13 @@
         <button id="copy_song_data_to_clipboard" style="margin-right:0;"><i class="material-icons">content_copy</i></button>
       </div>
     </div>
+    <datalist id="blockdatatitlelookuplist">
+      <option>::scene::</option>
+      <option>::scene::_fixturesWrapper</option>
+      <option>::scene::_basketcart</option>
+      <option>::scene::_chatWrapper</option>
+      <option>::scene::_productsWrapper</option>
+    </datalist>
   </div>
 
   <script>
@@ -238,6 +291,8 @@
         } else {
           this.template_filter_select.value = 'Layout';
         }
+
+        this.sheetnameinputdirty = false;
         this.loadTemplateList();
 
         this.clearBusy();
@@ -245,9 +300,9 @@
       initDom() {
         let dom_id = [
           'publish_results', 'target_to_deploy', 'token_to_deploy', 'url_to_deploy', 'project_deploy_select',
-          'deploy_options_server_list', 'display_publish_list', 'assets_anchor',
-          'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview',
-          'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel',
+          'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'plot_type_select',
+          'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview', 'plotter_output_table',
+          'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel', 'position_plotter_div',
           'sheetname', 'circuit_template_select', 'help_viewer_panel', 'block_wizard_select_wrapper',
           'create_layout_btn', 'add_to_publishlist', 'set_to_defaultproject', 'publishlist_add_chk_wrapper', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second', 'template_filter_select',
@@ -255,7 +310,10 @@
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
           'show_help_panel_btn', 'project_selected_options', 'upload_file_preview_select', 'upload_file_img_preview', 'upload_file_audio_preview',
           'upload_file_mesh_preview', 'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'upload_file_audio_ctl',
-          'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom'
+          'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom',
+          'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
+          'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
+          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders'
         ];
 
         dom_id.forEach(ctl => {
@@ -282,6 +340,7 @@
         this.reload_addon.addEventListener('click', e => this.initSheetBasedData());
         this.target_server_set_button.addEventListener('click', e => this.cloudDeploySetServer());
         this.upload_file_preview_select.addEventListener('input', e => this.cloudDeployUpdateFilePreview());
+        this.sheetname.addEventListener('input', e => this.sheetnameinputdirty = true);
 
         this.wizard_choices.addEventListener('change', e => this.loadBlockWizard());
         this.audio_file.addEventListener('change', e => this.audioProcessFileSelected());
@@ -289,7 +348,7 @@
         this.freq_samples_to_second.addEventListener('input', e => this.audioProcessUpdateData());
         this.bands_to_combine.addEventListener('input', e => this.audioProcessUpdateData());
 
-
+        this.plot_type_select.addEventListener('input', e => this.plotterUpdateView());
         this.show_help_panel_btn.addEventListener('click', e => this.helpPanelToggle());
 
         this.song_detail_data_rdo.addEventListener('input', e => this.updateSongDataView());
@@ -302,6 +361,13 @@
           tInput.setSelectionRange(0, 99999);
           document.execCommand("copy");
           tInput.remove();
+        });
+
+        let iall = this.position_plotter_div.querySelectorAll('input');
+        iall.forEach(ctl => ctl.addEventListener('input', e => this.plotterUpdatePlot()));
+        this.plotterUpdateView();
+        this.plotter_copy_csv_to_clipboard.addEventListener('click', e => {
+          cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_includeheaders.checked);
         });
       }
 
@@ -420,11 +486,13 @@
         let data = this.templateMap[this.circuit_template_select.value];
         if (!data)
           return;
-        if (data.hint) {
+        if (this.sheetname.value === '')
+          this.sheetnameinputdirty = false;
+        if (data.hint && !this.sheetnameinputdirty) {
           if (data.categories === 'Setup')
             this.sheetname.value = data.hint;
           else
-            this.sheetname.value = data.hint + ' ' + Math.floor(1000 + Math.random() * 9000).toString();
+            this.sheetname.value = data.hint + ' ' + Math.floor(100 + Math.random() * 900).toString();
         }
 
         if (data.description) {
@@ -855,6 +923,7 @@
         });
 
         await Promise.all(promises);
+        this.sheetnameinputdirty = false;
 
         return this.initSheetBasedData();
       }
@@ -1363,6 +1432,94 @@
         this.song_raw_data.innerHTML = JSON.stringify(resampledArray);
       }
 
+      plotterUpdateView() {
+        let cat = this.plot_type_select.value;
+
+        //document.querySelectorAll('.plot_display_view').forEach(ctl => ctl.style.display = '');
+        //document.querySelector('#' + divId).style.display = 'block';
+
+        let rows = document.querySelectorAll('#position_plotter_div tr');
+        rows.forEach(r => {
+          if (r.dataset.cats && r.dataset.cats.indexOf(cat) === -1)
+            r.style.display = 'none';
+          else
+            r.style.display = '';
+        });
+
+        this.plotterUpdatePlot();
+
+      }
+      plotterUpdatePlot() {
+        this.plotter_output_table.innerHTML = '';
+        let plot_type = this.plot_type_select.value;
+
+        if (plot_type === 'bar_chart_plotter') {
+          let lineCount = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_count.value, 1);
+          let pointCount = GLOBALUTIL.getNumberOrDefault(this.plotter_points_per_plot.value, 10);
+          let width = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_width.value, 10);
+          let depth = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_depth.value, 10);
+          let includeBreaks = this.plotter_plots_includebreaks.checked;
+          let includeLabels = this.plotter_plots_includelabels.checked;
+          let includeLongLabels = this.plotter_plots_includelabelslong.checked;
+
+          let range = [];
+          let widthOffset = width / pointCount;
+          let depthOffset = depth / lineCount;
+
+          let y = '0.00';
+          let raw_z = 0;
+          let rx = '0';
+          let ry = '0';
+          let rz = '0';
+          for (let plotCounter = 0; plotCounter < lineCount; plotCounter++) {
+            let plot_points = [];
+            if (includeBreaks && (plotCounter > 0 || includeLabels || includeLongLabels)) {
+              let packet = {};
+              if (includeLabels || includeLongLabels)
+                packet.label = 'Series ' + (plotCounter + 1).toString();
+              Object.assign(packet, {
+                x: '',
+                y: '',
+                z: '',
+                rx: '',
+                ry: '',
+                rz: ''
+              });
+              plot_points.push(packet);
+            }
+
+            let raw_x = 0;
+            for (let pointCounter = 0; pointCounter < pointCount; pointCounter++) {
+              let x = raw_x.toFixed(2);
+              let z = raw_z.toFixed(2);
+              let packet = {};
+              if (includeLabels)
+                packet.label = (pointCounter + 1).toString();
+              if (includeLongLabels)
+                packet.label = (plotCounter + 1).toString() + '-' + (pointCounter + 1).toString();
+              Object.assign(packet, {
+                x,
+                y,
+                z,
+                rx,
+                ry,
+                rz
+              });
+              plot_points.push(packet);
+              raw_x += widthOffset;
+            }
+            raw_z += depthOffset;
+
+            range.push(plot_points);
+          }
+
+
+          let allPlots = [];
+          range.forEach(r => allPlots = allPlots.concat(r));
+          this.plotterRows = allPlots;
+          this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(allPlots, [], this.plotter_plots_includeheaders.checked);
+        }
+      }
       updateSongDataView() {
         if (this.song_detail_data_rdo.checked) {
           this.song_raw_data.style.display = 'none';
@@ -1543,9 +1700,24 @@
     }
 
     input[type="color"] {
-      width: 2.25em;
-      height: 1.65em;
+      width: 35px;
+      height: 28px;
       margin: 0 .1em;
+    }
+
+    input[type="checkbox"] {
+      width: 1.5em;
+      height: 1.5em;
+      margin-bottom: -2px;
+    }
+
+    input[type="checkbox"]:checked:after {
+      top: -2px;
+      left: -2px;
+    }
+
+    .plot_display_view {
+      display: none;
     }
   </style>
 

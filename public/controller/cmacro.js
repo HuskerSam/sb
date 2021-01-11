@@ -119,20 +119,20 @@ class cMacro {
         </td>
       </tr>
       <tr>
-      <td colspan="3">
-        <div style="display:flex;flex-direction:row">
-          <span>Scale X</span><input type="text" class="wizard_sx" />
-          <span>Y</span><input type="text" class="wizard_sy" />
-          <span>Z</span><input type="text" class="wizard_sz" />
-        </div>
-      </td>
-      </tr>
-      <tr>
         <td colspan="3">
           <div style="display:flex;flex-direction:row">
             <span>Rotate X</span><input type="text" class="wizard_rx" />
             <span>Y</span><input type="text" class="wizard_ry" />
             <span>Z</span><input type="text" class="wizard_rz" />
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <div style="display:flex;flex-direction:row">
+            <span>Scale X</span><input type="text" class="wizard_sx" />
+            <span>Y</span><input type="text" class="wizard_sy" />
+            <span>Z</span><input type="text" class="wizard_sz" />
           </div>
         </td>
       </tr>
@@ -149,9 +149,10 @@ class cMacro {
          <option>2D Text Plane</option>
          <option>Web Font</option>
         </select>
-        <div class="scene_type_option_list" style="text-align:center;flex:10">
-          <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span style="font-size:.85em">Skybox</span></label>
-          <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span style="font-size:.85em;">Building</span></label>
+        <div class="scene_type_option_list" style="text-align:center;flex:1;padding-top:4px;">
+          <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span style="font-size:.85em"> Skybox</span></label>
+          &nbsp;
+          <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span style="font-size:.85em;"> Building</span></label>
         </div>
       </div>
       <div class="create-2d-text-plane">
@@ -648,11 +649,11 @@ class cMacro {
         ${this._addParentTemplate(true)}
       </div>
     </div>
-    <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
+    <div class="copy_clipboard_footer">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
       <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
-      <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
       <br>
       <div class="csv_import_preview"></div>
     </div>
@@ -890,12 +891,12 @@ class cMacro {
       </table>
       ${this._addParentTemplate()}
     </div>
-    <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
+    <div class="copy_clipboard_footer">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
       <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
-      <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
-      <label><input type="checkbox" checked class="copy_csv_allcolumn_clipboard"> all fields</label>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+      <label><input type="checkbox" checked class="copy_csv_allcolumn_clipboard"><span> all fields</span></label>
       <br>
       <div class="csv_import_preview"></div>
     </div>`;
@@ -1038,12 +1039,12 @@ class cMacro {
       csv_row['x'] = this.wizard_x.value;
       csv_row['y'] = this.wizard_y.value;
       csv_row['z'] = this.wizard_z.value;
-      csv_row['sx'] = this.wizard_sx.value;
-      csv_row['sy'] = this.wizard_sy.value;
-      csv_row['sz'] = this.wizard_sz.value;
       csv_row['rx'] = this.wizard_rx.value;
       csv_row['ry'] = this.wizard_ry.value;
       csv_row['rz'] = this.wizard_rz.value;
+      csv_row['sx'] = this.wizard_sx.value;
+      csv_row['sy'] = this.wizard_sy.value;
+      csv_row['sz'] = this.wizard_sz.value;
     }
 
     let r = csv_row;
@@ -1114,11 +1115,11 @@ class cMacro {
         ${this._addParentTemplate()}
       </div>
     </div>
-    <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
+    <div class="copy_clipboard_footer">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
       <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
-      <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
       <br>
       <div class="csv_import_preview"></div>
     </div>`;
@@ -1247,12 +1248,12 @@ class cMacro {
       csv_row['x'] = this.wizard_x.value;
       csv_row['y'] = this.wizard_y.value;
       csv_row['z'] = this.wizard_z.value;
-      csv_row['sx'] = this.wizard_sx.value;
-      csv_row['sy'] = this.wizard_sy.value;
-      csv_row['sz'] = this.wizard_sz.value;
       csv_row['rx'] = this.wizard_rx.value;
       csv_row['ry'] = this.wizard_ry.value;
       csv_row['rz'] = this.wizard_rz.value;
+      csv_row['sx'] = this.wizard_sx.value;
+      csv_row['sy'] = this.wizard_sy.value;
+      csv_row['sz'] = this.wizard_sz.value;
     }
 
     return csv_row;
@@ -1278,11 +1279,11 @@ class cMacro {
           </div>
         </div>
       </div>
-      <div style="padding:4px;text-align:left;border-top:solid 1px silver;">
+      <div class="copy_clipboard_footer">
         <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
         <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
         <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
-        <label><input type="checkbox" checked class="copy_csv_header_clipboard"> headers</label>
+        <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
         <br>
         <div class="csv_import_preview"></div>
       </div>`;
@@ -1750,12 +1751,12 @@ class cMacro {
       csv_row['x'] = this.wizard_x.value;
       csv_row['y'] = this.wizard_y.value;
       csv_row['z'] = this.wizard_z.value;
-      csv_row['sx'] = this.wizard_sx.value;
-      csv_row['sy'] = this.wizard_sy.value;
-      csv_row['sz'] = this.wizard_sz.value;
       csv_row['rx'] = this.wizard_rx.value;
       csv_row['ry'] = this.wizard_ry.value;
       csv_row['rz'] = this.wizard_rz.value;
+      csv_row['sx'] = this.wizard_sx.value;
+      csv_row['sy'] = this.wizard_sy.value;
+      csv_row['sz'] = this.wizard_sz.value;
     }
 
     let header = this.copy_csv_header_clipboard.checked;
@@ -1889,7 +1890,7 @@ class cMacro {
     }
 
     if (!this.panelInputUpdated)
-      this.panelInput.value = prefix + ' ' + Math.floor(1000 + Math.random() * 9000).toString();
+      this.panelInput.value = prefix + ' ' + Math.floor(100 + Math.random() * 900).toString();
     this[this.tag + 'UpdateCSV']();
     return r;
   }
