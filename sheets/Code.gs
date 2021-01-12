@@ -310,12 +310,16 @@ function getCSVRangeForCell() {
 }
 
 function getTablesForCells() {
-  let cellStrings = arguments;
+  let cellStrings = [];
+  let args = [...arguments];
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-
+  //let args = ["'Shapes Demo'!A1,'Shapes Demo'!A4"];
+  args.forEach(arg => {
+    let subArgs = arg.split(',');
+    cellStrings = cellStrings.concat(subArgs);
+  });
   let list = '';
-  for (let i in arguments) {
-    let f = arguments[i];
+  cellStrings.forEach((f,i) => {
     let sheetName = getSheetFromRangeString(f);
     if (!sheetName)
       sheetName = SpreadsheetApp.getActiveSheet().getName();
@@ -327,10 +331,41 @@ function getTablesForCells() {
     range = range.getDataRegion(SpreadsheetApp.Dimension.COLUMNS);
 
     list += sheetName + range.getA1Notation() + ',';
-  }
+  });
 
   list = list.slice(0, -1);
   return list;
+}
+
+function getCSVRangesFromSheet(sheetName) {
+  let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  if (!sheet) return [];
+  let lastRow = sheet.getLastRow();
+  let lastColumn = sheet.getLastColumn();
+  if (lastRow === 0) return [];
+  let range = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
+
+  let rowCount = 0;
+  let tableCells = [];
+  let rangeStart = 0;
+  for (let rctr = 0; rctr < range.length; rctr++) {
+    let row = range[rctr];
+    if (row.length > 0) {
+      if (row[0]) {
+        if (rowCount === 0)
+          rangeStart = rctr + 1;
+        if (rowCount === 1)
+          tableCells.push('\'' + sheetName + '\'!A' + rangeStart);
+        rowCount++;
+      }  else {
+        if (rowCount > 1) {
+          rowCount = 0;
+        }
+      }
+    }
+  }
+
+  return tableCells.join(',');
 }
 
 function getJSONFromCSVSheet(sheetName) {
