@@ -1189,7 +1189,7 @@ class gCSVImport {
     this.dbSetRecord('frame', {
       parentKey: blockresult.key,
       frameOrder: 20,
-      frameTime: 0,
+      frameTime,
       rotationY: sceneParams.rotateY + 'deg'
     });
 
@@ -2357,10 +2357,11 @@ class gCSVImport {
       return Promise.resolve();
 
     let frameId = frameRecords.recordIds[frameRecords.recordIds.length - 1];
-    promises.push(
-      this.dbSetRecordFields('frame', {
-        frameTime: (pInfo.runLength * 1000).toString()
-      }, frameId));
+    if (pInfo.runLength !== 0)
+      promises.push(
+        this.dbSetRecordFields('frame', {
+          frameTime: (pInfo.runLength * 1000).toString()
+        }, frameId));
 
     promises.push(this.addCSVBasketProducts());
 
@@ -2455,11 +2456,11 @@ class gCSVImport {
 
     let finishDelay = 0,
       introTime = 0,
-      runLength = 60;
+      runLength = 0;
     if (cameraData) {
       finishDelay = this.getNumberOrDefault(cameraData.finishdelay, 0);
       introTime = this.getNumberOrDefault(cameraData.introtime, 0);
-      runLength = this.getNumberOrDefault(cameraData.runlength, 60);
+      runLength = this.getNumberOrDefault(cameraData.runlength, 0);
     }
 
     let blocksData = await this.dbFetchByLookup('block', 'blockFlag', 'displayblock');
