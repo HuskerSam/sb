@@ -1,0 +1,119 @@
+[{
+    "range": "A3:C4",
+    "rangeValue": [
+      ["name", "asset", "clearcolor"],
+      ["Logo Scene", "sceneblock", ""]
+    ]
+  },
+  {
+    "range": "A6:R7",
+    "rangeValue": [
+      ["name", "texttext", "materialname", "textdepth", "textsize", "asset", "shapetype", "textfontfamily", "parent", "x", "y", "z", "rx", "ry", "rz", "sx", "sy", "sz"],
+      ["3dtext", "Company Logo", "color: 0.17,0.24,1", "0.2", "100", "shape", "text", "=B10", "::scene::", "", "", "", "", "", "-40deg", "5", "5", "5"]
+    ]
+  },
+  {
+    "range": "B7",
+    "backgroundColor": "rgb(100,255,100)"
+  },
+  {
+    "range": "A13",
+    "backgroundColor": "rgb(100,255,100)"
+  },
+  {
+    "range": "B10",
+    "backgroundColor": "rgb(217,234,211)"
+  },
+  {
+    "range": "A14",
+    "backgroundColor": "rgb(217,234,211)"
+  },
+  {
+    "range": "C7",
+    "backgroundColor": "rgb(207,226,243)"
+  },
+  {
+    "range": "A15",
+    "backgroundColor": "rgb(207,226,243)"
+  },
+  {
+    "range": "C4",
+    "backgroundColor": "rgb(234,209,220)"
+  },
+  {
+    "range": "A16",
+    "backgroundColor": "rgb(234,209,220)"
+  },
+  {
+    "range": "D7",
+    "backgroundColor": "rgb(255,242,204)"
+  },
+  {
+    "range": "A17",
+    "backgroundColor": "rgb(255,242,204)"
+  },
+  {
+    "range": "E7",
+    "backgroundColor": "rgb(252,229,205)"
+  },
+  {
+    "range": "A18",
+    "backgroundColor": "rgb(252,229,205)"
+  },
+  {
+    "range": "A9:D10",
+    "rangeValue": [
+      ["name", "genericblockdata", "asset", "blockflag"],
+      ["webfontblock", "Raleway", "block", "googlefont"]
+    ]
+  },
+  {
+    "range": "A12:B18",
+    "rangeValue": [
+      ["A1", " link to Projects:Circuit Ranges"],
+      ["B7", " Company Logo text"],
+      ["B10", " Google Web Font Name - or use html standard font - linked to I13 in the shape block"],
+      ["C7", " Set the font color (optionally a material name) - the color ranges from black color: 0,0,0 -> white color: 1,1,1, also > 1 is possible, ecolor: .5,.5,.5 for emissive color, decolor: both emissive and diffuse, color: diffuse only"],
+      ["D10", " Set the clear color (leave blank to have it default to user setting) - 0,0,0 is black, 1,1,1 is white - no lighting effect - this is canvas default/clear color if set"],
+      ["E13", " adjust the thickness of the letters - .2 - 1.0 are typical values, higher then 1 gets hard to read"],
+      ["F13", " adjust the tessellation by changing the text size - higher is more polys.  100 is pretty good, 50 is a little choppy, 200 is very high def"]
+    ]
+  },
+  {
+    "columnNumber": 2,
+    "width": 150
+  },
+  {
+    "columnNumber": 3,
+    "width": 150
+  },
+  {
+    "columnNumber": 4,
+    "width": 150
+  },
+  {
+    "columnNumber": 5,
+    "width": 150
+  },
+  {
+    "columnNumber": 6,
+    "width": 150
+  },
+  {
+    "range": "A3:3",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "A6:6",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "A9:9",
+    "fontWeight": "bold"
+  },
+  {
+    "range": "A1",
+    "formula": "=getTablesForCells(\"A3\", \"A6\", \"A9\")",
+    "fontColor": "rgb(100,100,100)"
+  }
+]

@@ -294,6 +294,45 @@ function truncateEmptyCSVColumns(rows) {
   return resultRows;
 }
 
+function getCSVRangeForCell() {
+  let f = SpreadsheetApp.getActiveRange().getFormula();
+  f = f.replace('=getCSVRangeForCell(', '');
+  f = f.slice(0, -1);
+  let sheetName = getSheetFromRangeString(f);
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var range = ss.getRange(f);
+
+  range = range.getDataRegion(SpreadsheetApp.Dimension.ROWS);
+  range = range.getDataRegion(SpreadsheetApp.Dimension.COLUMNS);
+
+  return "'" + sheetName + "'!" + range.getA1Notation();
+}
+
+function getTablesForCells() {
+  let cellStrings = arguments;
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  let list = '';
+  for (let i in arguments) {
+    let f = arguments[i];
+    let sheetName = getSheetFromRangeString(f);
+    if (!sheetName)
+      sheetName = SpreadsheetApp.getActiveSheet().getName();
+    if (sheetName)
+      sheetName = "'" + sheetName + "'!";
+    var range = ss.getRange(f);
+
+    range = range.getDataRegion(SpreadsheetApp.Dimension.ROWS);
+    range = range.getDataRegion(SpreadsheetApp.Dimension.COLUMNS);
+
+    list += sheetName + range.getA1Notation() + ',';
+  }
+
+  list = list.slice(0, -1);
+  return list;
+}
+
 function getJSONFromCSVSheet(sheetName) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   if (!sheet)

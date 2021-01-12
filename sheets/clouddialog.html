@@ -64,7 +64,7 @@
         </tr>
         <tr data-cats="bar_chart_plotter">
           <td>width (x)</td>
-          <td><input type="text" id="plotter_plots_width" value="10" /></td>
+          <td><input type="text" id="plotter_plots_width" value="25" /></td>
           <td></td>
         </tr>
         <tr data-cats="bar_chart_plotter">
@@ -653,8 +653,9 @@
       }
       async loadTemplateList() {
         if (!this.templateListResults) {
-          let genResponse = await fetch('https://www.handtop.com/addontemplates/templatelist.json', {
-            method: "get"
+          let genResponse = await fetch('https://handtop.com/addontemplates/templatelist.json', {
+            method: "get",
+            cache: "no-store"
           });
           this.templateListResults = await genResponse.json();
         }
@@ -721,7 +722,8 @@
           let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/widforname/?name=' + encodeURIComponent(selectedProject);
           url += '&token=' + encodeURIComponent(this.defaultToken);
           let genResponse = await fetch(url, {
-            method: "get"
+            method: "get",
+            cache: "no-store"
           });
           let genResults = await genResponse.text();
           let r = JSON.parse(genResults);
@@ -814,7 +816,8 @@
 
         this.create_layout_btn.innerHTML = '...';
         let genResponse = await fetch('https://www.handtop.com/addontemplates/template_' + layoutName + '.json', {
-          method: "get"
+          method: "get",
+          cache: "no-store"
         });
         let genText = await genResponse.text();
         if (baseSheetName)
@@ -841,7 +844,7 @@
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).AddRowToProjectList(baseSheetName, '=\'' + baseSheetName + "'!C2", '', '', '');
+          }).AddRowToProjectList(baseSheetName, '=\'' + baseSheetName + "'!A1", '', '', '');
         });
       }
       async sheetsStoreSelectedProject(project) {
