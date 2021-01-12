@@ -348,13 +348,16 @@ function getCSVRangesFromSheet(sheetName) {
   let rowCount = 0;
   let tableCells = [];
   let rangeStart = 0;
+  let startValue = '';
   for (let rctr = 0; rctr < range.length; rctr++) {
     let row = range[rctr];
     if (row.length > 0) {
       if (row[0]) {
-        if (rowCount === 0)
+        if (rowCount === 0) {
           rangeStart = rctr + 1;
-        if (rowCount === 1)
+          startValue = row[0].toString();
+        }
+        if (rowCount === 1  && startValue !== '::comment')
           tableCells.push('\'' + sheetName + '\'!A' + rangeStart);
         rowCount++;
       }  else {
@@ -368,10 +371,49 @@ function getCSVRangesFromSheet(sheetName) {
   return tableCells.join(',');
 }
 
-function getJSONFromCSVSheet(sheetName) {
+function refreshSheetQueries(sheet) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  if (!sheet)
+    sheet = ss.getActiveSheet();
+
+  var range = sheet.getDataRange();
+  var lastColIndex = range.getLastColumn();
+  var lastRowIndex = range.getLastRow();
+  var formulas = range.getFormulas();
+
+  for (var rowCounter = 0; rowCounter < lastRowIndex; rowCounter++) {
+    var colFormulas = formulas[rowCounter];
+    for (var colCounter = 0; colCounter < lastColIndex; colCounter++)
+      if (colFormulas[colCounter] != '')
+        range.getCell(rowCounter + 1, colCounter + 1).setFormula('');
+  }
+
+  SpreadsheetApp.flush();
+  for (var rowCounter = 0; rowCounter < lastRowIndex; rowCounter++) {
+    var colFormulas = formulas[rowCounter];
+    for (var colCounter = 0; colCounter < lastColIndex; colCounter++)
+      if (colFormulas[colCounter] != '')
+        range.getCell(rowCounter + 1, colCounter + 1).setFormula(colFormulas[colCounter]);
+  }
+}
+
+function forceEval(sheetName, row, col) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(sheetName);
+  var orig = sheet.getRange(row, col).getFormula();
+  var temp = orig.replace("=", "?");
+  sheet.getRange(row, col).setFormula(temp);
+  SpreadsheetApp.flush();
+  sheet.getRange(row, col).setFormula(orig);
+}
+
+function getJSONFromCSVSheet(sheetName, refreshFormulas = false) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   if (!sheet)
     return [];
+  if (refreshFormulas)
+    refreshSheetQueries(sheet);
   let lastRow = sheet.getLastRow();
   let lastColumn = sheet.getLastColumn();
 

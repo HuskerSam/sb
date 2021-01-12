@@ -330,7 +330,7 @@
         this.file_upload_name.addEventListener('input', e => this.loadImagePreview());
         this.upload_file_cloud.addEventListener('click', e => this.upload_file_input.click());
         this.upload_file_input.addEventListener('change', e => this.storageUploadProjectFile(e));
-        this.display_publish_single.addEventListener('click', e => this.cloudDeployProjects('selected'));
+        this.display_publish_single.addEventListener('click', e => this.cloudDeployProjects('list_selected'));
         this.display_publish_single_header.addEventListener('click', e => this.cloudDeployProjects('selected'));
         this.set_default_proj.addEventListener('click', e => this.sheetsStoreSelectedProject());
         this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
@@ -820,8 +820,10 @@
           cache: "no-store"
         });
         let genText = await genResponse.text();
-        if (baseSheetName)
+        if (baseSheetName) {
           genText = genText.split('##sheetname').join("'" + baseSheetName + "'");
+          genText = genText.split('##sheetrawname').join(baseSheetName);
+        }
 
         let genResults = JSON.parse(genText);
         return new Promise(async (resolve, reject) => {
@@ -844,7 +846,7 @@
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).AddRowToProjectList(baseSheetName, '=\'' + baseSheetName + "'!A1", '', '', '');
+          }).AddRowToProjectList(baseSheetName, '=getTablesForCells(getCSVRangesFromSheet(\"' + baseSheetName + "\"))", '', '', '');
         });
       }
       async sheetsStoreSelectedProject(project) {
@@ -861,12 +863,12 @@
           }).SetCSVSheetValue(sheetName, rowIndex, field, value);
         });
       }
-      async sheetsJSONforSheetCSV(sheetName) {
+      async sheetsJSONforSheetCSV(sheetName, refresh = false) {
         return new Promise(async (resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             console.log('json for sheet', sheetName, result.length);
             resolve(result);
-          }).getJSONFromCSVSheet(sheetName);
+          }).getJSONFromCSVSheet(sheetName, refresh);
         });
       }
       async sheetsJSONforRangeListCSV(rangeStrings) {
@@ -934,10 +936,6 @@
         if (this.busy)
           return;
 
-        let singleIndex = null;
-        if (filter === 'selected') {
-          singleIndex = this.project_deploy_select.selectedIndex;
-        }
         this.display_publish_list.innerHTML = 'Working...';
         this.display_publish_single.innerHTML = 'Working...';
         this.display_publish_single_header.classList.add('green');
@@ -946,7 +944,7 @@
 
         this.busy = true;
 
-        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName);
+        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, true);
 
         let deleteProject = async (name) => {
           let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
@@ -1098,18 +1096,25 @@
         };
 
         let promises = [];
-        let start = 0;
-        let end = publishList.length - 1;
-
-        if (singleIndex !== null) {
-          start = singleIndex;
-          end = singleIndex;
-        }
 
         this.publish_results.value = publishList.length.toString() + ' Items in ' + this.projectsSheetName + '\n\n';
+        let singleIndex = null;
+        if (filter === 'list_selected') {
+          singleIndex = this.project_deploy_select.selectedIndex;
+        }
+        if (filter === 'selected') {
+          publishList.forEach((i, index) => {
+            if (this.defaultProjectTarget === i['Project Name'])
+              singleIndex = index;
+          });
+        }
+        for (let c = 0, end = publishList.length; c < end; c++) {
+          if (singleIndex !== null && singleIndex !== c)
+            continue;
 
-        for (let c = start; c <= end; c++) {
           let row = publishList[c];
+          if (!row)
+            console.log('ppp', publishList);
           let flags = row.Flags;
           if (!flags) flags = '';
           flags = flags.toLowerCase();

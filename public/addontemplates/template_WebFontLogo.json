@@ -1,76 +1,76 @@
 [{
-    "range": "A3:C4",
+    "range": "A1:C2",
     "rangeValue": [
       ["name", "asset", "clearcolor"],
       ["Logo Scene", "sceneblock", ""]
     ]
   },
   {
-    "range": "A6:R7",
+    "range": "A4:R5",
     "rangeValue": [
       ["name", "texttext", "materialname", "textdepth", "textsize", "asset", "shapetype", "textfontfamily", "parent", "x", "y", "z", "rx", "ry", "rz", "sx", "sy", "sz"],
-      ["3dtext", "Company Logo", "color: 0.17,0.24,1", "0.2", "100", "shape", "text", "=B10", "::scene::", "", "", "", "", "", "-40deg", "5", "5", "5"]
+      ["3dtext", "##sheetrawname", "color: 0.17,0.24,1", "0.2", "100", "shape", "text", "=B8", "::scene::", "", "", "", "", "", "-40deg", "5", "5", "5"]
     ]
   },
   {
-    "range": "B7",
+    "range": "B5",
     "backgroundColor": "rgb(100,255,100)"
+  },
+  {
+    "range": "A11",
+    "backgroundColor": "rgb(100,255,100)"
+  },
+  {
+    "range": "B8",
+    "backgroundColor": "rgb(217,234,211)"
+  },
+  {
+    "range": "A12",
+    "backgroundColor": "rgb(217,234,211)"
+  },
+  {
+    "range": "C5",
+    "backgroundColor": "rgb(207,226,243)"
   },
   {
     "range": "A13",
-    "backgroundColor": "rgb(100,255,100)"
+    "backgroundColor": "rgb(207,226,243)"
   },
   {
-    "range": "B10",
-    "backgroundColor": "rgb(217,234,211)"
+    "range": "C2",
+    "backgroundColor": "rgb(234,209,220)"
   },
   {
     "range": "A14",
-    "backgroundColor": "rgb(217,234,211)"
+    "backgroundColor": "rgb(234,209,220)"
   },
   {
-    "range": "C7",
-    "backgroundColor": "rgb(207,226,243)"
+    "range": "D5",
+    "backgroundColor": "rgb(255,242,204)"
   },
   {
     "range": "A15",
-    "backgroundColor": "rgb(207,226,243)"
+    "backgroundColor": "rgb(255,242,204)"
   },
   {
-    "range": "C4",
-    "backgroundColor": "rgb(234,209,220)"
+    "range": "E5",
+    "backgroundColor": "rgb(252,229,205)"
   },
   {
     "range": "A16",
-    "backgroundColor": "rgb(234,209,220)"
-  },
-  {
-    "range": "D7",
-    "backgroundColor": "rgb(255,242,204)"
-  },
-  {
-    "range": "A17",
-    "backgroundColor": "rgb(255,242,204)"
-  },
-  {
-    "range": "E7",
     "backgroundColor": "rgb(252,229,205)"
   },
   {
-    "range": "A18",
-    "backgroundColor": "rgb(252,229,205)"
-  },
-  {
-    "range": "A9:D10",
+    "range": "A7:D8",
     "rangeValue": [
       ["name", "genericblockdata", "asset", "blockflag"],
       ["webfontblock", "Raleway", "block", "googlefont"]
     ]
   },
   {
-    "range": "A12:B18",
+    "range": "A10:B16",
     "rangeValue": [
-      ["A1", " link to Projects:Circuit Ranges"],
+      ["::comment", ""],
       ["B7", " Company Logo text"],
       ["B10", " Google Web Font Name - or use html standard font - linked to I13 in the shape block"],
       ["C7", " Set the font color (optionally a material name) - the color ranges from black color: 0,0,0 -> white color: 1,1,1, also > 1 is possible, ecolor: .5,.5,.5 for emissive color, decolor: both emissive and diffuse, color: diffuse only"],
@@ -100,20 +100,18 @@
     "width": 150
   },
   {
-    "range": "A3:3",
+    "range": "A1:1",
     "fontWeight": "bold"
   },
   {
-    "range": "A6:6",
+    "range": "A4:4",
     "fontWeight": "bold"
   },
   {
-    "range": "A9:9",
+    "range": "A7:7",
     "fontWeight": "bold"
   },
   {
-    "range": "A1",
-    "formula": "=getTablesForCells(\"A3\", \"A6\", \"A9\")",
-    "fontColor": "rgb(100,100,100)"
+    "range": "A1"
   }
 ]
