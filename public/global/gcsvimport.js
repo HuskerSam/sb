@@ -1194,12 +1194,13 @@ class gCSVImport {
       frameTime: 0,
       rotationY: '0deg'
     });
-    this.dbSetRecord('frame', {
-      parentKey: blockresult.key,
-      frameOrder: 20,
-      frameTime,
-      rotationY: sceneParams.rotateY + 'deg'
-    });
+    if (frameTime)
+      this.dbSetRecord('frame', {
+        parentKey: blockresult.key,
+        frameOrder: 20,
+        frameTime,
+        rotationY: sceneParams.rotateY + 'deg'
+      });
 
     if (row.skyboxtype === 'building') {
 
