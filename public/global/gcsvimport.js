@@ -1152,6 +1152,14 @@ class gCSVImport {
       this.dbSetRecord('material', material);
     }
 
+    let boxsize = this.getNumberOrDefault(row.skyboxsize, 800);
+    if (!row.width)
+      row.width = boxsize.toString();
+    if (!row.height)
+      row.height = boxsize.toString();
+    if (!row.depth)
+      row.depth = boxsize.toString();
+
     let block = {
       title: row.name,
       width: row.width,
