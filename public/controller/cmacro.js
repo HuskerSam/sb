@@ -1092,9 +1092,9 @@ class cMacro {
           <tr>
             <td colspan="3">
               <div style="display:flex;flex-direction:row">
-                <span style="padding-top:4px;padding-right:4px;">Specular Power</span><input type="text" class="mesh_specularpower" data-field="mesh_hasalpha" />
+                <span style="padding-top:4px;padding-right:4px;">Specular Power</span><input type="text" class="mesh_specularpower" data-field="mesh_specularpower" />
 
-                <span style="padding-left:8px;padding-right:4px;padding-top:4px;">Has Alpha (1)</span><input type="text" class="mesh_hasalpha" data-field="hasalpha" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:4px;">Has Alpha (1)</span><input type="text" class="mesh_hasalpha" data-field="mesh_hasalpha" />
               </div>
             </td>
           </tr>
@@ -1265,11 +1265,33 @@ class cMacro {
   }
   materialTemplate() {
     return `<div class="standardmaterialassetpanel material_wizard_wrapper" style="flex-direction:column">
-        <select size="4" style="flex:1;margin:0" class="materialtexturepicker select_list">
-        </select>
         <table class="wizard_field_container">
           <tr>
-            <td style="text-align:center;">
+            <td>Texture URL</td>
+            <td><input type="text" list="materialsuggestionlist" class="material_texturepath texturepathinput" data-field="material_texturepath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Normal Map URL</td>
+            <td><input type="text" list="sbimageslist" class="material_bmppath texturepathinput" data-field="material_bmppath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Specular Map URL</td>
+            <td><input type="text" list="sbimageslist" class="material_specularpath texturepathinput" data-field="material_specularpath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <div style="display:flex;flex-direction:row">
+                <span style="padding-top:4px;padding-right:4px;">Specular Power</span><input type="text" class="material_specularpower" data-field="material_specularpower" />
+
+                <span style="padding-left:8px;padding-right:4px;padding-top:4px;">Has Alpha (1)</span><input type="text" class="material_hasalpha" data-field="material_hasalpha" />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
               <label><span>Scale V (x)</span><input type="text" class="materialscalev" /></label>
               <label><span>Scale U (y)</span><input type="text" class="materialscaleu" /></label>
             </td>
@@ -1288,25 +1310,29 @@ class cMacro {
         <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
         <br>
         <div class="csv_import_preview"></div>
-      </div>`;
-
+      </div>
+      <datalist id="materialsuggestionlist"></datalist>`;
   }
   _materialGetHTMLOptionList() {
-    let html = '';
+    let paths = [];
     for (let c = 0; c < 17; c++)
-      html += `<option>sb:matpack/brickwall${c + 1}</option>`;
+      paths.push(`sb:matpack/brickwall${c + 1}_D.jpg`);
     for (let c = 0; c < 11; c++)
-      html += `<option>sb:matpack/floor${c + 1}</option>`;
+      paths.push(`sb:matpack/floor${c + 1}_D.jpg`);
     for (let c = 0; c < 8; c++)
-      html += `<option>sb:matpack/grid${c + 1}</option>`;
+      paths.push(`sb:matpack/grid${c + 1}_D.png`);
     for (let c = 0; c < 2; c++)
-      html += `<option>sb:matpack/hedgerow${c + 1}</option>`;
+      paths.push(`sb:matpack/hedgerow${c + 1}_D.jpg`);
     for (let c = 0; c < 4; c++)
-      html += `<option>sb:matpack/metal${c + 1}</option>`;
+      paths.push(`sb:matpack/metal${c + 1}_D.jpg`);
     for (let c = 0; c < 16; c++)
-      html += `<option>sb:matpack/roof${c + 1}</option>`;
+      paths.push(`sb:matpack/roof${c + 1}_D.jpg`);
     for (let c = 0; c < 7; c++)
-      html += `<option>sb:matpack/wood${c + 1}</option>`;
+      paths.push(`sb:matpack/wood${c + 1}_D.jpg`);
+    this.materialTexturePaths = paths;
+
+    let html = '';
+    paths.forEach(p => html += `<option>${p}</option>`);
     return html;
   }
   materialRegister() {
@@ -1324,18 +1350,23 @@ class cMacro {
     this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
     this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
-    this.materialtexturepicker = this.panel.querySelector('.materialtexturepicker');
     this.material_image_bkg_div = this.panel.querySelector('.material_image_bkg_div');
     this.materialscalev = this.panel.querySelector('.materialscalev');
     this.materialscaleu = this.panel.querySelector('.materialscaleu');
+    this.material_texturepath = this.panel.querySelector('.material_texturepath');
+    this.material_bmppath = this.panel.querySelector('.material_bmppath');
+    this.material_specularpath = this.panel.querySelector('.material_specularpath');
+    this.material_specularpower = this.panel.querySelector('.material_specularpower');
+    this.material_hasalpha = this.panel.querySelector('.material_hasalpha');
+    this.materialsuggestionlist = this.panel.querySelector('#materialsuggestionlist');
 
-    this.materialtexturepicker.innerHTML = this._materialGetHTMLOptionList();
 
-    this.materialtexturepicker.selectedIndex = 0;
+    this.materialsuggestionlist.innerHTML = this._materialGetHTMLOptionList();
+    this.material_texturepath.addEventListener('input', e => this.materialDiffuseChanged());
 
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
-    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
 
+    this.__registerFileUploaders();
     this.materialUpdateCSV();
   }
   materialUpdateCSV() {
@@ -1359,6 +1390,7 @@ class cMacro {
     return new Promise((resolve) => {
       let img = document.createElement('img');
       img.addEventListener('load', e => {
+        img.remove();
         resolve();
       });
       img.setAttribute('crossorigin', 'anonymous');
@@ -1366,6 +1398,22 @@ class cMacro {
       img.style.display = 'none';
       document.body.appendChild(img);
     });
+  }
+  materialDiffuseChanged() {
+    let texture = this.material_texturepath.value;
+
+    if (this.materialTexturePaths.indexOf(texture) === -1)
+      return;
+
+    let hasAlpha = '';
+    if (texture.substring(0, 3) === 'png') {
+      hasAlpha = '1';
+    }
+
+    this.material_bmppath.value = texture.slice(0, -6) + '_N.jpg';
+    this.material_specularpath.value = texture.slice(0, -6) + '_S.jpg';
+    this.material_hasalpha.value = hasAlpha;
+    this.materialUpdateCSV();
   }
   materialScrape() {
     this.standardmaterialassetpanel.style.display = 'flex';
@@ -1375,28 +1423,22 @@ class cMacro {
       asset: 'material'
     };
 
-    let texture = this.materialtexturepicker.value;
-    let textureURL = '';
-    let speculartexture = '';
-    let bumptexture = '';
-    let hasAlpha = '';
-    if (!texture)
-      texture = '';
+    let texture = this.material_texturepath.value;
+    let bumptexture = this.material_bmppath.value;
+    let speculartexture = this.material_specularpath.value;
 
     let scaleu = this.materialscaleu.value;
     let scalev = this.materialscalev.value;
 
+    let textureURL = '';
+    let hasAlpha = '';
+    if (!texture)
+      texture = '';
+
     if (texture) {
-      textureURL = this.cdnPrefix + 'textures/' + texture.substring(3) + '_D.jpg';
-      speculartexture = texture + '_S.jpg';
-      bumptexture = texture + '_N.jpg';
-      if (texture.substr(-5).substring(0, 4) === 'grid') {
-        textureURL = this.cdnPrefix + 'textures/' + texture.substring(3) + '_D.png';
-        hasAlpha = '1';
-        texture += '_D.png';
-      } else {
-        texture += '_D.jpg';
-      }
+      textureURL = texture;
+      if (texture.substring(0,3) === 'sb:')
+        textureURL = this.cdnPrefix + 'textures/' + texture.substring(3);
 
       this.material_image_bkg_div.style.backgroundImage = '';
       this._crossAnonLoadImg(textureURL).then(() => {
