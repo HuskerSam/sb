@@ -12,6 +12,7 @@
   <script src="https://handtop.com/controller/cmacro.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
   <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -126,6 +127,8 @@
           <option>Open in /view</option>
           <option>Open in /display</option>
           <option>Open in /edit</option>
+          <option data-view="qrcode_for_link_display">QR Code for /view</option>
+          <option data-view="qrcode_for_link_display">QR code for /display</option>
         </select>
         <select id="project_preview_zoom" style="visibility:hidden;margin-top:8px;margin-right:8px;">
           <option>1x</option>
@@ -166,6 +169,7 @@
 
           <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
         </div>
+        <div id="qrcode_for_link_display" style="display:none;flex-direction: column;width: 100%;flex:1"></div>
       </div>
     </div>
     <div id="template_view" class="main_div_wrapper">
@@ -313,7 +317,7 @@
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
-          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders'
+          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display'
         ];
 
         dom_id.forEach(ctl => {
@@ -608,6 +612,26 @@
           this.preview_panel.setAttribute('src', this.projectViewURL);
         } else if (this.selectedProjectView === 2) {
           this.preview_panel.setAttribute('src', this.projectDisplayURL);
+        } else if (this.selectedProjectView === 7) {
+          this.qrcode_for_link_display.innerHTML = '';
+          var qrcode = new QRCode(this.qrcode_for_link_display, {
+            text: this.projectViewURL,
+            width: 128,
+            height: 128,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+          });
+        } else if (this.selectedProjectView === 8) {
+          this.qrcode_for_link_display.innerHTML = '';
+          var qrcode = new QRCode(this.qrcode_for_link_display, {
+            text: this.projectDisplayURL,
+            width: 128,
+            height: 128,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+          });
         } else {
           this.preview_panel.setAttribute('src', '');
         }
@@ -782,7 +806,7 @@
           document.body.removeChild(a);
         }
 
-        if (this.project_selected_options.selectedIndex > 3)
+        if (this.project_selected_options.selectedIndex > 3 && this.project_selected_options.selectedIndex < 7)
           this.project_selected_options.selectedIndex = this.selectedProjectView;
         this.selectedProjectView = this.project_selected_options.selectedIndex;
         this.loadProjectPreview();
@@ -790,7 +814,7 @@
         this.project_deploy_view.style.display = (this.selectedProjectView === 0) ? 'flex' : 'none';
         this.project_upload_view.style.display = (this.selectedProjectView === 3) ? 'flex' : 'none';
         this.project_display_view.style.display = (this.selectedProjectView === 1 || this.selectedProjectView === 2) ? '' : 'none';
-
+        this.qrcode_for_link_display.style.display = (this.selectedProjectView === 7 || this.selectedProjectView === 8) ? 'flex' : 'none';
         this.loadImagePreview();
       }
       async loadProjectSelectList() {
@@ -1726,6 +1750,15 @@
 
     .plot_display_view {
       display: none;
+    }
+
+    #qrcode_for_link_display {
+      overflow: hidden;
+    }
+    #qrcode_for_link_display img {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
     }
   </style>
 

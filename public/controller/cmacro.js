@@ -438,7 +438,7 @@ class cMacro {
             </tr>
             <tr>
               <td>Skybox Size</td>
-              <td><input type="text" class="skyboxsize" value="400" /></td>
+              <td><input type="text" class="skyboxsize" value="" /></td>
               <td></td>
             </tr>
             <tr>
@@ -467,17 +467,17 @@ class cMacro {
           <table class="wizard_field_container">
             <tr>
               <td>Width (x)</td>
-              <td><input type="text" class="width" value="50" /></td>
+              <td><input type="text" class="width" value="" /></td>
               <td></td>
             </tr>
             <tr>
               <td>Depth (z)</td>
-              <td><input type="text" class="depth" value="100" /></td>
+              <td><input type="text" class="depth" value="" /></td>
               <td></td>
             </tr>
             <tr>
               <td>Height (y)</td>
-              <td><input type="text" class="height" value="40" /></td>
+              <td><input type="text" class="height" value="" /></td>
               <td></td>
             </tr>
             <tr>
@@ -654,6 +654,7 @@ class cMacro {
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
       <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+      <label><input type="checkbox" class="copy_csv_excludeempty_clipboard"><span> exclude empty</span></label>
       <br>
       <div class="csv_import_preview"></div>
     </div>
@@ -720,6 +721,7 @@ class cMacro {
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
     this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+    this.copy_csv_excludeempty_clipboard = this.panel.querySelector('.copy_csv_excludeempty_clipboard');
     this.copy_csv_to_clipboard.addEventListener('click', e => {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
@@ -1606,7 +1608,7 @@ class cMacro {
     let skyboxType = this.panel.querySelector('.skyboxtemplatetype').checked;
 
     if (skyboxType)
-      csv_row['skyboxtype'] = 'skybox';
+      csv_row['skyboxtype'] = '';
     else
       csv_row['skyboxtype'] = 'building';
 
@@ -1759,11 +1761,21 @@ class cMacro {
       csv_row['sz'] = this.wizard_sz.value;
     }
 
+    let excludeEmpty = this.copy_csv_excludeempty_clipboard.checked;
+    let out_row = csv_row;
+    if (excludeEmpty) {
+      out_row = {};
+      for (let key in csv_row)
+        if (csv_row[key] !== '')
+          out_row[key] = csv_row[key];
+    }
+    console.log(csv_row, out_row);
+
     let header = this.copy_csv_header_clipboard.checked;
-    this.export_csv = csv_row;
-    if (csv_row) {
+    this.export_csv = out_row;
+    if (this.export_csv) {
       if (window.Papa)
-        this.csvImportPreviewRaw = Papa.unparse([csv_row], {
+        this.csvImportPreviewRaw = Papa.unparse([this.export_csv], {
           header
         });
       else
