@@ -175,7 +175,7 @@ class cMacro {
           <tr>
             <td>Font Color</td>
             <td><input class="textfontcolor" type="text" value="0,0,0" /></td>
-            <td></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="textfontcolor"></td>
           </tr>
           <tr>
             <td>Font Weight</td>
@@ -426,6 +426,11 @@ class cMacro {
       <div class="scene_block_add_options">
         <div class="skyboxscenefeatures">
           <table class="wizard_field_container">
+            <tr>
+              <td>Clear Color</td>
+              <td><input type="text" class="clearcolor" data-field="clearcolor" /></td>
+              <td><input type="color" class="colorpickerraw" data-inputclass="clearcolor"></td>
+            </tr>
             <tr>
               <td>Skybox Equirect</td>
               <td><input type="text" class="skybox texturepathinput" list="skyboxlist"  data-field="skybox" /></td>
@@ -746,6 +751,8 @@ class cMacro {
 
     this.panel.querySelectorAll('.colorpicker')
       .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i)));
+    this.panel.querySelectorAll('.colorpickerraw')
+      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i, '')));
 
     this.__registerFileUploaders();
 
@@ -1520,13 +1527,13 @@ class cMacro {
     });
     return csv_row;
   }
-  blockColorPickerClick(event, ctl) {
+  blockColorPickerClick(event, ctl, prefix = 'color: ') {
     let bColor = GLOBALUTIL.HexToRGB(ctl.value);
     let rgb = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
     let inputCTL = ctl.parentNode.querySelector('.' + ctl.dataset.inputclass);
     if (!inputCTL)
       inputCTL = ctl.parentNode.parentNode.querySelector('.' + ctl.dataset.inputclass);
-    inputCTL.value = 'color: ' + rgb;
+    inputCTL.value = prefix + rgb;
 
     this.blockUpdateMaterialField(null, inputCTL);
   }
@@ -1635,7 +1642,7 @@ class cMacro {
     };
     let fields = [
       'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox',
-      'width', 'height', 'depth', 'floormaterial', 'backwallmaterial',
+      'width', 'height', 'depth', 'floormaterial', 'backwallmaterial', 'clearcolor',
       'frontwallmaterial', 'leftwallmaterial', 'rightwallmaterial',
       'ceilingmaterial',
       'leftwallscalev', 'leftwallscaleu', 'leftwallimage',
