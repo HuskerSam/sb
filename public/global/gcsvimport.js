@@ -499,6 +499,11 @@ class gCSVImport {
       inheritMaterial
     };
 
+    if (blockChildData.childtype === 'camera'){
+      blockChildData.childName = row.cameratype;
+      blockChildData.cameraName = row.name;
+    }
+
     if (row.latitude)
       blockChildData.latitude = row.latitude;
     if (row.longitude)
@@ -510,8 +515,6 @@ class gCSVImport {
     }
     if (row.sku)
       blockChildData.sku = row.sku;
-    if (row.cameraname)
-      blockChildData.cameraName = row.cameraname;
     if (row.origCameraRow)
       blockChildData.origRow = row;
     if (row.realOrigRow)

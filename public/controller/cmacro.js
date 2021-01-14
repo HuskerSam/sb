@@ -138,6 +138,225 @@ class cMacro {
       </tr>
     </table>`;
   }
+  cameraTemplate() {
+    return `<div class="shape_wizard_wrapper" style="display:flex;flex-direction:column;">
+      <div style="display:flex;flex-direction:row">
+        <select class="camera_wizard_type_select" style="margin-bottom: 8px;margin-top:4px;width: 9em;margin-right:.25em;font-size:.9em">
+         <option selected>Native Camera</option>
+         <option>Product Camera</option>
+        </select>
+      </div>
+      <div style="flex:1;overflow: hidden auto;">
+        <table class="wizard_field_container native_camera_table">
+          <tr>
+            <td>Camera Type</td>
+            <td><input data-field="cameratype" type="text" value="ArcRotate" list="camerasourceslist" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Parent</td>
+            <td><input data-field="parent" type="text" value="::scene::" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Start X</td>
+            <td><input data-field="startx" type="text" value="-40" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Start Y</td>
+            <td><input data-field="starty" type="text" value="30" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Start Z</td>
+            <td><input data-field="startz" type="text" value="0" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Radius</td>
+            <td><input data-field="cameraradius" type="text" value="30" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Height</td>
+            <td><input data-field="cameraheightoffset" type="text" value="35" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Aim Target</td>
+            <td><input data-field="cameraaimtarget" type="text" value="0,0,0" /></td>
+            <td></td>
+          </tr>
+        </table>
+        <table class="wizard_field_container product_camera_table" style="display:none;">
+          <tr>
+            <td>Height Offset</td>
+            <td><input data-field="cameraheightoffset" type="text" value="25" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Move Time (ms)</td>
+            <td><input data-field="cameramovetime" type="text" value="500" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Radius</td>
+            <td><input data-field="cameraradius" type="text" value="25" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Finish Delay (s)</td>
+            <td><input data-field="finishdelay" type="text" value="2" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Finish Delay (s)</td>
+            <td><input data-field="introtime" type="text" value="1" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Run Length (s)</td>
+            <td><input data-field="runlength" type="text" value="60" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Camera Start X</td>
+            <td><input data-field="startx" type="text" value="-40" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Camera Start Y</td>
+            <td><input data-field="starty" type="text" value="6" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Camera Start Z</td>
+            <td><input data-field="startz" type="text" value="9.5" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Camera Rotate Y</td>
+            <td><input data-field="startry" type="text" value="-90deg" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Target Start X</td>
+            <td><input data-field="x" type="text" value="-50" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Target Start Y</td>
+            <td><input data-field="y" type="text" value="5" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Target Start Z</td>
+            <td><input data-field="z" type="text" value="0" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Generic Data</td>
+            <td><input data-field="genericblockdata" type="text" value="signyoffset|1" /></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="copy_clipboard_footer">
+      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+      <br>
+      <div class="csv_import_preview"></div>
+    </div>`;
+  }
+  cameraRegister() {
+    this.camera_wizard_type_select = this.panel.querySelector('.camera_wizard_type_select');
+    this.product_camera_table = this.panel.querySelector('.product_camera_table');
+    this.native_camera_table = this.panel.querySelector('.native_camera_table');
+    this.camera_wizard_type_select.addEventListener('input', e => {
+      if (this.camera_wizard_type_select.selectedIndex === 0) {
+        this.native_camera_table.style.display = '';
+        this.product_camera_table.style.display = 'none';
+      } else {
+        this.native_camera_table.style.display = 'none';
+        this.product_camera_table.style.display = '';
+      }
+    });
+
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName(true);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
+
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.cameraUpdateCSV()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.cameraUpdateCSV()));
+  }
+  cameraUpdateCSV() {
+    this.newName = this.panelInput.value.trim();
+    let cameraTypeIndex = this.camera_wizard_type_select.selectedIndex;
+    let csv_row = {
+      name: this.newName
+    };
+
+    let tr_rows = [];
+    if (cameraTypeIndex === 0) {
+      tr_rows = this.panel.querySelectorAll('.native_camera_table tr');
+      csv_row.asset = 'blockchild';
+      csv_row.childtype = 'camera';
+    }
+    else {
+      tr_rows = this.panel.querySelectorAll('.product_camera_table tr');
+      csv_row.asset = 'displaycamera';
+    }
+
+
+    tr_rows.forEach(row => {
+      let i = row.querySelector('input[type="text"]');
+      if (i) {
+        csv_row[i.dataset.field] = i.value;
+      }
+    });
+
+    let r = csv_row;
+    let header = this.copy_csv_header_clipboard.checked;
+    this.export_csv = r;
+    if (r) {
+      if (window.Papa) {
+        this.csvImportPreviewRaw = Papa.unparse([r], {
+          header
+        });
+        this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+        if (this.csv_import_shown === 2) {
+          this.csv_import_shown = 0;
+          this._updateCSVDisplay(2);
+        }
+      }
+    } else
+      this.csv_import_preview.innerHTML = new Date();
+  }
+  frameTemplate() {
+    return 'Frames stuff';
+  }
+  lightTemplate() {
+    return 'Light stuff';
+  }
+  lightUpdateCSV() {
+    return '';
+  }
+  frameUpdateCSV() {
+    return '';
+  }
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
       <div style="display:flex;flex-direction:row">

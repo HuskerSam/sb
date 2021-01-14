@@ -40,6 +40,65 @@ class cAppDefaults {
     return;
   }
   async loadPickerData() {
+    let listsHTML = `<datalist id="framecommandoptionslist">
+            <option>Set</option>
+            <option>GSet</option>
+            <option>Animation</option>
+            <option>Video</option>
+            <option>Audio</option>
+            <option>Function</option>
+            <option>Camera</option>
+          </datalist>
+          <datalist id="framecommandfieldslist">
+            <option>videoURL</option>
+            <option>videoHeight</option>
+            <option>videoWidth</option>
+            <option>fogType</option>
+            <option>fogDensity</option>
+            <option>skybox</option>
+            <option>groundMaterial</option>
+            <option>material</option>
+            <option>play</option>
+            <option>pause</option>
+            <option>stop</option>
+            <option>position</option>
+            <option>target</option>
+          </datalist>
+          <datalist id="blockchildtypelist">
+            <option>block</option>
+            <option>mesh</option>
+            <option>shape</option>
+            <option>light</option>
+            <option>camera</option>
+          </datalist>
+          <datalist id="htmlvideosourcelist">
+            <option>video/webm</option>
+            <option>video/mp4</option>
+            <option>video/ogg</option>
+          </datalist>
+          <datalist id="fogtypelist">
+            <option>none</option>
+            <option>EXP</option>
+            <option>EXP2</option>
+            <option>LINEAR</option>
+          </datalist>
+          <datalist id="lightsourceslist">
+            <option>Point</option>
+            <option>Directional</option>
+            <option>Spot</option>
+            <option>Hemispheric</option>
+          </datalist>
+          <datalist id="camerasourceslist">
+            <option>UniversalCamera</option>
+            <option>ArcRotate</option>
+            <option>FollowCamera</option>
+            <option>DeviceOrientationCamera</option>
+            <option>WebVRFreeCamera</option>
+          </datalist>`;
+    let div = document.createElement('div');
+    div.innerHTML = listsHTML;
+    div.style.display = 'none';
+    document.body.appendChild(div);
     return await Promise.all([
       this._loadDataLists('sbimageslist'),
       this._loadDataLists('sbstoreimageslist'),
