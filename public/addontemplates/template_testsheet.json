@@ -1,0 +1,196 @@
+[{
+  "range": "A1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "Logo Scene"
+}, {
+  "range": "A4",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "A5",
+  "value": "3dtext"
+}, {
+  "range": "A7",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "A8",
+  "value": "webfontblock"
+}, {
+  "range": "B1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B2",
+  "value": "sceneblock"
+}, {
+  "range": "B4",
+  "value": "texttext",
+  "fontWeight": "bold"
+}, {
+  "range": "B5",
+  "value": "SupEr Logo",
+  "backgroundColor": "#64ff64"
+}, {
+  "range": "B7",
+  "value": "genericblockdata",
+  "fontWeight": "bold"
+}, {
+  "range": "B8",
+  "value": "Raleway",
+  "backgroundColor": "#d9ead3"
+}, {
+  "range": "B11",
+  "value": "B7",
+  "backgroundColor": "#64ff64"
+}, {
+  "range": "B12",
+  "value": "B10",
+  "backgroundColor": "#d9ead3"
+}, {
+  "range": "B13",
+  "value": "C7",
+  "backgroundColor": "#cfe2f3"
+}, {
+  "range": "B14",
+  "value": "D10",
+  "backgroundColor": "#ead1dc"
+}, {
+  "range": "B15",
+  "value": "E13",
+  "backgroundColor": "#fff2cc"
+}, {
+  "range": "B16",
+  "value": "F13",
+  "backgroundColor": "#fce5cd"
+}, {
+  "range": "C1",
+  "value": "clearcolor",
+  "fontWeight": "bold"
+}, {
+  "range": "C4",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "C5",
+  "value": "color: 0.17,0.24,1",
+  "backgroundColor": "#cfe2f3"
+}, {
+  "range": "C7",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C8",
+  "value": "block"
+}, {
+  "range": "C11",
+  "value": " Company Logo text"
+}, {
+  "range": "C12",
+  "value": " Google Web Font Name - or use html standard font - linked to I13 in the shape block"
+}, {
+  "range": "C13",
+  "value": " Set the font color (optionally a material name) - the color ranges from black color: 0,0,0 -> white color: 1,1,1, also > 1 is possible, ecolor: .5,.5,.5 for emissive color, decolor: both emissive and diffuse, color: diffuse only"
+}, {
+  "range": "C14",
+  "value": " Set the clear color (leave blank to have it default to user setting) - 0,0,0 is black, 1,1,1 is white - no lighting effect - this is canvas default/clear color if set"
+}, {
+  "range": "C15",
+  "value": " adjust the thickness of the letters - .2 - 1.0 are typical values, higher then 1 gets hard to read"
+}, {
+  "range": "C16",
+  "value": " adjust the tessellation by changing the text size - higher is more polys.  100 is pretty good, 50 is a little choppy, 200 is very high def"
+}, {
+  "range": "D4",
+  "value": "textdepth",
+  "fontWeight": "bold"
+}, {
+  "range": "D5",
+  "value": 0.2,
+  "backgroundColor": "#fff2cc",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D7",
+  "value": "blockflag",
+  "fontWeight": "bold"
+}, {
+  "range": "D8",
+  "value": "googlefont"
+}, {
+  "range": "E4",
+  "value": "textsize",
+  "fontWeight": "bold"
+}, {
+  "range": "E5",
+  "value": 100,
+  "backgroundColor": "#fce5cd",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F4",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "F5",
+  "value": "shape"
+}, {
+  "range": "G4",
+  "value": "shapetype",
+  "fontWeight": "bold"
+}, {
+  "range": "G5",
+  "value": "text"
+}, {
+  "range": "H4",
+  "value": "textfontfamily",
+  "fontWeight": "bold"
+}, {
+  "range": "H5",
+  "formula": "=B8"
+}, {
+  "range": "I4",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "I5",
+  "value": "::scene::"
+}, {
+  "range": "J4",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "K4",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "L4",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "M4",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "N4",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "O4",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "O5",
+  "value": "-40deg"
+}, {
+  "range": "P4",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "P5",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]

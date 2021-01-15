@@ -319,7 +319,7 @@ function getTablesForCells() {
     cellStrings = cellStrings.concat(subArgs);
   });
   let list = '';
-  cellStrings.forEach((f,i) => {
+  cellStrings.forEach((f, i) => {
     let sheetName = getSheetFromRangeString(f);
     if (!sheetName)
       sheetName = SpreadsheetApp.getActiveSheet().getName();
@@ -357,10 +357,10 @@ function getCSVRangesFromSheet(sheetName) {
           rangeStart = rctr + 1;
           startValue = row[0].toString();
         }
-        if (rowCount === 1  && startValue !== '::comment')
+        if (rowCount === 1 && startValue !== '::comment')
           tableCells.push('\'' + sheetName + '\'!A' + rangeStart);
         rowCount++;
-      }  else {
+      } else {
         if (rowCount > 1) {
           rowCount = 0;
         }
@@ -458,4 +458,67 @@ function getCellRangeFromRangeString(str) {
   let parts = str.split('!');
   let sheetName = parts[1].replace(/\'/g, '');
   return sheetName;
+}
+
+function getJSONForSheet(sheetName) {
+  let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
+  if (!sheet)
+    return [];
+  let lastRow = sheet.getLastRow();
+  let lastColumn = sheet.getLastColumn();
+
+  let jsonCells = [];
+
+  for (let rctr = 0; rctr < lastRow; rctr++) {
+    for (let cctr = 0; cctr < lastColumn; cctr++) {
+      let range = String.fromCharCode(rctr + "A".charCodeAt(0)) + (cctr + 1).toString();
+      if (rctr > 25)
+        range = "A" + String.fromCharCode((rctr - 26)  + "A".charCodeAt(0)) + (cctr + 1).toString();
+      if (rctr > 51)
+        range = "B" + String.fromCharCode((rctr - 52)  + "A".charCodeAt(0)) + (cctr + 1).toString();
+
+      let r = sheet.getRange(range);
+      let formula = r.getFormula();
+      let value = r.getValue();
+      let cell = null;
+      if (formula) {
+        cell = {
+          range,
+          formula
+        };
+      } else if (value) {
+        cell = {
+          range,
+          value
+        };
+      }
+
+      if (cell) {
+        let fontWeight = r.getFontWeight();
+        let fontColor = r.getFontColor();
+        let backgroundColor = r.getBackground();
+        let wrapStrategy = r.getWrapStrategy().toString();
+        let horizontalAlignment = r.getHorizontalAlignment();
+
+        if (fontWeight !== 'normal')
+          cell['fontWeight'] = fontWeight;
+        if (fontColor !== '#000000')
+          cell['fontColor'] = fontColor;
+        if (backgroundColor !== '#ffffff')
+          cell['backgroundColor'] = backgroundColor;
+        if (wrapStrategy !== 'OVERFLOW')
+          cell['wrapStrategy'] = wrapStrategy;
+        if (horizontalAlignment !== 'general-left')
+          cell['horizontalAlignment'] = horizontalAlignment;
+
+        jsonCells.push(cell);
+      }
+    }
+  }
+
+  jsonCells.push({
+    range: 'A1'
+  });
+
+  return JSON.stringify(jsonCells);
 }
