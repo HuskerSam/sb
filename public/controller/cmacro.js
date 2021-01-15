@@ -854,6 +854,7 @@ class cMacro {
   }
   lightUpdateCSV() {
     this.newName = this.panelInput.value.trim();
+    let category = this.lighttypeinput.value;
     let csv_row = {
       name: this.newName,
       asset: 'blockchild',
@@ -866,7 +867,7 @@ class cMacro {
       if (!cats)
         cats = '';
       cats = cats.split(',');
-      if (cats.indexOf(childname) !== -1 || cats[0] === 'all') {
+      if (cats.indexOf(category) !== -1 || cats[0] === 'all') {
         let i = row.querySelector('input[type="text"]');
         if (i) {
           csv_row[i.dataset.field] = i.value;
