@@ -1213,7 +1213,7 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayGroup: 'camera',
   displayKey: 'childType',
   displayType: 'number',
-  contextObjectField: 'position.x',
+  contextObjectField: '_position.x',
   group: 'camera'
 }, {
   title: 'x y z',
@@ -1221,7 +1221,7 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayGroup: 'camera',
   displayKey: 'childType',
   displayType: 'number',
-  contextObjectField: 'position.y',
+  contextObjectField: '_position.y',
   group: 'camera'
 }, {
   title: '&nbsp;',
@@ -1229,7 +1229,7 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayGroup: 'camera',
   displayKey: 'childType',
   displayType: 'number',
-  contextObjectField: 'position.z',
+  contextObjectField: '_position.z',
   group: 'camera'
 }, {
   title: 'Rotation',
@@ -1301,21 +1301,24 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   displayGroup: 'camera',
   displayType: 'number',
   displayKey: 'childType',
-  group: 'cameraAimTarget'
+  group: 'cameraAimTarget',
+  contextObjectField: '_currentTarget.x'
 }, {
   title: 'x y z',
   fireSetField: 'cameraAimTargetY',
   displayGroup: 'camera',
   displayType: 'number',
   displayKey: 'childType',
-  group: 'cameraAimTarget'
+  group: 'cameraAimTarget',
+  contextObjectField: '_currentTarget.y'
 }, {
   title: '&nbsp;',
   fireSetField: 'cameraAimTargetZ',
   displayGroup: 'camera',
   displayType: 'number',
   displayKey: 'childType',
-  group: 'cameraAimTarget'
+  group: 'cameraAimTarget',
+  contextObjectField: '_currentTarget.z'
 }];
 __localStaticStorageForBindingFields['frameColor'] = [{
   title: 'Diffuse Color',
