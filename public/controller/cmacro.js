@@ -346,7 +346,218 @@ class cMacro {
       this.csv_import_preview.innerHTML = new Date();
   }
   frameTemplate() {
-    return 'Frames stuff';
+    return `<div class="frame_wizard_wrapper" style="display:flex;flex-direction:column;overflow:hidden auto;flex:1">
+      <table class="wizard_field_container">
+        <tr data-cats="all">
+          <td>Block Child Type</td>
+          <td>
+            <input class="frametype" type="text" list="blockchildtypelist" data-field="childtype">
+          </td>
+          <td></td>
+        </tr>
+        <tr data-cats="all">
+          <td>Block Child Name</td>
+          <td>
+            <input data-field="name" type="text" value="">
+          </td>
+          <td></td>
+        </tr>
+        <tr data-cats="all">
+          <td>Parent Block</td>
+          <td>
+            <input data-field="parent" type="text" value="::scene::">
+          </td>
+          <td></td>
+        </tr>
+        <tr data-cats="all">
+          <td>Time (ms)</td>
+          <td><input data-field="frametime" type="text" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="all">
+          <td>Order</td>
+          <td><input data-field="frameorder" type="text" value="20" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape">
+          <td>Visibility</td>
+          <td><input data-field="visibility" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Position X</td>
+          <td><input data-field="positionx" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Position Y</td>
+          <td><input data-field="positiony" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Position Z</td>
+          <td><input data-field="positionz" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Rotation X</td>
+          <td><input data-field="rotationx" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Rotation Y</td>
+          <td><input data-field="rotationy" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Rotation Z</td>
+          <td><input data-field="rotationz" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Scale X</td>
+          <td><input data-field="scalingx" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Scale Y</td>
+          <td><input data-field="scalingy" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape,block">
+          <td>Scale Z</td>
+          <td><input data-field="scalingz" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="mesh,shape">
+          <td>Diffuse Color</td>
+          <td><input data-field="diffusecolor" class="diffusecolor" type="text" value="" /></td>
+          <td><input type="color" class="colorpickerraw" data-inputclass="diffusecolor"></td>
+        </tr>
+        <tr data-cats="mesh,shape">
+          <td>Emissive Color</td>
+          <td><input data-field="emissivecolor" class="emissivecolor" type="text" value="" /></td>
+          <td><input type="color" class="colorpickerraw" data-inputclass="emissivecolor"></td>
+        </tr>
+        <tr data-cats="mesh,shape">
+          <td>Ambient Color</td>
+          <td><input data-field="ambientcolor" class="ambientcolor" type="text" value="" /></td>
+          <td><input type="color" class="colorpickerraw" data-inputclass="ambientcolor"></td>
+        </tr>
+        <tr data-cats="mesh,shape">
+          <td>Specular Color</td>
+          <td><input data-field="specularcolor" class="specularcolor" type="text" value="" /></td>
+          <td><input type="color" class="colorpickerraw" data-inputclass="specularcolor"></td>
+        </tr>
+        <tr data-cats="Block">
+          <td>Command</td>
+          <td><input data-field="framecommand" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="Block">
+          <td>Field</td>
+          <td><input data-field="framecommandfield" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="Block">
+          <td>Value</td>
+          <td><input data-field="framecommandvalue" type="text" value="" /></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+    <div class="copy_clipboard_footer">
+      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+      <br>
+      <div class="csv_import_preview"></div>
+    </div>`;
+  }
+  frameRegister() {
+    this.frametype = this.panel.querySelector('.frametype');
+    this.frametype.addEventListener('input', e => this.frameUpdateFields());
+    this.wizard_field_container = this.panel.querySelector('.wizard_field_container');
+
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName(true);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
+
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.frameCSVUpdate()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.frameCSVUpdate()));
+    this.panel.querySelectorAll('.colorpickerraw')
+      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i, '')));
+
+    this.frameUpdateFields();
+  }
+  frameUpdateFields() {
+    let category = this.frametype.value;
+    let rows = this.wizard_field_container.querySelectorAll('tr');
+
+    rows.forEach(row => {
+      let cats = row.dataset.cats;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(category) === -1 && cats[0] !== 'all')
+        row.style.display = 'none';
+      else
+        row.style.display = '';
+    });
+
+    this.frameUpdateCSV();
+  }
+  frameCSVUpdate() {
+    let category = this.frametype.value;
+
+    let csv_row = {
+      name: '',
+      parent: '',
+      frametime: '',
+      frameorder: '',
+      asset: 'blockchildframe'
+    };
+
+    let tr_rows = this.panel.querySelectorAll('.wizard_field_container tr');
+    tr_rows.forEach(row => {
+      let cats = row.dataset.cats;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(category) !== -1 || cats[0] === 'all') {
+        let i = row.querySelector('input[type="text"]');
+        if (i) {
+          csv_row[i.dataset.field] = i.value;
+        }
+      }
+    });
+
+    let r = csv_row;
+    let header = this.copy_csv_header_clipboard.checked;
+    this.export_csv = r;
+    if (r) {
+      if (window.Papa) {
+        this.csvImportPreviewRaw = Papa.unparse([r], {
+          header
+        });
+        this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+        if (this.csv_import_shown === 2) {
+          this.csv_import_shown = 0;
+          this._updateCSVDisplay(2);
+        }
+      }
+    } else
+      this.csv_import_preview.innerHTML = new Date();
   }
   lightTemplate() {
     return `<div class="shape_wizard_wrapper" style="display:flex;flex-direction:column;">

@@ -74,8 +74,9 @@ class GLOBALUTIL {
         z = GLOBALUTIL.getNumberOrDefault(parts[2], z);
       }
 
-    if (window.BABYLON)
-      return new BABYLON.Vector3(x, y, z);
+    if (window)
+      if (window.BABYLON)
+        return new BABYLON.Vector3(x, y, z);
 
     return {
       x,

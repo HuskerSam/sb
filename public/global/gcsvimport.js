@@ -759,13 +759,53 @@ class gCSVImport {
   async addCSVBlockChildFrameRow(row) {
     let children = await this._getBlockChildren(row.parent, row.childtype, row.name);
 
+    let shapeMeshOnlyFields = [
+      'diffuseColor',
+      'emissiveColor',
+      'ambientColor',
+      'specularColor'
+    ];
+    let cameraFields = [
+      'cameraFOV',
+      'cameraOriginX',
+      'cameraOriginY',
+      'cameraOriginZ',
+      'cameraRotationX',
+      'cameraRotationY',
+      'cameraRotationZ',
+      'cameraRadius',
+      'cameraHeightOffset',
+      'cameraRotationOffset',
+      'cameraAcceleration',
+      'maxCameraSpeed',
+      'cameraAimTarget'
+    ];
+    let lightFields = [
+      'lightOriginX',
+      'lightOriginY',
+      'lightOriginZ',
+      'lightDirectionX',
+      'lightDirectionY',
+      'lightDirectionZ',
+      'lightIntensity',
+      'lightDiffuseR',
+      'lightDiffuseG',
+      'lightDiffuseB',
+      'lightSpecularR',
+      'lightSpecularG',
+      'lightSpecularB',
+      'lightGroundColorR',
+      'lightGroundColorG',
+      'lightGroundColorB',
+      'lightAngle',
+      'lightDecay'
+    ];
+
     let promises = [];
     if (row.y === undefined)
       console.log(row);
 
-    for (let parentKey in children) {
       let frameData = {
-        parentKey,
         positionX: row.x,
         positionY: row.y,
         positionZ: row.z,
@@ -779,7 +819,21 @@ class gCSVImport {
         frameOrder: row.frameorder,
         frameTime: row.frametime
       };
-      promises.push(this.dbSetRecord('frame', frameData));
+
+      if (row.childtype === 'shape' || row.childtype === 'mesh') {
+        shapeMeshOnlyFields.forEach(v => {
+          if (row[v.toLowerCase()]) {
+            let vector = this.getVector(row[v.toLowerCase()], 0, 0, 0);
+            frameData[v + 'R'] = vector.x;
+            frameData[v + 'G'] = vector.y;
+            frameData[v + 'B'] = vector.z;
+          }
+        });
+      }
+
+    for (let parentKey in children) {
+      frameData.parentKey = parentKey;
+      promises.push(this.dbSetRecord('frame', Object.assign({}, frameData)));
     }
 
     return Promise.all(promises);
