@@ -506,9 +506,13 @@ class gCSVImport {
       inheritMaterial
     };
 
-    if (blockChildData.childtype === 'camera'){
-      blockChildData.childName = row.cameratype;
-      blockChildData.cameraName = row.name;
+    if (blockChildData.childtype === 'camera') {
+      blockChildData.cameraType = row.cameratype;
+      blockChildData.childName = row.name;
+    }
+    if (row.childtype === 'light') {
+      blockChildData.lightType = row.lighttype;
+      blockChildData.childName = row.childname;
     }
 
     if (row.latitude)
@@ -529,12 +533,9 @@ class gCSVImport {
 
     if (row.cameratargetblock)
       blockChildData.cameraTargetBlock = row.cameratargetblock;
-    if (row.cameraaimtarget)
-      blockChildData.cameraAimTarget = row.cameraaimtarget;
+    if (row.cameratype)
+      blockChildData.cameraType = row.cameratype;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
-
-    if (row.childtype === 'light')
-      blockChildData.childName = row.childname;
 
     let childResults = await this.dbSetRecord('blockchild', blockChildData);
 
@@ -576,6 +577,12 @@ class gCSVImport {
       frameData.cameraOriginY = row.starty;
     if (row.startz)
       frameData.cameraOriginZ = row.startz;
+    if (row.cameraaimtargetx)
+      frameData.cameraAimTargetX = row.cameraaimtargetx;
+    if (row.cameraaimtargety)
+      frameData.cameraAimTargetY = row.cameraaimtargety;
+    if (row.cameraaimtargetz)
+      frameData.cameraAimTargetZ = row.cameraaimtargetz;
 
     if (row.childtype === 'light') {
       let lightFields = [
@@ -788,48 +795,77 @@ class gCSVImport {
       'lightDirectionY',
       'lightDirectionZ',
       'lightIntensity',
-      'lightDiffuseR',
-      'lightDiffuseG',
-      'lightDiffuseB',
-      'lightSpecularR',
-      'lightSpecularG',
-      'lightSpecularB',
-      'lightGroundColorR',
-      'lightGroundColorG',
-      'lightGroundColorB',
       'lightAngle',
       'lightDecay'
+    ];
+    let lightColors = [
+      'lightDiffuse',
+      'lightSpecular',
+      'lightGroundColor'
+    ];
+    let blockFields = [
+      'frameCommand',
+      'frameCommandField',
+      'frameCommandValue'
     ];
 
     let promises = [];
     if (row.y === undefined)
       console.log(row);
 
-      let frameData = {
-        positionX: row.x,
-        positionY: row.y,
-        positionZ: row.z,
-        rotationX: row.rx,
-        rotationY: row.ry,
-        rotationZ: row.rz,
-        scalingX: row.sx,
-        scalingY: row.sy,
-        scalingZ: row.sz,
-        visibility: row.visibility,
-        frameOrder: row.frameorder,
-        frameTime: row.frametime
-      };
+    let frameData = {
+      positionX: row.x,
+      positionY: row.y,
+      positionZ: row.z,
+      rotationX: row.rx,
+      rotationY: row.ry,
+      rotationZ: row.rz,
+      scalingX: row.sx,
+      scalingY: row.sy,
+      scalingZ: row.sz,
+      visibility: row.visibility,
+      frameOrder: row.frameorder,
+      frameTime: row.frametime
+    };
 
-      if (row.childtype === 'shape' || row.childtype === 'mesh') {
-        shapeMeshOnlyFields.forEach(v => {
-          if (row[v.toLowerCase()]) {
-            let vector = this.getVector(row[v.toLowerCase()], 0, 0, 0);
-            frameData[v + 'R'] = vector.x;
-            frameData[v + 'G'] = vector.y;
-            frameData[v + 'B'] = vector.z;
-          }
-        });
-      }
+    if (row.childtype === 'shape' || row.childtype === 'mesh') {
+      shapeMeshOnlyFields.forEach(v => {
+        if (row[v.toLowerCase()]) {
+          let vector = this.getVector(row[v.toLowerCase()], 0, 0, 0);
+          frameData[v + 'R'] = vector.x;
+          frameData[v + 'G'] = vector.y;
+          frameData[v + 'B'] = vector.z;
+        }
+      });
+    }
+
+    if (row.childtype === 'camera') {
+      cameraFields.forEach(f => {
+        if (row[f.toLowerCase()])
+          frameData[f] = row[f.toLowerCase()];
+      });
+    }
+    if (row.childtype === 'block') {
+      blockFields.forEach(f => {
+        if (row[f.toLowerCase()])
+          frameData[f] = row[f.toLowerCase()];
+      });
+    }
+
+    if (row.childtype === 'light') {
+      lightFields.forEach(f => {
+        if (row[f.toLowerCase()])
+          frameData[f] = row[f.toLowerCase()];
+      });
+      lightColors.forEach(v => {
+        if (row[v.toLowerCase()]) {
+          let vector = this.getVector(row[v.toLowerCase()], 0, 0, 0);
+          frameData[v + 'R'] = vector.x;
+          frameData[v + 'G'] = vector.y;
+          frameData[v + 'B'] = vector.z;
+        }
+      });
+    }
 
     for (let parentKey in children) {
       frameData.parentKey = parentKey;
@@ -2057,8 +2093,9 @@ class gCSVImport {
     cam.asset = 'blockchild';
     cam.cameraacceleration = '.005';
     cam.camerafov = '0.8';
-    cam.cameraname = "demo";
+    cam.childname = "demo";
     cam.cameraradius = row.cameraradius;
+    cam.cameratype = 'FollowCamera';
     cam.cameraheightoffset = row.cameraheightoffset;
     cam.camerarotationoffset = '0';
     cam.maxcameraspeed = '10';

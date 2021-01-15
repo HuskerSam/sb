@@ -97,7 +97,7 @@ class wBlock {
 
     if (equipath.substring(0,6) === 'skybox')
       return;
-      
+
     let skybox = BABYLON.Mesh.CreateBox("skyBox", skyboxSize, this.context.scene);
     skybox.isPickable = false;
     let skyboxMaterial = new BABYLON.StandardMaterial(equipath, this.context.scene);
@@ -864,7 +864,7 @@ class wBlock {
     let values = this.framesHelper.firstFrameValues();
     let lP = this.framesHelper.__getLightDetails(values);
 
-    let light = this.blockRawData['childName'];
+    let light = this.blockRawData['lightType'];
     if (this.lightObject) {
       this.lightObject.dispose();
       this.lightObject = null;
@@ -1330,7 +1330,7 @@ class wBlock {
       let html = '';
       let count = 0;
       for (let i in this.context.canvasHelper.cameraDetails) {
-        html += `<option value="${i}">${this.context.canvasHelper.cameraDetails[i].cameraName}</option>`;
+        html += `<option value="${i}">${this.context.canvasHelper.cameraDetails[i].childName}</option>`;
         count++;
       }
       sel.innerHTML = html;

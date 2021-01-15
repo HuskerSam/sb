@@ -40,8 +40,7 @@ class sDataDefinition {
 
     if (tag === 'blockchild') {
       let localCopy = __localStaticStorageForBindingFields['childBlock'].slice(0);
-      //localCopy = localCopy.concat(this.bindingFields('frameCommand'));
-      return localCopy.concat(this.bindingFields('frameCamera'));
+      return localCopy;
     }
     return __localStaticStorageForBindingFields[tag].slice(0);
   }
@@ -70,39 +69,26 @@ let __localStaticStorageForBindingFields = {};
 let __defaultData = {};
 let __animFieldFilters = {};
 
-__animFieldFilters.blockCameraFields = {};
 __animFieldFilters.animateCameraFields = {};
-__animFieldFilters.blockCameraFields['UniversalCamera'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraRotationX', 'cameraRotationY', 'cameraRotationZ', 'cameraOrigin', 'cameraFOV'];
-__animFieldFilters.blockCameraFields['ArcRotate'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraRadius', 'cameraHeightOffset', 'cameraFOV'];
-__animFieldFilters.blockCameraFields['FollowCamera'] = ['cameraTargetBlock', 'cameraName'];
+__animFieldFilters.animateCameraFields['UniversalCamera'] = ['cameraOriginX',
+      'cameraOriginY', 'cameraOriginZ', 'cameraFOV', 'cameraAimTargetX', 'cameraAimTargetY', 'cameraAimTargetZ'];
+__animFieldFilters.animateCameraFields['ArcRotate'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ',
+      'cameraRadius', 'cameraHeightOffset', 'cameraFOV', 'cameraAimTargetX', 'cameraAimTargetY', 'cameraAimTargetZ'];
 __animFieldFilters.animateCameraFields['FollowCamera'] = ['cameraRadius', 'cameraHeightOffset', 'cameraRotationOffset', 'cameraAcceleration',
-  'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
-];
-__animFieldFilters.blockCameraFields['DeviceOrientationCamera'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['DeviceOrientationCamera'] = ['cameraRadius', 'cameraRotationOffset', 'cameraAcceleration',
-  'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
-];
-__animFieldFilters.blockCameraFields['WebVRFreeCamera'] = ['cameraAimTarget', 'cameraName'];
-__animFieldFilters.animateCameraFields['WebVRFreeCamera'] = ['cameraRadius', 'cameraRotationOffset', 'cameraAcceleration',
-  'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'
-];
-__animFieldFilters.blockLightFields = {};
+  'maxCameraSpeed', 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV'];
+__animFieldFilters.animateCameraFields['DeviceOrientationCamera'] = [ 'cameraOriginX', 'cameraOriginY', 'cameraOriginZ', 'cameraFOV', 'cameraAimTargetX', 'cameraAimTargetY', 'cameraAimTargetZ'];
+__animFieldFilters.animateCameraFields['WebVRFreeCamera'] = ['cameraOriginX', 'cameraOriginY', 'cameraOriginZ',
+  'cameraFOV'];
 __animFieldFilters.animateLightFields = {};
-__animFieldFilters.blockLightFields['Hemispheric'] = [];
 __animFieldFilters.animateLightFields['Hemispheric'] = ['lightDirectionX', 'lightDirectionY', 'lightDirectionZ', 'lightIntensity', 'lightGroundColorR', 'lightGroundColorG', 'lightGroundColorB',
   'lightSpecularR', 'lightSpecularG', 'lightSpecularB', 'lightDiffuseR', 'lightDiffuseG', 'lightDiffuseB'
 ];
-__animFieldFilters.blockLightFields['Point'] = [];
 __animFieldFilters.animateLightFields['Point'] = ['lightOriginX', 'lightOriginY', 'lightOriginZ', 'lightIntensity', 'lightGroundColor', 'lightGroundColorR', 'lightGroundColorG', 'lightGroundColorB',
   'lightSpecularR', 'lightSpecularG', 'lightSpecularB', 'lightDiffuseR', 'lightDiffuseG', 'lightDiffuseB'
 ];
-__animFieldFilters.blockLightFields['Directional'] = [];
 __animFieldFilters.animateLightFields['Directional'] = ['lightDirectionX', 'lightDirectionY', 'lightDirectionZ', 'lightIntensity', 'lightGroundColor', 'lightGroundColorR', 'lightGroundColorG', 'lightGroundColorB',
   'lightSpecularR', 'lightSpecularG', 'lightSpecularB', 'lightDiffuseR', 'lightDiffuseG', 'lightDiffuseB'
 ];
-__animFieldFilters.blockLightFields['Spot'] = [];
 __animFieldFilters.animateLightFields['Spot'] = ['lightOriginX', 'lightOriginY', 'lightOriginZ', 'lightDirectionX', 'lightDirectionY', 'lightDirectionZ', 'lightIntensity', 'lightGroundColor', 'lightAngle', 'lightDecay',
   'lightGroundColor', 'lightGroundColorR', 'lightGroundColorG', 'lightGroundColorB',
   'lightSpecularR', 'lightSpecularG', 'lightSpecularB', 'lightDiffuseR', 'lightDiffuseG', 'lightDiffuseB'
@@ -932,8 +918,8 @@ __localStaticStorageForBindingFields['childBlock'] = [{
     mesh: 'meshdatatitlelookuplist',
     block: 'blockdatatitlelookuplist',
     shape: 'shapedatatitlelookuplist',
-    light: 'lightsourceslist',
-    camera: 'camerasourceslist'
+    light: '',
+    camera: ''
   },
   dataListId: 'meshdatatitlelookuplist'
 }, {
@@ -944,18 +930,26 @@ __localStaticStorageForBindingFields['childBlock'] = [{
   displayGroup: ['mesh', 'shape', 'block'],
   displayKey: 'childType'
 }, {
-  title: 'Name',
-  fireSetField: 'cameraName',
-  displayGroup: 'camera',
+  title: 'Light Type',
+  fireSetField: 'lightType',
+  displayGroup: ['light'],
   displayKey: 'childType',
-  group: 'camera'
+  dataListId: 'lightsourceslist',
+  group: 'light'
+}, {
+  title: 'Camera Type',
+  fireSetField: 'cameraType',
+  displayGroup: ['camera'],
+  displayKey: 'childType',
+  dataListId: 'camerasourceslist',
+  group: 'options'
 }, {
   title: 'Target Block',
   fireSetField: 'cameraTargetBlock',
   displayGroup: ['camera'],
   displayKey: 'childType',
   dataListId: 'followblocktargetoptionslist',
-  group: 'camera'
+  group: 'options'
 }, {
   title: 'Latitude',
   fireSetField: 'latitude',
@@ -1303,11 +1297,25 @@ __localStaticStorageForBindingFields['frameCamera'] = [{
   group: 'camera1'
 }, {
   title: 'Aim at Position',
-  fireSetField: 'cameraAimTarget',
+  fireSetField: 'cameraAimTargetX',
   displayGroup: 'camera',
-  displayType: 'shortVector',
+  displayType: 'number',
   displayKey: 'childType',
-  group: 'camera'
+  group: 'cameraAimTarget'
+}, {
+  title: 'x y z',
+  fireSetField: 'cameraAimTargetY',
+  displayGroup: 'camera',
+  displayType: 'number',
+  displayKey: 'childType',
+  group: 'cameraAimTarget'
+}, {
+  title: '&nbsp;',
+  fireSetField: 'cameraAimTargetZ',
+  displayGroup: 'camera',
+  displayType: 'number',
+  displayKey: 'childType',
+  group: 'cameraAimTarget'
 }];
 __localStaticStorageForBindingFields['frameColor'] = [{
   title: 'Diffuse Color',
@@ -1468,12 +1476,11 @@ __defaultData['blockchild'] = {
   lightIntensity: '',
   lightDiffuse: '',
   lightSpecular: '',
-  cameraName: '',
-  cameraName: '',
+  cameraType: '',
+  lightType: '',
   cameraOrigin: '',
   cameraTargetBlock: '',
   cameraParentBlock: '',
-  cameraAimTarget: '',
   order: 0
 };
 __defaultData['frame'] = {

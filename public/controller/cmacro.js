@@ -184,8 +184,18 @@ class cMacro {
             <td></td>
           </tr>
           <tr>
-            <td>Aim Target</td>
-            <td><input data-field="cameraaimtarget" type="text" value="0,0,0" /></td>
+            <td>Aim Target X</td>
+            <td><input data-field="cameraaimtargetx" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Aim Target Y</td>
+            <td><input data-field="cameraaimtargety" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Aim Target Z</td>
+            <td><input data-field="cameraaimtargetz" type="text" value="" /></td>
             <td></td>
           </tr>
         </table>
@@ -449,17 +459,152 @@ class cMacro {
           <td><input data-field="specularcolor" class="specularcolor" type="text" value="" /></td>
           <td><input type="color" class="colorpickerraw" data-inputclass="specularcolor"></td>
         </tr>
-        <tr data-cats="Block">
+        <tr data-cats="camera">
+          <td>FOV</td>
+          <td><input data-field="camerafov" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Origin X</td>
+          <td><input data-field="cameraoriginx" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Origin Y</td>
+          <td><input data-field="cameraoriginy" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Origin Z</td>
+          <td><input data-field="cameraoriginz" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Rotation X</td>
+          <td><input data-field="camerarotationx" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Rotation Y</td>
+          <td><input data-field="camerarotationy" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Rotation Z</td>
+          <td><input data-field="camerarotationz" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Radius</td>
+          <td><input data-field="cameraradius" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Height Offset</td>
+          <td><input data-field="cameraheightoffset" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Rotation Offset</td>
+          <td><input data-field="camerarotationffset" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Acceleration</td>
+          <td><input data-field="cameraacceleration" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Max Speed</td>
+          <td><input data-field="maxcameraspeed" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Aim Target X</td>
+          <td><input data-field="cameraaimtargetx" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Aim Target Y</td>
+          <td><input data-field="cameraaimtargety" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="camera">
+          <td>Aim Target Z</td>
+          <td><input data-field="cameraaimtargetz" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Itensity</td>
+          <td><input data-field="lightintensity" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Origin X</td>
+          <td><input data-field="lightoriginx" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Origin Y</td>
+          <td><input data-field="lightoriginy" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Origin Z</td>
+          <td><input data-field="lightoriginz" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Direction X</td>
+          <td><input data-field="lightdirectionx" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Direction Y</td>
+          <td><input data-field="lightdirectiony" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Direction Z</td>
+          <td><input data-field="lightdirectionz" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Angle</td>
+          <td><input data-field="lightangle" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Decay</td>
+          <td><input data-field="lightdecay" type="text" value="" /></td>
+          <td></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Diffuse</td>
+          <td><input data-field="lightdiffuse" type="text" class="lightdiffuse" value="" /></td>
+          <td><input type="color" class="colorpickerraw" data-inputclass="lightdiffuse"></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Specular</td>
+          <td><input data-field="lightspecular" type="text" class="lightspecular" value="" /></td>
+          <td><input type="color" class="colorpickerraw" data-inputclass="lightspecular"></td>
+        </tr>
+        <tr data-cats="light">
+          <td>Ground Color</td>
+          <td><input data-field="lightgroundcolor" type="text" class="lightgroundcolor" value="" /></td>
+          <td><input type="color" class="colorpickerraw" data-inputclass="lightgroundcolor"></td>
+        </tr>
+        <tr data-cats="block">
           <td>Command</td>
-          <td><input data-field="framecommand" type="text" value="" /></td>
+          <td><input data-field="framecommand" list="framecommandoptionslist" type="text" value="" /></td>
           <td></td>
         </tr>
-        <tr data-cats="Block">
+        <tr data-cats="block">
           <td>Field</td>
-          <td><input data-field="framecommandfield" type="text" value="" /></td>
+          <td><input data-field="framecommandfield" list="framecommandfieldslist" type="text" value="" /></td>
           <td></td>
         </tr>
-        <tr data-cats="Block">
+        <tr data-cats="block">
           <td>Value</td>
           <td><input data-field="framecommandvalue" type="text" value="" /></td>
           <td></td>

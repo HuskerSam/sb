@@ -555,15 +555,15 @@ class wContext {
         this._renderDefaultCamera();
       } else {
         let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
-        if (cameraDetails.childName === 'FollowCamera') {
+        if (cameraDetails.cameraType === 'FollowCamera') {
           this._renderFollowCamera();
-        } else if (cameraDetails.childName === 'UniversalCamera') {
+        } else if (cameraDetails.cameraType === 'UniversalCamera') {
           this._renderUniversalCamera();
-        } else if (cameraDetails.childName === 'ArcRotate') {
+        } else if (cameraDetails.cameraType === 'ArcRotate') {
           this._renderArcCamera();
-        } else if (cameraDetails.childName === 'DeviceOrientationCamera') {
+        } else if (cameraDetails.cameraType === 'DeviceOrientationCamera') {
           this._renderDeviceOrientationCamera();
-        } else if (cameraDetails.childName === 'WebVRFreeCamera') {
+        } else if (cameraDetails.cameraType === 'WebVRFreeCamera') {
           this._renderVRFreeCamera();
         } else {
           this._renderDefaultCamera();
@@ -618,11 +618,10 @@ class wContext {
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.UniversalCamera("UniversalCamera", cameraOrigin, this.scene);
 
-    let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
+    let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
+      values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
-    this.cameraAimTarget = cameraDetails.cameraAimTarget;
 
-    this.camera.setPosition(cameraOrigin);
     this.rebindCamera();
   }
   _renderDeviceOrientationCamera() {
@@ -634,11 +633,11 @@ class wContext {
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.DeviceOrientationCamera("DeviceOrientationCamera", cameraOrigin, this.scene);
 
-    let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
+    let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
+      values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
-    this.cameraAimTarget = cameraDetails.cameraAimTarget;
 
-    this.camera.position = cameraOrigin;
+    //this.camera.position = cameraOrigin;
     this.rebindCamera();
   }
   _renderVRFreeCamera() {
@@ -650,11 +649,11 @@ class wContext {
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.WebVRFreeCamera("WebVRFreeCamera", cameraOrigin, this.scene);
 
-    let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
+    let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
+      values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
-    this.cameraAimTarget = cameraDetails.cameraAimTarget;
 
-    this.camera.position = cameraOrigin;
+    //this.camera.position = cameraOrigin;
     this.rebindCamera();
   }
   _renderDefaultCamera() {
@@ -683,14 +682,17 @@ class wContext {
     let values = cameraDetails.firstFrameValues;
     let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
-    this.camera = new BABYLON.ArcRotateCamera("defaultSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9, values.cameraOriginY, new BABYLON.Vector3(0, 0, 0), this.scene)
+    this.camera = new BABYLON.ArcRotateCamera("arcRotateSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9,
+      values.cameraOriginY, cameraOrigin, this.scene)
     this.rebindCamera();
     if (values.cameraRadius)
       this.camera.radius = Number(values.cameraRadius);
-    let aimTarget = GLOBALUTIL.getVector(cameraDetails.cameraAimTarget, 0, 0, 0);
+
+    let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
+      values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
-    this.cameraAimTarget = cameraDetails.cameraAimTarget;
-    this.camera.setPosition(cameraOrigin);
+
+    //this.camera.setPosition(cameraOrigin);
   }
   selectCamera(blockCameraId, dialogForCamera) {
     if (!this.canvasHelper.cameraDetails[blockCameraId])

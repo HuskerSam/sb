@@ -27,42 +27,15 @@ class cBlockLinkSelect extends bBand {
   }
   __updateFieldsForAnimHeaderRow() {
     this.childEditFields._superUpdateDisplayFilters();
-    let fieldsFilter = sDataDefinition.getAnimFieldsFilter();
-    let fieldList = null;
-    if (this.parent.context.activeBlock.blockRawData.childType === 'camera')
-      fieldList = fieldsFilter.blockCameraFields[this.parent.context.activeBlock.blockRawData.childName];
-    if (this.parent.context.activeBlock.blockRawData.childType === 'light')
-      fieldList = fieldsFilter.blockLightFields[this.parent.context.activeBlock.blockRawData.childName];
 
-    if (!fieldList)
-      fieldList = [];
+    if (this.parent.context.activeBlock.blockRawData.childType === 'camera') {
+      let map = {};
+      this.childEditFields.fields.forEach(i => map[i.fireSetField] = i);
 
-    let groupList = ['camera', 'light', 'camera0', 'light0', 'camera1', 'lightsub', 'camera1', 'lightsubdif', 'lightsubspec', 'lightsubgnd', 'cameraArc', 'cameraFOV'];
-
-    if (fieldList !== null) {
-      for (let inner in this.childEditFields.fields) {
-        let innerField = this.childEditFields.fields[inner];
-        let key = innerField.fireSetField;
-
-        if (groupList.indexOf(innerField.group) === -1)
-          continue;
-
-        if (fieldList.indexOf(key) !== -1)
-          innerField.domContainer.style.display = 'inline-block';
-        else
-          innerField.domContainer.style.display = 'none';
-      }
-
-      for (let i in this.childEditFields.groups) {
-        let childVisible = false;
-        this.childEditFields.groups[i].style.display = 'none';
-        let children = this.childEditFields.groups[i].childNodes;
-        for (let ii = 0; ii < children.length; ii++)
-          if (children[ii].style.display !== 'none') {
-            this.childEditFields.groups[i].style.display = '';
-            break;
-          }
-      }
+      if (map['cameraType'].dom.value !== 'FollowCamera')
+        map['cameraTargetBlock'].domContainer.style.display = 'none';
+      else
+        map['cameraTargetBlock'].domContainer.style.display = 'inline-block';
     }
   }
   handleDataChange(fireData, type) {

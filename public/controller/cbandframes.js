@@ -47,9 +47,9 @@ class cBandFrames extends bBand {
     let fieldsFilter = sDataDefinition.getAnimFieldsFilter();
     let fieldList = null;
     if (this.framesHelper.cachedChildType === 'camera')
-      fieldList = fieldsFilter.animateCameraFields[this.parent.context.activeBlock.blockRawData.childName];
+      fieldList = fieldsFilter.animateCameraFields[this.parent.context.activeBlock.blockRawData.cameraType];
     if (this.framesHelper.cachedChildType === 'light')
-      fieldList = fieldsFilter.animateLightFields[this.parent.context.activeBlock.blockRawData.childName];
+      fieldList = fieldsFilter.animateLightFields[this.parent.context.activeBlock.blockRawData.lightType];
 
     if (fieldList) {
       for (let inner in instance.dataPanel.fields) {
@@ -204,7 +204,7 @@ class cBandFrames extends bBand {
       return;
 
     childType = cache.childType;
-    
+
     if (this.parent.context.activeBlock)
       this.framesHelper = this.parent.context.activeBlock.framesHelper;
     else
@@ -362,23 +362,22 @@ class cBandFrames extends bBand {
           }
         }
 
+        let getVectorDiv = (x,y,z) => `<div class="${className}">` +
+          GLOBALUTIL.formatNumber(x) + ',' +
+          GLOBALUTIL.formatNumber(y) + ',' +
+          GLOBALUTIL.formatNumber(z) + '</div>';
+
         if (groupDisplays.scale)
-          groupDisplays.scale.innerHTML += `<div class="${className}">` +
-          GLOBALUTIL.formatNumber(rFrame.values['scalingX'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['scalingY'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['scalingZ'].value) + '</div>';
+          groupDisplays.scale.innerHTML += getVectorDiv(rFrame.values['scalingX'].value,
+            rFrame.values['scalingY'].value, rFrame.values['scalingZ'].value);
 
         if (groupDisplays.offset)
-          groupDisplays.offset.innerHTML += `<div class="${className}">` +
-          GLOBALUTIL.formatNumber(rFrame.values['positionX'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['positionY'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['positionZ'].value) + '</div>';
+          groupDisplays.offset.innerHTML += getVectorDiv(rFrame.values['positionX'].value,
+            rFrame.values['positionY'].value, rFrame.values['positionZ'].value);
 
         if (groupDisplays.rotate)
-          groupDisplays.rotate.innerHTML += `<div class="${className}">` +
-          GLOBALUTIL.formatNumber(rFrame.values['rotationX'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['rotationY'].value) + ',' +
-          GLOBALUTIL.formatNumber(rFrame.values['rotationZ'].value) + '</div>';
+          groupDisplays.rotate.innerHTML += getVectorDiv(rFrame.values['rotationX'].value,
+              rFrame.values['rotationY'].value, rFrame.values['rotationZ'].value);
 
         if (groupDisplays.visi)
           groupDisplays.visi.innerHTML += `<div class="${className}">` +
@@ -395,6 +394,10 @@ class cBandFrames extends bBand {
           GLOBALUTIL.formatNumber(rFrame.values['cameraRotationOffset'].value) + ' &nbsp; ' +
           GLOBALUTIL.formatNumber(rFrame.values['cameraAcceleration'].value) + ' &nbsp; ' +
           GLOBALUTIL.formatNumber(rFrame.values['maxCameraSpeed'].value) + '</div>';
+
+        if (groupDisplays.cameraAimTarget)
+          groupDisplays.cameraAimTarget.innerHTML += getVectorDiv(rFrame.values['cameraAimTargetX'].value,
+              rFrame.values['cameraAimTargetY'].value, rFrame.values['cameraAimTargetZ'].value);;
 
         if (groupDisplays.cameraArc)
           groupDisplays.cameraArc.innerHTML += `<div class="${className}">` +
@@ -416,26 +419,32 @@ class cBandFrames extends bBand {
           GLOBALUTIL.formatNumber(rFrame.values['cameraRotationX'].value) + ',' +
           GLOBALUTIL.formatNumber(rFrame.values['cameraRotationY'].value) + ',' +
           GLOBALUTIL.formatNumber(rFrame.values['cameraRotationZ'].value) + '</div>';
+
         if (groupDisplays.light)
-          groupDisplays.light.innerHTML += lightValues.directionX + ',' + lightValues.directionY + ',' + lightValues.directionZ;
+          groupDisplays.light.innerHTML += getVectorDiv(lightValues.directionX,
+            lightValues.directionY, lightValues.directionZ);
 
         if (groupDisplays.lightsub)
-          groupDisplays.lightsub.innerHTML += lightValues.intensity;
+          groupDisplays.lightsub.innerHTML += `<div class="${className}">` + lightValues.intensity + '</div>';
 
         if (groupDisplays.lightsubdif)
-          groupDisplays.lightsubdif.innerHTML += lightValues.diffuseR + ',' + lightValues.diffuseG + ',' + lightValues.diffuseB;
+          groupDisplays.lightsubdif.innerHTML += getVectorDiv(lightValues.diffuseR,
+             lightValues.diffuseG, lightValues.diffuseB);
 
         if (groupDisplays.lightsubspec)
-          groupDisplays.lightsubspec.innerHTML += lightValues.specularR + ',' + lightValues.specularG + ',' + lightValues.specularB;
+          groupDisplays.lightsubspec.innerHTML += getVectorDiv(lightValues.specularR,
+             lightValues.specularG, lightValues.specularB);
 
         if (groupDisplays.lightsubgnd)
-          groupDisplays.lightsubgnd.innerHTML += lightValues.groundR + ',' + lightValues.groundG + ',' + lightValues.groundB;
+          groupDisplays.lightsubgnd.innerHTML += getVectorDiv(lightValues.groundR,
+             lightValues.groundG, lightValues.groundB);
 
         if (groupDisplays.lightP)
-          groupDisplays.lightP.innerHTML += lightValues.originX + ',' + lightValues.originY + ',' + lightValues.originZ;
+          groupDisplays.lightP.innerHTML += getVectorDiv(lightValues.originX,
+              lightValues.originY, lightValues.originZ);
 
         if (groupDisplays.light4)
-          groupDisplays.light4.innerHTML += lightValues.angle + ',' + lightValues.decay;
+          groupDisplays.light4.innerHTML += `<div class="${className}">` + lightValues.angle + ',' + lightValues.decay + '</div>';
 
         if (groupDisplays.emissive)
           groupDisplays.emissive.innerHTML += `<div class="${className}">` +

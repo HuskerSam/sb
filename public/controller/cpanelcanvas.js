@@ -190,10 +190,10 @@ class cPanelCanvas {
   get defaultCameras() {
     return {
       default: {
-        cameraName: 'Camera'
+        childName: 'Camera'
       },
       reset: {
-        cameraName: 'Reset'
+        childName: 'Reset'
       }
     };
   }
@@ -657,15 +657,18 @@ class cPanelCanvas {
       this.arcRangeSlider.parentNode.style.display = 'inline-block';
       this.fovSlider.parentNode.style.display = 'inline-block';
     } else {
-      let camType = this.cameraDetails[this.cameraSelect.value].childName;
+      let camType = this.cameraDetails[this.cameraSelect.value].cameraType;
 
-      if (camType === 'ArcRotate' || camType === 'FollowCamera' || camType === 'DeviceOrientationCamera' || camType === 'WebVRFreeCamera') {
+      if (camType === 'ArcRotate' || camType === 'FollowCamera') {
         this.arcRangeSlider.parentNode.style.display = 'inline-block';
         this.fovSlider.parentNode.style.display = 'inline-block';
       }
 
       if (camType === 'FollowCamera')
         this.heightSlider.parentNode.style.display = 'inline-block';
+
+      if (camType === 'UniversalCamera' || camType === 'DeviceOrientationCamera')
+        this.fovSlider.parentNode.style.display = 'inline-block';
     }
 
     let animStatus = true;
