@@ -14,7 +14,7 @@ class GLOBALUTIL {
     let b = Number(parts[2]);
     if (isNaN(b))
       b = 0;
-    if (window.BABYLON)
+    if (window && window.BABYLON)
       return new BABYLON.Color3(r, g, b);
 
     return {
@@ -74,9 +74,8 @@ class GLOBALUTIL {
         z = GLOBALUTIL.getNumberOrDefault(parts[2], z);
       }
 
-    if (window)
-      if (window.BABYLON)
-        return new BABYLON.Vector3(x, y, z);
+    if (window && window.BABYLON)
+      return new BABYLON.Vector3(x, y, z);
 
     return {
       x,
@@ -130,7 +129,7 @@ class GLOBALUTIL {
     var r = GLOBALUTIL.HexToR(hex) / 255;
     var g = GLOBALUTIL.HexToG(hex) / 255;
     var b = GLOBALUTIL.HexToB(hex) / 255;
-    if (window.BABYLON)
+    if (window && window.BABYLON)
       return new BABYLON.Color3(r, g, b);
 
     return {

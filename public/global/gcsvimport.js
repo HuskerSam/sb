@@ -512,7 +512,7 @@ class gCSVImport {
     }
     if (row.childtype === 'light') {
       blockChildData.lightType = row.lighttype;
-      blockChildData.childName = row.childname;
+      blockChildData.childName = row.name;
     }
 
     if (row.latitude)

@@ -160,27 +160,27 @@ class cMacro {
           </tr>
           <tr>
             <td>Start X</td>
-            <td><input data-field="startx" type="text" value="-40" /></td>
+            <td><input data-field="startx" type="text" value="" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Start Y</td>
-            <td><input data-field="starty" type="text" value="30" /></td>
+            <td><input data-field="starty" type="text" value="" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Start Z</td>
-            <td><input data-field="startz" type="text" value="0" /></td>
+            <td><input data-field="startz" type="text" value="" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Radius</td>
-            <td><input data-field="cameraradius" type="text" value="30" /></td>
+            <td><input data-field="cameraradius" type="text" value="" /></td>
             <td></td>
           </tr>
           <tr>
             <td>Height</td>
-            <td><input data-field="cameraheightoffset" type="text" value="35" /></td>
+            <td><input data-field="cameraheightoffset" type="text" value="" /></td>
             <td></td>
           </tr>
           <tr>
@@ -196,6 +196,11 @@ class cMacro {
           <tr>
             <td>Aim Target Z</td>
             <td><input data-field="cameraaimtargetz" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>FOV</td>
+            <td><input data-field="camerafov" type="text" value="" /></td>
             <td></td>
           </tr>
         </table>
@@ -536,7 +541,7 @@ class cMacro {
         </tr>
         <tr data-cats="light">
           <td>Itensity</td>
-          <td><input data-field="lightintensity" type="text" value="" /></td>
+          <td><input data-field="lightintensity" type="text" value="1" /></td>
           <td></td>
         </tr>
         <tr data-cats="light">
@@ -561,7 +566,7 @@ class cMacro {
         </tr>
         <tr data-cats="light">
           <td>Direction Y</td>
-          <td><input data-field="lightdirectiony" type="text" value="" /></td>
+          <td><input data-field="lightdirectiony" type="text" value="-1" /></td>
           <td></td>
         </tr>
         <tr data-cats="light">
@@ -581,17 +586,17 @@ class cMacro {
         </tr>
         <tr data-cats="light">
           <td>Diffuse</td>
-          <td><input data-field="lightdiffuse" type="text" class="lightdiffuse" value="" /></td>
+          <td><input data-field="lightdiffuse" type="text" class="lightdiffuse" value="1,1,1" /></td>
           <td><input type="color" class="colorpickerraw" data-inputclass="lightdiffuse"></td>
         </tr>
         <tr data-cats="light">
           <td>Specular</td>
-          <td><input data-field="lightspecular" type="text" class="lightspecular" value="" /></td>
+          <td><input data-field="lightspecular" type="text" class="lightspecular" value="1,1,1" /></td>
           <td><input type="color" class="colorpickerraw" data-inputclass="lightspecular"></td>
         </tr>
         <tr data-cats="light">
           <td>Ground Color</td>
-          <td><input data-field="lightgroundcolor" type="text" class="lightgroundcolor" value="" /></td>
+          <td><input data-field="lightgroundcolor" type="text" class="lightgroundcolor" value="0,0,0" /></td>
           <td><input type="color" class="colorpickerraw" data-inputclass="lightgroundcolor"></td>
         </tr>
         <tr data-cats="block">
@@ -616,6 +621,7 @@ class cMacro {
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
       <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
       <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+      <label><input type="checkbox" class="copy_csv_excludeempty_clipboard"><span> exclude empty</span></label>
       <br>
       <div class="csv_import_preview"></div>
     </div>`;
@@ -637,9 +643,10 @@ class cMacro {
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
     this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
     this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
+    this.copy_csv_excludeempty_clipboard = this.panel.querySelector('.copy_csv_excludeempty_clipboard');
 
-    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.frameCSVUpdate()));
-    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.frameCSVUpdate()));
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.frameUpdateCSV()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.frameUpdateCSV()));
     this.panel.querySelectorAll('.colorpickerraw')
       .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i, '')));
 
@@ -662,7 +669,7 @@ class cMacro {
 
     this.frameUpdateCSV();
   }
-  frameCSVUpdate() {
+  frameUpdateCSV() {
     let category = this.frametype.value;
 
     let csv_row = {
@@ -682,12 +689,24 @@ class cMacro {
       if (cats.indexOf(category) !== -1 || cats[0] === 'all') {
         let i = row.querySelector('input[type="text"]');
         if (i) {
-          csv_row[i.dataset.field] = i.value;
+          let v = i.value;
+          if (i.value.indexOf('%') !== -1)
+            v = "=\"" + v + "\"";
+          csv_row[i.dataset.field] = v;
         }
       }
     });
 
-    let r = csv_row;
+    let excludeEmpty = this.copy_csv_excludeempty_clipboard.checked;
+    let out_row = csv_row;
+    if (excludeEmpty) {
+      out_row = {};
+      for (let key in csv_row)
+        if (csv_row[key] !== '')
+          out_row[key] = csv_row[key];
+    }
+
+    let r = out_row;
     let header = this.copy_csv_header_clipboard.checked;
     this.export_csv = r;
     if (r) {
@@ -710,7 +729,7 @@ class cMacro {
         <table class="wizard_field_container light_fields_table">
           <tr data-cats="all">
             <td>Light Type</td>
-            <td><input data-field="childname" class="lighttypeinput" type="text" list="lightsourceslist" /></td>
+            <td><input data-field="lighttype" class="lighttypeinput" type="text" list="lightsourceslist" /></td>
             <td></td>
           </tr>
           <tr data-cats="all">
@@ -735,17 +754,17 @@ class cMacro {
           </tr>
           <tr data-cats="Directional,Hemispheric,Spot">
             <td>Direction X</td>
-            <td><input data-field="lightdirectionx" type="text" value="30" /></td>
+            <td><input data-field="lightdirectionx" type="text" value="0" /></td>
             <td></td>
           </tr>
           <tr data-cats="Directional,Hemispheric,Spot">
             <td>Direction Y</td>
-            <td><input data-field="lightdirectiony" type="text" value="30" /></td>
+            <td><input data-field="lightdirectiony" type="text" value="-1" /></td>
             <td></td>
           </tr>
           <tr data-cats="Directional,Hemispheric,Spot">
             <td>Direction Z</td>
-            <td><input data-field="lightdirectionz" type="text" value="30" /></td>
+            <td><input data-field="lightdirectionz" type="text" value="0" /></td>
             <td></td>
           </tr>
           <tr data-cats="all">
@@ -755,17 +774,17 @@ class cMacro {
           </tr>
           <tr data-cats="all">
             <td>Ground Color</td>
-            <td><input data-field="groundcolor" class="groundcolor" type="text" value="" /></td>
+            <td><input data-field="groundcolor" class="groundcolor" type="text" value="0,0,0" /></td>
             <td><input type="color" class="colorpickerraw" data-inputclass="groundcolor"></td>
           </tr>
           <tr data-cats="all">
             <td>Diffuse Color</td>
-            <td><input data-field="diffusecolor" class="diffusecolor" type="text" value="" /></td>
+            <td><input data-field="diffusecolor" class="diffusecolor" type="text" value="1,1,1" /></td>
             <td><input type="color" class="colorpickerraw" data-inputclass="diffusecolor"></td>
           </tr>
           <tr data-cats="all">
             <td>Specular Color</td>
-            <td><input data-field="specularcolor" class="specularcolor" type="text" value="" /></td>
+            <td><input data-field="specularcolor" class="specularcolor" type="text" value="1,1,1" /></td>
             <td><input type="color" class="colorpickerraw" data-inputclass="specularcolor"></td>
           </tr>
           <tr data-cats="Spot">
@@ -835,13 +854,10 @@ class cMacro {
   }
   lightUpdateCSV() {
     this.newName = this.panelInput.value.trim();
-    let childname = this.lighttypeinput.value;
-
     let csv_row = {
       name: this.newName,
       asset: 'blockchild',
-      childtype: 'light',
-      childname
+      childtype: 'light'
     };
 
     let tr_rows = this.panel.querySelectorAll('.light_fields_table tr');
@@ -874,9 +890,6 @@ class cMacro {
       }
     } else
       this.csv_import_preview.innerHTML = new Date();
-  }
-  frameUpdateCSV() {
-    return '';
   }
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
