@@ -23,6 +23,13 @@ class gCSVImport {
       return GLOBALUTIL.angleDeg(angle, d);
     }
   }
+  getVector(str, x, y, z) {
+    if (this.node) {
+      return this.globalUtil.getVector(str, x, y, z);
+    } else {
+      return GLOBALUTIL.getVector(str, x, y, z);
+    }
+  }
   path(eleType) {
     if (eleType === 'projectTitles')
       return '/projectTitles';
@@ -526,6 +533,9 @@ class gCSVImport {
       blockChildData.cameraAimTarget = row.cameraaimtarget;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
 
+    if (row.childtype === 'light')
+      blockChildData.childName = row.childname;
+
     let childResults = await this.dbSetRecord('blockchild', blockChildData);
 
     let frameTime = row.frametime;
@@ -566,6 +576,42 @@ class gCSVImport {
       frameData.cameraOriginY = row.starty;
     if (row.startz)
       frameData.cameraOriginZ = row.startz;
+
+    if (row.childtype === 'light') {
+      let lightFields = [
+        'lightOriginX',
+        'lightOriginY',
+        'lightOriginZ',
+        'lightDirectionX',
+        'lightDirectionY',
+        'lightDirectionZ',
+        'lightAngle',
+        'lightDecay',
+        'lightIntensity'
+      ];
+      let colorFields = [
+        'Diffuse',
+        'Specular',
+        'Ground'
+      ];
+      lightFields.forEach(f => {
+        let field = f.toLowerCase();
+        if (row[field])
+          frameData[f] = row[field];
+      });
+      colorFields.forEach(c => {
+        let field = c.toLowerCase() + 'color';
+        if (c === 'Ground')
+          c += 'Color';
+        if (row[field]) {
+          let vector = this.getVector(row[field], 0, 0, 0);
+          frameData['light' + c + 'R'] = vector.x;
+          frameData['light' + c + 'G'] = vector.y;
+          frameData['light' + c + 'B'] = vector.z;
+        }
+      });
+
+    }
 
     return this.dbSetRecord('frame', frameData);
   }

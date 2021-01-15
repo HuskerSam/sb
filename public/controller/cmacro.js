@@ -141,7 +141,7 @@ class cMacro {
   cameraTemplate() {
     return `<div class="shape_wizard_wrapper" style="display:flex;flex-direction:column;">
       <div style="display:flex;flex-direction:row">
-        <select class="camera_wizard_type_select" style="margin-bottom: 8px;margin-top:4px;width: 9em;margin-right:.25em;font-size:.9em">
+        <select class="camera_wizard_type_select" style="margin-bottom: 8px;margin-top:4px;width: 12em;margin-right:.25em;font-size:.9em">
          <option selected>Native Camera</option>
          <option>Product Camera</option>
         </select>
@@ -349,10 +349,175 @@ class cMacro {
     return 'Frames stuff';
   }
   lightTemplate() {
-    return 'Light stuff';
+    return `<div class="shape_wizard_wrapper" style="display:flex;flex-direction:column;">
+      <div style="flex:1;overflow: hidden auto;">
+        <table class="wizard_field_container light_fields_table">
+          <tr data-cats="all">
+            <td>Light Type</td>
+            <td><input data-field="childname" class="lighttypeinput" type="text" list="lightsourceslist" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="all">
+            <td>Parent</td>
+            <td><input data-field="parent" type="text" value="::scene::" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="Point,Spot">
+            <td>Origin X</td>
+            <td><input data-field="lightoriginx" type="text" value="30" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="Point,Spot">
+            <td>Origin Y</td>
+            <td><input data-field="lightoriginy" type="text" value="30" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="Point,Spot">
+            <td>Origin Z</td>
+            <td><input data-field="lightoriginz" type="text" value="30" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="Directional,Hemispheric,Spot">
+            <td>Direction X</td>
+            <td><input data-field="lightdirectionx" type="text" value="30" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="Directional,Hemispheric,Spot">
+            <td>Direction Y</td>
+            <td><input data-field="lightdirectiony" type="text" value="30" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="Directional,Hemispheric,Spot">
+            <td>Direction Z</td>
+            <td><input data-field="lightdirectionz" type="text" value="30" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="all">
+            <td>Intensity</td>
+            <td><input data-field="lightintensity" type="text" value="1" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="all">
+            <td>Ground Color</td>
+            <td><input data-field="groundcolor" class="groundcolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="groundcolor"></td>
+          </tr>
+          <tr data-cats="all">
+            <td>Diffuse Color</td>
+            <td><input data-field="diffusecolor" class="diffusecolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="diffusecolor"></td>
+          </tr>
+          <tr data-cats="all">
+            <td>Specular Color</td>
+            <td><input data-field="specularcolor" class="specularcolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="specularcolor"></td>
+          </tr>
+          <tr data-cats="Spot">
+            <td>Decay</td>
+            <td><input data-field="lightdecay" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr data-cats="Spot">
+            <td>Angle</td>
+            <td><input data-field="lightangle" type="text" value="" /></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="copy_clipboard_footer">
+      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+      <br>
+      <div class="csv_import_preview"></div>
+    </div>`;
+  }
+  lightRegister() {
+    this.lighttypeinput = this.panel.querySelector('.lighttypeinput');
+    this.lighttypeinput.addEventListener('input', e => this.lightUpdateDisplayedFields());
+
+    this.wizard_field_container = this.panel.querySelector('.wizard_field_container');
+
+    this.panel.querySelectorAll('.colorpickerraw')
+      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i, '')));
+
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName(true);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
+
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.lightUpdateCSV()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.lightUpdateCSV()));
+
+    this.lightUpdateDisplayedFields();
+  }
+  lightUpdateDisplayedFields() {
+    let category = this.lighttypeinput.value;
+    let rows = this.wizard_field_container.querySelectorAll('tr');
+
+    rows.forEach(row => {
+      let cats = row.dataset.cats;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(category) === -1 && cats[0] !== 'all')
+        row.style.display = 'none';
+      else
+        row.style.display = '';
+    });
+    this.lightUpdateCSV();
   }
   lightUpdateCSV() {
-    return '';
+    this.newName = this.panelInput.value.trim();
+    let childname = this.lighttypeinput.value;
+
+    let csv_row = {
+      name: this.newName,
+      asset: 'blockchild',
+      childtype: 'light',
+      childname
+    };
+
+    let tr_rows = this.panel.querySelectorAll('.light_fields_table tr');
+    tr_rows.forEach(row => {
+      let cats = row.dataset.cats;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(childname) !== -1 || cats[0] === 'all') {
+        let i = row.querySelector('input[type="text"]');
+        if (i) {
+          csv_row[i.dataset.field] = i.value;
+        }
+      }
+    });
+
+    let r = csv_row;
+    let header = this.copy_csv_header_clipboard.checked;
+    this.export_csv = r;
+    if (r) {
+      if (window.Papa) {
+        this.csvImportPreviewRaw = Papa.unparse([r], {
+          header
+        });
+        this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+        if (this.csv_import_shown === 2) {
+          this.csv_import_shown = 0;
+          this._updateCSVDisplay(2);
+        }
+      }
+    } else
+      this.csv_import_preview.innerHTML = new Date();
   }
   frameUpdateCSV() {
     return '';
