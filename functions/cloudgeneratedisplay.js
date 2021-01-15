@@ -1,8 +1,8 @@
 const requireFromUrl = require('require-from-url/sync');
 let firebase = require("firebase-admin");
 let project_id = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
-let gcsvimport = requireFromUrl(`https://${project_id}.web.app/global/gcsvimport.js?abc=894i4`);
-let GLOBALUTIL = requireFromUrl(`https://${project_id}.web.app/global/globalutil.js?abc=13ii8974`);
+let gcsvimport = requireFromUrl(`https://${project_id}.web.app/global/gcsvimport.js?abc=8332`);
+let GLOBALUTIL = requireFromUrl(`https://${project_id}.web.app/global/globalutil.js?abc=13ii221`);
 const Busboy = require('busboy');
 const toArray = require('stream-to-array');
 
