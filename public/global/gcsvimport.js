@@ -495,16 +495,18 @@ class gCSVImport {
     let key = parentRecords.recordIds[0];
 
     let inheritMaterial = false;
-    if (row.materialname === 'inherit')
+    if (row.materialname === 'inherit' || row.inheritmaterial === '1')
       inheritMaterial = true;
 
     let blockChildData = {
-      materialName: row.materialname,
       parentKey: key,
       childType: row.childtype,
       childName: row.name,
       inheritMaterial
     };
+
+    if (row.childname)
+      blockChildData.childName = row.childname;
 
     if (blockChildData.childtype === 'camera') {
       blockChildData.cameraType = row.cameratype;

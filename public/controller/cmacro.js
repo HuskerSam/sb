@@ -902,12 +902,42 @@ class cMacro {
          <option>Connector Line</option>
          <option>2D Text Plane</option>
          <option>Web Font</option>
+         <option>Block Child</option>
         </select>
         <div class="scene_type_option_list" style="text-align:center;flex:1;padding-top:4px;">
           <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span style="font-size:.85em"> Skybox</span></label>
           &nbsp;
           <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span style="font-size:.85em;"> Building</span></label>
         </div>
+      </div>
+      <div class="block_child_wizard">
+        <table class="wizard_field_container">
+          <tr>
+            <td>Child Name</td>
+            <td><input data-field="childname" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Child Type</td>
+            <td><input data-field="childtype" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Inherit Material</td>
+            <td><input data-field="inheritmaterial" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Latitude</td>
+            <td><input data-field="latitude" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Longitude</td>
+            <td><input data-field="longitude" type="text" value="" /></td>
+            <td></td>
+          </tr>
+        </table>
       </div>
       <div class="create-2d-text-plane">
         <table class="wizard_field_container">
@@ -1220,6 +1250,31 @@ class cMacro {
                 <div class="groundimage_preview_div image_preview_div"></div>
               </td>
             </tr>
+            <tr>
+              <td>Frame Time</td>
+              <td><input type="text" class="frametime" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Camera Name</td>
+              <td><input type="text" class="displaycamera" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Audio URL</td>
+              <td><input type="text" class="audiourl" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Audio Params</td>
+              <td><input type="text" class="musicparams" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Block Data</td>
+              <td><input type="text" class="genericblockdata" /></td>
+              <td></td>
+            </tr>
           </table>
         </div>
         <div class="buildingscenefeatures" style="display:none;">
@@ -1399,7 +1454,7 @@ class cMacro {
       </div>
       <div id="block_wizard_parent_wrapper">
         <table class="wizard_field_container">
-          <tr data-types="all">
+          <tr data-types="all" class="show_parent_details_row">
             <td>Show Parent Details</td>
             <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
             <td></td>
@@ -1423,6 +1478,9 @@ class cMacro {
     this.block_wizard_type_select = this.panel.querySelector('.block_wizard_type_select');
     this.block_wizard_type_select.addEventListener('input', e => this.blockHelperChange());
 
+    this.show_parent_details_row = this.panel.querySelector('.show_parent_details_row');
+
+    this.block_child_wizard = this.panel.querySelector('.block_child_wizard');
     this.blockShapePanel = this.panel.querySelector('.shape_and_text_block_options');
     this.scene_block_add_options = this.panel.querySelector('.scene_block_add_options');
     this.scene_type_option_list = this.panel.querySelector('.scene_type_option_list');
@@ -2404,8 +2462,9 @@ class cMacro {
       'backwallscalev', 'backwallscaleu', 'backwallimage',
       'frontwallscalev', 'frontwallscaleu', 'frontwallimage',
       'floorscalev', 'floorscaleu', 'floorimage',
-      'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage'
-    ];
+      'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage',
+      'frametime', 'audiourl', 'displaycamera', 'genericblockdata',
+      'musicparams' ];
 
     let fieldValues = {};
     let skyboxType = this.panel.querySelector('.skyboxtemplatetype').checked;
@@ -2510,10 +2569,12 @@ class cMacro {
     this.connectorLinePanel.style.display = 'none';
     this.webFontPanel.style.display = 'none';
     this.text2dpanel.style.display = 'none';
+    this.block_child_wizard.style.display = 'none';
 
     let sel = this.block_wizard_type_select.value;
 
     this.block_wizard_parent_wrapper.style.display = (sel === 'Web Font' || sel === 'Scene') ? 'none' : '';
+    this.show_parent_details_row.style.display = (sel === 'Block Child') ? 'none' : '';
 
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
@@ -2528,8 +2589,29 @@ class cMacro {
       this.text2dpanel.style.display = '';
     else if (sel === 'Web Font')
       this.webFontPanel.style.display = '';
+    else if (sel === 'Block Child') {
+      this.block_child_wizard.style.display = '';
+      this.show_parent_wizard_details.checked = true;
+      this.wizard_parent_details.style.display = '';
+    }
 
     this.getItemName();
+  }
+  _blockChildScrape() {
+    let csv_row = {
+      asset: 'blockchild'
+    };
+
+    let tr_rows = this.panel.querySelectorAll('.block_child_wizard tr');
+    tr_rows.forEach(row => {
+      let i = row.querySelector('input[type="text"]');
+      if (i) {
+        if (i.dataset.field)
+          csv_row[i.dataset.field] = i.value;
+      }
+    });
+
+    return csv_row;
   }
   blockUpdateCSV() {
     let macrotype = this.block_wizard_type_select.value;
@@ -2546,6 +2628,8 @@ class cMacro {
       csv_row = this._blockScrapeScene();
     if (macrotype === '2D Text Plane')
       csv_row = this._shapeScrapeTextPlane();
+    if (macrotype === 'Block Child')
+      csv_row = this._blockChildScrape();
 
     let includeParent = this.show_parent_wizard_details.checked;
     let sel = this.block_wizard_type_select.value;
