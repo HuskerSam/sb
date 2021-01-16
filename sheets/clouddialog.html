@@ -32,7 +32,7 @@
         <option value="position_plotter_div">Position Plotter</option>
       </select>
       <div style="padding:0 4px;">
-        <button id="show_help_panel_btn"><i class="material-icons">help</i></button>
+        <button id="show_help_panel_btn" style="margin-bottom:8px;"><i class="material-icons">help</i></button>
       </div>
       <div style="padding-right:4px">
         <button id="reload_addon"><i class="material-icons">refresh</i></button>
@@ -43,7 +43,7 @@
     </div>
     <div id="help_viewer_panel" style="display:none;flex:.7;"></div>
     <div id="position_plotter_div" class="main_div_wrapper">
-      <table class="wizard_field_container" style="padding: 8px 8px 0 8px;flex:none;">
+      <table class="wizard_field_container" style="padding: 0px 8px 0 8px;flex:none;">
         <tr>
           <td>Plot Type</td>
           <td>
@@ -92,11 +92,11 @@
       <div class="select_flex_view" style="flex:none;">
         <div style="display:flex;flex-direction:row;padding:2px 8px">
           <div style="padding: 2px">Target</div>
-          <input id="target_to_deploy" style="flex:1" type="text" />
+          <input id="target_to_deploy" style="flex:1" type="text" value="handtopbuilder" />
         </div>
         <div style="display:flex;flex-direction:row;padding: 2px 8px">
           <div style="padding: 2px">Token</div>
-          <input id="token_to_deploy" type="text" style="flex:1" />
+          <input id="token_to_deploy" type="text" style="flex:1" value="builder" />
         </div>
         <div style="text-align:center;">
           <button id="target_server_set_button" class="blue">Set Server</button>
@@ -118,7 +118,7 @@
           <button id="display_publish_list" class="green">Deploy All</button>
         </div>
       </div>
-      <div style="display:flex;flex-direction:row;padding-top:8px;">
+      <div style="display:flex;flex-direction:row;">
         <select id="project_selected_options" style="flex:1;margin:8px">
           <option data-view="project_deploy_view">Deployment</option>
           <option data-view="project_display_view">View (/view)</option>
@@ -173,7 +173,7 @@
       </div>
     </div>
     <div id="template_view" class="main_div_wrapper">
-      <div style="display:flex;flex-direction:row;padding: 0 8px;margin-top:8px;">
+      <div style="display:flex;flex-direction:row;padding: 0 8px;">
         <input id="sheetname" style="flex:1;">
         <button id="create_layout_btn" class="green" style="margin-left:8px">Create Sheet</button>
       </div>
@@ -195,7 +195,7 @@
       </div>
     </div>
     <div id="block_wizards" class="main_div_wrapper">
-      <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:8px;">
+      <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:0 8px;">
         <select id="wizard_choices" style="margin-right: 8px;">
           <option value="block">Block</option>
           <option value="shape">Shape</option>
@@ -210,7 +210,7 @@
       </div>
     </div>
     <div id="song_import_div" class="main_div_wrapper">
-      <table class="wizard_field_container" style="padding: 8px 8px 0 8px">
+      <table class="wizard_field_container" style="padding: 0px 8px 0 8px">
         <tr>
           <td colspan="2">WAV Audio File<br>
             <input type="file" id="audio_file" style="width:90%" /></td>
@@ -597,6 +597,8 @@
           this.app.updateHelpView('addontemplates', this.help_viewer_panel);
         } else if (this.addon_display_view_select.value === 'block_wizards') {
           this.app.updateHelpView(this.wizard_choices.value, this.help_viewer_panel);
+        } else if (this.addon_display_view_select.value === 'position_plotter_div') {
+          this.app.updateHelpView('positionplotter', this.help_viewer_panel);
         }
 
         if (this.addon_display_view_select.value !== 'cloud_deploy')
@@ -755,7 +757,6 @@
           let genResults = await genResponse.text();
           let r = JSON.parse(genResults);
           wid = r.wid;
-          console.log('wid', r);
           window.bucketName = r.bucket;
           this.widForName[this.defaultServerTarget] = wid;
         }
@@ -893,7 +894,6 @@
       async sheetsJSONforSheetCSV(sheetName, refresh = false) {
         return new Promise(async (resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
-            console.log('json for sheet', sheetName, result.length);
             resolve(result);
           }).getJSONFromCSVSheet(sheetName, refresh);
         });
@@ -901,7 +901,6 @@
       async sheetsJSONforRangeListCSV(rangeStrings) {
         return new Promise(async (resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
-            console.log(rangeStrings, result.length);
             resolve(result);
           }).mergeCSVRangeStrings(rangeStrings, true);
         });
@@ -1007,7 +1006,6 @@
                 assets = await this.sheetsJSONforRangeListCSV(ranges);
                 console.log('asset fetch');
               }
-              console.log('assets', assets);
               let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
               url += encodeURIComponent(name) + '&type=asset';
               url += '&token=' + encodeURIComponent(this.defaultToken);
@@ -1042,7 +1040,6 @@
                 scene = await this.sheetsJSONforRangeListCSV(ranges);
                 console.log('scene fetched');
               }
-              console.log('c', scene);
               let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
               url += encodeURIComponent(name) + '&type=scene';
               url += '&token=' + encodeURIComponent(this.defaultToken);
@@ -1160,7 +1157,6 @@
               this.publish_results.value += 'ERROR: ' + r_result.errorMessage + '\n\n';
             }
 
-            console.log(c, 'remove', r_result);
             continue;
           }
 
@@ -1168,7 +1164,6 @@
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
           let result = await publishSingle(row['Project Name'], row['Asset Ranges'],
             row['Circuit Ranges'], row['Catalog Sheet']);
-          console.log(c, result);
         }
         this.busy = false;
         this.display_publish_list.innerHTML = 'Deploy All';
@@ -1208,7 +1203,6 @@
         } catch (e) {
           console.log(e, genResults);
         }
-        console.log(r);
 
         if (r.success)
           if (r.result_msg.success) {
@@ -1463,7 +1457,6 @@
         //resample to 10 per second  2584 @ 60s => 600 @ 60s
         let resampledArray = resampleData(freqData, this.seconds_clip, Number(this.freq_samples_to_second.value));
 
-        console.log(resampledArray);
         this.song_raw_data.innerHTML = JSON.stringify(resampledArray);
       }
 
@@ -1569,11 +1562,13 @@
           this.helpPanelVisible = false;
           this.help_viewer_panel.style.display = 'none';
           this.show_help_panel_btn.style.background = '';
+          this.show_help_panel_btn.style.marginBottom = '8px';
           this.show_help_panel_btn.style.color = '';
         } else {
           this.helpPanelVisible = true;
           this.help_viewer_panel.style.display = '';
-          this.show_help_panel_btn.style.background = 'rgb(255,200,100)';
+          this.show_help_panel_btn.style.marginBottom = '0';
+          this.show_help_panel_btn.style.background = 'rgb(255,200,200)';
           this.show_help_panel_btn.style.color = 'white';
         }
       }
@@ -1647,8 +1642,8 @@
 
     select.select_list {
       text-align: left;
-      margin: 8px;
-      width: calc(100% - 16px);
+      margin: 0 8px;
+      width: 100% - 16px);
       flex: 1;
       min-height: 3em;
     }
@@ -1728,7 +1723,7 @@
     }
 
     #help_viewer_panel {
-      border: solid 8px rgb(255, 200, 100);
+      border: solid 8px rgb(255, 200, 200);
       overflow: hidden auto;
       text-align: left;
       padding: 0;

@@ -2572,7 +2572,6 @@ class cMacro {
         if (csv_row[key] !== '')
           out_row[key] = csv_row[key];
     }
-    console.log(csv_row, out_row);
 
     let header = this.copy_csv_header_clipboard.checked;
     this.export_csv = out_row;
