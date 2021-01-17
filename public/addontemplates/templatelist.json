@@ -35,11 +35,11 @@
     "description": "list of servers stored in a sheet"
   },
   {
-    "name": "Complex Layout (2 sheets)",
-    "key": "ComplexCircuit,ComplexRanges: Ranges",
-    "hint": "My Display",
+    "name": "Grocery Isle",
+    "key": "GroceryIsle",
+    "hint": "Grocery Isle",
     "categories": "Layout",
-    "description": "Grocery Display with Products"
+    "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
   },
   {
     "name": "Simple Layout (2 sheets)",
