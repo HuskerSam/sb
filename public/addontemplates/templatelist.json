@@ -42,13 +42,6 @@
     "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
   },
   {
-    "name": "Simple Layout (2 sheets)",
-    "key": "SimpleCircuit,SimpleRanges: Ranges",
-    "hint": "My Display",
-    "categories": "Layout",
-    "description": "Empty display with cameras and second sheet with range aggregration"
-  },
-  {
     "name": "Simple Layout",
     "key": "Simple1SheetCircuit",
     "hint": "My Example",
