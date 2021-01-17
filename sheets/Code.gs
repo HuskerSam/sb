@@ -471,11 +471,11 @@ function getJSONForSheet(sheetName) {
 
   for (let rctr = 0; rctr < lastRow; rctr++) {
     for (let cctr = 0; cctr < lastColumn; cctr++) {
-      let range = String.fromCharCode(rctr + "A".charCodeAt(0)) + (cctr + 1).toString();
-      if (rctr > 25)
-        range = "A" + String.fromCharCode((rctr - 26)  + "A".charCodeAt(0)) + (cctr + 1).toString();
-      if (rctr > 51)
-        range = "B" + String.fromCharCode((rctr - 52)  + "A".charCodeAt(0)) + (cctr + 1).toString();
+      let range = String.fromCharCode(cctr + "A".charCodeAt(0)) + (rctr + 1).toString();
+      if (cctr > 25)
+        range = "A" + String.fromCharCode((cctr - 26) + "A".charCodeAt(0)) + (rctr + 1).toString();
+      if (cctr > 51)
+        range = "B" + String.fromCharCode((cctr - 52) + "A".charCodeAt(0)) + (rctr + 1).toString();
 
       let r = sheet.getRange(range);
       let formula = r.getFormula();

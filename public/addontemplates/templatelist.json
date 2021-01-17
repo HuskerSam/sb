@@ -56,6 +56,13 @@
     "description": "Scene with building, 2 walls<br>1 Sheet with aggregation cells at top<br>5 wine bottle meshes shown"
   },
   {
+    "name": "Fixture Assets",
+    "key": "AssetFixtures",
+    "hint": "Fixture Assets",
+    "categories": "Assets",
+    "description": "Fixture meshes, blocks and materials for displays"
+  },
+  {
     "name": "Product List with 1 product",
     "key": "ProductList",
     "hint": "Products",
@@ -81,5 +88,11 @@
     "hint": "testsheet",
     "categories": "Other",
     "description": "test"
+  }, {
+    "name": "Produce Assets",
+    "key": "AssetProduce",
+    "hint": "Produce Assets",
+    "categories": "Assets",
+    "description": "Produce meshes and product blocks"
   }
 ]

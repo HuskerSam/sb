@@ -1,0 +1,2449 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "meshpath",
+  "fontWeight": "bold"
+}, {
+  "range": "E1",
+  "value": "texturepath",
+  "fontWeight": "bold"
+}, {
+  "range": "F1",
+  "value": "bmppath",
+  "fontWeight": "bold"
+}, {
+  "range": "G1",
+  "value": "ambient",
+  "fontWeight": "bold"
+}, {
+  "range": "H1",
+  "value": "diffuse",
+  "fontWeight": "bold"
+}, {
+  "range": "I1",
+  "value": "emissive",
+  "fontWeight": "bold"
+}, {
+  "range": "J1",
+  "value": "shapetype",
+  "fontWeight": "bold"
+}, {
+  "range": "K1",
+  "value": "tessellation",
+  "fontWeight": "bold"
+}, {
+  "range": "L1",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "M1",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "N1",
+  "value": "depth",
+  "fontWeight": "bold"
+}, {
+  "range": "O1",
+  "value": "specularpath",
+  "fontWeight": "bold"
+}, {
+  "range": "P1",
+  "value": "specularpower",
+  "fontWeight": "bold"
+}, {
+  "range": "Q1",
+  "value": "hasalpha",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "shape"
+}, {
+  "range": "B2",
+  "value": "signpost"
+}, {
+  "range": "J2",
+  "value": "box"
+}, {
+  "range": "L2",
+  "value": 0.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M2",
+  "value": 8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N2",
+  "value": 0.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A3",
+  "value": "shape"
+}, {
+  "range": "B3",
+  "value": "signboard"
+}, {
+  "range": "J3",
+  "value": "box"
+}, {
+  "range": "L3",
+  "value": 0.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M3",
+  "value": 6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N3",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A4",
+  "value": "shape"
+}, {
+  "range": "B4",
+  "value": "fruitstandsignpost"
+}, {
+  "range": "C4",
+  "value": "circuit_metal1"
+}, {
+  "range": "J4",
+  "value": "cylinder"
+}, {
+  "range": "K4",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L4",
+  "value": 0.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M4",
+  "value": 1.3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A5",
+  "value": "shape"
+}, {
+  "range": "B5",
+  "value": "fruitstandsign"
+}, {
+  "range": "C5",
+  "value": "circuit_metal2"
+}, {
+  "range": "J5",
+  "value": "box"
+}, {
+  "range": "L5",
+  "value": 0.06,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M5",
+  "value": 0.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N5",
+  "value": 3.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "shape"
+}, {
+  "range": "B6",
+  "value": "fruitstandfoot"
+}, {
+  "range": "C6",
+  "value": "circuit_metal2"
+}, {
+  "range": "J6",
+  "value": "cylinder"
+}, {
+  "range": "K6",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L6",
+  "value": 0.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M6",
+  "value": 0.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "shape"
+}, {
+  "range": "B7",
+  "value": "fruitstandbase"
+}, {
+  "range": "C7",
+  "value": "circuit_wood2"
+}, {
+  "range": "J7",
+  "value": "box"
+}, {
+  "range": "L7",
+  "value": 3.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M7",
+  "value": 1.25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N7",
+  "value": 1.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A8",
+  "value": "shape"
+}, {
+  "range": "B8",
+  "value": "fruitstandsurface"
+}, {
+  "range": "C8",
+  "value": "circuit_wood1"
+}, {
+  "range": "J8",
+  "value": "plane"
+}, {
+  "range": "L8",
+  "value": 3.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M8",
+  "value": 1.95,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A9",
+  "value": "shape"
+}, {
+  "range": "B9",
+  "value": "flowerstandbase"
+}, {
+  "range": "C9",
+  "value": "circuit_metal1"
+}, {
+  "range": "J9",
+  "value": "box"
+}, {
+  "range": "L9",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M9",
+  "value": 0.3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N9",
+  "value": 1.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A10",
+  "value": "shape"
+}, {
+  "range": "B10",
+  "value": "flowerstandback"
+}, {
+  "range": "C10",
+  "value": "circuit_wood1"
+}, {
+  "range": "J10",
+  "value": "box"
+}, {
+  "range": "L10",
+  "value": 1.98,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M10",
+  "value": 1.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N10",
+  "value": 0.03,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A11",
+  "value": "shape"
+}, {
+  "range": "B11",
+  "value": "flowerstandshelf"
+}, {
+  "range": "C11",
+  "value": "circuit_wood1"
+}, {
+  "range": "J11",
+  "value": "box"
+}, {
+  "range": "L11",
+  "value": 0.45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M11",
+  "value": 0.03,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N11",
+  "value": 1.88,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A12",
+  "value": "meshtexture"
+}, {
+  "range": "B12",
+  "value": "standardstandbase"
+}, {
+  "range": "C12",
+  "value": "circuit_wood1"
+}, {
+  "range": "D12",
+  "value": "sb:standardstandbase.babylon"
+}, {
+  "range": "A13",
+  "value": "meshtexture"
+}, {
+  "range": "B13",
+  "value": "standardstandmetal"
+}, {
+  "range": "C13",
+  "value": "circuit_metal1"
+}, {
+  "range": "D13",
+  "value": "sb:standardstandmetal.babylon"
+}, {
+  "range": "A14",
+  "value": "meshtexture"
+}, {
+  "range": "B14",
+  "value": "standcratebottomcrates"
+}, {
+  "range": "C14",
+  "value": "circuit_wood1"
+}, {
+  "range": "D14",
+  "value": "sb:standcratebottomcrates.babylon"
+}, {
+  "range": "A15",
+  "value": "meshtexture"
+}, {
+  "range": "B15",
+  "value": "standcratebottombase"
+}, {
+  "range": "C15",
+  "value": "circuit_wood2"
+}, {
+  "range": "D15",
+  "value": "sb:standcratebottombase.babylon"
+}, {
+  "range": "A16",
+  "value": "meshtexture"
+}, {
+  "range": "B16",
+  "value": "standcratebottomshelf"
+}, {
+  "range": "C16",
+  "value": "circuit_metal1"
+}, {
+  "range": "D16",
+  "value": "sb:standcratebottomshelf.babylon"
+}, {
+  "range": "A17",
+  "value": "meshtexture"
+}, {
+  "range": "B17",
+  "value": "standpegsshelves"
+}, {
+  "range": "C17",
+  "value": "circuit_wood1"
+}, {
+  "range": "D17",
+  "value": "sb:standpegsshelves.babylon"
+}, {
+  "range": "A18",
+  "value": "meshtexture"
+}, {
+  "range": "B18",
+  "value": "standpegspegs"
+}, {
+  "range": "C18",
+  "value": "circuit_metal1"
+}, {
+  "range": "D18",
+  "value": "sb:standpegspegs.babylon"
+}, {
+  "range": "A19",
+  "value": "meshtexture"
+}, {
+  "range": "B19",
+  "value": "standpegsbase"
+}, {
+  "range": "C19",
+  "value": "circuit_wood2"
+}, {
+  "range": "D19",
+  "value": "sb:standpegsbase.babylon"
+}, {
+  "range": "A20",
+  "value": "meshtexture"
+}, {
+  "range": "B20",
+  "value": "fruitstandmantle"
+}, {
+  "range": "C20",
+  "value": "circuit_wood2"
+}, {
+  "range": "D20",
+  "value": "sb:fruitstandmantle.babylon"
+}, {
+  "range": "A21",
+  "value": "meshtexture"
+}, {
+  "range": "B21",
+  "value": "flowerstandmetal"
+}, {
+  "range": "C21",
+  "value": "circuit_metal1"
+}, {
+  "range": "D21",
+  "value": "sb:flowerstandmetal.babylon"
+}, {
+  "range": "A22",
+  "value": "meshtexture"
+}, {
+  "range": "B22",
+  "value": "metalmeshstand"
+}, {
+  "range": "C22",
+  "value": "circuit_metal1"
+}, {
+  "range": "D22",
+  "value": "sb:metalmeshstand.babylon"
+}, {
+  "range": "A23",
+  "value": "meshtexture"
+}, {
+  "range": "B23",
+  "value": "fridgestand"
+}, {
+  "range": "C23",
+  "value": "circuit_metal1"
+}, {
+  "range": "D23",
+  "value": "sb:fridgestand.babylon"
+}, {
+  "range": "A24",
+  "value": "meshtexture"
+}, {
+  "range": "B24",
+  "value": "register"
+}, {
+  "range": "C24",
+  "value": "registermaterial"
+}, {
+  "range": "D24",
+  "value": "sb:market/register.babylon"
+}, {
+  "range": "E24",
+  "value": "sb:market/register_D.jpg"
+}, {
+  "range": "G24",
+  "value": "x"
+}, {
+  "range": "H24",
+  "value": "x"
+}, {
+  "range": "O24",
+  "value": "sb:market/register_D.jpg"
+}, {
+  "range": "P24",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A25",
+  "value": "meshtexture"
+}, {
+  "range": "B25",
+  "value": "fixture_fishshopprice"
+}, {
+  "range": "C25",
+  "value": "circuit_sign_info"
+}, {
+  "range": "D25",
+  "formula": "=\"sb:\" & B25 & \".babylon\""
+}, {
+  "range": "A26",
+  "value": "meshtexture"
+}, {
+  "range": "B26",
+  "value": "fixture_fishshopinfo1"
+}, {
+  "range": "C26",
+  "value": "circuit_sign_info"
+}, {
+  "range": "D26",
+  "formula": "=\"sb:\" & B26 & \".babylon\""
+}, {
+  "range": "A27",
+  "value": "meshtexture"
+}, {
+  "range": "B27",
+  "value": "fixture_fishshopinfo2"
+}, {
+  "range": "C27",
+  "value": "circuit_sign_info"
+}, {
+  "range": "D27",
+  "formula": "=\"sb:\" & B27 & \".babylon\""
+}, {
+  "range": "A28",
+  "value": "meshtexture"
+}, {
+  "range": "B28",
+  "value": "fixture_butchershopprice"
+}, {
+  "range": "C28",
+  "value": "circuit_sign_info"
+}, {
+  "range": "D28",
+  "formula": "=\"sb:\" & B28 & \".babylon\""
+}, {
+  "range": "A29",
+  "value": "meshtexture"
+}, {
+  "range": "B29",
+  "value": "fixture_butchershopinfo1"
+}, {
+  "range": "C29",
+  "value": "circuit_sign_info"
+}, {
+  "range": "D29",
+  "formula": "=\"sb:\" & B29 & \".babylon\""
+}, {
+  "range": "A30",
+  "value": "meshtexture"
+}, {
+  "range": "B30",
+  "value": "fixture_butchershopinfo2"
+}, {
+  "range": "C30",
+  "value": "circuit_sign_info"
+}, {
+  "range": "D30",
+  "formula": "=\"sb:\" & B30 & \".babylon\""
+}, {
+  "range": "A31",
+  "value": "meshtexture"
+}, {
+  "range": "B31",
+  "value": "fixture_butchershopinfo3"
+}, {
+  "range": "C31",
+  "value": "circuit_sign_info"
+}, {
+  "range": "D31",
+  "formula": "=\"sb:\" & B31 & \".babylon\""
+}, {
+  "range": "A32",
+  "value": "meshtexture"
+}, {
+  "range": "B32",
+  "value": "fixture_butchershopinfo4"
+}, {
+  "range": "C32",
+  "value": "circuit_sign_info"
+}, {
+  "range": "D32",
+  "formula": "=\"sb:\" & B32 & \".babylon\""
+}, {
+  "range": "A33",
+  "value": "meshtexture"
+}, {
+  "range": "B33",
+  "value": "fixture_delidoordoors"
+}, {
+  "range": "C33",
+  "value": "circuit_wood2"
+}, {
+  "range": "D33",
+  "formula": "=\"sb:\" & B33 & \".babylon\""
+}, {
+  "range": "A34",
+  "value": "meshtexture"
+}, {
+  "range": "B34",
+  "value": "fixture_delidoorhandles"
+}, {
+  "range": "C34",
+  "value": "circuit_metal1"
+}, {
+  "range": "D34",
+  "formula": "=\"sb:\" & B34 & \".babylon\""
+}, {
+  "range": "A35",
+  "value": "meshtexture"
+}, {
+  "range": "B35",
+  "value": "fixture_delidoorwindows"
+}, {
+  "range": "C35",
+  "value": "circuit_metal2"
+}, {
+  "range": "D35",
+  "formula": "=\"sb:\" & B35 & \".babylon\""
+}, {
+  "range": "A36",
+  "value": "meshtexture"
+}, {
+  "range": "B36",
+  "value": "fixture_delidoorframe"
+}, {
+  "range": "C36",
+  "value": "circuit_wood2"
+}, {
+  "range": "D36",
+  "formula": "=\"sb:\" & B36 & \".babylon\""
+}, {
+  "range": "A37",
+  "value": "meshtexture"
+}, {
+  "range": "B37",
+  "value": "fixture_doorhandle"
+}, {
+  "range": "C37",
+  "value": "circuit_metal1"
+}, {
+  "range": "D37",
+  "formula": "=\"sb:\" & B37 & \".babylon\""
+}, {
+  "range": "A38",
+  "value": "meshtexture"
+}, {
+  "range": "B38",
+  "value": "fixture_doorframe"
+}, {
+  "range": "C38",
+  "value": "circuit_wood1"
+}, {
+  "range": "D38",
+  "formula": "=\"sb:\" & B38 & \".babylon\""
+}, {
+  "range": "A39",
+  "value": "meshtexture"
+}, {
+  "range": "B39",
+  "value": "fixture_fishshopbackwall"
+}, {
+  "range": "C39",
+  "value": "circuit_wood1"
+}, {
+  "range": "D39",
+  "formula": "=\"sb:\" & B39 & \".babylon\""
+}, {
+  "range": "A40",
+  "value": "meshtexture"
+}, {
+  "range": "B40",
+  "value": "fixture_vent"
+}, {
+  "range": "C40",
+  "value": "circuit_metal2"
+}, {
+  "range": "D40",
+  "formula": "=\"sb:\" & B40 & \".babylon\""
+}, {
+  "range": "A41",
+  "value": "meshtexture"
+}, {
+  "range": "B41",
+  "value": "fixture_ceilinglightbuilbs"
+}, {
+  "range": "C41",
+  "value": "color: 2, 2, 2"
+}, {
+  "range": "D41",
+  "formula": "=\"sb:\" & B41 & \".babylon\""
+}, {
+  "range": "A42",
+  "value": "meshtexture"
+}, {
+  "range": "B42",
+  "value": "fixture_ceilinglightshell"
+}, {
+  "range": "C42",
+  "value": "circuit_metal1"
+}, {
+  "range": "D42",
+  "formula": "=\"sb:\" & B42 & \".babylon\""
+}, {
+  "range": "A43",
+  "value": "meshtexture"
+}, {
+  "range": "B43",
+  "value": "fixture_butcherybackwall"
+}, {
+  "range": "C43",
+  "value": "circuit_wood1"
+}, {
+  "range": "D43",
+  "formula": "=\"sb:\" & B43 & \".babylon\""
+}, {
+  "range": "A44",
+  "value": "meshtexture"
+}, {
+  "range": "B44",
+  "value": "fixture_carton1"
+}, {
+  "range": "C44",
+  "formula": "=B44"
+}, {
+  "range": "D44",
+  "formula": "=\"sb:\" & B44 & \".babylon\""
+}, {
+  "range": "E44",
+  "value": "sb:product/carton_D.jpg"
+}, {
+  "range": "O44",
+  "formula": "=E44"
+}, {
+  "range": "P44",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A45",
+  "value": "meshtexture"
+}, {
+  "range": "B45",
+  "value": "fixture_carton2"
+}, {
+  "range": "C45",
+  "formula": "=B45"
+}, {
+  "range": "D45",
+  "formula": "=\"sb:\" & B45 & \".babylon\""
+}, {
+  "range": "E45",
+  "value": "sb:product/carton_D.jpg"
+}, {
+  "range": "O45",
+  "formula": "=E45"
+}, {
+  "range": "P45",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A46",
+  "value": "meshtexture"
+}, {
+  "range": "B46",
+  "value": "fixture_carton3"
+}, {
+  "range": "C46",
+  "formula": "=B46"
+}, {
+  "range": "D46",
+  "formula": "=\"sb:\" & B46 & \".babylon\""
+}, {
+  "range": "E46",
+  "value": "sb:product/carton_D.jpg"
+}, {
+  "range": "O46",
+  "formula": "=E46"
+}, {
+  "range": "P46",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A47",
+  "value": "meshtexture"
+}, {
+  "range": "B47",
+  "value": "fixture_carton4"
+}, {
+  "range": "C47",
+  "formula": "=B47"
+}, {
+  "range": "D47",
+  "formula": "=\"sb:\" & B47 & \".babylon\""
+}, {
+  "range": "E47",
+  "value": "sb:product/carton_D.jpg"
+}, {
+  "range": "O47",
+  "formula": "=E47"
+}, {
+  "range": "P47",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A48",
+  "value": "meshtexture"
+}, {
+  "range": "B48",
+  "value": "fixture_carton5"
+}, {
+  "range": "C48",
+  "formula": "=B48"
+}, {
+  "range": "D48",
+  "formula": "=\"sb:\" & B48 & \".babylon\""
+}, {
+  "range": "E48",
+  "value": "sb:product/carton_D.jpg"
+}, {
+  "range": "O48",
+  "formula": "=E48"
+}, {
+  "range": "P48",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A49",
+  "value": "meshtexture"
+}, {
+  "range": "B49",
+  "value": "fixture_carton6"
+}, {
+  "range": "C49",
+  "formula": "=B49"
+}, {
+  "range": "D49",
+  "formula": "=\"sb:\" & B49 & \".babylon\""
+}, {
+  "range": "E49",
+  "value": "sb:product/carton_D.jpg"
+}, {
+  "range": "O49",
+  "formula": "=E49"
+}, {
+  "range": "P49",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A50",
+  "value": "meshtexture"
+}, {
+  "range": "B50",
+  "value": "fixture_vehicles"
+}, {
+  "range": "C50",
+  "formula": "=B50"
+}, {
+  "range": "D50",
+  "formula": "=\"sb:\" & B50 & \".babylon\""
+}, {
+  "range": "E50",
+  "value": "sb:product/fixture_vehicles_D.jpg"
+}, {
+  "range": "O50",
+  "formula": "=E50"
+}, {
+  "range": "P50",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A51",
+  "value": "meshtexture"
+}, {
+  "range": "B51",
+  "value": "rectangletable"
+}, {
+  "range": "C51",
+  "formula": "=B51"
+}, {
+  "range": "D51",
+  "formula": "= CONCATENATE(\"sb:market/\" , B51, \".babylon\")"
+}, {
+  "range": "E51",
+  "formula": "= CONCATENATE(\"sb:market/\" , C51, \"_D.jpg\")"
+}, {
+  "range": "O51",
+  "value": "sb:market/rectangletable_D.jpg"
+}, {
+  "range": "P51",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A52",
+  "value": "meshtexture"
+}, {
+  "range": "B52",
+  "value": "pedestaltable"
+}, {
+  "range": "C52",
+  "formula": "=B52"
+}, {
+  "range": "D52",
+  "formula": "= CONCATENATE(\"sb:market/\" , B52, \".babylon\")"
+}, {
+  "range": "E52",
+  "formula": "= CONCATENATE(\"sb:market/\" , C52, \"_D.jpg\")"
+}, {
+  "range": "O52",
+  "value": "sb:market/pedestaltable_D.jpg"
+}, {
+  "range": "P52",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A53",
+  "value": "meshtexture"
+}, {
+  "range": "B53",
+  "value": "globestand"
+}, {
+  "range": "C53",
+  "formula": "=B53"
+}, {
+  "range": "D53",
+  "formula": "= CONCATENATE(\"sb:market/\" , B53, \".babylon\")"
+}, {
+  "range": "E53",
+  "formula": "= CONCATENATE(\"sb:market/\" , B53, \"_D.jpg\")"
+}, {
+  "range": "O53",
+  "value": "sb:market/globestand_D.jpg"
+}, {
+  "range": "P53",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A54",
+  "value": "shape"
+}, {
+  "range": "B54",
+  "value": "globesphere"
+}, {
+  "range": "C54",
+  "value": "globeshape"
+}, {
+  "range": "J54",
+  "value": "sphere"
+}, {
+  "range": "A55",
+  "value": "meshtexture"
+}, {
+  "range": "B55",
+  "value": "extinguisher"
+}, {
+  "range": "C55",
+  "formula": "=B55"
+}, {
+  "range": "D55",
+  "formula": "=\"sb:\" & B55 & \".babylon\""
+}, {
+  "range": "E55",
+  "value": "sb:extinguisher_D.jpg"
+}, {
+  "range": "F55",
+  "value": "sb:extinguisher_N.jpg"
+}, {
+  "range": "O55",
+  "value": "sb:extinguisher_S.png"
+}, {
+  "range": "P55",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A57",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B57",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C57",
+  "value": "texture",
+  "fontWeight": "bold"
+}, {
+  "range": "D57",
+  "value": "speculartexture",
+  "fontWeight": "bold"
+}, {
+  "range": "E57",
+  "value": "bumptexture",
+  "fontWeight": "bold"
+}, {
+  "range": "F57",
+  "value": "scaleu",
+  "fontWeight": "bold"
+}, {
+  "range": "G57",
+  "value": "scalev",
+  "fontWeight": "bold"
+}, {
+  "range": "H57",
+  "value": "hasalpha",
+  "fontWeight": "bold"
+}, {
+  "range": "I57",
+  "value": "emissivetexture",
+  "fontWeight": "bold"
+}, {
+  "range": "J57",
+  "value": "specularpower",
+  "fontWeight": "bold"
+}, {
+  "range": "A58",
+  "value": "material"
+}, {
+  "range": "B58",
+  "value": "brickwall10"
+}, {
+  "range": "C58",
+  "value": "sb:matpack/brickwall10_D.jpg"
+}, {
+  "range": "D58",
+  "value": "sb:matpack/brickwall10_S.jpg"
+}, {
+  "range": "E58",
+  "value": "sb:matpack/brickwall10_N.jpg"
+}, {
+  "range": "F58",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G58",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I58",
+  "value": "sb:matpack/brickwall10_D.jpg"
+}, {
+  "range": "A59",
+  "value": "material"
+}, {
+  "range": "B59",
+  "value": "wood7"
+}, {
+  "range": "C59",
+  "value": "sb:matpack/wood7_D.jpg"
+}, {
+  "range": "D59",
+  "value": "sb:matpack/wood7_S.jpg"
+}, {
+  "range": "E59",
+  "value": "sb:matpack/wood7_N.jpg"
+}, {
+  "range": "F59",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G59",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I59",
+  "value": "sb:matpack/wood7_D.jpg"
+}, {
+  "range": "J59",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A60",
+  "value": "material"
+}, {
+  "range": "B60",
+  "value": "grid7"
+}, {
+  "range": "C60",
+  "value": "sb:matpack/grid7_D.png"
+}, {
+  "range": "D60",
+  "value": "sb:matpack/grid7_S.jpg"
+}, {
+  "range": "E60",
+  "value": "sb:matpack/grid7_D.png"
+}, {
+  "range": "F60",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G60",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H60",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A61",
+  "value": "material"
+}, {
+  "range": "B61",
+  "value": "brickwall16"
+}, {
+  "range": "C61",
+  "value": "sb:matpack/brickwall16_D.jpg"
+}, {
+  "range": "D61",
+  "value": "sb:matpack/brickwall16_S.jpg"
+}, {
+  "range": "E61",
+  "value": "sb:matpack/brickwall16_N.jpg"
+}, {
+  "range": "F61",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G61",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I61",
+  "value": "sb:matpack/brickwall16_D.jpg"
+}, {
+  "range": "J61",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A62",
+  "value": "material"
+}, {
+  "range": "B62",
+  "value": "wood2"
+}, {
+  "range": "C62",
+  "value": "sb:matpack/wood2_D.jpg"
+}, {
+  "range": "D62",
+  "value": "sb:matpack/wood2_S.jpg"
+}, {
+  "range": "E62",
+  "value": "sb:matpack/wood2_N.jpg"
+}, {
+  "range": "F62",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G62",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I62",
+  "value": "sb:matpack/wood2_D.jpg"
+}, {
+  "range": "J62",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A63",
+  "value": "material"
+}, {
+  "range": "B63",
+  "value": "metal1"
+}, {
+  "range": "C63",
+  "value": "sb:matpack/metal1_D.jpg"
+}, {
+  "range": "D63",
+  "value": "sb:matpack/metal1_S.jpg"
+}, {
+  "range": "E63",
+  "value": "sb:matpack/metal1_N.jpg"
+}, {
+  "range": "F63",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G63",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A64",
+  "value": "material"
+}, {
+  "range": "B64",
+  "value": "circuit_wood1"
+}, {
+  "range": "C64",
+  "value": "sb:matpack/wood3_D.jpg"
+}, {
+  "range": "D64",
+  "value": "sb:matpack/wood3_S.jpg"
+}, {
+  "range": "E64",
+  "value": "sb:matpack/wood3_N.jpg"
+}, {
+  "range": "F64",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G64",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I64",
+  "value": "sb:matpack/wood3_D.jpg"
+}, {
+  "range": "J64",
+  "value": 64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A65",
+  "value": "material"
+}, {
+  "range": "B65",
+  "value": "circuit_wood2"
+}, {
+  "range": "C65",
+  "value": "sb:matpack/wood2_D.jpg"
+}, {
+  "range": "D65",
+  "value": "sb:matpack/wood2_S.jpg"
+}, {
+  "range": "E65",
+  "value": "sb:matpack/wood2_N.jpg"
+}, {
+  "range": "F65",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G65",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I65",
+  "value": "sb:matpack/wood2_D.jpg"
+}, {
+  "range": "J65",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A66",
+  "value": "material"
+}, {
+  "range": "B66",
+  "value": "circuit_trim1"
+}, {
+  "range": "C66",
+  "value": "sb:matpack/wood5_D.jpg"
+}, {
+  "range": "D66",
+  "value": "sb:matpack/wood5_S.jpg"
+}, {
+  "range": "E66",
+  "value": "sb:matpack/wood5_N.jpg"
+}, {
+  "range": "F66",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G66",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I66",
+  "value": "sb:matpack/wood5_D.jpg"
+}, {
+  "range": "J66",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A67",
+  "value": "material"
+}, {
+  "range": "B67",
+  "value": "circuit_trim2"
+}, {
+  "range": "C67",
+  "value": "sb:matpack/wood4_D.jpg"
+}, {
+  "range": "D67",
+  "value": "sb:matpack/wood4_S.jpg"
+}, {
+  "range": "E67",
+  "value": "sb:matpack/wood4_N.jpg"
+}, {
+  "range": "F67",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G67",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I67",
+  "value": "sb:matpack/wood4_D.jpg"
+}, {
+  "range": "J67",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A68",
+  "value": "material"
+}, {
+  "range": "B68",
+  "value": "circuit_metal1"
+}, {
+  "range": "C68",
+  "value": "sb:matpack/metal1_D.jpg"
+}, {
+  "range": "D68",
+  "value": "sb:matpack/metal1_S.jpg"
+}, {
+  "range": "E68",
+  "value": "sb:matpack/metal1_N.jpg"
+}, {
+  "range": "F68",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G68",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A69",
+  "value": "material"
+}, {
+  "range": "B69",
+  "value": "circuit_metal2"
+}, {
+  "range": "C69",
+  "value": "sb:matpack/metal2_D.jpg"
+}, {
+  "range": "D69",
+  "value": "sb:matpack/metal2_S.jpg"
+}, {
+  "range": "E69",
+  "value": "sb:matpack/metal2_N.jpg"
+}, {
+  "range": "F69",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G69",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A70",
+  "value": "material"
+}, {
+  "range": "B70",
+  "value": "circuit_tile1"
+}, {
+  "range": "C70",
+  "value": "sb:matpack/floor5_D.jpg"
+}, {
+  "range": "D70",
+  "value": "sb:matpack/floor5_S.jpg"
+}, {
+  "range": "E70",
+  "value": "sb:matpack/floor5_N.jpg"
+}, {
+  "range": "F70",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G70",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I70",
+  "value": "sb:matpack/floor5_D.jpg"
+}, {
+  "range": "J70",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A71",
+  "value": "material"
+}, {
+  "range": "B71",
+  "value": "circuit_tile2"
+}, {
+  "range": "C71",
+  "value": "sb:matpack/brickwall16_D.jpg"
+}, {
+  "range": "D71",
+  "value": "sb:matpack/brickwall16_S.jpg"
+}, {
+  "range": "E71",
+  "value": "sb:matpack/brickwall16_N.jpg"
+}, {
+  "range": "F71",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G71",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I71",
+  "value": "sb:matpack/brickwall16_D.jpg"
+}, {
+  "range": "J71",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A72",
+  "value": "material"
+}, {
+  "range": "B72",
+  "value": "circuit_sign_info"
+}, {
+  "range": "C72",
+  "value": "sb:butchery_infos_D.jpg"
+}, {
+  "range": "F72",
+  "value": 1,
+  "horizontalAlignment": "right"
+}, {
+  "range": "G72",
+  "value": 1,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I72",
+  "value": "sb:butchery_infos_D.jpg"
+}, {
+  "range": "J72",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A73",
+  "value": "material"
+}, {
+  "range": "B73",
+  "value": "metal2"
+}, {
+  "range": "C73",
+  "value": "sb:matpack/metal2_D.jpg"
+}, {
+  "range": "D73",
+  "value": "sb:matpack/metal2_S.jpg"
+}, {
+  "range": "E73",
+  "value": "sb:matpack/metal2_N.jpg"
+}, {
+  "range": "F73",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G73",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A74",
+  "value": "material"
+}, {
+  "range": "B74",
+  "value": "wood3"
+}, {
+  "range": "C74",
+  "value": "sb:matpack/wood3_D.jpg"
+}, {
+  "range": "D74",
+  "value": "sb:matpack/wood3_S.jpg"
+}, {
+  "range": "E74",
+  "value": "sb:matpack/wood3_N.jpg"
+}, {
+  "range": "F74",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G74",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I74",
+  "value": "sb:matpack/wood3_D.jpg"
+}, {
+  "range": "J74",
+  "value": 64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A75",
+  "value": "material"
+}, {
+  "range": "B75",
+  "value": "wood1"
+}, {
+  "range": "C75",
+  "value": "sb:matpack/wood1_D.jpg"
+}, {
+  "range": "D75",
+  "value": "sb:matpack/wood1_S.jpg"
+}, {
+  "range": "E75",
+  "value": "sb:matpack/wood1_N.jpg"
+}, {
+  "range": "F75",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G75",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I75",
+  "value": "sb:matpack/wood1_D.jpg"
+}, {
+  "range": "J75",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A76",
+  "value": "material"
+}, {
+  "range": "B76",
+  "value": "floor5"
+}, {
+  "range": "C76",
+  "value": "sb:matpack/floor5_D.jpg"
+}, {
+  "range": "D76",
+  "value": "sb:matpack/floor5_S.jpg"
+}, {
+  "range": "E76",
+  "value": "sb:matpack/floor5_N.jpg"
+}, {
+  "range": "F76",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G76",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I76",
+  "value": "sb:matpack/floor5_D.jpg"
+}, {
+  "range": "J76",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A77",
+  "value": "material"
+}, {
+  "range": "B77",
+  "value": "globeshape"
+}, {
+  "range": "C77",
+  "value": "sb:market/earthmap_D.jpg"
+}, {
+  "range": "D77",
+  "value": "sb:market/earthmap_S.jpg"
+}, {
+  "range": "E77",
+  "value": "sb:market/earthmap_N.jpg"
+}, {
+  "range": "A80",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B80",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C80",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "D80",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "E80",
+  "value": "depth",
+  "fontWeight": "bold"
+}, {
+  "range": "F80",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "G80",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "H80",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "I80",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "J80",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "K80",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "L80",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "M80",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "N80",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "O80",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "P80",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "Q80",
+  "value": "frametime",
+  "fontWeight": "bold"
+}, {
+  "range": "R80",
+  "value": "frameorder",
+  "fontWeight": "bold"
+}, {
+  "range": "A81",
+  "value": "fruitstandnative"
+}, {
+  "range": "B81",
+  "value": "block"
+}, {
+  "range": "E81",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F81",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G81",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A82",
+  "value": "fruitstandbase"
+}, {
+  "range": "B82",
+  "value": "blockchild"
+}, {
+  "range": "C82",
+  "value": "fruitstandnative"
+}, {
+  "range": "D82",
+  "value": "shape"
+}, {
+  "range": "I82",
+  "value": 0.69,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L82",
+  "value": "90deg"
+}, {
+  "range": "A83",
+  "value": "fruitstandsurface"
+}, {
+  "range": "B83",
+  "value": "blockchild"
+}, {
+  "range": "C83",
+  "value": "fruitstandnative"
+}, {
+  "range": "D83",
+  "value": "shape"
+}, {
+  "range": "I83",
+  "value": 1.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "K83",
+  "value": "70deg"
+}, {
+  "range": "L83",
+  "value": "-90deg"
+}, {
+  "range": "A84",
+  "value": "fruitstandmantle"
+}, {
+  "range": "B84",
+  "value": "blockchild"
+}, {
+  "range": "C84",
+  "value": "fruitstandnative"
+}, {
+  "range": "D84",
+  "value": "mesh"
+}, {
+  "range": "H84",
+  "value": -1.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I84",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J84",
+  "value": -3.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L84",
+  "value": "180deg"
+}, {
+  "range": "N84",
+  "value": 1.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "O84",
+  "value": 1.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "P84",
+  "value": 1.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A85",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B85",
+  "value": "blockchild"
+}, {
+  "range": "C85",
+  "value": "fruitstandnative"
+}, {
+  "range": "D85",
+  "value": "shape"
+}, {
+  "range": "H85",
+  "value": 0.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I85",
+  "value": 0.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J85",
+  "value": -1.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A86",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B86",
+  "value": "blockchild"
+}, {
+  "range": "C86",
+  "value": "fruitstandnative"
+}, {
+  "range": "D86",
+  "value": "shape"
+}, {
+  "range": "H86",
+  "value": 0.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I86",
+  "value": 0.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J86",
+  "value": 1.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A87",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B87",
+  "value": "blockchild"
+}, {
+  "range": "C87",
+  "value": "fruitstandnative"
+}, {
+  "range": "D87",
+  "value": "shape"
+}, {
+  "range": "H87",
+  "value": -0.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I87",
+  "value": 0.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J87",
+  "value": -1.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A88",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B88",
+  "value": "blockchild"
+}, {
+  "range": "C88",
+  "value": "fruitstandnative"
+}, {
+  "range": "D88",
+  "value": "shape"
+}, {
+  "range": "H88",
+  "value": -0.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I88",
+  "value": 0.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J88",
+  "value": 1.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A89",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "B89",
+  "value": "block"
+}, {
+  "range": "D89",
+  "value": "block"
+}, {
+  "range": "E89",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F89",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G89",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A90",
+  "value": "flowerstandmetal"
+}, {
+  "range": "B90",
+  "value": "blockchild"
+}, {
+  "range": "C90",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D90",
+  "value": "mesh"
+}, {
+  "range": "A91",
+  "value": "flowerstandback"
+}, {
+  "range": "B91",
+  "value": "blockchild"
+}, {
+  "range": "C91",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D91",
+  "value": "shape"
+}, {
+  "range": "H91",
+  "value": -0.52,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I91",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L91",
+  "value": "90deg"
+}, {
+  "range": "A92",
+  "value": "flowerstandbase"
+}, {
+  "range": "B92",
+  "value": "blockchild"
+}, {
+  "range": "C92",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D92",
+  "value": "shape"
+}, {
+  "range": "I92",
+  "value": 0.25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L92",
+  "value": "90deg"
+}, {
+  "range": "A93",
+  "value": "flowerstandshelf"
+}, {
+  "range": "B93",
+  "value": "blockchild"
+}, {
+  "range": "C93",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D93",
+  "value": "shape"
+}, {
+  "range": "H93",
+  "value": 0.43,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I93",
+  "value": 0.64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A94",
+  "value": "flowerstandshelf"
+}, {
+  "range": "B94",
+  "value": "blockchild"
+}, {
+  "range": "C94",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D94",
+  "value": "shape"
+}, {
+  "range": "H94",
+  "value": 0.08,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I94",
+  "value": 1.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A95",
+  "value": "flowerstandshelf"
+}, {
+  "range": "B95",
+  "value": "blockchild"
+}, {
+  "range": "C95",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D95",
+  "value": "shape"
+}, {
+  "range": "H95",
+  "value": -0.25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I95",
+  "value": 1.45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A96",
+  "value": "fixture_standard"
+}, {
+  "range": "B96",
+  "value": "block"
+}, {
+  "range": "E96",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F96",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G96",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A97",
+  "value": "standardstandmetal"
+}, {
+  "range": "B97",
+  "value": "blockchild"
+}, {
+  "range": "C97",
+  "value": "fixture_standard"
+}, {
+  "range": "D97",
+  "value": "mesh"
+}, {
+  "range": "I97",
+  "value": 0.01,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A98",
+  "value": "standardstandbase"
+}, {
+  "range": "B98",
+  "value": "blockchild"
+}, {
+  "range": "C98",
+  "value": "fixture_standard"
+}, {
+  "range": "D98",
+  "value": "mesh"
+}, {
+  "range": "A99",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "B99",
+  "value": "block"
+}, {
+  "range": "E99",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F99",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G99",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A100",
+  "value": "standcratebottomshelf"
+}, {
+  "range": "B100",
+  "value": "blockchild"
+}, {
+  "range": "C100",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "D100",
+  "value": "mesh"
+}, {
+  "range": "A101",
+  "value": "standcratebottombase"
+}, {
+  "range": "B101",
+  "value": "blockchild"
+}, {
+  "range": "C101",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "D101",
+  "value": "mesh"
+}, {
+  "range": "A102",
+  "value": "standcratebottomcrates"
+}, {
+  "range": "B102",
+  "value": "blockchild"
+}, {
+  "range": "C102",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "D102",
+  "value": "mesh"
+}, {
+  "range": "A103",
+  "value": "fixture_pegstand"
+}, {
+  "range": "B103",
+  "value": "block"
+}, {
+  "range": "E103",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F103",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G103",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A104",
+  "value": "standpegsbase"
+}, {
+  "range": "B104",
+  "value": "blockchild"
+}, {
+  "range": "C104",
+  "value": "fixture_pegstand"
+}, {
+  "range": "D104",
+  "value": "mesh"
+}, {
+  "range": "A105",
+  "value": "standpegspegs"
+}, {
+  "range": "B105",
+  "value": "blockchild"
+}, {
+  "range": "C105",
+  "value": "fixture_pegstand"
+}, {
+  "range": "D105",
+  "value": "mesh"
+}, {
+  "range": "A106",
+  "value": "standpegsshelves"
+}, {
+  "range": "B106",
+  "value": "blockchild"
+}, {
+  "range": "C106",
+  "value": "fixture_pegstand"
+}, {
+  "range": "D106",
+  "value": "mesh"
+}, {
+  "range": "A107",
+  "value": "fixture_delidoors"
+}, {
+  "range": "B107",
+  "value": "block"
+}, {
+  "range": "E107",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F107",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G107",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A108",
+  "value": "fixture_delidoordoors"
+}, {
+  "range": "B108",
+  "value": "blockchild"
+}, {
+  "range": "C108",
+  "value": "fixture_delidoors"
+}, {
+  "range": "D108",
+  "value": "mesh"
+}, {
+  "range": "H108",
+  "value": -38.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I108",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J108",
+  "value": 4.45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A109",
+  "value": "fixture_delidoorhandles"
+}, {
+  "range": "B109",
+  "value": "blockchild"
+}, {
+  "range": "C109",
+  "value": "fixture_delidoors"
+}, {
+  "range": "D109",
+  "value": "mesh"
+}, {
+  "range": "H109",
+  "value": -38.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I109",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J109",
+  "value": 4.45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A110",
+  "value": "fixture_delidoorwindows"
+}, {
+  "range": "B110",
+  "value": "blockchild"
+}, {
+  "range": "C110",
+  "value": "fixture_delidoors"
+}, {
+  "range": "D110",
+  "value": "mesh"
+}, {
+  "range": "H110",
+  "value": -38.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I110",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J110",
+  "value": 4.45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A111",
+  "value": "fixture_delidoorframe"
+}, {
+  "range": "B111",
+  "value": "blockchild"
+}, {
+  "range": "C111",
+  "value": "fixture_delidoors"
+}, {
+  "range": "D111",
+  "value": "mesh"
+}, {
+  "range": "H111",
+  "value": -38.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I111",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J111",
+  "value": 4.45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A112",
+  "value": "fixture_deliwall"
+}, {
+  "range": "B112",
+  "value": "block"
+}, {
+  "range": "E112",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F112",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G112",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A113",
+  "value": "fixture_delidoors"
+}, {
+  "range": "B113",
+  "value": "blockchild"
+}, {
+  "range": "C113",
+  "formula": "=A112"
+}, {
+  "range": "D113",
+  "value": "block"
+}, {
+  "range": "A114",
+  "value": "fixture_butcherybackwall"
+}, {
+  "range": "B114",
+  "value": "blockchild"
+}, {
+  "range": "C114",
+  "formula": "=A112"
+}, {
+  "range": "D114",
+  "value": "mesh"
+}, {
+  "range": "H114",
+  "value": 4.065,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I114",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J114",
+  "value": -5.14,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A115",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "B115",
+  "value": "block"
+}, {
+  "range": "E115",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F115",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G115",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A116",
+  "value": "fruitstandnative"
+}, {
+  "range": "B116",
+  "value": "blockchild"
+}, {
+  "range": "C116",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D116",
+  "value": "block"
+}, {
+  "range": "H116",
+  "value": 0.94,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A117",
+  "value": "fruitstandnative"
+}, {
+  "range": "B117",
+  "value": "blockchild"
+}, {
+  "range": "C117",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D117",
+  "value": "block"
+}, {
+  "range": "H117",
+  "value": -0.94,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L117",
+  "value": "180deg"
+}, {
+  "range": "A118",
+  "value": "fruitstandsign"
+}, {
+  "range": "B118",
+  "value": "blockchild"
+}, {
+  "range": "C118",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D118",
+  "value": "shape"
+}, {
+  "range": "I118",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A119",
+  "value": "fruitstandsignpost"
+}, {
+  "range": "B119",
+  "value": "blockchild"
+}, {
+  "range": "C119",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D119",
+  "value": "shape"
+}, {
+  "range": "I119",
+  "value": 2.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J119",
+  "value": 1.6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A120",
+  "value": "fruitstandsignpost"
+}, {
+  "range": "B120",
+  "value": "blockchild"
+}, {
+  "range": "C120",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D120",
+  "value": "shape"
+}, {
+  "range": "I120",
+  "value": 2.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J120",
+  "value": -1.6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A121",
+  "value": "spinningglobe"
+}, {
+  "range": "B121",
+  "value": "block"
+}, {
+  "range": "Q121",
+  "value": "2s"
+}, {
+  "range": "A122",
+  "value": "globestand"
+}, {
+  "range": "B122",
+  "value": "blockchild"
+}, {
+  "range": "C122",
+  "formula": "=A121"
+}, {
+  "range": "D122",
+  "value": "mesh"
+}, {
+  "range": "A123",
+  "value": "globesphere"
+}, {
+  "range": "B123",
+  "value": "blockchild"
+}, {
+  "range": "C123",
+  "value": "spinningglobe"
+}, {
+  "range": "D123",
+  "value": "shape"
+}, {
+  "range": "I123",
+  "value": 1.15,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M123",
+  "value": "190deg"
+}, {
+  "range": "N123",
+  "value": 1.14,
+  "horizontalAlignment": "right"
+}, {
+  "range": "O123",
+  "value": 1.14,
+  "horizontalAlignment": "right"
+}, {
+  "range": "P123",
+  "value": 1.14,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A124",
+  "value": "globesphere"
+}, {
+  "range": "B124",
+  "value": "blockchildframe"
+}, {
+  "range": "C124",
+  "formula": "=A121"
+}, {
+  "range": "D124",
+  "value": "shape"
+}, {
+  "range": "L124",
+  "value": "360deg"
+}, {
+  "range": "Q124",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "R124",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]
