@@ -188,6 +188,9 @@
         <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
         <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
       </div>
+      <div style="" id="publishlist_asset_add_chk_wrapper">
+        <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_asset_to_projectlist" checked> Set Assets for Current Project </label>
+      </div>
       <select id="circuit_template_select" class="select_list" size="5" style="margin-top:4px">
       </select>
       <div class="select_flex_view" style="flex:none;">
@@ -310,9 +313,9 @@
           'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'plot_type_select',
           'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview', 'plotter_output_table',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel', 'position_plotter_div',
-          'sheetname', 'circuit_template_select', 'help_viewer_panel', 'block_wizard_select_wrapper',
+          'sheetname', 'circuit_template_select', 'help_viewer_panel', 'block_wizard_select_wrapper', 'add_asset_to_projectlist',
           'create_layout_btn', 'add_to_publishlist', 'set_to_defaultproject', 'publishlist_add_chk_wrapper', 'template_description', 'macro_details_wrapper', 'wizard_choices',
-          'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second', 'template_filter_select',
+          'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second', 'template_filter_select', 'publishlist_asset_add_chk_wrapper',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
           'show_help_panel_btn', 'project_selected_options', 'upload_file_preview_select', 'upload_file_img_preview', 'upload_file_audio_preview',
@@ -496,7 +499,7 @@
         if (this.sheetname.value === '')
           this.sheetnameinputdirty = false;
         if (data.hint && !this.sheetnameinputdirty) {
-          if (data.categories === 'Setup')
+          if (data.categories === 'Setup' || data.categories === 'Assets')
             this.sheetname.value = data.hint;
           else
             this.sheetname.value = data.hint + ' ' + Math.floor(100 + Math.random() * 900).toString();
@@ -516,6 +519,14 @@
           this.add_to_publishlist.checked = false;
           this.set_to_defaultproject.checked = false;
           this.publishlist_add_chk_wrapper.style.display = 'none';
+        }
+
+        if (data.categories.indexOf('Assets') !== -1) {
+          this.publishlist_asset_add_chk_wrapper.style.display = '';
+          this.add_asset_to_projectlist.checked = true;
+        } else {
+          this.publishlist_asset_add_chk_wrapper.style.display = 'none';
+          this.add_asset_to_projectlist.checked = false;
         }
         return;
       }
@@ -863,6 +874,8 @@
                 await this.sheetsAddToProjectList(baseSheetName);
               if (this.set_to_defaultproject.checked && (baseSheetName === sheetName))
                 await this.sheetsStoreSelectedProject(sheetName);
+              if (this.add_asset_to_projectlist.checked && (baseSheetName === sheetName))
+                await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget);
             }
 
             this.create_layout_btn.innerHTML = 'Create Sheet';
@@ -904,6 +917,23 @@
             resolve(result);
           }).mergeCSVRangeStrings(rangeStrings, true);
         });
+      }
+      async sheetsSetAssetsForProject(assetSheetName, projectName) {
+        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, true);
+
+        let rowIndex = -1;
+        for (let c = 0; c < publishList.length; c++) {
+
+          if (publishList[c]['Project Name'] === projectName) {
+            rowIndex = c;
+            break;
+          }
+        }
+
+        if (rowIndex !== -1) {
+          await this.sheetsStoreCSVValue(this.projectsSheetName, rowIndex + 1,
+              'Asset Ranges', '=getTablesForCells(getCSVRangesFromSheet(\"' + assetSheetName + "\"))");
+        }
       }
 
       async cloudDeployUpdateFilePreview() {
