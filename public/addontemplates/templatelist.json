@@ -94,5 +94,59 @@
     "hint": "Produce Assets",
     "categories": "Assets",
     "description": "Produce meshes and product blocks"
+  }, {
+    "name": "Meat Assets",
+    "key": "AssetMeat",
+    "hint": "Meat Assets",
+    "categories": "Assets",
+    "description": "Meat meshes and product blocks"
+  }, {
+    "name": "Liquid Bottle Assets",
+    "key": "AssetLiquidBottle",
+    "hint": "Liquid Bottle Assets",
+    "categories": "Assets",
+    "description": "Liquid Bottle meshes and product blocks"
+  }, {
+    "name": "Books and Paper Assets",
+    "key": "AssetBooksAndPaper",
+    "hint": "Books and Paper Assets",
+    "categories": "Assets",
+    "description": "Books and Paper meshes and product blocks"
+  }, {
+    "name": "Seafood and Frozen Assets",
+    "key": "AssetSeafoodAndFrozen",
+    "hint": "Seafood and Frozen Assets",
+    "categories": "Assets",
+    "description": "Seafood and Frozen meshes and product blocks"
+  }, {
+    "name": "Bread and Dairy Assets",
+    "key": "AssetBreadAndDairy",
+    "hint": "Bread and Dairy Assets",
+    "categories": "Assets",
+    "description": "Bread and Dairy meshes and product blocks"
+  }, {
+    "name": "City and Block Assets",
+    "key": "AssetCityAndBlock",
+    "hint": "City and Block Assets",
+    "categories": "Assets",
+    "description": "City and Block meshes and product blocks"
+  }, {
+    "name": "Toys and Cleaners Assets",
+    "key": "AssetToysAndCleaners",
+    "hint": "Toys and Cleaners Assets",
+    "categories": "Assets",
+    "description": "Toys and Cleaners meshes and product blocks"
+  }, {
+    "name": "GM Assets",
+    "key": "AssetGM",
+    "hint": "GM Assets",
+    "categories": "Assets",
+    "description": "GM meshes and product blocks"
+  }, {
+    "name": "Food Assets",
+    "key": "AssetFood",
+    "hint": "Food Assets",
+    "categories": "Assets",
+    "description": "Food meshes and product blocks"
   }
 ]

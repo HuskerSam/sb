@@ -460,7 +460,7 @@ function getCellRangeFromRangeString(str) {
   return sheetName;
 }
 
-function getJSONForSheet(sheetName) {
+function getJSONForSheet(sheetName, block = 1) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   if (!sheet)
     return [];
@@ -520,5 +520,7 @@ function getJSONForSheet(sheetName) {
     range: 'A1'
   });
 
-  return JSON.stringify(jsonCells);
+  let rawString = JSON.stringify(jsonCells);
+
+  return rawString.substr((block - 1) * 50000, 50000);
 }
