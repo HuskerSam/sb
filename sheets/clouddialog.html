@@ -1020,8 +1020,8 @@
 
           return r;
         };
-        let publishSingle = async (name, assetRanges, circuitRanges, catalogSheet) => {
-          console.log(name, assetRanges, circuitRanges, catalogSheet);
+        let publishSingle = async (name, assetRanges, circuitRanges, catalogRanges) => {
+          console.log(name, assetRanges, circuitRanges, catalogRanges);
           let step = 'Assets';
           try {
             let assetResults = {};
@@ -1093,8 +1093,18 @@
 
             step = "Products";
             let productResults = {};
-            if (catalogSheet) {
-              let products = await this.sheetsJSONforSheetCSV(catalogSheet);
+            if (catalogRanges) {
+
+              let products = null;
+              if (this.dataCache[catalogRanges])
+                products = this.dataCache[catalogRanges];
+
+              if (!products) {
+                let ranges = catalogRanges.split(',');
+                products = await this.sheetsJSONforRangeListCSV(ranges);
+                console.log('products fetch');
+              }
+
               let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
               url += encodeURIComponent(name) + '&type=product';
               url += '&token=' + encodeURIComponent(this.defaultToken);
@@ -1193,7 +1203,7 @@
 
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
           let result = await publishSingle(row['Project Name'], row['Asset Ranges'],
-            row['Circuit Ranges'], row['Catalog Sheet']);
+            row['Circuit Ranges'], row['Catalog Ranges']);
         }
         this.busy = false;
         this.display_publish_list.innerHTML = 'Deploy All';

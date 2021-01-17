@@ -123,7 +123,7 @@ function AddRowToProjectList(name, circuitranges, assetranges, productssheet, fl
   SetCSVSheetValue('Projects', row, 'Project Name', name);
   SetCSVSheetValue('Projects', row, 'Asset Ranges', assetranges);
   SetCSVSheetValue('Projects', row, 'Circuit Ranges', circuitranges);
-  SetCSVSheetValue('Projects', row, 'Catalog Sheet', productssheet);
+  SetCSVSheetValue('Projects', row, 'Catalog Ranges', productssheet);
   SetCSVSheetValue('Projects', row, 'Flags', flags);
 }
 

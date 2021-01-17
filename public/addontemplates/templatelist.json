@@ -141,5 +141,17 @@
     "hint": "Food Assets",
     "categories": "Assets",
     "description": "Food meshes and product blocks"
+  }, {
+    "name": "Carousel Display",
+    "key": "CarouselDisplay",
+    "hint": "Carousel Display",
+    "categories": "Layout",
+    "description": "Rotating scene with table in a carousel style product display<BR>ALERT: Asset Ranges Example required to support this."
+  }, {
+    "name": "Carousel Display Products 1",
+    "key": "CarouselProducts1",
+    "hint": "Carousel Products 1",
+    "categories": "Other",
+    "description": "Products list that matches Asset Ranges example and Carousel Display"
   }
 ]

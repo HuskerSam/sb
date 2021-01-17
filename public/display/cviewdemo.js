@@ -1160,7 +1160,8 @@ class cViewDemo extends bView {
 
     let basketBlock = product.block;
 
-    let basketCart = this.rootBlock._findBestTargetObject(`block:basketcart`);
+    let bcart = this.productData.sceneBlock.title + '_basketcart';
+    let basketCart = this.rootBlock._findBestTargetObject(`block:${bcart}`);
     let sceneProduct = this.rootBlock._findBestTargetObject(`block:${product.childName}`);
     let existingItemBlock = basketCart._findBestTargetObject(`block:${basketBlock}`);
 
@@ -1395,7 +1396,8 @@ class cViewDemo extends bView {
     let basketBlock = product.block;
     let rootKey = this.rootBlock.blockKey;
 
-    let basketCart = await new gCSVImport(gAPPP.loadedWID).findMatchBlocks('block', 'basketcart', rootKey);
+    let bcart = this.productData.sceneBlock.title + '_basketcart';
+    let basketCart = await new gCSVImport(gAPPP.loadedWID).findMatchBlocks('block', bcart, rootKey);
     let basketItems = await new gCSVImport(gAPPP.loadedWID).findMatchBlocks('block', basketBlock, basketCart[0].blockKey, 'sku', itemId);
 
     let promises = [];

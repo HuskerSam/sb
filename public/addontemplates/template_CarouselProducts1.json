@@ -1,0 +1,428 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "block",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "displaystyle",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "E1",
+  "value": "image",
+  "fontWeight": "bold"
+}, {
+  "range": "F1",
+  "value": "index",
+  "fontWeight": "bold"
+}, {
+  "range": "G1",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "H1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "I1",
+  "value": "price",
+  "fontWeight": "bold"
+}, {
+  "range": "J1",
+  "value": "pricetext",
+  "fontWeight": "bold"
+}, {
+  "range": "K1",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "L1",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "M1",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "N1",
+  "value": "sku",
+  "fontWeight": "bold"
+}, {
+  "range": "O1",
+  "value": "text1",
+  "fontWeight": "bold"
+}, {
+  "range": "P1",
+  "value": "text2",
+  "fontWeight": "bold"
+}, {
+  "range": "Q1",
+  "value": "textfontfamily",
+  "fontWeight": "bold"
+}, {
+  "range": "R1",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "S1",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "T1",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "U1",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "product"
+}, {
+  "range": "B2",
+  "value": "DISPLAY product_toyboy1"
+}, {
+  "range": "E2",
+  "value": "sb:productsignimages\\toyboy1.jpg"
+}, {
+  "range": "F2",
+  "value": 100,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H2",
+  "value": "Action Figure - Blue"
+}, {
+  "range": "I2",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J2",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N2",
+  "value": "Action Figure - Blue"
+}, {
+  "range": "O2",
+  "value": "Action Figure - Blue"
+}, {
+  "range": "S2",
+  "value": -15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T2",
+  "value": 9.8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A3",
+  "value": "product"
+}, {
+  "range": "B3",
+  "value": "DISPLAY product_toyboy2"
+}, {
+  "range": "E3",
+  "value": "sb:productsignimages\\toyboy2.jpg"
+}, {
+  "range": "F3",
+  "value": 200,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H3",
+  "value": "Toy Dart Guns"
+}, {
+  "range": "I3",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J3",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L3",
+  "value": "45deg"
+}, {
+  "range": "N3",
+  "value": "Toy Dart Guns"
+}, {
+  "range": "O3",
+  "value": "Toy Dart Guns"
+}, {
+  "range": "S3",
+  "value": -10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T3",
+  "value": 9.8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U3",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A4",
+  "value": "product"
+}, {
+  "range": "B4",
+  "value": "DISPLAY product_toyboy3"
+}, {
+  "range": "E4",
+  "value": "sb:productsignimages\\toyboy3.jpg"
+}, {
+  "range": "F4",
+  "value": 300,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H4",
+  "value": "Action Figure - Yellow"
+}, {
+  "range": "I4",
+  "value": 9.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J4",
+  "value": 9.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L4",
+  "value": "90deg"
+}, {
+  "range": "N4",
+  "value": "Action Figure - Yellow"
+}, {
+  "range": "O4",
+  "value": "Action Figure - Yellow"
+}, {
+  "range": "T4",
+  "value": 9.8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U4",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A5",
+  "value": "product"
+}, {
+  "range": "B5",
+  "value": "DISPLAY product_toyboy4"
+}, {
+  "range": "E5",
+  "value": "sb:productsignimages\\toyboy4.jpg"
+}, {
+  "range": "F5",
+  "value": 400,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H5",
+  "value": "Lego Toy"
+}, {
+  "range": "I5",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J5",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L5",
+  "value": "135deg"
+}, {
+  "range": "N5",
+  "value": "Lego Toy"
+}, {
+  "range": "O5",
+  "value": "Lego Toy"
+}, {
+  "range": "S5",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T5",
+  "value": 9.8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U5",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "product"
+}, {
+  "range": "B6",
+  "value": "DISPLAY product_toyboy5"
+}, {
+  "range": "E6",
+  "value": "sb:productsignimages\\toyboy5.jpg"
+}, {
+  "range": "F6",
+  "value": 500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H6",
+  "value": "RC Truck"
+}, {
+  "range": "I6",
+  "value": 29.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J6",
+  "value": 29.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L6",
+  "value": "180deg"
+}, {
+  "range": "N6",
+  "value": "RC Truck"
+}, {
+  "range": "O6",
+  "value": "RC Truck"
+}, {
+  "range": "S6",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T6",
+  "value": 9.8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "product"
+}, {
+  "range": "B7",
+  "value": "DISPLAY product_toygirl1"
+}, {
+  "range": "E7",
+  "value": "sb:productsignimages\\toygirl1.jpg"
+}, {
+  "range": "F7",
+  "value": 600,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H7",
+  "value": "Barbie Doll"
+}, {
+  "range": "I7",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J7",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L7",
+  "value": "225deg"
+}, {
+  "range": "N7",
+  "value": "Barbie Doll"
+}, {
+  "range": "O7",
+  "value": "Barbie Doll"
+}, {
+  "range": "S7",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T7",
+  "value": 9.8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U7",
+  "value": -10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A8",
+  "value": "product"
+}, {
+  "range": "B8",
+  "value": "DISPLAY product_teddybear"
+}, {
+  "range": "E8",
+  "value": "sb:productsignimages\\teddybear.jpg"
+}, {
+  "range": "F8",
+  "value": 700,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H8",
+  "value": "Washable Teddy"
+}, {
+  "range": "I8",
+  "value": 39.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J8",
+  "value": 39.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L8",
+  "value": "270deg"
+}, {
+  "range": "N8",
+  "value": "Washable Teddy"
+}, {
+  "range": "O8",
+  "value": "Washable Teddy"
+}, {
+  "range": "T8",
+  "value": 9.8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U8",
+  "value": -15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A9",
+  "value": "product"
+}, {
+  "range": "B9",
+  "value": "DISPLAY product_game_5"
+}, {
+  "range": "E9",
+  "value": "sb:productsignimages\\game5.jpg"
+}, {
+  "range": "F9",
+  "value": 800,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H9",
+  "value": "Lego Game"
+}, {
+  "range": "I9",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J9",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L9",
+  "value": "315deg"
+}, {
+  "range": "N9",
+  "value": "Lego Game"
+}, {
+  "range": "O9",
+  "value": "Lego Game"
+}, {
+  "range": "S9",
+  "value": -10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T9",
+  "value": 9.8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U9",
+  "value": -10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]
