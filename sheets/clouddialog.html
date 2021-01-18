@@ -37,12 +37,17 @@
       <div style="padding-right:4px">
         <button id="reload_addon"><i class="material-icons">refresh</i></button>
       </div>
-      <div style="padding-right:4px">
+      <div style="padding-right:8px">
         <button id="display_publish_single_header"><i class="material-icons">publish</i></button>
       </div>
     </div>
     <div id="help_viewer_panel" style="display:none;flex:.7;">
-      <select id="help_viewer_panel_select"><option>Help items</option></select>
+      <div style="display:flex;flex-direction:row;">
+        <select id="help_viewer_panel_select"></select>
+        <div id="helper_viewer_panel_open_wrapper">
+          <button id="helper_viewer_panel_open_btn"><i class="material-icons" style="color:rgb(200,0,0)">open_in_new</i></button>
+        </div>
+      </div>
       <div id="help_viewer_panel_internal"></div>
     </div>
     <div id="position_plotter_div" class="main_div_wrapper">
@@ -113,7 +118,7 @@
     <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
       <div style="display:flex;flex-direction:row;flex:1">
         <select id="project_deploy_select" class="select_list" size="5" style="flex:1;height:100%"></select>
-        <div style="line-height:2.5em;padding-top: 1em;padding-right:8px;">
+        <div style="line-height:2.5em;padding-top: 0px;padding-right:8px;">
           <button id="set_default_proj" class="blue">Set Project</button>
           <br>
           <button id="display_publish_single" class="green"><i class="material-icons">publish</i>Deploy</button>
@@ -342,7 +347,7 @@
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
-          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display'
+          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display', 'helper_viewer_panel_open_btn'
         ];
 
         dom_id.forEach(ctl => {
@@ -379,6 +384,17 @@
 
         this.plot_type_select.addEventListener('input', e => this.plotterUpdateView());
         this.show_help_panel_btn.addEventListener('click', e => this.helpPanelToggle());
+
+        this.helper_viewer_panel_open_btn.addEventListener('click', e => {
+          let help_topic = this.help_viewer_panel_select.value;
+          let url = this.app.jsonLibPrefix + '/doc/' + help_topic + 'help.html';
+          let a = document.createElement('a');
+          a.setAttribute('href', url);
+          a.setAttribute('target', '_blank');
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        });
 
         this.help_viewer_panel_select.addEventListener('input', e => {
           this.app.updateHelpView(this.help_viewer_panel_select.value, this.helpViewer);
@@ -1808,6 +1824,12 @@
     }
 
     #help_viewer_panel_select {
+      flex: 1;
+      color: rgb(200, 0, 0);
+    }
+
+    #helper_viewer_panel_open_wrapper {
+      border-left: solid 8px rgb(255, 200, 200);
     }
 
     #help_viewer_panel {
@@ -1823,7 +1845,7 @@
       border-top: solid 8px rgb(255, 200, 200);
       overflow: hidden auto;
       text-align: left;
-      padding: 0;
+      padding: 4px;
     }
 
     input[type="color"] {
