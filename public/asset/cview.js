@@ -589,7 +589,7 @@ class cView extends bView {
     if (this.key === 'Details')
       url = '/doc/workspacehelp.html';
     if (this.key === 'Overview')
-      url = '/doc/overview.html';
+      url = '/doc/overviewhelp.html';
 
     let res = await fetch(url, {
       cache: "no-cache"

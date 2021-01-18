@@ -41,7 +41,10 @@
         <button id="display_publish_single_header"><i class="material-icons">publish</i></button>
       </div>
     </div>
-    <div id="help_viewer_panel" style="display:none;flex:.7;"></div>
+    <div id="help_viewer_panel" style="display:none;flex:.7;">
+      <select id="help_viewer_panel_select"><option>Help items</option></select>
+      <div id="help_viewer_panel_internal"></div>
+    </div>
     <div id="position_plotter_div" class="main_div_wrapper">
       <table class="wizard_field_container" style="padding: 0px 8px 0 8px;flex:none;">
         <tr>
@@ -281,8 +284,20 @@
         this.app.jsonLibPrefix = 'https://handtop.com';
         this.app.loadTextures();
         this.app.loadPickerData();
+        this.fetchHelpList();
+
         this.widForName = {};
         this.loadBlockWizard();
+      }
+      async fetchHelpList() {
+        let fetched = await fetch(this.app.jsonLibPrefix + '/doc/helplist.json', {
+          cache: "no-cache"
+        });
+        let data = await fetched.json();
+
+        let html = '';
+        data.forEach(i => html += '<option value="' + i.value  + '">' + i.title + '</option>');
+        this.help_viewer_panel_select.innerHTML = html;
       }
       async setBusy() {
         this.reload_addon.style.borderRadius = '50%';
@@ -316,7 +331,8 @@
           'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'plot_type_select',
           'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview', 'plotter_output_table',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel', 'position_plotter_div',
-          'sheetname', 'circuit_template_select', 'help_viewer_panel', 'block_wizard_select_wrapper', 'add_asset_to_projectlist',
+          'sheetname', 'circuit_template_select', 'help_viewer_panel', 'help_viewer_panel_internal',
+          'block_wizard_select_wrapper', 'add_asset_to_projectlist', 'help_viewer_panel_select',
           'create_layout_btn', 'add_to_publishlist', 'set_to_defaultproject', 'publishlist_add_chk_wrapper', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second', 'template_filter_select', 'publishlist_asset_add_chk_wrapper',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span', 'publishlist_products_add_chk_wrapper',
@@ -363,6 +379,10 @@
 
         this.plot_type_select.addEventListener('input', e => this.plotterUpdateView());
         this.show_help_panel_btn.addEventListener('click', e => this.helpPanelToggle());
+
+        this.help_viewer_panel_select.addEventListener('input', e => {
+          this.app.updateHelpView(this.help_viewer_panel_select.value, this.helpViewer);
+        });
 
         this.song_detail_data_rdo.addEventListener('input', e => this.updateSongDataView());
         this.song_raw_data_rdo.addEventListener('input', e => this.updateSongDataView());
@@ -548,7 +568,7 @@
           this.block_wizard_add_name_div.remove();
 
         this.app.mV = this;
-        this.helpViewer = this.help_viewer_panel;
+        this.helpViewer = this.help_viewer_panel_internal;
         this.macro = new cMacro(this.macro_details_wrapper, this.wizard_choices.value, this.app, true);
 
         this.block_wizard_add_name_div = document.querySelector('.block_wizard_add_name_div');
@@ -627,24 +647,24 @@
         return;
       }
       async updateHelpViewer() {
-        console.log(this);
         if (this.addon_display_view_select.value === 'song_import_div') {
-          this.app.updateHelpView('processaudio', this.help_viewer_panel);
+          this.currentHelpTag = 'processaudio';
         } else if (this.addon_display_view_select.value === 'cloud_deploy') {
-          this.app.updateHelpView('addonprojects', this.help_viewer_panel);
+          this.currentHelpTag = 'addonprojects';
         } else if (this.addon_display_view_select.value === 'cloud_target') {
-          this.app.updateHelpView('addonconfiguration', this.help_viewer_panel);
+          this.currentHelpTag = 'addonconfiguration';
         } else if (this.addon_display_view_select.value === 'template_view') {
-          this.app.updateHelpView('addontemplates', this.help_viewer_panel);
+          this.currentHelpTag = 'addontemplates';
         } else if (this.addon_display_view_select.value === 'block_wizards') {
-          console.log(this.macro, this);
           if (this.macro.tag === 'block' && this.macro.block_wizard_type_select.value === "Scene")
-            await this.app.updateHelpView("sceneblock", this.app.mV.helpViewer);
+            this.currentHelpTag = "sceneblock";
           else
-            await this.app.updateHelpView(this.wizard_choices.value, this.app.mV.helpViewer);
-        } else if (this.addon_display_view_select.value === 'position_plotter_div') {
-          this.app.updateHelpView('positionplotter', this.help_viewer_panel);
-        }
+            this.currentHelpTag =  this.wizard_choices.value;
+        } else if (this.addon_display_view_select.value === 'position_plotter_div')
+          this.currentHelpTag = 'positionplotter';
+
+        this.app.help_topic_picker_select = this.help_viewer_panel_select;
+        await this.app.updateHelpView(this.currentHelpTag, this.helpViewer);
       }
       async loadProjectPreview() {
         if (this.selectedProjectView === 1) {
@@ -1787,8 +1807,20 @@
       top: .25em;
     }
 
+    #help_viewer_panel_select {
+    }
+
     #help_viewer_panel {
+      padding: 0;
       border: solid 8px rgb(255, 200, 200);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #help_viewer_panel_internal {
+      flex: 1;
+      border-top: solid 8px rgb(255, 200, 200);
       overflow: hidden auto;
       text-align: left;
       padding: 0;

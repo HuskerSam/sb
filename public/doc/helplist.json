@@ -1,0 +1,59 @@
+[
+{
+  "value": "addonconfiguration",
+  "title": "Configuration (sheet)"
+},
+{
+  "value": "addonprojects",
+  "title": "Projects (sheet)"
+},
+{
+  "value": "addontemplates",
+  "title": "Sheet Templates"
+},
+
+{
+  "value": "block",
+  "title": "Blocks (general)"
+},
+{
+  "value": "camera",
+  "title": "Cameras"
+},
+{
+  "value": "light",
+  "title": "Lights"
+},
+{
+  "value": "material",
+  "title": "Materials"
+},
+{
+  "value": "mesh",
+  "title": "Meshes"
+},
+{
+  "value": "overview",
+  "title": "Overview"
+},
+{
+  "value": "positionplotter",
+  "title": "Position Plotter"
+},
+{
+  "value": "processaudio",
+  "title": "Process Audio"
+},
+{
+  "value": "sceneblock",
+  "title": "Scene Block (block)"
+},
+{
+  "value": "shape",
+  "title": "Shapes"
+},
+{
+  "value": "workspace",
+  "title": "Project (/asset)"
+}
+]

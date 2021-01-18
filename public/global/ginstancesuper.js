@@ -171,6 +171,9 @@ class cAppDefaults {
     document.body.appendChild(currentList);
   }
   async updateHelpView(helpTag, dom) {
+    if (this.help_topic_picker_select)
+      this.help_topic_picker_select.value = helpTag;
+
     if (helpTag === 'texture')
       helpTag = 'material';
     if (helpTag !== '')
