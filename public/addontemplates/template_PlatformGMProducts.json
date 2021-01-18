@@ -1,0 +1,1311 @@
+[{
+  "range": "A1",
+  "value": "asset"
+}, {
+  "range": "B1",
+  "value": "block"
+}, {
+  "range": "C1",
+  "value": "displaystyle"
+}, {
+  "range": "D1",
+  "value": "height"
+}, {
+  "range": "E1",
+  "value": "image"
+}, {
+  "range": "F1",
+  "value": "index"
+}, {
+  "range": "G1",
+  "value": "materialname"
+}, {
+  "range": "H1",
+  "value": "name"
+}, {
+  "range": "I1",
+  "value": "price"
+}, {
+  "range": "J1",
+  "value": "pricetext"
+}, {
+  "range": "K1",
+  "value": "rx"
+}, {
+  "range": "L1",
+  "value": "ry"
+}, {
+  "range": "M1",
+  "value": "rz"
+}, {
+  "range": "N1",
+  "value": "sku"
+}, {
+  "range": "O1",
+  "value": "text1"
+}, {
+  "range": "P1",
+  "value": "text2"
+}, {
+  "range": "Q1",
+  "value": "textfontfamily"
+}, {
+  "range": "R1",
+  "value": "width"
+}, {
+  "range": "S1",
+  "value": "x"
+}, {
+  "range": "T1",
+  "value": "y"
+}, {
+  "range": "U1",
+  "value": "z"
+}, {
+  "range": "A2",
+  "value": "product"
+}, {
+  "range": "B2",
+  "value": "DISPLAY product_custard"
+}, {
+  "range": "E2",
+  "value": "sb:productsignimages/custard.jpg"
+}, {
+  "range": "F2",
+  "value": 100,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H2",
+  "value": "Delight Custard"
+}, {
+  "range": "I2",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J2",
+  "value": "$8.99 / 3pk"
+}, {
+  "range": "L2",
+  "value": "90deg"
+}, {
+  "range": "N2",
+  "value": "Delight Custard"
+}, {
+  "range": "O2",
+  "value": "Delight Custard"
+}, {
+  "range": "S2",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T2",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U2",
+  "value": -8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A3",
+  "value": "product"
+}, {
+  "range": "B3",
+  "value": "DISPLAY product_freshcream"
+}, {
+  "range": "E3",
+  "value": "sb:productsignimages/freshcream.jpg"
+}, {
+  "range": "F3",
+  "value": 200,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H3",
+  "value": "You and Me Cream"
+}, {
+  "range": "I3",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J3",
+  "value": "$3.99 / 3pk"
+}, {
+  "range": "L3",
+  "value": "67deg"
+}, {
+  "range": "N3",
+  "value": "You and Me Cream"
+}, {
+  "range": "O3",
+  "value": "You and Me Cream"
+}, {
+  "range": "S3",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T3",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U3",
+  "value": -8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A4",
+  "value": "product"
+}, {
+  "range": "B4",
+  "value": "DISPLAY product_vinegar"
+}, {
+  "range": "E4",
+  "value": "sb:productsignimages/vinegar.jpg"
+}, {
+  "range": "F4",
+  "value": 300,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H4",
+  "value": "Red Wine Vinegar"
+}, {
+  "range": "I4",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J4",
+  "value": "$6.99 / liter"
+}, {
+  "range": "L4",
+  "value": "45deg"
+}, {
+  "range": "N4",
+  "value": "Red Wine Vinegar"
+}, {
+  "range": "O4",
+  "value": "Red Wine Vinegar"
+}, {
+  "range": "S4",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T4",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U4",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A5",
+  "value": "product"
+}, {
+  "range": "B5",
+  "value": "DISPLAY product_saltshaker"
+}, {
+  "range": "E5",
+  "value": "sb:productsignimages/saltshaker.jpg"
+}, {
+  "range": "F5",
+  "value": 400,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H5",
+  "value": "Salt Shaker"
+}, {
+  "range": "I5",
+  "value": 0.35,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J5",
+  "value": 0.35,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L5",
+  "value": "45deg"
+}, {
+  "range": "N5",
+  "value": "Salt Shaker"
+}, {
+  "range": "O5",
+  "value": "Salt Shaker"
+}, {
+  "range": "S5",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T5",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U5",
+  "value": -7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "product"
+}, {
+  "range": "B6",
+  "value": "DISPLAY product_peppershaker"
+}, {
+  "range": "E6",
+  "value": "sb:productsignimages/peppershaker.jpg"
+}, {
+  "range": "F6",
+  "value": 500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H6",
+  "value": "Pepper Shaker"
+}, {
+  "range": "I6",
+  "value": 0.35,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J6",
+  "value": 0.35,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L6",
+  "value": "45deg"
+}, {
+  "range": "N6",
+  "value": "Pepper Shaker"
+}, {
+  "range": "O6",
+  "value": "Pepper Shaker"
+}, {
+  "range": "S6",
+  "value": 31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T6",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U6",
+  "value": -1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "product"
+}, {
+  "range": "B7",
+  "value": "DISPLAY product_oliveoil"
+}, {
+  "range": "E7",
+  "value": "sb:productsignimages/oliveoil.jpg"
+}, {
+  "range": "F7",
+  "value": 600,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H7",
+  "value": "Olive Oil"
+}, {
+  "range": "I7",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J7",
+  "value": "$8.99 / liter"
+}, {
+  "range": "L7",
+  "value": "45deg"
+}, {
+  "range": "N7",
+  "value": "Olive Oil"
+}, {
+  "range": "O7",
+  "value": "Olive Oil"
+}, {
+  "range": "S7",
+  "value": 22.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T7",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U7",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A8",
+  "value": "product"
+}, {
+  "range": "B8",
+  "value": "DISPLAY product_pickles"
+}, {
+  "range": "E8",
+  "value": "sb:productsignimages/pickles.jpg"
+}, {
+  "range": "F8",
+  "value": 700,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H8",
+  "value": "Pickles"
+}, {
+  "range": "I8",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J8",
+  "value": "$4.99 / 0.5 liter"
+}, {
+  "range": "L8",
+  "value": "23deg"
+}, {
+  "range": "N8",
+  "value": "Pickles"
+}, {
+  "range": "O8",
+  "value": "Pickles"
+}, {
+  "range": "S8",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T8",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U8",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A9",
+  "value": "product"
+}, {
+  "range": "B9",
+  "value": "DISPLAY product_mustard"
+}, {
+  "range": "E9",
+  "value": "sb:productsignimages/mustard.jpg"
+}, {
+  "range": "F9",
+  "value": 800,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H9",
+  "value": "Mustard"
+}, {
+  "range": "I9",
+  "value": 1.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J9",
+  "value": "$1.99 / 200 mL"
+}, {
+  "range": "N9",
+  "value": "Mustard"
+}, {
+  "range": "O9",
+  "value": "Mustard"
+}, {
+  "range": "S9",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T9",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U9",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A10",
+  "value": "product"
+}, {
+  "range": "B10",
+  "value": "DISPLAY product_mayo1"
+}, {
+  "range": "E10",
+  "value": "sb:productsignimages/mayo1.jpg"
+}, {
+  "range": "F10",
+  "value": 900,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H10",
+  "value": "Mayo Tube"
+}, {
+  "range": "I10",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J10",
+  "value": "$4.99 / tube"
+}, {
+  "range": "N10",
+  "value": "Mayo Tube"
+}, {
+  "range": "O10",
+  "value": "Mayo Tube"
+}, {
+  "range": "S10",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T10",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U10",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A11",
+  "value": "product"
+}, {
+  "range": "B11",
+  "value": "DISPLAY product_mayo2"
+}, {
+  "range": "E11",
+  "value": "sb:productsignimages/mayo2.jpg"
+}, {
+  "range": "F11",
+  "value": 1000,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H11",
+  "value": "Mayo Jar"
+}, {
+  "range": "I11",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J11",
+  "value": "$2.99 / jar"
+}, {
+  "range": "L11",
+  "value": "-23deg"
+}, {
+  "range": "N11",
+  "value": "Mayo Jar"
+}, {
+  "range": "O11",
+  "value": "Mayo Jar"
+}, {
+  "range": "S11",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T11",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U11",
+  "value": 40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A12",
+  "value": "product"
+}, {
+  "range": "B12",
+  "value": "DISPLAY product_ketchup"
+}, {
+  "range": "E12",
+  "value": "sb:productsignimages/ketchup.jpg"
+}, {
+  "range": "F12",
+  "value": 1100,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H12",
+  "value": "Salad Dressing"
+}, {
+  "range": "I12",
+  "value": 1.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J12",
+  "value": "$1.99 / liter"
+}, {
+  "range": "L12",
+  "value": "-45deg"
+}, {
+  "range": "N12",
+  "value": "Salad Dressing"
+}, {
+  "range": "O12",
+  "value": "Salad Dressing"
+}, {
+  "range": "S12",
+  "value": 31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T12",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U12",
+  "value": 50,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A13",
+  "value": "product"
+}, {
+  "range": "B13",
+  "value": "DISPLAY product_knickers"
+}, {
+  "range": "E13",
+  "value": "sb:productsignimages/knickers.jpg"
+}, {
+  "range": "F13",
+  "value": 1200,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H13",
+  "value": "Knickers - female"
+}, {
+  "range": "I13",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J13",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L13",
+  "value": "-45deg"
+}, {
+  "range": "N13",
+  "value": "Knickers - female"
+}, {
+  "range": "O13",
+  "value": "Knickers - female"
+}, {
+  "range": "S13",
+  "value": 31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T13",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U13",
+  "value": 50,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A14",
+  "value": "product"
+}, {
+  "range": "B14",
+  "value": "DISPLAY product_undergarment1"
+}, {
+  "range": "E14",
+  "value": "sb:productsignimages/undergarment1.jpg"
+}, {
+  "range": "F14",
+  "value": 1300,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H14",
+  "value": "Underwear - female"
+}, {
+  "range": "I14",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J14",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L14",
+  "value": "-45deg"
+}, {
+  "range": "N14",
+  "value": "Underwear - female"
+}, {
+  "range": "O14",
+  "value": "Underwear - female"
+}, {
+  "range": "S14",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T14",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U14",
+  "value": 47,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A15",
+  "value": "product"
+}, {
+  "range": "B15",
+  "value": "DISPLAY product_undergarment2"
+}, {
+  "range": "E15",
+  "value": "sb:productsignimages/undergarment2.jpg"
+}, {
+  "range": "F15",
+  "value": 1400,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H15",
+  "value": "Underwear Large - female"
+}, {
+  "range": "I15",
+  "value": 7.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J15",
+  "value": 7.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L15",
+  "value": "-45deg"
+}, {
+  "range": "N15",
+  "value": "Underwear Large - female"
+}, {
+  "range": "O15",
+  "value": "Underwear Large - female"
+}, {
+  "range": "S15",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T15",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U15",
+  "value": 47,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A16",
+  "value": "product"
+}, {
+  "range": "B16",
+  "value": "DISPLAY product_undergarment3"
+}, {
+  "range": "E16",
+  "value": "sb:productsignimages/undergarment3.jpg"
+}, {
+  "range": "F16",
+  "value": 1500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H16",
+  "value": "Underwear Small - female"
+}, {
+  "range": "I16",
+  "value": 5.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J16",
+  "value": 5.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L16",
+  "value": "-67deg"
+}, {
+  "range": "N16",
+  "value": "Underwear Small - female"
+}, {
+  "range": "O16",
+  "value": "Underwear Small - female"
+}, {
+  "range": "S16",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T16",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U16",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A17",
+  "value": "product"
+}, {
+  "range": "B17",
+  "value": "DISPLAY product_undergarment4"
+}, {
+  "range": "E17",
+  "value": "sb:productsignimages/undergarment4.jpg"
+}, {
+  "range": "F17",
+  "value": 1600,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H17",
+  "value": "Underwear - male"
+}, {
+  "range": "I17",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J17",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L17",
+  "value": "-90deg"
+}, {
+  "range": "N17",
+  "value": "Underwear - male"
+}, {
+  "range": "O17",
+  "value": "Underwear - male"
+}, {
+  "range": "S17",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T17",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U17",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A18",
+  "value": "product"
+}, {
+  "range": "B18",
+  "value": "DISPLAY product_tshirt1"
+}, {
+  "range": "E18",
+  "value": "sb:productsignimages/tshirt1.jpg"
+}, {
+  "range": "F18",
+  "value": 1700,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H18",
+  "value": "T-Shirt - Teal"
+}, {
+  "range": "I18",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J18",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L18",
+  "value": "-90deg"
+}, {
+  "range": "N18",
+  "value": "T-Shirt - Teal"
+}, {
+  "range": "O18",
+  "value": "T-Shirt - Teal"
+}, {
+  "range": "S18",
+  "value": -5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T18",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U18",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A19",
+  "value": "product"
+}, {
+  "range": "B19",
+  "value": "DISPLAY product_tshirt2"
+}, {
+  "range": "E19",
+  "value": "sb:productsignimages/tshirt2.jpg"
+}, {
+  "range": "F19",
+  "value": 1800,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H19",
+  "value": "T-Shirt - Gray"
+}, {
+  "range": "I19",
+  "value": 11.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J19",
+  "value": 11.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L19",
+  "value": "248deg"
+}, {
+  "range": "N19",
+  "value": "T-Shirt - Gray"
+}, {
+  "range": "O19",
+  "value": "T-Shirt - Gray"
+}, {
+  "range": "S19",
+  "value": -15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T19",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U19",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A20",
+  "value": "product"
+}, {
+  "range": "B20",
+  "value": "DISPLAY product_hanger"
+}, {
+  "range": "E20",
+  "value": "sb:productsignimages/hanger.jpg"
+}, {
+  "range": "F20",
+  "value": 1900,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H20",
+  "value": "Black Hanger"
+}, {
+  "range": "I20",
+  "value": 0.49,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J20",
+  "value": 0.49,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L20",
+  "value": "225deg"
+}, {
+  "range": "N20",
+  "value": "Black Hanger"
+}, {
+  "range": "O20",
+  "value": "Black Hanger"
+}, {
+  "range": "S20",
+  "value": -15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T20",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U20",
+  "value": 47,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A21",
+  "value": "product"
+}, {
+  "range": "B21",
+  "value": "DISPLAY product_slippers1"
+}, {
+  "range": "E21",
+  "value": "sb:productsignimages/slippers1.jpg"
+}, {
+  "range": "F21",
+  "value": 2000,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H21",
+  "value": "Pink Slippers"
+}, {
+  "range": "I21",
+  "value": 1.49,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J21",
+  "value": 1.49,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L21",
+  "value": "225deg"
+}, {
+  "range": "N21",
+  "value": "Pink Slippers"
+}, {
+  "range": "O21",
+  "value": "Pink Slippers"
+}, {
+  "range": "S21",
+  "value": -25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T21",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U21",
+  "value": 57,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A22",
+  "value": "product"
+}, {
+  "range": "B22",
+  "value": "DISPLAY product_slippers2"
+}, {
+  "range": "E22",
+  "value": "sb:productsignimages/slippers2.jpg"
+}, {
+  "range": "F22",
+  "value": 2100,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H22",
+  "value": "Black Slippers"
+}, {
+  "range": "I22",
+  "value": 1.69,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J22",
+  "value": 1.69,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L22",
+  "value": "225deg"
+}, {
+  "range": "N22",
+  "value": "Black Slippers"
+}, {
+  "range": "O22",
+  "value": "Black Slippers"
+}, {
+  "range": "S22",
+  "value": -31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T22",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U22",
+  "value": 50,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A23",
+  "value": "product"
+}, {
+  "range": "B23",
+  "value": "DISPLAY product_socks1"
+}, {
+  "range": "E23",
+  "value": "sb:productsignimages/socks1.jpg"
+}, {
+  "range": "F23",
+  "value": 2200,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H23",
+  "value": "Christmas Socks"
+}, {
+  "range": "I23",
+  "value": 1.89,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J23",
+  "value": 1.89,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L23",
+  "value": "225deg"
+}, {
+  "range": "N23",
+  "value": "Christmas Socks"
+}, {
+  "range": "O23",
+  "value": "Christmas Socks"
+}, {
+  "range": "S23",
+  "value": -21.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T23",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U23",
+  "value": 41,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A24",
+  "value": "product"
+}, {
+  "range": "B24",
+  "value": "DISPLAY product_socks2"
+}, {
+  "range": "E24",
+  "value": "sb:productsignimages/socks2.jpg"
+}, {
+  "range": "F24",
+  "value": 2300,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H24",
+  "value": "Work Socks"
+}, {
+  "range": "I24",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J24",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L24",
+  "value": "202deg"
+}, {
+  "range": "N24",
+  "value": "Work Socks"
+}, {
+  "range": "O24",
+  "value": "Work Socks"
+}, {
+  "range": "S24",
+  "value": -31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T24",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U24",
+  "value": 40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A25",
+  "value": "product"
+}, {
+  "range": "B25",
+  "value": "DISPLAY product_tanktop"
+}, {
+  "range": "E25",
+  "value": "sb:productsignimages/tanktop.jpg"
+}, {
+  "range": "F25",
+  "value": 2400,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H25",
+  "value": "Pink Tanktop"
+}, {
+  "range": "I25",
+  "value": 13.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J25",
+  "value": 13.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L25",
+  "value": "180deg"
+}, {
+  "range": "N25",
+  "value": "Pink Tanktop"
+}, {
+  "range": "O25",
+  "value": "Pink Tanktop"
+}, {
+  "range": "S25",
+  "value": -31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T25",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U25",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A26",
+  "value": "product"
+}, {
+  "range": "B26",
+  "value": "DISPLAY product_tshirt_smartchild"
+}, {
+  "range": "E26",
+  "value": "sb:productsignimages/tshirt_smartchild.jpg"
+}, {
+  "range": "F26",
+  "value": 2500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H26",
+  "value": "Children TShirt"
+}, {
+  "range": "I26",
+  "value": 1.39,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J26",
+  "value": 1.39,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L26",
+  "value": "180deg"
+}, {
+  "range": "N26",
+  "value": "Children TShirt"
+}, {
+  "range": "O26",
+  "value": "Children TShirt"
+}, {
+  "range": "S26",
+  "value": -31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T26",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U26",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A27",
+  "value": "product"
+}, {
+  "range": "B27",
+  "value": "DISPLAY product_frypan1"
+}, {
+  "range": "E27",
+  "value": "sb:productsignimages/frypan1.jpg"
+}, {
+  "range": "F27",
+  "value": 2600,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H27",
+  "value": "Stir Fry Pan"
+}, {
+  "range": "I27",
+  "value": 29.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J27",
+  "value": 29.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L27",
+  "value": "157deg"
+}, {
+  "range": "N27",
+  "value": "Stir Fry Pan"
+}, {
+  "range": "O27",
+  "value": "Stir Fry Pan"
+}, {
+  "range": "S27",
+  "value": -31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T27",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U27",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A28",
+  "value": "product"
+}, {
+  "range": "B28",
+  "value": "DISPLAY product_frypan2"
+}, {
+  "range": "E28",
+  "value": "sb:productsignimages/frypan2.jpg"
+}, {
+  "range": "F28",
+  "value": 2700,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H28",
+  "value": "Skillet"
+}, {
+  "range": "I28",
+  "value": 19.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J28",
+  "value": 19.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L28",
+  "value": "135deg"
+}, {
+  "range": "N28",
+  "value": "Skillet"
+}, {
+  "range": "O28",
+  "value": "Skillet"
+}, {
+  "range": "S28",
+  "value": -21.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T28",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U28",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A29",
+  "value": "product"
+}, {
+  "range": "B29",
+  "value": "DISPLAY product_largespoon"
+}, {
+  "range": "E29",
+  "value": "sb:productsignimages/largespoon.jpg"
+}, {
+  "range": "F29",
+  "value": 2800,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H29",
+  "value": "Fry pan - long handle"
+}, {
+  "range": "I29",
+  "value": 49.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J29",
+  "value": 49.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L29",
+  "value": "135deg"
+}, {
+  "range": "N29",
+  "value": "Fry pan - long handle"
+}, {
+  "range": "O29",
+  "value": "Fry pan - long handle"
+}, {
+  "range": "S29",
+  "value": -31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T29",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U29",
+  "value": -1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]

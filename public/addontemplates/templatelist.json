@@ -56,13 +56,6 @@
     "description": "Fixture meshes, blocks and materials for displays"
   },
   {
-    "name": "Product List with 1 product",
-    "key": "ProductList",
-    "hint": "Products",
-    "categories": "Block,Other",
-    "description": "Product list with headers and various examples products"
-  },
-  {
     "name": "Audio Animation - 8 Bands",
     "key": "Audio8Band",
     "hint": "8 Band Song",
@@ -151,7 +144,44 @@
     "name": "Carousel Display Products 1",
     "key": "CarouselProducts1",
     "hint": "Carousel Products 1",
-    "categories": "Other",
+    "categories": "Products",
     "description": "Products list that matches Asset Ranges example and Carousel Display"
+  }, {
+    "name": "Platform Display",
+    "key": "PlatformDisplay",
+    "hint": "Platform Display",
+    "categories": "Layout",
+    "description": "Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this."
+  }, {
+    "name": "Platform Books and Paper Products",
+    "key": "PlatformBooksAndPaperProducts",
+    "hint": "Books and Paper Products",
+    "categories": "Products",
+    "description": "Products list that matches Asset Ranges example and Platform Display"
+  }, {
+    "name": "Platform Bread and Dairy Products",
+    "key": "PlatformBreadAndDairyProducts",
+    "hint": "Bread And Dairy Products",
+    "categories": "Products",
+    "description": "Products list that matches Asset Ranges example and Platform Display"
+  }, {
+    "name": "Platform GM Products",
+    "key": "PlatformGMProducts",
+    "hint": "GM Products",
+    "categories": "Products",
+    "description": "Products list that matches Asset Ranges example and Platform Display"
+  }, {
+    "name": "Platform Seafood and Frozen",
+    "key": "PlatformSeafoodAndFrozenProducts",
+    "hint": "Seafood and Frozen Products",
+    "categories": "Products",
+    "description": "Products list that matches Asset Ranges example and Platform Display"
+  },
+  {
+    "name": "Product List with 1 product",
+    "key": "ProductList",
+    "hint": "Products",
+    "categories": "Products",
+    "description": "Product list with headers and various examples products"
   }
 ]

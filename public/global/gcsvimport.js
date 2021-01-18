@@ -1329,6 +1329,8 @@ class gCSVImport {
     let blockresult = await this.dbSetRecord('block', block);
     let sceneParams = this._fetchSceneParams(block);
     let frameTime = row.frametime;
+    if (frameTime === '' || frameTime === undefined)
+      frameTime = '60s';
     this.dbSetRecord('frame', {
       parentKey: blockresult.key,
       frameOrder: 10,

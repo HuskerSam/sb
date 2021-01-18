@@ -1,0 +1,824 @@
+[{
+  "range": "A1",
+  "value": "asset"
+}, {
+  "range": "B1",
+  "value": "block"
+}, {
+  "range": "C1",
+  "value": "displaystyle"
+}, {
+  "range": "D1",
+  "value": "height"
+}, {
+  "range": "E1",
+  "value": "image"
+}, {
+  "range": "F1",
+  "value": "index"
+}, {
+  "range": "G1",
+  "value": "materialname"
+}, {
+  "range": "H1",
+  "value": "name"
+}, {
+  "range": "I1",
+  "value": "price"
+}, {
+  "range": "J1",
+  "value": "pricetext"
+}, {
+  "range": "K1",
+  "value": "rx"
+}, {
+  "range": "L1",
+  "value": "ry"
+}, {
+  "range": "M1",
+  "value": "rz"
+}, {
+  "range": "N1",
+  "value": "sku"
+}, {
+  "range": "O1",
+  "value": "text1"
+}, {
+  "range": "P1",
+  "value": "text2"
+}, {
+  "range": "Q1",
+  "value": "textfontfamily"
+}, {
+  "range": "R1",
+  "value": "width"
+}, {
+  "range": "S1",
+  "value": "x"
+}, {
+  "range": "T1",
+  "value": "y"
+}, {
+  "range": "U1",
+  "value": "z"
+}, {
+  "range": "A2",
+  "value": "product"
+}, {
+  "range": "B2",
+  "value": "DISPLAY product_book1"
+}, {
+  "range": "E2",
+  "value": "sb:productsignimages/book1.jpg"
+}, {
+  "range": "F2",
+  "value": 100,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H2",
+  "value": "Book: Un Village"
+}, {
+  "range": "I2",
+  "value": 24.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J2",
+  "value": 24.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L2",
+  "value": "90deg"
+}, {
+  "range": "N2",
+  "value": "Book: Un Village"
+}, {
+  "range": "O2",
+  "value": "Book: Un Village"
+}, {
+  "range": "S2",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T2",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U2",
+  "value": -8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A3",
+  "value": "product"
+}, {
+  "range": "B3",
+  "value": "DISPLAY product_book2"
+}, {
+  "range": "E3",
+  "value": "sb:productsignimages/book2.jpg"
+}, {
+  "range": "F3",
+  "value": 200,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H3",
+  "value": "Book: Cuisine Easy"
+}, {
+  "range": "I3",
+  "value": 5.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J3",
+  "value": 5.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L3",
+  "value": "67deg"
+}, {
+  "range": "N3",
+  "value": "Book: Cuisine Easy"
+}, {
+  "range": "O3",
+  "value": "Book: Cuisine Easy"
+}, {
+  "range": "S3",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T3",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U3",
+  "value": -8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A4",
+  "value": "product"
+}, {
+  "range": "B4",
+  "value": "DISPLAY product_book3"
+}, {
+  "range": "E4",
+  "value": "sb:productsignimages/book3.jpg"
+}, {
+  "range": "F4",
+  "value": 300,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H4",
+  "value": "Book: Jamille by Coly"
+}, {
+  "range": "I4",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J4",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L4",
+  "value": "45deg"
+}, {
+  "range": "N4",
+  "value": "Book: Jamille by Coly"
+}, {
+  "range": "O4",
+  "value": "Book: Jamille by Coly"
+}, {
+  "range": "S4",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T4",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U4",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A5",
+  "value": "product"
+}, {
+  "range": "B5",
+  "value": "DISPLAY product_book4"
+}, {
+  "range": "E5",
+  "value": "sb:productsignimages/book4.jpg"
+}, {
+  "range": "F5",
+  "value": 400,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H5",
+  "value": "Book: Gill (for children)"
+}, {
+  "range": "I5",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J5",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L5",
+  "value": "45deg"
+}, {
+  "range": "N5",
+  "value": "Book: Gill (for children)"
+}, {
+  "range": "O5",
+  "value": "Book: Gill (for children)"
+}, {
+  "range": "S5",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T5",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U5",
+  "value": -7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "product"
+}, {
+  "range": "B6",
+  "value": "DISPLAY product_book5"
+}, {
+  "range": "E6",
+  "value": "sb:productsignimages/book5.jpg"
+}, {
+  "range": "F6",
+  "value": 500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H6",
+  "value": "Book: La Petite Pince"
+}, {
+  "range": "I6",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J6",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L6",
+  "value": "45deg"
+}, {
+  "range": "N6",
+  "value": "Book: La Petite Pince"
+}, {
+  "range": "O6",
+  "value": "Book: La Petite Pince"
+}, {
+  "range": "S6",
+  "value": 31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T6",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U6",
+  "value": -1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "product"
+}, {
+  "range": "B7",
+  "value": "DISPLAY product_book6"
+}, {
+  "range": "E7",
+  "value": "sb:productsignimages/book6.jpg"
+}, {
+  "range": "F7",
+  "value": 600,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H7",
+  "value": "Book: Atlas"
+}, {
+  "range": "I7",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J7",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L7",
+  "value": "45deg"
+}, {
+  "range": "N7",
+  "value": "Book: Atlas"
+}, {
+  "range": "O7",
+  "value": "Book: Atlas"
+}, {
+  "range": "S7",
+  "value": 22.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T7",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U7",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A8",
+  "value": "product"
+}, {
+  "range": "B8",
+  "value": "DISPLAY product_book7"
+}, {
+  "range": "E8",
+  "value": "sb:productsignimages/book7.jpg"
+}, {
+  "range": "F8",
+  "value": 700,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H8",
+  "value": "Book: Wines"
+}, {
+  "range": "I8",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J8",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L8",
+  "value": "23deg"
+}, {
+  "range": "N8",
+  "value": "Book: Wines"
+}, {
+  "range": "O8",
+  "value": "Book: Wines"
+}, {
+  "range": "S8",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T8",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U8",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A9",
+  "value": "product"
+}, {
+  "range": "B9",
+  "value": "DISPLAY product_book8"
+}, {
+  "range": "E9",
+  "value": "sb:productsignimages/book8.jpg"
+}, {
+  "range": "F9",
+  "value": 800,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H9",
+  "value": "Book: Larry Tropeur"
+}, {
+  "range": "I9",
+  "value": 29.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J9",
+  "value": 29.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N9",
+  "value": "Book: Larry Tropeur"
+}, {
+  "range": "O9",
+  "value": "Book: Larry Tropeur"
+}, {
+  "range": "S9",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T9",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U9",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A10",
+  "value": "product"
+}, {
+  "range": "B10",
+  "value": "DISPLAY product_book9"
+}, {
+  "range": "E10",
+  "value": "sb:productsignimages/book9.jpg"
+}, {
+  "range": "F10",
+  "value": 900,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H10",
+  "value": "Book: Coloring - snails"
+}, {
+  "range": "I10",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J10",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N10",
+  "value": "Book: Coloring - snails"
+}, {
+  "range": "O10",
+  "value": "Book: Coloring - snails"
+}, {
+  "range": "S10",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T10",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U10",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A11",
+  "value": "product"
+}, {
+  "range": "B11",
+  "value": "DISPLAY product_book10"
+}, {
+  "range": "E11",
+  "value": "sb:productsignimages/book10.jpg"
+}, {
+  "range": "F11",
+  "value": 1000,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H11",
+  "value": "Book: Coloring - cows"
+}, {
+  "range": "I11",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J11",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L11",
+  "value": "-23deg"
+}, {
+  "range": "N11",
+  "value": "Book: Coloring - cows"
+}, {
+  "range": "O11",
+  "value": "Book: Coloring - cows"
+}, {
+  "range": "S11",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T11",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U11",
+  "value": 40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A12",
+  "value": "product"
+}, {
+  "range": "B12",
+  "value": "DISPLAY product_book11"
+}, {
+  "range": "E12",
+  "value": "sb:productsignimages/book11.jpg"
+}, {
+  "range": "F12",
+  "value": 1100,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H12",
+  "value": "Book: Marlin (for children)"
+}, {
+  "range": "I12",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J12",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L12",
+  "value": "-45deg"
+}, {
+  "range": "N12",
+  "value": "Book: Marlin (for children)"
+}, {
+  "range": "O12",
+  "value": "Book: Marlin (for children)"
+}, {
+  "range": "S12",
+  "value": 22.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T12",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U12",
+  "value": 41,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A13",
+  "value": "product"
+}, {
+  "range": "B13",
+  "value": "DISPLAY product_papersheet"
+}, {
+  "range": "E13",
+  "value": "sb:productsignimages/papersheet.jpg"
+}, {
+  "range": "F13",
+  "value": 1200,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H13",
+  "value": "A4 Paper"
+}, {
+  "range": "I13",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J13",
+  "value": "$4.99 / 500 sht"
+}, {
+  "range": "L13",
+  "value": "-45deg"
+}, {
+  "range": "N13",
+  "value": "A4 Paper"
+}, {
+  "range": "O13",
+  "value": "A4 Paper"
+}, {
+  "range": "S13",
+  "value": 31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T13",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U13",
+  "value": 50,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A14",
+  "value": "product"
+}, {
+  "range": "B14",
+  "value": "DISPLAY product_pencil24_02"
+}, {
+  "range": "E14",
+  "value": "sb:productsignimages/pencil24_02.jpg"
+}, {
+  "range": "F14",
+  "value": 1300,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H14",
+  "value": "Loiseau - 24 cnt"
+}, {
+  "range": "I14",
+  "value": 9.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J14",
+  "value": 9.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L14",
+  "value": "-45deg"
+}, {
+  "range": "N14",
+  "value": "Loiseau - 24 cnt"
+}, {
+  "range": "O14",
+  "value": "Loiseau - 24 cnt"
+}, {
+  "range": "S14",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T14",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U14",
+  "value": 57,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A15",
+  "value": "product"
+}, {
+  "range": "B15",
+  "value": "DISPLAY product_pencil12_02"
+}, {
+  "range": "E15",
+  "value": "sb:productsignimages/pencil12_02.jpg"
+}, {
+  "range": "F15",
+  "value": 1400,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H15",
+  "value": "Loiseau - 12 cnt"
+}, {
+  "range": "I15",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J15",
+  "value": 6.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L15",
+  "value": "-45deg"
+}, {
+  "range": "N15",
+  "value": "Loiseau - 12 cnt"
+}, {
+  "range": "O15",
+  "value": "Loiseau - 12 cnt"
+}, {
+  "range": "S15",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T15",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U15",
+  "value": 47,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A16",
+  "value": "product"
+}, {
+  "range": "B16",
+  "value": "DISPLAY product_pencil12_01"
+}, {
+  "range": "E16",
+  "value": "sb:productsignimages/pencil12_01.jpg"
+}, {
+  "range": "F16",
+  "value": 1500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H16",
+  "value": "Washable Crayons - 12cnt"
+}, {
+  "range": "I16",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J16",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L16",
+  "value": "-67deg"
+}, {
+  "range": "N16",
+  "value": "Washable Crayons - 12cnt"
+}, {
+  "range": "O16",
+  "value": "Washable Crayons - 12cnt"
+}, {
+  "range": "S16",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T16",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U16",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A17",
+  "value": "product"
+}, {
+  "range": "B17",
+  "value": "DISPLAY product_pencil6_0_1"
+}, {
+  "range": "E17",
+  "value": "sb:productsignimages/pencil6_0_1.jpg"
+}, {
+  "range": "F17",
+  "value": 1600,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H17",
+  "value": "Washable Crayons - 6cnt"
+}, {
+  "range": "I17",
+  "value": 1.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J17",
+  "value": 1.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L17",
+  "value": "-90deg"
+}, {
+  "range": "N17",
+  "value": "Washable Crayons - 6cnt"
+}, {
+  "range": "O17",
+  "value": "Washable Crayons - 6cnt"
+}, {
+  "range": "S17",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T17",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U17",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A18",
+  "value": "product"
+}, {
+  "range": "B18",
+  "value": "DISPLAY product_pencilcolor"
+}, {
+  "range": "E18",
+  "value": "sb:productsignimages/pencilcolor.jpg"
+}, {
+  "range": "F18",
+  "value": 1700,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H18",
+  "value": "Color Pencil (N)"
+}, {
+  "range": "I18",
+  "value": 0.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J18",
+  "value": 0.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L18",
+  "value": "-90deg"
+}, {
+  "range": "N18",
+  "value": "Color Pencil (N)"
+}, {
+  "range": "O18",
+  "value": "Color Pencil (N)"
+}, {
+  "range": "S18",
+  "value": -5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T18",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U18",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]

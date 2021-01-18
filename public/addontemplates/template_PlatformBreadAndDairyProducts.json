@@ -1,0 +1,789 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "block",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "displaystyle",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "E1",
+  "value": "image",
+  "fontWeight": "bold"
+}, {
+  "range": "F1",
+  "value": "index",
+  "fontWeight": "bold"
+}, {
+  "range": "G1",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "H1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "I1",
+  "value": "price",
+  "fontWeight": "bold"
+}, {
+  "range": "J1",
+  "value": "pricetext",
+  "fontWeight": "bold"
+}, {
+  "range": "K1",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "L1",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "M1",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "N1",
+  "value": "sku",
+  "fontWeight": "bold"
+}, {
+  "range": "O1",
+  "value": "text1",
+  "fontWeight": "bold"
+}, {
+  "range": "P1",
+  "value": "text2",
+  "fontWeight": "bold"
+}, {
+  "range": "Q1",
+  "value": "textfontfamily",
+  "fontWeight": "bold"
+}, {
+  "range": "R1",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "S1",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "T1",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "U1",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "product"
+}, {
+  "range": "B2",
+  "value": "DISPLAY product_bread1"
+}, {
+  "range": "E2",
+  "value": "sb:productsignimages/bread1.jpg"
+}, {
+  "range": "F2",
+  "value": 100,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H2",
+  "value": "Sourbread Loaf"
+}, {
+  "range": "I2",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J2",
+  "value": "$2.99 / lb"
+}, {
+  "range": "L2",
+  "value": "90deg"
+}, {
+  "range": "N2",
+  "value": "Sourbread Loaf"
+}, {
+  "range": "O2",
+  "value": "Sourbread Loaf"
+}, {
+  "range": "S2",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T2",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U2",
+  "value": -8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A3",
+  "value": "product"
+}, {
+  "range": "B3",
+  "value": "DISPLAY product_bread2"
+}, {
+  "range": "E3",
+  "value": "sb:productsignimages/bread2.jpg"
+}, {
+  "range": "F3",
+  "value": 200,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H3",
+  "value": "French Bagguette"
+}, {
+  "range": "I3",
+  "value": 1.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J3",
+  "value": "$1.99 / loaf"
+}, {
+  "range": "L3",
+  "value": "67deg"
+}, {
+  "range": "N3",
+  "value": "French Bagguette"
+}, {
+  "range": "O3",
+  "value": "French Bagguette"
+}, {
+  "range": "S3",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T3",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U3",
+  "value": -8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A4",
+  "value": "product"
+}, {
+  "range": "B4",
+  "value": "DISPLAY product_bread3"
+}, {
+  "range": "E4",
+  "value": "sb:productsignimages/bread3.jpg"
+}, {
+  "range": "F4",
+  "value": 300,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H4",
+  "value": "French Bread"
+}, {
+  "range": "I4",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J4",
+  "value": "$2.99 / lb"
+}, {
+  "range": "L4",
+  "value": "45deg"
+}, {
+  "range": "N4",
+  "value": "French Bread"
+}, {
+  "range": "O4",
+  "value": "French Bread"
+}, {
+  "range": "S4",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T4",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U4",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A5",
+  "value": "product"
+}, {
+  "range": "B5",
+  "value": "DISPLAY product_bread4"
+}, {
+  "range": "E5",
+  "value": "sb:productsignimages/bread4.jpg"
+}, {
+  "range": "F5",
+  "value": 400,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H5",
+  "value": "Fortified Bread"
+}, {
+  "range": "I5",
+  "value": 0.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J5",
+  "value": 0.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L5",
+  "value": "45deg"
+}, {
+  "range": "N5",
+  "value": "Fortified Bread"
+}, {
+  "range": "O5",
+  "value": "Fortified Bread"
+}, {
+  "range": "S5",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T5",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U5",
+  "value": -7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "product"
+}, {
+  "range": "B6",
+  "value": "DISPLAY product_bread5"
+}, {
+  "range": "E6",
+  "value": "sb:productsignimages/bread5.jpg"
+}, {
+  "range": "F6",
+  "value": 500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H6",
+  "value": "Croissants - 8"
+}, {
+  "range": "I6",
+  "value": 1.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J6",
+  "value": 1.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L6",
+  "value": "45deg"
+}, {
+  "range": "N6",
+  "value": "Croissants - 8"
+}, {
+  "range": "O6",
+  "value": "Croissants - 8"
+}, {
+  "range": "S6",
+  "value": 31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T6",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U6",
+  "value": -1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "product"
+}, {
+  "range": "B7",
+  "value": "DISPLAY product_cheese1"
+}, {
+  "range": "E7",
+  "value": "sb:productsignimages/cheese1.jpg"
+}, {
+  "range": "F7",
+  "value": 600,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H7",
+  "value": "Best Monk Cheese"
+}, {
+  "range": "I7",
+  "value": 5.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J7",
+  "value": "$5.99 / kg"
+}, {
+  "range": "L7",
+  "value": "45deg"
+}, {
+  "range": "N7",
+  "value": "Best Monk Cheese"
+}, {
+  "range": "O7",
+  "value": "Best Monk Cheese"
+}, {
+  "range": "S7",
+  "value": 22.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T7",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U7",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A8",
+  "value": "product"
+}, {
+  "range": "B8",
+  "value": "DISPLAY product_cheese2"
+}, {
+  "range": "E8",
+  "value": "sb:productsignimages/cheese2.jpg"
+}, {
+  "range": "F8",
+  "value": 700,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H8",
+  "value": "Goat Cheese"
+}, {
+  "range": "I8",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J8",
+  "value": "$4.99 / lb"
+}, {
+  "range": "L8",
+  "value": "23deg"
+}, {
+  "range": "N8",
+  "value": "Goat Cheese"
+}, {
+  "range": "O8",
+  "value": "Goat Cheese"
+}, {
+  "range": "S8",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T8",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U8",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A9",
+  "value": "product"
+}, {
+  "range": "B9",
+  "value": "DISPLAY product_cheese3"
+}, {
+  "range": "E9",
+  "value": "sb:productsignimages/cheese3.jpg"
+}, {
+  "range": "F9",
+  "value": 800,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H9",
+  "value": "Minister Cheese"
+}, {
+  "range": "I9",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J9",
+  "value": "$3.99 / lb"
+}, {
+  "range": "N9",
+  "value": "Minister Cheese"
+}, {
+  "range": "O9",
+  "value": "Minister Cheese"
+}, {
+  "range": "S9",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T9",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U9",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A10",
+  "value": "product"
+}, {
+  "range": "B10",
+  "value": "DISPLAY product_cheese4"
+}, {
+  "range": "E10",
+  "value": "sb:productsignimages/cheese4.jpg"
+}, {
+  "range": "F10",
+  "value": 900,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H10",
+  "value": "San Peter Cheese"
+}, {
+  "range": "I10",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J10",
+  "value": "$5.99 / pkg"
+}, {
+  "range": "N10",
+  "value": "San Peter Cheese"
+}, {
+  "range": "O10",
+  "value": "San Peter Cheese"
+}, {
+  "range": "S10",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T10",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U10",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A11",
+  "value": "product"
+}, {
+  "range": "B11",
+  "value": "DISPLAY product_cheese5"
+}, {
+  "range": "E11",
+  "value": "sb:productsignimages/cheese5.jpg"
+}, {
+  "range": "F11",
+  "value": 1000,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H11",
+  "value": "Camembert"
+}, {
+  "range": "I11",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J11",
+  "value": "$2.99 / wheel"
+}, {
+  "range": "L11",
+  "value": "-23deg"
+}, {
+  "range": "N11",
+  "value": "Camembert"
+}, {
+  "range": "O11",
+  "value": "Camembert"
+}, {
+  "range": "S11",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T11",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U11",
+  "value": 40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A12",
+  "value": "product"
+}, {
+  "range": "B12",
+  "value": "DISPLAY product_cheese6"
+}, {
+  "range": "E12",
+  "value": "sb:productsignimages/cheese6.jpg"
+}, {
+  "range": "F12",
+  "value": 1100,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H12",
+  "value": "Camembert (Normandy)"
+}, {
+  "range": "I12",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J12",
+  "value": "$3.99 / wheel"
+}, {
+  "range": "L12",
+  "value": "-45deg"
+}, {
+  "range": "N12",
+  "value": "Camembert (Normandy)"
+}, {
+  "range": "O12",
+  "value": "Camembert (Normandy)"
+}, {
+  "range": "S12",
+  "value": 22.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T12",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U12",
+  "value": 41,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A13",
+  "value": "product"
+}, {
+  "range": "B13",
+  "value": "DISPLAY product_cheese7"
+}, {
+  "range": "E13",
+  "value": "sb:productsignimages/cheese7.jpg"
+}, {
+  "range": "F13",
+  "value": 1200,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H13",
+  "value": "Aged Yellow Cheese"
+}, {
+  "range": "I13",
+  "value": 3.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J13",
+  "value": "$3.99 / lb"
+}, {
+  "range": "L13",
+  "value": "-45deg"
+}, {
+  "range": "N13",
+  "value": "Aged Yellow Cheese"
+}, {
+  "range": "O13",
+  "value": "Aged Yellow Cheese"
+}, {
+  "range": "S13",
+  "value": 31,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T13",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U13",
+  "value": 50,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A14",
+  "value": "product"
+}, {
+  "range": "B14",
+  "value": "DISPLAY product_yogurt1"
+}, {
+  "range": "E14",
+  "value": "sb:productsignimages/yogurt1.jpg"
+}, {
+  "range": "F14",
+  "value": 1300,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H14",
+  "value": "Nature Yogurt"
+}, {
+  "range": "I14",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J14",
+  "value": 4.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L14",
+  "value": "-45deg"
+}, {
+  "range": "N14",
+  "value": "Nature Yogurt"
+}, {
+  "range": "O14",
+  "value": "Nature Yogurt"
+}, {
+  "range": "S14",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T14",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U14",
+  "value": 57,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A15",
+  "value": "product"
+}, {
+  "range": "B15",
+  "value": "DISPLAY product_yogurt2"
+}, {
+  "range": "E15",
+  "value": "sb:productsignimages/yogurt2.jpg"
+}, {
+  "range": "F15",
+  "value": 1400,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H15",
+  "value": "Fruit Yogurt"
+}, {
+  "range": "I15",
+  "value": 5.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J15",
+  "value": 5.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L15",
+  "value": "-45deg"
+}, {
+  "range": "N15",
+  "value": "Fruit Yogurt"
+}, {
+  "range": "O15",
+  "value": "Fruit Yogurt"
+}, {
+  "range": "S15",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T15",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U15",
+  "value": 47,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A16",
+  "value": "product"
+}, {
+  "range": "B16",
+  "value": "DISPLAY product_butter1"
+}, {
+  "range": "E16",
+  "value": "sb:productsignimages/butter1.jpg"
+}, {
+  "range": "F16",
+  "value": 1500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H16",
+  "value": "Minister Butter"
+}, {
+  "range": "I16",
+  "value": 2.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J16",
+  "value": "$2.99 / lb"
+}, {
+  "range": "L16",
+  "value": "-67deg"
+}, {
+  "range": "N16",
+  "value": "Minister Butter"
+}, {
+  "range": "O16",
+  "value": "Minister Butter"
+}, {
+  "range": "S16",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T16",
+  "value": 7,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U16",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A17",
+  "value": "product"
+}, {
+  "range": "B17",
+  "value": "DISPLAY product_butter2"
+}, {
+  "range": "E17",
+  "value": "sb:productsignimages/butter2.jpg"
+}, {
+  "range": "F17",
+  "value": 1600,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H17",
+  "value": "Salted Butter Cream"
+}, {
+  "range": "I17",
+  "value": 1.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J17",
+  "value": "$1.99 / lb"
+}, {
+  "range": "L17",
+  "value": "-90deg"
+}, {
+  "range": "N17",
+  "value": "Salted Butter Cream"
+}, {
+  "range": "O17",
+  "value": "Salted Butter Cream"
+}, {
+  "range": "S17",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "T17",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "U17",
+  "value": 55,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]
