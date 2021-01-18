@@ -4,7 +4,7 @@
   "fontWeight": "bold"
 }, {
   "range": "A2",
-  "formula": "=JOIN(\",\", C5:C9)"
+  "formula": "=JOIN(\",\", C5:C15)"
 }, {
   "range": "A4",
   "value": "Spreadsheet Id",
@@ -62,6 +62,60 @@
 }, {
   "range": "C9",
   "formula": "=A9 & \"||||'\" & JOIN(\",\" & A9 & \"||||'\", SPLIT(B9,\",\"))"
+}, {
+  "range": "A10",
+  "value": "12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE"
+}, {
+  "range": "B10",
+  "formula": "=importrange(A10, \"'Asset Inventory'!B7\")"
+}, {
+  "range": "C10",
+  "formula": "=A10 & \"||||'\" & JOIN(\",\" & A10 & \"||||'\", SPLIT(B10,\",\"))"
+}, {
+  "range": "A11",
+  "value": "12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE"
+}, {
+  "range": "B11",
+  "formula": "=importrange(A11, \"'Asset Inventory'!B8\")"
+}, {
+  "range": "C11",
+  "formula": "=A11 & \"||||'\" & JOIN(\",\" & A11 & \"||||'\", SPLIT(B11,\",\"))"
+}, {
+  "range": "A12",
+  "value": "12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE"
+}, {
+  "range": "B12",
+  "formula": "=importrange(A12, \"'Asset Inventory'!B9\")"
+}, {
+  "range": "C12",
+  "formula": "=A12 & \"||||'\" & JOIN(\",\" & A12 & \"||||'\", SPLIT(B12,\",\"))"
+}, {
+  "range": "A13",
+  "value": "12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE"
+}, {
+  "range": "B13",
+  "formula": "=importrange(A13, \"'Asset Inventory'!B10\")"
+}, {
+  "range": "C13",
+  "formula": "=A13 & \"||||'\" & JOIN(\",\" & A13 & \"||||'\", SPLIT(B13,\",\"))"
+}, {
+  "range": "A14",
+  "value": "12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE"
+}, {
+  "range": "B14",
+  "formula": "=importrange(A14, \"'Asset Inventory'!B11\")"
+}, {
+  "range": "C14",
+  "formula": "=A14 & \"||||'\" & JOIN(\",\" & A14 & \"||||'\", SPLIT(B14,\",\"))"
+}, {
+  "range": "A15",
+  "value": "12hWlqcT9jfhIZ9rKUcTpBDDI68KW1UNq6dWK8uk7foE"
+}, {
+  "range": "B15",
+  "formula": "=importrange(A15, \"'Asset Inventory'!B12\")"
+}, {
+  "range": "C15",
+  "formula": "=A15 & \"||||'\" & JOIN(\",\" & A15 & \"||||'\", SPLIT(B15,\",\"))"
 }, {
   "range": "A1"
 }]

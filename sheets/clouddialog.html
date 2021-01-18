@@ -188,8 +188,11 @@
         <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
         <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
       </div>
-      <div style="" id="publishlist_asset_add_chk_wrapper">
+      <div style="" id="publishlist_asset_add_chk_wrapper" style="display:none;">
         <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_asset_to_projectlist" checked> Set Assets for Current Project </label>
+      </div>
+      <div style="" id="publishlist_products_add_chk_wrapper" style="display:none;">
+        <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_products_to_projectlist" checked> Set Products for Current Project </label>
       </div>
       <select id="circuit_template_select" class="select_list" size="5" style="margin-top:4px">
       </select>
@@ -209,7 +212,7 @@
           <option value="frame">Frame</option>
         </select>
       </div>
-      <div id="macro_details_wrapper" style="flex:1;display:flex;flex-direction: column;border-top:solid 1px silver;" class="add_asset_template_panel">
+      <div id="macro_details_wrapper" style="flex:1;display:flex;flex-direction: column;" class="add_asset_template_panel">
       </div>
     </div>
     <div id="song_import_div" class="main_div_wrapper">
@@ -316,11 +319,11 @@
           'sheetname', 'circuit_template_select', 'help_viewer_panel', 'block_wizard_select_wrapper', 'add_asset_to_projectlist',
           'create_layout_btn', 'add_to_publishlist', 'set_to_defaultproject', 'publishlist_add_chk_wrapper', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second', 'template_filter_select', 'publishlist_asset_add_chk_wrapper',
-          'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span',
+          'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span', 'publishlist_products_add_chk_wrapper',
           'target_server_set_button', 'selected_server_details_div', 'project_display_view', 'project_deploy_view', 'project_upload_view',
           'show_help_panel_btn', 'project_selected_options', 'upload_file_preview_select', 'upload_file_img_preview', 'upload_file_audio_preview',
           'upload_file_mesh_preview', 'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'upload_file_audio_ctl',
-          'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom',
+          'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
           'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display'
@@ -417,6 +420,8 @@
           }
         }
 
+        setTimeout(() => this.updateHelpViewer(), 100);
+
         this.defaultToken = '';
         if (this.configurationCSV[0]['Target Token'])
           this.defaultToken = this.configurationCSV[0]['Target Token'];
@@ -499,7 +504,7 @@
         if (this.sheetname.value === '')
           this.sheetnameinputdirty = false;
         if (data.hint && !this.sheetnameinputdirty) {
-          if (data.categories === 'Setup' || data.categories === 'Assets')
+          if (data.categories === 'Setup' || data.categories === 'Assets' || data.categories === 'Products')
             this.sheetname.value = data.hint;
           else
             this.sheetname.value = data.hint + ' ' + Math.floor(100 + Math.random() * 900).toString();
@@ -528,11 +533,22 @@
           this.publishlist_asset_add_chk_wrapper.style.display = 'none';
           this.add_asset_to_projectlist.checked = false;
         }
+
+        if (data.categories.indexOf('Products') !== -1) {
+          this.publishlist_products_add_chk_wrapper.style.display = '';
+          this.add_products_to_projectlist.checked = true;
+        } else {
+          this.publishlist_products_add_chk_wrapper.style.display = 'none';
+          this.add_products_to_projectlist.checked = false;
+        }
         return;
       }
       async loadBlockWizard() {
         if (this.block_wizard_add_name_div)
           this.block_wizard_add_name_div.remove();
+
+        this.app.mV = this;
+        this.helpViewer = this.help_viewer_panel;
         this.macro = new cMacro(this.macro_details_wrapper, this.wizard_choices.value, this.app, true);
 
         this.block_wizard_add_name_div = document.querySelector('.block_wizard_add_name_div');
@@ -590,14 +606,28 @@
           return handleImageTextureUpload(fileCtl, field);
         };
 
-        await this.app.updateHelpView(this.wizard_choices.value, this.help_viewer_panel);
-
+        this.updateHelpViewer();
         return null;
       }
       async loadAddonView() {
         let wrappers = document.body.querySelectorAll('.main_div_wrapper');
         wrappers.forEach(w => w.style.display = 'none');
 
+        if (this.addon_display_view_select.value !== 'cloud_deploy')
+          this.preview_panel.setAttribute('src', '');
+        else
+          this.loadProjectView();
+
+        this.updateHelpViewer();
+
+        let ele = document.getElementById(this.addon_display_view_select.value);
+        if (ele)
+          ele.style.display = 'flex';
+
+        return;
+      }
+      async updateHelpViewer() {
+        console.log(this);
         if (this.addon_display_view_select.value === 'song_import_div') {
           this.app.updateHelpView('processaudio', this.help_viewer_panel);
         } else if (this.addon_display_view_select.value === 'cloud_deploy') {
@@ -607,21 +637,14 @@
         } else if (this.addon_display_view_select.value === 'template_view') {
           this.app.updateHelpView('addontemplates', this.help_viewer_panel);
         } else if (this.addon_display_view_select.value === 'block_wizards') {
-          this.app.updateHelpView(this.wizard_choices.value, this.help_viewer_panel);
+          console.log(this.macro, this);
+          if (this.macro.tag === 'block' && this.macro.block_wizard_type_select.value === "Scene")
+            await this.app.updateHelpView("sceneblock", this.app.mV.helpViewer);
+          else
+            await this.app.updateHelpView(this.wizard_choices.value, this.app.mV.helpViewer);
         } else if (this.addon_display_view_select.value === 'position_plotter_div') {
           this.app.updateHelpView('positionplotter', this.help_viewer_panel);
         }
-
-        if (this.addon_display_view_select.value !== 'cloud_deploy')
-          this.preview_panel.setAttribute('src', '');
-        else
-          this.loadProjectView();
-
-        let ele = document.getElementById(this.addon_display_view_select.value);
-        if (ele)
-          ele.style.display = 'flex';
-
-        return;
       }
       async loadProjectPreview() {
         if (this.selectedProjectView === 1) {
@@ -876,6 +899,8 @@
                 await this.sheetsStoreSelectedProject(sheetName);
               if (this.add_asset_to_projectlist.checked && (baseSheetName === sheetName))
                 await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget);
+              if (this.add_products_to_projectlist.checked && (baseSheetName === sheetName))
+                await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget, "Catalog Ranges");
             }
 
             this.create_layout_btn.innerHTML = 'Create Sheet';
@@ -918,12 +943,11 @@
           }).mergeCSVRangeStrings(rangeStrings, true);
         });
       }
-      async sheetsSetAssetsForProject(assetSheetName, projectName) {
+      async sheetsSetAssetsForProject(assetSheetName, projectName, field = "Asset Ranges") {
         let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, true);
 
         let rowIndex = -1;
         for (let c = 0; c < publishList.length; c++) {
-
           if (publishList[c]['Project Name'] === projectName) {
             rowIndex = c;
             break;
@@ -932,7 +956,7 @@
 
         if (rowIndex !== -1) {
           await this.sheetsStoreCSVValue(this.projectsSheetName, rowIndex + 1,
-              'Asset Ranges', '=getTablesForCells(getCSVRangesFromSheet(\"' + assetSheetName + "\"))");
+              field, '=getTablesForCells(getCSVRangesFromSheet(\"' + assetSheetName + "\"))");
         }
       }
 
@@ -1656,6 +1680,7 @@
 
     select {
       padding-right: 1em;
+      padding-left: .5em;
     }
 
     #preview_panel {

@@ -965,6 +965,10 @@ table.wizard_field_container td:nth-child(2) input {
   text-align: left;
 }
 
+table.wizard_field_container td:nth-child(2) {
+  padding-right: 4px;
+}
+
 table.wizard_field_container label span, .copy_clipboard_footer label span {
   top: -.2em;
   position: relative;
@@ -1004,5 +1008,5 @@ table.wizard_parent_details tr td span:nth-child(1) {
 .copy_clipboard_footer {
   padding:4px;
   text-align:left;
-  border-top:solid 1px silver;
+  border-top:outset .1em silver;
 }

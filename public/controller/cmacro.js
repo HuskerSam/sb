@@ -88,7 +88,7 @@ class cMacro {
   baseTemplate() {
     let template = `<div class="block_wizard_add_name_div" style="flex:1;display:flex;flex-direction:row;padding-top:2px;">
       <label class="add_template_name_label" style="padding:2px 4px;"><span style="font-size:.75em;">Name</span>
-     </label><input class="add_wizard_item_name" type="text" style="width:11.5em;" value="name" />`;
+     </label><input class="add_wizard_item_name" type="text" style="flex:1;" value="name" />`;
     if (!this.addonmode)
       template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
         <button class="add-newwindow-button btn-sb-icon"><i class="material-icons">open_in_new</i></button>
@@ -895,7 +895,7 @@ class cMacro {
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
       <div style="display:flex;flex-direction:row">
-        <select class="block_wizard_type_select" style="margin-bottom: 8px;margin-top:4px;width: 9em;margin-right:.25em;font-size:.9em">
+        <select class="block_wizard_type_select" style="margin-bottom: 8px;margin-top:4px;width: 10em;margin-right:.25em;font-size:.9em">
          <option selected>Scene</option>
          <option>Text and Shape</option>
          <option>Animated Line</option>
@@ -2561,7 +2561,7 @@ class cMacro {
 
     }
   }
-  blockHelperChange() {
+  async blockHelperChange() {
     this.blockShapePanel.style.display = 'none';
     this.scene_block_add_options.style.display = 'none';
     this.scene_type_option_list.style.display = 'none';
@@ -2594,6 +2594,11 @@ class cMacro {
       this.show_parent_wizard_details.checked = true;
       this.wizard_parent_details.style.display = '';
     }
+
+    if (this.block_wizard_type_select.value === "Scene")
+      await this.app.updateHelpView("sceneblock", this.app.mV.helpViewer);
+    else
+      await this.app.updateHelpView(this.tag, this.app.mV.helpViewer);
 
     this.getItemName();
   }
