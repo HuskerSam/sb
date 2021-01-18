@@ -13,6 +13,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
   <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.0/split.min.js"></script>
 </head>
 
 <body>
@@ -41,233 +42,237 @@
         <button id="display_publish_single_header"><i class="material-icons">publish</i></button>
       </div>
     </div>
-    <div id="help_viewer_panel" style="display:none;flex:.7;">
-      <div style="display:flex;flex-direction:row;">
-        <select id="help_viewer_panel_select"></select>
-        <div id="helper_viewer_panel_open_wrapper">
-          <button id="helper_viewer_panel_open_btn"><i class="material-icons" style="color:rgb(200,0,0)">open_in_new</i></button>
+    <div id="help_and_details_wrapper_for_split" style="flex:1;display:flex;overflow:hidden;flex-direction:column;">
+      <div id="help_viewer_panel" style="display:none;flex:.7;">
+        <div style="display:flex;flex-direction:row;">
+          <select id="help_viewer_panel_select"></select>
+          <div id="helper_viewer_panel_open_wrapper">
+            <button id="helper_viewer_panel_open_btn"><i class="material-icons" style="color:blue">open_in_new</i></button>
+          </div>
         </div>
+        <div id="help_viewer_panel_internal"></div>
       </div>
-      <div id="help_viewer_panel_internal"></div>
-    </div>
-    <div id="position_plotter_div" class="main_div_wrapper">
-      <table class="wizard_field_container" style="padding: 0px 8px 0 8px;flex:none;">
-        <tr>
-          <td>Plot Type</td>
-          <td>
-            <select id="plot_type_select" style="width:99%;">
-              <option selected value="bar_chart_plotter">Bar Chart</option>
+      <div id="details_wrapper_for_split" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+        <div id="position_plotter_div" class="main_div_wrapper">
+          <table class="wizard_field_container" style="padding: 0px 8px 0 8px;flex:none;">
+            <tr>
+              <td>Plot Type</td>
+              <td>
+                <select id="plot_type_select" style="width:99%;">
+                  <option selected value="bar_chart_plotter">Bar Chart</option>
+                </select>
+              </td>
+              <td></td>
+            </tr>
+            <tr data-cats="bar_chart_plotter">
+              <td># of series</td>
+              <td><input type="text" id="plotter_plots_count" value="2" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="bar_chart_plotter">
+              <td>points per series</td>
+              <td><input type="text" id="plotter_points_per_plot" value="10" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="bar_chart_plotter">
+              <td>width (x)</td>
+              <td><input type="text" id="plotter_plots_width" value="25" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="bar_chart_plotter">
+              <td>depth (z)</td>
+              <td><input type="text" id="plotter_plots_depth" value="10" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="bar_chart_plotter">
+              <td colspan="3">
+                <button id="plotter_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
+                <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
+                <label><input type="checkbox" id="plotter_plots_includebreaks" /><span>breaks</span></label>
+                <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
+                <label><input type="checkbox" id="plotter_plots_includelabelslong" /><span>long</span></label>
+              </td>
+            </tr>
+          </table>
+          <div style="flex:1;overflow: auto;">
+            <table id="plotter_output_table" style="min-width:100%" class="table_export"></table>
+          </div>
+        </div>
+        <div id="cloud_target" class="main_div_wrapper">
+          <select id="deploy_options_server_list" class="select_list" size="5"></select>
+          <div class="select_flex_view" style="flex:none;">
+            <div style="display:flex;flex-direction:row;padding:2px 8px">
+              <div style="padding: 2px">Target</div>
+              <input id="target_to_deploy" style="flex:1" type="text" value="handtopbuilder" />
+            </div>
+            <div style="display:flex;flex-direction:row;padding: 2px 8px">
+              <div style="padding: 2px">Token</div>
+              <input id="token_to_deploy" type="text" style="flex:1" value="builder" />
+            </div>
+            <div style="text-align:center;">
+              <button id="target_server_set_button" class="blue">Set Server</button>
+              &nbsp;
+              <div id="url_to_deploy" style="display:inline-block;"></div>
+            </div>
+            <div id="selected_server_details_div" style="padding-top:4px;"></div>
+            <div id="assets_anchor" style="margin-top:.5em;"> loading...</div>
+          </div>
+        </div>
+        <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
+          <div style="display:flex;flex-direction:row;flex:1">
+            <select id="project_deploy_select" class="select_list" size="5" style="flex:1;height:100%"></select>
+            <div style="line-height:2.5em;padding-top: 0px;padding-right:8px;">
+              <button id="set_default_proj" class="blue">Set Project</button>
+              <br>
+              <button id="display_publish_single" class="green"><i class="material-icons">publish</i>Deploy</button>
+              <br>
+              <button id="display_publish_list" class="green">Deploy All</button>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:row;">
+            <select id="project_selected_options" style="flex:1;margin:8px">
+              <option data-view="project_deploy_view">Deployment</option>
+              <option data-view="project_display_view">View (/view)</option>
+              <option data-view="project_display_view">Display (/display)</option>
+              <option data-view="project_upload_view">Upload File</option>
+              <option>Open in /view</option>
+              <option>Open in /display</option>
+              <option>Open in /edit</option>
+              <option data-view="qrcode_for_link_display">QR Code for /view</option>
+              <option data-view="qrcode_for_link_display">QR code for /display</option>
             </select>
-          </td>
-          <td></td>
-        </tr>
-        <tr data-cats="bar_chart_plotter">
-          <td># of series</td>
-          <td><input type="text" id="plotter_plots_count" value="2" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="bar_chart_plotter">
-          <td>points per series</td>
-          <td><input type="text" id="plotter_points_per_plot" value="10" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="bar_chart_plotter">
-          <td>width (x)</td>
-          <td><input type="text" id="plotter_plots_width" value="25" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="bar_chart_plotter">
-          <td>depth (z)</td>
-          <td><input type="text" id="plotter_plots_depth" value="10" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="bar_chart_plotter">
-          <td colspan="3">
-            <button id="plotter_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
-            <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
-            <label><input type="checkbox" id="plotter_plots_includebreaks" /><span>breaks</span></label>
-            <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
-            <label><input type="checkbox" id="plotter_plots_includelabelslong" /><span>long</span></label>
-          </td>
-        </tr>
-      </table>
-      <div style="flex:1;overflow: auto;">
-        <table id="plotter_output_table" style="min-width:100%" class="table_export"></table>
-      </div>
-    </div>
-    <div id="cloud_target" class="main_div_wrapper">
-      <select id="deploy_options_server_list" class="select_list" size="5"></select>
-      <div class="select_flex_view" style="flex:none;">
-        <div style="display:flex;flex-direction:row;padding:2px 8px">
-          <div style="padding: 2px">Target</div>
-          <input id="target_to_deploy" style="flex:1" type="text" value="handtopbuilder" />
-        </div>
-        <div style="display:flex;flex-direction:row;padding: 2px 8px">
-          <div style="padding: 2px">Token</div>
-          <input id="token_to_deploy" type="text" style="flex:1" value="builder" />
-        </div>
-        <div style="text-align:center;">
-          <button id="target_server_set_button" class="blue">Set Server</button>
-          &nbsp;
-          <div id="url_to_deploy" style="display:inline-block;"></div>
-        </div>
-        <div id="selected_server_details_div" style="padding-top:4px;"></div>
-        <div id="assets_anchor" style="margin-top:.5em;"> loading...</div>
-      </div>
-    </div>
-    <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
-      <div style="display:flex;flex-direction:row;flex:1">
-        <select id="project_deploy_select" class="select_list" size="5" style="flex:1;height:100%"></select>
-        <div style="line-height:2.5em;padding-top: 0px;padding-right:8px;">
-          <button id="set_default_proj" class="blue">Set Project</button>
-          <br>
-          <button id="display_publish_single" class="green"><i class="material-icons">publish</i>Deploy</button>
-          <br>
-          <button id="display_publish_list" class="green">Deploy All</button>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:row;">
-        <select id="project_selected_options" style="flex:1;margin:8px">
-          <option data-view="project_deploy_view">Deployment</option>
-          <option data-view="project_display_view">View (/view)</option>
-          <option data-view="project_display_view">Display (/display)</option>
-          <option data-view="project_upload_view">Upload File</option>
-          <option>Open in /view</option>
-          <option>Open in /display</option>
-          <option>Open in /edit</option>
-          <option data-view="qrcode_for_link_display">QR Code for /view</option>
-          <option data-view="qrcode_for_link_display">QR code for /display</option>
-        </select>
-        <select id="project_preview_zoom" style="visibility:hidden;margin-top:8px;margin-right:8px;">
-          <option>1x</option>
-          <option selected>1/2x</option>
-          <option>1/4x</option>
-        </select>
-      </div>
-      <div class="select_flex_view" style="padding-top:0px;">
-        <div id="project_display_view" style="display:none;height:inherit;flex:1;margin: 0 8px 8px 8px;">
-          <iframe id="preview_panel"></iframe>
-        </div>
-        <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
-          <div>
+            <select id="project_preview_zoom" style="visibility:hidden;margin-top:8px;margin-right:8px;">
+              <option>1x</option>
+              <option selected>1/2x</option>
+              <option>1/4x</option>
+            </select>
           </div>
-          <textarea id="publish_results" style="flex:1"></textarea>
-        </div>
-        <div id="project_upload_view" style="display:none;flex-direction: column;height:10em;width: 100%">
-          <div style="display:flex;flex-direction:row">
-            <div style="padding: 4px 4px 0 8px;font-size:.75em;">Name</div>
-            <input id="file_upload_name" type="text" style="flex:1;margin-top:2px;">
-            <button id="upload_file_cloud" style="margin:0 8px 0 4px;"><i class="material-icons">cloud_upload</i></button>
-            <input type="file" id="upload_file_input" style="display:none;">
-          </div>
-          <select id="upload_file_preview_select" style="margin:8px;">
-            <option>Image Preview</option>
-            <option>Audio Preview</option>
-            <option>Mesh Preview</option>
-          </select>
-          <div style="flex:1;overflow:hidden;" id="upload_file_img_preview">
-            <img id="img_preview" crossorigin="anonymous" style="max-width:100%;max-height:100%">
-          </div>
-          <div style="flex:1;overflow:hidden;display:none;" id="upload_file_audio_preview">
-            <audio id="upload_file_audio_ctl" controls style="width:calc(100% - 32px)"></audio>
-          </div>
-          <div style="flex:1;overflow:hidden;display:none;" id="upload_file_mesh_preview">
-            Preview not available in addon
-          </div>
+          <div class="select_flex_view" style="padding-top:0px;">
+            <div id="project_display_view" style="display:none;height:inherit;flex:1;margin: 0 8px 8px 8px;">
+              <iframe id="preview_panel"></iframe>
+            </div>
+            <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
+              <div>
+              </div>
+              <textarea id="publish_results" style="flex:1"></textarea>
+            </div>
+            <div id="project_upload_view" style="display:none;flex-direction: column;height:10em;width: 100%">
+              <div style="display:flex;flex-direction:row">
+                <div style="padding: 4px 4px 0 8px;font-size:.75em;">Name</div>
+                <input id="file_upload_name" type="text" style="flex:1;margin-top:2px;">
+                <button id="upload_file_cloud" style="margin:0 8px 0 4px;"><i class="material-icons">cloud_upload</i></button>
+                <input type="file" id="upload_file_input" style="display:none;">
+              </div>
+              <select id="upload_file_preview_select" style="margin:8px;">
+                <option>Image Preview</option>
+                <option>Audio Preview</option>
+                <option>Mesh Preview</option>
+              </select>
+              <div style="flex:1;overflow:hidden;" id="upload_file_img_preview">
+                <img id="img_preview" crossorigin="anonymous" style="max-width:100%;max-height:100%">
+              </div>
+              <div style="flex:1;overflow:hidden;display:none;" id="upload_file_audio_preview">
+                <audio id="upload_file_audio_ctl" controls style="width:calc(100% - 32px)"></audio>
+              </div>
+              <div style="flex:1;overflow:hidden;display:none;" id="upload_file_mesh_preview">
+                Preview not available in addon
+              </div>
 
-          <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
+              <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
+            </div>
+            <div id="qrcode_for_link_display" style="display:none;flex-direction: column;width: 100%;flex:1"></div>
+          </div>
         </div>
-        <div id="qrcode_for_link_display" style="display:none;flex-direction: column;width: 100%;flex:1"></div>
-      </div>
-    </div>
-    <div id="template_view" class="main_div_wrapper">
-      <div style="display:flex;flex-direction:row;padding: 0 8px;">
-        <input id="sheetname" style="flex:1;">
-        <button id="create_layout_btn" class="green" style="margin-left:8px">Create Sheet</button>
-      </div>
-      <select id="template_filter_select" style="margin:4px 8px;">
-        <option>All</option>
-        <option>Setup</option>
-        <option selected>Layouts</option>
-        <option>Blocks</option>
-        <option>Other</option>
-      </select>
-      <div style="" id="publishlist_add_chk_wrapper">
-        <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
-        <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
-      </div>
-      <div style="" id="publishlist_asset_add_chk_wrapper" style="display:none;">
-        <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_asset_to_projectlist" checked> Set Assets for Current Project </label>
-      </div>
-      <div style="" id="publishlist_products_add_chk_wrapper" style="display:none;">
-        <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_products_to_projectlist" checked> Set Products for Current Project </label>
-      </div>
-      <select id="circuit_template_select" class="select_list" size="5" style="margin-top:4px">
-      </select>
-      <div class="select_flex_view" style="flex:none;">
-        <div id="template_description" style="padding: 8px;height: 5em;overflow: hidden auto;"></div>
-      </div>
-    </div>
-    <div id="block_wizards" class="main_div_wrapper">
-      <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:0 8px;">
-        <select id="wizard_choices" style="margin-right: 8px;">
-          <option value="block">Block</option>
-          <option value="shape">Shape</option>
-          <option value="mesh">Mesh</option>
-          <option value="material">Material</option>
-          <option value="camera">Camera</option>
-          <option value="light">Light</option>
-          <option value="frame">Frame</option>
-        </select>
-      </div>
-      <div id="macro_details_wrapper" style="flex:1;display:flex;flex-direction: column;" class="add_asset_template_panel">
-      </div>
-    </div>
-    <div id="song_import_div" class="main_div_wrapper">
-      <table class="wizard_field_container" style="padding: 0px 8px 0 8px">
-        <tr>
-          <td colspan="2">WAV Audio File<br>
-            <input type="file" id="audio_file" style="width:90%" /></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>seconds to sample<br>(empty for length)</td>
-          <td><input id="seconds_to_sample" type="text" /></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Frequency<br>(samples/sec)</td>
-          <td><input id="freq_samples_to_second" type="text" value="10" /></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td># of result bands<br>(sample rate / #)</td>
-          <td> <select id="bands_to_combine">
-              <option value="1">256</option>
-              <option value="2">128</option>
-              <option value="4">64</option>
-              <option value="8">32</option>
-              <option value="16" selected>16</option>
-              <option value="32">8</option>
-            </select></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td colspan="3"><audio id="audio" controls style="width:calc(100% - 16px)"></audio></td>
-        </tr>
-        <tr>
-          <td colspan="3">
-            <label><input id="song_detail_data_rdo" name="song_data_display" type="radio" checked> Details</label>
-            <label><input id="song_raw_data_rdo" name="song_data_display" type="radio"> Data</label>
-          </td>
-        </tr>
-      </table>
-      <div id="song_len_sec" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;text-align:left;">
-        No song file selected
-      </div>
-      <div id="song_raw_data" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;word-break:break-all;display:none;"></div>
-      <div style="padding:4px;text-align:left;">
-        <button id="copy_song_data_to_clipboard" style="margin-right:0;"><i class="material-icons">content_copy</i></button>
+        <div id="template_view" class="main_div_wrapper">
+          <div style="display:flex;flex-direction:row;padding: 0 8px;">
+            <input id="sheetname" style="flex:1;">
+            <button id="create_layout_btn" class="green" style="margin-left:8px">Create Sheet</button>
+          </div>
+          <select id="template_filter_select" style="margin:4px 8px;">
+            <option>All</option>
+            <option>Setup</option>
+            <option selected>Layouts</option>
+            <option>Blocks</option>
+            <option>Other</option>
+          </select>
+          <div style="" id="publishlist_add_chk_wrapper">
+            <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
+            <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
+          </div>
+          <div style="" id="publishlist_asset_add_chk_wrapper" style="display:none;">
+            <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_asset_to_projectlist" checked> Set Assets for Current Project </label>
+          </div>
+          <div style="" id="publishlist_products_add_chk_wrapper" style="display:none;">
+            <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_products_to_projectlist" checked> Set Products for Current Project </label>
+          </div>
+          <select id="circuit_template_select" class="select_list" size="5" style="margin-top:4px">
+          </select>
+          <div class="select_flex_view" style="flex:none;">
+            <div id="template_description" style="padding: 8px;height: 5em;overflow: hidden auto;"></div>
+          </div>
+        </div>
+        <div id="block_wizards" class="main_div_wrapper">
+          <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:0 8px;">
+            <select id="wizard_choices" style="margin-right: 8px;">
+              <option value="block">Block</option>
+              <option value="shape">Shape</option>
+              <option value="mesh">Mesh</option>
+              <option value="material">Material</option>
+              <option value="camera">Camera</option>
+              <option value="light">Light</option>
+              <option value="frame">Frame</option>
+            </select>
+          </div>
+          <div id="macro_details_wrapper" style="flex:1;display:flex;flex-direction: column;" class="add_asset_template_panel">
+          </div>
+        </div>
+        <div id="song_import_div" class="main_div_wrapper">
+          <table class="wizard_field_container" style="padding: 0px 8px 0 8px">
+            <tr>
+              <td colspan="2">WAV Audio File<br>
+                <input type="file" id="audio_file" style="width:90%" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>seconds to sample<br>(empty for length)</td>
+              <td><input id="seconds_to_sample" type="text" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Frequency<br>(samples/sec)</td>
+              <td><input id="freq_samples_to_second" type="text" value="10" /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td># of result bands<br>(sample rate / #)</td>
+              <td> <select id="bands_to_combine">
+                  <option value="1">256</option>
+                  <option value="2">128</option>
+                  <option value="4">64</option>
+                  <option value="8">32</option>
+                  <option value="16" selected>16</option>
+                  <option value="32">8</option>
+                </select></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td colspan="3"><audio id="audio" controls style="width:calc(100% - 16px)"></audio></td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <label><input id="song_detail_data_rdo" name="song_data_display" type="radio" checked> Details</label>
+                <label><input id="song_raw_data_rdo" name="song_data_display" type="radio"> Data</label>
+              </td>
+            </tr>
+          </table>
+          <div id="song_len_sec" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;text-align:left;">
+            No song file selected
+          </div>
+          <div id="song_raw_data" style="flex:1;margin:0 8px 8px 8px;overflow:hidden;overflow-y:auto;word-break:break-all;display:none;"></div>
+          <div style="padding:4px;text-align:left;">
+            <button id="copy_song_data_to_clipboard" style="margin-right:0;"><i class="material-icons">content_copy</i></button>
+          </div>
+        </div>
       </div>
     </div>
     <datalist id="blockdatatitlelookuplist">
@@ -301,7 +306,7 @@
         let data = await fetched.json();
 
         let html = '';
-        data.forEach(i => html += '<option value="' + i.value  + '">' + i.title + '</option>');
+        data.forEach(i => html += '<option value="' + i.value + '">' + i.title + '</option>');
         this.help_viewer_panel_select.innerHTML = html;
       }
       async setBusy() {
@@ -337,7 +342,7 @@
           'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview', 'plotter_output_table',
           'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel', 'position_plotter_div',
           'sheetname', 'circuit_template_select', 'help_viewer_panel', 'help_viewer_panel_internal',
-          'block_wizard_select_wrapper', 'add_asset_to_projectlist', 'help_viewer_panel_select',
+          'block_wizard_select_wrapper', 'add_asset_to_projectlist', 'help_viewer_panel_select', 'help_and_details_wrapper_for_split',
           'create_layout_btn', 'add_to_publishlist', 'set_to_defaultproject', 'publishlist_add_chk_wrapper', 'template_description', 'macro_details_wrapper', 'wizard_choices',
           'seconds_to_sample', 'bands_to_combine', 'freq_samples_to_second', 'template_filter_select', 'publishlist_asset_add_chk_wrapper',
           'addon_display_view_select', 'audio', 'audio_file', 'reload_addon', 'selected_target_span', 'selected_project_span', 'publishlist_products_add_chk_wrapper',
@@ -347,7 +352,8 @@
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
-          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display', 'helper_viewer_panel_open_btn'
+          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display',
+           'helper_viewer_panel_open_btn', 'details_wrapper_for_split'
         ];
 
         dom_id.forEach(ctl => {
@@ -675,7 +681,7 @@
           if (this.macro.tag === 'block' && this.macro.block_wizard_type_select.value === "Scene")
             this.currentHelpTag = "sceneblock";
           else
-            this.currentHelpTag =  this.wizard_choices.value;
+            this.currentHelpTag = this.wizard_choices.value;
         } else if (this.addon_display_view_select.value === 'position_plotter_div')
           this.currentHelpTag = 'positionplotter';
 
@@ -693,9 +699,9 @@
             text: this.projectViewURL,
             width: 128,
             height: 128,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
           });
         } else if (this.selectedProjectView === 8) {
           this.qrcode_for_link_display.innerHTML = '';
@@ -703,9 +709,9 @@
             text: this.projectDisplayURL,
             width: 128,
             height: 128,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
           });
         } else {
           this.preview_panel.setAttribute('src', '');
@@ -992,7 +998,7 @@
 
         if (rowIndex !== -1) {
           await this.sheetsStoreCSVValue(this.projectsSheetName, rowIndex + 1,
-              field, '=getTablesForCells(getCSVRangesFromSheet(\"' + assetSheetName + "\"))");
+            field, '=getTablesForCells(getCSVRangesFromSheet(\"' + assetSheetName + "\"))");
         }
       }
 
@@ -1658,18 +1664,28 @@
         }
       }
       helpPanelToggle() {
+        if (this.splitHelpInstance)
+          this.splitHelpInstance.destroy();
+        this.splitHelpInstance = null;
         if (this.helpPanelVisible) {
           this.helpPanelVisible = false;
           this.help_viewer_panel.style.display = 'none';
           this.show_help_panel_btn.style.background = '';
           this.show_help_panel_btn.style.marginBottom = '8px';
           this.show_help_panel_btn.style.color = '';
+          this.details_wrapper_for_split.style.display = 'flex';
+          this.help_and_details_wrapper_for_split.style.display = 'flex';
         } else {
+          this.help_and_details_wrapper_for_split.style.display = 'block';
           this.helpPanelVisible = true;
           this.help_viewer_panel.style.display = '';
           this.show_help_panel_btn.style.marginBottom = '0';
-          this.show_help_panel_btn.style.background = 'rgb(255,200,200)';
-          this.show_help_panel_btn.style.color = 'white';
+          this.show_help_panel_btn.style.background = 'rgb(100,200,255)';
+          this.show_help_panel_btn.style.color = 'blue';
+          this.splitHelpInstance = Split(['#help_viewer_panel', '#details_wrapper_for_split'], {
+              sizes: [40, 60],
+              direction: 'vertical'
+          });
         }
       }
     }
@@ -1825,24 +1841,25 @@
 
     #help_viewer_panel_select {
       flex: 1;
-      color: rgb(200, 0, 0);
+      color: blue;
     }
 
     #helper_viewer_panel_open_wrapper {
-      border-left: solid 8px rgb(255, 200, 200);
+      border-left: solid 8px rgb(100, 200, 255);
     }
 
     #help_viewer_panel {
       padding: 0;
-      border: solid 8px rgb(255, 200, 200);
+      border: solid 8px rgb(100, 200, 255);
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      border-bottom: none;
     }
 
     #help_viewer_panel_internal {
       flex: 1;
-      border-top: solid 8px rgb(255, 200, 200);
+      border-top: solid 8px rgb(100, 200, 255);
       overflow: hidden auto;
       text-align: left;
       padding: 4px;
@@ -1872,10 +1889,20 @@
     #qrcode_for_link_display {
       overflow: hidden;
     }
+
     #qrcode_for_link_display img {
       object-fit: contain;
       width: 100%;
       height: 100%;
+    }
+
+    .gutter.gutter-vertical {
+      background-image: linear-gradient(rgb(100, 200, 255), white, rgb(100, 200, 255), white,
+            rgb(100, 200, 255), white);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: rgb(100, 200, 255);
+      background-size: 50px 100%;
     }
   </style>
 

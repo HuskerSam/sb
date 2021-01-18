@@ -55,5 +55,9 @@
 {
   "value": "workspace",
   "title": "Project (/asset)"
+},
+{
+  "value": "csvformat",
+  "title": "CSV Format"
 }
 ]
