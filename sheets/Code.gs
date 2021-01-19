@@ -548,7 +548,7 @@ function onEdit(e) {
             continue;
           let source = sheet.getRange(firstCell);
           let v = source.getValue();
-          v = v.toLowerCase().replace('color:');
+          v = v.toLowerCase().replace('color:', '');
           v = v.trim();
 
           let l1color = color(v);
@@ -563,7 +563,7 @@ function onEdit(e) {
             outCell = outCell.split('\"').join("").trim();
             let oC = sheet.getRange(outCell);
             oC.setFontColor(fc);
-            oC.setBackground(colorRGB255(v));            
+            oC.setBackground(colorRGB255(v));
           });
         }
       }

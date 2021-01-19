@@ -1,117 +1,221 @@
 [{
-    "range": "A1:C2",
-    "rangeValue": [
-      ["name", "asset", "clearcolor"],
-      ["Logo Scene", "sceneblock", ""]
-    ]
-  },
-  {
-    "range": "A4:R5",
-    "rangeValue": [
-      ["name", "texttext", "materialname", "textdepth", "textsize", "asset", "shapetype", "textfontfamily", "parent", "x", "y", "z", "rx", "ry", "rz", "sx", "sy", "sz"],
-      ["3dtext", "##sheetrawname", "color: 0.17,0.24,1", "0.2", "100", "shape", "text", "=B8", "::scene::", "", "", "", "", "", "-40deg", "5", "5", "5"]
-    ]
-  },
-  {
-    "range": "B5",
-    "backgroundColor": "rgb(100,255,100)"
-  },
-  {
-    "range": "A11",
-    "backgroundColor": "rgb(100,255,100)"
-  },
-  {
-    "range": "B8",
-    "backgroundColor": "rgb(217,234,211)"
-  },
-  {
-    "range": "A12",
-    "backgroundColor": "rgb(217,234,211)"
-  },
-  {
-    "range": "C5",
-    "backgroundColor": "rgb(207,226,243)"
-  },
-  {
-    "range": "A13",
-    "backgroundColor": "rgb(207,226,243)"
-  },
-  {
-    "range": "C2",
-    "backgroundColor": "rgb(234,209,220)"
-  },
-  {
-    "range": "A14",
-    "backgroundColor": "rgb(234,209,220)"
-  },
-  {
-    "range": "D5",
-    "backgroundColor": "rgb(255,242,204)"
-  },
-  {
-    "range": "A15",
-    "backgroundColor": "rgb(255,242,204)"
-  },
-  {
-    "range": "E5",
-    "backgroundColor": "rgb(252,229,205)"
-  },
-  {
-    "range": "A16",
-    "backgroundColor": "rgb(252,229,205)"
-  },
-  {
-    "range": "A7:D8",
-    "rangeValue": [
-      ["name", "genericblockdata", "asset", "blockflag"],
-      ["webfontblock", "Raleway", "block", "googlefont"]
-    ]
-  },
-  {
-    "range": "A10:B16",
-    "rangeValue": [
-      ["::comment", ""],
-      ["B7", " Company Logo text"],
-      ["B10", " Google Web Font Name - or use html standard font - linked to I13 in the shape block"],
-      ["C7", " Set the font color (optionally a material name) - the color ranges from black color: 0,0,0 -> white color: 1,1,1, also > 1 is possible, ecolor: .5,.5,.5 for emissive color, decolor: both emissive and diffuse, color: diffuse only"],
-      ["D10", " Set the clear color (leave blank to have it default to user setting) - 0,0,0 is black, 1,1,1 is white - no lighting effect - this is canvas default/clear color if set"],
-      ["E13", " adjust the thickness of the letters - .2 - 1.0 are typical values, higher then 1 gets hard to read"],
-      ["F13", " adjust the tessellation by changing the text size - higher is more polys.  100 is pretty good, 50 is a little choppy, 200 is very high def"]
-    ]
-  },
-  {
-    "columnNumber": 2,
-    "width": 150
-  },
-  {
-    "columnNumber": 3,
-    "width": 150
-  },
-  {
-    "columnNumber": 4,
-    "width": 150
-  },
-  {
-    "columnNumber": 5,
-    "width": 150
-  },
-  {
-    "columnNumber": 6,
-    "width": 150
-  },
-  {
-    "range": "A1:1",
-    "fontWeight": "bold"
-  },
-  {
-    "range": "A4:4",
-    "fontWeight": "bold"
-  },
-  {
-    "range": "A7:7",
-    "fontWeight": "bold"
-  },
-  {
-    "range": "A1"
-  }
-]
+  "range": "A1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "formula": "=colorHeader(\"clearcolor\", \"C2\", \"C1\", \"C2\", \"B14\")",
+  "fontWeight": "bold",
+  "fontColor": "#ffffff",
+  "backgroundColor": "#009900"
+}, {
+  "range": "A2",
+  "value": "Logo Scene"
+}, {
+  "range": "B2",
+  "value": "sceneblock"
+}, {
+  "range": "C2",
+  "value": "0,.6,0",
+  "fontColor": "#ffffff",
+  "backgroundColor": "#009900"
+}, {
+  "range": "A4",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B4",
+  "value": "texttext",
+  "fontWeight": "bold",
+  "backgroundColor": "#64ff64"
+}, {
+  "range": "C4",
+  "formula": "=colorHeader(\"materialname\", \"C5\", \"C5\", \"B13\", \"C4\")",
+  "fontWeight": "bold",
+  "backgroundColor": "#f7a3e6"
+}, {
+  "range": "D4",
+  "value": "textdepth",
+  "fontWeight": "bold",
+  "backgroundColor": "#fff2cc"
+}, {
+  "range": "E4",
+  "value": "textsize",
+  "fontWeight": "bold",
+  "backgroundColor": "#fce5cd"
+}, {
+  "range": "F4",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "G4",
+  "value": "shapetype",
+  "fontWeight": "bold"
+}, {
+  "range": "H4",
+  "value": "textfontfamily",
+  "fontWeight": "bold"
+}, {
+  "range": "I4",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "J4",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "K4",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "L4",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "M4",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "N4",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "O4",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "P4",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "Q4",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "R4",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "A5",
+  "value": "3dtext"
+}, {
+  "range": "B5",
+  "value": "Logo 123"
+}, {
+  "range": "C5",
+  "value": "color: 0.97,0.64,.9",
+  "backgroundColor": "#f7a3e6"
+}, {
+  "range": "D5",
+  "value": 0.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E5",
+  "value": 130,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F5",
+  "value": "shape"
+}, {
+  "range": "G5",
+  "value": "text"
+}, {
+  "range": "H5",
+  "formula": "=B8"
+}, {
+  "range": "I5",
+  "value": "::scene::"
+}, {
+  "range": "O5",
+  "value": "-40deg"
+}, {
+  "range": "P5",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "Q5",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "R5",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B7",
+  "value": "genericblockdata",
+  "fontWeight": "bold",
+  "backgroundColor": "#d9ead3"
+}, {
+  "range": "C7",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "D7",
+  "value": "blockflag",
+  "fontWeight": "bold"
+}, {
+  "range": "A8",
+  "value": "webfontblock"
+}, {
+  "range": "B8",
+  "value": "Raleway"
+}, {
+  "range": "C8",
+  "value": "block"
+}, {
+  "range": "D8",
+  "value": "googlefont"
+}, {
+  "range": "B11",
+  "value": "B5",
+  "backgroundColor": "#64ff64"
+}, {
+  "range": "C11",
+  "value": " Company Logo text"
+}, {
+  "range": "B12",
+  "value": "B8",
+  "backgroundColor": "#d9ead3"
+}, {
+  "range": "C12",
+  "value": " Google Web Font Name - or use html standard font - linked to I13 in the shape block"
+}, {
+  "range": "B13",
+  "value": "C5",
+  "backgroundColor": "#f7a3e6"
+}, {
+  "range": "C13",
+  "value": " Set the font color (optionally a material name) - the color ranges from black color: 0,0,0 -> white color: 1,1,1, also > 1 is possible, ecolor: .5,.5,.5 for emissive color, decolor: both emissive and diffuse, color: diffuse only"
+}, {
+  "range": "B14",
+  "value": "C2",
+  "fontColor": "#ffffff",
+  "backgroundColor": "#009900"
+}, {
+  "range": "C14",
+  "value": " Set the clear color (leave blank to have it default to user setting) - 0,0,0 is black, 1,1,1 is white - no lighting effect - this is canvas default/clear color if set"
+}, {
+  "range": "B15",
+  "value": "D5",
+  "backgroundColor": "#fff2cc"
+}, {
+  "range": "C15",
+  "value": " adjust the thickness of the letters - .2 - 1.0 are typical values, higher then 1 gets hard to read"
+}, {
+  "range": "B16",
+  "value": "E5",
+  "backgroundColor": "#fce5cd"
+}, {
+  "range": "C16",
+  "value": " adjust the tessellation by changing the text size - higher is more polys.  100 is pretty good, 50 is a little choppy, 200 is very high def"
+}, {
+  "range": "A1"
+}]

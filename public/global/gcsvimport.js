@@ -922,7 +922,7 @@ class gCSVImport {
         return this.addCSVDisplayBlock(row);
     }
 
-    console.log('type not found', row.asset, row);
+    console.log('type not found', row.asset);
     return;
   }
   async addCSVMaterial(row) {
