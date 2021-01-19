@@ -156,7 +156,7 @@
               </div>
               <textarea id="publish_results" style="flex:1"></textarea>
             </div>
-            <div id="project_upload_view" style="display:none;flex-direction: column;height:10em;width: 100%">
+            <div id="project_upload_view" style="display:none;flex-direction: column;flex:1;width: 100%;overflow:hidden;">
               <div style="display:flex;flex-direction:row">
                 <div style="padding: 4px 4px 0 8px;font-size:.75em;">Name</div>
                 <input id="file_upload_name" type="text" style="flex:1;margin-top:2px;">
@@ -168,7 +168,7 @@
                 <option>Audio Preview</option>
                 <option>Mesh Preview</option>
               </select>
-              <div style="flex:1;overflow:hidden;" id="upload_file_img_preview">
+              <div style="flex:1;overflow:hidden;padding:0 8px;align-items:center;justify-content:center;display:flex;" id="upload_file_img_preview">
                 <img id="img_preview" crossorigin="anonymous" style="max-width:100%;max-height:100%">
               </div>
               <div style="flex:1;overflow:hidden;display:none;" id="upload_file_audio_preview">
@@ -178,7 +178,12 @@
                 Preview not available in addon
               </div>
 
-              <a id="img_preview_link" style="line-break:anywhere;" target="_blank"></a>
+              <div id="image_preview_link_footer" style="display:flex;flex-direction:row;overflow:hidden;">
+                <button id="upload_copy_link_to_clipboard" style="margin-top:4px;"><i class="material-icons">content_copy</i></button>
+                <div style="flex:1;overflow: auto hidden;">
+                  <a id="img_preview_link" style="white-space:nowrap;" target="_blank"></a>
+                </div>
+              </div>
             </div>
             <div id="qrcode_for_link_display" style="display:none;flex-direction: column;width: 100%;flex:1"></div>
           </div>
@@ -355,7 +360,7 @@
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
           'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display',
-           'helper_viewer_panel_open_btn', 'details_wrapper_for_split'
+           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard'
         ];
 
         dom_id.forEach(ctl => {
@@ -425,6 +430,16 @@
         this.plotterUpdateView();
         this.plotter_copy_csv_to_clipboard.addEventListener('click', e => {
           cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_includeheaders.checked);
+        });
+
+        this.upload_copy_link_to_clipboard.addEventListener('click', e => {
+          let tInput = document.createElement('input');
+          tInput.value = this.img_preview_link.url;
+          document.body.appendChild(tInput);
+          tInput.select();
+          tInput.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+          tInput.remove();
         });
       }
 
@@ -850,12 +865,15 @@
           window.bucketName + "/o/" + encodeURIComponent(this.referencePath + name) + "?alt=media&token=" + 'token';
 
         let signed_url = this.signed_url;
+        this.img_preview_link.setAttribute('href', signed_url);
+        this.upload_file_audio_ctl.src = signed_url;
+        this.img_preview_link.innerHTML = signed_url;
+        this.img_preview_link.url = signed_url;
+
         if (signed_url)
           signed_url += '&randomstuff=' + Number(new Date()).toString();
         this.img_preview.setAttribute('src', signed_url);
-        this.img_preview_link.setAttribute('href', signed_url);
-        this.upload_file_audio_ctl.src = signed_url;
-        this.img_preview_link.innerHTML = 'Open in new Window';
+
         this.updatingImagePreview = false;
       }
       async loadProjectView() {
@@ -1015,7 +1033,7 @@
         this.upload_file_mesh_preview.style.display = 'none';
         this.upload_file_audio_preview.style.display = 'none';
         if (v === 0) {
-          this.upload_file_img_preview.style.display = '';
+          this.upload_file_img_preview.style.display = 'flex';
         } else if (v === 1) {
           this.upload_file_audio_preview.style.display = '';
         } else {
