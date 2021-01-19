@@ -524,3 +524,90 @@ function getJSONForSheet(sheetName, block = 1) {
 
   return rawString.substr((block - 1) * 50000, 50000);
 }
+
+
+function onEdit(e) {
+  if (e) {
+    let sheet = e.source.getActiveSheet();
+    let range = e.source.getActiveRange()
+
+    let startRow = Math.max(0, (range.getRow() - 3));
+    let lastRow = range.getRow() + 3;
+    let lastCol = range.getLastColumn();
+    for (var i = startRow; i < lastRow; i++) {
+      for (var j = 0; j < lastCol; j++) {
+        let cell = sheet.getRange(i + 1, j + 1);
+        if (cell.getFormula().indexOf('colorHeader(') !== -1) {
+          let args = cell.getFormula().substr(13);
+          args = args.slice(0, -1);
+          args = args.split(',');
+
+          let firstCell = args[1];
+          firstCell = firstCell.split('\"').join("").trim();
+          if (!firstCell)
+            continue;
+          let source = sheet.getRange(firstCell);
+          let v = source.getValue();
+          v = v.toLowerCase().replace('color:');
+          v = v.trim();
+
+          let l1color = color(v);
+          let fc = 'white';
+          if (l1color.r + l1color.g + l1color.b > 1.4)
+            fc = 'black';
+
+          let outCells = args.slice(2);
+          if (outCells.length === 0)
+            outCells = args.slice(1);
+          outCells.forEach(outCell => {
+            outCell = outCell.split('\"').join("").trim();
+            let oC = sheet.getRange(outCell);
+            oC.setFontColor(fc);
+            oC.setBackground(colorRGB255(v));            
+          });
+        }
+      }
+    }
+  }
+}
+
+function colorHeader() {
+  return arguments[0];
+}
+
+function color(str) {
+  if (!str) {
+    str = '1,1,1';
+  }
+  let parts = str.split(',');
+  let cA = [];
+  let r = Number(parts[0]);
+  if (isNaN(r))
+    r = 0;
+  let g = Number(parts[1]);
+  if (isNaN(g))
+    g = 0;
+  let b = Number(parts[2]);
+  if (isNaN(b))
+    b = 0;
+  if (typeof window !== "undefined" && window.BABYLON)
+    return new BABYLON.Color3(r, g, b);
+
+  return {
+    r,
+    g,
+    b
+  };
+}
+
+function colorRGB255(str) {
+  let bC = color(str);
+  if (isNaN(bC.r))
+    bC.r = 1;
+  if (isNaN(bC.g))
+    bC.g = 1;
+  if (isNaN(bC.b))
+    bC.b = 1;
+
+  return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0) + ')'
+}
