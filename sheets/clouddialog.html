@@ -444,6 +444,8 @@
           this.selected_target_span.innerHTML = '<span style="color:red;font-size:1em">No Server Target</span>';
           this.addon_display_view_select.value = 'cloud_target';
           this.loadAddonView();
+          this.helpPanelVisible = false;
+          this.helpPanelToggle();
         }
 
         this.defaultProjectTarget = '';

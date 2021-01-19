@@ -1,4 +1,28 @@
-<b>Configuration</b><br>
-&nbsp; Select a server and token for project deployment and image uploading<br>
-&nbsp; View key fields from [Configuration] sheet
-<br><br>
+<b>First Time User</b><br>
+ &nbsp; &nbsp; Use <span style="color:red">[SET SERVER]</span> with the default values for a
+  <span style="color:red">Server Target</span>.  The <img src="https://handtop.com/images/notbusybutton.png" style="height:1.25em;position:relative;top:.35em;"> [Refresh]
+  Button will turn to busy <img style="height:1.25em;position:relative;top:.35em;" src="https://handtop.com/images/busybutton.png"> - when it completes the Sheet Templates view will load with the next step.
+<hr>
+<b>'Configuration'</b> sheet<br>
+- This sheet stores basic settings and is generated when needed<br>
+[Target Server]: Firebase Project ID with API deployed<br>
+[Token Token]: Token for API</br>
+[Target Project]: Default Project [name] in <b>'Projects'</b> list<br>
+[Parent Spreadsheet]: Document ID to load deployment options from (more below).
+<hr>
+<b>'Projects'</b> sheet<br>
+- This sheet stores project configurations for deployment and is generated when needed<br>
+[Project Name]: Title of project (unique to server)<br>
+[Asset Ranges]: Comma delimited list of ranges (can be remote: with spreadsheetid||||sheet!range)<br>
+[Circuit Ranges]: Comma delimited list of ranges with CSV - 2nd processed<br>
+[Catalog Ranges]: Comma delimited list of ranges with CSV - last processed<br>
+[Flags]: "Ignore" skips this line on [Deploy All] - "Remove" removes the project from the target server<br>
+<hr>
+<b>'Deploy Options'</b> sheet<br>
+- This sheet can exist in a remote (parent) spreadsheet addressed by 'Configuration'<br>
+[deployrange]: Range of Server Options for Configuration View to load as presets<br>
+Range: Servers<br>
+[server]: Firebase instance/project name<br>
+[url]: Public url if it exists<br>
+[token]: token (optional)<br>
+[description]: displays in Configuration View<br>
