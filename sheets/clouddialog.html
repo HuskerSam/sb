@@ -188,27 +188,27 @@
             <input id="sheetname" style="flex:1;">
             <button id="create_layout_btn" class="green" style="margin-left:8px">Create Sheet</button>
           </div>
-          <select id="template_filter_select" style="margin:4px 8px;">
+          <select id="template_filter_select" style="margin:8px 8px 4px 8px;">
             <option>All</option>
             <option>Setup</option>
             <option selected>Layouts</option>
             <option>Blocks</option>
             <option>Other</option>
           </select>
-          <div style="" id="publishlist_add_chk_wrapper">
+          <div style="display:none;" id="publishlist_add_chk_wrapper">
             <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
             <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
           </div>
-          <div style="" id="publishlist_asset_add_chk_wrapper" style="display:none;">
+          <div id="publishlist_asset_add_chk_wrapper" style="display:none;">
             <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_asset_to_projectlist" checked> Set Assets for Current Project </label>
           </div>
-          <div style="" id="publishlist_products_add_chk_wrapper" style="display:none;">
+          <div id="publishlist_products_add_chk_wrapper" style="display:none;">
             <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_products_to_projectlist" checked> Set Products for Current Project </label>
           </div>
           <select id="circuit_template_select" class="select_list" size="5" style="margin-top:4px">
           </select>
           <div class="select_flex_view" style="flex:none;">
-            <div id="template_description" style="padding: 8px;height: 5em;overflow: hidden auto;"></div>
+            <div id="template_description" style="margin:8px;background:rgb(245,245,245);border-radius:1em;padding: 8px;height: 5em;overflow: hidden auto;"></div>
           </div>
         </div>
         <div id="block_wizards" class="main_div_wrapper">
@@ -312,10 +312,12 @@
       async setBusy() {
         this.reload_addon.style.borderRadius = '50%';
         this.reload_addon.style.background = 'rgb(150,220,150)';
+        this.reload_addon.classList.add('rotate_busy');
       }
       async clearBusy() {
         this.reload_addon.style.borderRadius = '';
         this.reload_addon.style.background = '';
+        this.reload_addon.classList.remove('rotate_busy');
       }
       async initSheetBasedData() {
         this.setBusy();
@@ -461,6 +463,9 @@
           if (this.defaultServerTarget !== '') {
             this.addon_display_view_select.value = 'template_view';
             this.loadAddonView();
+
+            this.helpPanelVisible = false;
+            this.helpPanelToggle();
           }
         }
 
@@ -1865,6 +1870,7 @@
       overflow: hidden auto;
       text-align: left;
       padding: 4px;
+      background-color: rgb(235,255,255);
     }
 
     input[type="color"] {
@@ -1906,6 +1912,12 @@
       background-color: rgb(100, 200, 255);
       background-size: 50px 100%;
     }
+
+    .rotate_busy i {
+        animation:spin_rotate_busy 2s linear infinite;
+    }
+
+    @keyframes spin_rotate_busy { 100% { transform:rotate(360deg); } }
   </style>
 
 </body>
