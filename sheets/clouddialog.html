@@ -119,73 +119,70 @@
           </div>
         </div>
         <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
-          <div style="display:flex;flex-direction:row;flex:1">
-            <select id="project_deploy_select" class="select_list" size="5" style="flex:1;height:100%"></select>
-            <div style="line-height:2.5em;padding-top: 0px;padding-right:8px;">
-              <button id="set_default_proj" class="blue">Set Project</button>
-              <br>
-              <button id="display_publish_single" class="green"><i class="material-icons">publish</i>Deploy</button>
-              <br>
-              <button id="display_publish_list" class="green">Deploy All</button>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:row;">
-            <select id="project_selected_options" style="flex:1;margin:8px">
-              <option data-view="project_deploy_view">Deployment</option>
-              <option data-view="project_display_view">View (/view)</option>
-              <option data-view="project_display_view">Display (/display)</option>
-              <option data-view="project_upload_view">Upload File</option>
-              <option>Open in /view</option>
-              <option>Open in /display</option>
-              <option>Open in /edit</option>
-              <option data-view="qrcode_for_link_display">QR Code for /view</option>
-              <option data-view="qrcode_for_link_display">QR code for /display</option>
-            </select>
-            <select id="project_preview_zoom" style="visibility:hidden;margin-top:8px;margin-right:8px;">
-              <option>1x</option>
-              <option selected>1/2x</option>
-              <option>1/4x</option>
-            </select>
-          </div>
-          <div class="select_flex_view" style="padding-top:0px;">
-            <div id="project_display_view" style="display:none;height:inherit;flex:1;margin: 0 8px 8px 8px;">
-              <iframe id="preview_panel"></iframe>
-            </div>
-            <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
-              <div>
-              </div>
-              <textarea id="publish_results" style="flex:1"></textarea>
-            </div>
-            <div id="project_upload_view" style="display:none;flex-direction: column;flex:1;width: 100%;overflow:hidden;">
-              <div style="display:flex;flex-direction:row">
-                <div style="padding: 4px 4px 0 8px;font-size:.75em;">Name</div>
-                <input id="file_upload_name" type="text" style="flex:1;margin-top:2px;">
-                <button id="upload_file_cloud" style="margin:0 8px 0 4px;"><i class="material-icons">cloud_upload</i></button>
-                <input type="file" id="upload_file_input" style="display:none;">
-              </div>
-              <select id="upload_file_preview_select" style="margin:8px;">
-                <option>Image Preview</option>
-                <option>Audio Preview</option>
-                <option>Mesh Preview</option>
+          <select id="project_deploy_select" class="select_list" size="5"></select>
+          <div id="project_detail_view_for_split" style="display:flex;overflow:hidden;flex-direction:column;">
+            <div style="margin:4px 8px;text-align:left;">
+              <button id="set_default_proj" class="blue"><i class="material-icons">push_pin</i></button>
+              <select id="project_selected_options" style="width:5.5em;margin:0 4px;">
+                <option data-view="project_deploy_view">Deploy</option>
+                <option data-view="project_display_view">View</option>
+                <option data-view="project_display_view">Display</option>
+                <option data-view="project_upload_view">Upload</option>
+                <option>Open in /view</option>
+                <option>Open in /display</option>
+                <option>Open in /edit</option>
+                <option data-view="qrcode_for_link_display">QR Code for /view</option>
+                <option data-view="qrcode_for_link_display">QR code for /display</option>
               </select>
-              <div style="flex:1;overflow:hidden;padding:0 8px;align-items:center;justify-content:center;display:flex;" id="upload_file_img_preview">
-                <img id="img_preview" crossorigin="anonymous" style="max-width:100%;max-height:100%">
+              <select id="project_preview_zoom" style="display:none;">
+                <option>1x</option>
+                <option selected>1/2x</option>
+                <option>1/4x</option>
+              </select>
+              <span id="deploy_detail_buttons_view">
+                <button id="display_publish_single"><i class="material-icons">publish</i> Selected</button>
+                <button id="display_publish_list" style="margin:0 4px;"><i class="material-icons">publish</i> All</button>
+              </span>
+            </div>
+            <div class="select_flex_view" style="padding-top:4px;">
+              <div id="project_display_view" style="display:none;height:inherit;flex:1;margin: 0 8px 8px 8px;">
+                <iframe id="preview_panel"></iframe>
               </div>
-              <div style="flex:1;overflow:hidden;display:none;" id="upload_file_audio_preview">
-                <audio id="upload_file_audio_ctl" controls style="width:calc(100% - 32px)"></audio>
+              <div id="project_deploy_view" style="display:none;flex-direction: column;flex:1;padding:8px;padding-top:0;width: 100%;">
+                <div>
+                </div>
+                <textarea id="publish_results" style="flex:1;margin-top:0px;"></textarea>
               </div>
-              <div style="flex:1;overflow:hidden;display:none;" id="upload_file_mesh_preview">
-                Preview not available in addon
-              </div>
+              <div id="project_upload_view" style="display:none;flex-direction: column;flex:1;width: 100%;overflow:hidden;">
+                <div style="display:flex;flex-direction:row;">
+                  <input id="file_upload_name" type="text" style="width:20px;flex:1;margin-top:4px;margin-left:8px;">
+                  <button id="upload_file_cloud" style="margin:0 8px 0 4px;"><i class="material-icons">cloud_upload</i></button>
+                  <input type="file" id="upload_file_input" style="display:none;">
+                  <select id="upload_file_preview_select" style="margin-right:8px;">
+                    <option>Image</option>
+                    <option>Audio</option>
+                    <option>Mesh</option>
+                  </select>
+                </div>
+                <div style="flex:1;overflow:hidden;padding:0 8px;align-items:center;justify-content:center;display:flex;" id="upload_file_img_preview">
+                  <img id="img_preview" crossorigin="anonymous" style="max-width:100%;max-height:100%">
+                </div>
+                <div style="flex:1;overflow:hidden;display:none;" id="upload_file_audio_preview">
+                  <audio id="upload_file_audio_ctl" controls style="width:calc(100% - 32px)"></audio>
+                </div>
+                <div style="flex:1;overflow:hidden;display:none;" id="upload_file_mesh_preview">
+                  Preview not available in addon
+                </div>
 
-              <div id="image_preview_link_footer" style="display:flex;flex-direction:row;overflow:hidden;">
-                <button id="upload_copy_link_to_clipboard" style="margin-top:4px;"><i class="material-icons">content_copy</i></button>
-                <div style="flex:1;overflow: auto hidden;">
-                  <a id="img_preview_link" style="white-space:nowrap;" target="_blank"></a>
+                <div id="image_preview_link_footer" style="display:flex;flex-direction:row;overflow:hidden;padding: 0px 8px 4px 8px;">
+                  <button id="upload_copy_link_to_clipboard" style="margin-top:4px;"><i class="material-icons">content_copy</i></button>
+                  <div style="flex:1;overflow: auto hidden;">
+                    <a id="img_preview_link" style="white-space:nowrap;" target="_blank"></a>
+                  </div>
                 </div>
               </div>
+              <div id="qrcode_for_link_display" style="display:none;flex-direction: column;width: 100%;flex:1"></div>
             </div>
-            <div id="qrcode_for_link_display" style="display:none;flex-direction: column;width: 100%;flex:1"></div>
           </div>
         </div>
         <div id="template_view" class="main_div_wrapper">
@@ -360,7 +357,7 @@
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
           'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display',
-           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard'
+          'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view'
         ];
 
         dom_id.forEach(ctl => {
@@ -440,6 +437,14 @@
           tInput.setSelectionRange(0, 99999);
           document.execCommand("copy");
           tInput.remove();
+        });
+
+        if (this.splitProjectsView)
+          this.splitProjectsView.destroy();
+        this.splitProjectsView = Split(['#project_deploy_select', '#project_detail_view_for_split'], {
+          sizes: [40, 60],
+          minSize: [20, 20],
+          direction: 'vertical'
         });
       }
 
@@ -740,7 +745,7 @@
         }
 
         if (this.selectedProjectView === 1 || this.selectedProjectView === 2) {
-          this.project_preview_zoom.style.visibility = '';
+          this.project_preview_zoom.style.display = '';
           let scaleF = this.project_preview_zoom.selectedIndex;
           let style = {};
 
@@ -774,7 +779,7 @@
             this.preview_panel.style[key] = style[key];
           }
         } else {
-          this.project_preview_zoom.style.visibility = 'hidden';
+          this.project_preview_zoom.style.display = 'none';
         }
         return null;
       }
@@ -881,6 +886,12 @@
           this.selectedProjectView = 0;
 
         let selectedProject = this.project_deploy_select.value;
+        let defaultProject = this.defaultProjectTarget;
+        if (selectedProject === defaultProject)
+          this.set_default_proj.classList.remove("blue");
+        else
+          this.set_default_proj.classList.add("blue");
+
         let pid = this.defaultServerTarget;
         this.projectDisplayURL = 'https://' + pid + '.web.app/display/?name=' + selectedProject;
         this.projectEditURL = 'https://' + pid + '.web.app/asset/?name=' + selectedProject;
@@ -916,6 +927,7 @@
         this.selectedProjectView = this.project_selected_options.selectedIndex;
         this.loadProjectPreview();
 
+        this.deploy_detail_buttons_view.style.display = (this.selectedProjectView === 0) ? '' : 'none';
         this.project_deploy_view.style.display = (this.selectedProjectView === 0) ? 'flex' : 'none';
         this.project_upload_view.style.display = (this.selectedProjectView === 3) ? 'flex' : 'none';
         this.project_display_view.style.display = (this.selectedProjectView === 1 || this.selectedProjectView === 2) ? '' : 'none';
@@ -1083,9 +1095,9 @@
         if (this.busy)
           return;
 
-        this.display_publish_list.innerHTML = 'Working...';
-        this.display_publish_single.innerHTML = 'Working...';
-        this.display_publish_single_header.classList.add('green');
+        this.display_publish_list.classList.add('busy_deploy');
+        this.display_publish_single.classList.add('busy_deploy');
+        this.display_publish_single_header.classList.add('busy_deploy');
         this.publish_results.value = '';
         this.dataCache = {};
 
@@ -1297,11 +1309,13 @@
             row['Circuit Ranges'], row['Catalog Ranges']);
         }
         this.busy = false;
-        this.display_publish_list.innerHTML = 'Deploy All';
-        this.display_publish_single.innerHTML = 'Deploy';
-        this.display_publish_single_header.classList.remove('green');
+        this.display_publish_list.classList.remove('busy_deploy');
+        this.display_publish_single.classList.remove('busy_deploy');
+        this.display_publish_single_header.classList.remove('busy_deploy');
 
-
+        if (this.addon_display_view_select.value === 'cloud_deploy') {
+          this.loadProjectPreview();
+        }
         this.publish_results.value += '\nComplete\n\n';
         this.publish_results.scrollTop = this.publish_results.scrollHeight;
       }
@@ -1708,8 +1722,8 @@
           this.show_help_panel_btn.style.background = 'rgb(100,200,255)';
           this.show_help_panel_btn.style.color = 'blue';
           this.splitHelpInstance = Split(['#help_viewer_panel', '#details_wrapper_for_split'], {
-              sizes: [40, 60],
-              direction: 'vertical'
+            sizes: [40, 60],
+            direction: 'vertical'
           });
         }
       }
@@ -1888,7 +1902,7 @@
       overflow: hidden auto;
       text-align: left;
       padding: 4px;
-      background-color: rgb(235,255,255);
+      background-color: rgb(235, 255, 255);
     }
 
     input[type="color"] {
@@ -1923,19 +1937,65 @@
     }
 
     .gutter.gutter-vertical {
-      background-image: linear-gradient(rgb(100, 200, 255), white, rgb(100, 200, 255), white,
-            rgb(100, 200, 255), white);
+      background-image: linear-gradient(rgb(100, 200, 255), rgb(100, 200, 255), white,  rgb(100, 200, 255),
+        rgb(100, 200, 255));
       background-repeat: no-repeat;
       background-position: center;
       background-color: rgb(100, 200, 255);
       background-size: 50px 100%;
     }
 
-    .rotate_busy i {
-        animation:spin_rotate_busy 2s linear infinite;
+    #cloud_deploy .gutter.gutter-vertical {
+      background-image: linear-gradient(white, white, silver, white,
+        white);
+      background-color: white;
+      margin: 0 8px;
     }
 
-    @keyframes spin_rotate_busy { 100% { transform:rotate(360deg); } }
+    .rotate_busy i {
+      animation: spin_rotate_busy 2s linear infinite;
+    }
+
+    @keyframes spin_rotate_busy {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    button.busy_deploy {
+      background: rgb(150, 220, 150);
+      overflow: hidden;
+    }
+
+    .busy_deploy i {
+      animation: spin_deploy_busy 2s linear infinite;
+    }
+
+    @keyframes spin_deploy_busy {
+      0% {
+        transform: translateY(0%);
+      }
+
+      25% {
+        transform: translateY(-100%);
+      }
+
+      25.001% {
+        transform: translateY(100%);
+      }
+
+      75% {
+        transform: translateY(-100%);
+      }
+
+      75.001% {
+        transform: translateY(100%);
+      }
+
+      100% {
+        transform: translateY(0%)
+      }
+    }
   </style>
 
 </body>
