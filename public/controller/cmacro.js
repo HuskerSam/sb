@@ -899,15 +899,11 @@ class cMacro {
          <option>Text and Shape</option>
          <option>Animated Line</option>
          <option>Connector Line</option>
+         <option>Room Walls</option>
          <option>2D Text Plane</option>
          <option>Web Font</option>
          <option>Block Child</option>
         </select>
-        <div class="scene_type_option_list" style="text-align:center;flex:1;padding-top:4px;">
-          <label><input type="radio" class="sceneaddtype skyboxtemplatetype" data-type="skyboxscenefeatures" name="sceneaddtype" checked /><span style="font-size:.85em"> Skybox</span></label>
-          &nbsp;
-          <label><input type="radio" class="sceneaddtype buildingtemplatetype" data-type="buildingscenefeatures" name="sceneaddtype" /><span style="font-size:.85em;"> Building</span></label>
-        </div>
       </div>
       <div class="block_child_wizard">
         <table class="wizard_field_container">
@@ -1207,249 +1203,247 @@ class cMacro {
         </table>
       </div>
       <div class="scene_block_add_options">
-        <div class="skyboxscenefeatures">
-          <table class="wizard_field_container">
-            <tr>
-              <td>Clear Color</td>
-              <td><input type="text" class="clearcolor" data-field="clearcolor" /></td>
-              <td><input type="color" class="colorpickerraw" data-inputclass="clearcolor"></td>
-            </tr>
-            <tr>
-              <td>Skybox Equirect</td>
-              <td><input type="text" class="skybox texturepathinput" list="skyboxlist"  data-field="skybox" /></td>
-              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-            </tr>
-            <tr>
-              <td style="text-align:center;" colspan="3">
-                <img class="skybox_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
-              </td>
-            </tr>
-            <tr>
-              <td>Skybox Size</td>
-              <td><input type="text" class="skyboxsize" value="" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Ground</td>
-              <td><input type="text" class="groundimage texturepathinput" data-field="groundimage" list="groundTexturesDataList" /></td>
-              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-            </tr>
-            <tr>
-              <td>Scale v (x)</td>
-              <td><input type="text" class="skyboxgroundscalev groundimage_scalev" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Scale u (y)</td>
-              <td><input type="text" class="skyboxgroundscaleu groundimage_scaleu" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td style="text-align:center;" colspan="3">
-                <div class="groundimage_preview_div image_preview_div"></div>
-              </td>
-            </tr>
-            <tr>
-              <td>Frame Time</td>
-              <td><input type="text" class="frametime" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Camera Name</td>
-              <td><input type="text" class="displaycamera" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Audio URL</td>
-              <td><input type="text" class="audiourl" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Audio Params</td>
-              <td><input type="text" class="musicparams" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Block Data</td>
-              <td><input type="text" class="genericblockdata" /></td>
-              <td></td>
-            </tr>
-          </table>
-        </div>
-        <div class="buildingscenefeatures" style="display:none;">
-          <table class="wizard_field_container">
-            <tr>
-              <td>Width (x)</td>
-              <td><input type="text" class="width" value="" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Depth (z)</td>
-              <td><input type="text" class="depth" value="" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Height (y)</td>
-              <td><input type="text" class="height" value="" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Show Uploads</td>
-              <td><input type="checkbox" style="width:1.5em;" class="show_uploads" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><b>Floor Material</b></td>
-              <td><input type="text" class="floormaterial" list="materialdatatitlelookuplist" /></td>
-              <td><input type="color" class="colorpicker" data-inputclass="floormaterial"></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Image</td>
-              <td><input type="text" class="floorimage texturepathinput" data-field="floorimage" list="floorTexturesDataList" /></td>
-              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale v (x)</td>
-              <td><input type="text" class="floorscalev floorimage_scalev" /></td>
-              <td></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale u (z)</td>
-              <td><input type="text" class="floorscaleu floorimage_scaleu" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td style="text-align:center;" colspan="3">
-                <div class="floorimage_preview_div image_preview_div"></div>
-              </td>
-            </tr>
-            <tr>
-              <td><b>Backwall Material</b></td>
-              <td><input type="text" class="backwallmaterial" list="materialdatatitlelookuplist" /></td>
-              <td><input type="color" class="colorpicker" data-inputclass="backwallmaterial"></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Image</td>
-              <td><input type="text" class="backwallimage texturepathinput" data-field="backwallimage" list="wallTexturesDataList" /></td>
-              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale v (x)</td>
-              <td><input type="text" class="backwallscalev backwallimage_scalev" /></td>
-              <td></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale u (z)</td>
-              <td><input type="text" class="backwallscaleu backwallimage_scaleu" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td style="text-align:center;" colspan="3">
-                <div class="backwallimage_preview_div image_preview_div"></div>
-              </td>
-            </tr>
-            <tr>
-              <td><b>Front Wall Material</b></td>
-              <td><input type="text" class="frontwallmaterial" list="materialdatatitlelookuplist" /></td>
-              <td><input type="color" class="colorpicker" data-inputclass="frontwallmaterial"></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Image</td>
-              <td><input type="text" class="frontwallimage texturepathinput" data-field="frontwallimage" list="wallTexturesDataList" /></td>
-              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale v (x)</td>
-              <td><input type="text" class="frontwallscalev frontwallimage_scalev" /></td>
-              <td></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale u (z)</td>
-              <td><input type="text" class="frontwallscaleu frontwallimage_scaleu" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td style="text-align:center;" colspan="3">
-                <div class="frontwallimage_preview_div image_preview_div"></div>
-              </td>
-            </tr>
-            <tr>
-              <td><b>Right Wall Material</b></td>
-              <td><input type="text" class="rightwallmaterial" list="materialdatatitlelookuplist" /></td>
-              <td><input type="color" class="colorpicker" data-inputclass="rightwallmaterial"></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Image</td>
-              <td><input type="text" class="rightwallimage texturepathinput" data-field="rightwallimage" list="wallTexturesDataList" /></td>
-              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale v (x)</td>
-              <td><input type="text" class="rightwallscalev rightwallimage_scalev" /></td>
-              <td></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale u (z)</td>
-              <td><input type="text" class="rightwallscaleu rightwallimage_scaleu" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td style="text-align:center;" colspan="3">
-                <div class="frontwallimage_preview_div image_preview_div"></div>
-              </td>
-            </tr>
-            <tr>
-              <td><b>Left Wall Material</b></td>
-              <td><input type="text" class="leftwallmaterial" list="materialdatatitlelookuplist" /></td>
-              <td><input type="color" class="colorpicker" data-inputclass="leftwallmaterial"></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Image</td>
-              <td><input type="text" class="leftwallimage texturepathinput" data-field="leftwallimage" list="wallTexturesDataList" /></td>
-              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale v (x)</td>
-              <td><input type="text" class="leftwallscalev leftwallimage_scalev" /></td>
-              <td></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale u (z)</td>
-              <td><input type="text" class="leftwallscaleu leftwallimage_scaleu" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td style="text-align:center;" colspan="3">
-                <div class="leftwallimage_preview_div image_preview_div"></div>
-              </td>
-            </tr>
-            <tr>
-              <td><b>Ceiling Material</b></td>
-              <td><input type="text" class="ceilingwallmaterial" list="materialdatatitlelookuplist" /></td>
-              <td><input type="color" class="colorpicker" data-inputclass="ceilingwallmaterial"></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Image</td>
-              <td><input type="text" class="ceilingwallimage texturepathinput" data-field="ceilingwallimage" list="wallTexturesDataList" /></td>
-              <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale v (x)</td>
-              <td><input type="text" class="ceilingwallscalev ceilingwallimage_scalev" /></td>
-              <td></td>
-            </tr>
-            <tr class="image_upload_building">
-              <td>Scale u (z)</td>
-              <td><input type="text" class="ceilingwallscaleu ceilingwallimage_scaleu" /></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td style="text-align:center;" colspan="3">
-                <div class="ceilingwallimage_preview_div image_preview_div"></div>
-              </td>
-            </tr>
-          </table>
-        </div>
+        <table class="wizard_field_container">
+          <tr>
+            <td>Clear Color</td>
+            <td><input type="text" class="clearcolor" data-field="clearcolor" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="clearcolor"></td>
+          </tr>
+          <tr>
+            <td>Skybox Equirect</td>
+            <td><input type="text" class="skybox texturepathinput" list="skyboxlist"  data-field="skybox" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
+              <img class="skybox_image" crossorigin="anonymous" style="max-width:100%;max-height: 10em;display:none;">
+            </td>
+          </tr>
+          <tr>
+            <td>Skybox Size</td>
+            <td><input type="text" class="skyboxsize" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Ground</td>
+            <td><input type="text" class="groundimage texturepathinput" data-field="groundimage" list="groundTexturesDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Scale v (x)</td>
+            <td><input type="text" class="skyboxgroundscalev groundimage_scalev" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Scale u (y)</td>
+            <td><input type="text" class="skyboxgroundscaleu groundimage_scaleu" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
+              <div class="groundimage_preview_div image_preview_div"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>Frame Time</td>
+            <td><input type="text" class="frametime" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Camera Name</td>
+            <td><input type="text" class="displaycamera" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Audio URL</td>
+            <td><input type="text" class="audiourl" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Audio Params</td>
+            <td><input type="text" class="musicparams" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Block Data</td>
+            <td><input type="text" class="genericblockdata" /></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div class="buildingscenefeatures" style="display:none;">
+        <table class="wizard_field_container">
+          <tr>
+            <td>Width (x)</td>
+            <td><input type="text" class="width" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Depth (z)</td>
+            <td><input type="text" class="depth" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Height (y)</td>
+            <td><input type="text" class="height" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Show Uploads</td>
+            <td><input type="checkbox" style="width:1.5em;" class="show_uploads" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><b>Floor Material</b></td>
+            <td><input type="text" class="floormaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="floormaterial"></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Image</td>
+            <td><input type="text" class="floorimage texturepathinput" data-field="floorimage" list="floorTexturesDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale v (x)</td>
+            <td><input type="text" class="floorscalev floorimage_scalev" /></td>
+            <td></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale u (z)</td>
+            <td><input type="text" class="floorscaleu floorimage_scaleu" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
+              <div class="floorimage_preview_div image_preview_div"></div>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Backwall Material</b></td>
+            <td><input type="text" class="backwallmaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="backwallmaterial"></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Image</td>
+            <td><input type="text" class="backwallimage texturepathinput" data-field="backwallimage" list="wallTexturesDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale v (x)</td>
+            <td><input type="text" class="backwallscalev backwallimage_scalev" /></td>
+            <td></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale u (z)</td>
+            <td><input type="text" class="backwallscaleu backwallimage_scaleu" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
+              <div class="backwallimage_preview_div image_preview_div"></div>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Front Wall Material</b></td>
+            <td><input type="text" class="frontwallmaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="frontwallmaterial"></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Image</td>
+            <td><input type="text" class="frontwallimage texturepathinput" data-field="frontwallimage" list="wallTexturesDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale v (x)</td>
+            <td><input type="text" class="frontwallscalev frontwallimage_scalev" /></td>
+            <td></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale u (z)</td>
+            <td><input type="text" class="frontwallscaleu frontwallimage_scaleu" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
+              <div class="frontwallimage_preview_div image_preview_div"></div>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Right Wall Material</b></td>
+            <td><input type="text" class="rightwallmaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="rightwallmaterial"></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Image</td>
+            <td><input type="text" class="rightwallimage texturepathinput" data-field="rightwallimage" list="wallTexturesDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale v (x)</td>
+            <td><input type="text" class="rightwallscalev rightwallimage_scalev" /></td>
+            <td></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale u (z)</td>
+            <td><input type="text" class="rightwallscaleu rightwallimage_scaleu" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
+              <div class="frontwallimage_preview_div image_preview_div"></div>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Left Wall Material</b></td>
+            <td><input type="text" class="leftwallmaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="leftwallmaterial"></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Image</td>
+            <td><input type="text" class="leftwallimage texturepathinput" data-field="leftwallimage" list="wallTexturesDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale v (x)</td>
+            <td><input type="text" class="leftwallscalev leftwallimage_scalev" /></td>
+            <td></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale u (z)</td>
+            <td><input type="text" class="leftwallscaleu leftwallimage_scaleu" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
+              <div class="leftwallimage_preview_div image_preview_div"></div>
+            </td>
+          </tr>
+          <tr>
+            <td><b>Ceiling Material</b></td>
+            <td><input type="text" class="ceilingwallmaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="ceilingwallmaterial"></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Image</td>
+            <td><input type="text" class="ceilingwallimage texturepathinput" data-field="ceilingwallimage" list="wallTexturesDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale v (x)</td>
+            <td><input type="text" class="ceilingwallscalev ceilingwallimage_scalev" /></td>
+            <td></td>
+          </tr>
+          <tr class="image_upload_building">
+            <td>Scale u (z)</td>
+            <td><input type="text" class="ceilingwallscaleu ceilingwallimage_scaleu" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td style="text-align:center;" colspan="3">
+              <div class="ceilingwallimage_preview_div image_preview_div"></div>
+            </td>
+          </tr>
+        </table>
       </div>
       <div id="block_wizard_parent_wrapper">
         <table class="wizard_field_container">
@@ -1482,7 +1476,7 @@ class cMacro {
     this.block_child_wizard = this.panel.querySelector('.block_child_wizard');
     this.blockShapePanel = this.panel.querySelector('.shape_and_text_block_options');
     this.scene_block_add_options = this.panel.querySelector('.scene_block_add_options');
-    this.scene_type_option_list = this.panel.querySelector('.scene_type_option_list');
+    this.buildingscenefeatures = this.panel.querySelector('.buildingscenefeatures');
     this.connectorLinePanel = this.panel.querySelector('.connector-line-block-add-options');
     this.animatedDashPanel = this.panel.querySelector('.animated-line-block-add-options');
     this.webFontPanel = this.panel.querySelector('.web-font-block-add-options');
@@ -1521,16 +1515,6 @@ class cMacro {
         this.wizard_parent_details.style.display = 'none';
     });
     this.block_wizard_parent_wrapper = this.panel.querySelector('#block_wizard_parent_wrapper');
-
-    let sceneRadios = this.panel.querySelectorAll('.sceneaddtype');
-    sceneRadios.forEach(rdo => {
-      rdo.addEventListener('input', e => {
-        this.scene_block_add_options.querySelector('.buildingscenefeatures').style.display = 'none';
-        this.scene_block_add_options.querySelector('.skyboxscenefeatures').style.display = 'none';
-        let showClass = rdo.dataset.type;
-        this.scene_block_add_options.querySelector('.' + showClass).style.display = '';
-      });
-    });
 
     this.addSceneLight = this.panel.querySelector('.block-add-hemi-light');
     this.stretchDetailsPanel = this.panel.querySelector('.block-stretch-along-width-label');
@@ -2480,26 +2464,11 @@ class cMacro {
     };
     let fields = [
       'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox',
-      'width', 'height', 'depth', 'floormaterial', 'backwallmaterial', 'clearcolor',
-      'frontwallmaterial', 'leftwallmaterial', 'rightwallmaterial',
-      'ceilingmaterial',
-      'leftwallscalev', 'leftwallscaleu', 'leftwallimage',
-      'rightwallscalev', 'rightwallscaleu', 'rightwallimage',
-      'backwallscalev', 'backwallscaleu', 'backwallimage',
-      'frontwallscalev', 'frontwallscaleu', 'frontwallimage',
-      'floorscalev', 'floorscaleu', 'floorimage',
-      'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage',
-      'frametime', 'audiourl', 'displaycamera', 'genericblockdata',
+      'clearcolor', 'frametime', 'audiourl', 'displaycamera', 'genericblockdata',
       'musicparams'
     ];
 
     let fieldValues = {};
-    let skyboxType = this.panel.querySelector('.skyboxtemplatetype').checked;
-
-    if (skyboxType)
-      csv_row['skyboxtype'] = '';
-    else
-      csv_row['skyboxtype'] = 'building';
 
     fields.forEach(field => {
       let f = this.scene_block_add_options.querySelector('.' + field);
@@ -2549,13 +2518,79 @@ class cMacro {
       }
     });
 
-    if (skyboxType) {
-      csv_row.width = csv_row.skyboxsize;
-      csv_row.height = csv_row.skyboxsize;
-      csv_row.depth = csv_row.skyboxsize;
-    }
+    csv_row.width = csv_row.skyboxsize;
+    csv_row.height = csv_row.skyboxsize;
+    csv_row.depth = csv_row.skyboxsize;
 
     this.blockSkyboxChange();
+
+    return csv_row;
+  }
+  _blockScrapeBuilding() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      name: this.newName,
+      asset: 'buildingblock'
+    };
+    let fields = [
+      'width', 'height', 'depth', 'floormaterial', 'backwallmaterial',
+      'frontwallmaterial', 'leftwallmaterial', 'rightwallmaterial',
+      'ceilingmaterial',
+      'leftwallscalev', 'leftwallscaleu', 'leftwallimage',
+      'rightwallscalev', 'rightwallscaleu', 'rightwallimage',
+      'backwallscalev', 'backwallscaleu', 'backwallimage',
+      'frontwallscalev', 'frontwallscaleu', 'frontwallimage',
+      'floorscalev', 'floorscaleu', 'floorimage',
+      'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage'];
+    let fieldValues = {};
+
+    fields.forEach(field => {
+      let f = this.buildingscenefeatures.querySelector('.' + field);
+      if (f) {
+        if (f.getAttribute('type') === 'checkbox')
+          csv_row[field] = f.checked ? '1' : '';
+        else {
+          if (field.indexOf('image') !== -1) {
+            let url = f.value;
+            if (url.substring(0, 3) === 'sb:')
+              url = this.cdnPrefix + 'textures/' + url.substring(3);
+
+            let p_div = this.buildingscenefeatures.querySelector('.' + field + '_preview_div');
+            if (p_div) {
+              if (url) {
+                p_div.style.backgroundImage = '';
+                this._crossAnonLoadImg(url).then(() => {
+                  p_div.style.backgroundImage = 'url(' + url + ')';
+                });
+                p_div.style.display = 'block';
+                let scaleu = this.buildingscenefeatures.querySelector('.' + field + '_scaleu');
+                let scalev = this.buildingscenefeatures.querySelector('.' + field + '_scalev');
+
+                let u = Number(scaleu.value);
+                let v = Number(scalev.value);
+                if (!u)
+                  u = 1;
+                if (!v)
+                  v = 1;
+
+                let sizeX = 100;
+                let sizeY = 100;
+                if (v !== 0.0) {
+                  sizeX = (sizeX / v).toFixed(2);
+                }
+                if (u !== 0.0) {
+                  sizeY = (sizeY / u).toFixed(2);
+                }
+                p_div.style.backgroundSize = sizeX + '% ' + sizeY + '%';
+              } else {
+                p_div.style.display = 'none';
+              }
+            }
+          }
+          csv_row[field] = f.value;
+        }
+      }
+    });
 
     return csv_row;
   }
@@ -2591,12 +2626,12 @@ class cMacro {
   async blockHelperChange() {
     this.blockShapePanel.style.display = 'none';
     this.scene_block_add_options.style.display = 'none';
-    this.scene_type_option_list.style.display = 'none';
     this.animatedDashPanel.style.display = 'none';
     this.connectorLinePanel.style.display = 'none';
     this.webFontPanel.style.display = 'none';
     this.text2dpanel.style.display = 'none';
     this.block_child_wizard.style.display = 'none';
+    this.buildingscenefeatures.style.display = 'none';
 
     let sel = this.block_wizard_type_select.value;
 
@@ -2605,10 +2640,11 @@ class cMacro {
 
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
-    else if (sel === 'Scene') {
+    else if (sel === 'Scene')
       this.scene_block_add_options.style.display = '';
-      this.scene_type_option_list.style.display = '';
-    } else if (sel === 'Connector Line')
+    else if (sel === 'Room Walls')
+      this.buildingscenefeatures.style.display = '';
+    else if (sel === 'Connector Line')
       this.connectorLinePanel.style.display = '';
     else if (sel === 'Animated Line')
       this.animatedDashPanel.style.display = '';
@@ -2622,10 +2658,12 @@ class cMacro {
       this.wizard_parent_details.style.display = '';
     }
 
-    if (this.block_wizard_type_select.value === "Scene")
-      await this.app.updateHelpView("sceneblock", this.app.mV.helpViewer);
-    else
-      await this.app.updateHelpView(this.tag, this.app.mV.helpViewer);
+    if (this.app.mV) {
+      if (this.block_wizard_type_select.value === "Scene")
+        await this.app.updateHelpView("sceneblock", this.app.mV.helpViewer);
+      else
+        await this.app.updateHelpView(this.tag, this.app.mV.helpViewer);
+    }
 
     this.getItemName();
   }
@@ -2658,6 +2696,8 @@ class cMacro {
       csv_row = this._blockScrapeWebFont();
     if (macrotype === 'Scene')
       csv_row = this._blockScrapeScene();
+    if (macrotype === 'Room Walls')
+      csv_row = this._blockScrapeBuilding();
     if (macrotype === '2D Text Plane')
       csv_row = this._shapeScrapeTextPlane();
     if (macrotype === 'Block Child')
