@@ -102,7 +102,7 @@ class cMacro {
     return `<table class="wizard_field_container wizard_parent_details" style="display:none">
       <tr>
         <td>Parent Block</td>
-        <td><input type="text" list="blockdatatitlelookuplist" class="wizard_parent" style="width:100%" value="::scene::" /></td>
+        <td><input type="text" list="blockdatatitlelookuplist" class="wizard_parent" style="width:100%;margin-left:4px;" value="::scene::" /></td>
         <td></td>
       </tr>
       <tr style="${hideVisibility ? "display:none" : "" }">
@@ -893,18 +893,25 @@ class cMacro {
   }
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
-      <div style="display:flex;flex-direction:row">
-        <select class="block_wizard_type_select" style="margin-bottom: 8px;margin-top:4px;width: 10em;margin-right:.25em;font-size:.9em">
-         <option selected>Scene</option>
-         <option>Text and Shape</option>
-         <option>Animated Line</option>
-         <option>Connector Line</option>
-         <option>Room Walls</option>
-         <option>2D Text Plane</option>
-         <option>Web Font</option>
-         <option>Block Child</option>
-        </select>
-      </div>
+      <table class="wizard_field_container">
+        <tr>
+          <td>Block Type &nbsp; &nbsp; &nbsp; &nbsp;</td>
+          <td colspan="2">
+            <div style="display:flex;flex-direction:row">
+              <select class="block_wizard_type_select" style="margin-left:2px;width: 11em;margin-right:.25em;font-size:.9em">
+               <option selected>Scene</option>
+               <option>Text and Shape</option>
+               <option>Animated Line</option>
+               <option>Connector Line</option>
+               <option>Room Walls</option>
+               <option>2D Text Plane</option>
+               <option>Web Font</option>
+               <option>Block Child</option>
+              </select>
+            </div>
+          </td>
+        </tr>
+      </table>
       <div class="block_child_wizard">
         <table class="wizard_field_container">
           <tr>
@@ -1390,7 +1397,7 @@ class cMacro {
           </tr>
           <tr>
             <td style="text-align:center;" colspan="3">
-              <div class="frontwallimage_preview_div image_preview_div"></div>
+              <div class="rightwallimage_preview_div image_preview_div"></div>
             </td>
           </tr>
           <tr>

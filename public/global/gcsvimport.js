@@ -1285,7 +1285,7 @@ class gCSVImport {
       row.height = '60';
     if (!row.depth)
       row.depth = '45';
-      
+
     let block = {
       title: row.name,
       width: row.width,
@@ -1423,6 +1423,7 @@ class gCSVImport {
       this.addCSVRow(panelrow);
     }
 
+    row.asset = 'block';
     this.addParentBlockChild(row);
     return b_result;
   }
