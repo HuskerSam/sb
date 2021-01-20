@@ -952,6 +952,18 @@ table.wizard_field_container td:nth-child(1), table.wizard_field_container td sp
   font-size: .8em;
 }
 
+table.wizard_field_container input {
+  margin: 2px 0;
+}
+
+table.wizard_field_container button {
+  margin: 0;
+}
+
+table.wizard_field_container td:nth-child(1) {
+  min-width: 8.5em;
+}
+
 table.wizard_field_container td:nth-child(1) b {
    font-size: inherit;
 }
@@ -961,7 +973,7 @@ table.wizard_field_container td:nth-child(2) {
 }
 
 table.wizard_field_container td:nth-child(2) input {
-  width: 100%;
+  width: 11em;
   text-align: left;
 }
 
@@ -1009,4 +1021,15 @@ table.wizard_parent_details tr td span:nth-child(1) {
   padding:4px;
   text-align:left;
   border-top:outset .1em silver;
+}
+
+#position_plotter_div table.wizard_field_container label span {
+  top: -.75em;
+  margin-left:2px;
+  position: relative;
+  font-size: .8em;
+}
+
+#position_plotter_div input {
+  margin-left:4px;
 }

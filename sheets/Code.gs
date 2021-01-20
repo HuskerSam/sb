@@ -548,6 +548,8 @@ function onEdit(e) {
             continue;
           let source = sheet.getRange(firstCell);
           let v = source.getValue();
+          v = v.toLowerCase().replace('decolor:', '');
+          v = v.toLowerCase().replace('ecolor:', '');
           v = v.toLowerCase().replace('color:', '');
           v = v.trim();
 

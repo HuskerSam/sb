@@ -53,12 +53,12 @@
         <div id="help_viewer_panel_internal"></div>
       </div>
       <div id="details_wrapper_for_split" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
-        <div id="position_plotter_div" class="main_div_wrapper">
-          <table class="wizard_field_container" style="padding: 0px 8px 0 8px;flex:none;">
+        <div id="position_plotter_div" class="main_div_wrapper" style="padding: 0 8px 8px 8px;">
+          <table class="wizard_field_container" style="flex:none;text-align:left;">
             <tr>
               <td>Plot Type</td>
               <td>
-                <select id="plot_type_select" style="width:99%;">
+                <select id="plot_type_select" style="width:10em;margin-left:4px;">
                   <option selected value="bar_chart_plotter">Bar Chart</option>
                 </select>
               </td>
@@ -70,22 +70,22 @@
               <td></td>
             </tr>
             <tr data-cats="bar_chart_plotter">
-              <td>points per series</td>
+              <td>Points per series</td>
               <td><input type="text" id="plotter_points_per_plot" value="10" /></td>
               <td></td>
             </tr>
             <tr data-cats="bar_chart_plotter">
-              <td>width (x)</td>
+              <td>Width (x)</td>
               <td><input type="text" id="plotter_plots_width" value="25" /></td>
               <td></td>
             </tr>
             <tr data-cats="bar_chart_plotter">
-              <td>depth (z)</td>
+              <td>Depth (z)</td>
               <td><input type="text" id="plotter_plots_depth" value="10" /></td>
               <td></td>
             </tr>
             <tr data-cats="bar_chart_plotter">
-              <td colspan="3">
+              <td colspan="3" style="padding-bottom:4px;">
                 <button id="plotter_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
                 <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
                 <label><input type="checkbox" id="plotter_plots_includebreaks" /><span>breaks</span></label>
@@ -214,8 +214,8 @@
           </div>
         </div>
         <div id="block_wizards" class="main_div_wrapper">
-          <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:0 8px;">
-            <select id="wizard_choices" style="margin-right: 8px;">
+          <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:0 8px 8px 0">
+            <select id="wizard_choices" style="width:7em">
               <option value="block">Block</option>
               <option value="shape">Shape</option>
               <option value="mesh">Mesh</option>

@@ -87,7 +87,7 @@ class cMacro {
   }
   baseTemplate() {
     let template = `<div class="block_wizard_add_name_div" style="flex:1;display:flex;flex-direction:row;padding-top:2px;">
-      <label class="add_template_name_label" style="padding:2px 4px;"><span style="font-size:.75em;">Name</span>
+      <label class="add_template_name_label" style=""><span style="font-size:.75em;"></span>
      </label><input class="add_wizard_item_name" type="text" style="flex:1;" value="name" />`;
     if (!this.addonmode)
       template += `<button class="add-button btn-sb-icon"><i class="material-icons">add</i></button>
@@ -102,17 +102,18 @@ class cMacro {
     return `<table class="wizard_field_container wizard_parent_details" style="display:none">
       <tr>
         <td>Parent Block</td>
-        <td><input type="text" list="blockdatatitlelookuplist" class="wizard_parent" style="width:100%;margin-left:4px;" value="::scene::" /></td>
+        <td><input type="text" list="blockdatatitlelookuplist" class="wizard_parent" style="width:11em;" value="::scene::" /></td>
         <td></td>
       </tr>
       <tr style="${hideVisibility ? "display:none" : "" }">
         <td>Visibility</td>
-        <td colspan="2"><input type="text" class="wizard_visibility" style="width:6em" value="" /></td>
+        <td><input type="text" class="wizard_visibility" style="width:11em" value="" /></td>
+        <td></td>
       </tr>
       <tr>
         <td colspan="3">
           <div style="display:flex;flex-direction:row">
-            <span>Position X</span><input type="text" class="wizard_x" />
+            <span style="width:8.5em">Position X</span><input type="text" class="wizard_x" />
             <span>Y</span><input type="text" class="wizard_y" />
             <span>Z</span><input type="text" class="wizard_z" />
           </div>
@@ -121,7 +122,7 @@ class cMacro {
       <tr>
         <td colspan="3">
           <div style="display:flex;flex-direction:row">
-            <span>Rotate X</span><input type="text" class="wizard_rx" />
+            <span style="width:8.5em">Rotate X</span><input type="text" class="wizard_rx" />
             <span>Y</span><input type="text" class="wizard_ry" />
             <span>Z</span><input type="text" class="wizard_rz" />
           </div>
@@ -130,7 +131,7 @@ class cMacro {
       <tr>
         <td colspan="3">
           <div style="display:flex;flex-direction:row">
-            <span>Scale X</span><input type="text" class="wizard_sx" />
+            <span style="width:8.5em">Scale X</span><input type="text" class="wizard_sx" />
             <span>Y</span><input type="text" class="wizard_sy" />
             <span>Z</span><input type="text" class="wizard_sz" />
           </div>
@@ -140,14 +141,16 @@ class cMacro {
   }
   cameraTemplate() {
     return `<div class="shape_wizard_wrapper" style="display:flex;flex-direction:column;">
-      <div style="display:flex;flex-direction:row">
-        <select class="camera_wizard_type_select" style="margin-bottom: 8px;margin-top:4px;width: 12em;margin-right:.25em;font-size:.9em">
-         <option selected>Native Camera</option>
-         <option>Product Camera</option>
-        </select>
-      </div>
       <div style="flex:1;overflow: hidden auto;">
         <table class="wizard_field_container native_camera_table">
+          <tr>
+            <td></td>
+            <td>
+            <select class="camera_wizard_type_select">
+             <option selected>Native Camera</option>
+             <option>Product Camera</option>
+            </select>
+            </td><td></td>
           <tr>
             <td>Camera Type</td>
             <td><input data-field="cameratype" type="text" value="ArcRotate" list="camerasourceslist" /></td>
@@ -360,7 +363,7 @@ class cMacro {
       this.csv_import_preview.innerHTML = new Date();
   }
   frameTemplate() {
-    return `<div class="frame_wizard_wrapper" style="display:flex;flex-direction:column;overflow:hidden auto;flex:1">
+    return `<div class="shape_wizard_wrapper frame_wizard_wrapper" style="display:flex;flex-direction:column;overflow:hidden auto;flex:1">
       <table class="wizard_field_container">
         <tr data-cats="all">
           <td>Block Child Type</td>
@@ -895,10 +898,9 @@ class cMacro {
     return `<div class="block_wizard_wrapper">
       <table class="wizard_field_container">
         <tr>
-          <td>Block Type &nbsp; &nbsp; &nbsp; &nbsp;</td>
-          <td colspan="2">
-            <div style="display:flex;flex-direction:row">
-              <select class="block_wizard_type_select" style="margin-left:2px;width: 11em;margin-right:.25em;font-size:.9em">
+          <td>Block Type</td>
+          <td>
+              <select class="block_wizard_type_select" style="width:11em;">
                <option selected>Scene</option>
                <option>Text and Shape</option>
                <option>Animated Line</option>
@@ -909,6 +911,8 @@ class cMacro {
                <option>Block Child</option>
               </select>
             </div>
+          </td>
+          <td>
           </td>
         </tr>
       </table>
@@ -1326,7 +1330,7 @@ class cMacro {
             </td>
           </tr>
           <tr>
-            <td><b>Backwall Material</b></td>
+            <td><b>Back Material</b></td>
             <td><input type="text" class="backwallmaterial" list="materialdatatitlelookuplist" /></td>
             <td><input type="color" class="colorpicker" data-inputclass="backwallmaterial"></td>
           </tr>
@@ -1351,7 +1355,7 @@ class cMacro {
             </td>
           </tr>
           <tr>
-            <td><b>Front Wall Material</b></td>
+            <td><b>Front Material</b></td>
             <td><input type="text" class="frontwallmaterial" list="materialdatatitlelookuplist" /></td>
             <td><input type="color" class="colorpicker" data-inputclass="frontwallmaterial"></td>
           </tr>
@@ -1376,7 +1380,7 @@ class cMacro {
             </td>
           </tr>
           <tr>
-            <td><b>Right Wall Material</b></td>
+            <td><b>Right Material</b></td>
             <td><input type="text" class="rightwallmaterial" list="materialdatatitlelookuplist" /></td>
             <td><input type="color" class="colorpicker" data-inputclass="rightwallmaterial"></td>
           </tr>
@@ -1401,7 +1405,7 @@ class cMacro {
             </td>
           </tr>
           <tr>
-            <td><b>Left Wall Material</b></td>
+            <td><b>Left Material</b></td>
             <td><input type="text" class="leftwallmaterial" list="materialdatatitlelookuplist" /></td>
             <td><input type="color" class="colorpicker" data-inputclass="leftwallmaterial"></td>
           </tr>
@@ -1455,7 +1459,7 @@ class cMacro {
       <div id="block_wizard_parent_wrapper">
         <table class="wizard_field_container">
           <tr data-types="all" class="show_parent_details_row">
-            <td>Show Parent Details</td>
+            <td>Parent</td>
             <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
             <td></td>
           </tr>
@@ -1695,7 +1699,7 @@ class cMacro {
           <td></td>
         </tr>
         <tr data-types="all">
-          <td>Show Parent Details</td>
+          <td>Parent</td>
           <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
           <td></td>
         </tr>
@@ -1889,21 +1893,21 @@ class cMacro {
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
-            <td>Normal Map URL</td>
+            <td>Normal Map</td>
             <td><input type="text" list="sbimageslist" class="mesh_bmppath texturepathinput" data-field="mesh_bmppath" /></td>
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
-            <td>Specular Map URL</td>
+            <td>Specular Map</td>
             <td><input type="text" list="sbimageslist" class="mesh_specularpath texturepathinput" data-field="mesh_specularpath" /></td>
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
             <td colspan="3">
               <div style="display:flex;flex-direction:row">
-                <span style="padding-top:4px;padding-right:4px;">Specular Power</span><input type="text" class="mesh_specularpower" data-field="mesh_specularpower" />
+                <span style="padding-top:8px;padding-right:4px;">Specular Power</span><input type="text" class="mesh_specularpower" data-field="mesh_specularpower" />
 
-                <span style="padding-left:8px;padding-right:4px;padding-top:4px;">Has Alpha (1)</span><input type="text" class="mesh_hasalpha" data-field="mesh_hasalpha" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Has Alpha (1)</span><input type="text" class="mesh_hasalpha" data-field="mesh_hasalpha" />
               </div>
             </td>
           </tr>
@@ -1918,7 +1922,7 @@ class cMacro {
             </td>
           </tr>
           <tr data-types="all">
-            <td>Show Parent Details</td>
+            <td>Parent</td>
             <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
             <td></td>
           </tr>
