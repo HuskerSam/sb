@@ -329,8 +329,7 @@ class cMacro {
       tr_rows = this.panel.querySelectorAll('.native_camera_table tr');
       csv_row.asset = 'blockchild';
       csv_row.childtype = 'camera';
-    }
-    else {
+    } else {
       tr_rows = this.panel.querySelectorAll('.product_camera_table tr');
       csv_row.asset = 'displaycamera';
     }
@@ -1993,7 +1992,7 @@ class cMacro {
         this.wizard_parent_details.style.display = 'none';
     });
 
-    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath','specularpath','specularpower','hasalpha'];
+    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'specularpath', 'specularpower', 'hasalpha'];
 
     this.__registerFileUploaders();
 
@@ -2138,6 +2137,11 @@ class cMacro {
       paths.push(`sb:matpack/brickwall${c + 1}_D.jpg`);
     for (let c = 0; c < 11; c++)
       paths.push(`sb:matpack/floor${c + 1}_D.jpg`);
+    for (let c = 0; c < 9; c++)
+      paths.push(`sb:matpack/tiles0${c + 1}_D.jpg`);
+    paths.push(`sb:matpack/tiles10_D.jpg`);
+    for (let c = 0; c < 10; c++)
+      paths.push(`sb:matpack/Stone${c + 1}_D.jpg`);
     for (let c = 0; c < 8; c++)
       paths.push(`sb:matpack/grid${c + 1}_D.png`);
     for (let c = 0; c < 2; c++)
@@ -2148,6 +2152,28 @@ class cMacro {
       paths.push(`sb:matpack/roof${c + 1}_D.jpg`);
     for (let c = 0; c < 7; c++)
       paths.push(`sb:matpack/wood${c + 1}_D.jpg`);
+    for (let c = 0; c < 14; c++)
+      paths.push(`sb:ground/ground${c + 1}_D.jpg`);
+    for (let c = 0; c < 14; c++)
+      paths.push(`sb:ground/ground${c + 1}_D.jpg`);
+    for (let c = 0; c < 4; c++)
+      paths.push(`sb:ground/grass${c + 1}_D.jpg`);
+    for (let c = 0; c < 4; c++)
+      paths.push(`sb:ground/sand${c + 1}_D.jpg`);
+    paths.push(`sb:ground/g2/dryground_D.jpg`);
+    paths.push(`sb:ground/g2/grassleaves_D.jpg`);
+    paths.push(`sb:ground/g2/grassleaves2_D.jpg`);
+    paths.push(`sb:ground/g2/grassmoss_D.jpg`);
+    paths.push(`sb:ground/g2/grassrocks_D.jpg`);
+    paths.push(`sb:ground/g2/grounddirt1_D.jpg`);
+    paths.push(`sb:ground/g2/grounddirt2_D.jpg`);
+    paths.push(`sb:ground/g2/groundlava_D.jpg`);
+    paths.push(`sb:ground/g2/groundweeds_D.jpg`);
+    for (let c = 0; c < 6; c++)
+      paths.push(`sb:ground/g2/grass${c + 1}_D.jpg`);
+    for (let c = 0; c < 3; c++)
+      paths.push(`sb:ground/g2/groundrocks${c + 1}_D.jpg`);
+
     this.materialTexturePaths = paths;
 
     let html = '';
@@ -2256,7 +2282,7 @@ class cMacro {
 
     if (texture) {
       textureURL = texture;
-      if (texture.substring(0,3) === 'sb:')
+      if (texture.substring(0, 3) === 'sb:')
         textureURL = this.cdnPrefix + 'textures/' + texture.substring(3);
 
       this.material_image_bkg_div.style.backgroundImage = '';
@@ -2464,7 +2490,8 @@ class cMacro {
       'floorscalev', 'floorscaleu', 'floorimage',
       'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage',
       'frametime', 'audiourl', 'displaycamera', 'genericblockdata',
-      'musicparams' ];
+      'musicparams'
+    ];
 
     let fieldValues = {};
     let skyboxType = this.panel.querySelector('.skyboxtemplatetype').checked;
@@ -2794,7 +2821,9 @@ class cMacro {
 
     if (!this.panelInputUpdated)
       this.panelInput.value = prefix + ' ' + Math.floor(100 + Math.random() * 900).toString();
-    this[this.tag + 'UpdateCSV']();
+
+    if (this[this.tag + 'UpdateCSV'])
+      this[this.tag + 'UpdateCSV']();
     return r;
   }
   async createItem(newWindow) {

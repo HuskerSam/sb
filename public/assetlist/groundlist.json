@@ -1,4 +1,12 @@
 [
   {"path":"sb:display/handdrawnbeigetile.webp", "scaleu":3,"scalev":3},
-{"path":"sb:display/indoorwood44_1024.jpg", "scaleu":3,"scalev":3}
+{"path":"sb:display/indoorwood44_1024.jpg", "scaleu":3,"scalev":3},
+
+{"path":"sb:ground/BrownStony.png", "scaleu":2,"scalev":2},
+{"path":"sb:ground/BrownStonyLight.png", "scaleu":2,"scalev":2},
+{"path":"sb:ground/Grass.png", "scaleu":4,"scalev":4},
+{"path":"sb:ground/Sandy.png", "scaleu":1,"scalev":1},
+{"path":"sb:ground/SandyOrange.png", "scaleu":1,"scalev":1},
+{"path":"sb:ground/WaterLightBlue.png", "scaleu":1,"scalev":1},
+{"path":"sb:ground/WaterDeepBlue.png", "scaleu":1,"scalev":1}
 ]
