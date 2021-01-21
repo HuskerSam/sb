@@ -19,10 +19,11 @@ class gPublishApp extends gInstanceSuper {
         this.mV = new cViewPublished();
         this._updateApplicationStyle();
         this.mV.noProjectFoundCanvas.style.display = '';
+
+        gAPPP.a.modelSets['projectTitles'].childListeners.push((values, type, fireData) => window.location.reload());
         return;
       }
     }
-
 
     let workspace = urlParams.get('w');
     this.blockId = urlParams.get('b');
