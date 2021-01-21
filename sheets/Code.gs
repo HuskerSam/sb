@@ -582,8 +582,8 @@ function onEdit(e) {
   }
 }
 
-function colorHeader() {
-  return arguments[0];
+function colorHeader(label) {
+  return label;
 }
 
 function color(str) {

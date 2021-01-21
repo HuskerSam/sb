@@ -109,7 +109,7 @@
                 <td>
                   <input id="target_to_deploy" type="text" value="handtopbuilder" />
                 </td>
-                <td><button id="target_server_set_button" class="blue">Set Server</button></td>
+                <td><button id="target_server_set_button" class="">Set Server</button></td>
               </tr>
               <tr>
                 <td>Token</td>
@@ -145,7 +145,7 @@
                 <option data-view="project_upload_view">Upload</option>
                 <option>Open in /view</option>
                 <option>Open in /display</option>
-                <option>Open in /edit</option>
+                <option>Open in /asset</option>
                 <option data-view="qrcode_for_link_display">QR Code for /view</option>
                 <option data-view="qrcode_for_link_display">QR code for /display</option>
               </select>
@@ -482,12 +482,10 @@
         this.defaultServerTarget = '';
         if (this.configurationCSV[0]['Target Server']) {
           this.defaultServerTarget = this.configurationCSV[0]['Target Server'];
-          this.target_server_set_button.classList.add('blue');
           this.target_server_set_button.classList.remove('red');
           this.selected_target_span.innerHTML = this.defaultServerTarget;
         } else {
           this.target_server_set_button.classList.add('red');
-          this.target_server_set_button.classList.remove('blue');
           this.selected_target_span.innerHTML = '<span style="color:red;font-size:1em">No Server Target</span>';
           this.addon_display_view_select.value = 'cloud_target';
           this.loadAddonView();
@@ -513,6 +511,11 @@
             this.helpPanelToggle();
           }
         }
+
+        let pid = this.defaultServerTarget;
+        this.gProjectDisplayURL = 'https://' + pid + '.web.app/display/?name=' + this.defaultProjectTarget;
+        this.gProjectEditURL = 'https://' + pid + '.web.app/asset/?name=' + this.defaultProjectTarget;
+        this.gProjectViewURL = 'https://' + pid + '.web.app/view/?name=' + this.defaultProjectTarget;
 
         setTimeout(() => this.updateHelpViewer(), 100);
 
@@ -592,6 +595,11 @@
         this.url_to_deploy.innerHTML = '<a target="_blank" href="' + navurl + '">Open</a>';
 
         this.selected_server_details_div.innerHTML = t['description'];
+
+        if (this.defaultServerTarget && this.defaultServerTarget === id)
+          this.target_server_set_button.classList.remove("blue");
+        else
+          this.target_server_set_button.classList.add("blue");
       }
       async loadTemplateDetails() {
         let data = this.templateMap[this.circuit_template_select.value];
@@ -934,7 +942,12 @@
         this.projectViewURL = 'https://' + pid + '.web.app/view/?name=' + selectedProject;
 
         if (this.project_selected_options.selectedIndex === 4) {
-          this.projectViewCurrentProject();
+          let a = document.createElement('a');
+          a.setAttribute('href', this.projectViewURL);
+          a.setAttribute('target', '_blank');
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
         }
         if (this.project_selected_options.selectedIndex === 5) {
           let a = document.createElement('a');
@@ -987,6 +1000,7 @@
         let sheets = layoutName.split(',');
 
         this.create_layout_btn.classList.add('create_layout_spin');
+        this.create_layout_btn.classList.remove('blue');
         let genResponse = await fetch('https://www.handtop.com/addontemplates/template_' + layoutName + '.json', {
           method: "get",
           cache: "no-store"
@@ -1012,7 +1026,7 @@
               if (this.add_products_to_projectlist.checked && (baseSheetName === sheetName))
                 await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget, "Catalog Ranges");
             }
-
+            this.create_layout_btn.classList.add('blue');
             this.create_layout_btn.classList.remove('create_layout_spin');
             resolve(result);
           }).createSheetFromTemplate(sheetName, genResults);
@@ -1121,6 +1135,24 @@
 
         return this.initSheetBasedData();
       }
+      _uploadCSVTest(csv, testData = false) {
+        if (!csv)
+          return false;
+        if (csv.length === 0)
+          return false;
+        let data = csv[0];
+        let keys = Object.keys(data);
+        let error = false;
+        keys.forEach(key => {if (key === '#ERROR!') error = true});
+        if (testData)
+          csv.forEach(e => keys.forEach(key => {
+            if (e[key] === '#ERROR!') error = true
+          }));
+
+        if (error)
+          this.user_notify_error = true;
+        return error;
+      }
       async cloudDeployProjects(filter) {
         if (this.busy)
           return;
@@ -1132,8 +1164,19 @@
         this.dataCache = {};
 
         this.busy = true;
+        this.user_notify_error = false;
+        this.publish_results.value = '';
 
         let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, true);
+
+        this.projectsFetchCSVTestStatus = this._uploadCSVTest(publishList, true);
+        if (this.projectsFetchCSVTestStatus) {
+          console.log('CSV Validation Error', 'Projects', publishList);
+          this.publish_results.value += name + ':PROJECTS: Error ';
+          this.publish_results.value +=  'CSV Validation Error\n\n';
+        }
+
+        this.publish_results.value += publishList.length.toString() + ' Items in ' + this.projectsSheetName + '\n\n';
 
         let deleteProject = async (name) => {
           let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
@@ -1167,7 +1210,13 @@
               if (!assets) {
                 let ranges = assetRanges.split(',');
                 assets = await this.sheetsJSONforRangeListCSV(ranges);
-                console.log('asset fetch');
+                let csvError = this._uploadCSVTest(assets);
+                if (csvError) {
+                  console.log('CSV Validation Error', name, 'assets', assets);
+                  this.publish_results.value += name + ':assets: Error ';
+                  this.publish_results.value +=  'CSV Validation Error\n';
+                }
+                console.log('asset fetch', assets);
               }
               let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
               url += encodeURIComponent(name) + '&type=asset';
@@ -1187,6 +1236,7 @@
               } else {
                 this.publish_results.value += name + ':assets: Error ';
                 this.publish_results.value += assetResults.errorMessage + '\n';
+                this.user_notify_error = true;
               }
               this.publish_results.scrollTop = this.publish_results.scrollHeight;
             }
@@ -1201,7 +1251,14 @@
               if (!scene) {
                 let ranges = circuitRanges.split(',');
                 scene = await this.sheetsJSONforRangeListCSV(ranges);
-                console.log('scene fetched');
+                let csvError = this._uploadCSVTest(scene);
+                if (csvError) {
+                  console.log('CSV Validation Error', name, 'Circuit', scene);
+                  this.publish_results.value += name + ':circuit: Error ';
+                  this.publish_results.value +=  'CSV Validation Error\n';
+                }
+
+                console.log('circuit fetched', scene);
               }
               let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
               url += encodeURIComponent(name) + '&type=scene';
@@ -1220,6 +1277,7 @@
               } else {
                 this.publish_results.value += name + ':circuit: Error ';
                 this.publish_results.value += sceneResults.errorMessage + '\n';
+                this.user_notify_error = true;
               }
               this.publish_results.scrollTop = this.publish_results.scrollHeight;
             }
@@ -1235,7 +1293,15 @@
               if (!products) {
                 let ranges = catalogRanges.split(',');
                 products = await this.sheetsJSONforRangeListCSV(ranges);
-                console.log('products fetch');
+
+                let csvError = this._uploadCSVTest(products);
+                if (csvError) {
+                  console.log('CSV Validation Error', name, 'Products', products);
+                  this.publish_results.value += name + ':products: Error ';
+                  this.publish_results.value +=  'CSV Validation Error\n';
+                }
+
+                console.log('products fetch', products);
               }
 
               let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/upload?name=';
@@ -1254,6 +1320,7 @@
               } else {
                 this.publish_results.value += name + ':products: Error ';
                 this.publish_results.value += productResults.errorMessage + '\n';
+                this.user_notify_error = true;
               }
               this.publish_results.scrollTop = this.publish_results.scrollHeight;
             }
@@ -1286,6 +1353,7 @@
             this.publish_results.value += '\nERROR ' + step + '\n';
             this.publish_results.value += error.message;
             this.publish_results.scrollTop = this.publish_results.scrollHeight;
+            this.user_notify_error = true;
             return {
               error: error
             };
@@ -1293,8 +1361,6 @@
         };
 
         let promises = [];
-
-        this.publish_results.value = publishList.length.toString() + ' Items in ' + this.projectsSheetName + '\n\n';
         let singleIndex = null;
         if (filter === 'list_selected') {
           singleIndex = this.project_deploy_select.selectedIndex;
@@ -1337,6 +1403,11 @@
           this.publish_results.scrollTop = this.publish_results.scrollHeight;
           let result = await publishSingle(row['Project Name'], row['Asset Ranges'],
             row['Circuit Ranges'], row['Catalog Ranges']);
+
+          if (this.user_notify_error) {
+            this.user_notify_error = false;
+            alert('Error deploying ' + row['Project Name'].toString() + ' - please refer to log.');
+          }
         }
         this.busy = false;
         this.display_publish_list.classList.remove('busy_deploy');
@@ -1637,7 +1708,7 @@
 
       projectViewCurrentProject() {
         let a = document.createElement('a');
-        a.setAttribute('href', this.projectViewURL);
+        a.setAttribute('href', this.gProjectViewURL);
         a.setAttribute('target', '_blank');
         document.body.appendChild(a);
         a.click();
