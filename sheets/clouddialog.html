@@ -188,29 +188,31 @@
         <div id="template_view" class="main_div_wrapper">
           <div style="display:flex;flex-direction:row;padding: 0 8px;">
             <input id="sheetname" style="flex:1;">
-            <button id="create_layout_btn" class="green" style="margin-left:8px">Create Sheet</button>
+            <button id="create_layout_btn" class="blue" style="margin-left:8px"><i class="material-icons">build</i> Create</button>
           </div>
-          <select id="template_filter_select" style="margin:8px 8px 4px 8px;">
-            <option>All</option>
-            <option>Setup</option>
-            <option selected>Layouts</option>
-            <option>Blocks</option>
-            <option>Other</option>
-          </select>
-          <div style="display:none;" id="publishlist_add_chk_wrapper">
-            <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_to_publishlist" checked>Add to Projects </label>
-            <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="set_to_defaultproject" checked>Set Default </label>
+          <div id="template_upper_split" style="display:flex;flex-direction:row;padding:8px;">
+            <select id="template_filter_select" style="margin-right:8px;width:7em;">
+              <option>All</option>
+              <option>Setup</option>
+              <option selected>Layouts</option>
+              <option>Blocks</option>
+              <option>Other</option>
+            </select>
+            <div style="display:none;" id="publishlist_add_chk_wrapper">
+              <label style="flex:1;;"> <input type="checkbox" id="add_to_publishlist" checked> Add Project </label>
+              <label style="flex:1;margin-left:4px;"> <input type="checkbox" id="set_to_defaultproject" checked> Default </label>
+            </div>
+            <div id="publishlist_asset_add_chk_wrapper" style="display:none;">
+              <label style="flex:1;"> <input type="checkbox" id="add_asset_to_projectlist" checked> Set for Current Project </label>
+            </div>
+            <div id="publishlist_products_add_chk_wrapper" style="display:none;">
+              <label style="flex:1;"> <input type="checkbox" id="add_products_to_projectlist" checked> Set for Current Project </label>
+            </div>
           </div>
-          <div id="publishlist_asset_add_chk_wrapper" style="display:none;">
-            <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_asset_to_projectlist" checked> Set Assets for Current Project </label>
-          </div>
-          <div id="publishlist_products_add_chk_wrapper" style="display:none;">
-            <label style="flex:1;padding-top:4px;"> <input type="checkbox" id="add_products_to_projectlist" checked> Set Products for Current Project </label>
-          </div>
-          <select id="circuit_template_select" class="select_list" size="5" style="margin-top:4px">
-          </select>
-          <div class="select_flex_view" style="flex:none;">
-            <div id="template_description" style="margin:8px;background:rgb(245,245,245);border-radius:1em;padding: 8px;height: 5em;overflow: hidden auto;"></div>
+          <div style="flex:1;overflow:hidden;display:block;">
+            <select id="circuit_template_select" class="select_list" size="5">
+            </select>
+            <div id="template_description" style="overflow: hidden auto;"></div>
           </div>
         </div>
         <div id="block_wizards" class="main_div_wrapper">
@@ -824,6 +826,15 @@
 
         this.circuit_template_select.selectedIndex = 0;
         this.loadTemplateDetails();
+
+
+        if (this.splitTemplatesView)
+          this.splitTemplatesView.destroy();
+        this.splitTemplatesView = Split(['#circuit_template_select', '#template_description'], {
+          sizes: [80, 20],
+          minSize: [20, 20],
+          direction: 'vertical'
+        });
       }
       async loadImagePreview(new_url) {
         if (this.updatingImagePreview) {
@@ -955,7 +966,7 @@
       async sheetsCreateTemplateSheet(layoutName, sheetName, baseSheetName = '') {
         let sheets = layoutName.split(',');
 
-        this.create_layout_btn.innerHTML = '...';
+        this.create_layout_btn.classList.add('create_layout_spin');
         let genResponse = await fetch('https://www.handtop.com/addontemplates/template_' + layoutName + '.json', {
           method: "get",
           cache: "no-store"
@@ -982,7 +993,7 @@
                 await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget, "Catalog Ranges");
             }
 
-            this.create_layout_btn.innerHTML = 'Create Sheet';
+            this.create_layout_btn.classList.remove('create_layout_spin');
             resolve(result);
           }).createSheetFromTemplate(sheetName, genResults);
         });
@@ -1066,7 +1077,6 @@
         this.initSheetBasedData();
       }
       async templateCreateSheets() {
-        this.setBusy();
         let sheetName = this.sheetname.value;
         let templateString = this.circuit_template_select.value;
         let templates = templateString.split(',');
@@ -1799,7 +1809,6 @@
     select.select_list {
       text-align: left;
       margin: 0 8px;
-      width: 100% - 16px);
       flex: 1;
       min-height: 3em;
     }
@@ -1945,11 +1954,14 @@
       background-size: 50px 100%;
     }
 
-    #cloud_deploy .gutter.gutter-vertical {
+    #cloud_deploy .gutter.gutter-vertical, #template_view .gutter.gutter-vertical {
       background-image: linear-gradient(white, white, silver, white,
         white);
       background-color: white;
       margin: 0 8px;
+    }
+    #circuit_template_select {
+      width: calc(100% - 16px)
     }
 
     .rotate_busy i {
@@ -1996,6 +2008,30 @@
         transform: translateY(0%)
       }
     }
+
+    button.create_layout_spin {
+      background: rgb(150, 220, 150);
+    }
+
+    .create_layout_spin i {
+      animation: spin_build_wrench 1s ease-in-out infinite;
+      transform-origin: 20% 20%;
+    }
+
+    @keyframes spin_build_wrench {
+      0% {
+        transform: rotate(0);
+      }
+
+      50% {
+        transform: rotate(90deg);
+      }
+
+      100% {
+        transform: rotate(0);
+      }
+    }
+
   </style>
 
 </body>
