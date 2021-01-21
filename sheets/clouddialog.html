@@ -666,13 +666,8 @@
           field.value = 'Uploading...';
           let filename = fileBlob.name;
 
-          if (!this.defaultProjectTarget) {
-            alert('No default project configured');
+          if (!this._validationConfiguration())
             return;
-          }
-          if (!this.defaultServerTarget) {
-            alert('No default target server configured');
-          }
           if (!this.defaultToken) {
             alert('No default token configured');
           }
@@ -1154,6 +1149,9 @@
         return error;
       }
       async cloudDeployProjects(filter) {
+        if (!this._validationConfiguration())
+          return;
+
         if (this.busy)
           return;
 
@@ -1706,7 +1704,22 @@
         this.song_raw_data.innerHTML = JSON.stringify(resampledArray);
       }
 
+      _validationConfiguration() {
+        if (!this.defaultServerTarget) {
+          alert('No default server set - refer to help');
+          return false;
+        }
+
+        if (!this.defaultProjectTarget) {
+          alert('No default project set - refer to help');
+          return false;
+        }
+
+        return true;
+      }
       projectViewCurrentProject() {
+        if (!this._validationConfiguration())
+          return;
         let a = document.createElement('a');
         a.setAttribute('href', this.gProjectViewURL);
         a.setAttribute('target', '_blank');
