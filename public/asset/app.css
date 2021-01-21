@@ -1022,14 +1022,3 @@ table.wizard_parent_details tr td span:nth-child(1) {
   text-align:left;
   border-top:outset .1em silver;
 }
-
-#position_plotter_div table.wizard_field_container label span {
-  top: -.75em;
-  margin-left:2px;
-  position: relative;
-  font-size: .8em;
-}
-
-#position_plotter_div input {
-  margin-left:4px;
-}

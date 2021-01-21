@@ -99,31 +99,43 @@
           </div>
         </div>
         <div id="cloud_target" class="main_div_wrapper">
-          <select id="deploy_options_server_list" class="select_list" size="5"></select>
-          <div class="select_flex_view" style="flex:none;">
-            <div style="display:flex;flex-direction:row;padding:2px 8px">
-              <div style="padding: 2px">Target</div>
-              <input id="target_to_deploy" style="flex:1" type="text" value="handtopbuilder" />
-            </div>
-            <div style="display:flex;flex-direction:row;padding: 2px 8px">
-              <div style="padding: 2px">Token</div>
-              <input id="token_to_deploy" type="text" style="flex:1" value="builder" />
-            </div>
-            <div style="text-align:center;">
-              <button id="target_server_set_button" class="blue">Set Server</button>
-              &nbsp;
-              <div id="url_to_deploy" style="display:inline-block;"></div>
-            </div>
-            <div id="selected_server_details_div" style="padding-top:4px;"></div>
-            <div id="assets_anchor" style="margin-top:.5em;"> loading...</div>
+          <div id="cloud_target_header_panel" style="padding: 0 8px 8px 8px">
+            <table class="wizard_field_container top_view_table" style="flex:none;text-align:left;">
+              <tr>
+                <td>Target</td>
+                <td>
+                  <input id="target_to_deploy" type="text" value="handtopbuilder" />
+                </td>
+                <td><button id="target_server_set_button" class="blue">Set Server</button></td>
+              </tr>
+              <tr>
+                <td>Token</td>
+                <td>
+                  <input id="token_to_deploy" type="text" value="builder" />
+                </td>
+                <td><div id="url_to_deploy" style="display:inline-block;"></div></td>
+              </tr>
+              <tr>
+                <td>Source</td>
+                <td>
+                  <div id="assets_anchor" style="padding: 4px 6px;">loading...</div>
+                </td>
+                <td></td>
+            </table>
+          </div>
+          <div style="flex:1;overflow:hidden;display:block;">
+            <select id="deploy_options_server_list" style="width:calc(100% - 16px)" class="select_list" size="5"></select>
+            <div id="selected_server_details_div" class="select_flex_view" style="flex:none;">
+          </div>
           </div>
         </div>
         <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
           <select id="project_deploy_select" class="select_list" size="5"></select>
           <div id="project_detail_view_for_split" style="display:flex;overflow:hidden;flex-direction:column;">
             <div style="margin:4px 8px;text-align:left;">
-              <button id="set_default_proj" class="blue"><i class="material-icons">push_pin</i></button>
-              <select id="project_selected_options" style="width:5.5em;margin:0 4px;">
+              <button id="project_set_default_btn" class="blue"><i class="material-icons">push_pin</i></button>
+              <button id="display_publish_single" style="margin-left:2px;"><i class="material-icons">publish</i></button>
+              <select id="project_selected_options" style="width:7em;margin:0 4px;">
                 <option data-view="project_deploy_view">Deploy</option>
                 <option data-view="project_display_view">View</option>
                 <option data-view="project_display_view">Display</option>
@@ -140,7 +152,6 @@
                 <option>1/4x</option>
               </select>
               <span id="deploy_detail_buttons_view">
-                <button id="display_publish_single"><i class="material-icons">publish</i> Selected</button>
                 <button id="display_publish_list" style="margin:0 4px;"><i class="material-icons">publish</i> All</button>
               </span>
             </div>
@@ -346,7 +357,7 @@
           'publish_results', 'target_to_deploy', 'token_to_deploy', 'url_to_deploy', 'project_deploy_select',
           'deploy_options_server_list', 'display_publish_list', 'assets_anchor', 'plot_type_select',
           'upload_file_cloud', 'file_upload_name', 'upload_file_input', 'img_preview', 'plotter_output_table',
-          'img_preview_link', 'display_publish_single', 'set_default_proj', 'preview_panel', 'position_plotter_div',
+          'img_preview_link', 'display_publish_single', 'project_set_default_btn', 'preview_panel', 'position_plotter_div',
           'sheetname', 'circuit_template_select', 'help_viewer_panel', 'help_viewer_panel_internal',
           'block_wizard_select_wrapper', 'add_asset_to_projectlist', 'help_viewer_panel_select', 'help_and_details_wrapper_for_split',
           'create_layout_btn', 'add_to_publishlist', 'set_to_defaultproject', 'publishlist_add_chk_wrapper', 'template_description', 'macro_details_wrapper', 'wizard_choices',
@@ -378,7 +389,7 @@
         this.upload_file_input.addEventListener('change', e => this.storageUploadProjectFile(e));
         this.display_publish_single.addEventListener('click', e => this.cloudDeployProjects('list_selected'));
         this.display_publish_single_header.addEventListener('click', e => this.cloudDeployProjects('selected'));
-        this.set_default_proj.addEventListener('click', e => this.sheetsStoreSelectedProject());
+        this.project_set_default_btn.addEventListener('click', e => this.sheetsStoreSelectedProject());
         this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
         this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails());
         this.template_filter_select.addEventListener('input', e => this.loadTemplateList());
@@ -448,6 +459,14 @@
           minSize: [20, 20],
           direction: 'vertical'
         });
+
+        if (this.splitDeployView)
+          this.splitDeployView.destroy();
+        this.splitDeployView = Split(['#deploy_options_server_list', '#selected_server_details_div'], {
+          sizes: [70, 30],
+          minSize: [20, 20],
+          direction: 'vertical'
+        });
       }
 
       async loadConfiguration() {
@@ -475,12 +494,12 @@
         this.defaultProjectTarget = '';
         if (this.configurationCSV[0]['Target Project']) {
           this.defaultProjectTarget = this.configurationCSV[0]['Target Project'];
-          this.set_default_proj.classList.remove('red');
-          this.set_default_proj.classList.add('blue');
+          this.project_set_default_btn.classList.remove('red');
+          this.project_set_default_btn.classList.add('blue');
           this.selected_project_span.innerHTML = this.defaultProjectTarget;
         } else {
-          this.set_default_proj.classList.add('red');
-          this.set_default_proj.classList.remove('blue');
+          this.project_set_default_btn.classList.add('red');
+          this.project_set_default_btn.classList.remove('blue');
           this.selected_project_span.innerHTML = '<span style="color:red;font-size:1em">No Project Target</span>';
           if (this.defaultServerTarget !== '') {
             this.addon_display_view_select.value = 'template_view';
@@ -507,6 +526,10 @@
           rangeString = deployOptionsRange;
 
         let deploys = await this.sheetsJSONforRangeListCSV([rangeString]);
+
+        if (deploys.length === 0)
+          return;
+
         let targetRange = deploys[0].deployrange;
         let assetRString = this.mainSpreadsheetID + "||||'Deploy Options'!" + targetRange;
         if (!this.mainSpreadsheetID)
@@ -520,13 +543,11 @@
         if (this.mainSpreadsheetID) {
           let url = "https://docs.google.com/spreadsheets/d/";
           url += this.mainSpreadsheetID.toString();
-          let open = '<a target="_blank" href="' + url + '">Open</a>';
-          configDetailsHTML += 'Parent Spreadsheet &nbsp;' + open + '<br> <span style="font-size:.65em">' + this.mainSpreadsheetID.toString() + '</span>';
+          this.assets_anchor.innerHTML= '<a target="_blank" href="' + url + '">Open</a>';
+          configDetailsHTML += open;
         } else {
-          configDetailsHTML += 'Parent Spreadsheet<br> <span style="font-size:.65em">None</span>';
+          this.assets_anchor.innerHTML ='Local';
         }
-
-        this.assets_anchor.innerHTML = configDetailsHTML;
 
         let sIndex = this.deploy_options_server_list.selectedIndex;
         let sDefaultIndex = -1;
@@ -898,11 +919,11 @@
 
         let selectedProject = this.project_deploy_select.value;
         let defaultProject = this.defaultProjectTarget;
-        if (selectedProject === defaultProject)
-          this.set_default_proj.classList.remove("blue");
-        else
-          this.set_default_proj.classList.add("blue");
-
+        if (selectedProject === defaultProject) {
+          this.project_set_default_btn.classList.remove("blue");
+        } else {
+          this.project_set_default_btn.classList.add("blue");
+        }
         let pid = this.defaultServerTarget;
         this.projectDisplayURL = 'https://' + pid + '.web.app/display/?name=' + selectedProject;
         this.projectEditURL = 'https://' + pid + '.web.app/asset/?name=' + selectedProject;
@@ -1946,7 +1967,7 @@
     }
 
     .gutter.gutter-vertical {
-      background-image: linear-gradient(rgb(100, 200, 255), rgb(100, 200, 255), white,  rgb(100, 200, 255),
+      background-image: linear-gradient(rgb(100, 200, 255), rgb(100, 200, 255), white, rgb(100, 200, 255),
         rgb(100, 200, 255));
       background-repeat: no-repeat;
       background-position: center;
@@ -1954,12 +1975,15 @@
       background-size: 50px 100%;
     }
 
-    #cloud_deploy .gutter.gutter-vertical, #template_view .gutter.gutter-vertical {
+    #cloud_target .gutter.gutter-vertical,
+    #cloud_deploy .gutter.gutter-vertical,
+    #template_view .gutter.gutter-vertical {
       background-image: linear-gradient(white, white, silver, white,
         white);
       background-color: white;
       margin: 0 8px;
     }
+
     #circuit_template_select {
       width: calc(100% - 16px)
     }
@@ -2030,6 +2054,33 @@
       100% {
         transform: rotate(0);
       }
+    }
+
+
+
+    #position_plotter_div table.wizard_field_container label span {
+      top: -.75em;
+      margin-left:2px;
+      position: relative;
+      font-size: .8em;
+    }
+
+    #position_plotter_div input {
+      margin-left:4px;
+    }
+
+    table.wizard_field_container.top_view_table tr td:nth-child(1) {
+     width: 4.5em;
+     min-width: initial;
+    }
+
+    table.wizard_field_container.top_view_table tr td:nth-child(3) {
+     min-width: initial;
+    }
+
+    table.wizard_field_container td:nth-child(2) input {
+      width: 100%;
+      text-align: left;
     }
 
   </style>

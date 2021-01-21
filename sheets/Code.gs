@@ -1,4 +1,8 @@
-function onOpen() {
+function onInstall(e) {
+  onOpen(e);
+}
+
+function onOpen(e) {
   let ui = SpreadsheetApp.getUi();
 
   ui.createAddonMenu()
@@ -529,11 +533,16 @@ function getJSONForSheet(sheetName, block = 1) {
 function onEdit(e) {
   if (e) {
     let sheet = e.source.getActiveSheet();
-    let range = e.source.getActiveRange()
+    let range = e.source.getActiveRange();
 
-    let startRow = Math.max(0, (range.getRow() - 3));
-    let lastRow = range.getRow() + 3;
-    let lastCol = range.getLastColumn();
+    let val = range.getValue();
+    let parts = val.toString().split(',');
+    if (parts.length < 3)
+      return;
+
+    let startRow = Math.max(0, (range.getRow() - 2));
+    let lastRow = range.getRow() + 1;
+    let lastCol = sheet.getLastColumn();
     for (var i = startRow; i < lastRow; i++) {
       for (var j = 0; j < lastCol; j++) {
         let cell = sheet.getRange(i + 1, j + 1);
