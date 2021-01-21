@@ -14,6 +14,13 @@ class gPublishApp extends gInstanceSuper {
     if (name) {
       let csvImport = await new gCSVImport();
       nameWid = await csvImport.widForName(name);
+
+      if (!nameWid) {
+        this.mV = new cViewPublished();
+        this._updateApplicationStyle();
+        this.mV.noProjectFoundCanvas.style.display = '';
+        return;
+      }
     }
 
 

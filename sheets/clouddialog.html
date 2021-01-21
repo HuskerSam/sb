@@ -26,17 +26,20 @@
     <div style="display:flex;flex-direction:row;flex:0">
       <select id="addon_display_view_select">
         <option value="cloud_target">Configuration</option>
-        <option value="cloud_deploy" selected>Catalog Projects</option>
-        <option value="template_view">Sheet Templates</option>
-        <option value="block_wizards">Content Wizards</option>
-        <option value="song_import_div">Process Audio</option>
-        <option value="position_plotter_div">Position Plotter</option>
+        <option value="cloud_deploy" selected>Projects</option>
+        <option value="template_view">Templates</option>
+        <option value="block_wizards">Wizards</option>
+        <option value="position_plotter_div">Plotter</option>
+        <option value="song_import_div">Audio</option>
       </select>
       <div style="padding:0 4px;">
         <button id="show_help_panel_btn" style="margin-bottom:8px;"><i class="material-icons">help</i></button>
       </div>
       <div style="padding-right:4px">
         <button id="reload_addon"><i class="material-icons">refresh</i></button>
+      </div>
+      <div style="padding-right:4px">
+        <button id="view_current_project_btn"><i class="material-icons">visibility</i></button>
       </div>
       <div style="padding-right:8px">
         <button id="display_publish_single_header"><i class="material-icons">publish</i></button>
@@ -227,7 +230,7 @@
           </div>
         </div>
         <div id="block_wizards" class="main_div_wrapper">
-          <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:0 8px 8px 0">
+          <div id="block_wizard_select_wrapper" style="display:flex;flex-direction:row;padding:0 8px 8px 8px">
             <select id="wizard_choices" style="width:7em">
               <option value="block">Block</option>
               <option value="shape">Shape</option>
@@ -369,7 +372,7 @@
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
-          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display',
+          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn',
           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view'
         ];
 
@@ -389,6 +392,7 @@
         this.upload_file_input.addEventListener('change', e => this.storageUploadProjectFile(e));
         this.display_publish_single.addEventListener('click', e => this.cloudDeployProjects('list_selected'));
         this.display_publish_single_header.addEventListener('click', e => this.cloudDeployProjects('selected'));
+        this.view_current_project_btn.addEventListener('click', e => this.projectViewCurrentProject());
         this.project_set_default_btn.addEventListener('click', e => this.sheetsStoreSelectedProject());
         this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
         this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails());
@@ -930,12 +934,7 @@
         this.projectViewURL = 'https://' + pid + '.web.app/view/?name=' + selectedProject;
 
         if (this.project_selected_options.selectedIndex === 4) {
-          let a = document.createElement('a');
-          a.setAttribute('href', this.projectViewURL);
-          a.setAttribute('target', '_blank');
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
+          this.projectViewCurrentProject();
         }
         if (this.project_selected_options.selectedIndex === 5) {
           let a = document.createElement('a');
@@ -1636,6 +1635,14 @@
         this.song_raw_data.innerHTML = JSON.stringify(resampledArray);
       }
 
+      projectViewCurrentProject() {
+        let a = document.createElement('a');
+        a.setAttribute('href', this.projectViewURL);
+        a.setAttribute('target', '_blank');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
       plotterUpdateView() {
         let cat = this.plot_type_select.value;
 
@@ -1857,21 +1864,21 @@
 
     .target_header {
       width: 100%;
-      padding: 4px 8px;
+      padding: 0px 12px;
     }
 
     .target_header span {
       white-space: nowrap;
       float: right;
       color: blue;
-      font-size: 13px;
+      font-size: 10px;
     }
 
     #selected_target_span {
       float: left;
       text-align: left;
       color: green;
-      font-size: 13px;
+      font-size: 10px;
     }
 
     * {

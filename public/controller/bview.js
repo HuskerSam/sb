@@ -40,10 +40,14 @@ class bView {
   }
   initUI() {}
   registerFirebaseModels() {
-    this.canvasFBRecordTypes.forEach(recType => gAPPP.a.modelSets[recType].childListeners.push(
-      (values, type, fireData) => this._updateContextWithDataChange(recType, values, type, fireData)));
-    gAPPP.a.modelSets['userProfile'].childListeners.push(
-      (values, type, fireData) => this.profileUpdate(values, type, fireData));
+    this.canvasFBRecordTypes.forEach(recType => {
+      if (gAPPP.a.modelSets[recType])
+        gAPPP.a.modelSets[recType].childListeners.push(
+          (values, type, fireData) => this._updateContextWithDataChange(recType, values, type, fireData));
+    });
+    if (gAPPP.a.modelSets['userProfile'])
+      gAPPP.a.modelSets['userProfile'].childListeners.push(
+        (values, type, fireData) => this.profileUpdate(values, type, fireData));
   }
   initCanvas() {
     let canvasTemplate = this._canvasPanelTemplate();

@@ -9,6 +9,7 @@ class cViewPublished extends bView {
     this.fieldValue = document.getElementById('value-to-edit');
     this.setButton = document.getElementById('button-to-edit');
     this.setButton.addEventListener('click', e => this.setValue());
+    this.noProjectFoundCanvas = document.getElementById('noProjectFoundCanvas');
 
     this.bandButtons = [];
     this.fontToolsContainer = this.dialog.querySelector('#publish-profile-panel');
@@ -97,7 +98,9 @@ class cViewPublished extends bView {
     this.dialog.style.display = 'block';
   }
   elementTypeChange() {
-    let t = this.elementSelect.value.toLowerCase();
+    let t = this.elementSelect.value.toLowerCase();    
+    if (!gAPPP.a.modelSets[t])
+      return;
 
     let eleList = document.createElement('datalist');
     let fldList = document.createElement('datalist');
@@ -171,7 +174,8 @@ class cViewPublished extends bView {
   }
   layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
-  <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
+    <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
+    <div id="noProjectFoundCanvas" style="display:none;"><br><br>No Project Found</div>
   <div class="form_canvas_wrapper"></div>
   <button id="user-profile-dialog-reset-button">Reset Options</button>
   <button id="publish-settings-button" style='bottom: 2em;' class="btn-sb-icon"><i class="material-icons">dashboard</i></button>

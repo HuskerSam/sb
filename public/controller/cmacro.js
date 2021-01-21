@@ -142,17 +142,20 @@ class cMacro {
   cameraTemplate() {
     return `<div class="shape_wizard_wrapper" style="display:flex;flex-direction:column;">
       <div style="flex:1;overflow: hidden auto;">
-        <table class="wizard_field_container native_camera_table">
+        <table class="wizard_field_container">
           <tr>
-            <td></td>
+            <td>Type</td>
             <td>
-            <select class="camera_wizard_type_select">
+            <select class="camera_wizard_type_select" style="width:100%;">
              <option selected>Native Camera</option>
              <option>Product Camera</option>
             </select>
             </td><td></td>
+          </tr>
+        </table>
+        <table class="wizard_field_container native_camera_table">
           <tr>
-            <td>Camera Type</td>
+            <td>Native Type</td>
             <td><input data-field="cameratype" type="text" value="ArcRotate" list="camerasourceslist" /></td>
             <td></td>
           </tr>
