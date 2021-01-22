@@ -5,6 +5,12 @@
     "hint": "Logo",
     "categories": "Layout",
     "description": "Basic 3D logo example using a google web font"
+  },{
+    "name": "Simple Shapes and Frames",
+    "key": "ShapesAndFrames",
+    "hint": "Shapes",
+    "categories": "Layout",
+    "description": "A variety of shapes with a few frames"
   },
   {
     "name": "Configuration",

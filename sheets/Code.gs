@@ -531,60 +531,84 @@ function getJSONForSheet(sheetName, block = 1) {
   return rawString.substr((block - 1) * 50000, 50000);
 }
 
+function _processValueForColor(v, sheet) {
+  v = v.toLowerCase().replace('decolor:', '');
+  v = v.replace('ecolor:', '');
+  v = v.replace('color:', '');
+  v = v.trim();
+
+  let l1color = color(v);
+  return {
+    color: l1color,
+    str: v
+  };
+}
 
 function onEdit(e) {
   if (e) {
     let sheet = e.source.getActiveSheet();
     let range = e.source.getActiveRange();
 
-    let val = range.getValue();
-    let parts = val.toString().split(',');
-    if (parts.length < 3 || val === '')
-      return;
+    let lastRow = range.getRow();
+    let lastCol = range.getLastColumn();
+    let cell = sheet.getRange(lastRow - 1, lastCol);
+    if (cell.getFormula().indexOf('colorHeader(') !== -1) {
+      let v = cell.getFormula().substr(13);
+      v = v.slice(0, -1);
+      let args = v.split(',');
 
-    let startRow = Math.max(0, (range.getRow() - 2));
-    let lastRow = range.getRow() + 1;
-    let lastCol = sheet.getLastColumn();
-    for (var i = startRow; i < lastRow; i++) {
-      for (var j = 0; j < lastCol; j++) {
-        let cell = sheet.getRange(i + 1, j + 1);
-        if (cell.getFormula().indexOf('colorHeader(') !== -1) {
-          let args = cell.getFormula().substr(13);
-          args = args.slice(0, -1);
-          args = args.split(',');
+      let firstCell = args[1].split('\"').join("").trim();
+      let cvalue = sheet.getRange(firstCell).getValue();
 
-          let firstCell = args[1];
-          firstCell = firstCell.split('\"').join("").trim();
-          if (!firstCell)
-            continue;
-          let source = sheet.getRange(firstCell);
-          let v = source.getValue();
-          v = v.toLowerCase().replace('decolor:', '');
-          v = v.toLowerCase().replace('ecolor:', '');
-          v = v.toLowerCase().replace('color:', '');
-          v = v.trim();
+      cvalue = cvalue.split('\"').join("").trim();
 
-          let l1color = color(v);
-          let fc = 'white';
-          if (l1color.r + l1color.g + l1color.b > 1.4)
-            fc = 'black';
+      let pc = _processValueForColor(cvalue, sheet);
+      let l1color = pc.color;
+      let fc = 'white';
+      if (l1color.r + l1color.g + l1color.b > 1.4)
+        fc = 'black';
 
-          let outCells = args.slice(2);
-          if (outCells.length === 0)
-            outCells = args.slice(1);
-          outCells.forEach(outCell => {
-            outCell = outCell.split('\"').join("").trim();
-            let oC = sheet.getRange(outCell);
-            oC.setFontColor(fc);
-            oC.setBackground(colorRGB255(v));
-          });
-        }
+      let outCells = args.slice(2);
+      if (outCells.length === 0)
+        outCells = args.slice(1);
+      outCells.forEach(outCell => {
+        outCell = outCell.split('\"').join("").trim();
+        let oC = sheet.getRange(outCell);
+        oC.setFontColor(fc);
+        oC.setBackground(colorRGB255(pc.str));
+      });
+    }
+
+    let maxRows = 100;
+    let min = Math.max(0, lastRow - 100);
+    for (let rCtr = lastRow - 1; rCtr > min; rCtr--) {
+      let cell = sheet.getRange(rCtr, lastCol);
+      let formula = cell.getFormula();
+      if (formula.indexOf('colorColumn(') !== -1) {
+        cell = sheet.getRange(lastRow, lastCol);
+        let pc = _processValueForColor(cell.getValue(), sheet);
+        let l1color = pc.color;
+        let fc = 'white';
+        if (l1color.r + l1color.g + l1color.b > 1.4)
+          fc = 'black';
+
+        cell.setFontColor(fc);
+        cell.setBackground(colorRGB255(pc.str));
+        break;
       }
+      let value = cell.getValue();
+      if (value === '' && formula === '')
+        break;
+
     }
   }
 }
 
 function colorHeader(label) {
+  return label;
+}
+
+function colorColumn(label) {
   return label;
 }
 

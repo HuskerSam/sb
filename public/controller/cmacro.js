@@ -67,6 +67,7 @@ class cMacro {
         this.panelCreateBtn2.addEventListener('click', e => this.createItem(true));
       }
       this.panelInput = this.panel.querySelector('.add_wizard_item_name');
+      this.add_wizard_item_name = this.panelInput;
       this.createMesage = this.panel.querySelector('.creating-message');
     }
 
@@ -655,6 +656,7 @@ class cMacro {
     this.panel.querySelectorAll('.colorpickerraw')
       .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i, '')));
 
+    this.add_wizard_item_name.style.display = 'none';
     this.frameUpdateFields();
   }
   frameUpdateFields() {
@@ -2651,6 +2653,7 @@ class cMacro {
 
     this.block_wizard_parent_wrapper.style.display = (sel === 'Web Font' || sel === 'Scene') ? 'none' : '';
     this.show_parent_details_row.style.display = (sel === 'Block Child') ? 'none' : '';
+    this.add_wizard_item_name.style.display = '';
 
     if (sel === 'Text and Shape')
       this.blockShapePanel.style.display = '';
@@ -2670,6 +2673,7 @@ class cMacro {
       this.block_child_wizard.style.display = '';
       this.show_parent_wizard_details.checked = true;
       this.wizard_parent_details.style.display = '';
+      this.add_wizard_item_name.style.display = 'none';
     }
 
     if (this.app.mV) {
