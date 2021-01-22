@@ -1,6 +1,6 @@
 [{
   "range": "A1",
-  "value": "hit",
+  "value": "name",
   "fontWeight": "bold",
   "horizontalAlignment": "left"
 }, {

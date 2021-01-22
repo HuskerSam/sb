@@ -315,9 +315,13 @@ function getCSVRangeForCell() {
 
 function getTablesForCells() {
   let cellStrings = [];
-
+  let args = [...arguments];
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  //let args = ["'Shapes Demo'!A1,'Shapes Demo'!A4"];
+  if (!args)
+    args = '';
+  if (!Array.isArray(args))
+    args = [args];
+
   args.forEach(arg => {
     if (arg === undefined)
       arg = '';
