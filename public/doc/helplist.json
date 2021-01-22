@@ -1,8 +1,11 @@
 [
-{
-  "value": "addonconfiguration",
-  "title": "Configuration"
-},
+  {
+    "value": "warning",
+    "title": "WARNINGS FOR USERS"
+  },{
+    "value": "addonconfiguration",
+    "title": "Configuration"
+  },
 {
   "value": "addonprojects",
   "title": "Projects"

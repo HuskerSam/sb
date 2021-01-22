@@ -406,47 +406,47 @@ class cMacro {
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Position X</td>
-          <td><input data-field="positionx" type="text" value="" /></td>
+          <td><input data-field="x" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Position Y</td>
-          <td><input data-field="positiony" type="text" value="" /></td>
+          <td><input data-field="y" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Position Z</td>
-          <td><input data-field="positionz" type="text" value="" /></td>
+          <td><input data-field="z" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Rotation X</td>
-          <td><input data-field="rotationx" type="text" value="" /></td>
+          <td><input data-field="rx" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Rotation Y</td>
-          <td><input data-field="rotationy" type="text" value="" /></td>
+          <td><input data-field="ry" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Rotation Z</td>
-          <td><input data-field="rotationz" type="text" value="" /></td>
+          <td><input data-field="rz" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Scale X</td>
-          <td><input data-field="scalingx" type="text" value="" /></td>
+          <td><input data-field="sx" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Scale Y</td>
-          <td><input data-field="scalingy" type="text" value="" /></td>
+          <td><input data-field="sy" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape,block">
           <td>Scale Z</td>
-          <td><input data-field="scalingz" type="text" value="" /></td>
+          <td><input data-field="sz" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="mesh,shape">
