@@ -539,7 +539,7 @@ function onEdit(e) {
 
     let val = range.getValue();
     let parts = val.toString().split(',');
-    if (parts.length < 3)
+    if (parts.length < 3 || val === '')
       return;
 
     let startRow = Math.max(0, (range.getRow() - 2));

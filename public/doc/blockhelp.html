@@ -16,6 +16,12 @@
   ... to add - inherit material, follow camera example, skybox and ground, block dimensions
   <br>
   <br>
+  <b>Important notes<b><br>
+    Blocks must existing before adding block children (not late/loose bound) - the block to blockchild to block/shape/mesh/camera/light is related with internal IDs.
+    <br>
+    Same rule with frames, the block, and block child must exist - as the frames are internally related to block children.
+    <br>
+  <hr>
   <h1 id="blockdiagrams">3D Block Diagrams</h1> There are 3 add helpers for quickly building diagrams.
   <br>
   <br>
