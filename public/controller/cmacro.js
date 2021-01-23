@@ -210,6 +210,11 @@ class cMacro {
             <td><input data-field="camerafov" type="text" value="" /></td>
             <td></td>
           </tr>
+          <tr>
+            <td>Target Block</td>
+            <td><input data-field="cameratargetblock" type="text" value="" /></td>
+            <td></td>
+          </tr>
         </table>
         <table class="wizard_field_container product_camera_table" style="display:none;">
           <tr>
@@ -400,55 +405,37 @@ class cMacro {
           <td><input data-field="frameorder" type="text" value="20" /></td>
           <td></td>
         </tr>
-        <tr data-cats="mesh,shape">
+        <tr data-cats="shape,mesh">
           <td>Visibility</td>
-          <td><input data-field="visibility" type="text" value="" /></td>
+          <td><input type="text" data-field="visibility" /></td>
           <td></td>
         </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Position X</td>
-          <td><input data-field="x" type="text" value="" /></td>
-          <td></td>
+        <tr data-cats="mesh,shape,block" class="span_padding">
+          <td colspan="3">
+            <div style="display:flex;flex-direction:row">
+              <span style="width:8.5em">Position X</span><input type="text" data-field="x" />
+              <span>Y</span><input type="text" data-field="y" />
+              <span>Z</span><input type="text" data-field="z" />
+            </div>
+          </td>
         </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Position Y</td>
-          <td><input data-field="y" type="text" value="" /></td>
-          <td></td>
+        <tr data-cats="mesh,shape,block" class="span_padding">
+          <td colspan="3">
+            <div style="display:flex;flex-direction:row">
+              <span style="width:8.5em">Rotate X</span><input type="text" data-field="rx" />
+              <span>Y</span><input type="text" data-field="ry" />
+              <span>Z</span><input type="text" data-field="rz" />
+            </div>
+          </td>
         </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Position Z</td>
-          <td><input data-field="z" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Rotation X</td>
-          <td><input data-field="rx" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Rotation Y</td>
-          <td><input data-field="ry" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Rotation Z</td>
-          <td><input data-field="rz" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Scale X</td>
-          <td><input data-field="sx" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Scale Y</td>
-          <td><input data-field="sy" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="mesh,shape,block">
-          <td>Scale Z</td>
-          <td><input data-field="sz" type="text" value="" /></td>
-          <td></td>
+        <tr data-cats="mesh,shape,block" class="span_padding">
+          <td colspan="3">
+            <div style="display:flex;flex-direction:row">
+              <span style="width:8.5em">Scale X</span><input type="text" data-field="sx" />
+              <span>Y</span><input type="text" data-field="sy" />
+              <span>Z</span><input type="text" data-field="sz" />
+            </div>
+          </td>
         </tr>
         <tr data-cats="mesh,shape">
           <td>Diffuse Color</td>
@@ -654,7 +641,7 @@ class cMacro {
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.frameUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.frameUpdateCSV()));
     this.panel.querySelectorAll('.colorpickerraw')
-      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i, '')));
+      .forEach(i => this._initColorPicker(i, ''));
 
     this.add_wizard_item_name.style.display = 'none';
     this.frameUpdateFields();
@@ -694,13 +681,13 @@ class cMacro {
         cats = '';
       cats = cats.split(',');
       if (cats.indexOf(category) !== -1 || cats[0] === 'all') {
-        let i = row.querySelector('input[type="text"]');
-        if (i) {
+        let list = row.querySelectorAll('input[type="text"]');
+        list.forEach(i => {
           let v = i.value;
           if (i.value.indexOf('%') !== -1)
             v = "=\"" + v + "\"";
           csv_row[i.dataset.field] = v;
-        }
+        });
       }
     });
 
@@ -823,7 +810,7 @@ class cMacro {
     this.wizard_field_container = this.panel.querySelector('.wizard_field_container');
 
     this.panel.querySelectorAll('.colorpickerraw')
-      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i, '')));
+      .forEach(i => this._initColorPicker(i, ''));
 
     this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
     this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
@@ -1561,9 +1548,9 @@ class cMacro {
       .forEach(i => i.addEventListener('input', e => this.blockUpdateMaterialField(e, i)));
 
     this.panel.querySelectorAll('.colorpicker')
-      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i)));
+      .forEach(i => this._initColorPicker(i));
     this.panel.querySelectorAll('.colorpickerraw')
-      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i, '')));
+      .forEach(i => this._initColorPicker(i, ''));
 
     this.__registerFileUploaders();
 
@@ -1769,7 +1756,7 @@ class cMacro {
       .forEach(i => i.addEventListener('input', e => this.blockUpdateMaterialField(e, i)));
 
     this.panel.querySelectorAll('.colorpicker')
-      .forEach(i => i.addEventListener('input', e => this.blockColorPickerClick(e, i)));
+      .forEach(i => this._initColorPicker(i));
 
     this.shapeTypeFilterChange();
   }
@@ -2379,6 +2366,15 @@ class cMacro {
     inputCTL.value = prefix + rgb;
 
     this.blockUpdateMaterialField(null, inputCTL);
+  }
+  _initColorPicker(ctl, prefix = 'color: ') {
+    ctl.addEventListener('input', e => this.blockColorPickerClick(e, ctl, prefix));
+    let wrapper = ctl.parentNode.parentNode;
+    let fieldctl = wrapper.querySelector('.' + ctl.dataset.inputclass);
+    fieldctl.addEventListener('input', e => {
+      let v = GLOBALUTIL.color(fieldctl.value);
+      ctl.value = GLOBALUTIL.colorToHex(v);
+    });
   }
   blockUpdateMaterialField(event, ctl) {
     let val = ctl.value;

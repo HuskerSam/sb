@@ -962,6 +962,7 @@ table.wizard_field_container button {
 
 table.wizard_field_container td:nth-child(1) {
   min-width: 8.5em;
+  text-align: right;
 }
 
 table.wizard_field_container td:nth-child(1) b {
@@ -1008,7 +1009,7 @@ table.wizard_parent_details tr td:nth-child(1) {
 }
 
 table.wizard_parent_details td span {
-  padding-top: 6px;
+  padding-top: 8px;
   margin:0 3px;
 }
 
@@ -1021,4 +1022,8 @@ table.wizard_parent_details tr td span:nth-child(1) {
   padding:4px;
   text-align:left;
   border-top:outset .1em silver;
+}
+
+tr.span_padding td span {
+  padding-top: 8px;
 }
