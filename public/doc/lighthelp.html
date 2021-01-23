@@ -8,8 +8,23 @@
 </head>
 
 <body>
-        Blocks without a light specificed use a <a href="https://doc.babylonjs.com/babylon101/lights#the-hemispheric-light" target="_blank">Hemispheric Light</a> with color (0.2, 0.8, 0.2)
+        Blocks without a light specificed use a <a href="https://doc.babylonjs.com/babylon101/lights#the-hemispheric-light" target="_blank">Hemispheric Light</a> with direction vector (0.2, 0.8, 0.2)
       <br> -  intensity is adjustable - 1.0 is approximately sunlight.
       <br> -  adding a light to a block (or any child block), the default light is disabled.
-
+<br><Br>
+  [Point]: A point light is a light defined by an unique point in world space. The light is emitted in every direction from this point. A good example of a point light is a standard light bulb.
+  <br>
+  [Directional]: A directional light is defined by a direction (what a surprise!). The light is emitted from everywhere in the specified direction, and has an infinite range. An example of a directional light is when a distant planet is lit by the apparently parallel lines of light from its sun. Light in a downward direction will light the top of an object.
+  <br>
+  [Spot]: A spot light is defined by a position, a direction, an angle, and an exponent. These values define a cone of light starting from the position, emitting toward the direction.
+  <br>
+  [Hemispheric]: A hemispheric light is defined by a direction, usually 'up' towards the sky. However it is by setting the color properties that the full effect is achieved.
+  <br><Br>
+    Color Properties<br>
+There are three properties of lights that affect color. Two of these diffuse and specular apply to all four types of light, the third, groundColor, only applies to an Hemispheric Light.
+<br><br>
+Diffuse gives the basic color to an object;
+<br>Specular produces a highlight color on an object.
+<br>
+Visual Catalogs uses Babylon.js to render scenes - the full specifications for lights can be found at <a href="https://doc.babylonjs.com/divingDeeper/lights/lights_introduction" target="_blank">https://doc.babylonjs.com/divingDeeper/lights/lights_introduction</a>
 </html>

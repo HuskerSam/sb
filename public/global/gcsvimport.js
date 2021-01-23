@@ -1429,19 +1429,24 @@ class gCSVImport {
   }
   async addCSVSceneBlock(row) {
     if (row.groundimage) {
-      let texture = {
-        title: row.name + '_groundtexture',
-        url: row.groundimage,
-        vScale: row.skyboxgroundscalev,
-        uScale: row.skyboxgroundscaleu
-      };
-      this.dbSetRecord('texture', texture);
-      let material = {
-        title: row.name + '_groundmaterial',
-        diffuseTextureName: texture.title
+      let i = row.groundimage;
+      if (i.indexOf('color:') !== 1 && i.indexOf('decolor:') !== -1 && i.indexOf('ecolor') !== -1) {
+        let texture = {
+          title: row.name + '_groundtexture',
+          url: row.groundimage,
+          vScale: row.skyboxgroundscalev,
+          uScale: row.skyboxgroundscaleu
+        };
+        this.dbSetRecord('texture', texture);
+        let material = {
+          title: row.name + '_groundmaterial',
+          diffuseTextureName: texture.title
+        }
+        row.groundmaterial = material.title;
+        this.dbSetRecord('material', material);
+      } else {
+        row.groundmaterial = row.groundimage;
       }
-      row.groundmaterial = material.title;
-      this.dbSetRecord('material', material);
     }
 
     let boxsize = this.getNumberOrDefault(row.skyboxsize, 800);
