@@ -18,6 +18,13 @@
     "categories": "Layout",
     "description": "Some product meshes scattered about",
     "helpkey": "mesh"
+  },{
+    "name": "Lights Fun",
+    "key": "LightsFun",
+    "hint": "Lights",
+    "categories": "Layout",
+    "description": "Some spot lights and a directional light",
+    "helpkey": "light"
   },
   {
     "name": "Configuration",

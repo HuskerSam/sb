@@ -2100,18 +2100,23 @@ class cMacro {
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
-            <td colspan="3">
+            <td>Specular Power</td>
+            <td colspan="2">
               <div style="display:flex;flex-direction:row">
-                <span style="padding-top:4px;padding-right:4px;">Specular Power</span><input type="text" class="material_specularpower" data-field="material_specularpower" />
-
-                <span style="padding-left:8px;padding-right:4px;padding-top:4px;">Has Alpha (1)</span><input type="text" class="material_hasalpha" data-field="material_hasalpha" />
+                <input type="text" class="material_specularpower" data-field="material_specularpower" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Has Alpha (1)</span>
+                <input type="text" class="material_hasalpha" data-field="material_hasalpha" />
               </div>
             </td>
           </tr>
           <tr>
-            <td style="text-align:center;" colspan="3">
-              <label><span>Scale V (x)</span><input type="text" class="materialscalev" /></label>
-              <label><span>Scale U (y)</span><input type="text" class="materialscaleu" /></label>
+            <td>Scale v</td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input type="text" class="materialscalev" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Scale u</span>
+                <input type="text" class="materialscaleu" />
+              </div>
             </td>
           </tr>
         </table>

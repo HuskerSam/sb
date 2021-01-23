@@ -541,10 +541,13 @@ function _processValueForColor(v, sheet) {
   v = v.replace('color:', '');
   v = v.trim();
 
+  let parts = v.split(',');
+  let validColor =  (parts.length > 2);
   let l1color = color(v);
   return {
     color: l1color,
-    str: v
+    str: v,
+    validColor
   };
 }
 
@@ -569,7 +572,7 @@ function onEdit(e) {
       let pc = _processValueForColor(cvalue, sheet);
       let l1color = pc.color;
       let fc = 'white';
-      if (l1color.r + l1color.g + l1color.b > 1.4)
+      if (l1color.r + (l1color.g * 1.5) + l1color.b > 1.4)
         fc = 'black';
 
       let outCells = args.slice(2);
@@ -578,8 +581,14 @@ function onEdit(e) {
       outCells.forEach(outCell => {
         outCell = outCell.split('\"').join("").trim();
         let oC = sheet.getRange(outCell);
-        oC.setFontColor(fc);
-        oC.setBackground(colorRGB255(pc.str));
+        if (pc.validColor) {
+          oC.setBackground(colorRGB255(pc.str));
+          oC.setFontColor(fc);
+        }
+        else {
+          oC.setFontColor('black');                    
+          oC.setBackground('white');
+        }
       });
     }
 

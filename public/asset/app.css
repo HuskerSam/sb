@@ -982,7 +982,7 @@ table.wizard_field_container td:nth-child(2) {
 }
 
 table.wizard_field_container label span, .copy_clipboard_footer label span {
-  top: -.2em;
+  top: 0em;
   position: relative;
   font-size: .8em;
 }

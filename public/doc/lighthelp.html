@@ -8,17 +8,18 @@
 </head>
 
 <body>
-        Blocks without a light specificed use a <a href="https://doc.babylonjs.com/babylon101/lights#the-hemispheric-light" target="_blank">Hemispheric Light</a> with direction vector (0.2, 0.8, 0.2)
-      <br> -  intensity is adjustable - 1.0 is approximately sunlight.
-      <br> -  adding a light to a block (or any child block), the default light is disabled.
+        <b>Default</b>: <a href="https://doc.babylonjs.com/babylon101/lights#the-hemispheric-light"
+          target="_blank">Hemispheric Light</a> (0.2, 0.8, 0.2)
+      <br>intensity is adjustable - 1.0 ~ sunlight
+      <br>adding a light disables the default
 <br><Br>
-  [Point]: A point light is a light defined by an unique point in world space. The light is emitted in every direction from this point. A good example of a point light is a standard light bulb.
+  <b>[Point]</b>: A point light is a light defined by an unique point in world space. The light is emitted in every direction from this point. A good example of a point light is a standard light bulb.
   <br>
-  [Directional]: A directional light is defined by a direction (what a surprise!). The light is emitted from everywhere in the specified direction, and has an infinite range. An example of a directional light is when a distant planet is lit by the apparently parallel lines of light from its sun. Light in a downward direction will light the top of an object.
+  <b>[Directional]</b>: A directional light is defined by a direction. The light is emitted from everywhere in the specified direction, and has an infinite range. An example of a directional light is when a distant planet is lit by the apparently parallel lines of light from its sun. Light in a downward direction will light the top of an object.
   <br>
-  [Spot]: A spot light is defined by a position, a direction, an angle, and an exponent. These values define a cone of light starting from the position, emitting toward the direction.
+  <b>[Spot]</b>: A spot light is defined by a position, a direction, an angle, and an exponent. These values define a cone of light starting from the position, emitting toward the direction.
   <br>
-  [Hemispheric]: A hemispheric light is defined by a direction, usually 'up' towards the sky. However it is by setting the color properties that the full effect is achieved.
+  <b>[Hemispheric]</b>: A hemispheric light is defined by a direction, usually 'up' towards the sky. However it is by setting the color properties that the full effect is achieved.
   <br><Br>
     Color Properties<br>
 There are three properties of lights that affect color. Two of these diffuse and specular apply to all four types of light, the third, groundColor, only applies to an Hemispheric Light.
