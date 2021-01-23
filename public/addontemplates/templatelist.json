@@ -11,6 +11,13 @@
     "categories": "Layout",
     "description": "A variety of shapes with a few frames",
     "helpkey": "reviewguide"
+  },{
+    "name": "Meshes Basic",
+    "key": "MeshesBasic",
+    "hint": "Meshes",
+    "categories": "Layout",
+    "description": "Some product meshes scattered about",
+    "helpkey": "mesh"
   },
   {
     "name": "Configuration",

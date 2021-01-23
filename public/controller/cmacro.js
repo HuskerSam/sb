@@ -1908,17 +1908,17 @@ class cMacro {
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
-            <td colspan="3">
+            <td>Specular Power</td>
+            <td colspan="2">
               <div style="display:flex;flex-direction:row">
-                <span style="padding-top:8px;padding-right:4px;">Specular Power</span><input type="text" class="mesh_specularpower" data-field="mesh_specularpower" />
-
+                <input type="text" class="mesh_specularpower" data-field="mesh_specularpower" />
                 <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Has Alpha (1)</span><input type="text" class="mesh_hasalpha" data-field="mesh_hasalpha" />
               </div>
             </td>
           </tr>
           <tr>
             <td colspan="3" style="text-align:center">
-              <div class="mesh-details-images">
+              <div class="mesh-details-images" style="line-height:0">
                 <img class="mesh_texture_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
                 <img class="mesh_bump_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
                 <img class="mesh-preview-img" crossorigin="anonymous" style="display:none;">
