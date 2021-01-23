@@ -652,3 +652,7 @@ function colorRGB255(str) {
 
   return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0) + ')'
 }
+
+function getDataRangesForSheet(sheet) {
+  return getTablesForCells(getCSVRangesFromSheet(sheet))
+}

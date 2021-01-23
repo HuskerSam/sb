@@ -20,7 +20,7 @@ class gPublishApp extends gInstanceSuper {
         this._updateApplicationStyle();
         this.mV.noProjectFoundCanvas.style.display = '';
 
-        gAPPP.a.modelSets['projectTitles'].childListeners.push((values, type, fireData) => window.location.reload());
+        gAPPP.a.modelSets['projectTitles'].childListeners.push((values, type, fireData) => setTimeout(() => window.location.reload(), 1000));
         return;
       }
     }

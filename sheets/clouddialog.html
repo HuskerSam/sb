@@ -1072,7 +1072,7 @@
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).AddRowToProjectList(baseSheetName, '=getTablesForCells(getCSVRangesFromSheet(\"' + baseSheetName + "\"))", '', '', '');
+          }).AddRowToProjectList(baseSheetName, '=getDataRangesForSheet(\"' + baseSheetName + "\")", '', '', '');
         });
       }
       async sheetsStoreSelectedProject(project) {
@@ -1116,7 +1116,7 @@
 
         if (rowIndex !== -1) {
           await this.sheetsStoreCSVValue(this.projectsSheetName, rowIndex + 1,
-            field, '=getTablesForCells(getCSVRangesFromSheet(\"' + assetSheetName + "\"))");
+            field, '=getDataRangesForSheet(\"' + assetSheetName + "\")");
         }
       }
 
