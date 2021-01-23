@@ -188,6 +188,9 @@ class cAppDefaults {
     if (dom)
       dom.innerHTML = html;
 
+    if (this.helpViewCallback)
+      this.helpViewCallback(helpTag, dom);
+
     return html;
   }
 }

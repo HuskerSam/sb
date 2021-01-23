@@ -103,12 +103,12 @@ class cMacro {
     return `<table class="wizard_field_container wizard_parent_details" style="display:none">
       <tr>
         <td>Parent Block</td>
-        <td><input type="text" list="blockdatatitlelookuplist" class="wizard_parent" style="width:11em;" value="::scene::" /></td>
+        <td><input type="text" list="blockdatatitlelookuplist" class="wizard_parent" style="width:calc(100% - 2.75em);" value="::scene::" /></td>
         <td></td>
       </tr>
       <tr style="${hideVisibility ? "display:none" : "" }">
         <td>Visibility</td>
-        <td><input type="text" class="wizard_visibility" style="width:11em" value="" /></td>
+        <td><input type="text" class="wizard_visibility" style="width:calc(100% - 2.75em)" value="" /></td>
         <td></td>
       </tr>
       <tr>

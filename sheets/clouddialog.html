@@ -49,8 +49,9 @@
       <div id="help_viewer_panel" style="display:none;flex:.7;">
         <div style="display:flex;flex-direction:row;">
           <select id="help_viewer_panel_select"></select>
-          <div id="helper_viewer_panel_open_wrapper">
-            <button id="helper_viewer_panel_open_btn"><i class="material-icons" style="color:blue">open_in_new</i></button>
+          <div id="helper_viewer_panel_open_wrapper" style="background:rgb(100, 200, 255)">
+            <button id="helper_viewer_panel_open_video_btn" class="green"><i class="material-icons">ondemand_video</i></button>
+            <button id="helper_viewer_panel_open_btn" style="margin:0;margin-left:4px;"><i class="material-icons">open_in_new</i></button>
           </div>
         </div>
         <div id="help_viewer_panel_internal"></div>
@@ -322,7 +323,7 @@
           cache: "no-cache"
         });
         let data = await fetched.json();
-
+        this.cachedHelpItemList = data;
         let html = '';
         data.forEach(i => html += '<option value="' + i.value + '">' + i.title + '</option>');
         this.help_viewer_panel_select.innerHTML = html;
@@ -370,7 +371,7 @@
           'show_help_panel_btn', 'project_selected_options', 'upload_file_preview_select', 'upload_file_img_preview', 'upload_file_audio_preview',
           'upload_file_mesh_preview', 'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'upload_file_audio_ctl',
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
-          'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth',
+          'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth', 'helper_viewer_panel_open_video_btn',
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
           'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn',
           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view'
@@ -417,6 +418,22 @@
           let url = this.app.jsonLibPrefix + '/doc/' + help_topic + 'help.html';
           let a = document.createElement('a');
           a.setAttribute('href', url);
+          a.setAttribute('target', '_blank');
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        });
+        this.helper_viewer_panel_open_video_btn.addEventListener('click', e => {
+          let help_topic = this.help_viewer_panel_select.selectedIndex;
+          let helpData = this.cachedHelpItemList[help_topic];
+
+          if (!helpData || !helpData.video) {
+            alert('No video link found');
+            return;
+          }
+
+          let a = document.createElement('a');
+          a.setAttribute('href', helpData.video);
           a.setAttribute('target', '_blank');
           document.body.appendChild(a);
           a.click();
@@ -743,6 +760,18 @@
           this.currentHelpTag = 'positionplotter';
 
         this.app.help_topic_picker_select = this.help_viewer_panel_select;
+
+        this.app.helpViewCallback = (helpTag, dom) => {
+          let help_topic = this.help_viewer_panel_select.selectedIndex;
+          let helpData = this.cachedHelpItemList[help_topic];
+
+          if (!helpData || !helpData.video) {
+            this.helper_viewer_panel_open_video_btn.style.visibility = 'hidden';
+          } else {
+            this.helper_viewer_panel_open_video_btn.style.visibility = '';
+          }
+        };
+
         await this.app.updateHelpView(this.currentHelpTag, this.helpViewer);
       }
       async loadProjectPreview() {

@@ -1,69 +1,69 @@
-[
-  {
+[{
     "value": "warning",
     "title": "WARNINGS FOR USERS"
-  },{
+  }, {
     "value": "addonconfiguration",
     "title": "Configuration"
   },
-{
-  "value": "addonprojects",
-  "title": "Projects"
-},
-{
-  "value": "addontemplates",
-  "title": "Templates"
-},
-{
-  "value": "block",
-  "title": "Blocks (general)"
-},
-{
-  "value": "camera",
-  "title": "Cameras"
-},
-{
-  "value": "light",
-  "title": "Lights"
-},
-{
-  "value": "material",
-  "title": "Materials"
-},
-{
-  "value": "mesh",
-  "title": "Meshes"
-},
-{
-  "value": "overview",
-  "title": "Overview"
-},
-{
-  "value": "positionplotter",
-  "title": "Position Plotter"
-},
-{
-  "value": "processaudio",
-  "title": "Process Audio"
-},
-{
-  "value": "sceneblock",
-  "title": "Scene Block (block)"
-},
-{
-  "value": "shape",
-  "title": "Shapes"
-},
-{
-  "value": "workspace",
-  "title": "Project (/asset)"
-},
-{
-  "value": "csvformat",
-  "title": "CSV Format"
-},
-{
-  "value": "reviewguide",
-  "title": "Review Guide"
-}
+  {
+    "value": "addonprojects",
+    "title": "Projects"
+  },
+  {
+    "value": "addontemplates",
+    "title": "Templates"
+  },
+  {
+    "value": "block",
+    "title": "Blocks (general)"
+  },
+  {
+    "value": "camera",
+    "title": "Cameras"
+  },
+  {
+    "value": "light",
+    "title": "Lights"
+  },
+  {
+    "value": "material",
+    "title": "Materials"
+  },
+  {
+    "value": "mesh",
+    "title": "Meshes"
+  },
+  {
+    "value": "overview",
+    "title": "Overview"
+  },
+  {
+    "value": "positionplotter",
+    "title": "Position Plotter"
+  },
+  {
+    "value": "processaudio",
+    "title": "Process Audio"
+  },
+  {
+    "value": "sceneblock",
+    "title": "Scene Block (block)"
+  },
+  {
+    "value": "shape",
+    "title": "Shapes"
+  },
+  {
+    "value": "workspace",
+    "title": "Project (/asset)",
+    "video": "https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4"
+  },
+  {
+    "value": "csvformat",
+    "title": "CSV Format"
+  },
+  {
+    "value": "reviewguide",
+    "title": "Review Guide"
+  }
 ]
