@@ -1544,9 +1544,6 @@ class cMacro {
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.blockUpdateCSV()));
 
-    this.panel.querySelectorAll('[list=materialdatatitlelookuplist]')
-      .forEach(i => i.addEventListener('input', e => this.blockUpdateMaterialField(e, i)));
-
     this.panel.querySelectorAll('.colorpicker')
       .forEach(i => this._initColorPicker(i));
     this.panel.querySelectorAll('.colorpickerraw')
@@ -1751,9 +1748,6 @@ class cMacro {
     this.panel.querySelectorAll('.textfontfamily').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
-
-    this.panel.querySelectorAll('[list=materialdatatitlelookuplist]')
-      .forEach(i => i.addEventListener('input', e => this.blockUpdateMaterialField(e, i)));
 
     this.panel.querySelectorAll('.colorpicker')
       .forEach(i => this._initColorPicker(i));
@@ -2365,37 +2359,38 @@ class cMacro {
       inputCTL = ctl.parentNode.parentNode.querySelector('.' + ctl.dataset.inputclass);
     inputCTL.value = prefix + rgb;
 
-    this.blockUpdateMaterialField(null, inputCTL);
+    let rgb255 = GLOBALUTIL.colorRGB255(inputCTL.value);
+    if (inputCTL.value.split(',').length > 2) {
+      inputCTL.style.borderStyle = 'solid';
+      inputCTL.style.borderWidth = '.35em';
+      inputCTL.style.borderColor = rgb255;
+    } else {
+      ctl.value = '';
+      inputCTL.style.borderStyle = '';
+      inputCTL.style.borderWidth = '';
+      inputCTL.style.borderColor = '';
+    }
   }
   _initColorPicker(ctl, prefix = 'color: ') {
     ctl.addEventListener('input', e => this.blockColorPickerClick(e, ctl, prefix));
     let wrapper = ctl.parentNode.parentNode;
     let fieldctl = wrapper.querySelector('.' + ctl.dataset.inputclass);
     fieldctl.addEventListener('input', e => {
-      let v = GLOBALUTIL.color(fieldctl.value);
-      ctl.value = GLOBALUTIL.colorToHex(v);
+      if (fieldctl.value.split(',').length > 2) {
+        let v = GLOBALUTIL.color(fieldctl.value);
+        ctl.value = GLOBALUTIL.colorToHex(v);
+        let rgb = GLOBALUTIL.colorRGB255(fieldctl.value);
+
+        fieldctl.style.borderStyle = 'solid';
+        fieldctl.style.borderWidth = '.35em';
+        fieldctl.style.borderColor = rgb;
+      } else {
+        ctl.value = '';
+        fieldctl.style.borderStyle = '';
+        fieldctl.style.borderWidth = '';
+        fieldctl.style.borderColor = '';
+      }
     });
-  }
-  blockUpdateMaterialField(event, ctl) {
-    let val = ctl.value;
-    let index = val.indexOf('color:');
-    if (index !== -1) {
-      let color = val.substring(index + 6).trim();
-      let rgb = GLOBALUTIL.colorRGB255(color);
-
-      ctl.style.borderStyle = 'solid';
-      ctl.style.borderWidth = '.35em';
-      ctl.style.borderColor = rgb;
-
-      ctl.parentNode.nextElementSibling.value = GLOBALUTIL.colorToHex(GLOBALUTIL.color(color));
-    } else {
-      ctl.style.borderStyle = '';
-      ctl.style.borderWidth = '';
-      ctl.style.borderColor = '';
-      ctl.parentNode.nextElementSibling.value = '';
-    }
-
-    this[this.tag + 'UpdateCSV']();
   }
   _blockScrapeTextAndShape() {
     this.newName = this.panelInput.value.trim();
