@@ -662,6 +662,16 @@
           this.publishlist_products_add_chk_wrapper.style.display = 'none';
           this.add_products_to_projectlist.checked = false;
         }
+
+        if (this.addon_display_view_select.value === 'template_view') {
+          if (data.helpkey) {
+            this.app.updateHelpView(data.helpkey, this.helpViewer);
+          } else {
+            if (this.help_viewer_panel_select.value !== 'addontemplates')
+              this.app.updateHelpView('addontemplates', this.helpViewer);
+          }
+        }
+
         return;
       }
       async loadBlockWizard() {
@@ -763,6 +773,8 @@
 
         this.app.helpViewCallback = (helpTag, dom) => {
           let help_topic = this.help_viewer_panel_select.selectedIndex;
+          if (help_topic < 0)
+            return;
           let helpData = this.cachedHelpItemList[help_topic];
 
           if (!helpData || !helpData.video) {

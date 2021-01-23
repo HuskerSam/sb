@@ -64,6 +64,7 @@
   },
   {
     "value": "reviewguide",
-    "title": "Review Guide"
+    "title": "Review Guide",
+    "video": "https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4"
   }
 ]
