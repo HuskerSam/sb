@@ -1233,15 +1233,15 @@
   "fontWeight": "bold"
 }, {
   "range": "J34",
-  "value": "startx",
+  "value": "originx",
   "fontWeight": "bold"
 }, {
   "range": "K34",
-  "value": "starty",
+  "value": "originy",
   "fontWeight": "bold"
 }, {
   "range": "L34",
-  "value": "startz",
+  "value": "originz",
   "fontWeight": "bold"
 }, {
   "range": "M34",
@@ -1330,15 +1330,15 @@
   "fontWeight": "bold"
 }, {
   "range": "F37",
-  "value": "startx",
+  "value": "originx",
   "fontWeight": "bold"
 }, {
   "range": "G37",
-  "value": "starty",
+  "value": "originy",
   "fontWeight": "bold"
 }, {
   "range": "H37",
-  "value": "startz",
+  "value": "originz",
   "fontWeight": "bold"
 }, {
   "range": "I37",

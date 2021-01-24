@@ -277,13 +277,13 @@
   "value": "runlength"
 }, {
   "range": "K4",
-  "value": "startx"
+  "value": "originx"
 }, {
   "range": "L4",
-  "value": "starty"
+  "value": "originy"
 }, {
   "range": "M4",
-  "value": "startz"
+  "value": "originz"
 }, {
   "range": "N4",
   "value": "startry"
@@ -377,13 +377,13 @@
   "value": "cameraaimtarget"
 }, {
   "range": "G7",
-  "value": "startx"
+  "value": "originx"
 }, {
   "range": "H7",
-  "value": "starty"
+  "value": "originy"
 }, {
   "range": "I7",
-  "value": "startz"
+  "value": "originz"
 }, {
   "range": "J7",
   "value": "cameraradius"

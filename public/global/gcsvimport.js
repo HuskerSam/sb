@@ -573,12 +573,14 @@ class gCSVImport {
       frameData.cameraFOV = row.camerafov;
     if (row.camerarotationoffset)
       frameData.cameraRotationOffset = row.camerarotationoffset;
-    if (row.startx)
-      frameData.cameraOriginX = row.startx;
-    if (row.starty)
-      frameData.cameraOriginY = row.starty;
-    if (row.startz)
-      frameData.cameraOriginZ = row.startz;
+
+    if (row.originx)
+      frameData.cameraOriginX = row.originx;
+    if (row.originY)
+      frameData.cameraOriginY = row.originy;
+    if (row.originz)
+      frameData.cameraOriginZ = row.originz;
+
     if (row.cameraaimtargetx)
       frameData.cameraAimTargetX = row.cameraaimtargetx;
     if (row.cameraaimtargety)
@@ -2109,12 +2111,12 @@ class gCSVImport {
     cameraBlockBC.name = cameraBlock.name;
     cameraBlockBC.childtype = 'block';
     cameraBlockBC.parent = sceneData.title;
-    cameraBlockBC.rx = row.startrx;
-    cameraBlockBC.ry = row.startry;
-    cameraBlockBC.rz = row.startrz;
-    cameraBlockBC.x = row.startx;
-    cameraBlockBC.y = row.starty;
-    cameraBlockBC.z = row.startz;
+    cameraBlockBC.rx = row.originrx;
+    cameraBlockBC.ry = row.originry;
+    cameraBlockBC.rz = row.originrz;
+    cameraBlockBC.x = row.originy;
+    cameraBlockBC.y = row.originy;
+    cameraBlockBC.z = row.originz;
     childCSVRows.push(cameraBlockBC);
 
     let cam = this.defaultCSVRow();
@@ -2137,9 +2139,9 @@ class gCSVImport {
     cam.x = row.x;
     cam.y = row.y;
     cam.z = row.z;
-    cam.startx = row.startx;
-    cam.starty = row.starty;
-    cam.startz = row.startz;
+    cam.originx = row.originx;
+    cam.originy = row.originy;
+    cam.originz = row.originz;
     cam.origCameraRow = row;
     childCSVRows.push(cam);
 
@@ -2256,12 +2258,6 @@ class gCSVImport {
       z: "",
       textfontfamily: '',
       textfontcolor: '',
-      startx: '',
-      starty: '',
-      startz: '',
-      startrx: '',
-      startry: '',
-      startrz: '',
       texttext: '',
       textdepth: '',
       textsize: ''

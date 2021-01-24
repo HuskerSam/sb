@@ -899,7 +899,7 @@
   "fontWeight": "bold"
 }, {
   "range": "J21",
-  "value": "startx",
+  "value": "originx",
   "fontWeight": "bold"
 }, {
   "range": "K21",
@@ -907,11 +907,11 @@
   "fontWeight": "bold"
 }, {
   "range": "L21",
-  "value": "startz",
+  "value": "originz",
   "fontWeight": "bold"
 }, {
   "range": "M21",
-  "value": "startry",
+  "value": "originry",
   "fontWeight": "bold"
 }, {
   "range": "N21",
@@ -1007,7 +1007,7 @@
   "fontWeight": "bold"
 }, {
   "range": "F24",
-  "value": "startx",
+  "value": "originx",
   "fontWeight": "bold"
 }, {
   "range": "G24",
@@ -1015,7 +1015,7 @@
   "fontWeight": "bold"
 }, {
   "range": "H24",
-  "value": "startz",
+  "value": "originz",
   "fontWeight": "bold"
 }, {
   "range": "I24",
@@ -2098,7 +2098,7 @@
   "value": "displayfieldedits"
 }, {
   "range": "D75",
-  "value": "Camera Start Position||layout||FollowCamera||displaycamera||x:num||y:num||z:num||startx:num||starty:num||startz:num||startrx:num||startry:num||startrz:num"
+  "value": "Camera Start Position||layout||FollowCamera||displaycamera||x:num||y:num||z:num||originx:num||starty:num||originz:num||originrx:num||originry:num||originrz:num"
 }, {
   "range": "A76",
   "value": "block"

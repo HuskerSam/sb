@@ -165,20 +165,15 @@ class cMacro {
             <td><input data-field="parent" type="text" value="::scene::" /></td>
             <td></td>
           </tr>
-          <tr>
-            <td>Start X</td>
-            <td><input data-field="startx" type="text" value="" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Start Y</td>
-            <td><input data-field="starty" type="text" value="" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Start Z</td>
-            <td><input data-field="startz" type="text" value="" /></td>
-            <td></td>
+          <tr class="span_padding">
+            <td>Origin X</td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input type="text" data-field="originx" />
+                <span>Y</span><input type="text" data-field="originy" />
+                <span>Z</span><input type="text" data-field="originz" />
+              </div>
+            </td>
           </tr>
           <tr>
             <td>Radius</td>
@@ -190,19 +185,15 @@ class cMacro {
             <td><input data-field="cameraheightoffset" type="text" value="" /></td>
             <td></td>
           </tr>
-          <tr>
+          <tr class="span_padding">
             <td>Aim Target X</td>
-            <td><input data-field="cameraaimtargetx" type="text" value="" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Aim Target Y</td>
-            <td><input data-field="cameraaimtargety" type="text" value="" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Aim Target Z</td>
-            <td><input data-field="cameraaimtargetz" type="text" value="" /></td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input data-field="cameraaimtargetx" type="text" value="" />
+                <span>Y</span><input data-field="cameraaimtargety" type="text" value="" />
+                <span>Z</span><input data-field="cameraaimtargetz" type="text" value="" />
+              </div>
+            </td>
             <td></td>
           </tr>
           <tr>
@@ -232,55 +223,49 @@ class cMacro {
             <td><input data-field="cameraradius" type="text" value="25" /></td>
             <td></td>
           </tr>
-          <tr>
-            <td>Finish Delay (s)</td>
-            <td><input data-field="finishdelay" type="text" value="2" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Finish Delay (s)</td>
-            <td><input data-field="introtime" type="text" value="1" /></td>
-            <td></td>
+          <tr class="span_padding">
+            <td>Intro Delay (s)</td>
+            <td>
+              <div style="display:flex;flex-direction:row;">
+                <input data-field="introtime" type="text" value="1" />
+                <span>Finish</span>
+                <input data-field="finishdelay" type="text" value="2" />
+              </div>
+            </td>
           </tr>
           <tr>
             <td>Run Length (s)</td>
             <td><input data-field="runlength" type="text" value="60" /></td>
             <td></td>
           </tr>
-          <tr>
-            <td>Camera Start X</td>
-            <td><input data-field="startx" type="text" value="-40" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Camera Start Y</td>
-            <td><input data-field="starty" type="text" value="6" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Camera Start Z</td>
-            <td><input data-field="startz" type="text" value="9.5" /></td>
-            <td></td>
+          <tr class="span_padding">
+            <td>Camera Origin X</td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input data-field="originx" type="text" value="-40" />
+                <span>Y</span>
+                <input data-field="originy" type="text" value="6" />
+                <span>Z</span>
+                <input data-field="originz" type="text" value="9.5" />
+              </div>
+            </td>
           </tr>
           <tr>
             <td>Camera Rotate Y</td>
-            <td><input data-field="startry" type="text" value="-90deg" /></td>
+            <td><input data-field="ry" type="text" value="-90deg" /></td>
             <td></td>
           </tr>
-          <tr>
+          <tr class="span_padding">
             <td>Target Start X</td>
-            <td><input data-field="x" type="text" value="-50" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Target Start Y</td>
-            <td><input data-field="y" type="text" value="5" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Target Start Z</td>
-            <td><input data-field="z" type="text" value="0" /></td>
-            <td></td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row;">
+                <input data-field="x" type="text" value="-50" />
+                <span>Y</span>
+                <input data-field="y" type="text" value="5" />
+                <span>Z</span>
+                <input data-field="z" type="text" value="0" />
+              </div>
+            </td>
           </tr>
           <tr>
             <td>Generic Data</td>
@@ -346,12 +331,11 @@ class cMacro {
       csv_row.asset = 'displaycamera';
     }
 
-
     tr_rows.forEach(row => {
-      let i = row.querySelector('input[type="text"]');
-      if (i) {
+      let ia = row.querySelectorAll('input[type="text"]');
+      ia.forEach(i => {
         csv_row[i.dataset.field] = i.value;
-      }
+      });
     });
 
     let r = csv_row;
@@ -462,35 +446,29 @@ class cMacro {
           <td><input data-field="camerafov" type="text" value="" /></td>
           <td></td>
         </tr>
-        <tr data-cats="camera">
+        <tr data-cats="camera" class="span_padding">
           <td>Origin X</td>
-          <td><input data-field="cameraoriginx" type="text" value="" /></td>
-          <td></td>
+          <td colspan="2">
+            <div style="display:flex;flex-direction:row">
+              <input data-field="cameraoriginx" type="text" value="" />
+              <span>Y</span>
+              <input data-field="cameraoriginy" type="text" value="" />
+              <span>Z</span>
+              <input data-field="cameraoriginz" type="text" value="" />
+            </div>
+          </td>
         </tr>
-        <tr data-cats="camera">
-          <td>Origin Y</td>
-          <td><input data-field="cameraoriginy" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="camera">
-          <td>Origin Z</td>
-          <td><input data-field="cameraoriginz" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="camera">
+        <tr data-cats="camera" class="span_padding">
           <td>Rotation X</td>
-          <td><input data-field="camerarotationx" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="camera">
-          <td>Rotation Y</td>
-          <td><input data-field="camerarotationy" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="camera">
-          <td>Rotation Z</td>
-          <td><input data-field="camerarotationz" type="text" value="" /></td>
-          <td></td>
+          <td colspan="2">
+            <div style="display:flex;flex-direction:row">
+              <input data-field="camerarotationx" type="text" value="" />
+              <span>Y</span>
+              <input data-field="camerarotationy" type="text" value="" />
+              <span>Z</span>
+              <input data-field="camerarotationz" type="text" value="" />
+            </div>
+          </td>
         </tr>
         <tr data-cats="camera">
           <td>Radius</td>
@@ -517,55 +495,45 @@ class cMacro {
           <td><input data-field="maxcameraspeed" type="text" value="" /></td>
           <td></td>
         </tr>
-        <tr data-cats="camera">
+        <tr data-cats="camera" class="span_padding">
           <td>Aim Target X</td>
-          <td><input data-field="cameraaimtargetx" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="camera">
-          <td>Aim Target Y</td>
-          <td><input data-field="cameraaimtargety" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="camera">
-          <td>Aim Target Z</td>
-          <td><input data-field="cameraaimtargetz" type="text" value="" /></td>
-          <td></td>
+          <td colspan="2">
+            <div style="display:flex;flex-direction:row">
+              <input data-field="cameraaimtargetx" type="text" value="" />
+              <span>Y</span>
+              <input data-field="cameraaimtargety" type="text" value="" />
+              <span>Z</span>
+              <input data-field="cameraaimtargetz" type="text" value="" />
+            </div>
+          </td>
         </tr>
         <tr data-cats="light">
           <td>Itensity</td>
           <td><input data-field="lightintensity" type="text" value="1" /></td>
           <td></td>
         </tr>
-        <tr data-cats="light">
+        <tr data-cats="light" class="span_padding">
           <td>Origin X</td>
-          <td><input data-field="lightoriginx" type="text" value="" /></td>
-          <td></td>
+          <td colspan="2">
+            <div style="display:flex;flex-direction:row">
+              <input data-field="lightoriginx" type="text" value="" />
+              <span>Y</span>
+              <input data-field="lightoriginy" type="text" value="" />
+              <span>Z</span>
+              <input data-field="lightoriginz" type="text" value="" />
+          </div>
         </tr>
-        <tr data-cats="light">
-          <td>Origin Y</td>
-          <td><input data-field="lightoriginy" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="light">
-          <td>Origin Z</td>
-          <td><input data-field="lightoriginz" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="light">
+        <tr data-cats="light" class="span_padding">
           <td>Direction X</td>
-          <td><input data-field="lightdirectionx" type="text" value="" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="light">
-          <td>Direction Y</td>
-          <td><input data-field="lightdirectiony" type="text" value="-1" /></td>
-          <td></td>
-        </tr>
-        <tr data-cats="light">
-          <td>Direction Z</td>
-          <td><input data-field="lightdirectionz" type="text" value="" /></td>
-          <td></td>
+          <td colspan="2">
+            <div style="display:flex;flex-direction:row;">
+              <input data-field="lightdirectionx" type="text" value="" />
+              <span>Y</span>
+              <input data-field="lightdirectiony" type="text" value="-1" />
+              <span>Z</span>
+              <input data-field="lightdirectionz" type="text" value="" />
+            </div>
+          </td>
         </tr>
         <tr data-cats="light">
           <td>Angle</td>
@@ -731,35 +699,29 @@ class cMacro {
             <td><input data-field="parent" type="text" value="::scene::" /></td>
             <td></td>
           </tr>
-          <tr data-cats="Point,Spot">
+          <tr data-cats="Point,Spot" class="span_padding">
             <td>Origin X</td>
-            <td><input data-field="lightoriginx" type="text" value="30" /></td>
-            <td></td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input data-field="lightoriginx" type="text" value="30" />
+                <span>Y</span>
+                <input data-field="lightoriginy" type="text" value="30" />
+                <span>Z</span>
+                <input data-field="lightoriginz" type="text" value="30" />
+              </div>
+            </td>
           </tr>
-          <tr data-cats="Point,Spot">
-            <td>Origin Y</td>
-            <td><input data-field="lightoriginy" type="text" value="30" /></td>
-            <td></td>
-          </tr>
-          <tr data-cats="Point,Spot">
-            <td>Origin Z</td>
-            <td><input data-field="lightoriginz" type="text" value="30" /></td>
-            <td></td>
-          </tr>
-          <tr data-cats="Directional,Hemispheric,Spot">
+          <tr data-cats="Directional,Hemispheric,Spot" class="span_padding">
             <td>Direction X</td>
-            <td><input data-field="lightdirectionx" type="text" value="0" /></td>
-            <td></td>
-          </tr>
-          <tr data-cats="Directional,Hemispheric,Spot">
-            <td>Direction Y</td>
-            <td><input data-field="lightdirectiony" type="text" value="-1" /></td>
-            <td></td>
-          </tr>
-          <tr data-cats="Directional,Hemispheric,Spot">
-            <td>Direction Z</td>
-            <td><input data-field="lightdirectionz" type="text" value="0" /></td>
-            <td></td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input data-field="lightdirectionx" type="text" value="0" />
+                <span>Y</span>
+                <input data-field="lightdirectiony" type="text" value="-1" />
+                <span>Z</span>
+                <input data-field="lightdirectionz" type="text" value="0" />
+              </div>
+            </td>
           </tr>
           <tr data-cats="all">
             <td>Intensity</td>
@@ -862,10 +824,10 @@ class cMacro {
         cats = '';
       cats = cats.split(',');
       if (cats.indexOf(category) !== -1 || cats[0] === 'all') {
-        let i = row.querySelector('input[type="text"]');
-        if (i) {
+        let ia = row.querySelectorAll('input[type="text"]');
+        ia.forEach(i => {
           csv_row[i.dataset.field] = i.value;
-        }
+        });
       }
     });
 

@@ -1478,15 +1478,15 @@
   "fontWeight": "bold"
 }, {
   "range": "J44",
-  "value": "startx",
+  "value": "originx",
   "fontWeight": "bold"
 }, {
   "range": "K44",
-  "value": "starty",
+  "value": "originy",
   "fontWeight": "bold"
 }, {
   "range": "L44",
-  "value": "startz",
+  "value": "originz",
   "fontWeight": "bold"
 }, {
   "range": "M44",
@@ -1575,15 +1575,15 @@
   "fontWeight": "bold"
 }, {
   "range": "F47",
-  "value": "startx",
+  "value": "originx",
   "fontWeight": "bold"
 }, {
   "range": "G47",
-  "value": "starty",
+  "value": "originy",
   "fontWeight": "bold"
 }, {
   "range": "H47",
-  "value": "startz",
+  "value": "originz",
   "fontWeight": "bold"
 }, {
   "range": "I47",
