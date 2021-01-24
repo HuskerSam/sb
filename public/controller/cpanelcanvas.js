@@ -227,6 +227,7 @@ class cPanelCanvas {
       this.parent.context.selectCamera(this.cameraSelect.value, this.parent);
       this.refresh();
     }
+    this.canvas.click();
   }
   downloadVideo() {
     if (this.rootBlock.framesHelper.maxLength === 0)
