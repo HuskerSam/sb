@@ -73,8 +73,45 @@ class cViewPublished extends bView {
 
   }
   async canvasReadyPostTimeout() {
+    this.updateDisplayCameraName();
+    this.updateSelectedCamera();
     await super.canvasReadyPostTimeout();
-    setTimeout(() => this.canvasHelper.cameraChangeHandler(), 150);
+    this._displayCameraFeatures();
+  }
+  _displayCameraFeatures() {
+    this.updateDisplayCameraName();
+    if (this.displayCamera) {
+      setTimeout(() => this.updateSelectedCamera(), 150);
+    } else {
+      setTimeout(() => this.canvasHelper.cameraChangeHandler(), 150);
+    }
+  }
+  updateSelectedCamera() {
+    if (!this.displayCamera)
+      return;
+
+    let options = this.canvasHelper.cameraSelect;
+    for (let c = 0; c < options.length; c++) {
+      if (options.item(c).innerHTML === this.displayCamera) {
+        this.canvasHelper.cameraSelect.selectedIndex = c;
+        this.canvasHelper.cameraChangeHandler();
+        break;
+      }
+    }
+  }
+  updateDisplayCameraName() {
+    if (!this.rootBlock)
+      return;
+    this.displayCamera = 'demo';
+    this.sceneDefaultCamera = '';
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
+      this.displayCamera = this.rootBlock.blockRawData.displayCamera;
+      this.sceneDefaultCamera = this.displayCamera;
+    }
+    let urlParams = new URLSearchParams(window.location.search);
+    let displayCamera = urlParams.get('displayCamera');
+    if (displayCamera)
+      this.displayCamera = displayCamera;
   }
   setValue() {
     let t = this.elementSelect.value.toLowerCase();
@@ -98,7 +135,7 @@ class cViewPublished extends bView {
     this.dialog.style.display = 'block';
   }
   elementTypeChange() {
-    let t = this.elementSelect.value.toLowerCase();    
+    let t = this.elementSelect.value.toLowerCase();
     if (!gAPPP.a.modelSets[t])
       return;
 

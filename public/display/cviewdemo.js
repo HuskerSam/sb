@@ -661,7 +661,6 @@ class cViewDemo extends bView {
     }
     let urlParams = new URLSearchParams(window.location.search);
     let displayCamera = urlParams.get('displayCamera');
-    this.displayCamera = displayCamera;
     if (displayCamera)
       this.displayCamera = displayCamera;
 
@@ -675,7 +674,9 @@ class cViewDemo extends bView {
             break;
           }
         }
-      }, 100);
+      }, 500);
+    } else {
+      setTimeout(() => this.canvasHelper.cameraChangeHandler(), 500);
     }
   }
   _sceneDataPanel() {
