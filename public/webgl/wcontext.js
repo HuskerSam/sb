@@ -568,6 +568,14 @@ class wContext {
         } else {
           this._renderDefaultCamera();
         }
+
+        if (gAPPP.mV && gAPPP.mV.rootBlock) {
+          setTimeout(() => {
+            gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].framesHelper.compileFrames();
+            gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].playAnimation();
+          }, 100);
+
+        }
       }
     }
   }

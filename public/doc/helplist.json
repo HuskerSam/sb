@@ -54,6 +54,10 @@
     "title": "Shapes"
   },
   {
+    "value": "frame",
+    "title": "Frames"
+  },
+  {
     "value": "workspace",
     "title": "Project (/asset)",
     "video": "https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4"
