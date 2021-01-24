@@ -632,12 +632,11 @@ class wContext {
     let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.DeviceOrientationCamera("DeviceOrientationCamera", cameraOrigin, this.scene);
-
+    this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
     let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
       values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
 
-    //this.camera.position = cameraOrigin;
     this.rebindCamera();
   }
   _renderVRFreeCamera() {

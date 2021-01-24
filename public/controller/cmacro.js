@@ -144,7 +144,7 @@ class cMacro {
     return `<div class="shape_wizard_wrapper" style="display:flex;flex-direction:column;">
       <div style="flex:1;overflow: hidden auto;">
         <table class="wizard_field_container">
-          <tr>
+          <tr data-cats="all">
             <td>Type</td>
             <td>
             <select class="camera_wizard_type_select" style="width:100%;">
@@ -155,17 +155,17 @@ class cMacro {
           </tr>
         </table>
         <table class="wizard_field_container native_camera_table">
-          <tr>
+          <tr data-cats="all">
             <td>Native Type</td>
-            <td><input data-field="cameratype" type="text" value="ArcRotate" list="camerasourceslist" /></td>
+            <td><input data-field="cameratype" class="cameratype" type="text" value="ArcRotate" list="camerasourceslist" /></td>
             <td></td>
           </tr>
-          <tr>
+          <tr data-cats="all">
             <td>Parent</td>
             <td><input data-field="parent" type="text" value="::scene::" /></td>
             <td></td>
           </tr>
-          <tr class="span_padding">
+          <tr class="span_padding" data-cats="all">
             <td>Origin X</td>
             <td colspan="2">
               <div style="display:flex;flex-direction:row">
@@ -175,17 +175,17 @@ class cMacro {
               </div>
             </td>
           </tr>
-          <tr>
+          <tr data-cats="FollowCamera">
             <td>Radius</td>
             <td><input data-field="cameraradius" type="text" value="" /></td>
             <td></td>
           </tr>
-          <tr>
+          <tr data-cats="FollowCamera">
             <td>Height</td>
             <td><input data-field="cameraheightoffset" type="text" value="" /></td>
             <td></td>
           </tr>
-          <tr class="span_padding">
+          <tr class="span_padding" data-cats="DeviceOrientationCamera,ArcRotate">
             <td>Aim Target X</td>
             <td colspan="2">
               <div style="display:flex;flex-direction:row">
@@ -196,12 +196,12 @@ class cMacro {
             </td>
             <td></td>
           </tr>
-          <tr>
+          <tr data-cats="all">
             <td>FOV</td>
             <td><input data-field="camerafov" type="text" value="" /></td>
             <td></td>
           </tr>
-          <tr>
+          <tr data-cats="FollowCamera">
             <td>Target Block</td>
             <td><input data-field="cameratargetblock" type="text" value="" /></td>
             <td></td>
@@ -288,6 +288,7 @@ class cMacro {
     this.camera_wizard_type_select = this.panel.querySelector('.camera_wizard_type_select');
     this.product_camera_table = this.panel.querySelector('.product_camera_table');
     this.native_camera_table = this.panel.querySelector('.native_camera_table');
+    this.cameratype = this.panel.querySelector('.cameratype');
     this.camera_wizard_type_select.addEventListener('input', e => {
       if (this.camera_wizard_type_select.selectedIndex === 0) {
         this.native_camera_table.style.display = '';
@@ -314,6 +315,21 @@ class cMacro {
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.cameraUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.cameraUpdateCSV()));
   }
+  _cameraUpdateNativeFields() {
+    let category = this.cameratype.value;
+    let rows = this.native_camera_table.querySelectorAll('tr');
+
+    rows.forEach(row => {
+      let cats = row.dataset.cats;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(category) === -1 && cats[0] !== 'all')
+        row.style.display = 'none';
+      else
+        row.style.display = '';
+    });
+  }
   cameraUpdateCSV() {
     this.newName = this.panelInput.value.trim();
     let cameraTypeIndex = this.camera_wizard_type_select.selectedIndex;
@@ -326,6 +342,7 @@ class cMacro {
       tr_rows = this.panel.querySelectorAll('.native_camera_table tr');
       csv_row.asset = 'blockchild';
       csv_row.childtype = 'camera';
+      this._cameraUpdateNativeFields();
     } else {
       tr_rows = this.panel.querySelectorAll('.product_camera_table tr');
       csv_row.asset = 'displaycamera';

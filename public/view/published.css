@@ -10,7 +10,7 @@
 
 #publish-profile-panel {
   right: .25em;
-  bottom: 3.25em;
+  bottom: 5.5em;
   position: absolute;
 }
 
@@ -50,4 +50,8 @@
 .canvas-actions {
   top: 0;
   height: 100%;
+}
+
+.btn-sb-icon, #user-profile-dialog-reset-button {
+  font-size: 1.5em;
 }

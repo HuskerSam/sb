@@ -74,8 +74,12 @@ class cPanelCanvas {
     this.closeMenusOnClick = true;
 
     this.canvas.addEventListener('click', e => {
-      if (this.closeMenusOnClick)
+      if (this.closeMenusOnClick && gAPPP.mV)
         gAPPP.mV.closeHeaderBands(true);
+      if (gAPPP.activeContext.camera) {
+        if (this.fovSlider.value = gAPPP.activeContext.camera.fov)
+          this.fovSliderChange();
+      }
     });
 
     this._playState = 0;
