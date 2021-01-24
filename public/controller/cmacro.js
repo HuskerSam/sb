@@ -1194,15 +1194,15 @@ class cMacro {
             <td><input type="text" class="groundimage texturepathinput" data-field="groundimage" list="groundTexturesDataList" /></td>
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
-          <tr>
+          <tr class="span_padding">
             <td>Scale v (x)</td>
-            <td><input type="text" class="skyboxgroundscalev groundimage_scalev" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Scale u (y)</td>
-            <td><input type="text" class="skyboxgroundscaleu groundimage_scaleu" /></td>
-            <td></td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row;">
+                <input type="text" class="skyboxgroundscalev groundimage_scalev" />
+                <span>u (z)</span>
+                <input type="text" class="skyboxgroundscaleu groundimage_scaleu" />
+              </div>
+            </td>
           </tr>
           <tr>
             <td style="text-align:center;" colspan="3">

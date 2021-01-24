@@ -903,7 +903,7 @@
   "fontWeight": "bold"
 }, {
   "range": "K21",
-  "value": "starty",
+  "value": "originy",
   "fontWeight": "bold"
 }, {
   "range": "L21",
@@ -1011,7 +1011,7 @@
   "fontWeight": "bold"
 }, {
   "range": "G24",
-  "value": "starty",
+  "value": "originy",
   "fontWeight": "bold"
 }, {
   "range": "H24",
@@ -2098,7 +2098,7 @@
   "value": "displayfieldedits"
 }, {
   "range": "D75",
-  "value": "Camera Start Position||layout||FollowCamera||displaycamera||x:num||y:num||z:num||originx:num||starty:num||originz:num||originrx:num||originry:num||originrz:num"
+  "value": "Camera Start Position||layout||FollowCamera||displaycamera||x:num||y:num||z:num||originx:num||originy:num||originz:num||originrx:num||originry:num||originrz:num"
 }, {
   "range": "A76",
   "value": "block"

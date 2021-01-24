@@ -10,7 +10,7 @@
   "horizontalAlignment": "left"
 }, {
   "range": "C1",
-  "value": "groundimage",
+  "value": "=colorColumn(\"groundimage\")",
   "fontWeight": "bold",
   "horizontalAlignment": "left"
 }, {

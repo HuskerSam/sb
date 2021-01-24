@@ -576,7 +576,7 @@ class gCSVImport {
 
     if (row.originx)
       frameData.cameraOriginX = row.originx;
-    if (row.originY)
+    if (row.originy)
       frameData.cameraOriginY = row.originy;
     if (row.originz)
       frameData.cameraOriginZ = row.originz;
@@ -1432,7 +1432,7 @@ class gCSVImport {
   async addCSVSceneBlock(row) {
     if (row.groundimage) {
       let i = row.groundimage;
-      if (i.indexOf('color:') !== 1 && i.indexOf('decolor:') !== -1 && i.indexOf('ecolor') !== -1) {
+      if (i.indexOf('color:') === -1 && i.indexOf('decolor:') === -1 && i.indexOf('ecolor') === -1) {
         let texture = {
           title: row.name + '_groundtexture',
           url: row.groundimage,

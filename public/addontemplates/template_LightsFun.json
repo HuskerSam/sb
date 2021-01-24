@@ -10,7 +10,7 @@
   "horizontalAlignment": "left"
 }, {
   "range": "C1",
-  "value": "groundimage",
+  "formula": "=colorColumn(\"groundimage\")",
   "fontWeight": "bold",
   "horizontalAlignment": "left"
 }, {
@@ -44,6 +44,8 @@
 }, {
   "range": "C2",
   "value": "color: 0,0,0",
+  "fontColor": "#ffffff",
+  "backgroundColor": "#000000",
   "horizontalAlignment": "left"
 }, {
   "range": "D2",
@@ -491,7 +493,8 @@
   "horizontalAlignment": "left"
 }, {
   "range": "D13",
-  "value": "color: 1,1,1",
+  "value": "color: .75,.75,.75",
+  "backgroundColor": "#bfbfbf",
   "horizontalAlignment": "left"
 }, {
   "range": "E13",
