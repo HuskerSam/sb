@@ -259,7 +259,7 @@
   "fontWeight": "bold"
 }, {
   "range": "E4",
-  "value": "cameraheightoffset"
+  "value": "heightoffset"
 }, {
   "range": "F4",
   "value": "cameramovetime"
@@ -374,7 +374,7 @@
   "fontWeight": "bold"
 }, {
   "range": "F7",
-  "value": "cameraaimtarget"
+  "value": "aimtarget"
 }, {
   "range": "G7",
   "value": "originx"
@@ -389,7 +389,7 @@
   "value": "cameraradius"
 }, {
   "range": "K7",
-  "value": "cameraheightoffset"
+  "value": "heightoffset"
 }, {
   "range": "A8",
   "value": "arcRotateCamera"

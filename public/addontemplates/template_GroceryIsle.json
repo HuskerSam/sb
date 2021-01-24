@@ -871,7 +871,7 @@
   "fontWeight": "bold"
 }, {
   "range": "C21",
-  "value": "cameraheightoffset",
+  "value": "heightoffset",
   "fontWeight": "bold"
 }, {
   "range": "D21",
@@ -1003,7 +1003,7 @@
   "fontWeight": "bold"
 }, {
   "range": "E24",
-  "value": "cameraaimtarget",
+  "value": "aimtarget",
   "fontWeight": "bold"
 }, {
   "range": "F24",
@@ -1023,7 +1023,7 @@
   "fontWeight": "bold"
 }, {
   "range": "J24",
-  "value": "cameraheightoffset",
+  "value": "heightoffset",
   "fontWeight": "bold"
 }, {
   "range": "K24",
@@ -2110,7 +2110,7 @@
   "value": "displayfieldedits"
 }, {
   "range": "D76",
-  "value": "Camera Range||layout||FollowCamera||displaycamera||cameraradius:num||cameraheightoffset:num"
+  "value": "Camera Range||layout||FollowCamera||displaycamera||cameraradius:num||heightoffset:num"
 }, {
   "range": "A77",
   "value": "block"

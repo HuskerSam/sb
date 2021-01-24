@@ -182,16 +182,16 @@ class cMacro {
           </tr>
           <tr data-cats="FollowCamera">
             <td>Height</td>
-            <td><input data-field="cameraheightoffset" type="text" value="" /></td>
+            <td><input data-field="heightoffset" type="text" value="" /></td>
             <td></td>
           </tr>
-          <tr class="span_padding" data-cats="DeviceOrientationCamera,ArcRotate">
+          <tr class="span_padding" data-cats="DeviceOrientationCamera,ArcRotate,UniversalCamera">
             <td>Aim Target X</td>
             <td colspan="2">
               <div style="display:flex;flex-direction:row">
-                <input data-field="cameraaimtargetx" type="text" value="" />
-                <span>Y</span><input data-field="cameraaimtargety" type="text" value="" />
-                <span>Z</span><input data-field="cameraaimtargetz" type="text" value="" />
+                <input data-field="aimtargetx" type="text" value="" />
+                <span>Y</span><input data-field="aimtargety" type="text" value="" />
+                <span>Z</span><input data-field="aimtargetz" type="text" value="" />
               </div>
             </td>
             <td></td>
@@ -203,14 +203,14 @@ class cMacro {
           </tr>
           <tr data-cats="FollowCamera">
             <td>Target Block</td>
-            <td><input data-field="cameratargetblock" type="text" value="" /></td>
+            <td><input data-field="targetblock" type="text" value="" /></td>
             <td></td>
           </tr>
         </table>
         <table class="wizard_field_container product_camera_table" style="display:none;">
           <tr>
             <td>Height Offset</td>
-            <td><input data-field="cameraheightoffset" type="text" value="25" /></td>
+            <td><input data-field="heightoffset" type="text" value="25" /></td>
             <td></td>
           </tr>
           <tr>
@@ -315,21 +315,6 @@ class cMacro {
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.cameraUpdateCSV()));
     this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.cameraUpdateCSV()));
   }
-  _cameraUpdateNativeFields() {
-    let category = this.cameratype.value;
-    let rows = this.native_camera_table.querySelectorAll('tr');
-
-    rows.forEach(row => {
-      let cats = row.dataset.cats;
-      if (!cats)
-        cats = '';
-      cats = cats.split(',');
-      if (cats.indexOf(category) === -1 && cats[0] !== 'all')
-        row.style.display = 'none';
-      else
-        row.style.display = '';
-    });
-  }
   cameraUpdateCSV() {
     this.newName = this.panelInput.value.trim();
     let cameraTypeIndex = this.camera_wizard_type_select.selectedIndex;
@@ -342,17 +327,35 @@ class cMacro {
       tr_rows = this.panel.querySelectorAll('.native_camera_table tr');
       csv_row.asset = 'blockchild';
       csv_row.childtype = 'camera';
-      this._cameraUpdateNativeFields();
     } else {
       tr_rows = this.panel.querySelectorAll('.product_camera_table tr');
       csv_row.asset = 'displaycamera';
     }
 
+
+    let category = this.cameratype.value;
     tr_rows.forEach(row => {
-      let ia = row.querySelectorAll('input[type="text"]');
-      ia.forEach(i => {
-        csv_row[i.dataset.field] = i.value;
-      });
+      if (cameraTypeIndex === 0) {
+        let cats = row.dataset.cats;
+        if (!cats)
+          cats = '';
+        cats = cats.split(',');
+        if (cats.indexOf(category) === -1 && cats[0] !== 'all')
+          row.style.display = 'none';
+        else {
+          let ia = row.querySelectorAll('input[type="text"]');
+          ia.forEach(i => {
+            csv_row[i.dataset.field] = i.value;
+          });
+
+          row.style.display = '';
+        }
+      } else {
+        let ia = row.querySelectorAll('input[type="text"]');
+        ia.forEach(i => {
+          csv_row[i.dataset.field] = i.value;
+        });
+      }
     });
 
     let r = csv_row;
@@ -494,7 +497,7 @@ class cMacro {
         </tr>
         <tr data-cats="camera">
           <td>Height Offset</td>
-          <td><input data-field="cameraheightoffset" type="text" value="" /></td>
+          <td><input data-field="heightoffset" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="camera">
@@ -516,11 +519,11 @@ class cMacro {
           <td>Aim Target X</td>
           <td colspan="2">
             <div style="display:flex;flex-direction:row">
-              <input data-field="cameraaimtargetx" type="text" value="" />
+              <input data-field="aimtargetx" type="text" value="" />
               <span>Y</span>
-              <input data-field="cameraaimtargety" type="text" value="" />
+              <input data-field="aimtargety" type="text" value="" />
               <span>Z</span>
-              <input data-field="cameraaimtargetz" type="text" value="" />
+              <input data-field="aimtargetz" type="text" value="" />
             </div>
           </td>
         </tr>

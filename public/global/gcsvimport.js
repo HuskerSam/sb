@@ -533,8 +533,8 @@ class gCSVImport {
     if (row.realOrigRow)
       blockChildData.origRow = row.realOrigRow;
 
-    if (row.cameratargetblock)
-      blockChildData.cameraTargetBlock = row.cameratargetblock;
+    if (row.targetblock)
+      blockChildData.cameraTargetBlock = row.targetblock;
     if (row.cameratype)
       blockChildData.cameraType = row.cameratype;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
@@ -563,8 +563,8 @@ class gCSVImport {
 
     if (row.cameraradius)
       frameData.cameraRadius = row.cameraradius;
-    if (row.cameraheightoffset)
-      frameData.cameraHeightOffset = row.cameraheightoffset;
+    if (row.heightoffset)
+      frameData.cameraHeightOffset = row.heightoffset;
     if (row.cameraacceleration)
       frameData.cameraAcceleration = row.cameraacceleration;
     if (row.maxcameraspeed)
@@ -581,12 +581,12 @@ class gCSVImport {
     if (row.originz)
       frameData.cameraOriginZ = row.originz;
 
-    if (row.cameraaimtargetx)
-      frameData.cameraAimTargetX = row.cameraaimtargetx;
-    if (row.cameraaimtargety)
-      frameData.cameraAimTargetY = row.cameraaimtargety;
-    if (row.cameraaimtargetz)
-      frameData.cameraAimTargetZ = row.cameraaimtargetz;
+    if (row.aimtargetx)
+      frameData.cameraAimTargetX = row.aimtargetx;
+    if (row.aimtargety)
+      frameData.cameraAimTargetY = row.aimtargety;
+    if (row.aimtargetz)
+      frameData.cameraAimTargetZ = row.aimtargetz;
 
     if (row.childtype === 'light') {
       let lightFields = [
@@ -2126,10 +2126,10 @@ class gCSVImport {
     cam.childname = "demo";
     cam.cameraradius = row.cameraradius;
     cam.cameratype = 'FollowCamera';
-    cam.cameraheightoffset = row.cameraheightoffset;
+    cam.heightoffset = row.heightoffset;
     cam.camerarotationoffset = '0';
     cam.maxcameraspeed = '10';
-    cam.cameratargetblock = "block:" + cameraBlock.name;
+    cam.targetblock = "block:" + cameraBlock.name;
     cam.childtype = 'camera';
     cam.name = row.name;
     cam.parent = sceneData.title;

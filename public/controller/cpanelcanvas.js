@@ -77,8 +77,10 @@ class cPanelCanvas {
       if (this.closeMenusOnClick && gAPPP.mV)
         gAPPP.mV.closeHeaderBands(true);
       if (gAPPP.activeContext.camera) {
-        if (this.fovSlider.value = gAPPP.activeContext.camera.fov)
+        if (this.fovSlider.value !== gAPPP.activeContext.camera.fov) {
+          this.fovSlider.value = gAPPP.activeContext.camera.fov;
           this.fovSliderChange();
+        }
       }
     });
 

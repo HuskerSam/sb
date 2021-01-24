@@ -597,11 +597,15 @@ class wContext {
       this.camera.cameraAcceleration = Number(cameraAcceleration);
     if (maxCameraSpeed)
       this.camera.maxCameraSpeed = Number(maxCameraSpeed);
+    if (values.cameraFOV)
+      this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
 
     this.rebindCamera();
 
     let targetBlock = this.dialogForCamera.rootBlock;
     if (!targetBlock)
+      return;
+    if (!cameraDetails.cameraTargetBlock)
       return;
     let mesh = targetBlock._findBestTargetObject(cameraDetails.cameraTargetBlock);
     if (!mesh)
@@ -617,6 +621,8 @@ class wContext {
     let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.UniversalCamera("UniversalCamera", cameraOrigin, this.scene);
+    if (values.cameraFOV)
+      this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
 
     let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
       values.cameraAimTargetZ, 0, 0, 0);
@@ -632,7 +638,8 @@ class wContext {
     let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.DeviceOrientationCamera("DeviceOrientationCamera", cameraOrigin, this.scene);
-    this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
+    if (values.cameraFOV)
+      this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
     let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
       values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
@@ -686,6 +693,8 @@ class wContext {
     this.rebindCamera();
     if (values.cameraRadius)
       this.camera.radius = Number(values.cameraRadius);
+    if (values.cameraFOV)
+      this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
 
     let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
       values.cameraAimTargetZ, 0, 0, 0);

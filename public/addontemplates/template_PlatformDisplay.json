@@ -1205,7 +1205,7 @@
   "fontWeight": "bold"
 }, {
   "range": "C34",
-  "value": "cameraheightoffset",
+  "value": "heightoffset",
   "fontWeight": "bold"
 }, {
   "range": "D34",
@@ -1326,7 +1326,7 @@
   "fontWeight": "bold"
 }, {
   "range": "E37",
-  "value": "cameraaimtarget",
+  "value": "aimtarget",
   "fontWeight": "bold"
 }, {
   "range": "F37",
@@ -1346,7 +1346,7 @@
   "fontWeight": "bold"
 }, {
   "range": "J37",
-  "value": "cameraheightoffset",
+  "value": "heightoffset",
   "fontWeight": "bold"
 }, {
   "range": "K37",
