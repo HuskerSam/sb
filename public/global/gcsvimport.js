@@ -789,7 +789,9 @@ class gCSVImport {
       'cameraRotationOffset',
       'cameraAcceleration',
       'maxCameraSpeed',
-      'cameraAimTarget'
+      'cameraAimTargetX',
+      'cameraAimTargetY',
+      'cameraAimTargetZ'
     ];
     let lightFields = [
       'lightOriginX',

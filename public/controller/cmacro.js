@@ -497,7 +497,7 @@ class cMacro {
         </tr>
         <tr data-cats="camera">
           <td>Height Offset</td>
-          <td><input data-field="heightoffset" type="text" value="" /></td>
+          <td><input data-field="cameraheightoffset" type="text" value="" /></td>
           <td></td>
         </tr>
         <tr data-cats="camera">
@@ -519,11 +519,11 @@ class cMacro {
           <td>Aim Target X</td>
           <td colspan="2">
             <div style="display:flex;flex-direction:row">
-              <input data-field="aimtargetx" type="text" value="" />
+              <input data-field="cameraaimtargetx" type="text" value="" />
               <span>Y</span>
-              <input data-field="aimtargety" type="text" value="" />
+              <input data-field="cameraaimtargety" type="text" value="" />
               <span>Z</span>
-              <input data-field="aimtargetz" type="text" value="" />
+              <input data-field="cameraaimtargetz" type="text" value="" />
             </div>
           </td>
         </tr>

@@ -570,13 +570,17 @@ class wContext {
         }
 
         if (gAPPP.mV && gAPPP.mV.rootBlock) {
-          setTimeout(() => {
-            gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].framesHelper.compileFrames();
-            gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].playAnimation();
-          }, 100);
-
+          this._animateCamera();
         }
       }
+    }
+  }
+  _animateCamera() {
+    try {
+      gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].framesHelper.compileFrames();
+      gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].playAnimation();
+    } catch (err) {
+      console.log('_animateCamera Error', err, this);
     }
   }
   _renderFollowCamera() {
