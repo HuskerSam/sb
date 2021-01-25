@@ -227,7 +227,9 @@
           <div style="flex:1;overflow:hidden;display:block;">
             <select id="circuit_template_select" class="select_list" size="5">
             </select>
-            <div id="template_description" style="overflow: hidden auto;"></div>
+            <div id="template_description_wrapper" style="overflow:hidden;padding:8px;">
+              <div id="template_description" style="overflow: hidden auto;height:100%;width:100%;"></div>
+            </div>
           </div>
         </div>
         <div id="block_wizards" class="main_div_wrapper">
@@ -477,7 +479,7 @@
           this.splitProjectsView.destroy();
         this.splitProjectsView = Split(['#project_deploy_select', '#project_detail_view_for_split'], {
           sizes: [40, 60],
-          minSize: [20, 20],
+          minSize: [.1,.1],
           direction: 'vertical'
         });
 
@@ -485,7 +487,7 @@
           this.splitDeployView.destroy();
         this.splitDeployView = Split(['#deploy_options_server_list', '#selected_server_details_div'], {
           sizes: [70, 30],
-          minSize: [20, 20],
+          minSize: [.1,.1],
           direction: 'vertical'
         });
       }
@@ -899,9 +901,9 @@
 
         if (this.splitTemplatesView)
           this.splitTemplatesView.destroy();
-        this.splitTemplatesView = Split(['#circuit_template_select', '#template_description'], {
-          sizes: [80, 20],
-          minSize: [20, 20],
+        this.splitTemplatesView = Split(['#circuit_template_select', '#template_description_wrapper'], {
+          sizes: [70, 30],
+          minSize: [.1,.1],
           direction: 'vertical'
         });
       }
@@ -1886,7 +1888,8 @@
           this.show_help_panel_btn.style.color = 'blue';
           this.splitHelpInstance = Split(['#help_viewer_panel', '#details_wrapper_for_split'], {
             sizes: [40, 60],
-            direction: 'vertical'
+            direction: 'vertical',
+            minSize: [.1, .1]
           });
         }
       }
