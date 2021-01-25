@@ -874,7 +874,7 @@ class cMacro {
         <tr>
           <td>Block Type</td>
           <td>
-              <select class="block_wizard_type_select" style="width:11em;">
+              <select class="block_wizard_type_select" style="width:10em;">
                <option selected>Scene</option>
                <option>Text and Shape</option>
                <option>Animated Line</option>
@@ -1171,7 +1171,7 @@ class cMacro {
             <td></td>
           </tr>
           <tr>
-            <td>Tess</td>
+            <td>Tessellation</td>
             <td><input type="text" class="tessellation" /></td>
             <td></td>
           </tr>
