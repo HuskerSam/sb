@@ -624,6 +624,8 @@ class gCSVImport {
 
     }
 
+    if (row.nofirstframe === '1')
+      return;
     return this.dbSetRecord('frame', frameData);
   }
   async addCSVShapeRow(row) {
@@ -742,6 +744,7 @@ class gCSVImport {
     sceneBC.visibility = row.visibility;
     sceneBC.frametime = row.frametime;
     sceneBC.materialname = row.materialname;
+    sceneBC.nofirstframe = row.nofirstframe;
 
     return this.addCSVRow(sceneBC);
   }
@@ -768,6 +771,15 @@ class gCSVImport {
     return matchingChildren;
   }
   async addCSVBlockChildFrameRow(row) {
+    if (row.parent.substr(0, 9) === '::scene::') {
+      let sb = await this.csvFetchSceneBlock();
+      row.parent = sb.parent + row.parent.substring(9);
+    }
+    if (row.name.substr(0, 9) === '::scene::') {
+      let sb = await this.csvFetchSceneBlock();
+      row.name = sb.parent + row.name.substring(9);
+    }
+
     let children = await this._getBlockChildren(row.parent, row.childtype, row.name);
 
     let shapeMeshOnlyFields = [
@@ -1517,6 +1529,7 @@ class gCSVImport {
     chatBC.name = row.name + '_chatWrapper';
     chatBC.parent = row.name;
     chatBC.x = '0';
+    basketBC.nofirstframe = '1';
     this.addCSVRow(chatBC);
 
     let fixturesBC = this.defaultCSVRow();
@@ -1531,6 +1544,7 @@ class gCSVImport {
     basketBC.name = row.name + '_basketcart';
     basketBC.parent = row.name;
     basketBC.blockflag = 'basket';
+    basketBC.nofirstframe = '1';
     this.addCSVRow(basketBC);
 
     return blockresult;

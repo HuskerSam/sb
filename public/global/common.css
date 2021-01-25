@@ -103,6 +103,10 @@ html, body {
   color: rgb(0, 127, 0);
 }
 
+.canvas-actions .pause-button, .canvas-actions .play-button {
+  margin-left: .25em;
+}
+
 .canvas-actions .video-button {
   color: red;
 }
@@ -122,7 +126,7 @@ html, body {
 }
 
 .canvas-actions input.animate-range {
-  width: calc(100% - 9em);
+  width: calc(100% - 7em);
   min-width: 12em;
   position: absolute;
   left: 3.5em;
@@ -245,7 +249,7 @@ button i.material-icons, button i.material-icons-outlined {
 
 button.scene-options {
   position: absolute;
-  right: .05em;
+  right: .25em;
   top: .35em;
   z-index: 10000;
 }

@@ -212,5 +212,19 @@
     "hint": "Products",
     "categories": "Products",
     "description": "Product list with headers and various examples products"
+  },
+  {
+    "name": "Grocery Isle - Vegetables",
+    "key": "GroceryIsleVegetablesProducts",
+    "hint": "Vegetables",
+    "categories": "Products",
+    "description": "Vegetable product list for Grocery Isle"
+  },
+  {
+    "name": "Grocery Isle - Fruits",
+    "key": "GroceryIsleFruitsProducts",
+    "hint": "Fruits",
+    "categories": "Products",
+    "description": "Fruit product list for Grocery Isle"
   }
 ]

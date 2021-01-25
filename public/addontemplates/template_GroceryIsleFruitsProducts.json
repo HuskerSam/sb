@@ -1,0 +1,400 @@
+[{
+  "range": "A1",
+  "value": "asset"
+}, {
+  "range": "B1",
+  "value": "block"
+}, {
+  "range": "C1",
+  "value": "displaystyle"
+}, {
+  "range": "D1",
+  "value": "height"
+}, {
+  "range": "E1",
+  "value": "image"
+}, {
+  "range": "F1",
+  "value": "index"
+}, {
+  "range": "G1",
+  "value": "materialname"
+}, {
+  "range": "H1",
+  "value": "name"
+}, {
+  "range": "I1",
+  "value": "price"
+}, {
+  "range": "J1",
+  "value": "pricetext"
+}, {
+  "range": "K1",
+  "value": "rx"
+}, {
+  "range": "L1",
+  "value": "ry"
+}, {
+  "range": "M1",
+  "value": "rz"
+}, {
+  "range": "N1",
+  "value": "sku"
+}, {
+  "range": "O1",
+  "value": "text1"
+}, {
+  "range": "P1",
+  "value": "text2"
+}, {
+  "range": "Q1",
+  "value": "textfontfamily"
+}, {
+  "range": "R1",
+  "value": "width"
+}, {
+  "range": "S1",
+  "value": "x"
+}, {
+  "range": "T1",
+  "value": "y"
+}, {
+  "range": "U1",
+  "value": "z"
+}, {
+  "range": "A2",
+  "value": "product"
+}, {
+  "range": "B2",
+  "value": "DISPLAY product_apple"
+}, {
+  "range": "E2",
+  "value": "sb:productsignimages/apple_gala.jpg"
+}, {
+  "range": "F2",
+  "value": 100,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H2",
+  "value": "Gala Apples"
+}, {
+  "range": "I2",
+  "value": 0.69,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J2",
+  "value": "$.69 per lb"
+}, {
+  "range": "M2",
+  "value": "20deg"
+}, {
+  "range": "N2",
+  "value": "Gala Apples"
+}, {
+  "range": "O2",
+  "value": "Gala Apples"
+}, {
+  "range": "S2",
+  "value": -16,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T2",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U2",
+  "value": 5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A3",
+  "value": "product"
+}, {
+  "range": "B3",
+  "value": "DISPLAY product_avocado"
+}, {
+  "range": "E3",
+  "value": "sb:productsignimages/avocado.jpg"
+}, {
+  "range": "F3",
+  "value": 200,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H3",
+  "value": "Haas Avocados"
+}, {
+  "range": "I3",
+  "value": 0.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J3",
+  "value": "$.50 each"
+}, {
+  "range": "N3",
+  "value": "Haas Avocados"
+}, {
+  "range": "O3",
+  "value": "Haas Avocados"
+}, {
+  "range": "S3",
+  "value": -11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T3",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U3",
+  "value": -32.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A4",
+  "value": "product"
+}, {
+  "range": "B4",
+  "value": "DISPLAY product_pear"
+}, {
+  "range": "E4",
+  "value": "sb:productsignimages/bartletpear.jpg"
+}, {
+  "range": "F4",
+  "value": 300,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H4",
+  "value": "Bartlet Pears"
+}, {
+  "range": "I4",
+  "value": 0.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J4",
+  "value": "$.99 per lb"
+}, {
+  "range": "M4",
+  "value": "20deg"
+}, {
+  "range": "N4",
+  "value": "Bartlet Pears"
+}, {
+  "range": "O4",
+  "value": "Bartlet Pears"
+}, {
+  "range": "S4",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T4",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U4",
+  "value": 5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A5",
+  "value": "product"
+}, {
+  "range": "B5",
+  "value": "DISPLAY product_banana"
+}, {
+  "range": "E5",
+  "value": "sb:productsignimages/banana.jpg"
+}, {
+  "range": "F5",
+  "value": 400,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H5",
+  "value": "Bananas from Peru"
+}, {
+  "range": "I5",
+  "value": 0.59,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J5",
+  "value": "$.59 per lb"
+}, {
+  "range": "N5",
+  "value": "Bananas from Peru"
+}, {
+  "range": "O5",
+  "value": "Bananas from Peru"
+}, {
+  "range": "S5",
+  "value": 4,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T5",
+  "value": 8,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U5",
+  "value": 26,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A6",
+  "value": "product"
+}, {
+  "range": "B6",
+  "value": "DISPLAY product_courget"
+}, {
+  "range": "E6",
+  "value": "sb:productsignimages/zucchini.jpg"
+}, {
+  "range": "F6",
+  "value": 500,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H6",
+  "value": "Summer Zucchini"
+}, {
+  "range": "I6",
+  "value": 0.49,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J6",
+  "value": "$.49 per lb"
+}, {
+  "range": "N6",
+  "value": "Summer Zucchini"
+}, {
+  "range": "O6",
+  "value": "Summer Zucchini"
+}, {
+  "range": "S6",
+  "value": 13.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T6",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U6",
+  "value": -32.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A7",
+  "value": "product"
+}, {
+  "range": "B7",
+  "value": "DISPLAY product_melon"
+}, {
+  "range": "E7",
+  "value": "sb:productsignimages/melon_charentais.jpg"
+}, {
+  "range": "F7",
+  "value": 600,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H7",
+  "value": "Charentais Melons"
+}, {
+  "range": "I7",
+  "value": 1.59,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J7",
+  "value": "$1.59 each"
+}, {
+  "range": "N7",
+  "value": "Charentais Melons"
+}, {
+  "range": "O7",
+  "value": "Charentais Melons"
+}, {
+  "range": "S7",
+  "value": 34,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T7",
+  "value": 8,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U7",
+  "value": 26,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A8",
+  "value": "product"
+}, {
+  "range": "B8",
+  "value": "DISPLAY product_orange"
+}, {
+  "range": "E8",
+  "value": "sb:productsignimages/navelorange.jpg"
+}, {
+  "range": "F8",
+  "value": 700,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H8",
+  "value": "Oranges"
+}, {
+  "range": "I8",
+  "value": 0.79,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J8",
+  "value": "$.79 per lb"
+}, {
+  "range": "N8",
+  "value": "Oranges"
+}, {
+  "range": "O8",
+  "value": "Oranges"
+}, {
+  "range": "S8",
+  "value": 43,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T8",
+  "value": 2,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U8",
+  "value": 21,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A9",
+  "value": "product"
+}, {
+  "range": "B9",
+  "value": "DISPLAY product_strawberries"
+}, {
+  "range": "E9",
+  "value": "sb:productsignimages/strawberries.jpg"
+}, {
+  "range": "F9",
+  "value": 800,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H9",
+  "value": "Strawberries 8 oz"
+}, {
+  "range": "I9",
+  "value": 1.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J9",
+  "value": "$1.99 for 8 oz"
+}, {
+  "range": "N9",
+  "value": "Strawberries 8 oz"
+}, {
+  "range": "O9",
+  "value": "Strawberries 8 oz"
+}, {
+  "range": "S9",
+  "value": 43,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T9",
+  "value": 2,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U9",
+  "value": 9,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A1"
+}]

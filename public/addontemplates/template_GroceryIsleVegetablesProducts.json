@@ -1,0 +1,797 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "block",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "displaystyle",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "E1",
+  "value": "image",
+  "fontWeight": "bold"
+}, {
+  "range": "F1",
+  "value": "index",
+  "fontWeight": "bold"
+}, {
+  "range": "G1",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "H1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "I1",
+  "value": "price",
+  "fontWeight": "bold"
+}, {
+  "range": "J1",
+  "value": "pricetext",
+  "fontWeight": "bold"
+}, {
+  "range": "K1",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "L1",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "M1",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "N1",
+  "value": "sku",
+  "fontWeight": "bold"
+}, {
+  "range": "O1",
+  "value": "text1",
+  "fontWeight": "bold"
+}, {
+  "range": "P1",
+  "value": "text2",
+  "fontWeight": "bold"
+}, {
+  "range": "Q1",
+  "value": "textfontfamily",
+  "fontWeight": "bold"
+}, {
+  "range": "R1",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "S1",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "T1",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "U1",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "product"
+}, {
+  "range": "B2",
+  "value": "DISPLAY Asparagus bunch of 6"
+}, {
+  "range": "E2",
+  "value": "sb:productsignimages/asparagus.jpg"
+}, {
+  "range": "F2",
+  "value": 100,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H2",
+  "value": "Asparagus Bunch (small)"
+}, {
+  "range": "I2",
+  "value": 1.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J2",
+  "value": "$1.99 per bunch"
+}, {
+  "range": "N2",
+  "value": "Asparagus Bunch (small)"
+}, {
+  "range": "O2",
+  "value": "Asparagus Bunch (small)"
+}, {
+  "range": "S2",
+  "value": -33.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T2",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U2",
+  "value": 30,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A3",
+  "value": "product"
+}, {
+  "range": "B3",
+  "value": "DISPLAY Artichoke"
+}, {
+  "range": "E3",
+  "value": "sb:productsignimages/artichoke.jpg"
+}, {
+  "range": "F3",
+  "value": 200,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H3",
+  "value": "Artichoke"
+}, {
+  "range": "I3",
+  "value": 1.89,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J3",
+  "value": "$1.89 each"
+}, {
+  "range": "M3",
+  "value": "20deg"
+}, {
+  "range": "N3",
+  "value": "Artichoke"
+}, {
+  "range": "O3",
+  "value": "Artichoke"
+}, {
+  "range": "S3",
+  "value": -16,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T3",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U3",
+  "value": -5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A4",
+  "value": "product"
+}, {
+  "range": "B4",
+  "value": "DISPLAY product_salad"
+}, {
+  "range": "E4",
+  "value": "sb:productsignimages/greensalad.jpg"
+}, {
+  "range": "F4",
+  "value": 300,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H4",
+  "value": "Green Salad"
+}, {
+  "range": "I4",
+  "value": 3.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J4",
+  "value": "$3.99 each"
+}, {
+  "range": "N4",
+  "value": "Green Salad"
+}, {
+  "range": "O4",
+  "value": "Green Salad"
+}, {
+  "range": "S4",
+  "value": -18.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T4",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U4",
+  "value": 30,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A5",
+  "value": "product"
+}, {
+  "range": "B5",
+  "value": "DISPLAY product_tulip_yellow"
+}, {
+  "range": "E5",
+  "value": "sb:productsignimages/yellowtulips.jpg"
+}, {
+  "range": "F5",
+  "value": 400,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H5",
+  "value": "Yellow Tulips"
+}, {
+  "range": "I5",
+  "value": 9.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J5",
+  "value": "$9.99 for 8"
+}, {
+  "range": "M5",
+  "value": "-20deg"
+}, {
+  "range": "N5",
+  "value": "Yellow Tulips"
+}, {
+  "range": "O5",
+  "value": "Yellow Tulips"
+}, {
+  "range": "S5",
+  "value": -8.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T5",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U5",
+  "value": 5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A6",
+  "value": "product"
+}, {
+  "range": "B6",
+  "value": "DISPLAY product_tulip_purple"
+}, {
+  "range": "E6",
+  "value": "sb:productsignimages/purpletulips.jpg"
+}, {
+  "range": "F6",
+  "value": 500,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H6",
+  "value": "Purple Tulips"
+}, {
+  "range": "I6",
+  "value": 9.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J6",
+  "value": "$9.99 for 8"
+}, {
+  "range": "N6",
+  "value": "Purple Tulips"
+}, {
+  "range": "O6",
+  "value": "Purple Tulips"
+}, {
+  "range": "S6",
+  "value": -11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T6",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U6",
+  "value": -32.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A7",
+  "value": "product"
+}, {
+  "range": "B7",
+  "value": "DISPLAY product_tulip_pink"
+}, {
+  "range": "E7",
+  "value": "sb:productsignimages/pinktulips.jpg"
+}, {
+  "range": "F7",
+  "value": 600,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H7",
+  "value": "Pink Tulips"
+}, {
+  "range": "I7",
+  "value": 9.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J7",
+  "value": "$9.99 for 8"
+}, {
+  "range": "M7",
+  "value": "20deg"
+}, {
+  "range": "N7",
+  "value": "Pink Tulips"
+}, {
+  "range": "O7",
+  "value": "Pink Tulips"
+}, {
+  "range": "S7",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T7",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U7",
+  "value": 5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A8",
+  "value": "product"
+}, {
+  "range": "B8",
+  "value": "DISPLAY product_califlower"
+}, {
+  "range": "E8",
+  "value": "sb:productsignimages/califlower.jpg"
+}, {
+  "range": "F8",
+  "value": 700,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H8",
+  "value": "California Califlower"
+}, {
+  "range": "I8",
+  "value": 0.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J8",
+  "value": "$.99 each"
+}, {
+  "range": "N8",
+  "value": "California Califlower"
+}, {
+  "range": "O8",
+  "value": "California Califlower"
+}, {
+  "range": "S8",
+  "value": 5.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T8",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U8",
+  "value": -32.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A9",
+  "value": "product"
+}, {
+  "range": "B9",
+  "value": "DISPLAY product_tomato"
+}, {
+  "range": "E9",
+  "value": "sb:productsignimages/greenhousetomato.jpg"
+}, {
+  "range": "F9",
+  "value": 800,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H9",
+  "value": "Greenhouse Tomatoes"
+}, {
+  "range": "I9",
+  "value": 0.79,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J9",
+  "value": "$.79 per lb"
+}, {
+  "range": "N9",
+  "value": "Greenhouse Tomatoes"
+}, {
+  "range": "O9",
+  "value": "Greenhouse Tomatoes"
+}, {
+  "range": "S9",
+  "value": 11.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T9",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U9",
+  "value": 30,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A10",
+  "value": "product"
+}, {
+  "range": "B10",
+  "value": "DISPLAY product_milk_veg_b2"
+}, {
+  "range": "E10",
+  "value": "sb:productsignimages/product_milk_veg_b2.jpg"
+}, {
+  "range": "F10",
+  "value": 900,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H10",
+  "value": "Latte Vegan Milk"
+}, {
+  "range": "I10",
+  "value": 3.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J10",
+  "value": 3.99,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M10",
+  "value": "-20deg"
+}, {
+  "range": "N10",
+  "value": "Latte Vegan Milk"
+}, {
+  "range": "O10",
+  "value": "Latte Vegan Milk"
+}, {
+  "range": "S10",
+  "value": 13.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T10",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U10",
+  "value": -5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A11",
+  "value": "product"
+}, {
+  "range": "B11",
+  "value": "DISPLAY product_carrot"
+}, {
+  "range": "E11",
+  "value": "sb:productsignimages/carrots.jpg"
+}, {
+  "range": "F11",
+  "value": 1000,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H11",
+  "value": "Topless Carrots"
+}, {
+  "range": "I11",
+  "value": 1.29,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J11",
+  "value": "$1.29 per lb"
+}, {
+  "range": "N11",
+  "value": "Topless Carrots"
+}, {
+  "range": "O11",
+  "value": "Topless Carrots"
+}, {
+  "range": "S11",
+  "value": 13.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T11",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U11",
+  "value": -32.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A12",
+  "value": "product"
+}, {
+  "range": "B12",
+  "value": "DISPLAY product_eggbox"
+}, {
+  "range": "E12",
+  "value": "sb:productsignimages/browneggs.jpg"
+}, {
+  "range": "F12",
+  "value": 1100,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H12",
+  "value": "Free Range Eggs"
+}, {
+  "range": "I12",
+  "value": 0.59,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J12",
+  "value": "$.59 for 6"
+}, {
+  "range": "N12",
+  "value": "Free Range Eggs"
+}, {
+  "range": "O12",
+  "value": "Free Range Eggs"
+}, {
+  "range": "S12",
+  "value": 19,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T12",
+  "value": 8,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U12",
+  "value": 26,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A13",
+  "value": "product"
+}, {
+  "range": "B13",
+  "value": "DISPLAY product_eggplant"
+}, {
+  "range": "E13",
+  "value": "sb:productsignimages/eggplant.jpg"
+}, {
+  "range": "F13",
+  "value": 1200,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H13",
+  "value": "Whole Eggplant"
+}, {
+  "range": "I13",
+  "value": 1.89,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J13",
+  "value": "$1.89 each"
+}, {
+  "range": "N13",
+  "value": "Whole Eggplant"
+}, {
+  "range": "O13",
+  "value": "Whole Eggplant"
+}, {
+  "range": "S13",
+  "value": 26.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T13",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U13",
+  "value": 30,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A14",
+  "value": "product"
+}, {
+  "range": "B14",
+  "value": "DISPLAY product_garlic"
+}, {
+  "range": "E14",
+  "value": "sb:productsignimages/garlic.jpg"
+}, {
+  "range": "F14",
+  "value": 1300,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H14",
+  "value": "Fresh Garlic"
+}, {
+  "range": "I14",
+  "value": 0.79,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J14",
+  "value": "$.79 each"
+}, {
+  "range": "N14",
+  "value": "Fresh Garlic"
+}, {
+  "range": "O14",
+  "value": "Fresh Garlic"
+}, {
+  "range": "S14",
+  "value": 34,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T14",
+  "value": 8,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U14",
+  "value": 26,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A15",
+  "value": "product"
+}, {
+  "range": "B15",
+  "value": "DISPLAY product_green_pepper"
+}, {
+  "range": "E15",
+  "value": "sb:productsignimages/greenpepper.jpg"
+}, {
+  "range": "F15",
+  "value": 1400,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H15",
+  "value": "Green Peppers"
+}, {
+  "range": "I15",
+  "value": 1,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J15",
+  "value": "5 for $5"
+}, {
+  "range": "N15",
+  "value": "Green Peppers"
+}, {
+  "range": "O15",
+  "value": "Green Peppers"
+}, {
+  "range": "S15",
+  "value": 46,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T15",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U15",
+  "value": 27,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A16",
+  "value": "product"
+}, {
+  "range": "B16",
+  "value": "DISPLAY product_leek"
+}, {
+  "range": "E16",
+  "value": "sb:productsignimages/leek.jpg"
+}, {
+  "range": "F16",
+  "value": 1500,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H16",
+  "value": "Trimmed Leeks"
+}, {
+  "range": "I16",
+  "value": 1.29,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J16",
+  "value": "$1.29 per lb"
+}, {
+  "range": "N16",
+  "value": "Trimmed Leeks"
+}, {
+  "range": "O16",
+  "value": "Trimmed Leeks"
+}, {
+  "range": "S16",
+  "value": 43,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T16",
+  "value": 2,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U16",
+  "value": 21,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A17",
+  "value": "product"
+}, {
+  "range": "B17",
+  "value": "DISPLAY product_potatoes"
+}, {
+  "range": "E17",
+  "value": "sb:productsignimages/russetpotato.jpg"
+}, {
+  "range": "F17",
+  "value": 1600,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H17",
+  "value": "Russet Potatoes lb"
+}, {
+  "range": "I17",
+  "value": 2.5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J17",
+  "value": "$2.50 for 10lb"
+}, {
+  "range": "N17",
+  "value": "Russet Potatoes lb"
+}, {
+  "range": "O17",
+  "value": "Russet Potatoes lb"
+}, {
+  "range": "S17",
+  "value": 46,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T17",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U17",
+  "value": 15,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A18",
+  "value": "product"
+}, {
+  "range": "B18",
+  "value": "DISPLAY product_red_pepper"
+}, {
+  "range": "E18",
+  "value": "sb:productsignimages/redpepper.jpg"
+}, {
+  "range": "F18",
+  "value": 1700,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H18",
+  "value": "Red Peppers"
+}, {
+  "range": "I18",
+  "value": 1,
+  "horizontalAlignment": "right"
+}, {
+  "range": "J18",
+  "value": "3 for $3"
+}, {
+  "range": "N18",
+  "value": "Red Peppers"
+}, {
+  "range": "O18",
+  "value": "Red Peppers"
+}, {
+  "range": "S18",
+  "value": 46,
+  "horizontalAlignment": "right"
+}, {
+  "range": "T18",
+  "value": 11,
+  "horizontalAlignment": "right"
+}, {
+  "range": "U18",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A1"
+}]

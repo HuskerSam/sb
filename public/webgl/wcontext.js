@@ -581,7 +581,6 @@ class wContext {
     }
   }
   _animateCamera() {
-    console.log(gAPPP.mV.rootBlock);
     try {
       gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].framesHelper.compileFrames();
       gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].playAnimation();
