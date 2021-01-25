@@ -561,6 +561,11 @@ class wContext {
           this._renderUniversalCamera();
         } else if (cameraDetails.cameraType === 'ArcRotate') {
           this._renderArcCamera();
+          if (gAPPP.mV && gAPPP.mV.rootBlock) {
+            setTimeout(() => this._animateCamera(), 500);
+            setTimeout(() => this._animateCamera(), 1000);
+          }
+
         } else if (cameraDetails.cameraType === 'DeviceOrientationCamera') {
           this._renderDeviceOrientationCamera();
         } else if (cameraDetails.cameraType === 'WebVRFreeCamera') {
@@ -570,12 +575,13 @@ class wContext {
         }
 
         if (gAPPP.mV && gAPPP.mV.rootBlock) {
-          this._animateCamera();
+          setTimeout(() => this._animateCamera(), 50);
         }
       }
     }
   }
   _animateCamera() {
+    console.log(gAPPP.mV.rootBlock);
     try {
       gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].framesHelper.compileFrames();
       gAPPP.mV.rootBlock.childBlocks[this.blockCameraId].playAnimation();
