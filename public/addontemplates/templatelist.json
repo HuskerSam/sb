@@ -25,6 +25,13 @@
     "categories": "Layout",
     "description": "Some spot lights and a directional light",
     "helpkey": "light"
+  },{
+    "name": "Camera Animations",
+    "key": "CameraAnimations",
+    "hint": "Cameras",
+    "categories": "Layout",
+    "description": "Shapes demo with some extra cameras and frames",
+    "helpkey": "camera"
   },
   {
     "name": "Configuration",
