@@ -1529,7 +1529,7 @@ class gCSVImport {
     chatBC.name = row.name + '_chatWrapper';
     chatBC.parent = row.name;
     chatBC.x = '0';
-    basketBC.nofirstframe = '1';
+    chatBC.nofirstframe = '1';
     this.addCSVRow(chatBC);
 
     let fixturesBC = this.defaultCSVRow();
@@ -2634,7 +2634,7 @@ class gCSVImport {
         productsBySKU[p.itemId] = p;
     }
 
-    let cameraBC = await this.findMatchBlocks('camera', 'FollowCamera', sceneId);
+    let cameraBC = await this.findMatchBlocks('camera', 'demo', sceneId);
     let cameraOrigRow = null;
     if (cameraBC[0]) {
       cameraOrigRow = cameraBC[0].BC.origRow.origCameraRow;
