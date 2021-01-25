@@ -70,5 +70,9 @@
     "value": "reviewguide",
     "title": "Review Guide",
     "video": "https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4"
+  },
+  {
+    "value": "viewer",
+    "title": "/view help"
   }
 ]

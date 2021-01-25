@@ -52,6 +52,17 @@ class cViewPublished extends bView {
     this.bandButtons.push(this.fontTools);
     this.fontTools.closeOthersCallback = () => this.closeHeaderBands();
 
+    this.publish_help_viewer = this.dialog.querySelector('#publish_help_viewer');
+    this.publish_help_viewer.addEventListener('click', e => {
+      let url = '/doc/viewerhelp.html';
+      let a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('target', '_blank');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e =>{
       gAPPP.a.resetProfile();
       setTimeout(() => location.reload(), 100);
@@ -216,6 +227,7 @@ class cViewPublished extends bView {
   <div class="form_canvas_wrapper"></div>
   <button id="user-profile-dialog-reset-button">Reset Options</button>
   <button id="publish-settings-button" style='bottom: 2em;' class="btn-sb-icon"><i class="material-icons">dashboard</i></button>
+  <button id="publish_help_viewer" style='bottom: 2em;right:2.5em;position:absolute;' class="btn-sb-icon"><i class="material-icons">help</i></button>
   <div id="publish-profile-panel" style="display:none;">
     <div id="value-set-panel" style="display:none;">
       <label><span>Element</span>
