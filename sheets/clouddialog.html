@@ -206,7 +206,7 @@
             <button id="create_layout_btn" class="blue" style="margin-left:8px"><i class="material-icons">build</i> Create</button>
           </div>
           <div id="template_upper_split" style="display:flex;flex-direction:row;padding:8px;">
-            <select id="template_filter_select" style="margin-right:8px;width:7em;">
+            <select id="template_filter_select" style="margin-right:8px;width:9em;">
               <option>All</option>
               <option>Setup</option>
               <option selected>Layouts</option>
@@ -214,14 +214,14 @@
               <option>Other</option>
             </select>
             <div style="display:none;" id="publishlist_add_chk_wrapper">
-              <label style="flex:1;;"> <input type="checkbox" id="add_to_publishlist" checked> Add Project </label>
-              <label style="flex:1;margin-left:4px;"> <input type="checkbox" id="set_to_defaultproject" checked> Default </label>
+              <label style="flex:1;;"> <input type="checkbox" id="add_to_publishlist" checked><span>Projects</span></label>
+              <label style="flex:1;margin-left:4px;"> <input type="checkbox" id="set_to_defaultproject" checked><span>Default</span></label>
             </div>
             <div id="publishlist_asset_add_chk_wrapper" style="display:none;">
-              <label style="flex:1;"> <input type="checkbox" id="add_asset_to_projectlist" checked> Set for Current Project </label>
+              <label style="flex:1;"> <input type="checkbox" id="add_asset_to_projectlist" checked><span>Set for Project</span></label>
             </div>
             <div id="publishlist_products_add_chk_wrapper" style="display:none;">
-              <label style="flex:1;"> <input type="checkbox" id="add_products_to_projectlist" checked> Set for Current Project </label>
+              <label style="flex:1;"> <input type="checkbox" id="add_products_to_projectlist" checked><span>Set for Project</span></label>
             </div>
           </div>
           <div style="flex:1;overflow:hidden;display:block;">
@@ -2216,6 +2216,10 @@
     table.wizard_field_container td:nth-child(2) input {
       width: 100%;
       text-align: left;
+    }
+
+    #template_upper_split span {
+        font-size: .8em;
     }
 
   </style>
