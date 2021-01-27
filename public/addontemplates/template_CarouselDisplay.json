@@ -85,9 +85,6 @@
   "range": "J5",
   "value": "arcRotateCamera"
 }, {
-  "range": "K5",
-  "value": "starwars"
-}, {
   "range": "L5",
   "value": "signyoffset|8|datascalefactor|2|dataframesfilter|.07"
 }, {
@@ -282,7 +279,7 @@
   "horizontalAlignment": "left"
 }, {
   "range": "A8",
-  "value": "Room Walls 575",
+  "value": "scenewalls",
   "fontColor": "#222222",
   "horizontalAlignment": "left"
 }, {
@@ -1924,135 +1921,135 @@
   "value": "displaypositions"
 }, {
   "range": "D60",
-  "formula": "=J61"
+  "formula": "=gridJoin(\"|\", B61:G68)"
 }, {
   "range": "B61",
   "value": -15,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "C61",
   "value": 9.8,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
-}, {
-  "range": "I61",
-  "formula": "=B61 & \"|\" & C61 & \"|\" & D61 & \"|\" & E61 & \"|\" & F61 & \"|\" & G61 & \"|\""
-}, {
-  "range": "J61",
-  "formula": "=CONCATENATE(I61:I68)"
 }, {
   "range": "B62",
   "value": -10,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "C62",
   "value": 9.8,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "D62",
   "value": 10,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "F62",
-  "value": "45deg"
-}, {
-  "range": "I62",
-  "formula": "=B62 & \"|\" & C62 & \"|\" & D62 & \"|\" & E62 & \"|\" & F62 & \"|\" & G62 & \"|\""
+  "value": "45deg",
+  "backgroundColor": "#efefef"
 }, {
   "range": "C63",
   "value": 9.8,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "D63",
   "value": 15,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "F63",
-  "value": "90deg"
-}, {
-  "range": "I63",
-  "formula": "=B63 & \"|\" & C63 & \"|\" & D63 & \"|\" & E63 & \"|\" & F63 & \"|\" & G63 & \"|\""
+  "value": "90deg",
+  "backgroundColor": "#efefef"
 }, {
   "range": "B64",
   "value": 10,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "C64",
   "value": 9.8,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "D64",
   "value": 10,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "F64",
-  "value": "135deg"
-}, {
-  "range": "I64",
-  "formula": "=B64 & \"|\" & C64 & \"|\" & D64 & \"|\" & E64 & \"|\" & F64 & \"|\" & G64 & \"|\""
+  "value": "135deg",
+  "backgroundColor": "#efefef"
 }, {
   "range": "B65",
   "value": 15,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "C65",
   "value": 9.8,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "F65",
-  "value": "180deg"
-}, {
-  "range": "I65",
-  "formula": "=B65 & \"|\" & C65 & \"|\" & D65 & \"|\" & E65 & \"|\" & F65 & \"|\" & G65 & \"|\""
+  "value": "180deg",
+  "backgroundColor": "#efefef"
 }, {
   "range": "B66",
   "value": 10,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "C66",
   "value": 9.8,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "D66",
   "value": -10,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "F66",
-  "value": "225deg"
-}, {
-  "range": "I66",
-  "formula": "=B66 & \"|\" & C66 & \"|\" & D66 & \"|\" & E66 & \"|\" & F66 & \"|\" & G66 & \"|\""
+  "value": "225deg",
+  "backgroundColor": "#efefef"
 }, {
   "range": "C67",
   "value": 9.8,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "D67",
   "value": -15,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "F67",
-  "value": "270deg"
-}, {
-  "range": "I67",
-  "formula": "=B67 & \"|\" & C67 & \"|\" & D67 & \"|\" & E67 & \"|\" & F67 & \"|\" & G67 & \"|\""
+  "value": "270deg",
+  "backgroundColor": "#efefef"
 }, {
   "range": "B68",
   "value": -10,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "C68",
   "value": 9.8,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "D68",
   "value": -10,
+  "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
 }, {
   "range": "F68",
-  "value": "315deg"
-}, {
-  "range": "I68",
-  "formula": "=B68 & \"|\" & C68 & \"|\" & D68 & \"|\" & E68 & \"|\" & F68 & \"|\" & G68 & \"|\""
+  "value": "315deg",
+  "backgroundColor": "#efefef"
 }, {
   "range": "B70",
   "value": "step 10",
@@ -2242,114 +2239,6 @@
   "range": "Q77",
   "value": 0.6,
   "horizontalAlignment": "general-right"
-}, {
-  "range": "B80",
-  "value": "step 12",
-  "fontColor": "#0000ff"
-}, {
-  "range": "D80",
-  "value": "add data edit blocks",
-  "fontColor": "#0000ff"
-}, {
-  "range": "A81",
-  "value": "asset",
-  "fontWeight": "bold"
-}, {
-  "range": "B81",
-  "value": "name",
-  "fontWeight": "bold"
-}, {
-  "range": "C81",
-  "value": "blockflag",
-  "fontWeight": "bold"
-}, {
-  "range": "D81",
-  "value": "genericblockdata",
-  "fontWeight": "bold"
-}, {
-  "range": "A82",
-  "value": "block"
-}, {
-  "range": "B82",
-  "value": "Floor Image Edit"
-}, {
-  "range": "C82",
-  "value": "displayfieldedits"
-}, {
-  "range": "D82",
-  "value": "Floor Image||layout||SceneRecipe||sceneblock||floorimage:image||floorscaleu:num||floorscalev:num"
-}, {
-  "range": "A83",
-  "value": "block"
-}, {
-  "range": "B83",
-  "value": "Left Wall Edit"
-}, {
-  "range": "C83",
-  "value": "displayfieldedits"
-}, {
-  "range": "D83",
-  "value": "Left Wall||layout||SceneRecipe||sceneblock||leftwallimage:image||leftwallscaleu:num||leftwallscalev:num"
-}, {
-  "range": "A84",
-  "value": "block"
-}, {
-  "range": "B84",
-  "value": "Right Wall Edit"
-}, {
-  "range": "C84",
-  "value": "displayfieldedits"
-}, {
-  "range": "D84",
-  "value": "Right Wall||layout||SceneRecipe||sceneblock||rightwallimage:image||rightwallscaleu:num||rightwallscalev:num"
-}, {
-  "range": "A85",
-  "value": "block"
-}, {
-  "range": "B85",
-  "value": "Back Wall Edit"
-}, {
-  "range": "C85",
-  "value": "displayfieldedits"
-}, {
-  "range": "D85",
-  "value": "Back Wall||layout||SceneRecipe||sceneblock||backwallimage:image||backwallscaleu:num||backwallscalev:num"
-}, {
-  "range": "A86",
-  "value": "block"
-}, {
-  "range": "B86",
-  "value": "Fore Wall Edit"
-}, {
-  "range": "C86",
-  "value": "displayfieldedits"
-}, {
-  "range": "D86",
-  "value": "Front Wall||layout||SceneRecipe||sceneblock||frontwallimage:image||frontwallscaleu:num||frontwallscalev:num"
-}, {
-  "range": "A87",
-  "value": "block"
-}, {
-  "range": "B87",
-  "value": "Table Top Edit"
-}, {
-  "range": "C87",
-  "value": "displayfieldedits"
-}, {
-  "range": "D87",
-  "value": "Table Top Image||layout||spinningtablecylinder||shape||texturepath:image||scaleu:num||scalev:num||uoffset:num||voffset:num"
-}, {
-  "range": "A88",
-  "value": "block"
-}, {
-  "range": "B88",
-  "value": "Table Edge Edit"
-}, {
-  "range": "C88",
-  "value": "displayfieldedits"
-}, {
-  "range": "D88",
-  "value": "Table Edge Image||layout||spinningtabletorus||shape||texturepath:image||scaleu:num||scalev:num||uoffset:num||voffset:num"
 }, {
   "range": "A1"
 }]

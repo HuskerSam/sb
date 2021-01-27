@@ -586,7 +586,7 @@ function onEdit(e) {
           oC.setFontColor(fc);
         }
         else {
-          oC.setFontColor('black');                    
+          oC.setFontColor('black');
           oC.setBackground('white');
         }
       });
@@ -664,4 +664,16 @@ function colorRGB255(str) {
 
 function getDataRangesForSheet(sheet) {
   return getTablesForCells(getCSVRangesFromSheet(sheet))
+}
+
+function gridJoin(delimiter, rangeValues) {
+  let result = '';
+
+  for (let c = 0, l = rangeValues.length; c < l; c++)
+    for (let d = 0, dl = rangeValues[c].length; d < dl; d++) {
+      result += rangeValues[c][d] + delimiter;
+    }
+
+  result = result.slice(0, -1 * delimiter.length);
+  return result;
 }

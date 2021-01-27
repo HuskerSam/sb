@@ -71,13 +71,6 @@
     "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
   },
   {
-    "name": "Simple Layout",
-    "key": "Simple1SheetCircuit",
-    "hint": "My Example",
-    "categories": "Layout",
-    "description": "Scene with building, 2 walls<br>1 Sheet with aggregation cells at top<br>5 wine bottle meshes shown"
-  },
-  {
     "name": "Fixture Assets",
     "key": "AssetFixtures",
     "hint": "Fixture Assets",
@@ -97,12 +90,6 @@
     "hint": "16 Band Song",
     "categories": "Other",
     "description": "Use addon to process a song into 16 bands and this sheet will produce the animation data"
-  }, {
-    "name": "test sheet",
-    "key": "testsheet",
-    "hint": "testsheet",
-    "categories": "Other",
-    "description": "test"
   }, {
     "name": "Produce Assets",
     "key": "AssetProduce",

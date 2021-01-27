@@ -64,6 +64,7 @@
               <td>
                 <select id="plot_type_select" style="width:10em;margin-left:4px;">
                   <option selected value="bar_chart_plotter">Bar Chart</option>
+                  <option selected value="radial_plotter">Radial</option>
                 </select>
               </td>
               <td></td>
@@ -73,19 +74,54 @@
               <td><input type="text" id="plotter_plots_count" value="2" /></td>
               <td></td>
             </tr>
-            <tr data-cats="bar_chart_plotter">
+            <tr data-cats="bar_chart_plotter,radial_plotter">
               <td>Points per series</td>
               <td><input type="text" id="plotter_points_per_plot" value="10" /></td>
               <td></td>
             </tr>
-            <tr data-cats="bar_chart_plotter">
+            <tr data-cats="bar_chart_plotter,radial_plotter">
               <td>Width (x)</td>
               <td><input type="text" id="plotter_plots_width" value="25" /></td>
               <td></td>
             </tr>
-            <tr data-cats="bar_chart_plotter">
+            <tr data-cats="radial_plotter">
+              <td>End Width (x)</td>
+              <td><input type="text" id="plotter_plots_end_width" value="0" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="bar_chart_plotter,radial_plotter">
               <td>Depth (z)</td>
               <td><input type="text" id="plotter_plots_depth" value="10" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="radial_plotter">
+              <td>End Depth (z)</td>
+              <td><input type="text" id="plotter_plots_end_depth" value="0" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="radial_plotter">
+              <td>Height (y)</td>
+              <td><input type="text" id="plotter_plots_height" value="0" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="radial_plotter">
+              <td>Turns</td>
+              <td><input type="text" id="plotter_plots_turns" value="3" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="radial_plotter">
+              <td>Decay per turn (%)</td>
+              <td><input type="text" id="plotter_plots_decay_per_turn" value="50%" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="radial_plotter">
+              <td>Outward Facing</td>
+              <td><input type="checkbox" id="plotter_plots_outward_face" /></td>
+              <td></td>
+            </tr>
+            <tr data-cats="radial_plotter">
+              <td>Offset Angle</td>
+              <td><input type="checkbox" id="plotter_plots_offset_angle" /></td>
               <td></td>
             </tr>
             <tr data-cats="bar_chart_plotter">
@@ -95,6 +131,14 @@
                 <label><input type="checkbox" id="plotter_plots_includebreaks" /><span>breaks</span></label>
                 <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
                 <label><input type="checkbox" id="plotter_plots_includelabelslong" /><span>long</span></label>
+              </td>
+            </tr>
+            <tr data-cats="radial_plotter">
+              <td colspan="3" style="padding-bottom:4px;">
+                <button id="plotter_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
+                <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
+                <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
+                <label><input type="checkbox" id="plotter_plots_includeradians" /><span>radians</span></label>
               </td>
             </tr>
           </table>
@@ -377,6 +421,8 @@
           'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
           'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn',
           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view'
+          'plotter_plots_end_depth', 'plotter_plots_height', 'plotter_plots_end_width', 'plotter_plots_turns',
+          'plotter_plots_decay_per_turn', 'plotter_plots_outward_face', 'plotter_plots_offset_angle'
         ];
 
         dom_id.forEach(ctl => {
@@ -1851,11 +1897,19 @@
             range.push(plot_points);
           }
 
-
           let allPlots = [];
           range.forEach(r => allPlots = allPlots.concat(r));
           this.plotterRows = allPlots;
           this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(allPlots, [], this.plotter_plots_includeheaders.checked);
+        }
+        else if (plot_type === 'radial_plotter') {
+          let pointCount = GLOBALUTIL.getNumberOrDefault(this.plotter_points_per_plot.value, 10);
+          let x_radius = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_width.value, 10) / 2;
+          let z_radius = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_depth.value, 10) / 2;
+
+
+          this.plotterRows = [];
+          this.plotter_output_table.innerHTML = 'NA';
         }
       }
       updateSongDataView() {
