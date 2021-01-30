@@ -135,7 +135,7 @@
             </tr>
             <tr data-cats="radial_plotter">
               <td colspan="3" style="padding-bottom:4px;">
-                <button id="plotter_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
+                <button id="plotter_radial_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
                 <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
                 <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
                 <label><input type="checkbox" id="plotter_plots_includeradians" /><span>radians</span></label>
@@ -161,7 +161,9 @@
                 <td>
                   <input id="token_to_deploy" type="text" value="builder" />
                 </td>
-                <td><div id="url_to_deploy" style="display:inline-block;"></div></td>
+                <td>
+                  <div id="url_to_deploy" style="display:inline-block;"></div>
+                </td>
               </tr>
               <tr>
                 <td>Source</td>
@@ -174,7 +176,7 @@
           <div style="flex:1;overflow:hidden;display:block;">
             <select id="deploy_options_server_list" style="width:calc(100% - 16px)" class="select_list" size="5"></select>
             <div id="selected_server_details_div" class="select_flex_view" style="flex:none;">
-          </div>
+            </div>
           </div>
         </div>
         <div id="cloud_deploy" class="main_div_wrapper" style="display:flex">
@@ -418,9 +420,10 @@
           'upload_file_mesh_preview', 'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'upload_file_audio_ctl',
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth', 'helper_viewer_panel_open_video_btn',
-          'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong',
-          'plotter_copy_csv_to_clipboard', 'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn',
-          'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view'
+          'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong', 'plotter_plots_includeradians',
+          'plotter_copy_csv_to_clipboard', 'plotter_radial_copy_csv_to_clipboard',
+          'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn',
+          'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view',
           'plotter_plots_end_depth', 'plotter_plots_height', 'plotter_plots_end_width', 'plotter_plots_turns',
           'plotter_plots_decay_per_turn', 'plotter_plots_outward_face', 'plotter_plots_offset_angle'
         ];
@@ -510,6 +513,9 @@
         this.plotter_copy_csv_to_clipboard.addEventListener('click', e => {
           cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_includeheaders.checked);
         });
+        this.plotter_radial_copy_csv_to_clipboard.addEventListener('click', e => {
+          cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_includeheaders.checked);
+        });
 
         this.upload_copy_link_to_clipboard.addEventListener('click', e => {
           let tInput = document.createElement('input');
@@ -525,7 +531,7 @@
           this.splitProjectsView.destroy();
         this.splitProjectsView = Split(['#project_deploy_select', '#project_detail_view_for_split'], {
           sizes: [40, 60],
-          minSize: [.1,.1],
+          minSize: [.1, .1],
           direction: 'vertical'
         });
 
@@ -533,7 +539,7 @@
           this.splitDeployView.destroy();
         this.splitDeployView = Split(['#deploy_options_server_list', '#selected_server_details_div'], {
           sizes: [70, 30],
-          minSize: [.1,.1],
+          minSize: [.1, .1],
           direction: 'vertical'
         });
       }
@@ -615,10 +621,10 @@
         if (this.mainSpreadsheetID) {
           let url = "https://docs.google.com/spreadsheets/d/";
           url += this.mainSpreadsheetID.toString();
-          this.assets_anchor.innerHTML= '<a target="_blank" href="' + url + '">Open Parent Spreadsheet</a>';
+          this.assets_anchor.innerHTML = '<a target="_blank" href="' + url + '">Open Parent Spreadsheet</a>';
           configDetailsHTML += open;
         } else {
-          this.assets_anchor.innerHTML ='Local';
+          this.assets_anchor.innerHTML = 'Local';
         }
 
         let sIndex = this.deploy_options_server_list.selectedIndex;
@@ -949,7 +955,7 @@
           this.splitTemplatesView.destroy();
         this.splitTemplatesView = Split(['#circuit_template_select', '#template_description_wrapper'], {
           sizes: [70, 30],
-          minSize: [.1,.1],
+          minSize: [.1, .1],
           direction: 'vertical'
         });
       }
@@ -1227,7 +1233,9 @@
         let data = csv[0];
         let keys = Object.keys(data);
         let error = false;
-        keys.forEach(key => {if (key === '#ERROR!') error = true});
+        keys.forEach(key => {
+          if (key === '#ERROR!') error = true
+        });
         if (testData)
           csv.forEach(e => keys.forEach(key => {
             if (e[key] === '#ERROR!') error = true
@@ -1260,7 +1268,7 @@
         if (this.projectsFetchCSVTestStatus) {
           console.log('CSV Validation Error', 'Projects', publishList);
           this.publish_results.value += name + ':PROJECTS: Error ';
-          this.publish_results.value +=  'CSV Validation Error\n\n';
+          this.publish_results.value += 'CSV Validation Error\n\n';
         }
 
         this.publish_results.value += publishList.length.toString() + ' Items in ' + this.projectsSheetName + '\n\n';
@@ -1301,7 +1309,7 @@
                 if (csvError) {
                   console.log('CSV Validation Error', name, 'assets', assets);
                   this.publish_results.value += name + ':assets: Error ';
-                  this.publish_results.value +=  'CSV Validation Error\n';
+                  this.publish_results.value += 'CSV Validation Error\n';
                 }
                 console.log('asset fetch', assets);
               }
@@ -1342,7 +1350,7 @@
                 if (csvError) {
                   console.log('CSV Validation Error', name, 'Circuit', scene);
                   this.publish_results.value += name + ':circuit: Error ';
-                  this.publish_results.value +=  'CSV Validation Error\n';
+                  this.publish_results.value += 'CSV Validation Error\n';
                 }
 
                 console.log('circuit fetched', scene);
@@ -1385,7 +1393,7 @@
                 if (csvError) {
                   console.log('CSV Validation Error', name, 'Products', products);
                   this.publish_results.value += name + ':products: Error ';
-                  this.publish_results.value +=  'CSV Validation Error\n';
+                  this.publish_results.value += 'CSV Validation Error\n';
                 }
 
                 console.log('products fetch', products);
@@ -1818,10 +1826,6 @@
       }
       plotterUpdateView() {
         let cat = this.plot_type_select.value;
-
-        //document.querySelectorAll('.plot_display_view').forEach(ctl => ctl.style.display = '');
-        //document.querySelector('#' + divId).style.display = 'block';
-
         let rows = document.querySelectorAll('#position_plotter_div tr');
         rows.forEach(r => {
           if (r.dataset.cats && r.dataset.cats.indexOf(cat) === -1)
@@ -1901,15 +1905,45 @@
           range.forEach(r => allPlots = allPlots.concat(r));
           this.plotterRows = allPlots;
           this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(allPlots, [], this.plotter_plots_includeheaders.checked);
-        }
-        else if (plot_type === 'radial_plotter') {
+        } else if (plot_type === 'radial_plotter') {
+
           let pointCount = GLOBALUTIL.getNumberOrDefault(this.plotter_points_per_plot.value, 10);
           let x_radius = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_width.value, 10) / 2;
           let z_radius = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_depth.value, 10) / 2;
+          let x_end = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_end_width.value, 10) / 2;
+          let z_end = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_end_depth.value, 10) / 2;
+          let turns = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_turns.value, 1);
+          let height = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_height.value, 0);
+          let decay = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_decay_per_turn.value, 0);
 
+          let degPerPoint = 360 / pointCount;
+          let points = [];
+          for (let c = 0; c < pointCount; c++) {
+            let x = Math.round(x_radius * Math.cos(degPerPoint * c) * 1000) / 1000;
+            let z = Math.round(z_radius * Math.sin(degPerPoint * c) * 1000) / 1000;
+            let y = 0;
+            let outwardAdjustment = this.plotter_plots_outward_face.checked ? 180 : 0;
+            let ry = Math.round((c * degPerPoint + outwardAdjustment) * Math.PI / 180 * 1000) / 1000;
+            points.push({
+              x,
+              y,
+              z,
+              rx: 0,
+              ry,
+              rz: 0
+            });
+          }
 
-          this.plotterRows = [];
-          this.plotter_output_table.innerHTML = 'NA';
+          /*
+
+          plotter_plots_offset_angle
+          plotter_plots_includeheaders
+          plotter_plots_includelabels
+          plotter_plots_includeradians
+          */
+
+          this.plotterRows = points;
+          this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(points, [], this.plotter_plots_includeheaders.checked);
         }
       }
       updateSongDataView() {
@@ -2249,22 +2283,22 @@
 
     #position_plotter_div table.wizard_field_container label span {
       top: -.75em;
-      margin-left:2px;
+      margin-left: 2px;
       position: relative;
       font-size: .8em;
     }
 
     #position_plotter_div input {
-      margin-left:4px;
+      margin-left: 4px;
     }
 
     table.wizard_field_container.top_view_table tr td:nth-child(1) {
-     width: 4.5em;
-     min-width: initial;
+      width: 4.5em;
+      min-width: initial;
     }
 
     table.wizard_field_container.top_view_table tr td:nth-child(3) {
-     min-width: initial;
+      min-width: initial;
     }
 
     table.wizard_field_container td:nth-child(2) input {
@@ -2273,9 +2307,8 @@
     }
 
     #template_upper_split span {
-        font-size: .8em;
+      font-size: .8em;
     }
-
   </style>
 
 </body>
