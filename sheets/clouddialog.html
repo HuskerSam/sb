@@ -57,93 +57,95 @@
         <div id="help_viewer_panel_internal"></div>
       </div>
       <div id="details_wrapper_for_split" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
-        <div id="position_plotter_div" class="main_div_wrapper" style="padding: 0 8px 8px 8px;">
-          <table class="wizard_field_container" style="flex:none;text-align:left;">
-            <tr>
-              <td>Plot Type</td>
-              <td>
-                <select id="plot_type_select" style="width:10em;margin-left:4px;">
-                  <option selected value="bar_chart_plotter">Bar Chart</option>
-                  <option selected value="radial_plotter">Radial</option>
-                </select>
-              </td>
-              <td></td>
-            </tr>
-            <tr data-cats="bar_chart_plotter">
-              <td># of series</td>
-              <td><input type="text" id="plotter_plots_count" value="2" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="bar_chart_plotter,radial_plotter">
-              <td>Points per series</td>
-              <td><input type="text" id="plotter_points_per_plot" value="10" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="bar_chart_plotter,radial_plotter">
-              <td>Width (x)</td>
-              <td><input type="text" id="plotter_plots_width" value="25" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="radial_plotter">
-              <td>End Width (x)</td>
-              <td><input type="text" id="plotter_plots_end_width" value="0" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="bar_chart_plotter,radial_plotter">
-              <td>Depth (z)</td>
-              <td><input type="text" id="plotter_plots_depth" value="10" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="radial_plotter">
-              <td>End Depth (z)</td>
-              <td><input type="text" id="plotter_plots_end_depth" value="0" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="radial_plotter">
-              <td>Height (y)</td>
-              <td><input type="text" id="plotter_plots_height" value="0" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="radial_plotter">
-              <td>Turns</td>
-              <td><input type="text" id="plotter_plots_turns" value="3" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="radial_plotter">
-              <td>Decay per turn (%)</td>
-              <td><input type="text" id="plotter_plots_decay_per_turn" value="50%" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="radial_plotter">
-              <td>Outward Facing</td>
-              <td><input type="checkbox" id="plotter_plots_outward_face" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="radial_plotter">
-              <td>Offset Angle</td>
-              <td><input type="checkbox" id="plotter_plots_offset_angle" /></td>
-              <td></td>
-            </tr>
-            <tr data-cats="bar_chart_plotter">
-              <td colspan="3" style="padding-bottom:4px;">
-                <button id="plotter_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
-                <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
-                <label><input type="checkbox" id="plotter_plots_includebreaks" /><span>breaks</span></label>
-                <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
-                <label><input type="checkbox" id="plotter_plots_includelabelslong" /><span>long</span></label>
-              </td>
-            </tr>
-            <tr data-cats="radial_plotter">
-              <td colspan="3" style="padding-bottom:4px;">
-                <button id="plotter_radial_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
-                <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
-                <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
-                <label><input type="checkbox" id="plotter_plots_includeradians" /><span>radians</span></label>
-              </td>
-            </tr>
-          </table>
-          <div style="flex:1;overflow: auto;">
-            <table id="plotter_output_table" style="min-width:100%" class="table_export"></table>
+        <div id="position_plotter_div" class="main_div_wrapper" style="display:none;">
+          <div id="plotter_wizard_details" style="overflow: hidden auto;margin: 0 8px 0px 8px;">
+            <table class="wizard_field_container" style="flex:none;text-align:left;margin: 0 8px">
+              <tr>
+                <td>Plot Type</td>
+                <td>
+                  <select id="plot_type_select" style="width:10em;margin-left:4px;">
+                    <option selected value="bar_chart_plotter">Bar Chart</option>
+                    <option selected value="radial_plotter">Radial</option>
+                  </select>
+                </td>
+                <td></td>
+              </tr>
+              <tr data-cats="bar_chart_plotter">
+                <td># of series</td>
+                <td><input type="text" id="plotter_plots_count" value="2" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="bar_chart_plotter,radial_plotter">
+                <td>Points per series</td>
+                <td><input type="text" id="plotter_points_per_plot" value="20" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="bar_chart_plotter,radial_plotter">
+                <td>Width (x)</td>
+                <td><input type="text" id="plotter_plots_width" value="25" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="radial_plotter">
+                <td>End Width (x)</td>
+                <td><input type="text" id="plotter_plots_end_width" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="bar_chart_plotter,radial_plotter">
+                <td>Depth (z)</td>
+                <td><input type="text" id="plotter_plots_depth" value="10" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="radial_plotter">
+                <td>End Depth (z)</td>
+                <td><input type="text" id="plotter_plots_end_depth" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="radial_plotter">
+                <td>Height (y)</td>
+                <td><input type="text" id="plotter_plots_height" value="10" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="radial_plotter">
+                <td>Turns</td>
+                <td><input type="text" id="plotter_plots_turns" value="3" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="radial_plotter">
+                <td>Decay per turn (0 - 1)</td>
+                <td><input type="text" id="plotter_plots_decay_per_turn" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="radial_plotter">
+                <td>Start Angle</td>
+                <td><input type="text" id="plotter_plots_offset_angle" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="radial_plotter">
+                <td>Item start angle</td>
+                <td><input type="text" id="plotter_plots_item_offset_angle" /></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+          <div id="plotter_output_split" style="overflow:hidden auto;margin: 0 8px 8px 8px;">
+            <table class="wizard_field_container plotter_output" style="margin:0 8px;">
+              <tr data-cats="bar_chart_plotter">
+                <td colspan="3" style="padding-bottom:4px;">
+                  <button id="plotter_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
+                  <label><input type="checkbox" id="plotter_plots_includeheaders" checked /><span>headers</span></label>
+                  <label><input type="checkbox" id="plotter_plots_includelabels" checked /><span>labels</span></label>
+                </td>
+              </tr>
+              <tr data-cats="radial_plotter">
+                <td colspan="3" style="padding-bottom:4px;">
+                  <button id="plotter_radial_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
+                  <label><input type="checkbox" id="plotter_plots_radial_includeheaders" checked /><span>headers</span></label>
+                  <label><input type="checkbox" id="plotter_plots_radial_includelabels" /><span>labels</span></label>
+                  <label><input type="checkbox" id="plotter_plots_includeradians" /><span>radians</span></label>
+                </td>
+              </tr>
+            </table>
+            <table id="plotter_output_table" style="width:100%" class="table_export"></table>
           </div>
         </div>
         <div id="cloud_target" class="main_div_wrapper">
@@ -420,12 +422,12 @@
           'upload_file_mesh_preview', 'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'upload_file_audio_ctl',
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth', 'helper_viewer_panel_open_video_btn',
-          'plotter_plots_includebreaks', 'plotter_plots_includelabels', 'plotter_plots_includelabelslong', 'plotter_plots_includeradians',
-          'plotter_copy_csv_to_clipboard', 'plotter_radial_copy_csv_to_clipboard',
+          'plotter_plots_includelabels', 'plotter_plots_includeradians', 'plotter_plots_radial_includelabels',
+          'plotter_copy_csv_to_clipboard', 'plotter_radial_copy_csv_to_clipboard', 'plotter_plots_radial_includeheaders',
           'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn',
           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view',
           'plotter_plots_end_depth', 'plotter_plots_height', 'plotter_plots_end_width', 'plotter_plots_turns',
-          'plotter_plots_decay_per_turn', 'plotter_plots_outward_face', 'plotter_plots_offset_angle'
+          'plotter_plots_decay_per_turn', 'plotter_plots_item_offset_angle', 'plotter_plots_offset_angle'
         ];
 
         dom_id.forEach(ctl => {
@@ -511,10 +513,10 @@
         iall.forEach(ctl => ctl.addEventListener('input', e => this.plotterUpdatePlot()));
         this.plotterUpdateView();
         this.plotter_copy_csv_to_clipboard.addEventListener('click', e => {
-          cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_includeheaders.checked);
+          cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_includeheaders.checked, 3);
         });
         this.plotter_radial_copy_csv_to_clipboard.addEventListener('click', e => {
-          cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_includeheaders.checked);
+          cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_radial_includeheaders.checked, 3);
         });
 
         this.upload_copy_link_to_clipboard.addEventListener('click', e => {
@@ -539,6 +541,15 @@
           this.splitDeployView.destroy();
         this.splitDeployView = Split(['#deploy_options_server_list', '#selected_server_details_div'], {
           sizes: [70, 30],
+          minSize: [.1, .1],
+          direction: 'vertical'
+        });
+
+
+        if (this.splitPlotterView)
+          this.splitPlotterView.destroy();
+        this.splitPlotterView = Split(['#plotter_wizard_details', '#plotter_output_split'], {
+          sizes: [60, 40],
           minSize: [.1, .1],
           direction: 'vertical'
         });
@@ -1827,7 +1838,15 @@
       plotterUpdateView() {
         let cat = this.plot_type_select.value;
         let rows = document.querySelectorAll('#position_plotter_div tr');
+        let extraRows = document.querySelectorAll('.plotter_output_split tr');
+
         rows.forEach(r => {
+          if (r.dataset.cats && r.dataset.cats.indexOf(cat) === -1)
+            r.style.display = 'none';
+          else
+            r.style.display = '';
+        });
+        extraRows.forEach(r => {
           if (r.dataset.cats && r.dataset.cats.indexOf(cat) === -1)
             r.style.display = 'none';
           else
@@ -1846,9 +1865,7 @@
           let pointCount = GLOBALUTIL.getNumberOrDefault(this.plotter_points_per_plot.value, 10);
           let width = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_width.value, 10);
           let depth = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_depth.value, 10);
-          let includeBreaks = this.plotter_plots_includebreaks.checked;
           let includeLabels = this.plotter_plots_includelabels.checked;
-          let includeLongLabels = this.plotter_plots_includelabelslong.checked;
 
           let range = [];
           let widthOffset = width / pointCount;
@@ -1861,20 +1878,6 @@
           let rz = '0';
           for (let plotCounter = 0; plotCounter < lineCount; plotCounter++) {
             let plot_points = [];
-            if (includeBreaks && (plotCounter > 0 || includeLabels || includeLongLabels)) {
-              let packet = {};
-              if (includeLabels || includeLongLabels)
-                packet.label = 'Series ' + (plotCounter + 1).toString();
-              Object.assign(packet, {
-                x: '',
-                y: '',
-                z: '',
-                rx: '',
-                ry: '',
-                rz: ''
-              });
-              plot_points.push(packet);
-            }
 
             let raw_x = 0;
             for (let pointCounter = 0; pointCounter < pointCount; pointCounter++) {
@@ -1883,8 +1886,6 @@
               let packet = {};
               if (includeLabels)
                 packet.label = (pointCounter + 1).toString();
-              if (includeLongLabels)
-                packet.label = (plotCounter + 1).toString() + '-' + (pointCounter + 1).toString();
               Object.assign(packet, {
                 x,
                 y,
@@ -1904,27 +1905,76 @@
           let allPlots = [];
           range.forEach(r => allPlots = allPlots.concat(r));
           this.plotterRows = allPlots;
-          this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(allPlots, [], this.plotter_plots_includeheaders.checked);
+          this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(allPlots, [], this.plotter_plots_includeheaders.checked, 3);
         } else if (plot_type === 'radial_plotter') {
+          let includeLabels = this.plotter_plots_radial_includelabels.checked;
 
           let pointCount = GLOBALUTIL.getNumberOrDefault(this.plotter_points_per_plot.value, 10);
           let x_radius = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_width.value, 10) / 2;
           let z_radius = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_depth.value, 10) / 2;
-          let x_end = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_end_width.value, 10) / 2;
-          let z_end = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_end_depth.value, 10) / 2;
+          let x_end = x_radius;
+          if (this.plotter_plots_end_width.value !== '')
+            x_end = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_end_width.value, 10) / 2;
+          let z_end = z_radius;
+          if (this.plotter_plots_end_depth.value !== '')
+            z_end = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_end_depth.value, 10) / 2;
           let turns = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_turns.value, 1);
           let height = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_height.value, 0);
           let decay = GLOBALUTIL.getNumberOrDefault(this.plotter_plots_decay_per_turn.value, 0);
+          let angle_offset = GLOBALUTIL.angleDeg(this.plotter_plots_offset_angle.value, 0);
+          let item_offset_angle = GLOBALUTIL.angleDeg(this.plotter_plots_item_offset_angle.value, 0);
 
-          let degPerPoint = 360 / pointCount;
           let points = [];
+          let pts_per_turn = [];
+          for (let c = 0; c < turns; c++) {
+            pts_per_turn[c] = Math.floor(pointCount / turns);
+          }
+          let fraction = pointCount / turns * 1.0 - Math.floor(pointCount / turns);
+          let more_pts = Math.round(fraction * turns);
+          let turnCtr = 0;
+          while (more_pts > 0) {
+            pts_per_turn[turnCtr]++;
+            more_pts--;
+            turnCtr++;
+            if (turnCtr >= turns)
+              turnCtr = 0;
+          }
+
+          let solvePerTurnWithDecay = () => {
+
+          };
+
+          let pts_turned = 0;
+          turnCtr = 0;
+          console.log('per turn', pts_per_turn);
+          let labelCtr = 0;
+          let y_turned = angle_offset;
           for (let c = 0; c < pointCount; c++) {
-            let x = Math.round(x_radius * Math.cos(degPerPoint * c) * 1000) / 1000;
-            let z = Math.round(z_radius * Math.sin(degPerPoint * c) * 1000) / 1000;
-            let y = 0;
-            let outwardAdjustment = this.plotter_plots_outward_face.checked ? 180 : 0;
-            let ry = Math.round((c * degPerPoint + outwardAdjustment) * Math.PI / 180 * 1000) / 1000;
-            points.push({
+            let turnPoints = pts_per_turn[turnCtr];
+            if (c >= pts_turned + turnPoints) {
+              turnCtr++;
+              pts_turned += turnPoints;
+              turnPoints = pts_per_turn[turnCtr];
+              labelCtr = 0;
+            }
+            labelCtr++;
+
+            let degPerPoint = 360.0 / turnPoints;
+            let ratio = c * (1.0 / (pointCount - 1));
+            let x_delta = (x_end - x_radius) * ratio;
+            let z_delta = (z_end - z_radius) * ratio;
+            let x = (x_radius + x_delta) * Math.cos(y_turned);
+            let z = (z_radius + z_delta) * Math.sin(y_turned);
+            let ry = Math.atan2(x, z) + item_offset_angle;
+
+            let y = height * ratio;
+
+            y_turned += degPerPoint * Math.PI / 180;
+
+            let packet = {};
+            if (includeLabels)
+              packet.label = labelCtr.toString();
+            Object.assign(packet, {
               x,
               y,
               z,
@@ -1932,18 +1982,16 @@
               ry,
               rz: 0
             });
+            points.push(packet);
           }
 
           /*
-
-          plotter_plots_offset_angle
-          plotter_plots_includeheaders
           plotter_plots_includelabels
           plotter_plots_includeradians
           */
 
           this.plotterRows = points;
-          this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(points, [], this.plotter_plots_includeheaders.checked);
+          this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(points, [], this.plotter_plots_radial_includeheaders.checked, 3);
         }
       }
       updateSongDataView() {
@@ -2200,7 +2248,8 @@
 
     #cloud_target .gutter.gutter-vertical,
     #cloud_deploy .gutter.gutter-vertical,
-    #template_view .gutter.gutter-vertical {
+    #template_view .gutter.gutter-vertical,
+    #position_plotter_div .gutter.gutter-vertical {
       background-image: linear-gradient(white, white, silver, white,
         white);
       background-color: white;

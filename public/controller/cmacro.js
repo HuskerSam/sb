@@ -2783,7 +2783,7 @@ class cMacro {
       });
     });
   }
-  static _dataRowsToTableHTML(dataRows, fieldOrder = [], headers = true) {
+  static _dataRowsToTableHTML(dataRows, fieldOrder = [], headers = true, digits = -1) {
     if (!dataRows) return;
     if (dataRows.length < 1) return;
 
@@ -2808,7 +2808,24 @@ class cMacro {
       tableGuts += '<tr>';
       fieldOrder.forEach((field) => {
         let v = row[field];
-        if (!v) v = '';
+
+        if (digits !== -1) {
+          if (v === '' || v === undefined)
+            v = '0';
+
+          let deg = false;
+          if (v.toString().indexOf('deg') !== -1) {
+            deg = true;
+            v = v.split('deg').join('');
+          }
+          v = GLOBALUTIL.getNumberOrDefault(v, 0);
+          v = Math.round(v * Math.pow(10, digits)) / Math.pow(10, digits);
+          v = v.toString();
+          if (deg)
+            v += 'deg';
+        } else {
+          if (!v) v = '';
+        }
         tableGuts += '<td>' + v.toString() + '</td>';
       });
       tableGuts += '</tr>';
@@ -2818,11 +2835,11 @@ class cMacro {
 
     return html;
   }
-  static copyDataToClipboard(dataRows, fieldOrder = [], headers = true) {
+  static copyDataToClipboard(dataRows, fieldOrder = [], headers = true, digits = -1) {
     if (!dataRows) return;
     if (dataRows.length < 1) return;
 
-    let html = cMacro._dataRowsToTableHTML(dataRows, fieldOrder, headers);
+    let html = cMacro._dataRowsToTableHTML(dataRows, fieldOrder, headers, digits);
     let el = document.createElement('div');
     el.innerHTML = html;
     el = el.children[0];
