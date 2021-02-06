@@ -1940,13 +1940,31 @@
               turnCtr = 0;
           }
 
-          let solvePerTurnWithDecay = () => {
-
+          if (decay < 0)
+            decay = 0;
+          if (decay > .99)
+            decay = .99;
+          let solvePerTurnWithDecay = (pts_turn, decay) => {
+            for (let c = 1; c < pts_turn.length; c++) {
+              if (pts_turn[c] > 1 &&
+                pts_turn[c] > pts_turn[c - 1] * (1.0 - decay)) {
+                pts_turn[c - 1]++;
+                pts_turn[c]--;
+              }
+            }
+            return pts_turn;
           };
+
+          if (decay > 0) {
+            let pts_per_turn_process = [...pts_per_turn];
+            let processed_turns = solvePerTurnWithDecay(pts_per_turn_process, decay);
+            for (let c = 0; c < pointCount; c++)
+              processed_turns = solvePerTurnWithDecay(processed_turns, decay);
+            pts_per_turn = processed_turns;
+          }
 
           let pts_turned = 0;
           turnCtr = 0;
-          console.log('per turn', pts_per_turn);
           let labelCtr = 0;
           let y_turned = angle_offset;
           for (let c = 0; c < pointCount; c++) {
@@ -1965,10 +1983,24 @@
             let z_delta = (z_end - z_radius) * ratio;
             let x = (x_radius + x_delta) * Math.cos(y_turned);
             let z = (z_radius + z_delta) * Math.sin(y_turned);
-            let ry = Math.atan2(x, z) + item_offset_angle;
-
             let y = height * ratio;
+            let ampRoot = Math.sqrt(x * x + y * y + z * z);
+            let rx = Math.acos(x / ampRoot);
+            let ry = Math.acos(y / ampRoot);
+            if (x < 0 && z < 0) {
+              ry += Math.PI;
+            } else if (x < 0) {
+              ry -= Math.PI / 2;
+            } else if (z < 0) {
+              ry += Math.PI / 2;
+            }
 
+            let rz = Math.acos(z / ampRoot);
+            ry = Math.atan2(x, z);
+            rz = Math.atan2(y, x);
+            rx = Math.atan2(z, y);
+
+ 
             y_turned += degPerPoint * Math.PI / 180;
 
             let packet = {};
@@ -1978,9 +2010,9 @@
               x,
               y,
               z,
-              rx: 0,
+              rx,
               ry,
-              rz: 0
+              rz
             });
             points.push(packet);
           }
