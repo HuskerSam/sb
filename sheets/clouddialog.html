@@ -1985,22 +1985,29 @@
             let z = (z_radius + z_delta) * Math.sin(y_turned);
             let y = height * ratio;
             let ampRoot = Math.sqrt(x * x + y * y + z * z);
-            let rx = Math.acos(x / ampRoot);
-            let ry = Math.acos(y / ampRoot);
-            if (x < 0 && z < 0) {
-              ry += Math.PI;
-            } else if (x < 0) {
-              ry -= Math.PI / 2;
-            } else if (z < 0) {
-              ry += Math.PI / 2;
+            let ax = x / ampRoot;
+            let ay = y / ampRoot;
+            let az = z / ampRoot;
+
+            let ry = Math.atan2(ax, az) + item_offset_angle;
+            if (!this.plotter_plots_includeradians.checked) {
+              ry *= 180 / Math.PI;
+              ry = ry.toFixed(3) + 'deg';
             }
+            /*
+            let rx = Math.atan2(az, ay);
+            let rz = Math.atan2(ay, ax);
+            if (ry >= Math.PI / 2 && ry <= 3 * Math.PI / 2) {
+              rx *= -1;
+            } else if (ry >= 3 * Math.PI / 2 && ry <= 5 * Math.PI / 2) {
+              rx *= -1;
+            } else if (ry >= -1 * Math.PI / 2 && ry <= -3 * Math.PI / 2) {
+              rx *= -1;
+            }
+            */
+            let rz = 0;
+            let rx = 0;
 
-            let rz = Math.acos(z / ampRoot);
-            ry = Math.atan2(x, z);
-            rz = Math.atan2(y, x);
-            rx = Math.atan2(z, y);
-
- 
             y_turned += degPerPoint * Math.PI / 180;
 
             let packet = {};
@@ -2016,11 +2023,6 @@
             });
             points.push(packet);
           }
-
-          /*
-          plotter_plots_includelabels
-          plotter_plots_includeradians
-          */
 
           this.plotterRows = points;
           this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(points, [], this.plotter_plots_radial_includeheaders.checked, 3);
