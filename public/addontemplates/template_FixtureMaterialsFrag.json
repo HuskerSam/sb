@@ -1,0 +1,548 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "texture",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "speculartexture",
+  "fontWeight": "bold"
+}, {
+  "range": "E1",
+  "value": "bumptexture",
+  "fontWeight": "bold"
+}, {
+  "range": "F1",
+  "value": "scaleu",
+  "fontWeight": "bold"
+}, {
+  "range": "G1",
+  "value": "scalev",
+  "fontWeight": "bold"
+}, {
+  "range": "H1",
+  "value": "hasalpha",
+  "fontWeight": "bold"
+}, {
+  "range": "I1",
+  "value": "emissivetexture",
+  "fontWeight": "bold"
+}, {
+  "range": "J1",
+  "value": "specularpower",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "material"
+}, {
+  "range": "B2",
+  "value": "brickwall10"
+}, {
+  "range": "C2",
+  "value": "sb:matpack/brickwall10_D.jpg"
+}, {
+  "range": "D2",
+  "value": "sb:matpack/brickwall10_S.jpg"
+}, {
+  "range": "E2",
+  "value": "sb:matpack/brickwall10_N.jpg"
+}, {
+  "range": "F2",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G2",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I2",
+  "value": "sb:matpack/brickwall10_D.jpg"
+}, {
+  "range": "A3",
+  "value": "material"
+}, {
+  "range": "B3",
+  "value": "wood7"
+}, {
+  "range": "C3",
+  "value": "sb:matpack/wood7_D.jpg"
+}, {
+  "range": "D3",
+  "value": "sb:matpack/wood7_S.jpg"
+}, {
+  "range": "E3",
+  "value": "sb:matpack/wood7_N.jpg"
+}, {
+  "range": "F3",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G3",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I3",
+  "value": "sb:matpack/wood7_D.jpg"
+}, {
+  "range": "J3",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A4",
+  "value": "material"
+}, {
+  "range": "B4",
+  "value": "grid7"
+}, {
+  "range": "C4",
+  "value": "sb:matpack/grid7_D.png"
+}, {
+  "range": "D4",
+  "value": "sb:matpack/grid7_S.jpg"
+}, {
+  "range": "E4",
+  "value": "sb:matpack/grid7_D.png"
+}, {
+  "range": "F4",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G4",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H4",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A5",
+  "value": "material"
+}, {
+  "range": "B5",
+  "value": "brickwall16"
+}, {
+  "range": "C5",
+  "value": "sb:matpack/brickwall16_D.jpg"
+}, {
+  "range": "D5",
+  "value": "sb:matpack/brickwall16_S.jpg"
+}, {
+  "range": "E5",
+  "value": "sb:matpack/brickwall16_N.jpg"
+}, {
+  "range": "F5",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G5",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I5",
+  "value": "sb:matpack/brickwall16_D.jpg"
+}, {
+  "range": "J5",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "material"
+}, {
+  "range": "B6",
+  "value": "wood2"
+}, {
+  "range": "C6",
+  "value": "sb:matpack/wood2_D.jpg"
+}, {
+  "range": "D6",
+  "value": "sb:matpack/wood2_S.jpg"
+}, {
+  "range": "E6",
+  "value": "sb:matpack/wood2_N.jpg"
+}, {
+  "range": "F6",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G6",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I6",
+  "value": "sb:matpack/wood2_D.jpg"
+}, {
+  "range": "J6",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "material"
+}, {
+  "range": "B7",
+  "value": "metal1"
+}, {
+  "range": "C7",
+  "value": "sb:matpack/metal1_D.jpg"
+}, {
+  "range": "D7",
+  "value": "sb:matpack/metal1_S.jpg"
+}, {
+  "range": "E7",
+  "value": "sb:matpack/metal1_N.jpg"
+}, {
+  "range": "F7",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G7",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A8",
+  "value": "material"
+}, {
+  "range": "B8",
+  "value": "circuit_wood1"
+}, {
+  "range": "C8",
+  "value": "sb:matpack/wood3_D.jpg"
+}, {
+  "range": "D8",
+  "value": "sb:matpack/wood3_S.jpg"
+}, {
+  "range": "E8",
+  "value": "sb:matpack/wood3_N.jpg"
+}, {
+  "range": "F8",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G8",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I8",
+  "value": "sb:matpack/wood3_D.jpg"
+}, {
+  "range": "J8",
+  "value": 64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A9",
+  "value": "material"
+}, {
+  "range": "B9",
+  "value": "circuit_wood2"
+}, {
+  "range": "C9",
+  "value": "sb:matpack/wood2_D.jpg"
+}, {
+  "range": "D9",
+  "value": "sb:matpack/wood2_S.jpg"
+}, {
+  "range": "E9",
+  "value": "sb:matpack/wood2_N.jpg"
+}, {
+  "range": "F9",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G9",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I9",
+  "value": "sb:matpack/wood2_D.jpg"
+}, {
+  "range": "J9",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A10",
+  "value": "material"
+}, {
+  "range": "B10",
+  "value": "circuit_trim1"
+}, {
+  "range": "C10",
+  "value": "sb:matpack/wood5_D.jpg"
+}, {
+  "range": "D10",
+  "value": "sb:matpack/wood5_S.jpg"
+}, {
+  "range": "E10",
+  "value": "sb:matpack/wood5_N.jpg"
+}, {
+  "range": "F10",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G10",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I10",
+  "value": "sb:matpack/wood5_D.jpg"
+}, {
+  "range": "J10",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A11",
+  "value": "material"
+}, {
+  "range": "B11",
+  "value": "circuit_trim2"
+}, {
+  "range": "C11",
+  "value": "sb:matpack/wood4_D.jpg"
+}, {
+  "range": "D11",
+  "value": "sb:matpack/wood4_S.jpg"
+}, {
+  "range": "E11",
+  "value": "sb:matpack/wood4_N.jpg"
+}, {
+  "range": "F11",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G11",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I11",
+  "value": "sb:matpack/wood4_D.jpg"
+}, {
+  "range": "J11",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A12",
+  "value": "material"
+}, {
+  "range": "B12",
+  "value": "circuit_metal1"
+}, {
+  "range": "C12",
+  "value": "sb:matpack/metal1_D.jpg"
+}, {
+  "range": "D12",
+  "value": "sb:matpack/metal1_S.jpg"
+}, {
+  "range": "E12",
+  "value": "sb:matpack/metal1_N.jpg"
+}, {
+  "range": "F12",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G12",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A13",
+  "value": "material"
+}, {
+  "range": "B13",
+  "value": "circuit_metal2"
+}, {
+  "range": "C13",
+  "value": "sb:matpack/metal2_D.jpg"
+}, {
+  "range": "D13",
+  "value": "sb:matpack/metal2_S.jpg"
+}, {
+  "range": "E13",
+  "value": "sb:matpack/metal2_N.jpg"
+}, {
+  "range": "F13",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G13",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A14",
+  "value": "material"
+}, {
+  "range": "B14",
+  "value": "circuit_tile1"
+}, {
+  "range": "C14",
+  "value": "sb:matpack/floor5_D.jpg"
+}, {
+  "range": "D14",
+  "value": "sb:matpack/floor5_S.jpg"
+}, {
+  "range": "E14",
+  "value": "sb:matpack/floor5_N.jpg"
+}, {
+  "range": "F14",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G14",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I14",
+  "value": "sb:matpack/floor5_D.jpg"
+}, {
+  "range": "J14",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A15",
+  "value": "material"
+}, {
+  "range": "B15",
+  "value": "circuit_tile2"
+}, {
+  "range": "C15",
+  "value": "sb:matpack/brickwall16_D.jpg"
+}, {
+  "range": "D15",
+  "value": "sb:matpack/brickwall16_S.jpg"
+}, {
+  "range": "E15",
+  "value": "sb:matpack/brickwall16_N.jpg"
+}, {
+  "range": "F15",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G15",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I15",
+  "value": "sb:matpack/brickwall16_D.jpg"
+}, {
+  "range": "J15",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A16",
+  "value": "material"
+}, {
+  "range": "B16",
+  "value": "metal2"
+}, {
+  "range": "C16",
+  "value": "sb:matpack/metal2_D.jpg"
+}, {
+  "range": "D16",
+  "value": "sb:matpack/metal2_S.jpg"
+}, {
+  "range": "E16",
+  "value": "sb:matpack/metal2_N.jpg"
+}, {
+  "range": "F16",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G16",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A17",
+  "value": "material"
+}, {
+  "range": "B17",
+  "value": "wood3"
+}, {
+  "range": "C17",
+  "value": "sb:matpack/wood3_D.jpg"
+}, {
+  "range": "D17",
+  "value": "sb:matpack/wood3_S.jpg"
+}, {
+  "range": "E17",
+  "value": "sb:matpack/wood3_N.jpg"
+}, {
+  "range": "F17",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G17",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I17",
+  "value": "sb:matpack/wood3_D.jpg"
+}, {
+  "range": "J17",
+  "value": 64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A18",
+  "value": "material"
+}, {
+  "range": "B18",
+  "value": "wood1"
+}, {
+  "range": "C18",
+  "value": "sb:matpack/wood1_D.jpg"
+}, {
+  "range": "D18",
+  "value": "sb:matpack/wood1_S.jpg"
+}, {
+  "range": "E18",
+  "value": "sb:matpack/wood1_N.jpg"
+}, {
+  "range": "F18",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G18",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I18",
+  "value": "sb:matpack/wood1_D.jpg"
+}, {
+  "range": "J18",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A19",
+  "value": "material"
+}, {
+  "range": "B19",
+  "value": "floor5"
+}, {
+  "range": "C19",
+  "value": "sb:matpack/floor5_D.jpg"
+}, {
+  "range": "D19",
+  "value": "sb:matpack/floor5_S.jpg"
+}, {
+  "range": "E19",
+  "value": "sb:matpack/floor5_N.jpg"
+}, {
+  "range": "F19",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G19",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I19",
+  "value": "sb:matpack/floor5_D.jpg"
+}, {
+  "range": "J19",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]

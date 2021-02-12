@@ -690,7 +690,7 @@
         if (this.sheetname.value === '')
           this.sheetnameinputdirty = false;
         if (data.hint && !this.sheetnameinputdirty) {
-          if (data.categories === 'Setup' || data.categories === 'Assets' || data.categories === 'Products')
+          if (data.categories === 'Setup' || data.categories === 'Assets' || data.categories === 'Products' || data.categories === 'Fragments')
             this.sheetname.value = data.hint;
           else
             this.sheetname.value = data.hint + ' ' + Math.floor(100 + Math.random() * 900).toString();

@@ -1539,6 +1539,15 @@ class gCSVImport {
     fixturesBC.x = '0';
     this.addCSVRow(fixturesBC);
 
+    let signBoardShape = this.defaultCSVRow();
+    signBoardShape.asset = 'shape';
+    signBoardShape.name = 'scene_product_signboard';
+    signBoardShape.depth = '4';
+    signBoardShape.height = '6';
+    signBoardShape.width = '.1';
+    signBoardShape.shapetype = 'box';
+    this.addCSVRow(signBoardShape);
+
     let basketBC = this.defaultCSVRow();
     basketBC.asset = 'block';
     basketBC.name = row.name + '_basketcart';
@@ -1956,21 +1965,11 @@ class gCSVImport {
     blockSPBC.asset = 'blockchild';
     blockSPBC.childtype = 'shape';
     blockSPBC.parent = parent;
-    blockSPBC.name = 'signboard';
+    blockSPBC.name = 'scene_product_signboard';
     blockSPBC.materialname = 'inherit';
     blockSPBC.y = productData.sceneParams.signYOffset.toString();
     newObjects.push(blockSPBC);
-    /*
-    let blockSP2BC = this.defaultCSVRow();
-    blockSP2BC.asset = 'blockchild';
-    blockSP2BC.childtype = 'shape';
-    blockSP2BC.parent = parent;
-    blockSP2BC.name = 'signpost';
-    blockSP2BC.materialname = 'inherit';
-    blockSP2BC.x = '-0.05';
-    blockSP2BC.y = (productData.sceneParams.signYOffset - 3.5).toString();
-    newObjects.push(blockSP2BC);
-    */
+
     return this.addCSVRowList(newObjects);
   }
   async _addSignPost3D(product, productData, parent) {

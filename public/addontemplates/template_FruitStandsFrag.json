@@ -1,0 +1,793 @@
+[{
+  "range": "A1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "meshpath",
+  "fontWeight": "bold"
+}, {
+  "range": "E1",
+  "value": "texturepath",
+  "fontWeight": "bold"
+}, {
+  "range": "F1",
+  "value": "bmppath",
+  "fontWeight": "bold"
+}, {
+  "range": "G1",
+  "value": "ambient",
+  "fontWeight": "bold"
+}, {
+  "range": "H1",
+  "value": "diffuse",
+  "fontWeight": "bold"
+}, {
+  "range": "I1",
+  "value": "emissive",
+  "fontWeight": "bold"
+}, {
+  "range": "J1",
+  "value": "shapetype",
+  "fontWeight": "bold"
+}, {
+  "range": "K1",
+  "value": "tessellation",
+  "fontWeight": "bold"
+}, {
+  "range": "L1",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "M1",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "N1",
+  "value": "depth",
+  "fontWeight": "bold"
+}, {
+  "range": "O1",
+  "value": "specularpath",
+  "fontWeight": "bold"
+}, {
+  "range": "P1",
+  "value": "specularpower",
+  "fontWeight": "bold"
+}, {
+  "range": "Q1",
+  "value": "hasalpha",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "fruitstandsignpost"
+}, {
+  "range": "B2",
+  "value": "shape"
+}, {
+  "range": "C2",
+  "value": "circuit_metal1"
+}, {
+  "range": "J2",
+  "value": "cylinder"
+}, {
+  "range": "K2",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L2",
+  "value": 0.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M2",
+  "value": 1.3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A3",
+  "value": "fruitstandsign"
+}, {
+  "range": "B3",
+  "value": "shape"
+}, {
+  "range": "C3",
+  "value": "circuit_metal2"
+}, {
+  "range": "J3",
+  "value": "box"
+}, {
+  "range": "L3",
+  "value": 0.06,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M3",
+  "value": 0.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N3",
+  "value": 3.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A4",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B4",
+  "value": "shape"
+}, {
+  "range": "C4",
+  "value": "circuit_metal2"
+}, {
+  "range": "J4",
+  "value": "cylinder"
+}, {
+  "range": "K4",
+  "value": 9,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L4",
+  "value": 0.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M4",
+  "value": 0.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A5",
+  "value": "fruitstandbase"
+}, {
+  "range": "B5",
+  "value": "shape"
+}, {
+  "range": "C5",
+  "value": "circuit_wood2"
+}, {
+  "range": "J5",
+  "value": "box"
+}, {
+  "range": "L5",
+  "value": 3.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M5",
+  "value": 1.25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N5",
+  "value": 1.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "fruitstandsurface"
+}, {
+  "range": "B6",
+  "value": "shape"
+}, {
+  "range": "C6",
+  "value": "circuit_wood1"
+}, {
+  "range": "J6",
+  "value": "plane"
+}, {
+  "range": "L6",
+  "value": 3.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M6",
+  "value": 1.95,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "flowerstandbase"
+}, {
+  "range": "B7",
+  "value": "shape"
+}, {
+  "range": "C7",
+  "value": "circuit_metal1"
+}, {
+  "range": "J7",
+  "value": "box"
+}, {
+  "range": "L7",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M7",
+  "value": 0.3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N7",
+  "value": 1.1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A8",
+  "value": "flowerstandback"
+}, {
+  "range": "B8",
+  "value": "shape"
+}, {
+  "range": "C8",
+  "value": "circuit_wood1"
+}, {
+  "range": "J8",
+  "value": "box"
+}, {
+  "range": "L8",
+  "value": 1.98,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M8",
+  "value": 1.2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N8",
+  "value": 0.03,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A9",
+  "value": "flowerstandshelf"
+}, {
+  "range": "B9",
+  "value": "shape"
+}, {
+  "range": "C9",
+  "value": "circuit_wood1"
+}, {
+  "range": "J9",
+  "value": "box"
+}, {
+  "range": "L9",
+  "value": 0.45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M9",
+  "value": 0.03,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N9",
+  "value": 1.88,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A10",
+  "value": "fruitstandmantle"
+}, {
+  "range": "B10",
+  "value": "meshtexture"
+}, {
+  "range": "C10",
+  "value": "circuit_wood2"
+}, {
+  "range": "D10",
+  "value": "sb:fruitstandmantle.babylon"
+}, {
+  "range": "A11",
+  "value": "flowerstandmetal"
+}, {
+  "range": "B11",
+  "value": "meshtexture"
+}, {
+  "range": "C11",
+  "value": "circuit_metal1"
+}, {
+  "range": "D11",
+  "value": "sb:flowerstandmetal.babylon"
+}, {
+  "range": "A13",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B13",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C13",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "D13",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "E13",
+  "value": "depth",
+  "fontWeight": "bold"
+}, {
+  "range": "F13",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "G13",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "H13",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "I13",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "J13",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "K13",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "L13",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "M13",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "N13",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "O13",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "P13",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "Q13",
+  "value": "frametime",
+  "fontWeight": "bold"
+}, {
+  "range": "R13",
+  "value": "frameorder",
+  "fontWeight": "bold"
+}, {
+  "range": "A14",
+  "value": "fruitstandnative"
+}, {
+  "range": "B14",
+  "value": "block"
+}, {
+  "range": "E14",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F14",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G14",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A15",
+  "value": "fruitstandbase"
+}, {
+  "range": "B15",
+  "value": "blockchild"
+}, {
+  "range": "C15",
+  "value": "fruitstandnative"
+}, {
+  "range": "D15",
+  "value": "shape"
+}, {
+  "range": "I15",
+  "value": 0.69,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L15",
+  "value": "90deg"
+}, {
+  "range": "A16",
+  "value": "fruitstandsurface"
+}, {
+  "range": "B16",
+  "value": "blockchild"
+}, {
+  "range": "C16",
+  "value": "fruitstandnative"
+}, {
+  "range": "D16",
+  "value": "shape"
+}, {
+  "range": "I16",
+  "value": 1.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "K16",
+  "value": "70deg"
+}, {
+  "range": "L16",
+  "value": "-90deg"
+}, {
+  "range": "A17",
+  "value": "fruitstandmantle"
+}, {
+  "range": "B17",
+  "value": "blockchild"
+}, {
+  "range": "C17",
+  "value": "fruitstandnative"
+}, {
+  "range": "D17",
+  "value": "mesh"
+}, {
+  "range": "H17",
+  "value": -1.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I17",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J17",
+  "value": -3.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L17",
+  "value": "180deg"
+}, {
+  "range": "N17",
+  "value": 1.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "O17",
+  "value": 1.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "P17",
+  "value": 1.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A18",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B18",
+  "value": "blockchild"
+}, {
+  "range": "C18",
+  "value": "fruitstandnative"
+}, {
+  "range": "D18",
+  "value": "shape"
+}, {
+  "range": "H18",
+  "value": 0.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I18",
+  "value": 0.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J18",
+  "value": -1.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A19",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B19",
+  "value": "blockchild"
+}, {
+  "range": "C19",
+  "value": "fruitstandnative"
+}, {
+  "range": "D19",
+  "value": "shape"
+}, {
+  "range": "H19",
+  "value": 0.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I19",
+  "value": 0.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J19",
+  "value": 1.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A20",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B20",
+  "value": "blockchild"
+}, {
+  "range": "C20",
+  "value": "fruitstandnative"
+}, {
+  "range": "D20",
+  "value": "shape"
+}, {
+  "range": "H20",
+  "value": -0.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I20",
+  "value": 0.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J20",
+  "value": -1.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A21",
+  "value": "fruitstandfoot"
+}, {
+  "range": "B21",
+  "value": "blockchild"
+}, {
+  "range": "C21",
+  "value": "fruitstandnative"
+}, {
+  "range": "D21",
+  "value": "shape"
+}, {
+  "range": "H21",
+  "value": -0.75,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I21",
+  "value": 0.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J21",
+  "value": 1.4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A22",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "B22",
+  "value": "block"
+}, {
+  "range": "D22",
+  "value": "block"
+}, {
+  "range": "E22",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F22",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G22",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A23",
+  "value": "flowerstandmetal"
+}, {
+  "range": "B23",
+  "value": "blockchild"
+}, {
+  "range": "C23",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D23",
+  "value": "mesh"
+}, {
+  "range": "A24",
+  "value": "flowerstandback"
+}, {
+  "range": "B24",
+  "value": "blockchild"
+}, {
+  "range": "C24",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D24",
+  "value": "shape"
+}, {
+  "range": "H24",
+  "value": -0.52,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I24",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L24",
+  "value": "90deg"
+}, {
+  "range": "A25",
+  "value": "flowerstandbase"
+}, {
+  "range": "B25",
+  "value": "blockchild"
+}, {
+  "range": "C25",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D25",
+  "value": "shape"
+}, {
+  "range": "I25",
+  "value": 0.25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L25",
+  "value": "90deg"
+}, {
+  "range": "A26",
+  "value": "flowerstandshelf"
+}, {
+  "range": "B26",
+  "value": "blockchild"
+}, {
+  "range": "C26",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D26",
+  "value": "shape"
+}, {
+  "range": "H26",
+  "value": 0.43,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I26",
+  "value": 0.64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A27",
+  "value": "flowerstandshelf"
+}, {
+  "range": "B27",
+  "value": "blockchild"
+}, {
+  "range": "C27",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D27",
+  "value": "shape"
+}, {
+  "range": "H27",
+  "value": 0.08,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I27",
+  "value": 1.05,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A28",
+  "value": "flowerstandshelf"
+}, {
+  "range": "B28",
+  "value": "blockchild"
+}, {
+  "range": "C28",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "D28",
+  "value": "shape"
+}, {
+  "range": "H28",
+  "value": -0.25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I28",
+  "value": 1.45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A29",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "B29",
+  "value": "block"
+}, {
+  "range": "E29",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F29",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G29",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A30",
+  "value": "fruitstandnative"
+}, {
+  "range": "B30",
+  "value": "blockchild"
+}, {
+  "range": "C30",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D30",
+  "value": "block"
+}, {
+  "range": "H30",
+  "value": 0.94,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A31",
+  "value": "fruitstandnative"
+}, {
+  "range": "B31",
+  "value": "blockchild"
+}, {
+  "range": "C31",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D31",
+  "value": "block"
+}, {
+  "range": "H31",
+  "value": -0.94,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L31",
+  "value": "180deg"
+}, {
+  "range": "A32",
+  "value": "fruitstandsign"
+}, {
+  "range": "B32",
+  "value": "blockchild"
+}, {
+  "range": "C32",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D32",
+  "value": "shape"
+}, {
+  "range": "I32",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A33",
+  "value": "fruitstandsignpost"
+}, {
+  "range": "B33",
+  "value": "blockchild"
+}, {
+  "range": "C33",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D33",
+  "value": "shape"
+}, {
+  "range": "I33",
+  "value": 2.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J33",
+  "value": 1.6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A34",
+  "value": "fruitstandsignpost"
+}, {
+  "range": "B34",
+  "value": "blockchild"
+}, {
+  "range": "C34",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "D34",
+  "value": "shape"
+}, {
+  "range": "I34",
+  "value": 2.65,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J34",
+  "value": -1.6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]

@@ -78,6 +78,20 @@
     "description": "Fixture meshes, blocks and materials for displays"
   },
   {
+    "name": "Fruit Stands (2)",
+    "key": "FruitStandsFrag",
+    "hint": "Fruit Stands",
+    "categories": "Fragments",
+    "description": "Fruit stand meshes and block with configurable materials - depends on fixture materials fragment"
+  },
+  {
+    "name": "Fixture Materials",
+    "key": "FixtureMaterialsFrag",
+    "hint": "Fixture Materials",
+    "categories": "Fragments",
+    "description": "Materials to enable client UI change on the fly - for fixtures fragments"
+  },
+  {
     "name": "Audio Animation - 8 Bands",
     "key": "Audio8Band",
     "hint": "8 Band Song",
