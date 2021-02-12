@@ -78,11 +78,18 @@
     "description": "Fixture meshes, blocks and materials for displays"
   },
   {
-    "name": "Fruit Stands (2)",
+    "name": "Fruit Stands",
     "key": "FruitStandsFrag",
     "hint": "Fruit Stands",
     "categories": "Fragments",
     "description": "Fruit stand meshes and block with configurable materials - depends on fixture materials fragment"
+  },
+  {
+    "name": "Additional Fixtures",
+    "key": "AdditionalFixturesFrag",
+    "hint": "Additional Fixtures",
+    "categories": "Fragments",
+    "description": "Fixture stand meshes and block with configurable materials - depends on fixture materials fragment"
   },
   {
     "name": "Fixture Materials",

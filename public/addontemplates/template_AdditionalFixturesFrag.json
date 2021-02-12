@@ -1,0 +1,623 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "meshpath",
+  "fontWeight": "bold"
+}, {
+  "range": "E1",
+  "value": "texturepath",
+  "fontWeight": "bold"
+}, {
+  "range": "F1",
+  "value": "bmppath",
+  "fontWeight": "bold"
+}, {
+  "range": "G1",
+  "value": "ambient",
+  "fontWeight": "bold"
+}, {
+  "range": "H1",
+  "value": "diffuse",
+  "fontWeight": "bold"
+}, {
+  "range": "I1",
+  "value": "emissive",
+  "fontWeight": "bold"
+}, {
+  "range": "J1",
+  "value": "shapetype",
+  "fontWeight": "bold"
+}, {
+  "range": "K1",
+  "value": "tessellation",
+  "fontWeight": "bold"
+}, {
+  "range": "L1",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "M1",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "N1",
+  "value": "depth",
+  "fontWeight": "bold"
+}, {
+  "range": "O1",
+  "value": "specularpath",
+  "fontWeight": "bold"
+}, {
+  "range": "P1",
+  "value": "specularpower",
+  "fontWeight": "bold"
+}, {
+  "range": "Q1",
+  "value": "hasalpha",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "meshtexture"
+}, {
+  "range": "B2",
+  "value": "standardstandbase"
+}, {
+  "range": "C2",
+  "value": "circuit_wood1"
+}, {
+  "range": "D2",
+  "value": "sb:standardstandbase.babylon"
+}, {
+  "range": "A3",
+  "value": "meshtexture"
+}, {
+  "range": "B3",
+  "value": "standardstandmetal"
+}, {
+  "range": "C3",
+  "value": "circuit_metal1"
+}, {
+  "range": "D3",
+  "value": "sb:standardstandmetal.babylon"
+}, {
+  "range": "A4",
+  "value": "meshtexture"
+}, {
+  "range": "B4",
+  "value": "standcratebottomcrates"
+}, {
+  "range": "C4",
+  "value": "circuit_wood1"
+}, {
+  "range": "D4",
+  "value": "sb:standcratebottomcrates.babylon"
+}, {
+  "range": "A5",
+  "value": "meshtexture"
+}, {
+  "range": "B5",
+  "value": "standcratebottombase"
+}, {
+  "range": "C5",
+  "value": "circuit_wood2"
+}, {
+  "range": "D5",
+  "value": "sb:standcratebottombase.babylon"
+}, {
+  "range": "A6",
+  "value": "meshtexture"
+}, {
+  "range": "B6",
+  "value": "standcratebottomshelf"
+}, {
+  "range": "C6",
+  "value": "circuit_metal1"
+}, {
+  "range": "D6",
+  "value": "sb:standcratebottomshelf.babylon"
+}, {
+  "range": "A7",
+  "value": "meshtexture"
+}, {
+  "range": "B7",
+  "value": "standpegsshelves"
+}, {
+  "range": "C7",
+  "value": "circuit_wood1"
+}, {
+  "range": "D7",
+  "value": "sb:standpegsshelves.babylon"
+}, {
+  "range": "A8",
+  "value": "meshtexture"
+}, {
+  "range": "B8",
+  "value": "standpegspegs"
+}, {
+  "range": "C8",
+  "value": "circuit_metal1"
+}, {
+  "range": "D8",
+  "value": "sb:standpegspegs.babylon"
+}, {
+  "range": "A9",
+  "value": "meshtexture"
+}, {
+  "range": "B9",
+  "value": "standpegsbase"
+}, {
+  "range": "C9",
+  "value": "circuit_wood2"
+}, {
+  "range": "D9",
+  "value": "sb:standpegsbase.babylon"
+}, {
+  "range": "A10",
+  "value": "meshtexture"
+}, {
+  "range": "B10",
+  "value": "metalmeshstand"
+}, {
+  "range": "C10",
+  "value": "circuit_metal1"
+}, {
+  "range": "D10",
+  "value": "sb:metalmeshstand.babylon"
+}, {
+  "range": "A11",
+  "value": "meshtexture"
+}, {
+  "range": "B11",
+  "value": "fridgestand"
+}, {
+  "range": "C11",
+  "value": "circuit_metal1"
+}, {
+  "range": "D11",
+  "value": "sb:fridgestand.babylon"
+}, {
+  "range": "A12",
+  "value": "meshtexture"
+}, {
+  "range": "B12",
+  "value": "register"
+}, {
+  "range": "C12",
+  "value": "registermaterial"
+}, {
+  "range": "D12",
+  "value": "sb:market/register.babylon"
+}, {
+  "range": "E12",
+  "value": "sb:market/register_D.jpg"
+}, {
+  "range": "G12",
+  "value": "x"
+}, {
+  "range": "H12",
+  "value": "x"
+}, {
+  "range": "O12",
+  "value": "sb:market/register_D.jpg"
+}, {
+  "range": "P12",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A13",
+  "value": "meshtexture"
+}, {
+  "range": "B13",
+  "value": "rectangletable"
+}, {
+  "range": "C13",
+  "formula": "=B13"
+}, {
+  "range": "D13",
+  "formula": "= CONCATENATE(\"sb:market/\" , B13, \".babylon\")"
+}, {
+  "range": "E13",
+  "formula": "= CONCATENATE(\"sb:market/\" , C13, \"_D.jpg\")"
+}, {
+  "range": "O13",
+  "value": "sb:market/rectangletable_D.jpg"
+}, {
+  "range": "P13",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A14",
+  "value": "meshtexture"
+}, {
+  "range": "B14",
+  "value": "pedestaltable"
+}, {
+  "range": "C14",
+  "formula": "=B14"
+}, {
+  "range": "D14",
+  "formula": "= CONCATENATE(\"sb:market/\" , B14, \".babylon\")"
+}, {
+  "range": "E14",
+  "formula": "= CONCATENATE(\"sb:market/\" , C14, \"_D.jpg\")"
+}, {
+  "range": "O14",
+  "value": "sb:market/pedestaltable_D.jpg"
+}, {
+  "range": "P14",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A15",
+  "value": "meshtexture"
+}, {
+  "range": "B15",
+  "value": "globestand"
+}, {
+  "range": "C15",
+  "formula": "=B15"
+}, {
+  "range": "D15",
+  "formula": "= CONCATENATE(\"sb:market/\" , B15, \".babylon\")"
+}, {
+  "range": "E15",
+  "formula": "= CONCATENATE(\"sb:market/\" , B15, \"_D.jpg\")"
+}, {
+  "range": "O15",
+  "value": "sb:market/globestand_D.jpg"
+}, {
+  "range": "P15",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A16",
+  "value": "shape"
+}, {
+  "range": "B16",
+  "value": "globesphere"
+}, {
+  "range": "C16",
+  "value": "globeshape"
+}, {
+  "range": "J16",
+  "value": "sphere"
+}, {
+  "range": "A17",
+  "value": "meshtexture"
+}, {
+  "range": "B17",
+  "value": "extinguisher"
+}, {
+  "range": "C17",
+  "formula": "=B17"
+}, {
+  "range": "D17",
+  "formula": "=\"sb:\" & B17 & \".babylon\""
+}, {
+  "range": "E17",
+  "value": "sb:extinguisher_D.jpg"
+}, {
+  "range": "F17",
+  "value": "sb:extinguisher_N.jpg"
+}, {
+  "range": "O17",
+  "value": "sb:extinguisher_S.png"
+}, {
+  "range": "P17",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A19",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B19",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C19",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "D19",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "E19",
+  "value": "depth",
+  "fontWeight": "bold"
+}, {
+  "range": "F19",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "G19",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "H19",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "I19",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "J19",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "K19",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "L19",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "M19",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "N19",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "O19",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "P19",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "Q19",
+  "value": "frametime",
+  "fontWeight": "bold"
+}, {
+  "range": "R19",
+  "value": "frameorder",
+  "fontWeight": "bold"
+}, {
+  "range": "A20",
+  "value": "fixture_standard"
+}, {
+  "range": "B20",
+  "value": "block"
+}, {
+  "range": "E20",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F20",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G20",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A21",
+  "value": "standardstandmetal"
+}, {
+  "range": "B21",
+  "value": "blockchild"
+}, {
+  "range": "C21",
+  "value": "fixture_standard"
+}, {
+  "range": "D21",
+  "value": "mesh"
+}, {
+  "range": "I21",
+  "value": 0.01,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A22",
+  "value": "standardstandbase"
+}, {
+  "range": "B22",
+  "value": "blockchild"
+}, {
+  "range": "C22",
+  "value": "fixture_standard"
+}, {
+  "range": "D22",
+  "value": "mesh"
+}, {
+  "range": "A23",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "B23",
+  "value": "block"
+}, {
+  "range": "E23",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F23",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G23",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A24",
+  "value": "standcratebottomshelf"
+}, {
+  "range": "B24",
+  "value": "blockchild"
+}, {
+  "range": "C24",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "D24",
+  "value": "mesh"
+}, {
+  "range": "A25",
+  "value": "standcratebottombase"
+}, {
+  "range": "B25",
+  "value": "blockchild"
+}, {
+  "range": "C25",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "D25",
+  "value": "mesh"
+}, {
+  "range": "A26",
+  "value": "standcratebottomcrates"
+}, {
+  "range": "B26",
+  "value": "blockchild"
+}, {
+  "range": "C26",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "D26",
+  "value": "mesh"
+}, {
+  "range": "A27",
+  "value": "fixture_pegstand"
+}, {
+  "range": "B27",
+  "value": "block"
+}, {
+  "range": "E27",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F27",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G27",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A28",
+  "value": "standpegsbase"
+}, {
+  "range": "B28",
+  "value": "blockchild"
+}, {
+  "range": "C28",
+  "value": "fixture_pegstand"
+}, {
+  "range": "D28",
+  "value": "mesh"
+}, {
+  "range": "A29",
+  "value": "standpegspegs"
+}, {
+  "range": "B29",
+  "value": "blockchild"
+}, {
+  "range": "C29",
+  "value": "fixture_pegstand"
+}, {
+  "range": "D29",
+  "value": "mesh"
+}, {
+  "range": "A30",
+  "value": "standpegsshelves"
+}, {
+  "range": "B30",
+  "value": "blockchild"
+}, {
+  "range": "C30",
+  "value": "fixture_pegstand"
+}, {
+  "range": "D30",
+  "value": "mesh"
+}, {
+  "range": "A31",
+  "value": "spinningglobe"
+}, {
+  "range": "B31",
+  "value": "block"
+}, {
+  "range": "Q31",
+  "value": "2s"
+}, {
+  "range": "A32",
+  "value": "globestand"
+}, {
+  "range": "B32",
+  "value": "blockchild"
+}, {
+  "range": "C32",
+  "formula": "=A31"
+}, {
+  "range": "D32",
+  "value": "mesh"
+}, {
+  "range": "A33",
+  "value": "globesphere"
+}, {
+  "range": "B33",
+  "value": "blockchild"
+}, {
+  "range": "C33",
+  "value": "spinningglobe"
+}, {
+  "range": "D33",
+  "value": "shape"
+}, {
+  "range": "I33",
+  "value": 1.15,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M33",
+  "value": "190deg"
+}, {
+  "range": "N33",
+  "value": 1.14,
+  "horizontalAlignment": "right"
+}, {
+  "range": "O33",
+  "value": 1.14,
+  "horizontalAlignment": "right"
+}, {
+  "range": "P33",
+  "value": 1.14,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A34",
+  "value": "globesphere"
+}, {
+  "range": "B34",
+  "value": "blockchildframe"
+}, {
+  "range": "C34",
+  "formula": "=A31"
+}, {
+  "range": "D34",
+  "value": "shape"
+}, {
+  "range": "L34",
+  "value": "360deg"
+}, {
+  "range": "Q34",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "R34",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]
