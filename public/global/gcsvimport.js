@@ -827,7 +827,6 @@ class gCSVImport {
       'frameCommandValue'
     ];
 
-    let promises = [];
     if (row.y === undefined)
       console.log(row);
 
@@ -885,11 +884,23 @@ class gCSVImport {
       });
     }
 
+    let frameOrder = frameData.frameOrder;
     for (let parentKey in children) {
+      let frameRecords = await this.dbFetchByLookup('frame', 'parentKey', parentKey);
+      for (let key in frameRecords.recordsById) {
+        let rec = frameRecords.recordsById[key];
+
+        if (!rec.frameOrder)
+          rec.frameOrder = '';
+        if (frameOrder.toString() === rec.frameOrder.toString())
+          await this.dbRemove('frame', key);
+      }
+
       frameData.parentKey = parentKey;
-      promises.push(this.dbSetRecord('frame', Object.assign({}, frameData)));
+      await this.dbSetRecord('frame', Object.assign({}, frameData));
     }
 
+    let promises = [];
     return Promise.all(promises);
   }
   async addCSVRowList(rowList) {
