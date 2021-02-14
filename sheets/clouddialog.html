@@ -57,18 +57,54 @@
         <div id="help_viewer_panel_internal"></div>
       </div>
       <div id="details_wrapper_for_split" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
-        <div id="position_plotter_div" class="main_div_wrapper" style="display:none;">
+        <div id="position_plotter_div" class="main_div_wrapper">
           <div id="plotter_wizard_details" style="overflow: hidden auto;margin: 0 8px 0px 8px;">
-            <table class="wizard_field_container" style="flex:none;text-align:left;margin: 0 8px">
+            <table class="wizard_field_container" style="flex:none;text-align:left;margin: 0 0px">
               <tr>
                 <td>Plot Type</td>
                 <td>
                   <select id="plot_type_select" style="width:10em;margin-left:4px;">
-                    <option selected value="bar_chart_plotter">Bar Chart</option>
+                    <option value="bar_chart_plotter">Bar Chart</option>
                     <option selected value="radial_plotter">Radial</option>
+                    <option value="path_frames_plotter">Path Frames</option>
                   </select>
                 </td>
                 <td></td>
+              </tr>
+              <tr data-cats="path_frames_plotter">
+                <td>Parent</td>
+                <td><input type="text" id="path_frames_parent" value="::scene::" list="blockdatatitlelookuplist" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="path_frames_plotter">
+                <td>Child Type</td>
+                <td><input type="text" id="path_frames_childtype" value="block" list="blockchildtypelist" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="path_frames_plotter">
+                <td>Child Name</td>
+                <td><input type="text" id="path_frames_childname" value="::scene::_basketcart" list="blockdatatitlelookuplist" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="path_frames_plotter">
+                <td>Easing</td>
+                <td><input type="text" id="path_frames_easing_option" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="path_frames_plotter">
+                <td>Example Data</td>
+                <td><input type="text" id="path_frames_example_data" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="path_frames_plotter">
+                <td colspan="3" style="text-align:left;">
+                  <b>Point per line:</b> time,x,y,z,rx,ry,rz,sx,sy,sz,visibility<br>
+                  <textarea id="path_frames_points" style="width:100%;height:10em;">0,-28,5,20,0,-90deg
+35%,28,,,,0
+50%,,,-20,,90deg
+85%,-28,,,,180deg
+100%,,,20,,270deg</textarea>
+                </td>
               </tr>
               <tr data-cats="bar_chart_plotter">
                 <td># of series</td>
@@ -127,7 +163,7 @@
               </tr>
             </table>
           </div>
-          <div id="plotter_output_split" style="overflow:hidden auto;margin: 0 8px 8px 8px;">
+          <div id="plotter_output_split" style="overflow:auto;margin: 0 8px 8px 8px;">
             <table class="wizard_field_container plotter_output" style="margin:0 8px;">
               <tr data-cats="bar_chart_plotter">
                 <td colspan="3" style="padding-bottom:4px;">
@@ -142,6 +178,12 @@
                   <label><input type="checkbox" id="plotter_plots_radial_includeheaders" checked /><span>headers</span></label>
                   <label><input type="checkbox" id="plotter_plots_radial_includelabels" /><span>labels</span></label>
                   <label><input type="checkbox" id="plotter_plots_includeradians" /><span>radians</span></label>
+                </td>
+              </tr>
+              <tr data-cats="path_frames_plotter">
+                <td colspan="3" style="padding-bottom:4px;">
+                  <button id="path_frames_copy_csv_to_clipboard" style="float:left;"><i class="material-icons">content_copy</i></button>
+                  <label><input type="checkbox" id="path_frames_includeheaders" checked /><span>headers</span></label>
                 </td>
               </tr>
             </table>
@@ -423,11 +465,12 @@
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth', 'helper_viewer_panel_open_video_btn',
           'plotter_plots_includelabels', 'plotter_plots_includeradians', 'plotter_plots_radial_includelabels',
-          'plotter_copy_csv_to_clipboard', 'plotter_radial_copy_csv_to_clipboard', 'plotter_plots_radial_includeheaders',
-          'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn',
+          'plotter_copy_csv_to_clipboard', 'plotter_radial_copy_csv_to_clipboard', 'plotter_plots_radial_includeheaders', 'path_frames_copy_csv_to_clipboard',
+          'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn', 'path_frames_includeheaders',
           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view',
           'plotter_plots_end_depth', 'plotter_plots_height', 'plotter_plots_end_width', 'plotter_plots_turns',
-          'plotter_plots_decay_per_turn', 'plotter_plots_item_offset_angle', 'plotter_plots_offset_angle'
+          'plotter_plots_decay_per_turn', 'plotter_plots_item_offset_angle', 'plotter_plots_offset_angle',
+          'path_frames_points', 'path_frames_parent', 'path_frames_childtype', 'path_frames_childname'
         ];
 
         dom_id.forEach(ctl => {
@@ -511,12 +554,17 @@
 
         let iall = this.position_plotter_div.querySelectorAll('input');
         iall.forEach(ctl => ctl.addEventListener('input', e => this.plotterUpdatePlot()));
+        iall = this.position_plotter_div.querySelectorAll('textarea');
+        iall.forEach(ctl => ctl.addEventListener('input', e => this.plotterUpdatePlot()));
         this.plotterUpdateView();
         this.plotter_copy_csv_to_clipboard.addEventListener('click', e => {
           cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_includeheaders.checked, 3);
         });
         this.plotter_radial_copy_csv_to_clipboard.addEventListener('click', e => {
           cMacro.copyDataToClipboard(this.plotterRows, [], this.plotter_plots_radial_includeheaders.checked, 3);
+        });
+        this.path_frames_copy_csv_to_clipboard.addEventListener('click', e => {
+          cMacro.copyDataToClipboard(this.plotterRows, [], this.path_frames_includeheaders.checked);
         });
 
         this.upload_copy_link_to_clipboard.addEventListener('click', e => {
@@ -2026,6 +2074,48 @@
 
           this.plotterRows = points;
           this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(points, [], this.plotter_plots_radial_includeheaders.checked, 3);
+        } else if (plot_type === 'path_frames_plotter') {
+          let pts_list = this.path_frames_points.value;
+          let pts_arr = pts_list.split('\n');
+          let parent = this.path_frames_parent.value;
+          let name = this.path_frames_childname.value;
+          let childtype = this.path_frames_childtype.value;
+
+          let frames = [];
+          let frameorder = 10;
+          pts_arr.forEach(str => {
+            str += ',,,,,,,,,,,,,,';
+            let items = str.split(',');
+            let frame = {
+              'asset': 'blockchildframe',
+              name,
+              parent,
+              childtype,
+              frameorder
+            };
+            frameorder += 10;
+            frame.frametime = items[0];
+            if (frame.frametime.indexOf('%') !== -1) {
+              if (frame.frametime.indexOf('\'') === -1)
+                frame.frametime = '\'' + frame.frametime;
+            }
+
+            frame.x = items[1];
+            frame.y = items[2];
+            frame.z = items[3];
+            frame.rx = items[4];
+            frame.ry = items[5];
+            frame.rz = items[6];
+            frame.sx = items[7];
+            frame.sy = items[8];
+            frame.sz = items[9];
+            frame.visibility = items[10];
+
+            frames.push(frame);
+          })
+
+          this.plotterRows = frames;
+          this.plotter_output_table.innerHTML = cMacro._dataRowsToTableHTML(frames, [], this.path_frames_includeheaders.checked);
         }
       }
       updateSongDataView() {
