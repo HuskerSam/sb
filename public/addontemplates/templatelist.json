@@ -99,6 +99,13 @@
     "description": "Materials to enable client UI change on the fly - for fixtures fragments"
   },
   {
+    "name": "Product Position List",
+    "key": "ProductPositionsListFrag",
+    "hint": "Product Positions",
+    "categories": "Fragments",
+    "description": "Product position example list ready for inclusion in a scene"
+  },
+  {
     "name": "Audio Animation - 8 Bands",
     "key": "Audio8Band",
     "hint": "8 Band Song",

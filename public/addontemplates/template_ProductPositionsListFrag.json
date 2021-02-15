@@ -1,0 +1,468 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "blockflag",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "genericblockdata",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "block"
+}, {
+  "range": "B2",
+  "value": "displaypositionsblock"
+}, {
+  "range": "C2",
+  "value": "displaypositions"
+}, {
+  "range": "D2",
+  "formula": "=gridJoin(\"|\", B3:G29)"
+}, {
+  "range": "B3",
+  "value": -33.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C3",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D3",
+  "value": 30,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B4",
+  "value": -26,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C4",
+  "value": 8,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D4",
+  "value": 26,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B5",
+  "value": -16,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C5",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D5",
+  "value": 5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G5",
+  "value": "20deg",
+  "backgroundColor": "#efefef"
+}, {
+  "range": "B6",
+  "value": -16,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C6",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D6",
+  "value": -5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G6",
+  "value": "20deg",
+  "backgroundColor": "#efefef"
+}, {
+  "range": "B7",
+  "value": -19,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C7",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D7",
+  "value": -32.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B8",
+  "value": -18.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C8",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D8",
+  "value": 30,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B9",
+  "value": -11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C9",
+  "value": 8,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D9",
+  "value": 26,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B10",
+  "value": -8.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C10",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D10",
+  "value": 5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G10",
+  "value": "-20deg",
+  "backgroundColor": "#efefef"
+}, {
+  "range": "B11",
+  "value": -8.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C11",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D11",
+  "value": -5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G11",
+  "value": "-20deg",
+  "backgroundColor": "#efefef"
+}, {
+  "range": "B12",
+  "value": -11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C12",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D12",
+  "value": -32.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B13",
+  "value": -3.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C13",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D13",
+  "value": 30,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B14",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C14",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D14",
+  "value": 5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G14",
+  "value": "20deg",
+  "backgroundColor": "#efefef"
+}, {
+  "range": "B15",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C15",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D15",
+  "value": -5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G15",
+  "value": "20deg",
+  "backgroundColor": "#efefef"
+}, {
+  "range": "B16",
+  "value": 5.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C16",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D16",
+  "value": -32.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B17",
+  "value": 4,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C17",
+  "value": 8,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D17",
+  "value": 26,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B18",
+  "value": 11.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C18",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D18",
+  "value": 30,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B19",
+  "value": 13.25,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C19",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D19",
+  "value": 5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G19",
+  "value": "-20deg",
+  "backgroundColor": "#efefef"
+}, {
+  "range": "B20",
+  "value": 13.25,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C20",
+  "value": 7,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D20",
+  "value": -5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G20",
+  "value": "-20deg",
+  "backgroundColor": "#efefef"
+}, {
+  "range": "B21",
+  "value": 13.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C21",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D21",
+  "value": -32.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B22",
+  "value": 19,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C22",
+  "value": 8,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D22",
+  "value": 26,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B23",
+  "value": 26.5,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C23",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D23",
+  "value": 30,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B24",
+  "value": 34,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C24",
+  "value": 8,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D24",
+  "value": 26,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B25",
+  "value": 46,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C25",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D25",
+  "value": 27,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B26",
+  "value": 43,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C26",
+  "value": 2,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D26",
+  "value": 21,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B27",
+  "value": 46,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C27",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D27",
+  "value": 15,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B28",
+  "value": 43,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C28",
+  "value": 2,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D28",
+  "value": 9,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B29",
+  "value": 46,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C29",
+  "value": 11,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D29",
+  "value": 3,
+  "backgroundColor": "#efefef",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A1"
+}]
