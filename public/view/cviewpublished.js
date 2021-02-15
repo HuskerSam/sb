@@ -96,6 +96,10 @@ class cViewPublished extends bView {
     } else {
       setTimeout(() => this.canvasHelper.cameraChangeHandler(), 150);
     }
+
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.supportVR) {
+      setTimeout(() => gAPPP.activeContext.setupXRSupport(), 1500);
+    }
   }
   updateSelectedCamera() {
     if (!this.displayCamera)

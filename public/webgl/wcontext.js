@@ -77,6 +77,9 @@ class wContext {
 
     this._scene.onPointerDown = (evt, pickResult) => this.scenePick(evt, pickResult);
   }
+  async setupXRSupport() {
+    this.xr = await this._scene.createDefaultXRExperienceAsync({});
+  }
   scenePick(evt, pickResult) {
     if (pickResult.hit) {
       let mesh = pickResult.pickedMesh;

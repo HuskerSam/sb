@@ -622,6 +622,10 @@ class cViewDemo extends bView {
         this.ui_select.value = this.rootBlock.blockRawData.displayUI;
     }
 
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.supportVR) {
+      setTimeout(() => gAPPP.activeContext.setupXRSupport(), 1000);
+    }
+
     this.updateUIDisplay();
     this._audioFeatures();
     this.context.scene.onPointerObservable.add(evt => {

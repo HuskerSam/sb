@@ -837,6 +837,12 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   floatLeft: true,
   clearLeft: true
 }, {
+  title: 'Support VR',
+  fireSetField: 'supportVR',
+  group: 'blockData',
+  floatLeft: true,
+  clearLeft: true
+}, {
   title: 'genericBlockData',
   fireSetField: 'genericBlockData',
   group: 'blockData',

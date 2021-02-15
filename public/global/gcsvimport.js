@@ -1507,6 +1507,7 @@ class gCSVImport {
     if (row.musicparams) block.musicParams = row.musicparams;
     if (row.genericblockdata) block.genericBlockData = row.genericblockdata;
     if (row.displayui) block.displayUI = row.displayui;
+    if (row.supportvr) block.supportVR = row.supportvr;
     if (row.clearcolor) block.clearColor = row.clearcolor;
 
     let blockresult = await this.dbSetRecord('block', block);
