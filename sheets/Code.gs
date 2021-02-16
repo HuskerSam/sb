@@ -47,7 +47,7 @@ function createSheetFromTemplate(sheetName, template) {
         let range = sheet.getRange(item.range);
         if (range) {
           sheet.setActiveRange(range);
-          if (item.value) {
+          if (item.value !== '' && item.value !== undefined) {
             let v = item.value.toString();
             if (v.indexOf('%') !== -1 && v.indexOf('\'') === -1)
                 v = '\'' + v;
@@ -500,7 +500,7 @@ function getJSONForSheet(sheetName, block = 1) {
           range,
           formula
         };
-      } else if (value) {
+      } else if (value !== ''  && value !== undefined) {
         cell = {
           range,
           value

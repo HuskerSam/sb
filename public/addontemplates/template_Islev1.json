@@ -3359,6 +3359,10 @@
   "value": 10,
   "horizontalAlignment": "left"
 }, {
+  "range": "F124",
+  "value": 0,
+  "horizontalAlignment": "left"
+}, {
   "range": "G124",
   "value": -28,
   "horizontalAlignment": "left"
@@ -3369,6 +3373,10 @@
 }, {
   "range": "I124",
   "value": 20,
+  "horizontalAlignment": "left"
+}, {
+  "range": "J124",
+  "value": 0,
   "horizontalAlignment": "left"
 }, {
   "range": "K124",
@@ -3425,6 +3433,10 @@
 }, {
   "range": "F126",
   "value": "500++",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K126",
+  "value": 0,
   "horizontalAlignment": "left"
 }, {
   "range": "A127",
@@ -4043,6 +4055,242 @@
   "value": 3,
   "backgroundColor": "#efefef",
   "horizontalAlignment": "general-right"
+}, {
+  "range": "A164",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B164",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C164",
+  "value": "heightoffset",
+  "fontWeight": "bold"
+}, {
+  "range": "D164",
+  "value": "cameramovetime",
+  "fontWeight": "bold"
+}, {
+  "range": "E164",
+  "value": "cameraname",
+  "fontWeight": "bold"
+}, {
+  "range": "F164",
+  "value": "cameraradius",
+  "fontWeight": "bold"
+}, {
+  "range": "G164",
+  "value": "finishdelay",
+  "fontWeight": "bold"
+}, {
+  "range": "H164",
+  "value": "introtime",
+  "fontWeight": "bold"
+}, {
+  "range": "I164",
+  "value": "runlength",
+  "fontWeight": "bold"
+}, {
+  "range": "J164",
+  "value": "originx",
+  "fontWeight": "bold"
+}, {
+  "range": "K164",
+  "value": "originy",
+  "fontWeight": "bold"
+}, {
+  "range": "L164",
+  "value": "originz",
+  "fontWeight": "bold"
+}, {
+  "range": "M164",
+  "value": "originry",
+  "fontWeight": "bold"
+}, {
+  "range": "N164",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "O164",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "P164",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "Q164",
+  "value": "genericblockdata",
+  "fontWeight": "bold"
+}, {
+  "range": "A165",
+  "value": "displaycamera"
+}, {
+  "range": "B165",
+  "value": "FollowCamera"
+}, {
+  "range": "C165",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D165",
+  "value": 500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F165",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G165",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H165",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I165",
+  "value": 60,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J165",
+  "value": -40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "K165",
+  "value": 6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L165",
+  "value": 9.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M165",
+  "value": "-90deg"
+}, {
+  "range": "N165",
+  "value": -50,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "O165",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "Q165",
+  "value": "signyoffset|0"
+}, {
+  "range": "A167",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B167",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "C167",
+  "value": "cameratype",
+  "fontWeight": "bold"
+}, {
+  "range": "D167",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "E167",
+  "value": "aimtarget",
+  "fontWeight": "bold"
+}, {
+  "range": "F167",
+  "value": "originx",
+  "fontWeight": "bold"
+}, {
+  "range": "G167",
+  "value": "originy",
+  "fontWeight": "bold"
+}, {
+  "range": "H167",
+  "value": "originz",
+  "fontWeight": "bold"
+}, {
+  "range": "I167",
+  "value": "cameraradius",
+  "fontWeight": "bold"
+}, {
+  "range": "J167",
+  "value": "heightoffset",
+  "fontWeight": "bold"
+}, {
+  "range": "K167",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "A168",
+  "value": "blockchild"
+}, {
+  "range": "B168",
+  "value": "camera"
+}, {
+  "range": "C168",
+  "value": "ArcRotate"
+}, {
+  "range": "D168",
+  "value": "arcRotateCamera"
+}, {
+  "range": "E168",
+  "value": "0,0,0"
+}, {
+  "range": "F168",
+  "value": -40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G168",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I168",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J168",
+  "value": 35,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "K168",
+  "value": "::scene::"
+}, {
+  "range": "A169",
+  "value": "blockchild"
+}, {
+  "range": "B169",
+  "value": "camera"
+}, {
+  "range": "C169",
+  "value": "DeviceOrientationCamera"
+}, {
+  "range": "D169",
+  "value": "deviceOrientation"
+}, {
+  "range": "E169",
+  "value": "0,5,0"
+}, {
+  "range": "F169",
+  "value": -30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G169",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I169",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "J169",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "K169",
+  "value": "::scene::"
 }, {
   "range": "A1"
 }]
