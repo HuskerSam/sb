@@ -63,6 +63,10 @@ class cViewPublished extends bView {
       document.body.removeChild(a);
     });
 
+    this.dialog.querySelector('#enable_vr_canvas_btn').addEventListener('click', e => {
+      gAPPP.activeContext.setupXRSupport();
+    });
+
     this.dialog.querySelector('#user-profile-dialog-reset-button').addEventListener('click', e =>{
       gAPPP.a.resetProfile();
       setTimeout(() => location.reload(), 100);
@@ -229,9 +233,9 @@ class cViewPublished extends bView {
     <div id="renderLoadingCanvas" style="display:none;"><br><br>LOADING...</div>
     <div id="noProjectFoundCanvas" style="display:none;"><br><br>No Project Found</div>
   <div class="form_canvas_wrapper"></div>
-  <button id="user-profile-dialog-reset-button">Reset Options</button>
-  <button id="publish-settings-button" style='bottom: 2em;' class="btn-sb-icon"><i class="material-icons">dashboard</i></button>
-  <button id="publish_help_viewer" style='bottom: 2em;right:2.5em;position:absolute;' class="btn-sb-icon"><i class="material-icons">help</i></button>
+  <button id="user-profile-dialog-reset-button">Reset</button>
+  <button id="publish-settings-button" style='right: 3.5em;' class="btn-sb-icon"><i class="material-icons">dashboard</i></button>
+  <button id="publish_help_viewer" style='right: 5.5em;bottom:.25em;position:absolute;' class="btn-sb-icon"><i class="material-icons">help</i></button>
   <div id="publish-profile-panel" style="display:none;">
     <div id="value-set-panel" style="display:none;">
       <label><span>Element</span>
@@ -254,7 +258,7 @@ class cViewPublished extends bView {
       <br>
       <button id="button-to-edit">Set</button>
     </div>
-
+    <button id="enable_vr_canvas_btn">Enable VR</button>
     <div class="fields-container"></div>
   </div>
 </div>`;

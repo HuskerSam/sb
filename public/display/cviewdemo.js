@@ -267,6 +267,9 @@ class cViewDemo extends bView {
     this.workspace_show_layout_positions = document.body.querySelector('.workspace_show_layout_positions');
     this.workspace_show_layout_positions.addEventListener('click', e => this.showLayoutPositions());
 
+    this.dialog.querySelector('#enable_vr_canvas_btn').addEventListener('click', e => {
+      gAPPP.activeContext.setupXRSupport();
+    });
   }
   __updateGPSLocation() {
     this.geo_gps_coords.innerHTML = '' + gAPPP.latitude + '°, ' + gAPPP.longitude + '°';
@@ -1497,6 +1500,7 @@ class cViewDemo extends bView {
                 <option value="mobile_portrait">Mobile Portrait</option>
               </select>
               <br>
+              <button id="enable_vr_canvas_btn">Enable VR</button>
               <a style="line-height:1.5em;font-size:1.5em;" href="/retail">About...</a>
               <br>
               <select id="workspaces-select"></select><div class="fields-container"></div>
