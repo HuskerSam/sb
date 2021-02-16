@@ -71,6 +71,13 @@
     "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
   },
   {
+    "name": "Grocery Isle (updated)",
+    "key": "Islev1",
+    "hint": "Islev1",
+    "categories": "Layout",
+    "description": "Grocery Display without Products"
+  },
+  {
     "name": "Fixture Assets",
     "key": "AssetFixtures",
     "hint": "Fixture Assets",

@@ -47,8 +47,12 @@ function createSheetFromTemplate(sheetName, template) {
         let range = sheet.getRange(item.range);
         if (range) {
           sheet.setActiveRange(range);
-          if (item.value)
-            range.setValue(item.value);
+          if (item.value) {
+            let v = item.value.toString();
+            if (v.indexOf('%') !== -1 && v.indexOf('\'') === -1)
+                v = '\'' + v;
+            range.setValue(v);
+          }
           if (item.formula)
             range.setFormula(item.formula);
           if (item.fontWeight)
