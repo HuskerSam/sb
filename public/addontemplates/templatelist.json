@@ -99,6 +99,13 @@
     "description": "Fixture stand meshes and block with configurable materials - depends on fixture materials fragment"
   },
   {
+    "name": "Good Bottles",
+    "key": "GoodBottlesFrag",
+    "hint": "Good Liquor Bottles",
+    "categories": "Fragments",
+    "description": "Assets for liquor bottles and product records"
+  },
+  {
     "name": "Fixture Materials",
     "key": "FixtureMaterialsFrag",
     "hint": "Fixture Materials",
@@ -200,6 +207,12 @@
   }, {
     "name": "Platform Display",
     "key": "PlatformDisplay",
+    "hint": "Platform Display",
+    "categories": "Layout",
+    "description": "Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this."
+  }, {
+    "name": "Platform Display (updated)",
+    "key": "Platformv1",
     "hint": "Platform Display",
     "categories": "Layout",
     "description": "Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this."

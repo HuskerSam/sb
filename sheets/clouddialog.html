@@ -109,11 +109,7 @@
               <tr data-cats="path_frames_plotter">
                 <td colspan="3" style="text-align:left;">
                   <b>Point per line:</b> time,x,y,z,rx,ry,rz,sx,sy,sz,visibility<br>
-                  <textarea id="path_frames_points" style="width:100%;height:10em;">0,-28,5,20,0,-90deg
-35%,28,,,,0
-50%,,,-20,,90deg
-85%,-28,,,,180deg
-100%,,,20,,270deg</textarea>
+                  <textarea id="path_frames_points" style="width:100%;height:10em;"></textarea>
                 </td>
               </tr>
               <tr data-cats="bar_chart_plotter">
@@ -608,6 +604,7 @@
           direction: 'vertical'
         });
 
+        this.path_frames_points.value = '0,-28,5,20,0,-90deg\n35%,28,,,,0\n50%,,,-20,,90deg\n85%,-28,,,,180deg\n100%,,,20,,270deg';
 
         if (this.splitPlotterView)
           this.splitPlotterView.destroy();

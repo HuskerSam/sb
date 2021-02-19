@@ -1,0 +1,1429 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B1",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C1",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "D1",
+  "value": "meshpath",
+  "fontWeight": "bold"
+}, {
+  "range": "E1",
+  "value": "texturepath",
+  "fontWeight": "bold"
+}, {
+  "range": "F1",
+  "value": "bmppath",
+  "fontWeight": "bold"
+}, {
+  "range": "G1",
+  "value": "ambient",
+  "fontWeight": "bold"
+}, {
+  "range": "H1",
+  "value": "diffuse",
+  "fontWeight": "bold"
+}, {
+  "range": "I1",
+  "value": "emissive",
+  "fontWeight": "bold"
+}, {
+  "range": "J1",
+  "value": "shapetype",
+  "fontWeight": "bold"
+}, {
+  "range": "K1",
+  "value": "tessellation",
+  "fontWeight": "bold"
+}, {
+  "range": "L1",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "M1",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "N1",
+  "value": "depth",
+  "fontWeight": "bold"
+}, {
+  "range": "O1",
+  "value": "specularpath",
+  "fontWeight": "bold"
+}, {
+  "range": "P1",
+  "value": "specularpower",
+  "fontWeight": "bold"
+}, {
+  "range": "Q1",
+  "value": "hasalpha",
+  "fontWeight": "bold"
+}, {
+  "range": "A2",
+  "value": "meshtexture"
+}, {
+  "range": "B2",
+  "value": "baileys"
+}, {
+  "range": "C2",
+  "formula": "=B2"
+}, {
+  "range": "D2",
+  "formula": "=\"sb:bottles/\" & B2 & \".babylon\""
+}, {
+  "range": "E2",
+  "formula": "=\"sb:bottles/\" & $B2 & \"diffuse.jpg\""
+}, {
+  "range": "F2",
+  "formula": "=\"sb:bottles/\" & $B2 & \"bump.jpg\""
+}, {
+  "range": "G2",
+  "value": "x"
+}, {
+  "range": "H2",
+  "value": "x"
+}, {
+  "range": "I2",
+  "value": "x"
+}, {
+  "range": "O2",
+  "formula": "=\"sb:bottles/\" & $B2 & \"spec.jpg\""
+}, {
+  "range": "P2",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A3",
+  "value": "meshtexture"
+}, {
+  "range": "B3",
+  "value": "becherovka"
+}, {
+  "range": "C3",
+  "formula": "=B3"
+}, {
+  "range": "D3",
+  "formula": "=\"sb:bottles/\" & B3 & \".babylon\""
+}, {
+  "range": "E3",
+  "formula": "=\"sb:bottles/\" & $B3 & \"diffuse.jpg\""
+}, {
+  "range": "F3",
+  "formula": "=\"sb:bottles/\" & $B3 & \"bump.jpg\""
+}, {
+  "range": "G3",
+  "value": "x"
+}, {
+  "range": "H3",
+  "value": "x"
+}, {
+  "range": "I3",
+  "value": "x"
+}, {
+  "range": "O3",
+  "formula": "=\"sb:bottles/\" & $B3 & \"spec.jpg\""
+}, {
+  "range": "P3",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A4",
+  "value": "meshtexture"
+}, {
+  "range": "B4",
+  "value": "chivas"
+}, {
+  "range": "C4",
+  "formula": "=B4"
+}, {
+  "range": "D4",
+  "formula": "=\"sb:bottles/\" & B4 & \".babylon\""
+}, {
+  "range": "E4",
+  "formula": "=\"sb:bottles/\" & $B4 & \"diffuse.jpg\""
+}, {
+  "range": "F4",
+  "formula": "=\"sb:bottles/\" & $B4 & \"bump.jpg\""
+}, {
+  "range": "G4",
+  "value": "x"
+}, {
+  "range": "H4",
+  "value": "x"
+}, {
+  "range": "I4",
+  "value": "x"
+}, {
+  "range": "O4",
+  "formula": "=\"sb:bottles/\" & $B4 & \"spec.jpg\""
+}, {
+  "range": "P4",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A5",
+  "value": "meshtexture"
+}, {
+  "range": "B5",
+  "value": "cointreau"
+}, {
+  "range": "C5",
+  "formula": "=B5"
+}, {
+  "range": "D5",
+  "formula": "=\"sb:bottles/\" & B5 & \".babylon\""
+}, {
+  "range": "E5",
+  "formula": "=\"sb:bottles/\" & $B5 & \"diffuse.jpg\""
+}, {
+  "range": "F5",
+  "formula": "=\"sb:bottles/\" & $B5 & \"bump.jpg\""
+}, {
+  "range": "G5",
+  "value": "x"
+}, {
+  "range": "H5",
+  "value": "x"
+}, {
+  "range": "I5",
+  "value": "x"
+}, {
+  "range": "O5",
+  "formula": "=\"sb:bottles/\" & $B5 & \"spec.jpg\""
+}, {
+  "range": "P5",
+  "value": 8,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "meshtexture"
+}, {
+  "range": "B6",
+  "value": "crema_di_limoncino"
+}, {
+  "range": "C6",
+  "formula": "=B6"
+}, {
+  "range": "D6",
+  "formula": "=\"sb:bottles/\" & B6 & \".babylon\""
+}, {
+  "range": "E6",
+  "formula": "=\"sb:bottles/\" & $B6 & \"diffuse.jpg\""
+}, {
+  "range": "F6",
+  "formula": "=\"sb:bottles/\" & $B6 & \"bump.jpg\""
+}, {
+  "range": "G6",
+  "value": "x"
+}, {
+  "range": "H6",
+  "value": "x"
+}, {
+  "range": "I6",
+  "value": "x"
+}, {
+  "range": "O6",
+  "formula": "=\"sb:bottles/\" & $B6 & \"spec.jpg\""
+}, {
+  "range": "P6",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "meshtexture"
+}, {
+  "range": "B7",
+  "value": "curacao"
+}, {
+  "range": "C7",
+  "formula": "=B7"
+}, {
+  "range": "D7",
+  "formula": "=\"sb:bottles/\" & B7 & \".babylon\""
+}, {
+  "range": "E7",
+  "formula": "=\"sb:bottles/\" & $B7 & \"diffuse.jpg\""
+}, {
+  "range": "F7",
+  "formula": "=\"sb:bottles/\" & $B7 & \"bump.jpg\""
+}, {
+  "range": "G7",
+  "value": "x"
+}, {
+  "range": "H7",
+  "value": "x"
+}, {
+  "range": "I7",
+  "value": "x"
+}, {
+  "range": "O7",
+  "formula": "=\"sb:bottles/\" & $B7 & \"spec.jpg\""
+}, {
+  "range": "P7",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A8",
+  "value": "meshtexture"
+}, {
+  "range": "B8",
+  "value": "havana_club"
+}, {
+  "range": "C8",
+  "formula": "=B8"
+}, {
+  "range": "D8",
+  "formula": "=\"sb:bottles/\" & B8 & \".babylon\""
+}, {
+  "range": "E8",
+  "formula": "=\"sb:bottles/\" & $B8 & \"diffuse.jpg\""
+}, {
+  "range": "F8",
+  "formula": "=\"sb:bottles/\" & $B8 & \"bump.jpg\""
+}, {
+  "range": "G8",
+  "value": "x"
+}, {
+  "range": "H8",
+  "value": "x"
+}, {
+  "range": "I8",
+  "value": "x"
+}, {
+  "range": "O8",
+  "formula": "=\"sb:bottles/\" & $B8 & \"spec.jpg\""
+}, {
+  "range": "P8",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A9",
+  "value": "meshtexture"
+}, {
+  "range": "B9",
+  "value": "jackdaniels"
+}, {
+  "range": "C9",
+  "formula": "=B9"
+}, {
+  "range": "D9",
+  "formula": "=\"sb:bottles/\" & B9 & \".babylon\""
+}, {
+  "range": "E9",
+  "formula": "=\"sb:bottles/\" & $B9 & \"diffuse.jpg\""
+}, {
+  "range": "F9",
+  "formula": "=\"sb:bottles/\" & $B9 & \"bump.jpg\""
+}, {
+  "range": "G9",
+  "value": "x"
+}, {
+  "range": "H9",
+  "value": "x"
+}, {
+  "range": "I9",
+  "value": "x"
+}, {
+  "range": "O9",
+  "formula": "=\"sb:bottles/\" & $B9 & \"spec.jpg\""
+}, {
+  "range": "P9",
+  "value": 4,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A10",
+  "value": "meshtexture"
+}, {
+  "range": "B10",
+  "value": "jagermeister"
+}, {
+  "range": "C10",
+  "formula": "=B10"
+}, {
+  "range": "D10",
+  "formula": "=\"sb:bottles/\" & B10 & \".babylon\""
+}, {
+  "range": "E10",
+  "formula": "=\"sb:bottles/\" & $B10 & \"diffuse.jpg\""
+}, {
+  "range": "F10",
+  "formula": "=\"sb:bottles/\" & $B10 & \"bump.jpg\""
+}, {
+  "range": "G10",
+  "value": "x"
+}, {
+  "range": "H10",
+  "value": "x"
+}, {
+  "range": "I10",
+  "value": "x"
+}, {
+  "range": "O10",
+  "formula": "=\"sb:bottles/\" & $B10 & \"spec.jpg\""
+}, {
+  "range": "P10",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A11",
+  "value": "meshtexture"
+}, {
+  "range": "B11",
+  "value": "jameson"
+}, {
+  "range": "C11",
+  "formula": "=B11"
+}, {
+  "range": "D11",
+  "formula": "=\"sb:bottles/\" & B11 & \".babylon\""
+}, {
+  "range": "E11",
+  "formula": "=\"sb:bottles/\" & $B11 & \"diffuse.jpg\""
+}, {
+  "range": "F11",
+  "formula": "=\"sb:bottles/\" & $B11 & \"bump.jpg\""
+}, {
+  "range": "G11",
+  "value": "x"
+}, {
+  "range": "H11",
+  "value": "x"
+}, {
+  "range": "I11",
+  "value": "x"
+}, {
+  "range": "O11",
+  "formula": "=\"sb:bottles/\" & $B11 & \"spec.jpg\""
+}, {
+  "range": "P11",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A12",
+  "value": "meshtexture"
+}, {
+  "range": "B12",
+  "value": "kahlua"
+}, {
+  "range": "C12",
+  "formula": "=B12"
+}, {
+  "range": "D12",
+  "formula": "=\"sb:bottles/\" & B12 & \".babylon\""
+}, {
+  "range": "E12",
+  "formula": "=\"sb:bottles/\" & $B12 & \"diffuse.jpg\""
+}, {
+  "range": "F12",
+  "formula": "=\"sb:bottles/\" & $B12 & \"bump.jpg\""
+}, {
+  "range": "G12",
+  "value": "x"
+}, {
+  "range": "H12",
+  "value": "x"
+}, {
+  "range": "I12",
+  "value": "x"
+}, {
+  "range": "O12",
+  "formula": "=\"sb:bottles/\" & $B12 & \"spec.jpg\""
+}, {
+  "range": "P12",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A13",
+  "value": "meshtexture"
+}, {
+  "range": "B13",
+  "value": "malibu"
+}, {
+  "range": "C13",
+  "formula": "=B13"
+}, {
+  "range": "D13",
+  "formula": "=\"sb:bottles/\" & B13 & \".babylon\""
+}, {
+  "range": "E13",
+  "formula": "=\"sb:bottles/\" & $B13 & \"diffuse.jpg\""
+}, {
+  "range": "F13",
+  "formula": "=\"sb:bottles/\" & $B13 & \"bump.jpg\""
+}, {
+  "range": "G13",
+  "value": "x"
+}, {
+  "range": "H13",
+  "value": "x"
+}, {
+  "range": "I13",
+  "value": "x"
+}, {
+  "range": "O13",
+  "formula": "=\"sb:bottles/\" & $B13 & \"spec.jpg\""
+}, {
+  "range": "P13",
+  "value": 64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A14",
+  "value": "meshtexture"
+}, {
+  "range": "B14",
+  "value": "martel"
+}, {
+  "range": "C14",
+  "formula": "=B14"
+}, {
+  "range": "D14",
+  "formula": "=\"sb:bottles/\" & B14 & \".babylon\""
+}, {
+  "range": "E14",
+  "formula": "=\"sb:bottles/\" & $B14 & \"diffuse.jpg\""
+}, {
+  "range": "F14",
+  "formula": "=\"sb:bottles/\" & $B14 & \"bump.jpg\""
+}, {
+  "range": "G14",
+  "value": "x"
+}, {
+  "range": "H14",
+  "value": "x"
+}, {
+  "range": "I14",
+  "value": "x"
+}, {
+  "range": "O14",
+  "formula": "=\"sb:bottles/\" & $B14 & \"spec.jpg\""
+}, {
+  "range": "P14",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A15",
+  "value": "meshtexture"
+}, {
+  "range": "B15",
+  "value": "olmeca"
+}, {
+  "range": "C15",
+  "formula": "=B15"
+}, {
+  "range": "D15",
+  "formula": "=\"sb:bottles/\" & B15 & \".babylon\""
+}, {
+  "range": "E15",
+  "formula": "=\"sb:bottles/\" & $B15 & \"diffuse.jpg\""
+}, {
+  "range": "F15",
+  "formula": "=\"sb:bottles/\" & $B15 & \"bump.jpg\""
+}, {
+  "range": "G15",
+  "value": "x"
+}, {
+  "range": "H15",
+  "value": "x"
+}, {
+  "range": "I15",
+  "value": "x"
+}, {
+  "range": "O15",
+  "formula": "=\"sb:bottles/\" & $B15 & \"spec.jpg\""
+}, {
+  "range": "P15",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A16",
+  "value": "meshtexture"
+}, {
+  "range": "B16",
+  "value": "pernod"
+}, {
+  "range": "C16",
+  "formula": "=B16"
+}, {
+  "range": "D16",
+  "formula": "=\"sb:bottles/\" & B16 & \".babylon\""
+}, {
+  "range": "E16",
+  "formula": "=\"sb:bottles/\" & $B16 & \"diffuse.jpg\""
+}, {
+  "range": "F16",
+  "formula": "=\"sb:bottles/\" & $B16 & \"bump.jpg\""
+}, {
+  "range": "G16",
+  "value": "x"
+}, {
+  "range": "H16",
+  "value": "x"
+}, {
+  "range": "I16",
+  "value": "x"
+}, {
+  "range": "O16",
+  "formula": "=\"sb:bottles/\" & $B16 & \"spec.jpg\""
+}, {
+  "range": "P16",
+  "value": 64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A17",
+  "value": "meshtexture"
+}, {
+  "range": "B17",
+  "value": "ramazzotti"
+}, {
+  "range": "C17",
+  "formula": "=B17"
+}, {
+  "range": "D17",
+  "formula": "=\"sb:bottles/\" & B17 & \".babylon\""
+}, {
+  "range": "E17",
+  "formula": "=\"sb:bottles/\" & $B17 & \"diffuse.jpg\""
+}, {
+  "range": "F17",
+  "formula": "=\"sb:bottles/\" & $B17 & \"bump.jpg\""
+}, {
+  "range": "G17",
+  "value": "x"
+}, {
+  "range": "H17",
+  "value": "x"
+}, {
+  "range": "I17",
+  "value": "x"
+}, {
+  "range": "O17",
+  "formula": "=\"sb:bottles/\" & $B17 & \"spec.jpg\""
+}, {
+  "range": "P17",
+  "value": 16,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A18",
+  "value": "meshtexture"
+}, {
+  "range": "B18",
+  "value": "sortilege"
+}, {
+  "range": "C18",
+  "formula": "=B18"
+}, {
+  "range": "D18",
+  "formula": "=\"sb:bottles/\" & B18 & \".babylon\""
+}, {
+  "range": "E18",
+  "formula": "=\"sb:bottles/\" & $B18 & \"diffuse.jpg\""
+}, {
+  "range": "F18",
+  "formula": "=\"sb:bottles/\" & $B18 & \"bump.jpg\""
+}, {
+  "range": "G18",
+  "value": "x"
+}, {
+  "range": "H18",
+  "value": "x"
+}, {
+  "range": "I18",
+  "value": "x"
+}, {
+  "range": "O18",
+  "formula": "=\"sb:bottles/\" & $B18 & \"spec.jpg\""
+}, {
+  "range": "P18",
+  "value": 64,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A20",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B20",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C20",
+  "value": "childname",
+  "fontWeight": "bold"
+}, {
+  "range": "D20",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "E20",
+  "value": "childcount",
+  "fontWeight": "bold"
+}, {
+  "range": "F20",
+  "value": "childscale",
+  "fontWeight": "bold"
+}, {
+  "range": "G20",
+  "value": "childrenwide",
+  "fontWeight": "bold"
+}, {
+  "range": "H20",
+  "value": "childrendeep",
+  "fontWeight": "bold"
+}, {
+  "range": "I20",
+  "value": "childrenhigh",
+  "fontWeight": "bold"
+}, {
+  "range": "J20",
+  "value": "childradius",
+  "fontWeight": "bold"
+}, {
+  "range": "K20",
+  "value": "layerheight",
+  "fontWeight": "bold"
+}, {
+  "range": "L20",
+  "value": "layerrotation",
+  "fontWeight": "bold"
+}, {
+  "range": "M20",
+  "value": "childx",
+  "fontWeight": "bold"
+}, {
+  "range": "N20",
+  "value": "childy",
+  "fontWeight": "bold"
+}, {
+  "range": "O20",
+  "value": "childz",
+  "fontWeight": "bold"
+}, {
+  "range": "P20",
+  "value": "childrx",
+  "fontWeight": "bold"
+}, {
+  "range": "Q20",
+  "value": "childry",
+  "fontWeight": "bold"
+}, {
+  "range": "R20",
+  "value": "childrz",
+  "fontWeight": "bold"
+}, {
+  "range": "S20",
+  "value": "childdeltax",
+  "fontWeight": "bold"
+}, {
+  "range": "T20",
+  "value": "childdeltay",
+  "fontWeight": "bold"
+}, {
+  "range": "U20",
+  "value": "childdeltaz",
+  "fontWeight": "bold"
+}, {
+  "range": "V20",
+  "value": "childdeltarx",
+  "fontWeight": "bold"
+}, {
+  "range": "W20",
+  "value": "childdeltary",
+  "fontWeight": "bold"
+}, {
+  "range": "X20",
+  "value": "childdeltarz",
+  "fontWeight": "bold"
+}, {
+  "range": "Y20",
+  "value": "childname2",
+  "fontWeight": "bold"
+}, {
+  "range": "Z20",
+  "value": "childtype2",
+  "fontWeight": "bold"
+}, {
+  "range": "AA20",
+  "value": "childscale2",
+  "fontWeight": "bold"
+}, {
+  "range": "AB20",
+  "value": "productname",
+  "fontWeight": "bold"
+}, {
+  "range": "AC20",
+  "value": "producttext2",
+  "fontWeight": "bold"
+}, {
+  "range": "AD20",
+  "value": "productprice",
+  "fontWeight": "bold"
+}, {
+  "range": "AE20",
+  "value": "productpricetext",
+  "fontWeight": "bold"
+}, {
+  "range": "AF20",
+  "value": "productimage",
+  "fontWeight": "bold"
+}, {
+  "range": "AG20",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "AH20",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "AI20",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "AJ20",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "AK20",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "AL20",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "AM20",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "AN20",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "AO20",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "AP20",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "A21",
+  "formula": "=\"DISPLAY \" & B2"
+}, {
+  "range": "B21",
+  "value": "displayblock"
+}, {
+  "range": "C21",
+  "formula": "=B2"
+}, {
+  "range": "D21",
+  "value": "mesh"
+}, {
+  "range": "E21",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F21",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q21",
+  "value": "305deg"
+}, {
+  "range": "AB21",
+  "value": "Baileys"
+}, {
+  "range": "AD21",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE21",
+  "formula": "=\"$\" & AD21 & \" / bottle\""
+}, {
+  "range": "AF21",
+  "formula": "=\"sb:productsignimages/\" & C21 & \".jpg\""
+}, {
+  "range": "A22",
+  "formula": "=\"DISPLAY \" & B3"
+}, {
+  "range": "B22",
+  "value": "displayblock"
+}, {
+  "range": "C22",
+  "formula": "=B3"
+}, {
+  "range": "D22",
+  "value": "mesh"
+}, {
+  "range": "E22",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F22",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q22",
+  "value": "165deg"
+}, {
+  "range": "AB22",
+  "value": "Becherovka"
+}, {
+  "range": "AD22",
+  "value": 15.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE22",
+  "formula": "=\"$\" & AD22 & \" / bottle\""
+}, {
+  "range": "AF22",
+  "formula": "=\"sb:productsignimages/\" & C22 & \".jpg\""
+}, {
+  "range": "A23",
+  "formula": "=\"DISPLAY \" & B4"
+}, {
+  "range": "B23",
+  "value": "displayblock"
+}, {
+  "range": "C23",
+  "formula": "=B4"
+}, {
+  "range": "D23",
+  "value": "mesh"
+}, {
+  "range": "E23",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F23",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q23",
+  "value": "270deg"
+}, {
+  "range": "AB23",
+  "value": "Chivas"
+}, {
+  "range": "AD23",
+  "value": 18.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE23",
+  "formula": "=\"$\" & AD23 & \" / bottle\""
+}, {
+  "range": "AF23",
+  "formula": "=\"sb:productsignimages/\" & C23 & \".jpg\""
+}, {
+  "range": "A24",
+  "formula": "=\"DISPLAY \" & B5"
+}, {
+  "range": "B24",
+  "value": "displayblock"
+}, {
+  "range": "C24",
+  "formula": "=B5"
+}, {
+  "range": "D24",
+  "value": "mesh"
+}, {
+  "range": "E24",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F24",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q24",
+  "value": "125deg"
+}, {
+  "range": "AB24",
+  "value": "Cointreau"
+}, {
+  "range": "AD24",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE24",
+  "formula": "=\"$\" & AD24 & \" / bottle\""
+}, {
+  "range": "AF24",
+  "formula": "=\"sb:productsignimages/\" & C24 & \".jpg\""
+}, {
+  "range": "A25",
+  "formula": "=\"DISPLAY \" & B6"
+}, {
+  "range": "B25",
+  "value": "displayblock"
+}, {
+  "range": "C25",
+  "formula": "=B6"
+}, {
+  "range": "D25",
+  "value": "mesh"
+}, {
+  "range": "E25",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F25",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q25",
+  "value": "295deg"
+}, {
+  "range": "AB25",
+  "value": "Crema Di Limoncino"
+}, {
+  "range": "AD25",
+  "value": 11.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE25",
+  "formula": "=\"$\" & AD25 & \" / bottle\""
+}, {
+  "range": "AF25",
+  "formula": "=\"sb:productsignimages/\" & C25 & \".jpg\""
+}, {
+  "range": "A26",
+  "formula": "=\"DISPLAY \" & B7"
+}, {
+  "range": "B26",
+  "value": "displayblock"
+}, {
+  "range": "C26",
+  "formula": "=B7"
+}, {
+  "range": "D26",
+  "value": "mesh"
+}, {
+  "range": "E26",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F26",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q26",
+  "value": "110deg"
+}, {
+  "range": "AB26",
+  "value": "Curacao"
+}, {
+  "range": "AD26",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE26",
+  "formula": "=\"$\" & AD26 & \" / bottle\""
+}, {
+  "range": "AF26",
+  "formula": "=\"sb:productsignimages/\" & C26 & \".jpg\""
+}, {
+  "range": "A27",
+  "formula": "=\"DISPLAY \" & B8"
+}, {
+  "range": "B27",
+  "value": "displayblock"
+}, {
+  "range": "C27",
+  "formula": "=B8"
+}, {
+  "range": "D27",
+  "value": "mesh"
+}, {
+  "range": "E27",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F27",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q27",
+  "value": "200deg"
+}, {
+  "range": "AB27",
+  "value": "Havana Club"
+}, {
+  "range": "AD27",
+  "value": 15.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE27",
+  "formula": "=\"$\" & AD27 & \" / bottle\""
+}, {
+  "range": "AF27",
+  "formula": "=\"sb:productsignimages/\" & C27 & \".jpg\""
+}, {
+  "range": "A28",
+  "formula": "=\"DISPLAY \" & B9"
+}, {
+  "range": "B28",
+  "value": "displayblock"
+}, {
+  "range": "C28",
+  "formula": "=B9"
+}, {
+  "range": "D28",
+  "value": "mesh"
+}, {
+  "range": "E28",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F28",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q28",
+  "value": "90deg"
+}, {
+  "range": "AB28",
+  "value": "Jack Daniels"
+}, {
+  "range": "AD28",
+  "value": 18.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE28",
+  "formula": "=\"$\" & AD28 & \" / bottle\""
+}, {
+  "range": "AF28",
+  "formula": "=\"sb:productsignimages/\" & C28 & \".jpg\""
+}, {
+  "range": "A29",
+  "formula": "=\"DISPLAY \" & B10"
+}, {
+  "range": "B29",
+  "value": "displayblock"
+}, {
+  "range": "C29",
+  "formula": "=B10"
+}, {
+  "range": "D29",
+  "value": "mesh"
+}, {
+  "range": "E29",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F29",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q29",
+  "value": "342deg"
+}, {
+  "range": "AB29",
+  "value": "Jagermeister"
+}, {
+  "range": "AD29",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE29",
+  "formula": "=\"$\" & AD29 & \" / bottle\""
+}, {
+  "range": "AF29",
+  "formula": "=\"sb:productsignimages/\" & C29 & \".jpg\""
+}, {
+  "range": "A30",
+  "formula": "=\"DISPLAY \" & B11"
+}, {
+  "range": "B30",
+  "value": "displayblock"
+}, {
+  "range": "C30",
+  "formula": "=B11"
+}, {
+  "range": "D30",
+  "value": "mesh"
+}, {
+  "range": "E30",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F30",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q30",
+  "value": "75deg"
+}, {
+  "range": "AB30",
+  "value": "Jameson"
+}, {
+  "range": "AD30",
+  "value": 11.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE30",
+  "formula": "=\"$\" & AD30 & \" / bottle\""
+}, {
+  "range": "AF30",
+  "formula": "=\"sb:productsignimages/\" & C30 & \".jpg\""
+}, {
+  "range": "A31",
+  "formula": "=\"DISPLAY \" & B12"
+}, {
+  "range": "B31",
+  "value": "displayblock"
+}, {
+  "range": "C31",
+  "formula": "=B12"
+}, {
+  "range": "D31",
+  "value": "mesh"
+}, {
+  "range": "E31",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F31",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q31",
+  "value": "215deg"
+}, {
+  "range": "AB31",
+  "value": "Kahlua"
+}, {
+  "range": "AD31",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE31",
+  "formula": "=\"$\" & AD31 & \" / bottle\""
+}, {
+  "range": "AF31",
+  "formula": "=\"sb:productsignimages/\" & C31 & \".jpg\""
+}, {
+  "range": "A32",
+  "formula": "=\"DISPLAY \" & B13"
+}, {
+  "range": "B32",
+  "value": "displayblock"
+}, {
+  "range": "C32",
+  "formula": "=B13"
+}, {
+  "range": "D32",
+  "value": "mesh"
+}, {
+  "range": "E32",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F32",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q32",
+  "value": "15deg"
+}, {
+  "range": "AB32",
+  "value": "Malibu"
+}, {
+  "range": "AD32",
+  "value": 15.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE32",
+  "formula": "=\"$\" & AD32 & \" / bottle\""
+}, {
+  "range": "AF32",
+  "formula": "=\"sb:productsignimages/\" & C32 & \"2.jpg\""
+}, {
+  "range": "A33",
+  "formula": "=\"DISPLAY \" & B14"
+}, {
+  "range": "B33",
+  "value": "displayblock"
+}, {
+  "range": "C33",
+  "formula": "=B14"
+}, {
+  "range": "D33",
+  "value": "mesh"
+}, {
+  "range": "E33",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F33",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q33",
+  "value": "0deg"
+}, {
+  "range": "AB33",
+  "value": "Martel"
+}, {
+  "range": "AD33",
+  "value": 12.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE33",
+  "formula": "=\"$\" & AD33 & \" / bottle\""
+}, {
+  "range": "AF33",
+  "formula": "=\"sb:productsignimages/\" & C33 & \".jpg\""
+}, {
+  "range": "A34",
+  "formula": "=\"DISPLAY \" & B15"
+}, {
+  "range": "B34",
+  "value": "displayblock"
+}, {
+  "range": "C34",
+  "formula": "=B15"
+}, {
+  "range": "D34",
+  "value": "mesh"
+}, {
+  "range": "E34",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F34",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q34",
+  "value": "145deg"
+}, {
+  "range": "AB34",
+  "value": "Olmeca"
+}, {
+  "range": "AD34",
+  "value": 15.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE34",
+  "formula": "=\"$\" & AD34 & \" / bottle\""
+}, {
+  "range": "AF34",
+  "formula": "=\"sb:productsignimages/\" & C34 & \".jpg\""
+}, {
+  "range": "A35",
+  "formula": "=\"DISPLAY \" & B16"
+}, {
+  "range": "B35",
+  "value": "displayblock"
+}, {
+  "range": "C35",
+  "formula": "=B16"
+}, {
+  "range": "D35",
+  "value": "mesh"
+}, {
+  "range": "E35",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F35",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q35",
+  "value": "255deg"
+}, {
+  "range": "AB35",
+  "value": "Pernod"
+}, {
+  "range": "AD35",
+  "value": 18.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE35",
+  "formula": "=\"$\" & AD35 & \" / bottle\""
+}, {
+  "range": "AF35",
+  "formula": "=\"sb:productsignimages/\" & C35 & \".jpg\""
+}, {
+  "range": "A36",
+  "formula": "=\"DISPLAY \" & B17"
+}, {
+  "range": "B36",
+  "value": "displayblock"
+}, {
+  "range": "C36",
+  "formula": "=B17"
+}, {
+  "range": "D36",
+  "value": "mesh"
+}, {
+  "range": "E36",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F36",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q36",
+  "value": "35deg"
+}, {
+  "range": "AB36",
+  "value": "Ramazzotti"
+}, {
+  "range": "AD36",
+  "value": 8.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE36",
+  "formula": "=\"$\" & AD36 & \" / bottle\""
+}, {
+  "range": "AF36",
+  "formula": "=\"sb:productsignimages/\" & C36 & \".jpg\""
+}, {
+  "range": "A37",
+  "formula": "=\"DISPLAY \" & B18"
+}, {
+  "range": "B37",
+  "value": "displayblock"
+}, {
+  "range": "C37",
+  "formula": "=B18"
+}, {
+  "range": "D37",
+  "value": "mesh"
+}, {
+  "range": "E37",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F37",
+  "value": 0.25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "Q37",
+  "value": "180deg"
+}, {
+  "range": "AB37",
+  "value": "Sortilege"
+}, {
+  "range": "AD37",
+  "value": 11.99,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "AE37",
+  "formula": "=\"$\" & AD37 & \" / bottle\""
+}, {
+  "range": "AF37",
+  "formula": "=\"sb:productsignimages/\" & C37 & \".jpg\""
+}, {
+  "range": "A1"
+}]

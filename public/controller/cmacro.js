@@ -1235,6 +1235,11 @@ class cMacro {
             <td></td>
           </tr>
           <tr>
+            <td>Display UI</td>
+            <td><input type="text" class="displayui" list="displayuilookuplist" /></td>
+            <td></td>
+          </tr>
+          <tr>
             <td>Camera Name</td>
             <td><input type="text" class="displaycamera" /></td>
             <td></td>
@@ -1441,6 +1446,12 @@ class cMacro {
         ${this._addParentTemplate(true)}
       </div>
     </div>
+    <datalist id="displayuilookuplist">
+      <option>mobile_portrait</option>
+      <option>console_follow</option>
+      <option>mobile_follow</option>
+      <option>mobile_orientation</option>
+    </datalist>
     <div class="copy_clipboard_footer">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
@@ -2459,7 +2470,7 @@ class cMacro {
     let fields = [
       'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox',
       'clearcolor', 'frametime', 'audiourl', 'displaycamera', 'genericblockdata',
-      'musicparams'
+      'musicparams', 'displayui'
     ];
 
     let fieldValues = {};

@@ -944,7 +944,7 @@ class cWorkspace {
 
   async workspaceLayoutCSVProductFieldsInit() {
     this.record_field_list_form = this.domPanel.querySelector('.layout_product_data_panel form');
-    this.record_field_list_form.innerHTML = '<button class="copy_to_clipboard"><i class="material-icons">content_copy</i></button>';
+    this.record_field_list_form.innerHTML = '<button class="copy_to_clipboard" style="position:absolute;top:.1em;"><i class="material-icons">content_copy</i></button>';
     this.fieldDivByName = {};
 
     this.displaystylelist = document.createElement('datalist');
