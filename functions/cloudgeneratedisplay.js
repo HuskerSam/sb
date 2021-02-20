@@ -1,8 +1,8 @@
 const requireFromUrl = require('require-from-url/sync');
 let firebase = require("firebase-admin");
 let project_id = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
-let gcsvimport = requireFromUrl(`https://${project_id}.web.app/global/gcsvimport.js?abc=8332`);
-let GLOBALUTIL = requireFromUrl(`https://${project_id}.web.app/global/globalutil.js?abc=13ii221`);
+let gcsvimport = requireFromUrl(`https://${project_id}.web.app/global/gcsvimport.js?abc=3432`);
+let GLOBALUTIL = requireFromUrl(`https://${project_id}.web.app/global/globalutil.js?abc=13i54321`);
 const Busboy = require('busboy');
 const toArray = require('stream-to-array');
 
@@ -49,6 +49,16 @@ module.exports = class cloudGenerateDisplay {
     }
 
     return wid;
+  }
+  async productDataForWorkspace(name) {
+    this.wid = await this.workspaceForName(name);
+    this.csvImport.projectId = this.wid;
+    let pD = await this.csvImport.initProducts(null, true);
+    pD.wid = this.wid;
+    let pos_blocks = await this.csvImport.dbFetchByLookup('block', 'blockFlag', 'displaypositions');
+    if (pos_blocks.records.length > 0)
+      pD.positionInfo = pos_blocks.records[0];
+    return pD;
   }
   async validateToken(token) {
     let fireDB = this.firebase.firestore();

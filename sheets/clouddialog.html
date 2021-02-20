@@ -29,6 +29,7 @@
         <option value="cloud_deploy" selected>Projects</option>
         <option value="template_view">Templates</option>
         <option value="block_wizards">Wizards</option>
+        <option value="position_products">Position Products</option>
         <option value="position_plotter_div">Plotter</option>
         <option value="song_import_div">Audio</option>
       </select>
@@ -390,6 +391,9 @@
             <button id="copy_song_data_to_clipboard" style="margin-right:0;"><i class="material-icons">content_copy</i></button>
           </div>
         </div>
+        <div id="position_products" class="main_div_wrapper">
+          <div class="position_products_fields"></div>
+        </div>
       </div>
     </div>
     <datalist id="blockdatatitlelookuplist">
@@ -403,6 +407,16 @@
       <option>eo</option>
       <option>ei</option>
       <option>eio</option>
+    </datalist>
+    <datalist id="blocklist"></datalist>
+    <datalist id="assetlist">
+      <option>product</option>
+      <option>message</option>
+    </datalist>
+    <datalist id="displaystylelist">
+      <option>regular</option>
+      <option>3dbasic</option>
+      <option>3dmin</option>
     </datalist>
   </div>
 
@@ -868,6 +882,9 @@
           this.preview_panel.setAttribute('src', '');
         else
           this.loadProjectView();
+        if (this.addon_display_view_select.value === 'position_products')
+         this.productPositionInit();
+
 
         this.updateHelpViewer();
 
@@ -1029,6 +1046,20 @@
           minSize: [.1, .1],
           direction: 'vertical'
         });
+      }
+      async loadProjectProducts() {
+        if (!this.defaultServerTarget || !this.defaultProjectTarget)
+          return {};
+
+        let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/productsforname/?name=' + encodeURIComponent(this.defaultProjectTarget);
+        url += '&token=' + encodeURIComponent(this.defaultToken);
+        let genResponse = await fetch(url, {
+          method: "get",
+          cache: "no-store"
+        });
+        let genResults = await genResponse.text();
+        let r = JSON.parse(genResults);
+        return r;
       }
       async loadImagePreview(new_url) {
         if (this.updatingImagePreview) {
@@ -2201,6 +2232,235 @@
             minSize: [.1, .1]
           });
         }
+      }
+
+      async productPositionInit() {
+        this.fieldList = [
+          'index', 'asset', 'block', 'name',
+          'x', 'y', 'z',
+          'rx', 'ry', 'rz',
+          'text1', 'text2', 'image',
+          'sku', 'price', 'pricetext',
+          'height', 'width',
+          'displaystyle', 'textfontfamily', 'materialname'
+        ];
+        this.messageOnlyFields = [
+          'index', 'name', 'asset', 'text1', 'text2',
+          'height', 'width', 'x', 'y', 'z',
+          'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily', 'materialname'
+        ];
+        this.productOnlyFields = [
+          'index', 'name', 'asset',
+          'text1', 'image', 'block',
+          'sku', 'price', 'pricetext',
+          'x', 'y', 'z',
+          'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily'
+        ];
+
+        this.record_field_list_form = document.body.querySelector('#position_products .position_products_fields');
+        this.fieldDivByName = {};
+
+        for (let c = 0, l = this.fieldList.length; c < l; c++) {
+          let title = this.fieldList[c];
+          let id = 'fieldid' + c.toString();
+          let listName = this.fieldList[c] + 'list';
+          if (title === 'textfontfamily')
+            listName = 'fontfamilydatalist';
+
+          this.fieldDivByName[title] = document.createElement('div');
+          this.fieldDivByName[title].innerHTML = '<label>' + this.fieldList[c] +
+            '<input type="text" class="fieldinput ' + title + 'edit" list="' + listName + '" /></label>';
+          this.fieldDivByName[title].inputField = this.fieldDivByName[title].querySelector('input');
+
+          if (title === 'x') {
+            let select = document.createElement('select');
+            select.style.width = '2.75em';
+            select.setAttribute('id', 'select-position-preset');
+            let xFld = this.fieldDivByName[title];
+            xFld.appendChild(select);
+          }
+          if (title === 'image') {
+            let btn = document.createElement('button');
+            btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
+            btn.setAttribute('class', 'texturepathupload');
+            this.fieldDivByName[title].appendChild(btn);
+            this.fieldDivByName[title].style.float = 'right';
+
+            this.signImagePreview = document.createElement('img');
+            this.signImagePreview.style.maxWidth = "8em";
+            this.signImagePreview.style.maxHeight = "8em";
+            this.signImagePreview.setAttribute('crossorigin', 'anonymous');
+            this.fieldDivByName[title].appendChild(this.signImagePreview);
+          }
+
+          this.record_field_list_form.appendChild(this.fieldDivByName[title]);
+          let br = document.createElement('br');
+          this.record_field_list_form.appendChild(br);
+        }
+
+        this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
+        this.uploadImageEditField = this.record_field_list_form.querySelector('.imageedit');
+        this.uploadImageEditField.addEventListener('input', e => this.productPositionUpdateImagePreview());
+
+        this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
+        this.assetEditField.addEventListener('input', e => this.productPositionUpdateProductType());
+
+        this.blockEditField = this.record_field_list_form.querySelector('.blockedit');
+        this.blockEditField.addEventListener('input', e => this.productPositionUpdateTypeFields());
+
+        this.productPositionUpdateProductType();
+
+        this.productDataResults = await this.loadProjectProducts();
+        this.productData = this.productDataResults.productData;
+        this.products = this.productData.products;
+        this.productBySKU = this.productData.productsBySKU;
+
+        let basketListHTML = '';
+        if (this.productData.displayBlocks)
+          for (let c = 0, l = this.productData.displayBlocks.length; c < l; c++)
+            basketListHTML += `<option>${this.productData.displayBlocks[c]}</option>`;
+        document.getElementById('blocklist').innerHTML = basketListHTML;
+
+        let positionInfo = this.productData.positionInfo;
+        let sel = document.getElementById('select-position-preset');
+        this.positionFrags = [];
+        if (positionInfo && positionInfo.genericBlockData) {
+          let arr = positionInfo.genericBlockData.split('|');
+          let positionHTML = '<option></option>';
+
+          for (let c = 0, l = arr.length; c < l - 5; c += 6) {
+            let frag = arr[c] + ',' + arr[c + 1] + ',' + arr[c + 2] + ',' + arr[c + 3] + ',' + arr[c + 4] + ',' + arr[c + 5];
+            this.positionFrags.push(frag);
+            positionHTML += `<option value="${frag}">${(c / 6) + 1} ${frag}</option>`;
+          }
+
+          sel.innerHTML = positionHTML;
+          sel.addEventListener('input', e => {
+            let vals = sel.value.split(',');
+
+            if (vals.length === 6) {
+              let xd = this.record_field_list_form.querySelector('.xedit');
+              let yd = this.record_field_list_form.querySelector('.yedit');
+              let zd = this.record_field_list_form.querySelector('.zedit');
+              let rxd = this.record_field_list_form.querySelector('.rxedit');
+              let ryd = this.record_field_list_form.querySelector('.ryedit');
+              let rzd = this.record_field_list_form.querySelector('.rzedit');
+
+              xd.value = vals[0];
+              yd.value = vals[1];
+              zd.value = vals[2];
+              rxd.value = vals[3];
+              ryd.value = vals[4];
+              rzd.value = vals[5];
+            }
+
+          });
+        }
+      }
+      productPositionUpdateImagePreview() {
+        let url = this.uploadImageEditField.value;
+        if (url.substring(0, 3) === 'sb:')
+          url = this.macro.cdnPrefix + 'textures/' + url.substring(3);
+
+        this.signImagePreview.setAttribute('src', url);
+      }
+      productPositionUploadImageFile() {
+
+      }
+      productPositionUpdateProductType() {
+        let fieldsToShow = null;
+        if (this.assetEditField.value === 'message')
+          fieldsToShow = this.messageOnlyFields;
+        else if (this.assetEditField.value === 'product')
+          fieldsToShow = this.productOnlyFields;
+
+        for (let i in this.fieldDivByName) {
+          if (fieldsToShow) {
+            if (fieldsToShow.indexOf(i) === -1)
+              this.fieldDivByName[i].style.display = 'none';
+            else
+              this.fieldDivByName[i].style.display = '';
+          } else {
+            let alwaysShow = ['asset', 'name', 'index', 'x', 'y', 'z', 'rx', 'ry', 'rz']
+            if (alwaysShow.indexOf(i) === -1)
+              this.fieldDivByName[i].style.display = 'none';
+            else
+              this.fieldDivByName[i].style.display = '';
+          }
+        }
+      }
+      productPositionUpdateTypeFields() {
+        let blockTitle = this.blockEditField.value;
+        let productInfo = null;
+        console.log(this.productData);
+        if (this.productData && this.productData.rawDisplayBlocksData) {
+          this.productData.rawDisplayBlocksData.records.forEach(r => {
+            if (r.title === blockTitle)
+              productInfo = r;
+          })
+        }
+
+        if (productInfo) {
+          this.record_field_list_form.querySelector('.nameedit').value = productInfo.origRow.productname;
+          this.record_field_list_form.querySelector('.skuedit').value = productInfo.origRow.productname;
+          this.record_field_list_form.querySelector('.text1edit').value = productInfo.origRow.productname;
+          if (productInfo.origRow.producttext2)
+            this.record_field_list_form.querySelector('.text2edit').value = productInfo.origRow.producttext2;
+          this.record_field_list_form.querySelector('.pricetextedit').value = productInfo.origRow.productpricetext;
+          this.record_field_list_form.querySelector('.imageedit').value = productInfo.origRow.productimage;
+          this.record_field_list_form.querySelector('.priceedit').value = productInfo.origRow.productprice;
+          this.productPositionUpdateImagePreview();
+        }
+
+      }
+      productPositionAdd(e) {
+        let fields = this.record_field_list_form.querySelectorAll('.fieldinput');
+
+        let name = fields[0].value;
+        if (!name) {
+          alert('name required');
+          return;
+        }
+        let assetType = fields[1].value;
+        if (!assetType) {
+          alert('asset type required');
+          return;
+        }
+
+        let newRow = {};
+        for (let c = 0, l = fields.length; c < l; c++) {
+          newRow[this.fieldList[c]] = fields[c].value;
+          if (this.fieldList[c] === 'asset' || this.fieldList[c] === 'displaystyle' || this.fieldList[c] === 'textfontfamily') {
+
+          } else if (this.fieldList[c] !== 'index')
+            fields[c].value = '';
+          else {
+            let num = GLOBALUTIL.getNumberOrDefault(fields[c].value, 0);
+            num += 100;
+            fields[c].value = num;
+          }
+
+          if (this.fieldList[c] === 'block')
+            fields[c].focus();
+        }
+
+        let rows = this.editTable.getData();
+        let newIndex = GLOBALUTIL.getNumberOrDefault(newRow['index'], 0);
+        let rc = 0,
+          rl = rows.length;
+        for (; rc < rl; rc++) {
+          let rowIndex = GLOBALUTIL.getNumberOrDefault(rows[rc]['index'], 0);
+          if (newIndex < rowIndex)
+            break;
+        }
+        rows.splice(rc, 0, newRow);
+        this.editTable.setData(rows);
+        this.workspaceLayoutCSVRowMoved('product', null);
+
+        if (this.signImagePreview)
+          this.signImagePreview.removeAttribute('src');
+        e.preventDefault();
+        return true;
       }
     }
 

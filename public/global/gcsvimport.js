@@ -2571,7 +2571,7 @@ class gCSVImport {
       generationState: 'ready'
     }, pInfo.sceneId);
   }
-  async initProducts(cameraData = null) {
+  async initProducts(cameraData = null, returnRawDisplayBlocks = false) {
     let result = await this.firebase.database().ref(this.path('blockchild'))
       .orderByChild('animationIndex')
       .startAt(-100000)
@@ -2666,6 +2666,7 @@ class gCSVImport {
     let blocksData = await this.dbFetchByLookup('block', 'blockFlag', 'displayblock');
     let displayBs = blocksData.recordsById;
     let displayBlocks = [];
+    let rawDisplayBlocksData = blocksData;
     for (let blockKey in displayBs)
       displayBlocks.push(displayBs[blockKey].title);
 
@@ -2703,6 +2704,9 @@ class gCSVImport {
       sceneBlock,
       sceneParams
     };
+
+    if (returnRawDisplayBlocks)
+      pInfo.rawDisplayBlocksData = rawDisplayBlocksData;
     return pInfo;
   }
   async findMatchBlocks(childType, childName, parentId, filterKey, filterValue) {

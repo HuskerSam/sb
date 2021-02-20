@@ -551,14 +551,6 @@ select {
   margin: .5em;
 }
 
-.tabulator {
-  background: none;
-}
-
-.scene_options_edit_fields {
-  text-align: center;
-}
-
 .layout_product_data_panel>form>div {
   display: inline-block;
   margin: .5em;
@@ -593,19 +585,6 @@ select {
 .workspacelayout .workspace_show_layout_positions,
 .workspacelayout .workspace_regenerate_layout_changes {
   display: inline-block;
-}
-
-.tabulator .tabulator-tableHolder .tabulator-table {
-  background: none;
-  color: inherit;
-}
-
-.tabulator .tabulator-row {
-  background: inherit;
-}
-
-.tabulator .tabulator-header {
-  background: inherit;
 }
 
 .scene-fields-panel {
@@ -719,16 +698,6 @@ select {
 
 .header_bar_top_row {
   margin-bottom: .25em;
-}
-
-.tabulator .tabulator-header .tabulator-col .tabulator-col-content .tabulator-col-title {}
-
-.tabulator .tabulator-header .tabulator-col.tab-header-cell-large .tabulator-col-content .tabulator-col-title {
-  font-size: .4em;
-}
-
-.tabulator .tabulator-header .tabulator-col.right-column-data .tabulator-col-content .tabulator-col-title {
-  text-align: center;
 }
 
 .csv_data_date_span {

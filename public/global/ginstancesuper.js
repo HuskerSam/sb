@@ -374,23 +374,6 @@ class gInstanceSuper extends cAppDefaults {
       border-radius: 1em;
     }
 
-
-    .tabulator .tabulator-header .tabulator-col {
-      background: ${ctlColor};
-    }
-
-    .tabulator .tabulator-header .tabulator-col.tabulator-frozen {
-      background: ${bkgColor};
-    }
-
-    .tabulator .tabulator-cell {
-      background: ${bkgColor};
-    }
-
-    .tabulator-row .tabulator-cell.tabulator-row-handle .tabulator-row-handle-box .tabulator-row-handle-bar {
-      background: ${foreColor}
-    }
-
     .app-inverted, .app-inverted i {
       color: ${ctlColor};
       background: ${foreColor}
