@@ -29,7 +29,7 @@
         <option value="cloud_deploy" selected>Projects</option>
         <option value="template_view">Templates</option>
         <option value="block_wizards">Wizards</option>
-        <option value="position_products">Position Products</option>
+        <option value="position_products">Positioning</option>
         <option value="position_plotter_div">Plotter</option>
         <option value="song_import_div">Audio</option>
       </select>
@@ -46,7 +46,7 @@
         <button id="display_publish_single_header"><i class="material-icons">publish</i></button>
       </div>
     </div>
-    <div id="help_and_details_wrapper_for_split" style="flex:1;display:flex;overflow:hidden;flex-direction:column;">
+    <div id="help_and_details_wrapper_for_split">
       <div id="help_viewer_panel" style="display:none;flex:.7;">
         <div style="display:flex;flex-direction:row;">
           <select id="help_viewer_panel_select"></select>
@@ -391,8 +391,124 @@
             <button id="copy_song_data_to_clipboard" style="margin-right:0;"><i class="material-icons">content_copy</i></button>
           </div>
         </div>
-        <div id="position_products" class="main_div_wrapper">
-          <div class="position_products_fields"></div>
+        <div id="position_products" class="main_div_wrapper" style="overflow:hidden;">
+          <input type="file" class="productdescpathuploadfile" style="display:none;">
+          <div class="position_products_fields" style="overflow:hidden auto;flex:1">
+            <table class="wizard_field_container position_products_table" style="flex:none;text-align:left;margin: 0 0px">
+              <tr data-cats="all">
+                <td>index</td>
+                <td><input type="text" data-field="index" class="indexedit" value="100" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="all">
+                <td>asset</td>
+                <td><input type="text" data-field="asset" class="assetedit" value="" list="assetlist" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="all">
+                <td>name</td>
+                <td><input type="text" data-field="name" class="nameedit" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="product">
+                <td>block</td>
+                <td><input type="text" data-field="block" class="blockedit" value="" list="blocklist" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="all">
+                <td>Preset Positions</td>
+                <td colspan="2">
+                  <select id="product_preset_positions_list" style="width:90%;margin-left:4px;"></select>
+                </td>
+              </tr>
+              <tr data-cats="all">
+                <td colspan="3">
+                  <div style="display:flex;flex-direction:row">
+                    <span style="width:8.5em">Position X</span><input type="text" data-field="x" class="xedit" />
+                    <span>Y</span><input type="text" class="yedit" data-field="y" />
+                    <span>Z</span><input type="text" class="zedit" data-field="z" />
+                  </div>
+                </td>
+              </tr>
+              <tr data-cats="all">
+                <td colspan="3">
+                  <div style="display:flex;flex-direction:row">
+                    <span style="width:8.5em">Rotate X</span><input type="text" class="rxedit" data-field="rx" />
+                    <span>Y</span><input type="text" class="ryedit" data-field="ry" />
+                    <span>Z</span><input type="text" class="rzedit" data-field="rz" />
+                  </div>
+                </td>
+              </tr>
+              <tr data-cats="all">
+                <td>text1</td>
+                <td><input type="text" data-field="text1" class="text1edit" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="message">
+                <td>text2</td>
+                <td><input type="text" data-field="text2" class="text2edit" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="product">
+                <td>image</td>
+                <td><input type="text" data-field="image" class="imageedit" value="" /></td>
+                <td><button class="texturepathupload product_image_upload_btn"><i class="material-icons">cloud_upload</i></button></td>
+              </tr>
+              <tr data-cats="product">
+                <td colspan="3">
+                  <img class="product_image_img" crossorigin="anonymous" />
+                </td>
+              </tr>
+              <tr data-cats="product">
+                <td>sku</td>
+                <td><input type="text" data-field="sku" class="skuedit" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="product">
+                <td>price</td>
+                <td><input type="text" data-field="price" class="priceedit" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="product">
+                <td>pricetext</td>
+                <td><input type="text" data-field="pricetext" class="pricetextedit" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="message">
+                <td>height</td>
+                <td><input type="text" data-field="height" class="heightedit" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="message">
+                <td>width</td>
+                <td><input type="text" data-field="width" class="widthedit" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="all">
+                <td>displaystyle</td>
+                <td><input type="text" data-field="displaystyle" class="displaystyleedit" list="displaystylelist" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="all">
+                <td>textfontfamily</td>
+                <td><input type="text" data-field="textfontfamily" class="textfontfamilyedit" list="fontfamilydatalist" value="" /></td>
+                <td></td>
+              </tr>
+              <tr data-cats="message">
+                <td>materialname</td>
+                <td><input type="text" data-field="materialname" class="materialnameedit" value="" /></td>
+                <td></td>
+              </tr>
+            </table>
+          </div>
+          <div class="copy_clipboard_footer">
+            <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+            <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+            <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
+            <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+            <br>
+            <div class="csv_import_preview"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -495,7 +611,8 @@
           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view',
           'plotter_plots_end_depth', 'plotter_plots_height', 'plotter_plots_end_width', 'plotter_plots_turns', 'path_frames_snappy_motion',
           'plotter_plots_decay_per_turn', 'plotter_plots_item_offset_angle', 'plotter_plots_offset_angle', 'path_frames_easing_option',
-          'path_frames_points', 'path_frames_parent', 'path_frames_childtype', 'path_frames_childname', 'path_frames_rotation_time'
+          'path_frames_points', 'path_frames_parent', 'path_frames_childtype', 'path_frames_childname', 'path_frames_rotation_time',
+          'product_preset_positions_list'
         ];
 
         dom_id.forEach(ctl => {
@@ -883,7 +1000,7 @@
         else
           this.loadProjectView();
         if (this.addon_display_view_select.value === 'position_products')
-         this.productPositionInit();
+          this.productPositionInit();
 
 
         this.updateHelpViewer();
@@ -2235,71 +2352,16 @@
       }
 
       async productPositionInit() {
-        this.fieldList = [
-          'index', 'asset', 'block', 'name',
-          'x', 'y', 'z',
-          'rx', 'ry', 'rz',
-          'text1', 'text2', 'image',
-          'sku', 'price', 'pricetext',
-          'height', 'width',
-          'displaystyle', 'textfontfamily', 'materialname'
-        ];
-        this.messageOnlyFields = [
-          'index', 'name', 'asset', 'text1', 'text2',
-          'height', 'width', 'x', 'y', 'z',
-          'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily', 'materialname'
-        ];
-        this.productOnlyFields = [
-          'index', 'name', 'asset',
-          'text1', 'image', 'block',
-          'sku', 'price', 'pricetext',
-          'x', 'y', 'z',
-          'rx', 'ry', 'rz', 'displaystyle', 'textfontfamily'
-        ];
-
         this.record_field_list_form = document.body.querySelector('#position_products .position_products_fields');
-        this.fieldDivByName = {};
-
-        for (let c = 0, l = this.fieldList.length; c < l; c++) {
-          let title = this.fieldList[c];
-          let id = 'fieldid' + c.toString();
-          let listName = this.fieldList[c] + 'list';
-          if (title === 'textfontfamily')
-            listName = 'fontfamilydatalist';
-
-          this.fieldDivByName[title] = document.createElement('div');
-          this.fieldDivByName[title].innerHTML = '<label>' + this.fieldList[c] +
-            '<input type="text" class="fieldinput ' + title + 'edit" list="' + listName + '" /></label>';
-          this.fieldDivByName[title].inputField = this.fieldDivByName[title].querySelector('input');
-
-          if (title === 'x') {
-            let select = document.createElement('select');
-            select.style.width = '2.75em';
-            select.setAttribute('id', 'select-position-preset');
-            let xFld = this.fieldDivByName[title];
-            xFld.appendChild(select);
-          }
-          if (title === 'image') {
-            let btn = document.createElement('button');
-            btn.innerHTML = '<i class="material-icons">cloud_upload</i>';
-            btn.setAttribute('class', 'texturepathupload');
-            this.fieldDivByName[title].appendChild(btn);
-            this.fieldDivByName[title].style.float = 'right';
-
-            this.signImagePreview = document.createElement('img');
-            this.signImagePreview.style.maxWidth = "8em";
-            this.signImagePreview.style.maxHeight = "8em";
-            this.signImagePreview.setAttribute('crossorigin', 'anonymous');
-            this.fieldDivByName[title].appendChild(this.signImagePreview);
-          }
-
-          this.record_field_list_form.appendChild(this.fieldDivByName[title]);
-          let br = document.createElement('br');
-          this.record_field_list_form.appendChild(br);
-        }
 
         this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
         this.uploadImageEditField = this.record_field_list_form.querySelector('.imageedit');
+
+        this.uploadImageFile = document.body.querySelector('.productdescpathuploadfile');
+        this.uploadImageFile.addEventListener('change', e => this.productPositionUploadImageFile());
+        this.uploadImageButton.addEventListener('click', e => this.uploadImageFile.click());
+        this.signImagePreview = document.body.querySelector('.product_image_img');
+
         this.uploadImageEditField.addEventListener('input', e => this.productPositionUpdateImagePreview());
 
         this.assetEditField = this.record_field_list_form.querySelector('.assetedit');
@@ -2307,6 +2369,22 @@
 
         this.blockEditField = this.record_field_list_form.querySelector('.blockedit');
         this.blockEditField.addEventListener('input', e => this.productPositionUpdateTypeFields());
+
+        this.position_products_table = this.record_field_list_form.querySelector('.position_products_table');
+
+        this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+        this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+        this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+        this.copy_csv_excludeempty_clipboard = this.panel.querySelector('.copy_csv_excludeempty_clipboard');
+        this.copy_csv_to_clipboard.addEventListener('click', e => {
+          let headers = this.copy_csv_header_clipboard.checked;
+          cMacro.copyDataToClipboard([this.export_csv], [], headers);
+          this.getItemName(true);
+        });
+        this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+        this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+        this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+        this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
 
         this.productPositionUpdateProductType();
 
@@ -2322,7 +2400,6 @@
         document.getElementById('blocklist').innerHTML = basketListHTML;
 
         let positionInfo = this.productData.positionInfo;
-        let sel = document.getElementById('select-position-preset');
         this.positionFrags = [];
         if (positionInfo && positionInfo.genericBlockData) {
           let arr = positionInfo.genericBlockData.split('|');
@@ -2334,9 +2411,9 @@
             positionHTML += `<option value="${frag}">${(c / 6) + 1} ${frag}</option>`;
           }
 
-          sel.innerHTML = positionHTML;
-          sel.addEventListener('input', e => {
-            let vals = sel.value.split(',');
+          this.product_preset_positions_list.innerHTML = positionHTML;
+          this.product_preset_positions_list.addEventListener('input', e => {
+            let vals = this.product_preset_positions_list.value.split(',');
 
             if (vals.length === 6) {
               let xd = this.record_field_list_form.querySelector('.xedit');
@@ -2364,35 +2441,67 @@
 
         this.signImagePreview.setAttribute('src', url);
       }
-      productPositionUploadImageFile() {
+      async productPositionUploadImageFile() {
+        let filename = this.uploadImageFile.files[0].name;
 
+        let url = "https://us-central1-" + this.defaultServerTarget;
+        url += '.cloudfunctions.net/fileupload?name=' + encodeURIComponent(this.defaultProjectTarget);
+        url += '&token=' + encodeURIComponent(this.defaultToken);
+        url += '&filename=' + encodeURIComponent(filename);
+
+        let body = new FormData();
+        body.append('file', this.uploadImageFile.files[0]);
+
+        this.upload_file_cloud.classList.add('green');
+        let genResponse = await fetch(url, {
+          method: "post",
+          body
+        });
+        let genResults = await genResponse.text();
+        let r = {
+          result_msg: 'unknown'
+        };
+        try {
+          r = JSON.parse(genResults);
+        } catch (e) {
+          console.log(e, genResults);
+        }
+
+        if (r.success)
+          if (r.result_msg.success) {
+            this.uploadImageEditField.value = r.result_msg.signed_url;
+            this.productPositionUpdateImagePreview();
+            this.uploadImageFile.value = '';
+            this.upload_file_cloud.classList.remove('green');
+            return r;
+          }
+        this.uploadImageEditField.value = '';
+        this.uploadImageFile.value = '';
+        this.productPositionUpdateImagePreview();
+        this.upload_file_cloud.classList.add('red');
+
+        alert('upload did not complete');
+        return r;
       }
       productPositionUpdateProductType() {
-        let fieldsToShow = null;
-        if (this.assetEditField.value === 'message')
-          fieldsToShow = this.messageOnlyFields;
-        else if (this.assetEditField.value === 'product')
-          fieldsToShow = this.productOnlyFields;
+        let category = this.assetEditField.value;
 
-        for (let i in this.fieldDivByName) {
-          if (fieldsToShow) {
-            if (fieldsToShow.indexOf(i) === -1)
-              this.fieldDivByName[i].style.display = 'none';
-            else
-              this.fieldDivByName[i].style.display = '';
-          } else {
-            let alwaysShow = ['asset', 'name', 'index', 'x', 'y', 'z', 'rx', 'ry', 'rz']
-            if (alwaysShow.indexOf(i) === -1)
-              this.fieldDivByName[i].style.display = 'none';
-            else
-              this.fieldDivByName[i].style.display = '';
-          }
-        }
+        let rows = this.position_products_table.querySelectorAll('tr');
+
+        rows.forEach(row => {
+          let cats = row.dataset.cats;
+          if (!cats)
+            cats = '';
+          cats = cats.split(',');
+          if (cats.indexOf(category) === -1 && cats[0] !== 'all')
+            row.style.display = 'none';
+          else
+            row.style.display = '';
+        });
       }
       productPositionUpdateTypeFields() {
         let blockTitle = this.blockEditField.value;
         let productInfo = null;
-        console.log(this.productData);
         if (this.productData && this.productData.rawDisplayBlocksData) {
           this.productData.rawDisplayBlocksData.records.forEach(r => {
             if (r.title === blockTitle)
@@ -2791,6 +2900,26 @@
     #template_upper_split span {
       font-size: .8em;
     }
+
+    #help_and_details_wrapper_for_split {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    table.position_products_table tr td:nth-child(1) {
+      padding: 0;
+      padding-right: 4px;
+    }
+
+    table.position_products_table td span {
+      padding-top: 8px;
+      margin:0 0px;
+      padding-left: 4px;
+    }
+
+
   </style>
 
 </body>
