@@ -883,6 +883,7 @@ class cMacro {
                <option>2D Text Plane</option>
                <option>Web Font</option>
                <option>Block Child</option>
+               <option>Display Block</option>
               </select>
             </div>
           </td>
@@ -899,7 +900,7 @@ class cMacro {
           </tr>
           <tr>
             <td>Child Type</td>
-            <td><input data-field="childtype" type="text" value="" /></td>
+            <td><input data-field="childtype" type="text" value="" list="blockchildtypelist" /></td>
             <td></td>
           </tr>
           <tr>
@@ -915,6 +916,160 @@ class cMacro {
           <tr>
             <td>Longitude</td>
             <td><input data-field="longitude" type="text" value="" /></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div class="display_block_wizard">
+        <table class="wizard_field_container">
+          <tr>
+            <td>Child Name</td>
+            <td><input data-field="childname" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Child Type</td>
+            <td><input data-field="childtype" type="text" value="" list="blockchildtypelist" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Child Count</td>
+            <td><input data-field="childcount" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Child Scale</td>
+            <td><input data-field="childscale" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Children Wide</td>
+            <td><input data-field="childrenwide" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Children Deep</td>
+            <td><input data-field="childrendeep" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Children High</td>
+            <td><input data-field="childrenhigh" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Children Radius</td>
+            <td><input data-field="childradius" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Layer Height</td>
+            <td><input data-field="layerheight" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Layer Rotation</td>
+            <td><input data-field="layerrotation" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childx</td>
+            <td><input data-field="childx" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childy</td>
+            <td><input data-field="childy" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childz</td>
+            <td><input data-field="childz" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childrx</td>
+            <td><input data-field="childrx" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childry</td>
+            <td><input data-field="childry" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childrz</td>
+            <td><input data-field="childrz" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childdeltax</td>
+            <td><input data-field="childdeltax" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childdeltay</td>
+            <td><input data-field="childdeltay" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childdeltaz</td>
+            <td><input data-field="childdeltaz" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childdeltarx</td>
+            <td><input data-field="childdeltarx" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childdeltary</td>
+            <td><input data-field="childdeltary" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childdeltarz</td>
+            <td><input data-field="childdeltarz" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childname2</td>
+            <td><input data-field="childname2" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childtype2</td>
+            <td><input data-field="childtype2" type="text" value="" list="blockchildtypelist" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>childscale2</td>
+            <td><input data-field="childscale2" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>productname</td>
+            <td><input data-field="productname" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>productdescription</td>
+            <td><input data-field="productdescription" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>productprice</td>
+            <td><input data-field="productprice" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>productpricetext</td>
+            <td><input data-field="productpricetext" type="text" value="" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>productimage</td>
+            <td><input data-field="productimage" type="text" value="" /></td>
             <td></td>
           </tr>
         </table>
@@ -1470,6 +1625,7 @@ class cMacro {
     this.show_parent_details_row = this.panel.querySelector('.show_parent_details_row');
 
     this.block_child_wizard = this.panel.querySelector('.block_child_wizard');
+    this.display_block_wizard = this.panel.querySelector('.display_block_wizard');
     this.blockShapePanel = this.panel.querySelector('.shape_and_text_block_options');
     this.scene_block_add_options = this.panel.querySelector('.scene_block_add_options');
     this.buildingscenefeatures = this.panel.querySelector('.buildingscenefeatures');
@@ -2636,12 +2792,13 @@ class cMacro {
     this.webFontPanel.style.display = 'none';
     this.text2dpanel.style.display = 'none';
     this.block_child_wizard.style.display = 'none';
+    this.display_block_wizard.style.display = 'none';
     this.buildingscenefeatures.style.display = 'none';
 
     let sel = this.block_wizard_type_select.value;
 
     this.block_wizard_parent_wrapper.style.display = (sel === 'Web Font' || sel === 'Scene') ? 'none' : '';
-    this.show_parent_details_row.style.display = (sel === 'Block Child') ? 'none' : '';
+    this.show_parent_details_row.style.display = (sel === 'Block Child' || sel === 'Display Block') ? 'none' : '';
     this.add_wizard_item_name.style.display = '';
 
     if (sel === 'Text and Shape')
@@ -2663,6 +2820,8 @@ class cMacro {
       this.show_parent_wizard_details.checked = true;
       this.wizard_parent_details.style.display = '';
       this.add_wizard_item_name.style.display = 'none';
+    } else if (sel === 'Display Block') {
+      this.display_block_wizard.style.display = '';
     }
 
     if (this.app.mV) {
@@ -2680,6 +2839,24 @@ class cMacro {
     };
 
     let tr_rows = this.panel.querySelectorAll('.block_child_wizard tr');
+    tr_rows.forEach(row => {
+      let i = row.querySelector('input[type="text"]');
+      if (i) {
+        if (i.dataset.field)
+          csv_row[i.dataset.field] = i.value;
+      }
+    });
+
+    return csv_row;
+  }
+  _blockDisplayBlockScrape() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      name: this.newName,
+      asset: 'displayblock'
+    };
+
+    let tr_rows = this.panel.querySelectorAll('.display_block_wizard tr');
     tr_rows.forEach(row => {
       let i = row.querySelector('input[type="text"]');
       if (i) {
@@ -2709,6 +2886,8 @@ class cMacro {
       csv_row = this._shapeScrapeTextPlane();
     if (macrotype === 'Block Child')
       csv_row = this._blockChildScrape();
+    if (macrotype === 'Display Block')
+      csv_row = this._blockDisplayBlockScrape();
 
     let includeParent = this.show_parent_wizard_details.checked;
     let sel = this.block_wizard_type_select.value;
