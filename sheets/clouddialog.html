@@ -2609,10 +2609,10 @@
             cats = '';
           cats = cats.split(',');
           if (cats.indexOf(category) !== -1 || cats[0] === 'all') {
-            let i = row.querySelector('input[type="text"]');
-            if (i) {
+            let fds = row.querySelectorAll('input[type="text"]');
+            fds.forEach(i => {
               csv_row[i.dataset.field] = i.value;
-            }
+            });
           }
         });
 
