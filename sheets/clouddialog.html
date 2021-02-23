@@ -502,10 +502,10 @@
             </table>
           </div>
           <div class="copy_clipboard_footer">
-            <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-            <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
-            <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
-            <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+            <button class="positions_copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+            <button class="positions_show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+            <button class="positions_show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
+            <label><input type="checkbox" checked class="positions_copy_csv_header_clipboard"><span> headers</span></label>
             <br>
             <div class="csv_import_preview"></div>
           </div>
@@ -1166,7 +1166,7 @@
       }
       async loadProjectProducts() {
         if (!this.defaultServerTarget || !this.defaultProjectTarget)
-          return {};
+          return null;
 
         let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/productsforname/?name=' + encodeURIComponent(this.defaultProjectTarget);
         url += '&token=' + encodeURIComponent(this.defaultToken);
@@ -2353,6 +2353,7 @@
 
       async productPositionInit() {
         this.record_field_list_form = document.body.querySelector('#position_products .position_products_fields');
+        this.positions_panel = document.body.querySelector('#position_products');
 
         this.uploadImageButton = this.record_field_list_form.querySelector('.texturepathupload');
         this.uploadImageEditField = this.record_field_list_form.querySelector('.imageedit');
@@ -2372,26 +2373,26 @@
 
         this.position_products_table = this.record_field_list_form.querySelector('.position_products_table');
 
-        this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
-        this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
-        this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
-        this.copy_csv_excludeempty_clipboard = this.panel.querySelector('.copy_csv_excludeempty_clipboard');
+
+        this.csv_import_preview = this.positions_panel.querySelector('.csv_import_preview');
+        this.copy_csv_to_clipboard = this.positions_panel.querySelector('.positions_copy_csv_to_clipboard');
+        this.copy_csv_header_clipboard = this.positions_panel.querySelector('.positions_copy_csv_header_clipboard');
+        this.copy_csv_excludeempty_clipboard = this.positions_panel.querySelector('.positions_copy_csv_excludeempty_clipboard');
         this.copy_csv_to_clipboard.addEventListener('click', e => {
           let headers = this.copy_csv_header_clipboard.checked;
           cMacro.copyDataToClipboard([this.export_csv], [], headers);
-          this.getItemName(true);
+          //this.getItemName(true);
         });
-        this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
-        this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
-        this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
-        this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
+        this.show_hide_raw_csv = this.positions_panel.querySelector('.positions_show_hide_raw_csv');
+        this.show_hide_raw_csv.addEventListener('click', e => this.positionsUpdateCSVDisplay(1));
+        this.show_hide_table_csv = this.positions_panel.querySelector('.positions_show_hide_table_csv');
+        this.show_hide_table_csv.addEventListener('click', e => this.positionsUpdateCSVDisplay(2));
 
         this.productPositionUpdateProductType();
 
         this.productDataResults = await this.loadProjectProducts();
         this.productData = this.productDataResults.productData;
-        this.products = this.productData.products;
-        this.productBySKU = this.productData.productsBySKU;
+
 
         let basketListHTML = '';
         if (this.productData.displayBlocks)
@@ -2433,6 +2434,11 @@
 
           });
         }
+
+        this.record_field_list_form.querySelectorAll('.position_products_table input[type="text"]')
+          .forEach(i => i.addEventListener('input', e => this.positionUpdateCSV()));
+
+        this.positionUpdateCSV();
       }
       productPositionUpdateImagePreview() {
         let url = this.uploadImageEditField.value;
@@ -2570,6 +2576,78 @@
           this.signImagePreview.removeAttribute('src');
         e.preventDefault();
         return true;
+      }
+      positionsUpdateCSVDisplay(btnIndex) {
+        this.csv_import_preview.style.display = 'none';
+        this.show_hide_raw_csv.style.background = '';
+        this.show_hide_raw_csv.style.color = '';
+        this.show_hide_table_csv.style.background = '';
+        this.show_hide_table_csv.style.color = '';
+
+        if (this.csv_import_shown === btnIndex) {
+          this.csv_import_shown = 0;
+        } else if (btnIndex === 1) {
+          this.csv_import_shown = btnIndex;
+          this.csv_import_preview.style.display = 'block';
+          this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
+          this.show_hide_raw_csv.style.color = 'white';
+          this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+        } else if (btnIndex === 2) {
+          this.csv_import_shown = btnIndex;
+          this.csv_import_preview.style.display = 'block';
+          this.show_hide_table_csv.style.background = 'rgb(100,100,100)';
+          this.show_hide_table_csv.style.color = 'white';
+
+          let headers = this.copy_csv_header_clipboard.checked;
+          let html = cMacro._dataRowsToTableHTML([this.export_csv], [], headers);
+
+          this.csv_import_preview.innerHTML = html;
+        }
+      }
+      positionUpdateCSV() {
+        let category = this.assetEditField.value;
+        let csv_row = {
+          asset: category
+        };
+
+        let t_rows = this.record_field_list_form.querySelectorAll('.position_products_table input[type="text"]');
+        let all_fields = [];
+        t_rows.forEach(f => {
+          if (all_fields.indexOf(f.dataset.field) === -1)
+            all_fields.push(f.dataset.field);
+          csv_row[f.dataset.field] = '';
+        });
+
+        let tr_rows = this.record_field_list_form.querySelectorAll('.position_products_table tr');
+        tr_rows.forEach(row => {
+          let cats = row.dataset.cats;
+          if (!cats)
+            cats = '';
+          cats = cats.split(',');
+          if (cats.indexOf(category) !== -1 || cats[0] === 'all') {
+            let i = row.querySelector('input[type="text"]');
+            if (i) {
+              csv_row[i.dataset.field] = i.value;
+            }
+          }
+        });
+
+        let r = csv_row;
+        let header = this.copy_csv_header_clipboard.checked;
+        this.export_csv = r;
+        if (r) {
+          if (window.Papa) {
+            this.csvImportPreviewRaw = Papa.unparse([r], {
+              header
+            });
+            this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+            if (this.csv_import_shown === 2) {
+              this.csv_import_shown = 0;
+              this._updateCSVDisplay(2);
+            }
+          }
+        } else
+          this.csv_import_preview.innerHTML = new Date();
       }
     }
 
