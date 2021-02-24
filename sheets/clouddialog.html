@@ -11,9 +11,10 @@
   <script src="https://handtop.com/global/ginstancesuper.js"></script>
   <script src="https://handtop.com/controller/cmacro.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.0/papaparse.min.js"></script>
-  <script src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous"></script>
+  <script async src="https://rawgit.com/corbanbrook/dsp.js/a7b2e97b1385a43083e50ed6dc81d697f0e57e28/dsp.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.0/split.min.js"></script>
+  <script async src="https://cse.google.com/cse.js?cx=0b2a9868105e1e42e"></script>
 </head>
 
 <body>
@@ -51,10 +52,13 @@
         <div style="display:flex;flex-direction:row;">
           <select id="help_viewer_panel_select"></select>
           <div id="helper_viewer_panel_open_wrapper" style="background:rgb(100, 200, 255)">
-            <button id="helper_viewer_panel_search_btn" class="green"><i class="material-icons">search</i></button>
+            <button id="helper_viewer_panel_search_btn"><i class="material-icons">search</i></button>
             <button id="helper_viewer_panel_open_video_btn" class="blue"><i class="material-icons">ondemand_video</i></button>
             <button id="helper_viewer_panel_open_btn" style="margin:0;margin-left:4px;"><i class="material-icons">open_in_new</i></button>
           </div>
+        </div>
+        <div id="helper_viewer_search_bar" style="display:none;">
+          <div class="gcse-search"></div>
         </div>
         <div id="help_viewer_panel_internal"></div>
       </div>
@@ -613,7 +617,7 @@
           'plotter_plots_end_depth', 'plotter_plots_height', 'plotter_plots_end_width', 'plotter_plots_turns', 'path_frames_snappy_motion',
           'plotter_plots_decay_per_turn', 'plotter_plots_item_offset_angle', 'plotter_plots_offset_angle', 'path_frames_easing_option',
           'path_frames_points', 'path_frames_parent', 'path_frames_childtype', 'path_frames_childname', 'path_frames_rotation_time',
-          'product_preset_positions_list'
+          'product_preset_positions_list', 'helper_viewer_panel_search_btn', 'helper_viewer_search_bar'
         ];
 
         dom_id.forEach(ctl => {
@@ -648,6 +652,18 @@
         this.seconds_to_sample.addEventListener('input', e => this.audioProcessUpdateData());
         this.freq_samples_to_second.addEventListener('input', e => this.audioProcessUpdateData());
         this.bands_to_combine.addEventListener('input', e => this.audioProcessUpdateData());
+
+        this.helper_viewer_panel_search_btn.addEventListener('click', e => {
+          if (this.helper_viewer_search_bar.style.display !== 'none') {
+            this.helper_viewer_search_bar.style.display = 'none';
+            this.helper_viewer_panel_search_btn.classList.remove('red');
+            this.help_viewer_panel_internal.style.borderTop = 'solid 8px rgb(100, 200, 255)';
+          } else {
+            this.helper_viewer_search_bar.style.display = '';
+            this.helper_viewer_panel_search_btn.classList.add('red');
+            this.help_viewer_panel_internal.style.borderTop = 'solid 8px #dd4b39';
+          }
+        });
 
         this.plot_type_select.addEventListener('input', e => this.plotterUpdateView());
         this.show_help_panel_btn.addEventListener('click', e => this.helpPanelToggle());
@@ -2984,7 +3000,45 @@
       padding-left: 4px;
     }
 
+    .gsc-control-cse.gsc-control-cse-en {
+      border: none;
+      padding: 0;
+      margin: 0;
+      background: #d14836;
+      padding-top: 8px;
+    }
 
+    input.gsc-input {
+      font-size: 24px;
+    }
+
+    td.gsc-search-button, td.gsc-clear-button, td.gsc-input {
+      padding: 0;
+    }
+
+    table.gsc-search-box td {
+      padding: 0;
+    }
+
+    form.gsc-search-box {
+      padding: 0;
+      margin: 0;
+    }
+
+    table.gsc-search-box {
+      padding: 0;
+      margin: 0;
+    }
+
+    table.gsc-search-box td.gsc-input {
+      padding-right: 8px;
+      padding-left: 8px;
+    }
+
+    .gsc-search-button-v2 {
+      padding: 6px 8px;
+      margin-right: 8px;
+    }
   </style>
 
 </body>
