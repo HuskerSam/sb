@@ -2827,6 +2827,8 @@ class cMacro {
     if (this.app.mV) {
       if (this.block_wizard_type_select.value === "Scene")
         await this.app.updateHelpView("sceneblock", this.app.mV.helpViewer);
+      else if (this.block_wizard_type_select.value === "Display Block")
+        await this.app.updateHelpView("displayblock", this.app.mV.helpViewer);
       else
         await this.app.updateHelpView(this.tag, this.app.mV.helpViewer);
     }

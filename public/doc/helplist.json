@@ -34,12 +34,24 @@
     "title": "Meshes"
   },
   {
+    "value": "displayblock",
+    "title": "Display Blocks"
+  },
+  {
+    "value": "positionproducts",
+    "title": "Position Products"
+  },
+  {
     "value": "overview",
     "title": "Overview"
   },
   {
     "value": "positionplotter",
     "title": "Position Plotter"
+  },
+  {
+    "value": "positionproducts",
+    "title": "Position Products"
   },
   {
     "value": "processaudio",
