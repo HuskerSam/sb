@@ -20,13 +20,16 @@ class HelperAPP {
   headerTemplate() {
     return `<link rel="stylesheet" href="https://handtop.com/public.css">
     <div class="option_bar">
-      <a style="border:none;text-decoration:none;float:left;position:relative;top:-8px;">
+      <a href="/" style="border:none;text-decoration:none;float:left;position:relative;top:-8px;">
         <img alt="small logo image" style="height:40px;position:relative;top:-18px;" src="https://handtop.com/images/handtop.png">
         <img alt="Handtop" style="height:65px" src="https://handtop.com/images/handtoplogo.png">
       </a>
+      <a href="/doc" style="font-weight:bold">Help Contents</a>
       <a href="/retail">Visual Catalogs</a>
       <a href="/about">About</a>
-      <div class="gcse-search" style="float:right;width:20em;display:inline-block;"></div>
+      <div style="float:right;width:20em;">
+        <div class="gcse-search"></div>
+      </div>
     </div>
     <div style="display:block;clear:both;"></div>`;
   }
