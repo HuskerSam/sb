@@ -710,6 +710,9 @@ class gCSVImport {
       sphereDiameterZ: row.depth
     };
 
+    if (row.textstroke === '1')
+      shapeData.textStroke = true;
+
     if (row.shapetype === 'torus') {
       shapeData.torusDiameter = row.width;
       shapeData.torusThickness = row.height;
@@ -1286,7 +1289,8 @@ class gCSVImport {
       textdepth: textDepth,
       parent: row.name,
       asset: 'shape',
-      shapetype: 'text'
+      shapetype: 'text',
+      textstroke: row.textstroke
     };
 
     let textRowLine2 = Object.assign({}, textRow);
@@ -2775,7 +2779,6 @@ class gCSVImport {
     return Promise.resolve();
 
   }
-
   async clearProjectData(deleteProject = false) {
     let basePath = `/project/${this.projectId}/`;
     let fireUpdates = {

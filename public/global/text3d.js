@@ -15104,7 +15104,7 @@ function getPixels(canvas, context, str, size, options) {
     var x = options.throughout ? size : size/2;
 
     if (options.stroke) {
-        context.strokeStyle = options.throughout?"#000": "#fff"
+        context.strokeStyle = options.throughout ? "#000" : "#fff"
         context.strokeText(str, x, x)
     } else {
         context.fillStyle = options.throughout ? "#000" : "#fff"

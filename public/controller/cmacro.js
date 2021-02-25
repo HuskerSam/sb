@@ -1327,6 +1327,11 @@ class cMacro {
             <td></td>
           </tr>
           <tr>
+            <td>Open Face</td>
+            <td><input type="checkbox" style="width:1.25em;line-height:1.5em" class="textstroke" /></td>
+            <td></td>
+          </tr>
+          <tr>
             <td>Text Material</td>
             <td><input type="text" class="textmaterial"  list="materialdatatitlelookuplist"/></td>
             <td><input type="color" class="colorpicker" data-inputclass="textmaterial"></td>
@@ -1792,6 +1797,11 @@ class cMacro {
         <tr data-types="text">
           <td>Depth</td>
           <td><input type="text" data-field="textdepth" value=".2"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Stroke</td>
+          <td><input type="text" data-field="textstroke"></td>
           <td></td>
         </tr>
         <tr data-types="text">
@@ -2567,7 +2577,7 @@ class cMacro {
     };
     let textshapefields = [
       'texttext', 'texttextline2', 'textfontfamily', 'textdepth', 'textmaterial', 'shapematerial',
-      'width', 'height', 'depth', 'tessellation', 'cylinderhorizontal', 'createshapetype'
+      'width', 'height', 'depth', 'tessellation', 'cylinderhorizontal', 'createshapetype', 'textstroke'
     ];
     textshapefields.forEach(field => {
       let f = this.blockShapePanel.querySelector('.' + field);
