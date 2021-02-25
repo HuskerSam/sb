@@ -1292,6 +1292,8 @@ class gCSVImport {
     if (row.texttextline2)
       this.addCSVShapeRow(Object.assign(this.defaultCSVRow(), textRowLine2));
 
+    row.origParent = row.parent;
+    row.origName = row.name;
     row.parent = row.name;
     row.name = row.name + '_shape';
 
@@ -1302,6 +1304,8 @@ class gCSVImport {
     this.addCSVShapeRow(this.__childShapeRow(row));
 
     row.asset = 'block';
+    row.parent = row.origParent;
+    row.name = row.origName;
     this.addParentBlockChild(row);
     return blockResult;
   }
