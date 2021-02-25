@@ -393,6 +393,13 @@ class cMacro {
           <td></td>
         </tr>
         <tr data-cats="all">
+          <td>Block Child Index</td>
+          <td>
+            <input data-field="childindex" type="text" value="">
+          </td>
+          <td></td>
+        </tr>
+        <tr data-cats="all">
           <td>Parent Block</td>
           <td>
             <input data-field="parent" type="text" value="::scene::">
@@ -619,6 +626,12 @@ class cMacro {
       let headers = this.copy_csv_header_clipboard.checked;
       cMacro.copyDataToClipboard([this.export_csv], [], headers);
       this.getItemName(true);
+
+      let num = GLOBALUTIL.getNumberOrDefault(this.lastFrameOrderField.value, 0);
+      if (num === 10)
+        this.copy_csv_header_clipboard.checked = false;
+      num += 10;
+      this.lastFrameOrderField.value = num;
     });
     this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
     this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
@@ -633,6 +646,8 @@ class cMacro {
 
     this.add_wizard_item_name.style.display = 'none';
     this.frameUpdateFields();
+
+    this.lastFrameOrderField.value = '10';
   }
   frameUpdateFields() {
     let category = this.frametype.value;
@@ -675,6 +690,9 @@ class cMacro {
           if (i.value.indexOf('%') !== -1)
             v = "=\"" + v + "\"";
           csv_row[i.dataset.field] = v;
+
+          if (i.dataset.field === 'frameorder')
+            this.lastFrameOrderField = i;
         });
       }
     });

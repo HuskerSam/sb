@@ -830,6 +830,9 @@ class gCSVImport {
     if (row.y === undefined)
       console.log(row);
 
+    let childIndex = this.getNumberOrDefault(row.childindex, -1);
+    if (row.childindex === 'all')
+      childIndex = -1;
     let frameData = {
       positionX: row.x,
       positionY: row.y,
@@ -885,7 +888,13 @@ class gCSVImport {
     }
 
     let frameOrder = frameData.frameOrder;
+    let childIndexCounter = -1;
     for (let parentKey in children) {
+      childIndexCounter++;
+      if (childIndex !== -1 && childIndex !== childIndexCounter) {
+        continue;
+      }
+
       let frameRecords = await this.dbFetchByLookup('frame', 'parentKey', parentKey);
       for (let key in frameRecords.recordsById) {
         let rec = frameRecords.recordsById[key];
