@@ -1,17 +1,83 @@
 [{
   "range": "A1",
   "value": "name",
+  "columnWidth": 100,
+  "columnNumber": 1,
   "fontWeight": "bold"
 }, {
   "range": "B1",
   "value": "asset",
+  "columnWidth": 147,
+  "columnNumber": 2,
   "fontWeight": "bold"
 }, {
   "range": "C1",
   "formula": "=colorHeader(\"clearcolor\", \"C2\", \"C1\", \"C2\", \"B14\")",
+  "columnWidth": 157,
+  "columnNumber": 3,
   "fontWeight": "bold",
   "fontColor": "#ffffff",
   "backgroundColor": "#009900"
+}, {
+  "columnWidth": 243,
+  "columnNumber": 4,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 6,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 7,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 8,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 9,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 10,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 11,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 12,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 13,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 14,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 15,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 16,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 17,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 18,
+  "horizontalAlignment": "general"
 }, {
   "range": "A2",
   "value": "Logo Scene"

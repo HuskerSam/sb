@@ -32,6 +32,34 @@
     "categories": "Layout",
     "description": "Shapes demo with some extra cameras and frames",
     "helpkey": "camera"
+  },{
+    "name": "Short Red Video",
+    "key": "VideoShortRed",
+    "hint": "Red Video",
+    "categories": "Layout",
+    "description": "Short red video - no assets required",
+    "helpkey": "shortcolorvideos"
+  },{
+    "name": "Short Blue Video",
+    "key": "VideoShortBlue",
+    "hint": "Blue Video",
+    "categories": "Layout",
+    "description": "Short blue video - assets: Spheres for Videos required",
+    "helpkey": "shortcolorvideos"
+  },{
+    "name": "Short Green Video",
+    "key": "VideoShortGreen",
+    "hint": "Green Video",
+    "categories": "Layout",
+    "description": "Short green video - assets: Spheres for Videos required",
+    "helpkey": "shortcolorvideos"
+  },{
+    "name": "Short Yellow Video",
+    "key": "VideoShortYellow",
+    "hint": "Yellow Video",
+    "categories": "Layout",
+    "description": "Short yellow video - assets: Spheres for Videos required",
+    "helpkey": "shortcolorvideos"
   },
   {
     "name": "Configuration",
@@ -97,6 +125,14 @@
     "hint": "Additional Fixtures",
     "categories": "Fragments",
     "description": "Fixture stand meshes and block with configurable materials - depends on fixture materials fragment"
+  },
+  {
+    "name": "Spheres for Videos",
+    "key": "AssetSpheresForVideos",
+    "hint": "Spheres For Videos",
+    "categories": "Assets",
+    "description": "Rotating colored spheres for short video examples",
+    "helpkey": "shortcolorvideos"
   },
   {
     "name": "Good Bottles",

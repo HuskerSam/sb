@@ -759,7 +759,7 @@ class gCSVImport {
 
     let parentRecords = await this.dbFetchByLookup('block', 'title', blockTitle);
     if (parentRecords.records.length < 1) {
-      console.log(row.parent, ' - block not found');
+      console.log(blockTitle, ' - block not found');
       return [];
     }
     let key = parentRecords.recordIds[0];
@@ -831,7 +831,7 @@ class gCSVImport {
     ];
 
     if (row.y === undefined)
-      console.log(row);
+      console.log('row with no y value', row);
 
     let childIndex = this.getNumberOrDefault(row.childindex, -1);
     if (row.childindex === 'all')

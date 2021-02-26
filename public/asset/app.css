@@ -996,3 +996,7 @@ table.wizard_parent_details tr td span:nth-child(1) {
 tr.span_padding td span {
   padding-top: 8px;
 }
+
+#helper_viewer_panel_search_btn {
+  margin-right: -.5em;
+}

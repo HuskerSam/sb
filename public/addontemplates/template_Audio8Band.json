@@ -72,27 +72,27 @@
 
   {
     "columnNumber": 1,
-    "width": 200
+    "columnWidth": 200
   },
   {
     "columnNumber": 2,
-    "width": 150
+    "columnWidth": 150
   },
   {
     "columnNumber": 3,
-    "width": 150
+    "columnWidth": 150
   },
   {
     "columnNumber": 4,
-    "width": 150
+    "columnWidth": 150
   },
   {
     "columnNumber": 5,
-    "width": 150
+    "columnWidth": 150
   },
   {
     "columnNumber": 6,
-    "width": 150
+    "columnWidth": 150
   },
   {
     "range":"A1:A",

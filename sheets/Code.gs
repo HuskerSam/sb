@@ -72,10 +72,8 @@ function createSheetFromTemplate(sheetName, template) {
         }
       }
 
-      if (item.columnNumber) {
-        if (item.width) {
-          sheet.setColumnWidth(Number(item.columnNumber), Number(item.width));
-        }
+      if (item.columnWidth) {
+        sheet.setColumnWidth(Number(item.columnNumber), Number(item.columnWidth));
       }
 
     }
@@ -505,6 +503,14 @@ function getJSONForSheet(sheetName, block = 1) {
           range,
           value
         };
+      }
+
+      if (rctr === 0) {
+        if (!cell)
+          cell = {};
+
+        cell.columnWidth = sheet.getColumnWidth(cctr + 1);
+        cell.columnNumber = cctr + 1;
       }
 
       if (cell) {

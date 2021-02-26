@@ -402,7 +402,7 @@ class cMacro {
         <tr data-cats="all">
           <td>Parent Block</td>
           <td>
-            <input data-field="parent" type="text" value="::scene::">
+            <input data-field="parent" list="blockdatatitlelookuplist" type="text" value="::scene::">
           </td>
           <td></td>
         </tr>
