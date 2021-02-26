@@ -11,49 +11,49 @@
     "categories": "Layout",
     "description": "A variety of shapes with a few frames",
     "helpkey": "reviewguide"
-  },{
+  }, {
     "name": "Meshes Basic",
     "key": "MeshesBasic",
     "hint": "Meshes",
     "categories": "Layout",
     "description": "Some product meshes scattered about",
     "helpkey": "mesh"
-  },{
+  }, {
     "name": "Lights Fun",
     "key": "LightsFun",
     "hint": "Lights",
     "categories": "Layout",
     "description": "Some spot lights and a directional light",
     "helpkey": "light"
-  },{
+  }, {
     "name": "Camera Animations",
     "key": "CameraAnimations",
     "hint": "Cameras",
     "categories": "Layout",
     "description": "Shapes demo with some extra cameras and frames",
     "helpkey": "camera"
-  },{
+  }, {
     "name": "Short Red Video",
     "key": "VideoShortRed",
     "hint": "Red Video",
     "categories": "Layout",
     "description": "Short red video - no assets required",
     "helpkey": "shortcolorvideos"
-  },{
+  }, {
     "name": "Short Blue Video",
     "key": "VideoShortBlue",
     "hint": "Blue Video",
     "categories": "Layout",
     "description": "Short blue video - assets: Spheres for Videos required",
     "helpkey": "shortcolorvideos"
-  },{
+  }, {
     "name": "Short Green Video",
     "key": "VideoShortGreen",
     "hint": "Green Video",
     "categories": "Layout",
     "description": "Short green video - assets: Spheres for Videos required",
     "helpkey": "shortcolorvideos"
-  },{
+  }, {
     "name": "Short Yellow Video",
     "key": "VideoShortYellow",
     "hint": "Yellow Video",
@@ -93,13 +93,6 @@
   },
   {
     "name": "Grocery Isle",
-    "key": "GroceryIsle",
-    "hint": "Grocery Isle",
-    "categories": "Layout",
-    "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
-  },
-  {
-    "name": "Grocery Isle (updated)",
     "key": "Islev1",
     "hint": "Islev1",
     "categories": "Layout",
@@ -242,12 +235,6 @@
     "description": "Products list that matches Asset Ranges example and Carousel Display"
   }, {
     "name": "Platform Display",
-    "key": "PlatformDisplay",
-    "hint": "Platform Display",
-    "categories": "Layout",
-    "description": "Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this."
-  }, {
-    "name": "Platform Display (updated)",
     "key": "Platformv1",
     "hint": "Platform Display",
     "categories": "Layout",
@@ -297,5 +284,19 @@
     "hint": "Fruits",
     "categories": "Products",
     "description": "Fruit product list for Grocery Isle"
+  },
+  {
+    "name": "Platform Display (legacy)",
+    "key": "PlatformDisplay",
+    "hint": "Platform Display",
+    "categories": "Legacy and Tests",
+    "description": "Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this."
+  },
+  {
+    "name": "Grocery Isle (legacy)",
+    "key": "GroceryIsle",
+    "hint": "Grocery Isle",
+    "categories": "Legacy and Tests",
+    "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
   }
 ]
