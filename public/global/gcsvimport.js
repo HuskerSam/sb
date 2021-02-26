@@ -710,7 +710,7 @@ class gCSVImport {
       sphereDiameterZ: row.depth
     };
 
-    if (row.textstroke === '1')
+    if (row.textstroke && row.textstroke.toString() === '1')
       shapeData.textStroke = true;
 
     if (row.shapetype === 'torus') {

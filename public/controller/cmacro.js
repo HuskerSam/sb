@@ -2536,7 +2536,7 @@ class cMacro {
       inputCTL = ctl.parentNode.parentNode.querySelector('.' + ctl.dataset.inputclass);
     inputCTL.value = prefix + rgb;
 
-    let rgb255 = GLOBALUTIL.colorRGB255(inputCTL.value);
+    let rgb255 = GLOBALUTIL.colorRGB255(rgb);
     if (inputCTL.value.split(',').length > 2) {
       inputCTL.style.borderStyle = 'solid';
       inputCTL.style.borderWidth = '.35em';
@@ -2553,10 +2553,14 @@ class cMacro {
     let wrapper = ctl.parentNode.parentNode;
     let fieldctl = wrapper.querySelector('.' + ctl.dataset.inputclass);
     fieldctl.addEventListener('input', e => {
-      if (fieldctl.value.split(',').length > 2) {
-        let v = GLOBALUTIL.color(fieldctl.value);
+      let value = fieldctl.value;
+      let colonPos = value.indexOf(':');
+      if (colonPos > 0)
+        value = value.substr(colonPos + 1).trim();
+      if (value.split(',').length > 2) {
+        let v = GLOBALUTIL.color(value);
         ctl.value = GLOBALUTIL.colorToHex(v);
-        let rgb = GLOBALUTIL.colorRGB255(fieldctl.value);
+        let rgb = GLOBALUTIL.colorRGB255(value);
 
         fieldctl.style.borderStyle = 'solid';
         fieldctl.style.borderWidth = '.35em';
