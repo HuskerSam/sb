@@ -60,6 +60,13 @@
     "categories": "Layout",
     "description": "Short yellow video - assets: Spheres for Videos required",
     "helpkey": "shortcolorvideos"
+  }, {
+    "name": "Video Picker",
+    "key": "VideoPicker",
+    "hint": "Video Picker",
+    "categories": "Layout",
+    "description": "Video Picker using frame commands - shows video with time synchronized between multiple browsers open",
+    "helpkey": "shortcolorvideos"
   },
   {
     "name": "Configuration",
