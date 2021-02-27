@@ -539,6 +539,10 @@ class gCSVImport {
       blockChildData.cameraType = row.cameratype;
     if (row.blockflag) blockChildData.blockFlag = row.blockflag;
 
+    if (row.framecommand) blockChildData.frameCommand = row.framecommand;
+    if (row.framecommandfield) blockChildData.frameCommandField = row.framecommandfield;
+    if (row.framecommandvalue) blockChildData.frameCommandValue = row.framecommandvalue;
+
     let childResults = await this.dbSetRecord('blockchild', blockChildData);
 
     let frameTime = row.frametime;
@@ -587,13 +591,6 @@ class gCSVImport {
       frameData.cameraAimTargetY = row.aimtargety;
     if (row.aimtargetz)
       frameData.cameraAimTargetZ = row.aimtargetz;
-
-    if (row.framecommand)
-      frameData.frameCommand = row.framecommand;
-    if (row.framecommandfield)
-      frameData.frameCommandField = row.framecommandfield;
-    if (row.framecommandvalue)
-      frameData.frameCommandValue = row.framecommandvalue;
 
     if (row.childtype === 'light') {
       let lightFields = [

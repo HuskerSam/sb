@@ -81,7 +81,8 @@ class cViewPublished extends bView {
       this.canvasHelper.hide();
     };
     gAPPP.activeContext.handleAnimationReadyCallback = () => {
-      location.reload();
+      if (this.rootBlock.updatesDisabled)
+        location.reload();
     };
   }
   closeHeaderBands() {

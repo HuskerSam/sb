@@ -52,7 +52,8 @@ class cViewDemo extends bView {
       this.canvasHelper.hide();
     };
     gAPPP.activeContext.handleAnimationReadyCallback = () => {
-      location.reload();
+      if (this.rootBlock.updatesDisabled)
+        location.reload();
     };
 
     this.orientation_details_div = this.dialog.querySelector('.orientation_details_div');

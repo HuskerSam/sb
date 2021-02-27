@@ -1465,7 +1465,7 @@ class cMacro {
           </tr>
           <tr>
             <td>Video Type</td>
-            <td><input type="text" class="videotype" /></td>
+            <td><input type="text" class="videotype" list="htmlvideosourcelist" /></td>
             <td></td>
           </tr>
           <tr>
