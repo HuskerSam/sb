@@ -40,7 +40,7 @@ class sDataDefinition {
 
     if (tag === 'blockchild') {
       let localCopy = __localStaticStorageForBindingFields['childBlock'].slice(0);
-      return localCopy;
+      return localCopy.concat(this.bindingFields('frameCommand'));
     }
     return __localStaticStorageForBindingFields[tag].slice(0);
   }

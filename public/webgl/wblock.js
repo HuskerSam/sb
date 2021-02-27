@@ -247,7 +247,7 @@ class wBlock {
       if (this._blockKey === fireData.key) {
         if (tag === 'block') {
           if (this.context.canvasHelper.rootBlock === this) {
-            if (values.generationState !== 'ready') {
+            if (values.generationState === 'not ready') {
               this.context.handleAnimationNotReady();
             }
           }

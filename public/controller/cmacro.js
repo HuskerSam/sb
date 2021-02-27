@@ -936,6 +936,22 @@ class cMacro {
             <td><input data-field="longitude" type="text" value="" /></td>
             <td></td>
           </tr>
+
+          <tr>
+            <td>Command</td>
+            <td><input data-field="framecommand" type="text" value="" list="framecommandoptionslist" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Command Field</td>
+            <td><input data-field="framecommandfield" type="text" value="" list="framecommandfieldslist" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Command Value</td>
+            <td><input data-field="framecommandvalue" type="text" value="" /></td>
+            <td></td>
+          </tr>
         </table>
       </div>
       <div class="display_block_wizard">
@@ -1373,6 +1389,11 @@ class cMacro {
             <td><input type="color" class="colorpickerraw" data-inputclass="clearcolor"></td>
           </tr>
           <tr>
+            <td>Ambient Color</td>
+            <td><input type="text" class="ambientcolor" data-field="ambientcolor" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="ambientcolor"></td>
+          </tr>
+          <tr>
             <td>Skybox Equirect</td>
             <td><input type="text" class="skybox texturepathinput" list="skyboxlist"  data-field="skybox" /></td>
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
@@ -1435,6 +1456,61 @@ class cMacro {
           <tr>
             <td>Block Data</td>
             <td><input type="text" class="genericblockdata" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Video URL</td>
+            <td><input type="text" class="videourl" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Video Type</td>
+            <td><input type="text" class="videotype" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Video Width</td>
+            <td><input type="text" class="videowidth" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Video Height</td>
+            <td><input type="text" class="videoheight" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Video Bottom</td>
+            <td><input type="checkbox" style="width:1.5em;" class="videoalignbottom" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Video Right</td>
+            <td><input type="checkbox" style="width:1.5em;" class="videoalignright" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Fog Type</td>
+            <td><input type="text" class="fogtype" list="fogtypelist" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Fog Density</td>
+            <td><input type="text" class="fogdensity" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Fog Color</td>
+            <td><input type="text" class="fogcolor" data-field="fogcolor" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="fogcolor"></td>
+          </tr>
+          <tr>
+            <td>Fog Start</td>
+            <td><input type="text" class="fogstart" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Fog End</td>
+            <td><input type="text" class="fogend" /></td>
             <td></td>
           </tr>
         </table>
@@ -2657,8 +2733,9 @@ class cMacro {
     };
     let fields = [
       'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox',
-      'clearcolor', 'frametime', 'audiourl', 'displaycamera', 'genericblockdata',
-      'musicparams', 'displayui'
+      'clearcolor', 'ambientcolor', 'frametime', 'audiourl', 'displaycamera', 'genericblockdata',
+      'musicparams', 'displayui', 'videourl', 'videotype', 'videowidth', 'videoheight',
+      'videoalignright', 'videoalignbottom', 'fogtype', 'fogdensity', 'fogcolor', 'fogstart', 'fogend'
     ];
 
     let fieldValues = {};

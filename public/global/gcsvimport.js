@@ -588,6 +588,13 @@ class gCSVImport {
     if (row.aimtargetz)
       frameData.cameraAimTargetZ = row.aimtargetz;
 
+    if (row.framecommand)
+      frameData.frameCommand = row.framecommand;
+    if (row.framecommandfield)
+      frameData.frameCommandField = row.framecommandfield;
+    if (row.framecommandvalue)
+      frameData.frameCommandValue = row.framecommandvalue;
+
     if (row.childtype === 'light') {
       let lightFields = [
         'lightOriginX',
@@ -1513,12 +1520,16 @@ class gCSVImport {
       blockFlag: 'scene'
     }
 
-    if (row.audiourl)
-      block.audioURL = row.audiourl;
+    if (row.videourl) block.videoURL = row.videourl;
+    if (row.videotype) block.videoType = row.videotype;
+    if (row.videowidth) block.videoWidth = row.videowidth;
+    if (row.videoheight) block.videoHeight = row.videoheight;
+    if (row.videoalignbottom === "1") block.videoAlignBottom = true;
+    if (row.videoalignright === "1") block.videoAlignRight = true;
+    if (row.videoclearurl === "1") block.videoClearURL = true;
 
-    if (row.displaycamera)
-      block.displayCamera = row.displaycamera;
-
+    if (row.audiourl) block.audioURL = row.audiourl;
+    if (row.displaycamera) block.displayCamera = row.displaycamera;
     if (row.blockflag) block.blockFlag = row.blockflag;
     if (row.blockcode) block.blockCode = row.blockcode;
     if (row.musicparams) block.musicParams = row.musicparams;
@@ -1526,6 +1537,13 @@ class gCSVImport {
     if (row.displayui) block.displayUI = row.displayui;
     if (row.supportvr) block.supportVR = row.supportvr;
     if (row.clearcolor) block.clearColor = row.clearcolor;
+    if (row.ambientcolor) block.ambientColor = row.ambientcolor;
+
+    if (row.fogtype) block.fogType = row.fogtype;
+    if (row.fogdensity) block.fogDensity = row.fogdensity;
+    if (row.fogcolor) block.fogColor = row.fogcolor;
+    if (row.fogstart) block.fogStart = row.fogstart;
+    if (row.fogend) block.fogEnd = row.fogend;
 
     let blockresult = await this.dbSetRecord('block', block);
     let sceneParams = this._fetchSceneParams(block);
