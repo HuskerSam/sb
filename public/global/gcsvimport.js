@@ -628,6 +628,23 @@ class gCSVImport {
 
     }
 
+    let shapeMeshOnlyFields = [
+      'diffuseColor',
+      'emissiveColor',
+      'ambientColor',
+      'specularColor'
+    ];
+    if (row.childtype === 'shape' || row.childtype === 'mesh') {
+      shapeMeshOnlyFields.forEach(v => {
+        if (row[v.toLowerCase()]) {
+          let vector = this.getVector(row[v.toLowerCase()], 0, 0, 0);
+          frameData[v + 'R'] = vector.x;
+          frameData[v + 'G'] = vector.y;
+          frameData[v + 'B'] = vector.z;
+        }
+      });
+    }
+
     if (row.nofirstframe === '1')
       return;
     return this.dbSetRecord('frame', frameData);

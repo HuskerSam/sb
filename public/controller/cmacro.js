@@ -886,6 +886,795 @@ class cMacro {
     } else
       this.csv_import_preview.innerHTML = new Date();
   }
+  shapeTemplate() {
+    return `<div class="standardmeshassetpanel shape_wizard_wrapper" style="display:flex;flex-direction:column;">
+      <table class="wizard_field_container shape_wizard_table">
+        <tr data-types="all">
+          <td>Shape Type</td>
+          <td><select data-field="shapetype" style="width: 100%;" class="shapetype_filter_select">
+           <option value="box" selected>Box</option>
+           <option value="cylinder">Cylinder</option>
+           <option value="sphere">Sphere</option>
+           <option value="text">3D Text</option>
+           <option value="plane">Plane</option>
+           <option value="torus">Torus</option>
+          </select></td>
+          <td></td>
+        </tr>
+        <tr data-types="all">
+          <td>Material</td>
+          <td><input type="text" data-field="materialname" class="materialname" list="materialdatatitlelookuplist" /></td>
+          <td><input type="color" class="colorpicker" data-inputclass="materialname"></td>
+        </tr>
+        <tr data-types="box,plane">
+          <td>Width</td>
+          <td><input type="text" data-field="width"></td>
+          <td></td>
+        </tr>
+        <tr data-types="box,plane">
+          <td>Height</td>
+          <td><input type="text" data-field="height"></td>
+          <td></td>
+        </tr>
+        <tr data-types="box">
+          <td>Depth</td>
+          <td><input type="text" data-field="depth"></td>
+          <td></td>
+        </tr>
+        <tr data-types="box">
+          <td>Box Size</td>
+          <td><input type="text" data-field="boxsize"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Font</td>
+          <td><input type="text" data-field="textfontfamily"  list="fontfamilydatalist"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Text</td>
+          <td><input type="text" data-field="texttext" value="Text"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Depth</td>
+          <td><input type="text" data-field="textdepth" value=".2"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Stroke</td>
+          <td><input type="text" data-field="textstroke"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Text Size</td>
+          <td><input type="text" data-field="textsize" value="100"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder">
+          <td>Height</td>
+          <td><input type="text" data-field="height"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder,torus">
+          <td>Diameter</td>
+          <td><input type="text" data-field="width"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder,torus">
+          <td>Tessellation</td>
+          <td><input type="text" data-field="tessellation"></td>
+          <td></td>
+        </tr>
+        <tr data-types="torus">
+          <td>Thickness</td>
+          <td><input type="text" data-field="height"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder">
+          <td>Diameter Top</td>
+          <td><input type="text" data-field="diametertop"></td>
+          <td></td>
+        </tr>
+        <tr data-types="cylinder">
+          <td>Diameter Bottom</td>
+          <td><input type="text" data-field="diameterbottom"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Diameter</td>
+          <td><input type="text" data-field="boxsize"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Segments</td>
+          <td><input type="text" data-field="tessellation"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Diameter X</td>
+          <td><input type="text" data-field="width"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Diameter Y</td>
+          <td><input type="text" data-field="height"></td>
+          <td></td>
+        </tr>
+        <tr data-types="sphere">
+          <td>Diameter Z</td>
+          <td><input type="text" data-field="depth"></td>
+          <td></td>
+        </tr>
+        <tr data-types="all">
+          <td>Parent</td>
+          <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
+          <td></td>
+        </tr>
+      </table>
+      ${this._addParentTemplate()}
+    </div>
+    <div class="copy_clipboard_footer">
+      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+      <label><input type="checkbox" checked class="copy_csv_allcolumn_clipboard"><span> all fields</span></label>
+      <br>
+      <div class="csv_import_preview"></div>
+    </div>`;
+  }
+  shapeRegister() {
+    this.shapetype_filter_select = this.panel.querySelector('.shapetype_filter_select');
+    this.shapetype_filter_select.addEventListener('input', e => this.shapeTypeFilterChange());
+    this.wizard_field_container = this.panel.querySelector('.wizard_field_container');
+
+    this.show_parent_wizard_details = this.panel.querySelector('.show_parent_wizard_details');
+    this.wizard_parent_details = this.panel.querySelector('.wizard_parent_details');
+    this.show_parent_wizard_details.addEventListener('input', e => {
+      if (this.show_parent_wizard_details.checked)
+        this.wizard_parent_details.style.display = '';
+      else
+        this.wizard_parent_details.style.display = 'none';
+    });
+
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_allcolumn_clipboard = this.panel.querySelector('.copy_csv_allcolumn_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName(true);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
+
+    this.wizard_parent = this.panel.querySelector('.wizard_parent');
+    this.wizard_visibility = this.panel.querySelector('.wizard_visibility');
+    this.wizard_x = this.panel.querySelector('.wizard_x');
+    this.wizard_y = this.panel.querySelector('.wizard_y');
+    this.wizard_z = this.panel.querySelector('.wizard_z');
+    this.wizard_sx = this.panel.querySelector('.wizard_sx');
+    this.wizard_sy = this.panel.querySelector('.wizard_sy');
+    this.wizard_sz = this.panel.querySelector('.wizard_sz');
+    this.wizard_rx = this.panel.querySelector('.wizard_rx');
+    this.wizard_ry = this.panel.querySelector('.wizard_ry');
+    this.wizard_rz = this.panel.querySelector('.wizard_rz');
+
+    this.panel.querySelectorAll('.textfontfamily').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
+    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
+
+    this.panel.querySelectorAll('.colorpicker')
+      .forEach(i => this._initColorPicker(i));
+
+    this.shapeTypeFilterChange();
+  }
+  _updateCSVDisplay(btnIndex) {
+    this.csv_import_preview.style.display = 'none';
+    this.show_hide_raw_csv.style.background = '';
+    this.show_hide_raw_csv.style.color = '';
+    this.show_hide_table_csv.style.background = '';
+    this.show_hide_table_csv.style.color = '';
+
+    if (this.csv_import_shown === btnIndex) {
+      this.csv_import_shown = 0;
+    } else if (btnIndex === 1) {
+      this.csv_import_shown = btnIndex;
+      this.csv_import_preview.style.display = 'block';
+      this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
+      this.show_hide_raw_csv.style.color = 'white';
+      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+    } else if (btnIndex === 2) {
+      this.csv_import_shown = btnIndex;
+      this.csv_import_preview.style.display = 'block';
+      this.show_hide_table_csv.style.background = 'rgb(100,100,100)';
+      this.show_hide_table_csv.style.color = 'white';
+
+      let headers = this.copy_csv_header_clipboard.checked;
+      let html = cMacro._dataRowsToTableHTML([this.export_csv], [], headers);
+
+      this.csv_import_preview.innerHTML = html;
+    }
+  }
+  shapeTypeFilterChange() {
+    let rows = this.wizard_field_container.querySelectorAll('tr');
+    let category = this.shapetype_filter_select.value;
+
+    rows.forEach(row => {
+      let cats = row.dataset.types;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(category) === -1 && cats[0] !== 'all')
+        row.style.display = 'none';
+      else
+        row.style.display = '';
+    });
+
+    this.getItemName();
+    this.shapeUpdateCSV();
+  }
+  shapeUpdateCSV() {
+    this.newName = this.panelInput.value.trim();
+    let shapetype = this.shapetype_filter_select.value;
+    let allColumns = this.copy_csv_allcolumn_clipboard.checked;
+
+    let csv_row = {
+      name: this.newName,
+      asset: 'shape',
+      shapetype
+    };
+
+    let t_rows = this.panel.querySelectorAll('.shape_wizard_table input[type="text"]');
+    let all_fields = [];
+    t_rows.forEach(f => {
+      if (all_fields.indexOf(f.dataset.field) === -1)
+        all_fields.push(f.dataset.field);
+      if (allColumns)
+        csv_row[f.dataset.field] = '';
+    });
+
+    let tr_rows = this.panel.querySelectorAll('.shape_wizard_table tr');
+    tr_rows.forEach(row => {
+      let cats = row.dataset.types;
+      if (!cats)
+        cats = '';
+      cats = cats.split(',');
+      if (cats.indexOf(shapetype) !== -1 || cats[0] === 'all') {
+        let i = row.querySelector('input[type="text"]');
+        if (i) {
+          csv_row[i.dataset.field] = i.value;
+        }
+      }
+    });
+
+    let includeParent = this.show_parent_wizard_details.checked;
+    if (includeParent) {
+      csv_row['parent'] = this.wizard_parent.value;
+      csv_row['visibility'] = this.wizard_visibility.value;
+      csv_row['x'] = this.wizard_x.value;
+      csv_row['y'] = this.wizard_y.value;
+      csv_row['z'] = this.wizard_z.value;
+      csv_row['rx'] = this.wizard_rx.value;
+      csv_row['ry'] = this.wizard_ry.value;
+      csv_row['rz'] = this.wizard_rz.value;
+      csv_row['sx'] = this.wizard_sx.value;
+      csv_row['sy'] = this.wizard_sy.value;
+      csv_row['sz'] = this.wizard_sz.value;
+    }
+
+    let r = csv_row;
+    let header = this.copy_csv_header_clipboard.checked;
+    this.export_csv = r;
+    if (r) {
+      if (window.Papa) {
+        this.csvImportPreviewRaw = Papa.unparse([r], {
+          header
+        });
+        this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+        if (this.csv_import_shown === 2) {
+          this.csv_import_shown = 0;
+          this._updateCSVDisplay(2);
+        }
+      }
+    } else
+      this.csv_import_preview.innerHTML = new Date();
+  }
+  meshTemplate() {
+    return `<div class="standardmeshassetpanel mesh_wizard_wrapper" style="display:flex;flex-direction:column;">
+        <table class="wizard_field_container">
+          <tr>
+            <td>Mesh URL</td>
+            <td><input type="text" class="mesh_meshpath texturepathinput" data-field="mesh_meshpath" list="meshesDefaultsDataList" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Texture URL</td>
+            <td><input type="text" list="sbimageslist" class="mesh_texturepath texturepathinput" data-field="mesh_texturepath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Normal Map</td>
+            <td><input type="text" list="sbimageslist" class="mesh_bmppath texturepathinput" data-field="mesh_bmppath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Specular Map</td>
+            <td><input type="text" list="sbimageslist" class="mesh_specularpath texturepathinput" data-field="mesh_specularpath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Specular Power</td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input type="text" class="mesh_specularpower" data-field="mesh_specularpower" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Has Alpha (1)</span><input type="text" class="mesh_hasalpha" data-field="mesh_hasalpha" />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" style="text-align:center">
+              <div class="mesh-details-images" style="line-height:0">
+                <img class="mesh_texture_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
+                <img class="mesh_bump_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
+                <img class="mesh-preview-img" crossorigin="anonymous" style="display:none;">
+              </div>
+              <div class="mesh_message" style=""></div>
+            </td>
+          </tr>
+          <tr data-types="all">
+            <td>Parent</td>
+            <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
+            <td></td>
+          </tr>
+        </table>
+        ${this._addParentTemplate()}
+      </div>
+    </div>
+    <div class="copy_clipboard_footer">
+      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
+      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+      <br>
+      <div class="csv_import_preview"></div>
+    </div>`;
+  }
+  meshRegister() {
+    this.mesh_texture_img = this.panel.querySelector('.mesh_texture_img');
+    this.mesh_bump_img = this.panel.querySelector('.mesh_bump_img');
+    this.mesh_message = this.panel.querySelector('.mesh_message');
+    this.standardmeshassetpanel = this.panel.querySelector('.standardmeshassetpanel');
+
+    this.mesh_meshpath = this.panel.querySelector('.mesh_meshpath');
+    this.mesh_texturepath = this.panel.querySelector('.mesh_texturepath');
+    this.mesh_bmppath = this.panel.querySelector('.mesh_bmppath');
+    this.mesh_specularpath = this.panel.querySelector('.mesh_specularpath');
+    this.mesh_specularpower = this.panel.querySelector('.mesh_specularpower');
+    this.mesh_hasalpha = this.panel.querySelector('.mesh_hasalpha');
+
+    this.wizard_parent = this.panel.querySelector('.wizard_parent');
+    this.wizard_visibility = this.panel.querySelector('.wizard_visibility');
+    this.wizard_x = this.panel.querySelector('.wizard_x');
+    this.wizard_y = this.panel.querySelector('.wizard_y');
+    this.wizard_z = this.panel.querySelector('.wizard_z');
+    this.wizard_sx = this.panel.querySelector('.wizard_sx');
+    this.wizard_sy = this.panel.querySelector('.wizard_sy');
+    this.wizard_sz = this.panel.querySelector('.wizard_sz');
+    this.wizard_rx = this.panel.querySelector('.wizard_rx');
+    this.wizard_ry = this.panel.querySelector('.wizard_ry');
+    this.wizard_rz = this.panel.querySelector('.wizard_rz');
+
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName(true);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
+
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV(e, i)));
+    this.show_parent_wizard_details = this.panel.querySelector('.show_parent_wizard_details');
+    this.wizard_parent_details = this.panel.querySelector('.wizard_parent_details');
+    this.show_parent_wizard_details.addEventListener('input', e => {
+      if (this.show_parent_wizard_details.checked)
+        this.wizard_parent_details.style.display = '';
+      else
+        this.wizard_parent_details.style.display = 'none';
+    });
+
+    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'specularpath', 'specularpower', 'hasalpha'];
+
+    this.__registerFileUploaders();
+
+    this.meshUpdateCSV();
+  }
+  meshUpdateCSV(e, ctl) {
+    if (ctl && ctl.classList.contains('mesh_meshpath')) {
+      let meshPath = ctl.value;
+      let meshIndex = this.app.meshesPaths.indexOf(meshPath);
+
+      if (meshIndex !== -1) {
+        let meshD = this.app.meshesDetails[meshIndex];
+        this.meshCSVFields.forEach((item, index) => {
+          let value = meshD[item];
+          if (!value)
+            value = '';
+          if (this['mesh_' + item].value !== undefined)
+            this['mesh_' + item].value = value;
+          else
+            this['mesh_' + item].innerHTML = value;
+        });
+      }
+    }
+
+    let img = this.mesh_texturepath.value;
+    if (img.substr(0, 3) === 'sb:')
+      img = this.cdnPrefix + 'textures/' + img.substring(3);
+    this.mesh_texture_img.setAttribute('src', img);
+    let bump = this.mesh_bmppath.value;
+    if (bump.substr(0, 3) === 'sb:')
+      bump = this.cdnPrefix + 'textures/' + bump.substring(3);
+    this.mesh_bump_img.setAttribute('src', bump);
+    let header = this.copy_csv_header_clipboard.checked;
+    let csv = this.meshScrape();
+    this.export_csv = csv;
+    if (csv) {
+      this.csvImportPreviewRaw = Papa.unparse([this.export_csv], {
+        header
+      });
+      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+      if (this.csv_import_shown === 2) {
+        this.csv_import_shown = 0;
+        this._updateCSVDisplay(2);
+      }
+    } else
+      this.csv_import_preview.innerHTML = new Date();
+  }
+  meshScrape() {
+    this.newName = this.panelInput.value.trim();
+    let includeParent = this.show_parent_wizard_details.checked;
+
+    let csv_row = {
+      name: this.newName,
+      asset: 'meshtexture'
+    };
+
+    csv_row['materialname'] = csv_row['name'] + '_material';
+
+    this.meshCSVFields.forEach((item, index) => {
+      if (item === 'message')
+        return;
+
+      csv_row[item] = this['mesh_' + item].value;
+    });
+
+    csv_row['ambient'] = 'x';
+    csv_row['diffuse'] = 'x';
+    csv_row['emissive'] = 'x';
+
+    if (includeParent) {
+      csv_row['parent'] = this.wizard_parent.value;
+      csv_row['visibility'] = this.wizard_visibility.value;
+      csv_row['x'] = this.wizard_x.value;
+      csv_row['y'] = this.wizard_y.value;
+      csv_row['z'] = this.wizard_z.value;
+      csv_row['rx'] = this.wizard_rx.value;
+      csv_row['ry'] = this.wizard_ry.value;
+      csv_row['rz'] = this.wizard_rz.value;
+      csv_row['sx'] = this.wizard_sx.value;
+      csv_row['sy'] = this.wizard_sy.value;
+      csv_row['sz'] = this.wizard_sz.value;
+    }
+
+    return csv_row;
+  }
+  async meshCreate() {
+    return this._itemCreate();
+  }
+  materialTemplate() {
+    return `<div class="standardmaterialassetpanel material_wizard_wrapper" style="flex-direction:column">
+        <table class="wizard_field_container">
+          <tr>
+            <td>Texture URL</td>
+            <td><input type="text" list="materialsuggestionlist" class="material_texturepath texturepathinput" data-field="material_texturepath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Normal Map URL</td>
+            <td><input type="text" list="normalTexturesDataList" class="material_bmppath texturepathinput" data-field="material_bmppath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Specular Map URL</td>
+            <td><input type="text" list="sbimageslist" class="material_specularpath texturepathinput" data-field="material_specularpath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Specular Power</td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input type="text" class="material_specularpower" data-field="material_specularpower" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Has Alpha (1)</span>
+                <input type="text" class="material_hasalpha" data-field="material_hasalpha" />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Scale v</td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input type="text" class="materialscalev" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Scale u</span>
+                <input type="text" class="materialscaleu" />
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div class="material-details-images" style="flex:1;text-align:center;">
+          <div class="material_image_bkg_div" style="width:90%;height:10em;background-image:repeat;display:inline-block;">
+          &nbsp;
+          </div>
+        </div>
+      </div>
+      <div class="copy_clipboard_footer">
+        <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
+        <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
+        <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
+        <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
+        <br>
+        <div class="csv_import_preview"></div>
+      </div>
+      <datalist id="materialsuggestionlist"></datalist>`;
+  }
+  _materialGetHTMLOptionList() {
+    let paths = [];
+    for (let c = 0; c < 17; c++)
+      paths.push(`sb:matpack/brickwall${c + 1}_D.jpg`);
+    for (let c = 0; c < 11; c++)
+      paths.push(`sb:matpack/floor${c + 1}_D.jpg`);
+    for (let c = 0; c < 9; c++)
+      paths.push(`sb:matpack/tiles0${c + 1}_D.jpg`);
+    paths.push(`sb:matpack/tiles10_D.jpg`);
+    for (let c = 0; c < 10; c++)
+      paths.push(`sb:matpack/Stone${c + 1}_D.jpg`);
+    for (let c = 0; c < 8; c++)
+      paths.push(`sb:matpack/grid${c + 1}_D.png`);
+    for (let c = 0; c < 2; c++)
+      paths.push(`sb:matpack/hedgerow${c + 1}_D.jpg`);
+    for (let c = 0; c < 4; c++)
+      paths.push(`sb:matpack/metal${c + 1}_D.jpg`);
+    for (let c = 0; c < 16; c++)
+      paths.push(`sb:matpack/roof${c + 1}_D.jpg`);
+    for (let c = 0; c < 7; c++)
+      paths.push(`sb:matpack/wood${c + 1}_D.jpg`);
+    for (let c = 0; c < 14; c++)
+      paths.push(`sb:ground/ground${c + 1}_D.jpg`);
+    for (let c = 0; c < 14; c++)
+      paths.push(`sb:ground/ground${c + 1}_D.jpg`);
+    for (let c = 0; c < 4; c++)
+      paths.push(`sb:ground/grass${c + 1}_D.jpg`);
+    for (let c = 0; c < 4; c++)
+      paths.push(`sb:ground/sand${c + 1}_D.jpg`);
+    paths.push(`sb:ground/g2/dryground_D.jpg`);
+    paths.push(`sb:ground/g2/grassleaves_D.jpg`);
+    paths.push(`sb:ground/g2/grassleaves2_D.jpg`);
+    paths.push(`sb:ground/g2/grassmoss_D.jpg`);
+    paths.push(`sb:ground/g2/grassrocks_D.jpg`);
+    paths.push(`sb:ground/g2/grounddirt1_D.jpg`);
+    paths.push(`sb:ground/g2/grounddirt2_D.jpg`);
+    paths.push(`sb:ground/g2/groundlava_D.jpg`);
+    paths.push(`sb:ground/g2/groundweeds_D.jpg`);
+    for (let c = 0; c < 6; c++)
+      paths.push(`sb:ground/g2/grass${c + 1}_D.jpg`);
+    for (let c = 0; c < 3; c++)
+      paths.push(`sb:ground/g2/groundrocks${c + 1}_D.jpg`);
+
+    this.materialTexturePaths = paths;
+
+    let html = '';
+    paths.forEach(p => html += `<option>${p}</option>`);
+    return html;
+  }
+  materialRegister() {
+    this.standardmaterialassetpanel = this.panel.querySelector('.standardmaterialassetpanel');
+    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
+    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
+    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
+    this.copy_csv_to_clipboard.addEventListener('click', e => {
+      let headers = this.copy_csv_header_clipboard.checked;
+      cMacro.copyDataToClipboard([this.export_csv], [], headers);
+      this.getItemName(true);
+    });
+    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
+    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
+    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
+    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
+
+    this.material_image_bkg_div = this.panel.querySelector('.material_image_bkg_div');
+    this.materialscalev = this.panel.querySelector('.materialscalev');
+    this.materialscaleu = this.panel.querySelector('.materialscaleu');
+    this.material_texturepath = this.panel.querySelector('.material_texturepath');
+    this.material_bmppath = this.panel.querySelector('.material_bmppath');
+    this.material_specularpath = this.panel.querySelector('.material_specularpath');
+    this.material_specularpower = this.panel.querySelector('.material_specularpower');
+    this.material_hasalpha = this.panel.querySelector('.material_hasalpha');
+    this.materialsuggestionlist = this.panel.querySelector('#materialsuggestionlist');
+
+
+    this.materialsuggestionlist.innerHTML = this._materialGetHTMLOptionList();
+    this.material_texturepath.addEventListener('input', e => this.materialDiffuseChanged());
+
+    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
+
+    this.__registerFileUploaders();
+    this.materialUpdateCSV();
+  }
+  materialUpdateCSV() {
+    let csv = this.materialScrape();
+    let header = this.copy_csv_header_clipboard.checked;
+
+    this.export_csv = csv;
+    if (csv) {
+      this.csvImportPreviewRaw = Papa.unparse([this.export_csv], {
+        header
+      });
+      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
+      if (this.csv_import_shown === 2) {
+        this.csv_import_shown = 0;
+        this._updateCSVDisplay(2);
+      }
+    } else
+      this.csv_import_preview.innerHTML = new Date();
+  }
+  async _crossAnonLoadImg(url) {
+    return new Promise((resolve) => {
+      let img = document.createElement('img');
+      img.addEventListener('load', e => {
+        img.remove();
+        resolve();
+      });
+      img.setAttribute('crossorigin', 'anonymous');
+      img.setAttribute('src', url);
+      img.style.display = 'none';
+      document.body.appendChild(img);
+    });
+  }
+  materialDiffuseChanged() {
+    let texture = this.material_texturepath.value;
+
+    if (this.materialTexturePaths.indexOf(texture) === -1)
+      return;
+
+    let hasAlpha = '';
+    if (texture.substring(0, 3) === 'png') {
+      hasAlpha = '1';
+    }
+
+    this.material_bmppath.value = texture.slice(0, -6) + '_N.jpg';
+    this.material_specularpath.value = texture.slice(0, -6) + '_S.jpg';
+    this.material_hasalpha.value = hasAlpha;
+    this.materialUpdateCSV();
+  }
+  materialScrape() {
+    this.standardmaterialassetpanel.style.display = 'flex';
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      name: this.newName,
+      asset: 'material'
+    };
+
+    let texture = this.material_texturepath.value;
+    let bumptexture = this.material_bmppath.value;
+    let speculartexture = this.material_specularpath.value;
+
+    let scaleu = this.materialscaleu.value;
+    let scalev = this.materialscalev.value;
+
+    let textureURL = '';
+    let hasAlpha = '';
+    if (!texture)
+      texture = '';
+
+    if (texture || bumptexture || speculartexture) {
+      textureURL = texture;
+      if (!textureURL)
+        textureURL = bumptexture;
+      if (!textureURL)
+        textureURL = speculartexture;
+
+      if (textureURL.substring(0, 3) === 'sb:')
+        textureURL = this.cdnPrefix + 'textures/' + textureURL.substring(3);
+
+      this.material_image_bkg_div.style.backgroundImage = '';
+      this._crossAnonLoadImg(textureURL).then(() => {
+        this.material_image_bkg_div.style.backgroundImage = 'url(' + textureURL + ')';
+      });
+
+      let u = Number(scaleu);
+      let v = Number(scalev);
+      if (!u)
+        u = 1;
+      if (!v)
+        v = 1;
+
+      let sizeX = 100;
+      let sizeY = 100;
+      if (v !== 0.0) {
+        sizeX = (sizeX / v).toFixed(2);
+      }
+      if (u !== 0.0) {
+        sizeY = (sizeY / u).toFixed(2);
+      }
+      this.material_image_bkg_div.style.backgroundSize = sizeX + '% ' + sizeY + '%';
+    } else {
+      this.material_image_bkg_div.style.backgroundImage = '';
+    }
+
+
+    Object.assign(csv_row, {
+      texture,
+      speculartexture,
+      bumptexture,
+      scaleu,
+      scalev,
+      hasalpha: hasAlpha
+    });
+
+    return csv_row;
+  }
+  async materialCreate() {
+    return this._itemCreate();
+  }
+  _handleImageTextureUpload(fileCtl, field) {
+    let fileBlob = fileCtl.files[0];
+
+    if (!fileBlob)
+      return;
+
+    field.value = 'Uploading...';
+
+    let fireSet = this.app.a.modelSets['block'];
+    let uKey = fireSet.getKey();
+    let key = this.app.a.profile.selectedWorkspace + `/${uKey}/`;
+    fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
+      field.value = uploadResult.downloadURL;
+      let event = new Event('input', {
+        bubbles: true,
+        cancelable: true,
+      });
+
+      field.dispatchEvent(event);
+    });
+  }
+  _shapeScrapeTextPlane() {
+    this.newName = this.panelInput.value.trim();
+    let csv_row = {
+      name: this.newName,
+      asset: 'textplane'
+    };
+    let textshapefields = [
+      'texturetext', 'texturetext2', 'textfontfamily', 'textfontcolor', 'textfontweight', 'textfontsize',
+      'texturetextrendersize', 'width', 'height'
+    ];
+    textshapefields.forEach(field => {
+      let f = this.text2dpanel.querySelector('.' + field);
+      if (f.getAttribute('type') === 'checkbox')
+        csv_row[field] = f.checked ? '1' : '';
+      else
+        csv_row[field] = f.value;
+    });
+    return csv_row;
+  }
   blockTemplate() {
     return `<div class="block_wizard_wrapper">
       <table class="wizard_field_container">
@@ -951,6 +1740,26 @@ class cMacro {
             <td>Command Value</td>
             <td><input data-field="framecommandvalue" type="text" value="" /></td>
             <td></td>
+          </tr>
+          <tr data-cats="mesh,shape">
+            <td>Diffuse Color</td>
+            <td><input data-field="diffusecolor" class="diffusecolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="diffusecolor"></td>
+          </tr>
+          <tr data-cats="mesh,shape">
+            <td>Emissive Color</td>
+            <td><input data-field="emissivecolor" class="emissivecolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="emissivecolor"></td>
+          </tr>
+          <tr data-cats="mesh,shape">
+            <td>Ambient Color</td>
+            <td><input data-field="ambientcolor" class="ambientcolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="ambientcolor"></td>
+          </tr>
+          <tr data-cats="mesh,shape">
+            <td>Specular Color</td>
+            <td><input data-field="specularcolor" class="specularcolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="specularcolor"></td>
           </tr>
         </table>
       </div>
@@ -1819,790 +2628,6 @@ class cMacro {
     this.blockHelperChange();
     this.blockSkyboxChange();
     this.blockUpdateCSV();
-  }
-  shapeTemplate() {
-    return `<div class="standardmeshassetpanel shape_wizard_wrapper" style="display:flex;flex-direction:column;">
-      <table class="wizard_field_container shape_wizard_table">
-        <tr data-types="all">
-          <td>Shape Type</td>
-          <td><select data-field="shapetype" style="width: 100%;" class="shapetype_filter_select">
-           <option value="box" selected>Box</option>
-           <option value="cylinder">Cylinder</option>
-           <option value="sphere">Sphere</option>
-           <option value="text">3D Text</option>
-           <option value="plane">Plane</option>
-           <option value="torus">Torus</option>
-          </select></td>
-          <td></td>
-        </tr>
-        <tr data-types="all">
-          <td>Material</td>
-          <td><input type="text" data-field="materialname" class="materialname" list="materialdatatitlelookuplist" /></td>
-          <td><input type="color" class="colorpicker" data-inputclass="materialname"></td>
-        </tr>
-        <tr data-types="box,plane">
-          <td>Width</td>
-          <td><input type="text" data-field="width"></td>
-          <td></td>
-        </tr>
-        <tr data-types="box,plane">
-          <td>Height</td>
-          <td><input type="text" data-field="height"></td>
-          <td></td>
-        </tr>
-        <tr data-types="box">
-          <td>Depth</td>
-          <td><input type="text" data-field="depth"></td>
-          <td></td>
-        </tr>
-        <tr data-types="box">
-          <td>Box Size</td>
-          <td><input type="text" data-field="boxsize"></td>
-          <td></td>
-        </tr>
-        <tr data-types="text">
-          <td>Font</td>
-          <td><input type="text" data-field="textfontfamily"  list="fontfamilydatalist"></td>
-          <td></td>
-        </tr>
-        <tr data-types="text">
-          <td>Text</td>
-          <td><input type="text" data-field="texttext" value="Text"></td>
-          <td></td>
-        </tr>
-        <tr data-types="text">
-          <td>Depth</td>
-          <td><input type="text" data-field="textdepth" value=".2"></td>
-          <td></td>
-        </tr>
-        <tr data-types="text">
-          <td>Stroke</td>
-          <td><input type="text" data-field="textstroke"></td>
-          <td></td>
-        </tr>
-        <tr data-types="text">
-          <td>Text Size</td>
-          <td><input type="text" data-field="textsize" value="100"></td>
-          <td></td>
-        </tr>
-        <tr data-types="cylinder">
-          <td>Height</td>
-          <td><input type="text" data-field="height"></td>
-          <td></td>
-        </tr>
-        <tr data-types="cylinder,torus">
-          <td>Diameter</td>
-          <td><input type="text" data-field="width"></td>
-          <td></td>
-        </tr>
-        <tr data-types="cylinder,torus">
-          <td>Tessellation</td>
-          <td><input type="text" data-field="tessellation"></td>
-          <td></td>
-        </tr>
-        <tr data-types="torus">
-          <td>Thickness</td>
-          <td><input type="text" data-field="height"></td>
-          <td></td>
-        </tr>
-        <tr data-types="cylinder">
-          <td>Diameter Top</td>
-          <td><input type="text" data-field="diametertop"></td>
-          <td></td>
-        </tr>
-        <tr data-types="cylinder">
-          <td>Diameter Bottom</td>
-          <td><input type="text" data-field="diameterbottom"></td>
-          <td></td>
-        </tr>
-        <tr data-types="sphere">
-          <td>Diameter</td>
-          <td><input type="text" data-field="boxsize"></td>
-          <td></td>
-        </tr>
-        <tr data-types="sphere">
-          <td>Segments</td>
-          <td><input type="text" data-field="tessellation"></td>
-          <td></td>
-        </tr>
-        <tr data-types="sphere">
-          <td>Diameter X</td>
-          <td><input type="text" data-field="width"></td>
-          <td></td>
-        </tr>
-        <tr data-types="sphere">
-          <td>Diameter Y</td>
-          <td><input type="text" data-field="height"></td>
-          <td></td>
-        </tr>
-        <tr data-types="sphere">
-          <td>Diameter Z</td>
-          <td><input type="text" data-field="depth"></td>
-          <td></td>
-        </tr>
-        <tr data-types="all">
-          <td>Parent</td>
-          <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
-          <td></td>
-        </tr>
-      </table>
-      ${this._addParentTemplate()}
-    </div>
-    <div class="copy_clipboard_footer">
-      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
-      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
-      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
-      <label><input type="checkbox" checked class="copy_csv_allcolumn_clipboard"><span> all fields</span></label>
-      <br>
-      <div class="csv_import_preview"></div>
-    </div>`;
-  }
-  shapeRegister() {
-    this.shapetype_filter_select = this.panel.querySelector('.shapetype_filter_select');
-    this.shapetype_filter_select.addEventListener('input', e => this.shapeTypeFilterChange());
-    this.wizard_field_container = this.panel.querySelector('.wizard_field_container');
-
-    this.show_parent_wizard_details = this.panel.querySelector('.show_parent_wizard_details');
-    this.wizard_parent_details = this.panel.querySelector('.wizard_parent_details');
-    this.show_parent_wizard_details.addEventListener('input', e => {
-      if (this.show_parent_wizard_details.checked)
-        this.wizard_parent_details.style.display = '';
-      else
-        this.wizard_parent_details.style.display = 'none';
-    });
-
-    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
-    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
-    this.copy_csv_allcolumn_clipboard = this.panel.querySelector('.copy_csv_allcolumn_clipboard');
-    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
-    this.copy_csv_to_clipboard.addEventListener('click', e => {
-      let headers = this.copy_csv_header_clipboard.checked;
-      cMacro.copyDataToClipboard([this.export_csv], [], headers);
-      this.getItemName(true);
-    });
-    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
-    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
-    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
-    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
-
-    this.wizard_parent = this.panel.querySelector('.wizard_parent');
-    this.wizard_visibility = this.panel.querySelector('.wizard_visibility');
-    this.wizard_x = this.panel.querySelector('.wizard_x');
-    this.wizard_y = this.panel.querySelector('.wizard_y');
-    this.wizard_z = this.panel.querySelector('.wizard_z');
-    this.wizard_sx = this.panel.querySelector('.wizard_sx');
-    this.wizard_sy = this.panel.querySelector('.wizard_sy');
-    this.wizard_sz = this.panel.querySelector('.wizard_sz');
-    this.wizard_rx = this.panel.querySelector('.wizard_rx');
-    this.wizard_ry = this.panel.querySelector('.wizard_ry');
-    this.wizard_rz = this.panel.querySelector('.wizard_rz');
-
-    this.panel.querySelectorAll('.textfontfamily').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
-    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
-    this.panel.querySelectorAll('select').forEach(i => i.addEventListener('input', e => this.shapeUpdateCSV()));
-
-    this.panel.querySelectorAll('.colorpicker')
-      .forEach(i => this._initColorPicker(i));
-
-    this.shapeTypeFilterChange();
-  }
-  _updateCSVDisplay(btnIndex) {
-    this.csv_import_preview.style.display = 'none';
-    this.show_hide_raw_csv.style.background = '';
-    this.show_hide_raw_csv.style.color = '';
-    this.show_hide_table_csv.style.background = '';
-    this.show_hide_table_csv.style.color = '';
-
-    if (this.csv_import_shown === btnIndex) {
-      this.csv_import_shown = 0;
-    } else if (btnIndex === 1) {
-      this.csv_import_shown = btnIndex;
-      this.csv_import_preview.style.display = 'block';
-      this.show_hide_raw_csv.style.background = 'rgb(100,100,100)';
-      this.show_hide_raw_csv.style.color = 'white';
-      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
-    } else if (btnIndex === 2) {
-      this.csv_import_shown = btnIndex;
-      this.csv_import_preview.style.display = 'block';
-      this.show_hide_table_csv.style.background = 'rgb(100,100,100)';
-      this.show_hide_table_csv.style.color = 'white';
-
-      let headers = this.copy_csv_header_clipboard.checked;
-      let html = cMacro._dataRowsToTableHTML([this.export_csv], [], headers);
-
-      this.csv_import_preview.innerHTML = html;
-    }
-  }
-  shapeTypeFilterChange() {
-    let rows = this.wizard_field_container.querySelectorAll('tr');
-    let category = this.shapetype_filter_select.value;
-
-    rows.forEach(row => {
-      let cats = row.dataset.types;
-      if (!cats)
-        cats = '';
-      cats = cats.split(',');
-      if (cats.indexOf(category) === -1 && cats[0] !== 'all')
-        row.style.display = 'none';
-      else
-        row.style.display = '';
-    });
-
-    this.getItemName();
-    this.shapeUpdateCSV();
-  }
-  shapeUpdateCSV() {
-    this.newName = this.panelInput.value.trim();
-    let shapetype = this.shapetype_filter_select.value;
-    let allColumns = this.copy_csv_allcolumn_clipboard.checked;
-
-    let csv_row = {
-      name: this.newName,
-      asset: 'shape',
-      shapetype
-    };
-
-    let t_rows = this.panel.querySelectorAll('.shape_wizard_table input[type="text"]');
-    let all_fields = [];
-    t_rows.forEach(f => {
-      if (all_fields.indexOf(f.dataset.field) === -1)
-        all_fields.push(f.dataset.field);
-      if (allColumns)
-        csv_row[f.dataset.field] = '';
-    });
-
-    let tr_rows = this.panel.querySelectorAll('.shape_wizard_table tr');
-    tr_rows.forEach(row => {
-      let cats = row.dataset.types;
-      if (!cats)
-        cats = '';
-      cats = cats.split(',');
-      if (cats.indexOf(shapetype) !== -1 || cats[0] === 'all') {
-        let i = row.querySelector('input[type="text"]');
-        if (i) {
-          csv_row[i.dataset.field] = i.value;
-        }
-      }
-    });
-
-    let includeParent = this.show_parent_wizard_details.checked;
-    if (includeParent) {
-      csv_row['parent'] = this.wizard_parent.value;
-      csv_row['visibility'] = this.wizard_visibility.value;
-      csv_row['x'] = this.wizard_x.value;
-      csv_row['y'] = this.wizard_y.value;
-      csv_row['z'] = this.wizard_z.value;
-      csv_row['rx'] = this.wizard_rx.value;
-      csv_row['ry'] = this.wizard_ry.value;
-      csv_row['rz'] = this.wizard_rz.value;
-      csv_row['sx'] = this.wizard_sx.value;
-      csv_row['sy'] = this.wizard_sy.value;
-      csv_row['sz'] = this.wizard_sz.value;
-    }
-
-    let r = csv_row;
-    let header = this.copy_csv_header_clipboard.checked;
-    this.export_csv = r;
-    if (r) {
-      if (window.Papa) {
-        this.csvImportPreviewRaw = Papa.unparse([r], {
-          header
-        });
-        this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
-        if (this.csv_import_shown === 2) {
-          this.csv_import_shown = 0;
-          this._updateCSVDisplay(2);
-        }
-      }
-    } else
-      this.csv_import_preview.innerHTML = new Date();
-  }
-  meshTemplate() {
-    return `<div class="standardmeshassetpanel mesh_wizard_wrapper" style="display:flex;flex-direction:column;">
-        <table class="wizard_field_container">
-          <tr>
-            <td>Mesh URL</td>
-            <td><input type="text" class="mesh_meshpath texturepathinput" data-field="mesh_meshpath" list="meshesDefaultsDataList" /></td>
-            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-          </tr>
-          <tr>
-            <td>Texture URL</td>
-            <td><input type="text" list="sbimageslist" class="mesh_texturepath texturepathinput" data-field="mesh_texturepath" /></td>
-            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-          </tr>
-          <tr>
-            <td>Normal Map</td>
-            <td><input type="text" list="sbimageslist" class="mesh_bmppath texturepathinput" data-field="mesh_bmppath" /></td>
-            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-          </tr>
-          <tr>
-            <td>Specular Map</td>
-            <td><input type="text" list="sbimageslist" class="mesh_specularpath texturepathinput" data-field="mesh_specularpath" /></td>
-            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-          </tr>
-          <tr>
-            <td>Specular Power</td>
-            <td colspan="2">
-              <div style="display:flex;flex-direction:row">
-                <input type="text" class="mesh_specularpower" data-field="mesh_specularpower" />
-                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Has Alpha (1)</span><input type="text" class="mesh_hasalpha" data-field="mesh_hasalpha" />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="3" style="text-align:center">
-              <div class="mesh-details-images" style="line-height:0">
-                <img class="mesh_texture_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
-                <img class="mesh_bump_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
-                <img class="mesh-preview-img" crossorigin="anonymous" style="display:none;">
-              </div>
-              <div class="mesh_message" style=""></div>
-            </td>
-          </tr>
-          <tr data-types="all">
-            <td>Parent</td>
-            <td><input class="show_parent_wizard_details" style="width:1.5em" type="checkbox"></td>
-            <td></td>
-          </tr>
-        </table>
-        ${this._addParentTemplate()}
-      </div>
-    </div>
-    <div class="copy_clipboard_footer">
-      <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-      <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
-      <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
-      <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
-      <br>
-      <div class="csv_import_preview"></div>
-    </div>`;
-  }
-  meshRegister() {
-    this.mesh_texture_img = this.panel.querySelector('.mesh_texture_img');
-    this.mesh_bump_img = this.panel.querySelector('.mesh_bump_img');
-    this.mesh_message = this.panel.querySelector('.mesh_message');
-    this.standardmeshassetpanel = this.panel.querySelector('.standardmeshassetpanel');
-
-    this.mesh_meshpath = this.panel.querySelector('.mesh_meshpath');
-    this.mesh_texturepath = this.panel.querySelector('.mesh_texturepath');
-    this.mesh_bmppath = this.panel.querySelector('.mesh_bmppath');
-    this.mesh_specularpath = this.panel.querySelector('.mesh_specularpath');
-    this.mesh_specularpower = this.panel.querySelector('.mesh_specularpower');
-    this.mesh_hasalpha = this.panel.querySelector('.mesh_hasalpha');
-
-    this.wizard_parent = this.panel.querySelector('.wizard_parent');
-    this.wizard_visibility = this.panel.querySelector('.wizard_visibility');
-    this.wizard_x = this.panel.querySelector('.wizard_x');
-    this.wizard_y = this.panel.querySelector('.wizard_y');
-    this.wizard_z = this.panel.querySelector('.wizard_z');
-    this.wizard_sx = this.panel.querySelector('.wizard_sx');
-    this.wizard_sy = this.panel.querySelector('.wizard_sy');
-    this.wizard_sz = this.panel.querySelector('.wizard_sz');
-    this.wizard_rx = this.panel.querySelector('.wizard_rx');
-    this.wizard_ry = this.panel.querySelector('.wizard_ry');
-    this.wizard_rz = this.panel.querySelector('.wizard_rz');
-
-    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
-    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
-    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
-    this.copy_csv_to_clipboard.addEventListener('click', e => {
-      let headers = this.copy_csv_header_clipboard.checked;
-      cMacro.copyDataToClipboard([this.export_csv], [], headers);
-      this.getItemName(true);
-    });
-    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
-    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
-    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
-    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
-
-    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.meshUpdateCSV(e, i)));
-    this.show_parent_wizard_details = this.panel.querySelector('.show_parent_wizard_details');
-    this.wizard_parent_details = this.panel.querySelector('.wizard_parent_details');
-    this.show_parent_wizard_details.addEventListener('input', e => {
-      if (this.show_parent_wizard_details.checked)
-        this.wizard_parent_details.style.display = '';
-      else
-        this.wizard_parent_details.style.display = 'none';
-    });
-
-    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'specularpath', 'specularpower', 'hasalpha'];
-
-    this.__registerFileUploaders();
-
-    this.meshUpdateCSV();
-  }
-  meshUpdateCSV(e, ctl) {
-    if (ctl && ctl.classList.contains('mesh_meshpath')) {
-      let meshPath = ctl.value;
-      let meshIndex = this.app.meshesPaths.indexOf(meshPath);
-
-      if (meshIndex !== -1) {
-        let meshD = this.app.meshesDetails[meshIndex];
-        this.meshCSVFields.forEach((item, index) => {
-          let value = meshD[item];
-          if (!value)
-            value = '';
-          if (this['mesh_' + item].value !== undefined)
-            this['mesh_' + item].value = value;
-          else
-            this['mesh_' + item].innerHTML = value;
-        });
-      }
-    }
-
-    let img = this.mesh_texturepath.value;
-    if (img.substr(0, 3) === 'sb:')
-      img = this.cdnPrefix + 'textures/' + img.substring(3);
-    this.mesh_texture_img.setAttribute('src', img);
-    let bump = this.mesh_bmppath.value;
-    if (bump.substr(0, 3) === 'sb:')
-      bump = this.cdnPrefix + 'textures/' + bump.substring(3);
-    this.mesh_bump_img.setAttribute('src', bump);
-    let header = this.copy_csv_header_clipboard.checked;
-    let csv = this.meshScrape();
-    this.export_csv = csv;
-    if (csv) {
-      this.csvImportPreviewRaw = Papa.unparse([this.export_csv], {
-        header
-      });
-      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
-      if (this.csv_import_shown === 2) {
-        this.csv_import_shown = 0;
-        this._updateCSVDisplay(2);
-      }
-    } else
-      this.csv_import_preview.innerHTML = new Date();
-  }
-  meshScrape() {
-    this.newName = this.panelInput.value.trim();
-    let includeParent = this.show_parent_wizard_details.checked;
-
-    let csv_row = {
-      name: this.newName,
-      asset: 'meshtexture'
-    };
-
-    csv_row['materialname'] = csv_row['name'] + '_material';
-
-    this.meshCSVFields.forEach((item, index) => {
-      if (item === 'message')
-        return;
-
-      csv_row[item] = this['mesh_' + item].value;
-    });
-
-    csv_row['ambient'] = 'x';
-    csv_row['diffuse'] = 'x';
-    csv_row['emissive'] = 'x';
-
-    if (includeParent) {
-      csv_row['parent'] = this.wizard_parent.value;
-      csv_row['visibility'] = this.wizard_visibility.value;
-      csv_row['x'] = this.wizard_x.value;
-      csv_row['y'] = this.wizard_y.value;
-      csv_row['z'] = this.wizard_z.value;
-      csv_row['rx'] = this.wizard_rx.value;
-      csv_row['ry'] = this.wizard_ry.value;
-      csv_row['rz'] = this.wizard_rz.value;
-      csv_row['sx'] = this.wizard_sx.value;
-      csv_row['sy'] = this.wizard_sy.value;
-      csv_row['sz'] = this.wizard_sz.value;
-    }
-
-    return csv_row;
-  }
-  async meshCreate() {
-    return this._itemCreate();
-  }
-  materialTemplate() {
-    return `<div class="standardmaterialassetpanel material_wizard_wrapper" style="flex-direction:column">
-        <table class="wizard_field_container">
-          <tr>
-            <td>Texture URL</td>
-            <td><input type="text" list="materialsuggestionlist" class="material_texturepath texturepathinput" data-field="material_texturepath" /></td>
-            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-          </tr>
-          <tr>
-            <td>Normal Map URL</td>
-            <td><input type="text" list="sbimageslist" class="material_bmppath texturepathinput" data-field="material_bmppath" /></td>
-            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-          </tr>
-          <tr>
-            <td>Specular Map URL</td>
-            <td><input type="text" list="sbimageslist" class="material_specularpath texturepathinput" data-field="material_specularpath" /></td>
-            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
-          </tr>
-          <tr>
-            <td>Specular Power</td>
-            <td colspan="2">
-              <div style="display:flex;flex-direction:row">
-                <input type="text" class="material_specularpower" data-field="material_specularpower" />
-                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Has Alpha (1)</span>
-                <input type="text" class="material_hasalpha" data-field="material_hasalpha" />
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>Scale v</td>
-            <td colspan="2">
-              <div style="display:flex;flex-direction:row">
-                <input type="text" class="materialscalev" />
-                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Scale u</span>
-                <input type="text" class="materialscaleu" />
-              </div>
-            </td>
-          </tr>
-        </table>
-        <div class="material-details-images" style="flex:1;text-align:center;">
-          <div class="material_image_bkg_div" style="width:90%;height:10em;background-image:repeat;display:inline-block;">
-          &nbsp;
-          </div>
-        </div>
-      </div>
-      <div class="copy_clipboard_footer">
-        <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
-        <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>
-        <button class="show_hide_table_csv" style="flex:0;margin-left:0"><i class="material-icons">view_module</i></button>
-        <label><input type="checkbox" checked class="copy_csv_header_clipboard"><span> headers</span></label>
-        <br>
-        <div class="csv_import_preview"></div>
-      </div>
-      <datalist id="materialsuggestionlist"></datalist>`;
-  }
-  _materialGetHTMLOptionList() {
-    let paths = [];
-    for (let c = 0; c < 17; c++)
-      paths.push(`sb:matpack/brickwall${c + 1}_D.jpg`);
-    for (let c = 0; c < 11; c++)
-      paths.push(`sb:matpack/floor${c + 1}_D.jpg`);
-    for (let c = 0; c < 9; c++)
-      paths.push(`sb:matpack/tiles0${c + 1}_D.jpg`);
-    paths.push(`sb:matpack/tiles10_D.jpg`);
-    for (let c = 0; c < 10; c++)
-      paths.push(`sb:matpack/Stone${c + 1}_D.jpg`);
-    for (let c = 0; c < 8; c++)
-      paths.push(`sb:matpack/grid${c + 1}_D.png`);
-    for (let c = 0; c < 2; c++)
-      paths.push(`sb:matpack/hedgerow${c + 1}_D.jpg`);
-    for (let c = 0; c < 4; c++)
-      paths.push(`sb:matpack/metal${c + 1}_D.jpg`);
-    for (let c = 0; c < 16; c++)
-      paths.push(`sb:matpack/roof${c + 1}_D.jpg`);
-    for (let c = 0; c < 7; c++)
-      paths.push(`sb:matpack/wood${c + 1}_D.jpg`);
-    for (let c = 0; c < 14; c++)
-      paths.push(`sb:ground/ground${c + 1}_D.jpg`);
-    for (let c = 0; c < 14; c++)
-      paths.push(`sb:ground/ground${c + 1}_D.jpg`);
-    for (let c = 0; c < 4; c++)
-      paths.push(`sb:ground/grass${c + 1}_D.jpg`);
-    for (let c = 0; c < 4; c++)
-      paths.push(`sb:ground/sand${c + 1}_D.jpg`);
-    paths.push(`sb:ground/g2/dryground_D.jpg`);
-    paths.push(`sb:ground/g2/grassleaves_D.jpg`);
-    paths.push(`sb:ground/g2/grassleaves2_D.jpg`);
-    paths.push(`sb:ground/g2/grassmoss_D.jpg`);
-    paths.push(`sb:ground/g2/grassrocks_D.jpg`);
-    paths.push(`sb:ground/g2/grounddirt1_D.jpg`);
-    paths.push(`sb:ground/g2/grounddirt2_D.jpg`);
-    paths.push(`sb:ground/g2/groundlava_D.jpg`);
-    paths.push(`sb:ground/g2/groundweeds_D.jpg`);
-    for (let c = 0; c < 6; c++)
-      paths.push(`sb:ground/g2/grass${c + 1}_D.jpg`);
-    for (let c = 0; c < 3; c++)
-      paths.push(`sb:ground/g2/groundrocks${c + 1}_D.jpg`);
-
-    this.materialTexturePaths = paths;
-
-    let html = '';
-    paths.forEach(p => html += `<option>${p}</option>`);
-    return html;
-  }
-  materialRegister() {
-    this.standardmaterialassetpanel = this.panel.querySelector('.standardmaterialassetpanel');
-    this.csv_import_preview = this.panel.querySelector('.csv_import_preview');
-    this.copy_csv_to_clipboard = this.panel.querySelector('.copy_csv_to_clipboard');
-    this.copy_csv_header_clipboard = this.panel.querySelector('.copy_csv_header_clipboard');
-    this.copy_csv_to_clipboard.addEventListener('click', e => {
-      let headers = this.copy_csv_header_clipboard.checked;
-      cMacro.copyDataToClipboard([this.export_csv], [], headers);
-      this.getItemName(true);
-    });
-    this.show_hide_raw_csv = this.panel.querySelector('.show_hide_raw_csv');
-    this.show_hide_raw_csv.addEventListener('click', e => this._updateCSVDisplay(1));
-    this.show_hide_table_csv = this.panel.querySelector('.show_hide_table_csv');
-    this.show_hide_table_csv.addEventListener('click', e => this._updateCSVDisplay(2));
-
-    this.material_image_bkg_div = this.panel.querySelector('.material_image_bkg_div');
-    this.materialscalev = this.panel.querySelector('.materialscalev');
-    this.materialscaleu = this.panel.querySelector('.materialscaleu');
-    this.material_texturepath = this.panel.querySelector('.material_texturepath');
-    this.material_bmppath = this.panel.querySelector('.material_bmppath');
-    this.material_specularpath = this.panel.querySelector('.material_specularpath');
-    this.material_specularpower = this.panel.querySelector('.material_specularpower');
-    this.material_hasalpha = this.panel.querySelector('.material_hasalpha');
-    this.materialsuggestionlist = this.panel.querySelector('#materialsuggestionlist');
-
-
-    this.materialsuggestionlist.innerHTML = this._materialGetHTMLOptionList();
-    this.material_texturepath.addEventListener('input', e => this.materialDiffuseChanged());
-
-    this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
-
-    this.__registerFileUploaders();
-    this.materialUpdateCSV();
-  }
-  materialUpdateCSV() {
-    let csv = this.materialScrape();
-    let header = this.copy_csv_header_clipboard.checked;
-
-    this.export_csv = csv;
-    if (csv) {
-      this.csvImportPreviewRaw = Papa.unparse([this.export_csv], {
-        header
-      });
-      this.csv_import_preview.innerHTML = this.csvImportPreviewRaw;
-      if (this.csv_import_shown === 2) {
-        this.csv_import_shown = 0;
-        this._updateCSVDisplay(2);
-      }
-    } else
-      this.csv_import_preview.innerHTML = new Date();
-  }
-  async _crossAnonLoadImg(url) {
-    return new Promise((resolve) => {
-      let img = document.createElement('img');
-      img.addEventListener('load', e => {
-        img.remove();
-        resolve();
-      });
-      img.setAttribute('crossorigin', 'anonymous');
-      img.setAttribute('src', url);
-      img.style.display = 'none';
-      document.body.appendChild(img);
-    });
-  }
-  materialDiffuseChanged() {
-    let texture = this.material_texturepath.value;
-
-    if (this.materialTexturePaths.indexOf(texture) === -1)
-      return;
-
-    let hasAlpha = '';
-    if (texture.substring(0, 3) === 'png') {
-      hasAlpha = '1';
-    }
-
-    this.material_bmppath.value = texture.slice(0, -6) + '_N.jpg';
-    this.material_specularpath.value = texture.slice(0, -6) + '_S.jpg';
-    this.material_hasalpha.value = hasAlpha;
-    this.materialUpdateCSV();
-  }
-  materialScrape() {
-    this.standardmaterialassetpanel.style.display = 'flex';
-    this.newName = this.panelInput.value.trim();
-    let csv_row = {
-      name: this.newName,
-      asset: 'material'
-    };
-
-    let texture = this.material_texturepath.value;
-    let bumptexture = this.material_bmppath.value;
-    let speculartexture = this.material_specularpath.value;
-
-    let scaleu = this.materialscaleu.value;
-    let scalev = this.materialscalev.value;
-
-    let textureURL = '';
-    let hasAlpha = '';
-    if (!texture)
-      texture = '';
-
-    if (texture) {
-      textureURL = texture;
-      if (texture.substring(0, 3) === 'sb:')
-        textureURL = this.cdnPrefix + 'textures/' + texture.substring(3);
-
-      this.material_image_bkg_div.style.backgroundImage = '';
-      this._crossAnonLoadImg(textureURL).then(() => {
-        this.material_image_bkg_div.style.backgroundImage = 'url(' + textureURL + ')';
-      });
-
-      let u = Number(scaleu);
-      let v = Number(scalev);
-      if (!u)
-        u = 1;
-      if (!v)
-        v = 1;
-
-      let sizeX = 100;
-      let sizeY = 100;
-      if (v !== 0.0) {
-        sizeX = (sizeX / v).toFixed(2);
-      }
-      if (u !== 0.0) {
-        sizeY = (sizeY / u).toFixed(2);
-      }
-      this.material_image_bkg_div.style.backgroundSize = sizeX + '% ' + sizeY + '%';
-    } else {
-      this.material_image_bkg_div.style.backgroundImage = '';
-    }
-
-
-    Object.assign(csv_row, {
-      texture,
-      speculartexture,
-      bumptexture,
-      scaleu,
-      scalev,
-      hasalpha: hasAlpha
-    });
-
-    return csv_row;
-  }
-  async materialCreate() {
-    return this._itemCreate();
-  }
-  _handleImageTextureUpload(fileCtl, field) {
-    let fileBlob = fileCtl.files[0];
-
-    if (!fileBlob)
-      return;
-
-    field.value = 'Uploading...';
-
-    let fireSet = this.app.a.modelSets['block'];
-    let uKey = fireSet.getKey();
-    let key = this.app.a.profile.selectedWorkspace + `/${uKey}/`;
-    fireSet.setBlob(key, fileBlob, fileBlob.name).then(uploadResult => {
-      field.value = uploadResult.downloadURL;
-      let event = new Event('input', {
-        bubbles: true,
-        cancelable: true,
-      });
-
-      field.dispatchEvent(event);
-    });
-  }
-  _shapeScrapeTextPlane() {
-    this.newName = this.panelInput.value.trim();
-    let csv_row = {
-      name: this.newName,
-      asset: 'textplane'
-    };
-    let textshapefields = [
-      'texturetext', 'texturetext2', 'textfontfamily', 'textfontcolor', 'textfontweight', 'textfontsize',
-      'texturetextrendersize', 'width', 'height'
-    ];
-    textshapefields.forEach(field => {
-      let f = this.text2dpanel.querySelector('.' + field);
-      if (f.getAttribute('type') === 'checkbox')
-        csv_row[field] = f.checked ? '1' : '';
-      else
-        csv_row[field] = f.value;
-    });
-    return csv_row;
   }
   blockColorPickerClick(event, ctl, prefix = 'color: ') {
     let bColor = GLOBALUTIL.HexToRGB(ctl.value);
