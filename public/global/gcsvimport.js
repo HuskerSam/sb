@@ -1038,12 +1038,18 @@ class gCSVImport {
     let ambientTextureName = row.ambient === 'x' ? textureName : '';
     let emissiveTextureName = row.emissive === 'x' ? textureName : '';
     let specularPower = '4';
-    if (row.specularpower)
-      specularPower = row.specularpower;
-    if (row.ambienttexture)
-      ambientTextureName = row.ambienttexture;
-    if (row.emissivetexture)
-      emissiveTextureName = row.emissivetexture;
+    let diffuseColor = '';
+    let emissiveColor = '';
+    let ambientColor = '';
+    let specularColor = '';
+    if (row.specularpower) specularPower = row.specularpower;
+    if (row.ambienttexture) ambientTextureName = row.ambienttexture;
+    if (row.emissivetexture) emissiveTextureName = row.emissivetexture;
+
+    if (row.diffusecolor) diffuseColor = row.diffusecolor;
+    if (row.ambientcolor) ambientColor = row.ambientcolor;
+    if (row.emissivecolor) emissiveColor = row.emissivecolor;
+    if (row.specularcolor) specularColor = row.specularcolor;
 
     let materialData = {
       title: row.name,
@@ -1053,10 +1059,11 @@ class gCSVImport {
       bumpTextureName,
       specularTextureName,
       specularPower,
-      ambientColor: '',
       backFaceCulling: true,
-      diffuseColor: '',
-      emissiveColor: ''
+      ambientColor,
+      diffuseColor,
+      emissiveColor,
+      specularColor
     };
     return await this.dbSetRecord('material', materialData);
   }

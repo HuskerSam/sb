@@ -1419,6 +1419,26 @@ class cMacro {
               </div>
             </td>
           </tr>
+          <tr>
+            <td>Diffuse Color</td>
+            <td><input data-field="diffusecolor" class="diffusecolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="diffusecolor"></td>
+          </tr>
+          <tr>
+            <td>Emissive Color</td>
+            <td><input data-field="emissivecolor" class="emissivecolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="emissivecolor"></td>
+          </tr>
+          <tr>
+            <td>Ambient Color</td>
+            <td><input data-field="ambientcolor" class="ambientcolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="ambientcolor"></td>
+          </tr>
+          <tr>
+            <td>Specular Color</td>
+            <td><input data-field="specularcolor" class="specularcolor" type="text" value="" /></td>
+            <td><input type="color" class="colorpickerraw" data-inputclass="specularcolor"></td>
+          </tr>
         </table>
         <div class="material-details-images" style="flex:1;text-align:center;">
           <div class="material_image_bkg_div" style="width:90%;height:10em;background-image:repeat;display:inline-block;">
@@ -1510,11 +1530,17 @@ class cMacro {
     this.material_hasalpha = this.panel.querySelector('.material_hasalpha');
     this.materialsuggestionlist = this.panel.querySelector('#materialsuggestionlist');
 
+    this.material_diffusecolor = this.panel.querySelector('.diffusecolor');
+    this.material_emissivecolor = this.panel.querySelector('.emissivecolor');
+    this.material_ambientcolor = this.panel.querySelector('.ambientcolor');
+    this.material_specularcolor = this.panel.querySelector('.specularcolor');
 
     this.materialsuggestionlist.innerHTML = this._materialGetHTMLOptionList();
     this.material_texturepath.addEventListener('input', e => this.materialDiffuseChanged());
 
     this.panel.querySelectorAll('input').forEach(i => i.addEventListener('input', e => this.materialUpdateCSV()));
+
+    this.panel.querySelectorAll('.colorpickerraw').forEach(i => this._initColorPicker(i, ''));
 
     this.__registerFileUploaders();
     this.materialUpdateCSV();
@@ -1580,6 +1606,11 @@ class cMacro {
     let scaleu = this.materialscaleu.value;
     let scalev = this.materialscalev.value;
 
+    let diffusecolor = this.material_diffusecolor.value;
+    let emissivecolor = this.material_emissivecolor.value;
+    let ambientcolor = this.material_ambientcolor.value;
+    let specularcolor = this.material_specularcolor.value;
+
     let textureURL = '';
     let hasAlpha = '';
     if (!texture)
@@ -1625,6 +1656,10 @@ class cMacro {
       texture,
       speculartexture,
       bumptexture,
+      diffusecolor,
+      emissivecolor,
+      ambientcolor,
+      specularcolor,
       scaleu,
       scalev,
       hasalpha: hasAlpha
