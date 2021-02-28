@@ -1335,6 +1335,7 @@ class gCSVImport {
 
     row.origParent = row.parent;
     row.origName = row.name;
+    row.origZ = row.z;
     row.parent = row.name;
     row.name = row.name + '_shape';
 
@@ -1347,6 +1348,7 @@ class gCSVImport {
     row.asset = 'block';
     row.parent = row.origParent;
     row.name = row.origName;
+    row.z = row.origZ;
     this.addParentBlockChild(row);
     return blockResult;
   }
