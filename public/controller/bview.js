@@ -59,7 +59,6 @@ class bView {
     this.canvasActions = this.dialog.querySelector('.canvas-actions');
     this.canvasActions.style.display = '';
     this.loadedSceneURL = '';
-    this.lastNoBump = gAPPP.a.profile.noBumpMaps;
 
     this.canvasHelper = new cPanelCanvas(this);
     this.context.canvasHelper = this.canvasHelper;
@@ -200,10 +199,6 @@ class bView {
     gAPPP._updateApplicationStyle();
     if (!this.rootBlock)
       return;
-    if (this.lastNoBump !== gAPPP.a.profile.noBumpMaps) {
-      this.lastNoBump = gAPPP.a.profile.noBumpMaps;
-      this.rootBlock.setData();
-    }
 
     if (this.canvasHelper)
       this.canvasHelper.userProfileChange();

@@ -27,19 +27,6 @@ class wBlock {
     this.groundObject = null;
     this.updateVideoCallback = () => {};
     this.updatesDisabled = false;
-
-    this.updateNoBump();
-  }
-  updateNoBump() {
-    this.noBump = false;
-    if (this.context.info.version.indexOf('1.0') !== -1)
-      return this.noBump = true;
-
-    if (gAPPP.a.profile.noBumpMaps)
-      return this.noBump = true;
-
-    for (let i in this.childBlocks)
-      this.childBlocks[i].updateNoBump();
   }
   set blockKey(key) {
     this._blockKey = key;
@@ -595,8 +582,6 @@ class wBlock {
     if (this.context !== gAPPP.activeContext)
       return;
 
-    this.updateNoBump();
-
     if (this.staticType === 'texture') {
       this.__setpreviewshape(values);
       this._createShape();
@@ -1005,10 +990,6 @@ class wBlock {
     for (let i in fields) {
       let field = fields[i];
       let value = values[field.fireSetField];
-
-      if (this.noBump)
-        if (field.fireSetField === 'bumpTextureName')
-          continue;
 
       if (field.contextObjectField)
         this.__updateObjectValue(field, value, material);

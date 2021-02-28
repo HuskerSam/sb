@@ -437,13 +437,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   floatLeft: true,
   clearLeft: true
 }, {
-  title: 'No Bump Maps',
-  fireSetField: 'noBumpMaps',
-  group: 'cameraTrack',
-  type: 'boolean',
-  floatLeft: true,
-  clearLeft: true
-}, {
   title: 'Hide Video',
   fireSetField: 'noVideo',
 
