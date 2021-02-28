@@ -1070,10 +1070,18 @@ class gCSVImport {
   async addCSVAnimatedLine(row) {
     let dashes = this.getNumberOrDefault(row.dashes, 1);
     let runlength = this.getNumberOrDefault(row.runlength, 2000);
+    if (row.runlength && row.runlength.toString().indexOf('s') !== -1) {
+      let str = row.runlength.split('s').join('');
+      let v = this.getNumberOrDefault(str, 0);
+      runlength = v * 1000;
+    }
     let width = this.getNumberOrDefault(row.width, 1);
     let height = this.getNumberOrDefault(row.height, 1);
     let depth = this.getNumberOrDefault(row.depth, 10);
     let dashlength = this.getNumberOrDefault(row.dashlength, 1);
+    if (row.scalarframetimes === undefined)
+      row.scalarframetimes = '';
+    let scalarframetimes = (row.scalarframetimes.toString() === '1');
 
     if (width <= 0.0)
       width = 0.001;
@@ -1163,12 +1171,17 @@ class gCSVImport {
         let zh = zLen / 2.0;
         let iTime = runlength - minZTime;
         frame.frameTime = (iTime / runlength * 100.0).toFixed(2).toString() + '%';
+        if (scalarframetimes)
+          frame.frameTime = iTime.toString();
+
         frame.frameOrder = frameOrder.toString();
         frame.positionZ = zh.toFixed(3);
         this.dbSetRecord('frame', frame);
         frameOrder += 10;
 
         frame.frameTime = ((iTime + 5) / runlength * 100.0).toFixed(2).toString() + '%';
+        if (scalarframetimes)
+          frame.frameTime = (iTime + 5).toString();
         frame.frameOrder = frameOrder.toString();
         frame.positionZ = (-1.0 * zh).toFixed(3);
         this.dbSetRecord('frame', frame);
@@ -1180,6 +1193,8 @@ class gCSVImport {
         frame.positionZ -= zLen;
       frame.frameOrder = frameOrder.toString();
       frame.frameTime = '100%';
+      if (scalarframetimes)
+        frame.frameTime = runlength.toString();
       this.dbSetRecord('frame', frame);
     }
 

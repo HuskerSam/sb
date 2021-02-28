@@ -2150,6 +2150,11 @@ class cMacro {
             <td><input type="text" class="depth" value="10" /></td>
             <td></td>
           </tr>
+          <tr>
+            <td>Scalar frame times</td>
+            <td><input type="checkbox" style="width:1.25em;line-height:1.5em" class="scalarframetimes" /></td>
+            <td></td>
+          </tr>
         </table>
       </div>
       <div class="shape_and_text_block_options">
@@ -2755,7 +2760,7 @@ class cMacro {
       asset: 'animatedline'
     };
     let fields = [
-      'dashes', 'runlength', 'dotshape', 'dashlength', 'tessellation', 'material', 'width', 'height', 'depth'
+      'dashes', 'runlength', 'dotshape', 'dashlength', 'tessellation', 'material', 'width', 'height', 'depth', 'scalarframetimes'
     ];
     fields.forEach(field => {
       let f = this.animatedDashPanel.querySelector('.' + field);
