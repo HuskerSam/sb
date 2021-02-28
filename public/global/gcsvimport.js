@@ -1333,22 +1333,25 @@ class gCSVImport {
     if (row.texttextline2)
       this.addCSVShapeRow(Object.assign(this.defaultCSVRow(), textRowLine2));
 
-    row.origParent = row.parent;
-    row.origName = row.name;
-    row.origZ = row.z;
-    row.parent = row.name;
-    row.name = row.name + '_shape';
-
-    if (row.createshapetype === 'cube' || row.createshapetype === 'sphere')
-      row.z = (-1.0 * minDim / 2.0).toFixed(3);
+    let sRow = Object.assign({}, row);
+    sRow.parent = row.name;
+    sRow.name = row.name + '_shape';
+    sRow.x = 0;
+    sRow.y = 0;
+    sRow.z = 0;
+    sRow.rx = 0;
+    sRow.ry = 0;
+    sRow.rz = 0;
+    sRow.sx = 1;
+    sRow.sy = 1;
+    sRow.sz = 1;
+    if (sRow.createshapetype === 'cube' || sRow.createshapetype === 'sphere')
+      sRow.z = (-1.0 * minDim / 2.0).toFixed(3);
     else
-      row.z = (-1.0 * depth / 2.0).toFixed(3);
-    this.addCSVShapeRow(this.__childShapeRow(row));
+      sRow.z = (-1.0 * depth / 2.0).toFixed(3);
+    this.addCSVShapeRow(this.__childShapeRow(sRow));
 
     row.asset = 'block';
-    row.parent = row.origParent;
-    row.name = row.origName;
-    row.z = row.origZ;
     this.addParentBlockChild(row);
     return blockResult;
   }
