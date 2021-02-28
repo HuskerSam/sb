@@ -51,13 +51,17 @@ class wFrames {
   }
   __baseDetails() {
     let root = this.isRoot;
-    let frameData = this.meshValues;
-    if (!root)
-      frameData = this.parentBlock.blockRenderData;
-    else if (this.orderedKeys.length > 0)
-      frameData = this.rawFrames[this.orderedKeys[0]];
-    else
-      frameData = this.parentBlock.blockRenderData;
+    let frameData = Object.assign({}, this.meshValues);
+    if (!root || this.orderedKeys.length < 1)
+      Object.assign(frameData, this.parentBlock.blockRenderData);
+
+    if (this.orderedKeys.length > 0) {
+      let data = this.rawFrames[this.orderedKeys[0]];
+      for (let i in data) {
+        if (data[i] !== undefined && data[i] !== '')
+          frameData[i] = data[i];
+      }
+    }
 
     let details = {};
     for (let c = 0, l = this.frameAttributeFields.length; c < l; c++) {
