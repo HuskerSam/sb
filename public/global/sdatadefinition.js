@@ -556,7 +556,7 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayType: 'number',
   group: 'dimensions'
 }, {
-  title: 'Tessellsation',
+  title: 'Tessellation',
   fireSetField: 'cylinderTessellation',
   shapeOption: 'tessellation',
   displayGroup: 'cylinder',
