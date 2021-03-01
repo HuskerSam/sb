@@ -67,6 +67,13 @@
     "categories": "Layout",
     "description": "Video Picker using frame commands - shows video with time synchronized between multiple browsers open",
     "helpkey": "shortcolorvideos"
+  }, {
+    "name": "webGL App Diagram",
+    "key": "webAppDiagram",
+    "hint": "webApp Diagram",
+    "categories": "Layout",
+    "description": "webApp diagram with lots of frames",
+    "helpkey": "webappdiagram"
   },
   {
     "name": "Configuration",
