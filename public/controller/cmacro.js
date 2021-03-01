@@ -1430,6 +1430,16 @@ class cMacro {
             </td>
           </tr>
           <tr>
+            <td>Offset v</td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
+                <input type="text" class="materialoffsetv" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Offset u</span>
+                <input type="text" class="materialoffsetu" />
+              </div>
+            </td>
+          </tr>
+          <tr>
             <td>Diffuse Color</td>
             <td><input data-field="diffusecolor" class="diffusecolor" type="text" value="" /></td>
             <td><input type="color" class="colorpickerraw" data-inputclass="diffusecolor"></td>
@@ -1533,6 +1543,8 @@ class cMacro {
     this.material_image_bkg_div = this.panel.querySelector('.material_image_bkg_div');
     this.materialscalev = this.panel.querySelector('.materialscalev');
     this.materialscaleu = this.panel.querySelector('.materialscaleu');
+    this.materialoffsetv = this.panel.querySelector('.materialoffsetv');
+    this.materialoffsetu = this.panel.querySelector('.materialoffsetu');
     this.material_texturepath = this.panel.querySelector('.material_texturepath');
     this.material_bmppath = this.panel.querySelector('.material_bmppath');
     this.material_specularpath = this.panel.querySelector('.material_specularpath');
@@ -1621,6 +1633,8 @@ class cMacro {
 
     let scaleu = this.materialscaleu.value;
     let scalev = this.materialscalev.value;
+    let offsetu = this.materialoffsetu.value;
+    let offsetv = this.materialoffsetv.value;
 
     let diffusecolor = this.material_diffusecolor.value;
     let emissivecolor = this.material_emissivecolor.value;
@@ -1684,6 +1698,8 @@ class cMacro {
       specularcolor,
       scaleu,
       scalev,
+      offsetu,
+      offsetv,
       hasalpha: hasAlpha
     });
 

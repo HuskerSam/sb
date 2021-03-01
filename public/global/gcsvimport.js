@@ -1008,7 +1008,9 @@ class gCSVImport {
       let textureData = {
         url: row.texture,
         vScale: row.scalev,
-        uScale: row.scaleu
+        uScale: row.scaleu,
+        uOffset: row.offsetu,
+        vOffset: row.offsetv
       };
 
       if (row.hasalpha.toString() === '1') textureData.hasAlpha = true;
@@ -1033,7 +1035,9 @@ class gCSVImport {
         title: bumpTextureName,
         url: row.bumptexture,
         vScale: row.scalev,
-        uScale: row.scaleu
+        uScale: row.scaleu,
+        uOffset: row.offsetu,
+        vOffset: row.offsetv
       };
       this.dbSetRecord('texture', textureData);
     }
@@ -1045,7 +1049,9 @@ class gCSVImport {
         title: specularTextureName,
         url: row.speculartexture,
         vScale: row.scalev,
-        uScale: row.scaleu
+        uScale: row.scaleu,
+        uOffset: row.offsetu,
+        vOffset: row.offsetv
       };
       this.dbSetRecord('texture', textureData);
     }
@@ -1065,7 +1071,9 @@ class gCSVImport {
         title: ambientTextureName,
         url: row.ambienttexture,
         vScale: row.scalev,
-        uScale: row.scaleu
+        uScale: row.scaleu,
+        uOffset: row.offsetu,
+        vOffset: row.offsetv
       };
       this.dbSetRecord('texture', textureData);
     }
@@ -1076,7 +1084,9 @@ class gCSVImport {
         title: emissiveTextureName,
         url: row.emissivetexture,
         vScale: row.scalev,
-        uScale: row.scaleu
+        uScale: row.scaleu,
+        uOffset: row.offsetu,
+        vOffset: row.offsetv
       };
       this.dbSetRecord('texture', textureData);
     }
