@@ -53,6 +53,10 @@
 
   If you append lf to the last frame, a last frame will be generated with a time equal to the last frame of the root animation.  This way if you
   move an object and want it to stay for the rest of the animation, add lf to it's time, i.e.  10slf  or 5500lf.
+
+  <br><br>
+  if no [parent], then name is used to look up a block, and only a block (such as a scene, or ::scene:: is valid), and attaches "default" frames to blocks (which are overridden by blockchild frames IF provided)
+  or if on the ::scene:: block, they are the only frames
 </body>
 
 </html>

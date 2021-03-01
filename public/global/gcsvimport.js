@@ -804,7 +804,13 @@ class gCSVImport {
       row.name = sb.parent + row.name.substring(9);
     }
 
-    let children = await this._getBlockChildren(row.parent, row.childtype, row.name);
+    let children = {};
+    if (row.parent)
+      children = await this._getBlockChildren(row.parent, row.childtype, row.name);
+    else {
+      children = await this.dbFetchByLookup('block', 'title', row.name);
+      children = children.recordsById;      
+    }
 
     let shapeMeshOnlyFields = [
       'diffuseColor',
@@ -2677,13 +2683,13 @@ class gCSVImport {
     await this._generateProductAssets(pInfo);
 
     if (!pInfo.sceneId)
-      return Promise.resolve();
+      return null;
 
     let promises = [];
     let frameRecords = await this.dbFetchByLookup('frame', 'parentKey', pInfo.sceneId);
 
     if (frameRecords.records.length <= 0)
-      return Promise.resolve();
+      return null;
 
     let frameId = frameRecords.recordIds[frameRecords.recordIds.length - 1];
     if (pInfo.runLength !== 0)
