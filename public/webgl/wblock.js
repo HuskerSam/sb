@@ -1094,7 +1094,7 @@ class wBlock {
     if (textureName.substring(0, 3) === 'sb:') {
       let url = gAPPP.cdnPrefix + 'textures/' + textureName.substring(3);
       let t = new BABYLON.Texture(url, this.context.scene);
-      if (textureName.substr(-4) === '.png')
+      if (textureName.indexOf('.png') !== -1 || textureName.indexOf('.svg') !== -1)
         t.hasAlpha = true;
       return t;
     }
@@ -1102,7 +1102,7 @@ class wBlock {
     let texturePrefix = textureName.substring(0, 7);
     if (texturePrefix === 'https:/' || texturePrefix === 'http://') {
       let t = new BABYLON.Texture(textureName, this.context.scene);
-      if (textureName.substr(-4) === '.png')
+      if (textureName.indexOf('.png') !== -1 || textureName.indexOf('.svg') !== -1)
         t.hasAlpha = true;
       return t;
     }

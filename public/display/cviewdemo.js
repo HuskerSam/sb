@@ -1679,7 +1679,7 @@ class cViewDemo extends bView {
     let speculartexture = texture + '_S.jpg';
     let bumptexture = texture + '_N.jpg';
     let hasAlpha = false;
-    if (textureD.substr(-4) === '.png') {
+    if (textureD.indexOf('.png') !== -1 || textureD.indexOf('.svg') !== -1) {
       hasAlpha = true;
     }
 
