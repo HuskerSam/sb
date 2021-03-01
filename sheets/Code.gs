@@ -472,7 +472,7 @@ function getCellRangeFromRangeString(str) {
   return sheetName;
 }
 
-function getJSONForSheet(sheetName, block = 1) {
+function getJSONForSheet(sheetName, rowStart = 1, rowLimit = 100, block = 1) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   if (!sheet)
     return [];
@@ -481,7 +481,9 @@ function getJSONForSheet(sheetName, block = 1) {
 
   let jsonCells = [];
 
-  for (let rctr = 0; rctr < lastRow; rctr++) {
+  let firstRow = Math.max(rowStart - 1, 0);
+  lastRow = Math.max(firstRow + rowLimit, lastRow);
+  for (let rctr = firstRow; rctr < lastRow; rctr++) {
     for (let cctr = 0; cctr < lastColumn; cctr++) {
       let range = String.fromCharCode(cctr + "A".charCodeAt(0)) + (rctr + 1).toString();
       if (cctr > 25)
