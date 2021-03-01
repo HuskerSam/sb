@@ -2011,7 +2011,7 @@ class cMacro {
           </tr>
           <tr>
             <td>Shrink to Fit</td>
-            <td><input class="isfittedtext" type="text" /></td>
+            <td><input type="checkbox" class="isfittedtext"  style="width:1.5em;" /></td>
             <td></td>
           </tr>
         </table>
