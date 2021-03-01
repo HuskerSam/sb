@@ -1698,8 +1698,8 @@ class cMacro {
       asset: 'textplane'
     };
     let textshapefields = [
-      'texturetext', 'texturetext2', 'textfontfamily', 'textfontcolor', 'textfontweight', 'textfontsize',
-      'texturetextrendersize', 'width', 'height'
+      'texturetext', 'texturetext2', 'texturetext3', 'texturetext4', 'textfontfamily', 'textfontcolor', 'textfontweight', 'textfontsize',
+      'texturetextrendersize', 'width', 'height', 'isfittedtext'
     ];
     textshapefields.forEach(field => {
       let f = this.text2dpanel.querySelector('.' + field);
@@ -1965,6 +1965,16 @@ class cMacro {
             <td></td>
           </tr>
           <tr>
+            <td>Line 3</td>
+            <td><input class="texturetext3" type="text" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Line 4</td>
+            <td><input class="texturetext4" type="text" /></td>
+            <td></td>
+          </tr>
+          <tr>
             <td>Font</td>
             <td><input class="textfontfamily" type="text" list="fontfamilydatalist" /></td>
             <td></td>
@@ -1997,6 +2007,11 @@ class cMacro {
           <tr>
             <td>Height</td>
             <td><input class="height" type="text" value="4" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Shrink to Fit</td>
+            <td><input class="isfittedtext" type="text" /></td>
             <td></td>
           </tr>
         </table>

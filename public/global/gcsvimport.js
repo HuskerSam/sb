@@ -1827,8 +1827,10 @@ class gCSVImport {
 
     if (row.displaystyle === '3dbasic') {
       this.__add3dTextPlane(row);
-    } else
+    } else {
+      row.isfittedtext = '1';
       this.__add2dTextPlane(row);
+    }
 
     row.asset = 'block';
     this.addParentBlockChild(row);
@@ -1856,10 +1858,10 @@ class gCSVImport {
     };
     this.dbSetRecord('shape', shapeData);
 
-    if (!row.texturetext)
-      row.texturetext = '';
-    if (!row.texturetext2)
-      row.texturetext2 = '';
+    if (!row.texturetext) row.texturetext = '';
+    if (!row.texturetext2) row.texturetext2 = '';
+    if (!row.texturetext3) row.texturetext3 = '';
+    if (!row.texturetext4) row.texturetext4 = '';
 
     let textureData = {
       textFontFamily: row.textfontfamily,
@@ -1868,13 +1870,18 @@ class gCSVImport {
       textFontColor: row.textfontcolor,
       textureText: row.texturetext,
       textureText2: row.texturetext2,
+      textureText3: row.texturetext3,
+      textureText4: row.texturetext4,
       url: '',
       title: textPlaneName
     };
     textureData.textFontSize = this.getNumberOrDefault(row.textfontsize, 100).toString();
     textureData.textureTextRenderSize = this.getNumberOrDefault(row.texturetextrendersize, 512).toString();
     textureData.textFontWeight = row.textfontweight ? row.textfontweight : '';
-    textureData.isFittedText = true;
+
+    textureData.isFittedText = false;
+    if (row.isfittedtext)
+      textureData.isFittedText = true;
 
     this.dbSetRecord('texture', textureData);
 
