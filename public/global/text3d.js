@@ -15203,7 +15203,7 @@ function processPixels(pixels, options, size) {
 function vectorizeText(str, canvas, context, options) {
     var size = options.size || 64
     let fontFam = options.fontFamily ? `'${options.fontFamily}'` : '';
-    context.font = options.fontStyle + " " + options.fontVariant + " " + options.fontWeight + " " + size + "px" + " " + fontFam;
+    context.font = options.fontStyle + " " + options.fontWeight + " " + size + "px" + " " + fontFam;
     context.font = context.font.replace(/\"/g, "'");
     context.textBaseline = "top"
 

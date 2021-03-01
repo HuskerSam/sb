@@ -504,8 +504,7 @@ class bView {
           stroke: false,
           fontFamily: 'Courier',
           fontStyle: undefined,
-          fontWeight: undefined,
-          fontVariant: undefined
+          fontWeight: undefined
         });
 
         let positionParts = this.positionFrags[positionCounter].split(',');

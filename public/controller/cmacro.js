@@ -932,6 +932,16 @@ class cMacro {
           <td></td>
         </tr>
         <tr data-types="text">
+          <td>Font Weight</td>
+          <td><input type="text" data-field="textfontweight"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
+          <td>Font Style</td>
+          <td><input type="text" data-field="textfontstyle"  list="fontstyledatalist"></td>
+          <td></td>
+        </tr>
+        <tr data-types="text">
           <td>Text</td>
           <td><input type="text" data-field="texttext" value="Text"></td>
           <td></td>
@@ -1014,6 +1024,11 @@ class cMacro {
       </table>
       ${this._addParentTemplate()}
     </div>
+    <datalist id="fontstyledatalist">
+      <option>normal</option>
+      <option>italic</option>
+      <option>oblique</option>
+    </datalist>
     <div class="copy_clipboard_footer">
       <button class="copy_csv_to_clipboard" style="flex:0"><i class="material-icons">content_copy</i></button>
       <button class="show_hide_raw_csv" style="flex:0;margin-left:0"><i class="material-icons">view_stream</i></button>

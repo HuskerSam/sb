@@ -715,6 +715,8 @@ class gCSVImport {
       boxDepth: row.depth,
       shapeType: row.shapetype,
       textFontFamily: row.textfontfamily,
+      textFontStyle: row.textfontstyle,
+      textFontWeight: row.textfontweight,
       textText: row.texttext,
       textDepth: row.textdepth,
       textSize: row.textsize,
@@ -809,7 +811,7 @@ class gCSVImport {
       children = await this._getBlockChildren(row.parent, row.childtype, row.name);
     else {
       children = await this.dbFetchByLookup('block', 'title', row.name);
-      children = children.recordsById;      
+      children = children.recordsById;
     }
 
     let shapeMeshOnlyFields = [

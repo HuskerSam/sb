@@ -621,13 +621,6 @@ __localStaticStorageForBindingFields['shape'] = [{
   displayKey: 'shapeType',
   group: 'font'
 }, {
-  title: 'Font Variant',
-  fireSetField: 'textFontVariant',
-  shapeOption: 'fontVariant',
-  displayGroup: 'text',
-  displayKey: 'shapeType',
-  group: 'fontExtra'
-}, {
   title: 'Font Style',
   fireSetField: 'textFontStyle',
   shapeOption: 'fontStyle',

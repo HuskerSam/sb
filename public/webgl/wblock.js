@@ -904,7 +904,6 @@ class wBlock {
       polygons: true,
       textBaseline: "top",
       fontStyle: 'normal',
-      fontVariant: 'normal',
       fontWeight: 'normal',
       fontFamily: 'Arial',
       size: size,
