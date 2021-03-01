@@ -987,22 +987,37 @@ class gCSVImport {
     console.log('type not found', row.asset);
     return;
   }
+  __testIfImageFile(textureName) {
+    if (!textureName)
+      return false;
+
+    if (textureName.indexOf('.') !== -1 || textureName.indexOf('/') !== -1)
+      return true;
+    return false;
+  }
   async addCSVMaterial(row) {
     let materialName = row.name;
     let textureName = '';
-    if (!row.hasalpha)
-      row.hasalpha = '';
-    if (row.hasalpha === 'x')
-      row.hasalpha = '1';
+    if (!row.hasalpha) row.hasalpha = '';
+    if (row.hasalpha === 'x') row.hasalpha = '1';
+    if (row.ambient === 'x') row.ambient = '1';
+    if (row.emissive === 'x') row.emissive = '1';
 
-    if (row.texture) {
+    if (this.__testIfImageFile(row.texture)) {
       textureName = row.name + '_texture';
       let textureData = {
         url: row.texture,
         vScale: row.scalev,
-        uScale: row.scaleu,
-        hasAlpha: (row.hasalpha.toString() === '1')
+        uScale: row.scaleu
       };
+
+      if (row.hasalpha.toString() === '1') textureData.hasAlpha = true;
+      if (row.texture.indexOf('.png') !== -1 || row.texture.indexOf('.svg') !== -1 || row.texture.indexOf('.gif') !== -1) {
+        textureData.hasAlpha = true;
+      }
+      if (row.texture.indexOf('.mp4') !== -1 || row.texture.indexOf('.webm') !== -1) {
+        textureData.isVideo = true;
+      }
 
       if (textureName.substring(0, 8) === 'circuit_') {
         textureData.orig = Object.assign({}, textureData);
@@ -1012,7 +1027,7 @@ class gCSVImport {
     }
 
     let bumpTextureName = '';
-    if (row.bumptexture) {
+    if (this.__testIfImageFile(row.bumptexture)) {
       bumpTextureName = row.name + '_Ntexture';
       let textureData = {
         title: bumpTextureName,
@@ -1024,7 +1039,7 @@ class gCSVImport {
     }
 
     let specularTextureName = '';
-    if (row.speculartexture) {
+    if (this.__testIfImageFile(row.speculartexture)) {
       specularTextureName = row.name + '_Stexture';
       let textureData = {
         title: specularTextureName,
@@ -1035,16 +1050,36 @@ class gCSVImport {
       this.dbSetRecord('texture', textureData);
     }
 
-    let ambientTextureName = row.ambient === 'x' ? textureName : '';
-    let emissiveTextureName = row.emissive === 'x' ? textureName : '';
+    let ambientTextureName = row.ambient === '1' ? textureName : '';
+    let emissiveTextureName = row.emissive === '1' ? textureName : '';
     let specularPower = '4';
     let diffuseColor = '';
     let emissiveColor = '';
     let ambientColor = '';
     let specularColor = '';
     if (row.specularpower) specularPower = row.specularpower;
-    if (row.ambienttexture) ambientTextureName = row.ambienttexture;
-    if (row.emissivetexture) emissiveTextureName = row.emissivetexture;
+
+    if (this.__testIfImageFile(row.ambienttexture)) {
+      ambientTextureName = row.name + '_Atexture';
+      let textureData = {
+        title: ambientTextureName,
+        url: row.ambienttexture,
+        vScale: row.scalev,
+        uScale: row.scaleu
+      };
+      this.dbSetRecord('texture', textureData);
+    }
+
+    if (this.__testIfImageFile(row.emissivetexture)) {
+      emissiveTextureName = row.name + '_Etexture';
+      let textureData = {
+        title: emissiveTextureName,
+        url: row.emissivetexture,
+        vScale: row.scalev,
+        uScale: row.scaleu
+      };
+      this.dbSetRecord('texture', textureData);
+    }
 
     if (row.diffusecolor) diffuseColor = row.diffusecolor;
     if (row.ambientcolor) ambientColor = row.ambientcolor;

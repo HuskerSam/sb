@@ -1400,6 +1400,16 @@ class cMacro {
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
+            <td>Ambient Map URL</td>
+            <td><input type="text" list="sbimageslist" class="material_ambientpath texturepathinput" data-field="material_ambientpath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
+            <td>Emissive Map URL</td>
+            <td><input type="text" list="sbimageslist" class="material_emissivepath texturepathinput" data-field="material_emissivepath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
             <td>Specular Power</td>
             <td colspan="2">
               <div style="display:flex;flex-direction:row">
@@ -1526,6 +1536,10 @@ class cMacro {
     this.material_texturepath = this.panel.querySelector('.material_texturepath');
     this.material_bmppath = this.panel.querySelector('.material_bmppath');
     this.material_specularpath = this.panel.querySelector('.material_specularpath');
+
+    this.material_ambientpath = this.panel.querySelector('.material_ambientpath');
+    this.material_emissivepath = this.panel.querySelector('.material_emissivepath');
+
     this.material_specularpower = this.panel.querySelector('.material_specularpower');
     this.material_hasalpha = this.panel.querySelector('.material_hasalpha');
     this.materialsuggestionlist = this.panel.querySelector('#materialsuggestionlist');
@@ -1602,6 +1616,8 @@ class cMacro {
     let texture = this.material_texturepath.value;
     let bumptexture = this.material_bmppath.value;
     let speculartexture = this.material_specularpath.value;
+    let ambienttexture = this.material_ambientpath.value;
+    let emissivetexture = this.material_emissivepath.value;
 
     let scaleu = this.materialscaleu.value;
     let scalev = this.materialscalev.value;
@@ -1616,12 +1632,16 @@ class cMacro {
     if (!texture)
       texture = '';
 
-    if (texture || bumptexture || speculartexture) {
+    if (texture || bumptexture || speculartexture || emissivetexture || ambienttexture) {
       textureURL = texture;
       if (!textureURL)
         textureURL = bumptexture;
       if (!textureURL)
         textureURL = speculartexture;
+      if (!textureURL)
+        textureURL = emissivetexture;
+      if (!textureURL)
+        textureURL = ambienttexture;
 
       if (textureURL.substring(0, 3) === 'sb:')
         textureURL = this.cdnPrefix + 'textures/' + textureURL.substring(3);
@@ -1656,6 +1676,8 @@ class cMacro {
       texture,
       speculartexture,
       bumptexture,
+      ambienttexture,
+      emissivetexture,
       diffusecolor,
       emissivecolor,
       ambientcolor,
@@ -2891,7 +2913,8 @@ class cMacro {
       'backwallscalev', 'backwallscaleu', 'backwallimage',
       'frontwallscalev', 'frontwallscaleu', 'frontwallimage',
       'floorscalev', 'floorscaleu', 'floorimage',
-      'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage'];
+      'ceilingwallscalev', 'ceilingwallscaleu', 'ceilingwallimage'
+    ];
     let fieldValues = {};
 
     fields.forEach(field => {

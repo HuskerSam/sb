@@ -27,6 +27,14 @@
      <br>
      <br>
      To view normal maps in the addon, leave the diffuse texture field blank - to view specular maps leave both the texture and bump map empty
+
+<Br>
+  <b>NOTES on IMPORT</b>
+  <br><br>
+on Import any texture name containing a "/" or "." is considered a file path and converted to a texture with scale and
+considers .mp4 or .webm files as videos (sets texture as such), .png and .svg to contain hasAlpha = true in the texture
+<br>hasalpha (csv) force sets the hasAlpha flag on the diffuse texture (alpha flag is only meaningful on diffuse)
+  <br><br>
 </body>
 
 </html>
