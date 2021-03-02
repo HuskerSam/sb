@@ -1232,6 +1232,11 @@ class cMacro {
             </td>
           </tr>
           <tr>
+            <td>Material</td>
+            <td><input type="text" data-field="mesh_materialname" class="mesh_materialname" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="mesh_materialname"></td>
+          </tr>
+          <tr>
             <td colspan="3" style="text-align:center">
               <div class="mesh-details-images" style="line-height:0">
                 <img class="mesh_texture_img" crossorigin="anonymous" style="max-width:50%;max-height:12em">
@@ -1271,6 +1276,7 @@ class cMacro {
     this.mesh_specularpath = this.panel.querySelector('.mesh_specularpath');
     this.mesh_specularpower = this.panel.querySelector('.mesh_specularpower');
     this.mesh_hasalpha = this.panel.querySelector('.mesh_hasalpha');
+    this.mesh_materialname = this.panel.querySelector('.mesh_materialname');
 
     this.wizard_parent = this.panel.querySelector('.wizard_parent');
     this.wizard_visibility = this.panel.querySelector('.wizard_visibility');
@@ -1307,7 +1313,11 @@ class cMacro {
         this.wizard_parent_details.style.display = 'none';
     });
 
-    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'specularpath', 'specularpower', 'hasalpha'];
+    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'specularpath',
+      'specularpower', 'hasalpha', 'materialname'];
+
+    this.panel.querySelectorAll('.colorpicker')
+      .forEach(i => this._initColorPicker(i));
 
     this.__registerFileUploaders();
 
@@ -1364,7 +1374,6 @@ class cMacro {
       asset: 'meshtexture'
     };
 
-    csv_row['materialname'] = csv_row['name'] + '_material';
 
     this.meshCSVFields.forEach((item, index) => {
       if (item === 'message')
@@ -1373,9 +1382,12 @@ class cMacro {
       csv_row[item] = this['mesh_' + item].value;
     });
 
-    csv_row['ambient'] = 'x';
-    csv_row['diffuse'] = 'x';
-    csv_row['emissive'] = 'x';
+    if (!csv_row.materialname) {
+      csv_row.materialname = csv_row.name + '_material';
+      csv_row['ambient'] = 'x';
+      csv_row['diffuse'] = 'x';
+      csv_row['emissive'] = 'x';
+    }
 
     if (includeParent) {
       csv_row['parent'] = this.wizard_parent.value;
