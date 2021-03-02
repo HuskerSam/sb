@@ -1,0 +1,1026 @@
+[{
+  "range": "A1",
+  "value": "name",
+  "columnWidth": 145,
+  "columnNumber": 1,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B1",
+  "value": "asset",
+  "columnWidth": 100,
+  "columnNumber": 2,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 3,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 4,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 6,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 7,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 8,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 9,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 10,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 11,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 12,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 13,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 14,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 15,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 16,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 17,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 18,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 19,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 20,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 21,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 22,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 23,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 24,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 25,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 26,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 27,
+  "horizontalAlignment": "general"
+}, {
+  "range": "A2",
+  "value": "What If",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B2",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A4",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B4",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C4",
+  "value": "length",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D4",
+  "value": "diameter",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E4",
+  "value": "tessellation",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F4",
+  "value": "material",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G4",
+  "value": "pointshape",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H4",
+  "value": "pointlength",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I4",
+  "value": "pointdiameter",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J4",
+  "value": "pointtessellation",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K4",
+  "value": "pointmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L4",
+  "value": "tailshape",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M4",
+  "value": "taillength",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N4",
+  "value": "taildiameter",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O4",
+  "value": "tailtessellation",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P4",
+  "value": "tailmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q4",
+  "value": "tailshapeflip",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R4",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S4",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T4",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "U4",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "V4",
+  "value": "rx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "W4",
+  "value": "ry",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "X4",
+  "value": "rz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Y4",
+  "value": "sx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Z4",
+  "value": "sy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "AA4",
+  "value": "sz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A5",
+  "value": "Connector Line 415",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B5",
+  "value": "connectorline",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C5",
+  "value": 10,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D5",
+  "value": 0.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F5",
+  "value": "color: 1,1,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G5",
+  "value": "cone",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H5",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I5",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K5",
+  "value": "color: 1,1,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L5",
+  "value": "sphere",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M5",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N5",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P5",
+  "value": "color: 1,1,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R5",
+  "value": "What If",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S5",
+  "value": -1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T5",
+  "value": -13,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "U5",
+  "value": -2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "X5",
+  "value": "180deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Y5",
+  "value": 0.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A6",
+  "value": "Connector Line 416",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B6",
+  "value": "connectorline",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C6",
+  "value": 10,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D6",
+  "value": 0.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F6",
+  "value": "color: 0,1,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G6",
+  "value": "cone",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H6",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I6",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K6",
+  "value": "color: 0,1,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L6",
+  "value": "sphere",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M6",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N6",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P6",
+  "value": "color: 0,1,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R6",
+  "value": "What If",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S6",
+  "value": -1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T6",
+  "value": -15,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "U6",
+  "value": -2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "X6",
+  "value": "180deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Y6",
+  "value": 0.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A7",
+  "value": "Connector Line 417",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B7",
+  "value": "connectorline",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C7",
+  "value": 10,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D7",
+  "value": 0.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F7",
+  "value": "color: 1,0,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G7",
+  "value": "cone",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H7",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I7",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K7",
+  "value": "color: 1,0,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L7",
+  "value": "sphere",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M7",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N7",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P7",
+  "value": "color: 1,0,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R7",
+  "value": "What If",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S7",
+  "value": -1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T7",
+  "value": -17,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "U7",
+  "value": -2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "X7",
+  "value": "180deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Y7",
+  "value": 0.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A9",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B9",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C9",
+  "value": "texttext",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D9",
+  "value": "texttextline2",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E9",
+  "value": "textfontfamily",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F9",
+  "value": "textdepth",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G9",
+  "value": "textmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H9",
+  "value": "shapematerial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I9",
+  "value": "width",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J9",
+  "value": "height",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K9",
+  "value": "depth",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L9",
+  "value": "tessellation",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M9",
+  "value": "cylinderhorizontal",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N9",
+  "value": "createshapetype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O9",
+  "value": "textstroke",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P9",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q9",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R9",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S9",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T9",
+  "value": "rx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "U9",
+  "value": "ry",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "V9",
+  "value": "rz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "W9",
+  "value": "sx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "X9",
+  "value": "sy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Y9",
+  "value": "sz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A10",
+  "value": "what if text",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B10",
+  "value": "shapeandtext",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C10",
+  "value": "What if a block",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D10",
+  "value": "is a product...",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E10",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F10",
+  "value": 0.25,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G10",
+  "value": "ecolor: 1,1,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H10",
+  "value": "color: 0,0,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I10",
+  "value": 8,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J10",
+  "value": 8,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K10",
+  "value": 4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N10",
+  "value": "ellipsoid",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P10",
+  "value": "What If",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q10",
+  "value": -8,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R10",
+  "value": -15,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A12",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B12",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C12",
+  "value": "frametime",
+  "fontWeight": "bold"
+}, {
+  "range": "D12",
+  "value": "frameorder",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E12",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F12",
+  "value": "childtype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G12",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H12",
+  "value": "diffusecolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A13",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B13",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D13",
+  "value": 10,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E13",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F13",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G13",
+  "value": -2,
+  "horizontalAlignment": "left"
+}, {
+  "range": "H13",
+  "value": "1,0,0",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A14",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B14",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C14",
+  "formula": "=\"13%\"",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D14",
+  "value": 20,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E14",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F14",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H14",
+  "value": "1,1,0",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A15",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B15",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C15",
+  "formula": "=\"25%\"",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D15",
+  "value": 30,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E15",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F15",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H15",
+  "value": "0,1,0"
+}, {
+  "range": "A16",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B16",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C16",
+  "formula": "=\"38%\"",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D16",
+  "value": 40,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E16",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F16",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H16",
+  "value": "0,1,1"
+}, {
+  "range": "A17",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B17",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C17",
+  "formula": "=\"50%\"",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D17",
+  "value": 50,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E17",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F17",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H17",
+  "value": "0,0,1"
+}, {
+  "range": "A18",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B18",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C18",
+  "formula": "=\"63%\"",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D18",
+  "value": 60,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E18",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F18",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H18",
+  "value": "0,1,1"
+}, {
+  "range": "A19",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B19",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C19",
+  "formula": "=\"75%\"",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D19",
+  "value": 70,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E19",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F19",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H19",
+  "value": "0,1,0"
+}, {
+  "range": "A20",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B20",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C20",
+  "formula": "=\"88%\"",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D20",
+  "value": 80,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E20",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F20",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H20",
+  "value": "1,1,0"
+}, {
+  "range": "A21",
+  "value": "what if text_shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B21",
+  "value": "what if text",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C21",
+  "formula": "=\"100%\"",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D21",
+  "value": 90,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E21",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F21",
+  "value": "shape",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H21",
+  "value": "1,0,0"
+}, {
+  "range": "A1"
+}]

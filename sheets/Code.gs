@@ -6,7 +6,7 @@ function onOpen(e) {
   let ui = SpreadsheetApp.getUi();
 
   ui.createAddonMenu()
-    .addItem('Visual Catalog Tools', 'showInitDialog')
+    .addItem('Visual Tools', 'showInitDialog')
     .addToUi();
 }
 
@@ -23,7 +23,7 @@ function showInitDialog() {
 function showDialog(name) {
   refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile(name)
-    .setTitle('Visual Catalog Tools')
+    .setTitle('Handtop Visual Tools')
   SpreadsheetApp.getUi().showSidebar(html);
 }
 

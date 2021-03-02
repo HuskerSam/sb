@@ -1,0 +1,988 @@
+[{
+  "range": "A1",
+  "value": "name",
+  "columnWidth": 100,
+  "columnNumber": 1,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B1",
+  "value": "asset",
+  "columnWidth": 100,
+  "columnNumber": 2,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 3,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 4,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 6,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 7,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 8,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 9,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 10,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 11,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 12,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 13,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 14,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 15,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 16,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 17,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 18,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 19,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 20,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 21,
+  "horizontalAlignment": "general"
+}, {
+  "range": "A2",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B2",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A4",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B4",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C4",
+  "value": "meshpath",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D4",
+  "value": "texturepath",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E4",
+  "value": "bmppath",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F4",
+  "value": "specularpath",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G4",
+  "value": "specularpower",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H4",
+  "value": "hasalpha",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I4",
+  "value": "materialname",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J4",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K4",
+  "value": "visibility",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L4",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M4",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N4",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O4",
+  "value": "rx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P4",
+  "value": "ry",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q4",
+  "value": "rz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R4",
+  "value": "sx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S4",
+  "value": "sy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T4",
+  "value": "sz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A5",
+  "value": "basket",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B5",
+  "value": "meshtexture",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C5",
+  "value": "sb:fruitbox2.babylon",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I5",
+  "value": "ecolor: 1,1,0",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J5",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N5",
+  "value": 5,
+  "horizontalAlignment": "left"
+}, {
+  "range": "P5",
+  "value": "90deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R5",
+  "value": 0.05,
+  "horizontalAlignment": "left"
+}, {
+  "range": "S5",
+  "value": 0.05,
+  "horizontalAlignment": "left"
+}, {
+  "range": "T5",
+  "value": 0.05,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A7",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B7",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C7",
+  "value": "shapetype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D7",
+  "value": "materialname",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E7",
+  "value": "boxsize",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F7",
+  "value": "tessellation",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G7",
+  "value": "width",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H7",
+  "value": "height",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I7",
+  "value": "depth",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J7",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K7",
+  "value": "visibility",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L7",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M7",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N7",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O7",
+  "value": "rx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P7",
+  "value": "ry",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q7",
+  "value": "rz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R7",
+  "value": "sx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S7",
+  "value": "sy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T7",
+  "value": "sz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A8",
+  "value": "sphere 587",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B8",
+  "value": "shape",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C8",
+  "value": "sphere",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D8",
+  "value": "color: 1,0,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E8",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J8",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L8",
+  "value": -4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M8",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N8",
+  "value": 5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A9",
+  "value": "sphere 588",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B9",
+  "value": "shape",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C9",
+  "value": "sphere",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D9",
+  "value": "color: 0,1,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E9",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J9",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L9",
+  "value": -4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M9",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N9",
+  "value": 0,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A10",
+  "value": "sphere 589",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B10",
+  "value": "shape",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C10",
+  "value": "sphere",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D10",
+  "value": "color: 0,0,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E10",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J10",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L10",
+  "value": -4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M10",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N10",
+  "value": -5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A12",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B12",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C12",
+  "value": "shapetype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D12",
+  "value": "materialname",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E12",
+  "value": "height",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F12",
+  "value": "width",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G12",
+  "value": "tessellation",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H12",
+  "value": "diametertop",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I12",
+  "value": "diameterbottom",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J12",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K12",
+  "value": "visibility",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L12",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M12",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N12",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O12",
+  "value": "rx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P12",
+  "value": "ry",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q12",
+  "value": "rz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R12",
+  "value": "sx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S12",
+  "value": "sy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T12",
+  "value": "sz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A13",
+  "value": "cylinder 985",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B13",
+  "value": "shape",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C13",
+  "value": "cylinder",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D13",
+  "value": "color: 1,0,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E13",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F13",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G13",
+  "value": 3,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H13",
+  "value": 0,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J13",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L13",
+  "value": 4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M13",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N13",
+  "value": 5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A14",
+  "value": "cylinder 986",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B14",
+  "value": "shape",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C14",
+  "value": "cylinder",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D14",
+  "value": "color: 0,1,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E14",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F14",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G14",
+  "value": 3,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H14",
+  "value": 0,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J14",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L14",
+  "value": 4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M14",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N14",
+  "value": 0,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A15",
+  "value": "cylinder 987",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B15",
+  "value": "shape",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C15",
+  "value": "cylinder",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D15",
+  "value": "color: 0,0,1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E15",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F15",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G15",
+  "value": 3,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H15",
+  "value": 0,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J15",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L15",
+  "value": 4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M15",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N15",
+  "value": -5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A17",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B17",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C17",
+  "value": "frametime",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D17",
+  "value": "frameorder",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E17",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F17",
+  "value": "childtype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G17",
+  "value": "childindex",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H17",
+  "value": "visibility",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I17",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J17",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K17",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L17",
+  "value": "rx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M17",
+  "value": "ry",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N17",
+  "value": "rz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O17",
+  "value": "sx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P17",
+  "value": "sy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q17",
+  "value": "sz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R17",
+  "value": "diffusecolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S17",
+  "value": "emissivecolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T17",
+  "value": "ambientcolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "U17",
+  "value": "specularcolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A18",
+  "value": "basket",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B18",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C18",
+  "value": "0:eio",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D18",
+  "value": 10,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E18",
+  "value": "blockchildframe",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F18",
+  "value": "mesh",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J18",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K18",
+  "value": 5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M18",
+  "value": "90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O18",
+  "value": 0.05,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P18",
+  "value": 0.05,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q18",
+  "value": 0.05,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S18",
+  "value": "1,1,0",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A19",
+  "value": "basket",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B19",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C19",
+  "formula": "=\"70%\"",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D19",
+  "value": 20,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E19",
+  "value": "blockchildframe",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F19",
+  "value": "mesh",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K19",
+  "value": -5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A20",
+  "value": "basket",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B20",
+  "value": "Mock Store",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C20",
+  "formula": "=\"100%\"",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D20",
+  "value": 30,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E20",
+  "value": "blockchildframe",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F20",
+  "value": "mesh",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K20",
+  "value": 5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A1"
+}]

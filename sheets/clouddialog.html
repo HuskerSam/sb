@@ -1324,7 +1324,11 @@
         this.loadProjectView();
       }
 
-      async sheetsCreateTemplateSheet(layoutName, sheetName, baseSheetName = '') {
+      async sheetsCreateFragmentSheets(fragments, setAssets = true) {
+//        this.templateMap
+          //.createSheetFromTemplate(sheetName, genResults);
+      }
+      async sheetsCreateTemplateSheet(layoutName, sheetName) {
         let sheets = layoutName.split(',');
 
         this.create_layout_btn.classList.add('create_layout_spin');
@@ -1334,9 +1338,9 @@
           cache: "no-store"
         });
         let genText = await genResponse.text();
-        if (baseSheetName) {
-          genText = genText.split('##sheetname').join("'" + baseSheetName + "'");
-          genText = genText.split('##sheetrawname').join(baseSheetName);
+        if (sheetName) {
+          genText = genText.split('##sheetname').join("'" + sheetName + "'");
+          genText = genText.split('##sheetrawname').join(sheetName);
         }
 
         let genResults = JSON.parse(genText);
@@ -1345,13 +1349,13 @@
             if (result !== 'success') {
               alert(result);
             } else {
-              if (this.add_to_publishlist.checked && (baseSheetName === sheetName))
-                await this.sheetsAddToProjectList(baseSheetName);
-              if (this.set_to_defaultproject.checked && (baseSheetName === sheetName))
+              if (this.add_to_publishlist.checked)
+                await this.sheetsAddToProjectList(sheetName);
+              if (this.set_to_defaultproject.checked)
                 await this.sheetsStoreSelectedProject(sheetName);
-              if (this.add_asset_to_projectlist.checked && (baseSheetName === sheetName))
+              if (this.add_asset_to_projectlist.checked)
                 await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget);
-              if (this.add_products_to_projectlist.checked && (baseSheetName === sheetName))
+              if (this.add_products_to_projectlist.checked)
                 await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget, "Catalog Ranges");
             }
             this.create_layout_btn.classList.add('blue');
@@ -1440,25 +1444,17 @@
       }
       async templateCreateSheets() {
         let sheetName = this.sheetname.value;
-        let templateString = this.circuit_template_select.value;
-        let templates = templateString.split(',');
+        let templateKey = this.circuit_template_select.value;
 
         if (!sheetName) {
           alert('Sheet name required');
           return null;
         }
 
-        let promises = [];
-        templates.forEach((item, i) => {
-          let parts = item.split(':');
-          let suffix = parts[1];
-          if (!suffix)
-            suffix = '';
-          let name = sheetName + suffix;
-          promises.push(this.sheetsCreateTemplateSheet(parts[0], name, sheetName));
-        });
+        let templateData = this.templateMap[templateKey];
 
-        await Promise.all(promises);
+        await this.sheetsCreateTemplateSheet(templateKey, name);
+
         this.sheetnameinputdirty = false;
 
         return this.initSheetBasedData();

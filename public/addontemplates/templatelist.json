@@ -106,6 +106,14 @@
     "description": "list of servers stored in a sheet"
   },
   {
+    "name": "Multi Sheet Flow Diagram",
+    "key": "FlowDiagramExample",
+    "hint": "3D Flow Diagram",
+    "fragments": "MockMiniStore,LineFlowChart,SimpleWhatIf,Spinner360",
+    "categories": "Layout",
+    "description": "multi sheet flow diagram using fragments"
+  },
+  {
     "name": "Grocery Isle",
     "key": "Islev1",
     "hint": "Islev1",
