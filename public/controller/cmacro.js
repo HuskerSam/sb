@@ -1437,12 +1437,27 @@ class cMacro {
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
+            <td>Reflection Map URL</td>
+            <td><input type="text" list="sbimageslist" class="material_reflectionpath texturepathinput" data-field="material_reflectionpath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
             <td>Specular Power</td>
             <td colspan="2">
               <div style="display:flex;flex-direction:row">
                 <input type="text" class="material_specularpower" data-field="material_specularpower" />
-                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Has Alpha (1)</span>
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Roughness</span>
+                <input type="text" class="material_roughness" data-field="material_roughness" />
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Has Alpha (1)</td>
+            <td colspan="2">
+              <div style="display:flex;flex-direction:row">
                 <input type="text" class="material_hasalpha" data-field="material_hasalpha" />
+                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Is Video (1)</span>
+                <input type="text" class="material_isvideo" data-field="material_isvideo" />
               </div>
             </td>
           </tr>
@@ -1578,9 +1593,13 @@ class cMacro {
 
     this.material_ambientpath = this.panel.querySelector('.material_ambientpath');
     this.material_emissivepath = this.panel.querySelector('.material_emissivepath');
+    this.material_reflectionpath = this.panel.querySelector('.material_reflectionpath');
 
     this.material_specularpower = this.panel.querySelector('.material_specularpower');
     this.material_hasalpha = this.panel.querySelector('.material_hasalpha');
+    this.material_isvideo = this.panel.querySelector('.material_isvideo');
+    this.material_roughness = this.panel.querySelector('.material_roughness');
+
     this.materialsuggestionlist = this.panel.querySelector('#materialsuggestionlist');
 
     this.material_diffusecolor = this.panel.querySelector('.diffusecolor');
@@ -1657,6 +1676,11 @@ class cMacro {
     let speculartexture = this.material_specularpath.value;
     let ambienttexture = this.material_ambientpath.value;
     let emissivetexture = this.material_emissivepath.value;
+    let reflectiontexture = this.material_reflectionpath.value;
+    let roughness = this.material_roughness.value;
+    let isvideo = this.material_isvideo.value;
+    let hasalpha = this.material_hasalpha.value;
+    let specularpower = this.material_specularpower.value;
 
     let scaleu = this.materialscaleu.value;
     let scalev = this.materialscalev.value;
@@ -1673,7 +1697,7 @@ class cMacro {
     if (!texture)
       texture = '';
 
-    if (texture || bumptexture || speculartexture || emissivetexture || ambienttexture) {
+    if (texture || bumptexture || speculartexture || emissivetexture || ambienttexture || reflectiontexture) {
       textureURL = texture;
       if (!textureURL)
         textureURL = bumptexture;
@@ -1683,6 +1707,8 @@ class cMacro {
         textureURL = emissivetexture;
       if (!textureURL)
         textureURL = ambienttexture;
+      if (!textureURL)
+        textureURL = reflectiontexture;
 
       if (textureURL.substring(0, 3) === 'sb:')
         textureURL = this.cdnPrefix + 'textures/' + textureURL.substring(3);
@@ -1719,6 +1745,9 @@ class cMacro {
       bumptexture,
       ambienttexture,
       emissivetexture,
+      reflectiontexture,
+      roughness,
+      isvideo,
       diffusecolor,
       emissivecolor,
       ambientcolor,
@@ -1727,7 +1756,8 @@ class cMacro {
       scalev,
       offsetu,
       offsetv,
-      hasalpha: hasAlpha
+      hasalpha,
+      specularpower
     });
 
     return csv_row;

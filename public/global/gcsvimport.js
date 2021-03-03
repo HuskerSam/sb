@@ -1007,13 +1007,24 @@ class gCSVImport {
     let materialName = row.name;
     let textureName = '';
     if (!row.hasalpha) row.hasalpha = '';
+    if (!row.isvideo) row.hasvideo = '';
     if (row.hasalpha === 'x') row.hasalpha = '1';
+    if (row.isvideo === 'x') row.isvideo = '1';
     if (row.ambient === 'x') row.ambient = '1';
     if (row.emissive === 'x') row.emissive = '1';
     if (!row.offsetu) row.offsetu = '';
     if (!row.offsetv) row.offsetv = '';
     if (!row.scaleu) row.scaleu = '';
     if (!row.scalev) row.scalev = '';
+
+    let hasAlpha = (row.hasalpha.toString() === '1');
+    let isVideo =  (row.isvideo.toString() === '1');
+    if (row.texture.indexOf('.png') !== -1 || row.texture.indexOf('.svg') !== -1 || row.texture.indexOf('.gif') !== -1) {
+      hasAlpha = true;
+    }
+    if (row.texture.indexOf('.mp4') !== -1 || row.texture.indexOf('.webm') !== -1) {
+      isVideo = true;
+    }
 
     if (this.__testIfImageFile(row.texture)) {
       textureName = row.name + '_texture';
@@ -1022,16 +1033,10 @@ class gCSVImport {
         vScale: row.scalev,
         uScale: row.scaleu,
         uOffset: row.offsetu,
-        vOffset: row.offsetv
+        vOffset: row.offsetv,
+        hasAlpha,
+        isVideo
       };
-
-      if (row.hasalpha.toString() === '1') textureData.hasAlpha = true;
-      if (row.texture.indexOf('.png') !== -1 || row.texture.indexOf('.svg') !== -1 || row.texture.indexOf('.gif') !== -1) {
-        textureData.hasAlpha = true;
-      }
-      if (row.texture.indexOf('.mp4') !== -1 || row.texture.indexOf('.webm') !== -1) {
-        textureData.isVideo = true;
-      }
 
       if (textureName.substring(0, 8) === 'circuit_') {
         textureData.orig = Object.assign({}, textureData);
@@ -1063,13 +1068,16 @@ class gCSVImport {
         vScale: row.scalev,
         uScale: row.scaleu,
         uOffset: row.offsetu,
-        vOffset: row.offsetv
+        vOffset: row.offsetv,
+        hasAlpha,
+        isVideo
       };
       this.dbSetRecord('texture', textureData);
     }
 
     let ambientTextureName = row.ambient === '1' ? textureName : '';
     let emissiveTextureName = row.emissive === '1' ? textureName : '';
+    let reflectionTextureName = '';
     let specularPower = '4';
     let diffuseColor = '';
     let emissiveColor = '';
@@ -1085,7 +1093,9 @@ class gCSVImport {
         vScale: row.scalev,
         uScale: row.scaleu,
         uOffset: row.offsetu,
-        vOffset: row.offsetv
+        vOffset: row.offsetv,
+        hasAlpha,
+        isVideo
       };
       this.dbSetRecord('texture', textureData);
     }
@@ -1098,7 +1108,24 @@ class gCSVImport {
         vScale: row.scalev,
         uScale: row.scaleu,
         uOffset: row.offsetu,
-        vOffset: row.offsetv
+        vOffset: row.offsetv,
+        hasAlpha,
+        isVideo
+      };
+      this.dbSetRecord('texture', textureData);
+    }
+
+    if (this.__testIfImageFile(row.reflectiontexture)) {
+      reflectionTextureName = row.name + '_Rtexture';
+      let textureData = {
+        title: reflectionTextureName,
+        url: row.reflectiontexture,
+        vScale: row.scalev,
+        uScale: row.scaleu,
+        uOffset: row.offsetu,
+        vOffset: row.offsetv,
+        hasAlpha,
+        isVideo
       };
       this.dbSetRecord('texture', textureData);
     }
@@ -1115,6 +1142,7 @@ class gCSVImport {
       emissiveTextureName,
       bumpTextureName,
       specularTextureName,
+      reflectionTextureName,
       specularPower,
       backFaceCulling: true,
       ambientColor,
