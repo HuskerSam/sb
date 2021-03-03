@@ -652,20 +652,20 @@ class gCSVImport {
   async addCSVShapeRow(row) {
     let texturename = row.texturepath;
     let bumptexturename = row.bmppath;
+    if (!row.offsetu) row.offsetu = '';
+    if (!row.offsetv) row.offsetv = '';
+    if (!row.scaleu) row.scaleu = '';
+    if (!row.scalev) row.scalev = '';
 
     if (row.texturepath) {
       texturename = row.materialname;
-      if (!row.uoffset) row.uoffset = '';
-      if (!row.voffset) row.voffset = '';
-      if (!row.scaleu) row.scaleu = '';
-      if (!row.scalev) row.scalev = '';
       this.dbSetRecord('texture', {
         title: texturename,
         url: row.texturepath,
         uScale: row.scaleu,
         vScale: row.scalev,
-        uOffset: row.uoffset,
-        vOffset: row.voffset
+        uOffset: row.offsetu,
+        vOffset: row.offsetv
       }).then(results => {});
     }
     if (row.bmppath) {
@@ -675,8 +675,8 @@ class gCSVImport {
         url: row.bmppath,
         uScale: row.scaleu,
         vScale: row.scalev,
-        uOffset: row.uoffset,
-        vOffset: row.voffset
+        uOffset: row.offsetu,
+        vOffset: row.offsetv
       }).then(results => {});
     }
 
@@ -1010,6 +1010,10 @@ class gCSVImport {
     if (row.hasalpha === 'x') row.hasalpha = '1';
     if (row.ambient === 'x') row.ambient = '1';
     if (row.emissive === 'x') row.emissive = '1';
+    if (!row.offsetu) row.offsetu = '';
+    if (!row.offsetv) row.offsetv = '';
+    if (!row.scaleu) row.scaleu = '';
+    if (!row.scalev) row.scalev = '';
 
     if (this.__testIfImageFile(row.texture)) {
       textureName = row.name + '_texture';
@@ -2407,8 +2411,6 @@ class gCSVImport {
       rz: "",
       scaleu: "",
       scalev: "",
-      uoffset: "",
-      voffset: "",
       shapetype: "",
       sx: "",
       sy: "",

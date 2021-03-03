@@ -248,14 +248,16 @@
     "name": "Carousel Display",
     "key": "CarouselDisplay",
     "hint": "Carousel Display",
+    "fragments": "GoodBottlesFrag",
+    "products": "CarouselProducts1",
     "categories": "Layout",
-    "description": "Rotating scene with table in a carousel style product display<BR>ALERT: Asset Ranges Example required to support this."
+    "description": "Rotating scene with table in a carousel style product display"
   }, {
     "name": "Carousel Display Products 1",
     "key": "CarouselProducts1",
     "hint": "Carousel Products 1",
     "categories": "Products",
-    "description": "Products list that matches Asset Ranges example and Carousel Display"
+    "description": "Products list for Carousel Display"
   }, {
     "name": "Platform Display",
     "key": "Platformv1",

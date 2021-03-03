@@ -1,428 +1,486 @@
 [{
   "range": "A1",
   "value": "asset",
+  "columnWidth": 100,
+  "columnNumber": 1,
   "fontWeight": "bold"
 }, {
   "range": "B1",
   "value": "block",
+  "columnWidth": 100,
+  "columnNumber": 2,
   "fontWeight": "bold"
 }, {
   "range": "C1",
   "value": "displaystyle",
+  "columnWidth": 100,
+  "columnNumber": 3,
   "fontWeight": "bold"
 }, {
   "range": "D1",
   "value": "height",
+  "columnWidth": 100,
+  "columnNumber": 4,
   "fontWeight": "bold"
 }, {
   "range": "E1",
   "value": "image",
+  "columnWidth": 100,
+  "columnNumber": 5,
   "fontWeight": "bold"
 }, {
   "range": "F1",
   "value": "index",
+  "columnWidth": 100,
+  "columnNumber": 6,
   "fontWeight": "bold"
 }, {
   "range": "G1",
   "value": "materialname",
+  "columnWidth": 100,
+  "columnNumber": 7,
   "fontWeight": "bold"
 }, {
   "range": "H1",
   "value": "name",
+  "columnWidth": 100,
+  "columnNumber": 8,
   "fontWeight": "bold"
 }, {
   "range": "I1",
   "value": "price",
+  "columnWidth": 100,
+  "columnNumber": 9,
   "fontWeight": "bold"
 }, {
   "range": "J1",
   "value": "pricetext",
+  "columnWidth": 100,
+  "columnNumber": 10,
   "fontWeight": "bold"
 }, {
   "range": "K1",
   "value": "rx",
+  "columnWidth": 100,
+  "columnNumber": 11,
   "fontWeight": "bold"
 }, {
   "range": "L1",
   "value": "ry",
+  "columnWidth": 100,
+  "columnNumber": 12,
   "fontWeight": "bold"
 }, {
   "range": "M1",
   "value": "rz",
+  "columnWidth": 100,
+  "columnNumber": 13,
   "fontWeight": "bold"
 }, {
   "range": "N1",
   "value": "sku",
+  "columnWidth": 100,
+  "columnNumber": 14,
   "fontWeight": "bold"
 }, {
   "range": "O1",
   "value": "text1",
+  "columnWidth": 100,
+  "columnNumber": 15,
   "fontWeight": "bold"
 }, {
   "range": "P1",
   "value": "text2",
+  "columnWidth": 100,
+  "columnNumber": 16,
   "fontWeight": "bold"
 }, {
   "range": "Q1",
   "value": "textfontfamily",
+  "columnWidth": 100,
+  "columnNumber": 17,
   "fontWeight": "bold"
 }, {
   "range": "R1",
   "value": "width",
+  "columnWidth": 100,
+  "columnNumber": 18,
   "fontWeight": "bold"
 }, {
   "range": "S1",
   "value": "x",
+  "columnWidth": 100,
+  "columnNumber": 19,
   "fontWeight": "bold"
 }, {
   "range": "T1",
   "value": "y",
+  "columnWidth": 100,
+  "columnNumber": 20,
   "fontWeight": "bold"
 }, {
   "range": "U1",
   "value": "z",
+  "columnWidth": 100,
+  "columnNumber": 21,
   "fontWeight": "bold"
 }, {
   "range": "A2",
   "value": "product"
 }, {
   "range": "B2",
-  "value": "DISPLAY product_toyboy1"
+  "value": "DISPLAY baileys"
 }, {
   "range": "E2",
-  "value": "sb:productsignimages\\toyboy1.jpg"
+  "value": "sb:productsignimages/baileys.jpg"
 }, {
   "range": "F2",
   "value": 100,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "H2",
-  "value": "Action Figure - Blue"
+  "value": "Baileys"
 }, {
   "range": "I2",
-  "value": 8.99,
-  "horizontalAlignment": "general-right"
+  "value": 12.99,
+  "horizontalAlignment": "right"
 }, {
   "range": "J2",
-  "value": 8.99,
-  "horizontalAlignment": "general-right"
+  "value": "$12.99 / bottle"
+}, {
+  "range": "L2",
+  "value": 0,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M2",
+  "value": 0,
+  "horizontalAlignment": "right"
 }, {
   "range": "N2",
-  "value": "Action Figure - Blue"
+  "value": "Baileys"
 }, {
   "range": "O2",
-  "value": "Action Figure - Blue"
+  "value": "Baileys"
 }, {
   "range": "S2",
   "value": -15,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "T2",
   "value": 9.8,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
+}, {
+  "range": "U2",
+  "value": 0,
+  "horizontalAlignment": "right"
 }, {
   "range": "A3",
   "value": "product"
 }, {
   "range": "B3",
-  "value": "DISPLAY product_toyboy2"
+  "value": "DISPLAY becherovka"
 }, {
   "range": "E3",
-  "value": "sb:productsignimages\\toyboy2.jpg"
+  "value": "sb:productsignimages/becherovka.jpg"
 }, {
   "range": "F3",
   "value": 200,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "H3",
-  "value": "Toy Dart Guns"
+  "value": "Becherovka"
 }, {
   "range": "I3",
-  "value": 12.99,
-  "horizontalAlignment": "general-right"
+  "value": 15.99,
+  "horizontalAlignment": "right"
 }, {
   "range": "J3",
-  "value": 12.99,
-  "horizontalAlignment": "general-right"
+  "value": "$15.99 / bottle"
 }, {
   "range": "L3",
   "value": "45deg"
 }, {
   "range": "N3",
-  "value": "Toy Dart Guns"
+  "value": "Becherovka"
 }, {
   "range": "O3",
-  "value": "Toy Dart Guns"
+  "value": "Becherovka"
 }, {
   "range": "S3",
   "value": -10,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "T3",
   "value": 9.8,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "U3",
   "value": 10,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "A4",
   "value": "product"
 }, {
   "range": "B4",
-  "value": "DISPLAY product_toyboy3"
+  "value": "DISPLAY chivas"
 }, {
   "range": "E4",
-  "value": "sb:productsignimages\\toyboy3.jpg"
+  "value": "sb:productsignimages/chivas.jpg"
 }, {
   "range": "F4",
   "value": 300,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "H4",
-  "value": "Action Figure - Yellow"
+  "value": "Chivas"
 }, {
   "range": "I4",
-  "value": 9.99,
-  "horizontalAlignment": "general-right"
+  "value": 18.99,
+  "horizontalAlignment": "right"
 }, {
   "range": "J4",
-  "value": 9.99,
-  "horizontalAlignment": "general-right"
+  "value": "$18.99 / bottle"
 }, {
   "range": "L4",
   "value": "90deg"
 }, {
   "range": "N4",
-  "value": "Action Figure - Yellow"
+  "value": "Chivas"
 }, {
   "range": "O4",
-  "value": "Action Figure - Yellow"
+  "value": "Chivas"
+}, {
+  "range": "S4",
+  "value": 0,
+  "horizontalAlignment": "right"
 }, {
   "range": "T4",
   "value": 9.8,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "U4",
   "value": 15,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "A5",
   "value": "product"
 }, {
   "range": "B5",
-  "value": "DISPLAY product_toyboy4"
+  "value": "DISPLAY cointreau"
 }, {
   "range": "E5",
-  "value": "sb:productsignimages\\toyboy4.jpg"
+  "value": "sb:productsignimages/cointreau.jpg"
 }, {
   "range": "F5",
   "value": 400,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "H5",
-  "value": "Lego Toy"
+  "value": "Cointreau"
 }, {
   "range": "I5",
-  "value": 4.99,
-  "horizontalAlignment": "general-right"
+  "value": 8.99,
+  "horizontalAlignment": "right"
 }, {
   "range": "J5",
-  "value": 4.99,
-  "horizontalAlignment": "general-right"
+  "value": "$8.99 / bottle"
 }, {
   "range": "L5",
   "value": "135deg"
 }, {
   "range": "N5",
-  "value": "Lego Toy"
+  "value": "Cointreau"
 }, {
   "range": "O5",
-  "value": "Lego Toy"
+  "value": "Cointreau"
 }, {
   "range": "S5",
   "value": 10,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "T5",
   "value": 9.8,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "U5",
   "value": 10,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "A6",
   "value": "product"
 }, {
   "range": "B6",
-  "value": "DISPLAY product_toyboy5"
+  "value": "DISPLAY crema_di_limoncino"
 }, {
   "range": "E6",
-  "value": "sb:productsignimages\\toyboy5.jpg"
+  "value": "sb:productsignimages/crema_di_limoncino.jpg"
 }, {
   "range": "F6",
   "value": 500,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "H6",
-  "value": "RC Truck"
+  "value": "Crema Di Limoncino"
 }, {
   "range": "I6",
-  "value": 29.99,
-  "horizontalAlignment": "general-right"
+  "value": 11.99,
+  "horizontalAlignment": "right"
 }, {
   "range": "J6",
-  "value": 29.99,
-  "horizontalAlignment": "general-right"
+  "value": "$11.99 / bottle"
 }, {
   "range": "L6",
   "value": "180deg"
 }, {
   "range": "N6",
-  "value": "RC Truck"
+  "value": "Crema Di Limoncino"
 }, {
   "range": "O6",
-  "value": "RC Truck"
+  "value": "Crema Di Limoncino"
 }, {
   "range": "S6",
   "value": 15,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "T6",
   "value": 9.8,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
+}, {
+  "range": "U6",
+  "value": 0,
+  "horizontalAlignment": "right"
 }, {
   "range": "A7",
   "value": "product"
 }, {
   "range": "B7",
-  "value": "DISPLAY product_toygirl1"
+  "value": "DISPLAY curacao"
 }, {
   "range": "E7",
-  "value": "sb:productsignimages\\toygirl1.jpg"
+  "value": "sb:productsignimages/curacao.jpg"
 }, {
   "range": "F7",
   "value": 600,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "H7",
-  "value": "Barbie Doll"
+  "value": "Curacao"
 }, {
   "range": "I7",
-  "value": 6.99,
-  "horizontalAlignment": "general-right"
+  "value": 12.99,
+  "horizontalAlignment": "right"
 }, {
   "range": "J7",
-  "value": 6.99,
-  "horizontalAlignment": "general-right"
+  "value": "$12.99 / bottle"
 }, {
   "range": "L7",
   "value": "225deg"
 }, {
   "range": "N7",
-  "value": "Barbie Doll"
+  "value": "Curacao"
 }, {
   "range": "O7",
-  "value": "Barbie Doll"
+  "value": "Curacao"
 }, {
   "range": "S7",
   "value": 10,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "T7",
   "value": 9.8,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "U7",
   "value": -10,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "A8",
   "value": "product"
 }, {
   "range": "B8",
-  "value": "DISPLAY product_teddybear"
+  "value": "DISPLAY havana_club"
 }, {
   "range": "E8",
-  "value": "sb:productsignimages\\teddybear.jpg"
+  "value": "sb:productsignimages/havana_club.jpg"
 }, {
   "range": "F8",
   "value": 700,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "H8",
-  "value": "Washable Teddy"
+  "value": "Havana Club"
 }, {
   "range": "I8",
-  "value": 39.99,
-  "horizontalAlignment": "general-right"
+  "value": 15.99,
+  "horizontalAlignment": "right"
 }, {
   "range": "J8",
-  "value": 39.99,
-  "horizontalAlignment": "general-right"
+  "value": "$15.99 / bottle"
 }, {
   "range": "L8",
   "value": "270deg"
 }, {
   "range": "N8",
-  "value": "Washable Teddy"
+  "value": "Havana Club"
 }, {
   "range": "O8",
-  "value": "Washable Teddy"
+  "value": "Havana Club"
+}, {
+  "range": "S8",
+  "value": 0,
+  "horizontalAlignment": "right"
 }, {
   "range": "T8",
   "value": 9.8,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "U8",
   "value": -15,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "A9",
   "value": "product"
 }, {
   "range": "B9",
-  "value": "DISPLAY product_game_5"
+  "value": "DISPLAY jackdaniels"
 }, {
   "range": "E9",
-  "value": "sb:productsignimages\\game5.jpg"
+  "value": "sb:productsignimages/jackdaniels.jpg"
 }, {
   "range": "F9",
   "value": 800,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "H9",
-  "value": "Lego Game"
+  "value": "Jack Daniels"
 }, {
   "range": "I9",
-  "value": 8.99,
-  "horizontalAlignment": "general-right"
+  "value": 18.99,
+  "horizontalAlignment": "right"
 }, {
   "range": "J9",
-  "value": 8.99,
-  "horizontalAlignment": "general-right"
+  "value": "$18.99 / bottle"
 }, {
   "range": "L9",
   "value": "315deg"
 }, {
   "range": "N9",
-  "value": "Lego Game"
+  "value": "Jack Daniels"
 }, {
   "range": "O9",
-  "value": "Lego Game"
+  "value": "Jack Daniels"
 }, {
   "range": "S9",
   "value": -10,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "T9",
   "value": 9.8,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "U9",
   "value": -10,
-  "horizontalAlignment": "general-right"
+  "horizontalAlignment": "right"
 }, {
   "range": "A1"
 }]

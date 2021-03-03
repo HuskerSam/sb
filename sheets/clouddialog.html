@@ -1345,19 +1345,31 @@
           }).createSheetFromTemplate(sheetName, genResults);
         });
       }
-      async sheetsAddToProjectList(sheetName, assetSheets = []) {
-        let assets = '=';
+      async sheetsAddToProjectList(sheetName, assetSheets = [], productSheets = []) {
+        let assets = '';
         if (assetSheets.length > 0)
           assetSheets.forEach(s => {
-            if (assets !== '=')
+            if (assets !== '')
               assets += ' & "," & ';
+            else
+              assets += '=';
             assets += 'getDataRangesForSheet(\"' + s + "\")";
+          });
+
+        let products = '';
+        if (productSheets.length > 0)
+          productSheets.forEach(s => {
+            if (products !== '')
+              products += ' & "," & ';
+            else
+              products += '=';
+            products += 'getDataRangesForSheet(\"' + s + "\")";
           });
 
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).AddRowToProjectList(sheetName, '=getDataRangesForSheet(\"' + sheetName + "\")", assets, '', '');
+          }).AddRowToProjectList(sheetName, '=getDataRangesForSheet(\"' + sheetName + "\")", assets, products, '');
         });
       }
       async sheetsStoreSelectedProject(project) {
@@ -1442,15 +1454,20 @@
         let templateData = this.templateMap[tKey];
         let result = await this.sheetsCreateTemplateSheet(tKey, sheetName);
         let assetSheets = [];
+        let productSheets = [];
 
         if (result !== 'success') {
           alert(result);
         } else {
-          if (templateData.fragments) {
+          if (templateData.fragments || templateData.products) {
+            if (!templateData.fragments) templateData.fragments = '';
+            if (!templateData.products) templateData.products = '';
             let fragments = templateData.fragments.split(',');
+            let products = templateData.products.split(',');
+            let both = fragments.concat(products);
 
-            for (let c = 0; c < fragments.length; c++) {
-              let frag = fragments[c];
+            for (let c = 0; c < both.length; c++) {
+              let frag = both[c];
               let tData = this.templateMap[frag];
 
               if (tData) {
@@ -1463,13 +1480,17 @@
                   alert(fragResult);
                   break;
                 }
-                assetSheets.push(sheetName);
+
+                if (fragments.indexOf(frag) !== -1)
+                  assetSheets.push(sheetName);
+                else
+                  productSheets.push(sheetName);
               }
             }
           }
 
           if (this.add_to_publishlist.checked)
-            await this.sheetsAddToProjectList(sheetName, assetSheets);
+            await this.sheetsAddToProjectList(sheetName, assetSheets, productSheets);
           if (this.set_to_defaultproject.checked)
             await this.sheetsStoreSelectedProject(sheetName);
           if (this.add_asset_to_projectlist.checked)
