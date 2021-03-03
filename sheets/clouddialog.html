@@ -1045,7 +1045,7 @@
         } else if (this.addon_display_view_select.value === 'position_plotter_div')
           this.currentHelpTag = 'positionplotter';
         else if (this.addon_display_view_select.value === 'position_products')
-         this.currentHelpTag = 'positionproducts';
+          this.currentHelpTag = 'positionproducts';
 
         this.app.help_topic_picker_select = this.help_viewer_panel_select;
 
@@ -1324,10 +1324,6 @@
         this.loadProjectView();
       }
 
-      async sheetsCreateFragmentSheets(fragments, setAssets = true) {
-//        this.templateMap
-          //.createSheetFromTemplate(sheetName, genResults);
-      }
       async sheetsCreateTemplateSheet(layoutName, sheetName) {
         let sheets = layoutName.split(',');
 
@@ -1338,37 +1334,22 @@
           cache: "no-store"
         });
         let genText = await genResponse.text();
-        if (sheetName) {
-          genText = genText.split('##sheetname').join("'" + sheetName + "'");
-          genText = genText.split('##sheetrawname').join(sheetName);
-        }
+
+        genText = genText.split('##sheetname').join("'" + sheetName + "'");
+        genText = genText.split('##sheetrawname').join(sheetName);
 
         let genResults = JSON.parse(genText);
         return new Promise(async (resolve, reject) => {
           google.script.run.withSuccessHandler(async (result) => {
-            if (result !== 'success') {
-              alert(result);
-            } else {
-              if (this.add_to_publishlist.checked)
-                await this.sheetsAddToProjectList(sheetName);
-              if (this.set_to_defaultproject.checked)
-                await this.sheetsStoreSelectedProject(sheetName);
-              if (this.add_asset_to_projectlist.checked)
-                await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget);
-              if (this.add_products_to_projectlist.checked)
-                await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget, "Catalog Ranges");
-            }
-            this.create_layout_btn.classList.add('blue');
-            this.create_layout_btn.classList.remove('create_layout_spin');
             resolve(result);
           }).createSheetFromTemplate(sheetName, genResults);
         });
       }
-      async sheetsAddToProjectList(baseSheetName) {
+      async sheetsAddToProjectList(sheetName) {
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).AddRowToProjectList(baseSheetName, '=getDataRangesForSheet(\"' + baseSheetName + "\")", '', '', '');
+          }).AddRowToProjectList(sheetName, '=getDataRangesForSheet(\"' + sheetName + "\")", '', '', '');
         });
       }
       async sheetsStoreSelectedProject(project) {
@@ -1444,16 +1425,48 @@
       }
       async templateCreateSheets() {
         let sheetName = this.sheetname.value;
-        let templateKey = this.circuit_template_select.value;
+        let tKey = this.circuit_template_select.value;
 
         if (!sheetName) {
           alert('Sheet name required');
           return null;
         }
+        let templateData = this.templateMap[tKey];
+        let result = await this.sheetsCreateTemplateSheet(tKey, sheetName);
 
-        let templateData = this.templateMap[templateKey];
+        if (result !== 'success') {
+          alert(result);
+        } else {
+          if (templateData.fragments) {
+            let fragments = templateData.fragments.split(',');
 
-        await this.sheetsCreateTemplateSheet(templateKey, name);
+            let promises = [];
+            fragments.forEach(frag => {
+              let tData = this.templateData[frag];
+
+              if (tData) {
+                let sheetName = tData.hint;
+                if (!sheetName)
+                  sheetName = frag;
+                promises.push(this.sheetsCreateTemplateSheet(frag, sheetName));
+              }
+            });
+
+            let fragResults = await Promise.all(promises);
+          }
+
+          if (this.add_to_publishlist.checked)
+            await this.sheetsAddToProjectList(sheetName);
+          if (this.set_to_defaultproject.checked)
+            await this.sheetsStoreSelectedProject(sheetName);
+          if (this.add_asset_to_projectlist.checked)
+            await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget);
+          if (this.add_products_to_projectlist.checked)
+            await this.sheetsSetAssetsForProject(sheetName, this.defaultProjectTarget, "Catalog Ranges");
+        }
+
+        this.create_layout_btn.classList.add('blue');
+        this.create_layout_btn.classList.remove('create_layout_spin');
 
         this.sheetnameinputdirty = false;
 
@@ -2858,7 +2871,7 @@
 
     .gutter.gutter-vertical {
       background-image: linear-gradient(rgb(100, 200, 255), rgb(100, 200, 255), white, rgb(100, 200, 255),
-        rgb(100, 200, 255));
+          rgb(100, 200, 255));
       background-repeat: no-repeat;
       background-position: center;
       background-color: rgb(100, 200, 255);
@@ -2870,7 +2883,7 @@
     #template_view .gutter.gutter-vertical,
     #position_plotter_div .gutter.gutter-vertical {
       background-image: linear-gradient(white, white, silver, white,
-        white);
+          white);
       background-color: white;
       margin: 0 8px;
     }
@@ -2992,7 +3005,7 @@
 
     table.position_products_table td span {
       padding-top: 8px;
-      margin:0 0px;
+      margin: 0 0px;
       padding-left: 4px;
     }
 
@@ -3008,7 +3021,9 @@
       font-size: 24px;
     }
 
-    td.gsc-search-button, td.gsc-clear-button, td.gsc-input {
+    td.gsc-search-button,
+    td.gsc-clear-button,
+    td.gsc-input {
       padding: 0;
     }
 
