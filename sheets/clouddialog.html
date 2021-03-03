@@ -1345,11 +1345,19 @@
           }).createSheetFromTemplate(sheetName, genResults);
         });
       }
-      async sheetsAddToProjectList(sheetName) {
+      async sheetsAddToProjectList(sheetName, assetSheets = []) {
+        let assets = '=';
+        if (assetSheets.length > 0)
+          assetSheets.forEach(s => {
+            if (assets !== '=')
+              assets += ' & "," & ';
+            assets += 'getDataRangesForSheet(\"' + s + "\")";
+          });
+
         return new Promise((resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).AddRowToProjectList(sheetName, '=getDataRangesForSheet(\"' + sheetName + "\")", '', '', '');
+          }).AddRowToProjectList(sheetName, '=getDataRangesForSheet(\"' + sheetName + "\")", assets, '', '');
         });
       }
       async sheetsStoreSelectedProject(project) {
@@ -1433,6 +1441,7 @@
         }
         let templateData = this.templateMap[tKey];
         let result = await this.sheetsCreateTemplateSheet(tKey, sheetName);
+        let assetSheets = [];
 
         if (result !== 'success') {
           alert(result);
@@ -1440,23 +1449,27 @@
           if (templateData.fragments) {
             let fragments = templateData.fragments.split(',');
 
-            let promises = [];
-            fragments.forEach(frag => {
-              let tData = this.templateData[frag];
+            for (let c = 0; c < fragments.length; c++) {
+              let frag = fragments[c];
+              let tData = this.templateMap[frag];
 
               if (tData) {
                 let sheetName = tData.hint;
                 if (!sheetName)
                   sheetName = frag;
-                promises.push(this.sheetsCreateTemplateSheet(frag, sheetName));
-              }
-            });
+                let fragResult = await this.sheetsCreateTemplateSheet(frag, sheetName);
 
-            let fragResults = await Promise.all(promises);
+                if (fragResult !== 'success') {
+                  alert(fragResult);
+                  break;
+                }
+                assetSheets.push(sheetName);
+              }
+            }
           }
 
           if (this.add_to_publishlist.checked)
-            await this.sheetsAddToProjectList(sheetName);
+            await this.sheetsAddToProjectList(sheetName, assetSheets);
           if (this.set_to_defaultproject.checked)
             await this.sheetsStoreSelectedProject(sheetName);
           if (this.add_asset_to_projectlist.checked)

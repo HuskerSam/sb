@@ -109,8 +109,9 @@
     "name": "Multi Sheet Flow Diagram",
     "key": "FlowDiagramExample",
     "hint": "3D Flow Diagram",
-    "fragments": "MockMiniStore,LineFlowChart,SimpleWhatIf,Spinner360",
+    "fragments": "MockMiniStoreFrag,LineFlowChartFrag,SimpleWhatIfFrag,Spinner360Frag",
     "categories": "Layout",
+    "helpkey": "spinnerdiagram",
     "description": "multi sheet flow diagram using fragments"
   },
   {
@@ -320,5 +321,37 @@
     "hint": "Grocery Isle",
     "categories": "Legacy and Tests",
     "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
+  },
+  {
+    "name": "Mini Mock Store",
+    "key": "MockMiniStoreFrag",
+    "hint": "mock store",
+    "helpkey": "spinnerdiagram",
+    "categories": "Fragments",
+    "description": "support file"
+  },
+  {
+    "name": "Line Flow Chart",
+    "key": "LineFlowChartFrag",
+    "hint": "flow chart",
+    "helpkey": "spinnerdiagram",
+    "categories": "Fragments",
+    "description": "support file"
+  },
+  {
+    "name": "Simple What If",
+    "key": "SimpleWhatIfFrag",
+    "hint": "whatif",
+    "helpkey": "spinnerdiagram",
+    "categories": "Fragments",
+    "description": "support file"
+  },
+  {
+    "name": "Spin wheel 360",
+    "key": "Spinner360Frag",
+    "hint": "spinner360",
+    "helpkey": "spinnerdiagram",
+    "categories": "Fragments",
+    "description": "support file"
   }
 ]

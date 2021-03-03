@@ -96,5 +96,9 @@
     "value": "webappdiagram",
     "title": "webGL App Diagram Example",
     "video": "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/webglapp.webm"
+  },
+  {
+    "value": "spinnerdiagram",
+    "title": "Multi Sheet Diagram Example"
   }
 ]
