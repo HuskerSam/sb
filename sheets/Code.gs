@@ -23,7 +23,7 @@ function showInitDialog() {
 function showDialog(name) {
   refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile(name)
-    .setTitle('Handtop Visual Tools')
+    .setTitle('Visual Tools')
   SpreadsheetApp.getUi().showSidebar(html);
 }
 

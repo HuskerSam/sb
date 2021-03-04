@@ -1869,7 +1869,7 @@ class gCSVImport {
     textPlaneBlock.textfontcolor = row.textfontcolor;
     textPlaneBlock.texturetext = row.text1;
     textPlaneBlock.texturetext2 = row.text2;
-    textPlaneBlock.isfitted = '1';
+    textPlaneBlock.isfittedtext = '1';
     textPlaneBlock.textfontsize = row.textfontsize;
     textPlaneBlock.texturetextrendersize = row.texturetextrendersize;
     textPlaneBlock.textfontweight = row.textfontweight;
@@ -2100,7 +2100,7 @@ class gCSVImport {
     let textPlane = this.defaultCSVRow();
     textPlane.asset = 'textplane';
     textPlane.hasalpha = 'x';
-    textPlane.isfitted = '1';
+    textPlane.isfittedtext = '1';
     textPlane.istext = true;
     let colorIndex = product.colorIndex;
     if (colorIndex !== 2 && colorIndex !== 0) {
