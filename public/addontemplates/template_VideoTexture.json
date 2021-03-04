@@ -1,0 +1,509 @@
+[{
+  "range": "A1",
+  "value": "name",
+  "columnWidth": 100,
+  "columnNumber": 1,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B1",
+  "value": "asset",
+  "columnWidth": 100,
+  "columnNumber": 2,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 3,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 4,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 6,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 7,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 8,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 9,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 10,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 11,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 12,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 13,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 14,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 15,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 16,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 17,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 18,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 19,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 20,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 21,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 22,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 23,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 24,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 25,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 26,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 27,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 28,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 29,
+  "horizontalAlignment": "general"
+}, {
+  "range": "A2",
+  "value": "Scene 711",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B2",
+  "value": "sceneblock",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A4",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B4",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C4",
+  "value": "texture",
+  "fontWeight": "bold"
+}, {
+  "range": "D4",
+  "value": "speculartexture",
+  "fontWeight": "bold"
+}, {
+  "range": "E4",
+  "value": "bumptexture",
+  "fontWeight": "bold"
+}, {
+  "range": "F4",
+  "value": "ambienttexture",
+  "fontWeight": "bold"
+}, {
+  "range": "G4",
+  "value": "emissivetexture",
+  "fontWeight": "bold"
+}, {
+  "range": "H4",
+  "value": "reflectiontexture",
+  "fontWeight": "bold"
+}, {
+  "range": "I4",
+  "value": "roughness",
+  "fontWeight": "bold"
+}, {
+  "range": "J4",
+  "value": "isvideo",
+  "fontWeight": "bold"
+}, {
+  "range": "K4",
+  "value": "diffusecolor",
+  "fontWeight": "bold"
+}, {
+  "range": "L4",
+  "value": "emissivecolor",
+  "fontWeight": "bold"
+}, {
+  "range": "M4",
+  "value": "ambientcolor",
+  "fontWeight": "bold"
+}, {
+  "range": "N4",
+  "value": "specularcolor",
+  "fontWeight": "bold"
+}, {
+  "range": "O4",
+  "value": "scaleu",
+  "fontWeight": "bold"
+}, {
+  "range": "P4",
+  "value": "scalev",
+  "fontWeight": "bold"
+}, {
+  "range": "Q4",
+  "value": "offsetu",
+  "fontWeight": "bold"
+}, {
+  "range": "R4",
+  "value": "offsetv",
+  "fontWeight": "bold"
+}, {
+  "range": "S4",
+  "value": "hasalpha",
+  "fontWeight": "bold"
+}, {
+  "range": "T4",
+  "value": "specularpower",
+  "fontWeight": "bold"
+}, {
+  "range": "A5",
+  "value": "video texture",
+  "fontColor": "#222222"
+}, {
+  "range": "B5",
+  "value": "material",
+  "fontColor": "#222222"
+}, {
+  "range": "C5",
+  "value": "https://hCWebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideogreen.webm",
+  "fontColor": "#222222"
+}, {
+  "range": "G5",
+  "value": "https://hCWebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideogreen.webm",
+  "fontColor": "#222222"
+}, {
+  "range": "J5",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A6",
+  "value": "redvideo",
+  "fontColor": "#222222"
+}, {
+  "range": "B6",
+  "value": "material",
+  "fontColor": "#222222"
+}, {
+  "range": "C6",
+  "value": "https://hCWEbflow.s3-us-west-2.amazonaws.com/videos/template/shortvideoyellow.webm",
+  "fontColor": "#222222"
+}, {
+  "range": "G6",
+  "value": "https://hCWEbflow.s3-us-west-2.amazonaws.com/videos/template/shortvideoyellow.webm",
+  "fontColor": "#222222"
+}, {
+  "range": "J6",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A7",
+  "value": "bluevideo",
+  "fontColor": "#222222"
+}, {
+  "range": "B7",
+  "value": "material",
+  "fontColor": "#222222"
+}, {
+  "range": "C7",
+  "value": "https://hCWebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideoblue.webm",
+  "fontColor": "#222222"
+}, {
+  "range": "G7",
+  "value": "https://hCWebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideoblue.webm",
+  "fontColor": "#222222"
+}, {
+  "range": "J7",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "O7",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "P7",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A10",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B10",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C10",
+  "value": "shapetype",
+  "fontWeight": "bold"
+}, {
+  "range": "D10",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "E10",
+  "value": "width",
+  "fontWeight": "bold"
+}, {
+  "range": "F10",
+  "value": "height",
+  "fontWeight": "bold"
+}, {
+  "range": "G10",
+  "value": "depth",
+  "fontWeight": "bold"
+}, {
+  "range": "H10",
+  "value": "boxsize",
+  "fontWeight": "bold"
+}, {
+  "range": "I10",
+  "value": "textfontfamily",
+  "fontWeight": "bold"
+}, {
+  "range": "J10",
+  "value": "textfontweight",
+  "fontWeight": "bold"
+}, {
+  "range": "K10",
+  "value": "textfontstyle",
+  "fontWeight": "bold"
+}, {
+  "range": "L10",
+  "value": "texttext",
+  "fontWeight": "bold"
+}, {
+  "range": "M10",
+  "value": "textdepth",
+  "fontWeight": "bold"
+}, {
+  "range": "N10",
+  "value": "textstroke",
+  "fontWeight": "bold"
+}, {
+  "range": "O10",
+  "value": "textsize",
+  "fontWeight": "bold"
+}, {
+  "range": "P10",
+  "value": "tessellation",
+  "fontWeight": "bold"
+}, {
+  "range": "Q10",
+  "value": "diametertop",
+  "fontWeight": "bold"
+}, {
+  "range": "R10",
+  "value": "diameterbottom",
+  "fontWeight": "bold"
+}, {
+  "range": "S10",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "T10",
+  "value": "visibility",
+  "fontWeight": "bold"
+}, {
+  "range": "U10",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "V10",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "W10",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "X10",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "Y10",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "Z10",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "AA10",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "AB10",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "AC10",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "A11",
+  "value": "box 905",
+  "fontColor": "#222222"
+}, {
+  "range": "B11",
+  "value": "shape",
+  "fontColor": "#222222"
+}, {
+  "range": "C11",
+  "value": "box",
+  "fontColor": "#222222"
+}, {
+  "range": "D11",
+  "value": "video texture",
+  "fontColor": "#222222"
+}, {
+  "range": "H11",
+  "value": 5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "S11",
+  "value": "::scene::",
+  "fontColor": "#222222"
+}, {
+  "range": "U11",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A12",
+  "value": "sphere 153",
+  "fontColor": "#222222"
+}, {
+  "range": "B12",
+  "value": "shape",
+  "fontColor": "#222222"
+}, {
+  "range": "C12",
+  "value": "sphere",
+  "fontColor": "#222222"
+}, {
+  "range": "D12",
+  "value": "bluevideo",
+  "fontColor": "#222222"
+}, {
+  "range": "E12",
+  "value": 6,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F12",
+  "value": 8,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G12",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "S12",
+  "value": "::scene::",
+  "fontColor": "#222222"
+}, {
+  "range": "X12",
+  "value": "180deg"
+}, {
+  "range": "A13",
+  "value": "plane 745",
+  "fontColor": "#222222"
+}, {
+  "range": "B13",
+  "value": "shape",
+  "fontColor": "#222222"
+}, {
+  "range": "C13",
+  "value": "plane",
+  "fontColor": "#222222"
+}, {
+  "range": "D13",
+  "value": "redvideo",
+  "fontColor": "#222222"
+}, {
+  "range": "E13",
+  "value": 4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F13",
+  "value": 7,
+  "fontColor": "#222222",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "S13",
+  "value": "::scene::",
+  "fontColor": "#222222"
+}, {
+  "range": "U13",
+  "value": -10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "Y13",
+  "value": "180deg"
+}, {
+  "range": "A1"
+}]

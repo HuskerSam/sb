@@ -355,5 +355,26 @@
     "helpkey": "spinnerdiagram",
     "categories": "Fragments",
     "description": "support file"
+  },
+  {
+    "name": "Video Texture Example",
+    "hint": "Video Texture",
+    "key": "VideoTexture",
+    "categories": "Layout",
+    "description": "3 videos used as textures wrapped on shapes - make sure to click the screen EARLY when loading so the videos load, otherwise use F5/cmd R to reload the display to see the videos animated"
+  },
+  {
+    "name": "GLB mesh example",
+    "hint": "GLB Bee Example",
+    "key": "AsterikAndGLB",
+    "categories": "Layout",
+    "description": "glb mesh used, wrapped in a block (container mesh internally) in order to apply frames - also the [*] operator is used to reuse blocks and shift time"
+  },
+  {
+    "name": "TRI Meter Example",
+    "hint": "TRI Meter",
+    "key": "TRIMeter",
+    "categories": "Layout",
+    "description": "simple text and shape and animated line combination for a diagram"
   }
 ]
