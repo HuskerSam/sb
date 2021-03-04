@@ -155,8 +155,18 @@ class cPanelData {
   uploadURL(f) {
     if (f.fileDom.files.length === 0)
       return;
+    if (f.uploadType === 'skybox') {
+      f.progressBar.style.display = '';
+      f.dom.style.display = 'none';
 
-    if (f.uploadType === 'mesh') {
+      if (f.fileDom.files.length > 0) {
+        this.parent.context.updateObjectURL('skybox', this.parent.key, f.fileDom.files[0]).then(results => {
+          f.fileDom.value = '';
+          f.progressBar.style.display = 'none';
+          f.dom.style.display = '';
+        });
+      }
+    } else if (f.uploadType === 'mesh') {
       f.progressBar.style.display = '';
       f.dom.style.display = 'none';
 

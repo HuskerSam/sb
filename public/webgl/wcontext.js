@@ -303,6 +303,11 @@ class wContext {
         let fireSet = gAPPP.a.modelSets['block'];
         fireSet.updateBlob(key, file, filename, 'audioURL').then(
           r => resolve(r));
+      } else if (objectType === 'skybox') {
+        let filename = file.name;
+        let fireSet = gAPPP.a.modelSets['block'];
+        fireSet.updateBlob(key, file, filename, 'skybox').then(
+          r => resolve(r));
       } else
         resolve({});
     });

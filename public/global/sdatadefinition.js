@@ -743,14 +743,14 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   title: 'Equirect Skybox',
   fireSetField: 'skybox',
   dataListId: 'skyboxlist',
-  group: 'ground',
-  floatLeft: true,
-  clearLeft: true
+  type: 'url',
+  group: 'skybox',
+  uploadType: 'skybox'
 }, {
   title: 'Size',
   fireSetField: 'skyboxSize',
   displayType: 'number',
-  group: 'ground',
+  group: 'skybox',
   floatLeft: true
 }, {
   title: 'Clear Color',
