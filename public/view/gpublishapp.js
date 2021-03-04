@@ -26,6 +26,8 @@ class gPublishApp extends gInstanceSuper {
     }
 
     let workspace = urlParams.get('w');
+    if (!workspace)
+      workspace = urlParams.get('wid');
     this.blockId = urlParams.get('b');
     let workspaceCode = urlParams.get('z');
     this.blockCode = urlParams.get('y');
@@ -35,6 +37,10 @@ class gPublishApp extends gInstanceSuper {
       if (data)
         workspace = gAPPP.a.modelSets['projectTitles'].lastKeyLookup;
     }
+
+    if (!nameWid)
+      if (workspace)
+        nameWid = workspace;
     if (nameWid)
       this.loadedWID = nameWid;
     else

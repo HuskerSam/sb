@@ -84,6 +84,11 @@ class cViewPublished extends bView {
       if (this.rootBlock.updatesDisabled)
         location.reload();
     };
+
+    this.workplacesSelect = document.querySelector('#workspaces-select');
+    this.workplacesSelect.addEventListener('input', e => this.selectProject());
+
+    this.refreshProjectList();
   }
   closeHeaderBands() {
 
@@ -159,19 +164,22 @@ class cViewPublished extends bView {
     if (!gAPPP.a.modelSets[t])
       return;
 
-    let eleList = document.createElement('datalist');
-    let fldList = document.createElement('datalist');
-    eleList.setAttribute('id', 'elementidlist');
-    fldList.setAttribute('id', 'fieldnamelist');
-    document.body.appendChild(eleList);
-    document.body.appendChild(fldList);
+    if (this.eleList) this.eleList.remove();
+    if (this.fldList) this.fldList.remove();
+
+    this.eleList = document.createElement('datalist');
+    this.fldList = document.createElement('datalist');
+    this.eleList.setAttribute('id', 'elementidlist');
+    this.fldList.setAttribute('id', 'fieldnamelist');
+    document.body.appendChild(this.eleList);
+    document.body.appendChild(this.fldList);
 
     let options = '';
     let fS = gAPPP.a.modelSets[t].fireDataValuesByKey;
     for (let i in fS)
       options += '<option>' + i + ' ' + fS[i].title + '</option>';
 
-    eleList.innerHTML = options;
+    this.eleList.innerHTML = options;
 
     if (t === 'frame')
       t = 'shapeFrame';
@@ -181,7 +189,7 @@ class cViewPublished extends bView {
     for (let c = 0, l = fields.length; c< l; c++)
       fieldOptions += '<option>' + fields[c].fireSetField + '</option>';
 
-    fldList.innerHTML = fieldOptions;
+    this.fldList.innerHTML = fieldOptions;
   }
   _canvasPanelTemplate() {
     return `<canvas class="popup-canvas"></canvas>
@@ -191,6 +199,7 @@ class cViewPublished extends bView {
     <div class="canvas-actions">
       <div class="canvas-play-bar">
         <div class="scene-options-panel" style="display:none;">
+          <select id="workspaces-select" style="float:right;"></select>
           <div class="scene-fields-container">
           </div>
           <div class="render-log-wrapper" style="display:none;">
@@ -239,7 +248,7 @@ class cViewPublished extends bView {
   <button id="publish-settings-button" style='right: 3.5em;' class="btn-sb-icon"><i class="material-icons">dashboard</i></button>
   <button id="publish_help_viewer" style='right: 5.5em;bottom:.25em;position:absolute;' class="btn-sb-icon"><i class="material-icons">help</i></button>
   <div id="publish-profile-panel" style="display:none;">
-    <div id="value-set-panel" style="display:none;">
+    <div id="value-set-panel">
       <label><span>Element</span>
       <select id="element-type-to-edit">
         <option>Block</option>
