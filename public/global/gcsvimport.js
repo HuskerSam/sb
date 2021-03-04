@@ -1007,7 +1007,7 @@ class gCSVImport {
     let materialName = row.name;
     let textureName = '';
     if (!row.hasalpha) row.hasalpha = '';
-    if (!row.isvideo) row.hasvideo = '';
+    if (!row.isvideo) row.isvideo = '';
     if (row.hasalpha === 'x') row.hasalpha = '1';
     if (row.isvideo === 'x') row.isvideo = '1';
     if (row.ambient === 'x') row.ambient = '1';

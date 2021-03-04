@@ -118,8 +118,10 @@
     "name": "Grocery Isle",
     "key": "Islev1",
     "hint": "Islev1",
-    "categories": "Layout",
-    "description": "Grocery Display without Products"
+    "fragments": "AssetFixtures,AssetProduce",
+    "products": "GroceryIsleVegetablesProducts",
+    "categories": "Display",
+    "description": "Grocery Isle Display - multiple sheets"
   },
   {
     "name": "Fixture Assets",
@@ -250,7 +252,7 @@
     "hint": "Carousel Display",
     "fragments": "GoodBottlesFrag",
     "products": "CarouselProducts1",
-    "categories": "Layout",
+    "categories": "Display",
     "description": "Rotating scene with table in a carousel style product display"
   }, {
     "name": "Carousel Display Products 1",
@@ -262,8 +264,8 @@
     "name": "Platform Display",
     "key": "Platformv1",
     "hint": "Platform Display",
-    "categories": "Layout",
-    "description": "Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this."
+    "categories": "Display",
+    "description": "Platform display with 32 positions"
   }, {
     "name": "Platform Books and Paper Products",
     "key": "PlatformBooksAndPaperProducts",

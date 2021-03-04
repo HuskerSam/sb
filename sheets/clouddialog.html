@@ -910,7 +910,7 @@
           this.template_description.innerHTML = '';
         }
 
-        if (data.categories.indexOf('Layout') !== -1) {
+        if (data.categories.indexOf('Layout') !== -1 || data.categories.indexOf('Display') !== -1) {
           this.add_to_publishlist.checked = true;
           this.set_to_defaultproject.checked = true;
           this.publishlist_add_chk_wrapper.style.display = '';
@@ -1476,7 +1476,7 @@
                   sheetName = frag;
                 let fragResult = await this.sheetsCreateTemplateSheet(frag, sheetName);
 
-                if (fragResult !== 'success') {
+                if (fragResult !== 'success' && fragResult !== 'sheet exists') {
                   alert(fragResult);
                   break;
                 }
