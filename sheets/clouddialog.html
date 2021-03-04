@@ -1154,10 +1154,10 @@
             cats = '';
           cats = cats.split(',');
           if (selectedFilter === 'All' || cats.indexOf(selectedFilter) !== -1) {
-            html += '<option value="' + i.key + '" ${selected}>' + i.name + '</option>';
+            html += '<option ${selected}>' + i.name + '</option>';
           }
           selected = '';
-          templateMap[i.key] = i;
+          templateMap[i.name] = i;
           cats.forEach(cat => {
             if (categories.indexOf(cat) === -1 && cat !== '')
               categories.push(cat);
@@ -1452,7 +1452,7 @@
           return null;
         }
         let templateData = this.templateMap[tKey];
-        let result = await this.sheetsCreateTemplateSheet(tKey, sheetName);
+        let result = await this.sheetsCreateTemplateSheet(templateData.mainFile, sheetName);
         let assetSheets = [];
         let productSheets = [];
 
@@ -1474,7 +1474,7 @@
                 let sheetName = tData.hint;
                 if (!sheetName)
                   sheetName = frag;
-                let fragResult = await this.sheetsCreateTemplateSheet(frag, sheetName);
+                let fragResult = await this.sheetsCreateTemplateSheet(tData.mainFile, sheetName);
 
                 if (fragResult !== 'success' && fragResult !== 'sheet exists') {
                   alert(fragResult);

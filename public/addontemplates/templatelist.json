@@ -1,75 +1,107 @@
 [{
     "name": "Web Font Logo",
-    "key": "WebFontLogo",
+    "mainFile": "WebFontLogo",
     "hint": "Logo",
     "categories": "Layout",
     "description": "Basic 3D logo example using a google web font"
+  },
+  {
+    "name": "Grocery Isle with Vegetables",
+    "mainFile": "Islev1",
+    "hint": "Isle with Vegetables",
+    "fragments": "Fixture Assets,Produce Assets",
+    "products": "Grocery Isle - Vegetables",
+    "categories": "Display",
+    "description": "Grocery Isle Display - multiple sheets"
+  },
+  {
+    "name": "Grocery Isle with Fruits",
+    "mainFile": "Islev1",
+    "hint": "Isle with Fruits",
+    "fragments": "Fixture Assets,Produce Assets",
+    "products": "Grocery Isle - Fruits",
+    "categories": "Display",
+    "description": "Grocery Isle Display - multiple sheets"
+  }, {
+    "name": "Carousel Display",
+    "mainFile": "CarouselDisplay",
+    "hint": "Carousel Display",
+    "fragments": "Good Bottles",
+    "products": "Carousel Display Products 1",
+    "categories": "Display",
+    "description": "Rotating scene with table in a carousel style product display"
+  }, {
+    "name": "Platform Display",
+    "mainFile": "Platformv1",
+    "hint": "Platform Display",
+    "categories": "Display",
+    "description": "Platform display with 32 positions"
   }, {
     "name": "Simple Shapes and Frames",
-    "key": "ShapesAndFrames",
+    "mainFile": "ShapesAndFrames",
     "hint": "Shapes",
     "categories": "Layout",
     "description": "A variety of shapes with a few frames",
     "helpkey": "reviewguide"
   }, {
     "name": "Meshes Basic",
-    "key": "MeshesBasic",
+    "mainFile": "MeshesBasic",
     "hint": "Meshes",
     "categories": "Layout",
     "description": "Some product meshes scattered about",
     "helpkey": "mesh"
   }, {
     "name": "Lights Fun",
-    "key": "LightsFun",
+    "mainFile": "LightsFun",
     "hint": "Lights",
     "categories": "Layout",
     "description": "Some spot lights and a directional light",
     "helpkey": "light"
   }, {
     "name": "Camera Animations",
-    "key": "CameraAnimations",
+    "mainFile": "CameraAnimations",
     "hint": "Cameras",
     "categories": "Layout",
     "description": "Shapes demo with some extra cameras and frames",
     "helpkey": "camera"
   }, {
     "name": "Short Red Video",
-    "key": "VideoShortRed",
+    "mainFile": "VideoShortRed",
     "hint": "Red Video",
     "categories": "Layout",
     "description": "Short red video - no assets required",
     "helpkey": "shortcolorvideos"
   }, {
     "name": "Short Blue Video",
-    "key": "VideoShortBlue",
+    "mainFile": "VideoShortBlue",
     "hint": "Blue Video",
     "categories": "Layout",
     "description": "Short blue video - assets: Spheres for Videos required",
     "helpkey": "shortcolorvideos"
   }, {
     "name": "Short Green Video",
-    "key": "VideoShortGreen",
+    "mainFile": "VideoShortGreen",
     "hint": "Green Video",
     "categories": "Layout",
     "description": "Short green video - assets: Spheres for Videos required",
     "helpkey": "shortcolorvideos"
   }, {
     "name": "Short Yellow Video",
-    "key": "VideoShortYellow",
+    "mainFile": "VideoShortYellow",
     "hint": "Yellow Video",
     "categories": "Layout",
     "description": "Short yellow video - assets: Spheres for Videos required",
     "helpkey": "shortcolorvideos"
   }, {
     "name": "Video Picker",
-    "key": "VideoPicker",
+    "mainFile": "VideoPicker",
     "hint": "Video Picker",
     "categories": "Layout",
     "description": "Video Picker using frame commands - shows video with time synchronized between multiple browsers open",
     "helpkey": "shortcolorvideos"
   }, {
     "name": "webGL App Diagram",
-    "key": "webAppDiagram",
+    "mainFile": "webAppDiagram",
     "hint": "webApp Diagram",
     "categories": "Layout",
     "description": "webApp diagram with lots of frames",
@@ -77,7 +109,7 @@
   },
   {
     "name": "Configuration",
-    "key": "ConfigurationDefault",
+    "mainFile": "ConfigurationDefault",
     "hint": "Configuration",
     "categories": "Setup",
     "description": "Default [Configuration] sheet - should be named Configuration",
@@ -85,7 +117,7 @@
   },
   {
     "name": "Projects",
-    "key": "ProjectList",
+    "mainFile": "ProjectList",
     "hint": "Projects",
     "categories": "Setup",
     "description": "Default Projects List Example (all columns) - name is specified in Configuration Sheet",
@@ -93,60 +125,51 @@
   },
   {
     "name": "Asset Ranges",
-    "key": "AssetRanges",
+    "mainFile": "AssetRanges",
     "hint": "Asset Ranges",
     "categories": "Setup",
     "description": "Example of aggregating data from external Assets Spreadsheet"
   },
   {
     "name": "Deploy Options",
-    "key": "DeployOptions",
+    "mainFile": "DeployOptions",
     "hint": "Deploy Options",
     "categories": "Setup",
     "description": "list of servers stored in a sheet"
   },
   {
     "name": "Multi Sheet Flow Diagram",
-    "key": "FlowDiagramExample",
+    "mainFile": "FlowDiagramExample",
     "hint": "3D Flow Diagram",
-    "fragments": "MockMiniStoreFrag,LineFlowChartFrag,SimpleWhatIfFrag,Spinner360Frag",
+    "fragments": "Mini Mock Store,Line Flow Chart,Simple What If,Spin wheel 360",
     "categories": "Layout",
     "helpkey": "spinnerdiagram",
     "description": "multi sheet flow diagram using fragments"
   },
   {
-    "name": "Grocery Isle",
-    "key": "Islev1",
-    "hint": "Islev1",
-    "fragments": "AssetFixtures,AssetProduce",
-    "products": "GroceryIsleVegetablesProducts",
-    "categories": "Display",
-    "description": "Grocery Isle Display - multiple sheets"
-  },
-  {
     "name": "Fixture Assets",
-    "key": "AssetFixtures",
+    "mainFile": "AssetFixtures",
     "hint": "Fixture Assets",
     "categories": "Assets",
     "description": "Fixture meshes, blocks and materials for displays"
   },
   {
     "name": "Fruit Stands",
-    "key": "FruitStandsFrag",
+    "mainFile": "FruitStandsFrag",
     "hint": "Fruit Stands",
     "categories": "Fragments",
     "description": "Fruit stand meshes and block with configurable materials - depends on fixture materials fragment"
   },
   {
     "name": "Additional Fixtures",
-    "key": "AdditionalFixturesFrag",
+    "mainFile": "AdditionalFixturesFrag",
     "hint": "Additional Fixtures",
     "categories": "Fragments",
     "description": "Fixture stand meshes and block with configurable materials - depends on fixture materials fragment"
   },
   {
     "name": "Spheres for Videos",
-    "key": "AssetSpheresForVideos",
+    "mainFile": "AssetSpheresForVideos",
     "hint": "Spheres For Videos",
     "categories": "Assets",
     "description": "Rotating colored spheres for short video examples",
@@ -154,181 +177,167 @@
   },
   {
     "name": "Good Bottles",
-    "key": "GoodBottlesFrag",
+    "mainFile": "GoodBottlesFrag",
     "hint": "Good Liquor Bottles",
     "categories": "Fragments",
     "description": "Assets for liquor bottles and product records"
   },
   {
     "name": "Fixture Materials",
-    "key": "FixtureMaterialsFrag",
+    "mainFile": "FixtureMaterialsFrag",
     "hint": "Fixture Materials",
     "categories": "Fragments",
     "description": "Materials to enable client UI change on the fly - for fixtures fragments"
   },
   {
     "name": "Product Position List",
-    "key": "ProductPositionsListFrag",
+    "mainFile": "ProductPositionsListFrag",
     "hint": "Product Positions",
     "categories": "Fragments",
     "description": "Product position example list ready for inclusion in a scene"
   },
   {
     "name": "Audio Animation - 8 Bands",
-    "key": "Audio8Band",
+    "mainFile": "Audio8Band",
     "hint": "8 Band Song",
     "categories": "Other",
     "description": "Use addon to process a song into 8 bands and this sheet will produce the animation data"
   },
   {
     "name": "Audio Animation - 16 Bands",
-    "key": "Audio16Band",
+    "mainFile": "Audio16Band",
     "hint": "16 Band Song",
     "categories": "Other",
     "description": "Use addon to process a song into 16 bands and this sheet will produce the animation data"
   }, {
     "name": "Produce Assets",
-    "key": "AssetProduce",
+    "mainFile": "AssetProduce",
     "hint": "Produce Assets",
     "categories": "Assets",
     "description": "Produce meshes and product blocks"
   }, {
     "name": "Meat Assets",
-    "key": "AssetMeat",
+    "mainFile": "AssetMeat",
     "hint": "Meat Assets",
     "categories": "Assets",
     "description": "Meat meshes and product blocks"
   }, {
     "name": "Liquid Bottle Assets",
-    "key": "AssetLiquidBottle",
+    "mainFile": "AssetLiquidBottle",
     "hint": "Liquid Bottle Assets",
     "categories": "Assets",
     "description": "Liquid Bottle meshes and product blocks"
   }, {
     "name": "Books and Paper Assets",
-    "key": "AssetBooksAndPaper",
+    "mainFile": "AssetBooksAndPaper",
     "hint": "Books and Paper Assets",
     "categories": "Assets",
     "description": "Books and Paper meshes and product blocks"
   }, {
     "name": "Seafood and Frozen Assets",
-    "key": "AssetSeafoodAndFrozen",
+    "mainFile": "AssetSeafoodAndFrozen",
     "hint": "Seafood and Frozen Assets",
     "categories": "Assets",
     "description": "Seafood and Frozen meshes and product blocks"
   }, {
     "name": "Bread and Dairy Assets",
-    "key": "AssetBreadAndDairy",
+    "mainFile": "AssetBreadAndDairy",
     "hint": "Bread and Dairy Assets",
     "categories": "Assets",
     "description": "Bread and Dairy meshes and product blocks"
   }, {
     "name": "City and Block Assets",
-    "key": "AssetCityAndBlock",
+    "mainFile": "AssetCityAndBlock",
     "hint": "City and Block Assets",
     "categories": "Assets",
     "description": "City and Block meshes and product blocks"
   }, {
     "name": "Toys and Cleaners Assets",
-    "key": "AssetToysAndCleaners",
+    "mainFile": "AssetToysAndCleaners",
     "hint": "Toys and Cleaners Assets",
     "categories": "Assets",
     "description": "Toys and Cleaners meshes and product blocks"
   }, {
     "name": "GM Assets",
-    "key": "AssetGM",
+    "mainFile": "AssetGM",
     "hint": "GM Assets",
     "categories": "Assets",
     "description": "GM meshes and product blocks"
   }, {
     "name": "Food Assets",
-    "key": "AssetFood",
+    "mainFile": "AssetFood",
     "hint": "Food Assets",
     "categories": "Assets",
     "description": "Food meshes and product blocks"
   }, {
-    "name": "Carousel Display",
-    "key": "CarouselDisplay",
-    "hint": "Carousel Display",
-    "fragments": "GoodBottlesFrag",
-    "products": "CarouselProducts1",
-    "categories": "Display",
-    "description": "Rotating scene with table in a carousel style product display"
-  }, {
     "name": "Carousel Display Products 1",
-    "key": "CarouselProducts1",
+    "mainFile": "CarouselProducts1",
     "hint": "Carousel Products 1",
     "categories": "Products",
     "description": "Products list for Carousel Display"
   }, {
-    "name": "Platform Display",
-    "key": "Platformv1",
-    "hint": "Platform Display",
-    "categories": "Display",
-    "description": "Platform display with 32 positions"
-  }, {
     "name": "Platform Books and Paper Products",
-    "key": "PlatformBooksAndPaperProducts",
+    "mainFile": "PlatformBooksAndPaperProducts",
     "hint": "Books and Paper Products",
     "categories": "Products",
     "description": "Products list that matches Asset Ranges example and Platform Display"
   }, {
     "name": "Platform Bread and Dairy Products",
-    "key": "PlatformBreadAndDairyProducts",
+    "mainFile": "PlatformBreadAndDairyProducts",
     "hint": "Bread And Dairy Products",
     "categories": "Products",
     "description": "Products list that matches Asset Ranges example and Platform Display"
   }, {
     "name": "Platform GM Products",
-    "key": "PlatformGMProducts",
+    "mainFile": "PlatformGMProducts",
     "hint": "GM Products",
     "categories": "Products",
     "description": "Products list that matches Asset Ranges example and Platform Display"
   }, {
     "name": "Platform Seafood and Frozen",
-    "key": "PlatformSeafoodAndFrozenProducts",
+    "mainFile": "PlatformSeafoodAndFrozenProducts",
     "hint": "Seafood and Frozen Products",
     "categories": "Products",
     "description": "Products list that matches Asset Ranges example and Platform Display"
   },
   {
     "name": "Product List with 1 product",
-    "key": "ProductList",
+    "mainFile": "ProductList",
     "hint": "Products",
     "categories": "Products",
     "description": "Product list with headers and various examples products"
   },
   {
     "name": "Grocery Isle - Vegetables",
-    "key": "GroceryIsleVegetablesProducts",
+    "mainFile": "GroceryIsleVegetablesProducts",
     "hint": "Vegetables",
     "categories": "Products",
     "description": "Vegetable product list for Grocery Isle"
   },
   {
     "name": "Grocery Isle - Fruits",
-    "key": "GroceryIsleFruitsProducts",
+    "mainFile": "GroceryIsleFruitsProducts",
     "hint": "Fruits",
     "categories": "Products",
     "description": "Fruit product list for Grocery Isle"
   },
   {
     "name": "Platform Display (legacy)",
-    "key": "PlatformDisplay",
+    "mainFile": "PlatformDisplay",
     "hint": "Platform Display",
     "categories": "Legacy and Tests",
     "description": "Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this."
   },
   {
     "name": "Grocery Isle (legacy)",
-    "key": "GroceryIsle",
+    "mainFile": "GroceryIsle",
     "hint": "Grocery Isle",
     "categories": "Legacy and Tests",
     "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
   },
   {
     "name": "Mini Mock Store",
-    "key": "MockMiniStoreFrag",
+    "mainFile": "MockMiniStoreFrag",
     "hint": "mock store",
     "helpkey": "spinnerdiagram",
     "categories": "Fragments",
@@ -336,7 +345,7 @@
   },
   {
     "name": "Line Flow Chart",
-    "key": "LineFlowChartFrag",
+    "mainFile": "LineFlowChartFrag",
     "hint": "flow chart",
     "helpkey": "spinnerdiagram",
     "categories": "Fragments",
@@ -344,7 +353,7 @@
   },
   {
     "name": "Simple What If",
-    "key": "SimpleWhatIfFrag",
+    "mainFile": "SimpleWhatIfFrag",
     "hint": "whatif",
     "helpkey": "spinnerdiagram",
     "categories": "Fragments",
@@ -352,7 +361,7 @@
   },
   {
     "name": "Spin wheel 360",
-    "key": "Spinner360Frag",
+    "mainFile": "Spinner360Frag",
     "hint": "spinner360",
     "helpkey": "spinnerdiagram",
     "categories": "Fragments",
@@ -361,21 +370,21 @@
   {
     "name": "Video Texture Example",
     "hint": "Video Texture",
-    "key": "VideoTexture",
+    "mainFile": "VideoTexture",
     "categories": "Layout",
     "description": "3 videos used as textures wrapped on shapes - make sure to click the screen EARLY when loading so the videos load, otherwise use F5/cmd R to reload the display to see the videos animated"
   },
   {
     "name": "GLB mesh example",
     "hint": "GLB Bee Example",
-    "key": "AsterikAndGLB",
+    "mainFile": "AsterikAndGLB",
     "categories": "Layout",
     "description": "glb mesh used, wrapped in a block (container mesh internally) in order to apply frames - also the [*] operator is used to reuse blocks and shift time"
   },
   {
     "name": "TRI Meter Example",
     "hint": "TRI Meter",
-    "key": "TRIMeter",
+    "mainFile": "TRIMeter",
     "categories": "Layout",
     "description": "simple text and shape and animated line combination for a diagram"
   }
