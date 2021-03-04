@@ -64,6 +64,14 @@ class cPanelCanvas {
     this.downloadButton = this.dialog.querySelector('.download-button');
     this.downloadButton.addEventListener('click', e => this.exportBabylonFile());
 
+    this.glbdownloadButton = this.dialog.querySelector('.glb-download-button');
+    if (this.glbdownloadButton)
+      this.glbdownloadButton.addEventListener('click', e => {
+        BABYLON.GLTF2Export.GLBAsync(this.parent.context.scene, "scene.glb").then((glb) => {
+          glb.downloadFiles();
+        });
+      });
+
     this.stopButton.setAttribute('disabled', "true");
     this.pauseButton.setAttribute('disabled', "true");
     this.pauseButton.style.display = 'none';

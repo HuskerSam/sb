@@ -202,6 +202,7 @@ class cViewPublished extends bView {
           <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
           <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
           <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+          <button class="btn-sb-icon glb-download-button"><i class="material-icons">download_for_offline</i></button>
           <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
         </div>
         <br>
