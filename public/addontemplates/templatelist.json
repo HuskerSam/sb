@@ -34,7 +34,9 @@
     "name": "Platform Display",
     "mainFile": "Platformv1",
     "hint": "Platform Display",
+    "fragments": "Books and Paper Assets",
     "categories": "Display",
+    "products": "Platform Books and Paper Products",
     "description": "Platform display with 32 positions"
   }, {
     "name": "Simple Shapes and Frames",
