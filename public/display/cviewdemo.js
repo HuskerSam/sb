@@ -923,235 +923,21 @@ class cViewDemo extends bView {
     if (!existingItemBlock)
       return Promise.resolve();
 
-    let basketPos = basketCart.sceneObject.getAbsolutePosition();
-    let productPos = sceneProduct.sceneObject.getAbsolutePosition();
-    let basketRot = basketCart.sceneObject.rotation;
-    let productRot = sceneProduct.sceneObject.rotation;
-    let rawOffset = {
-      x: basketPos.x - productPos.x,
-      y: basketPos.y - productPos.y,
-      z: basketPos.z - productPos.z
-    };
-    let bRot = basketCart.sceneObject.rotation;
-
-    bRot.y = bRot.y + (6 * Math.PI);
-    bRot.y = bRot.y % (2 * Math.PI);
-
-    let cos = Math.cos(-bRot.y);
-    let sin = Math.sin(-bRot.y);
-
     this.__shakePosition(sceneProduct.sceneObject);
-
-    let offset = {
-      x: -1 * (rawOffset.x * cos + rawOffset.z * sin),
-      y: -1 * rawOffset.y,
-      z: (rawOffset.x * sin + rawOffset.z * cos)
-    };
-
 
     let frames = existingItemBlock.framesHelper.rawFrames;
     let frameIds = [];
     for (let i in frames)
       frameIds.push(i);
 
-    if (frameIds.length < 4) {
-      //  alert('error');
+    if (frameIds.length < 1) {
+      console.log('no frames for', existingItemBlock);
       return;
     }
 
-    let existingValues = gAPPP.a.modelSets['frame'].fireDataValuesByKey[frameIds[0]];
-    if (bRot.y < Math.round(Math.floor(Math.PI * 1000 / 2)) / 1000) {
-      offset.z = -offset.z;
-    } else if (bRot.y < Math.round(Math.floor(0.9 * Math.PI * 1000)) / 1000) {} else if (bRot.y < Math.round(Math.floor(1.4 * Math.PI * 1000)) / 1000) {
-      offset.z = -offset.z;
-    } else {}
-
-    /*
-    gAPPP.a.modelSets['frame'].commitUpdateList([{
-      field: 'rotationY',
-      newValue: ((basketRot.y + productRot.y - Math.PI)).toFixed(2)
-    }, {
-      field: 'positionX',
-      newValue: offset.x
-    }, {
-      field: 'positionY',
-      newValue: offset.y
-    }, {
-      field: 'positionZ',
-      newValue: offset.z
-    }, {
-      field: 'scalingX',
-      newValue: "1"
-    }, {
-      field: 'scalingY',
-      newValue: "1"
-    }, {
-      field: 'scalingZ',
-      newValue: "1"
-    }], frameIds[0]);
-
-    gAPPP.a.modelSets['frame'].commitUpdateList([{
-      field: 'frameTime',
-      newValue: (this.canvasHelper.timeE - .1).toFixed(3) + 's'
-    }, {
-      field: 'rotationY',
-      newValue: ""
-    }, {
-      field: 'positionX',
-      newValue: ''
-    }, {
-      field: 'positionY',
-      newValue: ''
-    }, {
-      field: 'positionZ',
-      newValue: ''
-    }, {
-      field: 'scalingX',
-      newValue: ""
-    }, {
-      field: 'scalingY',
-      newValue: ""
-    }, {
-      field: 'scalingZ',
-      newValue: ""
-    }], frameIds[1]);
-
-    gAPPP.a.modelSets['frame'].commitUpdateList([{
-      field: 'frameTime',
-      newValue: (this.canvasHelper.timeE + .4).toFixed(3) + 's'
-    }, {
-      field: 'rotationY',
-      newValue: ((basketRot.y + productRot.y - Math.PI)).toFixed(2)
-    }, {
-      field: 'positionX',
-      newValue: offset.x
-    }, {
-      field: 'positionY',
-      newValue: offset.y
-    }, {
-      field: 'positionZ',
-      newValue: offset.z
-    }, {
-      field: 'scalingX',
-      newValue: "5"
-    }, {
-      field: 'scalingY',
-      newValue: "5"
-    }, {
-      field: 'scalingZ',
-      newValue: "5"
-    }], frameIds[2]);
-
-    gAPPP.a.modelSets['frame'].commitUpdateList([{
-      field: 'frameTime',
-      newValue: (this.canvasHelper.timeE + 2).toFixed(3) + 's'
-    }, {
-      field: 'rotationY',
-      newValue: "0"
-    }, {
-      field: 'positionX',
-      newValue: pos.x.toString()
-    }, {
-      field: 'positionY',
-      newValue: pos.y.toString()
-    }, {
-      field: 'positionZ',
-      newValue: pos.z.toString()
-    }, {
-      field: 'scalingX',
-      newValue: "1"
-    }, {
-      field: 'scalingY',
-      newValue: "1"
-    }, {
-      field: 'scalingZ',
-      newValue: "1"
-    }], frameIds[3]);
-
-    gAPPP.a.modelSets['frame'].commitUpdateList([{
-      field: 'frameTime',
-      newValue: (this.canvasHelper.timeLength).toFixed() + 's'
-    }, {
-      field: 'positionX',
-      newValue: pos.x.toString()
-    }, {
-      field: 'positionY',
-      newValue: pos.y.toString()
-    }, {
-      field: 'positionZ',
-      newValue: pos.z.toString()
-    }, {
-      field: 'scalingX',
-      newValue: "1"
-    }, {
-      field: 'scalingY',
-      newValue: "1"
-    }, {
-      field: 'scalingZ',
-      newValue: "1"
-    }], frameIds[4]);
-
-    setTimeout(async () => {
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'rotationY',
-        newValue: "0"
-      }, {
-        field: 'positionX',
-        newValue: pos.x.toString()
-      }, {
-        field: 'positionY',
-        newValue: pos.y.toString()
-      }, {
-        field: 'positionZ',
-        newValue: pos.z.toString()
-      }, {
-        field: 'scalingX',
-        newValue: "1"
-      }, {
-        field: 'scalingY',
-        newValue: "1"
-      }, {
-        field: 'scalingZ',
-        newValue: "1"
-      }], frameIds[0]);
-    }, 500);
-
-    clearTimeout(this.productPickUpdateTimeouts[sku]);
-    this.productPickUpdateTimeouts[sku] = setTimeout(async () => {
-
-      gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'rotationY',
-        newValue: "0"
-      }, {
-        field: 'positionX',
-        newValue: pos.x.toString()
-      }, {
-        field: 'positionY',
-        newValue: pos.y.toString()
-      }, {
-        field: 'positionZ',
-        newValue: pos.z.toString()
-      }, {
-        field: 'scalingX',
-        newValue: "1"
-      }, {
-        field: 'scalingY',
-        newValue: "1"
-      }, {
-        field: 'scalingZ',
-        newValue: "1"
-      }], frameIds[2]);
-
-
-    }, 2000);
-    */
     gAPPP.a.modelSets['frame'].commitUpdateList([{
         field: 'frameTime',
         newValue: '100%'
-      },
-      {
-        field: 'rotationY',
-        newValue: "0"
       }, {
         field: 'positionX',
         newValue: pos.x.toString()
@@ -1163,13 +949,13 @@ class cViewDemo extends bView {
         newValue: pos.z.toString()
       }, {
         field: 'scalingX',
-        newValue: "1"
+        newValue: ".45"
       }, {
         field: 'scalingY',
-        newValue: "1"
+        newValue: ".45"
       }, {
         field: 'scalingZ',
-        newValue: "1"
+        newValue: ".45"
       }
     ], frameIds[0]);
 
@@ -1204,7 +990,7 @@ class cViewDemo extends bView {
         newValue: ''
       }, {
         field: 'positionY',
-        newValue: '-1'
+        newValue: '-100'
       }, {
         field: 'positionZ',
         newValue: ''
@@ -1218,87 +1004,6 @@ class cViewDemo extends bView {
         field: 'scalingZ',
         newValue: ".001"
       }], frameIds[0]));
-
-      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionX',
-        newValue: ''
-      }, {
-        field: 'positionY',
-        newValue: '-1'
-      }, {
-        field: 'positionZ',
-        newValue: ''
-      }, {
-        field: 'scalingX',
-        newValue: ".001"
-      }, {
-        field: 'scalingY',
-        newValue: ".001"
-      }, {
-        field: 'scalingZ',
-        newValue: ".001"
-      }], frameIds[1]));
-
-      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionX',
-        newValue: ''
-      }, {
-        field: 'positionY',
-        newValue: '-1'
-      }, {
-        field: 'positionZ',
-        newValue: ''
-      }, {
-        field: 'scalingX',
-        newValue: ".001"
-      }, {
-        field: 'scalingY',
-        newValue: ".001"
-      }, {
-        field: 'scalingZ',
-        newValue: ".001"
-      }], frameIds[2]));
-
-
-      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionX',
-        newValue: ''
-      }, {
-        field: 'positionY',
-        newValue: '-1'
-      }, {
-        field: 'positionZ',
-        newValue: ''
-      }, {
-        field: 'scalingX',
-        newValue: ".001"
-      }, {
-        field: 'scalingY',
-        newValue: ".001"
-      }, {
-        field: 'scalingZ',
-        newValue: ".001"
-      }], frameIds[3]));
-
-      promises.push(gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'positionX',
-        newValue: ''
-      }, {
-        field: 'positionY',
-        newValue: '-1'
-      }, {
-        field: 'positionZ',
-        newValue: ''
-      }, {
-        field: 'scalingX',
-        newValue: ".001"
-      }, {
-        field: 'scalingY',
-        newValue: ".001"
-      }, {
-        field: 'scalingZ',
-        newValue: ".001"
-      }], frameIds[4]));
     }
 
     return Promise.all(promises);

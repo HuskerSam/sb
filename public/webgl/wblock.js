@@ -82,7 +82,7 @@ class wBlock {
         };
     }
 
-    if (equipath.substring(0,6) === 'skybox')
+    if (equipath.substring(0, 6) === 'skybox')
       return;
 
     let skybox = BABYLON.Mesh.CreateBox("skyBox", skyboxSize, this.context.scene);
@@ -312,7 +312,7 @@ class wBlock {
       }
       this.framesHelper.compileFrames();
       this.__applyFirstFrameValues();
-    }, 200);
+    }, 50);
   }
   _handleTextureUpdate(values) {
     if (!values || !values.title)
