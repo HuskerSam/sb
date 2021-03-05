@@ -965,6 +965,8 @@ class cViewDemo extends bView {
     } else if (bRot.y < Math.round(Math.floor(0.9 * Math.PI * 1000)) / 1000) {} else if (bRot.y < Math.round(Math.floor(1.4 * Math.PI * 1000)) / 1000) {
       offset.z = -offset.z;
     } else {}
+
+    /*
     gAPPP.a.modelSets['frame'].commitUpdateList([{
       field: 'rotationY',
       newValue: ((basketRot.y + productRot.y - Math.PI)).toFixed(2)
@@ -979,13 +981,13 @@ class cViewDemo extends bView {
       newValue: offset.z
     }, {
       field: 'scalingX',
-      newValue: "5"
+      newValue: "1"
     }, {
       field: 'scalingY',
-      newValue: "5"
+      newValue: "1"
     }, {
       field: 'scalingZ',
-      newValue: "5"
+      newValue: "1"
     }], frameIds[0]);
 
     gAPPP.a.modelSets['frame'].commitUpdateList([{
@@ -1142,6 +1144,34 @@ class cViewDemo extends bView {
 
 
     }, 2000);
+    */
+    gAPPP.a.modelSets['frame'].commitUpdateList([{
+        field: 'frameTime',
+        newValue: '100%'
+      },
+      {
+        field: 'rotationY',
+        newValue: "0"
+      }, {
+        field: 'positionX',
+        newValue: pos.x.toString()
+      }, {
+        field: 'positionY',
+        newValue: pos.y.toString()
+      }, {
+        field: 'positionZ',
+        newValue: pos.z.toString()
+      }, {
+        field: 'scalingX',
+        newValue: "1"
+      }, {
+        field: 'scalingY',
+        newValue: "1"
+      }, {
+        field: 'scalingZ',
+        newValue: "1"
+      }
+    ], frameIds[0]);
 
     return Promise.resolve();
   }
