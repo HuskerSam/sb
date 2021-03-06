@@ -15,46 +15,6 @@
   <meta property="fb:app_id" content="461141618064403" />
   <meta name="description" content='Display store layouts in Virtual Reality.  Handtop Display positions your products using Handtop Reality - "Your Product Display Any Where Any Time"'>
   <link rel="stylesheet" href="https://handtop.com/public.css">
-  <script>
-    window.addEventListener('DOMContentLoaded', e => {
-      let wrapperList = document.querySelectorAll('.video-wrapper');
-
-      wrapperList.forEach(wrapper => {
-        let video = wrapper.querySelector('video');
-        let btn = wrapper.querySelector('.playpause');
-
-        video.setAttribute('controls', '');
-        btn.addEventListener('click', e => {
-          if (video.paused) {
-            video.play();
-          }
-        });
-
-        video.addEventListener('pause', e => {
-          btn.style.display = '';
-        });
-        video.addEventListener('play', e => {
-          btn.style.display = 'none';
-        });
-      });
-
-      let video_linkList = document.querySelectorAll('.video_link');
-      video_linkList.forEach((anchor, index) => {
-        anchor.addEventListener('click', e => {
-          wrapperList.forEach(w => {
-            w.style.display = 'none';
-            w.querySelector('video').pause();
-          });
-          wrapperList[index].style.display = 'block';
-          wrapperList[index].querySelector('video').play();
-          video_linkList.forEach(i => i.classList.remove('selected'));
-          video_linkList[index].classList.add('selected');
-          e.preventDefault();
-          return false;
-        });
-      });
-    });
-  </script>
 </head>
 
 <body>
@@ -65,12 +25,15 @@
     </a>
     <div class="first_menu_break"></div>
     <a href="/retail">Visual Catalogs</a>
+    <a href="/doc">Documentation</a>
     <a href="/about">About</a>
     <div style="clear:both"></div>
   </div>
   <div class="wrapper" style="">
-    <h1 style="color:green;font-size:3em;font-weight:bold;font-family:Brush Script MT,cursive;;margin:0">
-      Visual Catalogs<span style="color:black;font-size:.5em;position:relative;top:-.5em"></span> Addon for Sheets</h1>
+    <br><Br>
+      doc for addon:
+      <a href="/doc" target="_blank">visual catalogs and addon reference</a><Br>
+        <br>
       Install addon - <a href="https://gsuite.google.com/marketplace/app/handtop/453466452088" target="_blank">Click here to visit G Suite Marketplace</a>
       <br>
     <img alt="webGL Asset Pipeline (wide)" style="width:600px" src="widepipeline.png">
@@ -84,24 +47,6 @@
     Share experiences across all devices at once
     <Br><br>
     <img alt="Sheets Addon Pipeline" class="ui_image" style="width:90%;max-width:90%;max-height:initial" src="sheetsaddon.png">
-    <hr>
-    <h2 id="catalogtools">Videos</h2>
-
-    <div style="flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
-      <div style="">
-        <div class="video-wrapper" id="video_1_link_video" style="display:block;">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/catalogaddon.mp4" muted preload="auto"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-      </div>
-    </div>
-    <div style="clear:both;"></div>
-  </div>
-  <div style="display:none">
-    fingers digits pens pencil drawing handheld 1998 trade mark registered uv webGL webXR Khronos hand top top of hand virtual reality catalogs retail visual augmented reality handtop lincoln nebraska usa sexy aesthetic
-    reality delicious culture firebase palmos supernote google hanglory real webgl babylonjs
-    javascript customizations retail chain store handtopuv handtopusa handtop usa mobile palm palmos
-    supernote vr xr ar mr mixed reality augmented reality extended reality dynamic reality
   </div>
 
   <div style="line-height:2em;padding-bottom:.5em;text-align:center;width:100%">
