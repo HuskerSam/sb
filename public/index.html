@@ -30,50 +30,14 @@
   <link rel="stylesheet" href="public.css">
 
   <style>
-    .home_block {
-      display: inline-block;
-    }
-
-    .home_block img {
-      max-width: 45vw;
-      border-radius: 1em;
-    }
-
-    .graph_img {
-      width: 700px;
-      max-width: 90vw;
-    }
-
-    @media screen and (max-width: 1000px) {
-      .home_block {
-        display: block;
-      }
-
-      .home_block img {
-        max-width: 90vw;
-      }
-    }
-
-    .vc_link {
-      border: solid green .1em;
-      border-radius: .5em;
-      background: rgb(210, 255, 210);
-      padding: .25em;
-      line-height: 1.5em;
-    }
-
-    .vc_link h2 {
-      display: inline-block;
-    }
-
     .vc_link:hover {
-      background: white;
+      background: silver;
     }
   </style>
 </head>
 
 <body>
-  <div style="display:flex;flex-direction:column;min-height:100vh;text-align:center">
+  <div style="display:flex;flex-direction:column;min-height:100vh;text-align:left;max-width:800px;">
     <div class="option_bar">
       <a style="border:none;text-decoration:none;float:left;position:relative;top:-8px;">
         <img alt="small logo image" style="height:40px;position:relative;top:-18px;" src="https://handtop.com/images/handtop.png">
@@ -82,38 +46,29 @@
       <a href="/retail">Visual Catalogs</a>
       <a href="/about">About</a>
     </div>
-    <div style="text-align:center;flex:1">
+    <div style="text-align:center;flex:1;padding:20px;">
       <div class="home_block">
         <h1 style="color:blue;">Maximizing followup on in store visits?</h1>
-        <img src="images/empoweredassociate.png" alt="Empowered Associate" style="width:400px">
-      </div>
-      <div class="home_block" style="display:none;">
-        <h2 style="color:green;">At least recycling is popular!</h2>
-        <img src="images/trash.png" alt="Mail put in trash" style="width:300px">
-      </div>
-      <br style="clear:both;">
-      <h2 style="color:red;display:none;"><span style="color:black">Handtop<span style="font-size:.5em;position:relative;top:-10px;">™</span></span>
-        digitizes mobile better.</h2>
-      <div style="padding-top:2em;padding-bottom:2em;font-size:1.5em;">
-        <a class="vc_link" href="/retail">
+        <a class="vc_link" style="display:block;padding-bottom:.25em;" href="/retail">
+          <img src="images/empoweredassociate.png" alt="Empowered Associate" style="max-width:600px">
+          <br>
           Learn about <span style="color:green">Visual Catalogs™</span>
         </a>
-        <br><br><br>
-        Digitize and display your products in <b style="color:rgb(0,125,0)">Virtual Reality</b>.
-
-        <br><b style="">Mobile first</b> but all
-        <img style="display:inline;height:4em;position:relative;top:1.5em;background:white;z-index:-1;margin-left:-1.5em;margin-right:-1.5em" src="/images/webgl.png">devices are supported!
+        <div>
+          <b style="">Mobile first</b> but all
+          <img style="display:inline;height:4em;position:relative;top:1.75em;background:white;z-index:-1;margin-left:-2.5em;margin-right:-2.1em" src="/images/webgl.png">devices are supported!
+        </div>
       </div>
     </div>
-    <div style="display:none">
-    </div>
-    <div style="line-height:2em;padding-bottom:.5em;text-align:center;width:100%">
-      <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
-      &nbsp;
-      <a href="privacy.html">Privacy Policy</a>
-      <br>
-      Based in Lincoln, Nebraska, USA 68508
-      <br>© 1998 - 2021 Handtop™. All Rights Reserved.
+    <div>
+      <div style="line-height:1.35em;text-align:center;padding: .25em;max-width: 800px;">
+        <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+        &nbsp;
+        <a href="privacy.html">Privacy Policy</a>
+        <br>
+        Based in Lincoln, Nebraska, USA 68508
+        <br>© 1998 - 2021 Handtop™. All Rights Reserved.
+      </div>
     </div>
   </div>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148094829-1">
