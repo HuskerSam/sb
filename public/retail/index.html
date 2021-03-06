@@ -16,46 +16,6 @@
   <meta property="fb:app_id" content="461141618064403" />
   <meta name="description" content='Creation pipeline and display tools'>
   <link rel="stylesheet" href="https://handtop.com/public.css">
-  <script>
-    window.addEventListener('DOMContentLoaded', e => {
-      let wrapperList = document.querySelectorAll('.video-wrapper');
-
-      wrapperList.forEach(wrapper => {
-        let video = wrapper.querySelector('video');
-        let btn = wrapper.querySelector('.playpause');
-
-        video.setAttribute('controls', '');
-        btn.addEventListener('click', e => {
-          if (video.paused) {
-            video.play();
-          }
-        });
-
-        video.addEventListener('pause', e => {
-          btn.style.display = '';
-        });
-        video.addEventListener('play', e => {
-          btn.style.display = 'none';
-        });
-      });
-
-      let video_linkList = document.querySelectorAll('.video_link');
-      video_linkList.forEach((anchor, index) => {
-        anchor.addEventListener('click', e => {
-          wrapperList.forEach(w => {
-            w.style.display = 'none';
-            w.querySelector('video').pause();
-          });
-          wrapperList[index].style.display = 'block';
-          wrapperList[index].querySelector('video').play();
-          video_linkList.forEach(i => i.classList.remove('selected'));
-          video_linkList[index].classList.add('selected');
-          e.preventDefault();
-          return false;
-        });
-      });
-    });
-  </script>
 </head>
 
 <body>
@@ -212,38 +172,7 @@
       </div>
       <div style="clear:both;"></div>
     </div>
-    <hr>
-    <div style="text-align:center;flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden;">
-      <div style="width: 100%;">
-        <a href="#" id="video_1_link" class="video_link selected">Create</a>
-        <a href="#" id="video_2_link" class="video_link">Customize</a>
-        <a href="#" id="video_3_link" class="video_link">Spinner</a>
-        <a href="#" id="video_4_link" class="video_link">Lines</a>
-        <a href="#" id="video_5_link" class="video_link">Basics</a>
-      </div>
-      <div style="padding:0 1em;">
-        <div class="video-wrapper" id="video_1_link_video" style="display:block;">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrscenes.mp4" muted preload="auto"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-        <div class="video-wrapper" id="video_2_link_video">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/xrsceneslargelayout.mp4" muted preload="none"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-        <div class="video-wrapper" id="video_3_link_video">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/spinner7.22.19.mp4" muted preload="none"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-        <div class="video-wrapper" id="video_4_link_video">
-          <video src="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4" muted preload="none"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-        <div class="video-wrapper" id="video_5_link_video">
-          <video src="https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4" muted preload="none"></video>
-          <div class="playpause"><i class="material-icons">play_arrow</i></div>
-        </div>
-      </div>
-    </div>
+    <Br>
     <div class="footer_bar">
       <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
       &nbsp;
