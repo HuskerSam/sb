@@ -122,8 +122,7 @@ h1, h2 {
 
 .option_bar {
   text-align: left;
-  margin-top: .1em;
-  line-height: 2em;
+  padding-top: .5em;
 }
 
 .option_bar a {
@@ -133,61 +132,40 @@ h1, h2 {
   margin: 0;
   color: black;
   text-decoration: none;
-  margin-bottom: -30px;
+  margin-top: .25em;
 }
 
 .option_bar a:hover {
   background: silver
 }
 
-.prose_wrapper {
-  display: flex;
+.option_bar a.logo {
+  margin-top: -.5em;
+  border: none;
+  text-decoration: none;
+  float: left;
+  padding-right: .5em;
+  margin-bottom: .5em;
 }
 
-.prose_text {
+.home_page_wrapper {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  min-height: 100vh;
+  text-align: left;
+  max-width: 800px;
 }
 
-.intro_video {
-  max-width: 600px;
+.small_logo {
+  height: 40px;
+  position: relative;
+  top: -18px;
+  margin-top: -18px
 }
 
-.display_image {
-  max-width: 400px;
-}
-
-.first_menu_break {
-  display: none;
-}
-
-@media screen and (max-width: 1000px) {
-  .prose_wrapper {
-    display: block;
-  }
-
-  .prose_text {
-    flex-direction: row;
-    display: block;
-  }
-
-  .intro_video {
-    max-width: 90vw;
-  }
-
-  .display_image {
-    max-width: 90vw;
-  }
-
-  .first_menu_break {
-    display: block;
-    clear: both;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .option_bar {
-    text-align: center;
-  }
+.footer_bar {
+  line-height: 2em;
+  padding-bottom: .5em;
+  text-align: center;
+  width: 100%
 }
