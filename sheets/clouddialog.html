@@ -323,7 +323,7 @@
               <label style="flex:1;margin-left:4px;"> <input type="checkbox" id="set_to_defaultproject" checked><span>Default</span></label>
             </div>
             <div id="publishlist_asset_add_chk_wrapper" style="display:none;">
-              <label style="flex:1;"> <input type="checkbox" id="add_asset_to_projectlist" checked><span>Set for Project</span></label>
+              <label style="flex:1;"> <input type="checkbox" id="add_asset_to_projectlist" checked><span>Add for Project</span></label>
             </div>
             <div id="publishlist_products_add_chk_wrapper" style="display:none;">
               <label style="flex:1;"> <input type="checkbox" id="add_products_to_projectlist" checked><span>Set for Project</span></label>
@@ -588,10 +588,7 @@
         ]);
         if (!this.defaultServerTarget) {
           this.template_filter_select.value = 'Setup';
-        } else {
-          this.template_filter_select.value = 'Layout';
         }
-
         this.sheetnameinputdirty = false;
         this.loadTemplateList();
 
@@ -925,7 +922,7 @@
           this.publishlist_add_chk_wrapper.style.display = 'none';
         }
 
-        if (data.categories.indexOf('Assets') !== -1) {
+        if (data.categories.indexOf('Assets') !== -1 || data.categories.indexOf('Fragments') !== -1) {
           this.publishlist_asset_add_chk_wrapper.style.display = '';
           this.add_asset_to_projectlist.checked = true;
         } else {
@@ -1149,8 +1146,9 @@
         let html = '';
         let selectedFilter = this.template_filter_select.value;
         if (!selectedFilter)
-          selectedFilter = 'All';
+          selectedFilter = 'Layout';
         let selected = 'selected';
+        let selectedTemplate = this.circuit_template_select.value;
         let templateMap = {};
         let categories = [];
         this.templateListResults.forEach(i => {
@@ -1176,9 +1174,11 @@
         this.template_filter_select.innerHTML = filter_options;
         this.template_filter_select.value = selectedFilter;
 
-        this.circuit_template_select.selectedIndex = 0;
+        if (selectedTemplate)
+          this.circuit_template_select.value = selectedTemplate;
+        if (this.circuit_template_select.selectedIndex === -1)
+          this.circuit_template_select.selectedIndex = 0;
         this.loadTemplateDetails();
-
 
         if (this.splitTemplatesView)
           this.splitTemplatesView.destroy();
@@ -1391,11 +1391,11 @@
           }).SetCSVSheetValue(sheetName, rowIndex, field, value);
         });
       }
-      async sheetsJSONforSheetCSV(sheetName, refresh = false) {
+      async sheetsJSONforSheetCSV(sheetName, refresh = false, formulas = false) {
         return new Promise(async (resolve, reject) => {
           google.script.run.withSuccessHandler((result) => {
             resolve(result);
-          }).getJSONFromCSVSheet(sheetName, refresh);
+          }).getJSONFromCSVSheet(sheetName, refresh, formulas);
         });
       }
       async sheetsJSONforRangeListCSV(rangeStrings) {
@@ -1406,7 +1406,7 @@
         });
       }
       async sheetsSetAssetsForProject(assetSheetName, projectName, field = "Asset Ranges") {
-        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, true);
+        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, false, true);
 
         let rowIndex = -1;
         for (let c = 0; c < publishList.length; c++) {
@@ -1417,8 +1417,17 @@
         }
 
         if (rowIndex !== -1) {
+          let pubData = publishList[rowIndex];
+          let assets = pubData.formulaRow[field];
+          console.log('assetsformula', assets);
+          if (assets !== '')
+            assets += ' & "," & ';
+          else
+            assets += '=';
+          assets += 'getDataRangesForSheet(\"' + assetSheetName + "\")";
+
           await this.sheetsStoreCSVValue(this.projectsSheetName, rowIndex + 1,
-            field, '=getDataRangesForSheet(\"' + assetSheetName + "\")");
+            field, assets);
         }
       }
 

@@ -420,7 +420,7 @@ function forceEval(sheetName, row, col) {
   sheet.getRange(row, col).setFormula(orig);
 }
 
-function getJSONFromCSVSheet(sheetName, refreshFormulas = false) {
+function getJSONFromCSVSheet(sheetName, refreshFormulas = false, formulas = false) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   if (!sheet)
     return [];
@@ -431,18 +431,30 @@ function getJSONFromCSVSheet(sheetName, refreshFormulas = false) {
 
   if (lastRow === 0)
     return [];
+  let formulaValues;
+  if (formulas)
+    formulaValues = sheet.getRange(1, 1, lastRow, lastColumn).getFormulas();
+
   let range = sheet.getRange(1, 1, lastRow, lastColumn).getValues();
+
   let cols = range[0];
   let outData = [];
   for (let rctr = 1; rctr < range.length; rctr++) {
     let row = range[rctr];
 
     let newRow = {};
+    let formulaRow = {};
     for (let cctr = 0; cctr < cols.length; cctr++) {
       let col = cols[cctr];
       let v = row[cctr];
       newRow[col] = v;
+      if (formulas)
+        formulaRow[col] = formulaValues[rctr][cctr];
     }
+
+    if (formulas)
+      newRow['formulaRow'] = formulaRow;
+
     outData.push(newRow);
   }
 

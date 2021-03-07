@@ -6,8 +6,8 @@ const helpGen = require('./helpgenpath/helpgen');
 admin.initializeApp();
 const fb_config = process.env.FIREBASE_CONFIG;
 const runtimeOpts = {
-  timeoutSeconds: 540,
-  memory: '2GB'
+  timeoutSeconds: 120,
+  memory: '1GB'
 };
 const database = admin.database();
 exports.generate = functions
