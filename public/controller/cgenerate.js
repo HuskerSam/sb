@@ -152,7 +152,7 @@ class cGenerate {
     this.updateCSVDataDisplay('scene');
     this.updateCSVDataDisplay('product');
 
-    let res = await fetch(`/doc/layouthelp.html`, {
+    let res = await fetch(`/docraw/layouthelp.html`, {
       cache: "no-cache"
     })
     let html = await res.text();

@@ -560,7 +560,7 @@
         this.loadBlockWizard();
       }
       async fetchHelpList() {
-        let fetched = await fetch(this.app.jsonLibPrefix + '/doc/helplist.json', {
+        let fetched = await fetch(this.app.jsonLibPrefix + '/docraw/helplist.json', {
           cache: "no-cache"
         });
         let data = await fetched.json();
@@ -675,7 +675,7 @@
 
         this.helper_viewer_panel_open_btn.addEventListener('click', e => {
           let help_topic = this.help_viewer_panel_select.value;
-          let url = this.app.jsonLibPrefix + '/doc/' + help_topic;
+          let url = this.app.jsonLibPrefix + '/docraw/' + help_topic;
           let a = document.createElement('a');
           a.setAttribute('href', url);
           a.setAttribute('target', '_blank');

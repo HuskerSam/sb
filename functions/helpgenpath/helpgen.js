@@ -13,6 +13,7 @@ module.exports.helpGen = sourceApp;
 sourceApp.get('/sitemap.xml', async (req, res) => await HelpGen.genSiteMap(req, res));
 sourceApp.get('/doc/:helpitem', async (req, res) => await HelpGen.genItemPath(req, res));
 sourceApp.get('/doc/', async (req, res) => await HelpGen.genPage(req, res));
+sourceApp.get('/doc', async (req, res) => await HelpGen.genPage(req, res));
 
 class HelpGen {
   static getTemplate(helpBody) {
@@ -27,7 +28,20 @@ class HelpGen {
     </head>
 
     <body>
+    <link rel="stylesheet" href="https://handtop.com/public.css">
+    <div class="option_bar">
+      <a href="/" style="border:none;text-decoration:none;float:left;position:relative;top:-8px;">
+        <img alt="small logo image" style="height:40px;position:relative;top:-18px;" src="https://handtop.com/images/handtop.png">
+        <img alt="Handtop" style="height:65px" src="https://handtop.com/images/handtoplogo.png">
+      </a>
+      <a href="/doc/">Documentation</a>
+      <div style="float:right;width:20em;">
+        <div class="gcse-search"></div>
+      </div>
+    </div>
+    <div style="display:block;clear:both;"></div>
       ${helpBody}
+      <script src="https://cse.google.com/cse.js?cx=0b2a9868105e1e42e"></script>
     </body>
 
     </html>`;
@@ -79,7 +93,7 @@ class HelpGen {
   static async genItemPath(req, res) {
     let item = req.params.helpitem;
 
-    let fetched = await fetch(`https://handtop.com/doc/${item}help.html`, {
+    let fetched = await fetch(`https://handtop.com/docraw/${item}help.html`, {
       cache: "no-cache"
     });
 
@@ -88,7 +102,9 @@ class HelpGen {
     }
 
     let data = await fetched.text();
-    return res.status(200).send(data);
+
+    let html = HelpGen.getTemplate(data);
+    return res.status(200).send(html);
   }
   static async genSiteMap(req, res) {
     res.set("Access-Control-Allow-Origin", "*");
@@ -112,7 +128,7 @@ class HelpGen {
     return res.send("GET Only");
   }
   static async helpListToHTMLAnchorList() {
-    let fetched = await fetch('https://handtop.com/doc/helplist.json', {
+    let fetched = await fetch('https://handtop.com/docraw/helplist.json', {
       cache: "no-cache"
     });
     let data = await fetched.json();

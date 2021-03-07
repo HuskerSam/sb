@@ -584,11 +584,11 @@ class cView extends bView {
     if (this.workspaceCTL)
       delete this.workspaceCTL;
     this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, this.key, this);
-    let url = '/doc/workspacehelp.html';
+    let url = '/docraw/workspacehelp.html';
     if (this.key === 'Details')
-      url = '/doc/workspacehelp.html';
+      url = '/docraw/workspacehelp.html';
     if (this.key === 'Overview')
-      url = '/doc/overviewhelp.html';
+      url = '/docraw/overviewhelp.html';
 
     let res = await fetch(url, {
       cache: "no-cache"

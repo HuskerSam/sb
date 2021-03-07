@@ -54,7 +54,7 @@ class cViewPublished extends bView {
 
     this.publish_help_viewer = this.dialog.querySelector('#publish_help_viewer');
     this.publish_help_viewer.addEventListener('click', e => {
-      let url = '/doc/viewerhelp.html';
+      let url = '/doc/viewer';
       let a = document.createElement('a');
       a.setAttribute('href', url);
       a.setAttribute('target', '_blank');

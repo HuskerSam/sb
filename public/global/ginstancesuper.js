@@ -180,7 +180,7 @@ class cAppDefaults {
       helpTag += 'help';
     else
       helpTag = 'overview';
-    let res = await fetch(`${this.jsonLibPrefix}/doc/${helpTag}.html`, {
+    let res = await fetch(`${this.jsonLibPrefix}/docraw/${helpTag}.html`, {
       cache: "no-cache"
     })
     let html = await res.text();
