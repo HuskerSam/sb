@@ -16,15 +16,22 @@ sourceApp.get('/doc/', async (req, res) => await HelpGen.genPage(req, res));
 sourceApp.get('/doc', async (req, res) => await HelpGen.genPage(req, res));
 
 class HelpGen {
-  static getTemplate(helpBody) {
+  static getTemplate(helpBody, title, urlFrag) {
     return `<!doctype html>
     <html lang="en">
 
     <head>
       <meta charset="utf-8">
-      <title>Scene Builder Help Contents</title>
+      <title>${title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="shortcut icon" href="https://handtop.com/images/handtop.png">
+      <link rel="canonical" href="https://handtop.com/doc/${urlFrag}" />
+      <meta property="og:title" content="${title}" />
+      <meta property="og:url" content="https://handtop.com/doc/${urlFrag}" />
+      <meta property="og:site_name" content="Handtop" />
+      <meta property="og:image" content="https://handtop.com/retail/pipeline.jpg" />
+      <meta property="og:type" content="website" />
+      <meta property="fb:app_id" content="461141618064403" />
     </head>
 
     <body>
@@ -103,7 +110,18 @@ class HelpGen {
 
     let data = await fetched.text();
 
-    let html = HelpGen.getTemplate(data);
+    let listFetch = await fetch('https://handtop.com/docraw/helplist.json', {
+      cache: "no-cache"
+    });
+    let helpList = await listFetch.json();
+    let helpItem = null;
+    helpList.forEach(i => {
+      if (i.value === item) helpItem = i;
+    });
+    let title = 'Visual Catalogs Documentation';
+    if (helpItem)
+      title = helpItem.title;
+    let html = HelpGen.getTemplate(data, title, item);
     return res.status(200).send(html);
   }
   static async genSiteMap(req, res) {
@@ -122,7 +140,7 @@ class HelpGen {
     if (req.method === 'GET') {
       let helpDataList = await this.helpListToHTMLAnchorList();
       let helpBody = helpDataList.html;
-      let html = HelpGen.getTemplate(helpBody);
+      let html = HelpGen.getTemplate(helpBody, 'Visual Catalogs Documentation', 'doc/');
       return res.status(200).send(html);
     }
     return res.send("GET Only");
