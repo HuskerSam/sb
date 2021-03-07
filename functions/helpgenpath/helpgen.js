@@ -36,19 +36,28 @@ class HelpGen {
 
     <body>
     <link rel="stylesheet" href="https://handtop.com/public.css">
-    <div class="option_bar">
-      <a href="/" style="border:none;text-decoration:none;float:left;position:relative;top:-8px;">
-        <img alt="small logo image" style="height:40px;position:relative;top:-18px;" src="https://handtop.com/images/handtop.png">
-        <img alt="Handtop" style="height:65px" src="https://handtop.com/images/handtoplogo.png">
-      </a>
-      <a href="/doc/">Documentation</a>
-      <div style="float:right;width:20em;">
-        <div class="gcse-search"></div>
+    <div class="home_page_wrapper">
+      <div class="option_bar">
+        <a href="/" class="logo">
+          <img alt="small logo image" class="small_logo" src="https://handtop.com/images/handtop.png">
+          <img alt="Handtop" style="height:65px" src="https://handtop.com/images/handtoplogo.png">
+        </a>
+        <a href="/doc/">Documentation</a>
+        <div style="float:right;width:20em;margin-top:-20px;">
+          <div class="gcse-search"></div>
+        </div>
+      </div>
+      <div style="padding: 20px;">${helpBody}</div>
+      <div class="footer_bar">
+        <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+        &nbsp;
+        <a href="/privacy.html">Privacy Policy</a>
+        <br><br>
+        Lincoln, Nebraska, USA 68508
+        <br>© 1998 - 2021 Handtop. All Rights Reserved.
       </div>
     </div>
-    <div style="display:block;clear:both;"></div>
-      ${helpBody}
-      <script src="https://cse.google.com/cse.js?cx=0b2a9868105e1e42e"></script>
+    <script src="https://cse.google.com/cse.js?cx=0b2a9868105e1e42e"></script>
     </body>
 
     </html>`;
