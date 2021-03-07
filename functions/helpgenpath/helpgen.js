@@ -16,7 +16,7 @@ sourceApp.get('/doc/', async (req, res) => await HelpGen.genPage(req, res));
 sourceApp.get('/doc', async (req, res) => await HelpGen.genPage(req, res));
 
 class HelpGen {
-  static getTemplate(helpBody, title, urlFrag) {
+  static getTemplate(helpBody, title, urlFrag, desc) {
     return `<!doctype html>
     <html lang="en">
 
@@ -31,6 +31,7 @@ class HelpGen {
       <meta property="og:site_name" content="Handtop" />
       <meta property="og:image" content="https://handtop.com/retail/pipeline.jpg" />
       <meta property="og:type" content="website" />
+      <meta property="og:description" content="${desc}" />
       <meta property="fb:app_id" content="461141618064403" />
     </head>
 
@@ -130,7 +131,10 @@ class HelpGen {
     let title = 'Visual Catalogs Documentation';
     if (helpItem)
       title = helpItem.title;
-    let html = HelpGen.getTemplate(data, title, item);
+    let regex = /(<([^>]+)>)/ig;
+    let desc = data.replace(regex, "");
+    desc = desc.substring(0, 200);
+    let html = HelpGen.getTemplate(data, title, item, desc);
     return res.status(200).send(html);
   }
   static async genSiteMap(req, res) {
@@ -149,7 +153,7 @@ class HelpGen {
     if (req.method === 'GET') {
       let helpDataList = await this.helpListToHTMLAnchorList();
       let helpBody = helpDataList.html;
-      let html = HelpGen.getTemplate(helpBody, 'Visual Catalogs Documentation', '');
+      let html = HelpGen.getTemplate(helpBody, 'Visual Catalogs Documentation', '', 'Visual Catalogs reference documentation');
       return res.status(200).send(html);
     }
     return res.send("GET Only");
