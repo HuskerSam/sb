@@ -1,0 +1,67 @@
+<h1>Blocks, Linked Blocks and Frames</h1>
+The concept of a block is to be a virtual lego block - with a specified size such as 2x4 or 1x8, etc. Then a scene and animation is built from a collection of blocks.
+<br>
+<br> Blocks are containers holding members in the form of meshes, shapes and other blocks. Blocks are rendered as a box mesh containing all of the child elements. The isVisible of the box is set to false, leaving the child elements visible, but not
+the block wrapper. Scaling, position and rotation are fully animatable features of a block - not color, visibility though. While materials can be applied to an entire block, animating the materials is not possible.
+The block root contains frames, when it's a child you can choose either to these frames, or override (default) them with new ones.
+<br>
+... to add - inherit material, follow camera example, skybox and ground, block dimensions
+<br>
+<br>
+<b>Important notes</b><br>
+Blocks must existing before adding block children (not late/loose bound) - the block to blockchild to block/shape/mesh/camera/light is related with internal IDs.
+<br>
+Same rule with frames, the block, and block child must exist - as the frames are internally related to block children.
+<br>
+<hr>
+<h1 id="blockdiagrams">3D Block Diagrams</h1> There are 3 add helpers for quickly building diagrams.
+<br>
+<br>
+<h2>Scene Block (sceneblock)</h2>
+Block Data (genericblockdata):
+<br> &nbsp; &nbsp; &nbsp;signyoffset (default = 6) - height signs float above products
+<br> &nbsp; &nbsp; &nbsp;datascalefactor (default = 2) - scale amount for audio generated animation
+<br>
+musicparams: (default = '') - prefix (+ 'frequencyblock') for audio animation blocks
+<br>
+Default Camera (displaycamera): camera name to use by default
+<br>
+audiourl: url to html5 compatible song (mpg, wav, etc)
+<br>
+frametime: length of animation if frames included for any blocks - this is <b>required to have a play button</b>
+<br>
+<br>
+<h2>Text and Shape</h2>
+<div style="float:left;">
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/textandshapeexample.png" style="width:200px" />
+</div>
+This block creation helper combines 1 or 2 lines of text to make a shape combined with text. This is intended to replace a 2D square or circle containing text. It's not a good idea to have too many characters in one animation - as the poly count
+can get
+high fast. <br>
+<br> For the materials, you can either use a <a href="#materials">material</a> you have created, or you can use "color: 1,1,1" notation to specify a color as the material.
+<br>
+<br> For the shape, pick one of the presets, size it and the text and shape will be generated and placed into a box. The shape will be positioned on the negative Z axis, centered on Y and X. The text will be placed on the positive Z axis.
+<br>
+<div style="clear:both"></div>
+<br>
+<br>
+<h2>Connector Line</h2>
+<div style="float:left;">
+  <img src="https://s3-us-west-2.amazonaws.com/hcwebflow/himage/connectorlineexample.jpg" style="width:200px" />
+</div>
+This block creation helper combines 3 shapes into a block to form a connector line. A cylinder shape is used for the line - if you don't want it round, specify the number of div (min 3), i.e. 4 makes a box instead of a cylinder.
+
+<div style="clear:both"></div>
+<br>
+<br>
+<h2>Animated Line</h2>
+<div style="float:left;">
+  <video width="200" autoplay loop>
+    <source src="https://s3-us-west-2.amazonaws.com/hcwebflow/videos/animatedline.webm" type="video/webm">
+  </video>
+</div>
+This block creation helper combines shapes into a container block and adds frames. To make the dashes move faster, decrease the Run Time, or increase the D (Depth) of the line. Use these in place of dashed lines or to show flow.
+
+<br><br><br>
+Shape and Text Notes<br>
+Spaces count for centering, to push left, add spaces at end of text, in front of text to slide text right

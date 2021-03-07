@@ -1,0 +1,26 @@
+<h1>Materials and Textures</h1>
+Babylonjs has an overview of materials and textures for reference: <a href="https://doc.babylonjs.com/babylon101/materials" target="_blank">here</a>.
+<h2>Bump Textures</h2>
+Bump textures (aka normal maps) allow the gpu to render more light effects from a rough surface, without adding to the poly count.
+Babylon has a little more reference: <a href="https://doc.babylonjs.com/how_to/more_materials">here</a>.
+<br>
+A number of bump textures (normal maps) are supplied for ease of use.
+Check out the images prefixed with "sb: bmp-".
+
+<br>
+<br>
+rgb (0-1 levels) color, use the format "color:r,g,b" - i.e. "color:1,0,0" is diffuse red, for emissive color, use "ecolor:1,0,0", to set both use "decolor:1,0,0"
+<br> &nbsp; for textures there is an image library available using the prefix "sb: 123.jpg"
+
+<br>
+<br>
+To view normal maps in the addon, leave the diffuse texture field blank - to view specular maps leave both the texture and bump map empty
+
+<Br>
+<b>NOTES on IMPORT</b>
+<br><br>
+on Import any texture name containing a "/" or "." is considered a file path and converted to a texture with scale and
+considers .mp4 or .webm files as videos (sets texture as such), .png and .svg to contain hasAlpha = true in the texture
+<br>hasalpha (csv) force sets the hasAlpha flag on the diffuse texture (alpha flag is only meaningful on diffuse)
+<br><br>
+offsetv, offsetu, scaleu, scalev are all applied to generated textures - for all textures - it's assumed if you scale or offet the diffuse map, all other maps will need the same alignment

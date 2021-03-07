@@ -675,7 +675,7 @@
 
         this.helper_viewer_panel_open_btn.addEventListener('click', e => {
           let help_topic = this.help_viewer_panel_select.value;
-          let url = this.app.jsonLibPrefix + '/doc/' + help_topic + 'help.html';
+          let url = this.app.jsonLibPrefix + '/doc/' + help_topic;
           let a = document.createElement('a');
           a.setAttribute('href', url);
           a.setAttribute('target', '_blank');

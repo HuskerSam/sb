@@ -79,7 +79,7 @@ class HelpGen {
   static async genItemPath(req, res) {
     let item = req.params.helpitem;
 
-    let fetched = await fetch(`https://handtop.com/doc/raw/${item}help.html`, {
+    let fetched = await fetch(`https://handtop.com/doc/${item}help.html`, {
       cache: "no-cache"
     });
 

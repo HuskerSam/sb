@@ -1,0 +1,22 @@
+Export files to <a href="https://www.khronos.org/gltf/" target="_blank">.glb or .gltf format</a> - the preferred tool is <a href="https://builder.blender.org/download/" target="_blank">Blender</a> 2.8 or higher. Best results is to use .babylon files
+and export plugin from babylon.
+
+<br>
+<br>
+Meshes can be difficult to export from blender and import. If you see red lines in the console (from images missing) - these textures can be removed by
+opening the .babylon file and removing them. Just empty the path and leave "". Try to keep the mesh in one piece, otherwise once imported you'll have to wrap it in a
+block to size it, etc and lose some of the native abilities. Try to delete as many other objects out of the blender scene as possible, so only the mesh is left. The
+import routine grabs the first mesh it finds coming in from the .babylon file (scene).
+<br>
+Once a mesh is loaded, use the [Fit] button to size it so you can see it, by default this will place the mesh in 1x1x1 box and you can size it from there.
+<br><br>
+<a href="https://builder.blender.org/download/" target="_blank">Blender 2.8</a> for .glb files
+<br>
+<br>
+<b>Note on GLB files</b><br>
+for now use mostly original format .glb files, blender 2.8 doesn't seem to be converting .fbx in and .glb out (6/9/19)
+<br>
+once a .glb file is imported, contain it in a block as a blockchild, then use that block in other blocks in order to position/scale/rotate it
+<br><br>
+<b>Addon wizard notes</b><br>
+materialname is generated if left empty and the textures are applied to diffuse, emissive and ambient maps
