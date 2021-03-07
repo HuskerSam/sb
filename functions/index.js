@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require("firebase-admin");
 const cloudGenerateDisplay = require('./cloudgeneratedisplay');
+const helpGen = require('./helpgenpath/helpgen');
 
 admin.initializeApp();
 const fb_config = process.env.FIREBASE_CONFIG;
@@ -142,7 +143,10 @@ exports.widforname = functions
     if (req.method === 'GET') {
       let name = req.query.name;
       if (!name)
-        return res.status(200).send({ success: false, wid: null});
+        return res.status(200).send({
+          success: false,
+          wid: null
+        });
 
       let cloudGen = new cloudGenerateDisplay();
       let validateResults = await cloudGen.validateToken(req.query.token);
@@ -160,29 +164,32 @@ exports.widforname = functions
     }
     return res.send("GET Only");
   });
-
-  exports.productsforname = functions
-    .runWith(runtimeOpts)
-    .https.onRequest(async (req, res) => {
-      res.set("Access-Control-Allow-Origin", "*");
-      if (req.method === 'GET') {
-        let name = req.query.name;
-        if (!name)
-          return res.status(200).send({ success: false, wid: null});
-
-        let cloudGen = new cloudGenerateDisplay();
-        let validateResults = await cloudGen.validateToken(req.query.token);
-        if (validateResults.success === false)
-          return res.status(200).send(validateResults);
-
-        let productData = await cloudGen.productDataForWorkspace(name);
-
+exports.productsforname = functions
+  .runWith(runtimeOpts)
+  .https.onRequest(async (req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    if (req.method === 'GET') {
+      let name = req.query.name;
+      if (!name)
         return res.status(200).send({
-          success: true,
-          name,
-          productData,
-          bucket: admin.instanceId().app.options.storageBucket
+          success: false,
+          wid: null
         });
-      }
-      return res.send("GET Only");
-    });
+
+      let cloudGen = new cloudGenerateDisplay();
+      let validateResults = await cloudGen.validateToken(req.query.token);
+      if (validateResults.success === false)
+        return res.status(200).send(validateResults);
+
+      let productData = await cloudGen.productDataForWorkspace(name);
+
+      return res.status(200).send({
+        success: true,
+        name,
+        productData,
+        bucket: admin.instanceId().app.options.storageBucket
+      });
+    }
+    return res.send("GET Only");
+  });
+exports.generatedhelplist = functions.runWith(runtimeOpts).https.onRequest(async (req, res) => helpGen.helpGen(req, res));

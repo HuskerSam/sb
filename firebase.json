@@ -54,7 +54,20 @@
       {
         "source": "/support.html",
         "destination": "/index.html"
+      },
+      {
+        "source": "/doc",
+        "function": "generatedhelplist"
+      },
+      {
+        "source": "/doc/**",
+        "function": "generatedhelplist"
+      },
+      {
+        "source": "/sitemap.xml",
+        "function": "generatedhelplist"
       }
+
     ]
   },
   "storage": {
