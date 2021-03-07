@@ -588,6 +588,9 @@
         ]);
         if (!this.defaultServerTarget) {
           this.template_filter_select.value = 'Setup';
+        } else if (this.template_filter_select.value === 'Setup'
+          && !this.defaultProjectTarget) {
+          this.template_filter_select.value = 'Layout';
         }
         this.sheetnameinputdirty = false;
         this.loadTemplateList();
