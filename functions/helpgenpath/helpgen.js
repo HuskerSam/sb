@@ -115,7 +115,7 @@ class HelpGen {
     });
 
     if (fetched.status !== 200) {
-      return res.status(200).send('help item not found');
+      return res.status(404).send('help item not found');
     }
 
     let data = await fetched.text();
