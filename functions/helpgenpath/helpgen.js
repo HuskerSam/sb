@@ -149,7 +149,7 @@ class HelpGen {
     if (req.method === 'GET') {
       let helpDataList = await this.helpListToHTMLAnchorList();
       let helpBody = helpDataList.html;
-      let html = HelpGen.getTemplate(helpBody, 'Visual Catalogs Documentation', '/');
+      let html = HelpGen.getTemplate(helpBody, 'Visual Catalogs Documentation', '');
       return res.status(200).send(html);
     }
     return res.send("GET Only");
