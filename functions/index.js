@@ -6,7 +6,7 @@ const helpGen = require('./helpgenpath/helpgen');
 admin.initializeApp();
 const fb_config = process.env.FIREBASE_CONFIG;
 const runtimeOpts = {
-  timeoutSeconds: 180,
+  timeoutSeconds: 300,
   memory: '2GB'
 };
 const database = admin.database();
@@ -76,7 +76,6 @@ exports.upload = functions
     return res.send("Post Only");
   });
 exports.delete = functions
-  .runWith(runtimeOpts)
   .https.onRequest(async (req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     if (req.method === 'POST') {
@@ -137,7 +136,6 @@ exports.fileupload = functions
     return res.send("Post Only");
   });
 exports.widforname = functions
-  .runWith(runtimeOpts)
   .https.onRequest(async (req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     if (req.method === 'GET') {
@@ -165,7 +163,6 @@ exports.widforname = functions
     return res.send("GET Only");
   });
 exports.productsforname = functions
-  .runWith(runtimeOpts)
   .https.onRequest(async (req, res) => {
     res.set("Access-Control-Allow-Origin", "*");
     if (req.method === 'GET') {
@@ -192,4 +189,5 @@ exports.productsforname = functions
     }
     return res.send("GET Only");
   });
-exports.generatedhelplist = functions.runWith(runtimeOpts).https.onRequest(async (req, res) => helpGen.helpGen(req, res));
+exports.generatedhelplist = functions
+  .https.onRequest(async (req, res) => helpGen.helpGen(req, res));
