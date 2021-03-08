@@ -70,6 +70,18 @@ class gCSVImport {
     }
     return this.firebase.database().ref().update(updates);
   }
+  async dbRemoveRecordsByTitle(type, title) {
+    let count_removed = 0;
+
+    let records = await this.dbFetchByLookup(type, 'title', title);
+    let promises = [];
+    for (let key in records.recordsById) {
+      promises.push(this.dbRemove(type, key));
+      count_removed++;
+    }
+    await Promise.all(promises);
+    return count_removed;
+  }
   async dbSetRecord(type, data, id) {
     if (type === 'material') {
       if (data.title.substring(0, 8) === 'decolor:' ||
@@ -650,6 +662,10 @@ class gCSVImport {
     return this.dbSetRecord('frame', frameData);
   }
   async addCSVShapeRow(row) {
+    let count_removed = await this.dbRemoveRecordsByTitle('shape', row.name);
+    if (count_removed > 0) {
+      console.log('dup shape deleted', row.name, count_removed);
+    }
     let texturename = row.texturepath;
     let bumptexturename = row.bmppath;
     if (!row.offsetu) row.offsetu = '';
@@ -1004,6 +1020,12 @@ class gCSVImport {
     return false;
   }
   async addCSVMaterial(row) {
+    let count_removed = await this.dbRemoveRecordsByTitle('material', row.name);
+    let remove_textures = false;
+    if (count_removed > 0) {
+      remove_textures = true;
+      console.log('dup material deleted', row.name, count_removed);
+    }
     let materialName = row.name;
     let textureName = '';
     if (!row.hasalpha) row.hasalpha = '';
@@ -1042,6 +1064,8 @@ class gCSVImport {
         textureData.orig = Object.assign({}, textureData);
       }
       textureData.title = textureName;
+
+      if (remove_textures) await this.dbRemoveRecordsByTitle('texture', textureData.title);
       this.dbSetRecord('texture', textureData);
     }
 
@@ -1056,6 +1080,7 @@ class gCSVImport {
         uOffset: row.offsetu,
         vOffset: row.offsetv
       };
+      if (remove_textures) await this.dbRemoveRecordsByTitle('texture', textureData.title);
       this.dbSetRecord('texture', textureData);
     }
 
@@ -1072,6 +1097,7 @@ class gCSVImport {
         hasAlpha,
         isVideo
       };
+      if (remove_textures) await this.dbRemoveRecordsByTitle('texture', textureData.title);
       this.dbSetRecord('texture', textureData);
     }
 
@@ -1097,6 +1123,7 @@ class gCSVImport {
         hasAlpha,
         isVideo
       };
+      if (remove_textures) await this.dbRemoveRecordsByTitle('texture', textureData.title);
       this.dbSetRecord('texture', textureData);
     }
 
@@ -1112,6 +1139,7 @@ class gCSVImport {
         hasAlpha,
         isVideo
       };
+      if (remove_textures) await this.dbRemoveRecordsByTitle('texture', textureData.title);
       this.dbSetRecord('texture', textureData);
     }
 
@@ -1127,6 +1155,7 @@ class gCSVImport {
         hasAlpha,
         isVideo
       };
+      if (remove_textures) await this.dbRemoveRecordsByTitle('texture', textureData.title);
       this.dbSetRecord('texture', textureData);
     }
 
