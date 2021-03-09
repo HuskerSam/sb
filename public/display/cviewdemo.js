@@ -646,6 +646,8 @@ class cViewDemo extends bView {
     this.basketUpdateTotal();
 
     setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);
+
+    this.updateDocTitle();
     return Promise.resolve();
   }
   getProductDataFromBlock(blk) {

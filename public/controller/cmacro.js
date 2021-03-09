@@ -1446,8 +1446,6 @@ class cMacro {
             <td colspan="2">
               <div style="display:flex;flex-direction:row">
                 <input type="text" class="material_specularpower" data-field="material_specularpower" />
-                <span style="padding-left:8px;padding-right:4px;padding-top:8px;">Roughness</span>
-                <input type="text" class="material_roughness" data-field="material_roughness" />
               </div>
             </td>
           </tr>
@@ -1598,7 +1596,6 @@ class cMacro {
     this.material_specularpower = this.panel.querySelector('.material_specularpower');
     this.material_hasalpha = this.panel.querySelector('.material_hasalpha');
     this.material_isvideo = this.panel.querySelector('.material_isvideo');
-    this.material_roughness = this.panel.querySelector('.material_roughness');
 
     this.materialsuggestionlist = this.panel.querySelector('#materialsuggestionlist');
 
@@ -1677,7 +1674,6 @@ class cMacro {
     let ambienttexture = this.material_ambientpath.value;
     let emissivetexture = this.material_emissivepath.value;
     let reflectiontexture = this.material_reflectionpath.value;
-    let roughness = this.material_roughness.value;
     let isvideo = this.material_isvideo.value;
     let hasalpha = this.material_hasalpha.value;
     let specularpower = this.material_specularpower.value;
@@ -1746,7 +1742,6 @@ class cMacro {
       ambienttexture,
       emissivetexture,
       reflectiontexture,
-      roughness,
       isvideo,
       diffusecolor,
       emissivecolor,

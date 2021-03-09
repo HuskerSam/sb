@@ -110,6 +110,7 @@ class cViewPublished extends bView {
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.supportVR) {
       setTimeout(() => gAPPP.activeContext.setupXRSupport(), 1500);
     }
+    this.updateDocTitle();
   }
   updateSelectedCamera() {
     if (!this.displayCamera)

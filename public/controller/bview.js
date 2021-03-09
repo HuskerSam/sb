@@ -556,4 +556,10 @@ class bView {
     }
     return positionFrags;
   }
+  updateDocTitle() {
+    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.title) {
+      document.title = this.rootBlock.blockRawData.title;
+    }
+
+  }
 }

@@ -234,15 +234,9 @@ __localStaticStorageForBindingFields['material'] = [{
   title: 'Bump Texture Name',
   fireSetField: 'bumpTextureName',
   contextObjectField: 'bumpTexture',
-  group: 'roughness',
+  group: 'btexture',
   type: 'texture',
   floatLeft: true
-}, {
-  title: 'Roughness',
-  fireSetField: 'roughness',
-  contextObjectField: 'roughness',
-  displayType: 'number',
-  group: 'roughness'
 }, {
   title: 'Max Lights',
   fireSetField: 'maxSimultaneousLights',
@@ -253,7 +247,7 @@ __localStaticStorageForBindingFields['material'] = [{
   title: 'Reflection Texture Name',
   fireSetField: 'reflectionTextureName',
   contextObjectField: 'reflectionTexture',
-  group: 'reflection',
+  group: 'btexture',
   type: 'texture',
   floatLeft: true
 }];
