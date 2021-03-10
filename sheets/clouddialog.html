@@ -558,6 +558,7 @@
 
         this.widForName = {};
         this.loadBlockWizard();
+        this.productPositionInit();
       }
       async fetchHelpList() {
         let fetched = await fetch(this.app.jsonLibPrefix + '/docraw/helplist.json', {
@@ -1022,7 +1023,7 @@
         else
           this.loadProjectView();
         if (this.addon_display_view_select.value === 'position_products')
-          this.productPositionInit();
+          this.positionsFetchRefresh();
 
 
         this.updateHelpViewer();
@@ -2472,11 +2473,13 @@
         this.show_hide_table_csv = this.positions_panel.querySelector('.positions_show_hide_table_csv');
         this.show_hide_table_csv.addEventListener('click', e => this.positionsUpdateCSVDisplay(2));
 
+        this.positionsFetchRefresh();
+      }
+      async positionsFetchRefresh() {
         this.productPositionUpdateProductType();
 
         this.productDataResults = await this.loadProjectProducts();
         this.productData = this.productDataResults.productData;
-
 
         let basketListHTML = '';
         if (this.productData.displayBlocks)
