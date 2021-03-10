@@ -252,7 +252,7 @@ class cMacro {
           </tr>
           <tr>
             <td>Camera Rotate Y</td>
-            <td><input data-field="ry" type="text" value="-90deg" /></td>
+            <td><input data-field="originry" type="text" value="-90deg" /></td>
             <td></td>
           </tr>
           <tr class="span_padding">
