@@ -1,6 +1,8 @@
 class cViewDemo extends bView {
   constructor() {
     super('Demo', null, null, true);
+    this.displayCamera = '';
+
     this.bandButtons = [];
 
     this.canvasHelper.cameraShownCallback = () => this._cameraShown();
@@ -575,26 +577,9 @@ class cViewDemo extends bView {
 
     document.body.classList.add(this.uiOverlay);
 
-    let cameraIndex = this.canvasHelper.cameraSelect.selectedIndex;
-    let newCameraIndex = cameraIndex;
-    let camera = this.displayCamera;
-    if (camera === 'demo') {
-      newCameraIndex = 2;
-    }
-    if (camera === 'arcRotateCamera') {
-      newCameraIndex = 3;
-    }
-    if (camera === 'deviceOrientation') {
-      newCameraIndex = 4;
-    }
-
-    setTimeout(() => {
-      if (cameraIndex !== newCameraIndex)
-        this.canvasHelper.cameraSelect.selectedIndex = newCameraIndex;
-
-      this.canvasHelper.noTestError = true;
-      this.canvasHelper.cameraChangeHandler();
-    }, 10);
+    let cameraName = this.canvasHelper.cameraSelect.item(this.canvasHelper.cameraSelect.selectedIndex).innerHTML;
+    if (this.displayCamera !== cameraName)
+      this._displayCameraFeatures();
   }
   async _cameraShown() {
     this.productData = await new gCSVImport(gAPPP.loadedWID).initProducts();
@@ -624,6 +609,7 @@ class cViewDemo extends bView {
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayUI) {
       if (this.ui_select)
         this.ui_select.value = this.rootBlock.blockRawData.displayUI;
+      this.displayUIDefault = this.rootBlock.blockRawData.displayUI;
     }
 
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.supportVR) {
@@ -645,7 +631,7 @@ class cViewDemo extends bView {
 
     this.basketUpdateTotal();
 
-    setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 500);
+    setTimeout(() => document.querySelector('.loading-screen').style.display = 'none', 50);
 
     this.updateDocTitle();
     return Promise.resolve();
@@ -663,11 +649,8 @@ class cViewDemo extends bView {
     return this.getProductDataFromBlock(blk.parent);
   }
   _displayCameraFeatures() {
-    this.displayCamera = 'demo';
-    this.sceneDefaultCamera = '';
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.displayCamera) {
       this.displayCamera = this.rootBlock.blockRawData.displayCamera;
-      this.sceneDefaultCamera = this.displayCamera;
     }
     let urlParams = new URLSearchParams(window.location.search);
     let displayCamera = urlParams.get('displayCamera');
@@ -684,9 +667,9 @@ class cViewDemo extends bView {
             break;
           }
         }
-      }, 500);
+      }, 50);
     } else {
-      setTimeout(() => this.canvasHelper.cameraChangeHandler(), 500);
+      setTimeout(() => this.canvasHelper.cameraChangeHandler(), 50);
     }
   }
   url(rawUrl) {
