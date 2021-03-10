@@ -235,13 +235,18 @@ class GLOBALUTIL {
       lon
     }
   }
-  static angleDeg(angle, d = 0.0) {
+  static angleDeg(angle, d = 0) {
+    if (angle === undefined)
+      angle = '';
+    angle = angle.toString();
+
+    if (d !== 0)
+      d = GLOBALUTIL.angleDeg(d);
+
     if (angle.toLowerCase().indexOf('deg') !== -1) {
       angle = angle.toLowerCase().replace('deg', '');
-      d = GLOBALUTIL.getNumberOrDefault(d, 0.0);
       angle = GLOBALUTIL.getNumberOrDefault(angle, d) * Math.PI / 180.0;
     } else {
-      d = GLOBALUTIL.getNumberOrDefault(d, 0.0);
       angle = GLOBALUTIL.getNumberOrDefault(angle, d);
     }
     return angle;

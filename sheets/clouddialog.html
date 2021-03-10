@@ -595,6 +595,7 @@
         }
         this.sheetnameinputdirty = false;
         this.loadTemplateList();
+        this.positionsFetchRefresh();
 
         this.clearBusy();
       }
@@ -2472,13 +2473,13 @@
         this.show_hide_raw_csv.addEventListener('click', e => this.positionsUpdateCSVDisplay(1));
         this.show_hide_table_csv = this.positions_panel.querySelector('.positions_show_hide_table_csv');
         this.show_hide_table_csv.addEventListener('click', e => this.positionsUpdateCSVDisplay(2));
-
-        this.positionsFetchRefresh();
       }
       async positionsFetchRefresh() {
         this.productPositionUpdateProductType();
 
         this.productDataResults = await this.loadProjectProducts();
+        if (!this.productDataResults)
+          return;
         this.productData = this.productDataResults.productData;
 
         let basketListHTML = '';

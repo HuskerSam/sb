@@ -2411,7 +2411,7 @@ class gCSVImport {
 
         cameraBlockFrame.z = p.z;
         cameraBlockFrame.rx = p.rx;
-        cameraBlockFrame.ry = ''; //p.ry;
+        cameraBlockFrame.ry = this.angleDeg(p.ry, '0deg') + this.angleDeg(cameraRow.originry, '0deg');
         cameraBlockFrame.rz = p.rz;
         cameraBlockFrame.sx = p.sx;
         cameraBlockFrame.sy = p.sy;
