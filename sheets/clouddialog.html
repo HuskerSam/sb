@@ -1766,8 +1766,15 @@
               singleIndex = index;
           });
         }
+
+        let skip = false;
+        if (filter !== 'all' && singleIndex === null) {
+          alert('project not found');
+          skip = true;
+        }
+
         for (let c = 0, end = publishList.length; c < end; c++) {
-          if (singleIndex !== null && singleIndex !== c)
+          if ((singleIndex !== null && singleIndex !== c) || skip)
             continue;
 
           let row = publishList[c];
