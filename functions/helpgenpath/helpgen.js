@@ -16,7 +16,7 @@ sourceApp.get('/doc/', async (req, res) => await HelpGen.genPage(req, res));
 sourceApp.get('/doc', async (req, res) => await HelpGen.genPage(req, res));
 
 class HelpGen {
-  static getTemplate(helpBody, title, urlFrag, desc) {
+  static getTemplate(helpBody, title, urlFrag, desc, helpOptions = '', video = '') {
     return `<!doctype html>
     <html lang="en">
 
@@ -48,7 +48,15 @@ class HelpGen {
           <div class="gcse-search"></div>
         </div>
       </div>
-      <div style="padding: 20px;">${helpBody}</div>
+      <div class="help_topic_sub_header">
+        Help Topics <select id="help_template_select"><option>Select one to open...</option>${helpOptions}</select>
+        <br>
+        <h1>${title}</h1>
+        <video class="help_item_video" style="${ (video === '') ? 'display:none;' : ''}" controls preload="auto">
+          <source src="${video}">
+        </video>
+      </div>
+      <div style="padding: 20px;flex:1;">${helpBody}</div>
       <div class="footer_bar">
         <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         &nbsp;
@@ -59,6 +67,20 @@ class HelpGen {
       </div>
     </div>
     <script src="https://cse.google.com/cse.js?cx=0b2a9868105e1e42e"></script>
+    <script>
+      let ctl = document.getElementById('help_template_select');
+      if (ctl.length < 2)
+        ctl.style.display = 'none';
+      ctl.addEventListener('input', e => {
+        let v = ctl.value;
+        let a = document.createElement('a');
+        a.setAttribute('href', 'https://handtop.com/doc/' + v);
+        a.setAttribute('target', '_blank');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+    </script>
     </body>
 
     </html>`;
@@ -120,10 +142,8 @@ class HelpGen {
 
     let data = await fetched.text();
 
-    let listFetch = await fetch('https://handtop.com/docraw/helplist.json', {
-      cache: "no-cache"
-    });
-    let helpList = await listFetch.json();
+    let helpData = await this.helpListToHTMLAnchorList();
+    let helpList = await helpData.data;
     let helpItem = null;
     helpList.forEach(i => {
       if (i.value === item) helpItem = i;
@@ -134,7 +154,7 @@ class HelpGen {
     let regex = /(<([^>]+)>)/ig;
     let desc = data.replace(regex, "");
     desc = desc.substring(0, 200);
-    let html = HelpGen.getTemplate(data, title, item, desc);
+    let html = HelpGen.getTemplate(data, title, item, desc, helpData.options, helpItem.video);
     return res.status(200).send(html);
   }
   static async genSiteMap(req, res) {
@@ -166,11 +186,14 @@ class HelpGen {
 
     let html = '';
     let xml = '';
+    let options = '';
     data.forEach(i => {
       html += `<a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
       if (i.video)
         html += ` &nbsp; <a href="${i.video}" target="_blank">video</a>`;
       html += '<br><br>\n';
+
+      options += `<option value="${i.value}">${i.title}</option>`;
 
       xml += `<url>
             <loc>https://handtop.com/doc/${i.value}</loc>
@@ -181,8 +204,10 @@ class HelpGen {
     });
 
     return {
+      data,
       html,
-      xml
+      xml,
+      options
     }
   }
 }

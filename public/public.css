@@ -169,3 +169,17 @@ h1, h2 {
   text-align: center;
   width: 100%
 }
+
+#help_template_select {
+  margin-left: 10px;
+}
+
+.help_item_video {
+  max-width: 90%;
+  width:20em;
+  max-height:50%;
+}
+
+.help_topic_sub_header {
+  padding-left: 1em;
+}
