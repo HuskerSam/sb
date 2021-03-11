@@ -1,0 +1,750 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "columnWidth": 100,
+  "columnNumber": 1,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B1",
+  "value": "index",
+  "columnWidth": 100,
+  "columnNumber": 2,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C1",
+  "value": "block",
+  "columnWidth": 100,
+  "columnNumber": 3,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D1",
+  "value": "name",
+  "columnWidth": 100,
+  "columnNumber": 4,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E1",
+  "value": "x",
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F1",
+  "value": "y",
+  "columnWidth": 100,
+  "columnNumber": 6,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G1",
+  "value": "z",
+  "columnWidth": 100,
+  "columnNumber": 7,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H1",
+  "value": "rx",
+  "columnWidth": 100,
+  "columnNumber": 8,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I1",
+  "value": "ry",
+  "columnWidth": 100,
+  "columnNumber": 9,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J1",
+  "value": "rz",
+  "columnWidth": 100,
+  "columnNumber": 10,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K1",
+  "value": "text1",
+  "columnWidth": 100,
+  "columnNumber": 11,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L1",
+  "value": "text2",
+  "columnWidth": 100,
+  "columnNumber": 12,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M1",
+  "value": "image",
+  "columnWidth": 100,
+  "columnNumber": 13,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N1",
+  "value": "sku",
+  "columnWidth": 100,
+  "columnNumber": 14,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O1",
+  "value": "price",
+  "columnWidth": 100,
+  "columnNumber": 15,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P1",
+  "value": "pricetext",
+  "columnWidth": 100,
+  "columnNumber": 16,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q1",
+  "value": "height",
+  "columnWidth": 100,
+  "columnNumber": 17,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R1",
+  "value": "width",
+  "columnWidth": 100,
+  "columnNumber": 18,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S1",
+  "value": "displaystyle",
+  "columnWidth": 100,
+  "columnNumber": 19,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T1",
+  "value": "textfontfamily",
+  "columnWidth": 100,
+  "columnNumber": 20,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "U1",
+  "value": "materialname",
+  "columnWidth": 100,
+  "columnNumber": 21,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A2",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B2",
+  "value": 100,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C2",
+  "value": "DISPLAY product_garlic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D2",
+  "value": "Fresh Garlic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E2",
+  "value": -5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F2",
+  "value": 6,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G2",
+  "value": 39,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I2",
+  "value": "-85deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K2",
+  "value": "Fresh Garlic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M2",
+  "value": "sb:productsignimages/garlic.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N2",
+  "value": "Fresh Garlic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O2",
+  "value": 0.79,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P2",
+  "value": "$.79 each",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S2",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T2",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A3",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B3",
+  "value": 200,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C3",
+  "value": "DISPLAY product_green_pepper",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D3",
+  "value": "Green Peppers",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E3",
+  "value": 5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F3",
+  "value": 6,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G3",
+  "value": 39,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I3",
+  "value": "-80deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K3",
+  "value": "Green Peppers",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M3",
+  "value": "sb:productsignimages/greenpepper.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N3",
+  "value": "Green Peppers",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O3",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P3",
+  "value": "5 for $5",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S3",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T3",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A4",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B4",
+  "value": 300,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C4",
+  "value": "DISPLAY product_melon",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D4",
+  "value": "Charentais Melons",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E4",
+  "value": -5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F4",
+  "value": 13,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G4",
+  "value": 45,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I4",
+  "value": "-85deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K4",
+  "value": "Charentais Melons",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M4",
+  "value": "sb:productsignimages/melon_charentais.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N4",
+  "value": "Charentais Melons",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O4",
+  "value": 1.59,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P4",
+  "value": "$1.59 each",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S4",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T4",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A5",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B5",
+  "value": 400,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C5",
+  "value": "DISPLAY product_leek",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D5",
+  "value": "Trimmed Leeks",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E5",
+  "value": 5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F5",
+  "value": 13,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G5",
+  "value": 45,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I5",
+  "value": "-80deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K5",
+  "value": "Trimmed Leeks",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M5",
+  "value": "sb:productsignimages/leek.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N5",
+  "value": "Trimmed Leeks",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O5",
+  "value": 1.29,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P5",
+  "value": "$1.29 per lb",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S5",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T5",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A6",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B6",
+  "value": 500,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C6",
+  "value": "DISPLAY product_orange",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D6",
+  "value": "Oranges",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E6",
+  "value": 20,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F6",
+  "value": 6,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G6",
+  "value": 39,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I6",
+  "value": "-60deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K6",
+  "value": "Oranges",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M6",
+  "value": "sb:productsignimages/navelorange.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N6",
+  "value": "Oranges",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O6",
+  "value": 0.79,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P6",
+  "value": "$.79 per lb",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S6",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T6",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A7",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B7",
+  "value": 600,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C7",
+  "value": "DISPLAY product_potatoes",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D7",
+  "value": "Russet Potatoes lb",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E7",
+  "value": 30,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F7",
+  "value": 6,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G7",
+  "value": 39,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I7",
+  "value": "-50deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K7",
+  "value": "Russet Potatoes lb",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M7",
+  "value": "sb:productsignimages/russetpotato.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N7",
+  "value": "Russet Potatoes lb",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O7",
+  "value": 2.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P7",
+  "value": "$2.50 for 10lb",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S7",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T7",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A8",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B8",
+  "value": 700,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C8",
+  "value": "DISPLAY product_red_pepper",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D8",
+  "value": "Red Peppers",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E8",
+  "value": 20,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F8",
+  "value": 13,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G8",
+  "value": 45,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I8",
+  "value": "-60deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K8",
+  "value": "Red Peppers",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M8",
+  "value": "sb:productsignimages/redpepper.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N8",
+  "value": "Red Peppers",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O8",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P8",
+  "value": "3 for $3",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S8",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T8",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A9",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B9",
+  "value": 800,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C9",
+  "value": "DISPLAY product_strawberries",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D9",
+  "value": "Strawberries 8 oz",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E9",
+  "value": 30,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F9",
+  "value": 13,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G9",
+  "value": 45,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I9",
+  "value": "-50deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K9",
+  "value": "Strawberries 8 oz",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M9",
+  "value": "sb:productsignimages/strawberries.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N9",
+  "value": "Strawberries 8 oz",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O9",
+  "value": 1.99,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P9",
+  "value": "$1.99 for 8 oz",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S9",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T9",
+  "value": "Cursive",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A1"
+}]

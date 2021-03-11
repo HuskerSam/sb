@@ -1,0 +1,1476 @@
+[{
+  "range": "A1",
+  "value": "name",
+  "columnWidth": 165,
+  "columnNumber": 1,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B1",
+  "value": "asset",
+  "columnWidth": 100,
+  "columnNumber": 2,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C1",
+  "value": "displayui",
+  "columnWidth": 175,
+  "columnNumber": 3,
+  "fontWeight": "bold"
+}, {
+  "columnWidth": 210,
+  "columnNumber": 4,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 6,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 7,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 8,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 9,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 10,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 11,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 12,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 13,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 14,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 15,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 16,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 17,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 18,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 19,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 20,
+  "horizontalAlignment": "general"
+}, {
+  "range": "A2",
+  "value": "Flower Stands",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B2",
+  "value": "sceneblock",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C2",
+  "value": "mobile_portrait"
+}, {
+  "range": "A4",
+  "value": "childname",
+  "fontWeight": "bold"
+}, {
+  "range": "B4",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C4",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "D4",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "E4",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "F4",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "G4",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "H4",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "I4",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "J4",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "K4",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "L4",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "M4",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "A5",
+  "value": "register"
+}, {
+  "range": "B5",
+  "value": "blockchild"
+}, {
+  "range": "C5",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D5",
+  "value": "mesh"
+}, {
+  "range": "E5",
+  "value": 30,
+  "horizontalAlignment": "right"
+}, {
+  "range": "G5",
+  "value": -15,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H5",
+  "value": "-90deg"
+}, {
+  "range": "I5",
+  "value": "210deg"
+}, {
+  "range": "J5",
+  "value": "-90deg"
+}, {
+  "range": "K5",
+  "value": 0.065,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L5",
+  "value": 0.065,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M5",
+  "value": 0.065,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A6",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "B6",
+  "value": "blockchild"
+}, {
+  "range": "C6",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D6",
+  "value": "block"
+}, {
+  "range": "E6",
+  "value": 25,
+  "horizontalAlignment": "right"
+}, {
+  "range": "F6",
+  "value": -1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G6",
+  "value": 44,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I6",
+  "value": "90deg"
+}, {
+  "range": "K6",
+  "value": 9,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L6",
+  "value": 9,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M6",
+  "value": 9,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A7",
+  "value": "fixture_flowerstand"
+}, {
+  "range": "B7",
+  "value": "blockchild"
+}, {
+  "range": "C7",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D7",
+  "value": "block"
+}, {
+  "range": "E7",
+  "value": 0,
+  "horizontalAlignment": "right"
+}, {
+  "range": "F7",
+  "value": -1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G7",
+  "value": 44,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I7",
+  "value": "90deg"
+}, {
+  "range": "K7",
+  "value": 9,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L7",
+  "value": 9,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M7",
+  "value": 9,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A8",
+  "value": "fixture_cratebottom"
+}, {
+  "range": "B8",
+  "value": "blockchild"
+}, {
+  "range": "C8",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D8",
+  "value": "block"
+}, {
+  "range": "E8",
+  "value": 45,
+  "horizontalAlignment": "right"
+}, {
+  "range": "G8",
+  "value": 20,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I8",
+  "value": "90deg"
+}, {
+  "range": "K8",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L8",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M8",
+  "value": 7,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A11",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B11",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C11",
+  "value": "texture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D11",
+  "value": "speculartexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E11",
+  "value": "bumptexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F11",
+  "value": "ambienttexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G11",
+  "value": "emissivetexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H11",
+  "value": "reflectiontexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I11",
+  "value": "roughness",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J11",
+  "value": "isvideo",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K11",
+  "value": "diffusecolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L11",
+  "value": "emissivecolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M11",
+  "value": "ambientcolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N11",
+  "value": "specularcolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O11",
+  "value": "scaleu",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P11",
+  "value": "scalev",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q11",
+  "value": "offsetu",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R11",
+  "value": "offsetv",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S11",
+  "value": "hasalpha",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T11",
+  "value": "specularpower",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A12",
+  "value": "stone 2",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B12",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C12",
+  "value": "sb:matpack/Stone2_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D12",
+  "value": "sb:matpack/Stone2_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E12",
+  "value": "sb:matpack/Stone2_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O12",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P12",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A13",
+  "value": "tiles 08",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B13",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C13",
+  "value": "sb:matpack/tiles08_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D13",
+  "value": "sb:matpack/tiles08_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E13",
+  "value": "sb:matpack/tiles08_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O13",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P13",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A14",
+  "value": "wood 4",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B14",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C14",
+  "value": "sb:matpack/wood4_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D14",
+  "value": "sb:matpack/wood4_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E14",
+  "value": "sb:matpack/wood4_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O14",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P14",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A15",
+  "value": "floor 2",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B15",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C15",
+  "value": "sb:matpack/floor2_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D15",
+  "value": "sb:matpack/floor2_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E15",
+  "value": "sb:matpack/floor2_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O15",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P15",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A16",
+  "value": "beige brick",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B16",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C16",
+  "value": "sb:matpack/brickwall10_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D16",
+  "value": "sb:matpack/brickwall10_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E16",
+  "value": "sb:matpack/brickwall10_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O16",
+  "value": 4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P16",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A17",
+  "value": "circuit_metal1"
+}, {
+  "range": "B17",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C17",
+  "value": "sb:matpack/metal4_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D17",
+  "value": "sb:matpack/metal4_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E17",
+  "value": "sb:matpack/metal4_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O17",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P17",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A18",
+  "value": "red floor",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B18",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C18",
+  "value": "sb:matpack/floor9_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D18",
+  "value": "sb:matpack/floor9_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E18",
+  "value": "sb:matpack/floor9_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O18",
+  "value": 4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P18",
+  "value": 4,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A20",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B20",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C20",
+  "value": "width",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D20",
+  "value": "height",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E20",
+  "value": "depth",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F20",
+  "value": "floormaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G20",
+  "value": "backwallmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H20",
+  "value": "frontwallmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I20",
+  "value": "leftwallmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J20",
+  "value": "rightwallmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K20",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A21",
+  "value": "Room Walls 513",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B21",
+  "value": "buildingblock",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C21",
+  "value": 100,
+  "horizontalAlignment": "left"
+}, {
+  "range": "D21",
+  "value": 40,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E21",
+  "value": 100,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F21",
+  "value": "red floor",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G21",
+  "value": "beige brick",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H21",
+  "value": "beige brick",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I21",
+  "value": "beige brick",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J21",
+  "value": "beige brick",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K21",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A23",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B23",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C23",
+  "value": "childtype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D23",
+  "value": "cameratype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E23",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F23",
+  "value": "originx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G23",
+  "value": "originy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H23",
+  "value": "originz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I23",
+  "value": "aimtargetx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J23",
+  "value": "aimtargety",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K23",
+  "value": "aimtargetz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L23",
+  "value": "camerafov",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A24",
+  "value": "main camera",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B24",
+  "value": "blockchild",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C24",
+  "value": "camera",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D24",
+  "value": "ArcRotate",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E24",
+  "value": "::scene::",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F24",
+  "value": -40,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G24",
+  "value": 20,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H24",
+  "value": -20,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I24",
+  "value": 20,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J24",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K24",
+  "value": 20,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A26",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B26",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C26",
+  "value": "blockflag",
+  "fontWeight": "bold"
+}, {
+  "range": "D26",
+  "value": "genericblockdata",
+  "fontWeight": "bold"
+}, {
+  "range": "A27",
+  "value": "block"
+}, {
+  "range": "B27",
+  "value": "displaypositionsblock"
+}, {
+  "range": "C27",
+  "value": "displaypositions"
+}, {
+  "range": "D27",
+  "formula": "=gridJoin(\"|\", B28:G43)"
+}, {
+  "range": "B28",
+  "value": -5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C28",
+  "value": 6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D28",
+  "value": 39,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F28",
+  "value": "-85deg"
+}, {
+  "range": "B29",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C29",
+  "value": 6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D29",
+  "value": 39,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F29",
+  "value": "-80deg"
+}, {
+  "range": "B30",
+  "value": -5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C30",
+  "value": 13,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D30",
+  "value": 45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F30",
+  "value": "-85deg"
+}, {
+  "range": "B31",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C31",
+  "value": 13,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D31",
+  "value": 45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F31",
+  "value": "-80deg"
+}, {
+  "range": "B32",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C32",
+  "value": 6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D32",
+  "value": 39,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F32",
+  "value": "-60deg"
+}, {
+  "range": "B33",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C33",
+  "value": 6,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D33",
+  "value": 39,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F33",
+  "value": "-50deg"
+}, {
+  "range": "B34",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C34",
+  "value": 13,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D34",
+  "value": 45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F34",
+  "value": "-60deg"
+}, {
+  "range": "B35",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C35",
+  "value": 13,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D35",
+  "value": 45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F35",
+  "value": "-50deg"
+}, {
+  "range": "B36",
+  "value": 40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C36",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D36",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F36",
+  "value": "-20deg"
+}, {
+  "range": "B37",
+  "value": 40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C37",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D37",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F37",
+  "value": "-10deg"
+}, {
+  "range": "B38",
+  "value": 45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C38",
+  "value": 11,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D38",
+  "value": 32,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F38",
+  "value": "-20deg"
+}, {
+  "range": "B39",
+  "value": 45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C39",
+  "value": 11,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D39",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F39",
+  "value": "-10deg"
+}, {
+  "range": "B40",
+  "value": 40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C40",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D40",
+  "value": 18,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F40",
+  "value": "-5deg"
+}, {
+  "range": "B41",
+  "value": 40,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C41",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D41",
+  "value": 11,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F41",
+  "value": 0,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "B42",
+  "value": 45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C42",
+  "value": 11,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D42",
+  "value": 18,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F42",
+  "value": "-5deg"
+}, {
+  "range": "B43",
+  "value": 45,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C43",
+  "value": 11,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D43",
+  "value": 11,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F43",
+  "value": 0,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "A45",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B45",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C45",
+  "value": "heightoffset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D45",
+  "value": "cameramovetime",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E45",
+  "value": "cameraradius",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F45",
+  "value": "introtime",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G45",
+  "value": "finishdelay",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H45",
+  "value": "runlength",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I45",
+  "value": "originx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J45",
+  "value": "originy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K45",
+  "value": "originz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L45",
+  "value": "originry",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M45",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N45",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O45",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P45",
+  "value": "genericblockdata",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A46",
+  "value": "camera 302",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B46",
+  "value": "displaycamera",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C46",
+  "value": 25,
+  "horizontalAlignment": "left"
+}, {
+  "range": "D46",
+  "value": 500,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E46",
+  "value": 25,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F46",
+  "value": 1,
+  "horizontalAlignment": "left"
+}, {
+  "range": "G46",
+  "value": 2,
+  "horizontalAlignment": "left"
+}, {
+  "range": "H46",
+  "value": 60,
+  "horizontalAlignment": "left"
+}, {
+  "range": "I46",
+  "value": 20,
+  "horizontalAlignment": "left"
+}, {
+  "range": "K46",
+  "value": 20,
+  "horizontalAlignment": "left"
+}, {
+  "range": "L46",
+  "value": "-90deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M46",
+  "value": 20,
+  "horizontalAlignment": "left"
+}, {
+  "range": "N46",
+  "value": 5,
+  "horizontalAlignment": "left"
+}, {
+  "range": "O46",
+  "value": 20,
+  "horizontalAlignment": "left"
+}, {
+  "range": "P46",
+  "value": "signyoffset|3",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A48",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B48",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C48",
+  "value": "frameorder",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D48",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E48",
+  "value": "childtype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F48",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G48",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H48",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A49",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B49",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C49",
+  "value": 10,
+  "horizontalAlignment": "left"
+}, {
+  "range": "D49",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E49",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F49",
+  "value": 30,
+  "horizontalAlignment": "left"
+}, {
+  "range": "G49",
+  "value": 5,
+  "horizontalAlignment": "left"
+}, {
+  "range": "H49",
+  "value": -15,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A51",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B51",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "C51",
+  "value": "cameratype",
+  "fontWeight": "bold"
+}, {
+  "range": "D51",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "E51",
+  "value": "aimtargetx",
+  "fontWeight": "bold"
+}, {
+  "range": "F51",
+  "value": "aimtargety",
+  "fontWeight": "bold"
+}, {
+  "range": "G51",
+  "value": "aimtargetz",
+  "fontWeight": "bold"
+}, {
+  "range": "H51",
+  "value": "originx",
+  "fontWeight": "bold"
+}, {
+  "range": "I51",
+  "value": "originy",
+  "fontWeight": "bold"
+}, {
+  "range": "J51",
+  "value": "originz",
+  "fontWeight": "bold"
+}, {
+  "range": "K51",
+  "value": "cameraradius",
+  "fontWeight": "bold"
+}, {
+  "range": "L51",
+  "value": "heightoffset",
+  "fontWeight": "bold"
+}, {
+  "range": "M51",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "A52",
+  "value": "blockchild"
+}, {
+  "range": "B52",
+  "value": "camera"
+}, {
+  "range": "C52",
+  "value": "ArcRotate"
+}, {
+  "range": "D52",
+  "value": "arcRotateCamera",
+  "horizontalAlignment": "right"
+}, {
+  "range": "F52",
+  "value": 3,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H52",
+  "value": -40,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I52",
+  "value": 15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "K52",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L52",
+  "value": 20,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M52",
+  "value": "::scene::",
+  "horizontalAlignment": "right"
+}, {
+  "range": "A53",
+  "value": "blockchild"
+}, {
+  "range": "B53",
+  "value": "camera"
+}, {
+  "range": "C53",
+  "value": "DeviceOrientationCamera"
+}, {
+  "range": "D53",
+  "value": "deviceOrientation"
+}, {
+  "range": "E53",
+  "value": 50,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G53",
+  "value": 50,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I53",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "K53",
+  "value": 30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L53",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "M53",
+  "value": "::scene::",
+  "horizontalAlignment": "right"
+}, {
+  "range": "A1"
+}]

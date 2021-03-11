@@ -6,6 +6,38 @@
     "description": "Basic 3D logo example using a google web font"
   },
   {
+    "name": "Flower stands with vegetables - 1",
+    "mainFile": "FlowerStandLayout",
+    "hint": "Flower stands with vegetables",
+    "fragments": "Fixture Materials,Fruit Stands,Additional Fixtures,Produce Assets",
+    "products": "Flower Stands - Products 1",
+    "categories": "Display",
+    "description": "Flower stands in the corner with veggies - product set 1/2"
+  },
+  {
+    "name": "Flower stands with vegetables - 2",
+    "mainFile": "FlowerStandLayout",
+    "hint": "Flower stands with vegetables",
+    "fragments": "Fixture Materials,Fruit Stands,Additional Fixtures,Produce Assets",
+    "products": "Flower Stands - Products 2",
+    "categories": "Display",
+    "description": "Flower stands in the corner with veggies - product set 2/2"
+  },
+  {
+    "name": "Flower Stands - Products 1",
+    "mainFile": "FlowerProducts1",
+    "hint": "Flower Products 1",
+    "categories": "Products",
+    "description": "Flower stands with veggies products 1/2"
+  },
+  {
+    "name": "Flower Stands - Products 2",
+    "mainFile": "FlowerProducts2",
+    "hint": "Flower Products 2",
+    "categories": "Products",
+    "description": "Flower stands with veggies products 2/2"
+  },
+  {
     "name": "Grocery Isle with Vegetables",
     "mainFile": "Islev1",
     "hint": "Isle with Vegetables",
