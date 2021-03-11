@@ -88,6 +88,10 @@
     "title": "/view help"
   },
   {
+    "value": "displayapp",
+    "title": "/display help"
+  },
+  {
     "value": "shortcolorvideos",
     "title": "Short Color Videos Example",
     "video": "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideogreen.webm"

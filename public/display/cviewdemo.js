@@ -489,6 +489,16 @@ class cViewDemo extends bView {
     this.profile_clear_button.addEventListener('click', e => {
       gAPPP.a.resetProfile();
     });
+
+    this.help_popup_button = this.dialog.querySelector('.help_popup_button');
+    this.help_popup_button.addEventListener('click', e => {
+      let a = document.createElement('a');
+      a.setAttribute('href', '/doc/displayapp');
+      a.setAttribute('target', '_blank');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
   }
   clearHeaderBar() {
     this.display_header_row.classList.remove('expanded_header');
@@ -577,7 +587,10 @@ class cViewDemo extends bView {
 
     document.body.classList.add(this.uiOverlay);
 
-    let cameraName = this.canvasHelper.cameraSelect.item(this.canvasHelper.cameraSelect.selectedIndex).innerHTML;
+    let selIndex = this.canvasHelper.cameraSelect.selectedIndex;
+    let cameraName = "unknownnotvalid";
+    if (selIndex !== -1)
+      cameraName = this.canvasHelper.cameraSelect.item().innerHTML;
     if (this.displayCamera !== cameraName)
       this._displayCameraFeatures();
   }
@@ -1167,6 +1180,7 @@ class cViewDemo extends bView {
       <div class="display_header_bar">
         <div class="display_header_row">
           <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
+          <button class="btn-sb-icon app-transparent help_popup_button" style="float:right;"><i class="material-icons-outlined">help</i></button>
           <button class="btn-sb-icon app-transparent mute_header_button" style="float:right;"><i class="material-icons-outlined">music_off</i></button>
           <button class="btn-sb-icon app-transparent demo_panel_button expanded_option"><i class="material-icons-outlined">info</i></button>
           <button class="btn-sb-icon app-transparent movie_panel_button expanded_option"><i class="material-icons-outlined">movie</i></button>
