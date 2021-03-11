@@ -14,12 +14,6 @@
   position: absolute;
 }
 
-#publish-settings-button {
-  position: absolute;
-  right: .25em;
-  bottom: .25em;
-}
-
 #publish-profile-panel {
   pointer-events: none;
 }
@@ -38,13 +32,6 @@
 
 #publish-profile-panel .fields-container * {
   pointer-events: auto;
-}
-
-#user-profile-dialog-reset-button {
-  position: absolute;
-  bottom: .25em;
-  right: .25em;
-  z-index: 1;
 }
 
 .canvas-actions {

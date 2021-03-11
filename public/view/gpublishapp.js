@@ -3,6 +3,8 @@ class gPublishApp extends gInstanceSuper {
     super();
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
       .then(() => this.a.signInAnon());
+
+    this._loadDataLists('fontfamilydatalist')
   }
   async profileReadyAndLoaded() {
     this.loadStarted = true;

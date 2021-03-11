@@ -1,0 +1,8 @@
+For /view and /display apps, <a href="https://firebase.google.com/docs/auth" target="_blank">Firebase Anonymous Authorization</a>
+is used with a single profile for all users during alpha to increase multiple user overlap.<br>
+For /asset Google authorization or email (passwordless) is used.  You are prompted to login each time because we can't save 2 sets
+of Firebase Auth credentials for one domain, so /view and /display authorization is preferred by default over /asset.  In production for
+a client we can use sub domains to store more credentials, so asset can become asset.sitename.com vs www.sitename.com and store separate credentials
+that don't overwrite the user applications.
+<br><br>
+Addon security is performed using a token stored in RTDB and passed to an API.

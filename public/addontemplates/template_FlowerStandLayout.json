@@ -96,7 +96,7 @@
   "horizontalAlignment": "left"
 }, {
   "range": "C2",
-  "value": "mobile_portrait"
+  "value": "mobile_orientation"
 }, {
   "range": "A4",
   "value": "childname",

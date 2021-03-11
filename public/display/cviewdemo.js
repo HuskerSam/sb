@@ -590,7 +590,7 @@ class cViewDemo extends bView {
     let selIndex = this.canvasHelper.cameraSelect.selectedIndex;
     let cameraName = "unknownnotvalid";
     if (selIndex !== -1)
-      cameraName = this.canvasHelper.cameraSelect.item().innerHTML;
+      cameraName = this.canvasHelper.cameraSelect.item(selIndex).innerHTML;
     if (this.displayCamera !== cameraName)
       this._displayCameraFeatures();
   }

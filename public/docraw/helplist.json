@@ -104,5 +104,9 @@
   {
     "value": "spinnerdiagram",
     "title": "Multi Sheet Diagram Example"
+  },
+  {
+    "value": "authorization",
+    "title": "Authorization Overview"
   }
 ]
