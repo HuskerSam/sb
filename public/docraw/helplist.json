@@ -108,5 +108,9 @@
   {
     "value": "authorization",
     "title": "Authorization Overview"
+  },
+  {
+    "value": "virtualreality",
+    "title": "Virtual Reality Support"
   }
 ]
