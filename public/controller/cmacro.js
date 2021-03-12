@@ -2618,8 +2618,8 @@ class cMacro {
           </tr>
           <tr>
             <td><b>Ceiling Material</b></td>
-            <td><input type="text" class="ceilingwallmaterial" list="materialdatatitlelookuplist" /></td>
-            <td><input type="color" class="colorpicker" data-inputclass="ceilingwallmaterial"></td>
+            <td><input type="text" class="ceilingmaterial" list="materialdatatitlelookuplist" /></td>
+            <td><input type="color" class="colorpicker" data-inputclass="ceilingmaterial"></td>
           </tr>
           <tr class="image_upload_building">
             <td>Image</td>
