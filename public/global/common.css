@@ -527,8 +527,8 @@ button.scene-options {
 
 .font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
   transform: none;
-  width: 18em;
-  left: -12.75em;
+  width: 17em;
+  left: -12em;
   top: .25em;
   margin-bottom: .75em;
 }

@@ -781,13 +781,18 @@ class cPanelCanvas {
     this.cameraTools.activate();
   }
   userProfileChange() {
+    if (!this.rootBlock)
+      return;
+
     this.parent.context.scene.getBoundingBoxRenderer().frontColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsLines);
     this.parent.context.scene.getBoundingBoxRenderer().backColor = GLOBALUTIL.color(gAPPP.appStyleDetails.boundsBack);
 
-    if (!gAPPP.a.profile.cameraUpdates)
-      return;
+    if (gAPPP.a.profile.canvasColor !== this.previewCanvasColor) {
+      this.rootBlock.__renderSceneOptions();
+      this.previewCanvasColor = gAPPP.a.profile.canvasColor;
+    }
 
-    if (!this.rootBlock)
+    if (!gAPPP.a.profile.cameraUpdates)
       return;
 
     let pS = gAPPP.a.profile['playState' + this.rootBlock.blockKey];

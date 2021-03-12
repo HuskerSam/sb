@@ -1445,7 +1445,7 @@ class cMacro {
             <td>Specular Power</td>
             <td colspan="2">
               <div style="display:flex;flex-direction:row">
-                <input type="text" class="material_specularpower" data-field="material_specularpower" />
+                <input type="text" style="width:5em;" class="material_specularpower" data-field="material_specularpower" />
               </div>
             </td>
           </tr>

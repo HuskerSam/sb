@@ -251,7 +251,7 @@ class cViewPublished extends bView {
     <button id="publish_help_viewer" class="btn-sb-icon"><i class="material-icons">help</i></button>
   </div>
   <div id="publish-profile-panel" style="display:none;">
-    <div id="value-set-panel">
+    <div id="value-set-panel" class="app-panel app-transparent">
       <label><span>Element</span>
       <select id="element-type-to-edit">
         <option>Block</option>

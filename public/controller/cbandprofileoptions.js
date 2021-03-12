@@ -23,10 +23,13 @@ class cBandProfileOptions {
       if (gAPPP.activeContext)
         gAPPP.activeContext.refreshFocus();
     });
-    this.fireSet.updatesCallback = (fieldUpdates, key) => this.profileUpdates(fieldUpdates, key);
+
+    //limited use preview of updates before they're sent - for fast UI refresh
+    this.fireSet.updatesCallback = (fieldUpdates, key) => this.profileUpdatesPreview(fieldUpdates, key);
     this.closeOthersCallback = null;
   }
-  profileUpdates(fieldUpdates, key) {
+  profileUpdatesPreview(fieldUpdates, key) {
+    //limited use preview of updates before they're sent - for fast UI refresh
     for (let i = 0; i < fieldUpdates.length; i++) {
       if (fieldUpdates[i].field === 'lightIntensity') {
         gAPPP.a.profile.lightIntensity = fieldUpdates[i].newValue;

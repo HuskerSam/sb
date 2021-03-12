@@ -107,8 +107,9 @@ class bFirebase {
       fireUpdates[refPath] = upd.newValue;
     }
 
-    if (this.updatesCallback)
-      this.updatesCallback(fieldUpdates, key);
+    //limited use preview of updates before they're sent - for fast UI refresh
+    if (this.updatesCallback) this.updatesCallback(fieldUpdates, key);
+
     return firebase.database().ref().update(fireUpdates);
   }
 }
