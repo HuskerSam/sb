@@ -274,6 +274,7 @@ class gCSVImport {
     return results[0];
   }
   async addCSVBlockRow(row) {
+    //TODO - the blockchildren and frames are orphaned - messy - need to delete more
     let count_removed = await this.dbRemoveRecordsByTitle('block', row.name);
     if (count_removed > 0) {
       console.log('dup block deleted', row.name, count_removed);
