@@ -169,6 +169,11 @@ class gCSVImport {
     }
   }
   async addCSVMeshRow(row) {
+    let count_removed = await this.dbRemoveRecordsByTitle('mesh', row.name);
+    if (count_removed > 0) {
+      console.log('dup mesh deleted', row.name, count_removed);
+    }
+
     let promises = [];
 
     let meshData = {
@@ -269,6 +274,11 @@ class gCSVImport {
     return results[0];
   }
   async addCSVBlockRow(row) {
+    let count_removed = await this.dbRemoveRecordsByTitle('block', row.name);
+    if (count_removed > 0) {
+      console.log('dup block deleted', row.name, count_removed);
+    }
+
     let blockData = {
       title: row.name,
       materialName: row.materialname,
@@ -2349,9 +2359,9 @@ class gCSVImport {
     cam.cameraacceleration = '.005';
     cam.camerafov = '0.8';
     cam.childname = "demo";
-    cam.cameraradius = row.cameraradius;
+    if (row.cameraradius) cam.cameraradius = row.cameraradius;
     cam.cameratype = 'FollowCamera';
-    cam.heightoffset = row.heightoffset;
+    if (row.heightoffset) cam.heightoffset = row.heightoffset;
     cam.camerarotationoffset = '0';
     cam.maxcameraspeed = '10';
     cam.targetblock = "block:" + cameraBlock.name;
@@ -2364,9 +2374,9 @@ class gCSVImport {
     cam.x = row.x;
     cam.y = row.y;
     cam.z = row.z;
-    cam.originx = row.originx;
-    cam.originy = row.originy;
-    cam.originz = row.originz;
+    if (row.originx) cam.originx = row.originx;
+    if (row.originy) cam.originy = row.originy;
+    if (row.originz) cam.originz = row.originz;
     cam.origCameraRow = row;
     childCSVRows.push(cam);
 

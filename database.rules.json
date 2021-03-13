@@ -14,12 +14,25 @@
         },
         "frame": {
           ".indexOn": ["parentKey"]
+        },
+        "material": {
+          ".indexOn": ["title"]
+        },
+        "texture": {
+          ".indexOn": ["title"]
+        },
+        "shape": {
+          ".indexOn": ["title"]
+        },
+        "mesh": {
+          ".indexOn": ["title"]
         }
       }
     },
     "projectTitles": {
       ".read": "auth !== null",
-      ".write": "auth !== null"
+      ".write": "auth !== null",
+      ".indexOn": ["title", "tags"]      
     },
     "usersprofile": {
       ".read": "auth !== null",
