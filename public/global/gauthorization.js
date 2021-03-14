@@ -162,28 +162,8 @@ class gAuthorization {
       this.updateAuthUICallback();
   }
   async resetProfile() {
-    let profileData = {
-      fontSize: '10',
-      lightIntensity: '.7',
-      selectedWorkspace: 'default',
-      showBoundsBox: true,
-      showFloorGrid: false,
-      cameraUpdates: true,
-      cameraSaves: true,
-      opacityLevel: '.5',
-      showForceWireframe: false,
-      showSceneGuides: true,
-      cameraName: "Default Camera",
-      gridAndGuidesDepth: '15'
-    };
+    let profileData = this.modelSets['userProfile']._defaultProfile(this.anonymous);
 
-    if (this.anonymous) {
-      profileData.cameraUpdates = true;
-      profileData.cameraSaves = true;
-      profileData.showSceneGuides = false;
-      profileData.showBoundsBox = false;
-      profileData.showFloorGrid = false;
-    }
     await this.modelSets['userProfile'].setObject(profileData);
 
     return;
