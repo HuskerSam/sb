@@ -1861,7 +1861,7 @@ class gCSVImport {
     let promises = [];
     let blockRow = Object.assign({}, row);
     blockRow.asset = 'block';
-    promises.push(this.addCSVRow(blockRow));
+    await this.addCSVRow(blockRow);
 
     let displayBC = this.defaultCSVRow();
     displayBC.asset = 'blockchild';

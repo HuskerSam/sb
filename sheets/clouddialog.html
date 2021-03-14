@@ -2466,6 +2466,7 @@
 
         this.position_products_table = this.record_field_list_form.querySelector('.position_products_table');
 
+        this.positions_panel.querySelectorAll('.textfontfamilyedit').forEach(i => i.addEventListener('input', e => this.updateFontField(i)));
 
         this.csv_import_preview = this.positions_panel.querySelector('.csv_import_preview');
         this.copy_csv_to_clipboard = this.positions_panel.querySelector('.positions_copy_csv_to_clipboard');
@@ -2536,6 +2537,9 @@
           .forEach(i => i.addEventListener('input', e => this.positionUpdateCSV()));
 
         this.positionUpdateCSV();
+      }
+      updateFontField(textDom) {
+        textDom.style.fontFamily = textDom.value;
       }
       positionsAdvanceNextItem(e) {
         let fields = this.record_field_list_form.querySelectorAll('.position_products_table input[type="text"]');
