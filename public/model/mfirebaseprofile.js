@@ -18,6 +18,8 @@ class mFirebaseProfile extends bFirebase {
     }
     else {
       this.profile = fireData.val();
+      if (!this.profile)
+        this.profile = {};
       gAPPP.profileLoaded = true;
       gAPPP.profileReady();
     }

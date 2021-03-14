@@ -232,15 +232,20 @@ class gInstanceSuper extends cAppDefaults {
   initializeAuthUI() {}
   profileReadyAndLoaded() {
     this.loadStarted = true;
-    let wId = this.a.profile.selectedWorkspace;
-    this.loadedWID = wId;
-    this.a.initProjectModels(wId);
+
+    if (!this.loadedWID) {
+      let wId = this.a.profile.selectedWorkspace;
+      if (!wId)
+        wId = 'default';
+      this.loadedWID = wId;
+    }
+    this.a.initProjectModels(this.loadedWID);
     this.a._activateModels();
     this.initialUILoad = false;
     this._updateApplicationStyle();
 
     this.workspaceProcessed = false;
-    gAPPP.a.workspaceLoadedCallback = () => this.workspaceLoaded(wId);
+    gAPPP.a.workspaceLoadedCallback = () => this.workspaceLoaded(this.loadedWID);
   }
   async workspaceLoaded(workspaceId) {
     await this._updateGoogleFonts();

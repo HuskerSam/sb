@@ -30,6 +30,9 @@ class gDemoApp extends gInstanceSuper {
         newValue: nameWid
       }]);
     }
+
+    if (!workspace)
+      workspace = 'default';
     this.loadedWID = workspace;
 
     this.a.initProjectModels(workspace);
