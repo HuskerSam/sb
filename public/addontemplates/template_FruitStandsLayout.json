@@ -1,0 +1,1825 @@
+[{
+  "range": "A1",
+  "value": "name",
+  "columnWidth": 100,
+  "columnNumber": 1,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B1",
+  "value": "asset",
+  "columnWidth": 100,
+  "columnNumber": 2,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "columnWidth": 193,
+  "columnNumber": 3,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 4,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 6,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 7,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 8,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 9,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 10,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 11,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 12,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 13,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 14,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 15,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 16,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 17,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 18,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 19,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 20,
+  "horizontalAlignment": "general"
+}, {
+  "range": "A2",
+  "value": "Fruit Stands",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B2",
+  "value": "sceneblock",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A4",
+  "value": "childname",
+  "fontWeight": "bold"
+}, {
+  "range": "B4",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C4",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "D4",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "E4",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "F4",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "G4",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "H4",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "I4",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "J4",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "K4",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "L4",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "M4",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "A5",
+  "value": "register"
+}, {
+  "range": "B5",
+  "value": "blockchild"
+}, {
+  "range": "C5",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D5",
+  "value": "mesh"
+}, {
+  "range": "E5",
+  "value": 30,
+  "horizontalAlignment": "right"
+}, {
+  "range": "G5",
+  "value": -15,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H5",
+  "value": "-90deg"
+}, {
+  "range": "I5",
+  "value": "210deg"
+}, {
+  "range": "J5",
+  "value": "-90deg"
+}, {
+  "range": "K5",
+  "value": 0.065,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L5",
+  "value": 0.065,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M5",
+  "value": 0.065,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A6",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "B6",
+  "value": "blockchild"
+}, {
+  "range": "C6",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D6",
+  "value": "block"
+}, {
+  "range": "E6",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G6",
+  "value": 15,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I6",
+  "value": "90deg"
+}, {
+  "range": "K6",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L6",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M6",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A7",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "B7",
+  "value": "blockchild"
+}, {
+  "range": "C7",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D7",
+  "value": "block"
+}, {
+  "range": "E7",
+  "value": -15,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G7",
+  "value": 15,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I7",
+  "value": "90deg"
+}, {
+  "range": "K7",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L7",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M7",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A8",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "B8",
+  "value": "blockchild"
+}, {
+  "range": "C8",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D8",
+  "value": "block"
+}, {
+  "range": "E8",
+  "value": -5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G8",
+  "value": -20,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I8",
+  "value": "90deg"
+}, {
+  "range": "K8",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L8",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M8",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A9",
+  "value": "fixture_fruitstand"
+}, {
+  "range": "B9",
+  "value": "blockchild"
+}, {
+  "range": "C9",
+  "value": "::scene::_fixturesWrapper"
+}, {
+  "range": "D9",
+  "value": "block"
+}, {
+  "range": "E9",
+  "value": -30,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G9",
+  "value": -20,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I9",
+  "value": "90deg"
+}, {
+  "range": "K9",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L9",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M9",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "A13",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B13",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C13",
+  "value": "texture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D13",
+  "value": "speculartexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E13",
+  "value": "bumptexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F13",
+  "value": "ambienttexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G13",
+  "value": "emissivetexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H13",
+  "value": "reflectiontexture",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I13",
+  "value": "isvideo",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J13",
+  "value": "diffusecolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K13",
+  "value": "emissivecolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L13",
+  "value": "ambientcolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M13",
+  "value": "specularcolor",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N13",
+  "value": "scaleu",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O13",
+  "value": "scalev",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P13",
+  "value": "offsetu",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q13",
+  "value": "offsetv",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R13",
+  "value": "hasalpha",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S13",
+  "value": "specularpower",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A14",
+  "value": "red wood",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B14",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C14",
+  "value": "sb:matpack/wood6_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D14",
+  "value": "sb:matpack/wood6_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E14",
+  "value": "sb:matpack/wood6_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N14",
+  "value": 3,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O14",
+  "value": 3,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A15",
+  "value": "gray brick",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B15",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C15",
+  "value": "sb:matpack/brickwall8_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D15",
+  "value": "sb:matpack/brickwall8_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E15",
+  "value": "sb:matpack/brickwall8_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N15",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O15",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A16",
+  "value": "gray brick 2",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B16",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C16",
+  "value": "sb:matpack/brickwall15_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D16",
+  "value": "sb:matpack/brickwall15_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E16",
+  "value": "sb:matpack/brickwall15_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N16",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O16",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A17",
+  "value": "floor 5",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B17",
+  "value": "material",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C17",
+  "value": "sb:matpack/floor5_D.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D17",
+  "value": "sb:matpack/floor5_S.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E17",
+  "value": "sb:matpack/floor5_N.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N17",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O17",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A19",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B19",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C19",
+  "value": "width",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D19",
+  "value": "height",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E19",
+  "value": "depth",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F19",
+  "value": "floormaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G19",
+  "value": "backwallmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H19",
+  "value": "frontwallmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I19",
+  "value": "leftwallmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J19",
+  "value": "rightwallmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K19",
+  "value": "ceilingmaterial",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L19",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A20",
+  "value": "Room Walls 318",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B20",
+  "value": "buildingblock",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C20",
+  "value": 100,
+  "horizontalAlignment": "left"
+}, {
+  "range": "D20",
+  "value": 30,
+  "horizontalAlignment": "left"
+}, {
+  "range": "E20",
+  "value": 80,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F20",
+  "value": "gray brick",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G20",
+  "value": "red wood",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H20",
+  "value": "red wood",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I20",
+  "value": "red wood",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J20",
+  "value": "red wood",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K20",
+  "value": "gray brick 2",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L20",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A22",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B22",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C22",
+  "value": "blockflag",
+  "fontWeight": "bold"
+}, {
+  "range": "D22",
+  "value": "genericblockdata",
+  "fontWeight": "bold"
+}, {
+  "range": "A23",
+  "value": "block"
+}, {
+  "range": "B23",
+  "value": "displaypositionsblock"
+}, {
+  "range": "C23",
+  "value": "displaypositions"
+}, {
+  "range": "D23",
+  "formula": "=gridJoin(\"|\", B24:G31)"
+}, {
+  "range": "B24",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C24",
+  "value": 6.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D24",
+  "value": 18,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F24",
+  "value": "90deg"
+}, {
+  "range": "G24",
+  "value": "20deg"
+}, {
+  "range": "B25",
+  "value": 10,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C25",
+  "value": 6.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D25",
+  "value": 11,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F25",
+  "value": "-90deg"
+}, {
+  "range": "G25",
+  "value": "20deg"
+}, {
+  "range": "B26",
+  "value": -15.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C26",
+  "value": 6.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D26",
+  "value": 18,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F26",
+  "value": "90deg"
+}, {
+  "range": "G26",
+  "value": "20deg"
+}, {
+  "range": "B27",
+  "value": -15.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C27",
+  "value": 6.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D27",
+  "value": 11,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F27",
+  "value": "-90deg"
+}, {
+  "range": "G27",
+  "value": "20deg"
+}, {
+  "range": "B28",
+  "value": -5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C28",
+  "value": 6.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D28",
+  "value": -17,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F28",
+  "value": "90deg"
+}, {
+  "range": "G28",
+  "value": "20deg"
+}, {
+  "range": "B29",
+  "value": -5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C29",
+  "value": 6.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D29",
+  "value": -24,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F29",
+  "value": "-90deg"
+}, {
+  "range": "G29",
+  "value": "20deg"
+}, {
+  "range": "B30",
+  "value": -30.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C30",
+  "value": 6.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D30",
+  "value": -17,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F30",
+  "value": "90deg"
+}, {
+  "range": "G30",
+  "value": "20deg"
+}, {
+  "range": "B31",
+  "value": -30.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "C31",
+  "value": 6.5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D31",
+  "value": -24,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F31",
+  "value": "-90deg"
+}, {
+  "range": "G31",
+  "value": "20deg"
+}, {
+  "range": "A33",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "B33",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "C33",
+  "value": "heightoffset",
+  "fontWeight": "bold"
+}, {
+  "range": "D33",
+  "value": "cameramovetime",
+  "fontWeight": "bold"
+}, {
+  "range": "E33",
+  "value": "cameraradius",
+  "fontWeight": "bold"
+}, {
+  "range": "F33",
+  "value": "introtime",
+  "fontWeight": "bold"
+}, {
+  "range": "G33",
+  "value": "finishdelay",
+  "fontWeight": "bold"
+}, {
+  "range": "H33",
+  "value": "runlength",
+  "fontWeight": "bold"
+}, {
+  "range": "I33",
+  "value": "originx",
+  "fontWeight": "bold"
+}, {
+  "range": "J33",
+  "value": "originy",
+  "fontWeight": "bold"
+}, {
+  "range": "K33",
+  "value": "originz",
+  "fontWeight": "bold"
+}, {
+  "range": "L33",
+  "value": "originry",
+  "fontWeight": "bold"
+}, {
+  "range": "M33",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "N33",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "O33",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "P33",
+  "value": "genericblockdata",
+  "fontWeight": "bold"
+}, {
+  "range": "A34",
+  "value": "camera 302"
+}, {
+  "range": "B34",
+  "value": "displaycamera"
+}, {
+  "range": "C34",
+  "value": 12,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "D34",
+  "value": 500,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E34",
+  "value": 25,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "F34",
+  "value": 1,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "G34",
+  "value": 2,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "H34",
+  "value": 60,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "I34",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "K34",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "L34",
+  "value": "-90deg"
+}, {
+  "range": "M34",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "N34",
+  "value": 5,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "O34",
+  "value": 20,
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "P34",
+  "value": "signyoffset|3"
+}, {
+  "range": "A36",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B36",
+  "value": "childtype",
+  "fontWeight": "bold"
+}, {
+  "range": "C36",
+  "value": "cameratype",
+  "fontWeight": "bold"
+}, {
+  "range": "D36",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "E36",
+  "value": "aimtargetx",
+  "fontWeight": "bold"
+}, {
+  "range": "F36",
+  "value": "aimtargety",
+  "fontWeight": "bold"
+}, {
+  "range": "G36",
+  "value": "aimtargetz",
+  "fontWeight": "bold"
+}, {
+  "range": "H36",
+  "value": "originx",
+  "fontWeight": "bold"
+}, {
+  "range": "I36",
+  "value": "originy",
+  "fontWeight": "bold"
+}, {
+  "range": "J36",
+  "value": "originz",
+  "fontWeight": "bold"
+}, {
+  "range": "K36",
+  "value": "cameraradius",
+  "fontWeight": "bold"
+}, {
+  "range": "L36",
+  "value": "heightoffset",
+  "fontWeight": "bold"
+}, {
+  "range": "M36",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "A37",
+  "value": "blockchild"
+}, {
+  "range": "B37",
+  "value": "camera"
+}, {
+  "range": "C37",
+  "value": "ArcRotate"
+}, {
+  "range": "D37",
+  "value": "arcRotateCamera",
+  "horizontalAlignment": "right"
+}, {
+  "range": "F37",
+  "value": 3,
+  "horizontalAlignment": "right"
+}, {
+  "range": "H37",
+  "value": -40,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I37",
+  "value": 15,
+  "horizontalAlignment": "right"
+}, {
+  "range": "K37",
+  "value": 20,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L37",
+  "value": 20,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M37",
+  "value": "::scene::",
+  "horizontalAlignment": "right"
+}, {
+  "range": "A38",
+  "value": "blockchild"
+}, {
+  "range": "B38",
+  "value": "camera"
+}, {
+  "range": "C38",
+  "value": "DeviceOrientationCamera"
+}, {
+  "range": "D38",
+  "value": "deviceOrientation"
+}, {
+  "range": "E38",
+  "value": 50,
+  "horizontalAlignment": "right"
+}, {
+  "range": "G38",
+  "value": 50,
+  "horizontalAlignment": "right"
+}, {
+  "range": "I38",
+  "value": 10,
+  "horizontalAlignment": "right"
+}, {
+  "range": "K38",
+  "value": 30,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L38",
+  "value": 10,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M38",
+  "value": "::scene::",
+  "horizontalAlignment": "right"
+}, {
+  "range": "A40",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B40",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C40",
+  "value": "materialname",
+  "fontWeight": "bold"
+}, {
+  "range": "D40",
+  "value": "parent",
+  "fontWeight": "bold"
+}, {
+  "range": "E40",
+  "value": "meshpath",
+  "fontWeight": "bold"
+}, {
+  "range": "F40",
+  "value": "texturepath",
+  "fontWeight": "bold"
+}, {
+  "range": "G40",
+  "value": "bmppath",
+  "fontWeight": "bold"
+}, {
+  "range": "H40",
+  "value": "x",
+  "fontWeight": "bold"
+}, {
+  "range": "I40",
+  "value": "y",
+  "fontWeight": "bold"
+}, {
+  "range": "J40",
+  "value": "z",
+  "fontWeight": "bold"
+}, {
+  "range": "K40",
+  "value": "sx",
+  "fontWeight": "bold"
+}, {
+  "range": "L40",
+  "value": "sy",
+  "fontWeight": "bold"
+}, {
+  "range": "M40",
+  "value": "sz",
+  "fontWeight": "bold"
+}, {
+  "range": "N40",
+  "value": "rx",
+  "fontWeight": "bold"
+}, {
+  "range": "O40",
+  "value": "ry",
+  "fontWeight": "bold"
+}, {
+  "range": "P40",
+  "value": "rz",
+  "fontWeight": "bold"
+}, {
+  "range": "Q40",
+  "value": "ambient",
+  "fontWeight": "bold"
+}, {
+  "range": "R40",
+  "value": "diffuse",
+  "fontWeight": "bold"
+}, {
+  "range": "S40",
+  "value": "emissive",
+  "fontWeight": "bold"
+}, {
+  "range": "T40",
+  "value": "blockflag",
+  "fontWeight": "bold"
+}, {
+  "range": "A41",
+  "value": "meshtexture"
+}, {
+  "range": "B41",
+  "value": "fruitboxmesh"
+}, {
+  "range": "C41",
+  "value": "fruitboxmesh_material"
+}, {
+  "range": "D41",
+  "value": "::scene::_basketcart"
+}, {
+  "range": "E41",
+  "value": "sb:demoadds/trolley.babylon"
+}, {
+  "range": "F41",
+  "value": "sb:demoadds/trolley_diff.jpg"
+}, {
+  "range": "I41",
+  "value": -5,
+  "horizontalAlignment": "right"
+}, {
+  "range": "K41",
+  "value": 0.07,
+  "horizontalAlignment": "right"
+}, {
+  "range": "L41",
+  "value": 0.07,
+  "horizontalAlignment": "right"
+}, {
+  "range": "M41",
+  "value": 0.07,
+  "horizontalAlignment": "right"
+}, {
+  "range": "N41",
+  "value": "-90deg"
+}, {
+  "range": "O41",
+  "value": "180deg"
+}, {
+  "range": "P41",
+  "value": "0deg"
+}, {
+  "range": "Q41",
+  "value": "x"
+}, {
+  "range": "R41",
+  "value": "x"
+}, {
+  "range": "S41",
+  "value": "x"
+}, {
+  "range": "T41",
+  "value": "static"
+}, {
+  "range": "A43",
+  "value": "asset",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B43",
+  "value": "name",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C43",
+  "value": "parent",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D43",
+  "value": "childtype",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E43",
+  "value": "frameorder",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F43",
+  "value": "frametime",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G43",
+  "value": "x",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H43",
+  "value": "y",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I43",
+  "value": "z",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J43",
+  "value": "rx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K43",
+  "value": "ry",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L43",
+  "value": "rz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M43",
+  "value": "sx",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N43",
+  "value": "sy",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O43",
+  "value": "sz",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P43",
+  "value": "visibility",
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A44",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B44",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C44",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D44",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E44",
+  "value": 10,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F44",
+  "value": 0,
+  "horizontalAlignment": "left"
+}, {
+  "range": "G44",
+  "value": -38,
+  "horizontalAlignment": "left"
+}, {
+  "range": "H44",
+  "value": 5,
+  "horizontalAlignment": "left"
+}, {
+  "range": "I44",
+  "value": 30,
+  "horizontalAlignment": "left"
+}, {
+  "range": "J44",
+  "value": 0,
+  "horizontalAlignment": "left"
+}, {
+  "range": "K44",
+  "value": "-90deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A45",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B45",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C45",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D45",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E45",
+  "value": 20,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F45",
+  "value": "15%",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G45",
+  "value": 28,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A46",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B46",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C46",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D46",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E46",
+  "value": 30,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F46",
+  "value": "500++",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K46",
+  "value": 0,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A47",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B47",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C47",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D47",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E47",
+  "value": 40,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F47",
+  "value": "30%",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I47",
+  "value": 0,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A48",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B48",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C48",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D48",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E48",
+  "value": 50,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F48",
+  "value": "500++",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K48",
+  "value": "90deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A49",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B49",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C49",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D49",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E49",
+  "value": 60,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F49",
+  "value": "45%",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G49",
+  "value": -40,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A50",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B50",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C50",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D50",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E50",
+  "value": 70,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F50",
+  "value": "500++",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K50",
+  "value": "0deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A51",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B51",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C51",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D51",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E51",
+  "value": 80,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F51",
+  "value": "55%",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I51",
+  "value": -30,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A52",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B52",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C52",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D52",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E52",
+  "value": 90,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F52",
+  "value": "500++",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K52",
+  "value": "-90deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A53",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B53",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C53",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D53",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E53",
+  "value": 100,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F53",
+  "value": "70%",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G53",
+  "value": 10,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A54",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B54",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C54",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D54",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E54",
+  "value": 110,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F54",
+  "value": "500++",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K54",
+  "value": "-150deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A55",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B55",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C55",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D55",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E55",
+  "value": 120,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F55",
+  "value": "75%",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G55",
+  "value": 28,
+  "horizontalAlignment": "left"
+}, {
+  "range": "I55",
+  "value": 30,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A56",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B56",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C56",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D56",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E56",
+  "value": 130,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F56",
+  "value": "500++",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K56",
+  "value": "-270deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A57",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B57",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C57",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D57",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E57",
+  "value": 140,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F57",
+  "value": "99%",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G57",
+  "value": -38,
+  "horizontalAlignment": "left"
+}, {
+  "range": "A58",
+  "value": "blockchildframe",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B58",
+  "value": "::scene::_basketcart",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C58",
+  "value": "::scene::",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D58",
+  "value": "block",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E58",
+  "value": 150,
+  "horizontalAlignment": "left"
+}, {
+  "range": "F58",
+  "value": "500++",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K58",
+  "value": "-270deg",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A59",
+  "value": "blockchildframe",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B59",
+  "value": "::scene::_basketcart",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C59",
+  "value": "::scene::",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D59",
+  "value": "block",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E59",
+  "value": 160,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F59",
+  "value": "100%",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G59",
+  "value": -38,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I59",
+  "value": 30,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J59",
+  "value": 0,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K59",
+  "value": "-90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B62",
+  "value": "raw data for Plotter: Path Frames tool"
+}, {
+  "range": "B63",
+  "value": "0,-38,5,30,0,-90deg"
+}, {
+  "range": "B64",
+  "value": "15%,28,,,,0"
+}, {
+  "range": "B65",
+  "value": "30%,,,0,,90deg"
+}, {
+  "range": "B66",
+  "value": "45%,-40,,,,0deg"
+}, {
+  "range": "B67",
+  "value": "55%,,,-30,,-90deg"
+}, {
+  "range": "B68",
+  "value": "70%,10,,,,-150deg"
+}, {
+  "range": "B69",
+  "value": "75%,28,,30,,-270deg"
+}, {
+  "range": "B70",
+  "value": "99%,-38,,,,-270deg"
+}, {
+  "range": "B71",
+  "value": "100%,-38,,30,0,-90deg"
+}, {
+  "range": "A1"
+}]

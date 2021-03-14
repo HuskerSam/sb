@@ -1,0 +1,780 @@
+[{
+  "range": "A1",
+  "value": "asset",
+  "columnWidth": 100,
+  "columnNumber": 1,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B1",
+  "value": "index",
+  "columnWidth": 100,
+  "columnNumber": 2,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C1",
+  "value": "block",
+  "columnWidth": 179,
+  "columnNumber": 3,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D1",
+  "value": "name",
+  "columnWidth": 100,
+  "columnNumber": 4,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E1",
+  "value": "x",
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F1",
+  "value": "y",
+  "columnWidth": 100,
+  "columnNumber": 6,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G1",
+  "value": "z",
+  "columnWidth": 100,
+  "columnNumber": 7,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "H1",
+  "value": "rx",
+  "columnWidth": 100,
+  "columnNumber": 8,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I1",
+  "value": "ry",
+  "columnWidth": 100,
+  "columnNumber": 9,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J1",
+  "value": "rz",
+  "columnWidth": 100,
+  "columnNumber": 10,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K1",
+  "value": "text1",
+  "columnWidth": 100,
+  "columnNumber": 11,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "L1",
+  "value": "text2",
+  "columnWidth": 100,
+  "columnNumber": 12,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M1",
+  "value": "image",
+  "columnWidth": 100,
+  "columnNumber": 13,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N1",
+  "value": "sku",
+  "columnWidth": 100,
+  "columnNumber": 14,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O1",
+  "value": "price",
+  "columnWidth": 100,
+  "columnNumber": 15,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P1",
+  "value": "pricetext",
+  "columnWidth": 100,
+  "columnNumber": 16,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "Q1",
+  "value": "height",
+  "columnWidth": 100,
+  "columnNumber": 17,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "R1",
+  "value": "width",
+  "columnWidth": 100,
+  "columnNumber": 18,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S1",
+  "value": "displaystyle",
+  "columnWidth": 100,
+  "columnNumber": 19,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T1",
+  "value": "textfontfamily",
+  "columnWidth": 100,
+  "columnNumber": 20,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "U1",
+  "value": "materialname",
+  "columnWidth": 100,
+  "columnNumber": 21,
+  "fontWeight": "bold",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A2",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B2",
+  "value": 100,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C2",
+  "value": "DISPLAY product_chicken",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D2",
+  "value": "Whole Chicken",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E2",
+  "value": 10,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F2",
+  "value": 6.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G2",
+  "value": 18,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I2",
+  "value": "90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J2",
+  "value": "20deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K2",
+  "value": "Whole Chicken",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M2",
+  "value": "sb:productsignimages/chicken.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N2",
+  "value": "Whole Chicken",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O2",
+  "value": 3.99,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P2",
+  "value": "$3.99 / bird",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S2",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A3",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B3",
+  "value": 200,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C3",
+  "value": "DISPLAY product_sausage1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D3",
+  "value": "Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E3",
+  "value": 10,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F3",
+  "value": 6.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G3",
+  "value": 11,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I3",
+  "value": "-90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J3",
+  "value": "20deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K3",
+  "value": "Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M3",
+  "value": "sb:productsignimages/sausage1.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N3",
+  "value": "Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O3",
+  "value": 1,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P3",
+  "value": "$1 / link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S3",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A4",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B4",
+  "value": 300,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C4",
+  "value": "DISPLAY product_sausage2",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D4",
+  "value": "Turkey Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E4",
+  "value": -15.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F4",
+  "value": 6.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G4",
+  "value": 18,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I4",
+  "value": "90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J4",
+  "value": "20deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K4",
+  "value": "Turkey Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M4",
+  "value": "sb:productsignimages/sausage2.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N4",
+  "value": "Turkey Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O4",
+  "value": 2,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P4",
+  "value": "$2 / link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S4",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T4",
+  "value": "Goudy Old Style",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A5",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B5",
+  "value": 400,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C5",
+  "value": "DISPLAY product_sausage3",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D5",
+  "value": "Veggie Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E5",
+  "value": -15.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F5",
+  "value": 6.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G5",
+  "value": 11,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I5",
+  "value": "-90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J5",
+  "value": "20deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K5",
+  "value": "Veggie Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M5",
+  "value": "sb:productsignimages/sausage3.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N5",
+  "value": "Veggie Sausage Link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O5",
+  "value": 3,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P5",
+  "value": "$3 / link",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S5",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T5",
+  "value": "Goudy Old Style",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A6",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B6",
+  "value": 500,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C6",
+  "value": "DISPLAY product_sausageset1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D6",
+  "value": "Sausage 3 Piece",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E6",
+  "value": -5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F6",
+  "value": 6.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G6",
+  "value": -17,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I6",
+  "value": "90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J6",
+  "value": "20deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K6",
+  "value": "Sausage 3 Piece",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M6",
+  "value": "sb:productsignimages/sausageset1.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N6",
+  "value": "Sausage 3 Piece",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O6",
+  "value": 5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P6",
+  "value": "$5 / three",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S6",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T6",
+  "value": "Goudy Old Style",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A7",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B7",
+  "value": 600,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C7",
+  "value": "DISPLAY product_sausageset2",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D7",
+  "value": "Chipolatas",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E7",
+  "value": -5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F7",
+  "value": 6.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G7",
+  "value": -24,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I7",
+  "value": "-90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J7",
+  "value": "20deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K7",
+  "value": "Chipolatas",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M7",
+  "value": "sb:productsignimages/sausageset2.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N7",
+  "value": "Chipolatas",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O7",
+  "value": 8,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P7",
+  "value": "$8 / six",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S7",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T7",
+  "value": "Goudy Old Style",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A8",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B8",
+  "value": 700,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C8",
+  "value": "DISPLAY product_sausageset3",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D8",
+  "value": "Spicy Sausage Sticks",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E8",
+  "value": -30.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F8",
+  "value": 6.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G8",
+  "value": -17,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I8",
+  "value": "90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J8",
+  "value": "20deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K8",
+  "value": "Spicy Sausage Sticks",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M8",
+  "value": "sb:productsignimages/sausageset3.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N8",
+  "value": "Spicy Sausage Sticks",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O8",
+  "value": 12,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P8",
+  "value": "$12 / ten",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S8",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T8",
+  "value": "Goudy Old Style",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A9",
+  "value": "product",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "B9",
+  "value": 800,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "C9",
+  "value": "DISPLAY product_pork1",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "D9",
+  "value": "Pork Chops",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "E9",
+  "value": -30.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "F9",
+  "value": 6.5,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "G9",
+  "value": -24,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "I9",
+  "value": "-90deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "J9",
+  "value": "20deg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "K9",
+  "value": "Pork Chops",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "M9",
+  "value": "sb:productsignimages/pork1.jpg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "N9",
+  "value": "Pork Chops",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "O9",
+  "value": 3,
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "P9",
+  "value": "$3 / kg",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "S9",
+  "value": "3dbasic",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "T9",
+  "value": "Goudy Old Style",
+  "fontColor": "#222222",
+  "horizontalAlignment": "left"
+}, {
+  "range": "A1"
+}]
