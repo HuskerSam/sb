@@ -467,7 +467,7 @@ class cViewDemo extends bView {
     this.mute_header_button = this.dialog.querySelector('.mute_header_button');
     this.mute_header_button.addEventListener('click', async e => {
       this.audio.currentTime = Math.max(0, this.canvasHelper.timeE);
-      if (this.audio.paused) {
+      if (this.audio && this.audio.paused) {
         let noError = true;
         try {
           await this.audio.play();
@@ -1096,10 +1096,10 @@ class cViewDemo extends bView {
 
     try {
       if (this.canvasHelper.playState !== 1) {
-        if (!this.audio.paused)
+        if (this.audio && !this.audio.paused)
           this.audio.pause();
-        muteButton.innerHTML = '<i class="material-icons">music_off</i>';
-        muteButton.classList.remove('app-inverted');
+        this.mute_header_button.innerHTML = '<i class="material-icons">music_off</i>';
+        this.mute_header_button.classList.remove('app-inverted');
       } else {
         if (this.audio) {
           if (this.canvasHelperPaused !== this.canvasHelper.timeE) {

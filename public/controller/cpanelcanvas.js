@@ -480,6 +480,8 @@ class cPanelCanvas {
           }
         }
       };
+
+      this.__updatePlayState();
     }
 
     this.__updateVideoCallback();
