@@ -78,7 +78,6 @@ h1, h2 {
   position: relative;
   color: inherit;
   text-decoration: none;
-  border: outset .15em silver;
   padding-top: 2.25em;
   padding-left: .35em;
   border-radius: .5em;
@@ -86,6 +85,10 @@ h1, h2 {
 
 .demo_item a i {
   font-size: 3em;
+}
+
+.demo_item a:hover {
+  background: silver;
 }
 
 .item_title {
