@@ -1,116 +1,149 @@
 [{
     "value": "warning",
-    "title": "WARNINGS FOR USERS"
+    "title": "WARNINGS FOR USERS",
+    "reviewed": "2021-03-14"
   }, {
     "value": "addonconfiguration",
-    "title": "Configuration"
+    "title": "Configuration",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "addonprojects",
-    "title": "Projects"
+    "title": "Projects",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "addontemplates",
-    "title": "Templates"
+    "title": "Templates",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "block",
-    "title": "Blocks (general)"
+    "title": "Blocks (general)",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "camera",
-    "title": "Cameras"
+    "title": "Cameras",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "light",
-    "title": "Lights"
+    "title": "Lights",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "material",
-    "title": "Materials"
+    "title": "Materials",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "mesh",
-    "title": "Meshes"
+    "title": "Meshes",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "displayblock",
-    "title": "Display Blocks"
+    "title": "Display Blocks",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "positionproducts",
-    "title": "Position Products"
+    "title": "Position Products",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "overview",
-    "title": "Overview"
+    "title": "Overview",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "positionplotter",
-    "title": "Position Plotter"
+    "title": "Position Plotter",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "positionproducts",
-    "title": "Position Products"
+    "title": "Position Products",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "processaudio",
-    "title": "Process Audio"
+    "title": "Process Audio",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "sceneblock",
-    "title": "Scene Block (block)"
+    "title": "Scene Block (block)",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "shape",
-    "title": "Shapes"
+    "title": "Shapes",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "frame",
-    "title": "Frames"
+    "title": "Frames",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "workspace",
     "title": "Project (/asset)",
-    "video": "https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4"
+    "video": "https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "csvformat",
-    "title": "CSV Format"
+    "title": "CSV Format",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "reviewguide",
     "title": "Review Guide",
-    "video": "https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4"
+    "video": "https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "viewer",
-    "title": "/view help"
+    "title": "/view help",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "displayapp",
-    "title": "/display help"
+    "title": "/display help",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "shortcolorvideos",
     "title": "Short Color Videos Example",
-    "video": "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideogreen.webm"
+    "video": "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideogreen.webm",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "webappdiagram",
     "title": "webGL App Diagram Example",
-    "video": "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/webglapp.webm"
+    "video": "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/webglapp.webm",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "spinnerdiagram",
-    "title": "Multi Sheet Diagram Example"
+    "title": "Multi Sheet Diagram Example",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "authorization",
-    "title": "Authorization Overview"
+    "title": "Authorization Overview",
+    "reviewed": "2021-03-14"
   },
   {
     "value": "virtualreality",
-    "title": "Virtual Reality Support"
+    "title": "Virtual Reality Support",
+    "reviewed": "2021-03-14"
+  },
+  {
+    "value": "newinstance",
+    "title": "Create new server",
+    "reviewed": "2021-03-14"
   }
 ]

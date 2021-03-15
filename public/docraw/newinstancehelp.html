@@ -1,0 +1,31 @@
+create new firebase project - this results in a {FIREBASEPROJECTID} - you can also bind a url to this
+<br><br>
+create Realtime Database instance - this is the main database at this time
+<br><br>
+Authentication - enable anonymous - this is for /view and /display<br>
+also enable Google - this is for /asset<br>
+also enable email/passwordless - this is for /asset<br>
+-- only enable anonymous for production - recommended at this time - to prevent /asset access 
+<br><br>
+create firestore instance (select region - will also create bucket storage) - this is only for configuration but will be the main database in a later release
+<br><br>
+add to firestore privateConfiguration->security->token: "{TOKENVALUE}"
+<br><br>
+the {TOKENVALUE} (you set it) and the Firebase proejct id will be the 2 values needed for the addon
+<br>
+<br>
+turn on billing / blaze plan to support cloud functions
+<br>
+<br>
+upload the code (fetch from github) - hosting only first
+<br>
+ firebase deploy -P {FIREBASEPROJECTID} --only hosting
+<br>
+  &nbsp; this is needed as site files are used in the server and need to be in the cloud when deployed initially
+  <br>
+  then deploy <br>
+firebase deploy -P {FIREBASEPROJECTID}
+<br>
+ &nbsp; --only functions is possible but the hosting deploy is very fast anyways and this will be the regular command that works
+ <br><br>
+to test deploy the web logo example using addon - FIREBASEPROJECTID and TOKENVALUE are the server credentials for addon

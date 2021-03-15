@@ -16,7 +16,11 @@ sourceApp.get('/doc/', async (req, res) => await HelpGen.genPage(req, res));
 sourceApp.get('/doc', async (req, res) => await HelpGen.genPage(req, res));
 
 class HelpGen {
-  static getTemplate(helpBody, title, urlFrag, desc, helpOptions = '', video = '') {
+  static getTemplate(helpBody, title, urlFrag, desc, helpOptions = '', video = '', reviewed = '') {
+    if (!reviewed)
+      reviewed = '';
+    if (!video)
+      video = '';
     return `<!doctype html>
     <html lang="en">
 
@@ -52,6 +56,7 @@ class HelpGen {
         Help Topics <select id="help_template_select"><option>Select one to open...</option>${helpOptions}</select>
         <br>
         <h1>${title}</h1>
+        Reviewed: ${reviewed}<br>
         <video class="help_item_video" style="${ (video === '') ? 'display:none;' : ''}" controls preload="auto">
           <source src="${video}">
         </video>
@@ -154,7 +159,7 @@ class HelpGen {
     let regex = /(<([^>]+)>)/ig;
     let desc = data.replace(regex, "");
     desc = desc.substring(0, 200);
-    let html = HelpGen.getTemplate(data, title, item, desc, helpData.options, helpItem.video);
+    let html = HelpGen.getTemplate(data, title, item, desc, helpData.options, helpItem.video, helpItem.reviewed);
     return res.status(200).send(html);
   }
   static async genSiteMap(req, res) {
