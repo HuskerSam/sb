@@ -1236,7 +1236,7 @@ class cViewDemo extends bView {
               </select>
               <br>
               <button id="enable_vr_canvas_btn">Enable VR</button>
-              <a style="line-height:1.5em;font-size:1.5em;" href="/retail">About...</a>
+              <a style="line-height:1.5em;font-size:1.5em;" href="/retail/">About...</a>
               <br>
               <select id="workspaces-select"></select><div class="fields-container"></div>
             </div>
