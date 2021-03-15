@@ -99,7 +99,16 @@ h1, h2 {
 .title {
   font-size: .75em;
   font-weight: bold;
-  padding-right: 1em;
+  padding-right: 2em;
+  display: inline-block;
+  width: 4em;
+  text-align: right;
+}
+
+.response {
+  text-align: left;
+  display: inline-block;
+  width: 6em;
 }
 
 .summary {
