@@ -45,10 +45,10 @@ class HelpGen {
       <div class="option_bar">
         <a href="/" class="logo">
           <img alt="small logo image" class="small_logo" src="https://handtop.com/images/handtop.png">
-          <img alt="Handtop" style="height:65px" src="https://handtop.com/images/handtoplogo.png">
         </a>
         <a href="/doc/">Documentation</a>
-        <div style="float:right;width:20em;margin-top:-20px;">
+        <a href="/doc/reviewguide">Review Guide</a>
+        <div class="search_box_wrapper">
           <div class="gcse-search"></div>
         </div>
       </div>

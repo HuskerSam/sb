@@ -126,14 +126,15 @@ h1, h2 {
 }
 
 .option_bar a {
-  padding: .25em;
   white-space: nowrap;
   border: solid 1px silver;
-  margin: 0;
+  margin: .15em;
   color: black;
   text-decoration: none;
-  margin-top: .25em;
   float:left;
+  padding: .65em .25em;
+  font-size: .95em;
+  margin-bottom: .85em;
 }
 
 .option_bar a:hover {
@@ -142,11 +143,12 @@ h1, h2 {
 
 .option_bar a.logo {
   border: none;
-
+  padding: 0;
 }
 
 .small_logo {
-  height: 40px;
+  height: 30px;
+  padding: 3px 5px 0px 5px;
 }
 
 .home_page_wrapper {
@@ -176,4 +178,10 @@ h1, h2 {
 
 .help_topic_sub_header {
   padding-left: 1em;
+}
+
+.search_box_wrapper {
+  float:right;
+  width:20em;
+  margin-top: -0.5em;
 }
