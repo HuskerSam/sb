@@ -125,7 +125,7 @@ h1, h2 {
   padding-top: .5em;
 }
 
-.option_bar a {
+.option_bar a, .footer_bar a {
   white-space: nowrap;
   border: solid 1px silver;
   margin: .15em;
@@ -137,7 +137,11 @@ h1, h2 {
   margin-bottom: .85em;
 }
 
-.option_bar a:hover {
+.footer_bar a {
+  float: none;
+}
+
+.option_bar a:hover, .footer_bar a:hover {
   background: silver
 }
 
