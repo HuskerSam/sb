@@ -21,166 +21,28 @@
 
   </script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <style>
-    html,
-    body,
-    * {
-      padding: 0;
-      margin: 0;
-    }
-
-    .text-tab-panel {
-      background: rgb(254, 254, 254);
-      flex: 1;
-      overflow: auto;
-      overflow-y: scroll;
-      display: none;
-      text-align: center;
-      padding-bottom: 20px;
-    }
-
-    .rant-header {
-      font-weight: bold;
-      cursor: pointer;
-      color: rgb(100, 100, 100);
-      transition: all 800ms;
-      background: rgb(240, 240, 240);
-      padding: 10px 0px;
-      margin: 0px;
-      clear: both;
-      text-align: center;
-      width: 100%;
-      font-size: 16pt;
-      font-family: Times;
-    }
-
-    .rant-text {
-      padding: 0px 10px;
-      height: 0;
-      overflow: hidden;
-      clear: both;
-      opacity: 0;
-      transition: all 1200ms;
-      text-align: center;
-    }
-
-    .sub-text-header {
-      padding-top: 20px;
-      font-weight: bold;
-    }
-
-    .intro-text {
-      font-size: larger;
-      font-family: Arial;
-      text-align: center;
-      color: rgb(0, 0, 200);
-      padding: 5px;
-    }
-
-    .preheadlineicon,
-    .postheadlineicon {
-      transition: all 800ms;
-      transform: rotate(-90deg);
-      margin-top: -4px;
-      position: relative;
-      top: 6px;
-    }
-
-    .postheadlineicon {
-      transform: rotate(90deg);
-    }
-
-    table {
-      border-collapse: collapse;
-    }
-
-    .team-table td {
-      padding: 6px;
-      color: black;
-    }
-
-    .team-table tr:nth-child(odd) {
-      background: rgb(250, 250, 230);
-    }
-
-    .team-table td:nth-child(2) {
-      border-right: solid 1px silver;
-    }
-
-    .team-table td:first-child {
-      background: none;
-      color: blue;
-    }
-
-    .team-table th {
-      background: white;
-      font-weight: normal;
-    }
-
-    .intro-image {
-      max-height: 300px;
-      max-width: 90%;
-      margin: 10px;
-      margin-top: 0px;
-    }
-
-    .footer {
-      text-align: center;
-      padding-top: 4px;
-    }
-
-    .collapse-expand-all {
-      float: left;
-      transform: rotate(-90deg);
-      transition: all 800ms;
-      cursor: pointer;
-      margin: 0;
-      padding: 10px 10px;
-      background: none;
-      border: none;
-    }
-
-    .collapse-expand-all i {
-      font-weight: bold;
-    }
-
-    body {
-      font-size: 14pt;
-      font-family: Geneva;
-      line-height: 1.5em;
-      overflow-y: scroll;
-    }
-
-
-  </style>
 </head>
 
-<body style="display:flex;flex-direction:column;min-height:100vh">
+<body>
+  <div class="home_page_wrapper">
   <div class="option_bar">
-    <a style="border:none;text-decoration:none;float:left;position:relative;top:-10px;left:-1px" href="/">
-      <img alt="small logo" style="height:40px;position:relative;top:-18px;margin-top:-18px" src="https://handtop.com/images/handtop.png">
-      <img alt="Handtop" style="height:65px" src="https://handtop.com/images/handtoplogo.png">
+    <a class="logo" style="border:none;">
+      <img alt="Handtop" class="small_logo" src="https://handtop.com/images/handtop.png">
     </a>
-    <button class="collapse-expand-all" style="display:none;"><i class="material-icons">expand_more</i></button>
-    <a href="/about">About</a>
+    <a href="/retail/">Visual Catalogs</a>
+    <a href="/about/">About</a>
+    <div class="search_box_wrapper">
+      <div class="gcse-search"></div>
+    </div>
   </div>
-
-  <div style="text-align:center">
-    <h1 style="display:inline-block">Delicious Culture<span style="font-size:.5em;position:relative;top:-11px;"></h1>
-  </div>
-  <br>
-  <div class="rant-header">LOCAL</div>
-  <div class="rant-text">
+  <div style="text-align:center;padding: 10px;">
+    <h1>Handtop Local Culture</h1>
     Combine the retention from local resourcing with the focus of remote workers
-    <br>
     <br> Quick payments to local contractors with automated invoicing and no fees
     <br>Payout pool gender balanced using split and ranking mechanisms
     <br>Training and tasks so contractors can climb in skill and pay
     <br>Spaces for social and professional collaborating
-    <br><br>
-  </div>
-  <div class="rant-header">GIGS</div>
-  <div class="rant-text">
+    <h2>GIGS</h2>
     Graded local rating - 1 day, 3 days, 1 week, 1 month, 1 year, never
     <br>Agencies are supported for contractors that prefer a team - but not a company
     <br>Market based payment clearing house (payouts to people with identity trouble)
@@ -190,7 +52,7 @@
     <br>Show online, available and/or present in market status
     <br>Skilled contractors keep companies relevant (and iterating) when employees are absent
 
-    <div class="sub-text-header">Reputation Protection</div>
+    <h3>Reputation Protection</h3>
     Contractors inform employers of criminal and financial history to prevent conflicts
     <br>Guidelines for contractors covering confidentiality, creditionals, invoicing on fixed price and hourly work
     <br>Companies and contractors can include additional policy in the project agreements
@@ -203,7 +65,7 @@
     <br>Features focusing respect, privacy and status between clients and contractors
     <br>Tasks in queue show how many people are approved so a contractor can pick rare ones (blend this)
 
-    <div class="sub-text-header">News, Training, Scholarships and Loans</div>
+    <h3>News, Training, Scholarships and Loans</h3>
     Market wide guidelines for conducting meetings and other regular business
     <br>Library of market techniques, documents, AV and contractor history of usage
     <br>Combine training with tasks as one gig
@@ -233,7 +95,7 @@
     <br>Training and task success noted on profile - failures age out
     <Br>Training and tasks sized for various skill levels so contractors can climb
 
-    <div class="sub-text-header">Automatic Queue</div>
+    <h3>Automatic Queue</h3>
     Contractors can only have a couple tasks open at a time (spread out work)
     <br>Contractors can self serve tasks (where approved)
     <br>Creditionals storage for companies (allows self serve access for contractors)
@@ -244,7 +106,7 @@
     <br>Submit tasks to the work queue for auto hire (optional)
     <br>Employers have option to hide most transaction details (pay rate, details)
 
-    <div class="sub-text-header">Scheduling</div>
+    <h3>Scheduling</h3>
     Employers can list future projects and related skills with a commitment level
     <br>Contractors can list current and future availability
     <br>Contractors status can be busy remote, available local, available, busy local
@@ -252,7 +114,7 @@
     <br>Employers can tag jobs as 2 workers or more to facilitate gender balancing
     <br>Companies can alert market to future budgets, techniques and training
 
-    <div class="sub-text-header">Work History and Auditing</div>
+    <h3>Work History and Auditing</h3>
     Market level comments, company level comments and contractor/employee level comments
     <br>Expiration of data (deletion) available for companies and contractors
     <br>Employers can mark specific skills for a contractor as weak or strong
@@ -263,49 +125,42 @@
     <br>Completed work is paid for quickly; immediate and accurate work is expected
     <br>Audit/tracing of results and hours worked for all parties
 
-    <div class="sub-text-header">Onboarding</div>
+    <h3>Onboarding</h3>
     Contractors are informed of tax status of earnings and sign an agreement of understanding
     <br>Extensive onboarding for both contractors, employers and agencies
     <br>Overview of property rights for all parties - ethical and legal
-    <br><br>
-  </div>
-  <div class="rant-header">PAYMENTS</div>
-  <div class="rant-text">
-    <img alt="Delicious Payment Flow" class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vSJkQJkc_ddorKA35zwX4ABv_pH3frUW6Tje8UaS1FrlMTzrlq20_dK51fVjZZm2eWQJdh2AXYCqfD_/pub?w=1100&amp;h=870">
+    <h2>PAYMENTS</h2>
+    <img alt="Delicious Payment Flow" class="intro-image"  style="width:800px;" src="https://docs.google.com/drawings/d/e/2PACX-1vSJkQJkc_ddorKA35zwX4ABv_pH3frUW6Tje8UaS1FrlMTzrlq20_dK51fVjZZm2eWQJdh2AXYCqfD_/pub?w=1100&amp;h=870">
     <br>
-    <div style="display:inline-block;">
-      <div class="sub-text-header">Payment Tagging</div>
-      Tag payments and salaries for gender, location and performance
-      <br>Contractor matching enables balancing of gender based outflows
-      <br>Fixed price contracts are broken down into hours for gender pay rank tracking
+    <h3>Payment Tagging</h3>
+    Tag payments and salaries for gender, location and performance
+    <br>Contractor matching enables balancing of gender based outflows
+    <br>Fixed price contracts are broken down into hours for gender pay rank tracking
 
-      <div class="sub-text-header">Payouts</div>
-      Deliver instant payments to local contractors with no load and minimum fees
-      <br>Payments only originate from Delicious companies, containing nefarious risk
-      <br>Bill payout with minimum fee (mailed checks) from earnings (LES, ALLO, etc)
-      <br>If contractor donates % of earnings to charity attribution noted (optional)
-      <br>No load local rent payments for contractors to qualified rentors
-      <br>No load payments for child support, fines and select organizations (churches, etc)
-      <br>Undocumented workers are able to verify local and receive pay (rent or cash)
-      <br>Payments for completed work are ungated for verified local workers
-      <br>Prepaid debit cards are available to people with no banking services
-      <br>Gift Cards for local vendors with a 5% bonus value (as available)
-      <br>Loads and fees are covered as possible from company premiums paid to market
-      <br>UI for local charities to provide gigs to needy residents
+    <h3>Payouts</h3>
+    Deliver instant payments to local contractors with no load and minimum fees
+    <br>Payments only originate from Delicious companies, containing nefarious risk
+    <br>Bill payout with minimum fee (mailed checks) from earnings (LES, ALLO, etc)
+    <br>If contractor donates % of earnings to charity attribution noted (optional)
+    <br>No load local rent payments for contractors to qualified rentors
+    <br>No load payments for child support, fines and select organizations (churches, etc)
+    <br>Undocumented workers are able to verify local and receive pay (rent or cash)
+    <br>Payments for completed work are ungated for verified local workers
+    <br>Prepaid debit cards are available to people with no banking services
+    <br>Gift Cards for local vendors with a 5% bonus value (as available)
+    <br>Loads and fees are covered as possible from company premiums paid to market
+    <br>UI for local charities to provide gigs to needy residents
 
-      <div class="sub-text-header">Automation and API</div>
-      Automates invoicing, payment posting and regular business tasks
-      <br> Widget provides an in editor plugin UI for creating, selecting and submitting complete work
-      <br>Unity, atom, android studio, Visual Studio, Office 360, Google Docs, JIRA, Trello
-      <br>Integrate easy to use timeclock feature (wiget and api)
-      <br>Invoicing for hourly and fixed projects (key for sizing future work)
-      <br>API allows payments, task submission and billing integration
-    </div>
-    <br><br>
-  </div>
-  <div class="rant-header">PRODUCT</div>
-  <div class="rant-text">
-    <img alt="Graylin Barriers" class="intro-image" style="border-radius:25px;margin-top:8px;" src="/images/graylinbarriers.png">
+    <h3>Automation and API</h3>
+    Automates invoicing, payment posting and regular business tasks
+    <br> Widget provides an in editor plugin UI for creating, selecting and submitting complete work
+    <br>Unity, atom, android studio, Visual Studio, Office 360, Google Docs, JIRA, Trello
+    <br>Integrate easy to use timeclock feature (wiget and api)
+    <br>Invoicing for hourly and fixed projects (key for sizing future work)
+    <br>API allows payments, task submission and billing integration
+
+    <h2>PRODUCT</h2>
+    <img alt="Graylin Barriers" style="border-radius:25px;margin-top:8px;width:800px;" src="/images/graylinbarriers.png">
     <br>Video, audio and VR content viewable and annotable
     <br>Comments and iteration friendly per task
     <br>3D / extended reality calendar to view gig gant chart etc
@@ -316,7 +171,7 @@
     <br>Anonymous contracts allow diverse people to collaborate
     <br>Shared virtual conference tools to visit work products
     <br><br>
-    <table class="team-table">
+    <table style="display:inline-block;">
       <tr>
         <th style="width:20%;"></th>
         <th style="width:40%;">MVP Team</th>
@@ -354,7 +209,7 @@
       </tr>
     </table>
 
-    <div class="sub-text-header">Key MVP Features</div>
+    <h3>Key MVP Features</h3>
     Platform based on latest techniques and frameworks (engine/code/product/app/branding/marketing)
     <br>core of process/technique is to remove “the requirement” of expert level talent at every point in the process
     <br>Automate regular (specify, commit code, build, deploy, release, etc) tasks to junior level employees can perform tasks
@@ -364,7 +219,7 @@
     <br>Firebase, Javascript and eXtended Reality technologies are preferred
     <br>MVP lead and key developers leaving as product iteration team is refilling
 
-    <div class="sub-text-header">Initial Product Team</div>
+    <h3>Initial Product Team</h3>
     avoid out of date workers that have little incentive to reskill and weight down the salary pool
     <br>provide ability to retire assets early (contract basis to start if possible)
     <br>get 2 "brains" on the team that cover knowledge across the product
@@ -381,16 +236,15 @@
     <br>Soft shutdown with a team so they can keep the collaboration when the product isn't viable
     <br>Entry level developers learning new techniques will be used to manage cost
 
-    <br>
-    <div class="sub-text-header">Smooth Employee Transitions</div>
+    <h3>Smooth Employee Transitions</h3>
     We pay what we can - better opportunities arise - lets keep it smooth
     <br>We keep the projects and phases reasonable in length and you finish them
     <br>We only finish 'projects' - if longer then a few months then a defined phase
 
-    <div class="sub-text-header">XR Content Flow</div>
-    <img alt="XR Content Flow" class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vRKPfJ5w1mSUVH6-GYhF3Ytd7M0vE7c6Dl2YIPBdffPy9gNJiFHTDY3FaCYdpOfOiCjdgnffZRMvkZw/pub?w=1844&amp;h=1237">
+    <h3>XR Content Flow</h3>
+    <img alt="XR Content Flow" class="intro-image" style="width:800px;" src="https://docs.google.com/drawings/d/e/2PACX-1vRKPfJ5w1mSUVH6-GYhF3Ytd7M0vE7c6Dl2YIPBdffPy9gNJiFHTDY3FaCYdpOfOiCjdgnffZRMvkZw/pub?w=1844&amp;h=1237">
 
-    <div class="sub-text-header">Delicious Support</div>
+    <h3>Delicious Support</h3>
     The Delicious team resides in each market hosting and sponsoring key assets
     <br>Contractors and employees of other companies are strong backups when critical departures occur
     <br>Where the core team is inexperienced contract resources can be used
@@ -400,11 +254,9 @@
     <br>Laid off employees are the first option for similar positions in the market
     <br>Salary guaranty in effect until they find a similar job
     <br>Laid off employees are encouraged to contract in the market
-    <br><br>
-  </div>
-  <div class="rant-header">BENEFITS</div>
-  <div class="rant-text">
-    <img alt="Delicious Benefit Flow" class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vSAZ5ZVc3360sxSl8X_MA6bLy48vja6yehw0THhzlfg_hdL2iBpsh_I_j-_Os-Wom8odDVA3IfGBBmw/pub?w=1299&amp;h=703">
+
+    <h2>BENEFITS</h2>
+    <img alt="Delicious Benefit Flow" class="intro-image" style="width:800px;" src="https://docs.google.com/drawings/d/e/2PACX-1vSAZ5ZVc3360sxSl8X_MA6bLy48vja6yehw0THhzlfg_hdL2iBpsh_I_j-_Os-Wom8odDVA3IfGBBmw/pub?w=1299&amp;h=703">
     <br>Benefits support employees freshly leaving college ready to start families
     <br>"Soft” tools for you, employees and contractors to collaborate
     <br>Employee package intended to balance risks of a startup versus a corporate position
@@ -413,7 +265,7 @@
     <br>Applied as a load on entire investment in lieu of traditional office and benefits
 
 
-    <div class="sub-text-header">Insurance</div>
+    <h3>Insurance</h3>
     Family and other event driven payouts to suppliment productivity with contractors
     <br>Contractor benefits offered from third party providers
     <br>Shared benefit pool to reduce costs
@@ -425,15 +277,15 @@
     <br>Insurance products offered from 3rd party insurers
     <br>Underwritten on a per company basis - product defintion adjusted per market
 
-    <div class="sub-text-header">Service Based</div>
+    <h3>Service Based</h3>
     Daycare is provided by pooled resources
     <br>No loads and fees for local contractors
     <br>Spot daycare is provided and available spaces reserved in software
     <br>Onsite or near by supplimented (if not totally free) daycare most hours
     <br>Market pools resources and facilities to reduce cost
 
-    <div class="sub-text-header">Salary Based</div>
-    >20% of weekly salary transfered to buckets for gig spending
+    <h3>Salary Based</h3>
+    &gt; 20% of weekly salary transfered to buckets for gig spending
     <br>Auto pay from pay account
     <br>Loans (contractor option) can kick in to keep benefits in force
     <br>Career stability backed with benefits and guaranteed salary pool
@@ -448,8 +300,8 @@
     <br>Investors want to do "good" things - this is a "treat" the team well product
     <br>Gives the investor the ability/option to “seed” some corporate culture
 
-    <div class="sub-text-header">Market Based</div>
-    <img alt="Market Description" class="intro-image" src="https://docs.google.com/drawings/d/e/2PACX-1vR5HRoO4GHg5fdc9ASHu-Lo6Be-2_TVyUG7zjWKMi5tcNeh7XByN41xEt3HWEkuHXJQocLKF6Z_k37_/pub?w=1008&amp;h=297"></td>
+    <h3>Market Based</h3>
+    <img alt="Market Description" class="intro-image" style="width:800px;" src="https://docs.google.com/drawings/d/e/2PACX-1vR5HRoO4GHg5fdc9ASHu-Lo6Be-2_TVyUG7zjWKMi5tcNeh7XByN41xEt3HWEkuHXJQocLKF6Z_k37_/pub?w=1008&amp;h=297"></td>
     <br>
     Alcohol and drugs are banned in sponsored spaces
     <br>Spaces are kid friendly in almost all cases
@@ -465,23 +317,22 @@
     <br>Environment to find and develop professional and personal contacts
     <br>Technology demonstration zones - geeks have toys and love to share and show and hand down
 
-    <br>
-    <div class="sub-text-header">Accessable Spaces</div>
+    <h3>Accessable Spaces</h3>
     Demonstration area for leading edge technology devices and software concentrated in on location of market
     <br>Private spaces for family members that need isolation for physical or mental issues
     <br>Highly accessable restroom, hygene and health facilities
 
-    <div class="sub-text-header">Family Spaces</div>
+    <h3>Family Spaces</h3>
     Kid collaboration areas that lend to safe and entertaining interactions for kids
     <br>Allow parents to determine how much their kids mix with which adults
 
-    <div class="sub-text-header">Business Spaces</div>
+    <h3>Business Spaces</h3>
     Adult only areas and Business only areas
 
-    <div class="sub-text-header">Daycare Features</div>
+    <h3>Daycare Features</h3>
     Daycare expenses are covered for employees and contractors attending meetings
 
-    <div class="sub-text-header">Convenience Features</div>
+    <h3>Convenience Features</h3>
     Staff has golf cart to provide fast local assistance
     <br>Smoking area that is clean, dry and convenient
     <br>Market wide Wifi
@@ -489,25 +340,25 @@
     <br>Virtual appliance support via market software to enhance visitor experiences
     <br>Market wide ordering system with POS system provided for shops at their option
 
-    <div class="sub-text-header">Work Area Features</div>
+    <h3>Work Area Features</h3>
     Spaces have tables for working at in the location
     <br>Retail displays (clothes, etc) - display only (aka catalog store)
     <br>Spaces track usage via membership cards - no purchase required -
     get a base fee for participating and bonus money for visits (ranked)
     <br><br>
   </div>
-  <div style="flex:1"></div>
-  <div style="line-height:2em;padding-bottom:.5em;text-align:center;width:100%">
+  <div class="footer_bar">
     <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
     &nbsp;
     <a href="/privacy.html">Privacy Policy</a>
-    <br>
+    <br><br>
     Lincoln, Nebraska, USA 68508
     <br>© 1998 - 2021 Handtop. All Rights Reserved.
   </div>
-  </div>
+</div>
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148094829-1">
   </script>
+  <script src="https://cse.google.com/cse.js?cx=4a6d22c42e0496e39"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
 
@@ -517,61 +368,6 @@
     gtag('js', new Date());
 
     gtag('config', 'UA-148094829-1');
-  </script>
-  <script>
-    let rTextAll = document.querySelectorAll('.rant-header');
-    rTextAll.forEach(h => {
-      let localH = h;
-      h.addEventListener('click', e => {
-        if (h.nextElementSibling.style.height !== 'auto') {
-          h.nextElementSibling.style.height = 'auto';
-          h.style.color = 'rgb(0, 0, 200)';
-          h.nextElementSibling.style.opacity = 1.0;
-          h.firstChild.style.transform = 'rotate(0deg)';
-          h.lastChild.style.transform = 'rotate(0deg)';
-        } else {
-          h.style.color = '';
-          h.nextElementSibling.style.height = '';
-          h.nextElementSibling.style.opacity = 0;
-          h.firstChild.style.transform = '';
-          h.lastChild.style.transform = '';
-        }
-      });
-      let expandIcon = document.createElement('i');
-      expandIcon.setAttribute('class', 'preheadlineicon material-icons');
-      expandIcon.innerHTML = 'expand_more';
-      h.insertBefore(expandIcon, h.firstChild);
-      expandIcon = document.createElement('i');
-      expandIcon.setAttribute('class', 'postheadlineicon material-icons');
-      expandIcon.innerHTML = 'expand_more';
-      h.appendChild(expandIcon);
-    });
-
-    let firstH = document.querySelector('.rant-header');
-    firstH.click();
-
-    let expandAllBtn = document.querySelector('.collapse-expand-all');
-    expandAllBtn.addEventListener('click', e => {
-      if (expandAllBtn.expanded) {
-        expandAllBtn.expanded = false;
-        expandAllBtn.style.transform = '';
-        expandAllBtn.style.color = '';
-
-        rTextAll.forEach(h => {
-          if (h.nextElementSibling.style.height === 'auto')
-            h.click();
-        });
-      } else {
-        expandAllBtn.expanded = true;
-        expandAllBtn.style.transform = 'rotate(0deg)';
-        expandAllBtn.style.color = 'blue';
-
-        rTextAll.forEach(h => {
-          if (h.nextElementSibling.style.height !== 'auto')
-            h.click();
-        });
-      }
-    });
   </script>
 </body>
 
