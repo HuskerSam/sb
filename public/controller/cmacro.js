@@ -268,8 +268,23 @@ class cMacro {
             </td>
           </tr>
           <tr>
-            <td>Generic Data</td>
-            <td><input data-field="genericblockdata" type="text" value="signyoffset|1" /></td>
+            <td>Sign Y Offset</td>
+            <td><input data-field="signyoffset" type="text" value="6" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Scale Factor</td>
+            <td><input data-field="datascalefactor" type="text" value="2" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Product Rotate Y</td>
+            <td><input data-field="productrotatey" type="text" value="0" /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Noise Filter</td>
+            <td><input data-field="dataframesfilter" type="text" value=".05" /></td>
             <td></td>
           </tr>
         </table>
