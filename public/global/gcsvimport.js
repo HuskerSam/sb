@@ -84,21 +84,21 @@ class gCSVImport {
   }
   async dbSetRecord(type, data, id) {
     if (type === 'material') {
-      if (data.title.substring(0, 8) === 'decolor:' ||
-        data.title.substring(0, 7) === 'ecolor:' ||
-        data.title.substring(0, 6) === 'color:' ||
+      if (data.title.toString().substring(0, 8) === 'decolor:' ||
+        data.title.toString().substring(0, 7) === 'ecolor:' ||
+        data.title.toString().substring(0, 6) === 'color:' ||
         data.title === 'inherit')
         return {
           key: null
         };
     }
     if (type === 'texture') {
-      if (data.title.substring(0, 3) === 'sb:')
+      if (data.title.toString().substring(0, 3) === 'sb:')
         return {
           key: null
         };
 
-      let texturePrefix = data.title.substring(0, 7);
+      let texturePrefix = data.title.toString().substring(0, 7);
       if (texturePrefix === 'https:/' || texturePrefix === 'http://')
         return {
           key: null
@@ -505,9 +505,9 @@ class gCSVImport {
     });
   }
   async addCSVBlockChildRow(row) {
-    if (row.parent.substr(0, 9) === '::scene::') {
+    if (row.parent.toString().substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      row.parent = sb.parent + row.parent.substring(9);
+      row.parent = sb.parent + row.parent.toString().substring(9);
     }
 
     let parentRecords = await this.dbFetchByLookup('block', 'title', row.parent);
@@ -775,9 +775,9 @@ class gCSVImport {
     if (!row.parent)
       return;
 
-    if (row.parent.substr(0, 9) === '::scene::') {
+    if (row.parent.toString().substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      row.parent = sb.parent + row.parent.substring(9);
+      row.parent = sb.parent + row.parent.toString().substring(9);
     }
 
     let sceneBC = this.defaultCSVRow();
@@ -802,9 +802,9 @@ class gCSVImport {
     return this.addCSVRow(sceneBC);
   }
   async _getBlockChildren(blockTitle, childType, childName) {
-    if (blockTitle.substr(0, 9) === '::scene::') {
+    if (blockTitle.toString().substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      blockTitle = sb.parent + blockTitle.substring(9);
+      blockTitle = sb.parent + blockTitle.toString().substring(9);
     }
 
     let parentRecords = await this.dbFetchByLookup('block', 'title', blockTitle);
@@ -824,13 +824,13 @@ class gCSVImport {
     return matchingChildren;
   }
   async addCSVBlockChildFrameRow(row) {
-    if (row.parent.substr(0, 9) === '::scene::') {
+    if (row.parent.toString().substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      row.parent = sb.parent + row.parent.substring(9);
+      row.parent = sb.parent + row.parent.toString().substring(9);
     }
-    if (row.name.substr(0, 9) === '::scene::') {
+    if (row.name.toString().substr(0, 9) === '::scene::') {
       let sb = await this.csvFetchSceneBlock();
-      row.name = sb.parent + row.name.substring(9);
+      row.name = sb.parent + row.name.toString().substring(9);
     }
 
     let children = {};
@@ -1071,7 +1071,7 @@ class gCSVImport {
         isVideo
       };
 
-      if (textureName.substring(0, 8) === 'circuit_') {
+      if (textureName.toString().substring(0, 8) === 'circuit_') {
         textureData.orig = Object.assign({}, textureData);
       }
       textureData.title = textureName;
