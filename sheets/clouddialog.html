@@ -891,7 +891,7 @@
         let navurl = url;
         if (navurl.substring(0, 3) !== 'htt')
           navurl = 'https://' + navurl;
-        this.url_to_deploy.innerHTML = '<a target="_blank" href="' + navurl + '">Open</a>';
+        this.url_to_deploy.innerHTML = '<a target="_blank" style="line-break:anywhere" href="' + navurl + '">' + navurl + '</a>';
 
         this.selected_server_details_div.innerHTML = t['description'];
 

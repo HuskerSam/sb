@@ -1,7 +1,0 @@
-firebase deploy -P groceryblocks --only hosting
-firebase deploy -P groceryscenes --only hosting
-firebase deploy -P handtop --only hosting
-firebase deploy -P sceneblocks --only hosting
-firebase deploy -P builder --only hosting
-firebase deploy -P sandboxone --only hosting
-firebase deploy -P vcsandbox1 --only hosting
