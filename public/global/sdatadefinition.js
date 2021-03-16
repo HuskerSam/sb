@@ -799,12 +799,6 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   uploadType: 'audio',
   floatLeft: true
 }, {
-  title: 'Music Params',
-  fireSetField: 'musicParams',
-  group: 'blockData',
-  clearLeft: true,
-  floatLeft: true
-}, {
   title: 'Display UI',
   fireSetField: 'displayUI',
   group: 'blockData',
@@ -822,11 +816,6 @@ __localStaticStorageForBindingFields['sceneFields'] = [{
   group: 'blockData',
   floatLeft: true,
   clearLeft: true
-}, {
-  title: 'genericBlockData',
-  fireSetField: 'genericBlockData',
-  group: 'blockData',
-  floatLeft: true
 }, {
   title: 'displayCamera',
   fireSetField: 'displayCamera',

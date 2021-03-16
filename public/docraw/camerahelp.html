@@ -14,5 +14,12 @@ Target Block (targetblock): [blocktype]:[name] ... ie. shape:box1 or block:block
 UniversalCamera and DeviceOrientationCamera can all have their origin controlled by frames.<br>
 ArcRotateCamera can have it's aim target controlled by frames.<br>
 The FollowCamera follows a specified child block in the same block (a camera is a child block).
+<br> &nbsp; &nbsp; &nbsp;signyoffset (default = 6) - height signs float above products
+<br> &nbsp; &nbsp; &nbsp;datascalefactor (default = 2) - scale amount for audio generated animation
+<br> &nbsp; &nbsp; &nbsp;dataframesfilter (default = .05) - clipping range to reduce frames at top and bottom levels
+<br> &nbsp; &nbsp; &nbsp;productrotatey (default = 0) - value to rotate each product position by (to counter rotating the ::scene::_productsWrapper) for a carousel effect
+<br> &nbsp; &nbsp; &nbsp;musicparams - (default = '') - prefix (+ 'frequencyblock') for audio animation blocks
+
+<br>
 <br>
 The default camera is NOT animatable - it's driven by the user profile and UI buttons in /view - add a camera to position or animate<br>

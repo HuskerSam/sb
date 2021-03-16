@@ -2403,16 +2403,6 @@ class cMacro {
             <td></td>
           </tr>
           <tr>
-            <td>Audio Params</td>
-            <td><input type="text" class="musicparams" /></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Block Data</td>
-            <td><input type="text" class="genericblockdata" /></td>
-            <td></td>
-          </tr>
-          <tr>
             <td>Video URL</td>
             <td><input type="text" class="videourl" /></td>
             <td></td>
@@ -2903,8 +2893,8 @@ class cMacro {
     };
     let fields = [
       'skyboxsize', 'groundimage', 'skyboxgroundscaleu', 'skyboxgroundscalev', 'skybox',
-      'clearcolor', 'ambientcolor', 'frametime', 'audiourl', 'displaycamera', 'genericblockdata',
-      'musicparams', 'displayui', 'videourl', 'videotype', 'videowidth', 'videoheight',
+      'clearcolor', 'ambientcolor', 'frametime', 'audiourl', 'displaycamera',
+      'displayui', 'videourl', 'videotype', 'videowidth', 'videoheight',
       'videoalignright', 'videoalignbottom', 'fogtype', 'fogdensity', 'fogcolor', 'fogstart', 'fogend'
     ];
 

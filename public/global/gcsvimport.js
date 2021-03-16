@@ -1698,7 +1698,6 @@ class gCSVImport {
     if (row.displaycamera) block.displayCamera = row.displaycamera;
     if (row.blockflag) block.blockFlag = row.blockflag;
     if (row.blockcode) block.blockCode = row.blockcode;
-    if (row.musicparams) block.musicParams = row.musicparams;
     if (row.genericblockdata) block.genericBlockData = row.genericblockdata;
     if (row.displayui) block.displayUI = row.displayui;
     if (row.supportvr) block.supportVR = row.supportvr;
@@ -1712,7 +1711,6 @@ class gCSVImport {
     if (row.fogend) block.fogEnd = row.fogend;
 
     let blockresult = await this.dbSetRecord('block', block);
-    let sceneParams = this._fetchSceneParams(block);
     let frameTime = row.frametime;
     if (frameTime === '' || frameTime === undefined)
       frameTime = '60s';
@@ -1726,8 +1724,7 @@ class gCSVImport {
       this.dbSetRecord('frame', {
         parentKey: blockresult.key,
         frameOrder: 20,
-        frameTime,
-        rotationY: sceneParams.rotateY + 'deg'
+        frameTime
       });
 
     let displayBC = this.defaultCSVRow();
@@ -2157,7 +2154,7 @@ class gCSVImport {
     textPlane.name = product.childName + '_pricedesc';
     textPlane.parent = parent;
     textPlane.x = '0.06';
-    textPlane.y = (productData.sceneParams.signYOffset - 2.75).toString();
+    textPlane.y = (productData.signYOffset - 2.75).toString();
     textPlane.sx = '.5';
     textPlane.sy = '.5';
     textPlane.sz = '.5';
@@ -2177,7 +2174,7 @@ class gCSVImport {
       blockImageShape.height = '3';
       blockImageShape.parent = parent;
       blockImageShape.x = '.06';
-      blockImageShape.y = (productData.sceneParams.signYOffset + 1.0).toString();
+      blockImageShape.y = (productData.signYOffset + 1.0).toString();
       blockImageShape.ry = '-90deg';
       newObjects.push(blockImageShape);
     }
@@ -2188,7 +2185,7 @@ class gCSVImport {
     blockSPBC.parent = parent;
     blockSPBC.name = 'scene_product_signboard';
     blockSPBC.materialname = 'inherit';
-    blockSPBC.y = productData.sceneParams.signYOffset.toString();
+    blockSPBC.y = productData.signYOffset.toString();
     newObjects.push(blockSPBC);
 
     return this.addCSVRowList(newObjects);
@@ -2210,7 +2207,7 @@ class gCSVImport {
       priceText.textdepth = '.25';
       priceText.textsize = '100';
       priceText.parent = parent;
-      priceText.y = (productData.sceneParams.signYOffset - 3.25).toString();
+      priceText.y = (productData.signYOffset - 3.25).toString();
       priceText.x = '.5';
       priceText.ry = '0deg';
       priceText.rz = '-90deg';
@@ -2227,7 +2224,7 @@ class gCSVImport {
     descText.textdepth = '.5';
     descText.textsize = '100';
     descText.parent = parent;
-    descText.y = (productData.sceneParams.signYOffset + 1.0).toString();
+    descText.y = (productData.signYOffset + 1.0).toString();
     descText.x = '.5';
     descText.ry = '0deg';
     descText.rz = '-90deg';
@@ -2246,7 +2243,7 @@ class gCSVImport {
       blockImageShape.height = '3';
       blockImageShape.parent = parent;
       blockImageShape.x = '.06';
-      blockImageShape.y = (productData.sceneParams.signYOffset - 1).toString();
+      blockImageShape.y = (productData.signYOffset - 1).toString();
       blockImageShape.ry = '-90deg';
       this.addCSVRow(blockImageShape);
     }
@@ -2268,7 +2265,7 @@ class gCSVImport {
     descText.textdepth = '.25';
     descText.textsize = '100';
     descText.parent = parent;
-    descText.y = (productData.sceneParams.signYOffset - 2.0).toString();
+    descText.y = (productData.signYOffset - 2.0).toString();
     descText.x = '.5';
     descText.ry = '0deg';
     descText.rz = '-90deg';
@@ -2340,6 +2337,11 @@ class gCSVImport {
     cameraBlock.introtime = row.introtime;
     cameraBlock.finishdelay = row.finishdelay;
     cameraBlock.runlength = row.runlength;
+    cameraBlock.signyoffset = row.signyoffset;
+    cameraBlock.musicparams = row.musicparams;
+    cameraBlock.datascalefactor = row.datascalefactor;
+    cameraBlock.productrotatey = row.productrotatey;
+    cameraBlock.dataframesfilter = row.dataframesfilter;
     childCSVRows.push(cameraBlock);
 
     let cameraBlockBC = this.defaultCSVRow();
@@ -2553,35 +2555,8 @@ class gCSVImport {
 
     return Promise.all(promises);
   }
-  _fetchSceneParams(sceneData) {
-    let map = {};
-    let rawData = sceneData.genericBlockData;
-    if (!rawData)
-      rawData = '';
-    if (!sceneData.genericBlockData)
-      sceneData.genericBlockData = '';
-    let data = sceneData.genericBlockData.split('|');
-    for (let c = 0; c < data.length; c += 2)
-      map[data[c]] = data[c + 1];
-
-    let scaleFactor = this.getNumberOrDefault(map.datascalefactor, 2.0);
-    let signYOffset = this.getNumberOrDefault(map.signyoffset, 6.0);
-    let rotateY = this.getNumberOrDefault(map.rotatey, 0);
-    let dataFramesFilter = this.getNumberOrDefault(map.dataframefilter, .05);
-    let animType = map.animtype;
-    if (!animType)
-      animType = 'product';
-
-    return {
-      scaleFactor,
-      signYOffset,
-      dataFramesFilter,
-      rotateY,
-      animType
-    }
-  }
   async _addProductFramesFromData(product, productData, productIndex, freqPrefix = '') {
-    if (productData.sceneParams.animType !== 'product')
+    if (!freqPrefix)
       return;
 
     let child = product.childName;
@@ -2591,7 +2566,7 @@ class gCSVImport {
     let frameRows = [];
 
     if (freq_data.records.length > 0) {
-      let scaleFactor = productData.sceneParams.scaleFactor;
+      let scaleFactor = productData.scaleFactor;
       let scaleminusone = scaleFactor - 1.0;
 
       let bandData = freq_data.records[0].genericBlockData;
@@ -2626,12 +2601,12 @@ class gCSVImport {
         if (index === frameCount - 1) {
           bandScaleFrame.frametime = '100%';
         }
-        if (productData.sceneParams.rotateY !== 0) {
+        if (productData.productRotateY !== 0) {
 
-          bandScaleFrame.ry = (-1.0 * productData.sceneParams.rotateY * timeRatio).toFixed(2) + 'deg';
+          bandScaleFrame.ry = (-1.0 * productData.productRotateY * timeRatio).toFixed(2) + 'deg';
         }
 
-        if (Math.abs(lastScale - dataPoint) < productData.sceneParams.dataFramesFilter)
+        if (Math.abs(lastScale - dataPoint) < productData.dataFramesFilter)
           skipFrame = true;
 
         if (skipFrame && index < frameCount - 1) {
@@ -2655,7 +2630,7 @@ class gCSVImport {
     let productIndex = 0;
     for (let c = 0, l = pInfo.products.length; c < l; c++) {
       if (pInfo.products[c].itemId) {
-        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, productIndex, pInfo.sceneBlock.musicParams));
+        promises.push(this._addProductFramesFromData(pInfo.products[c], pInfo, productIndex, pInfo.musicParams));
         promises.push(this.__addSignPost(pInfo.products[c], pInfo));
         productIndex++;
       } else
@@ -2782,11 +2757,19 @@ class gCSVImport {
 
     let finishDelay = 0,
       introTime = 0,
-      runLength = 0;
+      runLength = 0,
+      scaleFactor = 0,
+      productRotateY = 0,
+      dataFramesFilter = 0,
+      signYOffset = 0;
     if (cameraData) {
       finishDelay = this.getNumberOrDefault(cameraData.finishdelay, 0);
       introTime = this.getNumberOrDefault(cameraData.introtime, 0);
       runLength = this.getNumberOrDefault(cameraData.runlength, 0);
+      signYOffset = this.getNumberOrDefault(cameraData.signyoffset, 6.0);
+      scaleFactor = this.getNumberOrDefault(cameraData.datascalefactor, 2.0);
+      productRotateY = this.getNumberOrDefault(cameraData.productrotatey, 0);
+      dataFramesFilter = this.getNumberOrDefault(cameraData.dataframesfilter, .05);
     }
 
     let blocksData = await this.dbFetchByLookup('block', 'blockFlag', 'displayblock');
@@ -2811,8 +2794,9 @@ class gCSVImport {
       products[postC].endEnlargeTime = incLength + products[postC].startShowTime;
     }
 
-    let sceneParams = this._fetchSceneParams(sceneBlock);
-
+    let musicParams = cameraData.musicparams;
+    if (!musicParams)
+      musicParams = '';
     let pInfo = {
       products,
       productsBySKU,
@@ -2828,7 +2812,11 @@ class gCSVImport {
       cameraOrigRow,
       displayBlocks,
       sceneBlock,
-      sceneParams
+      signYOffset,
+      productRotateY,
+      musicParams,
+      dataFramesFilter,
+      scaleFactor
     };
 
     if (returnRawDisplayBlocks)

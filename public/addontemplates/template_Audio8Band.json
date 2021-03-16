@@ -1,116 +1,229 @@
-[
-  {"range":"C1","value":"Range to include for assets"},
-
-  {"range":"A2","value":"Single CSV output"},
-  {"range":"B2","value":"Ranges","fontWeight":"bold"},
-  {"range":"C2","formula":"getStringForRange(C4:F12)"},
-  {"range":"C4:F12","backgroundColor":"rgb(230,230,230)"},
-
-  {"range":"A4:F4", "rangeValue": [[
-    "Block Data for animation", "SONG NAME", "asset", "name", "blockflag", "genericblockdata"
-    ]],
-    "fontWeight": "bold"},
-
-  {"range":"C5","value":"block" },
-  {"range":"D5","formula":"concatenate(B4, \"frequencyblock\", 1)"},
-  {"range":"E5","formula":"concatenate(B4, \"frequencyblock\", 1)"},
-  {"range":"F5","formula":"JSONArrayToPipeData(E18, C18)","wrapStrategy":"CLIP"},
-  {"range":"C6","value":"block" },
-  {"range":"D6","formula":"concatenate(B4, \"frequencyblock\", 2)"},
-  {"range":"E6","formula":"concatenate(B4, \"frequencyblock\", 2)"},
-  {"range":"F6","formula":"JSONArrayToPipeData(E19, C19)","wrapStrategy":"CLIP"},
-  {"range":"C7","value":"block" },
-  {"range":"D7","formula":"concatenate(B4, \"frequencyblock\", 3)"},
-  {"range":"E7","formula":"concatenate(B4, \"frequencyblock\", 3)"},
-  {"range":"F7","formula":"JSONArrayToPipeData(E20, C20)","wrapStrategy":"CLIP"},
-  {"range":"C8","value":"block" },
-  {"range":"D8","formula":"concatenate(B4, \"frequencyblock\", 4)"},
-  {"range":"E8","formula":"concatenate(B4, \"frequencyblock\", 4)"},
-  {"range":"F8","formula":"JSONArrayToPipeData(E21, C21)","wrapStrategy":"CLIP"},
-  {"range":"C9","value":"block" },
-  {"range":"D9","formula":"concatenate(B4, \"frequencyblock\", 5)"},
-  {"range":"E9","formula":"concatenate(B4, \"frequencyblock\", 5)"},
-  {"range":"F9","formula":"JSONArrayToPipeData(E22, C22)","wrapStrategy":"CLIP"},
-  {"range":"C10","value":"block" },
-  {"range":"D10","formula":"concatenate(B4, \"frequencyblock\", 6)"},
-  {"range":"E10","formula":"concatenate(B4, \"frequencyblock\", 6)"},
-  {"range":"F10","formula":"JSONArrayToPipeData(E23, C23)","wrapStrategy":"CLIP"},
-  {"range":"C11","value":"block" },
-  {"range":"D11","formula":"concatenate(B4, \"frequencyblock\", 7)"},
-  {"range":"E11","formula":"concatenate(B4, \"frequencyblock\", 7)"},
-  {"range":"F11","formula":"JSONArrayToPipeData(E24, C24)","wrapStrategy":"CLIP"},
-  {"range":"C12","value":"block" },
-  {"range":"D12","formula":"concatenate(B4, \"frequencyblock\", 8)"},
-  {"range":"E12","formula":"concatenate(B4, \"frequencyblock\", 8)"},
-  {"range":"F12","formula":"JSONArrayToPipeData(E25, C25)","wrapStrategy":"CLIP"},
-
-  {"range":"A15","value":"Song Data from addon","fontWeight":"bold"},
-  {"range":"C15","value":"Song Frequency Bands"},
-  {"range":"C16","value":"[[],[],[],[],[],[],[],[]]","wrapStrategy":"CLIP","horizontalAlignment":"left"},
-  {"range":"C17","value":"8 max band values","fontWeight":"bold"},
-  {"range":"E17","value":"8 freq bands","fontWeight":"bold"},
-
-  {"range":"E18","formula":"JSONArraysToCells(C16)"},
-  {"range":"B18","value":"1200hz"},
-  {"range":"C18","formula":"JSONArrayMax(E18)"},
-  {"range":"E18:E25","wrapStrategy":"CLIP"},
-
-  {"range":"B19","value":"2400hz"},
-  {"range":"C19","formula":"JSONArrayMax(E19)"},
-  {"range":"B20","value":"3600hz"},
-  {"range":"C20","formula":"JSONArrayMax(E20)"},
-  {"range":"B21","value":"4800hz"},
-  {"range":"C21","formula":"JSONArrayMax(E21)"},
-  {"range":"B22","value":"6000hz"},
-  {"range":"C22","formula":"JSONArrayMax(E22)"},
-  {"range":"B23","value":"7200hz"},
-  {"range":"C23","formula":"JSONArrayMax(E23)"},
-  {"range":"B24","value":"8400hz"},
-  {"range":"C24","formula":"JSONArrayMax(E24)"},
-  {"range":"B25","value":"9600hz"},
-  {"range":"C25","formula":"JSONArrayMax(E25)"},
-
-  {
-    "columnNumber": 1,
-    "columnWidth": 200
-  },
-  {
-    "columnNumber": 2,
-    "columnWidth": 150
-  },
-  {
-    "columnNumber": 3,
-    "columnWidth": 150
-  },
-  {
-    "columnNumber": 4,
-    "columnWidth": 150
-  },
-  {
-    "columnNumber": 5,
-    "columnWidth": 150
-  },
-  {
-    "columnNumber": 6,
-    "columnWidth": 150
-  },
-  {
-    "range":"A1:A",
-    "fontColor": "blue"
-  },
-  {
-    "range":"A1:1",
-    "backgroundColor": "rgb(0,0,100)",
-    "fontColor": "white",
-    "fontWeight": "bold"
-  },
-  {
-    "range":"C2",
-    "backgroundColor": "rgb(150,255,150)"
-  },
-  {
-    "range":"C16",
-    "backgroundColor": "rgb(200,200,255)"
-  },
-  {"range":"A1","value":""}
-]
+[{
+  "columnWidth": 150,
+  "columnNumber": 1,
+  "horizontalAlignment": "general"
+}, {
+  "range": "B1",
+  "value": "song name:",
+  "columnWidth": 150,
+  "columnNumber": 2
+}, {
+  "range": "C1",
+  "value": "##sheetrawname##",
+  "columnWidth": 150,
+  "columnNumber": 3
+}, {
+  "columnWidth": 150,
+  "columnNumber": 4,
+  "horizontalAlignment": "general"
+}, {
+  "columnWidth": 100,
+  "columnNumber": 5,
+  "horizontalAlignment": "general"
+}, {
+  "range": "A3",
+  "value": "asset",
+  "fontWeight": "bold"
+}, {
+  "range": "B3",
+  "value": "name",
+  "fontWeight": "bold"
+}, {
+  "range": "C3",
+  "value": "blockflag",
+  "fontWeight": "bold"
+}, {
+  "range": "D3",
+  "value": "genericblockdata",
+  "fontWeight": "bold"
+}, {
+  "range": "A4",
+  "value": "block"
+}, {
+  "range": "B4",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 1)"
+}, {
+  "range": "C4",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 1)"
+}, {
+  "range": "D4",
+  "formula": "=JSONArrayToPipeData(E17, C17)"
+}, {
+  "range": "A5",
+  "value": "block"
+}, {
+  "range": "B5",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 2)"
+}, {
+  "range": "C5",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 2)"
+}, {
+  "range": "D5",
+  "formula": "=JSONArrayToPipeData(E18, C18)"
+}, {
+  "range": "A6",
+  "value": "block"
+}, {
+  "range": "B6",
+  "formula": "=concatenate($C$1, \"frequencyblock\",3)"
+}, {
+  "range": "C6",
+  "formula": "=concatenate($C$1, \"frequencyblock\",3)"
+}, {
+  "range": "D6",
+  "formula": "=JSONArrayToPipeData(E19, C19)"
+}, {
+  "range": "A7",
+  "value": "block"
+}, {
+  "range": "B7",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 4)"
+}, {
+  "range": "C7",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 4)"
+}, {
+  "range": "D7",
+  "formula": "=JSONArrayToPipeData(E20, C20)"
+}, {
+  "range": "A8",
+  "value": "block"
+}, {
+  "range": "B8",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 5)"
+}, {
+  "range": "C8",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 5)"
+}, {
+  "range": "D8",
+  "formula": "=JSONArrayToPipeData(E21, C21)"
+}, {
+  "range": "A9",
+  "value": "block"
+}, {
+  "range": "B9",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 6)"
+}, {
+  "range": "C9",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 6)"
+}, {
+  "range": "D9",
+  "formula": "=JSONArrayToPipeData(E22, C22)"
+}, {
+  "range": "A10",
+  "value": "block"
+}, {
+  "range": "B10",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 7)"
+}, {
+  "range": "C10",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 7)"
+}, {
+  "range": "D10",
+  "formula": "=JSONArrayToPipeData(E23, C23)"
+}, {
+  "range": "A11",
+  "value": "block"
+}, {
+  "range": "B11",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 8)"
+}, {
+  "range": "C11",
+  "formula": "=concatenate($C$1, \"frequencyblock\", 8)"
+}, {
+  "range": "D11",
+  "formula": "=JSONArrayToPipeData(E24, C24)"
+}, {
+  "range": "C14",
+  "value": "Song Frequency Bands"
+}, {
+  "range": "C15",
+  "value": "[[],[],[],[],[],[],[],[]]"
+}, {
+  "range": "C16",
+  "value": "8 max band values"
+}, {
+  "range": "E16",
+  "value": "8 freq bands"
+}, {
+  "range": "B17",
+  "value": "1200hz"
+}, {
+  "range": "C17",
+  "formula": "=JSONArrayMax(E17)",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E17",
+  "formula": "=JSONArraysToCells(C15)"
+}, {
+  "range": "B18",
+  "value": "2400hz"
+}, {
+  "range": "C18",
+  "formula": "=JSONArrayMax(E18)",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E18",
+  "value": "[]"
+}, {
+  "range": "B19",
+  "value": "3600hz"
+}, {
+  "range": "C19",
+  "formula": "=JSONArrayMax(E19)",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E19",
+  "value": "[]"
+}, {
+  "range": "B20",
+  "value": "4800hz"
+}, {
+  "range": "C20",
+  "formula": "=JSONArrayMax(E20)",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E20",
+  "value": "[]"
+}, {
+  "range": "B21",
+  "value": "6000hz"
+}, {
+  "range": "C21",
+  "formula": "=JSONArrayMax(E21)",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E21",
+  "value": "[]"
+}, {
+  "range": "B22",
+  "value": "7200hz"
+}, {
+  "range": "C22",
+  "formula": "=JSONArrayMax(E22)",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E22",
+  "value": "[]"
+}, {
+  "range": "B23",
+  "value": "8400hz"
+}, {
+  "range": "C23",
+  "formula": "=JSONArrayMax(E23)",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E23",
+  "value": "[]"
+}, {
+  "range": "B24",
+  "value": "9600hz"
+}, {
+  "range": "C24",
+  "formula": "=JSONArrayMax(E24)",
+  "horizontalAlignment": "general-right"
+}, {
+  "range": "E24",
+  "value": "[]"
+}, {
+  "range": "A1"
+}]
