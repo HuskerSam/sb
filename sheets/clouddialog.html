@@ -56,8 +56,9 @@
           <select id="help_viewer_panel_select"></select>
           <div id="helper_viewer_panel_open_wrapper" style="background:rgb(100, 200, 255)">
             <button id="helper_viewer_panel_search_btn"><i class="material-icons">search</i></button>
-            <button id="helper_viewer_panel_open_video_btn" class="blue"><i class="material-icons">ondemand_video</i></button>
-            <button id="helper_viewer_panel_open_btn" style="margin:0;margin-left:4px;"><i class="material-icons">open_in_new</i></button>
+            <button id="helper_viewer_panel_open_deployed_btn"><i class="material-icons">visibility</i></button>
+            <button id="helper_viewer_panel_open_video_btn"><i class="material-icons">ondemand_video</i></button>
+            <button id="helper_viewer_panel_open_btn"><i class="material-icons">open_in_new</i></button>
           </div>
         </div>
         <div id="helper_viewer_search_bar" style="display:none;">
@@ -617,7 +618,7 @@
           'upload_file_mesh_preview', 'song_detail_data_rdo', 'song_raw_data_rdo', 'song_raw_data', 'upload_file_audio_ctl',
           'song_len_sec', 'copy_song_data_to_clipboard', 'display_publish_single_header', 'project_preview_zoom', 'add_products_to_projectlist',
           'plotter_plots_count', 'plotter_points_per_plot', 'plotter_plots_width', 'plotter_plots_depth', 'helper_viewer_panel_open_video_btn',
-          'plotter_plots_includelabels', 'plotter_plots_includeradians', 'plotter_plots_radial_includelabels',
+          'plotter_plots_includelabels', 'plotter_plots_includeradians', 'plotter_plots_radial_includelabels', 'helper_viewer_panel_open_deployed_btn',
           'plotter_copy_csv_to_clipboard', 'plotter_radial_copy_csv_to_clipboard', 'plotter_plots_radial_includeheaders', 'path_frames_copy_csv_to_clipboard',
           'plotter_plots_includeheaders', 'qrcode_for_link_display', 'view_current_project_btn', 'path_frames_includeheaders',
           'helper_viewer_panel_open_btn', 'details_wrapper_for_split', 'upload_copy_link_to_clipboard', 'deploy_detail_buttons_view',
@@ -682,6 +683,22 @@
           let url = this.app.jsonLibPrefix + '/doc/' + help_topic;
           let a = document.createElement('a');
           a.setAttribute('href', url);
+          a.setAttribute('target', '_blank');
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        });
+        this.helper_viewer_panel_open_deployed_btn.addEventListener('click', e => {
+          let help_topic = this.help_viewer_panel_select.selectedIndex;
+          let helpData = this.cachedHelpItemList[help_topic];
+
+          if (!helpData || !helpData.deployed) {
+            alert('No deployed link found');
+            return;
+          }
+
+          let a = document.createElement('a');
+          a.setAttribute('href', helpData.deployed);
           a.setAttribute('target', '_blank');
           document.body.appendChild(a);
           a.click();
@@ -1065,10 +1082,17 @@
           let helpData = this.cachedHelpItemList[help_topic];
 
           if (!helpData || !helpData.video) {
-            this.helper_viewer_panel_open_video_btn.style.visibility = 'hidden';
+            this.helper_viewer_panel_open_video_btn.style.display = 'none';
           } else {
-            this.helper_viewer_panel_open_video_btn.style.visibility = '';
+            this.helper_viewer_panel_open_video_btn.style.display = '';
           }
+
+          if (!helpData || !helpData.deployed) {
+            this.helper_viewer_panel_open_deployed_btn.style.display = 'none';
+          } else {
+            this.helper_viewer_panel_open_deployed_btn.style.display = '';
+          }
+
         };
 
         await this.app.updateHelpView(this.currentHelpTag, this.helpViewer);
@@ -3123,6 +3147,10 @@
     .gsc-search-button-v2 {
       padding: 6px 8px;
       margin-right: 8px;
+    }
+
+    #helper_viewer_panel_open_wrapper button {
+      margin: 0;
     }
   </style>
 

@@ -145,5 +145,10 @@
     "value": "newinstance",
     "title": "Create new server",
     "reviewed": "2021-03-14"
+  },{
+    "value": "videopickerexample",
+    "title": "Video Picker Example",
+    "reviewed": "2021-03-17",
+    "deployed": "https://dedicateddemos.web.app/view/?name=Video%20Picker"
   }
 ]
