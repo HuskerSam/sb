@@ -2794,9 +2794,9 @@ class gCSVImport {
       products[postC].endEnlargeTime = incLength + products[postC].startShowTime;
     }
 
-    let musicParams = cameraData.musicparams;
-    if (!musicParams)
-      musicParams = '';
+    let musicParams = '';
+    if (cameraData && cameraData.musicparams)
+      musicParams = cameraData.musicparams;
     let pInfo = {
       products,
       productsBySKU,
