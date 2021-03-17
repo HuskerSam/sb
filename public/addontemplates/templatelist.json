@@ -90,7 +90,7 @@
     "name": "Carousel Display",
     "mainFile": "CarouselDisplay",
     "hint": "Carousel Display",
-    "fragments": "Good Bottles",
+    "fragments": "Good Bottles,Audio Animation Example - Star Wars 8 Bands",
     "products": "Carousel Display Products 1",
     "categories": "Display",
     "description": "Rotating scene with table in a carousel style product display"
@@ -268,6 +268,13 @@
     "hint": "8 Band Song",
     "categories": "Other",
     "description": "Use addon to process a song into 8 bands and this sheet will produce the animation data"
+  },
+  {
+    "name": "Audio Animation Example - Star Wars 8 Bands",
+    "mainFile": "AudioStarWars8Band",
+    "hint": "starwars8_60",
+    "categories": "Other",
+    "description": "8 band example using star wars intro 60 sec"
   },
   {
     "name": "Audio Animation - 16 Bands",
