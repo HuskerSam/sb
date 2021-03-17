@@ -192,12 +192,17 @@ h1, h2 {
   max-height:50%;
 }
 
-.help_topic_sub_header {
-  padding-left: 1em;
-}
-
 .search_box_wrapper {
   float:right;
   width:20em;
   margin-top: -0.5em;
+}
+
+.gsc-search-button.gsc-search-button-v2 {
+  background: silver;
+  border: gray;
+}
+
+.gsc-search-button.gsc-search-button-v2:hover {
+  background: black;
 }

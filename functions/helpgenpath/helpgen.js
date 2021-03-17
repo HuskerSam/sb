@@ -16,11 +16,25 @@ sourceApp.get('/doc/', async (req, res) => await HelpGen.genPage(req, res));
 sourceApp.get('/doc', async (req, res) => await HelpGen.genPage(req, res));
 
 class HelpGen {
-  static getTemplate(helpBody, title, urlFrag, desc, helpOptions = '', video = '', reviewed = '') {
+  static getTemplate(helpBody, title, urlFrag, desc, helpOptions = '', video = '', reviewed = '', deployed = '', includeList = false) {
     if (!reviewed)
       reviewed = '';
     if (!video)
       video = '';
+    let reviewHTML = '';
+    let listHTML = '';
+    if (reviewed) {
+      reviewHTML = `Reviewed: ${reviewed} `;
+    }
+    if (includeList) {
+      listHTML = `<select id="help_template_select" value="${title}"><option>Select one to open...</option>${helpOptions}</select>`;
+
+      if (video)
+        listHTML += ` &nbsp; <a href="${video}" target="_blank">video</a>`;
+      if (deployed)
+        listHTML += ` &nbsp; <a href="${deployed}" target="_blank">deployed</a>`;
+    }
+
     return `<!doctype html>
     <html lang="en">
 
@@ -52,14 +66,10 @@ class HelpGen {
           <div class="gcse-search"></div>
         </div>
       </div>
-      <div class="help_topic_sub_header">
-        Help Topics <select id="help_template_select"><option>Select one to open...</option>${helpOptions}</select>
-        <br>
-        <h1>${title}</h1>
-        Reviewed: ${reviewed}<br>
-        <video class="help_item_video" style="${ (video === '') ? 'display:none;' : ''}" controls preload="auto">
-          <source src="${video}">
-        </video>
+      <div style="padding:1em;">
+        <h1 style="display:inline-block;">${title}</h1>
+        ${reviewHTML}
+        ${listHTML}
       </div>
       <div style="padding: 20px;flex:1;">${helpBody}</div>
       <div class="footer_bar">
@@ -74,17 +84,19 @@ class HelpGen {
     <script src="https://cse.google.com/cse.js?cx=0b2a9868105e1e42e"></script>
     <script>
       let ctl = document.getElementById('help_template_select');
-      if (ctl.length < 2)
-        ctl.style.display = 'none';
-      ctl.addEventListener('input', e => {
-        let v = ctl.value;
-        let a = document.createElement('a');
-        a.setAttribute('href', 'https://handtop.com/doc/' + v);
-        a.setAttribute('target', '_blank');
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      });
+      if (ctl) {
+        if (ctl.length < 2)
+          ctl.style.display = 'none';
+        ctl.addEventListener('input', e => {
+          let v = ctl.value;
+          let a = document.createElement('a');
+          a.setAttribute('href', 'https://handtop.com/doc/' + v);
+          a.setAttribute('target', '_blank');
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        });
+      }
     </script>
     </body>
 
@@ -159,7 +171,7 @@ class HelpGen {
     let regex = /(<([^>]+)>)/ig;
     let desc = data.replace(regex, "");
     desc = desc.substring(0, 200);
-    let html = HelpGen.getTemplate(data, title, item, desc, helpData.options, helpItem.video, helpItem.reviewed);
+    let html = HelpGen.getTemplate(data, title, item, desc, helpData.options, helpItem.video, helpItem.reviewed, helpitem.deployed, true);
     return res.status(200).send(html);
   }
   static async genSiteMap(req, res) {
@@ -196,7 +208,9 @@ class HelpGen {
       html += `<a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
       if (i.video)
         html += ` &nbsp; <a href="${i.video}" target="_blank">video</a>`;
-      html += '<br><br>\n';
+      if (i.deployed)
+        html += ` &nbsp; <a href="${i.deployed}" target="_blank">deployed</a>`;
+      html += '<br>\n';
 
       options += `<option value="${i.value}">${i.title}</option>`;
 

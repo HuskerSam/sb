@@ -430,14 +430,6 @@ __localStaticStorageForBindingFields['sceneToolsBar'] = [{
   type: 'boolean',
   floatLeft: true,
   clearLeft: true
-}, {
-  title: 'Hide Video',
-  fireSetField: 'noVideo',
-
-  group: 'cameraTrack',
-  type: 'boolean',
-  floatLeft: true,
-  clearLeft: true
 }];
 __localStaticStorageForBindingFields['shape'] = [{
   title: 'Title',
