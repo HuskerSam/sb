@@ -16,7 +16,7 @@ sourceApp.get('/doc/', async (req, res) => await HelpGen.genPage(req, res));
 sourceApp.get('/doc', async (req, res) => await HelpGen.genPage(req, res));
 
 class HelpGen {
-  static getTemplate(helpBody, title, urlFrag, desc, helpOptions = '', video = '', reviewed = '', deployed = '', includeList = false) {
+  static getTemplate(helpBody, title, urlFrag, desc, helpOptions = '', video = '', reviewed = '', deployed = '', value = '', includeList = false) {
     if (!reviewed)
       reviewed = '';
     if (!video)
@@ -24,10 +24,10 @@ class HelpGen {
     let reviewHTML = '';
     let listHTML = '';
     if (reviewed) {
-      reviewHTML = `Reviewed: ${reviewed} `;
+      reviewHTML = `Reviewed: ${reviewed} <br>`;
     }
     if (includeList) {
-      listHTML = `<select id="help_template_select" value="${title}"><option>Select one to open...</option>${helpOptions}</select>`;
+      listHTML = `<select id="help_template_select" value="${value}">${helpOptions}</select>`;
 
       if (video)
         listHTML += ` &nbsp; <a href="${video}" target="_blank">video</a>`;
@@ -67,9 +67,9 @@ class HelpGen {
         </div>
       </div>
       <div style="padding:1em;">
-        <h1 style="display:inline-block;">${title}</h1>
-        ${reviewHTML}
         ${listHTML}
+        ${reviewHTML}
+        <h1 style="display:inline-block;">${title}</h1>
       </div>
       <div style="padding: 20px;flex:1;">${helpBody}</div>
       <div class="footer_bar">
@@ -91,7 +91,6 @@ class HelpGen {
           let v = ctl.value;
           let a = document.createElement('a');
           a.setAttribute('href', 'https://handtop.com/doc/' + v);
-          a.setAttribute('target', '_blank');
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
@@ -159,7 +158,7 @@ class HelpGen {
 
     let data = await fetched.text();
 
-    let helpData = await this.helpListToHTMLAnchorList();
+    let helpData = await this.helpListToHTMLAnchorList(item);
     let helpList = await helpData.data;
     let helpItem = null;
     helpList.forEach(i => {
@@ -171,7 +170,7 @@ class HelpGen {
     let regex = /(<([^>]+)>)/ig;
     let desc = data.replace(regex, "");
     desc = desc.substring(0, 200);
-    let html = HelpGen.getTemplate(data, title, item, desc, helpData.options, helpItem.video, helpItem.reviewed, helpitem.deployed, true);
+    let html = HelpGen.getTemplate(data, title, item, desc, helpData.options, helpItem.video, helpItem.reviewed, helpItem.deployed, helpItem.value, true);
     return res.status(200).send(html);
   }
   static async genSiteMap(req, res) {
@@ -195,7 +194,7 @@ class HelpGen {
     }
     return res.send("GET Only");
   }
-  static async helpListToHTMLAnchorList() {
+  static async helpListToHTMLAnchorList(value) {
     let fetched = await fetch('https://handtop.com/docraw/helplist.json', {
       cache: "no-cache"
     });
@@ -212,7 +211,7 @@ class HelpGen {
         html += ` &nbsp; <a href="${i.deployed}" target="_blank">deployed</a>`;
       html += '<br>\n';
 
-      options += `<option value="${i.value}">${i.title}</option>`;
+      options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.title}</option>`;
 
       xml += `<url>
             <loc>https://handtop.com/doc/${i.value}</loc>
