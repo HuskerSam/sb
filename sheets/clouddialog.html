@@ -1082,15 +1082,15 @@
           let helpData = this.cachedHelpItemList[help_topic];
 
           if (!helpData || !helpData.video) {
-            this.helper_viewer_panel_open_video_btn.style.display = 'none';
+            this.helper_viewer_panel_open_video_btn.style.visibility = 'hidden';
           } else {
-            this.helper_viewer_panel_open_video_btn.style.display = '';
+            this.helper_viewer_panel_open_video_btn.style.visibility = '';
           }
 
           if (!helpData || !helpData.deployed) {
-            this.helper_viewer_panel_open_deployed_btn.style.display = 'none';
+            this.helper_viewer_panel_open_deployed_btn.style.visibility = 'hidden';
           } else {
-            this.helper_viewer_panel_open_deployed_btn.style.display = '';
+            this.helper_viewer_panel_open_deployed_btn.style.visibility = '';
           }
 
         };
@@ -2925,7 +2925,6 @@
 
     #help_viewer_panel_internal {
       flex: 1;
-      border-top: solid 8px rgb(100, 200, 255);
       overflow: auto auto;
       text-align: left;
       padding: 4px;

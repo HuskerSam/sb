@@ -48,11 +48,6 @@
     "reviewed": "2021-03-14"
   },
   {
-    "value": "positionproducts",
-    "title": "Position Products",
-    "reviewed": "2021-03-14"
-  },
-  {
     "value": "overview",
     "title": "Overview",
     "reviewed": "2021-03-14"
@@ -149,6 +144,7 @@
     "value": "videopickerexample",
     "title": "Video Picker Example",
     "reviewed": "2021-03-17",
-    "deployed": "https://dedicateddemos.web.app/view/?name=Video%20Picker"
+    "deployed": "https://dedicateddemos.web.app/view/?name=Video%20Picker",
+    "video": "https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/webglapp.webm"
   }
 ]
