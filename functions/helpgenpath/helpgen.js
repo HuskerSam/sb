@@ -23,8 +23,10 @@ class HelpGen {
       video = '';
     let reviewHTML = '';
     let listHTML = '';
+    let reviewClassName = 'list_help_view';
     if (reviewed) {
       reviewHTML = `${reviewed}`;
+      reviewClassName = 'item_help_view';
     }
     if (includeList) {
       listHTML = `<select id="help_template_select" value="${value}">${helpOptions}</select>`;
@@ -51,25 +53,9 @@ class HelpGen {
       <meta property="og:description" content="${desc}" />
       <meta property="fb:app_id" content="461141618064403" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
-      <style>
-        i {
-          position: relative;
-          top: .25em;
-          color: black;
-        }
-
-        a {
-          color: black;
-        }
-
-        #help_template_select {
-          font-size: 1.25em;
-          max-width: 90%;
-        }
-      </style>
     </head>
 
-    <body>
+    <body class="${reviewClassName}">
     <link rel="stylesheet" href="https://handtop.com/public.css">
     <div class="home_page_wrapper">
       <div class="option_bar">
@@ -87,7 +73,7 @@ class HelpGen {
         ${listHTML}
         ${reviewHTML}
       </div>
-      <div style="padding: 0 1em;flex:1;line-height: 2em;">${helpBody}</div>
+      <div class="help_body">${helpBody}</div>
       <div class="footer_bar">
         <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         &nbsp;
@@ -222,11 +208,13 @@ class HelpGen {
     let xml = '';
     let options = '';
     data.forEach(i => {
-      html += `<a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
+      html += `<div class="help_display_item">`;
+      html += ` <a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
+      html += `<br><a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
       html += ` <a href="${i.video}" ${ i.video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
       html += ` <a href="${i.deployed}" ${ i.deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
-      html += ` <a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
-      html += '<br>\n';
+      html += ` ${i.reviewed}`
+      html += '</div>';
 
       options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.title}</option>`;
 
