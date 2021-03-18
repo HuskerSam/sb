@@ -57,6 +57,14 @@ class HelpGen {
           top: .25em;
           color: black;
         }
+
+        a {
+          color: black;
+        }
+        
+        #help_template_select {
+          font-size: 1.5em;
+        }
       </style>
     </head>
 
@@ -78,7 +86,7 @@ class HelpGen {
         ${listHTML}
         ${reviewHTML}
       </div>
-      <div style="padding: 0 1em;flex:1;line-height: 1.75em;">${helpBody}</div>
+      <div style="padding: 0 1em;flex:1;line-height: 2em;">${helpBody}</div>
       <div class="footer_bar">
         <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         &nbsp;
@@ -211,11 +219,10 @@ class HelpGen {
     let xml = '';
     let options = '';
     data.forEach(i => {
-      html += `<a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
-      if (i.video)
-        html += ` &nbsp; <a href="${i.video}" target="_blank"><i class="material-icons">ondemand_video</i></a>`;
-      if (i.deployed)
-        html += ` &nbsp; <a href="${i.deployed}" target="_blank"><i class="material-icons">animation</i></a>`;
+      html += `<a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
+      html += ` <a href="${i.video}" ${ i.video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
+      html += ` <a href="${i.deployed}" ${ i.deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
+      html += ` <a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
       html += '<br>\n';
 
       options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.title}</option>`;
