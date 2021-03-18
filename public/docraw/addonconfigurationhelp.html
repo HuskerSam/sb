@@ -6,8 +6,10 @@
 <img style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
 green means please wait patiently
 <h2>Sheet: Configuration</h2>
-<b>Purpose:</b> store basic settings<br>
-<b>Origin:</b> usually generated - manual edit is possible<br>
+<b>Purpose:</b> Configuration View data storage<br>
+<b>Origin:</b> usually generated - manual edit is ok<br>
+<img src="https://handtop.com/docimages/addoncontexthelp.png">
+<br>
 [Target Server]: Firebase Project ID with API deployed<br>
 [Token Token]: Token for API</br>
 [Target Project]: Default Project [name] in <b>'Projects'</b> list<br>
@@ -22,21 +24,39 @@ Please wait for
 to turn back to gray.
 
 <h2>Sheet: Projects</h2>
-- This sheet stores project configurations for deployment and is generated when needed<br>
+<b>Purpose:</b> Projects View data storage<br>
+<b>Origin:</b> usually generated - manual edit is ok<br>
+<img src="https://handtop.com/docimages/addonheaderoverview.png">
+<br>
+
 [Project Name]: Title of project (unique to server)<br>
 [Asset Ranges]: Comma delimited list of ranges (can be remote: with spreadsheetid||||sheet!range)<br>
 [Circuit Ranges]: Comma delimited list of ranges with CSV - 2nd processed<br>
 [Catalog Ranges]: Comma delimited list of ranges with CSV - last processed<br>
 [Flags]: "Ignore" skips this line on [Deploy All] - "Remove" removes the project from the target server<br>
-<hr>
-<b>'Deploy Options'</b> sheet<br>
-- This sheet can exist in a local or remote (parent) spreadsheet addressed by 'Configuration'<br>
-[deployrange]: Range of Server Options for Configuration View to load as presets<br>
-Range: Servers<br>
+<img src="https://handtop.com/docimages/projectssheethelp.png">
+<h3 style="color:red;display:inline-block;margin:0;">Note on manual editing with sidepanel open</h3> -
+use <img src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;">
+to refresh the data after editing.<br>
+Please wait for
+<img style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
+to turn back to gray.
+<br>
+<b>=getDataRangesForSheet(sheetName)</b> - detects the data tables and returns the ranges for a sheet.
+<br>For more: <a href="sheetsfunctions">Sheets Custom Functions</a>
+<h2>Sheet: Deploy Options</h2>
+<h3>Optional</h3>
+<b>Purpose:</b> Available Servers for Configuration View<br>
+<b>Origin:</b> manual creation<br>
+<b>Location:</b> from parent spreadsheet in <b>Configuration</b> - otherwise local<br>
+[deployrange]: Data Range for list<br>
+<b>Range:</b> Servers<br>
+<img src="https://handtop.com/docimages/deployoptionssheet.png">
+<b>Required range (local or parent):</b> 'Deploy Options'!A1:A2<br>
+ &nbsp; this specifies where to find the Data Table for servers<br>
 [server]: Firebase instance/project name<br>
 [url]: Public url if it exists<br>
 [token]: token (optional)<br>
 [description]: displays in Configuration View<br>
-<hr>
-<b>NOTES</b><br>
-If a Parent Spreadsheet is configured the addon will always and only look in the Parent Spreadsheet for 'Deploy Options'.<br>
+<b>Note:</b> If Parent Spreadsheet is specified in <b>Configuration</b> the addon will always and only
+look there for the <b>Deploy Options</b> sheet.

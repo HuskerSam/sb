@@ -63,7 +63,7 @@ class HelpGen {
         }
 
         #help_template_select {
-          font-size: 1.5em;
+          font-size: 1.25em;
           max-width: 90%;
         }
       </style>

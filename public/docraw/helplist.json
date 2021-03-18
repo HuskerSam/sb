@@ -1,5 +1,4 @@
-[
-  {"value":"addonconfiguration","title":"Configuration","reviewed":"2021-03-14","video":"","deployed":""},
+[{"value":"addonconfiguration","title":"Configuration","reviewed":"2021-03-18","video":"","deployed":""},
 {"value":"addonprojects","title":"Projects","reviewed":"2021-03-14","video":"","deployed":""},
 {"value":"addontemplates","title":"Templates","reviewed":"2021-03-14","video":"","deployed":""},
 {"value":"authorization","title":"Authorization Overview","reviewed":"2021-03-14","video":"","deployed":""},
@@ -20,6 +19,7 @@
 {"value":"reviewguide","title":"Review Guide","reviewed":"2021-03-14","video":"https://s3.us-west-2.amazonaws.com/hcwebflow/videos/basicsvideo.mp4","deployed":""},
 {"value":"sceneblock","title":"Scene Block (block)","reviewed":"2021-03-14","video":"","deployed":""},
 {"value":"shape","title":"Shapes","reviewed":"2021-03-14","video":"","deployed":""},
+{"value":"sheetsfunctions","title":"Sheets Custom Functions","reviewed":"2021-03-18","video":"","deployed":""},
 {"value":"shortcolorvideos","title":"Short Color Videos Example","reviewed":"2021-03-14","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideogreen.webm","deployed":""},
 {"value":"spinnerdiagram","title":"Multi Sheet Diagram Example","reviewed":"2021-03-14","video":"","deployed":""},
 {"value":"videopickerexample","title":"Video Picker Example","reviewed":"2021-03-17","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/videopickerexample.mp4","deployed":"https://dedicateddemos.web.app/view/?name=Video%20Picker"},

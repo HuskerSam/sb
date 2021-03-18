@@ -1,0 +1,9 @@
+<h2>Custom Sheets Functions</h2>
+<h3>=getDataRangesForSheet(sheetName)</h3>
+<h4>Heavily Used Function</h4>
+This function returns a list of ranges containing the data tables for a sheet.<br>
+ - data must start in the first (A) column<br>
+ - first row is headers<br>
+ - each row must have an entry in the first column, or else it's an end of table<br>
+ - the data table/range is ended when the first blank row shows up (no entry in first column)<br>
+ - rows with no data in the first column are ingnored, allowing for comments<br>
