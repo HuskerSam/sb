@@ -1,19 +1,27 @@
-<img src="https://handtop.com/images/redsetserver.png" style="height:1.5em;position:relative;top:.35em;"> sets the
+<img src="https://handtop.com/docimages/redsetserver.png" style="height:1.5em;position:relative;top:.35em;"> sets the
 <span style="color:red">Server Target</span>
 <br>
-<img src="https://handtop.com/images/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;"> refreshes data from the spreadsheet
+<img src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;"> refreshes data from the spreadsheet
 <br>
-<img style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/images/busybutton.png">
+<img style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
 green means please wait patiently
-<hr>
-<b>'Configuration'</b> sheet<br>
-- This sheet stores basic settings and is generated when needed<br>
+<h2>Sheet: Configuration</h2>
+<b>Purpose:</b> store basic settings<br>
+<b>Origin:</b> usually generated - manual edit is possible<br>
 [Target Server]: Firebase Project ID with API deployed<br>
 [Token Token]: Token for API</br>
 [Target Project]: Default Project [name] in <b>'Projects'</b> list<br>
 [Parent Spreadsheet]: Document ID to load deployment options from (more below).
-<hr>
-<b>'Projects'</b> sheet<br>
+<br>
+<img src="https://handtop.com/docimages/configurationsheethelp.png">
+<h3 style="color:red;display:inline-block;margin:0;">Note on manual editing with sidepanel open</h3> -
+use <img src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;">
+to refresh the data after editing.<br>
+Please wait for
+<img style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
+to turn back to gray.
+
+<h2>Sheet: Projects</h2>
 - This sheet stores project configurations for deployment and is generated when needed<br>
 [Project Name]: Title of project (unique to server)<br>
 [Asset Ranges]: Comma delimited list of ranges (can be remote: with spreadsheetid||||sheet!range)<br>

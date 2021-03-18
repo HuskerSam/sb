@@ -61,9 +61,10 @@ class HelpGen {
         a {
           color: black;
         }
-        
+
         #help_template_select {
           font-size: 1.5em;
+          max-width: 90%;
         }
       </style>
     </head>
@@ -110,6 +111,8 @@ class HelpGen {
           a.click();
           document.body.removeChild(a);
         });
+
+        ctl.focus();
       }
     </script>
     </body>

@@ -825,7 +825,7 @@ class cView extends bView {
             <button class="workspace_show_layout_positions"><i class="material-icons">grid_on</i></button>
             <button class="workspace_display_layout_new_window"><i class="material-icons">shop</i></button>
             <button class="delete-asset-button"><i class="material-icons">delete</i></button>
-            <button class="view-asset-button"><i class="material-icons">visibility</i></button>
+            <button class="view-asset-button"><i class="material-icons">animation</i></button>
             <button class="snapshot-asset-button"><i class="material-icons">add_photo_alternate</i></button>
             <div class="block_child_details_block">
               <select class="main-band-children-select" style="display:none;"></select>
