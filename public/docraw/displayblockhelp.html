@@ -1,2 +1,15 @@
 <b>Display Block</b>
 Display block description - these are used to template product blocks for displays, include default meta data (ie price, descriptions, images, mesh)
+<br><Br>
+  <b>message</b> - adds message to "scene" - with index for camera stop
+  <br> &nbsp; - [index] determines the order the message appears in the animation
+  <br> &nbsp; - [asset] = "textplane" csv columns apply
+  <br>
+  <b>product</b> - adds product to "scene" - with index for camera stop
+
+  <br>
+  <b>displaycamera</b> - adds FollowCamera and follow block to "scene"
+  <br> &nbsp; [introtime, runlength, finishdelay, cameramovetime] - important fields for animation timing
+  <br> &nbsp; [origin (xyz, rxyz)] - determine starting position for followed block
+  <br> &nbsp; [x, y, z, rx, ry, rz, heightoffset, cameraradius] - starting position for follow camera
+  <br>

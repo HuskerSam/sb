@@ -60,3 +60,21 @@ This block creation helper combines shapes into a container block and adds frame
 <br><br><br>
 Shape and Text Notes<br>
 Spaces count for centering, to push left, add spaces at end of text, in front of text to slide text right
+
+<br><br>
+<b>asset = block</b> - row for a block asset
+<br> &nbsp; basic fields - [materialname], [height], [width], [depth]
+<br> &nbsp; [blockcode] (blockCode) - lookup field
+<br> &nbsp; [blockflag] (blockFlag) - field flagging block as special case
+<br> &nbsp; [genericblockdata] (genericblockdata) - import data (i.e. hashed position list)
+<br><br>
+<b>blockchild</b> - [parent] relates to title of parent block, parent must exist
+<br> &nbsp; [materialname] = 'inherit' sets (inheritMaterial) = true
+<br> &nbsp; [childtype](childType) - shape, mesh, camera, light, block
+<br> &nbsp; [childname](childName) - title/name of Linked Asset - linked asset can be created later
+<Br><Br>
+  <b>textplane</b> - a row for texture and shape (plane) assets showing fitted/sized 2D text
+  <br> &nbsp; [width, height, depth] - determine size
+  <br> &nbsp; [texturetext, texturetext2] - line 1 and 2 of text
+  <br> &nbsp; [textfontfamily, textfontcolor, textfontsize, textfontweight] - html/css font fields
+  <br> &nbsp; [texturetextrendersize] - 512 by default - the width of the container the text is rendered in
