@@ -30,9 +30,9 @@ class HelpGen {
       listHTML = `<select id="help_template_select" value="${value}">${helpOptions}</select>`;
 
       if (video)
-        listHTML += ` &nbsp; <a href="${video}" target="_blank">video</a>`;
+        listHTML += ` &nbsp; <a href="${video}" target="_blank"><i class="material-icons">ondemand_video</i></a>`;
       if (deployed)
-        listHTML += ` &nbsp; <a href="${deployed}" target="_blank">deployed</a>`;
+        listHTML += ` &nbsp; <a href="${deployed}" target="_blank"><i class="material-icons">animation</i></a>`;
     }
     return `<!doctype html>
     <html lang="en">
@@ -50,6 +50,14 @@ class HelpGen {
       <meta property="og:type" content="website" />
       <meta property="og:description" content="${desc}" />
       <meta property="fb:app_id" content="461141618064403" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+      <style>
+        i {
+          position: relative;
+          top: .25em;
+          color: black;
+        }
+      </style>
     </head>
 
     <body>
@@ -59,17 +67,18 @@ class HelpGen {
         <a href="/" class="logo">
           <img alt="small logo image" class="small_logo" src="https://handtop.com/images/handtop.png">
         </a>
+        <a href="/addon/">Addon</a>
+        <a href="/about/">About</a>
         <a href="/doc/">Documentation</a>
-        <a href="/doc/reviewguide">Review Guide</a>
         <div class="search_box_wrapper">
           <div class="gcse-search"></div>
         </div>
       </div>
-      <div style="padding:0 1em;">
+      <div style="padding:0 1em;line-height:3em;">
         ${listHTML}
         ${reviewHTML}
       </div>
-      <div style="padding: 0 1em;flex:1;">${helpBody}</div>
+      <div style="padding: 0 1em;flex:1;line-height: 1.75em;">${helpBody}</div>
       <div class="footer_bar">
         <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         &nbsp;
@@ -204,9 +213,9 @@ class HelpGen {
     data.forEach(i => {
       html += `<a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
       if (i.video)
-        html += ` &nbsp; <a href="${i.video}" target="_blank">video</a>`;
+        html += ` &nbsp; <a href="${i.video}" target="_blank"><i class="material-icons">ondemand_video</i></a>`;
       if (i.deployed)
-        html += ` &nbsp; <a href="${i.deployed}" target="_blank">deployed</a>`;
+        html += ` &nbsp; <a href="${i.deployed}" target="_blank"><i class="material-icons">animation</i></a>`;
       html += '<br>\n';
 
       options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.title}</option>`;
