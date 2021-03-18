@@ -6,7 +6,7 @@ function onOpen(e) {
   let ui = SpreadsheetApp.getUi();
 
   ui.createAddonMenu()
-    .addItem('Visual Tools', 'showInitDialog')
+    .addItem('Side Panel', 'showInitDialog')
     .addToUi();
 }
 

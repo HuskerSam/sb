@@ -5,7 +5,7 @@ create Realtime Database instance - this is the main database at this time
 Authentication - enable anonymous - this is for /view and /display<br>
 also enable Google - this is for /asset<br>
 also enable email/passwordless - this is for /asset<br>
--- only enable anonymous for production - recommended at this time - to prevent /asset access 
+-- only enable anonymous for production - recommended at this time - to prevent /asset access
 <br><br>
 create firestore instance (select region - will also create bucket storage) - this is only for configuration but will be the main database in a later release
 <br><br>
@@ -29,3 +29,12 @@ firebase deploy -P {FIREBASEPROJECTID}
  &nbsp; --only functions is possible but the hosting deploy is very fast anyways and this will be the regular command that works
  <br><br>
 to test deploy the web logo example using addon - FIREBASEPROJECTID and TOKENVALUE are the server credentials for addon
+<br><br>
+<b>Important:</b> CORS headers need to be set on the google bucket associated with the project<br>
+<a href="https://cloud.google.com/storage/docs/cross-origin#Configuring-CORS-on-a-Bucket" target="_blank">GCP Reference</a>
+<a href="https://handtop.com/docimages/cors.json" target="_blank">Example cors.json</a> - this file also lives in the code root directory.<br>
+
+gcloud auth login<br>
+ - then follow steps to authenticate (if needed)<br>
+gsutil cors set cors.json gs://{FIREBASEPROJECTID}.appspot.com from where the cors.json file exists (or path this cmd better).
+<br>

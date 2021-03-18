@@ -1,3 +1,4 @@
+<h2>Projects View: Deploy</h2>
 <img src="https://handtop.com/docimages/bluesetproject.png" style="height:1.5em;position:relative;top:.35em;">
 pins the selection as default.
 <br>
@@ -8,6 +9,7 @@ deploys the selection.
 deploys all projects.
 <br>
 <img src="https://handtop.com/docimages/projectdeploylist.png" style="height:1.5em;position:relative;top:.35em;">
+choose subview or open in browser for highlighted project.
 <br>
 [Deploy]: log of most recent deployment activity<br>
 [View]: embedded view of deployed<br>
@@ -15,3 +17,16 @@ deploys all projects.
 [Upload]: Upload images, audio files and mesh (.babylon or .glb/.gltf) files<br>
 [Open in ...]: Open specified application in new window<br>
 [QR Codes]: QR codes holding URLs for /display and /view<br>
+
+<img src="https://handtop.com/docimages/projectsviewhelp.png">
+<br>
+The list of projects comes from the <b>Projects</b> sheet, please reload the addon data if manually editing this sheet.
+<h2>Projects View: Upload</h2>
+<img src="https://handtop.com/docimages/uploadviewhelp.png">
+<br>
+<b>Important:</b> Server and Project required to be selected, also make sure to have
+enabled CORS on the GCP bucket being used, or that will cause problems.
+<br>
+Files are uploaded to bucket specific to Selected Server and location specific to Highlighted Project.<Br>
+<b>Note</b> when uploading files in other views of the addon, the Selected Project is used, not the Highlighted Project.
+<br>
