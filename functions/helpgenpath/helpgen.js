@@ -24,7 +24,7 @@ class HelpGen {
     let reviewHTML = '';
     let listHTML = '';
     if (reviewed) {
-      reviewHTML = `Reviewed: ${reviewed} <br>`;
+      reviewHTML = `${reviewed}`;
     }
     if (includeList) {
       listHTML = `<select id="help_template_select" value="${value}">${helpOptions}</select>`;
@@ -34,7 +34,6 @@ class HelpGen {
       if (deployed)
         listHTML += ` &nbsp; <a href="${deployed}" target="_blank">deployed</a>`;
     }
-
     return `<!doctype html>
     <html lang="en">
 
@@ -66,12 +65,11 @@ class HelpGen {
           <div class="gcse-search"></div>
         </div>
       </div>
-      <div style="padding:1em;">
+      <div style="padding:0 1em;">
         ${listHTML}
         ${reviewHTML}
-        <h1 style="display:inline-block;">${title}</h1>
       </div>
-      <div style="padding: 20px;flex:1;">${helpBody}</div>
+      <div style="padding: 0 1em;flex:1;">${helpBody}</div>
       <div class="footer_bar">
         <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         &nbsp;

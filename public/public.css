@@ -176,6 +176,7 @@ h1, h2 {
 }
 
 .footer_bar {
+  padding-top: 1.5em;
   line-height: 1.25em;
   padding-bottom: .5em;
   text-align: center;
