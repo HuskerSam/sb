@@ -211,7 +211,7 @@ class HelpGen {
     let lastCat = '';
     data.forEach(i => {
       if (lastCat !== i.category) {
-          html += '<div></div><h3>' + i.category + '</h3>';
+          html += '<div></div><h2>' + i.category + '</h2>';
           lastCat = i.category;
       }
 
