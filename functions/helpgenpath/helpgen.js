@@ -171,7 +171,7 @@ class HelpGen {
     });
     let title = 'Visual Catalogs Documentation';
     if (helpItem)
-      title = helpItem.title;
+      title = helpItem.category + ': ' + helpItem.title;
     let regex = /(<([^>]+)>)/ig;
     let desc = data.replace(regex, "");
     desc = desc.substring(0, 200);
@@ -208,7 +208,13 @@ class HelpGen {
     let html = '';
     let xml = '';
     let options = '';
+    let lastCat = '';
     data.forEach(i => {
+      if (lastCat !== i.category) {
+          html += '<h3>' + i.category + '</h3>';
+          lastCat = i.category;
+      }
+
       html += `<div class="help_display_item">`;
       html += ` <a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
       html += `<br><a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
@@ -217,7 +223,8 @@ class HelpGen {
       html += ` <span class="reviewed">${i.reviewed}</span>`;
       html += '</div>';
 
-      options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.title}</option>`;
+
+      options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.category}: ${i.title}</option>`;
 
       xml += `<url>
             <loc>https://handtop.com/doc/${i.value}</loc>
