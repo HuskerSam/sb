@@ -64,9 +64,9 @@ class HelpGen {
         <a href="/" class="logo">
           <img alt="small logo image" class="small_logo" src="https://handtop.com/images/handtop.png">
         </a>
-        <a href="/addon/">Addon</a>
+        ${ includeList ? '': '<a href="/addon/">Addon</a>' }
         <a href="/about/">About</a>
-        <a href="/doc/">Documentation</a>
+        ${ includeList ? '<a href="/doc/">Documentation</a>' : '' }
         <div class="search_box_wrapper">
           <div class="gcse-search"></div>
         </div>
