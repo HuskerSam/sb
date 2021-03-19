@@ -96,7 +96,7 @@ h1, h2 {
   margin: .15em;
   color: black;
   text-decoration: none;
-  float:left;
+  float: left;
   padding: .65em .25em;
   font-size: .95em;
   margin-bottom: .85em;
@@ -137,8 +137,8 @@ h1, h2 {
 }
 
 .search_box_wrapper {
-  float:left;
-  width:20em;
+  float: left;
+  width: 20em;
   margin-top: -0.5em;
 }
 
@@ -152,21 +152,19 @@ h1, h2 {
   border: silver;
 }
 
-
 .help_display_item {
-    border: solid 1px silver;
-    border-radius: .5em;
-    margin: .1em;
-    float: left;
-    text-align: left;
-    line-height: 1em;
-    padding: .5em;
+  border: solid 1px silver;
+  border-radius: .5em;
+  margin: .1em;
+  float: left;
+  text-align: left;
+  line-height: 1em;
+  padding: .5em;
 }
-
 
 .help_body {
   padding: 0 1em;
-  flex:1;
+  flex: 1;
   line-height: 2em;
 }
 
@@ -174,11 +172,7 @@ h1, h2 {
   text-align: center;
 }
 
-.item_help_view {
-
-}
-
-
+.item_help_view {}
 
 .list_help_view .help_body i {
   position: relative;
@@ -197,4 +191,17 @@ h1, h2 {
 
 .list_html_div a i {
   color: orange;
+}
+
+.help_body .reviewed {
+  font-size: .75em;
+  color: gray;
+}
+
+.list_html_div .review_text {
+  margin-left: .5em;
+  font-size: .75em;
+  color: gray;
+  position: relative;
+  top: -.5em;
 }
