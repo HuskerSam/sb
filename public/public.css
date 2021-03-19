@@ -143,21 +143,24 @@ h1, h2 {
 }
 
 .gsc-search-button.gsc-search-button-v2 {
-  background: silver;
-  border: gray;
+  background: orange;
+  border: red;
 }
 
-.gsc-search-button.gsc-search-button-v2:hover {
-  background: black;
+.gsc-search-button.gsc-search-button-v2:focus, .gsc-search-button.gsc-search-button-v2:hover {
+  background: gray;
+  border: silver;
 }
+
 
 .help_display_item {
     border: solid 1px silver;
-    margin: .1em .25em;
     border-radius: .5em;
-    padding: 0em .5em;
+    margin: .1em;
     float: left;
     text-align: left;
+    line-height: 1em;
+    padding: .5em;
 }
 
 
@@ -180,7 +183,7 @@ h1, h2 {
 .list_help_view .help_body i {
   position: relative;
   top: .25em;
-  color: black;
+  color: orange;
 }
 
 .list_help_view .help_body a {
@@ -188,6 +191,10 @@ h1, h2 {
 }
 
 #help_template_select {
-  font-size: 1.25em;
-  max-width: 90%;
+  position: relative;
+  top: -.5em;
+}
+
+.list_html_div a i {
+  color: orange;
 }

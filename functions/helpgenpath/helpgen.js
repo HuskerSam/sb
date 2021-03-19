@@ -29,12 +29,14 @@ class HelpGen {
       reviewClassName = 'item_help_view';
     }
     if (includeList) {
-      listHTML = `<select id="help_template_select" value="${value}">${helpOptions}</select>`;
+      listHTML = `<div class="list_html_div"><a href="/doc/"><i class="material-icons">help_center</i></a> <select id="help_template_select" value="${value}">${helpOptions}</select>`;
 
       if (video)
         listHTML += ` &nbsp; <a href="${video}" target="_blank"><i class="material-icons">ondemand_video</i></a>`;
       if (deployed)
         listHTML += ` &nbsp; <a href="${deployed}" target="_blank"><i class="material-icons">animation</i></a>`;
+
+      listHTML += '</div>';
     }
     return `<!doctype html>
     <html lang="en">
