@@ -8,8 +8,30 @@ to deploy and view the animation.
 <img src="https://handtop.com/docimages/addontemplates.png">
 <h3>Template Filters</h3>
 <h4>Setup,Other</h4>
- - example configuration sheets<br>
-<span>[Layout]</span> - variety of starting templates for circuits<br>
-<span>[Assets]</span> - preset templates of products and fixtures for fast prototyping<br>
-<span>[Products]</span> - examples of product sets that match up with circuits (Layouts)<br>
-<span>[Other]</span> - Audio and other misc templates<br>
+Configuration, Project, Deploy Options examples and more<br>
+<h4>Layout,Display</h4>
+Layouts and Displays will add a primary sheet with the project name
+and optionally supporting sheets for assets and products.<br>
+Layout examples are generally targeted for the /view application.<br>
+Display examples are more specialized and targeted for the /display application<br>
+All Layout and Display templates should work in all the included applications, including /asset.
+<h5>Checkboxes</h5>
+<img src="https://handtop.com/docimages/templateprojectsdefaultcheckbox.png" style="width:10em"><br>
+[Projects] adds the sheets generated from this template as a project row
+on the <b>Projects</b> sheet.<br>
+[Default] sets the resulting project to the default project.<br>
+<h4>Assets,Fragments</h4>
+Assets and fragment templates contain reusable data in a single sheet,
+for example mesh and material combinations for floors, walls, products
+and furnature.  These templates can be imported stand alone,
+but need to be associated with a project to deploy.
+<h5>Checkboxes</h5>
+<img src="https://handtop.com/docimages/templateaddforproject.png" style="width:5em"><br>
+This will append the created sheet to the comma appended list of asset ranges
+for the current project using getDataRangesForSheet (refer to <a href="https://handtop.com/doc/sheetsfunctions" target="_blank">Functions</a> for more)
+ to derive the ranges for the data tables.
+<h4>Products</h4>
+Examples of product sets in a single sheet that match up with circuits (Layouts)<br>
+Usually these are included with a layout, otherwise the [Add for Project]
+works the same as assets, except in this case it operates on the [Products]
+column of the currently selected project.
