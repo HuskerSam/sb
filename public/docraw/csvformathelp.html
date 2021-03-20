@@ -2,14 +2,10 @@ Importing CSV Data into frames - CSV record types<br>
 CSV column/field names are all lower case,
  and when possible convert (with case changes) directly to the field name on the babylon/webGL asset.
 <br>
-<br>
+
 <b>Common CSV Columns (asset field)</b>
-<br>title (name)<br>
-materialname (materialName)<br>
-color (diffuseColorName, ...)<br>
-texturepath, scaleu, scalev (diffuseTextureName, ...)<br>
-diffuse, ambient, emissive ('x' applies)<br>
-bmppath (bumpTextureName)<br>
+title<br>
+materialname<br>
 x (positionX)<br>
 y (positionY)<br>
 z (positionZ)<br>
@@ -18,18 +14,4 @@ ry (rotationY)<br>
 rz (rotationZ)<br>
 sx (scalingX)<br>
 sy (scalingY)<br>
-sz (scalingZ)
-<br><br>
-<b>Late bound naming system</b><br>
-side note about "relationships" - one of the reasons I use the "CSV" term - is I relate rows by "textkeys" (columns) - CSV seems to indicate keep the "internal ids" to a minimum - not quite "sql" (autogen id heavy) - not quite nosql with the
-child/json structure. So that's why I'm using "CSV" - in my app I'm name matching a lot this way (only ~6 record types - so not that crazy for this) - but keeps the data "mutable" - when I'm creating something related to something, that
-related something doesn't need to exist yet - I just need to know what it's going to be named.
-
-So if I have "storeisle" - and I want 5 sub items, "storeisle_floor", and "storeisle_ceiling", ... etc - they don't need to exist yet in my work flow - I create them later. Versus sql, where we'd need the "id". This is still an "id" - just
-"late bound" (I match it up later) - versus "early bound" - where it's more or less internal/compiled.
-
-Can make things slower and more complicated if used at the wrong times. But spreadsheet driven size of complexity is the types of processes are what I've done for a long time. And definitely the statroute is a "spreadsheet" manageable type
-of design complication.
-<br><br>
-soon to be released...
-<br>
+sz (scalingZ)<br>

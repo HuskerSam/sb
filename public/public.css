@@ -15,10 +15,6 @@ img {
   margin: auto;
 }
 
-h1, h2 {
-  font-size: 2em;
-}
-
 .demo_item {
   margin: 1em;
   border-radius: 2em;
@@ -169,7 +165,7 @@ h1, h2 {
 }
 
 .list_help_view .help_body {
-  text-align: center;
+  text-align: left;
 }
 
 .item_help_view {}
