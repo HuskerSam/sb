@@ -221,19 +221,23 @@ class HelpGen {
     let options = '';
     let lastCat = '';
     data.forEach(i => {
+      if (lastCat === '') //skip first on purpose
+        lastCat = i.category;
       if (lastCat !== i.category) {
           html += '<div></div><h2>' + i.category + '</h2>';
           lastCat = i.category;
       }
 
+      let displayTitle = i.title;
+      if (i.category === 'General')
+        displayTitle = '<h1>' + displayTitle + '</h1>';
       html += `<div class="help_display_item">`;
-      html += ` <a href="https://handtop.com/doc/${i.value}">${i.title}</a>`;
+      html += ` <a href="https://handtop.com/doc/${i.value}">${displayTitle}</a>`;
       html += `<br><a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
       html += ` <a href="${i.video}" ${ i.video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
       html += ` <a href="${i.deployed}" ${ i.deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
       html += ` <span class="reviewed">${i.reviewed}</span>`;
       html += '</div>';
-
 
       options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.category}: ${i.title}</option>`;
 

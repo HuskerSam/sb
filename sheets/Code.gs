@@ -315,7 +315,19 @@ function getCSVRangeForCell() {
   return "'" + sheetName + "'!" + range.getA1Notation();
 }
 
-function getTablesForCells() {
+/**
+ * returns a comma delimited list of ranges
+ * containing data tables from a list of
+ * of cells representing by strings
+ * including sheet name.
+ * is designed to consume output of getCSVFirstCellsFromSheet
+ * either script or cell based
+ * called by getDataRangesForSheet
+ *
+ * @param {"Sheet1!A1,Sheet1!A10,Sheet2!A1"} cellStringList list of top left cells of Data Tables
+ * @customfunction
+ */
+function getTablesForCells(cellStringList) {
   let cellStrings = [];
   let args = [...arguments];
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -349,7 +361,16 @@ function getTablesForCells() {
   return list;
 }
 
-function getCSVRangesFromSheet(sheetName) {
+/**
+ * gets top left cell for all possible Data Tables
+ * returns cell ranges as comma delimited list
+ * ranges include sheet names
+ * getDataRangesForSheet calls this function
+ *
+ * @param {"My Sheet"} sheetName string value
+ * @customfunction
+ */
+function getCSVFirstCellsFromSheet(sheetName) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   if (!sheet) return [];
   let lastRow = sheet.getLastRow();
@@ -383,6 +404,14 @@ function getCSVRangesFromSheet(sheetName) {
   return tableCells.join(',');
 }
 
+/**
+ * forces recalc of all cells in a sheet including
+ * clearing Sheets cache via SpreadsheeetApp.flush()
+ * after clearing cell formulas
+ *
+ * @param {"My Sheet"} sheetName string value
+ * @customfunction
+ */
 function refreshSheetQueries(sheet) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
 
@@ -410,6 +439,16 @@ function refreshSheetQueries(sheet) {
   }
 }
 
+/**
+ * forces recalc of a cell including
+ * clearing Sheets cache via SpreadsheeetApp.flush()
+ * after clearing cell formula
+ *
+ * @param {"My Sheet"} sheetName string value
+ * @param {1} row row index - starts with 1
+ * @param {1} col column index - starts with 1 = A
+ * @customfunction
+ */
 function forceEval(sheetName, row, col) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(sheetName);
@@ -420,6 +459,17 @@ function forceEval(sheetName, row, col) {
   sheet.getRange(row, col).setFormula(orig);
 }
 
+/**
+ * returns a sheet contain a Data Table as a json array of rows
+ * column headers are expected as first row, data is CSV Style
+ * this is an important function for addon is used for
+ * Configuration and Projects sheets
+ *
+ * @param {"My CSV Sheet"} sheetName sheet to process
+ * @param {false} refreshFormulas forceEval cells to update data and break caching
+ * @param {false} formulas export formulas instead of values
+ * @customfunction
+ */
 function getJSONFromCSVSheet(sheetName, refreshFormulas = false, formulas = false) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   if (!sheet)
@@ -461,29 +511,64 @@ function getJSONFromCSVSheet(sheetName, refreshFormulas = false, formulas = fals
   return outData;
 }
 
-function getStringForRange() {
+/**
+ * returns string representing passed native range
+ * uses getActiveRange() - so cut and paste requires recalcs
+ * also caching can be an issue, focus cell and refresh formula to update
+ *
+ * @param {Sheet!A1} sheetRange native sheet range
+ * @customfunction
+ */
+function getStringForRange(sheetRange) {
   let f = SpreadsheetApp.getActiveRange().getFormula();
   f = f.replace('=getStringForRange(', '');
   f = f.slice(0, -1);
   return f;
 }
 
-function getSheetFromRangeString(str) {
-  if (str.indexOf('!') === -1)
+/**
+ * Extracts sheet name as a string from a sheet range string
+ * i.e. 'Sheet name'!A1:B2 returns "Sheet name"
+ * sheet name (Sheet) required in range
+ *
+ * @param {"Sheet name!A1:B2"} rangeString string based range including sheet name
+ * @customfunction
+ */
+function getSheetFromRangeString(rangeString) {
+  if (rangeString.indexOf('!') === -1)
     return '';
-  let parts = str.split('!');
+  let parts = rangeString.split('!');
   let sheetName = parts[0].replace(/\'/g, '');
   return sheetName;
 }
 
-function getCellRangeFromRangeString(str) {
-  if (str.indexOf('!') === -1)
+/**
+ * Extracts cell range as a string from a sheet range string
+ * i.e. "Sheet!A1:B2" returns "A1:B2"
+ * sheet name required in range
+ *
+ * @param {"Sheet!A1:B2"}
+ * @customfunction
+ */
+function getCellRangeFromRangeString(sheetRange) {
+  if (sheetRange.indexOf('!') === -1)
     return '';
-  let parts = str.split('!');
+  let parts = sheetRange.split('!');
   let sheetName = parts[1].replace(/\'/g, '');
   return sheetName;
 }
 
+/**
+ * Returns json data for a sheet
+ * 50k return limit (sheets cell based)
+ * rows are returned in an array
+ *
+ * @param {"Sheet Name"}  sheetName   Sheet Name to process to json.
+ * @param {1} rowStart   first row to include in output.
+ * @param {100} rowLimit   row limits - i.e. 1 to 100 =  100 rows
+ * @param {1} block   block index - if over 50k, use 2 for the 2nd block, etc
+ * @customfunction
+ */
 function getJSONForSheet(sheetName, rowStart = 1, rowLimit = 100, block = 1) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetName);
   if (!sheet)
@@ -641,14 +726,49 @@ function onEdit(e) {
   }
 }
 
-function colorHeader(label) {
-  return label;
+/**
+ * Returns displayString as a result for the cell
+ * process the 2nd parameter as a cell range to
+ * process for 1,1,1 webGL based colors
+ * including color:, ecolor: and decolor: prefixed values
+ * and sets cells based on the 3rd, 4th, ... parameters
+ * as range to set the background color
+ * because the onEdit is used, the color update takes a few seconds
+ * values in adjacent rows with values in the same column are processed
+ * once an empty row/cell is encountered, the cell coloring stops.
+ * @param {"Header Description"} displayString usually a column header, value to be displayed in cell
+ * @param {D1} cellToWatch cell that might contain a webGL (1,1,1) string based color value
+ * @param {D1} firstCellToSet cell to set background color
+ * @param {C1} secondCellToSet second cell to set background color - as many as you like ...
+ * @customfunction
+*/
+function colorHeader(displayString, cellToWatch, firstCellToSet, secondCellToSet) {
+  return displayString;
 }
 
-function colorColumn(label) {
-  return label;
+/**
+ * Returns the displayString as a result for the cell
+ * processes all cells below for 1,1,1 webGL based colors
+ * including color:, ecolor: and decolor: prefixed values
+ * and sets the cell background using onEdit operator
+ * because the onEdit is used, the color update takes a few seconds
+ * values in adjacent rows with values in the same column are processed
+ * once an empty row/cell is encountered, the cell coloring stops.
+ * @param {"Header Description"} displayString usually a column header, value to be displayed in cell
+ * @customfunction
+*/
+function colorColumn(displayString) {
+  return displayString;
 }
 
+/**
+ * Returns js object {r,g,b}
+ * an internal function for other
+ * script functions
+ *
+ * @param {"1,1,1"}   strRGB string based 1,1,1 webGL color vector
+ * @customfunction
+*/
 function color(str) {
   if (!str) {
     str = '1,1,1';
@@ -674,8 +794,14 @@ function color(str) {
   };
 }
 
-function colorRGB255(str) {
-  let bC = color(str);
+/**
+ * Returns html rgb(255,255,255) color for webGL 1,1,1 color
+ *
+ * @param {"1,0,1"} webGLColor r,g,b vector, 0-1 color values
+ * @customfunction
+ */
+function colorRGB255(webGLColor) {
+  let bC = color(webGLColor);
   if (isNaN(bC.r))
     bC.r = 1;
   if (isNaN(bC.g))
@@ -686,10 +812,30 @@ function colorRGB255(str) {
   return 'rgb(' + (bC.r * 255.0).toFixed(0) + ',' + (bC.g * 255.0).toFixed(0) + ',' + (bC.b * 255.0).toFixed(0) + ')'
 }
 
+/**
+ * Returns comma delimited list of ranges
+ * for Data Tables start in the A column,
+ * with headers in the first column
+ * table end is first row with column A empty
+ * rows with an empty column A are ignored (i.e. comments)
+ * this function is essential for the Projects Sheet
+ * = getTablesForCells(getCSVFirstCellsFromSheet(sheet))
+ *
+ * @param {"Sheet Name"}  sheetName   Sheet Name to process range for Data Tables.
+ * @customfunction
+ */
 function getDataRangesForSheet(sheet) {
-  return getTablesForCells(getCSVRangesFromSheet(sheet))
+  return getTablesForCells(getCSVFirstCellsFromSheet(sheet))
 }
 
+/**
+ * Similar to join(delimiter) in Javascript
+ * takes a range and returns a delimited list of values as a string
+ *
+ * @param {","}  delimiter  delimiter to separate cell data i.e. comma, tab or space
+ * @param {B2:E10}  rangeValues  range of cells used for input values
+ * @customfunction
+ */
 function gridJoin(delimiter, rangeValues) {
   let result = '';
 
