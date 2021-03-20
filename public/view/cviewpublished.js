@@ -100,6 +100,9 @@ class cViewPublished extends bView {
     this._displayCameraFeatures();
   }
   _displayCameraFeatures() {
+    if (!this.rootBlock)
+      return;
+      
     this.updateDisplayCameraName();
     if (this.displayCamera) {
       setTimeout(() => this.updateSelectedCamera(), 150);
