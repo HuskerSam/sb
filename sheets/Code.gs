@@ -226,9 +226,8 @@ function JSONArrayToPipeData(strJSONArray, maxValue) {
  * based list or a native json array
  * results can be json or cell based output
  *
- * @param {[]} rows array of strings, each respresenting a datarange
- * @param {true} range2 range containing Data Table
- * @param {Sheet3!A1:B10} range3 range containing Data Table... and so on
+ * @param rows array of strings, each respresenting a datarange
+ * @param jsonResult true for script native data result
  * @customfunction
  */
 function mergeCSVRangeStrings(rows, jsonResults = false) {
@@ -338,7 +337,7 @@ function _mergeCSVRanges(rangeArray, jsonResults = false) {
  * columns if the column is empty in all rows
  * script/json based parameters
  *
- * @param {[{"a":"1"},{"c":""}]} rows array of json maps
+ * @param rows array of json maps
  * @customfunction
  */
 function truncateEmptyCSVColumns(rows) {
@@ -608,7 +607,7 @@ function getJSONFromCSVSheet(sheetName, refreshFormulas = false, formulas = fals
  * uses getActiveRange() - so cut and paste requires recalcs
  * also caching can be an issue, focus cell and refresh formula to update
  *
- * @param {Sheet!A1} sheetRange native sheet range
+ * @param {"Sheet!A1"} sheetRange native sheet range
  * @customfunction
  */
 function getStringForRange(sheetRange) {

@@ -1,11 +1,3351 @@
-<h2>getDataRangesForSheet</h2>
-<h3>Heavily Used Function</h3>
-This function returns a list of ranges containing the data tables for a sheet.<br>
- - data must start in the first (A) column<br>
- - first row is headers<br>
- - each row must have an entry in the first column, or else it's an end of table<br>
- - the data table/range is ended when the first blank row shows up (no entry in first column)<br>
- - rows with no data in the first column are ingnored, allowing for comments<br>
+<div id="main">
 
-<h2>getJSONForSheet</h2>
-<img src="https://handtop.com/docimages/getJSONForSheetFunction.png">
+  <h1 class="page-title">Global</h1>
+
+
+
+
+
+
+  <section>
+
+    <header>
+
+      <h2></h2>
+
+
+    </header>
+
+    <article>
+      <div class="container-overview">
+
+
+
+
+
+
+        <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        </dl>
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+      <h3 class="subsection-title">Methods</h3>
+
+
+
+
+
+
+
+      <h4 class="name" id="AddRowToProjectList"><span class="type-signature"></span>AddRowToProjectList<span class="signature">(name, circuitranges, assetranges, productssheet, flags)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        adds project row to Projects sheet
+        adds Projects sheet if it doesn't exist
+        used by Addon to automate project mgmt
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>name</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"My Project"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">project name</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>circuitranges</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">""</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">comma delimited list of circuit ranges</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>assetranges</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">""</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">comma delimited list of asset ranges</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>productssheet</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">""</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">comma delimited list of product ranges</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>flags</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"remove,ignore"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">use ignore to ignore project for deploy all or remove to delete from server</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line147">line 147</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="color"><span class="type-signature"></span>color<span class="signature">(strRGB)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Returns js object {r,g,b}
+        an internal function for other
+        script functions
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>strRGB</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"1,1,1"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">string based 1,1,1 webGL color vector</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line863">line 863</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="colorColumn"><span class="type-signature"></span>colorColumn<span class="signature">(displayString)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Returns the displayString as a result for the cell
+        processes all cells below for 1,1,1 webGL based colors
+        including color:, ecolor: and decolor: prefixed values
+        and sets the cell background using onEdit operator
+        because the onEdit is used, the color update takes a few seconds
+        values in adjacent rows with values in the same column are processed
+        once an empty row/cell is encountered, the cell coloring stops.
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>displayString</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Header Description"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">usually a column header, value to be displayed in cell</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line851">line 851</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="colorHeader"><span class="type-signature"></span>colorHeader<span class="signature">(displayString, cellToWatch, firstCellToSet, secondCellToSet)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Returns displayString as a result for the cell
+        process the 2nd parameter as a cell range to
+        process for 1,1,1 webGL based colors
+        including color:, ecolor: and decolor: prefixed values
+        and sets cells based on the 3rd, 4th, ... parameters
+        as range to set the background color
+        because the onEdit is used, the color update takes a few seconds
+        values in adjacent rows with values in the same column are processed
+        once an empty row/cell is encountered, the cell coloring stops.
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>displayString</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Header Description"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">usually a column header, value to be displayed in cell</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>cellToWatch</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">D1</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">cell that might contain a webGL (1,1,1) string based color value</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>firstCellToSet</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">D1</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">cell to set background color</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>secondCellToSet</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">C1</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">second cell to set background color - as many as you like ...</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line836">line 836</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="colorRGB255"><span class="type-signature"></span>colorRGB255<span class="signature">(webGLColor)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Returns html rgb(255,255,255) color for webGL 1,1,1 color
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>webGLColor</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"1,0,1"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">r,g,b vector, 0-1 color values</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line894">line 894</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="createSheetFromTemplate"><span class="type-signature"></span>createSheetFromTemplate<span class="signature">(sheetName, template)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Create sheet from json template
+        script function, array is native javascript
+        used by addon to create templates
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetName</code></td>
+
+
+            <td class="type">
+
+            </td>
+
+
+
+
+
+            <td class="description last">sheet name</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>template</code></td>
+
+
+            <td class="type">
+
+            </td>
+
+
+
+
+
+            <td class="description last">json array of cell descriptions</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line38">line 38</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="forceEval"><span class="type-signature"></span>forceEval<span class="signature">(sheetName, row, col)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        forces recalc of a cell including
+        clearing Sheets cache via SpreadsheeetApp.flush()
+        after clearing cell formula
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetName</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"My Sheet"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">string value</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>row</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">1</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">row index - starts with 1</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>col</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">1</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">column index - starts with 1 = A</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line543">line 543</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getCellRangeFromRangeString"><span class="type-signature"></span>getCellRangeFromRangeString<span class="signature">(sheetRange)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Extracts cell range as a string from a sheet range string
+        i.e. "Sheet!A1:B2" returns "A1:B2"
+        sheet name required in range
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetRange</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Sheet!A1:B2"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last"></td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line644">line 644</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getCSVFirstCellsFromSheet"><span class="type-signature"></span>getCSVFirstCellsFromSheet<span class="signature">(sheetName)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        gets top left cell for all possible Data Tables
+        returns cell ranges as comma delimited list
+        ranges include sheet names
+        getDataRangesForSheet calls this function
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetName</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"My Sheet"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">string value</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line464">line 464</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getCSVRangeForCell"><span class="type-signature"></span>getCSVRangeForCell<span class="signature">(cellStringList)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        returns a string representing a range
+        containing the data table from
+        from the range string containing a cell
+        passed
+        uses Range.getDataRegion() internally to determine table boundaries
+        similar to getTablesForCells
+        uses getActiveRange similar to getStringForRange
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>cellStringList</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Sheet1!A1,Sheet1!A10,Sheet2!A1"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">list of top left cells of Data Tables</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line393">line 393</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getDataRangesForSheet"><span class="type-signature"></span>getDataRangesForSheet<span class="signature">(sheetName)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Returns comma delimited list of ranges
+        for Data Tables start in the A column,
+        with headers in the first column
+        table end is first row with column A empty
+        rows with an empty column A are ignored (i.e. comments)
+        this function is essential for the Projects Sheet
+        = getTablesForCells(getCSVFirstCellsFromSheet(sheet))
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetName</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Sheet Name"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">Sheet Name to process range for Data Tables.</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line918">line 918</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getJSONForSheet"><span class="type-signature"></span>getJSONForSheet<span class="signature">(sheetName, rowStart, rowLimit, block)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Returns json data for a sheet
+        50k return limit (sheets cell based)
+        rows are returned in an array
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+            <th>Default</th>
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetName</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Sheet Name"</span>
+
+
+
+            </td>
+
+
+
+
+            <td class="default">
+
+            </td>
+
+
+            <td class="description last">Sheet Name to process to json.</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>rowStart</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">1</span>
+
+
+
+            </td>
+
+
+
+
+            <td class="default">
+
+              1
+
+            </td>
+
+
+            <td class="description last">first row to include in output.</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>rowLimit</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">100</span>
+
+
+
+            </td>
+
+
+
+
+            <td class="default">
+
+              100
+
+            </td>
+
+
+            <td class="description last">row limits - i.e. 1 to 100 = 100 rows</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>block</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">1</span>
+
+
+
+            </td>
+
+
+
+
+            <td class="default">
+
+              1
+
+            </td>
+
+
+            <td class="description last">block index - if over 50k, use 2 for the 2nd block, etc</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line663">line 663</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getJSONFromCSVSheet"><span class="type-signature"></span>getJSONFromCSVSheet<span class="signature">(sheetName, refreshFormulas, formulas)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        returns a sheet contain a Data Table as a json array of rows
+        column headers are expected as first row, data is CSV Style
+        this is an important function for addon is used for
+        Configuration and Projects sheets
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+            <th>Default</th>
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetName</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"My CSV Sheet"</span>
+
+
+
+            </td>
+
+
+
+
+            <td class="default">
+
+            </td>
+
+
+            <td class="description last">sheet to process</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>refreshFormulas</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">false</span>
+
+
+
+            </td>
+
+
+
+
+            <td class="default">
+
+              false
+
+            </td>
+
+
+            <td class="description last">forceEval cells to update data and break caching</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>formulas</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">false</span>
+
+
+
+            </td>
+
+
+
+
+            <td class="default">
+
+              false
+
+            </td>
+
+
+            <td class="description last">export formulas instead of values</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line564">line 564</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getSheetFromRangeString"><span class="type-signature"></span>getSheetFromRangeString<span class="signature">(rangeString)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Extracts sheet name as a string from a sheet range string
+        i.e. 'Sheet name'!A1:B2 returns "Sheet name"
+        sheet name (Sheet) required in range
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>rangeString</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Sheet name!A1:B2"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">string based range including sheet name</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line628">line 628</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getStringForRange"><span class="type-signature"></span>getStringForRange<span class="signature">(sheetRange)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        returns string representing passed native range
+        uses getActiveRange() - so cut and paste requires recalcs
+        also caching can be an issue, focus cell and refresh formula to update
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetRange</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Sheet!A1"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">native sheet range</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line613">line 613</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="getTablesForCells"><span class="type-signature"></span>getTablesForCells<span class="signature">(cellStringList)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        returns a comma delimited list of ranges
+        containing data tables from a list of
+        of cells representing by strings
+        including sheet name.
+        is designed to consume output of getCSVFirstCellsFromSheet
+        either script or cell based
+        called by getDataRangesForSheet
+        uses Range.getDataRegion() internally to determine table boundaries
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>cellStringList</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"Sheet1!A1,Sheet1!A10,Sheet2!A1"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">list of top left cells of Data Tables</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line421">line 421</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="gridJoin"><span class="type-signature"></span>gridJoin<span class="signature">(delimiter, rangeValues)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        Similar to join(delimiter) in Javascript
+        takes a range and returns a delimited list of values as a string
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>delimiter</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">","</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">delimiter to separate cell data i.e. comma, tab or space</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>rangeValues</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">B2:E10</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">range of cells used for input values</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line930">line 930</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="JSONArrayMax"><span class="type-signature"></span>JSONArrayMax<span class="signature">(jsonArray)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        array of arrays to be broken into list of cells containing array each
+        string form of json inputs and outputs
+        used primarily for audio data
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>jsonArray</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"[1,5,12.1,0,1]"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">array of values (sing form of json)</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line171">line 171</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="JSONArraysToCells"><span class="type-signature"></span>JSONArraysToCells<span class="signature">(jsonArrays)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        array of arrays to be broken into list of cells containing array each
+        string form of json inputs and outputs
+        used primarily for audio data
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>jsonArrays</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"[[1][2]]"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">array of arrays</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line190">line 190</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="JSONArrayToPipeData"><span class="type-signature"></span>JSONArrayToPipeData<span class="signature">(strJSONArray, maxValue)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        takes a json array in string form and returns
+        a pipe delimited result ('|')
+        used primarily for audio data
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>strJSONArray</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"[1,5,12.1,0,1]"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">array of values to convert = 1|5|12.1 ...</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>maxValue</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">10</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">max to clip array</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line208">line 208</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="mergeCSVRanges"><span class="type-signature"></span>mergeCSVRanges<span class="signature">()</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        legacy - takes range(s) representing Data Tables as argument(s)
+        and merges them into one result
+        takes in variable number of arguments, each a range
+        containing a data table/csv data
+      </div>
+
+
+
+
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line282">line 282</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="mergeCSVRangeStrings"><span class="type-signature"></span>mergeCSVRangeStrings<span class="signature">(rows, jsonResult)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        legacy - takes string based range(s) representing Data Tables as argument(s)
+        and merges them into one result
+        supports |||| operator for data based in external workbooks
+        embedded or script based function - input rows can be a range
+        based list or a native json array
+        results can be json or cell based output
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>rows</code></td>
+
+
+            <td class="type">
+
+            </td>
+
+
+
+
+
+            <td class="description last">array of strings, each respresenting a datarange</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>jsonResult</code></td>
+
+
+            <td class="type">
+
+            </td>
+
+
+
+
+
+            <td class="description last">true for script native data result</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line233">line 233</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="refreshSheetQueries"><span class="type-signature"></span>refreshSheetQueries<span class="signature">(sheetName)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        forces recalc of all cells in a sheet including
+        clearing Sheets cache via SpreadsheeetApp.flush()
+        after clearing cell formulas
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetName</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"My Sheet"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">string value</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line506">line 506</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="SetCSVSheetValue"><span class="type-signature"></span>SetCSVSheetValue<span class="signature">(sheetName, rowIndex, field, value)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        for use CSV sheets (one data table per sheet)
+        Projects and Configuration sheets make use of this
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>sheetName</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"my sheet"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">sheet name string</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>rowIndex</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">1</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">1 is first row</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>field</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">"column"</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">column header</td>
+          </tr>
+
+
+
+          <tr>
+
+            <td class="name"><code>value</code></td>
+
+
+            <td class="type">
+
+
+              <span class="param-type">1</span>
+
+
+
+            </td>
+
+
+
+
+
+            <td class="description last">field value</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line102">line 102</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+      <h4 class="name" id="truncateEmptyCSVColumns"><span class="type-signature"></span>truncateEmptyCSVColumns<span class="signature">(rows)</span><span class="type-signature"></span></h4>
+
+
+
+
+
+
+      <div class="description">
+        analyzes an array of json rows and removes
+        columns if the column is empty in all rows
+        script/json based parameters
+      </div>
+
+
+
+
+
+
+
+
+
+      <h5>Parameters:</h5>
+
+
+      <table class="params">
+        <thead>
+          <tr>
+
+            <th>Name</th>
+
+
+            <th>Type</th>
+
+
+
+
+
+            <th class="last">Description</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr>
+
+            <td class="name"><code>rows</code></td>
+
+
+            <td class="type">
+
+            </td>
+
+
+
+
+
+            <td class="description last">array of json maps</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+
+
+
+
+
+
+      <dl class="details">
+
+
+
+
+
+
+
+
+
+
+        <dt class="tag-source">Source:</dt>
+        <dd class="tag-source">
+          <ul class="dummy">
+            <li>
+              <a href="Code.js.html">Code.js</a>, <a href="Code.js.html#line343">line 343</a>
+            </li>
+          </ul>
+        </dd>
+
+
+
+
+
+
+
+      </dl>
+
+
+
+
+
+
+
+
+
+
+    </article>
+
+  </section>
+
+
+
+
+</div>
+
+<nav>
+  <h2><a href="index.html">Home</a></h2>
+  <h3>Global</h3>
+  <ul>
+    <li><a href="global.html#AddRowToProjectList">AddRowToProjectList</a></li>
+    <li><a href="global.html#color">color</a></li>
+    <li><a href="global.html#colorColumn">colorColumn</a></li>
+    <li><a href="global.html#colorHeader">colorHeader</a></li>
+    <li><a href="global.html#colorRGB255">colorRGB255</a></li>
+    <li><a href="global.html#createSheetFromTemplate">createSheetFromTemplate</a></li>
+    <li><a href="global.html#forceEval">forceEval</a></li>
+    <li><a href="global.html#getCellRangeFromRangeString">getCellRangeFromRangeString</a></li>
+    <li><a href="global.html#getCSVFirstCellsFromSheet">getCSVFirstCellsFromSheet</a></li>
+    <li><a href="global.html#getCSVRangeForCell">getCSVRangeForCell</a></li>
+    <li><a href="global.html#getDataRangesForSheet">getDataRangesForSheet</a></li>
+    <li><a href="global.html#getJSONForSheet">getJSONForSheet</a></li>
+    <li><a href="global.html#getJSONFromCSVSheet">getJSONFromCSVSheet</a></li>
+    <li><a href="global.html#getSheetFromRangeString">getSheetFromRangeString</a></li>
+    <li><a href="global.html#getStringForRange">getStringForRange</a></li>
+    <li><a href="global.html#getTablesForCells">getTablesForCells</a></li>
+    <li><a href="global.html#gridJoin">gridJoin</a></li>
+    <li><a href="global.html#JSONArrayMax">JSONArrayMax</a></li>
+    <li><a href="global.html#JSONArraysToCells">JSONArraysToCells</a></li>
+    <li><a href="global.html#JSONArrayToPipeData">JSONArrayToPipeData</a></li>
+    <li><a href="global.html#mergeCSVRanges">mergeCSVRanges</a></li>
+    <li><a href="global.html#mergeCSVRangeStrings">mergeCSVRangeStrings</a></li>
+    <li><a href="global.html#refreshSheetQueries">refreshSheetQueries</a></li>
+    <li><a href="global.html#SetCSVSheetValue">SetCSVSheetValue</a></li>
+    <li><a href="global.html#truncateEmptyCSVColumns">truncateEmptyCSVColumns</a></li>
+  </ul>
+</nav>
+
+<br class="clear">
