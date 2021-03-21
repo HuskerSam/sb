@@ -1,16 +1,63 @@
 <style>
+  h4, h5 {
+    margin: 0;
+  }
+
+  div.description {
+    line-break: anywhere;
+  }
+
+  h4.name {
+    font-weight: bold;
+    margin-top: .1em;
+    padding-top: .25em;
+    font-family: monospace;
+    border-top: inset 4px silver;
+  }
+
+  h4 span.signature {
+    font-weight: normal;
+  }
+
+  table.params
+  {
+      border-spacing: 0;
+      border: 0;
+      border-collapse: collapse;
+      width: 100%;
+  }
+
     #main dl.details {
       display: none;
     }
+
+  table.params  td, th
+    {
+        border: 1px solid #ddd;
+        margin: 0px;
+        text-align: left;
+        vertical-align: top;
+        padding: 4px 6px;
+        display: table-cell;
+        overflow: hidden;
+        line-break: anywhere;
+    }
+
+  table.params  thead tr
+    {
+        background-color: #ddd;
+        font-weight: bold;
+    }
+
+  table.params  th { border-right: 1px solid #aaa; }
+  table.params  tr > th:last-child { border-right: 1px solid #ddd; }
+
+article {
+  overflow: hidden;
+}
+
 </style>
 <div id="main">
-
-  <h1 class="page-title">Global</h1>
-
-
-
-
-
 
   <section>
 
@@ -56,11 +103,6 @@
 
 
 
-      <h3 class="subsection-title">Methods</h3>
-
-
-
-
 
 
 
@@ -95,7 +137,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -298,7 +340,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -413,7 +455,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -530,7 +572,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -708,7 +750,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -819,7 +861,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -943,7 +985,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -1100,7 +1142,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -1212,7 +1254,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -1327,7 +1369,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -1442,7 +1484,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -1553,7 +1595,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -1758,7 +1800,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -1933,7 +1975,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -2044,7 +2086,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -2160,7 +2202,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -2270,7 +2312,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -2404,7 +2446,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -2515,7 +2557,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -2626,7 +2668,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -2823,7 +2865,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -2947,7 +2989,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -3057,7 +3099,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
@@ -3237,7 +3279,7 @@
             <th>Name</th>
 
 
-            <th>Type</th>
+            <th>Example Data</th>
 
 
 
