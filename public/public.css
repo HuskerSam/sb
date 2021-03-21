@@ -201,3 +201,9 @@ img {
   position: relative;
   top: -.5em;
 }
+
+a.gsst_a {
+  padding: 0;
+  margin: 0;
+  line-height: .5em;
+}
