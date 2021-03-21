@@ -27,6 +27,14 @@ function showDialog(name) {
   SpreadsheetApp.getUi().showSidebar(html);
 }
 
+/**
+ * Create sheet from json template
+ * script function, array is native javascript
+ * used by addon to create templates
+ *
+ * @param sheetName sheet name
+ * @param template json array of cell descriptions
+ */
 function createSheetFromTemplate(sheetName, template) {
   let activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = activeSpreadsheet.getSheetByName(sheetName);
@@ -82,6 +90,15 @@ function createSheetFromTemplate(sheetName, template) {
   return "success";
 }
 
+/**
+ * for use CSV sheets (one data table per sheet)
+ * Projects and Configuration sheets make use of this
+ *
+ * @param {"my sheet"} sheetName sheet name string
+ * @param {1} rowIndex 1 is first row
+ * @param {"column"} field column header
+ * @param {1} value field value
+ */
 function SetCSVSheetValue(sheetName, rowIndex, field, value) {
   if (!sheetName || !field || !rowIndex)
     return;
@@ -116,6 +133,17 @@ function SetCSVSheetValue(sheetName, rowIndex, field, value) {
     sheet.getRange(colSymbol + rowNumber).setValue(value);
 }
 
+/**
+ * adds project row to Projects sheet
+ * adds Projects sheet if it doesn't exist
+ * used by Addon to automate project mgmt
+ *
+ * @param {"My Project"} name project name
+ * @param {""} circuitranges comma delimited list of circuit ranges
+ * @param {""} assetranges comma delimited list of asset ranges
+ * @param {""} productssheet comma delimited list of product ranges
+ * @param {"remove,ignore"} flags use ignore to ignore project for deploy all or remove to delete from server
+ */
 function AddRowToProjectList(name, circuitranges, assetranges, productssheet, flags) {
   let activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = activeSpreadsheet.getSheetByName('Projects');
@@ -133,7 +161,14 @@ function AddRowToProjectList(name, circuitranges, assetranges, productssheet, fl
   SetCSVSheetValue('Projects', row, 'Flags', flags);
 }
 
-function JSONArrayMax(jsonArray) {
+/**
+ * array of arrays to be broken into list of cells containing array each
+ * string form of json inputs and outputs
+ * used primarily for audio data
+ *
+ * @param {"[1,5,12.1,0,1]"} jsonArray array of values (sing form of json)
+ */
+ function JSONArrayMax(jsonArray) {
   let arr = JSON.parse(jsonArray);
 
   let max = 0;
@@ -145,6 +180,13 @@ function JSONArrayMax(jsonArray) {
   return max;
 }
 
+/**
+ * array of arrays to be broken into list of cells containing array each
+ * string form of json inputs and outputs
+ * used primarily for audio data
+ *
+ * @param {"[[1][2]]"} jsonArrays array of arrays
+ */
 function JSONArraysToCells(jsonArrays) {
   let dataList = JSON.parse(jsonArrays);
   let outList = [];
@@ -155,8 +197,16 @@ function JSONArraysToCells(jsonArrays) {
   return outList;
 }
 
-function JSONArrayToPipeData(jsonArray, maxValue) {
-  let arr = JSON.parse(jsonArray);
+/**
+ * takes a json array in string form and returns
+ * a pipe delimited result ('|')
+ * used primarily for audio data
+ *
+ * @param {"[1,5,12.1,0,1]"} strJSONArray array of values to convert = 1|5|12.1 ...
+ * @param {10} maxValue max to clip array
+ */
+function JSONArrayToPipeData(strJSONArray, maxValue) {
+  let arr = JSON.parse(strJSONArray);
 
   let outString = '';
   arr.forEach(item => {
@@ -168,6 +218,19 @@ function JSONArrayToPipeData(jsonArray, maxValue) {
   return outString;
 }
 
+/**
+ * legacy - takes string based range(s) representing Data Tables as argument(s)
+ * and merges them into one result
+ * supports |||| operator for data based in external workbooks
+ * embedded or script based function - input rows can be a range
+ * based list or a native json array
+ * results can be json or cell based output
+ *
+ * @param {[]} rows array of strings, each respresenting a datarange
+ * @param {true} range2 range containing Data Table
+ * @param {Sheet3!A1:B10} range3 range containing Data Table... and so on
+ * @customfunction
+ */
 function mergeCSVRangeStrings(rows, jsonResults = false) {
   var ranges = [];
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -209,6 +272,14 @@ function _fetchRemoteRange(spreadsheetId, rangeName) {
   return range;
 }
 
+/**
+ * legacy - takes range(s) representing Data Tables as argument(s)
+ * and merges them into one result
+ * takes in variable number of arguments, each a range
+ * containing a data table/csv data
+ *
+ * @customfunction
+ */
 function mergeCSVRanges() {
   return _mergeCSVRanges(arguments);
 }
@@ -262,6 +333,14 @@ function _mergeCSVRanges(rangeArray, jsonResults = false) {
   return outRows;
 }
 
+/**
+ * analyzes an array of json rows and removes
+ * columns if the column is empty in all rows
+ * script/json based parameters
+ *
+ * @param {[{"a":"1"},{"c":""}]} rows array of json maps
+ * @customfunction
+ */
 function truncateEmptyCSVColumns(rows) {
   let processedRows = [];
   let validColumns = {};
@@ -300,6 +379,18 @@ function truncateEmptyCSVColumns(rows) {
   return resultRows;
 }
 
+/**
+ * returns a string representing a range
+ * containing the data table from
+ * from the range string containing a cell
+ * passed
+ * uses Range.getDataRegion() internally to determine table boundaries
+ * similar to getTablesForCells
+ * uses getActiveRange similar to getStringForRange
+ *
+ * @param {"Sheet1!A1,Sheet1!A10,Sheet2!A1"} cellStringList list of top left cells of Data Tables
+ * @customfunction
+ */
 function getCSVRangeForCell() {
   let f = SpreadsheetApp.getActiveRange().getFormula();
   f = f.replace('=getCSVRangeForCell(', '');
@@ -323,6 +414,7 @@ function getCSVRangeForCell() {
  * is designed to consume output of getCSVFirstCellsFromSheet
  * either script or cell based
  * called by getDataRangesForSheet
+ * uses Range.getDataRegion() internally to determine table boundaries
  *
  * @param {"Sheet1!A1,Sheet1!A10,Sheet2!A1"} cellStringList list of top left cells of Data Tables
  * @customfunction
