@@ -4,65 +4,74 @@ Please use one of the other servers in the list if you want some longer persiste
 <h2>Data Ownership</h2>
 Data created is "mostly" our property, your pictures, meshes and other data you upload is yours
 and your responsibility, we have no intention of claiming any rights to any of your media
- or profiting from it.
+or profiting from it.
 <h2>% based values in cells</h2>
 % based values are useful when working with frame times - be careful to either add a "'"
 to the front i.e. 98% = '98%, or 98% = ="98%" in the cell. Otherwise sheets calcs 98% = .98 - which equates to .98 ms.
 <h2>Sheets Timeouts</h2>
 functions must finish in 60 seconds or they fail - this at busy times of
- day (afternoon/evening USA) can cause intermitent fails - so check formula results and try again at times to make sure no errors
+day (afternoon/evening USA) can cause intermitent fails - so check formula results and try again at times to make sure no errors
 <h2>Addon Refresh Times</h2>
 Please be patient with the add for best results, wait until the green uploading/deploying/refreshing data
- is done to navigate and change values - we know it's slow it likely always will be<br>
+is done to navigate and change values - we know it's slow it likely always will be<br>
 <h2>Special Characters in names</h2>
 Try not to use commas (,) or other special characters in names (/, http, etc) as it may cause errors
 
-  <h1>Release Notes / Future Map</h1>
-  <h2>Features For Release</h2>
-    <h3>preset basket position and sizes</h3>
-    so selected items appear "in cart" in a pre defined (and better) way - similar to product positions - this would be basket positions
-  <h3>get instancing to work</h3>
-    when it's the same mesh in multiple child blocks - and no scaling is used (possibly use a flag at the block (or block child) level that hides/diables frame scaling
-    <br>
-    an instance flag on the block child record could force the mesh/shape to use an "instance" cache for all items in the animation (not just the current block) - the scale settings would come from the mesh/shape record
-  <h3>use a ghost block</h3>
-  when picking an item on local device for motion and scaling?
-  <br>
-    iterate away from changing the animation and use user profile and ghost blocks for user specific variations (i.e. cart should be full of ghost blocks - also use ghost blocks when picking an item)
-  <h3>fixup login on /asset so it caches credentials</h3>
-  <h3>remove music generation data after frames generated</h3>
-   (also provide option other then scaling to make it usable on mobile - such as a shaking rotation)
-  <h3>popup confirmation of data copied to clipboard</h3>
-   (like aws)
-  <h3>audio support for /view</h3>
-  <h3>Saved Camera Updates</h3>
-  investigate saved camera with default camera in /view, and also default arcrotate camera in /display for the move buttons
-  <h3>add fragments, assets and products to template preview</h3>
-  just info in the detail panel in addon
-	<h2>next release / need more thought</h2>
-  <h3>/asset - add open material new window</h3>
-   to make it easy to open and drill down into materials
-   <h3>realtime editable experience near homepage?  like logo editor???</h3>
-   <h3>need to created texture for /product/product_chips.babylon</h3>
-   <h3>Meter based units - unit factors</h3>
-    add cm operator for spatial units?  would 1/100 multiplier to convert to meters as a base unit (like ms for time)
-    <h3>refactor frames data to be children of blockchild records - deprecate frames collection</h3>
-      pre firestore conversion for sure
-    <h3>mesh/texture preview in 3d</h3>
-      for addon? (vs saved preview image)
-      <br>
-        maybe /preview that fast generates texture/mat/mesh and shows?
-      <br>autofit
-      <br>shape preview with realtime adjustments?
-    <h3>.glb export updates</h3>
-     (raw color problem) - convert the color: values to an inline embedded images for export data: ...
-    <h3>color picker for message type on product positioning</h3>
+<h1>Release Notes / Future Map</h1>
+<h2>Features For Release</h2>
+<h3>preset basket position and sizes</h3>
+so selected items appear "in cart" in a pre defined (and better) way - similar to product positions - this would be basket positions
+<h3>get instancing to work</h3>
+when it's the same mesh in multiple child blocks - and no scaling is used (possibly use a flag at the block (or block child) level that hides/diables frame scaling
+<br>
+an instance flag on the block child record could force the mesh/shape to use an "instance" cache for all items in the animation (not just the current block) - the scale settings would come from the mesh/shape record
+<h3>use a ghost block</h3>
+when picking an item on local device for motion and scaling?
+<br>
+iterate away from changing the animation and use user profile and ghost blocks for user specific variations (i.e. cart should be full of ghost blocks - also use ghost blocks when picking an item)
+<h3>fixup login on /asset so it caches credentials</h3>
+<h3>remove music generation data after frames generated</h3>
+(also provide option other then scaling to make it usable on mobile - such as a shaking rotation)
+<h3>popup confirmation of data copied to clipboard</h3>
+(like aws)
+<h3>audio support for /view</h3>
+<h3>Saved Camera Updates</h3>
+investigate saved camera with default camera in /view, and also default arcrotate camera in /display for the move buttons
+<h3>add fragments, assets and products to template preview</h3>
+just info in the detail panel in addon
+<h2>next release / need more thought</h2>
+<h3>/asset - add open material new window</h3>
+to make it easy to open and drill down into materials
+<h3>realtime editable experience near homepage? like logo editor???</h3>
+<h3>need to created texture for /product/product_chips.babylon</h3>
+<h3>Meter based units - unit factors</h3>
+add cm operator for spatial units? would 1/100 multiplier to convert to meters as a base unit (like ms for time)
+<h3>refactor frames data to be children of blockchild records - deprecate frames collection</h3>
+pre firestore conversion for sure
+<h3>mesh/texture preview in 3d</h3>
+for addon? (vs saved preview image)
+<br>
+maybe /preview that fast generates texture/mat/mesh and shows?
+<br>autofit
+<br>shape preview with realtime adjustments?
+<h3>.glb export updates</h3>
+(raw color problem) - convert the color: values to an inline embedded images for export data: ...
+<h3>color picker for message type on product positioning</h3>
 
-    <h3>Text, Shape and Arrow</h3>
-     - like text and shape - for diagraming - easy to connect arrow (connector line) to other shapes
-     <h2>Licensing Considerations</h2>
-    <h3>objects/meshes</h3>
-  	clients are free to use the provided meshes and object and textures, etc for development purposes - our licences cover this.
-    <br>
-  	clients need to license the meshes they use that are provided by default - the costs are not high.
-  	While our license may cover this, we feel the support to the content creation community is critical and prefer our clients to license meshes direclty rather then overuse and abuse commercial licenses at scale.
+<h3>Text, Shape and Arrow</h3>
+like text and shape - for diagraming - easy to connect arrow (connector line) to other shapes
+
+<h3>Service Worker for 3D Text</h3>
+Kick off a thread to generate 3D text - load one or two in parallel to main thread and have them generate 3D
+Text and transfer the result to main thread when complete
+
+<h3>Copy Link for new spreadsheet for template</h3>
+in help item provide a open new that creates a sheets doc and allows the user to make a copy
+with the template generated in it
+
+<h2>Licensing Considerations</h2>
+<h3>objects/meshes</h3>
+clients are free to use the provided meshes and object and textures, etc for development purposes - our licences cover this.
+<br>
+clients need to license the meshes they use that are provided by default - the costs are not high.
+While our license may cover this, we feel the support to the content creation community is critical and prefer our clients to license meshes direclty rather then overuse and abuse commercial licenses at scale.
