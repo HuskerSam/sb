@@ -171,8 +171,10 @@ class cAppDefaults {
     document.body.appendChild(currentList);
   }
   async updateHelpView(helpTag, dom) {
-    if (this.help_topic_picker_select)
+    if (this.help_topic_picker_select) {
       this.help_topic_picker_select.value = helpTag;
+    }
+    let rawHelpTag = helpTag;
 
     if (helpTag === 'texture')
       helpTag = 'material';
@@ -189,7 +191,7 @@ class cAppDefaults {
       dom.innerHTML = html;
 
     if (this.helpViewCallback)
-      this.helpViewCallback(helpTag, dom);
+      this.helpViewCallback(rawHelpTag, dom);
 
     return html;
   }
