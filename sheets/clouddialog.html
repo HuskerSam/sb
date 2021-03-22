@@ -44,6 +44,7 @@
         </select>
         <div id="header_bar_wrapper_panel">
           <button id="show_help_panel_btn" style="margin-left:0px;margin-right:4px;"><i class="material-icons">help</i></button>
+          <button id="helper_viewer_contents_btn" style="margin-right:4px;"><i class="material-icons">manage_search</i></button>
           <button id="reload_addon"><i class="material-icons">refresh</i></button>
         </div>
       </div>
@@ -52,9 +53,6 @@
       <div id="help_viewer_panel" style="display:none;flex:.7;">
         <div style="display:flex;flex-direction:row;">
           <select id="help_viewer_panel_select"></select>
-          <div id="helper_viewer_panel_open_wrapper" style="display:flex;flex-direction:row;flex:0">
-            <button id="helper_viewer_contents_btn" style="margin:0;margin-left:4px;"><i class="material-icons">manage_search</i></button>
-          </div>
         </div>
         <div id="help_new_window_link_div" style="display:flex;flex-direction:row;">
           <button id="help_back_button"><i class="material-icons">keyboard_arrow_left</i></button>
@@ -2490,7 +2488,7 @@
           this.help_and_details_wrapper_for_split.style.display = 'block';
           this.helpPanelVisible = true;
           this.help_viewer_panel.style.display = '';
-          this.addon_header_line_2.style.borderBottom = '8px solid rgb(100, 200, 255)';
+          this.addon_header_line_2.style.borderBottom = 'none';
           this.show_help_panel_btn.style.background = 'rgb(100, 200, 255)';
           this.splitHelpInstance = Split(['#help_viewer_panel', '#details_wrapper_for_split'], {
             sizes: [40, 60],

@@ -1,25 +1,30 @@
-- mouse right click, [ctrl] left click, or [ctrl] arrow keys moves the camera target (~position)
-<br><br>
-Assets and blocks without a camera specificed use the <a href="https://doc.babylonjs.com/babylon101/cameras#arc-rotate-camera" target="_blank">Arc Rotate Camera</a>.
+<h2>Native Cameras</h2>
+<h3>Native refers to BabylonJS Cameras</h3>
+For more specific details cameras visit:  <a href="https://doc.babylonjs.com/babylon101/cameras" target="_blank">BabylonJS Cameras 101</a>.
 <br>
+<img src="https://handtop.com/docimages/nativecamerapickhelp.png" />
+<h4>ArcRotate</h4>
+- mouse right click, [ctrl] left click, or [ctrl] arrow keys moves the camera target (~position)
 - zoom in and out with the mouse wheel, page up/dn or gestures
 <br> - right mouse button to move the point of focus
 <br> - left mouse allows you to rotate around the point of focus
 <br>
+- default camera if non specified
 <br>
-Target Block (targetblock): [blocktype]:[name] ... ie. shape:box1 or block:block1
-<br>
-<br>
-<b>Animatable Properties</b><br>
+For more on ArcRotate Camera visit: <a href="https://doc.babylonjs.com/babylon101/cameras#arc-rotate-camera" target="_blank">Arc Rotate Camera</a>.
+<h4>Follow Camera</h4>
+This camera is common in games where a camera follows a target and includes
+easing and smooth position and angle corrections with respect to the target (block/shape/mesh)
+followed.
+<br>Target Block (targetblock): [blocktype]:[name] ... ie. shape:box1 or block:block1
+<h3>Animatable Properties</h3>
 UniversalCamera and DeviceOrientationCamera can all have their origin controlled by frames.<br>
 ArcRotateCamera can have it's aim target controlled by frames.<br>
-The FollowCamera follows a specified child block in the same block (a camera is a child block).
+<h2>Product Camera</h2>
+<img src="https://handtop.com/docimages/productcamerahelp.png" />
+
 <br> &nbsp; &nbsp; &nbsp;signyoffset (default = 6) - height signs float above products
 <br> &nbsp; &nbsp; &nbsp;datascalefactor (default = 2) - scale amount for audio generated animation
 <br> &nbsp; &nbsp; &nbsp;dataframesfilter (default = .05) - clipping range to reduce frames from noise (small changes not requiring a separate frame)
 <br> &nbsp; &nbsp; &nbsp;productrotatey (default = 0) - value to rotate each product position by (to counter rotating the ::scene::_productsWrapper) for a carousel effect
 <br> &nbsp; &nbsp; &nbsp;musicparams - (default = '') - prefix (+ 'frequencyblock') for audio animation blocks
-
-<br>
-<br>
-The default camera is NOT animatable - it's driven by the user profile and UI buttons in /view - add a camera to position or animate<br>
