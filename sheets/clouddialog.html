@@ -2488,7 +2488,7 @@
           this.help_and_details_wrapper_for_split.style.display = 'block';
           this.helpPanelVisible = true;
           this.help_viewer_panel.style.display = '';
-          this.addon_header_line_2.style.borderBottom = 'none';
+          this.addon_header_line_2.style.borderBottom = 'solid 4px rgb(100, 200, 255)';
           this.show_help_panel_btn.style.background = 'rgb(100, 200, 255)';
           this.splitHelpInstance = Split(['#help_viewer_panel', '#details_wrapper_for_split'], {
             sizes: [40, 60],
@@ -2940,7 +2940,13 @@
 
     #help_viewer_panel_select {
       flex: 1;
-      color: blue;
+      color: white;
+      background-image: url(https://ssl.gstatic.com/ui/v1/disclosure/grey-disclosure-arrow-up-down.png), -webkit-linear-gradient(top, rgb(100,200,255), rgb(100,200,255));
+      background-image: url(https://ssl.gstatic.com/ui/v1/disclosure/grey-disclosure-arrow-up-down.png), linear-gradient(top, rgb(100,200,255), rgb(100,200,255));
+    }
+
+    #help_viewer_panel_select option {
+      color: black;
     }
 
     #helper_viewer_panel_open_wrapper {
@@ -3193,11 +3199,13 @@
       text-align: left;
       overflow: hidden;
       padding: 4px 0;
+      background: rgb(100, 200, 255);
     }
 
     #help_new_window_link_div a {
       text-align: left;
       text-decoration: underline;
+      color: white;
     }
 
     #help_new_window_link {
