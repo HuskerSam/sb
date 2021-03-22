@@ -1328,7 +1328,8 @@
             this.helpBackList.push(this.previousHelpTag);
           }
         }
-        console.log('nav', this.previousHelpTag, helpTag,  this.helpBackList);
+        if (this.helpBackList[this.helpBackList.length - 1] === helpTag)
+          this.helpBackList.pop();
 
         this.helpBackButtonPressed = false;
         this.previousPreviousHelpTag = this.previousHelpTag;
