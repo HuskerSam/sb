@@ -148,6 +148,11 @@ img {
   border: silver;
 }
 
+.search_box_wrapper input::placeholder {
+  color: orange;
+  font-weight: bold;
+}
+
 .help_display_item {
   border: solid 1px silver;
   border-radius: .5em;

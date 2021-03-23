@@ -84,7 +84,6 @@ class HelpGen {
         <br>© 1998 - 2021 Handtop. All Rights Reserved.
       </div>
     </div>
-    <script src="https://cse.google.com/cse.js?cx=0b2a9868105e1e42e"></script>
     <script>
       let ctl = document.getElementById('help_template_select');
       if (ctl) {
@@ -102,17 +101,8 @@ class HelpGen {
         ctl.focus();
       }
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148094829-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
 
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-
-      gtag('config', 'UA-148094829-1');
-    </script>
+    <script src="/homepagestuff.js"></script>
     </body>
 
     </html>`;
