@@ -1,8 +1,6 @@
-be careful of errors:<br><br>
 The screen must be clicked for the videos to play - the error will show up as all black shapes/meshes for the video texturesFromFile<br>
 just reload and click the screen right after a few times - should be fine (same deal with playing an audio file in html - it's why the scenes always start muted)<br>
 <br>
 <br>
 if you've loaded the video in another tab, this will cause a cors issue.  Clear the video file from your history (should be easy to find the exact one) - reload only in <thead>
   3d viewer so it's tagged as cors when loaded, otherwise the cors error propagates thru all tabs (unlike images - videos are nastier here)
-  
