@@ -11,7 +11,7 @@
 {"value":"addonprojects","title":"Projects","category":"Addon","reviewed":"2021-03-18","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/projectvideaddon.mp4","deployed":""},
 {"value":"addontemplates","title":"Templates","category":"Addon","reviewed":"2021-03-20","video":"","deployed":""},
 {"value":"sheetsfunctions","title":"Functions","category":"Addon","reviewed":"2021-03-23","video":"","deployed":""},
-{"value":"positionplotter","title":"Position Plotter","category":"Addon","reviewed":"2021-03-24","video":"","deployed":""},
+{"value":"positionplotter","title":"Position Plotter","category":"Addon","reviewed":"2021-03-24","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/pointsforplot.mp4","deployed":""},
 {"value":"positionproducts","title":"Position Products","category":"Addon","reviewed":"2021-03-21","video":"","deployed":""},
 {"value":"processaudio","title":"Process Audio","category":"Addon","reviewed":"2021-03-21","video":"","deployed":""},
 {"value":"block","title":"Blocks","category":"Element","reviewed":"2021-03-22","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/animatedlinechart.mp4","deployed":"https://dedicateddemos.web.app/view/?name=TRI%20Meter"},
