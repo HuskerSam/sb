@@ -54,14 +54,14 @@
         <div style="display:flex;flex-direction:row;">
           <select id="help_viewer_panel_select"></select>
         </div>
-        <div id="help_new_window_link_div" style="display:flex;flex-direction:row;">
+        <div id="help_new_window_link_div">
           <button id="help_back_button"><i class="material-icons">keyboard_arrow_left</i></button>
           <div style="flex:1;overflow:hidden;">
             <a id="help_new_window_link" href="https://handtop.com" target="_blank">handtop.com</a>
           </div>
           <div id="helper_viewer_panel_open_wrapper" style="display:flex;flex-direction:row;flex:0">
             <button id="help_forward_button"><i class="material-icons">keyboard_arrow_right</i></button>
-            <button id="helper_viewer_panel_open_deployed_btn" style="margin-left:4px;"><i class="material-icons">animation</i></button>
+            <button id="helper_viewer_panel_open_deployed_btn" style="margin-left:8px;margin-right:4px;"><i class="material-icons">animation</i></button>
             <button id="helper_viewer_panel_open_video_btn" style="margin-left:4px;"><i class="material-icons">ondemand_video</i></button>
           </div>
         </div>
@@ -2488,7 +2488,7 @@
           this.help_and_details_wrapper_for_split.style.display = 'block';
           this.helpPanelVisible = true;
           this.help_viewer_panel.style.display = '';
-          this.addon_header_line_2.style.borderBottom = 'solid 4px rgb(100, 200, 255)';
+          this.addon_header_line_2.style.borderBottom = 'solid 6px rgb(100, 200, 255)';
           this.show_help_panel_btn.style.background = 'rgb(100, 200, 255)';
           this.splitHelpInstance = Split(['#help_viewer_panel', '#details_wrapper_for_split'], {
             sizes: [40, 60],
@@ -2941,6 +2941,7 @@
     #help_viewer_panel_select {
       flex: 1;
       color: white;
+      border-color: white;
       background-image: url(https://ssl.gstatic.com/ui/v1/disclosure/grey-disclosure-arrow-up-down.png), -webkit-linear-gradient(top, rgb(100,200,255), rgb(100,200,255));
       background-image: url(https://ssl.gstatic.com/ui/v1/disclosure/grey-disclosure-arrow-up-down.png), linear-gradient(top, rgb(100,200,255), rgb(100,200,255));
     }
@@ -3200,6 +3201,9 @@
       overflow: hidden;
       padding: 4px 0;
       background: rgb(100, 200, 255);
+      display:flex;
+      flex-direction:row;
+      margin-left:-2px;
     }
 
     #help_new_window_link_div a {
@@ -3214,6 +3218,11 @@
       left: 2px;
       white-space: nowrap;
     }
+
+    #help_back_button i, #help_forward_button i {
+      margin: 0 -6px;
+    }
+
   </style>
 
 </body>

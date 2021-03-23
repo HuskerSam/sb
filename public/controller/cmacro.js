@@ -943,7 +943,7 @@ class cMacro {
         </tr>
         <tr data-types="text">
           <td>Font</td>
-          <td><input type="text" data-field="textfontfamily"  list="fontfamilydatalist"></td>
+          <td><input type="text" data-field="textfontfamily" class="textfontfamily"  list="fontfamilydatalist"></td>
           <td></td>
         </tr>
         <tr data-types="text">

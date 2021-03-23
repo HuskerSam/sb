@@ -108,7 +108,7 @@
     "hint": "Shapes",
     "categories": "Layout",
     "description": "A variety of shapes with a few frames",
-    "helpkey": "reviewguide"
+    "helpkey": "shape"
   }, {
     "name": "Meshes Basic",
     "mainFile": "MeshesBasic",
