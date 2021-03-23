@@ -9,6 +9,8 @@
 
 (function() {
   var cx = '4a6d22c42e0496e39';
+  if (window.customCSEID)
+    cx = window.customCSEID;
   var gcse = document.createElement('script');
   gcse.type = 'text/javascript';
   gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
@@ -18,7 +20,10 @@
 
 
 window.addEventListener('load', e => {
-  document.getElementById('gsc-i-id1').placeholder = 'Search Handtop';
+  let pH = 'Search Handtop';
+  if (window.customPH)
+    pH = window.customPH;
+  document.getElementById('gsc-i-id1').placeholder = pH;
   window.dataLayer = window.dataLayer || [];
 
   function gtag() {

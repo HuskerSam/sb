@@ -100,6 +100,9 @@ class HelpGen {
 
         ctl.focus();
       }
+
+      window.customCSEID = '0b2a9868105e1e42e';
+      window.customPH = 'Search Help';
     </script>
 
     <script src="/homepagestuff.js"></script>
