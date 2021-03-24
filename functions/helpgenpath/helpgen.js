@@ -217,7 +217,7 @@ class HelpGen {
       if (lastCat === '') //skip first on purpose
         lastCat = i.category;
       if (lastCat !== i.category) {
-          html += '<div></div><h2>' + i.category + '</h2>';
+          html += '<div style="clear:both;"></div><h2>' + i.category + '</h2>';
           lastCat = i.category;
       }
 
@@ -226,10 +226,10 @@ class HelpGen {
         displayTitle = '<h1>' + displayTitle + '</h1>';
       html += `<div class="help_display_item">`;
       html += ` <a href="https://handtop.com/doc/${i.value}">${displayTitle}</a>`;
-      html += `<br><a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
+      html += `<div><a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
       html += ` <a href="${i.video}" ${ i.video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
       html += ` <a href="${i.deployed}" ${ i.deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
-      html += ` <span class="reviewed">${i.reviewed}</span>`;
+      html += ` <span class="reviewed">${i.reviewed}</span></div>`;
       html += '</div>';
 
       options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.category}: ${i.title}</option>`;
