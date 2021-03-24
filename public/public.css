@@ -153,13 +153,11 @@ img {
 }
 
 .help_display_item {
-  margin: 0 .4em;
   text-align: left;
   line-height: 1em;
-  padding: .5em;
-  display: flex;
-  flex-direction: column;
-  float: left;
+  display: inline-block;
+  margin: 0 .5em;
+  padding-bottom: 1em;
 }
 
 .help_display_item a {
@@ -170,13 +168,17 @@ img {
   border: solid 1px silver;
   border-radius: .5em;
   text-decoration: none;
-  padding: .5em .5em;
-  width: 100%;
+  padding: .5em .25em;
+  display: block;
+  text-align: center;
 }
 
-.help_display_item > div {
+.help_display_item>div {
   padding-bottom: .25em;
-  margin-top: -.25em;
+}
+
+.help_display_item .sub_bar {
+  margin-top: -.75em;
 }
 
 .help_display_item a:hover, .help_display_item a:focus {
@@ -184,9 +186,9 @@ img {
 }
 
 .help_display_item h1 {
-  margin: .25em .1em;
+  margin: 0;
   display: block;
-  font-size: 1.5em;
+  font-size: 1.25em;
 }
 
 .help_body {
@@ -213,7 +215,15 @@ img {
 
 #help_template_select {
   position: relative;
-  top: -.5em;
+  top: -.525em;
+  font-size: 1.25em;
+  border-color: orange;
+  outline-color: orange;
+}
+
+#help_template_select:hover, #help_template_select:focus {
+  border-color: orange;
+  background: silver;
 }
 
 .list_html_div a i {
@@ -225,16 +235,25 @@ img {
   color: gray;
 }
 
+.help_body h2 {
+  margin: 0;
+}
+
 .list_html_div .review_text {
-  margin-left: .5em;
+  padding-left: .5em;
   font-size: .75em;
-  color: gray;
-  position: relative;
-  top: -.5em;
 }
 
 a.gsst_a {
   padding: 0;
   margin: 0;
   line-height: .5em;
+}
+
+.help_gen_list_wrapper {
+  padding: 0 1em;
+}
+
+.help_gen_list_wrapper .list_html_div i {
+  font-size: 2em;
 }

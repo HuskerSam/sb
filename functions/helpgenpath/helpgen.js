@@ -25,7 +25,7 @@ class HelpGen {
     let listHTML = '';
     let reviewClassName = 'list_help_view';
     if (reviewed) {
-      reviewHTML = `<span class="review_text">${reviewed}</span>`;
+      reviewHTML = `<div class="review_text">Reviewed: ${reviewed}</div>`;
       reviewClassName = 'item_help_view';
     }
     if (includeList) {
@@ -71,7 +71,7 @@ class HelpGen {
           <div class="gcse-search"></div>
         </div>
       </div>
-      <div style="padding:0 1em;line-height:3em;">
+      <div class="help_gen_list_wrapper">
         ${listHTML}
       </div>
       <div class="help_body">${helpBody}</div>
@@ -226,10 +226,11 @@ class HelpGen {
         displayTitle = '<h1>' + displayTitle + '</h1>';
       html += `<div class="help_display_item">`;
       html += ` <a href="https://handtop.com/doc/${i.value}">${displayTitle}</a>`;
-      html += `<div><a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
+      html += `<div class="reviewed">${i.reviewed}</div>`;
+      html += `<div class="sub_bar"><a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
       html += ` <a href="${i.video}" ${ i.video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
       html += ` <a href="${i.deployed}" ${ i.deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
-      html += ` <span class="reviewed">${i.reviewed}</span></div>`;
+      html += `</div>`;
       html += '</div>';
 
       options += `<option value="${i.value}" ${i.value === value ? 'selected' : ''}>${i.category}: ${i.title}</option>`;
