@@ -64,9 +64,7 @@ class HelpGen {
         <a href="/" class="logo">
           <img alt="small logo image" class="small_logo" src="https://handtop.com/images/handtop.png">
         </a>
-        ${ includeList ? '': '<a href="/addon/">Addon</a>' }
-        ${ includeList ? '<a href="/doc/">Documentation</a>' : '' }
-        <a href="/about/">About</a>
+        ${ includeList ? '': '<a href="/addon/">Sheets</a>' }
         <div class="search_box_wrapper">
           <div class="gcse-search"></div>
         </div>
@@ -102,7 +100,7 @@ class HelpGen {
       }
 
       window.customCSEID = '0b2a9868105e1e42e';
-      window.customPH = 'Search Visual Tools';
+      window.customPH = 'Visual Tools';
     </script>
 
     <script src="/homepagestuff.js"></script>

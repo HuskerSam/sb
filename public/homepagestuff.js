@@ -20,7 +20,7 @@
 
 
 window.addEventListener('load', e => {
-  let pH = 'Search handtop.com';
+  let pH = 'handtop.com';
   if (window.customPH)
     pH = window.customPH;
   document.getElementById('gsc-i-id1').placeholder = pH;
