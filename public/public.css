@@ -209,8 +209,8 @@ table.gsc-search-box td {
   text-align: left;
   line-height: 1em;
   display: inline-block;
-  margin: 0 .5em;
-  padding-bottom: .75em;
+  margin: 0 .25em;
+  padding-bottom: .5em;
 }
 
 .help_display_item a {
@@ -255,6 +255,7 @@ table.gsc-search-box td {
 .list_help_view .help_body {
   text-align: center;
   position: relative;
+  overflow: hidden auto;
 }
 
 .item_help_view {}
@@ -310,17 +311,15 @@ table.gsc-search-box td {
   display: inline-block;
   font-family: 'Comic Sans MS';
   position: absolute;
-  top: .15em;
 }
 
 .list_help_view .header_wrapper {
   position: absolute;
   z-index: -1;
   text-align: left;
-  left: 5%;
-  width: 95%;
-  overflow: hidden;
   height: 6em;
+  width: 100%;
+  overflow: visible;
 }
 
 .list_html_div .review_text {
@@ -372,4 +371,50 @@ a.gsst_a {
  {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+.h2_ctr_1 {
+  animation-name: cloudMsg;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  animation-delay: 0s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+.h2_ctr_2 {
+  animation-name: cloudMsg;
+  animation-duration: 16s;
+  animation-iteration-count: infinite;
+  animation-delay: -8s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+.h2_ctr_3 {
+  animation-name: cloudMsg;
+  animation-duration: 24s;
+  animation-iteration-count: infinite;
+  animation-delay: -20s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+
+.h2_ctr_4 {
+  animation-name: cloudMsg;
+  animation-duration: 28s;
+  animation-iteration-count: infinite;
+  animation-delay: -10s;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+@keyframes cloudMsg {
+  0%   {left: 0%;}
+  10%   {left: 0%;}
+  25%   {left: -100%;}
+  45%  {left: -100%;}
+  70%  {left: 0%;}
+  100%  {left: 0%;}
 }
