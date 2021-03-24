@@ -100,7 +100,7 @@ class HelpGen {
       }
 
       window.customCSEID = '0b2a9868105e1e42e';
-      window.customPH = 'Visual Tools';
+      window.customPH = 'Search Visual Tools reference';
     </script>
 
     <script src="/homepagestuff.js"></script>
@@ -171,7 +171,7 @@ class HelpGen {
     helpList.forEach(i => {
       if (i.value === item) helpItem = i;
     });
-    let title = 'Visual Tools Documentation';
+    let title = 'Visual Tools Reference';
     if (helpItem)
       title = helpItem.category + ': ' + helpItem.title;
     let regex = /(<([^>]+)>)/ig;
