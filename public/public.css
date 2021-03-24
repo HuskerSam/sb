@@ -97,6 +97,10 @@ img {
   padding: .75em .5em 0 .5em;
 }
 
+.footer_bar a {
+  padding: .75em;
+}
+
 .option_bar a:hover, .footer_bar a:hover, .option_bar a.logo:hover, a:hover,
 .option_bar a:focus, .footer_bar a:focus, .option_bar a.logo:focus, a:focus {
   border-color: orange;
