@@ -50,7 +50,7 @@ class HelpGen {
       <meta property="og:title" content="${title}" />
       <meta property="og:url" content="https://handtop.com/doc/${urlFrag}" />
       <meta property="og:site_name" content="Handtop" />
-      <meta property="og:image" content="https://handtop.com/retail/pipeline.jpg" />
+      <meta property="og:image" content="https://handtop.com/images/home8sec.gif" />
       <meta property="og:type" content="website" />
       <meta property="og:description" content="${desc}" />
       <meta property="fb:app_id" content="461141618064403" />
@@ -120,12 +120,6 @@ class HelpGen {
             <priority>1</priority>
         </url>
         <url>
-            <loc>https://handtop.com/retail/</loc>
-            <lastmod>${new Date().toISOString().substring(0, 10)}</lastmod>
-            <changefreq>daily</changefreq>
-            <priority>1</priority>
-        </url>
-        <url>
             <loc>https://handtop.com/about/</loc>
             <lastmod>${new Date().toISOString().substring(0, 10)}</lastmod>
             <changefreq>daily</changefreq>
@@ -147,7 +141,7 @@ class HelpGen {
             <loc>https://handtop.com/doc/</loc>
             <lastmod>${new Date().toISOString().substring(0, 10)}</lastmod>
             <changefreq>daily</changefreq>
-            <priority>.5</priority>
+            <priority>1</priority>
         </url>
         ${helpBodyXML}
     </urlset>`;
