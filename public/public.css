@@ -164,7 +164,7 @@ img {
   line-height: 1em;
   display: inline-block;
   margin: 0 .5em;
-  padding-bottom: 1em;
+  padding-bottom: .75em;
 }
 
 .help_display_item a {
@@ -175,7 +175,7 @@ img {
   border: solid 1px orange;
   border-radius: .5em;
   text-decoration: none;
-  padding: .5em .75em;
+  padding: .5em .75em 1.25em .75em;
   display: block;
   text-align: center;
   font-weight: bold;
@@ -219,7 +219,7 @@ img {
 }
 
 .list_help_view .help_body a {
-  color: black;
+  color: blue;
 }
 
 #help_template_select {
@@ -240,9 +240,13 @@ img {
 }
 
 .help_body .reviewed {
-  font-size: .6em;
+  font-size: .75em;
   color: gray;
   text-align: center;
+  margin-top: -1.5em;
+  position: relative;
+  z-index: -1;
+  margin-bottom: .75em;
 }
 
 .list_help_view h2 {
@@ -263,7 +267,8 @@ img {
 
 .list_html_div .review_text {
   padding-left: .5em;
-  font-size: .75em;
+  color: black;
+  margin-bottom: 1em;
 }
 
 a.gsst_a {
