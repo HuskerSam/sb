@@ -90,7 +90,7 @@ img {
   white-space: nowrap;
   border: solid 1px orange;
   margin: .15em;
-  color: black;
+  color: blue;
   text-decoration: none;
   float: left;
   padding: .65em .25em;
@@ -145,18 +145,44 @@ img {
   margin-top: -0.5em;
 }
 
+.search_box_wrapper table.gsc-search-box td.gsc-input {
+  padding-right:0;
+}
+
+table.gsc-search-box td {
+  margin-left: 0;
+}
+
+.gsc-search-button {
+  margin-left: 0;
+  border: solid 1px orange;
+  border-left: none;
+}
+
 .gsc-search-button.gsc-search-button-v2 {
-  background: orange;
-  border: red;
+  border: none;
+  background: transparent;
+  margin-left: -1px;
+  margin-bottom: -1px;
+}
+
+.gsc-search-button.gsc-search-button-v2 svg {
+  fill: blue;
 }
 
 .gsc-search-button.gsc-search-button-v2:focus, .gsc-search-button.gsc-search-button-v2:hover {
-  background: silver;
-  border: silver;
+  background: blue;
+  border: none;
 }
 
+.gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
+  fill: white;
+}
+
+
+
 .search_box_wrapper input::placeholder {
-  color: orange;
+  color: blue;
 }
 
 .help_display_item {
