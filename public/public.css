@@ -88,7 +88,7 @@ img {
 
 .option_bar a, .footer_bar a {
   white-space: nowrap;
-  border: solid 1px silver;
+  border: solid 1px orange;
   margin: .15em;
   color: black;
   text-decoration: none;
@@ -96,6 +96,12 @@ img {
   padding: .65em .25em;
   font-size: .95em;
   margin-bottom: .85em;
+}
+
+.option_bar a:hover, .footer_bar a:hover, .option_bar a.logo:hover, a:hover,
+.option_bar a:focus, .footer_bar a:focus, .option_bar a.logo:focus, a:focus {
+  border-color: orange;
+  background: silver;
 }
 
 .footer_bar a {
@@ -122,6 +128,7 @@ img {
   min-height: 100vh;
   text-align: left;
   max-width: 60em;
+  position: relative;
 }
 
 .footer_bar {
@@ -165,12 +172,13 @@ img {
 }
 
 .help_display_item>a {
-  border: solid 1px silver;
+  border: solid 1px orange;
   border-radius: .5em;
   text-decoration: none;
-  padding: .5em .25em;
+  padding: .5em .75em;
   display: block;
   text-align: center;
+  font-weight: bold;
 }
 
 .help_display_item>div {
@@ -179,6 +187,7 @@ img {
 
 .help_display_item .sub_bar {
   margin-top: -.75em;
+  text-align: center;
 }
 
 .help_display_item a:hover, .help_display_item a:focus {
@@ -198,7 +207,7 @@ img {
 }
 
 .list_help_view .help_body {
-  text-align: left;
+  text-align: center;
 }
 
 .item_help_view {}
@@ -233,10 +242,23 @@ img {
 .help_body .reviewed {
   font-size: .6em;
   color: gray;
+  text-align: center;
 }
 
-.help_body h2 {
+.list_help_view h2 {
   margin: 0;
+  color: rgb(255,210,140);
+  font-size: 5em;
+  display: inline-block;
+
+}
+
+.list_help_view .header_wrapper {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+  left: 0;
 }
 
 .list_html_div .review_text {
@@ -254,6 +276,15 @@ a.gsst_a {
   padding: 0 1em;
 }
 
-.help_gen_list_wrapper .list_html_div i {
+.help_gen_list_wrapper .list_html_div a {
+  padding-top: .1em;
   font-size: 2em;
+}
+
+.help_gen_list_wrapper .list_html_div a i {
+  font-size: 1em;
+}
+
+#gsc-iw-id1 {
+  border-color: orange;
 }

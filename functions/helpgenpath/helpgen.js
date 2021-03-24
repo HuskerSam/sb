@@ -217,7 +217,7 @@ class HelpGen {
       if (lastCat === '') //skip first on purpose
         lastCat = i.category;
       if (lastCat !== i.category) {
-          html += '<div style="clear:both;"></div><h2>' + i.category + '</h2>';
+          html += '<div style="clear:both;"></div><div class="header_wrapper"><h2>' + i.category + '</h2></div>';
           lastCat = i.category;
       }
 
@@ -227,7 +227,8 @@ class HelpGen {
       html += `<div class="help_display_item">`;
       html += ` <a href="https://handtop.com/doc/${i.value}">${displayTitle}</a>`;
       html += `<div class="reviewed">${i.reviewed}</div>`;
-      html += `<div class="sub_bar"><a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
+      html += `<div class="sub_bar">`;
+      //`<a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
       html += ` <a href="${i.video}" ${ i.video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
       html += ` <a href="${i.deployed}" ${ i.deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
       html += `</div>`;
