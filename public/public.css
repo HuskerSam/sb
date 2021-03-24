@@ -217,6 +217,13 @@ table.gsc-search-box td {
   padding: .25em;
 }
 
+.list_help_view .help_body
+.sub_bar a:hover,
+.list_help_view .help_body
+ .sub_bar a:focus {
+  background: silver;
+}
+
 .help_display_item>a {
   border: solid 1px orange;
   border-radius: .5em;
@@ -225,6 +232,11 @@ table.gsc-search-box td {
   display: block;
   text-align: center;
   font-weight: bold;
+}
+
+.list_help_view .help_body .sub_bar a {
+  padding: 8px;
+  border-radius: 10px;
 }
 
 .help_display_item>div {
