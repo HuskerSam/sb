@@ -209,8 +209,6 @@ img {
 .list_help_view .help_body {
   text-align: center;
   position: relative;
-  overflow: hidden auto;
-
 }
 
 .item_help_view {}
@@ -266,7 +264,10 @@ img {
   position: absolute;
   z-index: -1;
   text-align: left;
-  left: .25em;
+  left: 5%;
+  width: 95%;
+  overflow: hidden;
+  height: 6em;
 }
 
 .list_html_div .review_text {
