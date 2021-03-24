@@ -267,6 +267,13 @@ table.gsc-search-box td {
   color: blue;
 }
 
+
+.list_help_view .help_body a:hover, .list_help_view .help_body a:focus  {
+  color: black;
+  border-color: black;
+  background: transparent;
+}
+
 #help_template_select {
   position: relative;
   top: -.525em;
@@ -362,8 +369,4 @@ a.gsst_a {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-}
-
-.item_help_view .search_box_wrapper {
-  border-left: solid 1px orange;
 }
