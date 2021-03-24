@@ -150,7 +150,6 @@ img {
 
 .search_box_wrapper input::placeholder {
   color: orange;
-  font-weight: bold;
 }
 
 .help_display_item {
