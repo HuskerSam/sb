@@ -74,13 +74,6 @@ img {
   padding: .25em;
 }
 
-.ui_image {
-  max-width: 40vw;
-  max-height: 50vh;
-  border-radius: 1em;
-  border: solid 2px blue;
-}
-
 .option_bar {
   text-align: center;
   padding-top: .5em;
@@ -94,7 +87,7 @@ img {
   border: solid 1px orange;
   color: blue;
   text-decoration: none;
-  padding: .65em .5em 0 .5em;
+  padding: .75em .5em 0 .5em;
 }
 
 .footer_bar a {
@@ -209,7 +202,7 @@ table.gsc-search-box td {
   text-align: left;
   line-height: 1em;
   display: inline-block;
-  margin: 0 .25em;
+  margin: 0 2px;
   padding-bottom: .5em;
 }
 
@@ -226,7 +219,6 @@ table.gsc-search-box td {
 
 .help_display_item>a {
   border: solid 1px orange;
-  border-radius: .5em;
   text-decoration: none;
   padding: .25em .75em 1.25em .75em;
   display: block;
@@ -236,7 +228,6 @@ table.gsc-search-box td {
 
 .list_help_view .help_body .sub_bar a {
   padding: 8px;
-  border-radius: 10px;
 }
 
 .help_display_item>div {
@@ -267,7 +258,7 @@ table.gsc-search-box td {
 .list_help_view .help_body {
   text-align: center;
   position: relative;
-  overflow: hidden auto;
+  overflow: hidden;
 }
 
 .item_help_view {}
@@ -425,8 +416,8 @@ a.gsst_a {
 @keyframes cloudMsg {
   0%   {left: 0%;}
   10%   {left: 0%;}
-  25%   {left: -100%;}
-  45%  {left: -100%;}
+  25%   {left: -1000px;}
+  45%  {left: -1000px;}
   70%  {left: 0%;}
   100%  {left: 0%;}
 }
