@@ -271,7 +271,6 @@ table.gsc-search-box td {
 
 .item_help_view {}
 
-
 .list_help_view .help_body a {
   color: rgb(0, 100, 255);
 }
@@ -286,7 +285,7 @@ table.gsc-search-box td {
   position: relative;
   top: .25em;
   color: rgb(255, 140, 0);
-  background: transparent!important;
+  background: transparent !important;
 }
 
 #help_template_select {
@@ -439,6 +438,33 @@ a.gsst_a {
 }
 
 #gsc-i-id1 {
-  padding: 10px 0!important;
-  margin-left: 4px!important;
+  padding: 10px 0 !important;
+  margin-left: 4px !important;
+}
+
+a.gs-title {
+  position: relative;
+  top: 1.5em;
+  padding: .25em;
+  color: rgb(0, 100, 255) !important;
+}
+
+div.gs-title {
+  height: 3em!important;
+    padding: 0!important;
+}
+
+.gs-webResult div.gs-visibleUrl {
+  color: rgb(0,100, 255)!important;
+}
+
+.gs-result .gs-image {
+  padding: 0!important;
+}
+
+div.gsc-results-wrapper-overlay {
+  width: 92%;
+  left: 1%;
+  height: 88%;
+  top: 1%;
 }
