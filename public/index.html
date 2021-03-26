@@ -47,10 +47,38 @@
         <div class="gcse-search"></div>
       </div>
     </div>
-    <div style="flex:1"></div>
-    <div style="text-align:center;flex:1;padding: 0 1em;">
-      <img src="/images/home8sec.gif">
-      <h2>Create 3D content once and display everywhere!</h2>
+    <div style="position:relative;overflow:visible;flex:1">
+      <div class="anim_box_layer" style="animation-delay:0">
+        <h1>3D content in minutes</h1>
+        <h2><span class="orange">Low intensity</span> creation and distribution.</h2>
+        <h2><span class="orange">Load on demand</span> viewing for most screens.</h2>
+        <h2><span class="orange">Blend your data</span> with templates to customize.</h2>
+        <h3>“<span class="green">Time to Magic = Brand Promise</span>”</h3>
+      </div>
+      <br>
+      <div class="anim_box_layer" style="animation-delay:8s">
+        <h1>3D content that matters</h1>
+        <h2><span class="orange">Employees customize</span> using their taste.</h2>
+        <h2><span class="orange">Customers follow</span> employees for updates.</h2>
+        <h2><span class="orange">Localized display</span> in games and searches.</h2>
+        <h3>“<span class="green">Unique content per user</span>”</h3>
+      </div>
+      <div class="anim_box_layer" style="animation-delay:16s">
+        <h1>3D content with everyone</h1>
+        <h2><span class="orange">Publish once</span> for all devices and everyone.</h2>
+        <h2><span class="orange">Realtime Database</span> instantly pushes updates.</h2>
+        <h2><span class="orange">Dynamic hosting</span> scales when needed.</h2>
+        <h3>“<span class="green">Multiuser products are built that way from the core</span>”</h3>
+      </div>
+      <div class="anim_box_layer" style="animation-delay:24s">
+        <h1>3D content for today</h1>
+        <h2><span class="orange">Web optimized</span> with jpegs and low poly meshes.</h2>
+        <h2><span class="orange">Spreadsheets simplify</span> data importing and merging.</h2>
+        <h2><span class="orange">Fast turnaround</span> for managing evolving technology.</h2>
+        <h3>“<span class="green">Quick isn’t as important as right</span>”</h3>
+      </div>
+
+      <img src="/images/home8sec.gif" style="display:none;">
     </div>
     <div style="flex:1;"></div>
     <div class="footer_bar">
@@ -63,6 +91,76 @@
     </div>
   </div>
   <script src="/homepagestuff.js"></script>
+
+  <style>
+    .anim_box_layer {
+      text-align: center;
+      flex: 1;
+      padding: 0 1em;
+      text-align: left;
+      display: inline-block;
+      color: rgb(0, 100, 255);
+      font-family: Georgia;
+    }
+
+    .anim_box_layer h1 {
+      font-family: Arial;
+      font-weight: normal;
+      margin: .25em;
+    }
+
+    .anim_box_layer .orange {
+      color: rgb(255, 140, 0);
+    }
+
+    .anim_box_layer .green {
+      color: rgb(0, 200, 0);
+      font-family: 'Comic Sans MS';
+    }
+
+    .anim_box_layer h3 {
+      float: right;
+      font-size: 1.5em;
+      font-weight: normal;
+      margin-top: 0;
+    }
+
+    .anim_box_layer h2 {
+      font-weight: normal;
+      margin-right: 2em;
+    }
+
+    .anim_box_layer {
+      animation-name: animTimerFrames;
+      animation-duration: 32s;
+      animation-iteration-count: infinite;
+      position: absolute;
+      top: 0;
+      left: -800px;
+    }
+
+    @keyframes animTimerFrames {
+      0% {
+        left: -800px;
+      }
+
+      5% {
+        left: 0px;
+      }
+
+      28% {
+        left: 0px;
+      }
+
+      33% {
+        left: -800px;
+      }
+
+      100% {
+        left: -800px;
+      }
+    }
+  </style>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
 </body>
