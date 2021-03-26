@@ -32,6 +32,9 @@
     .vc_link:hover {
       background: silver;
     }
+    .anim_wrapper {
+      display: none;
+    }
   </style>
 </head>
 
@@ -47,7 +50,7 @@
         <div class="gcse-search"></div>
       </div>
     </div>
-    <div style="position:relative;overflow:visible;flex:1">
+    <div class="anim_wrapper" style="position:relative;overflow:visible;flex:1">
       <div class="anim_box_layer" style="animation-delay:0">
         <h1>3D content in minutes</h1>
         <h2><span class="orange">Low intensity</span> creation and distribution.</h2>
@@ -159,6 +162,10 @@
       100% {
         left: -800px;
       }
+    }
+
+    .anim_wrapper {
+      display: block;
     }
   </style>
 

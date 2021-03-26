@@ -386,7 +386,6 @@ a.gsst_a {
   animation-duration: 20s;
   animation-iteration-count: infinite;
   animation-delay: 0s;
-  animation-direction: alternate;
 }
 
 .h2_ctr_2 {
@@ -394,7 +393,6 @@ a.gsst_a {
   animation-duration: 16s;
   animation-iteration-count: infinite;
   animation-delay: -8s;
-  animation-direction: alternate;
 }
 
 .h2_ctr_3 {
@@ -402,7 +400,6 @@ a.gsst_a {
   animation-duration: 24s;
   animation-iteration-count: infinite;
   animation-delay: -20s;
-  animation-direction: alternate;
 }
 
 .h2_ctr_4 {
@@ -410,7 +407,6 @@ a.gsst_a {
   animation-duration: 28s;
   animation-iteration-count: infinite;
   animation-delay: -10s;
-  animation-direction: alternate;
 }
 
 @keyframes cloudMsg {
