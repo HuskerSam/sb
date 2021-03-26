@@ -321,6 +321,7 @@ table.gsc-search-box td {
   display: inline-block;
   font-family: 'Comic Sans MS';
   position: absolute;
+  top: .25em;
 }
 
 .list_help_view .header_wrapper {

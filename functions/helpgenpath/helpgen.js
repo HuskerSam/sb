@@ -207,8 +207,6 @@ class HelpGen {
     let lastCat = '';
     let counter = 1;
     data.forEach(i => {
-      if (lastCat === '') //skip first on purpose
-        lastCat = i.category;
       if (lastCat !== i.category) {
           html += '<div style="clear:both;"></div><div class="header_wrapper"><h2 class="h2_ctr_' + counter.toString() + '">' + i.category + '</h2></div>';
           counter++;
