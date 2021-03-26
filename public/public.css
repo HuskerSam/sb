@@ -82,7 +82,7 @@ img {
   margin-bottom: 1em;
 }
 
-.option_bar a, .footer_bar a {
+.option_bar a, .footer_bar a, .home_page_anchor {
   white-space: nowrap;
   border: solid 1px rgb(255, 140, 0);
   color: rgb(0, 100, 255);
@@ -90,22 +90,17 @@ img {
   padding: .75em .5em 0 .5em;
 }
 
-.footer_bar a {
+.footer_bar a, .home_page_anchor {
   padding: .75em;
-}
-
-.option_bar a:hover, .footer_bar a:hover, .option_bar a.logo:hover, a:hover,
-.option_bar a:focus, .footer_bar a:focus, .option_bar a.logo:focus, a:focus {
-  border-color: rgb(255, 140, 0);
-  background: silver;
-}
-
-.footer_bar a {
   float: none;
 }
 
-.option_bar a:hover, .footer_bar a:hover {
-  background: silver
+.option_bar a:hover, .footer_bar a:hover, .option_bar a.logo:hover, a:hover,
+.option_bar a:focus, .footer_bar a:focus, .option_bar a.logo:focus, a:focus,
+.home_page_anchor:focus, .home_page_anchor:hover
+ {
+  border-color: rgb(255, 140, 0);
+  background: silver;
 }
 
 .option_bar a.logo {
