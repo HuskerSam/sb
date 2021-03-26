@@ -114,8 +114,9 @@ img {
 }
 
 .small_logo {
-  height: 32px;
-  padding: 6px 5px 0px 5px;
+  height: 39px;
+  padding: 2px 5px 0px 5px;
+  margin-bottom: -1px;
 }
 
 .home_page_wrapper {
@@ -174,6 +175,7 @@ table.gsc-search-box td {
 
 .gsc-search-button.gsc-search-button-v2 svg {
   fill: rgb(0, 100, 255);
+  transform: scale(1.5);
 }
 
 .gsc-search-button.gsc-search-button-v2:focus, .gsc-search-button.gsc-search-button-v2:hover {
