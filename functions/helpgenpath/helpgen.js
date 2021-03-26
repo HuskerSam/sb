@@ -77,6 +77,8 @@ class HelpGen {
         <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         &nbsp;
         <a href="/privacy.html">Privacy Policy</a>
+        &nbsp;
+        <a href="/about/">About</a>
         <br><br>
         Lincoln, Nebraska, USA 68508
         <br>© 1998 - 2021 Handtop. All Rights Reserved.
