@@ -37,7 +37,8 @@ img {
 }
 
 .demo_item a:hover {
-  background: silver;
+  background: rgba(255, 140, 0, .25);
+  ;
 }
 
 .item_title {
@@ -97,11 +98,10 @@ img {
 
 .option_bar a:hover, .footer_bar a:hover, .option_bar a.logo:hover, a:hover,
 .option_bar a:focus, .footer_bar a:focus, .option_bar a.logo:focus, a:focus,
-.home_page_anchor:focus, .home_page_anchor:hover
- {
+.home_page_anchor:focus, .home_page_anchor:hover {
   border-color: rgb(255, 140, 0);
-  background: silver;
-  color: white;
+  background: rgba(255, 140, 0, .25);
+  color: black;
 }
 
 .option_bar a.logo {
@@ -140,7 +140,7 @@ img {
   width: 20em;
   border: solid 1px rgb(255, 140, 0);
   margin-right: .25em;
-  border-left: none;
+  border-left: solid 1px transparent;
 }
 
 .search_box_wrapper form.gsc-search-box {
@@ -177,13 +177,13 @@ table.gsc-search-box td {
 }
 
 .gsc-search-button.gsc-search-button-v2:focus, .gsc-search-button.gsc-search-button-v2:hover {
-  background: silver;
+  background: rgba(255, 140, 0, .25);
   border: none;
   border-left: solid 1px rgb(255, 140, 0);
 }
 
 .gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
-  fill: white;
+  fill: black;
 }
 
 .search_box_wrapper .gsc-control-cse {
@@ -232,6 +232,7 @@ table.gsc-search-box td {
 
 .list_help_view .help_body .sub_bar a:hover i,
 .list_help_view .help_body .sub_bar a:focus i {
+  background: rgba(255, 140, 0, .25);
   color: black;
 }
 
@@ -245,7 +246,7 @@ table.gsc-search-box td {
 }
 
 .help_display_item a:hover, .help_display_item a:focus {
-  background: silver;
+  background: rgba(255, 140, 0, .25);
 }
 
 .help_display_item h1 {
@@ -268,11 +269,6 @@ table.gsc-search-box td {
 
 .item_help_view {}
 
-.list_help_view .help_body i {
-  position: relative;
-  top: .25em;
-  color: rgb(255, 140, 0);
-}
 
 .list_help_view .help_body a {
   color: rgb(0, 100, 255);
@@ -280,8 +276,15 @@ table.gsc-search-box td {
 
 .list_help_view .help_body a:hover, .list_help_view .help_body a:focus {
   color: black;
+  background: rgba(255, 140, 0, .25);
   border-color: black;
-  background: transparent;
+}
+
+.list_help_view .help_body a i {
+  position: relative;
+  top: .25em;
+  color: rgb(255, 140, 0);
+  background: transparent!important;
 }
 
 #help_template_select {
@@ -294,7 +297,7 @@ table.gsc-search-box td {
 
 #help_template_select:hover, #help_template_select:focus {
   border-color: rgb(255, 140, 0);
-  background: silver;
+  background: rgba(255, 140, 0, .25);
 }
 
 .list_html_div a i {
