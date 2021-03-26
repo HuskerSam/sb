@@ -84,8 +84,8 @@ img {
 
 .option_bar a, .footer_bar a {
   white-space: nowrap;
-  border: solid 1px orange;
-  color: blue;
+  border: solid 1px rgb(255, 140, 0);
+  color: rgb(0, 100, 255);
   text-decoration: none;
   padding: .75em .5em 0 .5em;
 }
@@ -96,7 +96,7 @@ img {
 
 .option_bar a:hover, .footer_bar a:hover, .option_bar a.logo:hover, a:hover,
 .option_bar a:focus, .footer_bar a:focus, .option_bar a.logo:focus, a:focus {
-  border-color: orange;
+  border-color: rgb(255, 140, 0);
   background: silver;
 }
 
@@ -142,7 +142,7 @@ img {
 .search_box_wrapper {
   display: inline-block;
   width: 20em;
-  border: solid 1px orange;
+  border: solid 1px rgb(255, 140, 0);
   margin-right: .25em;
   border-left: none;
 }
@@ -152,7 +152,7 @@ img {
 }
 
 .search_box_wrapper table.gsc-search-box td.gsc-input {
-  padding-right:0;
+  padding-right: 0;
   padding-bottom: 2px;
 }
 
@@ -172,21 +172,21 @@ table.gsc-search-box td {
   padding-top: 14px;
   padding-bottom: 14px;
   border-radius: 0;
-  border-left: solid 1px orange;
+  border-left: solid 1px rgb(255, 140, 0);
 }
 
 .gsc-search-button.gsc-search-button-v2 svg {
-  fill: blue;
+  fill: rgb(0, 100, 255);
 }
 
 .gsc-search-button.gsc-search-button-v2:focus, .gsc-search-button.gsc-search-button-v2:hover {
   background: silver;
   border: none;
-  border-left: solid 1px orange;
+  border-left: solid 1px rgb(255, 140, 0);
 }
 
 .gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
-  fill: blue;
+  fill: rgb(0, 100, 255);
 }
 
 .search_box_wrapper .gsc-control-cse {
@@ -195,7 +195,7 @@ table.gsc-search-box td {
 }
 
 .search_box_wrapper input::placeholder {
-  color: orange;
+  color: rgba(255, 140, 0, .75);
 }
 
 .help_display_item {
@@ -210,15 +210,13 @@ table.gsc-search-box td {
   padding: .25em;
 }
 
-.list_help_view .help_body
-.sub_bar a:hover,
-.list_help_view .help_body
- .sub_bar a:focus {
-  background: silver;
+.list_help_view .help_body .sub_bar a:hover,
+.list_help_view .help_body .sub_bar a:focus {
+  background: rgba(255, 140, 0, .25);
 }
 
 .help_display_item>a {
-  border: solid 1px orange;
+  border: solid 1px rgb(255, 140, 0);
   text-decoration: none;
   padding: .25em .75em 1.25em .75em;
   display: block;
@@ -228,6 +226,15 @@ table.gsc-search-box td {
 
 .list_help_view .help_body .sub_bar a {
   padding: 8px;
+}
+
+.list_help_view .help_body .sub_bar a i {
+  color: rgb(255, 140, 0);
+}
+
+.list_help_view .help_body .sub_bar a:hover i,
+.list_help_view .help_body .sub_bar a:focus i {
+  color: black;
 }
 
 .help_display_item>div {
@@ -266,15 +273,14 @@ table.gsc-search-box td {
 .list_help_view .help_body i {
   position: relative;
   top: .25em;
-  color: orange;
+  color: rgb(255, 140, 0);
 }
 
 .list_help_view .help_body a {
-  color: blue;
+  color: rgb(0, 100, 255);
 }
 
-
-.list_help_view .help_body a:hover, .list_help_view .help_body a:focus  {
+.list_help_view .help_body a:hover, .list_help_view .help_body a:focus {
   color: black;
   border-color: black;
   background: transparent;
@@ -284,17 +290,17 @@ table.gsc-search-box td {
   position: relative;
   top: -.525em;
   font-size: 1.25em;
-  border-color: orange;
-  outline-color: orange;
+  border-color: rgb(255, 140, 0);
+  outline-color: rgb(255, 140, 0);
 }
 
 #help_template_select:hover, #help_template_select:focus {
-  border-color: orange;
+  border-color: rgb(255, 140, 0);
   background: silver;
 }
 
 .list_html_div a i {
-  color: orange;
+  color: rgb(255, 140, 0);
 }
 
 .help_body .reviewed {
@@ -309,7 +315,7 @@ table.gsc-search-box td {
 
 .list_help_view h2 {
   margin: 0;
-  color: rgb(255,220,160);
+  color: rgb(255, 220, 160);
   font-size: 6em;
   display: inline-block;
   font-family: 'Comic Sans MS';
@@ -365,13 +371,12 @@ a.gsst_a {
 }
 
 #gsc-iw-id1.gsc-input-box {
-    padding-top: 6px;
-    padding-bottom: 5px;
-    border: none;
+  padding-top: 6px;
+  padding-bottom: 5px;
+  border: none;
 }
 
-.search_box_wrapper table.gsc-search-box
- {
+.search_box_wrapper table.gsc-search-box {
   border-collapse: collapse;
   border-spacing: 0;
 }
@@ -403,7 +408,6 @@ a.gsst_a {
   animation-direction: alternate;
 }
 
-
 .h2_ctr_4 {
   animation-name: cloudMsg;
   animation-duration: 28s;
@@ -414,10 +418,27 @@ a.gsst_a {
 }
 
 @keyframes cloudMsg {
-  0%   {left: 0%;}
-  10%   {left: 0%;}
-  25%   {left: -1000px;}
-  45%  {left: -1000px;}
-  70%  {left: 0%;}
-  100%  {left: 0%;}
+  0% {
+    left: 0%;
+  }
+
+  10% {
+    left: 0%;
+  }
+
+  25% {
+    left: -1000px;
+  }
+
+  45% {
+    left: -1000px;
+  }
+
+  70% {
+    left: 0%;
+  }
+
+  100% {
+    left: 0%;
+  }
 }

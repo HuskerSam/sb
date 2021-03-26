@@ -272,12 +272,13 @@
                   <input id="new_sheet_add_name" type="text" style="width:20px;flex:1;margin-top:4px;margin-left:8px;">
                 </div>
                 <div style="display:flex;flex-direction:row;">
-                  <div>Add to Project </div>
+                  <div>Add to </div>
                   <select id="new_sheet_add_to_options" style="margin:0 8px;flex: 1">
-                    <option>Circuit Ranges</option>
+                    <option>New Project</option>
                     <option>Asset Ranges</option>
-                    <option>Product Ranges</option>
-                    <option>None</option>
+                    <option>Circuit Ranges</option>
+                    <option>Catalog Ranges</option>
+                    <option value="">None</option>
                   </select>
                   <button id="create_new_project_sheet_button" style="margin:0 8px 0 4px;"><i class="material-icons">add</i></button>
                 </div>
@@ -808,6 +809,9 @@
           this.helpForwardButtonPressed = true;
           this._updateHelpSelectChange();
         });
+        this.create_new_project_sheet_button.addEventListener('click', e => {
+          this.projectsAddSheetToProject();
+        });
       }
       _updateHelpSelectChange() {
         this.app.updateHelpView(this.help_viewer_panel_select.value, this.helpViewer);
@@ -1329,15 +1333,16 @@
         this.project_addsheet_view.style.display = (this.selectedProjectView === 4) ? 'flex' : 'none';
         this.project_display_view.style.display = (this.selectedProjectView === 1 || this.selectedProjectView === 2) ? '' : 'none';
         this.loadImagePreview();
+
+        this.projectsUpdateSheetAddView();
       }
       async loadProjectSelectList() {
         let sel = this.project_deploy_select.selectedIndex;
-        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName);
-        this.publistList = publishList;
+        this.publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, false, true);
         let linkListHTML = '';
         let defaultProject = this.defaultProjectTarget;
         let defaultIndex = -1;
-        publishList.forEach((t, index) => {
+        this.publishList.forEach((t, index) => {
           linkListHTML += '<option>' + t['Project Name'] + '</option>';
           if (defaultProject === t['Project Name'])
             defaultIndex = index;
@@ -1488,18 +1493,18 @@
         });
       }
       async sheetsSetAssetsForProject(assetSheetName, projectName, field = "Asset Ranges") {
-        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, false, true);
+        this.publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, false, true);
 
         let rowIndex = -1;
-        for (let c = 0; c < publishList.length; c++) {
-          if (publishList[c]['Project Name'] === projectName) {
+        for (let c = 0; c < this.publishList.length; c++) {
+          if (this.publishList[c]['Project Name'] === projectName) {
             rowIndex = c;
             break;
           }
         }
 
         if (rowIndex !== -1) {
-          let pubData = publishList[rowIndex];
+          let pubData = this.publishList[rowIndex];
           let assets = pubData.formulaRow[field];
           console.log('assetsformula', assets);
           if (assets !== '')
@@ -1639,16 +1644,16 @@
         this.user_notify_error = false;
         this.publish_results.value = '';
 
-        let publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, true);
+        this.publishList = await this.sheetsJSONforSheetCSV(this.projectsSheetName, true, true);
 
-        this.projectsFetchCSVTestStatus = this._uploadCSVTest(publishList, true);
+        this.projectsFetchCSVTestStatus = this._uploadCSVTest(this.publishList, true);
         if (this.projectsFetchCSVTestStatus) {
-          console.log('CSV Validation Error', 'Projects', publishList);
+          console.log('CSV Validation Error', 'Projects', this.publishList);
           this.publish_results.value += name + ':PROJECTS: Error ';
           this.publish_results.value += 'CSV Validation Error\n\n';
         }
 
-        this.publish_results.value += publishList.length.toString() + ' Items in ' + this.projectsSheetName + '\n\n';
+        this.publish_results.value += this.publishList.length.toString() + ' Projects found in ' + this.projectsSheetName + '\n\n';
 
         let deleteProject = async (name) => {
           let url = 'https://us-central1-' + this.defaultServerTarget + '.cloudfunctions.net/delete/?name=' + encodeURIComponent(name);
@@ -1838,7 +1843,7 @@
           singleIndex = this.project_deploy_select.selectedIndex;
         }
         if (filter === 'selected') {
-          publishList.forEach((i, index) => {
+          this.publishList.forEach((i, index) => {
             if (this.defaultProjectTarget === i['Project Name'])
               singleIndex = index;
           });
@@ -1850,13 +1855,13 @@
           skip = true;
         }
 
-        for (let c = 0, end = publishList.length; c < end; c++) {
+        for (let c = 0, end = this.publishList.length; c < end; c++) {
           if ((singleIndex !== null && singleIndex !== c) || skip)
             continue;
 
-          let row = publishList[c];
+          let row = this.publishList[c];
           if (!row)
-            console.log('ppp', publishList);
+            console.log('ppp', this.publishList);
           let flags = row.Flags;
           if (!flags) flags = '';
           flags = flags.toLowerCase();
@@ -2807,6 +2812,72 @@
         } else
           this.csv_import_preview.innerHTML = new Date();
       }
+
+      async projectsAddSheetToProject() {
+        let name = this.new_sheet_add_name.value;
+
+        if (!name) {
+          alert('Sheet name required')
+          return;
+        }
+
+        await this.initSheetBasedData();
+
+        this.setBusy();
+        await this.sheetsStoreCSVValue(name, 1, 'New Sheet', 'Empty');
+
+        let addToType = this.new_sheet_add_to_options.value;
+        if (addToType) {
+          if (addToType !== "New Project") {
+            if (this.project_deploy_select.selectedIndex < 0) {
+              alert('Project must be selected');
+              return;
+            }
+
+            let selectedProject = this.project_deploy_select.value;
+            let assets = '';
+            let data = this.publishList[this.project_deploy_select.selectedIndex];
+            assets = data[addToType];
+            if (assets !== '')
+              assets += ' & "," & ';
+            else
+              assets += '=';
+            assets += 'getDataRangesForSheet(\"' + name + "\")";
+            this.setBusy();
+
+            await this.sheetsSetAssetsForProject(name, selectedProject, addToType);
+          } else {
+            this.setBusy();
+            this.project_deploy_select.value = '';
+            await this.sheetsAddToProjectList(name);
+            this.setBusy();
+            await this.sheetsStoreSelectedProject(name);
+          }
+
+          await this.initSheetBasedData();
+        }
+        this.clearBusy();
+      }
+      projectsUpdateSheetAddView() {
+        this.project_addsheet_preview_data.innerHTML = '';
+
+        if (this.project_deploy_select.selectedIndex < 0)
+          return;
+
+        let selectedProject = this.project_deploy_select.value;
+        let defaultProject = this.defaultProjectTarget;
+        let rowData = this.publishList[this.project_deploy_select.selectedIndex];
+
+        let html = '';
+        html += 'Selected: <b>' + selectedProject + '</b><br>';
+        html += 'Asset Formula: ' + rowData.formulaRow['Asset Ranges'] + '<br>';
+        html += 'Values: ' + rowData['Asset Ranges'] + '<br>';
+        html += 'Circuit Formula: ' + rowData.formulaRow['Circuit Ranges'] + '<br>';
+        html += 'Values: ' + rowData['Circuit Ranges'] + '<br>';
+        html += 'Catalog Formula: ' + rowData.formulaRow['Catalog Ranges'] + '<br>';
+        html += 'Values: ' + rowData['Catalog Ranges'] + '<br>';
+        this.project_addsheet_preview_data.innerHTML = html;
+      }
     }
 
     document.addEventListener('DOMContentLoaded', e => window.HandtopApp = new AddonSidePanelApp());
@@ -3234,6 +3305,14 @@
     #help_back_button i,
     #help_forward_button i {
       margin: 0 -6px;
+    }
+
+    #project_addsheet_preview_data {
+      flex: 1;
+      text-align: left;
+      overflow: auto;
+      line-height: 1.25em;
+      white-space: nowrap;
     }
   </style>
 
