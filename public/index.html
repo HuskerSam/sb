@@ -32,6 +32,7 @@
     .vc_link:hover {
       background: silver;
     }
+
     .anim_wrapper {
       display: none;
     }
@@ -139,12 +140,12 @@
       animation-iteration-count: infinite;
       position: absolute;
       top: 0;
-      left: -800px;
+      left: -900px;
     }
 
     @keyframes animTimerFrames {
       0% {
-        left: -800px;
+        left: -900px;
       }
 
       5% {
@@ -156,16 +157,22 @@
       }
 
       33% {
-        left: -800px;
+        left: -900px;
       }
 
       100% {
-        left: -800px;
+        left: -900px;
       }
     }
 
     .anim_wrapper {
       display: block;
+    }
+
+    @media only screen and (max-width: 800px) {
+      .anim_box_layer {
+        width: calc(100% - 2em);
+      }
     }
   </style>
 
