@@ -360,11 +360,11 @@ a.gsst_a {
 }
 
 .gsst_a .gscb_a {
-  line-height: 26px;
+  line-height: 32px;
 }
 
 #gs_tti50 {
-  padding: 5px 4px 4px 4px;
+  padding: 0;
   border: none;
 }
 
@@ -373,8 +373,7 @@ a.gsst_a {
 }
 
 #gsc-iw-id1.gsc-input-box {
-  padding-top: 6px;
-  padding-bottom: 5px;
+  padding: 0;
   border: none;
 }
 
@@ -435,4 +434,9 @@ a.gsst_a {
   100% {
     left: 0%;
   }
+}
+
+#gsc-i-id1 {
+  padding: 10px 0!important;
+  margin-left: 4px!important;
 }
