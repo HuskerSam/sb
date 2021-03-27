@@ -89,6 +89,9 @@ img {
   color: rgb(0, 100, 255);
   text-decoration: none;
   padding: .7em .5em 0 .5em;
+}
+
+.option_bar a {
   font-family: Impact;
 }
 

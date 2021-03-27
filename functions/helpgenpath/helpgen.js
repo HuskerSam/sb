@@ -102,7 +102,7 @@ class HelpGen {
       }
 
       window.customCSEID = '0b2a9868105e1e42e';
-      window.customPH = 'Search Visual Tools reference';
+      window.customPH = 'Search reference';
     </script>
 
     <script src="/homepagestuff.js"></script>
