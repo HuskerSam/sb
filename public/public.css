@@ -2,6 +2,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: Tahoma, Georgia;
 }
 
 img {
@@ -88,11 +89,12 @@ img {
   border: solid 1px rgb(255, 140, 0);
   color: rgb(0, 100, 255);
   text-decoration: none;
-  padding: .7em .5em 0 .5em;
+  padding: .65em .5em 0 .5em;
+  font-family: Tahoma, Georgia;
 }
 
 .option_bar a {
-  font-family: Impact;
+  font-family: Tahoma, Georgia;
 }
 
 .footer_bar a, .home_page_anchor {
@@ -130,6 +132,8 @@ img {
   text-align: left;
   max-width: 60em;
   position: relative;
+  color: rgb(0,100,255);
+  font-family: Tahoma, Georgia;
 }
 
 .footer_bar {
@@ -199,7 +203,7 @@ table.gsc-search-box td {
 
 .search_box_wrapper input::placeholder {
   color: rgba(255, 140, 0, .75);
-  font-family: 'Lucida Console';
+  font-family: Tahoma, Georgia;
 }
 
 .help_display_item {
@@ -226,7 +230,7 @@ table.gsc-search-box td {
   padding: .25em .75em 1.25em .75em;
   display: block;
   text-align: center;
-  font-weight: bold;
+  font-family: Tahoma;
 }
 
 .list_help_view .help_body .sub_bar a {
@@ -299,11 +303,16 @@ table.gsc-search-box td {
   font-size: 1.25em;
   border-color: rgb(255, 140, 0);
   outline-color: rgb(255, 140, 0);
+  color: rgb(0,100,255);
+  padding: .25em;
+  margin-top: 7px;
 }
 
 #help_template_select:hover, #help_template_select:focus {
-  border-color: rgb(255, 140, 0);
   background: rgba(255, 140, 0, .25);
+  color: black;
+  border-color: black;
+  outline-color: black;
 }
 
 .list_html_div a i {
@@ -357,12 +366,18 @@ a.gsst_a {
 }
 
 .help_gen_list_wrapper .list_html_div a {
-  padding-top: .1em;
   font-size: 2em;
+  border: solid 1px transparent;
+  padding: 8px 4px 0 4px;
 }
 
 .help_gen_list_wrapper .list_html_div a i {
   font-size: 1em;
+}
+
+.help_gen_list_wrapper .list_html_div a:hover, .help_gen_list_wrapper .list_html_div a:focus {
+    border-color: black;
+    outline-color: black;
 }
 
 .gsst_a .gscb_a {
