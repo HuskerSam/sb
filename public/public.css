@@ -201,6 +201,8 @@ table.gsc-search-box td {
 .search_box_wrapper .gsc-control-cse {
   padding: 0;
   border-radius: none;
+  background: none;
+  border-color: transparent;
 }
 
 .search_box_wrapper input::placeholder {
@@ -402,6 +404,7 @@ a.gsst_a {
 #gsc-iw-id1.gsc-input-box {
   padding: 0;
   border: none;
+  background: none;
 }
 
 .search_box_wrapper table.gsc-search-box {
@@ -466,6 +469,7 @@ a.gsst_a {
 #gsc-i-id1 {
   padding: 10px 0 !important;
   margin-left: 4px !important;
+  background: none;
 }
 
 a.gs-title {
@@ -514,8 +518,8 @@ div.gcsc-more-maybe-branding-root {
 }
 
 body {
-  background: radial-gradient(farthest-corner at 40px 40px, rgb(255, 255, 255) 0%,
-  rgb(255, 255, 255) 30%,
+  background: radial-gradient(farthest-corner at 0% 100%, rgb(255, 255, 255) 0%,
+  rgb(255, 255, 255) 15%,
   rgb(255, 240, 200) 90%,
    rgb(255, 220, 90) 100%);
 }
