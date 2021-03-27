@@ -88,7 +88,8 @@ img {
   border: solid 1px rgb(255, 140, 0);
   color: rgb(0, 100, 255);
   text-decoration: none;
-  padding: .75em .5em 0 .5em;
+  padding: .7em .5em 0 .5em;
+  font-family: Impact;
 }
 
 .footer_bar a, .home_page_anchor {
@@ -195,6 +196,7 @@ table.gsc-search-box td {
 
 .search_box_wrapper input::placeholder {
   color: rgba(255, 140, 0, .75);
+  font-family: 'Lucida Console';
 }
 
 .help_display_item {
