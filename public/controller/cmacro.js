@@ -1329,7 +1329,8 @@ class cMacro {
     });
 
     this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'specularpath',
-      'specularpower', 'hasalpha', 'materialname'];
+      'specularpower', 'hasalpha', 'materialname'
+    ];
 
     this.panel.querySelectorAll('.colorpicker')
       .forEach(i => this._initColorPicker(i));
@@ -3114,6 +3115,16 @@ class cMacro {
         await this.app.updateHelpView("sceneblock", this.app.mV.helpViewer);
       else if (this.block_wizard_type_select.value === "Display Block")
         await this.app.updateHelpView("displayblock", this.app.mV.helpViewer);
+      else if (this.block_wizard_type_select.value === "Connector Line")
+        await this.app.updateHelpView("diagramblocks", this.app.mV.helpViewer);
+      else if (this.block_wizard_type_select.value === "Animated Line")
+        await this.app.updateHelpView("diagramblocks", this.app.mV.helpViewer);
+      else if (this.block_wizard_type_select.value === "Text and Shape")
+        await this.app.updateHelpView("diagramblocks", this.app.mV.helpViewer);
+      else if (this.block_wizard_type_select.value === "Room Walls")
+        await this.app.updateHelpView("roomwallsblock", this.app.mV.helpViewer);
+      else if (this.block_wizard_type_select.value === "Web Font")
+        await this.app.updateHelpView("webfontblock", this.app.mV.helpViewer);
       else
         await this.app.updateHelpView(this.tag, this.app.mV.helpViewer);
     }

@@ -27,6 +27,7 @@
 {"value":"sceneblock","title":"Scene Blocks","category":"Blocks","reviewed":"2021-03-14","video":"","deployed":""},
 {"value":"shape","title":"Shapes and 3D Text","category":"Blocks","reviewed":"2021-03-23","video":"","deployed":"https://dedicateddemos.web.app/view/?name=Shapes%20and%20Frames"},
 {"value":"webfontblock","title":"Web Fonts","category":"Blocks","reviewed":"2021-03-27","video":"","deployed":""},
+{"value":"roomwallsblock","title":"Room Walls","category":"Blocks","reviewed":"2021-03-27","video":"","deployed":""},
 {"value":"shortcolorvideos","title":"Color Videos","category":"Demos","reviewed":"2021-03-14","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideogreen.webm","deployed":""},
 {"value":"spinnerdiagram","title":"Spinner","category":"Demos","reviewed":"2021-03-14","video":"","deployed":""},
 {"value":"webappdiagram","title":"App Diagram","category":"Demos","reviewed":"2021-03-14","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/webglapp.webm","deployed":""},
