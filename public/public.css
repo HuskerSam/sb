@@ -133,14 +133,12 @@ img {
   text-align: left;
   max-width: 1000px;
   position: relative;
-  color: rgb(0,100,255);
+  color: rgb(0, 100, 255);
   font-family: Tahoma, Georgia;
 }
 
 .footer_bar {
-  padding-top: 1.5em;
-  line-height: 1.25em;
-  padding-bottom: .5em;
+  line-height: 3.5em;
   text-align: center;
   width: 100%
 }
@@ -149,7 +147,8 @@ img {
   display: inline-block;
   width: 20em;
   border: solid 1px rgb(255, 140, 0);
-  margin-right: .25em;
+  margin-right: 0;
+  border-right: none;
   border-left: none;
 }
 
@@ -175,11 +174,13 @@ table.gsc-search-box td {
   border: none;
   background: transparent;
   margin: -2px;
-  padding-top: 15px;
-  padding-bottom: 14px;
+  padding-top: 13px;
+  padding-bottom: 16px;
   border-radius: 0;
   border-left: solid 1px rgb(255, 140, 0);
   margin-right: -1px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .gsc-search-button.gsc-search-button-v2 svg {
@@ -278,7 +279,6 @@ table.gsc-search-box td {
 }
 
 .list_help_view .help_body {
-  text-align: center;
   position: relative;
   overflow: hidden;
 }
@@ -308,14 +308,14 @@ table.gsc-search-box td {
   font-size: 1.25em;
   border-color: rgb(255, 140, 0);
   outline-color: rgb(255, 140, 0);
-  color: rgb(0,100,255);
+  color: rgb(0, 100, 255);
   padding: .25em;
   margin-top: 7px;
 }
 
 #help_template_select:hover, #help_template_select:focus {
   background: rgba(255, 140, 0, .25);
-  color: rgb(0,100,255);
+  color: rgb(0, 100, 255);
   outline-color: black;
 }
 
@@ -354,7 +354,7 @@ table.gsc-search-box td {
 
 .list_html_div .review_text {
   padding-left: .5em;
-  color: rgb(255,140,0);
+  color: rgb(255, 140, 0);
   position: relative;
   top: -.75em;
   display: inline-block;
@@ -382,8 +382,8 @@ a.gsst_a {
 }
 
 .help_gen_list_wrapper .list_html_div a:hover, .help_gen_list_wrapper .list_html_div a:focus {
-    border-color: black;
-    outline-color: black;
+  border-color: black;
+  outline-color: black;
 }
 
 .gsst_a .gscb_a {
@@ -476,16 +476,16 @@ a.gs-title {
 }
 
 div.gs-title {
-  height: 3em!important;
-    padding: 0!important;
+  height: 3em !important;
+  padding: 0 !important;
 }
 
 .gs-webResult div.gs-visibleUrl {
-  color: rgb(0,100, 255)!important;
+  color: rgb(0, 100, 255) !important;
 }
 
 .gs-result .gs-image {
-  padding: 0!important;
+  padding: 0 !important;
 }
 
 div.gsc-results-wrapper-overlay {
@@ -496,7 +496,7 @@ div.gsc-results-wrapper-overlay {
 }
 
 div.gsc-modal-background-image-visible {
-  background: rgba(255,140,0,.25);
+  background: rgba(255, 140, 0, .25);
 }
 
 div.gcsc-more-maybe-branding-root a {
@@ -509,6 +509,18 @@ div.gcsc-more-maybe-branding-root {
 
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
   font-size: 2em;
-  color:rgb(0,100,255);
+  color: rgb(0, 100, 255);
   font-weight: bold;
+}
+
+body {
+  background: radial-gradient(farthest-corner at 40px 40px, rgb(255, 255, 255) 0%,
+  rgb(255, 255, 255) 30%,
+  rgb(255, 240, 200) 90%,
+   rgb(255, 220, 90) 100%);
+}
+
+.alternate_email {
+  position: relative;
+  top: -.1em;
 }

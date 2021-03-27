@@ -67,6 +67,7 @@ class HelpGen {
         <div class="search_box_wrapper">
           <div class="gcse-search"></div>
         </div>
+        <a href="mailto:support@handtop.com?subject=URGENT:Reference Question" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
       </div>
       <div class="help_gen_list_wrapper">
         ${listHTML}
@@ -78,7 +79,7 @@ class HelpGen {
         <a href="/privacy.html">Privacy Policy</a>
         &nbsp;
         <a href="/about/">About</a>
-        <br><br>
+        <br>
         Lincoln, Nebraska, USA 68508
         <br>© 1998 - 2021 Handtop. All Rights Reserved.
       </div>
