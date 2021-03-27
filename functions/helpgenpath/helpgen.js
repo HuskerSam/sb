@@ -31,10 +31,9 @@ class HelpGen {
     if (includeList) {
       listHTML = `<div class="list_html_div"><select id="help_template_select" value="${value}">${helpOptions}</select><br>`;
 
-      if (video)
-        listHTML += ` &nbsp; <a href="${video}" target="_blank"><i class="material-icons">ondemand_video</i></a>`;
-      if (deployed)
-        listHTML += ` &nbsp; <a href="${deployed}" target="_blank"><i class="material-icons">animation</i></a>`;
+      listHTML += ` &nbsp; <a href="${video}" ${ video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
+      listHTML += ` &nbsp; <a href="${deployed}" ${ deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
+
       listHTML += reviewHTML;
       listHTML += '</div>';
     }
@@ -210,9 +209,9 @@ class HelpGen {
     let counter = 1;
     data.forEach(i => {
       if (lastCat !== i.category) {
-          html += '<div style="clear:both;"></div><div class="header_wrapper"><h2 class="h2_ctr_' + counter.toString() + '">' + i.category + '</h2></div>';
-          counter++;
-          lastCat = i.category;
+        html += '<div style="clear:both;"></div><div class="header_wrapper"><h2 class="h2_ctr_' + counter.toString() + '">' + i.category + '</h2></div>';
+        counter++;
+        lastCat = i.category;
       }
 
       let displayTitle = i.title;
