@@ -108,6 +108,7 @@ img {
   border-color: rgb(255, 140, 0);
   background: rgba(255, 140, 0, .25);
   color: black;
+  z-index: 100;
 }
 
 .option_bar a.logo {
@@ -149,7 +150,7 @@ img {
   width: 20em;
   border: solid 1px rgb(255, 140, 0);
   margin-right: .25em;
-  border-left: solid 1px transparent;
+  border-left: none;
 }
 
 .search_box_wrapper form.gsc-search-box {
@@ -174,7 +175,7 @@ table.gsc-search-box td {
   border: none;
   background: transparent;
   margin: -2px;
-  padding-top: 14px;
+  padding-top: 15px;
   padding-bottom: 14px;
   border-radius: 0;
   border-left: solid 1px rgb(255, 140, 0);
@@ -211,7 +212,7 @@ table.gsc-search-box td {
   line-height: 1em;
   display: inline-block;
   margin: 0 2px;
-  padding-bottom: .5em;
+  padding-bottom: .75em;
 }
 
 .help_display_item a {
@@ -252,7 +253,7 @@ table.gsc-search-box td {
 }
 
 .help_display_item .sub_bar {
-  margin-top: -.75em;
+  margin-top: -.5em;
   text-align: center;
 }
 
@@ -267,7 +268,7 @@ table.gsc-search-box td {
 }
 
 .help_body {
-  padding: 0 1em;
+  padding: .25em .25em .5em .25em;
   flex: 1;
   line-height: 2em;
 }
@@ -310,8 +311,7 @@ table.gsc-search-box td {
 
 #help_template_select:hover, #help_template_select:focus {
   background: rgba(255, 140, 0, .25);
-  color: black;
-  border-color: black;
+  color: rgb(0,100,255);
   outline-color: black;
 }
 

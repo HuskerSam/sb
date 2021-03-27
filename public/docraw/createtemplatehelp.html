@@ -1,1 +1,22 @@
-<h3>Starting an existing Layout</h3>
+<h3>The cell coloring functions might liven up your sheets but otherwise the other
+information here is for saving templates (internal use)</h3>
+<h2>##sheetname and colorHeader</h2>
+Use ##sheetname to populate values such as logo text or Scene Block name.
+<br>
+The Scene Block name becomes the title of the /view window.
+<br>
+Use the colorHeader function to watch 1 cell and update many cells.
+<h3>Replace key values with ##sheetrawname</h3>
+<img src="https://handtop.com/docimages/layouthelpsheetrawname.png">
+<h3>colorHeader description</h3>
+<img src="https://handtop.com/docimages/addonfunctioncolorheader.png">
+<h3>colorColumn can be used for a column</h3>
+<img src="https://handtop.com/docimages/createtemplatecolorcolumn.png">
+<br>
+<img src="https://handtop.com/docimages/createtemplatecolorcolumnfunc.png">
+<h3>Use getJSONForSheet to capture the template</h3>
+Grab the data by chunks of 100 rows and merge the arrays in an
+editor, the cell length limit is 50k, and 100 rows generally works fine
+within this.  Raw chunking is possible as well.
+<br>
+<img src="https://handtop.com/docimages/getJSONForSheetFunction.png">
