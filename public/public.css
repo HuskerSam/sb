@@ -463,8 +463,26 @@ div.gs-title {
 }
 
 div.gsc-results-wrapper-overlay {
-  width: 92%;
+  width: calc(88vw - 25px);
   left: 1%;
-  height: 88%;
+  height: calc(88vh - 20px);
   top: 1%;
+}
+
+div.gsc-modal-background-image-visible {
+  background: rgba(255,140,0,.25);
+}
+
+div.gcsc-more-maybe-branding-root a {
+  padding-bottom: .75em;
+}
+
+div.gcsc-more-maybe-branding-root {
+  margin-top: 1em;
+}
+
+.gsc-results .gsc-cursor-box .gsc-cursor-page {
+  font-size: 2em;
+  color:rgb(0,100,255);
+  font-weight: bold;
 }
