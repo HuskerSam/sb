@@ -11,6 +11,9 @@ h1, h2 {
 
 a h1, a h2 {
   color: inherit;
+  margin: 0;
+  text-decoration: underline;
+  margin-top: .25em;
 }
 
 img {
@@ -551,21 +554,25 @@ body {
   top: -.1em;
 }
 
-.item_help_view h1 {
+ h1 {
   margin-bottom: .25em;
 }
 
-.item_help_view h2 {
+ h2 {
   margin-bottom: .25em;
   margin-left: 1em;
 }
 
-.item_help_view h3 {
+ h3 {
   margin-bottom: .25em;
   margin-left: 2em;
   color: rgb(0, 100, 255);
 }
 
 .item_help_view .help_body {
+  color: black;
+}
+
+.footer_bar .copyright {
   color: black;
 }

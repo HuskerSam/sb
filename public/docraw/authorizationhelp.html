@@ -1,8 +1,20 @@
+<h1>For Developers</h1>
+
 For /view and /display apps, <a href="https://firebase.google.com/docs/auth" target="_blank">Firebase Anonymous Authorization</a>
 is used with a single profile for all users during alpha to increase multiple user overlap.<br>
 For /asset Google authorization or email (passwordless) is used.  You are prompted to login each time because we can't save 2 sets
 of Firebase Auth credentials for one domain, so /view and /display authorization is preferred by default over /asset.  In production for
 a client we can use sub domains to store more credentials, so asset can become asset.sitename.com vs www.sitename.com and store separate credentials
 that don't overwrite the user applications.
-<br><br>
-Addon security is performed using a token stored in RTDB and passed to an API.
+<br>
+<img src="https://handtop.com/docimages/applicationauthorization.png"><br>
+The Asset Viewer(/view), Display Application(/display) and Asset Editor(/asset) all derive from the same shared code.
+At this time the viewer is heavier then wanted, the idea is to derive a minimum sized application for your needs, and the
+existing code is fragmented into a number optionally includable modules depending on UI features and advanced
+editing features.
+<br>
+Except in a few performance driven situations the applications write to the database and the canvas bound code reads from it
+(versus writing to memory, then to do db, and db to memory, etc etc).
+<br>
+Firebase Authentication is used for OAuth providers, anonymous authentication and managing user accounts, such as password
+changes and verification emails.
