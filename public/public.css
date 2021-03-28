@@ -39,7 +39,6 @@ img {
 
 .demo_item a:hover {
   background: rgba(255, 140, 0, .25);
-  ;
 }
 
 .item_title {
@@ -105,7 +104,7 @@ img {
 .option_bar a:hover, .footer_bar a:hover, .option_bar a.logo:hover, a:hover,
 .option_bar a:focus, .footer_bar a:focus, .option_bar a.logo:focus, a:focus,
 .home_page_anchor:focus, .home_page_anchor:hover {
-  border-color: rgb(255, 140, 0);
+  border-color: black;
   background: white;
   color: black;
   z-index: 100;
@@ -115,6 +114,11 @@ img {
   border: solid 1px transparent;
   padding: 0;
   border-right: none;
+}
+
+.option_bar a.logo:hover {
+  border-right: solid 1px black;
+  margin-right: -1px;
 }
 
 .small_logo {
@@ -192,9 +196,12 @@ table.gsc-search-box td {
 
 .gsc-search-button.gsc-search-button-v2:focus, .gsc-search-button.gsc-search-button-v2:hover {
   background: white;
-  border: none;
-  border-left: solid 1px rgb(255, 140, 0);
+  border: solid 1px black;
   cursor: pointer;
+  margin-right: -1px;
+  z-index: 1;
+  position: relative;
+  left: 1px;
 }
 
 .gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
