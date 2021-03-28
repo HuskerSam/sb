@@ -79,9 +79,10 @@ class HelpGen {
         <a href="/privacy.html">Privacy Policy</a>
         &nbsp;
         <a href="/about/">About</a>
-        <br>
-        Lincoln, Nebraska, USA 68508
-        <br>© 1998 - 2021 Handtop. All Rights Reserved.
+        <div class="copyright">
+          Lincoln, Nebraska, USA 68508
+          <br>© 1998 - 2021 Handtop. All Rights Reserved.
+        </div>
       </div>
     </div>
     <script>

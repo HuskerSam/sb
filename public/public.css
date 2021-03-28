@@ -112,8 +112,9 @@ img {
 }
 
 .option_bar a.logo {
-  border: none;
+  border: solid 1px transparent;
   padding: 0;
+  border-right: none;
 }
 
 .option_bar a:nth-child(3) {
@@ -121,7 +122,7 @@ img {
 }
 
 .small_logo {
-  height: 39px;
+  height: 37px;
   padding: 2px 5px 0px 5px;
   margin-bottom: -1px;
 }
@@ -141,6 +142,11 @@ img {
   line-height: 3.5em;
   text-align: center;
   width: 100%
+}
+
+.footer_bar .copyright {
+  line-height: 1.35em;
+  padding-bottom: .5em;
 }
 
 .search_box_wrapper {
@@ -192,6 +198,7 @@ table.gsc-search-box td {
   background: rgba(255, 140, 0, .25);
   border: none;
   border-left: solid 1px rgb(255, 140, 0);
+  cursor: pointer;
 }
 
 .gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
@@ -313,11 +320,12 @@ table.gsc-search-box td {
   color: rgb(0, 100, 255);
   padding: .25em;
   margin-top: 7px;
+  background-color: transparent;
 }
 
 #help_template_select:hover, #help_template_select:focus {
-  background: rgba(255, 140, 0, .25);
-  color: rgb(0, 100, 255);
+  border-color: black;
+  background-color: rgba(255,140,0,.25);
   outline-color: black;
 }
 
@@ -470,6 +478,7 @@ a.gsst_a {
   padding: 10px 0 !important;
   margin-left: 4px !important;
   background: none;
+  color: rgb(0,100,255);
 }
 
 a.gs-title {
@@ -518,10 +527,9 @@ div.gcsc-more-maybe-branding-root {
 }
 
 body {
-  background: radial-gradient(farthest-corner at 0% 100%, rgb(255, 255, 255) 0%,
-  rgb(255, 255, 255) 15%,
-  rgb(255, 240, 200) 90%,
-   rgb(255, 220, 90) 100%);
+  background: radial-gradient(farthest-corner at 0% 0%, rgba(100, 200, 255, .75) 0%,
+   rgb(255,255, 255) 300px,
+   rgb(255, 255, 255) 100%);
 }
 
 .alternate_email {
