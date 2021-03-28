@@ -43,6 +43,16 @@ class cViewPublished extends bView {
       rangeStep: '.25',
       groupClass: 'font-size-main-view',
       floatLeft: true
+    }, {
+      title: 'Opacity',
+      fireSetField: 'opacityLevel',
+      group: 'opacitysolo',
+      displayType: 'number',
+      helperType: 'singleSlider',
+      rangeMin: '0',
+      rangeMax: '1',
+      rangeStep: '.01',
+      groupClass: 'opacity-main-view'
     }];
     this.fontFieldsContainer = this.fontToolsContainer.querySelector('.fields-container');
     this.fontToolsButton = this.dialog.querySelector('#publish-settings-button');
@@ -102,7 +112,7 @@ class cViewPublished extends bView {
   _displayCameraFeatures() {
     if (!this.rootBlock)
       return;
-      
+
     this.updateDisplayCameraName();
     if (this.displayCamera) {
       setTimeout(() => this.updateSelectedCamera(), 150);

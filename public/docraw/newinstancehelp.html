@@ -1,41 +1,40 @@
-create new firebase project - this results in a {FIREBASEPROJECTID} - you can also bind a url to this
-<br><br>
-create Realtime Database instance - this is the main database at this time
-<br><br>
-Authentication - enable anonymous - this is for /view and /display<br>
-also enable Google - this is for /asset<br>
-also enable email/passwordless - this is for /asset<br>
--- only enable anonymous for production - recommended at this time - to prevent /asset access
-<br><br>
-create firestore instance (select region - will also create bucket storage) - this is only for configuration but will be the main database in a later release
-<br><br>
-add to firestore privateConfiguration->security->token: "{TOKENVALUE}"
-<br><br>
-the {TOKENVALUE} (you set it) and the Firebase proejct id will be the 2 values needed for the addon
-<br>
-<br>
-turn on billing / blaze plan to support cloud functions
-<br>
-<br>
-upload the code (fetch from github) - hosting only first
+<h1>Developer Usage Only</h1>
+<h2>Steps to create a new server instance</h2>
+<h3>Create new firebase project</h3>
+ - results in a {FIREBASEPROJECTID}<br>
+ - you can also bind a url to this
+<h3>Create Realtime Database</h3>
+ - main database
+<h3>Enable User Authentication</h3>
+ - enable anonymous - this is for Asset Viewer (/view) and Display App (/display)<br>
+ - enable Google - this is for Asset Manager (/asset); optional<br>
+ - enable email/passwordless - this is for Asset Manager (/asset); optional<br>
+ - only enable anonymous for production - recommended at this time - to prevent /asset access
+ - another option is to only enable the Firebase default route - not a configured url for access
+<h3>Create Firestore Instance</h3>
+ - select region
+ - will also create bucket storage
+ - this is only for configuration but will be the main database in a later release
+<h3>Initialize token for access</h3>
+ - add to Firestore privateConfiguration->security->token: "{TOKENVALUE}"
+ - the {TOKENVALUE} (you set it) and the Firebase Project id will be the 2 values needed for the addon
+<h3>Enable billing</h3>
+ - blaze plan to support cloud functions
+<h3>Upload Code</h3>
+  Code needs to be uploaded twice - once for hosting then a second time for cloud functions.  The cloud functions load
+  some routines from the hosted website (javascript).
 <br>
  firebase deploy -P {FIREBASEPROJECTID} --only hosting
 <br>
-  &nbsp; this is needed as site files are used in the server and need to be in the cloud when deployed initially
-  <br>
-  then deploy <br>
-firebase deploy -P {FIREBASEPROJECTID}
-<br>
- &nbsp; --only functions is possible but the hosting deploy is very fast anyways and this will be the regular command that works
- <br><br>
-to test deploy the web logo example using addon - FIREBASEPROJECTID and TOKENVALUE are the server credentials for addon
-<br><br>
+firebase deploy -P {FIREBASEPROJECTID} --only functions
+<h3>Configure CORS for bucket</h3>
 <b>Important:</b> CORS headers need to be set on the google bucket associated with the project<br>
 <a href="https://cloud.google.com/storage/docs/cross-origin#Configuring-CORS-on-a-Bucket" target="_blank">GCP Reference</a>
 <a href="https://handtop.com/docimages/cors.json" target="_blank">Example cors.json</a> - this file also lives in the code root directory.<br>
-
 gcloud auth login<br>
  - then follow steps to authenticate (if needed)<br>
-gsutil cors set cors.json gs://{FIREBASEPROJECTID}.appspot.com from where the cors.json file exists (or path this cmd better).
+gsutil cors set cors.json gs://{FIREBASEPROJECTID}.appspot.com
+<br> -- execute from directory where the cors.json file exists (or path this cmd better).
 <br>
-<b>Optional</b> - enable backup for RTDB
+<h3>Enable backup for RTDB</h3>
+If using the Asset Manager (/asset) to create content, it's recommended to enable daily backups on RTDB to prevent expected data loss.
