@@ -8,6 +8,8 @@ or profiting from it.
 <h2>% based values in cells</h2>
 % based values are useful when working with frame times - be careful to either add a "'"
 to the front i.e. 98% = '98%, or 98% = ="98%" in the cell. Otherwise sheets calcs 98% = .98 - which equates to .98 ms.
+<b>under consideration</b> is converting a raw value of  0 - 1 into a % (value / 100).  1 shouldn't really be used as
+3-5 is better - @30 frames a second, it's 3ms + per frame.  So possibly .1 = 10% (instead of .1ms), 1 = 100% (instead of 1ms) and 0 is 0.
 <h2>Sheets Timeouts</h2>
 functions must finish in 60 seconds or they fail - this at busy times of
 day (afternoon/evening USA) can cause intermitent fails - so check formula results and try again at times to make sure no errors

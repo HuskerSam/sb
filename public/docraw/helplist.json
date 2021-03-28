@@ -6,7 +6,7 @@
 {"value":"virtualreality","title":"Virtual Reality","category":"Cloud","reviewed":"2021-03-28","video":"","deployed":""},
 {"value":"newinstance","title":"Server Initialization","category":"Cloud","reviewed":"2021-03-28","video":"","deployed":""},
 {"value":"authorization","title":"Application Authorization","category":"Cloud","reviewed":"2021-03-28","video":"","deployed":""},
-{"value":"csvformat","title":"Data Import Format","category":"Cloud","reviewed":"2021-03-28","video":"https://youtu.be/1ShdbKuS62s","deployed":""},
+{"value":"csvformat","title":"Data Import Format","category":"Cloud","reviewed":"2021-03-28","video":"","deployed":""},
 {"value":"createlayout","title":"Create Layout","category":"Sheets","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/createlayoutwalkthru.mp4","deployed":"https://dedicateddemos.web.app/view/?name=Create%20Layout%20Logo%20Example"},
 {"value":"addonconfiguration","title":"Addon Configuration","category":"Sheets","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/newsheetintro.mp4","deployed":""},
 {"value":"addonprojects","title":"Addon Projects","category":"Sheets","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/projectvideaddon.mp4","deployed":""},

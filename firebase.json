@@ -28,34 +28,6 @@
     ],
     "rewrites": [
       {
-        "source": "/supernote{,/**}",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/SuperNote{,/**}",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/InfoView{,/**}",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/tTV{,/**}",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/SuperNote.html",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/sales.aspx",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/support.html",
-        "destination": "/index.html"
-      },
-      {
         "source": "/doc",
         "function": "generatedhelplist"
       },
