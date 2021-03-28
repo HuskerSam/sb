@@ -5,8 +5,13 @@ body {
   font-family: Tahoma, Georgia;
 }
 
-h1, h2, h3 {
+h1, h2 {
   color: rgb(0, 200, 0);
+}
+
+
+a h1, a h2 {
+  color: inherit;
 }
 
 img {
@@ -536,17 +541,10 @@ div.gcsc-more-maybe-branding-root {
 }
 
 body {
-  background: radial-gradient(farthest-corner at 0% 0%, rgba(100, 200, 255, .75) 0%,
-    rgb(255, 255, 255) 500px,
+  background: radial-gradient(farthest-corner at 0% 0%, rgba(100, 200, 255, .6) 0%,
+  rgba(100, 200, 255, .3) 40px,
+  rgb(255, 255, 255) 50%,
     rgb(255, 255, 255) 100%);
-}
-
-@media only screen and (max-width: 600px) {
-  body {
-    background: radial-gradient(farthest-corner at 0% 0%, rgba(100, 200, 255, .75) 0%,
-      rgb(255, 255, 255) 300px,
-      rgb(255, 255, 255) 100%);
-  }
 }
 
 .alternate_email {
