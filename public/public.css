@@ -337,8 +337,8 @@ table.gsc-search-box td {
   text-align: center;
   margin-top: -1.5em;
   position: relative;
-  z-index: -1;
   margin-bottom: .75em;
+  pointer-events: none;
 }
 
 .list_help_view h2 {
