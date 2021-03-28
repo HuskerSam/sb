@@ -5,6 +5,15 @@ largely go with webGL scene specifics - such as fog, canvas color - other fields
 go with display level animation length, audio and video settings that don't directly
 map to a webGL scene but live on the same level in the hierarchy of a display.
 <br>
+Fields like Frame Time (frametime) can be used to disable the play button (0) or set the length of the
+overall animation to repeat.  Audio URL (audiourl) and Video URL (videourl) control scene
+specific media that is played with time elasped in sync with the animation.
+<br>
+<h3>Note on HTML 5 Viewer</h3>
+The screen must always be clicked to start a video or audio file (a user interaction) - otherwise
+the browser disables the sound/video source.  This includes videos used as a texture or
+for native DOM display.
+<br>
 A scene block is a "macro" that resolves to a block with fields set.
 <br>
 <img src="https://handtop.com/docimages/sceneblockequirectdetails.png"><br>
@@ -14,8 +23,5 @@ way to acquire custom ones quickly.<br>
 abbreviate the full path, the image preview will popup and you can right click
 and view the image and capture the full path if wanted.<br>
 Uploading a file stores it in a project specific location using the token as security.
-
 <br>
-  audiourl: url to html5 compatible song (mpg, wav, etc)
-  <br>
-  frametime: length of animation if frames included for any blocks - this is <b>required to have a play button</b>
+<img src="https://handtop.com/docimages/sceneblockdisplayui.png"><br>

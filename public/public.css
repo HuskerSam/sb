@@ -541,8 +541,8 @@ div.gcsc-more-maybe-branding-root {
 }
 
 body {
-  background: radial-gradient(farthest-corner at 0% 0%, rgba(100, 200, 255, .6) 0%,
-  rgba(100, 200, 255, .3) 40px,
+  background: radial-gradient(farthest-corner at 0% 0%, rgba(100, 200, 255, 1) 0%,
+  rgba(100, 200, 255, .5) 40px,
   rgb(255, 255, 255) 50%,
     rgb(255, 255, 255) 100%);
 }
