@@ -175,7 +175,7 @@ img {
 
 .search_box_wrapper table.gsc-search-box td.gsc-input {
   padding-right: 0;
-  padding-bottom: 2px;
+  padding-bottom: 0px;
 }
 
 table.gsc-search-box td {
@@ -188,11 +188,11 @@ table.gsc-search-box td {
 }
 
 .gsc-search-button.gsc-search-button-v2 {
-  border: none;
+  border: solid 1px transparent;
   background: transparent;
   margin: -2px;
-  padding-top: 13px;
-  padding-bottom: 16px;
+  padding-top: 15px;
+  padding-bottom: 14px;
   border-radius: 0;
   border-left: solid 1px rgb(255, 140, 0);
   margin-right: -1px;
@@ -207,12 +207,10 @@ table.gsc-search-box td {
 
 .gsc-search-button.gsc-search-button-v2:focus, .gsc-search-button.gsc-search-button-v2:hover {
   background: white;
-  border: solid 1px black;
+  border-color: black;
   cursor: pointer;
   margin-right: -1px;
   z-index: 1;
-  position: relative;
-  left: 1px;
 }
 
 .gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
@@ -389,8 +387,9 @@ table.gsc-search-box td {
 a.gsst_a {
   padding: 0;
   margin: 0;
-  line-height: .5em;
-  border: none;
+  border-color: transparent;
+  position: relative;
+  left: -2px;
 }
 
 .help_gen_list_wrapper {
@@ -413,7 +412,11 @@ a.gsst_a {
 }
 
 .gsst_a .gscb_a {
-  line-height: 32px;
+  line-height: 38px;
+  padding-left: 7px;
+  padding-right: 6px;
+  background: white;
+  position: relative;
 }
 
 #gs_tti50 {
@@ -422,7 +425,8 @@ a.gsst_a {
 }
 
 #gs_st50 {
-  padding-right: 5px;
+  padding-right: 0px;
+  padding: 0;
 }
 
 #gsc-iw-id1.gsc-input-box {
@@ -491,10 +495,18 @@ a.gsst_a {
 }
 
 #gsc-i-id1 {
-  padding: 10px 0 !important;
-  margin-left: 4px !important;
+  padding: 11px 0px 10px 4px !important;
+  margin-left: 0px !important;
+  width: calc(100% - 6px)!important;
   background: none;
   color: rgb(0, 100, 255);
+}
+
+#gsc-i-id1:hover, #gsc-i-id1:focus {
+  background: white;
+  color: black;
+  outline: solid 1px black!important;
+  border-color: black;
 }
 
 a.gs-title {
