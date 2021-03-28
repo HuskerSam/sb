@@ -1,2 +1,21 @@
+A Scene Block takes on scene specific characteristics when it's the root block in
+a project (otherwise these fields are ignored).
+<br> The Scene Block specific fields
+largely go with webGL scene specifics - such as fog, canvas color - other fields
+go with display level animation length, audio and video settings that don't directly
+map to a webGL scene but live on the same level in the hierarchy of a display.
+<br>
+A scene block is a "macro" that resolves to a block with fields set.
+<br>
+<img src="https://handtop.com/docimages/sceneblockequirectdetails.png"><br>
+Equirects can quickly fill in the background, using a 360 camera is a common
+way to acquire custom ones quickly.<br>
+"sb:" is a macro that converts to a full path prefix in the cloud.  It's used to
+abbreviate the full path, the image preview will popup and you can right click
+and view the image and capture the full path if wanted.<br>
+Uploading a file stores it in a project specific location using the token as security.
+
+<br>
   audiourl: url to html5 compatible song (mpg, wav, etc)
+  <br>
   frametime: length of animation if frames included for any blocks - this is <b>required to have a play button</b>
