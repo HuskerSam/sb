@@ -117,10 +117,6 @@ img {
   border-right: none;
 }
 
-.option_bar a:nth-child(3) {
-  border-left: none;
-}
-
 .small_logo {
   height: 37px;
   padding: 2px 5px 0px 5px;
@@ -325,7 +321,7 @@ table.gsc-search-box td {
 
 #help_template_select:hover, #help_template_select:focus {
   border-color: black;
-  background-color: rgba(255,140,0,.25);
+  background-color: white;
   outline-color: black;
 }
 
