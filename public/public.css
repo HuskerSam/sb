@@ -670,12 +670,6 @@ h3 {
   margin: .25em;
 }
 
-h1,
-h2,
-h3 {
-  color: rgb(0, 100, 255);
-}
-
 .anim_box_layer .orange {
   color: rgb(0, 200, 0);
 }
@@ -752,17 +746,17 @@ h3 {
 }
 
 .anim_wrapper_height_container {
-  height: 1200px;
+  height: 900px;
 }
 
 
 @media only screen and (max-width: 1000px) {
   .anim_wrapper_height_container {
-    height: 800px;
+    height: 900px;
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 600px) {
   .anim_wrapper_height_container {
     height: 600px;
   }
