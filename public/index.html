@@ -52,8 +52,8 @@
       </div>
       <a href="mailto:contact@handtop.com?subject=URGENT QUESTION" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
     </div>
-    <div>
-      <button id="animation_skip_backward" class="timer_stop_btn"><i class="material-icons">navigate_before</i></button>
+    <div style="padding-left: 2em;">
+      <button id="animation_skip_backward" class="timer_stop_btn"><i class="material-icons" style="position:relative;left:5px;">arrow_back_ios</i></button>
       <div id="timer_bar_wrapper">
         <div id="timer_bar"></div>
         <button id="animation_skip_1" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
@@ -61,7 +61,7 @@
         <button id="animation_skip_3" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
         <button id="animation_skip_4" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
       </div>
-      <button id="animation_skip_forward" class="timer_stop_btn"><i class="material-icons">navigate_next</i></button>
+      <button id="animation_skip_forward" class="timer_stop_btn"><i class="material-icons">arrow_forward_ios</i></button>
     </div>
     <div class="anim_wrapper" style="position:relative;overflow:visible;flex:1">
       <div class="anim_box_layer" style="animation-delay:0">
@@ -84,7 +84,7 @@
         <h2><span class="orange">Publish once</span> for all devices and everyone.</h2>
         <h2><span class="orange">Realtime Database</span> instantly pushes updates.</h2>
         <h2><span class="orange">Dynamic hosting</span> scales for the unexpected.</h2>
-        <h3>“<span class="green">Multiuser begins at the core</span>”</h3>
+        <h3>“<span class="green">Multiuser starts at the core</span>”</h3>
       </div>
       <div class="anim_box_layer" style="animation-delay:24s">
         <h1>3D content for today</h1>
@@ -151,22 +151,25 @@
       height: 50%;
       padding-bottom: 3px;
       position: relative;
-      color: rgba(255,140,0,.75);
+      color: rgba(255,255,255,.5);
+      margin: 0 0px;
     }
 
     #timer_bar_wrapper button:hover, #timer_bar_wrapper button:focus {
       background: none;
+      background: rgba(255,255,255, .5);
+      color: black;
     }
 
     #timer_bar {
       position: absolute;
-      height: 100%;
+      height: 28%;
+      top: 38%;
       background-color: rgba(0,100,255,.5);
       animation-duration: 32s;
       animation-timing-function: linear;
       animation-name: timerBarFrames;
       animation-iteration-count: infinite;
-      top: 0;
     }
 
     @keyframes timerBarFrames {
@@ -213,6 +216,7 @@
       animation-name: animTimerFrames;
       animation-duration: 32s;
       animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
       position: absolute;
       top: 0;
       left: -900px;
@@ -246,23 +250,20 @@
 
     .timer_stop_btn {
       background: transparent;
-      margin: 0 .5em;
-      border: solid 1px rgb(255,140,0);
+      margin: 0;
+      border: none;
       padding-top: 6px;
       position: relative;
       z-index: 1;
+      color: rgb(0,100,255);
     }
 
     .timer_stop_btn:hover, .timer_stop_btn:focus {
-      background: white;
+      background: rgba(255,255,255,.5);
       outline: solid 1px black;
+      color: rgb(0,100,255);
     }
 
-    @media only screen and (max-width: 800px) {
-      .anim_box_layer {
-        width: calc(100% - 2em);
-      }
-    }
   </style>
 </body>
 

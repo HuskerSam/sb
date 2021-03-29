@@ -217,7 +217,11 @@ table.gsc-search-box td {
 }
 
 .gsc-search-button.gsc-search-button-v2:hover {
-  outline: none;
+  outline: solid 1px transparent;
+}
+
+.gsc-search-button.gsc-search-button-v2:focus {
+  outline: solid 1px black;
 }
 
 .gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
@@ -362,6 +366,7 @@ table.gsc-search-box td {
   position: relative;
   margin-bottom: .75em;
   pointer-events: none;
+  z-index: 2000;
 }
 
 .list_help_view h2 {
@@ -522,6 +527,10 @@ a.gsst_a {
 
 #gsc-i-id1:hover {
   outline: solid 1px transparent!important;
+}
+
+#gsc-i-id1:focus {
+  outline: solid 1px black!important;
 }
 
 a.gs-title {
