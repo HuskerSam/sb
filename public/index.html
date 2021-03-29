@@ -26,18 +26,15 @@
       window.location = '/display';
   </script>
 
-  <link rel="stylesheet" href="public.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
 
   <style>
-    .vc_link:hover {
-      background: silver;
-    }
-
     .anim_wrapper {
       display: none;
     }
   </style>
+  <link rel="stylesheet" href="public.css">
+
 </head>
 
 <body>
@@ -64,38 +61,39 @@
       </div>
       <button id="animation_skip_forward" class="timer_stop_btn"><i class="material-icons">arrow_forward_ios</i></button>
     </div>
-    <div class="anim_wrapper" style="position:relative;overflow:visible;flex:1">
-      <div class="anim_box_layer" style="animation-delay:0">
-        <h1>3D content in minutes</h1>
-        <h2><span class="orange">Low intensity</span> creation and distribution.</h2>
-        <h2><span class="orange">Load on demand</span> viewing for most screens.</h2>
-        <h2><span class="orange">Blend your data</span> with templates to customize.</h2>
-        <h3>“<span class="green">Time to magic is a brand's promise</span>”</h3>
-      </div>
-      <br>
-      <div class="anim_box_layer" style="animation-delay:8s">
-        <h1>3D content that matters</h1>
-        <h2><span class="orange">Employees customize</span> using their taste.</h2>
-        <h2><span class="orange">Customers visit</span> online for fresh displays.</h2>
-        <h2><span class="orange">Localized viewing</span> in games and searches.</h2>
-        <h3>“<span class="green">Unique content per user</span>”</h3>
-      </div>
-      <div class="anim_box_layer" style="animation-delay:16s">
-        <h1>3D content for everywhere</h1>
-        <h2><span class="orange">Publish once</span> for all devices and everyone.</h2>
-        <h2><span class="orange">Realtime Database</span> instantly pushes updates.</h2>
-        <h2><span class="orange">Dynamic hosting</span> scales for the unexpected.</h2>
-        <h3>“<span class="green">Multiuser starts at the core</span>”</h3>
-      </div>
-      <div class="anim_box_layer" style="animation-delay:24s">
-        <h1>3D content for today</h1>
-        <h2><span class="orange">Web optimized</span> with jpegs and low poly meshes.</h2>
-        <h2><span class="orange">Spreadsheets simplify</span> data importing and merging.</h2>
-        <h2><span class="orange">Fast turnaround</span> for managing evolving technology.</h2>
-        <h3>“<span class="green">Quick isn’t as important as right</span>”</h3>
-      </div>
+    <div style="min-height:500px;">
+      <div class="anim_wrapper" style="position:relative;overflow:visible;">
+        <div class="anim_box_layer" style="animation-delay:0">
+          <h1>3D content in minutes</h1>
+          <h2><span class="orange">Low intensity</span> creation and distribution.</h2>
+          <h2><span class="orange">Load on demand</span> viewing for most screens.</h2>
+          <h2><span class="orange">Blend your data</span> with templates to customize.</h2>
+          <h3>“<span class="green">Time to magic is a brand's promise</span>”</h3>
+        </div>
+        <div class="anim_box_layer" style="animation-delay:8s">
+          <h1>3D content that matters</h1>
+          <h2><span class="orange">Employees customize</span> using their taste.</h2>
+          <h2><span class="orange">Customers visit</span> online for fresh displays.</h2>
+          <h2><span class="orange">Localized viewing</span> in games and searches.</h2>
+          <h3>“<span class="green">Unique content per user</span>”</h3>
+        </div>
+        <div class="anim_box_layer" style="animation-delay:16s">
+          <h1>3D content for everywhere</h1>
+          <h2><span class="orange">Publish once</span> for all devices and everyone.</h2>
+          <h2><span class="orange">Realtime Database</span> instantly pushes updates.</h2>
+          <h2><span class="orange">Dynamic hosting</span> scales for the unexpected.</h2>
+          <h3>“<span class="green">Multiuser starts at the core</span>”</h3>
+        </div>
+        <div class="anim_box_layer" style="animation-delay:24s">
+          <h1>3D content for today</h1>
+          <h2><span class="orange">Web optimized</span> with jpegs and low poly meshes.</h2>
+          <h2><span class="orange">Spreadsheets simplify</span> data importing and merging.</h2>
+          <h2><span class="orange">Fast turnaround</span> for managing evolving technology.</h2>
+          <h3>“<span class="green">Quick isn’t as important as right</span>”</h3>
+        </div>
 
-      <img src="/images/home8sec.gif" style="display:none;">
+        <img src="/images/home8sec.gif" style="display:none;">
+      </div>
     </div>
     <div style="flex:1;"></div>
     <div class="footer_bar">
@@ -149,139 +147,6 @@
     });
   </script>
   <style>
-    .anim_box_layer {
-      text-align: center;
-      flex: 1;
-      padding: 0 1em;
-      text-align: left;
-      display: inline-block;
-      color: rgb(0, 100, 255);
-      font-family: Tahoma, Georgia;
-    }
-
-    #timer_bar_wrapper {
-      position: relative;
-      display: inline-block;
-    }
-
-    #timer_bar_wrapper button {
-      border: none;
-      font-size: .5em;
-      height: 50%;
-      padding-bottom: 3px;
-      position: relative;
-      color: rgba(255,140,0,.4);
-      margin: 0 0px;
-    }
-
-    #timer_bar_wrapper button:hover, #timer_bar_wrapper button:focus {
-      background: none;
-      background: rgba(255,255,255, .5);
-    }
-
-    #timer_bar {
-      position: absolute;
-      height: 28%;
-      top: 38%;
-      background-color: rgba(0,100,255,.5);
-      animation-duration: 32s;
-      animation-timing-function: linear;
-      animation-name: timerBarFrames;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes timerBarFrames {
-      0% {
-        width: 0%;
-      }
-
-      100% {
-        width: 100%;
-      }
-    }
-
-    .anim_box_layer h1 {
-      font-weight: normal;
-      margin: .25em;
-    }
-
-    h1, h2, h3 {
-      color: rgb(0, 100, 255);
-    }
-
-    .anim_box_layer .orange {
-      color: rgb(0, 200, 0);
-    }
-
-    .anim_box_layer .green {
-      color: rgb(0, 200, 0);
-      font-family: 'Comic Sans MS';
-    }
-
-    .anim_box_layer h3 {
-      float: right;
-      font-size: 1.5em;
-      font-weight: normal;
-      margin-top: 0;
-    }
-
-    .anim_box_layer h2 {
-      font-weight: normal;
-      margin-right: 2em;
-    }
-
-    .anim_box_layer {
-      animation-name: animTimerFrames;
-      animation-duration: 32s;
-      animation-iteration-count: infinite;
-      animation-timing-function: ease-in-out;
-      position: absolute;
-      top: 0;
-      left: -900px;
-    }
-
-    @keyframes animTimerFrames {
-      0% {
-        left: -900px;
-      }
-
-      5% {
-        left: 0px;
-      }
-
-      28% {
-        left: 0px;
-      }
-
-      33% {
-        left: -900px;
-      }
-
-      100% {
-        left: -900px;
-      }
-    }
-
-    .anim_wrapper {
-      display: block;
-    }
-
-    .timer_stop_btn {
-      background: transparent;
-      margin: 0;
-      border: none;
-      padding-top: 6px;
-      position: relative;
-      z-index: 1;
-      color: rgb(0,100,255);
-    }
-
-    .timer_stop_btn:hover, .timer_stop_btn:focus {
-      background: rgba(255,255,255,.5);
-      outline: solid 1px black;
-      color: rgb(0,100,255);
-    }
-
   </style>
 </body>
 

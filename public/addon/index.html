@@ -14,11 +14,17 @@
   <meta property="og:description" content="Sheets driven 3D content" />
   <meta property="fb:app_id" content="461141618064403" />
   <meta name="description" content='Sheets driven 3D content'>
+
+  <style>
+    .anim_wrapper {
+      display: none;
+    }
+  </style>
   <link rel="stylesheet" href="https://handtop.com/public.css">
 </head>
 
 <body>
-  <div class="home_page_wrapper">
+  <div class="home_page_wrapper" style="display:block;">
     <div class="option_bar">
       <a class="logo" href="/">
         <img alt="small logo" class="small_logo" src="https://handtop.com/images/handtop.png">
@@ -29,29 +35,49 @@
       </div>
       <a href="mailto:contact@handtop.com?subject=URGENT QUESTION" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
     </div>
-    <div style="flex:1;text-align:left;color:rgb(0,100,255);padding:0 1em;">
-      <h1 style="margin:0">Install Sheets Addon</h1>
-      G Suite Marketplace:
-      <a class="home_page_anchor" href="https://gsuite.google.com/marketplace/app/handtop/453466452088" target="_blank" style="margin-left:10px;">
-        <h2 style="display:inline-block;">Visual Tools</h2>
-      </a>
-      <h1>Configuration</h1>
-      <h3>Quickly upload project changes</h3>
-      <h3>All data is stored in the workbook</h3>
-      <img src="/docimages/addonheaderoverview.png">
-      <h1>Contextual Help</h1>
-      <h3>Template and wizard specific</h3>
-      <h3>Keyword searchable</h3>
-      <img src="/docimages/addoncontexthelp.png">
-      <h1>Project Templates</h1>
-      <h3>Lots of short demonstration examples</h3>
-      <h3>Full display examples</h3>
-      <img src="/docimages/addontemplates.png">
-      <h1 style="clear:both;">Content Wizards</h1>
-      <h3>Comprehensive for primitive and complex data</h3>
-      <h3>Diagram objects - like animated line, connector line and text and shape</h3>
-      <h3>Display building, product position and frame tools</h3>
-      <img src="/docimages/addonwizardmarkedup.png">
+    <div style="padding-left: .5em;">
+      <a id="visual_tools_anchor" href="https://gsuite.google.com/marketplace/app/handtop/453466452088" target="_blank">Visual Tools</a>
+      <div style="white-space:nowrap;display:inline-block">
+        <button id="animation_pause_btn" class="timer_stop_btn"><i class="material-icons" style="">pause</i></button>
+        <button id="animation_skip_backward" class="timer_stop_btn"><i class="material-icons" style="position:relative;left:5px;">arrow_back_ios</i></button>
+        <div id="timer_bar_wrapper">
+          <div id="timer_bar"></div>
+          <button id="animation_skip_1" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+          <button id="animation_skip_2" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+          <button id="animation_skip_3" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+          <button id="animation_skip_4" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        </div>
+        <button id="animation_skip_forward" class="timer_stop_btn"><i class="material-icons">arrow_forward_ios</i></button>
+      </div>
+    </div>
+    <div style="min-height:1000px">
+      <div class="anim_wrapper" style="position:relative;overflow:visible;">
+        <div class="anim_box_layer" style="animation-delay:0">
+          <h1>Configuration</h1>
+          <h3>Quickly upload project changes</h3>
+          <h3>All data is stored in the workbook</h3>
+          <img src="/docimages/addonheaderoverview.png">
+        </div>
+        <div class="anim_box_layer" style="animation-delay:8s">
+          <h1>Contextual Help</h1>
+          <h3>Template and wizard specific</h3>
+          <h3>Keyword searchable</h3>
+          <img src="/docimages/addoncontexthelp.png">
+        </div>
+        <div class="anim_box_layer" style="animation-delay:16s">
+          <h1>Project Templates</h1>
+          <h3>Lots of short demonstration examples</h3>
+          <h3>Full display examples</h3>
+          <img src="/docimages/addontemplates.png">
+        </div>
+        <div class="anim_box_layer" style="animation-delay:24s">
+          <h1>Content Wizards</h1>
+          <h3>Comprehensive for primitive and complex data</h3>
+          <h3>Diagram objects - like animated line, connector line and text and shape</h3>
+          <h3>Display building, product position and frame tools</h3>
+          <img src="/docimages/addonwizardmarkedup.png">
+        </div>
+      </div>
     </div>
     <div class="footer_bar">
       <a href="/privacy.html">Privacy Policy</a>
@@ -66,6 +92,64 @@
     </div>
   </div>
   <script src="/homepagestuff.js"></script>
+  <script>
+    document.getElementById('animation_skip_backward').addEventListener('click', e => {
+      let anims = document.querySelectorAll('.anim_box_layer');
+      anims.forEach(a => a.getAnimations()[0].currentTime += 24000);
+      document.getElementById('timer_bar').getAnimations()[0].currentTime += 24000;
+    });
+    document.getElementById('animation_skip_forward').addEventListener('click', e => {
+      let anims = document.querySelectorAll('.anim_box_layer');
+      anims.forEach(a => a.getAnimations()[0].currentTime += 8000);
+      document.getElementById('timer_bar').getAnimations()[0].currentTime += 8000;
+    });
+    document.querySelectorAll('.anim_stop_btn').forEach((ctl, index) => {
+      ctl.addEventListener('click', e => {
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.getAnimations()[0].currentTime = 8000 * index + 2000);
+        document.getElementById('timer_bar').getAnimations()[0].currentTime = 8000 * index + 2000;
+      });
+    });
+    document.getElementById('animation_pause_btn').addEventListener('click', e => {
+      let i_ele = document.querySelector('#animation_pause_btn i');
+      if (window.animation_paused) {
+        i_ele.innerHTML = 'pause';
+        window.animation_paused = false;
+
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.style.animationPlayState = 'running');
+        document.getElementById('timer_bar').style.animationPlayState = 'running';
+      } else {
+        i_ele.innerHTML = 'play_arrow';
+        window.animation_paused = true;
+
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.style.animationPlayState = 'paused');
+        document.getElementById('timer_bar').style.animationPlayState = 'paused';
+      }
+    });
+  </script>
+  <style>
+    #visual_tools_anchor:hover,
+    #visual_tools_anchor:focus {
+      background: rgba(255, 255, 255, .5);
+      outline: solid 1px black;
+    }
+
+    #visual_tools_anchor:focus {
+      outline: solid 2px black;
+    }
+
+    #visual_tools_anchor {
+      padding: 8px;
+      position: relative;
+      top: -6px;
+    }
+
+    .anim_box_layer {
+      max-width: 800px;
+    }
+  </style>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
 </body>
