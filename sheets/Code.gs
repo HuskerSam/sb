@@ -387,7 +387,7 @@ function truncateEmptyCSVColumns(rows) {
  * similar to getTablesForCells
  * uses getActiveRange similar to getStringForRange
  *
- * @param {"Sheet1!A1,Sheet1!A10,Sheet2!A1"} cellStringList list of top left cells of Data Tables
+ * @param {"Sheet1!A1, Sheet1!A10, Sheet2!A1"} cellStringList list of top left cells of Data Tables
  * @customfunction
  */
 function getCSVRangeForCell() {
@@ -415,7 +415,7 @@ function getCSVRangeForCell() {
  * called by getDataRangesForSheet
  * uses Range.getDataRegion() internally to determine table boundaries
  *
- * @param {"Sheet1!A1,Sheet1!A10,Sheet2!A1"} cellStringList list of top left cells of Data Tables
+ * @param {"Sheet1!A1, Sheet1!A10, Sheet2!A1"} cellStringList list of top left cells of Data Tables
  * @customfunction
  */
 function getTablesForCells(cellStringList) {
@@ -910,7 +910,7 @@ function colorRGB255(webGLColor) {
  * table end is first row with column A empty
  * rows with an empty column A are ignored (i.e. comments)
  * this function is essential for the Projects Sheet
- * = getTablesForCells(getCSVFirstCellsFromSheet(sheet))
+ * getTablesForCells( getCSVFirstCellsFromSheet(sheet))
  *
  * @param {"Sheet Name"}  sheetName   Sheet Name to process range for Data Tables.
  * @customfunction
