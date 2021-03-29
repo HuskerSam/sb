@@ -119,6 +119,7 @@ img {
   background: white;
   color: black;
   z-index: 100;
+  position: relative;
 }
 
 .option_bar a.logo {
@@ -210,7 +211,13 @@ table.gsc-search-box td {
   border-color: black;
   cursor: pointer;
   margin-right: -1px;
-  z-index: 1;
+  z-index: 1000;
+  outline: solid 1px black;
+  position: relative;
+}
+
+.gsc-search-button.gsc-search-button-v2:hover {
+  outline: none;
 }
 
 .gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
@@ -390,6 +397,7 @@ a.gsst_a {
   border-color: transparent;
   position: relative;
   left: -2px;
+  border: solid 1px black;
 }
 
 .help_gen_list_wrapper {
@@ -495,7 +503,7 @@ a.gsst_a {
 }
 
 #gsc-i-id1 {
-  padding: 11px 0px 10px 4px !important;
+  padding: 10px 0px 9px 4px !important;
   margin-left: 0px !important;
   width: calc(100% - 6px)!important;
   background: none;
@@ -507,6 +515,13 @@ a.gsst_a {
   color: black;
   outline: solid 1px black!important;
   border-color: black;
+  border: solid 1px black!important;
+  position: relative;
+  z-index: 100;
+}
+
+#gsc-i-id1:hover {
+  outline: solid 1px transparent!important;
 }
 
 a.gs-title {
