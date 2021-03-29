@@ -52,6 +52,17 @@
       </div>
       <a href="mailto:contact@handtop.com?subject=URGENT QUESTION" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
     </div>
+    <div>
+      <button id="animation_skip_backward" class="timer_stop_btn"><i class="material-icons">navigate_before</i></button>
+      <div id="timer_bar_wrapper">
+        <div id="timer_bar"></div>
+        <button id="animation_skip_1" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        <button id="animation_skip_2" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        <button id="animation_skip_3" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        <button id="animation_skip_4" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+      </div>
+      <button id="animation_skip_forward" class="timer_stop_btn"><i class="material-icons">navigate_next</i></button>
+    </div>
     <div class="anim_wrapper" style="position:relative;overflow:visible;flex:1">
       <div class="anim_box_layer" style="animation-delay:0">
         <h1>3D content in minutes</h1>
@@ -99,7 +110,25 @@
     </div>
   </div>
   <script src="/homepagestuff.js"></script>
-
+  <script>
+    document.getElementById('animation_skip_backward').addEventListener('click', e => {
+      let anims = document.querySelectorAll('.anim_box_layer');
+      anims.forEach(a => a.getAnimations()[0].currentTime += 24000);
+      document.getElementById('timer_bar').getAnimations()[0].currentTime += 24000;
+    });
+    document.getElementById('animation_skip_forward').addEventListener('click', e => {
+      let anims = document.querySelectorAll('.anim_box_layer');
+      anims.forEach(a => a.getAnimations()[0].currentTime += 8000);
+      document.getElementById('timer_bar').getAnimations()[0].currentTime += 8000;
+    });
+    document.querySelectorAll('.anim_stop_btn').forEach((ctl, index) => {
+      ctl.addEventListener('click', e => {
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.getAnimations()[0].currentTime = 8000 * index + 1500);
+        document.getElementById('timer_bar').getAnimations()[0].currentTime = 8000 * index + 1500;
+      });
+    })
+  </script>
   <style>
     .anim_box_layer {
       text-align: center;
@@ -109,6 +138,45 @@
       display: inline-block;
       color: rgb(0, 100, 255);
       font-family: Tahoma, Georgia;
+    }
+
+    #timer_bar_wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    #timer_bar_wrapper button {
+      border: none;
+      font-size: .5em;
+      height: 50%;
+      padding-bottom: 3px;
+      position: relative;
+      color: rgba(255,140,0,.75);
+    }
+
+    #timer_bar_wrapper button:hover, #timer_bar_wrapper button:focus {
+      background: none;
+    }
+
+    #timer_bar {
+      position: absolute;
+      height: 100%;
+      background-color: rgba(0,100,255,.5);
+      animation-duration: 32s;
+      animation-timing-function: linear;
+      animation-name: timerBarFrames;
+      animation-iteration-count: infinite;
+      top: 0;
+    }
+
+    @keyframes timerBarFrames {
+      0% {
+        width: 0%;
+      }
+
+      100% {
+        width: 100%;
+      }
     }
 
     .anim_box_layer h1 {
@@ -174,6 +242,20 @@
 
     .anim_wrapper {
       display: block;
+    }
+
+    .timer_stop_btn {
+      background: transparent;
+      margin: 0 .5em;
+      border: solid 1px rgb(255,140,0);
+      padding-top: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timer_stop_btn:hover, .timer_stop_btn:focus {
+      background: white;
+      outline: solid 1px black;
     }
 
     @media only screen and (max-width: 800px) {
