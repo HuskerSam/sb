@@ -52,7 +52,8 @@
       </div>
       <a href="mailto:contact@handtop.com?subject=URGENT QUESTION" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
     </div>
-    <div style="padding-left: 2em;">
+    <div style="padding-left: .5em;">
+      <button id="animation_pause_btn" class="timer_stop_btn"><i class="material-icons" style="">pause</i></button>
       <button id="animation_skip_backward" class="timer_stop_btn"><i class="material-icons" style="position:relative;left:5px;">arrow_back_ios</i></button>
       <div id="timer_bar_wrapper">
         <div id="timer_bar"></div>
@@ -127,7 +128,25 @@
         anims.forEach(a => a.getAnimations()[0].currentTime = 8000 * index + 1500);
         document.getElementById('timer_bar').getAnimations()[0].currentTime = 8000 * index + 1500;
       });
-    })
+    });
+    document.getElementById('animation_pause_btn').addEventListener('click', e => {
+      let i_ele = document.querySelector('#animation_pause_btn i');
+      if (window.animation_paused) {
+        i_ele.innerHTML = 'pause';
+        window.animation_paused = false;
+
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.style.animationPlayState = 'running');
+        document.getElementById('timer_bar').style.animationPlayState = 'running';
+      } else {
+        i_ele.innerHTML = 'play_arrow';
+        window.animation_paused = true;
+
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.style.animationPlayState = 'paused');
+        document.getElementById('timer_bar').style.animationPlayState = 'paused';
+      }
+    });
   </script>
   <style>
     .anim_box_layer {
@@ -151,14 +170,13 @@
       height: 50%;
       padding-bottom: 3px;
       position: relative;
-      color: rgba(255,255,255,.5);
+      color: rgba(255,140,0,.4);
       margin: 0 0px;
     }
 
     #timer_bar_wrapper button:hover, #timer_bar_wrapper button:focus {
       background: none;
       background: rgba(255,255,255, .5);
-      color: black;
     }
 
     #timer_bar {
