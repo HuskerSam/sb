@@ -17,34 +17,34 @@
 
 <body>
   <div class="body_flex_wrapper">
+    <div class="logo_container"></div>
     <div class="target_header">
-      <span style="float:left;text-align:left;line-height:1.5em;width:10em;">
-        <span id="selected_target_span">Loading</span>
-        <br>
-        <span id="selected_project_span">Loading</span>
-      </span>
-      <div style="float:right;padding-top:0px;padding-right:4px;">
+      <select id="addon_display_view_select">
+        <option value="cloud_target">Configuration</option>
+        <option value="cloud_deploy" selected>Projects</option>
+        <option value="template_view">Templates</option>
+        <option value="block_wizards">Wizards</option>
+        <option value="position_products">Positioning</option>
+        <option value="position_plotter_div">Plotter</option>
+        <option value="song_import_div">Audio</option>
+      </select>
+      <div style="padding-top:0px;padding-right:4px;">
         <button id="view_current_project_btn" style="margin-right:0"><i class="material-icons">animation</i></button>
         <button id="display_current_project_btn" style="margin-left:4px;margin-right:0"><i class="material-icons">web</i></button>
-        <button id="asset_current_project_btn" style="margin-left:4px;margin-right:0"><i class="material-icons">grid_4x4</i></button>
         <button id="display_publish_single_header" style="margin-left:4px;margin-right:4px;"><i class="material-icons">publish</i></button>
       </div>
       <div style="clear:both;"></div>
     </div>
     <div id="addon_header_line_2">
       <div style="display:flex;flex-direction:row">
-        <select id="addon_display_view_select">
-          <option value="cloud_target">Configuration</option>
-          <option value="cloud_deploy" selected>Projects</option>
-          <option value="template_view">Templates</option>
-          <option value="block_wizards">Wizards</option>
-          <option value="position_products">Positioning</option>
-          <option value="position_plotter_div">Plotter</option>
-          <option value="song_import_div">Audio</option>
-        </select>
-        <div class="logo_container"></div>
+        <div class="target_wrapper_div">
+          <span id="selected_target_span" class="project_name_span">Loading</span>
+          <br>
+          <span id="selected_project_span" class="project_name_span">Loading</span>
+        </div>
         <div id="header_bar_wrapper_panel">
-          <button id="show_help_panel_btn" style="margin-left:0px;margin-right:4px;"><i class="material-icons">help</i></button>
+          <button id="asset_current_project_btn" style="margin-left:0px;margin-right:0px"><i class="material-icons">grid_4x4</i></button>
+          <button id="show_help_panel_btn" style="margin-left:4px;margin-right:4px;"><i class="material-icons">help</i></button>
           <button id="helper_viewer_contents_btn" style="margin-right:4px;"><i class="material-icons">manage_search</i></button>
           <button id="reload_addon"><i class="material-icons">refresh</i></button>
         </div>
@@ -2976,6 +2976,7 @@
     .target_header {
       width: 100%;
       flex: 0;
+      display: flex;
       padding-bottom: 6px;
       padding-top: 6px;
       padding-left: 6px;
@@ -2983,13 +2984,16 @@
 
     .logo_container {
       background-image: url(https://handtop.com/images/handtop.png);
-      width: 30px;
-      margin-left: -6px;
+      width: 36px;
       background-repeat: no-repeat;
       background-size: contain;
+      position: absolute;
+      height: 38px;
+      z-index: -1;
+      top: 2px;
     }
 
-    .target_header span {
+    .project_name_span {
       white-space: nowrap;
       color: blue;
       font-size: 10px;
@@ -2999,6 +3003,16 @@
       text-align: left;
       color: green;
       font-size: 10px;
+    }
+
+    .target_wrapper_div {
+      text-align:left;
+      overflow:hidden;
+      flex:1;
+      padding-left: 6px;
+      line-height:1.1em;
+      margin-bottom:-10px;
+      margin-top: -1px;
     }
 
     * {
@@ -3023,8 +3037,8 @@
 
     #addon_display_view_select {
       flex: 1;
-      margin-left: 8px;
-      margin-right: 8px;
+      margin-left: 28px;
+      margin-right: 6px;
     }
 
     #project_display_view {
