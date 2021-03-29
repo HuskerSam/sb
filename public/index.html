@@ -54,14 +54,15 @@
       <button id="animation_skip_backward" class="timer_stop_btn"><i class="material-icons" style="position:relative;left:5px;">arrow_back_ios</i></button>
       <div id="timer_bar_wrapper">
         <div id="timer_bar"></div>
-        <button id="animation_skip_1" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
-        <button id="animation_skip_2" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
-        <button id="animation_skip_3" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
-        <button id="animation_skip_4" class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        <button class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        <button class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        <button class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        <button class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
+        <button class="timer_stop_btn anim_stop_btn"><i class="material-icons">trip_origin</i></button>
       </div>
       <button id="animation_skip_forward" class="timer_stop_btn"><i class="material-icons">arrow_forward_ios</i></button>
     </div>
-    <div style="min-height:500px;">
+    <div class="anim_wrapper_height_container">
       <div class="anim_wrapper" style="position:relative;overflow:visible;">
         <div class="anim_box_layer" style="animation-delay:0">
           <h1>3D content in minutes</h1>
@@ -91,6 +92,13 @@
           <h2><span class="orange">Fast turnaround</span> for managing evolving technology.</h2>
           <h3>“<span class="green">Quick isn’t as important as right</span>”</h3>
         </div>
+        <div class="anim_box_layer" style="animation-delay:32s">
+          <h1>3D content for business</h1>
+          <h2><span class="orange">Download once</span> for endless plays.</h2>
+          <h2><span class="orange">Users interact</span> with the visual environment.</h2>
+          <h2><span class="orange">Spatial and orientation</span> data enhance experiences.</h2>
+          <h3>“<span class="green">Saving a buck on hosting counts</span>”</h3>
+        </div>
 
         <img src="/images/home8sec.gif" style="display:none;">
       </div>
@@ -112,8 +120,8 @@
   <script>
     document.getElementById('animation_skip_backward').addEventListener('click', e => {
       let anims = document.querySelectorAll('.anim_box_layer');
-      anims.forEach(a => a.getAnimations()[0].currentTime += 24000);
-      document.getElementById('timer_bar').getAnimations()[0].currentTime += 24000;
+      anims.forEach(a => a.getAnimations()[0].currentTime += 32000);
+      document.getElementById('timer_bar').getAnimations()[0].currentTime += 32000;
     });
     document.getElementById('animation_skip_forward').addEventListener('click', e => {
       let anims = document.querySelectorAll('.anim_box_layer');
@@ -147,6 +155,46 @@
     });
   </script>
   <style>
+
+  .anim_wrapper_height_container {
+    height: 350px;
+  }
+  #timer_bar {
+    animation-duration: 40s;
+  }
+
+  .anim_box_layer {
+    animation-duration: 40s;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .anim_wrapper_height_container {
+      height: 600px;
+    }
+  }
+
+
+  @keyframes animTimerFrames {
+    0% {
+      left: -1100px;
+    }
+
+    4% {
+      left: 0px;
+    }
+
+    22% {
+      left: 0px;
+    }
+
+    25% {
+      left: -1100px;
+    }
+
+    100% {
+      left: -1100px;
+    }
+  }
   </style>
 </body>
 

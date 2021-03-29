@@ -36,7 +36,8 @@
       <a href="mailto:contact@handtop.com?subject=URGENT QUESTION" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
     </div>
     <div style="padding-left: .5em;">
-      <a id="visual_tools_anchor" href="https://gsuite.google.com/marketplace/app/handtop/453466452088" target="_blank">Visual Tools</a>
+      <a id="visual_tools_anchor" href="https://gsuite.google.com/marketplace/app/handtop/453466452088"
+       target="_blank" style="font-size:1.5em;color:rgb(0,100,255);">Visual Tools</a>
       <div style="white-space:nowrap;display:inline-block">
         <button id="animation_pause_btn" class="timer_stop_btn"><i class="material-icons" style="">pause</i></button>
         <button id="animation_skip_backward" class="timer_stop_btn"><i class="material-icons" style="position:relative;left:5px;">arrow_back_ios</i></button>
@@ -50,7 +51,7 @@
         <button id="animation_skip_forward" class="timer_stop_btn"><i class="material-icons">arrow_forward_ios</i></button>
       </div>
     </div>
-    <div style="min-height:1000px">
+    <div class="anim_wrapper_height_container">
       <div class="anim_wrapper" style="position:relative;overflow:visible;">
         <div class="anim_box_layer" style="animation-delay:0">
           <h1>Configuration</h1>
@@ -148,6 +149,14 @@
 
     .anim_box_layer {
       max-width: 800px;
+    }
+
+    .anim_wrapper h3 {
+      float: none;
+    }
+
+    .anim_wrapper h1 {
+      color: rgb(0,200,0);
     }
   </style>
 

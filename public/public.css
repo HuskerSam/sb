@@ -510,7 +510,7 @@ a.gsst_a {
 #gsc-i-id1 {
   padding: 10px 0px 9px 4px !important;
   margin-left: 0px !important;
-  width: calc(100% - 6px)!important;
+  width: calc(100% - 6px) !important;
   background: none;
   color: rgb(0, 100, 255);
 }
@@ -518,19 +518,19 @@ a.gsst_a {
 #gsc-i-id1:hover, #gsc-i-id1:focus {
   background: white;
   color: black;
-  outline: solid 1px black!important;
+  outline: solid 1px black !important;
   border-color: black;
-  border: solid 1px black!important;
+  border: solid 1px black !important;
   position: relative;
   z-index: 100;
 }
 
 #gsc-i-id1:hover {
-  outline: solid 1px transparent!important;
+  outline: solid 1px transparent !important;
 }
 
 #gsc-i-id1:focus {
-  outline: solid 1px black!important;
+  outline: solid 1px black !important;
 }
 
 a.gs-title {
@@ -590,16 +590,16 @@ body {
   top: -.1em;
 }
 
- h1 {
+h1 {
   margin-bottom: .25em;
 }
 
- h2 {
+h2 {
   margin-bottom: .25em;
   margin-left: 1em;
 }
 
- h3 {
+h3 {
   margin-bottom: .25em;
   margin-left: 2em;
   color: rgb(0, 100, 255);
@@ -613,144 +613,157 @@ body {
   color: black;
 }
 
+.anim_box_layer {
+  text-align: center;
+  flex: 1;
+  padding: 0 1em;
+  text-align: left;
+  display: inline-block;
+  color: rgb(0, 100, 255);
+  font-family: Tahoma, Georgia;
+}
 
+#timer_bar_wrapper {
+  position: relative;
+  display: inline-block;
+}
 
+#timer_bar_wrapper button {
+  border: none;
+  font-size: .5em;
+  height: 50%;
+  padding-bottom: 3px;
+  position: relative;
+  color: rgba(255, 140, 0, .4);
+  margin: 0 0px;
+}
 
+#timer_bar_wrapper button:hover,
+#timer_bar_wrapper button:focus {
+  background: none;
+  background: rgba(255, 255, 255, .5);
+}
 
-  .anim_box_layer {
-    text-align: center;
-    flex: 1;
-    padding: 0 1em;
-    text-align: left;
-    display: inline-block;
-    color: rgb(0, 100, 255);
-    font-family: Tahoma, Georgia;
+#timer_bar {
+  position: absolute;
+  height: 28%;
+  top: 38%;
+  background-color: rgba(0, 100, 255, .5);
+  animation-duration: 32s;
+  animation-timing-function: linear;
+  animation-name: timerBarFrames;
+  animation-iteration-count: infinite;
+}
+
+@keyframes timerBarFrames {
+  0% {
+    width: 0%;
   }
 
-  #timer_bar_wrapper {
-    position: relative;
-    display: inline-block;
+  100% {
+    width: 100%;
   }
+}
 
-  #timer_bar_wrapper button {
-    border: none;
-    font-size: .5em;
-    height: 50%;
-    padding-bottom: 3px;
-    position: relative;
-    color: rgba(255, 140, 0, .4);
-    margin: 0 0px;
-  }
+.anim_box_layer h1 {
+  font-weight: normal;
+  margin: .25em;
+}
 
-  #timer_bar_wrapper button:hover,
-  #timer_bar_wrapper button:focus {
-    background: none;
-    background: rgba(255, 255, 255, .5);
-  }
+h1,
+h2,
+h3 {
+  color: rgb(0, 100, 255);
+}
 
-  #timer_bar {
-    position: absolute;
-    height: 28%;
-    top: 38%;
-    background-color: rgba(0, 100, 255, .5);
-    animation-duration: 32s;
-    animation-timing-function: linear;
-    animation-name: timerBarFrames;
-    animation-iteration-count: infinite;
-  }
+.anim_box_layer .orange {
+  color: rgb(0, 200, 0);
+}
 
-  @keyframes timerBarFrames {
-    0% {
-      width: 0%;
-    }
+.anim_box_layer .green {
+  color: rgb(0, 200, 0);
+  font-family: 'Comic Sans MS';
+}
 
-    100% {
-      width: 100%;
-    }
-  }
+.anim_box_layer h3 {
+  float: right;
+  font-size: 1.5em;
+  font-weight: normal;
+  margin-top: 0;
+}
 
-  .anim_box_layer h1 {
-    font-weight: normal;
-    margin: .25em;
-  }
+.anim_box_layer h2 {
+  font-weight: normal;
+  margin-right: 1em;
+}
 
-  h1,
-  h2,
-  h3 {
-    color: rgb(0, 100, 255);
-  }
+.anim_box_layer {
+  animation-name: animTimerFrames;
+  animation-duration: 32s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  position: absolute;
+  max-width: 800px;
+  top: 0;
+  left: -1100px;
+}
 
-  .anim_box_layer .orange {
-    color: rgb(0, 200, 0);
-  }
-
-  .anim_box_layer .green {
-    color: rgb(0, 200, 0);
-    font-family: 'Comic Sans MS';
-  }
-
-  .anim_box_layer h3 {
-    float: right;
-    font-size: 1.5em;
-    font-weight: normal;
-    margin-top: 0;
-  }
-
-  .anim_box_layer h2 {
-    font-weight: normal;
-    margin-right: 1em;
-  }
-
-  .anim_box_layer {
-    animation-name: animTimerFrames;
-    animation-duration: 32s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    position: absolute;
-    max-width: 800px;
-    top: 0;
+@keyframes animTimerFrames {
+  0% {
     left: -1100px;
   }
 
-  @keyframes animTimerFrames {
-    0% {
-      left: -1100px;
-    }
-
-    5% {
-      left: 0px;
-    }
-
-    28% {
-      left: 0px;
-    }
-
-    33% {
-      left: -1100px;
-    }
-
-    100% {
-      left: -1100px;
-    }
+  5% {
+    left: 0px;
   }
 
-  .anim_wrapper {
-    display: block;
+  28% {
+    left: 0px;
   }
 
-  .timer_stop_btn {
-    background: transparent;
-    margin: 0;
-    border: none;
-    padding-top: 6px;
-    position: relative;
-    z-index: 1;
-    color: rgb(0, 100, 255);
+  33% {
+    left: -1100px;
   }
 
-  .timer_stop_btn:hover,
-  .timer_stop_btn:focus {
-    background: rgba(255, 255, 255, .5);
-    outline: solid 1px black;
-    color: rgb(0, 100, 255);
+  100% {
+    left: -1100px;
   }
+}
+
+.anim_wrapper {
+  display: block;
+}
+
+.timer_stop_btn {
+  background: transparent;
+  margin: 0;
+  border: none;
+  padding-top: 6px;
+  position: relative;
+  z-index: 1;
+  color: rgb(0, 100, 255);
+}
+
+.timer_stop_btn:hover,
+.timer_stop_btn:focus {
+  background: rgba(255, 255, 255, .5);
+  outline: solid 1px black;
+  color: rgb(0, 100, 255);
+}
+
+.anim_wrapper_height_container {
+  height: 1200px;
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .anim_wrapper_height_container {
+    height: 800px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .anim_wrapper_height_container {
+    height: 600px;
+  }
+}
