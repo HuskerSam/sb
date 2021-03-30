@@ -74,8 +74,8 @@
         <div class="anim_box_layer" style="animation-delay:24s">
           <h1>Content Wizards</h1>
           <h3>Comprehensive for primitive and complex data</h3>
-          <h3>Diagram objects - like animated line, connector line and text and shape</h3>
-          <h3>Display building, product position and frame tools</h3>
+          <h3>Shapes, animated lines and 3D text</h3>
+          <h3>Positioning and path building helpers</h3>
           <img src="/docimages/addonwizardmarkedup.png">
         </div>
       </div>
@@ -108,7 +108,7 @@
       ctl.addEventListener('click', e => {
         let anims = document.querySelectorAll('.anim_box_layer');
         anims.forEach(a => a.getAnimations()[0].currentTime = 8000 * index + 2000);
-        document.getElementById('timer_bar').getAnimations()[0].currentTime = 8000 * index + 2000;
+        document.getElementById('timer_bar').getAnimations()[0].currentTime = 8000 * index + 2500;
       });
     });
     document.getElementById('animation_pause_btn').addEventListener('click', e => {

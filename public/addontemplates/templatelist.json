@@ -1,464 +1,65 @@
-[{
-    "name": "Web Font Logo",
-    "mainFile": "WebFontLogo",
-    "hint": "Logo",
-    "categories": "Layout",
-    "description": "Basic 3D logo example using a google web font"
-  },
-  {
-    "name": "Fruit stands with meat - 1",
-    "mainFile": "FruitStandsLayout",
-    "hint": "Fruit stands with meats 1",
-    "fragments": "Fixture Materials,Fruit Stands,Additional Fixtures,Meat Assets",
-    "products": "Fruit Stands - Meat Products 1",
-    "categories": "Display",
-    "description": "Fruit stands with meat, follow camera and animated cart - product set 1/2"
-  },
-  {
-    "name": "Fruit stands with meat - 2",
-    "mainFile": "FruitStandsLayout",
-    "hint": "Fruit stands with meats 2",
-    "fragments": "Fixture Materials,Fruit Stands,Additional Fixtures,Meat Assets",
-    "products": "Fruit Stands - Meat Products 2",
-    "categories": "Display",
-    "description": "Fruit stands with meat, follow camera and animated cart - product set 2/2"
-  },
-  {
-    "name": "Flower stands with vegetables - 1",
-    "mainFile": "FlowerStandLayout",
-    "hint": "Flower stands with vegetables",
-    "fragments": "Fixture Materials,Fruit Stands,Additional Fixtures,Produce Assets",
-    "products": "Flower Stands - Products 1",
-    "categories": "Display",
-    "description": "Flower stands in the corner with veggies - product set 1/2"
-  },
-  {
-    "name": "Flower stands with vegetables - 2",
-    "mainFile": "FlowerStandLayout",
-    "hint": "Flower stands with vegetables",
-    "fragments": "Fixture Materials,Fruit Stands,Additional Fixtures,Produce Assets",
-    "products": "Flower Stands - Products 2",
-    "categories": "Display",
-    "description": "Flower stands in the corner with veggies - product set 2/2"
-  },
-  {
-    "name": "Fruit Stands - Meat Products 1",
-    "mainFile": "FruitStandsProducts1",
-    "hint": "Fruit Stands - Meat Products 1",
-    "categories": "Products",
-    "description": "Fruit stands with meat 1/2"
-  },
-  {
-    "name": "Fruit Stands - Meat Products 2",
-    "mainFile": "FruitStandsProducts2",
-    "hint": "Fruit Stands - Meat Products 2",
-    "categories": "Products",
-    "description": "Fruit stands with meat 2/2"
-  },
-  {
-    "name": "Flower Stands - Products 1",
-    "mainFile": "FlowerProducts1",
-    "hint": "Flower Products 1",
-    "categories": "Products",
-    "description": "Flower stands with veggies products 1/2"
-  },
-  {
-    "name": "Flower Stands - Products 2",
-    "mainFile": "FlowerProducts2",
-    "hint": "Flower Products 2",
-    "categories": "Products",
-    "description": "Flower stands with veggies products 2/2"
-  },
-  {
-    "name": "Grocery Isle with Vegetables",
-    "mainFile": "Islev1",
-    "hint": "Isle with Vegetables",
-    "fragments": "Fixture Assets,Produce Assets",
-    "products": "Grocery Isle - Vegetables",
-    "categories": "Display",
-    "description": "Grocery Isle Display - multiple sheets"
-  },
-  {
-    "name": "Grocery Isle with Fruits",
-    "mainFile": "Islev1",
-    "hint": "Isle with Fruits",
-    "fragments": "Fixture Assets,Produce Assets",
-    "products": "Grocery Isle - Fruits",
-    "categories": "Display",
-    "description": "Grocery Isle Display - multiple sheets"
-  }, {
-    "name": "Carousel Display",
-    "mainFile": "CarouselDisplay",
-    "hint": "Carousel Display",
-    "fragments": "Good Bottles,Audio Animation Example - Star Wars 8 Bands",
-    "products": "Carousel Display Products 1",
-    "categories": "Display",
-    "description": "Rotating scene with table in a carousel style product display"
-  }, {
-    "name": "Platform Display",
-    "mainFile": "Platformv1",
-    "hint": "Platform Display",
-    "fragments": "Books and Paper Assets",
-    "categories": "Display",
-    "products": "Platform Books and Paper Products",
-    "description": "Platform display with 32 positions"
-  }, {
-    "name": "Simple Shapes and Frames",
-    "mainFile": "ShapesAndFrames",
-    "hint": "Shapes",
-    "categories": "Layout",
-    "description": "A variety of shapes with a few frames",
-    "helpkey": "shape"
-  }, {
-    "name": "Meshes Basic",
-    "mainFile": "MeshesBasic",
-    "hint": "Meshes",
-    "categories": "Layout",
-    "description": "Some product meshes scattered about",
-    "helpkey": "mesh"
-  }, {
-    "name": "Lights Fun",
-    "mainFile": "LightsFun",
-    "hint": "Lights",
-    "categories": "Layout",
-    "description": "Some spot lights and a directional light",
-    "helpkey": "light"
-  }, {
-    "name": "Camera Animations",
-    "mainFile": "CameraAnimations",
-    "hint": "Cameras",
-    "categories": "Layout",
-    "description": "Shapes demo with some extra cameras and frames",
-    "helpkey": "camera"
-  }, {
-    "name": "Short Red Video",
-    "mainFile": "VideoShortRed",
-    "hint": "Red Video",
-    "categories": "Layout",
-    "description": "Short red video - no assets required",
-    "helpkey": "shortcolorvideos"
-  }, {
-    "name": "Short Blue Video",
-    "mainFile": "VideoShortBlue",
-    "hint": "Blue Video",
-    "categories": "Layout",
-    "description": "Short blue video - assets: Spheres for Videos required",
-    "helpkey": "shortcolorvideos"
-  }, {
-    "name": "Short Green Video",
-    "mainFile": "VideoShortGreen",
-    "hint": "Green Video",
-    "categories": "Layout",
-    "description": "Short green video - assets: Spheres for Videos required",
-    "helpkey": "shortcolorvideos"
-  }, {
-    "name": "Short Yellow Video",
-    "mainFile": "VideoShortYellow",
-    "hint": "Yellow Video",
-    "categories": "Layout",
-    "description": "Short yellow video - assets: Spheres for Videos required",
-    "helpkey": "shortcolorvideos"
-  }, {
-    "name": "Video Picker",
-    "mainFile": "VideoPicker",
-    "hint": "Video Picker",
-    "categories": "Layout",
-    "description": "Video Picker using frame commands - shows video with time synchronized between multiple browsers open",
-    "helpkey": "shortcolorvideos"
-  }, {
-    "name": "webGL App Diagram",
-    "mainFile": "webAppDiagram",
-    "hint": "webApp Diagram",
-    "categories": "Layout",
-    "description": "webApp diagram with lots of frames",
-    "helpkey": "webappdiagram"
-  },
-  {
-    "name": "Configuration",
-    "mainFile": "ConfigurationDefault",
-    "hint": "Configuration",
-    "categories": "Setup",
-    "description": "Default [Configuration] sheet - should be named Configuration",
-    "helpkey": "addonconfiguration"
-  },
-  {
-    "name": "Projects",
-    "mainFile": "ProjectList",
-    "hint": "Projects",
-    "categories": "Setup",
-    "description": "Default Projects List Example (all columns) - name is specified in Configuration Sheet",
-    "helpkey": "addonprojects"
-  },
-  {
-    "name": "Asset Ranges",
-    "mainFile": "AssetRanges",
-    "hint": "Asset Ranges",
-    "categories": "Setup",
-    "description": "Example of aggregating data from external Assets Spreadsheet"
-  },
-  {
-    "name": "Deploy Options",
-    "mainFile": "DeployOptions",
-    "hint": "Deploy Options",
-    "categories": "Setup",
-    "description": "list of servers stored in a sheet"
-  },
-  {
-    "name": "Multi Sheet Flow Diagram",
-    "mainFile": "FlowDiagramExample",
-    "hint": "3D Flow Diagram",
-    "fragments": "Mini Mock Store,Line Flow Chart,Simple What If,Spin wheel 360",
-    "categories": "Layout",
-    "helpkey": "spinnerdiagram",
-    "description": "multi sheet flow diagram using fragments"
-  },
-  {
-    "name": "Fixture Assets",
-    "mainFile": "AssetFixtures",
-    "hint": "Fixture Assets",
-    "categories": "Assets",
-    "description": "Fixture meshes, blocks and materials for displays"
-  },
-  {
-    "name": "Fruit Stands",
-    "mainFile": "FruitStandsFrag",
-    "hint": "Fruit Stands",
-    "categories": "Fragments",
-    "description": "Fruit stand meshes and block with configurable materials - depends on fixture materials fragment"
-  },
-  {
-    "name": "Additional Fixtures",
-    "mainFile": "AdditionalFixturesFrag",
-    "hint": "Additional Fixtures",
-    "categories": "Fragments",
-    "description": "Fixture stand meshes and block with configurable materials - depends on fixture materials fragment"
-  },
-  {
-    "name": "Spheres for Videos",
-    "mainFile": "AssetSpheresForVideos",
-    "hint": "Spheres For Videos",
-    "categories": "Assets",
-    "description": "Rotating colored spheres for short video examples",
-    "helpkey": "shortcolorvideos"
-  },
-  {
-    "name": "Good Bottles",
-    "mainFile": "GoodBottlesFrag",
-    "hint": "Good Liquor Bottles",
-    "categories": "Fragments",
-    "description": "Assets for liquor bottles and product records"
-  },
-  {
-    "name": "Fixture Materials",
-    "mainFile": "FixtureMaterialsFrag",
-    "hint": "Fixture Materials",
-    "categories": "Fragments",
-    "description": "Materials to enable client UI change on the fly - for fixtures fragments"
-  },
-  {
-    "name": "Product Position List",
-    "mainFile": "ProductPositionsListFrag",
-    "hint": "Product Positions",
-    "categories": "Fragments",
-    "description": "Product position example list ready for inclusion in a scene"
-  },
-  {
-    "name": "Audio Animation - 8 Bands",
-    "mainFile": "Audio8Band",
-    "hint": "8 Band Song",
-    "categories": "Other",
-    "description": "Use addon to process a song into 8 bands and this sheet will produce the animation data"
-  },
-  {
-    "name": "Audio Animation Example - Star Wars 8 Bands",
-    "mainFile": "AudioStarWars8Band",
-    "hint": "starwars8_60",
-    "categories": "Other",
-    "description": "8 band example using star wars intro 60 sec"
-  },
-  {
-    "name": "Audio Animation - 16 Bands",
-    "mainFile": "Audio16Band",
-    "hint": "16 Band Song",
-    "categories": "Other",
-    "description": "Use addon to process a song into 16 bands and this sheet will produce the animation data"
-  }, {
-    "name": "Produce Assets",
-    "mainFile": "AssetProduce",
-    "hint": "Produce Assets",
-    "categories": "Assets",
-    "description": "Produce meshes and product blocks"
-  }, {
-    "name": "Meat Assets",
-    "mainFile": "AssetMeat",
-    "hint": "Meat Assets",
-    "categories": "Assets",
-    "description": "Meat meshes and product blocks"
-  }, {
-    "name": "Liquid Bottle Assets",
-    "mainFile": "AssetLiquidBottle",
-    "hint": "Liquid Bottle Assets",
-    "categories": "Assets",
-    "description": "Liquid Bottle meshes and product blocks"
-  }, {
-    "name": "Books and Paper Assets",
-    "mainFile": "AssetBooksAndPaper",
-    "hint": "Books and Paper Assets",
-    "categories": "Assets",
-    "description": "Books and Paper meshes and product blocks"
-  }, {
-    "name": "Seafood and Frozen Assets",
-    "mainFile": "AssetSeafoodAndFrozen",
-    "hint": "Seafood and Frozen Assets",
-    "categories": "Assets",
-    "description": "Seafood and Frozen meshes and product blocks"
-  }, {
-    "name": "Bread and Dairy Assets",
-    "mainFile": "AssetBreadAndDairy",
-    "hint": "Bread and Dairy Assets",
-    "categories": "Assets",
-    "description": "Bread and Dairy meshes and product blocks"
-  }, {
-    "name": "City and Block Assets",
-    "mainFile": "AssetCityAndBlock",
-    "hint": "City and Block Assets",
-    "categories": "Assets",
-    "description": "City and Block meshes and product blocks"
-  }, {
-    "name": "Toys and Cleaners Assets",
-    "mainFile": "AssetToysAndCleaners",
-    "hint": "Toys and Cleaners Assets",
-    "categories": "Assets",
-    "description": "Toys and Cleaners meshes and product blocks"
-  }, {
-    "name": "GM Assets",
-    "mainFile": "AssetGM",
-    "hint": "GM Assets",
-    "categories": "Assets",
-    "description": "GM meshes and product blocks"
-  }, {
-    "name": "Food Assets",
-    "mainFile": "AssetFood",
-    "hint": "Food Assets",
-    "categories": "Assets",
-    "description": "Food meshes and product blocks"
-  }, {
-    "name": "Carousel Display Products 1",
-    "mainFile": "CarouselProducts1",
-    "hint": "Carousel Products 1",
-    "categories": "Products",
-    "description": "Products list for Carousel Display"
-  }, {
-    "name": "Platform Books and Paper Products",
-    "mainFile": "PlatformBooksAndPaperProducts",
-    "hint": "Books and Paper Products",
-    "categories": "Products",
-    "description": "Products list that matches Asset Ranges example and Platform Display"
-  }, {
-    "name": "Platform Bread and Dairy Products",
-    "mainFile": "PlatformBreadAndDairyProducts",
-    "hint": "Bread And Dairy Products",
-    "categories": "Products",
-    "description": "Products list that matches Asset Ranges example and Platform Display"
-  }, {
-    "name": "Platform GM Products",
-    "mainFile": "PlatformGMProducts",
-    "hint": "GM Products",
-    "categories": "Products",
-    "description": "Products list that matches Asset Ranges example and Platform Display"
-  }, {
-    "name": "Platform Seafood and Frozen",
-    "mainFile": "PlatformSeafoodAndFrozenProducts",
-    "hint": "Seafood and Frozen Products",
-    "categories": "Products",
-    "description": "Products list that matches Asset Ranges example and Platform Display"
-  },
-  {
-    "name": "Product List with 1 product",
-    "mainFile": "ProductList",
-    "hint": "Products",
-    "categories": "Products",
-    "description": "Product list with headers and various examples products"
-  },
-  {
-    "name": "Grocery Isle - Vegetables",
-    "mainFile": "GroceryIsleVegetablesProducts",
-    "hint": "Vegetables",
-    "categories": "Products",
-    "description": "Vegetable product list for Grocery Isle"
-  },
-  {
-    "name": "Grocery Isle - Fruits",
-    "mainFile": "GroceryIsleFruitsProducts",
-    "hint": "Fruits",
-    "categories": "Products",
-    "description": "Fruit product list for Grocery Isle"
-  },
-  {
-    "name": "Platform Display (legacy)",
-    "mainFile": "PlatformDisplay",
-    "hint": "Platform Display",
-    "categories": "Legacy and Tests",
-    "description": "Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this."
-  },
-  {
-    "name": "Grocery Isle (legacy)",
-    "mainFile": "GroceryIsle",
-    "hint": "Grocery Isle",
-    "categories": "Legacy and Tests",
-    "description": "Grocery Display without Products - requires Fixture Assets for assets to deploy"
-  },
-  {
-    "name": "Mini Mock Store",
-    "mainFile": "MockMiniStoreFrag",
-    "hint": "mock store",
-    "helpkey": "spinnerdiagram",
-    "categories": "Fragments",
-    "description": "support file"
-  },
-  {
-    "name": "Line Flow Chart",
-    "mainFile": "LineFlowChartFrag",
-    "hint": "flow chart",
-    "helpkey": "spinnerdiagram",
-    "categories": "Fragments",
-    "description": "support file"
-  },
-  {
-    "name": "Simple What If",
-    "mainFile": "SimpleWhatIfFrag",
-    "hint": "whatif",
-    "helpkey": "spinnerdiagram",
-    "categories": "Fragments",
-    "description": "support file"
-  },
-  {
-    "name": "Spin wheel 360",
-    "mainFile": "Spinner360Frag",
-    "hint": "spinner360",
-    "helpkey": "spinnerdiagram",
-    "categories": "Fragments",
-    "description": "support file"
-  },
-  {
-    "name": "Video Texture Example",
-    "hint": "Video Texture",
-    "mainFile": "VideoTexture",
-    "categories": "Layout",
-    "description": "3 videos used as textures wrapped on shapes - make sure to click the screen EARLY when loading so the videos load, otherwise use F5/cmd R to reload the display to see the videos animated"
-  },
-  {
-    "name": "GLB mesh example",
-    "hint": "GLB Bee Example",
-    "mainFile": "AsterikAndGLB",
-    "categories": "Layout",
-    "description": "glb mesh used, wrapped in a block (container mesh internally) in order to apply frames - also the [*] operator is used to reuse blocks and shift time"
-  },
-  {
-    "name": "TRI Meter Example",
-    "hint": "TRI Meter",
-    "mainFile": "TRIMeter",
-    "categories": "Layout",
-    "description": "simple text and shape and animated line combination for a diagram"
-  }
-]
+[{"name":"Web Font Logo","mainFile":"WebFontLogo","hint":"Logo","categories":"Layout","description":"Basic 3D logo example using a google web font","fragments":"","products":"","helpkey":""},
+{"name":"Fruit stands with meat - 1","mainFile":"FruitStandsLayout","hint":"Fruit stands with meats 1","categories":"Display","description":"Fruit stands with meat, follow camera and animated cart - product set 1/2","fragments":"Fixture Materials,Fruit Stands,Additional Fixtures,Meat Assets","products":"Fruit Stands - Meat Products 1","helpkey":""},
+{"name":"Fruit stands with meat - 2","mainFile":"FruitStandsLayout","hint":"Fruit stands with meats 2","categories":"Display","description":"Fruit stands with meat, follow camera and animated cart - product set 2/2","fragments":"Fixture Materials,Fruit Stands,Additional Fixtures,Meat Assets","products":"Fruit Stands - Meat Products 2","helpkey":""},
+{"name":"Flower stands with vegetables - 1","mainFile":"FlowerStandLayout","hint":"Flower stands with vegetables","categories":"Display","description":"Flower stands in the corner with veggies - product set 1/2","fragments":"Fixture Materials,Fruit Stands,Additional Fixtures,Produce Assets","products":"Flower Stands - Products 1","helpkey":""},
+{"name":"Flower stands with vegetables - 2","mainFile":"FlowerStandLayout","hint":"Flower stands with vegetables","categories":"Display","description":"Flower stands in the corner with veggies - product set 2/2","fragments":"Fixture Materials,Fruit Stands,Additional Fixtures,Produce Assets","products":"Flower Stands - Products 2","helpkey":""},
+{"name":"Fruit Stands - Meat Products 1","mainFile":"FruitStandsProducts1","hint":"Fruit Stands - Meat Products 1","categories":"Products","description":"Fruit stands with meat 1/2","fragments":"","products":"","helpkey":""},
+{"name":"Fruit Stands - Meat Products 2","mainFile":"FruitStandsProducts2","hint":"Fruit Stands - Meat Products 2","categories":"Products","description":"Fruit stands with meat 2/2","fragments":"","products":"","helpkey":""},
+{"name":"Flower Stands - Products 1","mainFile":"FlowerProducts1","hint":"Flower Products 1","categories":"Products","description":"Flower stands with veggies products 1/2","fragments":"","products":"","helpkey":""},
+{"name":"Flower Stands - Products 2","mainFile":"FlowerProducts2","hint":"Flower Products 2","categories":"Products","description":"Flower stands with veggies products 2/2","fragments":"","products":"","helpkey":""},
+{"name":"Grocery Isle with Vegetables","mainFile":"Islev1","hint":"Isle with Vegetables","categories":"Display","description":"Grocery Isle Display - multiple sheets","fragments":"Fixture Assets,Produce Assets","products":"Grocery Isle - Vegetables","helpkey":""},
+{"name":"Grocery Isle with Fruits","mainFile":"Islev1","hint":"Isle with Fruits","categories":"Display","description":"Grocery Isle Display - multiple sheets","fragments":"Fixture Assets,Produce Assets","products":"Grocery Isle - Fruits","helpkey":""},
+{"name":"Carousel Display","mainFile":"CarouselDisplay","hint":"Carousel Display","categories":"Display","description":"Rotating scene with table in a carousel style product display","fragments":"Good Bottles,Audio Animation Example - Star Wars 8 Bands","products":"Carousel Display Products 1","helpkey":""},
+{"name":"Platform Display","mainFile":"Platformv1","hint":"Platform Display","categories":"Display","description":"Platform display with 32 positions","fragments":"Books and Paper Assets","products":"Platform Books and Paper Products","helpkey":""},
+{"name":"Simple Shapes and Frames","mainFile":"ShapesAndFrames","hint":"Shapes","categories":"Layout","description":"A variety of shapes with a few frames","fragments":"","products":"","helpkey":"shape"},
+{"name":"Meshes Basic","mainFile":"MeshesBasic","hint":"Meshes","categories":"Layout","description":"Some product meshes scattered about","fragments":"","products":"","helpkey":"mesh"},
+{"name":"Lights Fun","mainFile":"LightsFun","hint":"Lights","categories":"Layout","description":"Some spot lights and a directional light","fragments":"","products":"","helpkey":"light"},
+{"name":"Camera Animations","mainFile":"CameraAnimations","hint":"Cameras","categories":"Layout","description":"Shapes demo with some extra cameras and frames","fragments":"","products":"","helpkey":"camera"},
+{"name":"Short Red Video","mainFile":"VideoShortRed","hint":"Red Video","categories":"Layout","description":"Short red video - no assets required","fragments":"","products":"","helpkey":"demoredvideo"},
+{"name":"Short Blue Video","mainFile":"VideoShortBlue","hint":"Blue Video","categories":"Layout","description":"Short blue video - assets: Spheres for Videos required","fragments":"","products":"","helpkey":"shortcolorvideos"},
+{"name":"Short Green Video","mainFile":"VideoShortGreen","hint":"Green Video","categories":"Layout","description":"Short green video - assets: Spheres for Videos required","fragments":"","products":"","helpkey":"shortcolorvideos"},
+{"name":"Short Yellow Video","mainFile":"VideoShortYellow","hint":"Yellow Video","categories":"Layout","description":"Short yellow video - assets: Spheres for Videos required","fragments":"","products":"","helpkey":"shortcolorvideos"},
+{"name":"Video Picker","mainFile":"VideoPicker","hint":"Video Picker","categories":"Layout","description":"Video Picker using frame commands - shows video with time synchronized between multiple browsers open","fragments":"","products":"","helpkey":"shortcolorvideos"},
+{"name":"webGL App Diagram","mainFile":"webAppDiagram","hint":"webApp Diagram","categories":"Layout","description":"webApp diagram with lots of frames","fragments":"","products":"","helpkey":"webappdiagram"},
+{"name":"Configuration","mainFile":"ConfigurationDefault","hint":"Configuration","categories":"Setup","description":"Default [Configuration] sheet - should be named Configuration","fragments":"","products":"","helpkey":"addonconfiguration"},
+{"name":"Projects","mainFile":"ProjectList","hint":"Projects","categories":"Setup","description":"Default Projects List Example (all columns) - name is specified in Configuration Sheet","fragments":"","products":"","helpkey":"addonprojects"},
+{"name":"Asset Ranges","mainFile":"AssetRanges","hint":"Asset Ranges","categories":"Setup","description":"Example of aggregating data from external Assets Spreadsheet","fragments":"","products":"","helpkey":""},
+{"name":"Deploy Options","mainFile":"DeployOptions","hint":"Deploy Options","categories":"Setup","description":"list of servers stored in a sheet","fragments":"","products":"","helpkey":""},
+{"name":"Multi Sheet Flow Diagram","mainFile":"FlowDiagramExample","hint":"3D Flow Diagram","categories":"Layout","description":"multi sheet flow diagram using fragments","fragments":"Mini Mock Store,Line Flow Chart,Simple What If,Spin wheel 360","products":"","helpkey":"spinnerdiagram"},
+{"name":"Fixture Assets","mainFile":"AssetFixtures","hint":"Fixture Assets","categories":"Assets","description":"Fixture meshes, blocks and materials for displays","fragments":"","products":"","helpkey":""},
+{"name":"Fruit Stands","mainFile":"FruitStandsFrag","hint":"Fruit Stands","categories":"Fragments","description":"Fruit stand meshes and block with configurable materials - depends on fixture materials fragment","fragments":"","products":"","helpkey":""},
+{"name":"Additional Fixtures","mainFile":"AdditionalFixturesFrag","hint":"Additional Fixtures","categories":"Fragments","description":"Fixture stand meshes and block with configurable materials - depends on fixture materials fragment","fragments":"","products":"","helpkey":""},
+{"name":"Spheres for Videos","mainFile":"AssetSpheresForVideos","hint":"Spheres For Videos","categories":"Assets","description":"Rotating colored spheres for short video examples","fragments":"","products":"","helpkey":"shortcolorvideos"},
+{"name":"Good Bottles","mainFile":"GoodBottlesFrag","hint":"Good Liquor Bottles","categories":"Fragments","description":"Assets for liquor bottles and product records","fragments":"","products":"","helpkey":""},
+{"name":"Fixture Materials","mainFile":"FixtureMaterialsFrag","hint":"Fixture Materials","categories":"Fragments","description":"Materials to enable client UI change on the fly - for fixtures fragments","fragments":"","products":"","helpkey":""},
+{"name":"Product Position List","mainFile":"ProductPositionsListFrag","hint":"Product Positions","categories":"Fragments","description":"Product position example list ready for inclusion in a scene","fragments":"","products":"","helpkey":""},
+{"name":"Audio Animation - 8 Bands","mainFile":"Audio8Band","hint":"8 Band Song","categories":"Other","description":"Use addon to process a song into 8 bands and this sheet will produce the animation data","fragments":"","products":"","helpkey":""},
+{"name":"Audio Animation Example - Star Wars 8 Bands","mainFile":"AudioStarWars8Band","hint":"starwars8_60","categories":"Other","description":"8 band example using star wars intro 60 sec","fragments":"","products":"","helpkey":""},
+{"name":"Audio Animation - 16 Bands","mainFile":"Audio16Band","hint":"16 Band Song","categories":"Other","description":"Use addon to process a song into 16 bands and this sheet will produce the animation data","fragments":"","products":"","helpkey":""},
+{"name":"Produce Assets","mainFile":"AssetProduce","hint":"Produce Assets","categories":"Assets","description":"Produce meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"Meat Assets","mainFile":"AssetMeat","hint":"Meat Assets","categories":"Assets","description":"Meat meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"Liquid Bottle Assets","mainFile":"AssetLiquidBottle","hint":"Liquid Bottle Assets","categories":"Assets","description":"Liquid Bottle meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"Books and Paper Assets","mainFile":"AssetBooksAndPaper","hint":"Books and Paper Assets","categories":"Assets","description":"Books and Paper meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"Seafood and Frozen Assets","mainFile":"AssetSeafoodAndFrozen","hint":"Seafood and Frozen Assets","categories":"Assets","description":"Seafood and Frozen meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"Bread and Dairy Assets","mainFile":"AssetBreadAndDairy","hint":"Bread and Dairy Assets","categories":"Assets","description":"Bread and Dairy meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"City and Block Assets","mainFile":"AssetCityAndBlock","hint":"City and Block Assets","categories":"Assets","description":"City and Block meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"Toys and Cleaners Assets","mainFile":"AssetToysAndCleaners","hint":"Toys and Cleaners Assets","categories":"Assets","description":"Toys and Cleaners meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"GM Assets","mainFile":"AssetGM","hint":"GM Assets","categories":"Assets","description":"GM meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"Food Assets","mainFile":"AssetFood","hint":"Food Assets","categories":"Assets","description":"Food meshes and product blocks","fragments":"","products":"","helpkey":""},
+{"name":"Carousel Display Products 1","mainFile":"CarouselProducts1","hint":"Carousel Products 1","categories":"Products","description":"Products list for Carousel Display","fragments":"","products":"","helpkey":""},
+{"name":"Platform Books and Paper Products","mainFile":"PlatformBooksAndPaperProducts","hint":"Books and Paper Products","categories":"Products","description":"Products list that matches Asset Ranges example and Platform Display","fragments":"","products":"","helpkey":""},
+{"name":"Platform Bread and Dairy Products","mainFile":"PlatformBreadAndDairyProducts","hint":"Bread And Dairy Products","categories":"Products","description":"Products list that matches Asset Ranges example and Platform Display","fragments":"","products":"","helpkey":""},
+{"name":"Platform GM Products","mainFile":"PlatformGMProducts","hint":"GM Products","categories":"Products","description":"Products list that matches Asset Ranges example and Platform Display","fragments":"","products":"","helpkey":""},
+{"name":"Platform Seafood and Frozen","mainFile":"PlatformSeafoodAndFrozenProducts","hint":"Seafood and Frozen Products","categories":"Products","description":"Products list that matches Asset Ranges example and Platform Display","fragments":"","products":"","helpkey":""},
+{"name":"Product List with 1 product","mainFile":"ProductList","hint":"Products","categories":"Products","description":"Product list with headers and various examples products","fragments":"","products":"","helpkey":""},
+{"name":"Grocery Isle - Vegetables","mainFile":"GroceryIsleVegetablesProducts","hint":"Vegetables","categories":"Products","description":"Vegetable product list for Grocery Isle","fragments":"","products":"","helpkey":""},
+{"name":"Grocery Isle - Fruits","mainFile":"GroceryIsleFruitsProducts","hint":"Fruits","categories":"Products","description":"Fruit product list for Grocery Isle","fragments":"","products":"","helpkey":""},
+{"name":"Platform Display (legacy)","mainFile":"PlatformDisplay","hint":"Platform Display","categories":"Legacy and Tests","description":"Platform display with 32 positions - Device orientation focused<BR>ALERT: Asset Ranges Example required to support this.","fragments":"","products":"","helpkey":""},
+{"name":"Grocery Isle (legacy)","mainFile":"GroceryIsle","hint":"Grocery Isle","categories":"Legacy and Tests","description":"Grocery Display without Products - requires Fixture Assets for assets to deploy","fragments":"","products":"","helpkey":""},
+{"name":"Mini Mock Store","mainFile":"MockMiniStoreFrag","hint":"mock store","categories":"Fragments","description":"support file","fragments":"","products":"","helpkey":"spinnerdiagram"},
+{"name":"Line Flow Chart","mainFile":"LineFlowChartFrag","hint":"flow chart","categories":"Fragments","description":"support file","fragments":"","products":"","helpkey":"spinnerdiagram"},
+{"name":"Simple What If","mainFile":"SimpleWhatIfFrag","hint":"whatif","categories":"Fragments","description":"support file","fragments":"","products":"","helpkey":"spinnerdiagram"},
+{"name":"Spin wheel 360","mainFile":"Spinner360Frag","hint":"spinner360","categories":"Fragments","description":"support file","fragments":"","products":"","helpkey":"spinnerdiagram"},
+{"name":"Video Texture Example","mainFile":"VideoTexture","hint":"Video Texture","categories":"Layout","description":"3 videos used as textures wrapped on shapes - make sure to click the screen EARLY when loading so the videos load, otherwise use F5/cmd R to reload the display to see the videos animated","fragments":"","products":"","helpkey":""},
+{"name":"GLB mesh example","mainFile":"AsterikAndGLB","hint":"GLB Bee Example","categories":"Layout","description":"glb mesh used, wrapped in a block (container mesh internally) in order to apply frames - also the [*] operator is used to reuse blocks and shift time","fragments":"","products":"","helpkey":""},
+{"name":"TRI Meter Example","mainFile":"TRIMeter","hint":"TRI Meter","categories":"Layout","description":"simple text and shape and animated line combination for a diagram","fragments":"","products":"","helpkey":""}]

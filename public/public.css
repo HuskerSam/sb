@@ -535,7 +535,7 @@ a.gsst_a {
 
 a.gs-title {
   position: relative;
-  top: 1.5em;
+  top: 1.4em;
   padding: .25em;
   color: rgb(0, 100, 255) !important;
 }
@@ -699,12 +699,12 @@ h3 {
   position: absolute;
   max-width: 800px;
   top: 0;
-  left: -1100px;
+  left: -1300px;
 }
 
 @keyframes animTimerFrames {
   0% {
-    left: -1100px;
+    left: -1300px;
   }
 
   5% {
@@ -716,11 +716,11 @@ h3 {
   }
 
   33% {
-    left: -1100px;
+    left: -1300px;
   }
 
   100% {
-    left: -1100px;
+    left: -1300px;
   }
 }
 
@@ -736,6 +736,11 @@ h3 {
   position: relative;
   z-index: 1;
   color: rgb(0, 100, 255);
+}
+
+#timer_bar_wrapper .timer_stop_btn {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .timer_stop_btn:hover,
