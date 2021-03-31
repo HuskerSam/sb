@@ -6,7 +6,7 @@ body {
 }
 
 h1, h2 {
-  color: rgb(0, 200, 0);
+  color: rgb(255, 140, 0);
 }
 
 a h1, a h2 {
@@ -371,7 +371,7 @@ table.gsc-search-box td {
 
 .list_help_view h2 {
   margin: 0;
-  color: rgba(0, 255, 0, .25);
+  color: rgba(255, 140, 0, .2);
   font-size: 7em;
   display: inline-block;
   font-family: 'Comic Sans MS';
@@ -580,7 +580,7 @@ div.gcsc-more-maybe-branding-root {
 
 body {
   background: radial-gradient(farthest-corner at 0% 0%, rgba(100, 200, 255, 1) 0%,
-    rgba(100, 200, 255, .5) 40px,
+    rgba(100, 200, 255, .4) 90px,
     rgb(255, 255, 255) 50%,
     rgb(255, 255, 255) 100%);
 }
@@ -626,8 +626,8 @@ h3 {
 #timer_bar_wrapper {
   position: relative;
   display: inline-block;
-  top: -.35em;
-  font-size: 1.2em;
+  top: -8px;
+  font-size: 28px;
 }
 
 #timer_bar_wrapper button {
@@ -637,6 +637,13 @@ h3 {
   position: relative;
   border: solid .5em rgba(255, 140, 0, .3);
   margin: 0 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-left: -2px;
+  margin-right: -2px;
+  border-radius: 2px;
+  padding-top:2px;
+  padding-bottom: 2px;
 }
 
 #timer_bar_wrapper button:hover,
@@ -646,9 +653,10 @@ h3 {
 
 #timer_bar {
   position: absolute;
-  height: 55%;
-  top: 23%;
-  background-color: rgba(0, 100, 255, .5);
+  height: 40%;
+  top: 38%;
+  border-radius: 3px;
+  background-color: rgba(255, 140, 0, .2);
   animation-duration: 32s;
   animation-timing-function: linear;
   animation-name: timerBarFrames;
@@ -671,11 +679,11 @@ h3 {
 }
 
 .anim_box_layer .orange {
-  color: rgb(0, 200, 0);
+  color: rgb(255, 140, 0);
 }
 
 .anim_box_layer .green {
-  color: rgb(0, 200, 0);
+  color: rgb(255, 140, 0);
   font-family: 'Comic Sans MS';
 }
 
@@ -735,12 +743,7 @@ h3 {
   padding-top: 6px;
   position: relative;
   z-index: 1;
-  color: rgb(0, 100, 255);
-}
-
-#timer_bar_wrapper .timer_stop_btn {
-  padding-left: 3px;
-  padding-right: 3px;
+  overflow: hidden;
 }
 
 .timer_stop_btn:hover,
@@ -765,4 +768,22 @@ h3 {
   .anim_wrapper_height_container {
     height: 600px;
   }
+}
+
+#animation_skip_backward i {
+  position: relative;
+  left: 10px;
+  transform: scale(1.8);
+  color: rgba(255,140,0,.5);
+}
+
+#animation_skip_forward i {
+  position: relative;
+  transform: scale(1.8);
+  color: rgba(255,140,0,.5);
+}
+
+#animation_pause_btn i {
+  transform: scale(2.5);
+  color: rgba(255,140,0,.5);
 }
