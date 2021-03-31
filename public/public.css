@@ -626,28 +626,28 @@ h3 {
 #timer_bar_wrapper {
   position: relative;
   display: inline-block;
+  top: -.35em;
+  font-size: 1.2em;
 }
 
 #timer_bar_wrapper button {
   border: none;
   font-size: .5em;
   height: 50%;
-  padding-bottom: 3px;
   position: relative;
-  color: rgba(255, 140, 0, .4);
+  border: solid .5em rgba(255, 140, 0, .4);
   margin: 0 0px;
 }
 
 #timer_bar_wrapper button:hover,
 #timer_bar_wrapper button:focus {
-  background: none;
   background: rgba(255, 255, 255, .5);
 }
 
 #timer_bar {
   position: absolute;
-  height: 28%;
-  top: 38%;
+  height: 55%;
+  top: 24%;
   background-color: rgba(0, 100, 255, .5);
   animation-duration: 32s;
   animation-timing-function: linear;
@@ -739,8 +739,8 @@ h3 {
 }
 
 #timer_bar_wrapper .timer_stop_btn {
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .timer_stop_btn:hover,
