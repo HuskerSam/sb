@@ -58,12 +58,12 @@ class HelpGen {
 
     <body class="${reviewClassName}">
     <link rel="stylesheet" href="https://handtop.com/public.css">
-    <div class="home_page_wrapper">
+    <div class="home_page_wrapper${!includeList ? ' contents_wrapper' : ''}">
       <div class="option_bar">
         <a href="/" class="logo">
           <img alt="small logo image" class="small_logo" src="https://handtop.com/images/handtop.png">
         </a>
-        ${ includeList ? '<a href="/doc/">Reference</a>': '<a href="/addon/">Visual Catalogs</a>' }
+        ${ includeList ? '<a href="/doc/">Contents</a>' : '' }
         <div class="search_box_wrapper">
           <div class="gcse-search"></div>
         </div>
