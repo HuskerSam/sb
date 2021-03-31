@@ -18,6 +18,17 @@
   s.parentNode.insertBefore(gcse, s);
 })();
 
+function searchBoxReady() {
+  document.querySelectorAll('.gsc-webResult.gsc-result a').forEach(i => i.setAttribute('target', ''));
+  return false;
+}
+
+window.__gcse || (window.__gcse = {});
+window.__gcse.searchCallbacks = {
+    web: {
+        rendered: searchBoxReady
+    }
+};
 
 window.addEventListener('load', e => {
   let pH = ' Search...';
