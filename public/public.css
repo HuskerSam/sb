@@ -764,7 +764,7 @@ h3 {
     height: 900px;
   }
 
-  .option_bar a, .footer_bar a, .home_page_anchor {
+  .option_bar a {
     padding: .75em .5em 0 .5em;
   }
 }
