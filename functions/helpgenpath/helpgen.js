@@ -74,7 +74,7 @@ class HelpGen {
       </div>
       <div class="help_body">${helpBody}</div>
       <div class="footer_bar">
-        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/privacy.html">Privacy</a>
         &nbsp;
         <a href="/about/">About</a>
         &nbsp;
