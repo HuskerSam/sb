@@ -99,7 +99,7 @@ img {
   border: solid 1px rgb(255, 140, 0);
   color: rgb(0, 100, 255);
   text-decoration: none;
-  padding: .65em .5em 0 .5em;
+  padding: .8em .5em 0 .5em;
   font-family: Georgia;
 }
 
@@ -582,14 +582,14 @@ div.gcsc-more-maybe-branding-root {
 
 .home_page_wrapper {
   background: radial-gradient(farthest-corner at 0% 0%, rgba(255, 255, 200, 1) 0%,
-    rgba(255, 255, 200, .4) 90px,
+    rgba(255, 255, 200, .8) 90px,
     transparent 50%,
     transparent 100%);
 }
 
 body {
   background: radial-gradient(farthest-corner at 0% 100%, rgba(200, 255, 255, 1) 0%,
-    rgba(200, 255, 255, .4) 90px,
+    rgba(200, 255, 255, .8) 90px,
     transparent 50%,
     transparent 100%);
 }
@@ -766,7 +766,7 @@ h3 {
   }
 
   .option_bar a {
-    padding: .8em .5em 0 .5em;
+    padding: .85em .5em 0 .5em;
   }
 }
 
