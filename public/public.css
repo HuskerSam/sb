@@ -683,11 +683,6 @@ h3 {
   color: rgb(255, 140, 0);
 }
 
-.anim_box_layer .green {
-  color: rgb(255, 140, 0);
-  font-family: 'Comic Sans MS';
-}
-
 .anim_box_layer h3 {
   float: right;
   font-size: 1.5em;
@@ -779,13 +774,13 @@ h3 {
   position: relative;
   left: 10px;
   transform: scale(1.8);
-  color: rgba(255,140,0,.5);
+  color: rgb(0, 100, 255);
 }
 
 #animation_skip_forward i {
   position: relative;
   transform: scale(1.8);
-  color: rgba(255,140,0,.5);
+  color: rgb(0, 100, 255);
 }
 
 #animation_pause_btn i {
