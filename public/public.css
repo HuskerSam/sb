@@ -2,7 +2,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: Tahoma, Georgia;
+  font-family: Georgia;
 }
 
 h1, h2 {
@@ -100,16 +100,17 @@ img {
   color: rgb(0, 100, 255);
   text-decoration: none;
   padding: .65em .5em 0 .5em;
-  font-family: Tahoma, Georgia;
+  font-family: Georgia;
 }
 
 .option_bar a {
-  font-family: Tahoma, Georgia;
+  font-family: Georgia;
 }
 
 .footer_bar a, .home_page_anchor {
   padding: .75em;
   float: none;
+  margin-right: -1px;
 }
 
 .option_bar a:hover, .footer_bar a:hover, .option_bar a.logo:hover, a:hover,
@@ -147,13 +148,14 @@ img {
   max-width: 1000px;
   position: relative;
   color: rgb(0, 100, 255);
-  font-family: Tahoma, Georgia;
+  font-family: Georgia;
 }
 
 .footer_bar {
   line-height: 3.5em;
-  text-align: center;
-  width: 100%
+  line-break: anywhere;
+  padding: .5em;
+  text-align: left;
 }
 
 .footer_bar .copyright {
@@ -237,7 +239,7 @@ table.gsc-search-box td {
 
 .search_box_wrapper input::placeholder {
   color: rgba(0, 100, 255, 1);
-  font-family: Tahoma, Georgia;
+  font-family: Georgia;
 }
 
 .help_display_item {
@@ -375,7 +377,6 @@ table.gsc-search-box td {
   color: rgba(255, 140, 0, .2);
   font-size: 7em;
   display: inline-block;
-  font-family: 'Comic Sans MS';
   position: absolute;
   top: .25em;
 }
@@ -579,11 +580,18 @@ div.gcsc-more-maybe-branding-root {
   font-weight: bold;
 }
 
-body {
+.home_page_wrapper {
   background: radial-gradient(farthest-corner at 0% 0%, rgba(255, 255, 200, 1) 0%,
-    rgba(255, 255, 200, .8) 90px,
-    rgb(255, 255, 255) 50%,
-    rgb(255, 255, 255) 100%);
+    rgba(255, 255, 200, .4) 90px,
+    transparent,
+    transparent 100%);
+}
+
+body {
+  background: radial-gradient(farthest-corner at 0% 100%, rgba(200, 255, 255, 1) 0%,
+    rgba(200, 255, 255, .4) 90px,
+    transparent,
+    transparent 100%);
 }
 
 .alternate_email {
@@ -621,7 +629,7 @@ h3 {
   text-align: left;
   display: inline-block;
   color: rgb(0, 100, 255);
-  font-family: Tahoma, Georgia;
+  font-family: Georgia;
 }
 
 #timer_bar_wrapper {
@@ -642,7 +650,6 @@ h3 {
   padding-right: 4px;
   margin-left: -2px;
   margin-right: -2px;
-  border-radius: 2px;
   padding-top:2px;
   padding-bottom: 2px;
 }
@@ -655,8 +662,7 @@ h3 {
 #timer_bar {
   position: absolute;
   height: 40%;
-  top: 38%;
-  border-radius: 3px;
+  top: 35%;
   background-color: rgba(255, 140, 0, .2);
   animation-duration: 32s;
   animation-timing-function: linear;
@@ -686,8 +692,8 @@ h3 {
 .anim_box_layer h3 {
   float: right;
   font-size: 1.5em;
-  font-weight: normal;
-  margin-top: 0;
+  font-weight: bold;
+  margin-top: .35em;
 }
 
 .anim_box_layer h2 {
@@ -760,7 +766,7 @@ h3 {
   }
 
   .option_bar a {
-    padding: .75em .5em 0 .5em;
+    padding: .8em .5em 0 .5em;
   }
 }
 
