@@ -322,11 +322,12 @@ table.gsc-search-box td {
 
 .list_help_view h2 {
   margin: 0;
-  color: rgba(255, 140, 0, .2);
+  color: rgba(0, 100, 255, .4);
   font-size: 7em;
   display: inline-block;
   position: absolute;
   top: .25em;
+  z-index: -10;
 }
 
 .list_help_view .header_wrapper {
@@ -735,7 +736,7 @@ h3 {
 
 #animation_pause_btn i {
   transform: scale(2.5);
-  color: rgba(255,140,0,.5);
+  color: rgba(255,140,0,1);
 }
 
 .contents_wrapper .search_box_wrapper {
