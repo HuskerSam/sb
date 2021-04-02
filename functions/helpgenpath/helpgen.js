@@ -44,7 +44,7 @@ class HelpGen {
       <meta charset="utf-8">
       <title>${title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="shortcut icon" href="https://handtop.com/images/handtop.png">
+      <link rel="shortcut icon" href="https://handtop.com/images/logo64.png">
       <link rel="canonical" href="https://handtop.com/doc/${urlFrag}" />
       <meta property="og:title" content="${title}" />
       <meta property="og:url" content="https://handtop.com/doc/${urlFrag}" />
