@@ -322,7 +322,7 @@ table.gsc-search-box td {
 
 .list_help_view h2 {
   margin: 0;
-  color: rgba(0, 100, 255, .4);
+  color: rgba(0, 100, 255, .2);
   font-size: 7em;
   display: inline-block;
   position: absolute;
@@ -749,7 +749,7 @@ h3 {
 
 
 
-body.item_help_view {
+body.item_help_view, body.list_help_view  {
   background: transparent;
   color: black;
 }
@@ -758,7 +758,7 @@ body.item_help_view {
   color: inherit;
 }
 
-.item_help_view .home_page_wrapper {
+.item_help_view .home_page_wrapper, .list_help_view .home_page_wrapper {
   background: transparent;
   color:inherit;
 }
