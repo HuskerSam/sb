@@ -341,7 +341,6 @@ table.gsc-search-box td {
 
 .list_html_div .review_text {
   padding-left: .5em;
-  color: rgb(255, 140, 0);
   position: relative;
   top: -.75em;
   display: inline-block;
@@ -368,11 +367,18 @@ a.gsst_a {
 
 .help_gen_list_wrapper .list_html_div a i {
   font-size: 1em;
+  color: rgb(0,100,255);
+}
+
+.help_gen_list_wrapper .list_html_div a:hover i {
+  color: black;
 }
 
 .help_gen_list_wrapper .list_html_div a:hover, .help_gen_list_wrapper .list_html_div a:focus {
   border-color: black;
   outline-color: black;
+  color: black;
+
 }
 
 .gsst_a .gscb_a {
@@ -738,4 +744,21 @@ h3 {
 
 .contents_wrapper .search_box_wrapper {
   border-left: solid 1px rgb(255,140,0);
+}
+
+
+
+
+body.item_help_view {
+  background: transparent;
+  color: black;
+}
+
+.item_help_view h1, h2, h3, h4 {
+  color: inherit;
+}
+
+.item_help_view .home_page_wrapper {
+  background: transparent;
+  color:inherit;
 }
