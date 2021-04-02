@@ -16,6 +16,7 @@
   <meta property="fb:app_id" content="461141618064403" />
   <meta name="description" content='Creation pipeline and display tools'>
   <link rel="stylesheet" href="https://handtop.com/public.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
 </head>
 
 <body>
@@ -30,119 +31,92 @@
       </div>
       <a href="mailto:contact@handtop.com?subject=URGENT QUESTION" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
     </div>
-    <div>
-      <div style="display:inline-block;">
-        <div class="demo_item" style="color: rgb(20, 180, 0);border-color: rgb(20, 180, 0);">
-          <a href="https://dedicateddemos.web.app/display/?name=Meat%20Display" target="_blank">
-            <span class="item_title">Follow UI</span>
-            &nbsp;
-            <i class="material-icons">exit_to_app</i></a>
-          <div style="display:flex;">
-            <div class="desc_panel">
-              <span class="title">Platform:</span><span class="response">Mobile</span><br>
-              <span class="title">Display:</span><span class="response">9 x 16</span><br>
-              <span class="title">Camera:</span><span class="response">Follow</span><br>
-              <span class="title">Bandwidth:</span><span class="response">Medium</span><br>
-              <span class="title">Polycount:</span><span class="response">Medium</span><br>
-              <span class="title">Labels:</span><span class="response">2D</span><br>
-              <span class="title">Load Time:</span><span class="response">Medium</span><br>
-              <span class="title">Music:</span><span class="response">None</span><br>
-              <span class="title">Complexity:</span><span class="response">Low</span>
-            </div>
-            <div style="font-family:impact;font-size:1.2em;white-space:initial;color: rgb(20, 180, 0);">
-              No device motion<br>
-              Auto Drive<br>
-              Touch to pick<br>
-              Low intensity<br>
-              Similar to video<br>
-            </div>
-          </div>
+    <div style="padding-left: .25em;">
+      <div style="white-space:nowrap;display:inline-block">
+        <button id="animation_pause_btn" class="timer_stop_btn"><i class="material-icons" style="">pause</i></button>
+        <button id="animation_skip_backward" class="timer_stop_btn"><i class="material-icons">arrow_back_ios</i></button>
+        <div id="timer_bar_wrapper">
+          <div id="timer_bar"></div>
+          <button class="timer_stop_btn anim_stop_btn">&nbsp;</button>
+          <button class="timer_stop_btn anim_stop_btn">&nbsp;</button>
+          <button class="timer_stop_btn anim_stop_btn">&nbsp;</button>
+          <button class="timer_stop_btn anim_stop_btn">&nbsp;</button>
+        </div>
+        <button id="animation_skip_forward" class="timer_stop_btn"><i class="material-icons">arrow_forward_ios</i></button>
+      </div>
+    </div>
 
-        </div>
-        <div class="demo_item" style="color:rgb(255, 100, 50);border-color:rgb(255, 100, 50)">
-          <a href="https://dedicateddemos.web.app/display/?name=Flower%20Stands" target="_blank">
-            <span class="item_title">Mild Orientation UI</span>
-            &nbsp;
-            <i class="material-icons">exit_to_app</i>
-          </a>
-          <div style="display:flex;">
-            <img alt="Mild Orientation UI" style="width:9em;max-width:initial;max-height:initial;flex:1" src="mildorientationdrivenUI.jpg">
-            <div class="desc_panel">
-              <div style="display:flex;height:100%;flex-direction:column">
-                <div style="flex:1"></div>
-                <div style="flex:1">
-                  <span class="title">Platform:</span><span class="response">Mobile</span><br>
-                  <span class="title">Display:</span><span class="response">9 x 16</span><br>
-                  <span class="title">Camera:</span><span class="response">Orientation</span><br>
-                  <span class="title">Bandwidth:</span><span class="response">Low</span><br>
-                  <span class="title">Polycount:</span><span class="response">Low</span><br>
-                  <span class="title">Load Time:</span><span class="response">Fast</span><br>
-                  <span class="title">Labels:</span><span class="response">2D</span><br>
-                  <span class="title">Music:</span><span class="response">None</span><br>
-                  <span class="title">Complexity:</span><span class="response">Simple</span><br>
-                </div>
-                <div style="flex:1"></div>
-              </div>
-            </div>
-          </div>
-          <div style="font-family:impact;font-size:1.2em;white-space:initial;">
-            Some device motion<br>
-            User Navigation<br>
-            Quickly view and pick items<br>
-            Simple story line<br>
-            <br>
-          </div>
-        </div>
-        <div class="demo_item" style="color: rgb(190, 0, 120);border-color: rgb(180, 0, 160);">
-          <a href="https://dedicateddemos.web.app/display/?name=Carousel%20Display" target="_blank">
-            <span class="item_title">Heavy Orientation UI</span>
-            &nbsp;
-            <i class="material-icons">exit_to_app</i></a>
-          <div style="display:flex;flex-direction:column">
-            <img alt="Heavy Orientation UI" style="width:18em;max-width:initial;max-height:initial;flex:1" src="heavyorientationui.jpg">
-            <div class="desc_panel" style="display:flex;">
-              <div>
-                <span class="title">Platform:</span><span class="response">Tablet</span><br>
-                <span class="title">Display:</span><span class="response">16 x 9</span><br>
-                <span class="title">Camera:</span><span class="response">Orientation</span><br>
-                <span class="title">Bandwidth:</span><span class="response">Medium</span><br>
-                <span class="title">Polycount:</span><span class="response">High</span><br>
-                <span class="title">Load Time:</span><span class="response">Slow</span><br>
-                <span class="title">Labels:</span><span class="response">3D</span><br>
-                <span class="title">Music:</span><span class="response">Yes</span><br>
-                <span class="title">Complexity:</span><span class="response">High</span><br>
-              </div>
-              <div style="font-family:impact;font-size:1.2em;white-space:initial;color: rgb(190, 0, 120);flex:1;text-align:center;">
-                Lots of device motion<br>
-                GPS or UI navigation<br>
-                Caters well to VR<br>
-                Versatile story line<br>
-              </div>
-            </div>
+    <div class="anim_wrapper_height_container">
+      <div class="anim_wrapper" style="position:relative;overflow:visible;">
+        <div class="anim_box_layer demo_item" style="animation-delay:-2s;display:flex;flex-direction:row;">
+          <img alt="Follow Camera UI" src="followcameraui.png" style="width:9em;">
+          <div class="tag_wrapper">
+            <a class="home_page_anchor" href="https://dedicateddemos.web.app/display/?name=Meat%20Display" target="_blank">Follow UI</a>
+            <span class="anim_response">Mobile</span>
+            <span class="anim_response">9 x 16</span>
+            <span class="anim_response">Medium Size</span>
+            <span class="anim_response">2D Labels</span>
+            <span class="anim_response">Touch Pick</span>
+            <span class="anim_response">Autoplay</span>
           </div>
         </div>
       </div>
-      <div class="demo_item" style="color: rgb(100, 100, 100);border-color: rgb(100, 100, 100);">
-        <a><span class="item_title" style="text-decoration:none;">Legend</span></a>
-        <div class="desc_panel">
-          <b>All visual catalogs are webGL based <br> and run in browsers or apps</b><br>
-          <span class="title">Platform:</span><span class="response">Mobile, Tablet, Desktop and/or PC</span><br>
-          <span class="title">Display:</span><span class="response">16 x 9 (landscape) or 9 x 16 (portrait)</span><br>
-          <span class="title">Camera:</span><span class="response">Follow (moves camera product <br>to product with time based picking options),<br>
-            Device Orientation (mobile hardware) <br> or Arc Rotate (perspective view)</span><br>
-          <span class="title">Bandwidth:</span><span class="response">Low (&lt;10mb), Medium (&lt;30mb)</span><br>
-          <span class="title">Polycount:</span><span class="response">Low will run on most phones</span><br>
-          <span class="title">Load Time:</span><span class="response">Fast (&lt;10s on mobile), <br>Medium or Slow</span><br>
-          <span class="title">Labels:</span><span class="response">3D is slow load time, <br>low bandwidth (rendered by UI)</span><br>
-          <span class="title">Music:</span><span class="response">Products are animated <br>based on music frequency bands</span><br>
-          <span class="title">Complexity:</span><span class="response">how long and involved <br>a visit is for a user</span><br>
+      <div class="anim_wrapper" style="position:relative;overflow:visible;">
+        <div class="anim_box_layer demo_item" style="animation-delay:-26s;display:flex;flex-direction:row;">
+          <img alt="Mild Orientation UI" style="width:9em;" src="mildorientationui.png">
+          <div class="tag_wrapper">
+            <a class="home_page_anchor" href="https://dedicateddemos.web.app/display/?name=Flower%20Stands" target="_blank">Orientation UI</a>
+            <span class="anim_response">Mobile</span>
+            <span class="anim_response">9 x 16</span>
+            <span class="anim_response">Small Size</span>
+            <span class="anim_response">2D Labels</span>
+            <span class="anim_response">Mild Motion</span>
+            <span class="anim_response">Auto Drive</span>
+          </div>
         </div>
       </div>
-      <br>
-      <br>
+      <div class="anim_wrapper" style="position:relative;overflow:visible;">
+        <div class="anim_box_layer demo_item" style="animation-delay:-18s;display:flex;flex-direction:row">
+          <img alt="Heavy Orientation UI" style="width:9em;" src="heavyorientationui.png">
+          <div class="tag_wrapper">
+            <a class="home_page_anchor" href="https://dedicateddemos.web.app/display/?name=Carousel%20Display" target="_blank">Orientation UI</a>
+            <span class="anim_response">Tablet</span>
+            <span class="anim_response">16 x 9</span>
+            <span class="anim_response">Medium Size</span>
+            <span class="anim_response">3D Labels</span>
+            <span class="anim_response">Heavy Motion</span>
+            <span class="anim_response">GPS Location</span>
+            <span class="anim_response">Music</span>
+            <span class="anim_response">Versatile Story</span>
+          </div>
+        </div>
+      </div>
+      <div class="anim_wrapper" style="position:relative;overflow:visible;">
+        <div class="anim_box_layer demo_item" style="animation-delay:-10s;display:flex;flex-direction:row">
+          <img alt="Console Driven UI" style="width:9em;" src="consoledrivenui.png">
+          <div class="tag_wrapper">
+            <a class="home_page_anchor" href="https://dedicateddemos.web.app/display/?name=Carousel%20Display&uiOverlay=console_follow" target="_blank">Console UI</a>
+            <span class="anim_response">Console</span>
+            <span class="anim_response">16 x 9</span>
+            <span class="anim_response">Follow Camera</span>
+            <span class="anim_response">Large Size</span>
+            <span class="anim_response">3D Labels</span>
+            <span class="anim_response">Music</span>
+            <span class="anim_response">Remote Control</span>
+            <span class="anim_response">Auto Drive</span>
+            <span class="anim_response">Full Story</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:1em;">
+      <a class="home_page_anchor" href="https://dedicateddemos.web.app/display/?name=Meat%20Display" target="_blank">Follow UI</a>
+      <a class="home_page_anchor" href="https://dedicateddemos.web.app/display/?name=Flower%20Stands" target="_blank">Orientation UI</a>
+      <a class="home_page_anchor" href="https://dedicateddemos.web.app/display/?name=Carousel%20Display" target="_blank">Orientation UI</a>
+      <a class="home_page_anchor" href="https://dedicateddemos.web.app/display/?name=Carousel%20Display&uiOverlay=console_follow" target="_blank">Console UI</a>
     </div>
     <div style="flex:1;padding:1em;">
-      <h1 style="margin-bottom:.25em;">Legacy resources</h1>
+      <h1 style="margin-bottom:.25em;">Additional resources</h1>
       Quick Run Thru (8/20 @ 5 min)
       <a target="_blank" href="https://hcwebflow.s3-us-west-2.amazonaws.com/videos/virtualcatalogintro.mp4">video</a>
       <br>
@@ -212,68 +186,66 @@
     </div>
   </div>
   <script src="/homepagestuff.js"></script>
+  <script>
+    document.getElementById('animation_skip_backward').addEventListener('click', e => {
+      let anims = document.querySelectorAll('.anim_box_layer');
+      anims.forEach(a => a.getAnimations()[0].currentTime += 24000);
+      document.getElementById('timer_bar').getAnimations()[0].currentTime += 24000;
+    });
+    document.getElementById('animation_skip_forward').addEventListener('click', e => {
+      let anims = document.querySelectorAll('.anim_box_layer');
+      anims.forEach(a => a.getAnimations()[0].currentTime += 8000);
+      document.getElementById('timer_bar').getAnimations()[0].currentTime += 8000;
+    });
+    document.querySelectorAll('.anim_stop_btn').forEach((ctl, index) => {
+      ctl.addEventListener('click', e => {
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.getAnimations()[0].currentTime = 8000 * index + 2000);
+        document.getElementById('timer_bar').getAnimations()[0].currentTime = 8000 * index + 2500;
+      });
+    });
+    document.getElementById('animation_pause_btn').addEventListener('click', e => {
+      let i_ele = document.querySelector('#animation_pause_btn i');
+      if (window.animation_paused) {
+        i_ele.innerHTML = 'pause';
+        window.animation_paused = false;
 
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.style.animationPlayState = 'running');
+        document.getElementById('timer_bar').style.animationPlayState = 'running';
+      } else {
+        i_ele.innerHTML = 'play_arrow';
+        window.animation_paused = true;
+
+        let anims = document.querySelectorAll('.anim_box_layer');
+        anims.forEach(a => a.style.animationPlayState = 'paused');
+        document.getElementById('timer_bar').style.animationPlayState = 'paused';
+      }
+    });
+  </script>
   <style>
-    .demo_item {
-      margin: 1em;
-      border-radius: 2em;
-      padding-top: 1em;
+    .anim_wrapper_height_container {
+      height: 300px !important;
     }
 
-    .demo_item img {}
-
-    .demo_item a {
-      position: relative;
-      color: inherit;
-      text-decoration: none;
-      padding-top: 2.25em;
-      padding-left: .35em;
-      border-radius: .5em;
-    }
-
-    .demo_item a i {
-      font-size: 3em;
-    }
-
-    .demo_item a:hover {
-      background: rgba(255, 140, 0, .25);
-    }
-
-    .item_title {
-      font-size: 1.5em;
-      position: relative;
-      top: -.75em;
-      font-weight: bold;
-      text-decoration: underline;
-    }
-
-    .title {
-      font-size: .75em;
-      font-weight: bold;
-      padding-right: 2em;
-      display: inline-block;
-      width: 4em;
-      text-align: right;
-    }
-
-    .response {
-      text-align: left;
-      display: inline-block;
-      width: 6em;
-    }
-
-    .summary {
-      padding: .5em;
-    }
-
-    .desc_panel {
-      flex: 1;
-      color: black;
-      white-space: nowrap;
+    .anim_response {
+      float: left;
       padding: .25em;
     }
+
+    .tag_wrapper .anim_response:nth-child(even) {
+      clear: left;
+    }
+
+    .tag_wrapper>a,
+    .horizontal_wrapper>a {
+      float: left;
+    }
+
+    .tag_wrapper {
+      padding-top: 1em;
+    }
   </style>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
 </body>
 
 </html>

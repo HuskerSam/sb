@@ -609,9 +609,9 @@ h3 {
 
 #timer_bar {
   position: absolute;
-  height: 40%;
-  top: 35%;
-  background-color: rgba(255, 140, 0, .2);
+  height: 30%;
+  top: 41%;
+  background-color: rgba(0, 100, 255, .2);
   animation-duration: 32s;
   animation-timing-function: linear;
   animation-name: timerBarFrames;
