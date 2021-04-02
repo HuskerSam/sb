@@ -261,6 +261,12 @@ table.gsc-search-box td {
 
 .item_help_view .help_body {
   padding: .5em;
+  padding-top: 0;
+}
+
+
+.item_help_view .help_body h1, .item_help_view .help_body h2, .item_help_view .help_body h3 {
+  margin-top: .1em;
 }
 
 .list_help_view .help_body {
