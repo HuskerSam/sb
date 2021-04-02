@@ -215,7 +215,8 @@ table.gsc-search-box td {
   padding: .25em .75em 1.25em .75em;
   display: block;
   text-align: center;
-  font-family: Tahoma;
+  margin-right: -3px;
+  margin-left: -2px;
 }
 
 .list_help_view .help_body .sub_bar a {
