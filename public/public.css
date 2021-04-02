@@ -536,18 +536,18 @@ div.gcsc-more-maybe-branding-root {
 }
 
 .home_page_wrapper {
-  background: radial-gradient(farthest-corner at 0% 0%, rgba(255, 255, 0, .8) 0%,
-    rgba(255, 255, 0, .4) 90px,
-    rgba(255, 255, 0, .1) 50%,
-    transparent 80%,
+  background: radial-gradient(circle at 0% 0%, rgba(255, 255, 0, 1) 0%,
+    rgba(255, 255, 0, .8) 30px,
+    rgba(255, 255, 0, .3) 100px,
+    transparent 30%,
     transparent 100%);
 }
 
 body {
-  background: radial-gradient(farthest-corner at 0% 100%, rgba(0, 255, 255, .8) 0%,
-    rgba(0, 255, 255, .6) 90px,
-    rgba(0, 255, 255, .1) 200px,
-    transparent 30%,
+  background: radial-gradient(circle at 0% 100%, rgba(0, 255, 255, .8) 0%,
+    rgba(0, 255, 255, .6) 70px,
+    rgba(0, 255, 255, .1) 150px,
+    transparent 50%,
     transparent 100%);
 }
 
