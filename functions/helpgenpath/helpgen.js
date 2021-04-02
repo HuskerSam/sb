@@ -74,14 +74,12 @@ class HelpGen {
       </div>
       <div class="help_body">${helpBody}</div>
       <div class="footer_bar">
-        <a href="/privacy.html">Privacy</a>
-        &nbsp;
-        <a href="/about/">About</a>
-        &nbsp;
-        <a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+        <a href="/privacy.html">Privacy</a><a
+        href="/about/">About</a><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         <div class="copyright">
           Lincoln, Nebraska, USA 68508
-          <br>© 1998 - 2021 Handtop. All Rights Reserved.
+          <br>© 1998 - 2021 Handtop.
+          <br>All Rights Reserved.
         </div>
       </div>
     </div>
