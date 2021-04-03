@@ -76,8 +76,8 @@ class HelpGen {
       <div class="footer_bar">
       <a href="/addon/"><img src="https://handtop.com/images/logo64.png"
          style="width:1.5em;top:.35em;position:relative;"> Tools</a><a
-       href="/doc/"><img src="https://handtop.com/images/logo64.png"
-          style="width:1.5em;top:.35em;position:relative;"> Reference</a><a
+       href="https://gsuite.google.com/marketplace/app/visual_tools/453466452088" target="_blank"><img src="https://handtop.com/images/logo64.png"
+          style="width:1.5em;top:.35em;position:relative;"> Install</a><a
         href="/retail/"><img src="https://handtop.com/images/logo64.png"
            style="width:1.5em;top:.35em;position:relative;"> Catalogs</a><a href="/privacy.html">Privacy</a><a
         href="/about/">About</a><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
