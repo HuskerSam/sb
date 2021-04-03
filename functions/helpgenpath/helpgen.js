@@ -74,7 +74,12 @@ class HelpGen {
       </div>
       <div class="help_body">${helpBody}</div>
       <div class="footer_bar">
-        <a href="/privacy.html">Privacy</a><a
+      <a href="/addon/"><img src="https://handtop.com/images/logo64.png"
+         style="width:1.5em;top:.35em;position:relative;"> Tools</a><a
+       href="/doc/"><img src="https://handtop.com/images/logo64.png"
+          style="width:1.5em;top:.35em;position:relative;"> Reference</a><a
+        href="/retail/"><img src="https://handtop.com/images/logo64.png"
+           style="width:1.5em;top:.35em;position:relative;"> Catalogs</a><a href="/privacy.html">Privacy</a><a
         href="/about/">About</a><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         <div class="copyright">
           Lincoln, Nebraska, USA 68508

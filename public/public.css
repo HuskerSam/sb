@@ -224,7 +224,7 @@ table.gsc-search-box td {
 }
 
 .list_help_view .help_body .sub_bar a i {
-  color: rgb(255, 140, 0);
+  color: rgb(0, 100, 255);
 }
 
 .list_help_view .help_body .sub_bar a:hover i,
@@ -238,7 +238,7 @@ table.gsc-search-box td {
 }
 
 .help_display_item .sub_bar {
-  margin-top: -.5em;
+  margin-top: -.65em;
   text-align: center;
 }
 
