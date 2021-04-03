@@ -56,14 +56,14 @@ class HelpGen {
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
     </head>
 
-    <body class="${reviewClassName}">
+    <body class="${reviewClassName} vtdocpage">
     <link rel="stylesheet" href="https://handtop.com/public.css">
     <div class="home_page_wrapper${!includeList ? ' contents_wrapper' : ''}">
       <div class="option_bar">
         <a href="/" class="logo">
-          <img alt="small logo image" class="small_logo" src="https://handtop.com/images/handtop.png">
+          <img alt="small logo image" class="small_logo" src="https://handtop.com/images/logo64.png">
         </a>
-        ${ includeList ? '<a href="/doc/" style="padding-top:.15em;"><img src="https://handtop.com/images/logo64.png" style="width:1.5em;top:.35em;position:relative;"> Contents</a>' : '' }
+        ${ includeList ? '<a href="/doc/">Contents</a>' : '' }
         <div class="search_box_wrapper">
           <div class="gcse-search"></div>
         </div>
@@ -103,7 +103,6 @@ class HelpGen {
       window.customCSEID = '0b2a9868105e1e42e';
       window.customPH = ' Search reference...';
     </script>
-
     <script src="/homepagestuff.js"></script>
     </body>
 
