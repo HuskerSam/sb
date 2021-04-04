@@ -173,7 +173,8 @@ table.gsc-search-box td {
   outline: solid 1px black;
 }
 
-.gsc-search-button.gsc-search-button-v2:focus svg, .gsc-search-button.gsc-search-button-v2:hover svg {
+.gsc-search-button.gsc-search-button-v2:focus svg,
+ .gsc-search-button.gsc-search-button-v2:hover svg {
   fill: black;
 }
 
@@ -185,8 +186,7 @@ table.gsc-search-box td {
 }
 
 .search_box_wrapper input::placeholder {
-  color: rgba(0, 100, 255, 1);
-  font-family: Georgia;
+  color: rgb(0, 140, 255);
 }
 
 .help_display_item {
@@ -204,7 +204,7 @@ table.gsc-search-box td {
 
 .list_help_view .help_body .sub_bar a:hover,
 .list_help_view .help_body .sub_bar a:focus {
-  background: rgb(0, 100, 255);
+  background: yellow;
   border-color: black;
 }
 
@@ -311,6 +311,10 @@ table.gsc-search-box td {
   border-color: black;
   background-color: yellow;
   outline-color: black;
+}
+
+#help_template_select:focus option {
+  background: white;
 }
 
 .list_html_div a i {
@@ -474,9 +478,11 @@ a.gsst_a {
 #gsc-i-id1 {
   padding: 10px 0px 9px 4px !important;
   margin-left: 0px !important;
-  width: calc(100% - 6px) !important;
+  width: calc(100% - 8px) !important;
   background: none;
   color: rgb(0, 100, 255);
+  left: -2px;
+  position: relative !important;
 }
 
 #gsc-i-id1:hover, #gsc-i-id1:focus {
@@ -544,18 +550,18 @@ div.gcsc-more-maybe-branding-root {
 
 .home_page_wrapper {
   background: radial-gradient(circle at 0% 0%, rgba(255, 255, 0, 1) 0%,
-    rgba(255, 255, 0, .8) 30px,
-    rgba(255, 255, 0, .3) 100px,
-    transparent 30%,
-    transparent 100%);
+      rgba(255, 255, 0, .8) 30px,
+      rgba(255, 255, 0, .3) 100px,
+      transparent 30%,
+      transparent 100%);
 }
 
 body {
   background: radial-gradient(circle at 0% 100%, rgba(0, 255, 255, .8) 0%,
-    rgba(0, 255, 255, .6) 70px,
-    rgba(0, 255, 255, .1) 150px,
-    transparent 50%,
-    transparent 100%);
+      rgba(0, 255, 255, .6) 70px,
+      rgba(0, 255, 255, .1) 150px,
+      transparent 50%,
+      transparent 100%);
 }
 
 .alternate_email {
@@ -593,7 +599,6 @@ h3 {
   text-align: left;
   display: inline-block;
   color: rgb(0, 100, 255);
-  font-family: Georgia;
 }
 
 #timer_bar_wrapper {
@@ -751,7 +756,7 @@ h3 {
 }
 
 .contents_wrapper .search_box_wrapper {
-  border-left: solid 1px rgb(255, 0, 0);
+  border-left: solid 1px rgb(0, 127, 0);
 }
 
 body.item_help_view, body.list_help_view {
@@ -768,126 +773,71 @@ body.item_help_view, body.list_help_view {
   color: inherit;
 }
 
-.list_help_view .option_bar a, .list_help_view .footer_bar a, .list_help_view .home_page_anchor {
-  border: solid 1px rgb(255, 0, 0);
+
+.vtdocpage .gsc-search-button.gsc-search-button-v2:focus svg,
+.vtdocpage .gsc-search-button.gsc-search-button-v2:hover svg {
+  fill: white;
+}
+
+.vtdocpage .search_box_wrapper input::placeholder {
+  color: rgb(0, 127, 0);
+}
+
+.vtdocpage .search_box_wrapper {
+  border-color: rgb(0, 127, 0);
+}
+
+.vtdocpage #gsc-i-id1 {
   color: black;
 }
 
-.list_help_view .option_bar a:hover, .list_help_view .footer_bar a:hover, .list_help_view .option_bar a.logo:hover,
-.list_help_view .option_bar a:focus, .list_help_view .footer_bar a:focus, .list_help_view .option_bar a.logo:focus .list_help_view .home_page_anchor:focus, .list_help_view .home_page_anchor:hover {
-  border-color: black;
-  background: rgb(0, 100, 255);
-  color: white;
-  z-index: 100;
-  position: relative;
-}
-
-.list_help_view .option_bar a.logo {
-  border: solid 1px transparent;
-  padding: 0;
-  border-right: none;
-}
-
-.list_help_view .option_bar a.logo:hover {
-  border-right: solid 1px rgb(255, 140, 0);
-  margin-right: -1px;
-  border-right: none;
-}
-
-.list_help_view .gsc-search-button.gsc-search-button-v2 {
-  border-left: solid 1px rgb(255, 0, 0);
-}
-
-.list_help_view .gsc-search-button.gsc-search-button-v2 svg {
-  fill: rgb(0, 0, 0);
-  transform: scale(1.5);
-}
-
-.list_help_view .gsc-search-button.gsc-search-button-v2:focus, .list_help_view .gsc-search-button.gsc-search-button-v2:hover {
-  background: rgb(0, 100, 255);
-}
-
-.list_help_view .gsc-search-button.gsc-search-button-v2:focus {
-  outline: solid 1px black;
-}
-
-.list_help_view .gsc-search-button.gsc-search-button-v2:focus svg, .list_help_view .gsc-search-button.gsc-search-button-v2:hover svg {
-  fill: black;
-}
-
-.list_help_view .search_box_wrapper .gsc-control-cse {
-  padding: 0;
-  border-radius: none;
-  background: none;
-  border-color: transparent;
-}
-
-.list_help_view .search_box_wrapper input::placeholder {
-  color: red;
-  font-family: Georgia;
-}
-
-.list_help_view .search_box_wrapper {
-  border-color: red;
-}
-
-.list_help_view #gsc-i-id1 {
-  color: black;
-}
-
-.item_help_view .option_bar a, .item_help_view .footer_bar a, .item_help_view .home_page_anchor {
+.vtdocpage .option_bar a, .vtdocpage .footer_bar a, .vtdocpage .home_page_anchor {
   border: solid 1px rgb(0, 127, 0);
   color: black;
 }
 
-.item_help_view .option_bar a.logo {
+.vtdocpage .option_bar a.logo {
   border: solid 1px transparent;
   padding: 0;
   border-right: none;
 }
 
-.item_help_view .option_bar a.logo:hover {
+.vtdocpage .option_bar a.logo:hover {
   border-right: black;
   margin-right: -1px;
   border: solid 1px black;
 }
 
-.item_help_view .gsc-search-button.gsc-search-button-v2 {
+.vtdocpage .gsc-search-button.gsc-search-button-v2 {
   border-left: solid 1px rgb(0, 127, 0);
 }
 
-.item_help_view .gsc-search-button.gsc-search-button-v2 svg {
+.vtdocpage .gsc-search-button.gsc-search-button-v2 svg {
   fill: rgb(0, 0, 0);
   transform: scale(1.5);
 }
 
-.item_help_view .gsc-search-button.gsc-search-button-v2:focus, .item_help_view .gsc-search-button.gsc-search-button-v2:hover {
+.vtdocpage .gsc-search-button.gsc-search-button-v2:focus,
+.vtdocpage .gsc-search-button.gsc-search-button-v2:hover {
   background: rgb(0, 100, 255);
 }
 
-.item_help_view .gsc-search-button.gsc-search-button-v2:focus {
+.vtdocpage .gsc-search-button.gsc-search-button-v2:focus {
   outline: solid 1px black;
 }
 
-.item_help_view .gsc-search-button.gsc-search-button-v2:focus svg, .item_help_view .gsc-search-button.gsc-search-button-v2:hover svg {
-  fill: black;
+.vtdocpage .gsc-search-button.gsc-search-button-v2:focus svg,
+.vtdocpage .gsc-search-button.gsc-search-button-v2:hover svg {
+  fill: white;
 }
 
-.item_help_view .search_box_wrapper input::placeholder {
-  color: rgb(0, 127, 0);
-  font-family: Georgia;
-}
-
-.item_help_view .search_box_wrapper {
-  border-color: rgb(0, 127, 0);
-}
-
-.item_help_view #gsc-i-id1 {
+.vtdocpage #gsc-i-id1 {
   color: black;
 }
 
-.item_help_view .option_bar a:hover, .item_help_view .footer_bar a:hover, .item_help_view .option_bar a.logo:hover,
-.item_help_view .option_bar a:focus, .item_help_view .footer_bar a:focus, .item_help_view .option_bar a.logo:focus .item_help_view .home_page_anchor:focus, .item_help_view .home_page_anchor:hover {
+.vtdocpage .option_bar a:hover, .vtdocpage .footer_bar a:hover, .vtdocpage .option_bar a.logo:hover,
+.vtdocpage .option_bar a:focus, .vtdocpage .footer_bar a:focus, .vtdocpage .option_bar a.logo:focus,
+.vtdocpage .home_page_anchor:focus, .vtdocpage .home_page_anchor:hover {
   border-color: black;
   background: rgb(0, 100, 255);
   color: white;

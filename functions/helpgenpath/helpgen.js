@@ -44,7 +44,7 @@ class HelpGen {
       <meta charset="utf-8">
       <title>${title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="shortcut icon" href="https://handtop.com/images/${includeList ? 'logo' : 'logo64' }.png">
+      <link rel="shortcut icon" href="https://handtop.com/images/${includeList ? 'funnel64' : 'logo64' }.png">
       <link rel="canonical" href="https://handtop.com/doc/${urlFrag}" />
       <meta property="og:title" content="${title}" />
       <meta property="og:url" content="https://handtop.com/doc/${urlFrag}" />
@@ -61,7 +61,7 @@ class HelpGen {
     <div class="home_page_wrapper${!includeList ? ' contents_wrapper' : ''}">
       <div class="option_bar">
         <a href="/" class="logo">
-          <img alt="small logo image" class="small_logo" src="https://handtop.com/images/${includeList ? 'logo' : 'logo64' }.png">
+          <img alt="small logo image" class="small_logo" src="https://handtop.com/images/${includeList ? 'funnel64' : 'logo64' }.png">
         </a>
         ${ includeList ? '<a href="/doc/">Contents</a>' : '' }
         <div class="search_box_wrapper">

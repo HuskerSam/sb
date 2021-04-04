@@ -31,7 +31,7 @@ window.__gcse.searchCallbacks = {
 };
 
 window.addEventListener('load', e => {
-  let pH = ' Search...';
+  let pH = ' Search Handtop...';
   if (window.customPH)
     pH = window.customPH;
   document.getElementById('gsc-i-id1').placeholder = pH;
