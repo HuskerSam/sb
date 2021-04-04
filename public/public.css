@@ -174,7 +174,7 @@ table.gsc-search-box td {
 }
 
 .gsc-search-button.gsc-search-button-v2:focus svg,
- .gsc-search-button.gsc-search-button-v2:hover svg {
+.gsc-search-button.gsc-search-button-v2:hover svg {
   fill: black;
 }
 
@@ -279,8 +279,8 @@ table.gsc-search-box td {
 }
 
 .list_help_view .help_body .help_display_item>a {
-  color: black;
-  border-color: rgb(0, 100, 255);
+  color: rgb(0, 100, 255);
+  border-color: rgb(0, 127, 0);
 }
 
 .list_help_view .help_body a:hover, .list_help_view .help_body a:focus {
@@ -334,7 +334,7 @@ table.gsc-search-box td {
 
 .list_help_view h2 {
   margin: 0;
-  color: rgb(255, 235, 190);
+  color: rgb(200, 255, 200);
   font-size: 7em;
   display: inline-block;
   position: absolute;
@@ -550,18 +550,18 @@ div.gcsc-more-maybe-branding-root {
 
 .home_page_wrapper {
   background: radial-gradient(circle at 0% 0%, rgba(255, 255, 0, 1) 0%,
-      rgba(255, 255, 0, .8) 30px,
-      rgba(255, 255, 0, .3) 100px,
-      transparent 30%,
-      transparent 100%);
+    rgba(255, 255, 0, .8) 30px,
+    rgba(255, 255, 0, .3) 100px,
+    transparent 30%,
+    transparent 100%);
 }
 
 body {
   background: radial-gradient(circle at 0% 100%, rgba(0, 255, 255, .8) 0%,
-      rgba(0, 255, 255, .6) 70px,
-      rgba(0, 255, 255, .1) 150px,
-      transparent 50%,
-      transparent 100%);
+    rgba(0, 255, 255, .6) 70px,
+    rgba(0, 255, 255, .1) 150px,
+    transparent 50%,
+    transparent 100%);
 }
 
 .alternate_email {
@@ -773,10 +773,9 @@ body.item_help_view, body.list_help_view {
   color: inherit;
 }
 
-
 .vtdocpage .gsc-search-button.gsc-search-button-v2:focus svg,
 .vtdocpage .gsc-search-button.gsc-search-button-v2:hover svg {
-  fill: white;
+  fill: black;
 }
 
 .vtdocpage .search_box_wrapper input::placeholder {
@@ -819,16 +818,11 @@ body.item_help_view, body.list_help_view {
 
 .vtdocpage .gsc-search-button.gsc-search-button-v2:focus,
 .vtdocpage .gsc-search-button.gsc-search-button-v2:hover {
-  background: rgb(0, 100, 255);
+  background: yellow;
 }
 
 .vtdocpage .gsc-search-button.gsc-search-button-v2:focus {
   outline: solid 1px black;
-}
-
-.vtdocpage .gsc-search-button.gsc-search-button-v2:focus svg,
-.vtdocpage .gsc-search-button.gsc-search-button-v2:hover svg {
-  fill: white;
 }
 
 .vtdocpage #gsc-i-id1 {
@@ -839,8 +833,15 @@ body.item_help_view, body.list_help_view {
 .vtdocpage .option_bar a:focus, .vtdocpage .footer_bar a:focus, .vtdocpage .option_bar a.logo:focus,
 .vtdocpage .home_page_anchor:focus, .vtdocpage .home_page_anchor:hover {
   border-color: black;
-  background: rgb(0, 100, 255);
-  color: white;
+  background: yellow;
   z-index: 100;
   position: relative;
+}
+
+.vtdocpage #gsc-i-id1:hover {
+  background: yellow!important;
+}
+
+.vtdocpage #gsc-i-id1:focus {
+  background: white!important;
 }

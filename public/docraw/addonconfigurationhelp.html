@@ -1,32 +1,32 @@
-<img src="https://handtop.com/docimages/redsetserver.png" style="height:1.5em;position:relative;top:.35em;"> sets the
+<img alt="Addon Set Server(red) Button" src="https://handtop.com/docimages/redsetserver.png" style="height:1.5em;position:relative;top:.35em;"> sets the
 <span style="color:red">Server Target</span>
 <br>
-<img src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;"> refreshes data from the spreadsheet
+<img alt="Addon Refresh Button" src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;"> refreshes data from the spreadsheet
 <br>
-<img style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
+<img alt="Addon Refresh(busy) Button" style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
 green means please wait patiently
 <h2>Sheet: Configuration</h2>
 <b>Purpose:</b> Configuration View data storage<br>
 <b>Origin:</b> usually generated - manual edit is ok<br>
-<img src="https://handtop.com/docimages/addoncontexthelp.png">
+<img alt="Addon Contextual Help Overview" src="https://handtop.com/docimages/addoncontexthelp.png">
 <br>
 [Target Server]: Firebase Project ID with API deployed<br>
 [Token Token]: Token for API</br>
 [Target Project]: Default Project [name] in <b>'Projects'</b> list<br>
 [Parent Spreadsheet]: Document ID to load deployment options from (more below).
 <br>
-<img src="https://handtop.com/docimages/configurationsheethelp.png">
+<img alt="Configuration Sheet Example" src="https://handtop.com/docimages/configurationsheethelp.png">
 <h3 style="color:red;display:inline-block;margin:0;">Note on manual editing with sidepanel open</h3> -
-use <img src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;">
+use <img alt="Addon Refresh Button" src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;">
 to refresh the data after editing.<br>
 Please wait for
-<img style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
+<img alt="Addon Refresh(busy) Button" style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
 to turn back to gray.
 
 <h2>Sheet: Projects</h2>
 <b>Purpose:</b> Projects View data storage<br>
 <b>Origin:</b> usually generated - manual edit is ok<br>
-<img src="https://handtop.com/docimages/addonheaderoverview.png">
+<img alt="Addon Header Overview" src="https://handtop.com/docimages/addonheaderoverview.png">
 <br>
 
 [Project Name]: Title of project (unique to server)<br>
@@ -34,12 +34,12 @@ to turn back to gray.
 [Circuit Ranges]: Comma delimited list of ranges with CSV - 2nd processed<br>
 [Catalog Ranges]: Comma delimited list of ranges with CSV - last processed<br>
 [Flags]: "Ignore" skips this line on [Deploy All] - "Remove" removes the project from the target server<br>
-<img src="https://handtop.com/docimages/projectssheethelp.png">
+<img alt="Projects Sheet Example" src="https://handtop.com/docimages/projectssheethelp.png">
 <h3 style="color:red;display:inline-block;margin:0;">Note on manual editing with sidepanel open</h3> -
-use <img src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;">
+use <img alt="Addon Refresh Button" src="https://handtop.com/docimages/notbusybutton.png" style="height:1.5em;position:relative;top:.35em;">
 to refresh the data after editing.<br>
 Please wait for
-<img style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
+<img alt="Addon Refresh(busy) Button" style="height:1.5em;position:relative;top:.35em;" src="https://handtop.com/docimages/busybutton.png">
 to turn back to gray.
 <br>
 <b>=getDataRangesForSheet(sheetName)</b> - detects the data tables and returns the ranges for a sheet.
@@ -51,7 +51,7 @@ to turn back to gray.
 <b>Location:</b> from parent spreadsheet in <b>Configuration</b> - otherwise local<br>
 [deployrange]: Data Range for list<br>
 <b>Range:</b> Servers<br>
-<img src="https://handtop.com/docimages/deployoptionssheet.png">
+<img alt="Deploy Options Sheet Example" src="https://handtop.com/docimages/deployoptionssheet.png">
 <b>Required range (local or parent):</b> 'Deploy Options'!A1:A2<br>
  &nbsp; this specifies where to find the Data Table for servers<br>
 [server]: Firebase instance/project name<br>
