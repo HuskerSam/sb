@@ -606,6 +606,7 @@ h3 {
   display: inline-block;
   top: -8px;
   font-size: 28px;
+  line-height: 1em;
 }
 
 #timer_bar_wrapper button {
@@ -627,9 +628,9 @@ h3 {
 
 #timer_bar {
   position: absolute;
-  height: 30%;
-  top: 41%;
-  background-color: rgba(0, 100, 255, .2);
+  height: 50%;
+  top: 29%;
+  background-color: rgba(255, 140, 0, .3);
   animation-duration: 32s;
   animation-timing-function: linear;
   animation-name: timerBarFrames;
@@ -752,7 +753,7 @@ h3 {
 
 #animation_pause_btn i {
   transform: scale(2.5);
-  color: rgba(255, 140, 0, 1);
+  color: rgb(0, 100, 255);
 }
 
 .contents_wrapper .search_box_wrapper {
