@@ -227,15 +227,6 @@
         document.getElementById('timer_bar').style.animationPlayState = 'paused';
       }
     });
-
-    document.addEventListener('wheel', e => {
-      if (e.deltaY < 0) {
-        document.getElementById('animation_skip_forward').click();
-      } else {
-        document.getElementById('animation_skip_backward').click();
-      }
-    });
-
   </script>
   <style>
     .anim_wrapper_height_container {
