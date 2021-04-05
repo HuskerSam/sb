@@ -1,30 +1,32 @@
 <h2>Deployed Project Persistence</h2>
-handtopbuilder/builder will be cleared often so it doesn't build up with junk<br>
-Please use one of the other servers in the list if you want some longer persistence.
-<h2>Data Ownership</h2>
-Data created is "mostly" our property, your pictures, meshes and other data you upload is yours
-and your responsibility, we have no intention of claiming any rights to any of your media
-or profiting from it.
-<h2>% based values in cells</h2>
+handtopbuilder/builder will be cleared often - use one of the other servers listed in the deploy options template if you want some longer persistence.
+<br>
+<a href="https://handtop.com/doc/addonconfiguration" target="_blank">More on Addon Server Targets</a>
+
+<h2>Data Ownership / Terms</h2>
+We have no intention of claiming any rights to any of your media or profiting from it.  On the other hand
+we own everything that we originate especially code and techniques.  <b>ABSOLUTELY don't go to scale</b>, over $100 and GCP
+demands payment at end of the week - I'm poor and big surprise bills suck bad.  If you want to publish something, just ask
+and it's easy to get something served up in an instant - on your billing account. <br>
+<a href="https://handtop.com/about/" target="_blank">More on Terms</a>
+
+<h2>Spreadsheet Considerations</h2>
+<h3>% based values in cells</h3>
 % based values are useful when working with frame times - be careful to either add a "'"
 to the front i.e. 98% = '98%, or 98% = ="98%" in the cell. Otherwise sheets calcs 98% = .98 - which equates to .98 ms.
 <b>under consideration</b> is converting a raw value of  0 - 1 into a % (value / 100).  1 shouldn't really be used as
 3-5 is better - @30 frames a second, it's 3ms + per frame.  So possibly .1 = 10% (instead of .1ms), 1 = 100% (instead of 1ms) and 0 is 0.
-<h2>Sheets Timeouts</h2>
-functions must finish in 60 seconds or they fail - this at busy times of
+<h3>Sheets Timeouts</h3>
+functions must finish in 30 seconds or they fail - this at busy times of
 day (afternoon/evening USA) can cause intermitent fails - so check formula results and try again at times to make sure no errors
-<h2>Addon Refresh Times</h2>
+<h3>Addon Refresh Times</h3>
 Please be patient with the add for best results, wait until the green uploading/deploying/refreshing data
-is done to navigate and change values - we know it's slow it likely always will be<br>
-<h2>Special Characters in names</h2>
-Try not to use commas (,) or other special characters in names (/, http, etc) as it may cause errors
-<h2>Content Alert</h2>
-Les Nessman and the WKRP news room will be recreated.  Including Les's walls.  It's high priority.
-<h1>Bugs</h1>
-Camera doesn't always load right on cameras demo for /viewer
-<h1>Release Notes / Future Map</h1>
-<h2>Features For Release</h2>
-<h3>HIGH: add alt tags to help images so they so up in search</h3>
+is done to navigate and change values - we know it's slow it likely always will be
+<h3>Special Characters in names</h3>
+Try not to use commas (,) or other special characters in names (/, http, etc) as it may cause errors due to
+CSV format (unlikely if you stick to the templates) but also macros, sometimes textures are generated from
+color: and http: prefixes to simplify material description
+<h2>Features in Progress For Release</h2>
 <h3>preset basket position and sizes</h3>
 so selected items appear "in cart" in a pre defined (and better) way - similar to product positions - this would be basket positions
 <h3>get instancing to work</h3>
@@ -45,16 +47,12 @@ iterate away from changing the animation and use user profile and ghost blocks f
 investigate saved camera with default camera in /view, and also default arcrotate camera in /display for the move buttons
 <h3>add fragments, assets and products to template preview</h3>
 just info in the detail panel in addon
-<h3>Google Group for support</h3>
- -- is this private and searchable and can suppress users names?  No likes getting
- hit in search results for asking and / or answering questions.  It would be nice
- to have an anonymized way to do this - so we get maximum user shared knowledge,
- with some user recognition, easy to use/access (not stupid username/pwd stuff),
- but doesn't record your name/email for others to see/hit in the general engine.
-<h3>Fake/permanent support user to answer questions, so no one has to record
-  themselves into web history answering questions</h3>
+<h3>Group for support</h3>
+<h4>Consistent but anonymous names</h4>
+<h4>In general able to share question and answer - but all personal and company
+  reference is removed.  Privacy first.  No one likes being the search engine at all,
+  especially not 10 years from now.  Lets keep you out throughout.
 <h3>GIFs supported in G Suite display - upgrade the image with some frames</h3>
-
 
 <br><br><br>
 <h2>next release / need more thought</h2>
@@ -95,9 +93,3 @@ for various atoms)
 
 <h3>Parallax scrolling interface - where the user scrolls a "follow ui" type of interface,
   but the follow is control via scroll ... similar to a parallax UI for a carousel interface</h3>
-<h2>Licensing Considerations</h2>
-<h3>objects/meshes</h3>
-clients are free to use the provided meshes and object and textures, etc for development purposes - our licences cover this.
-<br>
-clients need to license the meshes they use that are provided by default - the costs are not high.
-While our license may cover this, we feel the support to the content creation community is critical and prefer our clients to license meshes direclty rather then overuse and abuse commercial licenses at scale.
