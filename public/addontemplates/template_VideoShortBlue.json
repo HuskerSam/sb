@@ -110,7 +110,7 @@
   "horizontalAlignment": "general"
 }, {
   "range": "A2",
-  "value": "Logo Scene"
+  "value": "##sheetrawname"
 }, {
   "range": "B2",
   "value": "sceneblock"

@@ -35,6 +35,7 @@
 {"value":"tlightsfun","title":"Lights Fun","category":"Templates","reviewed":"2021-04-04","video":"","deployed":""},
 {"value":"tcameraanimations","title":"Camera Animations","category":"Templates","reviewed":"2021-04-04","video":"","deployed":""},
 {"value":"tredvideo","title":"Red Video","category":"Templates","reviewed":"2021-04-05","video":"","deployed":"https://dedicateddemos.web.app/view/?name=Red%20Video%20Tutorial"},
+{"value":"tbluevideo","title":"Blue Video","category":"Templates","reviewed":"2021-04-05","video":"","deployed":"https://dedicateddemos.web.app/view/?name=Blue%20Video%20Tutorial"},
 {"value":"shortcolorvideos","title":"Color Videos","category":"Templates","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/shortvideogreen.webm","deployed":""},
 {"value":"spinnerdiagram","title":"Spinner","category":"Templates","reviewed":"2021-03-28","video":"","deployed":""},
 {"value":"webappdiagram","title":"App Diagram","category":"Templates","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/webglapp.webm","deployed":""},
