@@ -14,7 +14,7 @@
 {"name":"Simple Shapes and Frames","mainFile":"ShapesAndFrames","hint":"Shapes","categories":"Layout","description":"A variety of shapes with a few frames","fragments":"","products":"","helpkey":"tshapesandframes"},
 {"name":"Meshes Basic","mainFile":"MeshesBasic","hint":"Meshes","categories":"Layout","description":"Some product meshes scattered about","fragments":"","products":"","helpkey":"tmeshpositions"},
 {"name":"Lights Fun","mainFile":"LightsFun","hint":"Lights","categories":"Layout","description":"Some spot lights and a directional light","fragments":"","products":"","helpkey":"tlightsfun"},
-{"name":"Camera Animations","mainFile":"CameraAnimations","hint":"Cameras","categories":"Layout","description":"Shapes demo with some extra cameras and frames","fragments":"","products":"","helpkey":"camera"},
+{"name":"Camera Animations","mainFile":"CameraAnimations","hint":"Cameras","categories":"Layout","description":"Shapes demo with some extra cameras and frames","fragments":"","products":"","helpkey":"tcameraanimations"},
 {"name":"Short Red Video","mainFile":"VideoShortRed","hint":"Red Video","categories":"Layout","description":"Short red video - no assets required","fragments":"","products":"","helpkey":"demoredvideo"},
 {"name":"Short Blue Video","mainFile":"VideoShortBlue","hint":"Blue Video","categories":"Layout","description":"Short blue video - assets: Spheres for Videos required","fragments":"","products":"","helpkey":"shortcolorvideos"},
 {"name":"Short Green Video","mainFile":"VideoShortGreen","hint":"Green Video","categories":"Layout","description":"Short green video - assets: Spheres for Videos required","fragments":"","products":"","helpkey":"shortcolorvideos"},
