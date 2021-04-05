@@ -5,7 +5,7 @@ class AddonSidePanelApp {
     this.helpForwardList = [];
     this.initDom();
     this.initSheetBasedData();
-    this.loadTemplateList();
+    this.loadTemplateList(true);
     this.app = new cAppDefaults();
     this.app.jsonLibPrefix = 'https://handtop.com';
     this.app.loadTextures();
@@ -50,7 +50,7 @@ class AddonSidePanelApp {
       this.template_filter_select.value = 'Layout';
     }
     this.sheetnameinputdirty = false;
-    this.loadTemplateList();
+    this.loadTemplateList(true);
     this.positionsFetchRefresh();
 
     this.clearBusy();
@@ -104,7 +104,7 @@ class AddonSidePanelApp {
     this.asset_current_project_btn.addEventListener('click', e => this.projectViewCurrentProject(2));
     this.project_set_default_btn.addEventListener('click', e => this.sheetsStoreSelectedProject());
     this.addon_display_view_select.addEventListener('input', e => this.loadAddonView());
-    this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails());
+    this.circuit_template_select.addEventListener('input', e => this.loadTemplateDetails(true));
     this.template_filter_select.addEventListener('input', e => this.loadTemplateList());
     this.create_layout_btn.addEventListener('click', e => this.templateCreateSheets());
     this.reload_addon.addEventListener('click', e => this.initSheetBasedData());
@@ -380,7 +380,7 @@ class AddonSidePanelApp {
     else
       this.target_server_set_button.classList.add("blue");
   }
-  async loadTemplateDetails() {
+  async loadTemplateDetails(clicked = false) {
     let data = this.templateMap[this.circuit_template_select.value];
     if (!data)
       return;
@@ -426,7 +426,7 @@ class AddonSidePanelApp {
     }
 
     if (this.addon_display_view_select.value === 'template_view') {
-      if (data.helpkey) {
+      if (data.helpkey && clicked) {
         this.app.updateHelpView(data.helpkey, this.helpViewer);
       } else {
         if (this.help_viewer_panel_select.value !== 'addontemplates')
@@ -592,7 +592,7 @@ class AddonSidePanelApp {
     }
     return null;
   }
-  async loadTemplateList() {
+  async loadTemplateList(initRun = false) {
     if (!this.templateListResults) {
       let genResponse = await fetch('https://handtop.com/addontemplates/templatelist.json', {
         method: "get",
@@ -636,7 +636,7 @@ class AddonSidePanelApp {
       this.circuit_template_select.value = selectedTemplate;
     if (this.circuit_template_select.selectedIndex === -1)
       this.circuit_template_select.selectedIndex = 0;
-    this.loadTemplateDetails();
+    this.loadTemplateDetails(!initRun);
 
     if (this.splitTemplatesView)
       this.splitTemplatesView.destroy();
