@@ -68,6 +68,7 @@ img {
   color: black;
   z-index: 100;
   position: relative;
+  outline: solid 1px black;
 }
 
 .option_bar a.logo {
@@ -166,7 +167,7 @@ table.gsc-search-box td {
 }
 
 .gsc-search-button.gsc-search-button-v2:hover {
-  outline: solid 1px transparent;
+  outline: solid 1px black;
 }
 
 .gsc-search-button.gsc-search-button-v2:focus {
@@ -501,14 +502,6 @@ a.gsst_a {
   z-index: 100;
 }
 
-#gsc-i-id1:hover {
-  outline: solid 1px transparent !important;
-}
-
-#gsc-i-id1:focus {
-  outline: solid 1px black !important;
-}
-
 a.gs-title {
   position: relative;
   top: 1.4em;
@@ -630,6 +623,7 @@ h3 {
 #timer_bar_wrapper button:hover,
 #timer_bar_wrapper button:focus {
   background: rgba(255, 255, 255, .5);
+  outline: solid 2px black;
 }
 
 #timer_bar {
@@ -714,17 +708,18 @@ h3 {
 .timer_stop_btn {
   background: transparent;
   margin: 0;
-  border: none;
   padding-top: 6px;
   position: relative;
   z-index: 1;
   overflow: hidden;
+  border: solid 1px transparent;
 }
 
 .timer_stop_btn:hover,
 .timer_stop_btn:focus {
   background: rgba(255, 255, 255, .5);
   outline: solid 1px black;
+  border: solid 1px black;
   color: rgb(0, 100, 255);
 }
 
