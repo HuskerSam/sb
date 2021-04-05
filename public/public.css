@@ -859,3 +859,8 @@ body.item_help_view, body.list_help_view {
   border-bottom-right-radius: 10px;
   border-right-width: 2px;
 }
+
+.vtdocpage div.item_wrapper div.sub_bar a {
+  border-radius: 0;
+  border-width: 1px;
+}
