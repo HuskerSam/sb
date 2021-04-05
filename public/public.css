@@ -299,7 +299,7 @@ table.gsc-search-box td {
   top: -.525em;
   font-size: 1.2em;
   border-color: rgb(0, 127, 0);
-  outline-color: rgb(255, 140, 0);
+  outline-color: black;
   color: black;
   padding: .25em;
   margin-top: 7px;
@@ -307,14 +307,20 @@ table.gsc-search-box td {
   background-color: white;
 }
 
-#help_template_select:hover, #help_template_select:focus {
+#help_template_select:focus {
   border-color: black;
+  background-color: white;
+  outline: solid 1px black;
+  color: rgb(0, 127, 0);
+}
+
+#help_template_select:hover {
   background-color: yellow;
-  outline-color: black;
 }
 
 #help_template_select:focus option {
   background: white;
+  color: black;
 }
 
 .list_html_div a i {
@@ -840,9 +846,21 @@ body.item_help_view, body.list_help_view {
 }
 
 .vtdocpage #gsc-i-id1:hover {
-  background: yellow!important;
+  background: yellow !important;
 }
 
 .vtdocpage #gsc-i-id1:focus {
-  background: white!important;
+  background: white !important;
+}
+
+.vtdocpage div.item_wrapper div:first-child>a {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-left-width: 2px;
+}
+
+.vtdocpage div.item_wrapper div:last-child>a {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-right-width: 2px;
 }

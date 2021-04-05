@@ -213,14 +213,14 @@ class HelpGen {
     let counter = 1;
     data.forEach(i => {
       if (lastCat !== i.category) {
-        html += '<div style="clear:both;"></div><div class="header_wrapper"><h2 class="h2_ctr_' + counter.toString() + '">' + i.category + '</h2></div>';
+        if (counter !== 1)
+          html += '</div>';
+        html += '<div style="clear:both;"></div><div class="header_wrapper"><h2 class="h2_ctr_' + counter.toString() + '">' + i.category + '</h2></div><div class="item_wrapper">';
         counter++;
         lastCat = i.category;
       }
 
       let displayTitle = i.title;
-      if (i.category === 'General')
-        displayTitle = '<h1>' + displayTitle + '</h1>';
       html += `<div class="help_display_item">`;
       html += ` <a href="https://handtop.com/doc/${i.value}">${displayTitle}</a>`;
       html += `<div class="reviewed">${i.reviewed}</div>`;
@@ -240,6 +240,9 @@ class HelpGen {
               <priority>1</priority>
           </url>`;
     });
+
+    if (html)
+      html += '</div>';
 
     return {
       data,
