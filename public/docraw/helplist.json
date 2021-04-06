@@ -7,6 +7,7 @@
 {"value":"newinstance","title":"Server Initialization","category":"Cloud","reviewed":"2021-03-28","video":"","deployed":""},
 {"value":"authorization","title":"Application Authorization","category":"Cloud","reviewed":"2021-03-28","video":"","deployed":""},
 {"value":"csvformat","title":"Data Import Format","category":"Cloud","reviewed":"2021-03-28","video":"","deployed":""},
+{"value":"displayarch","title":"Display Generation","category":"Cloud","reviewed":"2021-04-06","video":"","deployed":""},
 {"value":"addoninstall","title":"Addon Install","category":"Sheets","reviewed":"2021-04-04","video":"","deployed":""},
 {"value":"createlayout","title":"Create Layout","category":"Sheets","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/createlayoutwalkthru.mp4","deployed":"https://dedicateddemos.web.app/view/?name=Create%20Layout%20Logo%20Example"},
 {"value":"addonconfiguration","title":"Addon Configuration","category":"Sheets","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/newsheetintro.mp4","deployed":""},
