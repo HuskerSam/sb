@@ -41,4 +41,5 @@
 {"value":"spinnerdiagram","title":"Spinner","category":"Templates","reviewed":"2021-03-28","video":"","deployed":""},
 {"value":"webappdiagram","title":"App Diagram","category":"Templates","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/webglapp.webm","deployed":""},
 {"value":"videopickerexample","title":"Video Picker","category":"Templates","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/videopickerexample.mp4","deployed":"https://dedicateddemos.web.app/view/?name=Video%20Picker"},
-{"value":"videotexture","title":"Video Texture","category":"Templates","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/videotextureplay.webm","deployed":"https://dedicateddemos.web.app/view/?name=Video%20Texture"}]
+{"value":"videotexture","title":"Video Texture","category":"Templates","reviewed":"2021-03-28","video":"https://hcwebflow.s3-us-west-2.amazonaws.com/videos/template/videotextureplay.webm","deployed":"https://dedicateddemos.web.app/view/?name=Video%20Texture"},
+{"value":"tfruitstands","title":"Fruit Stands","category":"Templates","reviewed":"2021-04-07","video":"","deployed":""}]
