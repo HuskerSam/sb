@@ -235,7 +235,7 @@ class HelpGen {
 
       xml += `<url>
             <loc>https://handtop.com/doc/${i.value}</loc>
-              <lastmod>${new Date().toISOString().substring(0, 10)}</lastmod>
+              <lastmod>${i.reviewed}</lastmod>
               <changefreq>daily</changefreq>
               <priority>1</priority>
           </url>`;
