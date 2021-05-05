@@ -12,3 +12,55 @@ year or two - they tend to have lower poly counts and perform much better in gen
 <img alt="Unity Import Step 3" src="https://handtop.com/docimages/unityimportassetsstep3.png">
 <br>
 <img alt="Unity Import Step 4" src="https://handtop.com/docimages/unityimportassetsstep4.png">
+Right clicking an element allows you to "Show in Explorer"
+<br>
+To convert meshes to babylon format - we'll use <a href="https://www.blender.org/download/" target="_blank">Blender</a>
+and the Blender plugin for Babylon - <a href="https://doc.babylonjs.com/extensions/Exporters/Blender" target="_blank">Babylonjs Blender Plugin</a>
+- make sure to check the box after importing to enable the plugin.
+<br>
+If the textures are not already baked, consider using Ian Dean's Mesh Baker plugin for Unity - costs about 30 bucks<br>
+<br>
+In Blender you can delete objects by clicking on them and pressing the [del] key.
+<br>
+<br>
+<img alt="Import Mesh into Blender" src="https://handtop.com/docimages/blenderfbximport.png">
+<br>
+Clean the hierarchy down to only the mesh you want to export - the export tool exports a scene
+of which the first mesh in the scene is loaded into babylonjs
+<br>
+<img alt="Blender Hierarchy" src="https://handtop.com/docimages/blenderheirarchy.png">
+<br>
+Remove materials from mesh to export successfully<br>
+<img alt="Remove materials in Blender" src="https://handtop.com/docimages/removematerialsblender.png">
+<br>
+<img alt="Export Mesh to Babylon" src="https://handtop.com/docimages/blenderfbximport.png">
+Import the mesh into scene builder to adjust the scale - sometimes things are very small (when in meters)
+or very large when in mm or inches.<br>
+<img alt="Import Mesh into webGL" src="https://handtop.com/docimages/importmeshbuilder.png">
+<br>
+Import the material<br>
+First we need to convert the images to either png (if transparency is needed, or is small anyways) or jpg
+for large images where we need lossy compression to save space.
+<br>
+<a href="https://www.gimp.org/" target="_blank">GIMP</a> is recommended but use your favorite editor.  In the picture
+below when you see a 4 color channel called alpha, it's probably best to export to png if it's the base texture - transparency
+only applies to the base (or albedo texture) - otherwise jpg is almost always better - these texture files tend to be
+very large and reducing their size is critical to fast download performance.  If a file is small save it as a png so there
+is no loss - but anything over 100kb will be greatly reduced (usually) in jpg vs png.
+<br>
+<img alt="Image Export GIMP" src="https://handtop.com/docimages/alphalayeringimp.png">
+<br>
+Material Import - texture raw images<br>
+<img alt="Import texture images" src="https://handtop.com/docimages/materialrawimageimport.png">
+
+Final Result in webGL<br>
+<img alt="Result Mesh and Material" src="https://handtop.com/docimages/importedmeshandmatresult.png">
+<br>
+Result Files<br>
+The emissive texture is used for both spectral and emissive - as the spectral texture is very very
+large in these models and the emissive does "good enough" without the huge size.<br>
+<img alt="Result Mesh and Material" src="https://handtop.com/docimages/meshandmaterialfiles.png">
+
+<br>
+The addon wizard can now be used to create the rows<br>
+<img alt="Import Mesh Addon" src="https://handtop.com/docimages/importmeshaddon.png">
