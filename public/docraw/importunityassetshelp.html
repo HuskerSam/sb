@@ -1,4 +1,3 @@
-<h2>in progress...</h2>
 <h1>Buy and import assets from the Unity Store</h1>
 <h2>Import process is similar for importing any asset</h2>
 Most meshes as stored as .fbx format (Maya/Autodesk) - but you will also find some
@@ -64,3 +63,14 @@ large in these models and the emissive does "good enough" without the huge size.
 <br>
 The addon wizard can now be used to create the rows<br>
 <img alt="Import Mesh Addon" src="https://handtop.com/docimages/importmeshaddon.png">
+<br><br>
+To get things to work switch around the emissive, spectral, ambient and diffuse textures - at times you'll get
+a result that is better after conversion - and try to eliminate large files that are for spectral or emissive only
+and use the diffuse or the smaller of the s/e for both.  Keeping the size small is very important in imported
+assets, and they usually contain 5 or 6 texture files at time - which can all be used but keep each item
+2-5mb max size - think of 10 objects at 2M or 5M = 20-50mb.  That's a chunky download.  10mb is a strong target
+for a quick experience, 30 mb for a longer experience.  Above this and they need wifi and a bigger screen
+to really see things.
+<br><br>
+Usually assets in one package are very similar, once you decide which images and textures to use, formats,
+scaling and front direction - it's the same for all the assets in the package.
