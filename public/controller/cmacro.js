@@ -1233,6 +1233,11 @@ class cMacro {
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
           </tr>
           <tr>
+            <td>Emissive Map</td>
+            <td><input type="text" list="sbimageslist" class="mesh_emissivepath texturepathinput" data-field="mesh_emissivepath" /></td>
+            <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
+          </tr>
+          <tr>
             <td>Specular Map</td>
             <td><input type="text" list="sbimageslist" class="mesh_specularpath texturepathinput" data-field="mesh_specularpath" /></td>
             <td><button class="texturepathupload"><i class="material-icons">cloud_upload</i></button></td>
@@ -1288,6 +1293,7 @@ class cMacro {
     this.mesh_meshpath = this.panel.querySelector('.mesh_meshpath');
     this.mesh_texturepath = this.panel.querySelector('.mesh_texturepath');
     this.mesh_bmppath = this.panel.querySelector('.mesh_bmppath');
+    this.mesh_emissivepath = this.panel.querySelector('.mesh_emissivepath');
     this.mesh_specularpath = this.panel.querySelector('.mesh_specularpath');
     this.mesh_specularpower = this.panel.querySelector('.mesh_specularpower');
     this.mesh_hasalpha = this.panel.querySelector('.mesh_hasalpha');
@@ -1328,7 +1334,7 @@ class cMacro {
         this.wizard_parent_details.style.display = 'none';
     });
 
-    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'specularpath',
+    this.meshCSVFields = ['message', 'meshpath', 'texturepath', 'bmppath', 'emissivepath', 'specularpath',
       'specularpower', 'hasalpha', 'materialname'
     ];
 
