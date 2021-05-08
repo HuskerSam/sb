@@ -74,3 +74,22 @@ to really see things.
 <br><br>
 Usually assets in one package are very similar, once you decide which images and textures to use, formats,
 scaling and front direction - it's the same for all the assets in the package.
+
+<h2>Internal: Map to meshes autofill</h2>
+To get a list of items, split the mesh files (.babylon, .glb or .gltf) into one directory,
+and the texture files into a different directory.
+<br>
+Then use cmd.exe (not powershell) and run dir -b > meshlist.txt
+<br>
+<img alt="Use cmd to export mesh list" src="https://handtop.com/docimages/meshlist.png">
+<br>
+Upload meshes to /meshes (to use sb:) - also use a subdirectory per package, such as divebar<br>
+Upload textures to /textures (to use sb:) - ditto ~ subdirectory<br>
+<img alt="Use cmd to export mesh list" src="https://handtop.com/docimages/uploadmeshes.png">
+<br>
+<br>
+Add meshes to suggestion list in spreadhseet and export the json list to copy into source control.<br>
+<br>
+<img alt="Add to suggestion spreadsheet" src="https://handtop.com/docimages/addmeshestosuggestionlist.jpg">
+<br>
+<br>
