@@ -1,0 +1,37 @@
+<h3>Baking textures results in one set of files for an entire model/mesh</h3>
+<h4>Multiple meshes can also be baked into one mesh</h4>
+This is used to reduce complexity, and can be used to reduce file sizes (and quality).
+The resulting output can be rolled into a .glb or used in native .babylon mesh files -
+and texture files can used as is in the .glb or with the mesh in any resulting format
+for any system.
+<h4>Unity and packages needed</h4>
+Ian Deane's Mesh Baker (and texture baker) - <a target="_blank" href="https://assetstore.unity.com/packages/tools/modeling/mesh-baker-5017">Unity Store ~ $40</a>
+<br>
+FBX Export (free from Unity) - <a target="_blank" href="https://docs.unity3d.com/Packages/com.unity.formats.fbx@2.0/manual/index.html">Unity Store - free</a>
+<br>
+<br>
+The texture baker has lots and lots of options - which we will mostly ignore and use it's default
+setup - which will generally work well for most cases converting models for use on the web.
+<br>
+FBX is the most regular format for meshes and models - Unity, Blender and Autodesk all
+inter operate well using FBX formats - and Blender is the best place to go from FBX to
+BabylonJS.
+<h2>The recipe!</h2>
+<h3>Select, download and import a package of models from Unity</h3>
+Please download and import the 3 packages (FBX export, Ian Deane's Texture Baker and the package of assets you want to work with).
+<br>
+<img alt="Select My Assets in Package Manager" src="https://handtop.com/docimages/unitypackagemgrmyassets.png">
+<br>
+Using the Search field to filter can help<br>
+Find the FBX Export in the 'Unity Registry' - not 'My Assets'<br>
+<img alt="Filter Assets" src="https://handtop.com/docimages/unityimportmeshbaker.png">
+<br>
+Next add a meshbaker object to your project<br>
+<img alt="Add Mesh Baker" src="https://handtop.com/docimages/unityaddtexturebaker.png">
+<br>
+Next add an object from "Prefabs" (versus models - these tend to be only the mesh here)<br>
+Also zero the coords to 0,0,0 (optional)<br>
+Keep this as the only object in the project (for later when we export)<br>
+<img alt="Add prefab model" src="https://handtop.com/docimages/unityaddprefabobject.png">
+<br>
+<br>
