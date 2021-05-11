@@ -34,4 +34,18 @@ Also zero the coords to 0,0,0 (optional)<br>
 Keep this as the only object in the project (for later when we export)<br>
 <img alt="Add prefab model" src="https://handtop.com/docimages/unityaddprefabobject.png">
 <br>
+<h3>After baking and exporting a model</h3>
+It's best to delete the generated material (and all associated files)
+  from the directory, and also delete the generated object in the unity project, the texture baker object
+  and the original fabrication generated object.  This will create much more consistent results.
+
+<br>
+<br>
+If [Bake Materials Into Combined Material] doesn't produce results, try clicking the [Blend Non-Texture Properies] checkbox.
+
+<h2>Try not to include small details</h2>
+Things like door knobs, TV screens (detail) - can greatly increase the size of a mesh and texture set.
+At times, try to remove a key part that can be added back - so the main item is one color/material -
+otherwise the baked texture set gets megabytes big instead of kilobytes.
+<br>
 <br>
