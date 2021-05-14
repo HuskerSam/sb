@@ -194,7 +194,7 @@ class gCSVImport {
 
     promises.push(this.dbSetRecord('mesh', meshData));
 
-    if (row.materialname && row.texturepath) {
+    if (row.materialname && (row.texturepath || row.alpha)) {
       let textureName = row.name + 'material';
       let hasAlpha = false;
       if (row.hasalpha === 'x')
@@ -211,25 +211,27 @@ class gCSVImport {
       diffuseColor = row.color;
       diffuseTextureName = textureName;
 
-      let ambientColor = '';
+      let ambientColor = row.ambientcolor;
       let ambientTextureName = '';
       if (row.ambient === 'x') {
-        ambientColor = row.color;
+        if (!ambientColor)
+          ambientColor = row.color;
         ambientTextureName = textureName;
       }
       if (row.ambientpath) {
         ambientTextureName = row.ambientpath;
       }
-      let emissiveColor = '';
+      let emissiveColor = row.emissivecolor;
       let emissiveTextureName = '';
       if (row.emissive === 'x') {
-        emissiveColor = row.color;
+        if (!emissiveColor)
+          emissiveColor = row.color;
         emissiveTextureName = textureName;
       }
       if (row.emissivepath) {
         emissiveTextureName = row.emissivepath;
       }
-      let specularColor = '0,0,0';
+      let specularColor = row.specularcolor;
       let specularTextureName = '';
       let specularPower = "";
       let useSpecularOverAlpha = false;
@@ -246,6 +248,12 @@ class gCSVImport {
       if (row.specularpower)
         specularPower = row.specularpower;
 
+      if (!emissiveColor) emissiveColor = '';
+      if (!ambientColor) ambientColor = '';
+      if (!specularColor) specularColor = '0,0,0';
+
+      if (!row.alpha) row.alpha = '1';
+
       let materialData = {
         title: row.materialname,
         ambientColor,
@@ -260,7 +268,8 @@ class gCSVImport {
         bumpTextureName: row.bmppath,
         useSpecularOverAlpha,
         specularColor,
-        specularPower
+        specularPower,
+        alpha: row.alpha
       };
       promises.push(this.dbSetRecord('material', materialData));
     }
@@ -1049,9 +1058,10 @@ class gCSVImport {
     if (!row.offsetv) row.offsetv = '';
     if (!row.scaleu) row.scaleu = '';
     if (!row.scalev) row.scalev = '';
+    if (!row.alpha) row.alpha = '1';
 
     let hasAlpha = (row.hasalpha.toString() === '1');
-    let isVideo =  (row.isvideo.toString() === '1');
+    let isVideo = (row.isvideo.toString() === '1');
     if (row.texture.indexOf('.png') !== -1 || row.texture.indexOf('.svg') !== -1 || row.texture.indexOf('.gif') !== -1) {
       hasAlpha = true;
     }
@@ -1188,7 +1198,8 @@ class gCSVImport {
       ambientColor,
       diffuseColor,
       emissiveColor,
-      specularColor
+      specularColor,
+      alpha: row.alpha
     };
     return await this.dbSetRecord('material', materialData);
   }
