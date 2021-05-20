@@ -1,0 +1,66 @@
+#value-set-panel {
+  display: inline-block;
+  padding: .5em;
+}
+
+#value-set-panel label span {
+  padding-right: 1.5em;
+}
+
+#publish-profile-panel {
+  right: .25em;
+  bottom: 5.5em;
+  position: absolute;
+}
+
+#publish-profile-panel {
+  pointer-events: none;
+}
+
+#publish-profile-panel * {
+  pointer-events: auto;
+}
+
+#publish-profile-panel .fields-container {
+  pointer-events: none;
+}
+
+#publish-profile-panel .form-group-container-group {
+  overflow:hidden;
+}
+
+#publish-profile-panel .fields-container * {
+  pointer-events: auto;
+}
+
+.canvas-actions {
+  top: 0;
+  height: 100%;
+}
+
+.btn-sb-icon, #user-profile-dialog-reset-button {
+  font-size: 1.5em;
+}
+
+
+
+.font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"],
+.opacity-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  transform: none;
+  width: 16em;
+  left: -11.75em;
+  top: .25em;
+  margin-bottom: .75em;
+}
+
+.opacity-main-view {
+  width: 18em;
+}
+
+.opacity-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  transform: none;
+  width: 16em;
+  left: -5.75em;
+  top: .25em;
+  margin-bottom: .75em;
+}
