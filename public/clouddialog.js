@@ -291,8 +291,13 @@ class AddonSidePanelApp {
       }
     }
 
+    this.defaultAppTarget = 'display';
+    if (this.configurationCSV[0]['Target Application']) {
+      this.defaultAppTarget = this.configurationCSV[0]['Target Application'];
+    }
+
     let pid = this.defaultServerTarget;
-    this.gProjectDisplayURL = 'https://' + pid + '.web.app/display/?name=' + this.defaultProjectTarget;
+    this.gProjectDisplayURL = 'https://' + pid + '.web.app/' + this.defaultAppTarget + '/?name=' + this.defaultProjectTarget;
     this.gProjectEditURL = 'https://' + pid + '.web.app/asset/?name=' + this.defaultProjectTarget;
     this.gProjectViewURL = 'https://' + pid + '.web.app/view/?name=' + this.defaultProjectTarget;
 
@@ -728,7 +733,7 @@ class AddonSidePanelApp {
       this.project_set_default_btn.classList.add("blue");
     }
     let pid = this.defaultServerTarget;
-    this.projectDisplayURL = 'https://' + pid + '.web.app/display/?name=' + selectedProject;
+    this.projectDisplayURL = 'https://' + pid + '.web.app/' + this.defaultAppTarget + '/?name=' + selectedProject;
     this.projectEditURL = 'https://' + pid + '.web.app/asset/?name=' + selectedProject;
     this.projectViewURL = 'https://' + pid + '.web.app/view/?name=' + selectedProject;
 
