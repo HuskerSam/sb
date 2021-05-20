@@ -145,9 +145,9 @@ class cTapRoomView extends bView {
       <video></video>
     </div>
     <div class="canvas-actions">
-      <div class="canvas-play-bar">
+      <select id="workspaces-select" style="float:left;"></select>
+      <div class="canvas-play-bar" style="display:none;">
         <div class="scene-options-panel" style="display:none;">
-          <select id="workspaces-select" style="float:left;"></select>
           <div class="scene-fields-container">
           </div>
           <div class="render-log-wrapper" style="display:none;">
@@ -193,9 +193,9 @@ class cTapRoomView extends bView {
     <div id="noProjectFoundCanvas" style="display:none;"><br><br>No Project Found</div>
   <div class="form_canvas_wrapper"></div>
   <div style="position:absolute;bottom:.25em;right:.25em;">
-    <button id="user-profile-dialog-reset-button" style="padding-top:.125em;padding-bottom:.125em;">Reset</button>
+    <button id="user-profile-dialog-reset-button" style="display:none;padding-top:.125em;padding-bottom:.125em;">Reset</button>
     <button id="publish-settings-button" class="btn-sb-icon"><i class="material-icons">dashboard</i></button>
-    <button id="publish_help_viewer" class="btn-sb-icon"><i class="material-icons">help</i></button>
+    <button id="publish_help_viewer" style="display:none;" class="btn-sb-icon"><i class="material-icons">help</i></button>
   </div>
   <div id="publish-profile-panel" style="display:none;">
     <div class="fields-container"></div>
