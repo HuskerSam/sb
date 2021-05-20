@@ -168,16 +168,16 @@ class cTapRoomView extends bView {
           <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
         </div>
         <div class="camera-options-panel">
-          <select class="camera-select" style=""></select>
           <div style="display:inline-block;">
             <div class="camera-slider-label">Radius</div>
             <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
           </div>
-          <div style="display:inline-block;">
-            <div class="camera-slider-label">FOV</div>
-            <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
-          </div>
           <div style="display:none;">
+            <select class="camera-select" style=""></select>
+            <div style="display:inline-block;">
+              <div class="camera-slider-label">FOV</div>
+              <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+            </div>
             <div class="camera-slider-label">Height</div>
             <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
           </div>
