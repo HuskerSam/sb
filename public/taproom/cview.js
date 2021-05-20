@@ -145,8 +145,7 @@ class cTapRoomView extends bView {
       <video></video>
     </div>
     <div class="canvas-actions">
-      <select id="workspaces-select" style="float:left;"></select>
-      <div class="canvas-play-bar" style="display:none;">
+      <div class="canvas-play-bar">
         <div class="scene-options-panel" style="display:none;">
           <div class="scene-fields-container">
           </div>
@@ -161,13 +160,13 @@ class cTapRoomView extends bView {
           <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
           <button class="btn-sb-icon glb-download-button"><i class="material-icons">download_for_offline</i></button>
           <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+          <br>
+          <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
+          <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
+          <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
+          <div class="run-length-label"></div>
+          <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
         </div>
-        <br>
-        <button class="btn-sb-icon scene-options" style="clear:both;"><i class="material-icons">settings_brightness</i></button>
-        <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
-        <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
-        <div class="run-length-label"></div>
-        <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
         <div class="camera-options-panel">
           <select class="camera-select" style=""></select>
           <div style="display:inline-block;">
@@ -178,7 +177,7 @@ class cTapRoomView extends bView {
             <div class="camera-slider-label">FOV</div>
             <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
           </div>
-          <div style="display:inline-block;">
+          <div style="display:none;">
             <div class="camera-slider-label">Height</div>
             <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
           </div>
@@ -198,6 +197,8 @@ class cTapRoomView extends bView {
     <button id="publish_help_viewer" style="display:none;" class="btn-sb-icon"><i class="material-icons">help</i></button>
   </div>
   <div id="publish-profile-panel" style="display:none;">
+    <select id="workspaces-select"></select>
+    <br>
     <div class="fields-container"></div>
   </div>
 </div>`;
