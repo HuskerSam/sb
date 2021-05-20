@@ -26,9 +26,6 @@ class gTapRoomApp extends gInstanceSuper {
         return;
       }
     }
-
-  let nameWid = null;
-
     let workspace = urlParams.get('w');
     if (!workspace)
       workspace = urlParams.get('wid');

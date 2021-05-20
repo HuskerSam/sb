@@ -2,13 +2,6 @@ class cTapRoomView extends bView {
   constructor() {
     super(null, null, null, true);
 
-    this.elementSelect = document.getElementById('element-type-to-edit');
-    this.elementSelect.addEventListener('input', e => this.elementTypeChange());
-    this.blockId = document.getElementById('element-id-to-edit');
-    this.blockField = document.getElementById('field-name-to-edit');
-    this.fieldValue = document.getElementById('value-to-edit');
-    this.setButton = document.getElementById('button-to-edit');
-    this.setButton.addEventListener('click', e => this.setValue());
     this.noProjectFoundCanvas = document.getElementById('noProjectFoundCanvas');
 
     this.bandButtons = [];
@@ -78,8 +71,6 @@ class cTapRoomView extends bView {
       setTimeout(() => location.reload(), 100);
     });
 
-    this.elementTypeChange();
-
     this._updateSelectedBlock(gAPPP.blockInURL);
 
     gAPPP.activeContext.handleAnimationNotReadyCallback = () => {
@@ -116,9 +107,6 @@ class cTapRoomView extends bView {
       setTimeout(() => this.canvasHelper.cameraChangeHandler(), 150);
     }
 
-    if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.supportVR) {
-      setTimeout(() => gAPPP.activeContext.setupXRSupport(), 1500);
-    }
     this.updateDocTitle();
   }
   updateSelectedCamera() {
@@ -148,58 +136,8 @@ class cTapRoomView extends bView {
     if (displayCamera)
       this.displayCamera = displayCamera;
   }
-  setValue() {
-    let t = this.elementSelect.value.toLowerCase();
-    let id = this.blockId.value.split(' ')[0].trim();
-    let field = this.blockField.value.trim();
-    let v = this.fieldValue.value;
-
-    if (id === '')
-      return;
-
-    if (field === '')
-      return;
-
-    gAPPP.a.modelSets[t].commitUpdateList([{
-      field: field,
-      newValue: v
-    }], id);
-
-  }
   splitLayout() {
     this.dialog.style.display = 'block';
-  }
-  elementTypeChange() {
-    let t = this.elementSelect.value.toLowerCase();
-    if (!gAPPP.a.modelSets[t])
-      return;
-
-    if (this.eleList) this.eleList.remove();
-    if (this.fldList) this.fldList.remove();
-
-    this.eleList = document.createElement('datalist');
-    this.fldList = document.createElement('datalist');
-    this.eleList.setAttribute('id', 'elementidlist');
-    this.fldList.setAttribute('id', 'fieldnamelist');
-    document.body.appendChild(this.eleList);
-    document.body.appendChild(this.fldList);
-
-    let options = '';
-    let fS = gAPPP.a.modelSets[t].fireDataValuesByKey;
-    for (let i in fS)
-      options += '<option>' + i + ' ' + fS[i].title + '</option>';
-
-    this.eleList.innerHTML = options;
-
-    if (t === 'frame')
-      t = 'shapeFrame';
-    let fields = sDataDefinition.bindingFields(t);
-
-    let fieldOptions = '';
-    for (let c = 0, l = fields.length; c< l; c++)
-      fieldOptions += '<option>' + fields[c].fireSetField + '</option>';
-
-    this.fldList.innerHTML = fieldOptions;
   }
   _canvasPanelTemplate() {
     return `<canvas class="popup-canvas"></canvas>
@@ -230,7 +168,7 @@ class cTapRoomView extends bView {
         <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
         <div class="run-length-label"></div>
         <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
-        <div class="camera-options-panel" style="display:inline-block;">
+        <div class="camera-options-panel">
           <select class="camera-select" style=""></select>
           <div style="display:inline-block;">
             <div class="camera-slider-label">Radius</div>
@@ -260,28 +198,6 @@ class cTapRoomView extends bView {
     <button id="publish_help_viewer" class="btn-sb-icon"><i class="material-icons">help</i></button>
   </div>
   <div id="publish-profile-panel" style="display:none;">
-    <div id="value-set-panel" class="app-panel app-transparent">
-      <label><span>Element</span>
-      <select id="element-type-to-edit">
-        <option>Block</option>
-        <option>BlockChild</option>
-        <option>Shape</option>
-        <option>Mesh</option>
-        <option>Texture</option>
-        <option>Material</option>
-        <option>Frame</option>
-      </select>
-      </label>
-      <br>
-      <label><span>ID</span><input id="element-id-to-edit" type="text" list="elementidlist" /></label>
-      <br>
-      <label><span>Field</span><input id="field-name-to-edit" type="text" list="fieldnamelist" /></label>
-      <br>
-      <label><span>Value</span><input id="value-to-edit" type="text" /></label>
-      <br>
-      <button id="button-to-edit">Set</button>
-    </div>
-    <button id="enable_vr_canvas_btn">Enable VR</button>
     <div class="fields-container"></div>
   </div>
 </div>`;
