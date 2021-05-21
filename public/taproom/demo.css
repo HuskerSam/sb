@@ -1,0 +1,624 @@
+.canvas-actions {
+  top: 0;
+}
+
+#demo-profile-panel {
+  top: 0em;
+  position: absolute;
+}
+
+.canvas-actions-shown {
+  bottom: initial;
+  display: block;
+  top: 2em;
+}
+
+.button-list-image {
+  float: left;
+  width: 3em;
+  height: 3em;
+  margin-right: .5em;
+}
+
+.scene_edit_image {
+  max-width: 90%;
+  max-height: 100px;
+}
+
+.sceneoptionsupload {
+  float: right;
+}
+
+.csv_scene_field_upload_wrapper, .csv_scene_field_text_wrapper {
+  white-space: nowrap;
+  display: inline-block;
+  margin: .5em;
+}
+
+.display_header_bar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.display_header_bar * {
+  pointer-events: auto;
+}
+
+.display_header_bar .btn-sb-icon {
+  font-size: 2em;
+  float: left;
+}
+
+.display_header_bar .cart_panel_button {
+  padding: .05em;
+}
+
+#muteButton {
+  display: none;
+}
+
+.display_header_slideout {
+  clear: both;
+  position: relative;
+  display: flex;
+}
+
+.display_header_slideout>div {
+  overflow: hidden;
+  transition: transform 1ms 500ms, right 500ms, visibility 500ms, z-index 200ms;
+  top: 0;
+  left: auto;
+  position: absolute;
+  right: -100%;
+  width: 100%;
+  visibility: hidden;
+  transform: translateX(-100%);
+  z-index: 0;
+}
+
+.display_header_slideout>div.profile-panel-shown {
+  transition: transform 500ms, left 500ms, right 500ms, visibility 500ms, z-index 200ms;
+  left: 0;
+  right: 0;
+  visibility: visible;
+  z-index: 100;
+  transform: translateX(0);
+}
+
+.volume_panel .selected-mesh-bounds-helper-box {
+  background: none !important;
+  height: 7.5em;
+  padding-top: 1.25em;
+}
+
+.display_header_slideout .fields-container {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.display_header_slideout .fields-container * {
+  pointer-events: auto;
+}
+
+.display_header_slideout>div {
+  pointer-events: none;
+}
+
+.display_header_bar button.chat_panel_button, .display_header_bar .demo_panel_button {
+  float: right;
+}
+
+.selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  width: 100%;
+  margin-bottom: .5em;
+}
+
+.movie_panel .fields-container, .volume_panel .fields-container {
+  overflow-x: hidden;
+}
+
+.movie_panel_button {
+}
+.movie_panel {
+  padding: .5em;
+}
+
+.selected-mesh-bounds-helper-box {
+  color: black;
+  padding-left: .2em;
+  white-space: pre;
+  text-align: center;
+  border-radius: .25em;
+  font-size: inherit;
+  padding-top: .35em;
+}
+
+.movie_panel .selected-mesh-bounds-helper-box .action-area {
+  padding-bottom: .5em;
+}
+
+.selected-mesh-bounds-helper-box input[type="text"] {
+  border-radius: .25em;
+  border: default;
+}
+
+.selected-mesh-bounds-helper-box .form-control {
+  width: auto;
+  display: inline-block;
+}
+
+.nav_options {
+  padding: .5em;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.nav_options a {
+  color: blue;
+}
+
+.demo_panel_contents {
+  text-align: center;
+  float: left;
+  color: white;
+  padding: 1em;
+}
+
+.scene-tools-checkboxes {
+  top: 0;
+}
+
+input.animate-range {
+  width: 100%;
+}
+
+.run-length-label, .camera-slider-label {
+  font-size: 1.25em;
+  height: auto;
+  border-radius: 10%;
+  position: absolute;
+  left: .75em;
+  width: auto;
+  top: .25em;
+  display: inline-block;
+  pointer-events: none;
+  overflow: visible;
+  color: white;
+  z-index: 1;
+  white-space: nowrap;
+  padding: 0;
+  line-height: 1em;
+}
+
+.play-button, .pause-button {
+  position: static;
+}
+
+.render-log-panel {
+  width: 100%;
+}
+
+
+.font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"],
+.opacity-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  transform: none;
+  width: 16em;
+  left: -11.75em;
+  top: .25em;
+  margin-bottom: .75em;
+}
+
+.opacity-main-view {
+  width: 18em;
+}
+
+.opacity-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  transform: none;
+  width: 16em;
+  left: -5.75em;
+  top: .25em;
+  margin-bottom: .75em;
+}
+
+.cart-contents {
+  max-height: calc(80vh - 5em);
+  overflow: auto;
+  display: inline-block;
+}
+
+.cart-contents * {
+  pointer-events: auto;
+}
+
+.cart-item {
+  pointer-events: none;
+}
+
+.cart-item * {
+  pointer-events: auto;
+}
+
+.cart-item .cart-item-description {
+  padding: .25em;
+  padding-left: 1em;
+  display: inline-block;
+}
+
+.cart-item .cart-item-detail {
+  padding: .25em;
+  display: inline-block;
+  border: none;
+}
+
+.display_header_bar .cart-item .cart-item-remove {
+  float: right;
+}
+
+::-webkit-scrollbar {
+  background: none !important;
+}
+
+.bottom_options_panel {
+  position: absolute;
+  bottom: 0;
+  z-index: 1000;
+  pointer-events: none;
+  text-align: center;
+  width: 100%;
+}
+
+.bottom_options_panel * {
+  pointer-events: auto;
+}
+
+.nontouch_button_options {
+  width: 50%;
+  max-width: 20em;
+  float: left;
+}
+
+.nontouch_button_options button {
+  padding: .15em;
+  width: 100%;
+  line-height: 1.5em;
+  max-width: 35em;
+  overflow: hidden;
+  height: 3.75em;
+  text-align: left;
+}
+
+.nontouch_button_options button i {
+  font-size: 3em;
+  float: left;
+  color: inherit;
+}
+
+button.choice-button-one {
+  background: rgba(200, 0, 0, .7);
+  color: white;
+}
+
+button.choice-button-one i {
+  position: relative;
+  top: .05em;
+}
+
+button.choice-button-two i {
+  position: relative;
+  top: .05em;
+}
+
+button.choice-button-three i {
+  position: relative;
+  top: .05em;
+}
+
+button.choice-button-one span {
+  color: white;
+}
+
+button.choice-button-two {
+  background: rgba(0, 200, 0, .67);
+  color: black;
+}
+
+button.choice-button-two span {
+  color: black;
+}
+
+button.choice-button-three {
+  background: rgba(0, 0, 255, .5);
+  color: white;
+}
+
+button.choice-button-three span {
+  color: white;
+}
+
+button.choice-button-four {
+  background: rgba(255, 255, 0, .9);
+  color: black;
+}
+
+button.choice-button-four span {
+  color: black;
+}
+
+.mobile_orientation_options button {
+  font-size: 2em;
+}
+
+.mobile_orientation_options {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mobile_orientation_options * {
+  pointer-events: auto;
+}
+
+.mobile_orientation_options .sub_button_bar {
+  visibility: visible;
+  transition: top 400ms;
+  position: relative;
+  top: 0;
+  pointer-events: none;
+  line-height: 3.5em;
+}
+
+.mobile_orientation_options .sub_button_bar * {
+  pointer-events: auto;
+}
+
+.mobile_orientation_options.collapsed .sub_button_bar {
+  transition: top 400ms, visibility 400ms;
+  top: 7em;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.mobile_orientation_options.collapsed .expand_less {
+  display: none;
+}
+
+.mobile_orientation_options.collapsed .expand_more {
+  display: inline-block;
+}
+
+.mobile_orientation_options .expand_more {
+  display: none;
+}
+
+button, i, .no-selection {
+  user-select: none;
+}
+
+.raw_macro_panel {
+  display: inline-block
+}
+
+.raw_macro_panel hr {
+  display: none;
+}
+
+.raw_macro_panel .add-newwindow-button.btn-sb-icon {
+  display: none;
+}
+
+.raw_macro_panel .add-button {
+  float: right;
+}
+
+.raw_macro_panel label {
+  white-space: nowrap;
+}
+
+.raw_macro_panel label input {
+  width: 6em;
+}
+
+.raw_macro_panel label span {
+  flex: 0;
+  white-space: nowrap;
+}
+
+.raw_macro_panel label.add_template_name_label {
+  display: none;
+}
+
+.raw_macro_panel {
+  width: 100%;
+}
+
+.raw_macro_panel .width, .raw_macro_panel .height, .raw_macro_panel .depth {
+  width: 4em;
+}
+
+.raw_macro_panel .texttext, .raw_macro_panel .texttextline2 {
+  width: auto;
+}
+
+.inner_chat_panel {
+  overflow: auto;
+  max-height: calc(80vh - 6.5em);
+  padding: .1em;
+}
+
+.new_button_break {
+  display: none;
+}
+
+.shape_and_text_block_options {
+  clear: both;
+}
+
+.display_header_row {
+  pointer-events: none;
+}
+
+.display_header_row * {
+  pointer-events: auto;
+}
+
+.chat_x, .chat_y, .chat_z {
+  width: 4em;
+}
+
+.display_header_bar button.cart-submit {}
+
+.sub_button_bar .geo_gps_coords, .sub_button_bar .orientation_details_div {
+  line-height: 1em;
+  font-size: .65em;
+  padding: .25em;
+  pointer-events: none;
+  position: relative;
+  top: .75em;
+}
+
+.mobile_follow .nontouch_button_options button span {
+  display: none;
+}
+
+.mobile_follow .nontouch_button_options button img {
+  display: none;
+}
+
+.mobile_follow .nontouch_button_options button {
+  text-align: center;
+}
+
+.mobile_follow .nontouch_button_options button i {
+  float: none;
+}
+
+.mobile_follow .nontouch_button_options {
+  display: inline-block;
+  width: 4em;
+}
+
+.mobile_orientation_options {
+  display: none;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+}
+
+.mobile_orientation .mobile_orientation_options, .mobile_follow .mobile_orientation_options {
+  display: block;
+}
+
+.mobile_orientation_base_options, .mobile_orientation_sub_options, .mobile_follow_sub_options, .mobile_follow_base_options {
+  display: none;
+}
+
+.mobile_orientation .mobile_orientation_base_options, .mobile_orientation .mobile_orientation_sub_options {
+  display: inline-block;
+}
+
+.mobile_follow .mobile_follow_sub_options, .mobile_follow .mobile_follow_base_options {
+  display: inline-block;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options {
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options * {
+  pointer-events: auto;
+}
+
+.display_header_row button {
+  z-index: 2;
+  position: relative;
+}
+
+.display_header_row button.expanded_option {
+  position: relative;
+  top: -3em;
+  visibility: hidden;
+  transition: visibility 500ms, top 500ms;
+  z-index: 1;
+}
+
+.display_header_row.expanded_header .expanded_option {
+  top: 0;
+  visibility: visible;
+}
+
+.mobile_orientation_options .sub_button_bar .second-light-intensity-user-panel {
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  padding-bottom: .65em;
+  background: none;
+  border: none;
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .second-light-intensity-user-panel input {
+  pointer-events: auto;
+}
+
+.second-light-intensity-user-panel label span {
+  display: none;
+}
+
+.second-light-intensity-user-panel input.form-control {
+  display: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .selected-mesh-bounds-helper-box {
+  height: 9.5em;
+  padding: 0;
+  padding-top: 2.25em;
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .form-group {
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .action-area {
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar  .second_light_bar {
+  pointer-events: none;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .fields-container {
+  overflow: visible;
+}
+
+ .second-light-intensity-user-panel  .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
+   width: 9em;
+   left: -1.5em;
+}
+
+.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .flare_icon {
+  position: absolute;
+  z-index: 100;
+  top: 1em;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+.camera-select-range-fov-slider, .camera-select-range-slider, .camera-select-range-height-slider{
+  width: 45vw;
+  margin-right: 4vw;
+  margin-bottom: 2vw;
+  float:left;
+}
+
+.camera-select-range-fov-slider {
+  clear: left;
+}
+
+.camera-select {
+  float:left;
+  width: 44.5vw;
+  margin-right: 1vw;
+}
