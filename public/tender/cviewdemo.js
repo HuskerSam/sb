@@ -1584,4 +1584,6 @@ class cViewDemo extends bView {
       groupClass: 'light-intensity-user-panel'
     }];
   }
+  updateDocTitle() {
+  }
 }
