@@ -297,6 +297,41 @@ class cViewDemo extends bView {
 
     if (!camera)
       return;
+
+      let base_speed = 2.0;
+
+    let displayCamera = gAPPP.mV.rootBlock.blockRawData.displayCamera;
+
+    if (displayCamera === 'arcRotateCamera') {
+      let cam_dir = new BABYLON.Vector3(0, 0, 0);
+      if (dir === 'left') {
+        let vec2 = new BABYLON.Vector3(-base_speed, 0, 0);
+        camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+        BABYLON.Vector3.TransformNormalToRef(vec2, camera._cameraTransformMatrix, cam_dir);
+        camera.target.addInPlace(cam_dir);
+      }
+      else if (dir === 'up') {
+        let vec2 = new BABYLON.Vector3(0, 0, base_speed);
+        camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+        BABYLON.Vector3.TransformNormalToRef(vec2, camera._cameraTransformMatrix, cam_dir);
+        camera.target.addInPlace(cam_dir);
+      } else if (dir === 'right') {
+        let vec2 = new BABYLON.Vector3(base_speed, 0, 0);
+        camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+        BABYLON.Vector3.TransformNormalToRef(vec2, camera._cameraTransformMatrix, cam_dir);
+        camera.target.addInPlace(cam_dir);
+      } else if (dir === 'down') {
+        let vec2 = new BABYLON.Vector3(0, 0, -base_speed);
+        camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+        BABYLON.Vector3.TransformNormalToRef(vec2, camera._cameraTransformMatrix, cam_dir);
+        camera.target.addInPlace(cam_dir);
+      }
+
+
+
+      return;
+    }
+
     if (!camera._localDirection)
       return;
     if (dir === 'left')
