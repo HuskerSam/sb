@@ -691,19 +691,6 @@ class cViewDemo extends bView {
     }
     return rawUrl;
   }
-  async layoutSceneDataUploadImage() {
-    let fileBlob = this.soUploadImageFile.files[0];
-
-    if (!fileBlob)
-      return;
-
-    let fireSet = gAPPP.a.modelSets['block'];
-    let key = gAPPP.loadedWID + '/scenedatafiles';
-    let uploadResult = await fireSet.setBlob(key, fileBlob, fileBlob.name);
-    this.soUploadImageFile.editCTL.value = uploadResult.downloadURL;
-    this.sceneOptionDataChanged(this.soUploadImageFile.editCTL);
-    return;
-  }
 
 
   _audioFeatures() {
@@ -1584,6 +1571,5 @@ class cViewDemo extends bView {
       groupClass: 'light-intensity-user-panel'
     }];
   }
-  updateDocTitle() {
-  }
+  updateDocTitle() {}
 }
