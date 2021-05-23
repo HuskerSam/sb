@@ -49,6 +49,9 @@ class cViewDemo extends bView {
     this.initHeaderBar();
     this.initBottomBar();
 
+    this.mobile_orientation_sub_options = this.dialog.querySelector('.mobile_orientation_sub_options');
+    this.cChat = new cChat(this.mobile_orientation_sub_options);
+
     gAPPP.activeContext.handleAnimationNotReadyCallback = () => {
       this.rootBlock.updatesDisabled = true;
       this.canvasHelper.hide();
@@ -57,22 +60,6 @@ class cViewDemo extends bView {
       if (this.rootBlock.updatesDisabled)
         location.reload();
     };
-
-    this.orientation_details_div = this.dialog.querySelector('.orientation_details_div');
-
-    window.addEventListener('deviceorientation', event => {
-      this.orientationInited = true;
-      this.alpha = event.alpha ? event.alpha.toFixed(0) : 'none';
-      this.beta = event.beta ? event.beta.toFixed(1) : 'none';
-      this.gamma = event.gamma ? event.gamma.toFixed(2) : 'none';
-
-      if (this.orientation_details_div) {
-        if (this.alpha !== 'none') {
-          this.orientation_details_div.innerHTML = this.alpha + ' : ' + this.beta + ' <br>';
-          this.orientation_details_div.style.display = 'inline-block';
-        }
-      }
-    });
   }
   initBottomBar() {
     let expand_more = this.dialog.querySelector('.mobile_orientation_options .expand_more');
@@ -96,200 +83,13 @@ class cViewDemo extends bView {
         this.arrow_upward.running = true;
         this.arrow_upward.classList.add('app-inverted');
         this.moveCamera('up');
-        this.upwardMoveTimeout = setInterval(() => this.moveCamera('up'), 100);
+        this.upwardMoveTimeout = setInterval(() => this.moveCamera('up'), 20);
       }
     });
-
-    this.arrow_downward = this.dialog.querySelector('.mobile_orientation_options .arrow_downward');
-    this.arrow_downward.addEventListener('click', e => {
-      clearInterval(this.downwardMoveTimeout);
-
-      if (this.arrow_downward.running) {
-        this.arrow_downward.running = false;
-        this.arrow_downward.classList.remove('app-inverted');
-      } else {
-        this.arrow_downward.running = true;
-        this.arrow_downward.classList.add('app-inverted');
-        this.moveCamera('down');
-        this.downwardMoveTimeout = setInterval(() => this.moveCamera('down'), 100);
-      }
-    });
-
-    this.arrow_forward = this.dialog.querySelector('.mobile_orientation_options .arrow_forward');
-    this.arrow_forward.addEventListener('click', e => {
-      clearInterval(this.forwardMoveTimeout);
-
-      if (this.arrow_forward.running) {
-        this.arrow_forward.running = false;
-        this.arrow_forward.classList.remove('app-inverted');
-      } else {
-        this.arrow_forward.running = true;
-        this.arrow_forward.classList.add('app-inverted');
-        this.moveCamera('right');
-        this.forwardMoveTimeout = setInterval(() => this.moveCamera('right'), 100);
-      }
-    });
-
-    this.arrow_backward = this.dialog.querySelector('.mobile_orientation_options .arrow_backward');
-    this.arrow_backward.addEventListener('click', e => {
-      clearInterval(this.backwardMoveTimeout);
-
-      if (this.arrow_backward.running) {
-        this.arrow_backward.running = false;
-        this.arrow_backward.classList.remove('app-inverted');
-      } else {
-        this.arrow_backward.running = true;
-        this.arrow_backward.classList.add('app-inverted');
-        this.moveCamera('left');
-        this.backwardMoveTimeout = setInterval(() => this.moveCamera('left'), 100);
-      }
-    });
-
-    this.rotate_left = this.dialog.querySelector('.mobile_orientation_options .rotate_left');
-    this.rotate_left.addEventListener('click', e => {
-      clearInterval(this.rotateLeftMoveTimeout);
-
-      if (this.rotate_left.running) {
-        this.rotate_left.running = false;
-        this.rotate_left.classList.remove('app-inverted');
-      } else {
-        this.rotate_left.running = true;
-        this.rotate_left.classList.add('app-inverted');
-
-        gAPPP.activeContext.camera.updateUpVectorFromRotation = true;
-        gAPPP.activeContext.camera.cameraRotation.y -= .02;
-        this.rotateLeftMoveTimeout = setInterval(() => {
-          gAPPP.activeContext.camera.cameraRotation.y -= .02;
-        }, 100);
-      }
-    });
-
-    this.rotate_right = this.dialog.querySelector('.mobile_orientation_options .rotate_right');
-    this.rotate_right.addEventListener('click', e => {
-      clearInterval(this.rotateRightMoveTimeout);
-
-      if (this.rotate_right.running) {
-        this.rotate_right.running = false;
-        this.rotate_right.classList.remove('app-inverted');
-      } else {
-        this.rotate_right.running = true;
-        this.rotate_right.classList.add('app-inverted');
-
-        gAPPP.activeContext.camera.updateUpVectorFromRotation = true;
-        gAPPP.activeContext.camera.cameraRotation.y += .02;
-        this.rotateRightMoveTimeout = setInterval(() => {
-          gAPPP.activeContext.camera.cameraRotation.y += .02;
-        }, 100);
-      }
-    });
-
-    this.geo_gps_coords = this.dialog.querySelector('.geo_gps_coords');
-    this.geo_lock = this.dialog.querySelector('.mobile_orientation_options .geo_lock');
-    this.geo_lock.addEventListener('click', e => {
-
-      gAPPP.gpsCallback = (data, isError) => {
-        if (isError) {
-          this.geo_gps_coords.innerHTML = 'ERROR(' + data.code + '): ' + data.message;
-        } else {
-          this.__updateGPSLocation();
-        }
-      };
-      if (this.geo_lock.running) {
-        this.geo_lock.running = false;
-        this.geo_lock.classList.remove('app-inverted');
-        gAPPP.initGPSTracking(false);
-        this.geo_gps_coords.style.display = 'none';
-      } else {
-        this.geo_lock.running = true;
-        this.geo_lock.classList.add('app-inverted');
-        gAPPP.initGPSTracking(true);
-        this.geo_gps_coords.style.display = 'inline-block';
-      }
-    });
-
-    this.sub_bar_pause_button = this.dialog.querySelector('.sub_bar_pause_button');
-    this.sub_bar_pause_button.addEventListener('click', e => {
-      if (this.canvasHelper.playState === 1)
-        this.canvasHelper.playState = 2;
-      else
-        this.canvasHelper.playState = 1;
-    });
-    this.canvasHelper.playStateChangedCallback = () => {
-      if (this.canvasHelper.playState === 1) {
-        this.sub_bar_pause_button.innerHTML = '<i class="material-icons">pause</i>';
-        this.sub_bar_pause_button.classList.remove('app-inverted');
-      } else {
-        this.sub_bar_pause_button.innerHTML = '<i class="material-icons">play_arrow</i>';
-        this.sub_bar_pause_button.classList.add('app-inverted');
-      }
-    };
-
-    this.anim_rewind = this.dialog.querySelector('.anim_rewind');
-    this.anim_skip_previous = this.dialog.querySelector('.anim_skip_previous');
-    this.anim_skip_next = this.dialog.querySelector('.anim_skip_next');
-    this.anim_rewind.addEventListener('click', e => {
-      this.canvasHelper.stopAnimation();
-      this.canvasHelper.playAnimation();
-    });
-    this.anim_skip_next.addEventListener('click', e => {
-      let newPos = Number(this.canvasHelper.animateSlider.value) + 10;
-      if (newPos > 100.0)
-        newPos -= 100.0;
-      this.rootBlock.setAnimationPosition(newPos);
-    });
-    this.anim_skip_previous.addEventListener('click', e => {
-      let newPos = Number(this.canvasHelper.animateSlider.value) - 10;
-      if (newPos < 0.0)
-        newPos += 100.0;
-      this.rootBlock.setAnimationPosition(newPos);
-    });
-
-    this.second_light_bar = this.dialog.querySelector('.second_light_bar');
-    this.lightBarFields = [{
-      title: 'Light',
-      fireSetField: 'lightIntensity',
-      helperType: 'singleSlider',
-      rangeMin: '0',
-      rangeMax: '2',
-      rangeStep: '.01',
-      displayType: 'number',
-      group: 'group2',
-      groupClass: 'second-light-intensity-user-panel'
-    }];
-
-    this.second_light_bar_fc = this.second_light_bar.querySelector('.fields-container');
-    this.second_light_bar_button = document.createElement('button');
-    this.second_light_bar_ctl = new cBandProfileOptions(this.second_light_bar_button, this.lightBarFields,
-      this.second_light_bar_fc, this.second_light_bar);
-    this.second_light_bar_ctl.fireFields.values = gAPPP.a.profile;
-    this.second_light_bar_ctl.panelShownClass = 'profile-panel-shown';
-    this.second_light_bar_ctl.activate();
-    this.second_light_bar_button.click();
-
-
-    this.workspace_show_layout_positions = document.body.querySelector('.workspace_show_layout_positions');
-    this.workspace_show_layout_positions.addEventListener('click', e => this.showLayoutPositions());
 
     this.dialog.querySelector('#enable_vr_canvas_btn').addEventListener('click', e => {
       gAPPP.activeContext.setupXRSupport();
     });
-  }
-  __updateGPSLocation() {
-    this.geo_gps_coords.innerHTML = '' + gAPPP.latitude + '°, ' + gAPPP.longitude + '°';
-
-    if (!this.startLon) {
-      this.startLon = gAPPP.longitude;
-      this.startLat = gAPPP.latitude;
-      return;
-    }
-
-    let d_result = GLOBALUTIL.getGPSDiff(this.startLat, this.startLon, gAPPP.latitude, gAPPP.longitude);
-
-    this.startLon = gAPPP.longitude;
-    this.startLat = gAPPP.latitude;
-
-    this.context.camera._position.x += d_result.vertical * -1.0; //east increasing
-    this.context.camera._position.z += d_result.horizontal * 1.0; //north increasing\
   }
   moveCamera(dir) {
     let camera = gAPPP.activeContext.camera;
@@ -298,7 +98,7 @@ class cViewDemo extends bView {
     if (!camera)
       return;
 
-      let base_speed = 2.0;
+      let base_speed = .3;
 
     let displayCamera = gAPPP.mV.rootBlock.blockRawData.displayCamera;
 
@@ -1303,38 +1103,10 @@ class cViewDemo extends bView {
         </div>
         <div class="mobile_orientation_options collapsed">
           <div class="sub_button_bar">
-            <div class="mobile_orientation_sub_options">
-              <div class="geo_gps_coords app-transparent" style="display:none;"></div>
-              <div class="orientation_details_div app-transparent" style="display:none;"></div>
-              <div></div>
-              <button class="btn-sb-icon app-transparent rotate_left"><i class="material-icons">rotate_left</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent arrow_downward"><i class="material-icons">arrow_downward</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent rotate_right"><i class="material-icons">rotate_right</i></button>
-              <br>
-              <button class="btn-sb-icon app-transparent arrow_backward"><i class="material-icons">arrow_back</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent geo_lock"><i class="material-icons">my_location</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent arrow_forward"><i class="material-icons">arrow_forward</i></button>
-            </div>
-            <div class="mobile_follow_sub_options">
-              <button class="btn-sb-icon app-transparent anim_rewind"><i class="material-icons">replay</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent workspace_show_layout_positions"><i class="material-icons">grid_on</i></button>
-              <br>
-              <button class="btn-sb-icon app-transparent anim_skip_previous"><i class="material-icons">skip_previous</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent anim_skip_next"><i class="material-icons">skip_next</i></button>
-              <div class="second_light_bar" style="position:absolute;right:0;top:0"><i class="material-icons flare_icon">flare</i><div class="fields-container"></div></div>
-            </div>
+            <div class="mobile_orientation_sub_options app-transparent"></div>
           </div>
-          <button class="btn-sb-icon app-transparent sub_bar_pause_button"><i class="material-icons">pause</i></button>
-          &nbsp;
           <div class="mobile_orientation_base_options">
             <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
-            &nbsp;
           </div>
           <div class="mobile_follow_base_options">
           </div>
