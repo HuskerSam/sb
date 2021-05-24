@@ -7,6 +7,27 @@ class cChat {
   register() {
     this.submit_3d_text_msg = this.panel.querySelector('.submit_3d_text_msg');
     this.submit_3d_text_msg.addEventListener('click', e=> this.submitMessage());
+
+    this.texttext = this.panel.querySelector('.texttext');
+    this.textfontfamily = this.panel.querySelector('.textfontfamily');
+    this.textfontfamily.addEventListener('input', e => {
+      this.textfontfamily.style.fontFamily = this.textfontfamily.value;
+      this.texttext.style.fontFamily = this.textfontfamily.value;
+    });
+    this.loadFontList();
+  }
+  loadFontList() {
+    let fonts = document.querySelector('#fontfamilydatalist');
+    if (!fonts)
+      return setTimeout(() => this.loadFontList(), 500);
+
+    if (!document.querySelector('#fontfamilydatalist option'))
+      return setTimeout(() => this.loadFontList(), 500);
+
+    this.textfontfamily.innerHTML = fonts.innerHTML;
+    this.textfontfamily.value = 'Georgia';
+    this.textfontfamily.style.fontFamily = this.textfontfamily.value;
+    this.texttext.style.fontFamily = this.textfontfamily.value;
   }
   submitMessage() {
 
@@ -14,16 +35,14 @@ class cChat {
   template() {
     return `<div class="cchat_wrapper">
       Message<br>
-      <input type="text" class="texttext" value="My Message" />
+      <input type="text" class="texttext" value="" />
       <br>
-      <input type="text" class="textfontfamily"  list="fontfamilydatalist" />
+      <select type="text" class="textfontfamily"></select>
       <br>
       <label><input type="checkbox" class="textstroke" />
       <span>Open Face</span></label>
       <br>
       <input type="text" class="textmaterial"  list="materialdatatitlelookuplist"/>
-      <br>
-      Shape
       <br>
 
       <select class="createshapetype">
@@ -41,7 +60,7 @@ class cChat {
       <br>
       <input type="text" class="shapematerial" list="materialdatatitlelookuplist" />
       <br>
-      <button class="submit_3d_text_msg">Submit Message</button>
+      <button class="submit_3d_text_msg">Submit</button>
     </div>`;
   }
 }
