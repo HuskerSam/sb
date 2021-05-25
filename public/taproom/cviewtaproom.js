@@ -50,7 +50,7 @@ class cViewDemo extends bView {
     this.initBottomBar();
 
     this.mobile_orientation_sub_options = this.dialog.querySelector('.mobile_orientation_sub_options');
-    this.cChat = new cChat(this.mobile_orientation_sub_options);
+    this.cChat = new cChat(this.mobile_orientation_sub_options, gAPPP);
 
     gAPPP.activeContext.handleAnimationNotReadyCallback = () => {
       this.rootBlock.updatesDisabled = true;
@@ -1086,7 +1086,7 @@ class cViewDemo extends bView {
                 <label><span>s power</span><input type="text" class="materialspower" style="width:3em" value="4" /></label>
               </div>
             </div>
-            <div class="inner_chat_panel app-panel app-transparent" style="clear:both;display:none;">
+            <div class="inner_chat_panel" style="clear:both;display:none;">
               <div class="raw_macro_panel"></div>
               <div class="fields-container"></div>
               <div style="clear:both"></div>
@@ -1121,6 +1121,7 @@ class cViewDemo extends bView {
   }
   initBlockAddPanel() {
     this.raw_macro_panel = this.dialog.querySelector('.raw_macro_panel');
+/*
     this.generate = new cMacro(this.raw_macro_panel, 'block', gAPPP);
     this.generate.addCallback = async (id, blockName) => {
       if (blockName === undefined) {
@@ -1166,11 +1167,13 @@ class cViewDemo extends bView {
 
       this.generate.lastRowAdded = null;
     };
+
     let sel = this.dialog.querySelector('.block_wizard_type_select');
     sel.innerHTML = `<option selected>Text and Shape</option>
      <option>Animated Line</option>
      <option>Connector Line</option><option>Web Font</option>`;
     this.generate.blockHelperChange();
+    */
 
     this.chat_clear_button = this.dialog.querySelector('.chat_clear_button');
     this.chat_clear_button.addEventListener('click', e => this.clearSceneEdits());
@@ -1193,7 +1196,7 @@ class cViewDemo extends bView {
     this.circuitmaterialselect.innerHTML = matListHtml;
 
     let html = '<option>Set to ...</option>';
-    html += this.generate._materialGetHTMLOptionList();
+    //html += this.generate._materialGetHTMLOptionList();
     //html = html.replace(/sb:matpack\//gi, '');
     this.circuitmaterialchangeselect.innerHTML = html;
   }

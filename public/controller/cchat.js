@@ -1,13 +1,11 @@
 class cChat {
-  constructor(panelDiv) {
+  constructor(panelDiv, app) {
     this.panel = panelDiv;
+    this.app = app;
     this.panel.innerHTML = this.template();
     this.register();
   }
   register() {
-    this.submit_3d_text_msg = this.panel.querySelector('.submit_3d_text_msg');
-    this.submit_3d_text_msg.addEventListener('click', e=> this.submitMessage());
-
     this.texttext = this.panel.querySelector('.texttext');
     this.textfontfamily = this.panel.querySelector('.textfontfamily');
     this.textmaterial = this.panel.querySelector('.textmaterial');
@@ -26,7 +24,7 @@ class cChat {
 
     this.status_line = this.panel.querySelector('.status_line');
   }
-  postMessage() {
+  async postMessage() {
     let name = 'chatitem_' + Math.floor(100 + Math.random() * 900).toString();
 
     if (!this.texttext.value.trim()) {
@@ -49,11 +47,15 @@ class cChat {
       textdepth: '.25',
       tessellation: '',
       textstroke: '',
-      texttextline2: 'user shortname'
+      texttextline2: 'user shortname',
+      parent: '::scene::_chatWrapper'
     };
 
     console.log(csv_row);
-    this.texttext.value = '';
+    let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(csv_row);
+    let key = blockResult.key;
+
+    this.texttext.value = ''
     this.status_line.innerHTML = 'Sent ' + new Date().toLocaleTimeString();
   }
   loadFontList() {
@@ -68,9 +70,6 @@ class cChat {
     this.textfontfamily.value = 'Georgia';
     this.textfontfamily.style.fontFamily = this.textfontfamily.value;
     this.texttext.style.fontFamily = this.textfontfamily.value;
-  }
-  submitMessage() {
-
   }
   template() {
     return `<div class="cchat_wrapper app-control">
