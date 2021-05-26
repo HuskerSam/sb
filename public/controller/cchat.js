@@ -41,24 +41,30 @@ class cChat {
       shapematerial: this.shapematerial.value,
       cylinderhorizontal: (this.cylinderhorizontal.checked) ? '1' : '0',
       asset: 'shapeandtext',
-      width: "4",
-      height: "1",
-      depth: "1",
+      width: "8",
+      height: "3",
+      depth: "2",
       textdepth: '.25',
       tessellation: '',
       textstroke: '',
       texttextline2: 'user shortname',
-      parent: '::scene::_chatWrapper',
-      x: '10',
-      y: '5',
-      z: '10'
+      parent: '::scene::_chatWrapper'
     };
 
-    console.log(csv_row);
+    let seconds = Math.round(new Date().getSeconds());
+    let angle = -4.0 * Math.PI * (seconds % 60) / 60.0;
+
+    let radius = 15;
+    csv_row.x = radius * Math.cos(angle);
+    csv_row.z = radius * Math.sin(angle);
+    csv_row.y = 5.0;
+    csv_row.ry = Math.atan2(csv_row.x, csv_row.z);
+
+
     let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(csv_row);
     let key = blockResult.key;
 
-    this.texttext.value = ''
+    this.texttext.value = '';
     this.status_line.innerHTML = 'Sent ' + new Date().toLocaleTimeString();
   }
   loadFontList() {
