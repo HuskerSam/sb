@@ -24,7 +24,7 @@ class cChat {
 
     this.status_line = this.panel.querySelector('.status_line');
   }
-  async postMessage() {
+  postMessage() {
     let name = 'chatitem_' + Math.floor(100 + Math.random() * 900).toString();
 
     if (!this.texttext.value.trim()) {
@@ -51,6 +51,7 @@ class cChat {
       parent: '::scene::_chatWrapper'
     };
 
+
     let seconds = Math.round(new Date().getSeconds());
     let angle = -4.0 * Math.PI * (seconds % 60) / 60.0;
 
@@ -60,9 +61,38 @@ class cChat {
     csv_row.y = 5.0;
     csv_row.ry = Math.atan2(csv_row.x, csv_row.z);
 
+    let csvImport = new gCSVImport(this.app.loadedWID);
+    csvImport.addCSVRow(csv_row);
 
-    let blockResult = await (new gCSVImport(this.app.loadedWID)).addCSVRow(csv_row);
-    let key = blockResult.key;
+/*
+    //let curAnimTime = Math.max(0, this.app.mV.canvasHelper.timeE);
+    let curAnimTime = seconds;
+
+    let csvImport = new gCSVImport(this.app.loadedWID);
+    csvImport.addCSVRow(csv_row).then(() => {
+      csvImport.addCSVRow({
+        name: name,
+        childtype: 'block',
+        asset: 'blockchildframe',
+        parent: '::scene::_chatWrapper',
+        frametime: curAnimTime + 's',
+        y: 5.0,
+        frameorder: 20
+      });
+      csvImport.addCSVRow({
+        name: name,
+        childtype: 'block',
+        asset: 'blockchildframe',
+        parent: '::scene::_chatWrapper',
+        frametime: (curAnimTime + 20) + 'slf',
+        y: 30.0,
+        x: 0,
+        z: 0,
+        frameorder: 30
+      });
+    });
+
+*/
 
     this.texttext.value = '';
     this.status_line.innerHTML = 'Sent ' + new Date().toLocaleTimeString();
@@ -90,7 +120,7 @@ class cChat {
       <label><input type="checkbox" class="textstroke" />
       <span>Open Face</span></label>
       <br>
-      <input type="text" class="textmaterial"  list="materialdatatitlelookuplist"/>
+      <input type="text" class="textmaterial"  list="materialdatatitlelookuplist" value="ecolor:1,.5,0"/>
       <br>
 
       <select class="createshapetype">
@@ -106,7 +136,7 @@ class cChat {
         <span>Rotate 90°</span>
       </label>
       <br>
-      <input type="text" class="shapematerial" list="materialdatatitlelookuplist" />
+      <input type="text" class="shapematerial" list="materialdatatitlelookuplist" value="color:0,.5,1" />
       <br>
       <button class="submit_3d_text_msg">Submit</button>
       <div class="status_line">&nbsp;</div>
