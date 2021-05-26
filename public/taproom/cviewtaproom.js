@@ -996,7 +996,7 @@ class cViewDemo extends bView {
   }
   layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
-      <div id="renderLoadingCanvas" style="display:none;">Reloading Visual Catalog</div>
+      <div id="renderLoadingCanvas" style="display:none;">Loading Taproom!</div>
       <div class="form_canvas_wrapper"></div>
 
       <div class="display_header_bar">
@@ -1103,7 +1103,7 @@ class cViewDemo extends bView {
         </div>
         <div class="mobile_orientation_options collapsed">
           <div class="sub_button_bar">
-            <div class="mobile_orientation_sub_options app-transparent"></div>
+            <div class="mobile_orientation_sub_options"></div>
           </div>
           <div class="mobile_orientation_base_options">
             <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>

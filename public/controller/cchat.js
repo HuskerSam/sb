@@ -48,7 +48,10 @@ class cChat {
       tessellation: '',
       textstroke: '',
       texttextline2: 'user shortname',
-      parent: '::scene::_chatWrapper'
+      parent: '::scene::_chatWrapper',
+      x: '10',
+      y: '5',
+      z: '10'
     };
 
     console.log(csv_row);
