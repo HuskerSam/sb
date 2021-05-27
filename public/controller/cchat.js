@@ -17,6 +17,8 @@ class cChat {
       this.textfontfamily.style.fontFamily = this.textfontfamily.value;
       this.texttext.style.fontFamily = this.textfontfamily.value;
     });
+    this.next_message_status = this.panel.querySelector('.next_message_status');
+    this.updateMessageStatus();
     this.loadFontList();
 
     this.submit_3d_text_msg = this.panel.querySelector('.submit_3d_text_msg');
@@ -24,7 +26,26 @@ class cChat {
 
     this.status_line = this.panel.querySelector('.status_line');
   }
+  updateMessageStatus() {
+    if (!this.next_message_status)
+      return;
+
+    let lastMessageDate = gAPPP.appData.lastMessageDate;
+    let lD = new Date(gAPPP.appData.lastMessageDate);
+    let validDate = !isNaN(lD.getTime());
+    let msg_gap = 10000;
+    if (validDate && (new Date() - lD) < msg_gap) {
+      let time_to_next = Math.round((msg_gap - (new Date() - lD)) / 1000.0);
+      this.next_message_status.innerHTML = 'Next: ' + time_to_next.toString();
+      setTimeout(() => this.updateMessageStatus(), 500);
+    } else {
+      this.next_message_status.innerHTML = 'Last: ' + (validDate ? lD.toLocaleTimeString() : 'none');
+    }
+  }
   postMessage() {
+    //firebase.database().ref('applicationData/lastMessageDate').set(new Date().toISOString());
+  }
+  postMessageOld() {
     let name = 'chatitem_' + Math.floor(100 + Math.random() * 900).toString();
 
     if (!this.texttext.value.trim()) {
@@ -112,7 +133,7 @@ class cChat {
   }
   template() {
     return `<div class="cchat_wrapper app-control">
-      Message<br>
+      <div class="next_message_status">&nbsp;</div>
       <input type="text" class="texttext" value="" />
       <br>
       <select type="text" class="textfontfamily"></select>

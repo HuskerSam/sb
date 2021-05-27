@@ -45,6 +45,7 @@ class mFirebaseProfile extends bFirebase {
     };
 
     if (anon) {
+      profileData.displayName = 'User ' + Math.floor(1000 + Math.random() * 9000).toString();
       profileData.cameraUpdates = true;
       profileData.cameraSaves = true;
       profileData.showSceneGuides = false;

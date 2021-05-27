@@ -61,6 +61,9 @@ class cViewDemo extends bView {
         location.reload();
     };
   }
+  appDataUpdate(appData) {
+    this.cChat.updateMessageStatus();
+  }
   initBottomBar() {
     let expand_more = this.dialog.querySelector('.mobile_orientation_options .expand_more');
     let expand_less = this.dialog.querySelector('.mobile_orientation_options .expand_less');
@@ -1272,4 +1275,7 @@ class cViewDemo extends bView {
     }];
   }
   updateDocTitle() {}
+  applicationDataUpdate() {
+    console.log('app data update');
+  }
 }

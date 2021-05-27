@@ -32,9 +32,13 @@
     "projectTitles": {
       ".read": "auth !== null",
       ".write": "auth !== null",
-      ".indexOn": ["title", "tags"]      
+      ".indexOn": ["title", "tags"]
     },
     "usersprofile": {
+      ".read": "auth !== null",
+      ".write": "auth !== null"
+    },
+    "applicationData": {
       ".read": "auth !== null",
       ".write": "auth !== null"
     }

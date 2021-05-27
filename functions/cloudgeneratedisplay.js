@@ -153,4 +153,96 @@ module.exports = class cloudGenerateDisplay {
     let file_result = await this.uploadProfileImage(buffers[0], filename);
     return file_result;
   }
+  async post3DChatMessage(req, res) {
+    //delete old messages
+
+    //verify enuf time has passed since last (use transaction)
+
+
+
+/*
+    let name = 'chatitem_' + Math.floor(100 + Math.random() * 900).toString();
+
+    if (!this.texttext.value.trim()) {
+      alert('No msg to send');
+      return;
+    }
+
+    let csv_row = {
+      name,
+      texttext: this.texttext.value,
+      textfontfamily: this.textfontfamily.value,
+      textmaterial: this.textmaterial.value,
+      createshapetype: this.createshapetype.value,
+      shapematerial: this.shapematerial.value,
+      cylinderhorizontal: (this.cylinderhorizontal.checked) ? '1' : '0',
+      asset: 'shapeandtext',
+      width: "8",
+      height: "3",
+      depth: "2",
+      textdepth: '.25',
+      tessellation: '',
+      textstroke: '',
+      texttextline2: 'user shortname',
+      parent: '::scene::_chatWrapper'
+    };
+
+
+    let seconds = Math.round(new Date().getSeconds());
+    let angle = -4.0 * Math.PI * (seconds % 60) / 60.0;
+
+    let radius = 15;
+    csv_row.x = radius * Math.cos(angle);
+    csv_row.z = radius * Math.sin(angle);
+    csv_row.y = 5.0;
+    csv_row.ry = Math.atan2(csv_row.x, csv_row.z);
+
+    let csvImport = new gCSVImport(this.app.loadedWID);
+    csvImport.addCSVRow(csv_row);
+*/
+/*
+    //let curAnimTime = Math.max(0, this.app.mV.canvasHelper.timeE);
+    let curAnimTime = seconds;
+
+    let csvImport = new gCSVImport(this.app.loadedWID);
+    csvImport.addCSVRow(csv_row).then(() => {
+      csvImport.addCSVRow({
+        name: name,
+        childtype: 'block',
+        asset: 'blockchildframe',
+        parent: '::scene::_chatWrapper',
+        frametime: curAnimTime + 's',
+        y: 5.0,
+        frameorder: 20
+      });
+      csvImport.addCSVRow({
+        name: name,
+        childtype: 'block',
+        asset: 'blockchildframe',
+        parent: '::scene::_chatWrapper',
+        frametime: (curAnimTime + 20) + 'slf',
+        y: 30.0,
+        x: 0,
+        z: 0,
+        frameorder: 30
+      });
+    });
+
+*/
+
+//    this.texttext.value = '';
+//    this.status_line.innerHTML = 'Sent ' + new Date().toLocaleTimeString();
+
+
+
+
+
+
+
+
+
+    return res.status(200).send({
+      success: true
+    });
+  }
 };

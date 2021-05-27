@@ -191,3 +191,20 @@ exports.productsforname = functions
   });
 exports.generatedhelplist = functions
   .https.onRequest(async (req, res) => helpGen.helpGen(req, res));
+
+exports.post3dmessage = functions
+  .https.onRequest(async (req, res) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    if (req.method === 'POST') {
+      let id = req.query.id;
+      if (!id)
+        return res.status(200).send({
+          success: false,
+          wid: null
+        });
+
+      let cloudGen = new cloudGenerateDisplay(id);
+      return await cloudGen.post3DChatMessage(res, req);
+    }
+    return res.send("Post Only");
+  });

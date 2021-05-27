@@ -5,11 +5,37 @@ class gDemoApp extends gInstanceSuper {
     this.loadPickerData();
 
     this.filterActiveWorkspaces = true;
-    this.a.signInAnon(false);
+    this.a.signInAnon();
+  }
+  appDataUpdate(fireData) {
+    console.log('appdataupdate', fireData, fireData.val());
+
+    this.appData = {};
+    if (fireData.exists())
+      this.appData = fireData.val();
+
+    if (this.appData.wid)
+      if (this.appData.wid !== gAPPP.loadedWID && this.workspaceProcessed) {
+        location.reload(); // just dump the dom and restart
+      }
+
+    if (this.mV)
+      this.mV.appDataUpdate(this.appData);
   }
   async profileReadyAndLoaded() {
     this.loadStarted = true;
-    let workspace = this.a.profile.selectedWorkspace;
+
+    let appDataQuery = await firebase.database().ref('applicationData').once('value');
+    let appData = {
+      wid: null
+    };
+    if (appDataQuery.exists()) {
+      appData = appDataQuery.val();
+    }
+    firebase.database().ref('applicationData').on('value', data => this.appDataUpdate(data));
+    //firebase.database().ref('applicationData/child1').set(1234);
+
+    let workspace = appData.wid;
 
     let urlParams = new URLSearchParams(window.location.search);
 
@@ -123,5 +149,9 @@ class gDemoApp extends gInstanceSuper {
     `;
 
     return css + choice_css;
+  }
+  applicationDataUpdate() {
+    if (this.mV)
+      this.mV.applicationDataUpdate();
   }
 }
