@@ -156,7 +156,6 @@ module.exports = class cloudGenerateDisplay {
   async post3DChatMessage(req, res) {
 
     //verify enuf time has passed since last (use transaction)
-
     let db = this.firebase.database();
     let ref = db.ref('applicationData');
     let postMessageAllow = false;
@@ -167,7 +166,6 @@ module.exports = class cloudGenerateDisplay {
         success: false,
         message: 'texttext required'
       });
-      return;
     }
 
     try {
@@ -203,28 +201,32 @@ module.exports = class cloudGenerateDisplay {
         message: 'Wait Time'
       });
 
-
     //delete old messages
+    this.csvImport.deleteOldChat();
+
     let name = 'chatitem_' + newPostDate;
+    let postdate = newPostDate;
 
     let texttext = req.query.texttext;
     let createshapetype = req.query.createshapetype;
-    if (!createshapetype)
-      createshapetype = '';
+    if (!createshapetype) createshapetype = '';
     let cylinderhorizontal = req.query.cylinderhorizontal;
-    if (!cylinderhorizontal)
-      cylinderhorizontal = '';
+    if (!cylinderhorizontal) cylinderhorizontal = '';
 
-
-
+    let textfontfamily = req.query.textfontfamily;
+    if (!textfontfamily) textfontfamily = '';
+    let textmaterial = req.query.textmaterial;
+    if (!textmaterial) textmaterial = '';
+    let shapematerial = req.query.shapematerial;
+    if (!shapematerial) shapematerial = '';
 
     let csv_row = {
       name,
       texttext,
-      textfontfamily: 'Impact',
-      textmaterial: 'color:1,0,1',
+      textfontfamily,
+      textmaterial,
       createshapetype,
-      shapematerial: 'color:0,0,0',
+      shapematerial,
       cylinderhorizontal,
       asset: 'shapeandtext',
       width: "8",
@@ -234,9 +236,9 @@ module.exports = class cloudGenerateDisplay {
       tessellation: '',
       textstroke: '',
       texttextline2: 'user shortname',
-      parent: '::scene::_chatWrapper'
+      parent: '::scene::_chatWrapper',
+      postdate
     };
-
 
     let seconds = Math.round(new Date().getSeconds());
     let angle = -4.0 * Math.PI * (seconds % 60) / 60.0;

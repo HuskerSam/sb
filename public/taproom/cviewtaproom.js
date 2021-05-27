@@ -1085,8 +1085,6 @@ class cViewDemo extends bView {
     this.generate.blockHelperChange();
     */
 
-    this.chat_clear_button = this.dialog.querySelector('.chat_clear_button');
-    this.chat_clear_button.addEventListener('click', e => this.clearSceneEdits());
 
     this.circuitmaterialselect = this.dialog.querySelector('.circuitmaterialselect');
     this.circuitmaterialchangeselect = this.dialog.querySelector('.circuitmaterialchangeselect');
@@ -1180,36 +1178,6 @@ class cViewDemo extends bView {
         field: 'specularPower',
         newValue: specularPower
       }], mid);
-    }
-  }
-  clearSceneEdits() {
-    let parent = this.productData.sceneBlock.title + '_chatWrapper';
-    let b = gAPPP.a.modelSets['block'].getIdByFieldLookup('title', parent);
-    let blkChildren = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', b);
-    for (let i in blkChildren)
-      gAPPP.a.modelSets['blockchild'].removeByKey(i);
-
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'chatStartY',
-      newValue: "10"
-    }]);
-
-    let textures = gAPPP.a.modelSets['texture'].queryCacheContains('title', 'circuit_');
-    for (let tid in textures) {
-      let texture = textures[tid];
-      let orig = texture.orig;
-
-      if (!orig)
-        continue;
-
-      let updates = [];
-      for (let field in orig)
-        updates.push({
-          field,
-          newValue: orig[field]
-        });
-
-      gAPPP.a.modelSets['texture'].commitUpdateList(updates, tid);
     }
   }
   closeHeaderBands(canvasClick) {

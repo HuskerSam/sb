@@ -1468,11 +1468,6 @@ class cViewDemo extends bView {
     for (let i in blkChildren)
       gAPPP.a.modelSets['blockchild'].removeByKey(i);
 
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'chatStartY',
-      newValue: "10"
-    }]);
-
     let textures = gAPPP.a.modelSets['texture'].queryCacheContains('title', 'circuit_');
     for (let tid in textures) {
       let texture = textures[tid];

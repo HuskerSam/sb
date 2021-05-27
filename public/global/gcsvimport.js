@@ -506,12 +506,12 @@ class gCSVImport {
       });
     }
 
-    return Promise.resolve({
+    return {
       results,
       key: results.recordIds[0],
       data: results.records[0],
       parent: results.records[0].title
-    });
+    };
   }
   async addCSVBlockChildRow(row) {
     if (row.parent.toString().substr(0, 9) === '::scene::') {
@@ -2955,6 +2955,36 @@ class gCSVImport {
       return projects.recordIds[0];
 
     return null;
+  }
+  async deleteOldChat() {
+    let sceneData = await this.csvFetchSceneBlock();
+
+    if (!sceneData.parent)
+      return {};
+      //    key, data, parent
+
+    let obj = await this.findMatchBlocks('block', sceneData.parent + '_chatWrapper', sceneData.key);
+    console.log(obj);
+    let d = obj[0];
+    if (!obj[0])
+      return {};
+    let bcChildData = await this.dbFetchByLookup('blockchild', 'parentKey', obj[0].blockKey);
+    //let children = bcChildData.recordIds;
+
+    //blockData,
+    //BC: children[i],
+    //blockKey,
+    //BCKey: i
+    //console.log('chats', children);
+
+    let testDate = new Date();
+    bcChildData.records.forEach((t, index) => {
+      if (testDate - t.sortKey > 60000) {
+        let updatePath = this.path('blockchild') + '/' + bcChildData.recordIds[index];
+        this.firebase.database().ref(updatePath).remove();
+      }
+    });
+    return {};
   }
 }
 
