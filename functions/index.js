@@ -204,7 +204,7 @@ exports.post3dmessage = functions
         });
 
       let cloudGen = new cloudGenerateDisplay(id);
-      return await cloudGen.post3DChatMessage(res, req);
+      return await cloudGen.post3DChatMessage(req, res);
     }
     return res.send("Post Only");
   });

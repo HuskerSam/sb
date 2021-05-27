@@ -42,8 +42,30 @@ class cChat {
       this.next_message_status.innerHTML = 'Last: ' + (validDate ? lD.toLocaleTimeString() : 'none');
     }
   }
-  postMessage() {
+  async postMessage() {
     //firebase.database().ref('applicationData/lastMessageDate').set(new Date().toISOString());
+    if (!this.texttext.value) {
+      alert('msg required');
+      return;
+    }
+
+    let serverId = firebase.app().options.projectId;
+    let url = 'https://us-central1-' + serverId + '.cloudfunctions.net/post3dmessage';
+    url = 'http://localhost:5001/handtopbuilder/us-central1/post3dmessage';
+    url += '?id=' + encodeURIComponent(gAPPP.loadedWID);
+    url += '&texttext=' + encodeURIComponent(this.texttext.value);
+    url += '&createshapetype=' + encodeURIComponent(this.createshapetype.value);
+    url += '&cylinderhorizontal=' + this.cylinderhorizontal.checked ? '1' : '0';
+    let genResponse = await fetch(url, {
+      method: "post"
+    });
+    let gr = await genResponse.text();
+    let genResults = JSON.parse(gr);
+
+    if (genResults.success) {
+      this.texttext.value = '';
+    } else {
+    }
   }
   postMessageOld() {
     let name = 'chatitem_' + Math.floor(100 + Math.random() * 900).toString();

@@ -154,28 +154,78 @@ module.exports = class cloudGenerateDisplay {
     return file_result;
   }
   async post3DChatMessage(req, res) {
-    //delete old messages
 
     //verify enuf time has passed since last (use transaction)
 
+    let db = this.firebase.database();
+    let ref = db.ref('applicationData');
+    let postMessageAllow = false;
+    let newPostDate = new Date().toISOString();
 
-
-/*
-    let name = 'chatitem_' + Math.floor(100 + Math.random() * 900).toString();
-
-    if (!this.texttext.value.trim()) {
-      alert('No msg to send');
+    if (!req.query.texttext) {
+      return res.status(200).send({
+        success: false,
+        message: 'texttext required'
+      });
       return;
     }
 
+    try {
+      await ref.transaction((current_value) => {
+        if (!current_value) {
+          postMessageAllow = true;
+          return {
+            lastMessageDate: newPostDate
+          };
+        }
+
+        let lD = new Date(current_value.lastMessageDate);
+        if (new Date() - lD > 10000) {
+          postMessageAllow = true;
+          return {
+            lastMessageDate: newPostDate
+          };
+        }
+
+        newPostDate = null;
+        return current_value;
+      });
+    } catch (err) {
+      console.log('error', err);
+      return res.status(200).send({
+        success: true,
+        message: 'Error'
+      });
+    }
+    if (!newPostDate)
+      return res.status(200).send({
+        success: false,
+        message: 'Wait Time'
+      });
+
+
+    //delete old messages
+    let name = 'chatitem_' + newPostDate;
+
+    let texttext = req.query.texttext;
+    let createshapetype = req.query.createshapetype;
+    if (!createshapetype)
+      createshapetype = '';
+    let cylinderhorizontal = req.query.cylinderhorizontal;
+    if (!cylinderhorizontal)
+      cylinderhorizontal = '';
+
+
+
+
     let csv_row = {
       name,
-      texttext: this.texttext.value,
-      textfontfamily: this.textfontfamily.value,
-      textmaterial: this.textmaterial.value,
-      createshapetype: this.createshapetype.value,
-      shapematerial: this.shapematerial.value,
-      cylinderhorizontal: (this.cylinderhorizontal.checked) ? '1' : '0',
+      texttext,
+      textfontfamily: 'Impact',
+      textmaterial: 'color:1,0,1',
+      createshapetype,
+      shapematerial: 'color:0,0,0',
+      cylinderhorizontal,
       asset: 'shapeandtext',
       width: "8",
       height: "3",
@@ -197,48 +247,7 @@ module.exports = class cloudGenerateDisplay {
     csv_row.y = 5.0;
     csv_row.ry = Math.atan2(csv_row.x, csv_row.z);
 
-    let csvImport = new gCSVImport(this.app.loadedWID);
-    csvImport.addCSVRow(csv_row);
-*/
-/*
-    //let curAnimTime = Math.max(0, this.app.mV.canvasHelper.timeE);
-    let curAnimTime = seconds;
-
-    let csvImport = new gCSVImport(this.app.loadedWID);
-    csvImport.addCSVRow(csv_row).then(() => {
-      csvImport.addCSVRow({
-        name: name,
-        childtype: 'block',
-        asset: 'blockchildframe',
-        parent: '::scene::_chatWrapper',
-        frametime: curAnimTime + 's',
-        y: 5.0,
-        frameorder: 20
-      });
-      csvImport.addCSVRow({
-        name: name,
-        childtype: 'block',
-        asset: 'blockchildframe',
-        parent: '::scene::_chatWrapper',
-        frametime: (curAnimTime + 20) + 'slf',
-        y: 30.0,
-        x: 0,
-        z: 0,
-        frameorder: 30
-      });
-    });
-
-*/
-
-//    this.texttext.value = '';
-//    this.status_line.innerHTML = 'Sent ' + new Date().toLocaleTimeString();
-
-
-
-
-
-
-
+    this.csvImport.addCSVRow(csv_row);
 
 
     return res.status(200).send({
