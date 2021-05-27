@@ -90,6 +90,30 @@ class cViewDemo extends bView {
     this.dialog.querySelector('#enable_vr_canvas_btn').addEventListener('click', e => {
       gAPPP.activeContext.setupXRSupport();
     });
+    this.second_light_bar = this.dialog.querySelector('.second_light_bar');
+    this.lightBarFields = [{
+      title: 'Light',
+      fireSetField: 'lightIntensity',
+      helperType: 'singleSlider',
+      rangeMin: '0',
+      rangeMax: '2',
+      rangeStep: '.01',
+      displayType: 'number',
+      group: 'group2',
+      groupClass: 'second-light-intensity-user-panel'
+    }];
+
+    this.second_light_bar_fc = this.second_light_bar.querySelector('.fields-container');
+    this.second_light_bar_button = document.createElement('button');
+    this.second_light_bar_ctl = new cBandProfileOptions(this.second_light_bar_button, this.lightBarFields,
+      this.second_light_bar_fc, this.second_light_bar);
+    this.second_light_bar_ctl.fireFields.values = gAPPP.a.profile;
+    this.second_light_bar_ctl.panelShownClass = 'profile-panel-shown';
+    this.second_light_bar_ctl.activate();
+    this.second_light_bar_button.click();
+
+
+
   }
   moveCamera(dir) {
     let camera = gAPPP.activeContext.camera;
@@ -194,6 +218,7 @@ class cViewDemo extends bView {
     this.demo_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
     this.demo_panel_ctl.panelClosedCallback = () => this.clearHeaderBar();
 
+    /*
     this.cart_panel_button = this.dialog.querySelector('.cart_panel_button');
     this.cart_panel = this.dialog.querySelector('.cart_panel');
     this.cart_panel_fc = this.cart_panel.querySelector('.fields-container');
@@ -205,99 +230,7 @@ class cViewDemo extends bView {
     this.bandButtons.push(this.cart_panel_ctl);
     this.cart_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
     this.cart_panel_ctl.panelClosedCallback = () => this.clearHeaderBar();
-
-    this.chat_panel_button = this.dialog.querySelector('.chat_panel_button');
-    this.chat_panel = this.dialog.querySelector('.chat_panel');
-    this.chat_panel_fc = this.chat_panel.querySelector('.fields-container');
-    this.chat_fields = [{
-      title: 'X',
-      fireSetField: 'chatStartX',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'Y',
-      fireSetField: 'chatStartY',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'Z',
-      fireSetField: 'chatStartZ',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'rX',
-      fireSetField: 'chatStartrX',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true,
-      clearLeft: true
-    }, {
-      title: 'rY',
-      fireSetField: 'chatStartrY',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'rZ',
-      fireSetField: 'chatStartrZ',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'sX',
-      fireSetField: 'chatStartsX',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true,
-      clearLeft: true
-    }, {
-      title: 'sY',
-      fireSetField: 'chatStartsY',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'sZ',
-      fireSetField: 'chatStartsZ',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }];
-    this.chat_panel_ctl = new cBandProfileOptions(this.chat_panel_button, this.chat_fields,
-      this.chat_panel_fc, this.chat_panel);
-    this.chat_panel_ctl.fireFields.values = gAPPP.a.profile;
-    this.chat_panel_ctl.panelShownClass = 'profile-panel-shown';
-    this.chat_panel_ctl.activate();
-    this.bandButtons.push(this.chat_panel_ctl);
-    this.chat_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
-    this.chat_panel_ctl.panelClosedCallback = () => this.clearHeaderBar();
-
-    this.initBlockAddPanel();
-
-    this.edit_select_panel = this.dialog.querySelector('.edit_select_panel');
-    this.inner_circuitmaterial_panel = this.dialog.querySelector('.inner_circuitmaterial_panel');
-    this.inner_chat_panel = this.dialog.querySelector('.inner_chat_panel');
-    this.edit_select_panel.addEventListener('click', e => {
-      if (this.edit_select_panel.value === 'Circuit Materials') {
-        this.inner_circuitmaterial_panel.style.display = 'block';
-        this.inner_chat_panel.style.display = 'none';
-      } else {
-        this.inner_chat_panel.style.display = 'block';
-        this.inner_circuitmaterial_panel.style.display = 'none';
-      }
-    });
+    */
 
     this.mute_header_button = this.dialog.querySelector('.mute_header_button');
     this.mute_header_button.addEventListener('click', async e => {
@@ -1001,13 +934,11 @@ class cViewDemo extends bView {
 
       <div class="display_header_bar">
         <div class="display_header_row">
-          <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
+          <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total" style="display:none">$0.00</button>
           <button class="btn-sb-icon app-transparent help_popup_button" style="float:right;"><i class="material-icons-outlined">help</i></button>
           <button class="btn-sb-icon app-transparent mute_header_button" style="float:right;"><i class="material-icons-outlined">music_off</i></button>
           <button class="btn-sb-icon app-transparent demo_panel_button expanded_option"><i class="material-icons-outlined">info</i></button>
           <button class="btn-sb-icon app-transparent movie_panel_button expanded_option"><i class="material-icons-outlined">movie</i></button>
-          <button class="btn-sb-icon app-transparent chat_panel_button expanded_option"><i class="material-icons-outlined">edit</i></button>
-          <button class="btn-sb-icon app-transparent profile_panel_button expanded_option"><i class="material-icons-outlined">person</i></button>
           <div style="clear:both"></div>
         </div>
         <div class="display_header_slideout">
@@ -1058,7 +989,7 @@ class cViewDemo extends bView {
               </select>
               <br>
               <button id="enable_vr_canvas_btn">Enable VR</button>
-              <a style="line-height:1.5em;font-size:1.5em;" href="/retail/">About...</a>
+              <a style="line-height:1.5em;font-size:1.5em;" href="/retail/" target="_blank">About...</a>
               <br>
               <select id="workspaces-select"></select><div class="fields-container"></div>
             </div>
@@ -1068,29 +999,6 @@ class cViewDemo extends bView {
             </div>
             <div class="fields-container"></div>
             <button class="btn-sb-icon app-transparent cart-submit"><i class="material-icons-outlined">shopping_cart</i>Checkout</button>
-          </div>
-          <div class="chat_panel">
-            <select style="float:left;font-size:1.5em;" class="edit_select_panel app-transparent">
-              <option selected>Circuit Materials</option>
-              <option>Chat Items</option>
-            </select>
-            <button class="chat_clear_button btn-sb-icon app-transparent" style="float:right;">Reset Edits</button>
-            <div class="inner_circuitmaterial_panel app-panel app-transparent" style="clear:both;display:inline-block;float:left;">
-              <select class="circuitmaterialselect" style="display:inline-block"></select>
-              <br>
-              <select class="circuitmaterialchangeselect" style="display:inline-block"></select>
-              <br>
-              <div style="text-align:center;">
-                <label><span>repeat x</span><input type="text" class="materialscalev" style="width:3em;" value="1" /></label>
-                <label><span>repeat y</span><input type="text" class="materialscaleu" style="width:3em" value="1" /></label>
-                <label><span>s power</span><input type="text" class="materialspower" style="width:3em" value="4" /></label>
-              </div>
-            </div>
-            <div class="inner_chat_panel" style="clear:both;display:none;">
-              <div class="raw_macro_panel"></div>
-              <div class="fields-container"></div>
-              <div style="clear:both"></div>
-            </div>
           </div>
         </div>
       </div>
@@ -1108,12 +1016,12 @@ class cViewDemo extends bView {
           <div class="mobile_orientation_base_options">
             <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
           </div>
-          <div class="mobile_follow_base_options">
-          </div>
           <button class="btn-sb-icon app-transparent expand_less app-inverted"><i class="material-icons">expand_more</i></button>
-          <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">expand_less</i></button>
+          <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">edit</i></button>
+          <button class="btn-sb-icon app-transparent profile_panel_button expanded_option"><i class="material-icons-outlined">person</i></button>
         </div>
       </div>
+      <div class="second_light_bar" style="position:absolute;right:0;bottom:0"><i class="material-icons flare_icon">flare</i><div class="fields-container"></div></div>
     </div>`;
   }
   selectItem(newKey, newWindow) {

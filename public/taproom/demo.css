@@ -548,7 +548,7 @@ button, i, .no-selection {
   visibility: visible;
 }
 
-.mobile_orientation_options .sub_button_bar .second-light-intensity-user-panel {
+div.second-light-intensity-user-panel {
   padding: 0;
   margin: 0;
   overflow: visible;
@@ -558,7 +558,7 @@ button, i, .no-selection {
   pointer-events: none;
 }
 
-.mobile_orientation_options .sub_button_bar .second-light-intensity-user-panel input {
+.second-light-intensity-user-panel input {
   pointer-events: auto;
 }
 
@@ -570,40 +570,37 @@ button, i, .no-selection {
   display: none;
 }
 
-.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .selected-mesh-bounds-helper-box {
+.second-light-intensity-user-panel .selected-mesh-bounds-helper-box {
   height: 9.5em;
   padding: 0;
   padding-top: 2.25em;
   pointer-events: none;
 }
 
-.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .form-group {
+.second-light-intensity-user-panel .form-group {
   pointer-events: none;
 }
 
-.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .second-light-intensity-user-panel .action-area {
+.second-light-intensity-user-panel .action-area {
   pointer-events: none;
 }
 
-.mobile_orientation_options .sub_button_bar  .second_light_bar {
+.second_light_bar {
   pointer-events: none;
 }
 
-.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .fields-container {
-  overflow: visible;
-}
-
- .second-light-intensity-user-panel  .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
+.second-light-intensity-user-panel  .selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
    width: 9em;
    left: -1.5em;
 }
 
-.mobile_orientation_options .sub_button_bar .mobile_follow_sub_options .flare_icon {
+.flare_icon {
   position: absolute;
   z-index: 100;
   top: 1em;
   font-weight: bold;
   pointer-events: none;
+  right: 1.6em;
 }
 
 .camera-select-range-fov-slider, .camera-select-range-slider, .camera-select-range-height-slider{
