@@ -460,7 +460,6 @@ class cViewDemo extends bView {
     return rawUrl;
   }
 
-
   _audioFeatures() {
     if (this.rootBlock.blockRawData && this.rootBlock.blockRawData.audioURL) {
       let audio = document.createElement('audio');

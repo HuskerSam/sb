@@ -5,7 +5,7 @@ class mFirebaseProfile extends bFirebase {
     this.profile = this._defaultProfile();
     this.fireData = null;
     this.valueChangedEvents = true;
-    this.referencePath = 'usersprofile/anonymous';
+    this.referencePath = 'usersprofile/notinitialized';
 
     this.childListeners.push((values, type, fireData) => this._handleProfileDataChange(fireData, type));
   }
@@ -57,10 +57,7 @@ class mFirebaseProfile extends bFirebase {
     super.activate();
   }
   updateReferencePath() {
-    let uid = 'anonymous';
-    if (! gAPPP.a.anonymous)
-      uid = gAPPP.a.currentUser.uid;
-
+    let uid = gAPPP.a.currentUser.uid;
     this.referencePath = 'usersprofile/' + uid;
   }
   async setObject(profile) {

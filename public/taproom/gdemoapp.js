@@ -5,8 +5,7 @@ class gDemoApp extends gInstanceSuper {
     this.loadPickerData();
 
     this.filterActiveWorkspaces = true;
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
-      .then(() => this.a.signInAnon());
+    this.a.signInAnon(false);
   }
   async profileReadyAndLoaded() {
     this.loadStarted = true;

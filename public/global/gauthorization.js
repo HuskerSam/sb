@@ -17,7 +17,7 @@ class gAuthorization {
     this.modelSets['projectTitles'].childListeners.push((values, type, fireData) => this.onProjectTitlesChange(values, type, fireData));
     this.fireSets.push(this.modelSets['projectTitles']);
 
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+    //firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
 
     this.workspaceLoadedCallback = null;
@@ -131,11 +131,8 @@ class gAuthorization {
 
     this.__setAutoGoogleLogin(autoGoogleLogin);
 
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() => {
-        this.provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithRedirect(this.provider);
-      });
+    this.provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(this.provider);
   }
   async signInByEmail(email) {
     let actionCodeSettings = {
@@ -149,7 +146,6 @@ class gAuthorization {
   }
   async signInAnon() {
     this.anonymous = true;
-    await firebase.auth().signOut();
     firebase.auth().signInAnonymously();
   }
   signOut() {
