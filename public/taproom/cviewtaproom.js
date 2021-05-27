@@ -1247,16 +1247,6 @@ class cViewDemo extends bView {
       groupClass: 'font-size-main-view',
       floatLeft: true
     }, {
-      title: 'Opacity',
-      fireSetField: 'opacityLevel',
-      group: 'two',
-      displayType: 'number',
-      helperType: 'singleSlider',
-      rangeMin: '0',
-      rangeMax: '1',
-      rangeStep: '.01',
-      groupClass: 'opacity-main-view'
-    }, {
       title: 'Camera Updates',
       fireSetField: 'cameraUpdates',
       group: 'cameraTrack',
@@ -1270,13 +1260,6 @@ class cViewDemo extends bView {
       type: 'boolean',
       floatLeft: true,
       clearLeft: true
-    }, {
-      title: 'Wireframe',
-      fireSetField: 'showForceWireframe',
-      type: 'boolean',
-      group: 'cameraTrack',
-      floatLeft: true,
-      clearLeft: true,
     }];
   }
   getBrightnessFields() {

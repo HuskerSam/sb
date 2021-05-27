@@ -28,18 +28,20 @@ class mFirebaseProfile extends bFirebase {
   }
   _defaultProfile(anon = true) {
     let profileData = {
-      fontSize: '10',
-      lightIntensity: '.7',
-      selectedWorkspace: 'default',
+      fontSize: '12',
+      lightIntensity: '.75',
+      selectedWorkspace: '',
       showBoundsBox: true,
       showFloorGrid: true,
       cameraUpdates: true,
       cameraSaves: true,
-      opacityLevel: '.5',
+      opacityLevel: '1',
       showForceWireframe: false,
       showSceneGuides: true,
       cameraName: "Camera",
-      gridAndGuidesDepth: '15'
+      gridAndGuidesDepth: '15',
+      canvasColor: '1.00,0.78,0.39',
+
     };
 
     if (anon) {
