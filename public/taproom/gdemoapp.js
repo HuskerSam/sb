@@ -22,6 +22,15 @@ class gDemoApp extends gInstanceSuper {
 
     if (!nameWid)
       nameWid = urlParams.get('wid');
+
+    if (!nameWid) {
+      if (name !== 'taproom') {
+        name = 'taproom';
+        let csvImport = await new gCSVImport();
+        nameWid = await csvImport.widForName(name);
+      }
+    }
+
     if (nameWid) {
       workspace = nameWid;
       gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -88,8 +97,7 @@ class gDemoApp extends gInstanceSuper {
       maximumAge: 0
     });
   }
-  gpsReady() {
-  }
+  gpsReady() {}
   initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');
