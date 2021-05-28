@@ -8,7 +8,7 @@ class gDemoApp extends gInstanceSuper {
     this.a.signInAnon();
   }
   appDataUpdate(fireData) {
-    console.log('appdataupdate', fireData, fireData.val());
+    //console.log('appdataupdate', fireData, fireData.val());
 
     this.appData = {};
     if (fireData.exists())

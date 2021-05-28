@@ -20,11 +20,21 @@ class cChat {
     this.next_message_status = this.panel.querySelector('.next_message_status');
     this.updateMessageStatus();
     this.loadFontList();
+    this.loadMaterialLists();
 
     this.submit_3d_text_msg = this.panel.querySelector('.submit_3d_text_msg');
     this.submit_3d_text_msg.addEventListener('click', e => this.postMessage());
 
     this.status_line = this.panel.querySelector('.status_line');
+  }
+  loadMaterialLists() {
+    let materials = document.querySelector('#materialdatatitlelookuplist');
+
+    this.textmaterial.innerHTML = materials.innerHTML;
+    this.textmaterial.value = 'circuit_wood1';
+
+    this.shapematerial.innerHTML = materials.innerHTML;
+    this.shapematerial.value = 'circuit_metal2';
   }
   updateMessageStatus() {
     if (!this.next_message_status)
@@ -93,12 +103,9 @@ class cChat {
       <div class="next_message_status">&nbsp;</div>
       <input type="text" class="texttext" value="" />
       <br>
-      <select type="text" class="textfontfamily"></select>
+      <select class="textfontfamily"></select>
       <br>
-      <label><input type="checkbox" class="textstroke" />
-      <span>Open Face</span></label>
-      <br>
-      <input type="text" class="textmaterial"  list="materialdatatitlelookuplist" value="ecolor:1,.5,0"/>
+      <select class="textmaterial"></select>
       <br>
 
       <select class="createshapetype">
@@ -114,7 +121,7 @@ class cChat {
         <span>Rotate 90°</span>
       </label>
       <br>
-      <input type="text" class="shapematerial" list="materialdatatitlelookuplist" value="color:0,.5,1" />
+      <select class="shapematerial"></select>
       <br>
       <button class="submit_3d_text_msg">Submit</button>
       <div class="status_line">&nbsp;</div>

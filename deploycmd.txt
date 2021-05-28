@@ -7,11 +7,11 @@ firebase deploy -P sandboxone --only hosting
 firebase deploy -P vcsandbox1 --only hosting
 firebase deploy -P dedicateddemos --only hosting
 
-firebase deploy -P groceryblocks --only functions
-firebase deploy -P groceryscenes --only functions
-firebase deploy -P handtop --only functions
-firebase deploy -P sceneblocks --only functions
-firebase deploy -P builder --only functions
-firebase deploy -P sandboxone --only functions
-firebase deploy -P vcsandbox1 --only functions
-firebase deploy -P dedicateddemos --only functions
+firebase deploy -P groceryblocks
+firebase deploy -P groceryscenes
+firebase deploy -P handtop
+firebase deploy -P sceneblocks
+firebase deploy -P builder
+firebase deploy -P sandboxone
+firebase deploy -P vcsandbox1
+firebase deploy -P dedicateddemos
