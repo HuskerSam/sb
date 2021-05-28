@@ -274,7 +274,7 @@ class wBlock {
 
         if (this.blockRawData.childType === tag && values.title === this.blockRawData.childName) {
           if (type === 'add' && this.blockRawData.childType === 'block') {
-            return setTimeout(() => this.setData(), 100);
+            return setTimeout(() => this.setData(), 10);
           }
 
           return this.setData();
@@ -331,7 +331,7 @@ class wBlock {
       }
       this.framesHelper.compileFrames();
       this.__applyFirstFrameValues();
-    }, 50);
+    }, 10);
   }
   _handleTextureUpdate(values) {
     if (!values || !values.title)
