@@ -515,21 +515,7 @@ class cViewDemo extends bView {
     }
     this.basketAddItemBlock(sku, skuIndex);
 
-    if (!this.basketSKUs[sku])
-      this.basketSKUs[sku] = 1.0;
-    else
-      this.basketSKUs[sku] += 1.0;
-
-    let basketData = {
-      basketSKUs: this.basketSKUs,
-      skuOrder: this.skuOrder
-    };
-
-    let wsId = gAPPP.loadedWID;
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'basketData' + wsId,
-      newValue: basketData
-    }]);
+    return;
   }
   basketRemoveItem(event) {
     let btn = event.currentTarget;
@@ -680,41 +666,7 @@ class cViewDemo extends bView {
 
     this.__shakePosition(sceneProduct.sceneObject);
 
-    let frames = existingItemBlock.framesHelper.rawFrames;
-    let frameIds = [];
-    for (let i in frames)
-      frameIds.push(i);
-
-    if (frameIds.length < 1) {
-      console.log('no frames for', existingItemBlock);
-      return;
-    }
-
-    gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'frameTime',
-        newValue: '100%'
-      }, {
-        field: 'positionX',
-        newValue: pos.x.toString()
-      }, {
-        field: 'positionY',
-        newValue: pos.y.toString()
-      }, {
-        field: 'positionZ',
-        newValue: pos.z.toString()
-      }, {
-        field: 'scalingX',
-        newValue: ".45"
-      }, {
-        field: 'scalingY',
-        newValue: ".45"
-      }, {
-        field: 'scalingZ',
-        newValue: ".45"
-      }
-    ], frameIds[0]);
-
-    return Promise.resolve();
+    return true;
   }
   async basketRemoveItemBlock(sku) {
     let product = this.productsBySKU[sku];
