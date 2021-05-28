@@ -157,7 +157,7 @@ module.exports = class cloudGenerateDisplay {
 
     //verify enuf time has passed since last (use transaction)
     let db = this.firebase.database();
-    let ref = db.ref('applicationData');
+    let ref = db.ref('applicationData/lastMessageDate');
     let postMessageAllow = false;
     let newPostDate = new Date().toISOString();
 
@@ -172,17 +172,13 @@ module.exports = class cloudGenerateDisplay {
       await ref.transaction((current_value) => {
         if (!current_value) {
           postMessageAllow = true;
-          return {
-            lastMessageDate: newPostDate
-          };
+          return newPostDate;
         }
 
-        let lD = new Date(current_value.lastMessageDate);
+        let lD = new Date(current_value);
         if (new Date() - lD > 10000) {
           postMessageAllow = true;
-          return {
-            lastMessageDate: newPostDate
-          };
+          return newPostDate;
         }
 
         newPostDate = null;
