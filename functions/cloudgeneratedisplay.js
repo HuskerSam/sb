@@ -191,7 +191,7 @@ module.exports = class cloudGenerateDisplay {
     } catch (err) {
       console.log('error', err);
       return res.status(200).send({
-        success: true,
+        success: false,
         message: 'Error'
       });
     }
@@ -202,7 +202,7 @@ module.exports = class cloudGenerateDisplay {
       });
 
     //delete old messages
-    this.csvImport.deleteOldChat();
+    await this.csvImport.deleteOldChat();
 
     let name = 'chatitem_' + newPostDate;
     let postdate = newPostDate;
@@ -249,7 +249,7 @@ module.exports = class cloudGenerateDisplay {
     csv_row.y = 5.0;
     csv_row.ry = Math.atan2(csv_row.x, csv_row.z);
 
-    this.csvImport.addCSVRow(csv_row);
+    await this.csvImport.addCSVRow(csv_row);
 
 
     return res.status(200).send({

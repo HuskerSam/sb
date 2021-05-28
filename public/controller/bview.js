@@ -148,9 +148,10 @@ class bView {
     this.canvasHelper.__updateVideoCallback();
     this.key = profileKey;
     this.rootBlock.setData(blockData);
+    console.log('bview', '__loadBLock)');
     setTimeout(() => {
       this.canvasHelper.show();
-      this._updateContextWithDataChange();
+      //this._updateContextWithDataChange();
       gAPPP.activeContext.activeBlock.setData();
       this.profileUpdate();
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);

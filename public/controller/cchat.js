@@ -51,7 +51,7 @@ class cChat {
 
     let serverId = firebase.app().options.projectId;
     let url = 'https://us-central1-' + serverId + '.cloudfunctions.net/post3dmessage';
-    ////////////////url = 'http://localhost:5001/handtopbuilder/us-central1/post3dmessage';
+    //url = 'http://localhost:5001/handtopbuilder/us-central1/post3dmessage';
     url += '?id=' + encodeURIComponent(gAPPP.loadedWID);
     url += '&texttext=' + encodeURIComponent(this.texttext.value);
     url += '&createshapetype=' + encodeURIComponent(this.createshapetype.value);

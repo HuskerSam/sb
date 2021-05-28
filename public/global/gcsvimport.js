@@ -2964,7 +2964,6 @@ class gCSVImport {
       //    key, data, parent
 
     let obj = await this.findMatchBlocks('block', sceneData.parent + '_chatWrapper', sceneData.key);
-    console.log(obj);
     let d = obj[0];
     if (!obj[0])
       return {};

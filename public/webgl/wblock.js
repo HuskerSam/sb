@@ -4,6 +4,7 @@ class wBlock {
     this.blockTargetKey = null;
     this.sceneObject = sceneObject;
     this.childBlocks = {};
+    this.parentBlocks = {}; //root only
     this.context = context;
     this.parent = parent;
     this.staticType = '';
@@ -138,12 +139,28 @@ class wBlock {
     }
   }
   handleDataUpdate(tag, values, type, fireData) {
-    if (!this.parent) {
+    //if (type === 'add' && tag !== 'blockchild')
+    //  return;
+
+
+    let rootBlock = this.context.canvasHelper.rootBlock;
+    if (this !== rootBlock) {
       if (!this.skipInitEvent) {
         this.skipInitEvent = true;
       } else
         this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type, true);
     }
+
+    if ((tag === 'frame' || tag === 'blockchild') && type === 'add')
+      if (values.parentKey && this.parentBlocks[values.parentKey])
+        if (this.parentBlocks[values.parentKey] !== this)
+          return this.parentBlocks[values.parentKey].handleDataUpdate(tag, values, type, fireData);
+
+    if (type === 'add') {
+      if (tag === 'mesh' || tag === 'shape' || tag === 'block')
+        return;
+    }
+    console.log(this.blockKey, tag, type, values);
 
     if (type === 'moved')
       return;
@@ -211,6 +228,8 @@ class wBlock {
           return this.childBlocks[cb].setData();
         }
       }
+
+      return;
     } else if (tag === 'frame') {
       let parentKey = null;
       if (values)
@@ -303,7 +322,7 @@ class wBlock {
 
         if (this.framesHelper.processedFrames.length > 1) {
           this.setData(); //recalc block child frames if % values used
-          this._restartRootAnimation();
+          //this._restartRootAnimation();
         } else {
           this.__applyFirstFrameValues();
         }
@@ -613,7 +632,8 @@ class wBlock {
       }
     }
 
-    if (this.rootBlock.updatesDisabled)
+    let rootBlock = this.context.canvasHelper.rootBlock;
+    if (rootBlock.updatesDisabled)
       return;
 
     if (this.staticLoad) {
@@ -709,6 +729,8 @@ class wBlock {
     this.framesHelper.activeAnimation = null;
     this.framesHelper.setParentKey(this.blockKey, this);
 
+    let rootBlock = this.context.canvasHelper.rootBlock;
+    rootBlock.parentBlocks[this.blockKey] = this;
     this.__applyFirstFrameValues();
   }
   __renderMeshBlock() {
