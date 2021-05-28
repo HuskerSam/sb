@@ -219,6 +219,8 @@ module.exports = class cloudGenerateDisplay {
     if (!textmaterial) textmaterial = '';
     let shapematerial = req.query.shapematerial;
     if (!shapematerial) shapematerial = '';
+    let texttextline2 = req.query.displayname;
+    if (!texttextline2) texttextline2 = '';
 
     let csv_row = {
       name,
@@ -235,7 +237,7 @@ module.exports = class cloudGenerateDisplay {
       textdepth: '.25',
       tessellation: '',
       textstroke: '',
-      texttextline2: 'user shortname',
+      texttextline2,
       parent: '::scene::_chatWrapper',
       postdate
     };

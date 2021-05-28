@@ -49,6 +49,10 @@ class cChat {
       return;
     }
 
+    let displayName = gAPPP.a.profile.displayName;
+    if (!displayName)
+      displayName = 'Anonymous';
+
     let serverId = firebase.app().options.projectId;
     let url = 'https://us-central1-' + serverId + '.cloudfunctions.net/post3dmessage';
     //url = 'http://localhost:5001/handtopbuilder/us-central1/post3dmessage';
@@ -58,6 +62,7 @@ class cChat {
     url += '&textmaterial=' + encodeURIComponent(this.textmaterial.value);
     url += '&shapematerial=' + encodeURIComponent(this.shapematerial.value);
     url += '&textfontfamily=' + encodeURIComponent(this.textfontfamily.value);
+    url += '&displayname=' + encodeURIComponent(displayName);
     url += '&cylinderhorizontal=' + (this.cylinderhorizontal.checked ? '1' : '0');
     let genResponse = await fetch(url, {
       method: "post"
@@ -69,79 +74,6 @@ class cChat {
       this.texttext.value = '';
     } else {
     }
-  }
-  postMessageOld() {
-    let name = 'chatitem_' + Math.floor(100 + Math.random() * 900).toString();
-
-    if (!this.texttext.value.trim()) {
-      alert('No msg to send');
-      return;
-    }
-
-    let csv_row = {
-      name,
-      texttext: this.texttext.value,
-      textfontfamily: this.textfontfamily.value,
-      textmaterial: this.textmaterial.value,
-      createshapetype: this.createshapetype.value,
-      shapematerial: this.shapematerial.value,
-      cylinderhorizontal: (this.cylinderhorizontal.checked) ? '1' : '0',
-      asset: 'shapeandtext',
-      width: "8",
-      height: "3",
-      depth: "2",
-      textdepth: '.25',
-      tessellation: '',
-      textstroke: '',
-      texttextline2: 'user shortname',
-      parent: '::scene::_chatWrapper'
-    };
-
-
-    let seconds = Math.round(new Date().getSeconds());
-    let angle = -4.0 * Math.PI * (seconds % 60) / 60.0;
-
-    let radius = 15;
-    csv_row.x = radius * Math.cos(angle);
-    csv_row.z = radius * Math.sin(angle);
-    csv_row.y = 5.0;
-    csv_row.ry = Math.atan2(csv_row.x, csv_row.z);
-
-    let csvImport = new gCSVImport(this.app.loadedWID);
-    csvImport.addCSVRow(csv_row);
-
-/*
-    //let curAnimTime = Math.max(0, this.app.mV.canvasHelper.timeE);
-    let curAnimTime = seconds;
-
-    let csvImport = new gCSVImport(this.app.loadedWID);
-    csvImport.addCSVRow(csv_row).then(() => {
-      csvImport.addCSVRow({
-        name: name,
-        childtype: 'block',
-        asset: 'blockchildframe',
-        parent: '::scene::_chatWrapper',
-        frametime: curAnimTime + 's',
-        y: 5.0,
-        frameorder: 20
-      });
-      csvImport.addCSVRow({
-        name: name,
-        childtype: 'block',
-        asset: 'blockchildframe',
-        parent: '::scene::_chatWrapper',
-        frametime: (curAnimTime + 20) + 'slf',
-        y: 30.0,
-        x: 0,
-        z: 0,
-        frameorder: 30
-      });
-    });
-
-*/
-
-    this.texttext.value = '';
-    this.status_line.innerHTML = 'Sent ' + new Date().toLocaleTimeString();
   }
   loadFontList() {
     let fonts = document.querySelector('#fontfamilydatalist');

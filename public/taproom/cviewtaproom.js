@@ -1218,6 +1218,11 @@ class cViewDemo extends bView {
       groupClass: 'font-size-main-view',
       floatLeft: true
     }, {
+      title: 'Display Name',
+      fireSetField: 'displayName',
+      group: 'displayName',
+      floatLeft: true
+    }, {
       title: 'Camera Updates',
       fireSetField: 'cameraUpdates',
       group: 'cameraTrack',
