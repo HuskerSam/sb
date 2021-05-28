@@ -53,7 +53,6 @@ class cChat {
     }
   }
   async postMessage() {
-    //firebase.database().ref('applicationData/lastMessageDate').set(new Date().toISOString());
     if (!this.texttext.value) {
       alert('msg required');
       return;

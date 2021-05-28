@@ -49,7 +49,7 @@ class gDemoApp extends gInstanceSuper {
     if (!nameWid)
       nameWid = urlParams.get('wid');
 
-    if (!nameWid) {
+    if (!nameWid && !workspace) {
       if (name !== 'taproom') {
         name = 'taproom';
         let csvImport = await new gCSVImport();
@@ -59,10 +59,6 @@ class gDemoApp extends gInstanceSuper {
 
     if (nameWid) {
       workspace = nameWid;
-      gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-        field: 'selectedWorkspace',
-        newValue: nameWid
-      }]);
     }
 
     if (!workspace)

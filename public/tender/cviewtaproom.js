@@ -286,6 +286,13 @@ class cViewDemo extends bView {
   addDemoPanelOptions() {
     this.ui_select = this.dialog.querySelector('.ui_select');
     this.ui_select.addEventListener('input', e => this.updateUIDisplay(e));
+
+    this.taproom_select = this.dialog.querySelector('.taproom_select');
+    this.taproom_select.innerHTML = document.querySelector('#workspaces-select').innerHTML;
+    this.taproom_select.value = gAPPP.loadedWID;
+    this.taproom_select.addEventListener('input', e => {
+      firebase.database().ref('applicationData/wid').set(this.taproom_select.value);
+    });
   }
   updateURL() {
     let searchParams = new URLSearchParams(window.location.search);
@@ -946,7 +953,12 @@ class cViewDemo extends bView {
               <a style="line-height:1.5em;font-size:1.5em;" href="/retail/" target="_blank">About...</a>
               <br>
               <select id="workspaces-select"></select><div class="fields-container"></div>
-            </div>
+              <br>
+              <br>
+              Set Scene For /taproom
+              <br>
+              <select class="taproom_select"></select>
+              </div>
           </div>
           <div class="cart_panel">
             <div class="cart-contents app-panel app-transparent">
