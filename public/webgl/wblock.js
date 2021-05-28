@@ -139,17 +139,19 @@ class wBlock {
     }
   }
   handleDataUpdate(tag, values, type, fireData) {
-    //if (type === 'add' && tag !== 'blockchild')
-    //  return;
-
-
     let rootBlock = this.context.canvasHelper.rootBlock;
     if (this !== rootBlock) {
+      if (rootBlock.updatesDisabled)
+        return;
+
       if (!this.skipInitEvent) {
         this.skipInitEvent = true;
       } else
         this.context.canvasHelper.logMessage('event - ' + tag + ' ' + type, true);
     }
+
+    if (rootBlock.updatesDisabled && type !== 'change')
+      return;
 
     if ((tag === 'frame' || tag === 'blockchild') && type === 'add')
       if (values.parentKey && this.parentBlocks[values.parentKey])
@@ -160,7 +162,6 @@ class wBlock {
       if (tag === 'mesh' || tag === 'shape' || tag === 'block')
         return;
     }
-    console.log(this.blockKey, tag, type, values);
 
     if (type === 'moved')
       return;
@@ -273,8 +274,8 @@ class wBlock {
         }
 
         if (this.blockRawData.childType === tag && values.title === this.blockRawData.childName) {
-          if (type === 'add' && this.blockRawData.childType === 'block') {
-            return setTimeout(() => this.setData(), 10);
+          if (type === 'add') {
+            return this.setData();
           }
 
           return this.setData();
@@ -314,24 +315,20 @@ class wBlock {
     //  }, 150);
   }
   _framesRedraw() {
-    clearTimeout(this.framesRedrawTimeout);
-
-    this.framesRedrawTimeout = setTimeout(() => {
-      if (this.blockRawData.childType === 'block') {
-        this.framesHelper.compileFrames();
-
-        if (this.framesHelper.processedFrames.length > 1) {
-          this.setData(); //recalc block child frames if % values used
-          //this._restartRootAnimation();
-        } else {
-          this.__applyFirstFrameValues();
-        }
-
-        return;
-      }
+    if (this.blockRawData.childType === 'block') {
       this.framesHelper.compileFrames();
-      this.__applyFirstFrameValues();
-    }, 10);
+
+      if (this.framesHelper.processedFrames.length > 1) {
+        this.setData(); //recalc block child frames if % values used
+        //this._restartRootAnimation();
+      } else {
+        this.__applyFirstFrameValues();
+      }
+
+      return;
+    }
+    this.framesHelper.compileFrames();
+    this.__applyFirstFrameValues();
   }
   _handleTextureUpdate(values) {
     if (!values || !values.title)
