@@ -288,10 +288,11 @@ class cViewDemo extends bView {
     this.ui_select.addEventListener('input', e => this.updateUIDisplay(e));
 
     this.taproom_select = this.dialog.querySelector('.taproom_select');
-    this.taproom_select.innerHTML = document.querySelector('#workspaces-select').innerHTML;
-    this.taproom_select.value = gAPPP.loadedWID;
+    this.taproom_select.innerHTML = '<option>Select Display</option>' + document.querySelector('#workspaces-select').innerHTML;
+    this.taproom_select.selectedIndex = 0;
     this.taproom_select.addEventListener('input', e => {
-      firebase.database().ref('applicationData/wid').set(this.taproom_select.value);
+      if (this.taproom_select.selectedIndex > 0)
+        firebase.database().ref('applicationData/wid').set(this.taproom_select.value);
     });
   }
   updateURL() {
