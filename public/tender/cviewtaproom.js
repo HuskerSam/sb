@@ -49,6 +49,9 @@ class cViewDemo extends bView {
     this.initHeaderBar();
     this.initBottomBar();
 
+    this.mobile_orientation_sub_options = this.dialog.querySelector('.mobile_orientation_sub_options');
+    this.cChat = new cChat(this.mobile_orientation_sub_options, gAPPP);
+
     gAPPP.activeContext.handleAnimationNotReadyCallback = () => {
       this.rootBlock.updatesDisabled = true;
       this.canvasHelper.hide();
@@ -57,22 +60,9 @@ class cViewDemo extends bView {
       if (this.rootBlock.updatesDisabled)
         location.reload();
     };
-
-    this.orientation_details_div = this.dialog.querySelector('.orientation_details_div');
-
-    window.addEventListener('deviceorientation', event => {
-      this.orientationInited = true;
-      this.alpha = event.alpha ? event.alpha.toFixed(0) : 'none';
-      this.beta = event.beta ? event.beta.toFixed(1) : 'none';
-      this.gamma = event.gamma ? event.gamma.toFixed(2) : 'none';
-
-      if (this.orientation_details_div) {
-        if (this.alpha !== 'none') {
-          this.orientation_details_div.innerHTML = this.alpha + ' : ' + this.beta + ' <br>';
-          this.orientation_details_div.style.display = 'inline-block';
-        }
-      }
-    });
+  }
+  appDataUpdate(appData) {
+    this.cChat.updateMessageStatus();
   }
   initBottomBar() {
     let expand_more = this.dialog.querySelector('.mobile_orientation_options .expand_more');
@@ -96,154 +86,13 @@ class cViewDemo extends bView {
         this.arrow_upward.running = true;
         this.arrow_upward.classList.add('app-inverted');
         this.moveCamera('up');
-        this.upwardMoveTimeout = setInterval(() => this.moveCamera('up'), 100);
+        this.upwardMoveTimeout = setInterval(() => this.moveCamera('up'), 20);
       }
     });
 
-    this.arrow_downward = this.dialog.querySelector('.mobile_orientation_options .arrow_downward');
-    this.arrow_downward.addEventListener('click', e => {
-      clearInterval(this.downwardMoveTimeout);
-
-      if (this.arrow_downward.running) {
-        this.arrow_downward.running = false;
-        this.arrow_downward.classList.remove('app-inverted');
-      } else {
-        this.arrow_downward.running = true;
-        this.arrow_downward.classList.add('app-inverted');
-        this.moveCamera('down');
-        this.downwardMoveTimeout = setInterval(() => this.moveCamera('down'), 100);
-      }
+    this.dialog.querySelector('#enable_vr_canvas_btn').addEventListener('click', e => {
+      gAPPP.activeContext.setupXRSupport();
     });
-
-    this.arrow_forward = this.dialog.querySelector('.mobile_orientation_options .arrow_forward');
-    this.arrow_forward.addEventListener('click', e => {
-      clearInterval(this.forwardMoveTimeout);
-
-      if (this.arrow_forward.running) {
-        this.arrow_forward.running = false;
-        this.arrow_forward.classList.remove('app-inverted');
-      } else {
-        this.arrow_forward.running = true;
-        this.arrow_forward.classList.add('app-inverted');
-        this.moveCamera('right');
-        this.forwardMoveTimeout = setInterval(() => this.moveCamera('right'), 100);
-      }
-    });
-
-    this.arrow_backward = this.dialog.querySelector('.mobile_orientation_options .arrow_backward');
-    this.arrow_backward.addEventListener('click', e => {
-      clearInterval(this.backwardMoveTimeout);
-
-      if (this.arrow_backward.running) {
-        this.arrow_backward.running = false;
-        this.arrow_backward.classList.remove('app-inverted');
-      } else {
-        this.arrow_backward.running = true;
-        this.arrow_backward.classList.add('app-inverted');
-        this.moveCamera('left');
-        this.backwardMoveTimeout = setInterval(() => this.moveCamera('left'), 100);
-      }
-    });
-
-    this.rotate_left = this.dialog.querySelector('.mobile_orientation_options .rotate_left');
-    this.rotate_left.addEventListener('click', e => {
-      clearInterval(this.rotateLeftMoveTimeout);
-
-      if (this.rotate_left.running) {
-        this.rotate_left.running = false;
-        this.rotate_left.classList.remove('app-inverted');
-      } else {
-        this.rotate_left.running = true;
-        this.rotate_left.classList.add('app-inverted');
-
-        gAPPP.activeContext.camera.updateUpVectorFromRotation = true;
-        gAPPP.activeContext.camera.cameraRotation.y -= .02;
-        this.rotateLeftMoveTimeout = setInterval(() => {
-          gAPPP.activeContext.camera.cameraRotation.y -= .02;
-        }, 100);
-      }
-    });
-
-    this.rotate_right = this.dialog.querySelector('.mobile_orientation_options .rotate_right');
-    this.rotate_right.addEventListener('click', e => {
-      clearInterval(this.rotateRightMoveTimeout);
-
-      if (this.rotate_right.running) {
-        this.rotate_right.running = false;
-        this.rotate_right.classList.remove('app-inverted');
-      } else {
-        this.rotate_right.running = true;
-        this.rotate_right.classList.add('app-inverted');
-
-        gAPPP.activeContext.camera.updateUpVectorFromRotation = true;
-        gAPPP.activeContext.camera.cameraRotation.y += .02;
-        this.rotateRightMoveTimeout = setInterval(() => {
-          gAPPP.activeContext.camera.cameraRotation.y += .02;
-        }, 100);
-      }
-    });
-
-    this.geo_gps_coords = this.dialog.querySelector('.geo_gps_coords');
-    this.geo_lock = this.dialog.querySelector('.mobile_orientation_options .geo_lock');
-    this.geo_lock.addEventListener('click', e => {
-
-      gAPPP.gpsCallback = (data, isError) => {
-        if (isError) {
-          this.geo_gps_coords.innerHTML = 'ERROR(' + data.code + '): ' + data.message;
-        } else {
-          this.__updateGPSLocation();
-        }
-      };
-      if (this.geo_lock.running) {
-        this.geo_lock.running = false;
-        this.geo_lock.classList.remove('app-inverted');
-        gAPPP.initGPSTracking(false);
-        this.geo_gps_coords.style.display = 'none';
-      } else {
-        this.geo_lock.running = true;
-        this.geo_lock.classList.add('app-inverted');
-        gAPPP.initGPSTracking(true);
-        this.geo_gps_coords.style.display = 'inline-block';
-      }
-    });
-
-    this.sub_bar_pause_button = this.dialog.querySelector('.sub_bar_pause_button');
-    this.sub_bar_pause_button.addEventListener('click', e => {
-      if (this.canvasHelper.playState === 1)
-        this.canvasHelper.playState = 2;
-      else
-        this.canvasHelper.playState = 1;
-    });
-    this.canvasHelper.playStateChangedCallback = () => {
-      if (this.canvasHelper.playState === 1) {
-        this.sub_bar_pause_button.innerHTML = '<i class="material-icons">pause</i>';
-        this.sub_bar_pause_button.classList.remove('app-inverted');
-      } else {
-        this.sub_bar_pause_button.innerHTML = '<i class="material-icons">play_arrow</i>';
-        this.sub_bar_pause_button.classList.add('app-inverted');
-      }
-    };
-
-    this.anim_rewind = this.dialog.querySelector('.anim_rewind');
-    this.anim_skip_previous = this.dialog.querySelector('.anim_skip_previous');
-    this.anim_skip_next = this.dialog.querySelector('.anim_skip_next');
-    this.anim_rewind.addEventListener('click', e => {
-      this.canvasHelper.stopAnimation();
-      this.canvasHelper.playAnimation();
-    });
-    this.anim_skip_next.addEventListener('click', e => {
-      let newPos = Number(this.canvasHelper.animateSlider.value) + 10;
-      if (newPos > 100.0)
-        newPos -= 100.0;
-      this.rootBlock.setAnimationPosition(newPos);
-    });
-    this.anim_skip_previous.addEventListener('click', e => {
-      let newPos = Number(this.canvasHelper.animateSlider.value) - 10;
-      if (newPos < 0.0)
-        newPos += 100.0;
-      this.rootBlock.setAnimationPosition(newPos);
-    });
-
     this.second_light_bar = this.dialog.querySelector('.second_light_bar');
     this.lightBarFields = [{
       title: 'Light',
@@ -267,29 +116,7 @@ class cViewDemo extends bView {
     this.second_light_bar_button.click();
 
 
-    this.workspace_show_layout_positions = document.body.querySelector('.workspace_show_layout_positions');
-    this.workspace_show_layout_positions.addEventListener('click', e => this.showLayoutPositions());
 
-    this.dialog.querySelector('#enable_vr_canvas_btn').addEventListener('click', e => {
-      gAPPP.activeContext.setupXRSupport();
-    });
-  }
-  __updateGPSLocation() {
-    this.geo_gps_coords.innerHTML = '' + gAPPP.latitude + '°, ' + gAPPP.longitude + '°';
-
-    if (!this.startLon) {
-      this.startLon = gAPPP.longitude;
-      this.startLat = gAPPP.latitude;
-      return;
-    }
-
-    let d_result = GLOBALUTIL.getGPSDiff(this.startLat, this.startLon, gAPPP.latitude, gAPPP.longitude);
-
-    this.startLon = gAPPP.longitude;
-    this.startLat = gAPPP.latitude;
-
-    this.context.camera._position.x += d_result.vertical * -1.0; //east increasing
-    this.context.camera._position.z += d_result.horizontal * 1.0; //north increasing\
   }
   moveCamera(dir) {
     let camera = gAPPP.activeContext.camera;
@@ -297,6 +124,41 @@ class cViewDemo extends bView {
 
     if (!camera)
       return;
+
+      let base_speed = .3;
+
+    let displayCamera = gAPPP.mV.rootBlock.blockRawData.displayCamera;
+
+    if (displayCamera === 'arcRotateCamera') {
+      let cam_dir = new BABYLON.Vector3(0, 0, 0);
+      if (dir === 'left') {
+        let vec2 = new BABYLON.Vector3(-base_speed, 0, 0);
+        camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+        BABYLON.Vector3.TransformNormalToRef(vec2, camera._cameraTransformMatrix, cam_dir);
+        camera.target.addInPlace(cam_dir);
+      }
+      else if (dir === 'up') {
+        let vec2 = new BABYLON.Vector3(0, 0, base_speed);
+        camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+        BABYLON.Vector3.TransformNormalToRef(vec2, camera._cameraTransformMatrix, cam_dir);
+        camera.target.addInPlace(cam_dir);
+      } else if (dir === 'right') {
+        let vec2 = new BABYLON.Vector3(base_speed, 0, 0);
+        camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+        BABYLON.Vector3.TransformNormalToRef(vec2, camera._cameraTransformMatrix, cam_dir);
+        camera.target.addInPlace(cam_dir);
+      } else if (dir === 'down') {
+        let vec2 = new BABYLON.Vector3(0, 0, -base_speed);
+        camera.getViewMatrix().invertToRef(camera._cameraTransformMatrix);
+        BABYLON.Vector3.TransformNormalToRef(vec2, camera._cameraTransformMatrix, cam_dir);
+        camera.target.addInPlace(cam_dir);
+      }
+
+
+
+      return;
+    }
+
     if (!camera._localDirection)
       return;
     if (dir === 'left')
@@ -359,6 +221,7 @@ class cViewDemo extends bView {
     this.demo_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
     this.demo_panel_ctl.panelClosedCallback = () => this.clearHeaderBar();
 
+    /*
     this.cart_panel_button = this.dialog.querySelector('.cart_panel_button');
     this.cart_panel = this.dialog.querySelector('.cart_panel');
     this.cart_panel_fc = this.cart_panel.querySelector('.fields-container');
@@ -370,99 +233,7 @@ class cViewDemo extends bView {
     this.bandButtons.push(this.cart_panel_ctl);
     this.cart_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
     this.cart_panel_ctl.panelClosedCallback = () => this.clearHeaderBar();
-
-    this.chat_panel_button = this.dialog.querySelector('.chat_panel_button');
-    this.chat_panel = this.dialog.querySelector('.chat_panel');
-    this.chat_panel_fc = this.chat_panel.querySelector('.fields-container');
-    this.chat_fields = [{
-      title: 'X',
-      fireSetField: 'chatStartX',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'Y',
-      fireSetField: 'chatStartY',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'Z',
-      fireSetField: 'chatStartZ',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'rX',
-      fireSetField: 'chatStartrX',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true,
-      clearLeft: true
-    }, {
-      title: 'rY',
-      fireSetField: 'chatStartrY',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'rZ',
-      fireSetField: 'chatStartrZ',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'sX',
-      fireSetField: 'chatStartsX',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true,
-      clearLeft: true
-    }, {
-      title: 'sY',
-      fireSetField: 'chatStartsY',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }, {
-      title: 'sZ',
-      fireSetField: 'chatStartsZ',
-      group: 'main',
-      displayType: 'number',
-      groupClass: 'chat_num_field',
-      floatLeft: true
-    }];
-    this.chat_panel_ctl = new cBandProfileOptions(this.chat_panel_button, this.chat_fields,
-      this.chat_panel_fc, this.chat_panel);
-    this.chat_panel_ctl.fireFields.values = gAPPP.a.profile;
-    this.chat_panel_ctl.panelShownClass = 'profile-panel-shown';
-    this.chat_panel_ctl.activate();
-    this.bandButtons.push(this.chat_panel_ctl);
-    this.chat_panel_ctl.closeOthersCallback = () => this.closeHeaderBands();
-    this.chat_panel_ctl.panelClosedCallback = () => this.clearHeaderBar();
-
-    this.initBlockAddPanel();
-
-    this.edit_select_panel = this.dialog.querySelector('.edit_select_panel');
-    this.inner_circuitmaterial_panel = this.dialog.querySelector('.inner_circuitmaterial_panel');
-    this.inner_chat_panel = this.dialog.querySelector('.inner_chat_panel');
-    this.edit_select_panel.addEventListener('click', e => {
-      if (this.edit_select_panel.value === 'Circuit Materials') {
-        this.inner_circuitmaterial_panel.style.display = 'block';
-        this.inner_chat_panel.style.display = 'none';
-      } else {
-        this.inner_chat_panel.style.display = 'block';
-        this.inner_circuitmaterial_panel.style.display = 'none';
-      }
-    });
+    */
 
     this.mute_header_button = this.dialog.querySelector('.mute_header_button');
     this.mute_header_button.addEventListener('click', async e => {
@@ -744,21 +515,7 @@ class cViewDemo extends bView {
     }
     this.basketAddItemBlock(sku, skuIndex);
 
-    if (!this.basketSKUs[sku])
-      this.basketSKUs[sku] = 1.0;
-    else
-      this.basketSKUs[sku] += 1.0;
-
-    let basketData = {
-      basketSKUs: this.basketSKUs,
-      skuOrder: this.skuOrder
-    };
-
-    let wsId = gAPPP.loadedWID;
-    gAPPP.a.modelSets['userProfile'].commitUpdateList([{
-      field: 'basketData' + wsId,
-      newValue: basketData
-    }]);
+    return;
   }
   basketRemoveItem(event) {
     let btn = event.currentTarget;
@@ -909,41 +666,7 @@ class cViewDemo extends bView {
 
     this.__shakePosition(sceneProduct.sceneObject);
 
-    let frames = existingItemBlock.framesHelper.rawFrames;
-    let frameIds = [];
-    for (let i in frames)
-      frameIds.push(i);
-
-    if (frameIds.length < 1) {
-      console.log('no frames for', existingItemBlock);
-      return;
-    }
-
-    gAPPP.a.modelSets['frame'].commitUpdateList([{
-        field: 'frameTime',
-        newValue: '100%'
-      }, {
-        field: 'positionX',
-        newValue: pos.x.toString()
-      }, {
-        field: 'positionY',
-        newValue: pos.y.toString()
-      }, {
-        field: 'positionZ',
-        newValue: pos.z.toString()
-      }, {
-        field: 'scalingX',
-        newValue: ".45"
-      }, {
-        field: 'scalingY',
-        newValue: ".45"
-      }, {
-        field: 'scalingZ',
-        newValue: ".45"
-      }
-    ], frameIds[0]);
-
-    return Promise.resolve();
+    return true;
   }
   async basketRemoveItemBlock(sku) {
     let product = this.productsBySKU[sku];
@@ -1160,18 +883,16 @@ class cViewDemo extends bView {
   }
   layoutTemplate() {
     return `<div id="firebase-app-main-page" style="display:none;">
-      <div id="renderLoadingCanvas" style="display:none;">Reloading Visual Catalog</div>
+      <div id="renderLoadingCanvas" style="display:none;">Loading Taproom!</div>
       <div class="form_canvas_wrapper"></div>
 
       <div class="display_header_bar">
         <div class="display_header_row">
-          <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total">$0.00</button>
+          <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total" style="display:none">$0.00</button>
           <button class="btn-sb-icon app-transparent help_popup_button" style="float:right;"><i class="material-icons-outlined">help</i></button>
           <button class="btn-sb-icon app-transparent mute_header_button" style="float:right;"><i class="material-icons-outlined">music_off</i></button>
           <button class="btn-sb-icon app-transparent demo_panel_button expanded_option"><i class="material-icons-outlined">info</i></button>
           <button class="btn-sb-icon app-transparent movie_panel_button expanded_option"><i class="material-icons-outlined">movie</i></button>
-          <button class="btn-sb-icon app-transparent chat_panel_button expanded_option"><i class="material-icons-outlined">edit</i></button>
-          <button class="btn-sb-icon app-transparent profile_panel_button expanded_option"><i class="material-icons-outlined">person</i></button>
           <div style="clear:both"></div>
         </div>
         <div class="display_header_slideout">
@@ -1233,29 +954,6 @@ class cViewDemo extends bView {
             <div class="fields-container"></div>
             <button class="btn-sb-icon app-transparent cart-submit"><i class="material-icons-outlined">shopping_cart</i>Checkout</button>
           </div>
-          <div class="chat_panel">
-            <select style="float:left;font-size:1.5em;" class="edit_select_panel app-transparent">
-              <option selected>Circuit Materials</option>
-              <option>Chat Items</option>
-            </select>
-            <button class="chat_clear_button btn-sb-icon app-transparent" style="float:right;">Reset Edits</button>
-            <div class="inner_circuitmaterial_panel app-panel app-transparent" style="clear:both;display:inline-block;float:left;">
-              <select class="circuitmaterialselect" style="display:inline-block"></select>
-              <br>
-              <select class="circuitmaterialchangeselect" style="display:inline-block"></select>
-              <br>
-              <div style="text-align:center;">
-                <label><span>repeat x</span><input type="text" class="materialscalev" style="width:3em;" value="1" /></label>
-                <label><span>repeat y</span><input type="text" class="materialscaleu" style="width:3em" value="1" /></label>
-                <label><span>s power</span><input type="text" class="materialspower" style="width:3em" value="4" /></label>
-              </div>
-            </div>
-            <div class="inner_chat_panel app-panel app-transparent" style="clear:both;display:none;">
-              <div class="raw_macro_panel"></div>
-              <div class="fields-container"></div>
-              <div style="clear:both"></div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="bottom_options_panel">
@@ -1267,45 +965,17 @@ class cViewDemo extends bView {
         </div>
         <div class="mobile_orientation_options collapsed">
           <div class="sub_button_bar">
-            <div class="mobile_orientation_sub_options">
-              <div class="geo_gps_coords app-transparent" style="display:none;"></div>
-              <div class="orientation_details_div app-transparent" style="display:none;"></div>
-              <div></div>
-              <button class="btn-sb-icon app-transparent rotate_left"><i class="material-icons">rotate_left</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent arrow_downward"><i class="material-icons">arrow_downward</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent rotate_right"><i class="material-icons">rotate_right</i></button>
-              <br>
-              <button class="btn-sb-icon app-transparent arrow_backward"><i class="material-icons">arrow_back</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent geo_lock"><i class="material-icons">my_location</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent arrow_forward"><i class="material-icons">arrow_forward</i></button>
-            </div>
-            <div class="mobile_follow_sub_options">
-              <button class="btn-sb-icon app-transparent anim_rewind"><i class="material-icons">replay</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent workspace_show_layout_positions"><i class="material-icons">grid_on</i></button>
-              <br>
-              <button class="btn-sb-icon app-transparent anim_skip_previous"><i class="material-icons">skip_previous</i></button>
-              &nbsp;
-              <button class="btn-sb-icon app-transparent anim_skip_next"><i class="material-icons">skip_next</i></button>
-              <div class="second_light_bar" style="position:absolute;right:0;top:0"><i class="material-icons flare_icon">flare</i><div class="fields-container"></div></div>
-            </div>
+            <div class="mobile_orientation_sub_options"></div>
           </div>
-          <button class="btn-sb-icon app-transparent sub_bar_pause_button"><i class="material-icons">pause</i></button>
-          &nbsp;
           <div class="mobile_orientation_base_options">
             <button class="btn-sb-icon app-transparent arrow_upward"><i class="material-icons">arrow_upward</i></button>
-            &nbsp;
-          </div>
-          <div class="mobile_follow_base_options">
           </div>
           <button class="btn-sb-icon app-transparent expand_less app-inverted"><i class="material-icons">expand_more</i></button>
-          <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">expand_less</i></button>
+          <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">edit</i></button>
+          <button class="btn-sb-icon app-transparent profile_panel_button expanded_option"><i class="material-icons-outlined">person</i></button>
         </div>
       </div>
+      <div class="second_light_bar" style="position:absolute;right:0;bottom:0"><i class="material-icons flare_icon">flare</i><div class="fields-container"></div></div>
     </div>`;
   }
   selectItem(newKey, newWindow) {
@@ -1313,6 +983,7 @@ class cViewDemo extends bView {
   }
   initBlockAddPanel() {
     this.raw_macro_panel = this.dialog.querySelector('.raw_macro_panel');
+/*
     this.generate = new cMacro(this.raw_macro_panel, 'block', gAPPP);
     this.generate.addCallback = async (id, blockName) => {
       if (blockName === undefined) {
@@ -1358,14 +1029,14 @@ class cViewDemo extends bView {
 
       this.generate.lastRowAdded = null;
     };
+
     let sel = this.dialog.querySelector('.block_wizard_type_select');
     sel.innerHTML = `<option selected>Text and Shape</option>
      <option>Animated Line</option>
      <option>Connector Line</option><option>Web Font</option>`;
     this.generate.blockHelperChange();
+    */
 
-    this.chat_clear_button = this.dialog.querySelector('.chat_clear_button');
-    this.chat_clear_button.addEventListener('click', e => this.clearSceneEdits());
 
     this.circuitmaterialselect = this.dialog.querySelector('.circuitmaterialselect');
     this.circuitmaterialchangeselect = this.dialog.querySelector('.circuitmaterialchangeselect');
@@ -1385,7 +1056,7 @@ class cViewDemo extends bView {
     this.circuitmaterialselect.innerHTML = matListHtml;
 
     let html = '<option>Set to ...</option>';
-    html += this.generate._materialGetHTMLOptionList();
+    //html += this.generate._materialGetHTMLOptionList();
     //html = html.replace(/sb:matpack\//gi, '');
     this.circuitmaterialchangeselect.innerHTML = html;
   }
@@ -1461,31 +1132,6 @@ class cViewDemo extends bView {
       }], mid);
     }
   }
-  clearSceneEdits() {
-    let parent = this.productData.sceneBlock.title + '_chatWrapper';
-    let b = gAPPP.a.modelSets['block'].getIdByFieldLookup('title', parent);
-    let blkChildren = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', b);
-    for (let i in blkChildren)
-      gAPPP.a.modelSets['blockchild'].removeByKey(i);
-
-    let textures = gAPPP.a.modelSets['texture'].queryCacheContains('title', 'circuit_');
-    for (let tid in textures) {
-      let texture = textures[tid];
-      let orig = texture.orig;
-
-      if (!orig)
-        continue;
-
-      let updates = [];
-      for (let field in orig)
-        updates.push({
-          field,
-          newValue: orig[field]
-        });
-
-      gAPPP.a.modelSets['texture'].commitUpdateList(updates, tid);
-    }
-  }
   closeHeaderBands(canvasClick) {
     if (canvasClick)
       return;
@@ -1524,15 +1170,10 @@ class cViewDemo extends bView {
       groupClass: 'font-size-main-view',
       floatLeft: true
     }, {
-      title: 'Opacity',
-      fireSetField: 'opacityLevel',
-      group: 'two',
-      displayType: 'number',
-      helperType: 'singleSlider',
-      rangeMin: '0',
-      rangeMax: '1',
-      rangeStep: '.01',
-      groupClass: 'opacity-main-view'
+      title: 'Display Name',
+      fireSetField: 'displayName',
+      group: 'displayName',
+      floatLeft: true
     }, {
       title: 'Camera Updates',
       fireSetField: 'cameraUpdates',
@@ -1547,13 +1188,6 @@ class cViewDemo extends bView {
       type: 'boolean',
       floatLeft: true,
       clearLeft: true
-    }, {
-      title: 'Wireframe',
-      fireSetField: 'showForceWireframe',
-      type: 'boolean',
-      group: 'cameraTrack',
-      floatLeft: true,
-      clearLeft: true,
     }];
   }
   getBrightnessFields() {
@@ -1565,6 +1199,8 @@ class cViewDemo extends bView {
       groupClass: 'light-intensity-user-panel'
     }];
   }
-  updateDocTitle() {
+  updateDocTitle() {}
+  applicationDataUpdate() {
+    console.log('app data update');
   }
 }

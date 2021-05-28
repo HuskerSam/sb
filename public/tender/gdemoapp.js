@@ -5,12 +5,37 @@ class gDemoApp extends gInstanceSuper {
     this.loadPickerData();
 
     this.filterActiveWorkspaces = true;
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE)
-      .then(() => this.a.signInAnon());
+    this.a.signInAnon();
+  }
+  appDataUpdate(fireData) {
+    //console.log('appdataupdate', fireData, fireData.val());
+
+    this.appData = {};
+    if (fireData.exists())
+      this.appData = fireData.val();
+
+    if (this.appData.wid)
+      if (this.appData.wid !== gAPPP.loadedWID && this.workspaceProcessed) {
+        location.reload(); // just dump the dom and restart
+      }
+
+    if (this.mV)
+      this.mV.appDataUpdate(this.appData);
   }
   async profileReadyAndLoaded() {
     this.loadStarted = true;
-    let workspace = this.a.profile.selectedWorkspace;
+
+    let appDataQuery = await firebase.database().ref('applicationData').once('value');
+    let appData = {
+      wid: null
+    };
+    if (appDataQuery.exists()) {
+      appData = appDataQuery.val();
+    }
+    firebase.database().ref('applicationData').on('value', data => this.appDataUpdate(data));
+    //firebase.database().ref('applicationData/child1').set(1234);
+
+    let workspace = appData.wid;
 
     let urlParams = new URLSearchParams(window.location.search);
 
@@ -23,6 +48,15 @@ class gDemoApp extends gInstanceSuper {
 
     if (!nameWid)
       nameWid = urlParams.get('wid');
+
+    if (!nameWid) {
+      if (name !== 'taproom') {
+        name = 'taproom';
+        let csvImport = await new gCSVImport();
+        nameWid = await csvImport.widForName(name);
+      }
+    }
+
     if (nameWid) {
       workspace = nameWid;
       gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -89,8 +123,7 @@ class gDemoApp extends gInstanceSuper {
       maximumAge: 0
     });
   }
-  gpsReady() {
-  }
+  gpsReady() {}
   initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');
@@ -116,5 +149,9 @@ class gDemoApp extends gInstanceSuper {
     `;
 
     return css + choice_css;
+  }
+  applicationDataUpdate() {
+    if (this.mV)
+      this.mV.applicationDataUpdate();
   }
 }
