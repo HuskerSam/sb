@@ -245,7 +245,7 @@ module.exports = class cloudGenerateDisplay {
     let seconds = Math.round(new Date().getSeconds());
     let angle = -4.0 * Math.PI * (seconds % 60) / 60.0;
 
-    let radius = 15;
+    let radius = 19;
     csv_row.x = radius * Math.cos(angle);
     csv_row.z = radius * Math.sin(angle);
     csv_row.y = 5.0;
