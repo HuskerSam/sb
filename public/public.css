@@ -191,32 +191,20 @@ table.gsc-search-box td {
 }
 
 .help_display_item {
-  text-align: left;
-  line-height: 1em;
+  float: left;
+  clear: left;
+}
+
+.help_display_item div {
   display: inline-block;
-  margin: 0 2px;
-  padding-bottom: .75em;
+  margin-left: 1em;
 }
 
-.help_display_item a {
-  padding: .25em;
-  border: solid 1px transparent;
-}
-
-.list_help_view .help_body .sub_bar a:hover,
-.list_help_view .help_body .sub_bar a:focus {
-  background: yellow;
-  border-color: black;
-}
-
-.help_display_item>a {
-  border: solid 1px rgb(255, 140, 0);
-  text-decoration: none;
-  padding: .25em .75em 1.25em .75em;
-  display: block;
-  text-align: center;
-  margin-right: -3px;
-  margin-left: -2px;
+.list_help_view .help_body a i {
+  position: relative;
+  top: .25em;
+  color: rgb(255, 140, 0);
+  background: transparent !important;
 }
 
 .list_help_view .help_body .sub_bar a {
@@ -233,28 +221,9 @@ table.gsc-search-box td {
   color: black;
 }
 
-.help_display_item>div {
-  padding-bottom: .25em;
-}
-
-.help_display_item .sub_bar {
-  margin-top: -.65em;
-  text-align: center;
-}
-
-.help_display_item a:hover, .help_display_item a:focus {
-  background: white;
-  color: black;
-}
-
-.help_display_item h1 {
-  margin: 0;
-  display: block;
-  font-size: 1.25em;
-}
 
 .help_body {
-  padding: .25em .25em .5em .25em;
+  padding: .25em .25em .5em .75em;
   flex: 1;
   line-height: 2em;
 }
@@ -268,32 +237,8 @@ table.gsc-search-box td {
   margin-top: .1em;
 }
 
-.list_help_view .help_body {
-  position: relative;
-  overflow: hidden;
-}
-
 .item_help_view {}
 
-.list_help_view .help_body a {
-  color: rgb(0, 100, 255);
-}
-
-.list_help_view .help_body .help_display_item>a {
-  color: rgb(0, 100, 255);
-  border-color: rgb(0, 127, 0);
-}
-
-.list_help_view .help_body a:hover, .list_help_view .help_body a:focus {
-  background: yellow;
-}
-
-.list_help_view .help_body a i {
-  position: relative;
-  top: .25em;
-  color: rgb(255, 140, 0);
-  background: transparent !important;
-}
 
 #help_template_select {
   position: relative;
@@ -329,40 +274,15 @@ table.gsc-search-box td {
 }
 
 .help_body .reviewed {
-  font-size: .75em;
-  color: gray;
-  text-align: center;
-  margin-top: -1.5em;
-  position: relative;
-  margin-bottom: .75em;
-  pointer-events: none;
-  z-index: 2000;
 }
 
 .list_help_view h2 {
-  margin: 0;
-  color: rgb(200, 255, 200);
-  font-size: 7em;
-  display: inline-block;
-  position: absolute;
-  top: .25em;
-  z-index: -10;
 }
 
 .list_help_view .header_wrapper {
-  position: absolute;
-  z-index: -1;
-  text-align: left;
-  height: 6em;
-  width: 100%;
-  overflow: visible;
 }
 
 .list_html_div .review_text {
-  padding-left: .5em;
-  position: relative;
-  top: -.75em;
-  display: inline-block;
 }
 
 a.gsst_a {

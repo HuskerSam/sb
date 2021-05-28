@@ -31,8 +31,8 @@ class HelpGen {
     if (includeList) {
       listHTML = `<div class="list_html_div"><select id="help_template_select" value="${value}">${helpOptions}</select><br>`;
 
-      listHTML += ` &nbsp; <a href="${video}" ${ video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
-      listHTML += ` &nbsp; <a href="${deployed}" ${ deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
+      listHTML += ` &nbsp; <a href="${video}" ${ video ? '' : 'style="display:none;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
+      listHTML += ` &nbsp; <a href="${deployed}" ${ deployed ? '' : 'style="display:none;"'} target="_blank"><i class="material-icons">animation</i></a>`;
 
       listHTML += reviewHTML;
       listHTML += '</div>';
@@ -226,8 +226,8 @@ class HelpGen {
       html += `<div class="reviewed">${i.reviewed}</div>`;
       html += `<div class="sub_bar">`;
       //`<a href="${i.value}" target="_blank"><i class="material-icons">open_in_new</i></a>`;
-      html += ` <a href="${i.video}" ${ i.video ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
-      html += ` <a href="${i.deployed}" ${ i.deployed ? '' : 'style="visibility:hidden;"'} target="_blank"><i class="material-icons">animation</i></a>`;
+      html += ` <a href="${i.video}" ${ i.video ? '' : 'style="display:none;"'} target="_blank"><i class="material-icons">ondemand_video</i></a>`;
+      html += ` <a href="${i.deployed}" ${ i.deployed ? '' : 'style="display:none;"'} target="_blank"><i class="material-icons">animation</i></a>`;
       html += `</div>`;
       html += '</div>';
 
