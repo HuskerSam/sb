@@ -1509,8 +1509,8 @@ class AddonSidePanelApp {
     if (song_bytes) {
       let riffTest = new TextDecoder().decode(song_bytes.slice(0, 4));
       if (riffTest !== 'RIFF') {
-        alert('must be WAV file');
-        return;
+        alert('must be WAV file - RIFF warning');
+//        return;
       }
       this.totalSize = song_bytes[7] * (256 * 256 * 256) +
         song_bytes[6] * (256 * 256) +
@@ -1519,8 +1519,8 @@ class AddonSidePanelApp {
       html_out += 'total size: ' + this.totalSize + '<br>';
       let wavTEST = new TextDecoder().decode(song_bytes.slice(8, 15));
       if (wavTEST !== 'WAVEfmt') {
-        alert('must be WAV file');
-        return;
+        alert('must be WAV file - wavefmt warning');
+//        return;
       }
       this.sampleBits = song_bytes[19] * (256 * 256 * 256) +
         song_bytes[18] * (256 * 256) +
@@ -1556,8 +1556,8 @@ class AddonSidePanelApp {
       html_out += 'bitRate: ' + this.bitRate + '<br>';
       let dataTEST = new TextDecoder().decode(song_bytes.slice(36, 40));
       if (dataTEST !== 'data') {
-        alert('must be WAV file');
-        return;
+        alert('must be WAV file - data test warning');
+//        return;
       }
 
       this.dataChunkHeader = song_bytes[39] * (256 * 256 * 256) +
