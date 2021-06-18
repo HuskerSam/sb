@@ -115,8 +115,17 @@ class cViewDemo extends bView {
     this.second_light_bar_ctl.activate();
     this.second_light_bar_button.click();
 
+    this.image360bkgupload = this.dialog.querySelector('.image360bkgupload');
+    this.image360bkgupload.addEventListener('input', e => {
+      if (!this.productData.sceneId)
+        return;
 
-
+      let v = this.image360bkgupload.value;
+      gAPPP.a.modelSets['block'].commitUpdateList([{
+        field: 'skybox',
+        newValue: v
+      }], this.productData.sceneId);
+    });
   }
   moveCamera(dir) {
     let camera = gAPPP.activeContext.camera;
@@ -959,7 +968,12 @@ class cViewDemo extends bView {
               Set Scene For /taproom
               <br>
               <select class="taproom_select"></select>
-              </div>
+              <br>
+              <br>
+              360 Bkg: <input class="image360bkgupload" type="text" list="skyboxlist">
+              <br>
+              <br>
+            </div>
           </div>
           <div class="cart_panel">
             <div class="cart-contents app-panel app-transparent">

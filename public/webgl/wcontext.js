@@ -570,11 +570,6 @@ class wContext {
           this._renderUniversalCamera();
         } else if (cameraDetails.cameraType === 'ArcRotate') {
           this._renderArcCamera();
-          if (gAPPP.mV && gAPPP.mV.rootBlock) {
-            setTimeout(() => this._animateCamera(), 500);
-            setTimeout(() => this._animateCamera(), 1000);
-          }
-
         } else if (cameraDetails.cameraType === 'DeviceOrientationCamera') {
           this._renderDeviceOrientationCamera();
         } else if (cameraDetails.cameraType === 'WebVRFreeCamera') {
