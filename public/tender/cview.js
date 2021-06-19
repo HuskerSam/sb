@@ -908,8 +908,8 @@ class cViewDemo extends bView {
           <button class="cart_panel_button btn-sb-icon app-transparent cart-item-total" style="display:none">$0.00</button>
           <button class="btn-sb-icon app-transparent help_popup_button" style="float:right;"><i class="material-icons-outlined">help</i></button>
           <button class="btn-sb-icon app-transparent mute_header_button" style="float:right;"><i class="material-icons-outlined">music_off</i></button>
-          <button class="btn-sb-icon app-transparent demo_panel_button expanded_option"><i class="material-icons-outlined">info</i></button>
-          <button class="btn-sb-icon app-transparent movie_panel_button expanded_option"><i class="material-icons-outlined">movie</i></button>
+          <button class="btn-sb-icon app-transparent demo_panel_button"><i class="material-icons-outlined">info</i></button>
+          <button class="btn-sb-icon app-transparent movie_panel_button"><i class="material-icons-outlined">movie</i></button>
           <div style="clear:both"></div>
         </div>
         <div class="display_header_slideout">
