@@ -64,7 +64,7 @@ class cViewDemo extends bView {
     this.image360bkgupload = this.dialog.querySelector('.image360bkgupload');
     let html = '';
     for (let c = 1; c <= 67; c++) {
-      html += '<option>sb:chat360/nwalk' + c.toString() + '.jpg</option>';
+      html += '<option value="sb:chat360/nwalk' + c.toString() + '.jpg">360 Bkg ' + c.toString()  + '</option>';
     }
     this.image360bkgupload.innerHTML = html;
     this.image360bkgupload.addEventListener('input', e => {
@@ -78,6 +78,10 @@ class cViewDemo extends bView {
       }], this.productData.sceneId);
     });
 
+    BABYLON.WebXRSessionManager.IsSessionSupportedAsync("immersive-vr").then(vr => {
+      if (!vr)
+        this.enable_vr_canvas_btn.style.display = 'none';
+    });
   }
   appDataUpdate(appData) {
     this.cChat.updateMessageStatus();
@@ -108,7 +112,8 @@ class cViewDemo extends bView {
       }
     });
 
-    this.dialog.querySelector('#enable_vr_canvas_btn').addEventListener('click', e => {
+    this.enable_vr_canvas_btn = this.dialog.querySelector('#enable_vr_canvas_btn');
+    this.enable_vr_canvas_btn.addEventListener('click', e => {
       gAPPP.activeContext.setupXRSupport();
     });
     this.second_light_bar = this.dialog.querySelector('.second_light_bar');
@@ -959,7 +964,6 @@ class cViewDemo extends bView {
                 <option value="mobile_portrait">Mobile Portrait</option>
               </select>
               <br>
-              <button id="enable_vr_canvas_btn">Enable VR</button>
               <a style="line-height:1.5em;font-size:1.5em;" href="/retail/" target="_blank">About...</a>
               <br>
               <select id="workspaces-select"></select><div class="fields-container"></div>
@@ -994,6 +998,8 @@ class cViewDemo extends bView {
           <select class="image360bkgupload"></select>
           <br>
           <select class="camera-select" style="width:auto;float:none;"></select>
+          &nbsp;
+          <button id="enable_vr_canvas_btn">vr</button>
         </div>
       </div>
       <div class="second_light_bar" style="position:absolute;right:0;bottom:0"><i class="material-icons flare_icon">flare</i><div class="fields-container"></div></div>
