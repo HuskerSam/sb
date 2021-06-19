@@ -60,6 +60,24 @@ class cViewDemo extends bView {
       if (this.rootBlock.updatesDisabled)
         location.reload();
     };
+
+    this.image360bkgupload = this.dialog.querySelector('.image360bkgupload');
+    let html = '';
+    for (let c = 1; c <= 67; c++) {
+      html += '<option>sb:chat360/nwalk' + c.toString() + '.jpg</option>';
+    }
+    this.image360bkgupload.innerHTML = html;
+    this.image360bkgupload.addEventListener('input', e => {
+      if (!this.productData.sceneId)
+        return;
+
+      let v = this.image360bkgupload.value;
+      gAPPP.a.modelSets['block'].commitUpdateList([{
+        field: 'skybox',
+        newValue: v
+      }], this.productData.sceneId);
+    });
+
   }
   appDataUpdate(appData) {
     this.cChat.updateMessageStatus();
@@ -913,7 +931,6 @@ class cViewDemo extends bView {
               <div class="run-length-label"></div>
               <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
             </div>
-            <select class="camera-select"></select>
             <div style="float:left;position:relative;">
               <div class="camera-slider-label">Radius</div>
               <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
@@ -973,6 +990,10 @@ class cViewDemo extends bView {
           <button class="btn-sb-icon app-transparent expand_less app-inverted"><i class="material-icons">expand_more</i></button>
           <button class="btn-sb-icon app-transparent expand_more"><i class="material-icons">edit</i></button>
           <button class="btn-sb-icon app-transparent profile_panel_button expanded_option"><i class="material-icons-outlined">person</i></button>
+          <br>
+          <select class="image360bkgupload"></select>
+          <br>
+          <select class="camera-select" style="width:auto;float:none;"></select>
         </div>
       </div>
       <div class="second_light_bar" style="position:absolute;right:0;bottom:0"><i class="material-icons flare_icon">flare</i><div class="fields-container"></div></div>
