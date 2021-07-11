@@ -400,7 +400,7 @@ export class cApplication extends cWebApplication {
     if (!key) return;
 
     this.fields = sDataDefinition.bindingFieldsCloned(tag);
-    this.fireSet = gAPPP.a.modelSets[tag];
+    this.fireSet = this.sets[tag];
 
     this.fireFields = new cPanelData(this.fields, this.assetsFieldsContainer, this);
     this.fireFields.updateContextObject = true;

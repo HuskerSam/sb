@@ -12,17 +12,17 @@ export class cFirestoreData {
     this.keyList = false;
 
     if (type === 'workspace') {
-      this.referencePath = '/project/' + id + '/' + tag + '/';
+      this.referencePath = '/project/' + id + '/' + tag;
     } else if (type === 'profile') {
       this.referencePath = '/profile';
       this.uid = id;
       this.tag = 'profile';
     } else if (type === 'project') {
       this.tag = 'project';
-      this.referencePath = 'project';
+      this.referencePath = '/project';
     } else {
       alert('invalid cFirestoreData type');
-      this.referencePath = '/boguspath/';
+      this.referencePath = '/boguspath';
     }
 
     this.keyList = true;

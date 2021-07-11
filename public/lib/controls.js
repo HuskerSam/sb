@@ -409,12 +409,12 @@ export class cPanelData {
     this._updateFieldDom(field);
   }
   _commitUpdates(newValues) {
-    if (!this.fireSet)
+    if (!this.parent.fireSet)
       return;
 
     let updates = this._generateUpdateList(newValues);
     if (updates) {
-      this.fireSet.update(updates, this.key);
+      this.parent.fireSet.update(updates, this.parent.key);
 
       for (let i in this.fields) {
         let f = this.fields[i];
@@ -435,6 +435,7 @@ export class cPanelData {
       o = o.toString();
       if (v !== o) {
         updates[f.fireSetField] = v;
+        noData = false;
       }
     }
 
@@ -450,8 +451,8 @@ export class cPanelData {
     if (type === "moved")
       return;
 
-    if (this.fireSet.keyList) {
-      if (this.parent.key !== fireata.doc.id)
+    if (this.parent.fireSet.keyList) {
+      if (this.parent.key !== fireData.doc.id)
         return;
     }
 
