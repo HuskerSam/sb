@@ -1,4 +1,6 @@
-class wFrames {
+import gUtility from '/lib/gutility.js';
+
+export class wFrames {
   constructor(context, parentKey = null, parentBlock = null) {
     this.context = context;
     this.parentKey = parentKey;
@@ -327,10 +329,10 @@ class wFrames {
       let frameIndex = 0;
       try {
         if (this.activeAnimation) {
-          frameIndex = GLOBALUTIL.getNumberOrDefault(this.activeAnimation._runtimeAnimations[0].currentFrame, 1);
+          frameIndex = gUtility.getNumberOrDefault(this.activeAnimation._runtimeAnimations[0].currentFrame, 1);
         } else {
           if (rootFrames.activeAnimation)
-            frameIndex = GLOBALUTIL.getNumberOrDefault(rootFrames.activeAnimation._runtimeAnimations[0].currentFrame, 1);
+            frameIndex = gUtility.getNumberOrDefault(rootFrames.activeAnimation._runtimeAnimations[0].currentFrame, 1);
         }
 
         if (!this.activeAnimation || this.activeAnimation.masterFrame === 0)
@@ -442,7 +444,7 @@ class wFrames {
     if (block.parent)
       if (!block.parent.parent)
         if (['mesh', 'shape', 'block'].indexOf(block.blockRawData.childType) !== -1) {
-          let offsets = GLOBALUTIL.getGPSDiff(this.context.zeroLatitude, this.context.zeroLongitude,
+          let offsets = gUtility.getGPSDiff(this.context.zeroLatitude, this.context.zeroLongitude,
             block.blockRawData.latitude, block.blockRawData.longitude);
           block.gpsPositionX = 1.0 * offsets.vertical;
           block.gpsPositionZ = offsets.horizontal;
@@ -533,9 +535,9 @@ class wFrames {
     this.orderedKeys.sort((a, b) => {
       let a_order = 0;
       let b_order = 0;
-      if (GLOBALUTIL.isNumeric(this.fireSet.getCache(a).frameOrder))
+      if (gUtility.isNumeric(this.fireSet.getCache(a).frameOrder))
         a_order = Number(this.fireSet.getCache(a).frameOrder);
-      if (GLOBALUTIL.isNumeric(this.fireSet.getCache(b).frameOrder))
+      if (gUtility.isNumeric(this.fireSet.getCache(b).frameOrder))
         b_order = Number(this.fireSet.getCache(b).frameOrder);
 
       if (a_order !== b_order) return a_order - b_order;
@@ -549,7 +551,7 @@ class wFrames {
     let next = 1;
     for (let c = 0, l = this.orderedKeys.length; c < l; c++) {
       let frameCache = this.fireSet.getCache(this.orderedKeys[c]);
-      if (!GLOBALUTIL.isNumeric(frameCache.frameOrder))
+      if (!gUtility.isNumeric(frameCache.frameOrder))
         continue;
 
       let order = Number(frameCache.frameOrder);
@@ -727,32 +729,32 @@ class wFrames {
   }
   __getLightDetails(values) {
     let result = {};
-    result.originX = GLOBALUTIL.getNumberOrDefault(values['lightOriginX'], 10);
-    result.originY = GLOBALUTIL.getNumberOrDefault(values['lightOriginY'], 10);
-    result.originZ = GLOBALUTIL.getNumberOrDefault(values['lightOriginZ'], 10);
-    result.directionX = GLOBALUTIL.getNumberOrDefault(values['lightDirectionX'], 1);
-    result.directionY = GLOBALUTIL.getNumberOrDefault(values['lightDirectionY'], 1);
-    result.directionZ = GLOBALUTIL.getNumberOrDefault(values['lightDirectionZ'], 1);
+    result.originX = gUtility.getNumberOrDefault(values['lightOriginX'], 10);
+    result.originY = gUtility.getNumberOrDefault(values['lightOriginY'], 10);
+    result.originZ = gUtility.getNumberOrDefault(values['lightOriginZ'], 10);
+    result.directionX = gUtility.getNumberOrDefault(values['lightDirectionX'], 1);
+    result.directionY = gUtility.getNumberOrDefault(values['lightDirectionY'], 1);
+    result.directionZ = gUtility.getNumberOrDefault(values['lightDirectionZ'], 1);
 
     result.origin = new BABYLON.Vector3(result.originX, result.originY, result.originZ);
     result.direction = new BABYLON.Vector3(result.directionX, result.directionY, result.directionZ);
 
-    result.angle = GLOBALUTIL.getNumberOrDefault(values['lightAngle'], Math.PI / 2.0);
-    result.decay = GLOBALUTIL.getNumberOrDefault(values['lightDecay'], 1);
-    result.diffuseR = GLOBALUTIL.getNumberOrDefault(values['lightDiffuseR'], 1);
-    result.diffuseG = GLOBALUTIL.getNumberOrDefault(values['lightDiffuseG'], 1);
-    result.diffuseB = GLOBALUTIL.getNumberOrDefault(values['lightDiffuseB'], 1);
-    result.specularR = GLOBALUTIL.getNumberOrDefault(values['lightSpecularR'], 1);
-    result.specularG = GLOBALUTIL.getNumberOrDefault(values['lightSpecularG'], 1);
-    result.specularB = GLOBALUTIL.getNumberOrDefault(values['lightSpecularB'], 1);
-    result.groundR = GLOBALUTIL.getNumberOrDefault(values['lightGroundR'], 0);
-    result.groundG = GLOBALUTIL.getNumberOrDefault(values['lightGroundG'], 0);
-    result.groundB = GLOBALUTIL.getNumberOrDefault(values['lightGroundB'], 0);
+    result.angle = gUtility.getNumberOrDefault(values['lightAngle'], Math.PI / 2.0);
+    result.decay = gUtility.getNumberOrDefault(values['lightDecay'], 1);
+    result.diffuseR = gUtility.getNumberOrDefault(values['lightDiffuseR'], 1);
+    result.diffuseG = gUtility.getNumberOrDefault(values['lightDiffuseG'], 1);
+    result.diffuseB = gUtility.getNumberOrDefault(values['lightDiffuseB'], 1);
+    result.specularR = gUtility.getNumberOrDefault(values['lightSpecularR'], 1);
+    result.specularG = gUtility.getNumberOrDefault(values['lightSpecularG'], 1);
+    result.specularB = gUtility.getNumberOrDefault(values['lightSpecularB'], 1);
+    result.groundR = gUtility.getNumberOrDefault(values['lightGroundR'], 0);
+    result.groundG = gUtility.getNumberOrDefault(values['lightGroundG'], 0);
+    result.groundB = gUtility.getNumberOrDefault(values['lightGroundB'], 0);
 
-    result.specular = GLOBALUTIL.color(result.diffuseR + ',' + result.diffuseG + ',' + result.diffuseR);
-    result.diffuse = GLOBALUTIL.color(result.specularR + ',' + result.specularG + ',' + result.specularR);
-    result.ground = GLOBALUTIL.color(result.groundR + ',' + result.groundG + ',' + result.groundR);
-    result.intensity = GLOBALUTIL.getNumberOrDefault(values['lightIntensity'], .75);
+    result.specular = gUtility.color(result.diffuseR + ',' + result.diffuseG + ',' + result.diffuseR);
+    result.diffuse = gUtility.color(result.specularR + ',' + result.specularG + ',' + result.specularR);
+    result.ground = gUtility.color(result.groundR + ',' + result.groundG + ',' + result.groundR);
+    result.intensity = gUtility.getNumberOrDefault(values['lightIntensity'], .75);
     return result;
   }
 }
@@ -812,7 +814,7 @@ export default class wBlock {
       if (equipath.substring(0, 3) === 'sb:') {
         equipath = gAPPP.cdnPrefix + 'textures/' + equipath.substring(3);
       }
-      let skyboxSize = GLOBALUTIL.getNumberOrDefault(this.blockRawData.skyboxSize, 800.0);
+      let skyboxSize = gUtility.getNumberOrDefault(this.blockRawData.skyboxSize, 800.0);
 
       if (!BABYLON.equirectLoadFixed) {
         BABYLON.equirectLoadFixed = true;
@@ -1153,7 +1155,7 @@ export default class wBlock {
 
         if (addKey)
           if (field.displayType === 'number') {
-            if (GLOBALUTIL.isNumeric(this.blockRenderData[field.fireSetField]))
+            if (gUtility.isNumeric(this.blockRenderData[field.fireSetField]))
               options[field.shapeOption] = Number(this.blockRenderData[field.fireSetField]);
           } else
             options[field.shapeOption] = this.blockRenderData[field.fireSetField];
@@ -1586,7 +1588,7 @@ export default class wBlock {
 
     if (!renderData) {
       if (gAPPP.a.profile.canvasColor)
-        this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+        this.context.scene.clearColor = gUtility.color(gAPPP.a.profile.canvasColor);
 
       return;
     }
@@ -1604,28 +1606,28 @@ export default class wBlock {
         this.context.scene.fogMode = BABYLON.Scene.FOGMODE_EXP2;
       if (fogMode === 'LINEAR')
         this.context.scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR;
-      this.context.scene.fogDensity = GLOBALUTIL.getNumberOrDefault(renderData.fogDensity, .2);
-      this.context.scene.fogStart = GLOBALUTIL.getNumberOrDefault(renderData.fogStart, 20.0);
-      this.context.scene.fogEnd = GLOBALUTIL.getNumberOrDefault(renderData.fogEnd, 60.0);
+      this.context.scene.fogDensity = gUtility.getNumberOrDefault(renderData.fogDensity, .2);
+      this.context.scene.fogStart = gUtility.getNumberOrDefault(renderData.fogStart, 20.0);
+      this.context.scene.fogEnd = gUtility.getNumberOrDefault(renderData.fogEnd, 60.0);
 
       if (renderData.fogColor)
-        this.context.scene.fogColor = GLOBALUTIL.color(renderData.fogColor);
+        this.context.scene.fogColor = gUtility.color(renderData.fogColor);
       else
-        this.context.scene.fogColor = GLOBALUTIL.color('0.2,0.2,0.3');
+        this.context.scene.fogColor = gUtility.color('0.2,0.2,0.3');
     }
 
     if (renderData.ambientColor)
-      this.context.scene.ambientColor = GLOBALUTIL.color(renderData.ambientColor);
+      this.context.scene.ambientColor = gUtility.color(renderData.ambientColor);
     else
-      this.context.scene.ambientColor = GLOBALUTIL.color('0,0,0');
+      this.context.scene.ambientColor = gUtility.color('0,0,0');
 
     if (renderData.clearColor)
-      this.context.scene.clearColor = GLOBALUTIL.color(renderData.clearColor);
+      this.context.scene.clearColor = gUtility.color(renderData.clearColor);
     else {
       if (gAPPP.a.profile.canvasColor) {
-        this.context.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+        this.context.scene.clearColor = gUtility.color(gAPPP.a.profile.canvasColor);
       } else
-        this.context.scene.clearColor = GLOBALUTIL.color('.2,.4,.4');
+        this.context.scene.clearColor = gUtility.color('.2,.4,.4');
     }
 
     this.updateVideoCallback(renderData);
@@ -1801,9 +1803,9 @@ export default class wBlock {
       if (value === undefined) return;
 
       if (field.displayType === 'number')
-        value = GLOBALUTIL.getNumberOrDefault(value, 0.0);
+        value = gUtility.getNumberOrDefault(value, 0.0);
 
-      if (field.type === undefined) return GLOBALUTIL.path(object, field.contextObjectField, value);
+      if (field.type === undefined) return gUtility.path(object, field.contextObjectField, value);
 
       if (field.type === 'material') {
         this.__updateMaterial(value, object);
@@ -1819,15 +1821,15 @@ export default class wBlock {
         let parts = value.split(',');
         let cA = [];
         let color = new BABYLON.Color3(Number(parts[0]), Number(parts[1]), Number(parts[2]));
-        return GLOBALUTIL.path(object, field.contextObjectField, color);
+        return gUtility.path(object, field.contextObjectField, color);
       }
 
       if (field.type === 'texture') {
         let t = this._textureFromName(value);
-        return GLOBALUTIL.path(object, field.contextObjectField, t);
+        return gUtility.path(object, field.contextObjectField, t);
       }
 
-      GLOBALUTIL.path(object, field.contextObjectField, value);
+      gUtility.path(object, field.contextObjectField, value);
     } catch (e) {
       this.context.logError('set ui object error: ' + field.contextObjectField + ' : ' + value + '  ' + this.__getParentRoute());
     }
@@ -1838,22 +1840,22 @@ export default class wBlock {
       let objectData = sDataDefinition.getDefaultDataCloned('material');
       let m = this.__material(objectData);
 
-      m.diffuseColor = GLOBALUTIL.color(color);
-      m.emissiveColor = GLOBALUTIL.color(color);
+      m.diffuseColor = gUtility.color(color);
+      m.emissiveColor = gUtility.color(color);
       return m;
     } else if (materialName.substring(0, 7) === 'ecolor:') {
       let color = materialName.substring(7).trim();
       let objectData = sDataDefinition.getDefaultDataCloned('material');
       let m = this.__material(objectData);
 
-      m.emissiveColor = GLOBALUTIL.color(color);
+      m.emissiveColor = gUtility.color(color);
       return m;
     } else if (materialName.substring(0, 6) === 'color:') {
       let color = materialName.substring(6).trim();
       let objectData = sDataDefinition.getDefaultDataCloned('material');
       let m = this.__material(objectData);
 
-      m.diffuseColor = GLOBALUTIL.color(color);
+      m.diffuseColor = gUtility.color(color);
       return m;
     } else {
       let tD = gAPPP.a.modelSets['material'].getValuesByFieldLookup('title', materialName);
@@ -1904,7 +1906,7 @@ export default class wBlock {
       url = gAPPP.cdnPrefix + 'textures/' + url.substring(3);
 
     if (values.isFittedText) {
-      let renderSize = GLOBALUTIL.getNumberOrDefault(values.textureTextRenderSize, 512);
+      let renderSize = gUtility.getNumberOrDefault(values.textureTextRenderSize, 512);
       texture = new BABYLON.DynamicTexture("dynamic texture", renderSize, this.context.scene, true);
 
       let fontWeight = 'normal';
@@ -1913,7 +1915,7 @@ export default class wBlock {
       let textFontFamily = 'Geneva';
       if (values.textFontFamily)
         textFontFamily = values.textFontFamily;
-      let textFontSize = GLOBALUTIL.getNumberOrDefault(values.textFontSize, 75);
+      let textFontSize = gUtility.getNumberOrDefault(values.textFontSize, 75);
       let textFontSizeOrig = textFontSize;
 
       if (!values.textureText)
@@ -1935,11 +1937,11 @@ export default class wBlock {
       let color = "white"
 
       if (values.textFontColor)
-        color = GLOBALUTIL.colorRGB255(values.textFontColor);
+        color = gUtility.colorRGB255(values.textFontColor);
       if (values.textFontClearColor)
-        clearColor = GLOBALUTIL.colorRGB255(values.textFontClearColor);
+        clearColor = gUtility.colorRGB255(values.textFontClearColor);
       let x = 0;
-      let y = GLOBALUTIL.getNumberOrDefault(textFontSize, 50);
+      let y = gUtility.getNumberOrDefault(textFontSize, 50);
 
       texture._context.font = font;
       let wResult = texture._context.measureText(values.textureText);
@@ -1950,7 +1952,7 @@ export default class wBlock {
       if (values.textureText2) {
         //y += minFontSize2;
         y = renderSize / 2.25;
-        let textFontSize2 = GLOBALUTIL.getNumberOrDefault(values.textFontSize, 75);
+        let textFontSize2 = gUtility.getNumberOrDefault(values.textFontSize, 75);
 
         textFontSize2 = Math.min(textFontSize2, minFontSize2);
         x = 0;
@@ -1965,7 +1967,7 @@ export default class wBlock {
         texture.drawText(values.textureText2, x + leftOffset2, y, font, color, clearColor);
       }
     } else if (values.isText) {
-      let renderSize = GLOBALUTIL.getNumberOrDefault(values.textureTextRenderSize, 512);
+      let renderSize = gUtility.getNumberOrDefault(values.textureTextRenderSize, 512);
       texture = new BABYLON.DynamicTexture("dynamic texture", renderSize, this.context.scene, true);
 
       let fontWeight = 'normal';
@@ -1974,18 +1976,18 @@ export default class wBlock {
       let textFontFamily = 'Geneva';
       if (values.textFontFamily)
         textFontFamily = values.textFontFamily;
-      let textFontSize = GLOBALUTIL.getNumberOrDefault(values.textFontSize, 75);
+      let textFontSize = gUtility.getNumberOrDefault(values.textFontSize, 75);
       let font = fontWeight + ' ' + textFontSize + 'px ' + textFontFamily;
       let invertY = true;
       let clearColor = "transparent";
       let color = "white"
 
       if (values.textFontColor)
-        color = GLOBALUTIL.colorRGB255(values.textFontColor);
+        color = gUtility.colorRGB255(values.textFontColor);
       if (values.textFontClearColor)
-        clearColor = GLOBALUTIL.colorRGB255(values.textFontClearColor);
+        clearColor = gUtility.colorRGB255(values.textFontClearColor);
       let x = 10;
-      let y = GLOBALUTIL.getNumberOrDefault(textFontSize, 50);
+      let y = gUtility.getNumberOrDefault(textFontSize, 50);
 
       texture.drawText(values.textureText, x, y, font, color, clearColor);
 
@@ -2003,13 +2005,13 @@ export default class wBlock {
     else
       texture = new BABYLON.Texture(url, this.context.scene);
 
-    if (GLOBALUTIL.isNumeric(values['vScale']))
+    if (gUtility.isNumeric(values['vScale']))
       texture.vScale = Number(values['vScale']);
-    if (GLOBALUTIL.isNumeric(values['uScale']))
+    if (gUtility.isNumeric(values['uScale']))
       texture.uScale = Number(values['uScale']);
-    if (GLOBALUTIL.isNumeric(values['vOffset']))
+    if (gUtility.isNumeric(values['vOffset']))
       texture.vOffset = Number(values['vOffset']);
-    if (GLOBALUTIL.isNumeric(values['uOffset']))
+    if (gUtility.isNumeric(values['uOffset']))
       texture.uOffset = Number(values['uOffset']);
 
     texture.hasAlpha = values['hasAlpha'];
@@ -2017,13 +2019,13 @@ export default class wBlock {
   }
   getBlockDimDesc() {
     let width = 1;
-    if (GLOBALUTIL.isNumeric(this.blockRawData.width))
+    if (gUtility.isNumeric(this.blockRawData.width))
       width = Math.round(Number(this.blockRawData.width));
     let height = 1;
-    if (GLOBALUTIL.isNumeric(this.blockRawData.height))
+    if (gUtility.isNumeric(this.blockRawData.height))
       height = Math.round(Number(this.blockRawData.height));
     let depth = 1;
-    if (GLOBALUTIL.isNumeric(this.blockRawData.depth))
+    if (gUtility.isNumeric(this.blockRawData.depth))
       depth = Math.round(Number(this.blockRawData.depth));
 
     return width + ' x ' + depth + ' x ' + height;

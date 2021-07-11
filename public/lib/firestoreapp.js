@@ -1,3 +1,7 @@
+import sDataDefinition from '/lib/sdatadefinition.js';
+import gUtility from '/lib/gutility.js';
+import wBlock from '/lib/wBlock.js';
+
 class cFirestoreData {
   constructor(type, id, tag, datalist = true) {
     this.tag = tag;
@@ -492,7 +496,6 @@ class cAuthorization {
     firebase.auth().signInAnonymously();
   }
   signOut() {
-    this.__setAutoGoogleLogin(false);
     firebase.auth().signOut();
     location.reload(); // just dump the dom and restart
   }
@@ -744,7 +747,7 @@ class cAppDefaults {
     return html;
   }
 }
-class cWebApplication extends cAppDefaults {
+export default class cWebApplication extends cAppDefaults {
   constructor() {
     super();
     window.gAPPP = this;
@@ -806,11 +809,9 @@ class cWebApplication extends cAppDefaults {
       this.context.deactivate();
 
     this.styleUpdate();
-    let {
-      wBlock
-    } = await import('/lib/wblock.js');
-    this.wBlock = wBlock;
     await this.initCanvas();
+    this.signOutButton = this.dialog.querySelector('.signout-button');
+    this.signOutButton.addEventListener('click', e => this.a.signOut());
 
     let saveKey = 'selectedBlockKey' + this.loadedWID;
     let rootKey = this.sets.block.getIdByFieldLookup('blockCode', 'demo');
@@ -855,7 +856,7 @@ class cWebApplication extends cAppDefaults {
     this.canvasHelper.logClear();
     let startTime = Date.now();
 
-    let b = new this.wBlock(this.context);
+    let b = new wBlock(this.context);
     //document.title = blockData.title;
     b.staticType = 'block';
     b.staticLoad = true;
@@ -884,18 +885,12 @@ class cWebApplication extends cAppDefaults {
     this.canvasWrapper.innerHTML = canvasTemplate;
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
-    let {
-      wContext
-    } = await import('/lib/wcontext.js');
-    this.context = new wContext(this.canvas, this.geoOptions);
+    let wContext = await import('/lib/wcontext.js');
+    this.context = new wContext.default(this.canvas, this.geoOptions);
     this.canvasActions = this.dialog.querySelector('.canvas-actions');
     this.canvasActions.style.display = '';
     this.loadedSceneURL = '';
 
-    let {
-      sDataDefinition
-    } = await import('/lib/sdatadefinition.js');
-    this.sDataDefinition = sDataDefinition;
     let cCanvasLib = await import('/lib/ccanvas.js');
     this.canvasHelper = new cCanvasLib.default(this);
     this.context.canvasHelper = this.canvasHelper;
@@ -910,6 +905,9 @@ class cWebApplication extends cAppDefaults {
   <div class="canvas-actions">
     <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
     <div class="scene-options-panel app-panel" style="display:none;">
+      <div>
+        <button class="signout-button">Sign Out</button>
+      </div>
       <div class="scene-fields-container"></div>
       <div class="render-log-wrapper" style="display:none;">
         <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
@@ -1058,8 +1056,8 @@ class cWebApplication extends cAppDefaults {
     if (!opacityLevel)
       opacityLevel = .5;
 
-    let bkg = GLOBALUTIL.color(canvasColor);
-    let bkgColor = GLOBALUTIL.colorRGB255(canvasColor);
+    let bkg = gUtility.color(canvasColor);
+    let bkgColor = gUtility.colorRGB255(canvasColor);
     let bkgColorTransparent = bkgColor.replace('rgb(', '');
     bkgColorTransparent = bkgColorTransparent.replace(')', '');
     bkgColorTransparent = 'rgba(' + bkgColorTransparent + ',' + opacityLevel.toString() + ')';

@@ -7,15 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="/images/logo64.png">
   <script>
-    window.addEventListener('load', () => new cApplication());
+    window.addEventListener('load', async () => {
+      let appModule = await import("/v2/app.js");
+      new appModule.cApplication();
+    });
   </script>
-</head>
-
-<body>
-  <!-- dYnamic Reality Libraries -->
-  <script src="/global/globalutil.js"></script>
-  <script src="/lib/firestoreapp.js"></script>
-
+  <link rel="stylesheet" href="/v2/app.css">
   <!-- Firebase links -->
   <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js"></script>
@@ -30,10 +27,8 @@
   <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+</head>
 
-  <!-- Application Objects -->
-  <script src="/v2/app.js"></script>
-  <link rel="stylesheet" href="/v2/app.css">
-</body>
+<body></body>
 
 </html>

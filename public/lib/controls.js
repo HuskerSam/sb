@@ -1,3 +1,5 @@
+import gUtility from '/lib/gutility.js';
+
 export class cBandProfileOptions {
   constructor(btn, fields, fieldsContainer, panel) {
     this.expanded = false;
@@ -323,7 +325,7 @@ export class cPanelData {
       for (let i in this.fields) {
         let f = this.fields[i];
         if (f.fireSetField)
-          GLOBALUTIL.path(this.values, f.fireSetField, newValues[f.fireSetField]);
+          gUtility.path(this.values, f.fireSetField, newValues[f.fireSetField]);
       }
     }
   }
@@ -332,7 +334,7 @@ export class cPanelData {
     for (let i in this.fields) {
       let f = this.fields[i];
       let v = newValues[f.fireSetField];
-      let o = GLOBALUTIL.path(this.values, f.fireSetField);
+      let o = gUtility.path(this.values, f.fireSetField);
       if (o === undefined)
         o = '';
       o = o.toString();
@@ -434,14 +436,14 @@ export class cPanelData {
     this.helpers.initHelperField(field, this.parent.fireSet);
   }
   __handleColorInputChange(field) {
-    let bColor = GLOBALUTIL.HexToRGB(field.colorPickerInput.value);
+    let bColor = gUtility.HexToRGB(field.colorPickerInput.value);
     field.dom.value = bColor.r.toFixed(2) + ',' + bColor.g.toFixed(2) + ',' + bColor.b.toFixed(2);
     this.scrape(null);
   }
   _updateFieldDom(f) {
     let updateShown = false;
     let contextReloadRequired = false;
-    let v = GLOBALUTIL.path(this.values, f.fireSetField);
+    let v = gUtility.path(this.values, f.fireSetField);
     if (v === undefined)
       v = '';
     let o = this.valueCache[f.fireSetField];
@@ -548,7 +550,7 @@ export class cPanelData {
     };
   }
   __updateColorLabel(f) {
-    f.colorPickerInput.value = GLOBALUTIL.colorToHex(GLOBALUTIL.color(f.dom.value));
+    f.colorPickerInput.value = gUtility.colorToHex(gUtility.color(f.dom.value));
   }
   _updateDisplayFilters() {
     for (let inner in this.fields) {
@@ -721,7 +723,7 @@ export class cPanelHelpers {
     hp.fireSet = fireSet;
     hp.key = key;
 
-    let vector = GLOBALUTIL.getVector(field.dom.value, 0, 0, 0);
+    let vector = gUtility.getVector(field.dom.value, 0, 0, 0);
     hp.slider[0].value = vector.x.toFixed(3);
     hp.slider[1].value = vector.y.toFixed(3);
     hp.slider[2].value = vector.z.toFixed(3);
@@ -753,18 +755,18 @@ export class cPanelHelpers {
     let updates = [];
     updates.push({
       field: 'rotationX',
-      newValue: GLOBALUTIL.formatNumber(nObj.rotation.x).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.rotation.x).trim()
+      newValue: gUtility.formatNumber(nObj.rotation.x).trim(),
+      oldValue: gUtility.formatNumber(sObj.rotation.x).trim()
     });
     updates.push({
       field: 'rotationY',
-      newValue: GLOBALUTIL.formatNumber(nObj.rotation.y).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.rotation.y).trim()
+      newValue: gUtility.formatNumber(nObj.rotation.y).trim(),
+      oldValue: gUtility.formatNumber(sObj.rotation.y).trim()
     });
     updates.push({
       field: 'rotationZ',
-      newValue: GLOBALUTIL.formatNumber(nObj.rotation.z).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.rotation.z).trim()
+      newValue: gUtility.formatNumber(nObj.rotation.z).trim(),
+      oldValue: gUtility.formatNumber(sObj.rotation.z).trim()
     });
 
     helperPanel.input[0].value = 0;
@@ -789,13 +791,13 @@ export class cPanelHelpers {
     this.__updateBoundingInfo();
 
     let r = sObj.rotation;
-    let html = `x ${GLOBALUTIL.formatNumber(r.x * 57.2958).trim()}&deg;`;
-    html += ` y ${GLOBALUTIL.formatNumber(r.y * 57.2958).trim()}&deg;`;
-    html += ` z ${GLOBALUTIL.formatNumber(r.z * 57.2958).trim()}&deg;`;
+    let html = `x ${gUtility.formatNumber(r.x * 57.2958).trim()}&deg;`;
+    html += ` y ${gUtility.formatNumber(r.y * 57.2958).trim()}&deg;`;
+    html += ` z ${gUtility.formatNumber(r.z * 57.2958).trim()}&deg;`;
     if (this.tag === 'mesh') {
       let meshData = this.context.activeBlock.sceneObjectMeshData;
       if (meshData)
-        html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.rotationX)} y${GLOBALUTIL.formatNumber(meshData.rotationY)} z${GLOBALUTIL.formatNumber(meshData.rotationZ)}`;
+        html += `\n  Import x${gUtility.formatNumber(meshData.rotationX)} y${gUtility.formatNumber(meshData.rotationY)} z${gUtility.formatNumber(meshData.rotationZ)}`;
     }
 
     hp.infoDom.innerHTML = html;
@@ -816,19 +818,19 @@ export class cPanelHelpers {
     let vector = new BABYLON.Vector3(x2, y2, z2);
     tNode.rotation = vector;
 
-    let adjVector = GLOBALUTIL.getVector(x + ',' + y + ',' + z, 0, 0, 0);
+    let adjVector = gUtility.getVector(x + ',' + y + ',' + z, 0, 0, 0);
     tNode.rotation.x += (adjVector.x / 57.2958);
     tNode.rotation.y += (adjVector.y / 57.2958);
     tNode.rotation.z += (adjVector.z / 57.2958);
 
-    let xDegrees = GLOBALUTIL.formatNumber(tNode.rotation.x * 57.2958).trim();
-    let yDegrees = GLOBALUTIL.formatNumber(tNode.rotation.y * 57.2958).trim();
-    let zDegrees = GLOBALUTIL.formatNumber(tNode.rotation.z * 57.2958).trim();
+    let xDegrees = gUtility.formatNumber(tNode.rotation.x * 57.2958).trim();
+    let yDegrees = gUtility.formatNumber(tNode.rotation.y * 57.2958).trim();
+    let zDegrees = gUtility.formatNumber(tNode.rotation.z * 57.2958).trim();
     let previewHtml = `x ${xDegrees}&deg; y ${yDegrees}&deg; z ${zDegrees}&deg;`;
     hp.preview.innerHTML = previewHtml;
 
     let m = new BABYLON.StandardMaterial('material', this.context.scene);
-    m.diffuseColor = GLOBALUTIL.color('0,.3,.8');
+    m.diffuseColor = gUtility.color('0,.3,.8');
     m.diffuseColor.alpha = 0.7;
     this.context.__setMaterialOnObj(tNode, m);
     this.context.setGhostBlock('rotatePreview', new wBlock(this.context, null, tNode));
@@ -862,7 +864,7 @@ export class cPanelHelpers {
   }
   _scaleChangeApply() {
     let helperPanel = this.helperPanels['scale'];
-    if (helperPanel.input.value === '100' || !GLOBALUTIL.isNumeric(helperPanel.input.value))
+    if (helperPanel.input.value === '100' || !gUtility.isNumeric(helperPanel.input.value))
       return;
 
     let sObj = this.context.activeBlock.sceneObject;
@@ -870,18 +872,18 @@ export class cPanelHelpers {
     let updates = [];
     updates.push({
       field: 'scalingX',
-      newValue: GLOBALUTIL.formatNumber(nObj.scaling.x).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.scaling.x).trim()
+      newValue: gUtility.formatNumber(nObj.scaling.x).trim(),
+      oldValue: gUtility.formatNumber(sObj.scaling.x).trim()
     });
     updates.push({
       field: 'scalingY',
-      newValue: GLOBALUTIL.formatNumber(nObj.scaling.y).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.scaling.y).trim()
+      newValue: gUtility.formatNumber(nObj.scaling.y).trim(),
+      oldValue: gUtility.formatNumber(sObj.scaling.y).trim()
     });
     updates.push({
       field: 'scalingZ',
-      newValue: GLOBALUTIL.formatNumber(nObj.scaling.z).trim(),
-      oldValue: GLOBALUTIL.formatNumber(sObj.scaling.z).trim()
+      newValue: gUtility.formatNumber(nObj.scaling.z).trim(),
+      oldValue: gUtility.formatNumber(sObj.scaling.z).trim()
     });
 
     helperPanel.input.value = 100;
@@ -899,16 +901,16 @@ export class cPanelHelpers {
     }
     this.__updateBoundingInfo();
 
-    let html = `Original w${GLOBALUTIL.formatNumber(this._oDim.size.x)} h${GLOBALUTIL.formatNumber(this._oDim.size.y)} d${GLOBALUTIL.formatNumber(this._oDim.size.z)}`;
-    html += `\n  Actual w${GLOBALUTIL.formatNumber(this._wDim.size.x)} h${GLOBALUTIL.formatNumber(this._wDim.size.y)} d${GLOBALUTIL.formatNumber(this._wDim.size.z)}`;
+    let html = `Original w${gUtility.formatNumber(this._oDim.size.x)} h${gUtility.formatNumber(this._oDim.size.y)} d${gUtility.formatNumber(this._oDim.size.z)}`;
+    html += `\n  Actual w${gUtility.formatNumber(this._wDim.size.x)} h${gUtility.formatNumber(this._wDim.size.y)} d${gUtility.formatNumber(this._wDim.size.z)}`;
     if (this.tag === 'mesh') {
       let meshData = this.context.activeBlock.sceneObjectMeshData;
       if (meshData)
-        html += `\n  Import x${GLOBALUTIL.formatNumber(meshData.scalingX)} y${GLOBALUTIL.formatNumber(meshData.scalingY)} z${GLOBALUTIL.formatNumber(meshData.scalingZ)}`;
+        html += `\n  Import x${gUtility.formatNumber(meshData.scalingX)} y${gUtility.formatNumber(meshData.scalingY)} z${gUtility.formatNumber(meshData.scalingZ)}`;
     }
     hp.infoDom.innerHTML = html;
 
-    if (hp.input.value === "100" || !GLOBALUTIL.isNumeric(hp.input.value)) {
+    if (hp.input.value === "100" || !gUtility.isNumeric(hp.input.value)) {
       hp.preview.innerHTML = ' ';
     } else {
       let val = Number(hp.input.value) / 100.0;
@@ -916,7 +918,7 @@ export class cPanelHelpers {
       let height = this._wDim.size.y * val;
       let depth = this._wDim.size.z * val;
       let html = '';
-      html += `Scaled w${GLOBALUTIL.formatNumber(width)} h${GLOBALUTIL.formatNumber(height)} d${GLOBALUTIL.formatNumber(depth)}`;
+      html += `Scaled w${gUtility.formatNumber(width)} h${gUtility.formatNumber(height)} d${gUtility.formatNumber(depth)}`;
 
       let tNode = this._sObj.clone('scaleClonePreview');
       tNode.scaling.x = val * this._sObj.scaling.x;
@@ -924,7 +926,7 @@ export class cPanelHelpers {
       tNode.scaling.z = val * this._sObj.scaling.z;
 
       let m = new BABYLON.StandardMaterial('material', this.context.scene);
-      m.diffuseColor = GLOBALUTIL.color('1,.5,0');
+      m.diffuseColor = gUtility.color('1,.5,0');
       m.diffuseColor.alpha = 0.7;
       this.context.__setMaterialOnObj(tNode, m);
       this.context.setGhostBlock('scalePreview', new wBlock(this.context, null, tNode));
@@ -956,9 +958,9 @@ export class cPanelHelpers {
     hp.preview = aD.querySelector('.preview');
   }
   _fitChangeApply(hp) {
-    let fitWidth = GLOBALUTIL.getNumberOrDefault(hp.fitWidth.value, 1);
-    let fitHeight = GLOBALUTIL.getNumberOrDefault(hp.fitHeight.value, 1);
-    let fitDepth = GLOBALUTIL.getNumberOrDefault(hp.fitDepth.value, 1);
+    let fitWidth = gUtility.getNumberOrDefault(hp.fitWidth.value, 1);
+    let fitHeight = gUtility.getNumberOrDefault(hp.fitHeight.value, 1);
+    let fitDepth = gUtility.getNumberOrDefault(hp.fitDepth.value, 1);
     this.__updateBoundingInfo();
 
     let xF = fitWidth / this._oDim.size.x;

@@ -1,3 +1,5 @@
+import gUtility from '/lib/gutility.js';
+
 export default class wContext {
   constructor(canvas, geoOptions) {
     this.ghostBlocks = {};
@@ -37,8 +39,8 @@ export default class wContext {
     }
   }
   updateGPSWindow() {
-    let pt1 = GLOBALUTIL.gpsOffsetCoords(this.zeroLatitude, this.zeroLongitude, this.geoRadius, this.geoRadius);
-    let pt2 = GLOBALUTIL.gpsOffsetCoords(this.zeroLatitude, this.zeroLongitude, -1.0 * this.geoRadius, -1.0 * this.geoRadius);
+    let pt1 = gUtility.gpsOffsetCoords(this.zeroLatitude, this.zeroLongitude, this.geoRadius, this.geoRadius);
+    let pt2 = gUtility.gpsOffsetCoords(this.zeroLatitude, this.zeroLongitude, -1.0 * this.geoRadius, -1.0 * this.geoRadius);
 
     this.maxLatitude = pt1.lat;
     this.minLatitude = pt2.lat;
@@ -265,7 +267,7 @@ export default class wContext {
     BABYLON.Tools.CreateScreenshot(this.engine, this.camera, {
       width: 500
     }, base64ImageURI => {
-      let blob = GLOBALUTIL.dataURItoBlob(base64ImageURI);
+      let blob = gUtility.dataURItoBlob(base64ImageURI);
       fireSet.setBlob(key, blob, 'sceneRenderImage.jpg').then(uploadResult =>
         fireSet.update([{
           field: 'renderImageURL',
@@ -339,13 +341,13 @@ export default class wContext {
       this.defaultLight = false;
     } else {
       if (!this.light) {
-        let l = GLOBALUTIL.getVector(0, 1, 0);
+        let l = gUtility.getVector(0, 1, 0);
         this.light = new BABYLON.HemisphericLight("defaultSceneBuilderLight", l, this.scene);
         this.light.intensity = .7;
       }
       if (this.cachedProfile.lightIntensity !== profile.lightIntensity) {
         this.cachedProfile.lightIntensity = profile.lightIntensity;
-        this.light.intensity = GLOBALUTIL.getNumberOrDefault(profile.lightIntensity, .7);
+        this.light.intensity = gUtility.getNumberOrDefault(profile.lightIntensity, .7);
       }
     }
   }
@@ -476,9 +478,9 @@ export default class wContext {
   }
   _sceneAddDefaultObjects() {
     if (gAPPP.a.profile.canvasColor)
-      this.scene.clearColor = GLOBALUTIL.color(gAPPP.a.profile.canvasColor);
+      this.scene.clearColor = gUtility.color(gAPPP.a.profile.canvasColor);
     else
-      this.scene.clearColor = GLOBALUTIL.color('.35,.2,.6');
+      this.scene.clearColor = gUtility.color('.35,.2,.6');
 
     this._sceneDisposeDefaultObjects();
     this._updateCamera();
@@ -511,7 +513,7 @@ export default class wContext {
 
     this.floorGuidesShown = true;
 
-    let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.gridAndGuidesDepth, 5);
+    let gridDepth = gUtility.getNumberOrDefault(gAPPP.a.profile.gridAndGuidesDepth, 5);
     let block = new wBlock(this);
     block.createGuides(gridDepth);
     this.setGhostBlock('guides', block);
@@ -537,7 +539,7 @@ export default class wContext {
       return;
 
     this.floorGridShown = true;
-    let gridDepth = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.gridAndGuidesDepth, 5);
+    let gridDepth = gUtility.getNumberOrDefault(gAPPP.a.profile.gridAndGuidesDepth, 5);
     let block = new wBlock(this);
     block.createGrid(gridDepth);
     this.setGhostBlock('grid', block);
@@ -597,7 +599,7 @@ export default class wContext {
       this.camera.dispose();
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
     let values = cameraDetails.firstFrameValues;
-    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+    let cameraOrigin = gUtility.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.FollowCamera("FollowCam", cameraOrigin, this.scene);
 
@@ -619,7 +621,7 @@ export default class wContext {
     if (maxCameraSpeed)
       this.camera.maxCameraSpeed = Number(maxCameraSpeed);
     if (values.cameraFOV)
-      this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
+      this.camera.fov = gUtility.getNumberOrDefault(values.cameraFOV, .8);
 
     this.rebindCamera();
 
@@ -639,13 +641,13 @@ export default class wContext {
       this.camera.dispose();
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
     let values = cameraDetails.firstFrameValues;
-    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+    let cameraOrigin = gUtility.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.UniversalCamera("UniversalCamera", cameraOrigin, this.scene);
     if (values.cameraFOV)
-      this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
+      this.camera.fov = gUtility.getNumberOrDefault(values.cameraFOV, .8);
 
-    let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
+    let aimTarget = gUtility.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
       values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
 
@@ -656,12 +658,12 @@ export default class wContext {
       this.camera.dispose();
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
     let values = cameraDetails.firstFrameValues;
-    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+    let cameraOrigin = gUtility.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.DeviceOrientationCamera("DeviceOrientationCamera", cameraOrigin, this.scene);
     if (values.cameraFOV)
-      this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
-    let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
+      this.camera.fov = gUtility.getNumberOrDefault(values.cameraFOV, .8);
+    let aimTarget = gUtility.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
       values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
 
@@ -672,11 +674,11 @@ export default class wContext {
       this.camera.dispose();
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
     let values = cameraDetails.firstFrameValues;
-    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+    let cameraOrigin = gUtility.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.WebVRFreeCamera("WebVRFreeCamera", cameraOrigin, this.scene);
 
-    let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
+    let aimTarget = gUtility.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
       values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
 
@@ -688,7 +690,7 @@ export default class wContext {
       this.camera.dispose();
     let cameraVector = this.cameraVector;
     if (!cameraVector)
-      cameraVector = GLOBALUTIL.getVector(this.cameraVector, 15, 15, -3);
+      cameraVector = gUtility.getVector(this.cameraVector, 15, 15, -3);
     let radius = 10;
     let newRadius = Number(this.arcCameraRadius);
     if (newRadius > 0 && newRadius < 500)
@@ -707,7 +709,7 @@ export default class wContext {
 
     let cameraDetails = this.canvasHelper.cameraDetails[this.blockCameraId];
     let values = cameraDetails.firstFrameValues;
-    let cameraOrigin = GLOBALUTIL.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
+    let cameraOrigin = gUtility.getVector(values.cameraOriginX + ',' + values.cameraOriginY + ',' +
       values.cameraOriginZ, 0, 15, -15);
     this.camera = new BABYLON.ArcRotateCamera("arcRotateSceneBuilderCamera" + (Math.random() * 100).toFixed(), .9, 0.9,
       values.cameraOriginY, cameraOrigin, this.scene)
@@ -715,9 +717,9 @@ export default class wContext {
     if (values.cameraRadius)
       this.camera.radius = Number(values.cameraRadius);
     if (values.cameraFOV)
-      this.camera.fov = GLOBALUTIL.getNumberOrDefault(values.cameraFOV, .8);
+      this.camera.fov = gUtility.getNumberOrDefault(values.cameraFOV, .8);
 
-    let aimTarget = GLOBALUTIL.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
+    let aimTarget = gUtility.getVector(values.cameraAimTargetX + ',' + values.cameraAimTargetY + ',' +
       values.cameraAimTargetZ, 0, 0, 0);
     this.camera.setTarget(aimTarget);
 

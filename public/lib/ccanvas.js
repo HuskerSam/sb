@@ -1,6 +1,8 @@
 import {
   cBandProfileOptions
 } from '/lib/controls.js';
+import sDataDefinition from '/lib/sdatadefinition.js';
+import gUtility from '/lib/gutility.js';
 
 export default class cCanvas {
   constructor(parent) {
@@ -48,7 +50,7 @@ export default class cCanvas {
     this.bandButtons = [];
     this.sceneToolsButton = this.dialog.querySelector('.scene-options');
     this.sceneToolsContainer = this.dialog.querySelector('.scene-options-panel');
-    this.sceneFields = this.parent.sDataDefinition.bindingFieldsCloned('sceneToolsBar');
+    this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneToolsBar');
     this.sceneFieldsContainer = this.sceneToolsContainer.querySelector('.scene-fields-container');
     this.sceneTools = new cBandProfileOptions(this.sceneToolsButton, this.sceneFields, this.sceneFieldsContainer, this.sceneToolsContainer);
     this.sceneTools.fireFields.values = gAPPP.a.profile;
@@ -462,8 +464,8 @@ export default class cCanvas {
           return;
 
         let camera = this.parent.context.camera;
-        let cp = GLOBALUTIL.vectorToStr(camera.position);
-        let tp = GLOBALUTIL.vectorToStr(camera.target);
+        let cp = gUtility.vectorToStr(camera.position);
+        let tp = gUtility.vectorToStr(camera.target);
         let stored = gAPPP.a.profile['cameraPositionSave' + this.rootBlock.blockKey];
         let storedFOV = gAPPP.a.profile['cameraFOVSave' + this.rootBlock.blockKey];
 
@@ -581,9 +583,9 @@ export default class cCanvas {
   }
   __updateCameraFromSettings() {
     let camera = this.parent.context.camera;
-    let cameraPosition = GLOBALUTIL.getVector(gAPPP.a.profile['cameraPositionSave' + this.rootBlock.blockKey], -3, 15, 15);
-    let cameraTarget = GLOBALUTIL.getVector(gAPPP.a.profile['cameraTargetSave' + this.rootBlock.blockKey], 0, 0, 0);
-    let fov = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile['cameraFOVSave' + this.rootBlock.blockKey], .8);
+    let cameraPosition = gUtility.getVector(gAPPP.a.profile['cameraPositionSave' + this.rootBlock.blockKey], -3, 15, 15);
+    let cameraTarget = gUtility.getVector(gAPPP.a.profile['cameraTargetSave' + this.rootBlock.blockKey], 0, 0, 0);
+    let fov = gUtility.getNumberOrDefault(gAPPP.a.profile['cameraFOVSave' + this.rootBlock.blockKey], .8);
     if (!camera.setPosition)
       return;
 
@@ -593,8 +595,8 @@ export default class cCanvas {
 
     this.arcRangeSlider.value = this.cameraSliderPosition(camera.radius);
     this.fovSlider.value = camera.fov;
-    this.lastCP = GLOBALUTIL.vectorToStr(camera.position);
-    this.lastTP = GLOBALUTIL.vectorToStr(camera.target);
+    this.lastCP = gUtility.vectorToStr(camera.position);
+    this.lastTP = gUtility.vectorToStr(camera.target);
     this.lastFOV = fov;
     this.lastRadius = camera.radius;
     this._updateCameraRangeSlider();
@@ -690,7 +692,7 @@ export default class cCanvas {
       if (!this.parent.context.defaultLight) {
         lightIntensityDom.innerHTML = '(disabled)';
       } else {
-        lightIntensityDom.innerHTML = GLOBALUTIL.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
+        lightIntensityDom.innerHTML = gUtility.getNumberOrDefault(gAPPP.a.profile.lightIntensity, .66).toFixed(2);
       }
     }
 
@@ -728,7 +730,7 @@ export default class cCanvas {
       this.errorCount = 0;
       this.renderPanel.innerHTML = this.renderPanel.innerHTML.substring(this.renderPanel.innerHTML.length - 1000);
     }
-    this.renderPanel.innerHTML += GLOBALUTIL.msToTime(Date.now()).substring(6) + ' ' + errStr + ' ' + str + '\n';
+    this.renderPanel.innerHTML += gUtility.msToTime(Date.now()).substring(6) + ' ' + errStr + ' ' + str + '\n';
 
     if (document.activeElement !== this.renderPanel)
       this.renderPanel.scrollTop = this.renderPanel.scrollHeight;
@@ -775,8 +777,8 @@ export default class cCanvas {
     if (!this.rootBlock)
       return;
 
-    this.parent.context.scene.getBoundingBoxRenderer().frontColor = GLOBALUTIL.color(this.parent.appStyleDetails.boundsLines);
-    this.parent.context.scene.getBoundingBoxRenderer().backColor = GLOBALUTIL.color(this.parent.appStyleDetails.boundsBack);
+    this.parent.context.scene.getBoundingBoxRenderer().frontColor = gUtility.color(this.parent.appStyleDetails.boundsLines);
+    this.parent.context.scene.getBoundingBoxRenderer().backColor = gUtility.color(this.parent.appStyleDetails.boundsBack);
 
     if (gAPPP.a.profile.canvasColor !== this.previewCanvasColor) {
       this.rootBlock.__renderSceneOptions();
