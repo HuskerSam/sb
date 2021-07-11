@@ -1,5 +1,98 @@
 import gUtility from '/lib/gutility.js';
 
+class bBand {
+  constructor(modelSet, tag) {
+    this.modelSet = modelSet;
+    this.tag = tag;
+
+    this.bindingsList = [{
+      dataName: 'title',
+      type: 'innerText'
+    }, {
+      dataName: 'renderImageURL',
+      type: 'background-image',
+      classKey: 'OUTER'
+    }];
+
+    this.modelSet.childListeners.push((values, type, fireData) => this.handleDataChange(fireData, type));
+    this.myKey = Math.floor(Math.random() * 100).toString();
+  }
+  childAdded(fireData) {
+    this._getDomForChild(fireData.doc.id, fireData.doc.data());
+    this.childMoved();
+  }
+  childMoved() {}
+  childChanged(fireData) {
+    let div = this.childrenContainer.querySelector('.' + this.tag + this.myKey + '-' + fireData.doc.id);
+    if (!div)
+      return console.log(fireData, 'changed bBand missing dom');
+    let values = fireData.doc.data();
+    this._nodeApplyValues(values, div.querySelector('.band-background-preview'));
+    this.childMoved();
+  }
+  childRemoved(fireData) {
+    let post = this.childrenContainer.querySelector('.' + this.tag + this.myKey + '-' + fireData.doc.id);
+    if (post)
+      this.childrenContainer.removeChild(post);
+    this.childMoved();
+  }
+  handleDataChange(fireData, type) {
+    if (type === 'add')
+      return this.childAdded(fireData);
+    if (type === 'change')
+      return this.childChanged(fireData);
+    if (type === 'remove')
+      return this.childRemoved(fireData);
+    if (type === 'clear')
+      return this.clearChildren();
+    if (type === 'moved')
+      return this.childMoved(fireData);
+  }
+  childMoved(fireData) {}
+  clearChildren() {
+    this.childrenContainer.innerHTML = '';
+  }
+  refreshUIFromCache() {
+    this.clearChildren();
+
+    let children = this.fireSet.fireDataValuesByKey;
+
+    for (let i in children)
+      this._getDomForChild(i, children[i]);
+  }
+  _nodeApplyValues(values, outer) {
+    for (let i in this.bindingsList) {
+      let binding = this.bindingsList[i];
+      try {
+        let classKey = binding.dataName;
+        if (binding.classKey)
+          classKey = binding.classKey;
+        let element = outer.querySelector('.band-' + classKey);
+        if (classKey === 'OUTER')
+          element = outer;
+        if (element === null)
+          continue;
+        let val = values[binding.dataName];
+
+        if (binding.type === 'background-image') {
+          let url = val;
+          if (url) {
+            let imgHolder = element.querySelector('.img-holder');
+            if (imgHolder)
+              imgHolder.style.backgroundImage = 'url("' + url + '")';
+          }
+        }
+
+        if (val === undefined)
+          continue;
+        if (binding.type === 'innerText')
+          element.innerText = val;
+      } catch (e) {
+        console.log('bBand apply value', e, binding);
+      }
+    }
+  }
+}
 export class cBandProfileOptions {
   constructor(btn, fields, fieldsContainer, panel) {
     this.expanded = false;
@@ -352,13 +445,13 @@ export class cPanelData {
   _handleDataChange(values, type, fireData) {
     if (!this.active)
       return;
-    if (this.parent.key === null)
+    if (this.parent.key === null || this.parent.key === undefined)
       return;
     if (type === "moved")
       return;
 
     if (this.fireSet.keyList) {
-      if (this.parent.key !== fireData.key)
+      if (this.parent.key !== fireata.doc.id)
         return;
     }
 
@@ -1020,5 +1113,124 @@ export class cPanelHelpers {
       minimum: this._boundingBox.minimumWorld,
       maximum: this._boundingBox.maximumWorld
     };
+  }
+}
+export class cBandIcons extends bBand {
+  constructor(tag, dialog, childrenContainer, deleteOnly = false) {
+    super(gAPPP.a.modelSets[tag], tag);
+    this.fireSet = gAPPP.a.modelSets[tag];
+    this.dialog = dialog;
+    this.deleteOnly = deleteOnly;
+
+    if (childrenContainer)
+      this.childrenContainer = childrenContainer;
+    else
+      this.childrenContainer = this.dialog.assetsFieldsContainer;
+
+    setTimeout(() => {
+      this.refreshUIFromCache();
+      this.childMoved();
+    }, 1);
+  }
+  childMoved() {
+    this.modelSet.updateChildOrder();
+    let keyOrder = this.modelSet.childOrderByKey;
+    for (let i in keyOrder) {
+      let key = keyOrder[i];
+      let div = document.querySelector('.' + this.tag + this.myKey + '-' + key);
+      if (div)
+        this.childrenContainer.appendChild(div);
+    }
+    this._updateNoRecords();
+  }
+  _updateNoRecords() {
+    let keyOrder = this.modelSet.childOrderByKey;
+    if (Object.keys(keyOrder).length === 0) {
+      let noAssets = document.createElement('div');
+      let html = 'No ' + this.tag;
+      if (this.tag === 'mesh')
+        html += 'es';
+      else
+        html += 's';
+      html +=  ' found';
+      noAssets.innerHTML = html;
+      noAssets.classList.add('noassetsfound');
+      this.childrenContainer.appendChild(noAssets);
+    } else {
+      let noAssets = this.childrenContainer.querySelector('.noassetsfound');
+      if (noAssets)
+        noAssets.remove();
+    }
+  }
+  getDateString(values) {
+    let d = new Date(values.sortKey);
+    if (values.sortKey === undefined)
+      d = new Date('1/1/1970');
+    let od = d.toISOString().substring(0,10);
+    od += ' ' + d.toISOString().substring(11,16);
+    return od;
+  }
+  _getDomForChild(key, values) {
+    let html = '<span class="img-holder"></span><div class="band-title"></div><br>';
+    let od = this.getDateString(values);
+    html += `<div class="sort-date-last-edit">${od}</div>`;
+    let outer = document.createElement('div');
+    outer.setAttribute('class', `band-background-preview app-border`);
+    outer.innerHTML = html.trim();
+    let button = outer.childNodes[0];
+    let dd = document.createElement('div');
+    dd.setAttribute('class', `${this.tag}${this.myKey}-${key} menu-clipper-wrapper`);
+    dd.appendChild(outer);
+
+    outer.addEventListener('click',  e => this.selectItem(e, key));
+
+    if (! this.deleteOnly) {
+      this.__addMenuItem(outer, 'open_in_new', e => this.selectItem(e, key, true));
+      this.__addMenuItem(outer, 'file_download', e => this.downloadJSON(e, key), true);
+    }
+    this.__addMenuItem(outer, 'delete', e => this._removeElement(e, key), true);
+
+    if (this.tag === 'block') {
+      this.__addMenuItem(outer, 'visibility', e => this._viewElement(e, key), true);
+    }
+
+    this._nodeApplyValues(values, outer);
+
+    this.childrenContainer.insertBefore(dd, this.childrenContainer.firstChild);
+  }
+  _removeElement(e, key) {
+    if (!confirm('Are you sure you want to delete this ' + this.tag + '?'))
+      return;
+    gAPPP.a.modelSets[this.tag].removeByKey(key);
+  }
+  _viewElement(e, key) {
+    this.dialog.openViewerForAsset(key);
+  }
+  downloadJSON(e, key) {
+    let json = cWorkspace.assetJSON(this.tag, key);
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(json));
+    element.setAttribute('download', this.tag + '-' + key + '-asset.json');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+  selectItem(e, newKey, newWindow) {
+    this.dialog.selectItem(newKey, newWindow);
+  }
+  __addMenuItem(button, title, clickHandler, prependDivider) {
+    let btn = document.createElement('button');
+    btn.innerHTML = '<i class="material-icons">' + title + '</i>';
+    btn.classList.add('btn-sb-icon');
+    button.appendChild(btn);
+    btn.addEventListener('click', e =>
+    {
+      e.stopPropagation();
+      clickHandler(e);
+      return false;
+    }, false);
+    return btn;
   }
 }

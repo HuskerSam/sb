@@ -52,6 +52,7 @@ export class cFirestoreData {
     this.active = true;
     return new Promise((resolve) => {
       let resolved = false;
+      this.firestoreRef = firebase.firestore().collection(this.referencePath);
       this.notiRef = firebase.firestore().collection(this.referencePath).onSnapshot(snapshot => {
         let docCount = 0;
         snapshot.docChanges().forEach(change => {
@@ -87,63 +88,58 @@ export class cFirestoreData {
     this.updateStash(fireData, true);
     this.notifyChildren(fireData, 'remove');
   }
-  cloneByKey(key) {
-    return new Promise((resolve, reject) => {
-      let newKey = this.getKey();
-      let data = this.getCache(key);
-      let newData = JSON.parse(JSON.stringify(data));
-      this.set(newKey, newData);
-      resolve(newKey);
-    });
+  async cloneByKey(key) {
+    let newKey = this.getKey();
+    let data = this.getCache(key);
+    let newData = JSON.parse(JSON.stringify(data));
+    await this.firestoreRef.doc(newKey).set(newData);
+    return newKey;
   }
-  createWithBlob(data, blob, filename) {
-    return new Promise((resolve, reject) => {
-      let key = this.getKey();
+  async createWithBlob(data, blob, filename) {
+    let key = this.getKey();
 
-      if (blob) {
-        this.setBlob(key, blob, filename).then(
-          sr => {
-            data.url = sr.downloadURL;
-            data.type = 'url';
-            data.size = sr.totalBytes;
+    if (blob) {
+      let sr = await this.setBlob(key, blob, filename);
 
-            this.set(key, data).then(
-              r => resolve({
-                url: data.url,
-                key
-              }));
-          }).catch(
-          error => reject(error));
-      } else {
-        this.set(key, data).then(r => resolve({
-          key,
-          url: ''
-        }));
-      }
-    });
+      data.url = sr.downloadURL;
+      data.type = 'url';
+      data.size = sr.totalBytes;
+
+      await this.firestoreRef.doc(key).set(data);
+      return {
+        url: data.url,
+        key
+      };
+    }
+
+    await this.firestoreRef.doc(key).set(data);
+    return {
+      key,
+      url: ''
+    };
   }
-  createWithBlobString(data, blobString, filename) {
-    return new Promise((resolve, reject) => {
-      let key = this.getKey();
+  async createWithBlobString(data, blobString, filename) {
+    let key = this.firestoreRef.doc().id;
 
-      if (blobString) {
-        this.setString(key, blobString, filename).then(sr => {
-          data.url = sr.downloadURL;
-          data.type = 'url';
-          data.size = sr.totalBytes;
+    if (blobString) {
+      let sr = await this.setString(key, blobString, filename);
 
-          this.set(key, data).then(r => resolve({
-            key,
-            url: data.url
-          }));
-        }).catch(e => reject(e));
-      } else {
-        this.set(key, data).then(r => resolve({
-          key,
-          url: ''
-        }));
-      }
-    });
+      data.url = sr.downloadURL;
+      data.type = 'url';
+      data.size = sr.totalBytes;
+
+      let r = await this.firestoreRef.doc(key).set(data);
+      return {
+        key,
+        url: data.url
+      };
+    }
+
+    let r = await this.firestoreRef.doc(key).set(data);
+    return {
+      key,
+      url: ''
+    };
   }
   getCache(key) {
     if (key)
@@ -158,7 +154,7 @@ export class cFirestoreData {
     return null;
   }
   getKey() {
-    return firebase.database().ref().child(this.referencePath).push().key;
+    return this.firestoreRef.doc().id;
   }
   getValuesByFieldLookup(field, value) {
     this.lastKeyLookup = null;
@@ -171,7 +167,7 @@ export class cFirestoreData {
   }
   notifyChildren(fireData, type) {
     for (let i in this.childListeners) {
-      let values = fireData !== null ? this.getCache(fireData.key) : null;
+      let values = fireData !== null ? this.getCache(fireData.doc.id) : null;
       if (type === 'remove')
         values = this.lastValuesDeleted;
       fireData.lastValuesChanged = this.lastValuesChanged;
@@ -230,11 +226,6 @@ export class cFirestoreData {
     if (indexToRemove !== 1)
       this.childListeners.splice(indexToRemove, 1);
   }
-  set(id, jsonData) {
-    let updates = {};
-    updates['/' + this.referencePath + '/' + id] = jsonData;
-    return firebase.database().ref().update(updates);
-  }
   setBlob(id, blob, filename) {
     return new Promise((resolve, reject) => {
       let storageRef = firebase.storage().ref();
@@ -250,20 +241,13 @@ export class cFirestoreData {
         }).catch(error => reject(error));
     });
   }
-  setString(id, dataString, filename) {
-    return new Promise((resolve, reject) => {
-      let storageRef = firebase.storage().ref();
-      let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename);
-      let snapshot;
-      ref.putString(dataString)
-        .then(r => {
-          snapshot = r;
-          return ref.getDownloadURL();
-        }).then(url => {
-          snapshot.downloadURL = url;
-          resolve(snapshot)
-        }).catch(error => reject(error));
-    });
+  async setString(id, dataString, filename) {
+    let storageRef = firebase.storage().ref();
+    let ref = storageRef.child(this.referencePath + '/' + id + '/' + filename);
+    let snapshot = await ref.putString(dataString)
+    snapshot.downloadURL = await ref.getDownloadURL();
+
+    return snapshot;
   }
   startingOptionList() {
     if (this.tag === 'material')
@@ -750,6 +734,7 @@ export class cAppDefaults {
 export default class cWebApplication extends cAppDefaults {
   constructor() {
     super();
+    this.key = null;
     window.gAPPP = this;
     this.styleProfileDom = null;
     this.activeContext = null;
@@ -900,7 +885,7 @@ export default class cWebApplication extends cAppDefaults {
 
     this.canvas = this.dialog.querySelector('.popup-canvas');
     let wContext = await import('/lib/wcontext.js');
-    this.context = new wContext.default(this.canvas, this.geoOptions);
+    this.context = new wContext.default(this, this.canvas, this.geoOptions);
     this.canvasActions = this.dialog.querySelector('.canvas-actions');
     this.canvasActions.style.display = '';
     this.loadedSceneURL = '';
@@ -910,7 +895,7 @@ export default class cWebApplication extends cAppDefaults {
     this.context.canvasHelper = this.canvasHelper;
     this.canvasHelper.hide();
     this.canvasHelper.saveAnimState = true;
-    this.canvasHelper.cameraShownCallback = () => this.canvasReady();
+    //this.canvasHelper.cameraShownCallback = () => this.canvasReady();
   }
   _canvasPanelTemplate() {
     return `<canvas class="popup-canvas"></canvas>

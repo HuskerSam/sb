@@ -1,4 +1,5 @@
 import gUtility from '/lib/gutility.js';
+import sDataDefinition from '/lib/sdatadefinition.js';
 
 export class wFrames {
   constructor(context, parentKey = null, parentBlock = null) {
@@ -294,7 +295,7 @@ export class wFrames {
       return;
 
     this._validateFieldList();
-    this.rawFrames = this.fireSet.queryCache('parentKey', this.parentKey);
+    this.rawFrames = {};// this.fireSet.queryCache('parentKey', this.parentKey);
 
     this._sortFrames();
     this._calcFrameTimes();
@@ -1569,7 +1570,7 @@ export default class wBlock {
       containerKey = this.blockTargetKey;
     }
 
-    let children = gAPPP.a.modelSets['blockchild'].queryCache('parentKey', containerKey);
+    let children = {};// gAPPP.a.modelSets['blockchild'].queryCache('parentKey', containerKey);
     for (let i in children)
       this.__updateChild(i, children[i]);
 

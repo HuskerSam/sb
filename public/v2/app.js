@@ -1,11 +1,13 @@
 import cWebApplication from "/lib/firestoreapp.js";
 import {
-  cBandProfileOptions
+  cBandProfileOptions, cBandIcons, cPanelData
 } from '/lib/controls.js';
 import sDataDefinition from '/lib/sdatadefinition.js';
 import gUtility from '/lib/gutility.js';
 import cWorkspace from '/lib/cworkspace.js';
 import gCSVImport from '/lib/gcsvimport.js';
+import cMacro from '/lib/cmacro.js';
+import wBlock from '/lib/wblock.js';
 
 export class cApplication extends cWebApplication {
   constructor() {
@@ -588,5 +590,259 @@ export class cApplication extends cWebApplication {
 
     if (newWindow)
       this.openNewWindow('', '', newW);
+  }
+  async updateDisplayForAssetsList() {
+    this.context.activate(null);
+    this.dataview_record_key.selectedIndex = 0;
+    this.key = '';
+    this.generate = new cMacro(this.addAssetPanel, this.tag, gAPPP);
+    this.assetsFieldsContainer = this.form_panel_view_dom.querySelector('.asset-fields-container');
+    this.recordViewer = new cBandIcons(this.tag, this);
+    this.expand_all_global_btn.style.display = '';
+    this.form_canvas_wrapper.classList.add('show-help');
+    this.addAssetPanel.style.display = '';
+    this.deleteAssetButton.style.display = 'none';
+    this.snapshotAssetButton.style.display = 'none';
+
+    gAPPP.updateHelpView(this.tag, this.helpViewer);
+    this._updateHelpSections(true);
+  }
+  __newAssetName() {
+    let counter = 1;
+    let newName = 'new ' + this.tag + counter.toString();
+
+    while (true) {
+      let existingTitles = gAPPP.a.modelSets[this.tag].queryCache('title', newName);
+      let keys = Object.keys(existingTitles);
+      if (keys.length === 0)
+        break;
+
+      counter++;
+      newName = 'new ' + this.tag + counter.toString();
+    }
+
+    return newName;
+  }
+  async addAsset() {
+    let results = await this.context.createObject(this.tag, this.__newAssetName());
+    this.dataview_record_key.value = results.key;
+    return this.updateSelectedRecord();
+  }
+  initBlockDataFields() {
+    this.framesPanel = this.dataViewContainer.querySelector('.frames-panel');
+    //this.framesBand = new cBandFrames(this.framesPanel, this);
+    this.sceneFields = sDataDefinition.bindingFieldsCloned('sceneFields');
+    this.sceneFieldsPanel = this.dataViewContainer.querySelector('.scene-fields-panel');
+    this.sceneFireFields = new cPanelData(this.sceneFields, this.sceneFieldsPanel, this);
+    this.fireSet.childListeners.push((values, type, fireData) => this.sceneFireFields._handleDataChange(values, type, fireData));
+    this.sceneFireFields.updateContextObject = false;
+    this.fireFields.updateContextObject = false;
+
+    this.dialog.querySelector('.refresh-export-frames-button').addEventListener('click', e => this.fetchExportFrames());
+    this.dialog.querySelector('.refresh-export-json-button').addEventListener('click', e => this.fetchExportJSON());
+    this.dialog.querySelector('.import-frames-button').addEventListener('click', e => this.importFramesFromText());
+    this.dialog.querySelector('.canvas-actions .download-button').style.display = 'inline-block';
+    this.ieTextArea = this.dialog.querySelector('.frames-textarea-export');
+
+    this.exportFramesDetailsPanel = this.dialog.querySelector('.export-frames-details-panel');
+    this.nodedetailspanel = this.dialog.querySelector('.node-details-panel');
+    this.block_child_detail_view_btn.addEventListener('click', e => this.updateSubViewDisplay('details'));
+    this.block_child_frames_view_btn.addEventListener('click', e => this.updateSubViewDisplay('frames'));
+    this.block_child_import_view_btn.addEventListener('click', e => this.updateSubViewDisplay('import'));
+    this.updateSubViewDisplay('details');
+
+    let deleteBlockAndChildren = document.createElement('button');
+    deleteBlockAndChildren.innerHTML = '<i class="material-icons">delete</i> block and linked assets';
+    deleteBlockAndChildren.classList.add('delete_block_and_children');
+    deleteBlockAndChildren.addEventListener('click', e => this.deleteBlockAndChildren());
+    this.sceneFieldsPanel.appendChild(deleteBlockAndChildren);
+
+    this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
+    this.childBlockPickerBand = this.dialog.querySelector('.child_band_picker_expanded');
+//    this.childBand = new cBlockLinkSelect(this.blockChildrenSelect, this, this.childEditPanel, this.childBlockPickerBand);
+    this.childEditPanel.parentNode.insertBefore(this.assetsFieldsContainer, this.childEditPanel.parentNode.firstChild);
+
+    let openBtn = document.createElement('button');
+    openBtn.innerHTML = '<i class="material-icons">open_in_browser</i> linked asset';
+    openBtn.classList.add('open_in_browser_block_child');
+    openBtn.addEventListener('click', e => this.openChildBlockClick());
+    this.childEditPanel.appendChild(openBtn);
+    let openBtnInNew = document.createElement('button');
+    openBtnInNew.innerHTML = '<i class="material-icons">open_in_new</i> new window';
+    openBtnInNew.classList.add('open_in_new_block_child');
+    openBtnInNew.addEventListener('click', e => this.openChildBlockClick(true));
+    this.childEditPanel.appendChild(openBtnInNew);
+  }
+  updateSubViewDisplay(view) {
+    this.block_child_detail_view_btn.classList.remove('app-inverted');
+    this.block_child_frames_view_btn.classList.remove('app-inverted');
+    this.block_child_import_view_btn.classList.remove('app-inverted');
+    if (view === 'frames') this.block_child_frames_view_btn.classList.add('app-inverted');
+    if (view === 'details') this.block_child_detail_view_btn.classList.add('app-inverted');
+    if (view === 'import') this.block_child_import_view_btn.classList.add('app-inverted');
+
+    this.addFrameButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
+    this.framesPanel.style.display = (view === 'frames') ? 'block' : 'none';
+    this.nodedetailspanel.style.display = (view === 'details') ? '' : 'none';
+    this.exportFramesDetailsPanel.style.display = (view === 'import') ? 'flex' : 'none';
+    this.removeChildButton.style.visibility = (this.tag === 'block' && this.childKey) ? 'visibile' : 'hidden';
+  }
+  selectItem(newKey, newWindow) {
+    if (!newWindow) {
+      this.dataview_record_key.value = newKey;
+      this.updateSelectedRecord();
+      return;
+    }
+
+    this.openNewWindow(this.tag, newKey);
+  }
+  async updateDisplayForAssetEditView() {
+    this.form_canvas_wrapper.classList.remove('show-help');
+    this.deleteAssetButton.style.display = 'inline-block';
+    this.snapshotAssetButton.style.display = 'inline-block';
+    this.addAssetPanel.style.display = 'none';
+    this.expand_all_global_btn.style.display = '';
+
+    await this.showBusyScreen();
+
+    this.key = this.dataview_record_key.value;
+
+    if (this.key) {
+      this.asset_show_home_btn.style.visibility = '';
+    }
+
+    this.initRecordEditFields();
+    let data = this.fireSet.fireDataValuesByKey[this.key];
+
+    if (!data) {
+      this.key = '';
+      return;
+    }
+    this.fireFields.values = data;
+
+    this.openViewerAssetButton.style.display = (this.tag === 'block') ? 'inline-block' : 'none';
+
+    if (this.tag === 'block') {
+      if (this.fireFields.values.url)
+        await this.context.loadSceneURL(this.fireFields.values.url);
+
+      this.sceneFireFields.values = data;
+
+      this.block_child_details_block.style.display = '';
+    }
+    let b = new wBlock(this.context);
+    b.staticType = this.tag;
+    b.staticLoad = true;
+
+    if (this.tag === 'block' && this.key) {
+      b.blockKey = this.key;
+      b.isContainer = true;
+    }
+
+    this.context.activate(null);
+    this.context.setActiveBlock(b);
+    this.rootBlock = b;
+    this.rootBlock.updateCamera();
+    this.canvasHelper.refresh();
+    this.canvasHelper.playAnimation();
+
+    this.canvasHelper.__updateVideoCallback();
+    b.setData(this.fireFields.values);
+
+    let result = null;
+    if (this.tag === 'mesh')
+      result = await this.rootBlock.loadMesh();
+
+    if (this.tag === 'block') {
+      this.setChildKey(this.childKey);
+      //this.childBand.refreshUIFromCache();
+      this._updateFollowTargetListOptions();
+
+      if (this.blockChildrenSelect.selectedIndex === -1) {
+        this.childKey = '';
+        this.blockChildrenSelect.value = '';
+      }
+
+      this.updateSubViewDisplay('details');
+    }
+
+    this.rootBlock = this.context.activeBlock;
+    if (this.canvasHelper)
+      this.canvasHelper.logClear();
+
+    this.fireFields.loadedURL = this.fireFields.values['url'];
+    let sceneReloadRequired = this.fireFields.paint();
+    this.fireFields.helpers.resetUI();
+
+    if (this.detailsShown)
+      this.expandAll();
+    else
+      this.collapseAll();
+
+    if (this.tag === 'block')
+      this.setChildKey(this.childKey);
+
+    if (this.sceneFireFields) {
+      this.sceneFireFields.paint();
+      this.sceneFireFields.helpers.resetUI();
+    }
+    this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+
+    if (this.canvasHelper) {
+      this.canvasHelper.loadingScreen.style.display = 'none';
+      this.canvasHelper.show();
+    }
+  }
+  async showBusyScreen() {
+    return new Promise((resolve, reject) => {
+      if (this.canvasHelper) {
+        this.canvasHelper.loadingScreen.style.display = '';
+        this.canvasHelper.loadingScreen.offsetHeight;
+        return window.requestAnimationFrame(() => {
+          setTimeout(() => resolve(), 1);
+        });
+      }
+
+      return resolve();
+    });
+  }
+  setChildKey(key) {
+    this.childKey = key;
+    this.removeChildButton.style.visibility = (this.tag === 'block' && this.childKey) ? 'visible' : 'hidden';
+
+    if (!this.childKey) {
+      this.form_panel_view_dom.classList.add('root-block-display');
+      this.form_panel_view_dom.classList.remove('child-block-display');
+      this.context.setActiveBlock(this.rootBlock);
+    } else {
+      this.form_panel_view_dom.classList.remove('root-block-display');
+      this.form_panel_view_dom.classList.add('child-block-display');
+
+      if (this.rootBlock) {
+        let block = this.rootBlock.recursiveGetBlockForKey(this.childKey);
+        if (block)
+          this.context.setActiveBlock(block);
+        else
+          this.context.setActiveBlock(this.rootBlock);
+      }
+    }
+
+    if (this.framesBand)
+      this.framesBand.refreshUIFromCache();
+  }
+  _updateFollowTargetListOptions() {
+    let optionText = '';
+    let options = [];
+    if (this.rootBlock)
+      options = this.rootBlock.generateTargetFollowList();
+    for (let i = options.length - 1; i >= 0; i--)
+      optionText += '<option>' + options[i] + '</option>';
+
+    if (!this.followblocktargetoptionslist) {
+      this.followblocktargetoptionslist = document.createElement('datalist');
+      this.followblocktargetoptionslist.id = 'followblocktargetoptionslist';
+      document.body.appendChild(this.followblocktargetoptionslist);
+    }
+    this.followblocktargetoptionslist.innerHTML = optionText;
   }
 }

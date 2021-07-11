@@ -1,7 +1,9 @@
 import gUtility from '/lib/gutility.js';
+import sDataDefinition from '/lib/sdatadefinition.js';
 
 export default class wContext {
-  constructor(canvas, geoOptions) {
+  constructor(parent, canvas, geoOptions) {
+    this.parent = parent;
     this.ghostBlocks = {};
     this.light = null;
     this.camera = null;
@@ -169,7 +171,7 @@ export default class wContext {
   }
   async createObject(objectType, title, file, mixinData = {}) {
     let objectData = sDataDefinition.getDefaultDataCloned(objectType);
-    let fireSet = gAPPP.a.modelSets[objectType];
+    let fireSet = this.parent.sets[objectType];
     objectData.title = title;
 
     for (let i in mixinData)
