@@ -4,9 +4,11 @@ export default class gCSVImport {
     this.node = false;
     if (typeof module !== 'undefined' && module.exports) {
       this.firebase = require("firebase-admin");
+      this.firestore = this.firebase.firestore;
       this.node = true;
     } else {
       this.firebase = firebase;
+      this.firestore = firebase.firestore();
     }
   }
   getNumberOrDefault(val, d) {
@@ -2931,18 +2933,19 @@ export default class gCSVImport {
     return this.firebase.database().ref(`/project/${this.projectId}/rawData${rawName}Date`).once('value')
       .then(r => r.val());
   }
-  async addProject(newTitle, key = false, tags) {
-    if (!key)
-      key = this.firebase.database().ref('projectTitles').push().key;
-    if (!tags)
-      tags = '';
-    await this.firebase.database().ref('projectTitles/' + key).set({
-      title: newTitle,
-      tags
-    });
-    await this.firebase.database().ref('project/' + key).set({
-      title: newTitle
-    });
+  async addProject(title, key = false, tags = '') {
+    if (key) {
+      await this.firestore.doc('project/' + key).set({
+        title,
+        tags
+      });
+    } else {
+      let doc = await this.firestore.collection('project').add({
+        title,
+        tags
+      });
+      key = doc.id;
+    }
 
     return key;
   }

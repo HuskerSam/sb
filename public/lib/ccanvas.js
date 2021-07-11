@@ -357,7 +357,7 @@ export default class cCanvas {
       this.parent.sets.profile.update({
         ['playState' + this.rootBlock.blockKey]: this._playState,
         ['playStateAnimTime' + this.rootBlock.blockKey]: this.animateSlider.value,
-        ['playStateOffset' + this.rootBlock.blockKey]: firebase.database.ServerValue.TIMESTAMP,
+        ['playStateOffset' + this.rootBlock.blockKey]: firebase.firestore.FieldValue.serverTimestamp(),
       });
     this.__updatePlayState();
 

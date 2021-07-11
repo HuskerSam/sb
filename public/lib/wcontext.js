@@ -111,7 +111,7 @@ export default class wContext {
           newValue: cmdValue
         }, {
           field: 'videoStart',
-          newValue: firebase.database.ServerValue.TIMESTAMP
+          newValue: firebase.firestore.FieldValue.serverTimestamp()
         }], key);
       }
     }
