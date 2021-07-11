@@ -2,7 +2,7 @@ import sDataDefinition from '/lib/sdatadefinition.js';
 import gUtility from '/lib/gutility.js';
 import wBlock from '/lib/wBlock.js';
 
-class cFirestoreData {
+export class cFirestoreData {
   constructor(type, id, tag, datalist = true) {
     this.tag = tag;
     this.referencePath = this.tag;
@@ -94,22 +94,6 @@ class cFirestoreData {
       let newData = JSON.parse(JSON.stringify(data));
       this.set(newKey, newData);
       resolve(newKey);
-    });
-  }
-  async update(updates, key = null) {
-    if (!key && this.tag !== 'profile') {
-      console.log('update no key error', updates, key);
-      return;
-    }
-    if (this.tag === 'profile')
-      key = this.uid;
-
-    //limited use preview of updates before they're sent - for fast UI refresh
-    if (this.updatesCallback) this.updatesCallback(fieldUpdates, key);
-
-    let updatePath = this.referencePath + '/' + key;
-    return firebase.firestore().doc(updatePath).set(updates, {
-      merge: true
     });
   }
   createWithBlob(data, blob, filename) {
@@ -229,7 +213,7 @@ class cFirestoreData {
         if (url === undefined)
           url = '';
         if (url.indexOf(key) !== -1) {
-          let shortPath = url.replace(gAPPP.storagePrefix, '');
+          let shortPath = url.replace(this.storagePrefix, '');
           shortPath = decodeURIComponent(shortPath);
           shortPath = shortPath.substr(0, shortPath.indexOf('?'));
           let storageRef = firebase.storage().ref();
@@ -292,6 +276,22 @@ class cFirestoreData {
     }
 
     return '';
+  }
+  async update(updates, key = null) {
+    if (!key && this.tag !== 'profile') {
+      console.log('update no key error', updates, key);
+      return;
+    }
+    if (this.tag === 'profile')
+      key = this.uid;
+
+    let updatePath = this.referencePath + '/' + key;
+
+    //TO FIX - apply updates to local cache!!!
+
+    return firebase.firestore().doc(updatePath).set(updates, {
+      merge: true
+    });
   }
   updateBlobString(key, blobString, filename) {
     return new Promise((resolve, reject) => {
@@ -425,8 +425,8 @@ class cAuthorization {
     window.history.replaceState({}, document.title, "/asset/");
   }
   onProjectTitlesChange(values, type, fireData) {
-    if (gAPPP.mV)
-      gAPPP.mV.updateProjectList(gAPPP.a.modelSets['project'].fireDataValuesByKey, null);
+    //TO FIX
+    //  this.mV.updateProjectList(this.a.modelSets['project'].fireDataValuesByKey, null);
   }
   async onAuthStateChanged(user) {
     if (user && this.uid === user.uid) {
@@ -549,7 +549,7 @@ class cAuthorization {
       this.modelSets[key].deactivate();
   }
 }
-class cAppDefaults {
+export class cAppDefaults {
   constructor() {
     this.fontsAdded = {};
     this.storagePrefix = 'https://firebasestorage.googleapis.com/v0/b/husker-ac595.appspot.com/o/';
@@ -757,10 +757,7 @@ export default class cWebApplication extends cAppDefaults {
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
     this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
 
-    window.addEventListener("resize", () => {
-      if (this.activeContext)
-        this.activeContext.engine.resize();
-    });
+    window.addEventListener("resize", () => this.resize);
     firebase.database().ref('/.info/serverTimeOffset').once('value')
       .then((data) => this.serverOffsetTime = data.val());
 
@@ -769,13 +766,23 @@ export default class cWebApplication extends cAppDefaults {
 
     this.authInit();
   }
+  resize() {
+    if (this.activeContext)
+      this.activeContext.engine.resize();
+  }
   closeHeaderBands() {}
   mainInitUI() {
+    this.dialog = document.querySelector('#firebase-app-main-page');
+    if (this.dialog)
+      document.body.removeChild(this.dialog);
+    this.dialog = null;
+
     let div = document.createElement('div');
-    div.id = 'firebase-app-main-page';
-    div.innerHTML = `<div class="form_canvas_wrapper"></div>`;
-    this.dialog = div;
+    this.layoutMode = 'Top';
+    div.innerHTML = this.layoutTemplate();
+    div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
+    this.dialog = document.querySelector('#firebase-app-main-page');
   }
   async mainUpdateUI() {
     this.sets.profile = new cFirestoreData('profile', this.a.uid);
@@ -810,6 +817,7 @@ export default class cWebApplication extends cAppDefaults {
 
     this.styleUpdate();
     await this.initCanvas();
+    await this.splitLayout();
     this.signOutButton = this.dialog.querySelector('.signout-button');
     this.signOutButton.addEventListener('click', e => this.a.signOut());
 
@@ -819,6 +827,7 @@ export default class cWebApplication extends cAppDefaults {
 
     await this._updateGoogleFonts();
   }
+  async splitLayout() {}
   __updateSceneBlockBand(blockKey) {}
   show(scene) {
     this.context.activate(scene);
@@ -871,7 +880,7 @@ export default class cWebApplication extends cAppDefaults {
     setTimeout(() => {
       this.canvasHelper.show();
       this._updateContextWithDataChange();
-      gAPPP.activeContext.activeBlock.setData();
+      this.activeContext.activeBlock.setData();
       this.profileUpdate();
       this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
     }, 50);
@@ -1019,7 +1028,7 @@ export default class cWebApplication extends cAppDefaults {
     return size;
   }
   async _updateGoogleFonts() {
-    let editInfoBlocks = gAPPP.a.modelSets['block'].queryCache('blockFlag', 'googlefont');
+    let editInfoBlocks = this.sets['block'].queryCache('blockFlag', 'googlefont');
     let fontLoaded = false;
     for (let id in editInfoBlocks) {
       let fontName = editInfoBlocks[id].genericBlockData;
@@ -1049,10 +1058,10 @@ export default class cWebApplication extends cAppDefaults {
     }
   }
   __genBaseAppStyle() {
-    let canvasColor = gAPPP.a.profile.canvasColor;
+    let canvasColor = this.a.profile.canvasColor;
     if (!canvasColor)
       canvasColor = '';
-    let opacityLevel = gAPPP.a.profile.opacityLevel;
+    let opacityLevel = this.a.profile.opacityLevel;
     if (!opacityLevel)
       opacityLevel = .5;
 
@@ -1292,6 +1301,94 @@ export default class cWebApplication extends cAppDefaults {
         <label><input id="sign-in-by-email-link" name="email" type="email" style="width:14em;" placeholder="Email (no password)"></label>
         <button id="sign-in-email-button" class="btn btn-primary">Email link to logon</button>
       </div>
+    </div>`;
+  }
+  splitLayout() {
+    this.mainViewWrapper = this.dialog.querySelector('#main-view-wrapper');
+    if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1) {
+      this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
+      this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
+
+      let l = this.form_canvas_wrapper;
+      let r = this.form_panel_view_dom;
+      if (this.layoutMode === 'Right' || this.layoutMode === 'Bottom') {
+        l = this.form_panel_view_dom;
+        r = this.form_canvas_wrapper;
+        l.parentNode.insertBefore(l, r);
+      }
+
+      let splitOrientation = 'horizontal';
+      if (this.layoutMode === 'Top' || this.layoutMode === 'Bottom') {
+        splitOrientation = 'vertical';
+        this.dialog.style.display = 'block';
+      } else {
+        this.form_panel_view_dom.parentNode.style.display = 'flex';
+        this.dialog.style.display = 'flex';
+      }
+      this.splitInstance = window.Split([l, r], {
+        sizes: [40, 60],
+        gutterSize: 20,
+        direction: splitOrientation,
+        onDragEnd: () => this.resize(),
+        onDrag: () => this.resize()
+      });
+    } else if (['Edit', 'View'].indexOf(this.layoutMode) !== -1) {
+      this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
+      this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
+      this.dialog.style.display = 'block';
+      this.codeModeFromView = this.dialog.querySelector('.none-layout-mode-flip');
+      this.codeModeFromView.style.display = 'inline-block';
+      this.codeModeFromView.addEventListener('click', async e => {
+        await this.sets.profile.update({
+          formLayoutMode: 'Top'
+        });
+
+        setTimeout(() => location.reload(), 1);
+      });
+      if (this.layoutMode === 'Edit') {
+        this.form_canvas_wrapper.style.display = 'none';
+        this.mainViewWrapper.style.display = 'flex';
+      }
+
+      if (this.layoutMode === 'View') {
+        this.form_panel_view_dom.style.display = 'none';
+      }
+    } else if (this.layoutMode === 'Demo') {
+      this.dialog.style.display = 'block';
+    }
+    if (!this.layoutMode)
+      this.layoutMode = '';
+    this.dialog.classList.add('bview-layoutmode-' + this.layoutMode.toLowerCase());
+  }
+  layoutTemplate() {
+    if (['Left', 'Right', 'Top', 'Bottom', 'View', 'Edit'].indexOf(this.layoutMode) !== -1)
+      return this.splitLayoutTemplate();
+
+    return `<div id="firebase-app-main-page" style="display:none;">
+  <div id="renderLoadingCanvas" style="display:none;"><br><br>Working...</div>
+  <div id="main-view-wrapper">
+    <div class="form_canvas_wrapper"></div>
+  </div>
+</div>`;
+  }
+  profilePanelTemplate() {
+    return `<div id="record_field_list">
+      <form autocomplete="off" onsubmit="return false;"></form>
+    </div>
+    <button id="sign-out-button" style="float:right;"><i class="material-icons">account_box</i> Sign out </button>
+    <button id="user-profile-dialog-reset-button" style="float:right;"><i class="material-icons">account_circle</i> Reset Profile </button>
+    <select id="view_layout_select" style="float:right;">
+      <option>View</option>
+      <option>Top</option>
+      <option>Left</option>
+      <option>Bottom</option>
+      <option>Right</option>
+      <option>Edit</option>
+    </select>
+    <div class="fields-container" style="float:right;clear:right;"></div>
+    <div style="clear:both;display:inline-block;float:right;">
+      <img src='' class="user-profile-image" />
+      <div class="user-profile-info"></div>
     </div>`;
   }
 }

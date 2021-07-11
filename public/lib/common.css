@@ -1,0 +1,550 @@
+* {
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+select {
+  border-width: .25em;
+  border-radius: .5em;
+  padding: .15em;
+  border: outset .1em silver;
+  font-size: 1.25em;
+}
+
+html, body {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+*[disabled] {
+  background: silver;
+  opacity: .6;
+}
+
+#renderLoadingCanvas, #noProjectFoundCanvas {
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  background: silver;
+  font-size: 2em;
+  text-align: center;
+  color: rgb(50, 50, 50);
+  position: absolute;
+  z-index: 100000;
+  left: 0;
+}
+
+#firebase-app-main-page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.popup-canvas {
+  touch-action: none;
+  width: 100%;
+  height: 100%;
+}
+
+.form_panel_view_dom {
+  color: rgb(66, 66, 66);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  position: relative;
+  flex: 1;
+}
+
+.form_canvas_wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: .05em;
+}
+
+.canvas-actions .render-log-wrapper {
+  display: inline-block;
+  pointer-events: none;
+  position: relative;
+  top: -.5em;
+}
+
+.render-log-wrapper * {
+  pointer-events: auto;
+}
+
+.canvas-actions {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.canvas-actions .expanded-toolbar-content {
+  display: block;
+  pointer-events: none;
+}
+
+.canvas-actions * {
+  pointer-events: auto;
+}
+
+.canvas-actions .play-button {
+  color: rgb(0, 127, 0);
+}
+
+.canvas-actions .pause-button, .canvas-actions .play-button {
+  margin-left: .25em;
+}
+
+.canvas-actions .video-button {
+  color: red;
+}
+
+.canvas-actions .camera-select {
+  top: -.4em;
+  position: relative;
+}
+
+.canvas-actions input[type="range"] {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  top: .2em;
+  left: .2em;
+  margin-right: .5em;
+}
+
+.canvas-actions input.animate-range {
+  width: calc(100% - 7em);
+  min-width: 12em;
+  position: absolute;
+  left: 3.5em;
+  top: .35em;
+}
+
+.form-group.shortVector input[type="range"] {
+  width: 100%;
+}
+
+.form-group.longvector input[type="range"] {
+  width: 100%;
+}
+
+
+.play-button, .pause-button {
+  position: absolute;
+  top: .35em;
+}
+
+.form-group {
+  width: 12em;
+  display: inline-block;
+  font-size: inherit;
+  margin-right: .1em;
+}
+
+.form-group.number {
+  width: 5em;
+}
+
+.frames-panel .form-group.number {
+  width: 7em;
+}
+
+.form-group label {}
+
+.form-group label span {
+  font-size: .9em;
+  padding: 0em;
+  padding-left: .5em;
+  font-weight: bold;
+}
+
+.form-group input {
+  text-align: center;
+  width: 100%;
+  font-size: 1em;
+  float: left;
+}
+
+.checkboxgroup input {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.url-form-group a {
+}
+
+.url-form-group {
+  line-height: 1em;
+}
+
+.url-form-group button {
+  float: right;
+}
+
+.url-form-group input {}
+
+.checkboxgroup label {
+  font-size: 1em;
+}
+
+.checkboxgroup label span {
+  padding: .25em .1em;
+  font-size: 1em;
+  position: relative;
+  top: .25em;
+}
+
+.fields-container {
+  overflow: auto;
+}
+
+.form-group-container-group {
+  display: inline-block;
+  text-align: center;
+  float: left;
+  position: relative;
+  margin: .25em;
+  padding: .25em;
+  padding-top: 0;
+  max-width: 99%;
+  border-radius: 1em;
+}
+
+.form-group-container-group .checkboxgroup {
+  width: auto;
+  margin-top: -1em;
+  padding: .5em;
+  top: .5em;
+  position: relative;
+}
+
+.form-group-container-group label {
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+i.material-icons, i.material-icons-outlined {
+  font-size: inherit;
+}
+
+button i.material-icons, button i.material-icons-outlined {
+  position: relative;
+  top: .1em;
+  font-size: 1.1em;
+}
+
+button.scene-options {
+  position: absolute;
+  right: .25em;
+  top: .35em;
+  z-index: 10000;
+}
+
+.scene-options-panel .selected-mesh-bounds-helper-box {
+  background: none!important;
+  height: 7.5em;
+  padding-top: 1.25em;
+}
+
+.selected-mesh-helper-collapse-button {
+  display: none;
+}
+
+.form_panel_view_dom .selected-mesh-helper-collapse-button {
+  display: inline-block;
+  float: right;
+}
+
+.form_panel_view_dom #profile-header-panel .selected-mesh-helper-collapse-button {
+  display: none;
+}
+
+
+.render-log-panel {
+  background: rgba(255, 255, 255, .5);
+  white-space: pre;
+  width: 16em;
+  height: 10em;
+  border-radius: 0em;
+  border: inset .1em silver;
+  font-size: .9em;
+  padding: .25em;
+  overflow: auto;
+  float: left;
+  clear: both;
+}
+
+.scene-options-panel .log-clear {
+  float: right;
+}
+
+.scene-options .form-group-container-group {
+  background: rgba(255, 255, 255, .5);
+  padding: .25em;
+  overflow: hidden;
+}
+
+
+.scene-options-panel {
+  pointer-events: none;
+  position:absolute;
+  top: 2.5em;
+  z-index: 100;
+  margin: .5em;
+  padding: .25em;
+  right: .25em;
+}
+
+.scene-options-panel .scene-fields-container {
+  overflow: hidden;
+  pointer-events: none;
+  display: inline-block;
+}
+
+.scene-options-panel .scene-fields-container * {
+  pointer-events: auto;
+}
+
+.scene-options-panel .shortVector, .font-family-panel .shortVector {
+  padding-bottom: .25em;
+}
+
+.camera-options-panel {
+  padding-top: .5em;
+  margin-right: 5.5em;
+}
+
+.canvas-actions .camera-options-panel {
+  position: absolute;
+  bottom: 0em;
+  left: .35em;
+  line-height: 3em;
+  pointer-events: none;
+  width: 100%;
+}
+
+.camera-options-panel > div {
+  position: relative;
+  width: 40%;
+  min-width: 12em;
+  float: left;
+  clear: both;
+}
+
+.camera-options-panel > select {
+ float: left;
+}
+
+.color-picker-input {
+  position: absolute;
+  top: .15em;
+  right: -.6em;
+  width: 2.5em!important;
+  padding: 0em!important;
+  height: 1.25em;
+}
+
+.run-length-label, .camera-slider-label {
+  font-size: 1.25em;
+  background: rgba(50, 50, 50, .3);
+  height: auto;
+  border-radius: 10%;
+  position: absolute;
+  left: 3.25em;
+  width: auto;
+  top: .55em;
+  display: inline-block;
+  pointer-events: none;
+  overflow: visible;
+  color: white;
+  z-index: 1;
+  white-space: nowrap;
+  padding: 0;
+  line-height: 1em;
+}
+
+.run-length-label {
+  top: .75em;
+}
+
+.camera-slider-label {
+  left: .5em;
+}
+
+.run-length-label i, .camera-slider-label i {
+  top: .15em;
+  position: relative;
+  pointer-events: none;
+  color: white;
+}
+
+.light-intensity-user-panel {
+  padding-bottom: .65em;
+}
+
+.scene-tools-checkboxes {
+  top: 1.25em;
+}
+
+.color-data-item {
+  width: 7em;
+}
+
+.color-data-item>span {
+  padding-right: 2.5em!important;
+}
+
+.url-type-input-group {
+  width: 20em;
+  max-width: 100%;
+  float:left;
+}
+
+
+.selected-mesh-bounds-helper-box .action-area {
+  margin-top: -.5em;
+}
+
+.selected-mesh-bounds-helper-box .action-area input {
+  width: 3em;
+  text-align: right;
+  font-size: 1em;
+}
+
+.selected-mesh-bounds-helper-box .action-area select {
+  padding: 0;
+  font-size: 1em;
+}
+
+.selected-mesh-bounds-helper-box .action-area button {
+  background: white;
+  font-size: 1.25em;
+  margin: .25em;
+}
+
+.selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  width: 10em;
+  display: inline-block;
+  position: relative;
+  top: .75em;
+  font-size: inherit;
+}
+
+.selected-mesh-bounds-helper-box .action-area input[type="range"].singleslider {
+  transform: rotate(-90deg);
+  width: 6.5em;
+  top: 2em;
+  left: -.9em;
+}
+
+.selected-mesh-bounds-helper-box .info-area {
+  font-size: .8em;
+  font-family: monospace;
+}
+
+.selected-mesh-bounds-helper-box .preview {
+  font-size: .85em;
+  clear: both;
+}
+
+.selected-mesh-bounds-helper-box .action-area .preview, .selected-mesh-bounds-helper-box .action-area button {
+  color: rgb(127, 64, 0);
+}
+
+.selected-mesh-bounds-helper-box .action-area.offset .preview, .selected-mesh-bounds-helper-box .action-area.offset button {
+  color: rgb(20, 100, 0);
+}
+
+.selected-mesh-bounds-helper-box .action-area.rotate .preview, .selected-mesh-bounds-helper-box .action-area.rotate button {
+  color: rgb(0, 64, 127);
+}
+
+.canvas-play-bar {
+  pointer-events:none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.video-overlay {
+  width: 100%;
+  pointer-events: none;
+  height: 25vh;
+  position: absolute;
+  top: 0;
+  display: none;
+}
+
+.video-overlay * {
+  pointer-events: auto;
+}
+
+.video-overlay video {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.data-view-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  position: relative;
+  overflow: auto;
+}
+
+.bview-layoutmode-bottom .form_panel_view_dom, .bview-layoutmode-top .form_panel_view_dom {
+  min-height: auto;
+}
+
+#profile-header-panel {
+  overflow: auto;
+  display: none;
+  position: absolute;
+  top: 2.25em;
+  right: 0em;
+  z-index: 1000;
+  padding: .5em;
+  margin: .5em
+}
+
+.form_panel_view_dom.header-expanded #profile-header-panel {
+  display: inline-block;
+}
+
+.font-size-main-view .selected-mesh-bounds-helper-box .action-area input[type="range"] {
+  transform: none;
+  width: 17em;
+  left: -12em;
+  top: .25em;
+  margin-bottom: .75em;
+}
+
+.user-profile-info {
+  display: inline-block;
+  padding: .5em;
+}
+
+.user-profile-image {
+  max-width: 2em;
+  max-height: 2em;
+  float:left;
+  border-radius: .5em;
+}
+
+.help_folding_section {
+  display: none;
+}
+
+.help_folding_section.expanded {
+  display: block;
+}

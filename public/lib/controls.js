@@ -26,11 +26,11 @@ export class cBandProfileOptions {
         gAPPP.activeContext.refreshFocus();
     });
 
-    //limited use preview of updates before they're sent - for fast UI refresh
-    this.fireSet.updatesCallback = (fieldUpdates, key) => this.profileUpdatesPreview(fieldUpdates, key);
     this.closeOthersCallback = null;
   }
   profileUpdatesPreview(fieldUpdates, key) {
+    /*
+    TO FIX
     //limited use preview of updates before they're sent - for fast UI refresh
     for (let i = 0; i < fieldUpdates.length; i++) {
       if (fieldUpdates[i].field === 'lightIntensity') {
@@ -49,6 +49,7 @@ export class cBandProfileOptions {
         }
       }
     }
+    */
   }
   activate() {
     this.fireFields.paint();
@@ -315,12 +316,12 @@ export class cPanelData {
     this._updateFieldDom(field);
   }
   _commitUpdates(newValues) {
-    if (!this.parent.fireSet)
+    if (!this.fireSet)
       return;
 
     let updates = this._generateUpdateList(newValues);
-    if (updates.length > 0) {
-      this.parent.fireSet.update(updates, this.parent.key);
+    if (updates) {
+      this.fireSet.update(updates, this.key);
 
       for (let i in this.fields) {
         let f = this.fields[i];
@@ -330,7 +331,8 @@ export class cPanelData {
     }
   }
   _generateUpdateList(newValues) {
-    let updates = [];
+    let updates = {};
+    let noData = true;
     for (let i in this.fields) {
       let f = this.fields[i];
       let v = newValues[f.fireSetField];
@@ -339,13 +341,12 @@ export class cPanelData {
         o = '';
       o = o.toString();
       if (v !== o) {
-        updates.push({
-          field: f.fireSetField,
-          newValue: v,
-          oldValue: o
-        });
+        updates[f.fireSetField] = v;
       }
     }
+
+    if (noData)
+      return null;
     return updates;
   }
   _handleDataChange(values, type, fireData) {
@@ -356,7 +357,7 @@ export class cPanelData {
     if (type === "moved")
       return;
 
-    if (this.parent.fireSet.keyList) {
+    if (this.fireSet.keyList) {
       if (this.parent.key !== fireData.key)
         return;
     }
@@ -433,7 +434,7 @@ export class cPanelData {
     if (field.dataListId)
       element.setAttribute('list', field.dataListId);
 
-    this.helpers.initHelperField(field, this.parent.fireSet);
+    this.helpers.initHelperField(field, this.fireSet);
   }
   __handleColorInputChange(field) {
     let bColor = gUtility.HexToRGB(field.colorPickerInput.value);
@@ -515,9 +516,9 @@ export class cPanelData {
     }
 
     if (f.helperType === 'vector')
-      this.helpers.fieldVectorUpdateData(f, this.parent.fireSet, this.parent.key);
+      this.helpers.fieldVectorUpdateData(f, this.fireSet, this.parent.key);
     if (f.helperType === 'singleSlider')
-      this.helpers.fieldSliderUpdateData(f, this.parent.fireSet, this.parent.key);
+      this.helpers.fieldSliderUpdateData(f, this.fireSet, this.parent.key);
 
     if (f.displayType)
       f.domContainer.classList.add(f.displayType);
@@ -698,11 +699,9 @@ export class cPanelHelpers {
     if (!hp.fireSet)
       return;
 
-    hp.fireSet.update([{
-      field: field.fireSetField,
-      newValue: str,
-      oldValue: oldValue
-    }], hp.key);
+    hp.fireSet.update({
+      [field.fireSetField]: str
+    }, hp.key);
   }
   _fieldHandleSliderChange(field) {
     let hp = field.helperPanel;
@@ -712,11 +711,9 @@ export class cPanelHelpers {
     if (!hp.fireSet)
       return;
 
-    hp.fireSet.update([{
-      field: field.fireSetField,
-      newValue: str,
-      oldValue: oldValue
-    }], hp.key);
+    hp.fireSet.update({
+      [field.fireSetField]: str
+    }, hp.key);
   }
   fieldVectorUpdateData(field, fireSet, key) {
     let hp = field.helperPanel;
@@ -752,22 +749,6 @@ export class cPanelHelpers {
     let helperPanel = this.helperPanels['rotate'];
     let sObj = this.context.activeBlock.sceneObject;
     let nObj = this.context.ghostBlocks['rotatePreview'].sceneObject;
-    let updates = [];
-    updates.push({
-      field: 'rotationX',
-      newValue: gUtility.formatNumber(nObj.rotation.x).trim(),
-      oldValue: gUtility.formatNumber(sObj.rotation.x).trim()
-    });
-    updates.push({
-      field: 'rotationY',
-      newValue: gUtility.formatNumber(nObj.rotation.y).trim(),
-      oldValue: gUtility.formatNumber(sObj.rotation.y).trim()
-    });
-    updates.push({
-      field: 'rotationZ',
-      newValue: gUtility.formatNumber(nObj.rotation.z).trim(),
-      oldValue: gUtility.formatNumber(sObj.rotation.z).trim()
-    });
 
     helperPanel.input[0].value = 0;
     helperPanel.slider[0].value = 0;
@@ -775,7 +756,11 @@ export class cPanelHelpers {
     helperPanel.slider[1].value = 0;
     helperPanel.input[2].value = 0;
     helperPanel.slider[2].value = 0;
-    gAPPP.a.modelSets[this.tag].update(updates, this.key);
+    this.fireSet.update({
+      rotationX: gUtility.formatNumber(nObj.rotation.x).trim(),
+      rotationY: gUtility.formatNumber(nObj.rotation.y).trim(),
+      rotationZ: gUtility.formatNumber(nObj.rotation.z).trim()
+    }, this.key);
   }
   _rotateDataUpdate() {
     let hp = this.helperPanels['rotate'];
@@ -869,25 +854,13 @@ export class cPanelHelpers {
 
     let sObj = this.context.activeBlock.sceneObject;
     let nObj = this.context.ghostBlocks['scalePreview'].sceneObject;
-    let updates = [];
-    updates.push({
-      field: 'scalingX',
-      newValue: gUtility.formatNumber(nObj.scaling.x).trim(),
-      oldValue: gUtility.formatNumber(sObj.scaling.x).trim()
-    });
-    updates.push({
-      field: 'scalingY',
-      newValue: gUtility.formatNumber(nObj.scaling.y).trim(),
-      oldValue: gUtility.formatNumber(sObj.scaling.y).trim()
-    });
-    updates.push({
-      field: 'scalingZ',
-      newValue: gUtility.formatNumber(nObj.scaling.z).trim(),
-      oldValue: gUtility.formatNumber(sObj.scaling.z).trim()
-    });
 
     helperPanel.input.value = 100;
-    gAPPP.a.modelSets[this.tag].update(updates, this.key);
+    this.fireSet.update({
+      scalingX: gUtility.formatNumber(nObj.scaling.x).trim(),
+      scalingY: gUtility.formatNumber(nObj.scaling.y).trim(),
+      scalingZ: gUtility.formatNumber(nObj.scaling.z).trim()
+    }, this.key);
   }
   _scaleDataUpdate() {
     let hp = this.helperPanels['scale'];
@@ -969,20 +942,11 @@ export class cPanelHelpers {
 
     let factor = Math.min(xF, Math.min(xH, xD));
 
-    let updates = [];
-    updates.push({
-      field: 'scalingX',
-      newValue: factor.toFixed(6)
-    });
-    updates.push({
-      field: 'scalingY',
-      newValue: factor.toFixed(6)
-    });
-    updates.push({
-      field: 'scalingZ',
-      newValue: factor.toFixed(6)
-    });
-    gAPPP.a.modelSets[this.tag].update(updates, this.key);
+    this.fireSet.update({
+      scalingX: factor.toFixed(6),
+      scalingY: factor.toFixed(6),
+      scalingZ: factor.toFixed(6)
+    }, this.key);
   }
   collapseAll() {
     for (let c = 0, l = this.toggleButtons.length; c < l; c++)
