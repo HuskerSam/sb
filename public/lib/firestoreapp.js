@@ -772,13 +772,18 @@ export default class cWebApplication extends cAppDefaults {
   }
   closeHeaderBands() {}
   mainInitUI() {
+    //if (this.context)
+    //  this.context.deactivate();
+
+    if (!this.layoutMode)
+      this.layoutMode = 'Left';
+
     this.dialog = document.querySelector('#firebase-app-main-page');
     if (this.dialog)
       document.body.removeChild(this.dialog);
     this.dialog = null;
 
     let div = document.createElement('div');
-    this.layoutMode = 'Top';
     div.innerHTML = this.layoutTemplate();
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
@@ -1390,5 +1395,105 @@ export default class cWebApplication extends cAppDefaults {
       <img src='' class="user-profile-image" />
       <div class="user-profile-info"></div>
     </div>`;
+  }
+  updateProjectList(rawRecordList, selectedWorkspace = null) {
+    this.projectList = rawRecordList;
+    if (!this.workplacesSelect)
+      return;
+
+    let html = '';
+    let records = {};
+
+    if (this.filterActiveWorkspaces) {
+      for (let i in rawRecordList) {
+        let r = rawRecordList[i];
+        let tagList = (r.tags) ? r.tags.split(',') : [];
+        if (tagList.indexOf('active') !== -1)
+          records[i] = r;
+      }
+    } else {
+      records = rawRecordList;
+    }
+
+
+    let orderedRecords = [];
+    for (let i in records) {
+      records[i].id = i;
+      orderedRecords.push(records[i]);
+    }
+    orderedRecords.sort((a, b) => {
+      if (a.title > b.title) return -1;
+      if (a.title < b.title) return 1;
+
+      return 0;
+    });
+
+    for (let c = 0, l = orderedRecords.length; c < l; c++) {
+      let code = '';
+      if (orderedRecords[c].tags)
+        code = orderedRecords[c].tags;
+      let o = `<option value="${orderedRecords[c].id}">${orderedRecords[c].title}</option>`;
+
+      if (orderedRecords[c].id === 'default')
+        html += o;
+      else
+        html = o + html;
+    }
+    let val = selectedWorkspace;
+    if (val === null)
+      val = this.workplacesSelect.value;
+    this.workplacesSelect.innerHTML = html;
+    this.workplacesSelect.value = val;
+
+    if (!records || !records[val])
+      return;
+    this.lastWorkspaceName = records[val].title;
+    this.lastWorkspaceCode = records[val].tags;
+
+    if (this.workplacesSelectEditName) {
+      this.workplacesSelectEditName.value = records[val].title;
+      let code = '';
+      if (records[val].tags)
+        code = records[val].tags;
+      this.workplacesSelectEditCode.value = code;
+      gAPPP.workspaceCode = code;
+    }
+
+    if (this.workplacesSelect.selectedIndex === -1) {
+      this.workplacesSelect.selectedIndex = 0;
+      this.selectProject();
+    }
+  }
+  expandAll() {
+    if (this.fireFields)
+      this.fireFields.helpers.expandAll();
+    this.detailsShown = true;
+
+    this.sets.profile.update({
+      applicationDetailsShown: this.detailsShown
+    });
+  }
+  collapseAll() {
+    if (this.fireFields)
+      this.fireFields.helpers.collapseAll();
+    this.detailsShown = false;
+
+    this.sets.profile.update({
+      applicationDetailsShown: this.detailsShown
+    });
+  }
+  _updateQueryString(newWid) {
+    let queryString = `?wid=${newWid}`;
+
+    let url = window.location.protocol + "//" + window.location.host + window.location.pathname + queryString;
+
+    if (url !== this.url) {
+      window.history.pushState({
+        path: url
+      }, '', url);
+      this.url = url;
+    }
+
+    return;
   }
 }
