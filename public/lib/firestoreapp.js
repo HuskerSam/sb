@@ -15,7 +15,7 @@ class cFirestoreData {
       this.tag = 'profile';
     } else if (type === 'project') {
       this.tag = 'project';
-      this.referencePath = '/project/';
+      this.referencePath = 'project';
     } else {
       alert('invalid cFirestoreData type');
       this.referencePath = '/boguspath/';
@@ -92,9 +92,9 @@ class cFirestoreData {
       resolve(newKey);
     });
   }
-  async commitUpdateList(fieldUpdates, key = null) {
+  async update(updates, key = null) {
     if (!key && this.tag !== 'profile') {
-      console.log('commitUpdateList no key error', fieldUpdates, key);
+      console.log('update no key error', updates, key);
       return;
     }
     if (this.tag === 'profile')
@@ -104,7 +104,7 @@ class cFirestoreData {
     if (this.updatesCallback) this.updatesCallback(fieldUpdates, key);
 
     let updatePath = this.referencePath + '/' + key;
-    return firebase.firestore().doc(updatePath).set(fieldUpdates, {
+    return firebase.firestore().doc(updatePath).set(updates, {
       merge: true
     });
   }
@@ -301,7 +301,7 @@ class cFirestoreData {
           newValue: snapshot.totalBytes,
           oldValue: this.getCache(key)['size']
         }];
-        this.commitUpdateList(updates, key);
+        this.update(updates, key);
         resolve({
           result: snapshot,
           url: snapshot.downloadURL
@@ -321,7 +321,7 @@ class cFirestoreData {
           newValue: snapshot.totalBytes,
           oldValue: this.getCache(key)['size']
         }];
-        this.commitUpdateList(updates, key);
+        this.update(updates, key);
         resolve({
           result: snapshot,
           url: snapshot.downloadURL
@@ -399,7 +399,6 @@ class cAuthorization {
 
     firebase.auth().onAuthStateChanged(u => this.onAuthStateChanged(u));
 
-    this.workspaceLoadedCallback = null;
     this.updateAuthUICallback = null;
   }
   signInWithURL() {
@@ -461,14 +460,6 @@ class cAuthorization {
     if (workspaceLoaded)
       this.workspaceLoaded();
   }
-  workspaceLoaded() {
-    if (!this.initialBlockLoad) {
-      if (this.workspaceLoadedCallback)
-        this.workspaceLoadedCallback();
-
-      this.initialBlockLoad = true;
-    }
-  }
   get profile() {
     let model = this.modelSets['profile'];
     if (model && model.active) {
@@ -511,7 +502,7 @@ class cAuthorization {
   }
   async resetProfile() {
     this._profile = this._defaultProfile(this.anonymous);
-    await this.modelSets['profile'].commitUpdateList(this._profile, 'user');
+    await this.modelSets['profile'].update(this._profile, 'user');
     return;
   }
   _defaultProfile(anon = true) {
@@ -543,20 +534,16 @@ class cAuthorization {
 
     return profileData;
   }
-  _activateModels() {
+  async _activateModels() {
+    let promises = [];
     for (let key in this.modelSets)
-      this.modelSets[key].activate();
+      promises.push(this.modelSets[key].activate());
+
+    return Promise.all(promises);
   }
   _deactivateModels() {
     for (let key in this.modelSets)
       this.modelSets[key].deactivate();
-  }
-  initProjectModels(workspaceId) {
-    this.modelSets['mesh'] = new cFirestoreData('workspace', workspaceId, 'mesh');
-    this.modelSets['shape'] = new cFirestoreData('workspace', workspaceId, 'shape');
-    this.modelSets['block'] = new cFirestoreData('workspace', workspaceId, 'block');
-    this.modelSets['texture'] = new cFirestoreData('workspace', workspaceId, 'texture');
-    this.modelSets['material'] = new cFirestoreData('workspace', workspaceId, 'material');
   }
 }
 class cAppDefaults {
@@ -764,6 +751,8 @@ class cWebApplication extends cAppDefaults {
     this.styleProfileDom = null;
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
+    this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
+    this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
 
     window.addEventListener("resize", () => {
       if (this.activeContext)
@@ -777,20 +766,201 @@ class cWebApplication extends cAppDefaults {
 
     this.authInit();
   }
+  closeHeaderBands() {}
   mainInitUI() {
     let div = document.createElement('div');
     div.id = 'firebase-app-main-page';
+    div.innerHTML = `<div class="form_canvas_wrapper"></div>`;
+    this.dialog = div;
     document.body.insertBefore(div, document.body.firstChild);
   }
   async mainUpdateUI() {
-    this.a.modelSets['profile'] = new cFirestoreData('profile', this.a.uid);
-    await this.a.modelSets['profile'].activate();
-    console.log(this.a.profile);
+    this.sets.profile = new cFirestoreData('profile', this.a.uid);
+    await this.sets.profile.activate();
 
+    this.sets.project = new cFirestoreData('project');
+    await this.sets.project.activate();
 
-    //this.modelSets['project'] = new cFirestoreData('project');
+    if (!this.loadedWID) {
+      this.loadedWID = this.a.profile.selectedWorkspace;
+    }
+    let project = null;
 
-    //this.modelSets['project'].activate();
+    if (this.loadedWID)
+      project = this.sets.project.getCache(this.loadedWID);
+
+    if (!project) {
+      let keys = Object.keys(this.sets.project.fireDataValuesByKey);
+      if (keys.length === 0) {
+        project = null;
+      } else {
+        this.loadedWID = keys[0]
+        project = this.sets.project.getCache(this.loadedWID);
+      }
+    }
+
+    this.initProjectModels();
+    await this.a._activateModels();
+
+    if (this.context)
+      this.context.deactivate();
+
+    this.styleUpdate();
+    let {
+      wBlock
+    } = await import('/lib/wblock.js');
+    this.wBlock = wBlock;
+    await this.initCanvas();
+
+    let saveKey = 'selectedBlockKey' + this.loadedWID;
+    let rootKey = this.sets.block.getIdByFieldLookup('blockCode', 'demo');
+    await this._updateSelectedBlock(rootKey);
+
+    await this._updateGoogleFonts();
+  }
+  __updateSceneBlockBand(blockKey) {}
+  show(scene) {
+    this.context.activate(scene);
+    if (this.canvasHelper) {
+      this.canvasHelper.show();
+    }
+  }
+  _updateSelectedBlock(blockKey = null) {
+    if (!blockKey) {
+      this.key = '';
+      this.canvasHelper.show();
+      return;
+    }
+
+    if (this.key !== blockKey) {
+      this.show(null);
+      this.canvasHelper.hide();
+      let blockData = this.sets.block.getCache(profileKey);
+      if (blockData) {
+        this.__updateSceneBlockBand(profileKey);
+
+        if (blockData.url)
+          this.context.loadSceneURL(blockData.url).then(result => {
+            this.__loadBlock(profileKey, blockData);
+          });
+        else
+          this.__loadBlock(profileKey, blockData);
+      } else {
+        this.key = '';
+        this.canvasHelper.show();
+      }
+    }
+  }
+  async loadRootBlock() {
+    this.canvasHelper.logClear();
+    let startTime = Date.now();
+
+    let b = new this.wBlock(this.context);
+    //document.title = blockData.title;
+    b.staticType = 'block';
+    b.staticLoad = true;
+    b.blockKey = this.loadedWID;
+    b.isContainer = true;
+    this.context.setActiveBlock(b);
+    this.scene = this.context.scene;
+    this.rootBlock = b;
+    this.canvasHelper.__updateVideoCallback();
+    this.key = profileKey;
+    this.rootBlock.setData(blockData);
+    setTimeout(() => {
+      this.canvasHelper.show();
+      this._updateContextWithDataChange();
+      gAPPP.activeContext.activeBlock.setData();
+      this.profileUpdate();
+      this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+    }, 50);
+
+    this.canvasHelper.logMessage('load: ' + (Date.now() - startTime).toString() + 'ms');
+    this.canvasHelper.reportEngineDetails();
+  }
+  async initCanvas() {
+    let canvasTemplate = this._canvasPanelTemplate();
+    this.canvasWrapper = document.body.querySelector('.form_canvas_wrapper');
+    this.canvasWrapper.innerHTML = canvasTemplate;
+
+    this.canvas = this.dialog.querySelector('.popup-canvas');
+    let {
+      wContext
+    } = await import('/lib/wcontext.js');
+    this.context = new wContext(this.canvas, this.geoOptions);
+    this.canvasActions = this.dialog.querySelector('.canvas-actions');
+    this.canvasActions.style.display = '';
+    this.loadedSceneURL = '';
+
+    let {
+      sDataDefinition
+    } = await import('/lib/sdatadefinition.js');
+    this.sDataDefinition = sDataDefinition;
+    let cCanvasLib = await import('/lib/ccanvas.js');
+    this.canvasHelper = new cCanvasLib.default(this);
+    this.context.canvasHelper = this.canvasHelper;
+    this.canvasHelper.hide();
+    this.canvasHelper.saveAnimState = true;
+    this.canvasHelper.cameraShownCallback = () => this.canvasReady();
+  }
+  _canvasPanelTemplate() {
+    return `<canvas class="popup-canvas"></canvas>
+  <div class="video-overlay"><video></video></div>
+  <div class="help-overlay"></div>
+  <div class="canvas-actions">
+    <button class="btn-sb-icon scene-options"><i class="material-icons">settings_brightness</i></button>
+    <div class="scene-options-panel app-panel" style="display:none;">
+      <div class="scene-fields-container"></div>
+      <div class="render-log-wrapper" style="display:none;">
+        <button class="btn-sb-icon log-clear"><i class="material-icons">clear_all</i></button>
+        <textarea class="render-log-panel" spellcheck="false"></textarea>
+        <div class="fields-container" style="display:none;"></div>
+      </div>
+      <br>
+      <button class="btn-sb-icon stop-button"><i class="material-icons">stop</i></button>
+      <button class="btn-sb-icon video-button"><i class="material-icons">fiber_manual_record</i></button>
+      <button class="btn-sb-icon download-button"><i class="material-icons">file_download</i></button>
+      <button class="btn-sb-icon show-hide-log"><i class="material-icons">info_outline</i></button>
+    </div>
+    <div class="canvas-play-bar">
+      <button class="btn-sb-icon play-button"><i class="material-icons">play_arrow</i></button>
+      <button class="btn-sb-icon pause-button"><i class="material-icons">pause</i></button>
+      <div class="run-length-label"></div>
+      <input class="animate-range" type="range" step="any" value="0" min="0" max="100" />
+
+      <div class="lightbar-fields-container"></div>
+      <div class="camera-options-panel">
+        <select class="camera-select"></select>
+        <div>
+          <div class="camera-slider-label"><i class="material-icons" style="transform:rotate(90deg)">straighten</i></div>
+          <input class="camera-select-range-height-slider" type="range" step=".25" min="-15" max="40" />
+        </div>
+        <div>
+          <div class="camera-slider-label">FOV</div>
+          <input class="camera-select-range-fov-slider" type="range" step=".01" min="-1" max="2.5" value=".8" />
+        </div>
+        <div>
+          <div class="camera-slider-label"><i class="material-icons">straighten</i></div>
+          <input class="camera-select-range-slider" type="range" step="any" min="1" max="300" />
+        </div>
+        <div class="fields-container"></div>
+        <div id="extra-options-camera-area"></div>
+      </div>
+    </div>
+  </div>
+  <button class="none-layout-mode-flip btn-sb-icon" style="display:none;"><i class="material-icons">code</i></button>`;
+  }
+  initProjectModels() {
+    if (!this.loadedWID)
+      return;
+    this.sets.mesh = new cFirestoreData('workspace', this.loadedWID, 'mesh');
+    this.sets.shape = new cFirestoreData('workspace', this.loadedWID, 'shape');
+    this.sets.block = new cFirestoreData('workspace', this.loadedWID, 'block');
+    this.sets.texture = new cFirestoreData('workspace', this.loadedWID, 'texture');
+    this.sets.material = new cFirestoreData('workspace', this.loadedWID, 'material');
+  }
+  get sets() {
+    return this.a.modelSets;
   }
   authInit() {
     this.a = new cAuthorization();
@@ -831,26 +1001,6 @@ class cWebApplication extends cAppDefaults {
       loginPage.style.display = 'block';
       mainPage.style.display = 'none';
     }
-  }
-  profileReadyAndLoaded() {
-    this.loadStarted = true;
-
-    if (!this.loadedWID) {
-      let wId = this.a.profile.selectedWorkspace;
-      if (!wId)
-        wId = 'default';
-      this.loadedWID = wId;
-    }
-    this.a.initProjectModels(this.loadedWID);
-    this.a._activateModels();
-    this._updateApplicationStyle();
-
-    this.workspaceProcessed = false;
-    gAPPP.a.workspaceLoadedCallback = () => this.workspaceLoaded(this.loadedWID);
-  }
-  async workspaceLoaded(workspaceId) {
-    await this._updateGoogleFonts();
-    return;
   }
   get workspace() {
     let workspace = this.loadedWID;
@@ -1121,7 +1271,7 @@ class cWebApplication extends cAppDefaults {
     }
     return css;
   }
-  _updateApplicationStyle() {
+  styleUpdate() {
     let css = this.__genBaseAppStyle();
     if (this.lastStyleProfileCSS === css)
       return;
@@ -1134,7 +1284,6 @@ class cWebApplication extends cAppDefaults {
     this.styleProfileDom = document.createElement('style');
     this.styleProfileDom.innerHTML = css;
     document.body.appendChild(this.styleProfileDom);
-    this.resize();
   }
   _loginPageTemplate(title = `Dynamic Reality App`) {
     return `<div id="firebase-app-login-page" style="display:none;">
