@@ -42,7 +42,10 @@ export class cFirestoreData {
   deactivate() {
     if (!this.active)
       return;
-    this.notiRef.off();
+    if (this.notiRef) {
+      this.notiRef();
+      this.notiRef = null;
+    }
     this.active = false;
   }
   async activate() {

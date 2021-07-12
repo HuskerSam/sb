@@ -8,6 +8,7 @@ import cWorkspace from '/lib/cworkspace.js';
 import gCSVImport from '/lib/gcsvimport.js';
 import cMacro from '/lib/cmacro.js';
 import wBlock from '/lib/wblock.js';
+import cGenerate from '/lib/cgenerate.js';
 
 export class cApplication extends cWebApplication {
   constructor() {
@@ -509,13 +510,13 @@ export class cApplication extends cWebApplication {
       csvImport.readProjectRawDataDate('animationGenerated')
     ]);
     this.assetRowsDate = results[0];
-    this.assetRowsDateDisplay = (this.assetRowsDate) ? GLOBALUTIL.shortDateTime(gAPPP.assetRowsDate) : 'none';
+    this.assetRowsDateDisplay = (this.assetRowsDate) ? gUtility.shortDateTime(gAPPP.assetRowsDate) : 'none';
     this.sceneRowsDate = results[1];
-    this.sceneRowsDateDisplay = (this.sceneRowsDate) ? GLOBALUTIL.shortDateTime(gAPPP.sceneRowsDate) : 'none';
+    this.sceneRowsDateDisplay = (this.sceneRowsDate) ? gUtility.shortDateTime(gAPPP.sceneRowsDate) : 'none';
     this.productRowsDate = results[2];
-    this.productRowsDateDisplay = (this.productRowsDate) ? GLOBALUTIL.shortDateTime(gAPPP.productRowsDate) : 'none';
+    this.productRowsDateDisplay = (this.productRowsDate) ? gUtility.shortDateTime(gAPPP.productRowsDate) : 'none';
     this.animationGeneratedDate = results[3];
-    this.animationGeneratedDateDisplay = (this.animationGeneratedDate) ? GLOBALUTIL.shortDateTime(gAPPP.animationGeneratedDate) : 'none';
+    this.animationGeneratedDateDisplay = (this.animationGeneratedDate) ? gUtility.shortDateTime(gAPPP.animationGeneratedDate) : 'none';
 
     this.animationRegenerationNeeded = false;
     if (this.animationGeneratedDate) {
@@ -844,5 +845,93 @@ export class cApplication extends cWebApplication {
       document.body.appendChild(this.followblocktargetoptionslist);
     }
     this.followblocktargetoptionslist.innerHTML = optionText;
+  }
+  async updateDisplayForWorkspaceLayout() {
+    this.key = gAPPP.a.modelSets['block'].getIdByFieldLookup('blockCode', 'demo');
+    this.dialog.classList.add('workspacelayout');
+    this.context.arcCameraRadius = 80;
+    this.context.cameraVector = new BABYLON.Vector3(-10, 10, 1);
+
+    if (this.key && this.workspaceLayoutLoaded !== true) {
+      await this.showBusyScreen();
+      this.workspaceLayoutLoaded = true;
+      let fireValues = gAPPP.a.modelSets['block'].fireDataByKey[this.key].val();
+      //load saved scene if exists
+      if (fireValues.url)
+        await this.context.loadSceneURL(fireValues.url);
+
+      let b = new wBlock(this.context);
+      b.staticType = 'block';
+      b.staticLoad = true;
+
+      b.blockKey = this.key;
+      b.isContainer = true;
+
+      this.context.activate(null);
+      this.context.setActiveBlock(b);
+      this.rootBlock = b;
+      this.canvasHelper.__updateVideoCallback();
+      b.setData(fireValues);
+
+      let result = null;
+      this.canvasHelper.cameraSelect.selectedIndex = 2;
+      this.canvasHelper.noTestError = true;
+      this.canvasHelper.cameraChangeHandler();
+      this.canvasHelper.playAnimation();
+      this.rootBlock = this.context.activeBlock;
+      if (this.canvasHelper)
+        this.canvasHelper.logClear();
+
+      this.context.scene.switchActiveCamera(this.context.camera, this.context.canvas);
+    }
+    if (this.workspaceCTL)
+      delete this.workspaceCTL;
+    if (this.dataview_record_key.selectedIndex === 2)
+      this.workspaceCTL = new cGenerate(this.assetsFieldsContainer, this.key, this);
+    else
+      this.workspaceCTL = new cWorkspace(this.assetsFieldsContainer, this.dataview_record_key.value, this);
+  }
+  async generateAnimation(genNew = false, animationKey = false, clearWorkspace = true, reload = true) {
+    if (!animationKey)
+      animationKey = gAPPP.loadedWID;
+    if (!animationKey)
+      return;
+
+    if (!genNew && !confirm('This will clear existing data - proceed?'))
+      return;
+
+    this.canvasHelper.hide();
+    let csvImport = new gCSVImport(animationKey);
+
+    if (this.rootBlock)
+      await csvImport.dbSetRecordFields('block', {
+          generationState: 'not ready'
+        }, this.rootBlock.blockKey);
+
+    gAPPP.a._deactivateModels();
+    setTimeout(async () => {
+      if (this.rootBlock)
+        this.rootBlock.updatesDisabled = true;
+      if (clearWorkspace)
+        await csvImport.clearProjectData();
+      let assets = await csvImport.readProjectRawData('assetRows');
+      await csvImport.importRows(assets);
+      let scene = await csvImport.readProjectRawData('sceneRows');
+      await csvImport.importRows(scene);
+      let products = await csvImport.readProjectRawData('productRows');
+      await csvImport.importRows(products);
+      await csvImport.addCSVDisplayFinalize();
+      await csvImport.writeProjectRawData('animationGenerated', null);
+      this._updateQueryString(animationKey, 'Generate');
+
+      if (reload) {
+        //alert('Generation Complete, reloading...');
+        window.location.href = this.genQueryString(animationKey, null,
+          null, null, this.subView);
+      }
+
+    }, 10);
+
+    return;
   }
 }
