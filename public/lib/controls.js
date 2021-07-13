@@ -27,6 +27,7 @@ class bBand {
     if (!div)
       return console.log(fireData, 'changed bBand missing dom');
     let values = fireData.doc.data();
+    console.log('childchanged', values);
     this._nodeApplyValues(values, div.querySelector('.band-background-preview'));
     this.childMoved();
   }
@@ -305,7 +306,7 @@ export class cPanelData {
 
     return contextReloadRequired;
   }
-  scrape(e) {
+  async scrape(e) {
     if (!this.active)
       return;
     this.scrapeCache = [];
@@ -324,7 +325,7 @@ export class cPanelData {
       if (f.type === 'color')
         this.__updateColorLabel(f);
     }
-    this._commitUpdates(this.valueCache);
+    await this._commitUpdates(this.valueCache);
 
     this._updateDisplayFilters();
     this._updateDisplayListFilters();
@@ -408,14 +409,14 @@ export class cPanelData {
   _blurField(domControl, field, e) {
     this._updateFieldDom(field);
   }
-  _commitUpdates(newValues) {
+  async _commitUpdates(newValues) {
     if (!this.parent.fireSet)
       return;
 
     let updates = this._generateUpdateList(newValues);
     if (updates) {
-      this.parent.fireSet.update(updates, this.parent.key);
-
+      console.log(updates);
+      await this.parent.fireSet.update(updates, this.parent.key);
       for (let i in this.fields) {
         let f = this.fields[i];
         if (f.fireSetField)
@@ -443,7 +444,7 @@ export class cPanelData {
       return null;
     return updates;
   }
-  _handleDataChange(values, type, fireData) {
+  async _handleDataChange(values, type, fireData) {
     if (!this.active)
       return;
     if (this.parent.key === null || this.parent.key === undefined)
@@ -462,8 +463,10 @@ export class cPanelData {
     let cT = this.parent.context;
     if (contextReloadRequired) {
       if (cT.activeBlock)
-        if (this.parent.tag === 'mesh' && cT)
-          cT.activeBlock.loadMesh().then(() => this.paint());
+        if (this.parent.tag === 'mesh' && cT) {
+          await cT.activeBlock.loadMesh()
+          this.paint();
+        }
     }
 
   }
@@ -557,7 +560,7 @@ export class cPanelData {
         if (f.dom.checked !== v)
           f.dom.checked = v;
       } else {
-        if (!gAPPP.a.profile.inputFocusLock) //if value hasn't changed with focus, update it
+        if (!this.parent.a.profile.editIgnoreFocus) //if value hasn't changed with focus, update it
           if (o === f.dom.checked) {
             f.dom.checked = v;
             updateShown = true;
@@ -576,7 +579,7 @@ export class cPanelData {
         if (f.dom.value !== v)
           f.dom.value = v;
       } else {
-        if (!gAPPP.a.profile.inputFocusLock)
+        if (!this.parent.a.profile.editIgnoreFocus)
           if (o === f.dom.value) { //if value hasn't changed with focus, update it
             f.dom.value = v;
             updateShown = true;

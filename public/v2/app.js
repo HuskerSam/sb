@@ -1,6 +1,8 @@
 import cWebApplication from "/lib/firestoreapp.js";
 import {
-  cBandProfileOptions, cBandIcons, cPanelData
+  cBandProfileOptions,
+  cBandIcons,
+  cPanelData
 } from '/lib/controls.js';
 import sDataDefinition from '/lib/sdatadefinition.js';
 import gUtility from '/lib/gutility.js';
@@ -13,12 +15,51 @@ import cGenerate from '/lib/cgenerate.js';
 export class cApplication extends cWebApplication {
   constructor() {
     super();
+    window.addEventListener('popstate', () => {
+      let urlParams = new URLSearchParams(window.location.search);
+      let subView = urlParams.get('subview');
+      let tag = urlParams.get('tag');
+      let key = urlParams.get('key');
+
+      if (!tag)
+        tag = '';
+      if (!key)
+        key = '';
+      if (this.tag !== tag) {
+        this.dataview_record_tag.value = tag;
+        this.updateRecordList(key);
+      } else if (this.key !== key) {
+        this.dataview_record_key.value = key;
+        this.updateSelectedRecord();
+      }
+    });
 
     this.loadPickerData();
+    this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
+    this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture'];
   }
   async mainUpdateUI() {
     await super.mainUpdateUI();
     this.canvasHelper.initExtraOptions();
+
+    let urlParams = new URLSearchParams(window.location.search);
+    let layoutMode = urlParams.get('layoutmode');
+    if (!layoutMode)
+      layoutMode = this.a.profile.formLayoutMode;
+    let tag = urlParams.get('tag');
+    let key = urlParams.get('key');
+    let childKey = urlParams.get('childkey');
+    let subview = urlParams.get('subview');
+
+    this.playAnimation = false;
+    this.expandedAll = true;
+    this.tag = tag;
+    this.key = key;
+    this.childKey = childKey;
+    this.layoutMode = layoutMode;
+    this.subView = subview;
+    //this.geoOptions = geoOptions;
+    this.detailsShown = this.a.profile.applicationDetailsShown;
 
     this.userProfileName = this.dialog.querySelector('.user-profile-info');
     this.userprofileimage = this.dialog.querySelector('.user-profile-image');
@@ -660,7 +701,7 @@ export class cApplication extends cWebApplication {
 
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBlockPickerBand = this.dialog.querySelector('.child_band_picker_expanded');
-//    this.childBand = new cBlockLinkSelect(this.blockChildrenSelect, this, this.childEditPanel, this.childBlockPickerBand);
+    //    this.childBand = new cBlockLinkSelect(this.blockChildrenSelect, this, this.childEditPanel, this.childBlockPickerBand);
     this.childEditPanel.parentNode.insertBefore(this.assetsFieldsContainer, this.childEditPanel.parentNode.firstChild);
 
     let openBtn = document.createElement('button');
@@ -905,8 +946,8 @@ export class cApplication extends cWebApplication {
 
     if (this.rootBlock)
       await csvImport.dbSetRecordFields('block', {
-          generationState: 'not ready'
-        }, this.rootBlock.blockKey);
+        generationState: 'not ready'
+      }, this.rootBlock.blockKey);
 
     gAPPP.a._deactivateModels();
     setTimeout(async () => {
@@ -933,5 +974,14 @@ export class cApplication extends cWebApplication {
     }, 10);
 
     return;
+  }
+  openNewWindow(tag, key, wid = null) {
+    let url = this.genQueryString(wid, tag, key);
+    let a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('target', '_blank');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 }

@@ -10,6 +10,7 @@ export class cFirestoreData {
     this.childListeners = [];
     this.values = {};
     this.keyList = false;
+    this.sortKey = 'sortKey';
 
     if (type === 'workspace') {
       this.referencePath = '/project/' + id + '/' + tag;
@@ -20,6 +21,7 @@ export class cFirestoreData {
     } else if (type === 'project') {
       this.tag = 'project';
       this.referencePath = '/project';
+      this.sortKey = 'title';
     } else {
       alert('invalid cFirestoreData type');
       this.referencePath = '/boguspath';
@@ -56,7 +58,12 @@ export class cFirestoreData {
     return new Promise((resolve) => {
       let resolved = false;
       this.firestoreRef = firebase.firestore().collection(this.referencePath);
-      this.notiRef = firebase.firestore().collection(this.referencePath).onSnapshot(snapshot => {
+      this.notiRef = firebase.firestore().collection(this.referencePath);
+
+      if (this.sortKey)
+        this.notiRef = this.notiRef.orderBy(this.sortKey)
+
+      this.notiRef.onSnapshot(snapshot => {
         let docCount = 0;
         snapshot.docChanges().forEach(change => {
           docCount++;
@@ -274,8 +281,10 @@ export class cFirestoreData {
 
     let updatePath = this.referencePath + '/' + key;
 
-    //TO FIX - apply updates to local cache!!!
+    if (!this.fireDataValuesByKey[key])
+      this.fireDataValuesByKey[key] = {};
 
+    Object.assign(this.fireDataValuesByKey[key], updates);
     return firebase.firestore().doc(updatePath).set(updates, {
       merge: true
     });
