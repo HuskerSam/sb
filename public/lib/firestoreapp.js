@@ -3,13 +3,12 @@ import gUtility from '/lib/gutility.js';
 import wBlock from '/lib/wBlock.js';
 
 export class cFirestoreData {
-  constructor(type, id, tag, datalist = true) {
+  constructor(type, id, tag, childId) {
     this.tag = tag;
     this.referencePath = this.tag;
     this.active = false;
     this.childListeners = [];
     this.values = {};
-    this.keyList = false;
     this.sortKey = 'sortKey';
 
     if (type === 'workspace') {
@@ -18,16 +17,19 @@ export class cFirestoreData {
       this.referencePath = '/profile';
       this.uid = id;
       this.tag = 'profile';
+      datalist = false;
     } else if (type === 'project') {
       this.tag = 'project';
       this.referencePath = '/project';
       this.sortKey = 'title';
+    } else if (type === 'blockchild') {
+      this.tag = 'blockchild';
+      this.referencePath = '/project/' + id + "/block/" + childId + "/children";
     } else {
       alert('invalid cFirestoreData type');
       this.referencePath = '/boguspath';
     }
 
-    this.keyList = true;
     this.fireDataByKey = {};
     this.fireDataValuesByKey = {};
 
@@ -752,7 +754,7 @@ export default class cWebApplication extends cAppDefaults {
     this.activeContext = null;
     this.lastStyleProfileCSS = '';
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
-    this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture', 'frame'];
+    this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture'];
 
     window.addEventListener("resize", () => this.resize);
     firebase.database().ref('/.info/serverTimeOffset').once('value')
@@ -785,10 +787,15 @@ export default class cWebApplication extends cAppDefaults {
     div = div.firstChild;
     document.body.insertBefore(div, document.body.firstChild);
     this.dialog = document.querySelector('#firebase-app-main-page');
+    this.mainViewWrapper = this.dialog.querySelector('#main-view-wrapper');
   }
   async mainUpdateUI() {
     this.sets.profile = new cFirestoreData('profile', this.a.uid);
     await this.sets.profile.activate();
+
+    this.styleUpdate();
+    await this.initCanvas();
+    this._initAssetUI();
 
     this.sets.project = new cFirestoreData('project');
     await this.sets.project.activate();
@@ -817,11 +824,10 @@ export default class cWebApplication extends cAppDefaults {
     if (this.context)
       this.context.deactivate();
 
-    this.styleUpdate();
-    await this.initCanvas();
     await this.splitLayout();
     this.signOutButton = this.dialog.querySelector('.signout-button');
     this.signOutButton.addEventListener('click', e => this.a.signOut());
+
 
     let saveKey = 'selectedBlockKey' + this.loadedWID;
     let rootKey = this.sets.block.getIdByFieldLookup('blockCode', 'demo');
@@ -829,7 +835,6 @@ export default class cWebApplication extends cAppDefaults {
 
     await this._updateGoogleFonts();
   }
-  async splitLayout() {}
   __updateSceneBlockBand(blockKey) {}
   show(scene) {
     this.context.activate(scene);
@@ -967,6 +972,8 @@ export default class cWebApplication extends cAppDefaults {
     this.sets.block = new cFirestoreData('workspace', this.loadedWID, 'block');
     this.sets.texture = new cFirestoreData('workspace', this.loadedWID, 'texture');
     this.sets.material = new cFirestoreData('workspace', this.loadedWID, 'material');
+
+    this.registerFirebaseModels();
   }
   get sets() {
     return this.a.modelSets;
@@ -1306,7 +1313,6 @@ export default class cWebApplication extends cAppDefaults {
     </div>`;
   }
   splitLayout() {
-    this.mainViewWrapper = this.dialog.querySelector('#main-view-wrapper');
     if (['Left', 'Right', 'Top', 'Bottom'].indexOf(this.layoutMode) !== -1) {
       this.form_panel_view_dom = document.querySelector('.form_panel_view_dom');
       this.form_canvas_wrapper = document.querySelector('.form_canvas_wrapper');
@@ -1492,5 +1498,21 @@ export default class cWebApplication extends cAppDefaults {
     }
 
     return;
+  }
+  _updateContextWithDataChange(tag, values, type, fireData) {
+    if (this.rootBlock)
+      this.rootBlock.handleDataUpdate(tag, values, type, fireData);
+    if (this.canvasHelper)
+      this.canvasHelper.testError();
+  }
+  registerFirebaseModels() {
+    this.canvasFBRecordTypes.forEach(recType => {
+      if (this.sets[recType])
+        this.sets[recType].childListeners.push(
+          (values, type, fireData) => this._updateContextWithDataChange(recType, values, type, fireData));
+    });
+    if (this.sets.profile)
+      this.sets.profile.childListeners.push(
+        (values, type, fireData) => this.profileUpdate(values, type, fireData));
   }
 }

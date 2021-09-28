@@ -2,7 +2,8 @@ import cWebApplication from "/lib/firestoreapp.js";
 import {
   cBandProfileOptions,
   cBandIcons,
-  cPanelData
+  cPanelData,
+  cBlockLinkSelect
 } from '/lib/controls.js';
 import sDataDefinition from '/lib/sdatadefinition.js';
 import gUtility from '/lib/gutility.js';
@@ -36,7 +37,7 @@ export class cApplication extends cWebApplication {
 
     this.loadPickerData();
     this.templateBasePath = 'https://s3-us-west-2.amazonaws.com/hcwebflow/templates/';
-    this.canvasFBRecordTypes = ['blockchild', 'block', 'mesh', 'shape', 'material', 'texture'];
+    this.blockChildrenSet = null;
   }
   async mainUpdateUI() {
     await super.mainUpdateUI();
@@ -72,7 +73,6 @@ export class cApplication extends cWebApplication {
 
     this.profilePanelRegister();
     this.updateProjectList(this.sets.project.fireDataValuesByKey, this.loadedWID);
-    this._initAssetUI();
 
     this.updateRecordList(this.key, this.subView);
     this.canvasHelper.userProfileChange();
@@ -455,6 +455,11 @@ export class cApplication extends cWebApplication {
     this.fireSet.childListeners.push(this.fireSetCallback);
 
     if (tag === 'block') {
+      if (this.blockChildrenSet)
+        this.blockChildrenSet.deactivate();
+
+      this.blockChildrenSet = new cFirestoreData('blockchild', this.loadedWID, 'blockchild', key);
+      //this.blockChildrenSet.childListeners.push(this.fireSetCallback);
       this.initBlockDataFields();
       this.blockChildrenSelect.style.display = '';
       this.addChildButton.style.display = '';
@@ -701,7 +706,9 @@ export class cApplication extends cWebApplication {
 
     this.childEditPanel = this.dataViewContainer.querySelector('.cblock-child-details-panel');
     this.childBlockPickerBand = this.dialog.querySelector('.child_band_picker_expanded');
-    //    this.childBand = new cBlockLinkSelect(this.blockChildrenSelect, this, this.childEditPanel, this.childBlockPickerBand);
+
+
+    this.childBand = new cBlockLinkSelect(this.blockChildrenSelect, this, this.childEditPanel, this.childBlockPickerBand);
     this.childEditPanel.parentNode.insertBefore(this.assetsFieldsContainer, this.childEditPanel.parentNode.firstChild);
 
     let openBtn = document.createElement('button');
@@ -983,5 +990,23 @@ export class cApplication extends cWebApplication {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  }
+  _updateContextWithDataChange(tag, values, type, fireData) {
+    this._updateRecordSelect();
+
+    if (this.tag === '' && this.dataview_record_key.selectedIndex < 1) {
+      this.updateSelectedRecord();
+    }
+    super._updateContextWithDataChange(tag, values, type, fireData);
+
+    if (this.tag === 'block') {
+      if (this.rootBlock) {
+        this.childBand.refreshUIFromCache();
+        if (tag === 'blockchild') {
+          this.rootBlock.updateCamera();
+          this._updateFollowTargetListOptions();
+        }
+      }
+    }
   }
 }
