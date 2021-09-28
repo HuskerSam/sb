@@ -938,3 +938,408 @@ function gridJoin(delimiter, rangeValues) {
   result = result.slice(0, -1 * delimiter.length);
   return result;
 }
+
+/**
+ * calculates weighted tag values form a review for a user
+ *
+ * @param {"user_id"}  uid  describes users
+ * @param {5}  overall  value 0-10 for overall like of beer
+ * @param {5}  bitter  value 0-10 for bitter
+ * @param {5}  distinct  value 0-10 for distinct
+ * @param {"pine,hoppy,stout,sweet"}  tags  comma delimited list of tags
+
+ * @customfunction
+ */
+function calcUserTagRanks(uid, overall, bitter, distinct, tags) {
+  let basicTags = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('tags').getRange("B1").getValue().split(',');
+  let hopsTags = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('tags').getRange('B2').getValue().split(',');
+  let distinctTags = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('tags').getRange("B3").getValue().split(',');
+
+  let t = tags.split(',');
+  let bTags = [];
+  let hTags = [];
+  let dTags = [];
+  t.forEach(tag => {
+    tag = tag.split(":")[0].trim().toLowerCase();
+    if (tag === '') return;
+    if (basicTags.indexOf(tag + ":basic") !== -1)
+      bTags.push(tag.trim());
+    else if (hopsTags.indexOf(tag + ":bitter") !== -1)
+      hTags.push(tag.trim());
+    else if (distinctTags.indexOf(tag + ":distinct") !== -1)
+      dTags.push(tag.trim());
+  });
+
+  overall = Number(overall) / 10.0;
+  bitter = Number(bitter) / 10.0;
+  distinct = Number(distinct) / 10.0;
+
+  let result = '';
+  let totalSum = bTags.length * overall + hTags.length * overall * bitter * 2 + dTags.length * distinct * 2 * overall;
+
+  bTags.forEach(tag => {
+    result += tag + ':' + (overall / totalSum).toFixed(3) + ',';
+  });
+
+  hTags.forEach(tag => {
+    result += tag + ':' + (overall * bitter * 2 / totalSum).toFixed(3) + ',';
+  });
+
+  dTags.forEach(tag => {
+    result += tag + ':' + (overall * distinct * 2 / totalSum).toFixed(3) + ',';
+  });
+
+  return uid + "," + overall.toString() + "," + bitter.toString() + "," + distinct.toString() + "," + result;
+}
+
+/**
+ * Calculates weighted tag ranks from a review for a beer
+ *
+ * @param {"zipline:ipa"}  beerSlug  describes beer
+ * @param {5}  overall  value 0-10 for overall like of beer
+ * @param {5}  bitter  value 0-10 for bitter
+ * @param {5}  distinct  value 0-10 for distinct
+ * @param {"pine,hoppy,stout,sweet"}  tags  comma delimited list of tags
+
+ * @customfunction
+ */
+function calcTagRanks(beerSlug, overall, bitter, distinct, tags) {
+  let basicTags = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('tags').getRange("B1").getValue().split(',');
+  let hopsTags = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('tags').getRange('B2').getValue().split(',');
+  let distinctTags = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('tags').getRange("B3").getValue().split(',');
+
+  let t = tags.split(',');
+  let bTags = [];
+  let hTags = [];
+  let dTags = [];
+  t.forEach(tag => {
+    tag = tag.split(":")[0].trim().toLowerCase();
+    if (tag === '') return;
+    if (basicTags.indexOf(tag + ":basic") !== -1)
+      bTags.push(tag.trim());
+    else if (hopsTags.indexOf(tag + ":bitter") !== -1)
+      hTags.push(tag.trim());
+    else if (distinctTags.indexOf(tag + ":distinct") !== -1)
+      dTags.push(tag.trim());
+  });
+
+  overall = Number(overall) / 10.0;
+  bitter = Number(bitter) / 10.0;
+  distinct = Number(distinct) / 10.0;
+
+  let result = '';
+  let totalSum = bTags.length * overall + hTags.length * overall * bitter * 2 + dTags.length * distinct * 2 * overall;
+  bTags.forEach(tag => {
+    result += tag + ':' + (overall / totalSum).toFixed(3) + ',';
+  });
+
+  hTags.forEach(tag => {
+    result += tag + ':' + (overall * bitter * 2 / totalSum).toFixed(3) + ',';
+  });
+
+  dTags.forEach(tag => {
+    result += tag + ':' + (overall * distinct * 2 / totalSum).toFixed(3) + ',';
+  });
+
+  return beerSlug + "," + overall.toString() + "," + bitter.toString() + "," + distinct.toString() + "," + result;
+}
+
+/**
+ * Sums and weights all tags for all users
+ *
+ * @param {B2:B32}  range  range of cells with user tag ranks from calcUserTagRanks
+
+ * @customfunction
+ */
+function sumUsers(range) {
+  //  range = SpreadsheetApp.getActiveSheet().getRange('I7:I34').getValues();
+  let userTotals = {};
+  range.forEach(v => {
+    let fields = v.toString().split(',');
+    let slug = fields[0].toLowerCase();
+    let overall = fields[1];
+    let bitter = fields[2];
+    let distinct = fields[3];
+    if (!userTotals[slug]) userTotals[slug] = {
+      overall: 0,
+      distinct: 0,
+      bitter: 0,
+      count: 0
+    };
+    if (!overall) overall = 0;
+    if (overall > 1) overall = 1;
+    overall = Number(overall);
+    if (isNaN(overall)) overall = .5;
+    userTotals[slug].overall += overall;
+    distinct = Number(distinct);
+    if (isNaN(distinct)) distinct = .5;
+    userTotals[slug].distinct += distinct;
+    bitter = Number(bitter);
+    if (isNaN(bitter)) bitter = .5;
+    userTotals[slug].bitter += bitter;
+    userTotals[slug].count++;
+
+    for (let c = 4, l = fields.length; c < l; c++) {
+      let tagWeights = userTotals[slug];;
+      let f = fields[c];
+      let parts = f.split(':');
+      let tag = parts[0];
+      if (!tag) continue;
+      if (!tagWeights[tag]) tagWeights[tag] = 0;
+      if (!tagWeights[tag + 'Count']) tagWeights[tag + 'Count'] = 0;
+      tagWeights[tag + 'Count']++;
+      tagWeights[tag] += overall;
+    }
+  });
+
+  let users = Object.keys(userTotals);
+
+  users.forEach(user => {
+    let count = userTotals[user].count;
+    for (let tag in userTotals[user]) {
+      if (['distinct', 'overall', 'bitter'].indexOf(tag) !== -1)
+        userTotals[user][tag] /= count;
+      else if (tag.indexOf('Count') === -1 && tag !== 'count') {
+        userTotals[user][tag] /= userTotals[user][tag + 'Count'];
+      }
+    }
+  });
+
+  let results = [];
+  users.forEach(user => {
+    let row = [user, userTotals[user].count.toFixed(), userTotals[user].overall.toFixed(2), userTotals[user].bitter.toFixed(2), userTotals[user].distinct.toFixed(2)];
+
+    let tagOutput = "";
+    let tagList = Object.keys(userTotals[user]);
+    tagList = tagList.sort();
+    tagList.forEach(tag => {
+      if (tag === 'count' || tag.indexOf('Count') !== -1) return;
+      if (tag === 'overall' || tag === 'bitter' || tag === 'distinct') return;
+
+      row.push(tag + ': ' + userTotals[user][tag].toFixed(2) + " (" + userTotals[user][tag + 'Count'].toFixed() + ')')
+    });
+
+    results.push(row);
+  });
+  return results;
+}
+
+/**
+ * Sums and weights all tags for all beers
+ *
+ * @param {B2:B32}  range  range of cells with user tag ranks from calcTagRanks
+
+ * @customfunction
+ */
+function sumBeers(range) {
+  let beerTotals = {};
+  range.forEach(v => {
+    //results.push(v.toString());
+    let fields = v.toString().split(',');
+    let slug = fields[0];
+    let overall = fields[1];
+    let bitter = fields[2];
+    let distinct = fields[3];
+    if (!beerTotals[slug]) beerTotals[slug] = {
+      overall: 0,
+      distinct: 0,
+      bitter: 0,
+      count: 0
+    };
+    beerTotals[slug].overall += Number(overall);
+    beerTotals[slug].distinct += Number(distinct);
+    beerTotals[slug].bitter += Number(bitter);
+    beerTotals[slug].count++;
+
+    for (let c = 4, l = fields.length; c < l; c++) {
+      let tagWeights = beerTotals[slug];
+      let f = fields[c];
+      let parts = f.split(':');
+      let tag = parts[0];
+      let rate = Number(parts[1]);
+      if (isNaN(rate)) rate = 0;
+      if (!tagWeights[tag]) tagWeights[tag] = 0;
+      if (!isNaN(rate)) tagWeights[tag] += rate;
+    }
+  });
+
+  let beers = Object.keys(beerTotals);
+  beers.forEach(beer => {
+    let count = beerTotals[beer].count;
+    for (let tag in beerTotals[beer])
+      if (tag !== 'count') beerTotals[beer][tag] /= count;
+  });
+
+  let results = [];
+  beers.forEach(beer => {
+    let tagOutput = "";
+
+    let sortedTags = [];
+    for (let tag in beerTotals[beer]) {
+      if (tag === 'count' || tag.indexOf('Count') !== -1) continue;
+      if (tag === 'overall' || tag === 'bitter' || tag === 'distinct') continue;
+
+      if (tag !== '') sortedTags.push(tag);
+    }
+
+    sortedTags = sortedTags.sort((a, b) => {
+      let numA = beerTotals[beer][a];
+      let numB = beerTotals[beer][b];
+      if (numA > numB) return -1;
+      if (numA < numB) return 1;
+      return 0;
+    });
+
+    let cells = [beer, beerTotals[beer].count, beerTotals[beer].overall, beerTotals[beer].bitter, beerTotals[beer].distinct];
+
+    for (let c = 0, l = sortedTags.length; c < l; c++)
+      cells.push(sortedTags[c] + ":" + beerTotals[beer][sortedTags[c]].toFixed(2))
+
+    results.push(cells);
+
+  });
+
+  return results;
+}
+
+
+/**
+ * Calculates likeability for all beers for all users from sumBeers() and sumUsers()
+
+ * @customfunction
+ */
+function getBeersForUsers() {
+  let userProfileData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('userProfiles').getDataRange().getValues();
+  let beerProfileData = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('beerProfiles').getDataRange().getValues();
+
+  let beerDirectory = {};
+  let beerRows = [];
+  beerProfileData.forEach((beerDataArray, beerIndex) => {
+    if (beerIndex === 0) return;
+
+    let beerTagData = {};
+    beerDataArray.forEach((cellValue, cellIndex) => {
+      if (cellIndex < 5) return;
+      if (cellIndex > 10) return;
+      if (cellValue === '') return;
+
+      let parts = cellValue.split(':');
+      let tagName = parts[0];
+      let abc = '';
+      if (parts[1]) abc = parts[1].toString();
+      let parts2 = abc.trim().split(' ');
+      let tagValue = Number(parts2[0]);
+      if (isNaN(tagValue)) return;
+
+      beerTagData[tagName] = tagValue;
+    });
+
+    let beer = beerDataArray[0];
+    beerDirectory[beer] = beerTagData;
+
+    if (beer !== '') {
+      let cells = [beer, JSON.stringify(beerTagData)];
+      beerRows.push(cells);
+    }
+  });
+
+  let beerList = Object.keys(beerDirectory);
+  beerList = beerList.sort();
+
+  let userRows = [];
+  userProfileData.forEach((userDataArray, index) => {
+    if (index === 0) return;
+
+    let userTagData = {};
+    userDataArray.forEach((cellValue, cellIndex) => {
+      if (cellIndex < 5) return;
+
+      if (cellValue === '') return;
+
+      let parts = cellValue.split(':');
+      let tagName = parts[0];
+      let abc = '';
+      if (parts[1]) abc = parts[1].toString();
+      let parts2 = abc.trim().split(' ');
+      let tagValue = Number(parts2[0]);
+      if (isNaN(tagValue)) return;
+
+      userTagData[tagName] = tagValue;
+    });
+
+
+    let uid = userDataArray[0];
+    let count = userDataArray[1];
+    let overall = userDataArray[2];
+    let bitter = userDataArray[3];
+    let distinct = userDataArray[4];
+
+    if (uid === '') return;
+
+    let cells = [uid];
+
+    beerList.forEach(b => {
+      cells.push(b + ': ' + calcUserLikability(beerDirectory[b], userTagData));
+    })
+
+
+    userRows.push(cells);
+
+  });
+
+  return userRows;
+}
+
+/**
+ * Sums and weights all tags for all beers
+ *
+ * @param {"fields"}  beer  beer tag weights
+ * @param {"fields"}  user  user tag weights
+
+ * @customfunction
+ */
+function calcUserLikability(beer, user) {
+  // find 4/5 top 5 tags for beer match to user
+  let beerTagsArray = Object.keys(beer);
+  let tagsUsed = [];
+  let tagCount = 0;
+  let tagMax = 0.0;
+  for (let c = 0, l = beerTagsArray.length; c < l; c++) {
+    let tag = beerTagsArray[c];
+    if (user[tag] !== undefined) {
+      tagCount++;
+      tagsUsed.push(tag);
+      if (beer[tag] > tagMax) tagMax = beer[tag];
+      if (tagCount === 4) break;
+    }
+  }
+
+  if (tagCount < 4) return 'NA';
+
+  // take the 4 tags for the beer, use the highest tag as a base of 1, and ratio other tags
+  //Low =                user.tagA x beer.tagA
+  //high =   if (user.tagA > .5) then user.tagA (1/2 effect) * beer.tagA; else user.tagA x beer.tagA
+
+  let likeLows = [];
+  let likeHighs = [];
+  let highTagUsed = false;
+  tagsUsed.forEach(tag => {
+    let ratio = 1;
+    if (beer[tag] === tagMax && !highTagUsed) {
+      ratio = 2;
+      highTagUsed = true;
+    }
+
+    likeLows.push(user[tag] * ratio);
+    if (user[tag] > .5) likeHighs.push((1 - ((1 - user[tag]) / 2)) * ratio); else likeHighs.push(user[tag] * ratio);
+  });
+
+  let low = 0;
+  let high = 0;
+  for (let c = 0; c < 4; c++) {
+    low += likeLows[c];
+    high += likeHighs[c];
+  }
+
+  return (low / 5 * 100).toFixed(1) + ' - ' + (high / 5 * 100).toFixed(1);
+}
