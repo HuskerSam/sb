@@ -7,6 +7,7 @@ function onOpen(e) {
 
   ui.createAddonMenu()
     .addItem('Side Panel', 'showInitDialog')
+    .addItem('Review Tools', 'showReviewTools')
     .addToUi();
 }
 
@@ -18,6 +19,26 @@ function refreshOAuth() {
 
 function showInitDialog() {
   showDialog('clouddialog');
+}
+
+function showReviewTools() {
+  var html = HtmlService.createHtmlOutputFromFile('reviewtoolsdialog')
+    .setTitle('Husker.Beer Tools')
+  SpreadsheetApp.getUi().showSidebar(html);
+}
+
+function sheetName() {
+  return SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getName();
+}
+
+function getUploadData() {
+  let path = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange("H2").getValue();
+  let data = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange("K2").getValue();
+
+  return {
+    path,
+    data
+  };
 }
 
 function showDialog(name) {
@@ -58,7 +79,7 @@ function createSheetFromTemplate(sheetName, template) {
           if (item.value !== '' && item.value !== undefined) {
             let v = item.value.toString();
             if (v.indexOf('%') !== -1 && v.indexOf('\'') === -1)
-                v = '\'' + v;
+              v = '\'' + v;
             range.setValue(v);
           }
           if (item.formula)
@@ -168,7 +189,7 @@ function AddRowToProjectList(name, circuitranges, assetranges, productssheet, fl
  *
  * @param {"[1,5,12.1,0,1]"} jsonArray array of values (sing form of json)
  */
- function JSONArrayMax(jsonArray) {
+function JSONArrayMax(jsonArray) {
   let arr = JSON.parse(jsonArray);
 
   let max = 0;
@@ -688,7 +709,7 @@ function getJSONForSheet(sheetName, rowStart = 1, rowLimit = 100, block = 1) {
           range,
           formula
         };
-      } else if (value !== ''  && value !== undefined) {
+      } else if (value !== '' && value !== undefined) {
         cell = {
           range,
           value
@@ -742,7 +763,7 @@ function _processValueForColor(v, sheet) {
   v = v.trim();
 
   let parts = v.split(',');
-  let validColor =  (parts.length > 2);
+  let validColor = (parts.length > 2);
   let l1color = color(v);
   return {
     color: l1color,
@@ -784,8 +805,7 @@ function onEdit(e) {
         if (pc.validColor) {
           oC.setBackground(colorRGB255(pc.str));
           oC.setFontColor(fc);
-        }
-        else {
+        } else {
           oC.setFontColor('black');
           oC.setBackground('white');
         }
@@ -832,7 +852,7 @@ function onEdit(e) {
  * @param {D1} firstCellToSet cell to set background color
  * @param {C1} secondCellToSet second cell to set background color - as many as you like ...
  * @customfunction
-*/
+ */
 function colorHeader(displayString, cellToWatch, firstCellToSet, secondCellToSet) {
   return displayString;
 }
@@ -847,7 +867,7 @@ function colorHeader(displayString, cellToWatch, firstCellToSet, secondCellToSet
  * once an empty row/cell is encountered, the cell coloring stops.
  * @param {"Header Description"} displayString usually a column header, value to be displayed in cell
  * @customfunction
-*/
+ */
 function colorColumn(displayString) {
   return displayString;
 }
@@ -859,7 +879,7 @@ function colorColumn(displayString) {
  *
  * @param {"1,1,1"}   strRGB string based 1,1,1 webGL color vector
  * @customfunction
-*/
+ */
 function color(str) {
   if (!str) {
     str = '1,1,1';
@@ -1331,7 +1351,8 @@ function calcUserLikability(beer, user) {
     }
 
     likeLows.push(user[tag] * ratio);
-    if (user[tag] > .5) likeHighs.push((1 - ((1 - user[tag]) / 2)) * ratio); else likeHighs.push(user[tag] * ratio);
+    if (user[tag] > .5) likeHighs.push((1 - ((1 - user[tag]) / 2)) * ratio);
+    else likeHighs.push(user[tag] * ratio);
   });
 
   let low = 0;
