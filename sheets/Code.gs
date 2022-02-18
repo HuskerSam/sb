@@ -1,5 +1,6 @@
 function onInstall(e) {
   onOpen(e);
+  showInitDialog();
 }
 
 function onOpen(e) {
@@ -8,12 +9,6 @@ function onOpen(e) {
   ui.createAddonMenu()
     .addItem('Side Panel', 'showInitDialog')
     .addToUi();
-}
-
-function refreshOAuth() {
-  ScriptApp.invalidateAuth();
-  PropertiesService.getDocumentProperties().setProperty("accessToken", ScriptApp.getOAuthToken());
-  return;
 }
 
 function showInitDialog() {
@@ -41,7 +36,6 @@ function getUploadData() {
 }
 
 function showDialog(name) {
-  refreshOAuth();
   var html = HtmlService.createHtmlOutputFromFile(name)
     .setTitle('Visual Tools')
   SpreadsheetApp.getUi().showSidebar(html);
@@ -260,35 +254,13 @@ function mergeCSVRangeStrings(rows, jsonResults = false) {
     let rangeDesc = rows[rowIndex].toString();
 
     try {
-      let wb = rangeDesc.indexOf('||||');
-
-      if (wb === -1) {
         ranges.push(ss.getRange(rangeDesc).getValues());
-      } else {
-        let parts = rangeDesc.split('||||');
-
-        let r = _fetchRemoteRange(parts[0], parts[1]);
-        ranges.push(r.values);
-      }
     } catch (e) {
       return 'Error with : ' + rows[rowIndex] + ' ' + e.message;
     }
   }
 
   return _mergeCSVRanges(ranges, jsonResults);
-}
-
-function _fetchRemoteRange(spreadsheetId, rangeName) {
-  let rangeCleanName = rangeName.replace(/\$/g, "");
-  var accessToken = PropertiesService.getDocumentProperties().getProperty("accessToken");
-  var url = "https://sheets.googleapis.com/v4/spreadsheets/" + spreadsheetId + "/values/" + rangeCleanName;
-  var res = UrlFetchApp.fetch(url, {
-    headers: {
-      "Authorization": "Bearer " + accessToken
-    }
-  });
-  var range = JSON.parse(res.getContentText());
-  return range;
 }
 
 /**
