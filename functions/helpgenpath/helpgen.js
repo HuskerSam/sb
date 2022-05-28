@@ -52,7 +52,7 @@ class HelpGen {
       <meta property="og:image" content="https://handtop.com/images/home8sec.gif" />
       <meta property="og:type" content="website" />
       <meta property="og:description" content="${desc}" />
-      <meta property="fb:app_id" content="461141618064403" />
+      
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
     </head>
 
@@ -83,7 +83,7 @@ class HelpGen {
         href="/about/">About</a><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
         <div class="copyright">
           Lincoln, Nebraska, USA 68508
-          <br>© 1998 - 2021 Handtop.
+          <br>© 1998 - 2022 Handtop.
           <br>All Rights Reserved.
         </div>
       </div>
