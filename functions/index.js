@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const admin = require("firebase-admin");
 const cloudGenerateDisplay = require('./cloudgeneratedisplay');
 const helpGen = require('./helpgenpath/helpgen');
-
+const envProjectId = JSON.parse(process.env.FIREBASE_CONFIG).projectId;
 admin.initializeApp();
 const fb_config = process.env.FIREBASE_CONFIG;
 const runtimeOpts = {
@@ -190,7 +190,10 @@ exports.productsforname = functions
     return res.send("GET Only");
   });
 exports.generatedhelplist = functions
-  .https.onRequest(async (req, res) => helpGen.helpGen(req, res));
+  .runWith({
+    minInstances: envProjectId === "groceryblocks" ? 1 : 0,
+    memory: '256MB'
+  }).https.onRequest(async (req, res) => helpGen.helpGen(req, res));
 
 exports.post3dmessage = functions
   .https.onRequest(async (req, res) => {
