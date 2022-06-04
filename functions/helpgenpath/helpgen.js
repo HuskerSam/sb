@@ -52,8 +52,17 @@ class HelpGen {
       <meta property="og:image" content="https://handtop.com/images/home8sec.gif" />
       <meta property="og:type" content="website" />
       <meta property="og:description" content="${desc}" />
-      
+
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGH67VM5RP"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-JGH67VM5RP');
+      </script>
     </head>
 
     <body class="${reviewClassName} vtdocpage">
