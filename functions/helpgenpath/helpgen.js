@@ -140,12 +140,6 @@ class HelpGen {
             <priority>.5</priority>
         </url>
         <url>
-            <loc>https://handtop.com/dc/</loc>
-            <lastmod>${new Date().toISOString().substring(0, 10)}</lastmod>
-            <changefreq>daily</changefreq>
-            <priority>.5</priority>
-        </url>
-        <url>
             <loc>https://handtop.com/addon/</loc>
             <lastmod>${new Date().toISOString().substring(0, 10)}</lastmod>
             <changefreq>daily</changefreq>
