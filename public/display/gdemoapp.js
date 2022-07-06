@@ -23,6 +23,15 @@ class gDemoApp extends gInstanceSuper {
 
     if (!nameWid)
       nameWid = urlParams.get('wid');
+
+    if (!nameWid) {
+      let name = 'Fruits';
+      if (name) {
+        let csvImport = await new gCSVImport();
+        nameWid = await csvImport.widForName(name);
+      }
+    }
+
     if (nameWid) {
       workspace = nameWid;
       gAPPP.a.modelSets['userProfile'].commitUpdateList([{
@@ -31,8 +40,7 @@ class gDemoApp extends gInstanceSuper {
       }]);
     }
 
-    if (!workspace)
-      workspace = 'default';
+
     this.loadedWID = workspace;
 
     this.a.initProjectModels(workspace);
@@ -89,8 +97,7 @@ class gDemoApp extends gInstanceSuper {
       maximumAge: 0
     });
   }
-  gpsReady() {
-  }
+  gpsReady() {}
   initializeAuthUI() {
     let div = document.createElement('div');
     div.innerHTML = this._loginPageTemplate('eXtended Reality Grafter');
