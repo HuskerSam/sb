@@ -1,0 +1,131 @@
+<!doctype html>
+  <html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Cloud: Server Initialization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="https://handtop.com/images/funnel64.png">
+    <link rel="canonical" href="https://handtop.com/doc/newinstance" />
+    <meta property="og:title" content="Cloud: Server Initialization" />
+    <meta property="og:url" content="https://handtop.com/doc/newinstance" />
+    <meta property="og:site_name" content="Handtop" />
+    <meta property="og:image" content="https://handtop.com/images/home8sec.gif" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="For Developers
+Steps to create a new server instance
+Create new firebase project
+ - results in a {FIREBASEPROJECTID}
+ - you can also bind a url to this
+Create Realtime Database
+ - main database
+Enable" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGH67VM5RP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-JGH67VM5RP');
+    </script>
+  </head>
+
+  <body class="item_help_view vtdocpage">
+  <link rel="stylesheet" href="https://handtop.com/public.css">
+  <div class="home_page_wrapper">
+    <div class="option_bar">
+      <a href="/" class="logo">
+        <img alt="small logo image" class="small_logo" src="https://handtop.com/images/funnel64.png">
+      </a>
+      <a href="/doc/">Contents</a>
+      <div class="search_box_wrapper">
+        <div class="gcse-search"></div>
+      </div>
+      <a href="mailto:support@handtop.com?subject=URGENT:Reference Question" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
+    </div>
+    <div class="help_gen_list_wrapper">
+      <div class="list_html_div"><select id="help_template_select" value="newinstance"><option value="alphausers" >Cloud: Alpha Users</option><option value="overview" >Cloud: Cloud Overview</option><option value="workspace" >Cloud: Asset Manager</option><option value="displayapp" >Cloud: Display Viewer</option><option value="viewer" >Cloud: Asset Viewer</option><option value="virtualreality" >Cloud: Virtual Reality</option><option value="newinstance" selected>Cloud: Server Initialization</option><option value="authorization" >Cloud: Application Authorization</option><option value="csvformat" >Cloud: Data Import Format</option><option value="displayarch" >Cloud: Display Generation</option><option value="taproomapp" >Cloud: Taproom Application</option><option value="addoninstall" >Sheets: Addon Install</option><option value="createlayout" >Sheets: Create Layout</option><option value="addonconfiguration" >Sheets: Addon Configuration</option><option value="addonprojects" >Sheets: Addon Projects</option><option value="addontemplates" >Sheets: Importing Templates</option><option value="sheetsfunctions" >Sheets: Sheets Functions</option><option value="positionplotter" >Sheets: Position Plotter</option><option value="positionproducts" >Sheets: Position Products</option><option value="processaudio" >Sheets: Process Audio</option><option value="createtemplate" >Sheets: Create Template</option><option value="block" >Assets: Blocks and Children</option><option value="sceneblock" >Assets: Scene Blocks</option><option value="camera" >Assets: Cameras and Interfaces</option><option value="displayblock" >Assets: Display Blocks</option><option value="diagramblocks" >Assets: Diagram Blocks</option><option value="frame" >Assets: Frames and Animation</option><option value="light" >Assets: Lights and Shading</option><option value="material" >Assets: Materials and Textures</option><option value="mesh" >Assets: Meshes and .gltf/.glb</option><option value="shape" >Assets: Shapes and 3D Text</option><option value="webfontblock" >Assets: Web Fonts</option><option value="roomwallsblock" >Assets: Room Walls</option><option value="importunityassets" >Assets: Import Unity Assets</option><option value="texturebakeunity" >Assets: Bake Textures in Unity</option><option value="unityblenderglb" >Assets: GLB export from Unity</option><option value="twebfontlogo" >Templates: Web Font Logo</option><option value="tshapesandframes" >Templates: Shapes and Frames</option><option value="tmeshpositions" >Templates: Mesh Positions</option><option value="tlightsfun" >Templates: Lights Fun</option><option value="tcameraanimations" >Templates: Camera Animations</option><option value="tredvideo" >Templates: Red Video</option><option value="tbluevideo" >Templates: Blue Video</option><option value="tdivebarmeshes" >Templates: Dive Bar Meshes</option><option value="tbarinteriorkit" >Templates: Bar Interior Kit</option><option value="shortcolorvideos" >Templates: Color Videos</option><option value="spinnerdiagram" >Templates: Spinner</option><option value="webappdiagram" >Templates: App Diagram</option><option value="videopickerexample" >Templates: Video Picker</option><option value="videotexture" >Templates: Video Texture</option><option value="tfruitstands" >Templates: Fruit Stands</option></select><br> &nbsp; <a href="" style="display:none;" target="_blank"><i class="material-icons">ondemand_video</i></a> &nbsp; <a href="" style="display:none;" target="_blank"><i class="material-icons">animation</i></a><div class="review_text">Reviewed: 2021-05-28</div></div>
+    </div>
+    <div class="help_body"><h1>For Developers</h1>
+<h2>Steps to create a new server instance</h2>
+<h3>Create new firebase project</h3>
+ - results in a {FIREBASEPROJECTID}<br>
+ - you can also bind a url to this
+<h3>Create Realtime Database</h3>
+ - main database
+<h3>Enable User Authentication</h3>
+ - enable anonymous - this is for Asset Viewer (/view) and Display App (/display)<br>
+ - enable Google - this is for Asset Manager (/asset); optional<br>
+ - enable email/passwordless - this is for Asset Manager (/asset); optional<br>
+ - only enable anonymous for production - recommended at this time - to prevent /asset access
+ - another option is to only enable the Firebase default route - not a configured url for access
+<h3>Create Firestore Instance</h3>
+ - select region
+ - will also create bucket storage
+ - this is only for configuration but will be the main database in a later release
+<h3>Initialize token for access</h3>
+ - add to Firestore privateConfiguration->security->token: "{TOKENVALUE}"
+ - the {TOKENVALUE} (you set it) and the Firebase Project id will be the 2 values needed for the addon
+<h3>Enable billing</h3>
+ - blaze plan to support cloud functions
+<h3>Upload Code</h3>
+  Code needs to be uploaded twice - once for hosting then a second time for cloud functions.  The cloud functions load
+  some routines from the hosted website (javascript).
+<br>
+ firebase deploy -P {FIREBASEPROJECTID} --only hosting
+<br>
+firebase deploy -P {FIREBASEPROJECTID} --only functions
+<h3>Configure CORS for bucket</h3>
+<b>Important:</b> CORS headers need to be set on the google bucket associated with the project<br>
+<a href="https://cloud.google.com/storage/docs/cross-origin#Configuring-CORS-on-a-Bucket" target="_blank">GCP Reference</a>
+<a href="https://handtop.com/docimages/cors.json" target="_blank">Example cors.json</a> - this file also lives in the code root directory.<br>
+gcloud auth login<br>
+ - then follow steps to authenticate (if needed)<br>
+gsutil cors set cors.json gs://{FIREBASEPROJECTID}.appspot.com
+<br> -- execute from directory where the cors.json file exists (or path this cmd better).
+<br>
+<h3>Enable backup for RTDB</h3>
+If using the Asset Manager (/asset) to create content, it's recommended to enable daily backups on RTDB to prevent expected data loss.
+</div>
+    <div class="footer_bar">
+    <a href="/addon/"><img src="https://handtop.com/images/logo64.png"
+       style="width:1.5em;top:.35em;position:relative;"> Tools</a><a
+     href="https://gsuite.google.com/marketplace/app/visual_tools/453466452088" target="_blank"><img src="https://handtop.com/images/logo64.png"
+        style="width:1.5em;top:.35em;position:relative;"> Install</a><a
+      href="/retail/"><img src="https://handtop.com/images/logo64.png"
+         style="width:1.5em;top:.35em;position:relative;"> Catalogs</a><a href="/privacy.html">Privacy</a><a
+      href="/about/">About</a><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+      <div class="copyright">
+        Lincoln, Nebraska, USA 68508
+        <br>© 1998 - 2022 Handtop.
+        <br>All Rights Reserved.
+      </div>
+    </div>
+  </div>
+  <script>
+    let ctl = document.getElementById('help_template_select');
+    if (ctl) {
+      if (ctl.length < 2)
+        ctl.style.display = 'none';
+      ctl.addEventListener('input', e => {
+        let v = ctl.value;
+        let a = document.createElement('a');
+        a.setAttribute('href', 'https://handtop.com/doc/' + v);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+
+      ctl.focus();
+    }
+
+    window.customCSEID = '0b2a9868105e1e42e';
+    window.customPH = ' Search reference...';
+  </script>
+  <script src="/homepagestuff.js"></script>
+  </body>
+
+  </html>

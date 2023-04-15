@@ -1,0 +1,144 @@
+<!doctype html>
+  <html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Assets: Bake Textures in Unity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="https://handtop.com/images/funnel64.png">
+    <link rel="canonical" href="https://handtop.com/doc/texturebakeunity" />
+    <meta property="og:title" content="Assets: Bake Textures in Unity" />
+    <meta property="og:url" content="https://handtop.com/doc/texturebakeunity" />
+    <meta property="og:site_name" content="Handtop" />
+    <meta property="og:image" content="https://handtop.com/images/home8sec.gif" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="Baking textures results in one set of files for an entire model/mesh
+Multiple meshes can also be baked into one mesh
+This is used to reduce complexity, and can be used to reduce file sizes (and qualit" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGH67VM5RP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-JGH67VM5RP');
+    </script>
+  </head>
+
+  <body class="item_help_view vtdocpage">
+  <link rel="stylesheet" href="https://handtop.com/public.css">
+  <div class="home_page_wrapper">
+    <div class="option_bar">
+      <a href="/" class="logo">
+        <img alt="small logo image" class="small_logo" src="https://handtop.com/images/funnel64.png">
+      </a>
+      <a href="/doc/">Contents</a>
+      <div class="search_box_wrapper">
+        <div class="gcse-search"></div>
+      </div>
+      <a href="mailto:support@handtop.com?subject=URGENT:Reference Question" target="_blank"><i class="material-icons alternate_email">alternate_email</i></a>
+    </div>
+    <div class="help_gen_list_wrapper">
+      <div class="list_html_div"><select id="help_template_select" value="texturebakeunity"><option value="alphausers" >Cloud: Alpha Users</option><option value="overview" >Cloud: Cloud Overview</option><option value="workspace" >Cloud: Asset Manager</option><option value="displayapp" >Cloud: Display Viewer</option><option value="viewer" >Cloud: Asset Viewer</option><option value="virtualreality" >Cloud: Virtual Reality</option><option value="newinstance" >Cloud: Server Initialization</option><option value="authorization" >Cloud: Application Authorization</option><option value="csvformat" >Cloud: Data Import Format</option><option value="displayarch" >Cloud: Display Generation</option><option value="taproomapp" >Cloud: Taproom Application</option><option value="addoninstall" >Sheets: Addon Install</option><option value="createlayout" >Sheets: Create Layout</option><option value="addonconfiguration" >Sheets: Addon Configuration</option><option value="addonprojects" >Sheets: Addon Projects</option><option value="addontemplates" >Sheets: Importing Templates</option><option value="sheetsfunctions" >Sheets: Sheets Functions</option><option value="positionplotter" >Sheets: Position Plotter</option><option value="positionproducts" >Sheets: Position Products</option><option value="processaudio" >Sheets: Process Audio</option><option value="createtemplate" >Sheets: Create Template</option><option value="block" >Assets: Blocks and Children</option><option value="sceneblock" >Assets: Scene Blocks</option><option value="camera" >Assets: Cameras and Interfaces</option><option value="displayblock" >Assets: Display Blocks</option><option value="diagramblocks" >Assets: Diagram Blocks</option><option value="frame" >Assets: Frames and Animation</option><option value="light" >Assets: Lights and Shading</option><option value="material" >Assets: Materials and Textures</option><option value="mesh" >Assets: Meshes and .gltf/.glb</option><option value="shape" >Assets: Shapes and 3D Text</option><option value="webfontblock" >Assets: Web Fonts</option><option value="roomwallsblock" >Assets: Room Walls</option><option value="importunityassets" >Assets: Import Unity Assets</option><option value="texturebakeunity" selected>Assets: Bake Textures in Unity</option><option value="unityblenderglb" >Assets: GLB export from Unity</option><option value="twebfontlogo" >Templates: Web Font Logo</option><option value="tshapesandframes" >Templates: Shapes and Frames</option><option value="tmeshpositions" >Templates: Mesh Positions</option><option value="tlightsfun" >Templates: Lights Fun</option><option value="tcameraanimations" >Templates: Camera Animations</option><option value="tredvideo" >Templates: Red Video</option><option value="tbluevideo" >Templates: Blue Video</option><option value="tdivebarmeshes" >Templates: Dive Bar Meshes</option><option value="tbarinteriorkit" >Templates: Bar Interior Kit</option><option value="shortcolorvideos" >Templates: Color Videos</option><option value="spinnerdiagram" >Templates: Spinner</option><option value="webappdiagram" >Templates: App Diagram</option><option value="videopickerexample" >Templates: Video Picker</option><option value="videotexture" >Templates: Video Texture</option><option value="tfruitstands" >Templates: Fruit Stands</option></select><br> &nbsp; <a href="" style="display:none;" target="_blank"><i class="material-icons">ondemand_video</i></a> &nbsp; <a href="" style="display:none;" target="_blank"><i class="material-icons">animation</i></a><div class="review_text">Reviewed: 2021-05-09</div></div>
+    </div>
+    <div class="help_body"><h3>Baking textures results in one set of files for an entire model/mesh</h3>
+<h4>Multiple meshes can also be baked into one mesh</h4>
+This is used to reduce complexity, and can be used to reduce file sizes (and quality).
+The resulting output can be rolled into a .glb or used in native .babylon mesh files -
+and texture files can used as is in the .glb or with the mesh in any resulting format
+for any system.
+<h4>Unity and packages needed</h4>
+Ian Deane's Mesh Baker (and texture baker) - <a target="_blank" href="https://assetstore.unity.com/packages/tools/modeling/mesh-baker-5017">Unity Store ~ $40</a>
+<br>
+FBX Export (free from Unity) - <a target="_blank" href="https://docs.unity3d.com/Packages/com.unity.formats.fbx@2.0/manual/index.html">Unity Store - free</a>
+<br>
+<br>
+The texture baker has lots and lots of options - which we will mostly ignore and use it's default
+setup - which will generally work well for most cases converting models for use on the web.
+<br>
+FBX is the most regular format for meshes and models - Unity, Blender and Autodesk all
+inter operate well using FBX formats - and Blender is the best place to go from FBX to
+BabylonJS.
+<h2>The recipe!</h2>
+<h3>Select, download and import a package of models from Unity</h3>
+Please download and import the 3 packages (FBX export, Ian Deane's Texture Baker and the package of assets you want to work with).
+<br>
+<img alt="Select My Assets in Package Manager" src="https://handtop.com/docimages/unitypackagemgrmyassets.png">
+<br>
+Using the Search field to filter can help<br>
+Find the FBX Export in the 'Unity Registry' - not 'My Assets'<br>
+<img alt="Filter Assets" src="https://handtop.com/docimages/unityimportmeshbaker.png">
+<br>
+Next add a meshbaker object to your project<br>
+<img alt="Add Mesh Baker" src="https://handtop.com/docimages/unityaddtexturebaker.png">
+<br>
+Next add an object from "Prefabs" (versus models - these tend to be only the mesh here)<br>
+Also zero the coords to 0,0,0 (optional)<br>
+Keep this as the only object in the project (for later when we export)<br>
+<img alt="Add prefab model" src="https://handtop.com/docimages/unityaddprefabobject.png">
+<br>
+<h3>After baking and exporting a model</h3>
+It's best to delete the generated material (and all associated files)
+  from the directory, and also delete the generated object in the unity project, the texture baker object
+  and the original fabrication generated object.  This will create much more consistent results.
+
+<br>
+<br>
+If [Bake Materials Into Combined Material] doesn't produce results, try clicking the [Blend Non-Texture Properies] checkbox.
+
+<h2>Try not to include small details</h2>
+Things like door knobs, TV screens (detail) - can greatly increase the size of a mesh and texture set.
+At times, try to remove a key part that can be added back - so the main item is one color/material -
+otherwise the baked texture set gets megabytes big instead of kilobytes.
+<br>
+<br>
+At times remove sub meshes like knobs, screen displays, buttons, lights and
+  other items that greatly increase the detail of the textures.  This will make
+  the models easier to manipulate and much smaller.  Many times though, it
+  makes sense to mix all the items into one batch - when there are more then a few
+  sub items like 20 buttons, or 20 bottles, etc.  Use these when needed and bake the
+  textures for ease of use - but also keep the count in a scene small and make
+  sure they are high impact items to make the download size worth it.
+</div>
+    <div class="footer_bar">
+    <a href="/addon/"><img src="https://handtop.com/images/logo64.png"
+       style="width:1.5em;top:.35em;position:relative;"> Tools</a><a
+     href="https://gsuite.google.com/marketplace/app/visual_tools/453466452088" target="_blank"><img src="https://handtop.com/images/logo64.png"
+        style="width:1.5em;top:.35em;position:relative;"> Install</a><a
+      href="/retail/"><img src="https://handtop.com/images/logo64.png"
+         style="width:1.5em;top:.35em;position:relative;"> Catalogs</a><a href="/privacy.html">Privacy</a><a
+      href="/about/">About</a><a target="_blank" href="mailto:contact@handtop.com?subject=sent from handtop.com">contact@handtop.com</a>
+      <div class="copyright">
+        Lincoln, Nebraska, USA 68508
+        <br>© 1998 - 2022 Handtop.
+        <br>All Rights Reserved.
+      </div>
+    </div>
+  </div>
+  <script>
+    let ctl = document.getElementById('help_template_select');
+    if (ctl) {
+      if (ctl.length < 2)
+        ctl.style.display = 'none';
+      ctl.addEventListener('input', e => {
+        let v = ctl.value;
+        let a = document.createElement('a');
+        a.setAttribute('href', 'https://handtop.com/doc/' + v);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+
+      ctl.focus();
+    }
+
+    window.customCSEID = '0b2a9868105e1e42e';
+    window.customPH = ' Search reference...';
+  </script>
+  <script src="/homepagestuff.js"></script>
+  </body>
+
+  </html>
